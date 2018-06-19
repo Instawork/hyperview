@@ -4,7 +4,158 @@ import { createStackNavigator } from 'react-navigation';
 
 import { DOMParser } from 'xmldom';
 
-const ROOT = 'http://127.0.0.1:8080';
+const ROOT = 'http://10.1.10.14:8080';
+
+
+function createProps(element, stylesheet) {
+  const props = {};
+  if (element.attributes === null) {
+    return props;
+  }
+  for (let i = 0; i < element.attributes.length; ++i) {
+    let attr = element.attributes.item(i);
+    props[attr.name] = attr.value;
+  }
+  if (props.styles) {
+    props.style = stylesheet[props.styles];
+    delete props.styles;
+  }
+}
+
+function onPressProps(element, navigation) {
+  const props = {};
+  const source = element.getAttribute('source');
+  const target = element.getAttribute('target');
+
+  if (!source) {
+    return props;
+  }
+
+  let navFunction = navigation.push;
+  let navRoute = 'Stack';
+
+  if (props.target == 'push') {
+    navFunction = navigation.push;
+  } else if (props.target == 'replace') {
+    navFunction = navigation.replace;
+  } else if (props.target == 'navigate') {
+    navFunction = navigation.navigate;
+  } else if (props.target == 'modal') {
+    navRoute = 'Modal';
+  }
+
+  props['onPress'] = () => navFunction(
+    navRoute,
+    { source: props.source },
+  );
+
+  return props;
+}
+
+function anchor(element, navigation, stylesheet, children) {
+  const props = Object.assign(
+    createProps(element, stylesheet),
+    onPressProps(element, navigation),
+    { underlayColor: '#fff', activeOpacity: 0.5 },
+  );
+  return React.createElement(
+    TouchableHighlight,
+    props,
+    children.length > 0 ? children[0] : null
+  );
+}
+
+function body(element, navigation, stylesheet, children) {
+  let component = View;
+  if (element.getAttribute('scroll')) {
+    component = ScrollView;
+  }
+  const props = createProps(element, stylesheet);
+  return React.createElement(
+    component,
+    props,
+    children
+  );
+}
+
+function button(element, navigation, stylesheet, children) {
+  const props = Object.assign(
+    createProps(element, stylesheet),
+    onPressProps(element, navigation)
+  );
+  return React.createElement(
+    Button,
+    props,
+    children
+  );
+}
+
+function image(element, navigation, stylesheet, children) {
+  const imageProps = {};
+  if (element.getAttribute('source')) {
+    imageProps.source = { uri: element.getAttribute('source')};
+  }
+  const props = Object.assign(
+    createProps(element, stylesheet),
+    imageProps
+  );
+  return React.createElement(
+    Image,
+    props,
+    children
+  );
+}
+
+function view(element, navigation, stylesheet, children) {
+  const props = createProps(element, stylesheet);
+  return React.createElement(
+    View,
+    props,
+    children
+  );
+}
+
+function text(element, navigation, stylesheet, children) {
+  const props = createProps(element, stylesheet);
+  return React.createElement(
+    Text,
+    props,
+    children
+  );
+}
+
+function renderElement(element, navigation, stylesheet) {
+  const children = [];
+  if (element.childNodes !== null) {
+    for (let i = 0; i < element.childNodes.length; ++i) {
+      let e = renderElement(element.childNodes.item(i), navigation, stylesheet);
+      if (e) {
+        children.push(e);
+      }
+    }
+  }
+
+  switch (element.tagName) {
+    case 'a':
+      return anchor(element, this.props.navigation, this.state.styles, children); 
+    case 'body':
+      return body(element, this.props.navigation, this.state.styles, children); 
+    case 'button':
+      return button(element, this.props.navigation, this.state.styles, children); 
+    case 'image':
+      return image(element, this.props.navigation, this.state.styles, children); 
+    case 'text':
+      return text(element, this.props.navigation, this.state.styles, children); 
+    case 'view':
+      return view(element, this.props.navigation, this.state.styles, children); 
+  }
+
+  if (element.nodeValue && element.nodeValue.trim().length > 0) {
+    return element.nodeValue.trim();
+  }
+  return null;
+}
+
 
 class HyperView extends React.Component {
   static navigationOptions = ({ navigation, navigationOptions, screenProps }) => {
@@ -28,7 +179,7 @@ class HyperView extends React.Component {
 
     const path = this.props.navigation.getParam('source', null);
     const url = ROOT + path;
-    fetch(url, {headers: {'Cache-Control': 'no-cache'}})
+    fetch(url)
       .then((response) => response.text())
       .then((responseText) => {
         const doc = this.parser.parseFromString(responseText);
@@ -76,7 +227,7 @@ class HyperView extends React.Component {
           const rights = header.getElementsByTagName('right');
           let headerRight = null;
           if (rights && rights[0] && rights[0].childNodes) {
-            headerRight = this.renderElement(rights[0].childNodes[1]);
+            //headerRight = renderElement(rights[0].childNodes[1]);
           }
 
           props.navigation.setParams({
@@ -87,105 +238,6 @@ class HyperView extends React.Component {
       });
   }
 
-  getComponentForElement(element) {
-    switch (element.tagName) {
-      case 'body':
-        if (element.getAttribute('scroll')) {
-          return ScrollView;
-        } else {
-          return View;
-        }
-      case 'a':
-        return TouchableHighlight;
-      case 'view':
-        return View;
-      case 'button':
-        return Button;
-      case 'text':
-        return Text;
-      case 'image':
-        return Image;
-    }
-
-    return null;
-  }
-
-  getPropsForElement(element) {
-    let props = {};
-    if (element.attributes === null) {
-      return props;
-    }
-    for (let i = 0; i < element.attributes.length; ++i) {
-      let attr = element.attributes.item(i);
-      props[attr.name] = attr.value;
-    }
-
-    if (props.styles) {
-      props.style = this.state.styles[props.styles];
-      delete props.styles;
-    }
-
-    if (element.tagName === 'button' || element.tagName === 'a') {
-      if (props.source) {
-        let navFunction = this.props.navigation.push;
-        let navRoute = 'Stack';
-
-        if (props.target == 'push') {
-          navFunction = this.props.navigation.push;
-        } else if (props.target == 'replace') {
-          navFunction = this.props.navigation.replace;
-        } else if (props.target == 'navigate') {
-          navFunction = this.props.navigation.navigate;
-        } else if (props.target == 'modal') {
-          navRoute = 'Modal';
-        }
-
-        props['onPress'] = () => navFunction(
-          navRoute,
-          { source: props.source },
-        );
-      }
-    }
-
-    if (element.tagName === 'a') {
-      props.underlayColor = '#fff';
-      props.activeOpacity = 0.5;
-    }
-
-    if (element.tagName === 'image') {
-      if (props.source) {
-        props.source = {uri: props.source};
-      }
-    }
-
-    return props;
-  }
-
-  getChildrenForElement(element) {
-    if (element.childNodes === null) {
-      return [];
-    }
-    const childElements = [];
-    for (let i = 0; i < element.childNodes.length; ++i) {
-      childElements[i] = this.renderElement(element.childNodes.item(i));
-    }
-    return childElements;
-  }
-
-  renderElement(element) {
-    const component = this.getComponentForElement(element);
-    if (component === null) {
-      return element.nodeValue;
-    }
-    const props = this.getPropsForElement(element);
-    const children = this.getChildrenForElement(element);
-
-    if (element.tagName === 'a') {
-      // HACK
-      return React.createElement(component, props, children[1]);
-    }
-    return React.createElement(component, props, ...children);
-  }
 
   render() {
     if(this.state.isLoading) {
@@ -197,7 +249,7 @@ class HyperView extends React.Component {
     }
 
     const body = this.state.doc.getElementsByTagName('body')[0];
-    return this.renderElement(body);
+    return renderElement(body, this.props.navigation, this.state.styles);
   }
 }
 
