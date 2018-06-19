@@ -1,0 +1,98 @@
+<styles>
+  <rule
+    id="body"
+    flex="1"
+    backgroundColor="white"
+  />
+
+  <rule
+    id="hero"
+    paddingLeft="24"
+    paddingRight="24"
+    paddingTop="16"
+    paddingBottom="16"
+  />
+  <rule
+    id="title"
+    fontSize="32"
+    lineHeight="40"
+    color="#4E4D4D"
+  />
+  <rule
+    id="subtitle"
+    fontSize="20"
+    lineHeight="24"
+    color="#8D9494"
+  />
+
+  <rule
+    id="gigItem"
+    padding="24"
+    borderTopWidth="1"
+    borderColor="rgb(225,227,227)"
+    flexDirection="row"
+  />
+  <rule
+    id="gigImage"
+    width="64"
+    height="64"
+    marginRight="16"
+  />
+  <rule
+    id="gigPosition"
+    fontSize="16"
+    lineHeight="24"
+    fontWeight="bold"
+    color="rgb(78,77,77)"
+  />
+  <rule
+    id="gigTime"
+    fontSize="16"
+    lineHeight="24"
+    color="rgb(78,77,77)"
+  />
+  <rule
+    id="gigWorker"
+    fontSize="16"
+    lineHeight="24"
+    color="rgb(141,148,148)"
+  />
+</styles>
+
+<header>
+  <title>Gigs</title>
+  <right>
+    <button title="Search" source="/home.xml" target="modal" />
+  </right>
+</header>
+
+<body styles="body" scroll="true">
+  <view styles="hero">
+    <text styles="title">Gigs</text>
+    <text styles="subtitle">2 upcoming gigs</text>
+  </view>
+
+  <a source="/gigs/1.xml" target="push">
+    <view styles="gigItem">
+      <image source="https://instawork-profile.imgix.net/182262/resized-1510799395918.jpg?crop=faces&fit=crop&mask=ellipse&fm=png&h=64&w=64" styles="gigImage"/>
+      <view styles="gigInfo">
+        <text styles="gigPosition">Prep cook</text>
+        <text styles="gigTime">Mon Oct 1, 6:30-8:30 PM</text>
+        <text styles="gigWorker">Finding your Instaworker...</text>
+      </view>
+    </view>
+  </a>
+
+  <a source="/gigs/2.xml" target="push">
+    <view styles="gigItem">
+      <image source="https://instawork-profile.imgix.net/186221/resized-1515798417716.jpg?crop=faces&fit=crop&mask=ellipse&fm=png&h=64&w=64" styles="gigImage"/>
+      <view styles="gigInfo">
+        <text styles="gigPosition">Dishwasher</text>
+        <text styles="gigTime">Wed Oct 4, 5:30-9:30 PM</text>
+        <text styles="gigWorker">Andrew Jones</text>
+      </view>
+    </view>
+  </a>
+
+  <button title="Details" source="/details.xml" target="push" />
+</body>
