@@ -2,6 +2,8 @@ import React from 'react';
 import { Button, View, Image, Text, StyleSheet, TouchableHighlight, ScrollView } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 
+import { NavigationActions } from 'react-navigation';
+
 import { DOMParser } from 'xmldom';
 
 const ROOT = 'http://192.168.7.20:8080';
@@ -41,25 +43,37 @@ function onPressProps(element, navigation) {
 
   let navFunction = navigation.push;
   let navRoute = 'Stack';
+  let key = null;
 
   if (target == 'push') {
+    // push a new screen on the stack
     navFunction = navigation.push;
   } else if (target == 'replace') {
+    // replace current screen
     navFunction = navigation.replace;
   } else if (target == 'navigate') {
+    // Return to the screen, if it exists
     navFunction = navigation.navigate;
-  } else if (target == 'back') {
+    key = href;
   } else if (target == 'modal') {
     navRoute = 'Modal';
   }
 
-  props['onPress'] = () => navFunction(
-    navRoute,
-    {
-      href,
-      targetHasHeader,
-    },
-  );
+  if (target == 'back') {
+    props['onPress'] = () => navigation.goBack();
+  } else {
+    props['onPress'] = () => {
+      navFunction(
+        navRoute,
+        {
+          href,
+          targetHasHeader,
+        },
+        {},
+        key
+      );
+    }
+  }
 
   return props;
 }
@@ -242,6 +256,29 @@ function renderElement(element, navigation, stylesheet) {
  *
  */
 function createStylesheet(element) {
+  const numericRules = [
+    'borderBottomWidth',
+    'borderLeftWidth',
+    'borderRadius',
+    'borderRightWidth',
+    'borderTopWidth',
+    'borderWidth',
+    'flex',
+    'fontSize',
+    'height',
+    'lineHeight',
+    'margin',
+    'marginBottom',
+    'marginLeft',
+    'marginRight',
+    'marginTop',
+    'padding',
+    'paddingBottom',
+    'paddingLeft',
+    'paddingRight',
+    'paddingTop',
+    'width',
+  ];
   const styles = element.getElementsByTagName('styles');
   const stylesheet = {};
   if (styles && styles[0]) {
@@ -258,8 +295,12 @@ function createStylesheet(element) {
       for (let j = 0; j < ruleElement.attributes.length; ++j) {
         let attr = ruleElement.attributes.item(j);
         if (attr.name !== 'id') {
-          let intValue = parseInt(attr.value, 10);
-          ruleStyles[attr.name] = intValue || attr.value;
+          if (numericRules.indexOf(attr.name) >= 0) {
+            let intValue = parseInt(attr.value, 10);
+            ruleStyles[attr.name] = intValue || 0;
+          } else {
+            ruleStyles[attr.name] = attr.value;
+          }
         }
       }
       stylesheet[ruleId] = ruleStyles;
@@ -278,8 +319,6 @@ class HyperView extends React.Component {
     const headerRight = navigation.getParam('headerRight');
     const headerLeft = navigation.getParam('headerLeft');
     const targetHasHeader = navigation.getParam('targetHasHeader');
-    console.log('has header?', targetHasHeader);
-    console.log('title: ', title);
     const options = {
       title,
       headerRight,
@@ -315,6 +354,10 @@ class HyperView extends React.Component {
         const stylesheet = createStylesheet(doc);
         const header = renderHeader(doc, this.props.navigation, stylesheet);
         this.props.navigation.setParams({ header });
+        const setParamsAction = NavigationActions.setParams({
+          key: path,
+        });
+        this.props.navigation.dispatch(setParamsAction);
 
         this.setState({
           doc: doc,
@@ -322,6 +365,8 @@ class HyperView extends React.Component {
           styles: stylesheet,
         });
       });
+
+
   }
 
   render() {
