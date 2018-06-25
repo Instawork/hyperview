@@ -4,9 +4,12 @@ import { createStackNavigator } from 'react-navigation';
 
 import { DOMParser } from 'xmldom';
 
-const ROOT = 'http://10.1.10.14:8080';
+const ROOT = 'http://192.168.7.20:8080';
 
 
+/**
+ *
+ */
 function createProps(element, stylesheet) {
   const props = {};
   if (element.attributes === null) {
@@ -20,44 +23,57 @@ function createProps(element, stylesheet) {
     props.style = stylesheet[props.styles];
     delete props.styles;
   }
+  return props;
 }
 
+/**
+ *
+ */
 function onPressProps(element, navigation) {
   const props = {};
-  const source = element.getAttribute('source');
+  const href = element.getAttribute('href');
   const target = element.getAttribute('target');
+  const targetHasHeader = element.getAttribute('target-has-header') === 'true';
 
-  if (!source) {
+  if (!href) {
     return props;
   }
 
   let navFunction = navigation.push;
   let navRoute = 'Stack';
 
-  if (props.target == 'push') {
+  if (target == 'push') {
     navFunction = navigation.push;
-  } else if (props.target == 'replace') {
+  } else if (target == 'replace') {
     navFunction = navigation.replace;
-  } else if (props.target == 'navigate') {
+  } else if (target == 'navigate') {
     navFunction = navigation.navigate;
-  } else if (props.target == 'modal') {
+  } else if (target == 'back') {
+  } else if (target == 'modal') {
     navRoute = 'Modal';
   }
 
   props['onPress'] = () => navFunction(
     navRoute,
-    { source: props.source },
+    {
+      href,
+      targetHasHeader,
+    },
   );
 
   return props;
 }
 
-function anchor(element, navigation, stylesheet, children) {
+/**
+ *
+ */
+function anchor(element, navigation, stylesheet) {
   const props = Object.assign(
     createProps(element, stylesheet),
     onPressProps(element, navigation),
     { underlayColor: '#fff', activeOpacity: 0.5 },
   );
+  const children = renderChildren(element, navigation, stylesheet)
   return React.createElement(
     TouchableHighlight,
     props,
@@ -65,7 +81,10 @@ function anchor(element, navigation, stylesheet, children) {
   );
 }
 
-function body(element, navigation, stylesheet, children) {
+/**
+ *
+ */
+function body(element, navigation, stylesheet) {
   let component = View;
   if (element.getAttribute('scroll')) {
     component = ScrollView;
@@ -74,11 +93,14 @@ function body(element, navigation, stylesheet, children) {
   return React.createElement(
     component,
     props,
-    children
+    ...renderChildren(element, navigation, stylesheet)
   );
 }
 
-function button(element, navigation, stylesheet, children) {
+/**
+ *
+ */
+function button(element, navigation, stylesheet) {
   const props = Object.assign(
     createProps(element, stylesheet),
     onPressProps(element, navigation)
@@ -86,11 +108,14 @@ function button(element, navigation, stylesheet, children) {
   return React.createElement(
     Button,
     props,
-    children
+    ...renderChildren(element, navigation, stylesheet)
   );
 }
 
-function image(element, navigation, stylesheet, children) {
+/**
+ *
+ */
+function image(element, navigation, stylesheet) {
   const imageProps = {};
   if (element.getAttribute('source')) {
     imageProps.source = { uri: element.getAttribute('source')};
@@ -101,30 +126,81 @@ function image(element, navigation, stylesheet, children) {
   );
   return React.createElement(
     Image,
-    props,
-    children
+    props
   );
 }
 
-function view(element, navigation, stylesheet, children) {
+/**
+ *
+ */
+function view(element, navigation, stylesheet) {
   const props = createProps(element, stylesheet);
   return React.createElement(
     View,
     props,
-    children
+    ...renderChildren(element, navigation, stylesheet)
   );
 }
 
-function text(element, navigation, stylesheet, children) {
+/**
+ *
+ */
+function text(element, navigation, stylesheet) {
   const props = createProps(element, stylesheet);
   return React.createElement(
     Text,
     props,
-    children
+    ...renderChildren(element, navigation, stylesheet)
   );
 }
 
-function renderElement(element, navigation, stylesheet) {
+/**
+ *
+ */
+function renderHeader(element, navigation, stylesheet) {
+  const headers = element.getElementsByTagName('header');
+  if (!(headers && headers[0])) {
+    return null;
+  }
+  const header = headers[0];
+
+  const titles = header.getElementsByTagName('title');
+  let screenTitle = null;
+  if (titles && titles[0]) {
+    screenTitle = titles[0].childNodes[0].nodeValue;
+  }
+
+  const rights = header.getElementsByTagName('right');
+  let headerRight = null;
+  if (rights && rights[0] && rights[0].childNodes) {
+    headerRight = renderElement(
+      rights[0].childNodes[1],
+      navigation,
+      stylesheet,
+    );
+  }
+
+  const lefts = header.getElementsByTagName('left');
+  let headerLeft = null;
+  if (lefts && lefts[0] && lefts[0].childNodes) {
+    headerLeft = renderElement(
+      lefts[0].childNodes[1],
+      navigation,
+      stylesheet,
+    );
+  }
+
+  navigation.setParams({
+    screenTitle,
+    headerRight,
+    headerLeft,
+  });
+}
+
+/**
+ *
+ */
+function renderChildren(element, navigation, stylesheet) {
   const children = [];
   if (element.childNodes !== null) {
     for (let i = 0; i < element.childNodes.length; ++i) {
@@ -134,20 +210,26 @@ function renderElement(element, navigation, stylesheet) {
       }
     }
   }
+  return children;
+}
 
+/**
+ *
+ */
+function renderElement(element, navigation, stylesheet) {
   switch (element.tagName) {
     case 'a':
-      return anchor(element, this.props.navigation, this.state.styles, children); 
+      return anchor(element, navigation, stylesheet); 
     case 'body':
-      return body(element, this.props.navigation, this.state.styles, children); 
+      return body(element, navigation, stylesheet); 
     case 'button':
-      return button(element, this.props.navigation, this.state.styles, children); 
+      return button(element, navigation, stylesheet); 
     case 'image':
-      return image(element, this.props.navigation, this.state.styles, children); 
+      return image(element, navigation, stylesheet); 
     case 'text':
-      return text(element, this.props.navigation, this.state.styles, children); 
+      return text(element, navigation, stylesheet); 
     case 'view':
-      return view(element, this.props.navigation, this.state.styles, children); 
+      return view(element, navigation, stylesheet); 
   }
 
   if (element.nodeValue && element.nodeValue.trim().length > 0) {
@@ -156,88 +238,91 @@ function renderElement(element, navigation, stylesheet) {
   return null;
 }
 
+/**
+ *
+ */
+function createStylesheet(element) {
+  const styles = element.getElementsByTagName('styles');
+  const stylesheet = {};
+  if (styles && styles[0]) {
+    const ruleElements = styles[0].getElementsByTagName('rule');
 
+    for (let i = 0; i < ruleElements.length; ++i) {
+      const ruleElement = ruleElements.item(i);
+      const ruleId = ruleElement.getAttribute('id');
+      if (!ruleId) {
+        return;
+      }
+
+      const ruleStyles = {};
+      for (let j = 0; j < ruleElement.attributes.length; ++j) {
+        let attr = ruleElement.attributes.item(j);
+        if (attr.name !== 'id') {
+          let intValue = parseInt(attr.value, 10);
+          ruleStyles[attr.name] = intValue || attr.value;
+        }
+      }
+      stylesheet[ruleId] = ruleStyles;
+    };
+  }
+
+  return StyleSheet.create(stylesheet); 
+}
+
+/**
+ *
+ */
 class HyperView extends React.Component {
   static navigationOptions = ({ navigation, navigationOptions, screenProps }) => {
-
     const title = navigation.getParam('screenTitle');
     const headerRight = navigation.getParam('headerRight');
-    return {
+    const headerLeft = navigation.getParam('headerLeft');
+    const targetHasHeader = navigation.getParam('targetHasHeader');
+    console.log('has header?', targetHasHeader);
+    console.log('title: ', title);
+    const options = {
       title,
       headerRight,
     };
+    if (headerLeft) {
+      options.headerLeft = headerLeft;
+    }
+    if (!targetHasHeader) {
+      if (!(title || headerRight || headerLeft)) {
+        options.header = null;
+      }
+    }
+    return options;
   }
 
   constructor(props){
     super(props);
+    this.parser = new DOMParser();
     this.state ={
       isLoading: true,
       styles: null,
     }
+  }
 
-    this.parser = new DOMParser();
-
-    const path = this.props.navigation.getParam('source', null);
+  componentDidMount() {
+    const path = this.props.navigation.getParam('href', null);
     const url = ROOT + path;
     fetch(url)
       .then((response) => response.text())
       .then((responseText) => {
         const doc = this.parser.parseFromString(responseText);
 
-        const styles = doc.getElementsByTagName('styles');
-        const stylesheet = {};
-        if (styles && styles[0]) {
-          const ruleElements = styles[0].getElementsByTagName('rule');
-
-          for (let i = 0; i < ruleElements.length; ++i) {
-            const ruleElement = ruleElements.item(i);
-            const ruleId = ruleElement.getAttribute('id');
-            if (!ruleId) {
-              return;
-            }
-
-            const ruleStyles = {};
-            for (let j = 0; j < ruleElement.attributes.length; ++j) {
-              let attr = ruleElement.attributes.item(j);
-              if (attr.name !== 'id') {
-                let intValue = parseInt(attr.value, 10);
-                ruleStyles[attr.name] = intValue || attr.value;
-              }
-            }
-            stylesheet[ruleId] = ruleStyles;
-          };
-        }
+        const stylesheet = createStylesheet(doc);
+        const header = renderHeader(doc, this.props.navigation, stylesheet);
+        this.props.navigation.setParams({ header });
 
         this.setState({
           doc: doc,
           isLoading: false,
-          styles: StyleSheet.create(stylesheet),
+          styles: stylesheet,
         });
-
-        const headers = doc.getElementsByTagName('header');
-        if (headers && headers[0]) {
-          const header = headers[0];
-
-          const titles = header.getElementsByTagName('title');
-          let screenTitle = null;
-          if (titles && titles[0]) {
-            screenTitle = titles[0].childNodes[0].nodeValue;
-          }
-
-          const rights = header.getElementsByTagName('right');
-          let headerRight = null;
-          if (rights && rights[0] && rights[0].childNodes) {
-            //headerRight = renderElement(rights[0].childNodes[1]);
-          }
-
-          props.navigation.setParams({
-            screenTitle,
-            headerRight,
-          });
-        }
       });
   }
-
 
   render() {
     if(this.state.isLoading) {
@@ -247,12 +332,14 @@ class HyperView extends React.Component {
         </View>
       );
     }
-
     const body = this.state.doc.getElementsByTagName('body')[0];
     return renderElement(body, this.props.navigation, this.state.styles);
   }
 }
 
+/**
+ *
+ */
 const MainStack = createStackNavigator(
   {
     Stack: HyperView,
@@ -260,11 +347,14 @@ const MainStack = createStackNavigator(
   {
     initialRouteName: 'Stack',
     initialRouteParams: {
-      source: '/dashboard/gigs',
+      href: '/dashboard/gigs',
     }
   }
 );
 
+/**
+ *
+ */
 const RootStack = createStackNavigator(
   {
     Main: MainStack,
@@ -277,6 +367,9 @@ const RootStack = createStackNavigator(
   }
 );
 
+/**
+ *
+ */
 export default class App extends React.Component {
   render() {
     return <RootStack />;
