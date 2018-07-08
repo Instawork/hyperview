@@ -7,6 +7,7 @@ import { NavigationActions } from 'react-navigation';
 import { DOMParser } from 'xmldom';
 
 const ROOT = 'http://192.168.7.20:8080';
+//const ROOT = 'http://10.1.10.14:8080';
 
 
 /**
@@ -22,7 +23,7 @@ function createProps(element, stylesheet) {
     props[attr.name] = attr.value;
   }
   if (props.styles) {
-    props.style = stylesheet[props.styles];
+    props.style = props.styles.split(',').map((s) => stylesheet[s]);
     delete props.styles;
   }
   return props;
@@ -264,6 +265,7 @@ function createStylesheet(element) {
     'borderTopWidth',
     'borderWidth',
     'flex',
+    'flexGrow',
     'fontSize',
     'height',
     'lineHeight',
