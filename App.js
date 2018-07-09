@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, View, Image, Text, StyleSheet, TouchableHighlight, ScrollView } from 'react-native';
+import { Font, MapView } from 'expo';
 import { createStackNavigator } from 'react-navigation';
-
 import { NavigationActions } from 'react-navigation';
 
 import { DOMParser } from 'xmldom';
@@ -14,13 +14,22 @@ const ROOT = 'http://192.168.7.20:8080';
  *
  */
 function createProps(element, stylesheet) {
+  const numericRules = [
+    'numberOfLines',
+  ];
+
   const props = {};
   if (element.attributes === null) {
     return props;
   }
   for (let i = 0; i < element.attributes.length; ++i) {
     let attr = element.attributes.item(i);
-    props[attr.name] = attr.value;
+    if (numericRules.indexOf(attr.name) >= 0) {
+      let intValue = parseInt(attr.value, 10);
+      props[attr.name] = intValue || 0;
+    } else {
+      props[attr.name] = attr.value;
+    }
   }
   if (props.styles) {
     props.style = props.styles.split(',').map((s) => stylesheet[s]);
@@ -148,6 +157,57 @@ function image(element, navigation, stylesheet) {
 /**
  *
  */
+function map(element, navigation, stylesheet) {
+  const mapProps = {};
+  const geocode = element.getAttribute('geocode');
+  if (geocode) {
+    const parts = geocode.split(',');
+    mapProps.initialRegion = {
+      latitude: parseFloat(parts[0]),
+      longitude: parseFloat(parts[1]),
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+    };
+  }
+
+  const props = Object.assign(
+    createProps(element, stylesheet),
+    mapProps
+  );
+  return React.createElement(
+    MapView,
+    props,
+    ...renderChildren(element, navigation, stylesheet)
+  );
+}
+
+/**
+ *
+ */
+function mapMarker(element, navigation, stylesheet) {
+  const mapProps = {};
+  const geocode = element.getAttribute('geocode');
+  if (geocode) {
+    const parts = geocode.split(',');
+    mapProps.coordinate = {
+      latitude: parseFloat(parts[0]),
+      longitude: parseFloat(parts[1]),
+    };
+  }
+
+  const props = Object.assign(
+    createProps(element, stylesheet),
+    mapProps
+  );
+  return React.createElement(
+    MapView.Marker,
+    props
+  );
+}
+
+/**
+ *
+ */
 function view(element, navigation, stylesheet) {
   const props = createProps(element, stylesheet);
   return React.createElement(
@@ -179,36 +239,14 @@ function renderHeader(element, navigation, stylesheet) {
   }
   const header = headers[0];
 
-  const titles = header.getElementsByTagName('title');
-  let screenTitle = null;
-  if (titles && titles[0]) {
-    screenTitle = titles[0].childNodes[0].nodeValue;
-  }
-
-  const rights = header.getElementsByTagName('right');
-  let headerRight = null;
-  if (rights && rights[0] && rights[0].childNodes) {
-    headerRight = renderElement(
-      rights[0].childNodes[1],
-      navigation,
-      stylesheet,
-    );
-  }
-
-  const lefts = header.getElementsByTagName('left');
-  let headerLeft = null;
-  if (lefts && lefts[0] && lefts[0].childNodes) {
-    headerLeft = renderElement(
-      lefts[0].childNodes[1],
-      navigation,
-      stylesheet,
-    );
-  }
+  headerComponent = renderElement(
+    header,
+    navigation,
+    stylesheet,
+  );
 
   navigation.setParams({
-    screenTitle,
-    headerRight,
-    headerLeft,
+    headerComponent,
   });
 }
 
@@ -245,6 +283,12 @@ function renderElement(element, navigation, stylesheet) {
       return text(element, navigation, stylesheet); 
     case 'view':
       return view(element, navigation, stylesheet); 
+    case 'header':
+      return view(element, navigation, stylesheet); 
+    case 'map':
+      return map(element, navigation, stylesheet); 
+    case 'map-marker':
+      return mapMarker(element, navigation, stylesheet); 
   }
 
   if (element.nodeValue && element.nodeValue.trim().length > 0) {
@@ -266,6 +310,7 @@ function createStylesheet(element) {
     'borderWidth',
     'flex',
     'flexGrow',
+    'flexShrink',
     'fontSize',
     'height',
     'lineHeight',
@@ -317,19 +362,19 @@ function createStylesheet(element) {
  */
 class HyperView extends React.Component {
   static navigationOptions = ({ navigation, navigationOptions, screenProps }) => {
-    const title = navigation.getParam('screenTitle');
+    const header = navigation.getParam('headerComponent');
     const headerRight = navigation.getParam('headerRight');
     const headerLeft = navigation.getParam('headerLeft');
     const targetHasHeader = navigation.getParam('targetHasHeader');
     const options = {
-      title,
+      header,
       headerRight,
     };
     if (headerLeft) {
       options.headerLeft = headerLeft;
     }
     if (!targetHasHeader) {
-      if (!(title || headerRight || headerLeft)) {
+      if (!(header || headerRight || headerLeft)) {
         options.header = null;
       }
     }
@@ -339,10 +384,10 @@ class HyperView extends React.Component {
   constructor(props){
     super(props);
     this.parser = new DOMParser();
-    this.state ={
+    this.state = {
       isLoading: true,
       styles: null,
-    }
+    };
   }
 
   componentDidMount() {
@@ -418,7 +463,29 @@ const RootStack = createStackNavigator(
  *
  */
 export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      fontLoaded: false,
+    };
+  }
+
+  async componentDidMount() {
+    await Font.loadAsync({
+      'HKGrotesk-Bold': require('./assets/fonts/HKGrotesk-Bold.otf'),
+      'HKGrotesk-SemiBold': require('./assets/fonts/HKGrotesk-SemiBold.otf'),
+      'HKGrotesk-Medium': require('./assets/fonts/HKGrotesk-Medium.otf'),
+      'HKGrotesk-Regular': require('./assets/fonts/HKGrotesk-Regular.otf'),
+      'HKGrotesk-Light': require('./assets/fonts/HKGrotesk-Light.otf'),
+    });
+
+    this.setState({ fontLoaded: true });
+  }
+
   render() {
+    if (!this.state.fontLoaded) {
+      return null;
+    }
     return <RootStack />;
   }
 }
