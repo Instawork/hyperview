@@ -10,6 +10,17 @@ const ROOT = 'http://192.168.7.20:8080';
 //const ROOT = 'http://10.1.10.14:8080';
 
 
+const ROUTE_KEYS = {
+};
+
+/**
+ * UTILITIES
+ */
+function getHrefKey(href) {
+  return href.split('?')[0];
+}
+
+
 /**
  *
  */
@@ -45,7 +56,6 @@ function onPressProps(element, navigation) {
   const props = {};
   const href = element.getAttribute('href');
   const target = element.getAttribute('target');
-  const targetHasHeader = element.getAttribute('target-has-header') === 'true';
 
   if (!href) {
     return props;
@@ -64,7 +74,7 @@ function onPressProps(element, navigation) {
   } else if (target == 'navigate') {
     // Return to the screen, if it exists
     navFunction = navigation.navigate;
-    key = href;
+    key = ROUTE_KEYS[getHrefKey(href)];
   } else if (target == 'modal') {
     navRoute = 'Modal';
   }
@@ -73,11 +83,11 @@ function onPressProps(element, navigation) {
     props['onPress'] = () => navigation.goBack();
   } else {
     props['onPress'] = () => {
+      console.log('navigating to ', key, 'href: ', href);
       navFunction(
         navRoute,
         {
           href,
-          targetHasHeader,
         },
         {},
         key
@@ -325,6 +335,10 @@ function createStylesheet(element) {
     'paddingRight',
     'paddingTop',
     'width',
+    "top",
+    "bottom",
+    "left",
+    "right",
   ];
   const styles = element.getElementsByTagName('styles');
   const stylesheet = {};
@@ -365,7 +379,6 @@ class HyperView extends React.Component {
     const header = navigation.getParam('headerComponent');
     const headerRight = navigation.getParam('headerRight');
     const headerLeft = navigation.getParam('headerLeft');
-    const targetHasHeader = navigation.getParam('targetHasHeader');
     const options = {
       header,
       headerRight,
@@ -373,47 +386,57 @@ class HyperView extends React.Component {
     if (headerLeft) {
       options.headerLeft = headerLeft;
     }
-    if (!targetHasHeader) {
-      if (!(header || headerRight || headerLeft)) {
-        options.header = null;
-      }
-    }
     return options;
   }
 
   constructor(props){
     super(props);
     this.parser = new DOMParser();
+    this.isMounted = false;
     this.state = {
       isLoading: true,
       styles: null,
+      doc: null,
+      path: null,
     };
   }
 
   componentDidMount() {
+    this.isMounted = true;
     const path = this.props.navigation.getParam('href', null);
+    console.log('load on mount: ', path);
+    this.load(path);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const newHref = this.props.navigation.state.params.href
+    const oldHref = prevProps.navigation.state.params.href;
+    if (newHref != oldHref) {
+      console.log('load on change: ', newHref, oldHref);
+      this.load(newHref);
+    }
+  }
+
+  componentWillUnmount() {
+    this.isMounted = false;
+  }
+
+  load(path) {
     const url = ROOT + path;
     fetch(url)
       .then((response) => response.text())
       .then((responseText) => {
         const doc = this.parser.parseFromString(responseText);
-
         const stylesheet = createStylesheet(doc);
         const header = renderHeader(doc, this.props.navigation, stylesheet);
         this.props.navigation.setParams({ header });
-        const setParamsAction = NavigationActions.setParams({
-          key: path,
-        });
-        this.props.navigation.dispatch(setParamsAction);
-
+        ROUTE_KEYS[getHrefKey(path)] = this.props.navigation.state.key;
         this.setState({
           doc: doc,
           isLoading: false,
           styles: stylesheet,
         });
       });
-
-
   }
 
   render() {
