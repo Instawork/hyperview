@@ -56,6 +56,7 @@ function onPressProps(element, navigation) {
   const props = {};
   const href = element.getAttribute('href');
   const target = element.getAttribute('target');
+  const preload = element.getAttribute('preload');
 
   if (!href) {
     return props;
@@ -83,11 +84,18 @@ function onPressProps(element, navigation) {
     props['onPress'] = () => navigation.goBack();
   } else {
     props['onPress'] = () => {
-      console.log('navigating to ', key, 'href: ', href);
+      console.log('navigating to ', key, 'href: ', href, 'preload: ', preload);
+      let preloadScreen = null;
+      if (preload) {
+        const rootElement = element.ownerDocument;
+        const screens = rootElement.getElementsByTagName('screen');
+        preloadScreen = Array.from(screens).find((s) => s.getAttribute('id') == preload);
+      }
       navFunction(
         navRoute,
         {
           href,
+          preloadScreen,
         },
         {},
         key
@@ -392,9 +400,8 @@ class HyperView extends React.Component {
   constructor(props){
     super(props);
     this.parser = new DOMParser();
-    this.isMounted = false;
     this.state = {
-      isLoading: true,
+      needsLoad: false,
       styles: null,
       doc: null,
       path: null,
@@ -402,26 +409,52 @@ class HyperView extends React.Component {
   }
 
   componentDidMount() {
-    this.isMounted = true;
     const path = this.props.navigation.getParam('href', null);
-    console.log('load on mount: ', path);
-    this.load(path);
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const newHref = this.props.navigation.state.params.href
-    const oldHref = prevProps.navigation.state.params.href;
-    if (newHref != oldHref) {
-      console.log('load on change: ', newHref, oldHref);
-      this.load(newHref);
+    const preloadScreen = this.props.navigation.getParam('preloadScreen');
+    const preloadStyles = preloadScreen ? createStylesheet(preloadScreen) : null;
+    console.log('mounting', path);
+    if (preloadScreen) {
+      this.setState({
+        needsLoad: true,
+        doc: preloadScreen,
+        styles: preloadStyles,
+        path: path,
+      });
+    } else {
+      this.setState({
+        needsLoad: true,
+        path: path,
+      });
     }
   }
 
-  componentWillUnmount() {
-    this.isMounted = false;
+  componentWillReceiveProps(nextProps) {
+    const newHref = nextProps.navigation.state.params.href;
+    const oldHref = this.props.navigation.state.params.href;
+    console.log('got props', newHref, oldHref);
+
+    if (newHref != oldHref) {
+      const preloadScreen = nextProps.navigation.getParam('preloadScreen');
+      const stylesheet = preloadScreen ? createStylesheet(preloadScreen) : null;
+      console.log('new URL: ', newHref);
+      this.setState({
+        needsLoad: true,
+        doc: preloadScreen,
+        styles: stylesheet,
+        path: newHref,
+      });
+    }
   }
 
-  load(path) {
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.needsLoad) {
+      console.log('needs load');
+      this.load(this.state.path);
+    }
+  }
+
+  load() {
+    const path = this.state.path;
     const url = ROOT + path;
     fetch(url)
       .then((response) => response.text())
@@ -433,17 +466,16 @@ class HyperView extends React.Component {
         ROUTE_KEYS[getHrefKey(path)] = this.props.navigation.state.key;
         this.setState({
           doc: doc,
-          isLoading: false,
           styles: stylesheet,
+          needsLoad: false,
         });
       });
   }
 
   render() {
-    if(this.state.isLoading) {
+    if(!this.state.doc) {
       return (
-        <View>
-          <Text>Loading...</Text>
+        <View style={{backgroundColor: 'white', flex: 1}}>
         </View>
       );
     }
