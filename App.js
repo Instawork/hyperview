@@ -20,6 +20,14 @@ function getHrefKey(href) {
   return href.split('?')[0];
 }
 
+function getFirstTag(rootNode, tagName) {
+  elements = rootNode.getElementsByTagName(tagName);
+  if (elements  && elements[0]) {
+    return elements[0];
+  }
+  return null;
+}
+
 
 /**
  *
@@ -46,15 +54,17 @@ function createProps(element, stylesheet, animations) {
     props.style = props.styles.split(',').map((s) => stylesheet[s]);
     delete props.styles;
   }
-  if (props.animations) {
-    const value = animations.values[props.animations];
-    const property = animations.properties[props.animations];
-    if (value !== undefined && property !== undefined) {
-      const animatedStyle = {};
-      animatedStyle[property] = value;
-      props.style = props.style || [];
-      props.style.push(animatedStyle);
-    }
+  if (props.animatedValues) {
+    const values = props.animatedValues.split(',').forEach((v) => {
+      const value = animations.values[v];
+      const property = animations.properties[v];
+      if (value !== undefined && property !== undefined) {
+        const animatedStyle = {};
+        animatedStyle[property] = value;
+        props.style = props.style || [];
+        props.style.push(animatedStyle);
+      }
+    });
   }
   return props;
 }
@@ -393,62 +403,68 @@ function createStylesheet(element) {
  *
  */
 function createAnimations(element) {
-  const animations = element.getElementsByTagName('animations');
   const animatedValues = {};
   const animatedTimings = {};
   const animatedProperties = {};
-
-  if (animations && animations[0]) {
-    const animationElements = animations[0].childNodes;
-
-    for (let i = 0; i < animationElements.length; ++i) {
-      const animationElement = animationElements.item(i);
-      if (animationElement.nodeType !== 1) {
-        continue;
-      }
-
-      const animationId = animationElement.getAttribute('id');
-      if (!animationId) {
-        constinue;
-      }
-
-      if (animationElement.tagName == 'animation') {
-        const { value, timing, propertyName } = createAnimation(animationElement);
-        animatedValues[animationId] = value;
-        animatedTimings[animationId] = timing;
-        animatedProperties[animationId] = propertyName;
-
-      } else if (animationElement.tagName == 'sequence') {
-      }
-    }
-  }
-
-  return {
+  const returnValue = {
     values: animatedValues,
     timings: animatedTimings,
     properties: animatedProperties,
   };
+
+  const animated = getFirstTag(element, 'animated');
+  if (!animated) {
+    return returnValue;
+  }
+
+  const childElements = Array.from(animated.childNodes).filter((n) => n.nodeType == 1) || [];
+
+  const valueElements = childElements.filter((e) => e.tagName == 'value');
+  const animationElements = childElements.filter((e) => e.tagName == 'animation');
+
+  valueElements.forEach((v) => {
+    const id = v.getAttribute('id');
+    const fromValue = parseInt(v.getAttribute('from'));
+    const property = v.getAttribute('property');
+    animatedValues[id] = new Animated.Value(fromValue);
+    animatedProperties[id] = property;
+  });
+
+  animationElements.forEach((v) => {
+    const id = v.getAttribute('id');
+    animatedTimings[id] = createAnimation(v, animatedValues);
+  });
+  console.log(animatedTimings);
+  return returnValue;
 }
 
-function createAnimation(animationElement) {
-    const valueFrom = parseInt(animationElement.getAttribute('valueFrom'));
-    const valueTo = parseInt(animationElement.getAttribute('valueTo'));
-    const duration = parseInt(animationElement.getAttribute('duration'));
-    const propertyName = animationElement.getAttribute('propertyName');
+function createAnimation(element, animatedValues) {
+  const type = element.getAttribute('type');
 
-    const value = new Animated.Value(valueFrom);
-    const timing = Animated.timing(
-      value,
-      {
-        toValue: valueTo,
-        duration: duration,
-      },
-    );
-    return {
-      value,
-      timing,
-      propertyName,
+  if (type == 'sequence') {
+    const animations = Array.from(element.childNodes).filter((n) => n.nodeType == 1).map((e) => {
+      return createAnimation(e, animatedValues);
+    });
+    let animation = Animated.sequence(animations);
+    if (element.getAttribute('loop')) {
+      animation = Animated.loop(animation);
     }
+    return animation;
+
+  } else {
+    const value = element.getAttribute('value');
+    const toValue = parseFloat(element.getAttribute('to'));
+    const duration = parseInt(element.getAttribute('duration'));
+    return Animated.timing(
+      animatedValues[value],
+      {
+        toValue,
+        duration,
+      }
+    );
+  }
+
+  return null;
 }
 
 /**
