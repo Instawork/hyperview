@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, View, Image, Text, StyleSheet, TouchableHighlight, ScrollView } from 'react-native';
+import { Animated, Button, View, Image, Text, StyleSheet, TouchableHighlight, ScrollView } from 'react-native';
 import { Font, MapView } from 'expo';
 import { createStackNavigator } from 'react-navigation';
 import { NavigationActions } from 'react-navigation';
@@ -24,7 +24,7 @@ function getHrefKey(href) {
 /**
  *
  */
-function createProps(element, stylesheet) {
+function createProps(element, stylesheet, animations) {
   const numericRules = [
     'numberOfLines',
   ];
@@ -45,6 +45,16 @@ function createProps(element, stylesheet) {
   if (props.styles) {
     props.style = props.styles.split(',').map((s) => stylesheet[s]);
     delete props.styles;
+  }
+  if (props.animations) {
+    const value = animations.values[props.animations];
+    const property = animations.properties[props.animations];
+    if (value !== undefined && property !== undefined) {
+      const animatedStyle = {};
+      animatedStyle[property] = value;
+      props.style = props.style || [];
+      props.style.push(animatedStyle);
+    }
   }
   return props;
 }
@@ -109,13 +119,13 @@ function onPressProps(element, navigation) {
 /**
  *
  */
-function anchor(element, navigation, stylesheet) {
+function anchor(element, navigation, stylesheet, animations) {
   const props = Object.assign(
-    createProps(element, stylesheet),
+    createProps(element, stylesheet, animations),
     onPressProps(element, navigation),
     { underlayColor: '#fff', activeOpacity: 0.5 },
   );
-  const children = renderChildren(element, navigation, stylesheet)
+  const children = renderChildren(element, navigation, stylesheet, animations)
   return React.createElement(
     TouchableHighlight,
     props,
@@ -126,48 +136,48 @@ function anchor(element, navigation, stylesheet) {
 /**
  *
  */
-function body(element, navigation, stylesheet) {
-  let component = View;
+function body(element, navigation, stylesheet, animations) {
+  const props = createProps(element, stylesheet, animations);
+  let component = props.animations ? Animated.View : View;
   if (element.getAttribute('scroll')) {
-    component = ScrollView;
+    component = props.animated ? Animated.ScrollView : ScrollView;
   }
-  const props = createProps(element, stylesheet);
   return React.createElement(
     component,
     props,
-    ...renderChildren(element, navigation, stylesheet)
+    ...renderChildren(element, navigation, stylesheet, animations)
   );
 }
 
 /**
  *
  */
-function button(element, navigation, stylesheet) {
+function button(element, navigation, stylesheet, animations) {
   const props = Object.assign(
-    createProps(element, stylesheet),
+    createProps(element, stylesheet, animations),
     onPressProps(element, navigation)
   );
   return React.createElement(
     Button,
     props,
-    ...renderChildren(element, navigation, stylesheet)
+    ...renderChildren(element, navigation, stylesheet, animations)
   );
 }
 
 /**
  *
  */
-function image(element, navigation, stylesheet) {
+function image(element, navigation, stylesheet, animations) {
   const imageProps = {};
   if (element.getAttribute('source')) {
     imageProps.source = { uri: element.getAttribute('source')};
   }
   const props = Object.assign(
-    createProps(element, stylesheet),
+    createProps(element, stylesheet, animations),
     imageProps
   );
   return React.createElement(
-    Image,
+    props.animations ? Animated.Image : Image,
     props
   );
 }
@@ -226,24 +236,24 @@ function mapMarker(element, navigation, stylesheet) {
 /**
  *
  */
-function view(element, navigation, stylesheet) {
-  const props = createProps(element, stylesheet);
+function view(element, navigation, stylesheet, animations) {
+  const props = createProps(element, stylesheet, animations);
   return React.createElement(
-    View,
+    props.animations ? Animated.View : View,
     props,
-    ...renderChildren(element, navigation, stylesheet)
+    ...renderChildren(element, navigation, stylesheet, animations)
   );
 }
 
 /**
  *
  */
-function text(element, navigation, stylesheet) {
-  const props = createProps(element, stylesheet);
+function text(element, navigation, stylesheet, animations) {
+  const props = createProps(element, stylesheet, animations);
   return React.createElement(
-    Text,
+    props.animations? Animated.Text : Text,
     props,
-    ...renderChildren(element, navigation, stylesheet)
+    ...renderChildren(element, navigation, stylesheet, animations)
   );
 }
 
@@ -271,11 +281,11 @@ function renderHeader(element, navigation, stylesheet) {
 /**
  *
  */
-function renderChildren(element, navigation, stylesheet) {
+function renderChildren(element, navigation, stylesheet, animations) {
   const children = [];
   if (element.childNodes !== null) {
     for (let i = 0; i < element.childNodes.length; ++i) {
-      let e = renderElement(element.childNodes.item(i), navigation, stylesheet);
+      let e = renderElement(element.childNodes.item(i), navigation, stylesheet, animations);
       if (e) {
         children.push(e);
       }
@@ -287,24 +297,24 @@ function renderChildren(element, navigation, stylesheet) {
 /**
  *
  */
-function renderElement(element, navigation, stylesheet) {
+function renderElement(element, navigation, stylesheet, animations) {
   switch (element.tagName) {
     case 'a':
-      return anchor(element, navigation, stylesheet); 
+      return anchor(element, navigation, stylesheet, animations); 
     case 'body':
-      return body(element, navigation, stylesheet); 
+      return body(element, navigation, stylesheet, animations); 
     case 'button':
-      return button(element, navigation, stylesheet); 
+      return button(element, navigation, stylesheet, animations); 
     case 'image':
-      return image(element, navigation, stylesheet); 
+      return image(element, navigation, stylesheet, animations); 
     case 'text':
-      return text(element, navigation, stylesheet); 
+      return text(element, navigation, stylesheet, animations); 
     case 'view':
-      return view(element, navigation, stylesheet); 
+      return view(element, navigation, stylesheet, animations); 
     case 'header':
-      return view(element, navigation, stylesheet); 
+      return view(element, navigation, stylesheet, animations); 
     case 'map':
-      return map(element, navigation, stylesheet); 
+      return map(element, navigation, stylesheet, animations); 
     case 'map-marker':
       return mapMarker(element, navigation, stylesheet); 
   }
@@ -382,6 +392,68 @@ function createStylesheet(element) {
 /**
  *
  */
+function createAnimations(element) {
+  const animations = element.getElementsByTagName('animations');
+  const animatedValues = {};
+  const animatedTimings = {};
+  const animatedProperties = {};
+
+  if (animations && animations[0]) {
+    const animationElements = animations[0].childNodes;
+
+    for (let i = 0; i < animationElements.length; ++i) {
+      const animationElement = animationElements.item(i);
+      if (animationElement.nodeType !== 1) {
+        continue;
+      }
+
+      const animationId = animationElement.getAttribute('id');
+      if (!animationId) {
+        constinue;
+      }
+
+      if (animationElement.tagName == 'animation') {
+        const { value, timing, propertyName } = createAnimation(animationElement);
+        animatedValues[animationId] = value;
+        animatedTimings[animationId] = timing;
+        animatedProperties[animationId] = propertyName;
+
+      } else if (animationElement.tagName == 'sequence') {
+      }
+    }
+  }
+
+  return {
+    values: animatedValues,
+    timings: animatedTimings,
+    properties: animatedProperties,
+  };
+}
+
+function createAnimation(animationElement) {
+    const valueFrom = parseInt(animationElement.getAttribute('valueFrom'));
+    const valueTo = parseInt(animationElement.getAttribute('valueTo'));
+    const duration = parseInt(animationElement.getAttribute('duration'));
+    const propertyName = animationElement.getAttribute('propertyName');
+
+    const value = new Animated.Value(valueFrom);
+    const timing = Animated.timing(
+      value,
+      {
+        toValue: valueTo,
+        duration: duration,
+      },
+    );
+    return {
+      value,
+      timing,
+      propertyName,
+    }
+}
+
+/**
+ *
+ */
 class HyperView extends React.Component {
   static navigationOptions = ({ navigation, navigationOptions, screenProps }) => {
     const header = navigation.getParam('headerComponent');
@@ -400,8 +472,8 @@ class HyperView extends React.Component {
   constructor(props){
     super(props);
     this.parser = new DOMParser();
+    this.needsLoad = false;
     this.state = {
-      needsLoad: false,
       styles: null,
       doc: null,
       path: null,
@@ -412,17 +484,15 @@ class HyperView extends React.Component {
     const path = this.props.navigation.getParam('href', null);
     const preloadScreen = this.props.navigation.getParam('preloadScreen');
     const preloadStyles = preloadScreen ? createStylesheet(preloadScreen) : null;
-    console.log('mounting', path);
+    this.needsLoad = true;
     if (preloadScreen) {
       this.setState({
-        needsLoad: true,
         doc: preloadScreen,
         styles: preloadStyles,
         path: path,
       });
     } else {
       this.setState({
-        needsLoad: true,
         path: path,
       });
     }
@@ -431,14 +501,12 @@ class HyperView extends React.Component {
   componentWillReceiveProps(nextProps) {
     const newHref = nextProps.navigation.state.params.href;
     const oldHref = this.props.navigation.state.params.href;
-    console.log('got props', newHref, oldHref);
 
     if (newHref != oldHref) {
       const preloadScreen = nextProps.navigation.getParam('preloadScreen');
       const stylesheet = preloadScreen ? createStylesheet(preloadScreen) : null;
-      console.log('new URL: ', newHref);
+      this.needsLoad = true;
       this.setState({
-        needsLoad: true,
         doc: preloadScreen,
         styles: stylesheet,
         path: newHref,
@@ -447,9 +515,9 @@ class HyperView extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.needsLoad) {
-      console.log('needs load');
+    if (this.needsLoad) {
       this.load(this.state.path);
+      this.needsLoad = false;
     }
   }
 
@@ -460,14 +528,20 @@ class HyperView extends React.Component {
       .then((response) => response.text())
       .then((responseText) => {
         const doc = this.parser.parseFromString(responseText);
+        const animations = createAnimations(doc);
         const stylesheet = createStylesheet(doc);
         const header = renderHeader(doc, this.props.navigation, stylesheet);
         this.props.navigation.setParams({ header });
         ROUTE_KEYS[getHrefKey(path)] = this.props.navigation.state.key;
+
+        Object.entries(animations.timings).forEach(([key, timing]) => {
+          timing.start();
+        });
+
         this.setState({
           doc: doc,
           styles: stylesheet,
-          needsLoad: false,
+          animations: animations,
         });
       });
   }
@@ -480,7 +554,7 @@ class HyperView extends React.Component {
       );
     }
     const body = this.state.doc.getElementsByTagName('body')[0];
-    return renderElement(body, this.props.navigation, this.state.styles);
+    return renderElement(body, this.props.navigation, this.state.styles, this.state.animations);
   }
 }
 
