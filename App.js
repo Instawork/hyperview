@@ -1,13 +1,13 @@
 import React from 'react';
-import { Animated, Button, View, Image, Text, StyleSheet, TouchableHighlight, ScrollView } from 'react-native';
+import { Animated, Easing, Button, View, Image, Text, StyleSheet, TouchableHighlight, ScrollView } from 'react-native';
 import { Font, MapView } from 'expo';
 import { createStackNavigator } from 'react-navigation';
 import { NavigationActions } from 'react-navigation';
 
 import { DOMParser } from 'xmldom';
 
-const ROOT = 'http://192.168.7.20:8080';
-//const ROOT = 'http://10.1.10.14:8080';
+//const ROOT = 'http://192.168.7.20:8080';
+const ROOT = 'http://10.1.10.14:8080';
 
 
 const ROUTE_KEYS = {
@@ -412,6 +412,10 @@ function createAnimations(element) {
     properties: animatedProperties,
   };
 
+  if (!element) {
+    return returnValue;
+  }
+
   const animated = getFirstTag(element, 'animated');
   if (!animated) {
     return returnValue;
@@ -434,32 +438,39 @@ function createAnimations(element) {
     const id = v.getAttribute('id');
     animatedTimings[id] = createAnimation(v, animatedValues);
   });
-  console.log(animatedTimings);
   return returnValue;
 }
 
 function createAnimation(element, animatedValues) {
   const type = element.getAttribute('type');
 
-  if (type == 'sequence') {
+  if (type == 'sequence' || type == 'parallel') {
     const animations = Array.from(element.childNodes).filter((n) => n.nodeType == 1).map((e) => {
       return createAnimation(e, animatedValues);
     });
-    let animation = Animated.sequence(animations);
+    let animation = type == 'sequence' ? Animated.sequence(animations) : Animated.parallel(animations);
     if (element.getAttribute('loop')) {
       animation = Animated.loop(animation);
     }
     return animation;
 
+  } else if (type == 'delay') {
+    const duration = parseInt(element.getAttribute('duration'));
+    return Animated.delay(duration);
   } else {
     const value = element.getAttribute('value');
     const toValue = parseFloat(element.getAttribute('to'));
     const duration = parseInt(element.getAttribute('duration'));
+    const delay = parseInt(element.getAttribute('delay'));
+    const easingFunc = element.getAttribute('easing') || 'linear';
+    const easing = Easing[easingFunc]();
     return Animated.timing(
       animatedValues[value],
       {
         toValue,
         duration,
+        delay,
+        easing,
       }
     );
   }
@@ -500,12 +511,14 @@ class HyperView extends React.Component {
     const path = this.props.navigation.getParam('href', null);
     const preloadScreen = this.props.navigation.getParam('preloadScreen');
     const preloadStyles = preloadScreen ? createStylesheet(preloadScreen) : null;
+    const animations = createAnimations(preloadScreen);
     this.needsLoad = true;
     if (preloadScreen) {
       this.setState({
         doc: preloadScreen,
         styles: preloadStyles,
-        path: path,
+        path,
+        animations,
       });
     } else {
       this.setState({
@@ -521,10 +534,17 @@ class HyperView extends React.Component {
     if (newHref != oldHref) {
       const preloadScreen = nextProps.navigation.getParam('preloadScreen');
       const stylesheet = preloadScreen ? createStylesheet(preloadScreen) : null;
+      const animations = createAnimations(preloadScreen);
       this.needsLoad = true;
+
+      Object.entries(animations.timings).forEach(([key, timing]) => {
+        timing.start();
+      });
+
       this.setState({
         doc: preloadScreen,
         styles: stylesheet,
+        animations: animations,
         path: newHref,
       });
     }
