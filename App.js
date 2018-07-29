@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, Easing, Button, View, Image, Text, StyleSheet, TouchableHighlight, ScrollView } from 'react-native';
+import { Animated, Easing, Button, View, Image, Text, StyleSheet, TouchableHighlight, ScrollView, TextInput } from 'react-native';
 import { Font, MapView } from 'expo';
 import { createStackNavigator } from 'react-navigation';
 import { NavigationActions } from 'react-navigation';
@@ -12,6 +12,62 @@ const ROOT = 'http://10.1.10.14:8080';
 
 const ROUTE_KEYS = {
 };
+
+
+/**
+ * STATEFUL COMPONENTS
+ */
+class HVTextInput extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      focused: false,
+    };
+  }
+
+  render() {
+    const { element, navigation, stylesheet, animations } = this.props;
+    const props = Object.assign(
+      createProps(element, stylesheet, animations),
+      {
+        multiline: element.tagName == 'textarea',
+      },
+      {
+        onFocus: () => this.setState({focused: true}),
+        onBlur: () => this.setState({focused: false}),
+      }
+    );
+
+    if (this.state.focused && props.focusStyles) {
+      props.style = props.focusStyles.split(',').map((s) => stylesheet[s]);
+    }
+
+    const input = React.createElement(
+      TextInput,
+      props,
+    );
+
+    const labelElement = getFirstTag(element, 'label');
+    const helpElement = getFirstTag(element, 'help');
+
+    const label = labelElement ? text(labelElement, navigation, stylesheet, animations) : null;
+    const help = helpElement ? text(helpElement, navigation, stylesheet, animations) : null;
+
+    let outerStyles = null;
+    if (props.outerStyles) {
+      outerStyles = props.outerStyles.split(',').map((s) => stylesheet[s]);
+    }
+
+    return React.createElement(
+      View,
+      {style: outerStyles},
+      label,
+      input,
+      help
+    );
+  }
+}
+
 
 /**
  * UTILITIES
@@ -36,6 +92,9 @@ function createProps(element, stylesheet, animations) {
   const numericRules = [
     'numberOfLines',
   ];
+  const booleanRules = [
+    'multiline',
+  ];
 
   const props = {};
   if (element.attributes === null) {
@@ -46,6 +105,8 @@ function createProps(element, stylesheet, animations) {
     if (numericRules.indexOf(attr.name) >= 0) {
       let intValue = parseInt(attr.value, 10);
       props[attr.name] = intValue || 0;
+    } else if (booleanRules.indexOf(attr.name) >= 0) {
+      props[attr.name] = attr.value == 'true';
     } else {
       props[attr.name] = attr.value;
     }
@@ -195,6 +256,16 @@ function image(element, navigation, stylesheet, animations) {
 /**
  *
  */
+function input(element, navigation, stylesheet, animations) {
+  return React.createElement(
+    HVTextInput,
+    { element, navigation, stylesheet, animations }
+  );
+}
+
+/**
+ *
+ */
 function map(element, navigation, stylesheet) {
   const mapProps = {};
   const geocode = element.getAttribute('geocode');
@@ -317,7 +388,12 @@ function renderElement(element, navigation, stylesheet, animations) {
       return button(element, navigation, stylesheet, animations); 
     case 'image':
       return image(element, navigation, stylesheet, animations); 
+    case 'input':
+    case 'textarea':
+      return input(element, navigation, stylesheet, animations); 
     case 'text':
+    case 'label':
+    case 'help':
       return text(element, navigation, stylesheet, animations); 
     case 'view':
       return view(element, navigation, stylesheet, animations); 
