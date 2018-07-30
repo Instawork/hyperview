@@ -1,13 +1,13 @@
 import React from 'react';
-import { Animated, Easing, Button, View, Image, Text, StyleSheet, TouchableHighlight, ScrollView, TextInput } from 'react-native';
+import { Animated, Easing, Button, View, Image, Text, StyleSheet, TouchableHighlight, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 import { Font, MapView } from 'expo';
 import { createStackNavigator } from 'react-navigation';
 import { NavigationActions } from 'react-navigation';
 
 import { DOMParser } from 'xmldom';
 
-//const ROOT = 'http://192.168.7.20:8080';
-const ROOT = 'http://10.1.10.14:8080';
+const ROOT = 'http://192.168.7.20:8080';
+//const ROOT = 'http://10.1.10.14:8080';
 
 
 const ROUTE_KEYS = {
@@ -111,9 +111,8 @@ function createProps(element, stylesheet, animations) {
       props[attr.name] = attr.value;
     }
   }
-  if (props.styles) {
-    props.style = props.styles.split(',').map((s) => stylesheet[s]);
-    delete props.styles;
+  if (props.style) {
+    props.style = props.style.split(',').map((s) => stylesheet[s]);
   }
   if (props.animatedValues) {
     const values = props.animatedValues.split(',').forEach((v) => {
@@ -137,7 +136,7 @@ function onPressProps(element, navigation) {
   const props = {};
   const href = element.getAttribute('href');
   const target = element.getAttribute('target');
-  const preload = element.getAttribute('preload');
+  const preload = element.getAttribute('targetPreload');
 
   if (!href) {
     return props;
@@ -185,23 +184,6 @@ function onPressProps(element, navigation) {
   }
 
   return props;
-}
-
-/**
- *
- */
-function anchor(element, navigation, stylesheet, animations) {
-  const props = Object.assign(
-    createProps(element, stylesheet, animations),
-    onPressProps(element, navigation),
-    { underlayColor: '#fff', activeOpacity: 0.5 },
-  );
-  const children = renderChildren(element, navigation, stylesheet, animations)
-  return React.createElement(
-    TouchableHighlight,
-    props,
-    children.length > 0 ? children[0] : null
-  );
 }
 
 /**
@@ -319,11 +301,24 @@ function mapMarker(element, navigation, stylesheet) {
  */
 function view(element, navigation, stylesheet, animations) {
   const props = createProps(element, stylesheet, animations);
-  return React.createElement(
+  let component = React.createElement(
     props.animations ? Animated.View : View,
     props,
     ...renderChildren(element, navigation, stylesheet, animations)
   );
+  
+  if (element.getAttribute('href')) {
+    const pressProps = Object.assign(
+      onPressProps(element, navigation),
+      { activeOpacity: 0.5 },
+    );
+    component = React.createElement(
+      TouchableOpacity,
+      pressProps,
+      component
+    );
+  }
+  return component;
 }
 
 /**
@@ -331,11 +326,24 @@ function view(element, navigation, stylesheet, animations) {
  */
 function text(element, navigation, stylesheet, animations) {
   const props = createProps(element, stylesheet, animations);
-  return React.createElement(
+  let component = React.createElement(
     props.animations? Animated.Text : Text,
     props,
     ...renderChildren(element, navigation, stylesheet, animations)
   );
+
+  if (element.getAttribute('href')) {
+    const pressProps = Object.assign(
+      onPressProps(element, navigation),
+      { activeOpacity: 0.5 },
+    );
+    component = React.createElement(
+      TouchableOpacity,
+      pressProps,
+      component
+    );
+  }
+  return component;
 }
 
 /**
@@ -380,8 +388,6 @@ function renderChildren(element, navigation, stylesheet, animations) {
  */
 function renderElement(element, navigation, stylesheet, animations) {
   switch (element.tagName) {
-    case 'a':
-      return anchor(element, navigation, stylesheet, animations); 
     case 'body':
       return body(element, navigation, stylesheet, animations); 
     case 'button':
