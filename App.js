@@ -1,5 +1,17 @@
 import React from 'react';
-import { Animated, Easing, Button, View, Image, Text, StyleSheet, TouchableHighlight, TouchableOpacity, ScrollView, TextInput } from 'react-native';
+import {
+  Animated,
+  Button,
+  Easing,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableHighlight,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { Font, MapView } from 'expo';
 import { createStackNavigator } from 'react-navigation';
 import { NavigationActions } from 'react-navigation';
