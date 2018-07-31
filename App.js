@@ -3,7 +3,9 @@ import {
   Animated,
   Button,
   Easing,
+  FlatList,
   Image,
+  RefreshControl,
   ScrollView,
   StyleSheet,
   Text,
@@ -18,8 +20,8 @@ import { NavigationActions } from 'react-navigation';
 
 import { DOMParser } from 'xmldom';
 
-const ROOT = 'http://192.168.7.20:8080';
-//const ROOT = 'http://10.1.10.14:8080';
+//const ROOT = 'http://192.168.7.20:8080';
+const ROOT = 'http://10.1.10.14:8080';
 
 
 const ROUTE_KEYS = {
@@ -207,6 +209,15 @@ function body(element, navigation, stylesheet, animations) {
   if (element.getAttribute('scroll')) {
     component = props.animated ? Animated.ScrollView : ScrollView;
   }
+
+  if (element.getAttribute('trigger') === 'refresh') {
+    const refresh = React.createElement(
+      RefreshControl,
+      { refreshing: false, onRefresh: () => { console.log('ref'); } },
+    );
+    props.refreshControl = refresh;
+  }
+
   return React.createElement(
     component,
     props,
@@ -324,12 +335,34 @@ function view(element, navigation, stylesheet, animations) {
       onPressProps(element, navigation),
       { activeOpacity: 0.5 },
     );
+
     component = React.createElement(
       TouchableOpacity,
       pressProps,
       component
     );
   }
+
+  return component;
+}
+
+/**
+ *
+ */
+function list(element, navigation, stylesheet, animations) {
+  const props = {
+    data: element.getElementsByTagName('item'),
+    keyExtractor: (item, index) => {
+      return item.getAttribute('key');
+    },
+    renderItem: ({ item }) => {
+      return view(item, navigation, stylesheet, animations);
+    },
+  };
+  const component = React.createElement(
+    FlatList,
+    props,
+  );
   return component;
 }
 
@@ -415,6 +448,8 @@ function renderElement(element, navigation, stylesheet, animations) {
       return text(element, navigation, stylesheet, animations); 
     case 'view':
       return view(element, navigation, stylesheet, animations); 
+    case 'list':
+      return list(element, navigation, stylesheet, animations); 
     case 'header':
       return view(element, navigation, stylesheet, animations); 
     case 'map':
