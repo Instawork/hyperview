@@ -21,7 +21,8 @@ import { NavigationActions } from 'react-navigation';
 import { DOMParser } from 'xmldom';
 
 //const ROOT = 'http://192.168.7.20:8080';
-const ROOT = 'http://10.1.10.14:8080';
+//const ROOT = 'http://10.1.10.14:8080';
+const ROOT = 'http://127.0.0.1:8080';
 
 
 const ROUTE_KEYS = {
@@ -31,6 +32,62 @@ const ROUTE_KEYS = {
 /**
  * STATEFUL COMPONENTS
  */
+class HVFlatList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.parser = new DOMParser();
+    this.state = {
+      refreshing: false,
+      element: props.element,
+    };
+  }
+
+  refresh() {
+    const element = this.state.element;
+    this.setState({refreshing: true});
+    const path = element.getAttribute('href');
+    const url = ROOT + path;
+    fetch(url)
+      .then((response) => response.text())
+      .then((responseText) => {
+        const doc = this.parser.parseFromString(responseText);
+        this.setState({refreshing: false, element: doc.documentElement});
+      });
+  }
+
+  render() {
+    const { element, refreshing } = this.state;
+    const { navigation, stylesheet, animations } = this.props;
+    const styleAttr = element.getAttribute('style');
+    const style = styleAttr ? styleAttr.split(',').map((s) => stylesheet[s]) : null;
+
+    const listProps = {
+      style,
+      data: element.getElementsByTagName('item'),
+      keyExtractor: (item, index) => {
+        return item.getAttribute('key');
+      },
+      renderItem: ({ item }) => {
+        return view(item, navigation, stylesheet, animations);
+      },
+    };
+
+    let refreshProps = {};
+    if (element.getAttribute('trigger') === 'refresh') {
+      refreshProps = {
+        onRefresh: () => { this.refresh() },
+        refreshing,
+      };
+    }
+
+    return React.createElement(
+      FlatList,
+      Object.assign(listProps, refreshProps),
+    );
+  }
+}
+
+
 class HVTextInput extends React.Component {
   constructor(props) {
     super(props);
@@ -350,20 +407,10 @@ function view(element, navigation, stylesheet, animations) {
  *
  */
 function list(element, navigation, stylesheet, animations) {
-  const props = {
-    data: element.getElementsByTagName('item'),
-    keyExtractor: (item, index) => {
-      return item.getAttribute('key');
-    },
-    renderItem: ({ item }) => {
-      return view(item, navigation, stylesheet, animations);
-    },
-  };
-  const component = React.createElement(
-    FlatList,
-    props,
+  return React.createElement(
+    HVFlatList,
+    { element, navigation, stylesheet, animations },
   );
-  return component;
 }
 
 /**
@@ -733,7 +780,8 @@ const MainStack = createStackNavigator(
   {
     initialRouteName: 'Stack',
     initialRouteParams: {
-      href: '/dashboard/gigs',
+      //href: '/dashboard/gigs',
+      href: '/index.xml',
     }
   }
 );

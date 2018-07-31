@@ -1,0 +1,74 @@
+<doc>
+
+<styles>
+  <rule id="Header"
+    height="72"
+    alignItems="center"
+    backgroundColor="white"
+    borderBottomWidth="1"
+    borderBottomColor="#eee"
+    paddingTop="24"
+    paddingLeft="24"
+    paddingRight="24"
+    flexDirection="row"
+  />
+  <rule id="Header__Back"
+    color="blue"
+    fontFamily="HKGrotesk-SemiBold"
+    fontSize="16"
+    paddingRight="16"
+  />
+  <rule id="Header__Title"
+    fontFamily="HKGrotesk-SemiBold"
+    fontSize="24"
+    color="black"
+  />
+  <rule id="Body"
+    backgroundColor="white"
+    flex="1"
+  />
+  <rule id="Item"
+    borderBottomWidth="1"
+    borderBottomColor="#eee"
+    height="48"
+    flex="1"
+    flexDirection="row"
+    alignItems="center"
+    justifyContent="space-between"
+    paddingLeft="24"
+    paddingRight="24"
+  />
+  <rule id="Item__Label"
+    fontSize="18"
+    fontFamily="HKGrotesk-Regular"
+  />
+  <rule id="Item__Chevron"
+    fontSize="18"
+    fontFamily="HKGrotesk-Bold"
+  />
+</styles>
+
+<screen>
+<header style="Header">
+  <text style="Header__Back" href="/" target="back">Back</text>
+  <text style="Header__Title">List</text>
+</header>
+
+<body style="Body" scroll="true">
+  <list>
+
+    <item key="basic" style="Item" href="/list/basic.xml">
+      <text style="Item__Label">Basic List</text>
+      <text style="Item__Chevron">></text>
+    </item>
+
+    <item key="refresh" style="Item" href="/list/refresh.xml">
+      <text style="Item__Label">List With Refresh</text>
+      <text style="Item__Chevron">></text>
+    </item>
+
+  </list>
+</body>
+</screen>
+
+</doc>

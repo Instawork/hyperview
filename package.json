@@ -13,7 +13,8 @@
     "eject": "react-native-scripts eject",
     "android": "react-native-scripts android",
     "ios": "react-native-scripts ios",
-    "test": "jest"
+    "test": "jest",
+    "demo": "http-server -c-1 ./examples"
   },
   "jest": {
     "preset": "jest-expo"
