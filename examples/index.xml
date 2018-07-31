@@ -55,17 +55,45 @@
 
 <body style="Body" scroll="true">
   <list>
+    <item key="layout" style="Item">
+      <text style="Item__Label">Layout</text>
+      <text style="Item__Chevron">></text>
+    </item>
+
+    <item key="styling" style="Item">
+      <text style="Item__Label">Styling</text>
+      <text style="Item__Chevron">></text>
+    </item>
+
+    <item key="animation" style="Item">
+      <text style="Item__Label">Animation</text>
+      <text style="Item__Chevron">></text>
+    </item>
+
+    <item key="navigation" style="Item">
+      <text style="Item__Label">Navigation</text>
+      <text style="Item__Chevron">></text>
+    </item>
 
     <item key="list" style="Item" href="/list/index.xml">
       <text style="Item__Label">List</text>
       <text style="Item__Chevron">></text>
     </item>
 
-    <item key="sectionlist" style="Item" href="/sectionlist.xml">
+    <item key="sectionlist" style="Item">
       <text style="Item__Label">Section List</text>
       <text style="Item__Chevron">></text>
     </item>
 
+    <item key="element-replacement" style="Item">
+      <text style="Item__Label">Dynamic Elements</text>
+      <text style="Item__Chevron">></text>
+    </item>
+
+    <item key="element-replacement" style="Item">
+      <text style="Item__Label">Forms</text>
+      <text style="Item__Chevron">></text>
+    </item>
   </list>
 </body>
 </screen>

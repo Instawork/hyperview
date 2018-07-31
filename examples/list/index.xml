@@ -27,6 +27,15 @@
     backgroundColor="white"
     flex="1"
   />
+  <rule id="Description"
+    fontFamily="HKGrotesk-SemiBold"
+    fontSize="16"
+    margin="24"
+    padding="16"
+    borderWidth="2"
+    borderColor="red"
+    borderRadius="4"
+  />
   <rule id="Item"
     borderBottomWidth="1"
     borderBottomColor="#eee"
