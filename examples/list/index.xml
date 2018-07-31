@@ -59,7 +59,7 @@
 
 <screen>
 <header style="Header">
-  <text style="Header__Back" href="/" target="back">Back</text>
+  <text style="Header__Back" href="/list/index.xml" action="back">Back</text>
   <text style="Header__Title">List</text>
 </header>
 
@@ -73,6 +73,11 @@
 
     <item key="refresh" style="Item" href="/list/refresh.xml">
       <text style="Item__Label">List With Refresh</text>
+      <text style="Item__Chevron">></text>
+    </item>
+
+    <item key="infinite-scroll" style="Item" href="/list/infinite_scroll.xml">
+      <text style="Item__Label">List With Infinite Scroll</text>
       <text style="Item__Chevron">></text>
     </item>
 

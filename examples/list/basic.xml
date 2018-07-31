@@ -59,7 +59,7 @@
 
 <screen>
 <header style="Header">
-  <text style="Header__Back" href="/" target="back">Back</text>
+  <text style="Header__Back" href="/list/index.xml" action="back">Back</text>
   <text style="Header__Title">Basic List</text>
 </header>
 

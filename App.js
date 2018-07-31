@@ -14,11 +14,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import VisibilityDetectingView from './VisibilityDetectingView.js';
 import { Font, MapView } from 'expo';
 import { createStackNavigator } from 'react-navigation';
 import { NavigationActions } from 'react-navigation';
 
-import { DOMParser } from 'xmldom';
+import { DOMParser, XMLSerializer } from 'xmldom';
 
 //const ROOT = 'http://192.168.7.20:8080';
 //const ROOT = 'http://10.1.10.14:8080';
@@ -140,6 +141,60 @@ class HVTextInput extends React.Component {
 }
 
 
+function addHref(component, element, navigation) {
+  const href = element.getAttribute('href');
+  if (!href) {
+    return component;
+  }
+
+  const action = element.getAttribute('action') || 'push';
+  const trigger = element.getAttribute('trigger') || 'press';
+
+  const triggerPropNames = {
+    'press': 'onPress',
+    'longPress': 'onLongPress',
+    'pressIn': 'onPressIn',
+    'pressOut': 'onPressOut',
+  };
+
+  if (['press', 'longPress', 'pressIn', 'pressOut'].indexOf(trigger) >= 0) {
+    const props = {
+      // Component will use touchable opacity to trigger href.
+      activeOpacity: 0.5,
+    };
+    const triggerPropName = triggerPropNames[trigger];
+    // For now only navigate.
+    props[triggerPropName] = createNavHandler(element, navigation);
+
+    return React.createElement(
+      TouchableOpacity,
+      props,
+      component
+    );
+  } else if (trigger == 'visible') {
+    return React.createElement(
+      VisibilityDetectingView,
+      {
+        onVisible: () => {
+          const doc = element.ownerDocument;
+          const newElement = doc.createElement('text');
+          newElement.setAttribute('style', 'Item__Label')
+          const text = doc.createTextNode('hello!');
+          newElement.appendChild(text);
+          element.appendChild(newElement);
+          console.log('updated!');
+          const serializer = new XMLSerializer();
+          console.log(serializer.serializeToString(element));
+        }
+      },
+      component
+    );
+  }
+
+  return component;
+}
+
+
 /**
  * UTILITIES
  */
@@ -203,38 +258,38 @@ function createProps(element, stylesheet, animations) {
 /**
  *
  */
-function onPressProps(element, navigation) {
-  const props = {};
+function createNavHandler(element, navigation) {
+  let navHandler = null;
   const href = element.getAttribute('href');
-  const target = element.getAttribute('target');
+  const action = element.getAttribute('action');
   const preload = element.getAttribute('targetPreload');
 
   if (!href) {
-    return props;
+    return navHandler;
   }
 
   let navFunction = navigation.push;
   let navRoute = 'Stack';
   let key = null;
 
-  if (target == 'push') {
+  if (action == 'push') {
     // push a new screen on the stack
     navFunction = navigation.push;
-  } else if (target == 'replace') {
+  } else if (action == 'replace') {
     // replace current screen
     navFunction = navigation.replace;
-  } else if (target == 'navigate') {
+  } else if (action == 'navigate') {
     // Return to the screen, if it exists
     navFunction = navigation.navigate;
     key = ROUTE_KEYS[getHrefKey(href)];
-  } else if (target == 'modal') {
+  } else if (action == 'modal') {
     navRoute = 'Modal';
   }
 
-  if (target == 'back') {
-    props['onPress'] = () => navigation.goBack();
+  if (action == 'back') {
+    navHandler = () => navigation.goBack();
   } else {
-    props['onPress'] = () => {
+    navHandler = () => {
       console.log('navigating to ', key, 'href: ', href, 'preload: ', preload);
       let preloadScreen = null;
       if (preload) {
@@ -254,7 +309,7 @@ function onPressProps(element, navigation) {
     }
   }
 
-  return props;
+  return navHandler;
 }
 
 /**
@@ -277,21 +332,6 @@ function body(element, navigation, stylesheet, animations) {
 
   return React.createElement(
     component,
-    props,
-    ...renderChildren(element, navigation, stylesheet, animations)
-  );
-}
-
-/**
- *
- */
-function button(element, navigation, stylesheet, animations) {
-  const props = Object.assign(
-    createProps(element, stylesheet, animations),
-    onPressProps(element, navigation)
-  );
-  return React.createElement(
-    Button,
     props,
     ...renderChildren(element, navigation, stylesheet, animations)
   );
@@ -386,21 +426,7 @@ function view(element, navigation, stylesheet, animations) {
     props,
     ...renderChildren(element, navigation, stylesheet, animations)
   );
-  
-  if (element.getAttribute('href')) {
-    const pressProps = Object.assign(
-      onPressProps(element, navigation),
-      { activeOpacity: 0.5 },
-    );
-
-    component = React.createElement(
-      TouchableOpacity,
-      pressProps,
-      component
-    );
-  }
-
-  return component;
+  return addHref(component, element, navigation);
 }
 
 /**
@@ -424,18 +450,7 @@ function text(element, navigation, stylesheet, animations) {
     ...renderChildren(element, navigation, stylesheet, animations)
   );
 
-  if (element.getAttribute('href')) {
-    const pressProps = Object.assign(
-      onPressProps(element, navigation),
-      { activeOpacity: 0.5 },
-    );
-    component = React.createElement(
-      TouchableOpacity,
-      pressProps,
-      component
-    );
-  }
-  return component;
+  return addHref(component, element, navigation);
 }
 
 /**
@@ -482,8 +497,6 @@ function renderElement(element, navigation, stylesheet, animations) {
   switch (element.tagName) {
     case 'body':
       return body(element, navigation, stylesheet, animations); 
-    case 'button':
-      return button(element, navigation, stylesheet, animations); 
     case 'image':
       return image(element, navigation, stylesheet, animations); 
     case 'input':
@@ -494,11 +507,10 @@ function renderElement(element, navigation, stylesheet, animations) {
     case 'help':
       return text(element, navigation, stylesheet, animations); 
     case 'view':
+    case 'header':
       return view(element, navigation, stylesheet, animations); 
     case 'list':
       return list(element, navigation, stylesheet, animations); 
-    case 'header':
-      return view(element, navigation, stylesheet, animations); 
     case 'map':
       return map(element, navigation, stylesheet, animations); 
     case 'map-marker':
@@ -781,6 +793,8 @@ const MainStack = createStackNavigator(
     initialRouteName: 'Stack',
     initialRouteParams: {
       //href: '/dashboard/gigs',
+      //href: '/list/infinite_scroll.xml',
+      //href: '/list/index.xml',
       href: '/index.xml',
     }
   }

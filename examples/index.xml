@@ -27,6 +27,15 @@
     backgroundColor="white"
     flex="1"
   />
+  <rule id="Description"
+    fontFamily="HKGrotesk-SemiBold"
+    fontSize="16"
+    margin="24"
+    padding="16"
+    borderWidth="2"
+    borderColor="red"
+    borderRadius="4"
+  />
   <rule id="Item"
     borderBottomWidth="1"
     borderBottomColor="#eee"
@@ -54,6 +63,13 @@
 </header>
 
 <body style="Body" scroll="true">
+  <text
+    style="Description"
+    href="/list/_infinite_scroll_page2.xml"
+    target="replace"
+  >
+    Tap to replace...
+  </text>
   <list>
     <item key="layout" style="Item">
       <text style="Item__Label">Layout</text>
@@ -75,7 +91,7 @@
       <text style="Item__Chevron">></text>
     </item>
 
-    <item key="list" style="Item" href="/list/index.xml">
+    <item key="list" style="Item" href="/list/index.xml" trigger="press">
       <text style="Item__Label">List</text>
       <text style="Item__Chevron">></text>
     </item>
@@ -85,12 +101,12 @@
       <text style="Item__Chevron">></text>
     </item>
 
-    <item key="element-replacement" style="Item">
+    <item key="dynamic-elements" style="Item">
       <text style="Item__Label">Dynamic Elements</text>
       <text style="Item__Chevron">></text>
     </item>
 
-    <item key="element-replacement" style="Item">
+    <item key="forms" style="Item">
       <text style="Item__Label">Forms</text>
       <text style="Item__Chevron">></text>
     </item>
