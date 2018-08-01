@@ -1,0 +1,121 @@
+<doc>
+
+<styles>
+  <rule id="Header"
+    height="72"
+    alignItems="center"
+    backgroundColor="white"
+    borderBottomWidth="1"
+    borderBottomColor="#eee"
+    paddingTop="24"
+    paddingLeft="24"
+    paddingRight="24"
+    flexDirection="row"
+  />
+  <rule id="Header__Back"
+    color="blue"
+    fontFamily="HKGrotesk-SemiBold"
+    fontSize="16"
+    paddingRight="16"
+  />
+  <rule id="Header__Title"
+    fontFamily="HKGrotesk-SemiBold"
+    fontSize="24"
+    color="black"
+  />
+  <rule id="Body"
+    backgroundColor="white"
+    flex="1"
+  />
+  <rule id="Description"
+    fontFamily="HKGrotesk-Regular"
+    fontSize="16"
+    margin="24"
+    marginBottom="0"
+  />
+  <rule id="Item"
+    borderBottomWidth="1"
+    borderBottomColor="#eee"
+    height="48"
+    flex="1"
+    flexDirection="row"
+    alignItems="center"
+    justifyContent="space-between"
+    paddingLeft="24"
+    paddingRight="24"
+  />
+  <rule id="Item__Label"
+    fontSize="18"
+    fontFamily="HKGrotesk-Regular"
+  />
+  <rule id="Item__Chevron"
+    fontSize="18"
+    fontFamily="HKGrotesk-Bold"
+  />
+
+  <rule id="Button"
+    padding="24"
+    backgroundColor="#63CB76"
+    borderRadius="16"
+    margin="24"
+    flex="1"
+    flexDirection="row"
+    justifyContent="center"
+  />
+  <rule id="Button__Label"
+    color="white"
+    fontFamily="HKGrotesk-Bold"
+    fontSize="24"
+  />
+
+  <rule id="BorderButton"
+    padding="8"
+    borderColor="#63CB76"
+    borderRadius="16"
+    borderWidth="4"
+    flex="1"
+    flexDirection="row"
+    justifyContent="center"
+    margin="8"
+  />
+  <rule id="BorderButton--Root"
+    margin="24"
+  />
+  <rule id="BorderButton__Label"
+    color="#222"
+    fontFamily="HKGrotesk-Bold"
+    fontSize="24"
+  />
+
+  <rule id="ButtonWrapper"
+    flex="1"
+    alignItems="center"
+  />
+</styles>
+
+<screen>
+<header style="Header">
+  <text style="Header__Back" href="/dynamic_elements/index.xml" action="back">Back</text>
+  <text style="Header__Title">Replace Inner</text>
+</header>
+
+<body style="Body" scroll="true">
+  <text style="Description">
+    Tapping the button below will request an XML fragment and replace the children of the element with the response.
+  </text>
+
+  <view style="Button" href="/dynamic_elements/_replace_inner_fragment.xml" action="replace-inner">
+    <text style="Button__Label">Press me</text>
+  </view>
+
+  <text style="Description">
+    In this example, the replaced element also has a replace-inner action, allowing for a nested interaction.
+  </text>
+
+  <view style="BorderButton" href="/dynamic_elements/_replace_inner_fragment2.xml" action="replace-inner">
+    <text style="BorderButton__Label">Press me</text>
+  </view>
+</body>
+</screen>
+
+</doc>
