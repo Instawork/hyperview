@@ -183,6 +183,9 @@ class HyperRef extends React.Component {
             let newElement = null;
             if (action == 'replace') {
               newElement = doc.documentElement;
+            } else if (action == 'replace-inner') {
+              newElement = element.cloneNode(false);
+              newElement.appendChild(doc.documentElement);
             } else if (action == 'append') {
               newElement = element.cloneNode(true);
               newElement.appendChild(doc.documentElement);

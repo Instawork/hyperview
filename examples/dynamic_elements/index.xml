@@ -71,7 +71,7 @@
       <text style="Item__Chevron">></text>
     </item>
 
-    <item key="replace_inner" style="Item" href="/dynamic_elements/replace.xml">
+    <item key="replace_inner" style="Item" href="/dynamic_elements/replace_inner.xml">
       <text style="Item__Label">Replace Inner</text>
       <text style="Item__Chevron">></text>
     </item>
