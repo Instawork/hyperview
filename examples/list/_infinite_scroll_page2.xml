@@ -1,8 +1,9 @@
-  <text
-    style="Description"
-    href="/list/index.xml"
-    target="push"
-  >
-    Something got replaced!
-    Now you can press to navigate
-  </text>
+<text
+  style="Description"
+  href="/list/index.xml"
+  target="push"
+  indicator="saveState"
+>
+  Something got replaced!
+  Now you can press to navigate
+</text>

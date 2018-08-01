@@ -144,9 +144,8 @@
 
     <item key="20" style="Item"
       trigger="visible"
-      action="replace-inner"
-      href="/list/_infinite_scroll_page2.xml"
-      target="myList"
+      href="/index.xml"
+      action="push"
     >
       <text style="Item__Label">List 20</text>
     </item>

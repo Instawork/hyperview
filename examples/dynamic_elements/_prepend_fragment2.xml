@@ -1,0 +1,4 @@
+<view style="Tree" href="/dynamic_elements/_prepend_fragment3.xml" action="prepend">
+    <text style="Tree__Label">a) dolor</text>
+    <text style="Tree__Label">b) sit</text>
+</view>

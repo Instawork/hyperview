@@ -22,8 +22,8 @@ import { NavigationActions } from 'react-navigation';
 import { DOMParser, XMLSerializer } from 'xmldom';
 
 //const ROOT = 'http://192.168.7.20:8080';
-//const ROOT = 'http://10.1.10.14:8080';
-const ROOT = 'http://127.0.0.1:8080';
+const ROOT = 'http://10.1.10.14:8080';
+//const ROOT = 'http://127.0.0.1:8080';
 
 
 const ROUTE_KEYS = {
@@ -69,7 +69,7 @@ class HVFlatList extends React.Component {
         return item.getAttribute('key');
       },
       renderItem: ({ item }) => {
-        return view(item, navigation, stylesheet, animations);
+        return renderElement(item, navigation, stylesheet, animations);
       },
     };
 
@@ -141,57 +141,121 @@ class HVTextInput extends React.Component {
 }
 
 
-function addHref(component, element, navigation) {
+class HyperRef extends React.Component {
+  constructor(props) {
+    super(props);
+    const { element } = props;
+    this.state = {
+      element
+    };
+
+    this.parser = new DOMParser();
+
+    this.triggerPropNames = {
+      'press': 'onPress',
+      'longPress': 'onLongPress',
+      'pressIn': 'onPressIn',
+      'pressOut': 'onPressOut',
+    };
+
+    this.pressTriggers = ['press', 'longPress', 'pressIn', 'pressOut'];
+    this.navActions = ['push', 'new', 'back', 'navigate'];
+    this.updateActions = ['replace', 'replace-inner', 'append', 'prepend'];
+  }
+
+  createActionHandler(element, navigation) {
+    const action = element.getAttribute('action') || 'push';
+
+    if (this.navActions.indexOf(action) >= 0) {
+      return createNavHandler(element, navigation);
+    }
+
+    if (this.updateActions.indexOf(action) >= 0) {
+      return() => {
+        const path = element.getAttribute('href');
+        const url = ROOT + path;
+        fetch(url)
+          .then((response) => response.text())
+          .then((responseText) => {
+            const doc = this.parser.parseFromString(responseText);
+            const serializer = new XMLSerializer();
+
+            let newElement = null;
+            if (action == 'replace') {
+              newElement = doc.documentElement;
+            } else if (action == 'append') {
+              newElement = element.cloneNode(true);
+              newElement.appendChild(doc.documentElement);
+            } else if (action == 'prepend') {
+              newElement = element.cloneNode(true);
+              // If no children, append. Otherwise, insert before first child.
+              if (newElement.hasChildNodes()) {
+                newElement.insertBefore(doc.documentElement, newElement.firstChild)
+              } else {
+                newElement.appendChild(doc.documentElement);
+              }
+            }
+
+            this.setState({
+              element: newElement,
+            });
+          });
+      }
+    }
+  }
+
+  render() {
+    const { element } = this.state;
+    const { navigation, stylesheet, animations } = this.props;
+
+    const href = element.getAttribute('href');
+    if (!href) {
+      return renderElement(element, navigation, stylesheet, animations, {skipHref: true});
+    }
+
+    const trigger = element.getAttribute('trigger') || 'press';
+
+    // Render pressable element
+    if (this.pressTriggers.indexOf(trigger) >= 0) {
+      const props = {
+        // Component will use touchable opacity to trigger href.
+        activeOpacity: 0.5,
+      };
+      const triggerPropName = this.triggerPropNames[trigger];
+      // For now only navigate.
+      props[triggerPropName] = this.createActionHandler(element, navigation);
+
+      return React.createElement(
+        TouchableOpacity,
+        props,
+        renderElement(element, navigation, stylesheet, animations, {skipHref: true}),
+      );
+    }
+
+    if (trigger == 'visible') {
+      return React.createElement(
+        VisibilityDetectingView,
+        {
+          onVisible: this.createActionHandler(element, navigation),
+        },
+        ...renderChildren(element, navigation, stylesheet, animations)
+      );
+    }
+  }
+}
+
+
+function addHref(component, element, navigation, stylesheet, animations ) {
   const href = element.getAttribute('href');
   if (!href) {
     return component;
   }
 
-  const action = element.getAttribute('action') || 'push';
-  const trigger = element.getAttribute('trigger') || 'press';
-
-  const triggerPropNames = {
-    'press': 'onPress',
-    'longPress': 'onLongPress',
-    'pressIn': 'onPressIn',
-    'pressOut': 'onPressOut',
-  };
-
-  if (['press', 'longPress', 'pressIn', 'pressOut'].indexOf(trigger) >= 0) {
-    const props = {
-      // Component will use touchable opacity to trigger href.
-      activeOpacity: 0.5,
-    };
-    const triggerPropName = triggerPropNames[trigger];
-    // For now only navigate.
-    props[triggerPropName] = createNavHandler(element, navigation);
-
-    return React.createElement(
-      TouchableOpacity,
-      props,
-      component
-    );
-  } else if (trigger == 'visible') {
-    return React.createElement(
-      VisibilityDetectingView,
-      {
-        onVisible: () => {
-          const doc = element.ownerDocument;
-          const newElement = doc.createElement('text');
-          newElement.setAttribute('style', 'Item__Label')
-          const text = doc.createTextNode('hello!');
-          newElement.appendChild(text);
-          element.appendChild(newElement);
-          console.log('updated!');
-          const serializer = new XMLSerializer();
-          console.log(serializer.serializeToString(element));
-        }
-      },
-      component
-    );
-  }
-
-  return component;
+  return React.createElement(
+    HyperRef,
+    { element, navigation, stylesheet, animations },
+    ...renderChildren(element, navigation, stylesheet, animations)
+  );
 }
 
 
@@ -419,14 +483,15 @@ function mapMarker(element, navigation, stylesheet) {
 /**
  *
  */
-function view(element, navigation, stylesheet, animations) {
+function view(element, navigation, stylesheet, animations, options) {
+  const { skipHref } = options || {};
   const props = createProps(element, stylesheet, animations);
   let component = React.createElement(
     props.animations ? Animated.View : View,
     props,
     ...renderChildren(element, navigation, stylesheet, animations)
   );
-  return addHref(component, element, navigation);
+  return skipHref ? component : addHref(component, element, navigation, stylesheet, animations);
 }
 
 /**
@@ -442,7 +507,8 @@ function list(element, navigation, stylesheet, animations) {
 /**
  *
  */
-function text(element, navigation, stylesheet, animations) {
+function text(element, navigation, stylesheet, animations, options) {
+  const { skipHref } = options || {};
   const props = createProps(element, stylesheet, animations);
   let component = React.createElement(
     props.animations? Animated.Text : Text,
@@ -450,7 +516,7 @@ function text(element, navigation, stylesheet, animations) {
     ...renderChildren(element, navigation, stylesheet, animations)
   );
 
-  return addHref(component, element, navigation);
+  return skipHref ? component : addHref(component, element, navigation, stylesheet, animations);
 }
 
 /**
@@ -493,7 +559,7 @@ function renderChildren(element, navigation, stylesheet, animations) {
 /**
  *
  */
-function renderElement(element, navigation, stylesheet, animations) {
+function renderElement(element, navigation, stylesheet, animations, options) {
   switch (element.tagName) {
     case 'body':
       return body(element, navigation, stylesheet, animations); 
@@ -505,10 +571,11 @@ function renderElement(element, navigation, stylesheet, animations) {
     case 'text':
     case 'label':
     case 'help':
-      return text(element, navigation, stylesheet, animations); 
+      return text(element, navigation, stylesheet, animations, options, options); 
     case 'view':
     case 'header':
-      return view(element, navigation, stylesheet, animations); 
+    case 'item':
+      return view(element, navigation, stylesheet, animations, options, options); 
     case 'list':
       return list(element, navigation, stylesheet, animations); 
     case 'map':

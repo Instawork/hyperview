@@ -1,0 +1,5 @@
+<view style="Tree" href="/dynamic_elements/_append_fragment2.xml" action="append">
+    <text style="Tree__Label">i) amet</text>
+    <text style="Tree__Label">ii) consectetur</text>
+    <text style="Tree__Label">iii) adipiscing</text>
+</view>

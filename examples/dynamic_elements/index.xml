@@ -59,51 +59,33 @@
 
 <screen>
 <header style="Header">
-  <text style="Header__Title">Hyperview Examples</text>
+  <text style="Header__Back" href="/list/index.xml" action="back">Back</text>
+  <text style="Header__Title">Dynamic Elements</text>
 </header>
 
 <body style="Body" scroll="true">
-
   <list>
-    <item key="layout" style="Item">
-      <text style="Item__Label">UI Elements</text>
+
+    <item key="replace" style="Item" href="/dynamic_elements/replace.xml">
+      <text style="Item__Label">Replace</text>
       <text style="Item__Chevron">></text>
     </item>
 
-    <item key="styling" style="Item">
-      <text style="Item__Label">Styling</text>
+    <item key="replace_inner" style="Item" href="/dynamic_elements/replace.xml">
+      <text style="Item__Label">Replace Inner</text>
       <text style="Item__Chevron">></text>
     </item>
 
-    <item key="animation" style="Item">
-      <text style="Item__Label">Animation</text>
+    <item key="append" style="Item" href="/dynamic_elements/append.xml">
+      <text style="Item__Label">Append</text>
       <text style="Item__Chevron">></text>
     </item>
 
-    <item key="navigation" style="Item">
-      <text style="Item__Label">Navigation</text>
+    <item key="prepend" style="Item" href="/dynamic_elements/prepend.xml">
+      <text style="Item__Label">Prepend</text>
       <text style="Item__Chevron">></text>
     </item>
 
-    <item key="dynamic-elements" style="Item" href="/dynamic_elements/index.xml">
-      <text style="Item__Label">Dynamic Elements</text>
-      <text style="Item__Chevron">></text>
-    </item>
-
-    <item key="list" style="Item" href="/list/index.xml">
-      <text style="Item__Label">List</text>
-      <text style="Item__Chevron">></text>
-    </item>
-
-    <item key="sectionlist" style="Item">
-      <text style="Item__Label">Section List</text>
-      <text style="Item__Chevron">></text>
-    </item>
-
-    <item key="forms" style="Item">
-      <text style="Item__Label">Forms</text>
-      <text style="Item__Chevron">></text>
-    </item>
   </list>
 </body>
 </screen>
