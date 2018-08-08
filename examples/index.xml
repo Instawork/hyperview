@@ -47,9 +47,23 @@
     paddingLeft="24"
     paddingRight="24"
   />
+  <rule id="Item__Left"
+    flex="1"
+    flexDirection="row"
+  />
   <rule id="Item__Label"
     fontSize="18"
     fontFamily="HKGrotesk-Regular"
+  />
+  <rule id="Item__Label--WIP"
+    backgroundColor="#FBB90E"
+    color="white"
+    paddingLeft="4"
+    paddingRight="4"
+    fontFamily="HKGrotesk-Bold"
+    fontSize="12"
+    lineHeight="24"
+    marginLeft="8"
   />
   <rule id="Item__Chevron"
     fontSize="18"
@@ -66,22 +80,34 @@
 
   <list>
     <item key="layout" style="Item">
-      <text style="Item__Label">UI Elements</text>
+      <view style="Item__Left">
+        <text style="Item__Label">UI Elements</text>
+        <text style="Item__Label,Item__Label--WIP">TODO</text>
+      </view>
       <text style="Item__Chevron">></text>
     </item>
 
     <item key="styling" style="Item">
-      <text style="Item__Label">Styling</text>
+      <view style="Item__Left">
+        <text style="Item__Label">Styling</text>
+        <text style="Item__Label,Item__Label--WIP">TODO</text>
+      </view>
       <text style="Item__Chevron">></text>
     </item>
 
     <item key="animation" style="Item">
-      <text style="Item__Label">Animation</text>
+      <view style="Item__Left">
+        <text style="Item__Label">Animation</text>
+        <text style="Item__Label,Item__Label--WIP">TODO</text>
+      </view>
       <text style="Item__Chevron">></text>
     </item>
 
     <item key="navigation" style="Item">
-      <text style="Item__Label">Navigation</text>
+      <view style="Item__Left">
+        <text style="Item__Label">Navigation</text>
+        <text style="Item__Label,Item__Label--WIP">TODO</text>
+      </view>
       <text style="Item__Chevron">></text>
     </item>
 
@@ -95,13 +121,18 @@
       <text style="Item__Chevron">></text>
     </item>
 
-    <item key="sectionlist" style="Item">
-      <text style="Item__Label">Section List</text>
+    <item key="sectionlist" style="Item" href="/sectionlist/index.xml">
+      <view style="Item__Left">
+        <text style="Item__Label">Section List</text>
+      </view>
       <text style="Item__Chevron">></text>
     </item>
 
     <item key="forms" style="Item">
-      <text style="Item__Label">Forms</text>
+      <view style="Item__Left">
+        <text style="Item__Label">Forms</text>
+        <text style="Item__Label,Item__Label--WIP">TODO</text>
+      </view>
       <text style="Item__Chevron">></text>
     </item>
   </list>

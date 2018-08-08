@@ -1,0 +1,112 @@
+<doc>
+
+<styles>
+  <rule id="Header"
+    height="72"
+    alignItems="center"
+    backgroundColor="white"
+    borderBottomWidth="1"
+    borderBottomColor="#eee"
+    paddingTop="24"
+    paddingLeft="24"
+    paddingRight="24"
+    flexDirection="row"
+  />
+  <rule id="Header__Back"
+    color="blue"
+    fontFamily="HKGrotesk-SemiBold"
+    fontSize="16"
+    paddingRight="16"
+  />
+  <rule id="Header__Title"
+    fontFamily="HKGrotesk-SemiBold"
+    fontSize="24"
+    color="black"
+  />
+  <rule id="Body"
+    backgroundColor="white"
+    flex="1"
+  />
+  <rule id="Description"
+    fontFamily="HKGrotesk-SemiBold"
+    fontSize="16"
+    margin="24"
+    padding="16"
+    borderWidth="2"
+    borderColor="red"
+    borderRadius="4"
+  />
+
+  <rule id="List__Header"
+    backgroundColor="#eee"
+    paddingLeft="24"
+    paddingRight="24"
+    height="48"
+    flex="1"
+    flexDirection="row"
+    alignItems="center"
+  />
+  <rule id="List__HeaderText"
+    fontSize="18"
+    fontFamily="HKGrotesk-Bold"
+  />
+
+  <rule id="Item"
+    borderBottomWidth="1"
+    borderBottomColor="#eee"
+    height="48"
+    flex="1"
+    flexDirection="row"
+    alignItems="center"
+    justifyContent="space-between"
+    paddingLeft="24"
+    paddingRight="24"
+  />
+  <rule id="Item__Label"
+    fontSize="18"
+    fontFamily="HKGrotesk-Regular"
+  />
+  <rule id="Item__Label--Special"
+    color="red"
+  />
+  <rule id="Item__Chevron"
+    fontSize="18"
+    fontFamily="HKGrotesk-Bold"
+  />
+</styles>
+
+<screen>
+<header style="Header">
+  <text style="Header__Back" href="/list/index.xml" action="back">Back</text>
+  <text style="Header__Title">Section List with Refresh</text>
+</header>
+
+<body style="Body">
+  <text style="Description">Try multiple pull-to-refresh gestures on the section list below.</text>
+  <sectionlist
+    trigger="refresh"
+    action="replace"
+    href="/sectionlist/_refresh_load.xml"
+  >
+    <section>
+      <sectiontitle style="List__Header">
+        <text style="List__HeaderText">Section 1</text>
+      </sectiontitle>
+
+      <item key="1" style="Item">
+        <text style="Item__Label">List 1</text>
+      </item>
+
+      <item key="2" style="Item">
+        <text style="Item__Label">List 2</text>
+      </item>
+
+      <item key="3" style="Item">
+        <text style="Item__Label">List 3</text>
+      </item>
+    </section>
+  </sectionlist>
+</body>
+</screen>
+
+</doc>

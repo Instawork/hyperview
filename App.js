@@ -4,6 +4,7 @@ import {
   Button,
   Easing,
   FlatList,
+  SectionList,
   Image,
   RefreshControl,
   ScrollView,
@@ -22,8 +23,8 @@ import { NavigationActions } from 'react-navigation';
 import { DOMParser, XMLSerializer } from 'xmldom';
 
 //const ROOT = 'http://192.168.7.20:8080';
-const ROOT = 'http://10.1.10.14:8080';
-//const ROOT = 'http://127.0.0.1:8080';
+//const ROOT = 'http://10.1.10.14:8080';
+const ROOT = 'http://127.0.0.1:8080';
 
 
 const ROUTE_KEYS = {
@@ -83,6 +84,88 @@ class HVFlatList extends React.Component {
 
     return React.createElement(
       FlatList,
+      Object.assign(listProps, refreshProps),
+    );
+  }
+}
+
+
+/**
+ * STATEFUL COMPONENTS
+ */
+class HVSectionList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.parser = new DOMParser();
+    this.state = {
+      refreshing: false,
+      element: props.element,
+    };
+  }
+
+  refresh() {
+    console.log('REFRESHING!');
+    const element = this.state.element;
+    this.setState({refreshing: true});
+    const path = element.getAttribute('href');
+    const url = ROOT + path;
+    fetch(url)
+      .then((response) => response.text())
+      .then((responseText) => {
+        const doc = this.parser.parseFromString(responseText);
+        this.setState({refreshing: false, element: doc.documentElement});
+      });
+  }
+
+  render() {
+    const { element, refreshing } = this.state;
+    const { navigation, stylesheet, animations } = this.props;
+    const styleAttr = element.getAttribute('style');
+    const style = styleAttr ? styleAttr.split(',').map((s) => stylesheet[s]) : null;
+
+    const sectionElements = element.getElementsByTagName('section');
+    const sections = [];
+
+    for (let i = 0; i < sectionElements.length; ++i) {
+      const sectionElement = sectionElements.item(i);
+      const itemElements = sectionElement.getElementsByTagName('item');
+      const items = [];
+      for (let j = 0; j < itemElements.length; ++j) {
+        const itemElement = itemElements.item(j);
+        items.push(itemElement);
+      }
+      const titleElement = sectionElement.getElementsByTagName('sectiontitle').item(0);
+      sections.push({
+        title: titleElement,
+        data: items,
+      });
+    }
+
+    const listProps = {
+      style,
+      sections,
+      keyExtractor: (item, index) => {
+        return item.getAttribute('key');
+      },
+      renderItem: ({ item, index, section }) => {
+        return renderElement(item, navigation, stylesheet, animations);
+      },
+      renderSectionHeader: ({section: { title }}) => {
+        return renderElement(title, navigation, stylesheet, animations);
+      },
+    };
+
+    let refreshProps = {};
+    if (element.getAttribute('trigger') === 'refresh') {
+      console.log('REFRESH SECTIONLIST');
+      refreshProps = {
+        onRefresh: () => { this.refresh() },
+        refreshing,
+      };
+    }
+
+    return React.createElement(
+      SectionList,
       Object.assign(listProps, refreshProps),
     );
   }
@@ -178,7 +261,6 @@ class HyperRef extends React.Component {
           .then((response) => response.text())
           .then((responseText) => {
             const doc = this.parser.parseFromString(responseText);
-            const serializer = new XMLSerializer();
 
             let newElement = null;
             if (action == 'replace') {
@@ -510,6 +592,16 @@ function list(element, navigation, stylesheet, animations) {
 /**
  *
  */
+function sectionlist(element, navigation, stylesheet, animations) {
+  return React.createElement(
+    HVSectionList,
+    { element, navigation, stylesheet, animations },
+  );
+}
+
+/**
+ *
+ */
 function text(element, navigation, stylesheet, animations, options) {
   const { skipHref } = options || {};
   const props = createProps(element, stylesheet, animations);
@@ -578,9 +670,12 @@ function renderElement(element, navigation, stylesheet, animations, options) {
     case 'view':
     case 'header':
     case 'item':
+    case 'sectiontitle':
       return view(element, navigation, stylesheet, animations, options, options); 
     case 'list':
       return list(element, navigation, stylesheet, animations); 
+    case 'sectionlist':
+      return sectionlist(element, navigation, stylesheet, animations); 
     case 'map':
       return map(element, navigation, stylesheet, animations); 
     case 'map-marker':
