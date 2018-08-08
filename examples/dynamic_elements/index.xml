@@ -86,11 +86,25 @@
       <text style="Item__Chevron">></text>
     </item>
 
-    <item key="long_press" style="Item" href="/dynamic_elements/long_press.xml">
-      <text style="Item__Label">Long press</text>
+    <item key="press" style="Item" href="/dynamic_elements/press.xml">
+      <text style="Item__Label">Trigger: Press</text>
       <text style="Item__Chevron">></text>
     </item>
 
+    <item key="long_press" style="Item" href="/dynamic_elements/long_press.xml">
+      <text style="Item__Label">Trigger: Long press</text>
+      <text style="Item__Chevron">></text>
+    </item>
+
+    <item key="press_in" style="Item" href="/dynamic_elements/press_in.xml">
+      <text style="Item__Label">Trigger: Press In</text>
+      <text style="Item__Chevron">></text>
+    </item>
+
+    <item key="press_out" style="Item" href="/dynamic_elements/press_out.xml">
+      <text style="Item__Label">Trigger: Press Out</text>
+      <text style="Item__Chevron">></text>
+    </item>
   </list>
 </body>
 </screen>

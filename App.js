@@ -23,8 +23,8 @@ import { NavigationActions } from 'react-navigation';
 import { DOMParser, XMLSerializer } from 'xmldom';
 
 //const ROOT = 'http://192.168.7.20:8080';
-//const ROOT = 'http://10.1.10.14:8080';
-const ROOT = 'http://127.0.0.1:8080';
+const ROOT = 'http://10.1.10.14:8080';
+//const ROOT = 'http://127.0.0.1:8080';
 
 
 const ROUTE_KEYS = {
@@ -49,7 +49,7 @@ class HVFlatList extends React.Component {
     this.setState({refreshing: true});
     const path = element.getAttribute('href');
     const url = ROOT + path;
-    fetch(url)
+    fetch(url, {headers: {'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache', 'Expires': 0}})
       .then((response) => response.text())
       .then((responseText) => {
         const doc = this.parser.parseFromString(responseText);
@@ -109,7 +109,7 @@ class HVSectionList extends React.Component {
     this.setState({refreshing: true});
     const path = element.getAttribute('href');
     const url = ROOT + path;
-    fetch(url)
+    fetch(url, {headers: {'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache', 'Expires': 0}})
       .then((response) => response.text())
       .then((responseText) => {
         const doc = this.parser.parseFromString(responseText);
@@ -257,7 +257,7 @@ class HyperRef extends React.Component {
       return() => {
         const path = element.getAttribute('href');
         const url = ROOT + path;
-        fetch(url)
+        fetch(url, {headers: {'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache', 'Expires': 0}})
           .then((response) => response.text())
           .then((responseText) => {
             const doc = this.parser.parseFromString(responseText);
@@ -917,7 +917,7 @@ class HyperView extends React.Component {
   load() {
     const path = this.state.path;
     const url = ROOT + path;
-    fetch(url)
+    fetch(url, {headers: {'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache', 'Expires': 0}})
       .then((response) => response.text())
       .then((responseText) => {
         const doc = this.parser.parseFromString(responseText);

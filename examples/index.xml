@@ -119,10 +119,9 @@
       <text style="Item__Chevron">></text>
     </item>
 
-    <item key="styling" style="Item">
+    <item key="styling" style="Item" href="/styling/index.xml">
       <view style="Item__Left">
         <text style="Item__Label">Styling</text>
-        <text style="Item__Label,Item__Label--WIP">TODO</text>
       </view>
       <text style="Item__Chevron">></text>
     </item>

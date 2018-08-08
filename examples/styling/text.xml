@@ -1,0 +1,118 @@
+<doc>
+
+<styles>
+  <rule id="Header"
+    height="72"
+    alignItems="center"
+    backgroundColor="white"
+    borderBottomWidth="1"
+    borderBottomColor="#eee"
+    paddingTop="24"
+    paddingLeft="24"
+    paddingRight="24"
+    flexDirection="row"
+  />
+  <rule id="Header__Back"
+    color="blue"
+    fontFamily="HKGrotesk-SemiBold"
+    fontSize="16"
+    paddingRight="16"
+  />
+  <rule id="Header__Title"
+    fontFamily="HKGrotesk-SemiBold"
+    fontSize="24"
+    color="black"
+  />
+  <rule id="Body"
+    backgroundColor="white"
+    flex="1"
+  />
+  <rule id="Description"
+    fontFamily="HKGrotesk-SemiBold"
+    fontSize="16"
+    margin="24"
+    padding="16"
+    borderWidth="2"
+    borderColor="red"
+    borderRadius="4"
+  />
+  <rule id="Item"
+    borderBottomWidth="1"
+    borderBottomColor="#eee"
+    height="48"
+    flex="1"
+    flexDirection="row"
+    alignItems="center"
+    justifyContent="space-between"
+    paddingLeft="24"
+    paddingRight="24"
+  />
+  <rule id="Item__Label"
+    fontSize="18"
+    fontFamily="HKGrotesk-Regular"
+  />
+  <rule id="Item__Chevron"
+    fontSize="18"
+    fontFamily="HKGrotesk-Bold"
+  />
+
+  <rule id="Text"
+    fontFamily="HKGrotesk-Regular"
+    marginTop="8"
+    marginBottom="8"
+    marginLeft="24"
+    marginRight="24"
+  />
+  <rule id="Text--Small"
+    fontSize="8"
+  />
+  <rule id="Text--Medium"
+    fontSize="32"
+  />
+  <rule id="Text--Large"
+    fontSize="72"
+  />
+  <rule id="Text--LightWeight"
+    fontFamily="HKGrotesk-Light"
+  />
+  <rule id="Text--RegularWeight"
+    fontFamily="HKGrotesk-Regular"
+  />
+  <rule id="Text--MediumWeight"
+    fontFamily="HKGrotesk-Medium"
+  />
+  <rule id="Text--SemiBoldWeight"
+    fontFamily="HKGrotesk-SemiBold"
+  />
+  <rule id="Text--BoldWeight"
+    fontFamily="HKGrotesk-Bold"
+  />
+
+  <rule id="Text--Green"
+    color="#63CB76"
+  />
+
+</styles>
+
+<screen>
+<header style="Header">
+  <text style="Header__Back" href="/index.xml" action="back">Back</text>
+  <text style="Header__Title">Text Styling</text>
+</header>
+
+<body style="Body" scroll="true">
+  <text style="Text,Text--Small">Small</text>
+  <text style="Text,Text--Medium">Medium</text>
+  <text style="Text,Text--Large">Large</text>
+
+  <text style="Text,Text--Medium,Text--LightWeight">Light</text>
+  <text style="Text,Text--Medium,Text--RegularWeight">Regular</text>
+  <text style="Text,Text--Medium,Text--MediumWeight">Medium</text>
+  <text style="Text,Text--Medium,Text--SemiBoldWeight">Semi-Bold</text>
+  <text style="Text,Text--Medium,Text--BoldWeight">Bold</text>
+
+  <text style="Text,Text--Medium,Text--BoldWeight,Text--Green">Color</text>
+</body>
+</screen>
+
+</doc>

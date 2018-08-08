@@ -72,7 +72,7 @@
 <screen>
 <header style="Header">
   <text style="Header__Back" href="/dynamic_elements/index.xml" action="back">Back</text>
-  <text style="Header__Title">Replace</text>
+  <text style="Header__Title">Long Press</text>
 </header>
 
 <body style="Body" scroll="true">

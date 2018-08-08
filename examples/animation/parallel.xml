@@ -56,46 +56,53 @@
   <rule id="View"
     flex="1"
     padding="8"
-    margin="24"
+    marginLeft="24"
+    marginRight="24"
+    marginTop="8"
     backgroundColor="#63CB76"
     borderRadius="16"
-    height="40"
+    height="32"
   />
 </styles>
 
 <animated>
   <value id="example1" from="0" property="opacity" />
-  <value id="example2" from="-500" property="left" />
-  <value id="example3" from="0" property="width" />
+  <value id="example2" from="0" property="opacity" />
+  <value id="example3" from="0" property="opacity" />
 
-  <animation type="sequence" id="example1">
+  <value id="example4" from="0" property="opacity" />
+  <value id="example5" from="0" property="opacity" />
+  <value id="example6" from="0" property="opacity" />
+
+  <animation type="parallel" id="example1">
     <animation value="example1" to="1" duration="2000" />
+    <animation value="example2" to="1" duration="2000" />
+    <animation value="example3" to="1" duration="2000" />
   </animation>
 
-  <animation type="sequence" id="example2">
-    <animation value="example2" to="0" duration="2000" />
-  </animation>
-
-  <animation type="sequence" id="example3">
-    <animation value="example3" to="300" duration="2000" />
+  <animation type="parallel" id="example2">
+    <animation value="example4" to="1" duration="2000" delay="200" />
+    <animation value="example5" to="1" duration="2000" delay="400" />
+    <animation value="example6" to="1" duration="2000" delay="600" />
   </animation>
 </animated>
 
 <screen>
 <header style="Header">
   <text style="Header__Back" href="/index.xml" action="back">Back</text>
-  <text style="Header__Title">Timing</text>
+  <text style="Header__Title">Parallel</text>
 </header>
 
 <body style="Body" scroll="true">
-  <text style="Description">Animated Opacity</text>
+  <text style="Description">Parallel</text>
   <view style="View" animations="example1" animatedValues="example1"></view>
+  <view style="View" animations="example1" animatedValues="example2"></view>
+  <view style="View" animations="example1" animatedValues="example3"></view>
 
-  <text style="Description">Animated Position</text>
-  <view style="View" animations="example2" animatedValues="example2"></view>
-
-  <text style="Description">Animated Width</text>
-  <view style="View" animations="example3" animatedValues="example3"></view>
+  <text style="Description">Parallel With Delays</text>
+  <view style="View" animations="example2" animatedValues="example4"></view>
+  <view style="View" animations="example2" animatedValues="example5"></view>
+  <view style="View" animations="example2" animatedValues="example6"></view>
 </body>
 </screen>
 

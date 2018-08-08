@@ -28,10 +28,13 @@
     flex="1"
   />
   <rule id="Description"
-    fontFamily="HKGrotesk-Regular"
+    fontFamily="HKGrotesk-SemiBold"
     fontSize="16"
     margin="24"
-    marginBottom="0"
+    padding="16"
+    borderWidth="2"
+    borderColor="red"
+    borderRadius="4"
   />
   <rule id="Item"
     borderBottomWidth="1"
@@ -52,50 +55,26 @@
     fontSize="18"
     fontFamily="HKGrotesk-Bold"
   />
-
-  <rule id="View"
-    flex="1"
-    padding="8"
-    margin="24"
-    backgroundColor="#63CB76"
-    borderRadius="16"
-    height="40"
-  />
 </styles>
-
-<animated>
-  <value id="example1" from="0" property="opacity" />
-  <value id="example2" from="-500" property="left" />
-  <value id="example3" from="0" property="width" />
-
-  <animation type="sequence" id="example1">
-    <animation value="example1" to="1" duration="2000" />
-  </animation>
-
-  <animation type="sequence" id="example2">
-    <animation value="example2" to="0" duration="2000" />
-  </animation>
-
-  <animation type="sequence" id="example3">
-    <animation value="example3" to="300" duration="2000" />
-  </animation>
-</animated>
 
 <screen>
 <header style="Header">
   <text style="Header__Back" href="/index.xml" action="back">Back</text>
-  <text style="Header__Title">Timing</text>
+  <text style="Header__Title">Styling</text>
 </header>
 
 <body style="Body" scroll="true">
-  <text style="Description">Animated Opacity</text>
-  <view style="View" animations="example1" animatedValues="example1"></view>
+  <list>
+    <item key="timing" style="Item" href="/styling/flex.xml">
+      <text style="Item__Label">Flex Styling</text>
+      <text style="Item__Chevron">></text>
+    </item>
 
-  <text style="Description">Animated Position</text>
-  <view style="View" animations="example2" animatedValues="example2"></view>
-
-  <text style="Description">Animated Width</text>
-  <view style="View" animations="example3" animatedValues="example3"></view>
+    <item key="easing" style="Item" href="/styling/text.xml">
+      <text style="Item__Label">Text Styling</text>
+      <text style="Item__Chevron">></text>
+    </item>
+  </list>
 </body>
 </screen>
 

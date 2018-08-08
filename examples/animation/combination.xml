@@ -177,7 +177,7 @@
 <screen>
 <header style="Header">
   <text style="Header__Back" href="/index.xml" action="back">Back</text>
-  <text style="Header__Title">Animation</text>
+  <text style="Header__Title">Combination</text>
 </header>
 
 <body style="Body" scroll="true">
