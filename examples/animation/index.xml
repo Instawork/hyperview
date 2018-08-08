@@ -59,35 +59,40 @@
 
 <screen>
 <header style="Header">
-  <text style="Header__Back" href="/list/index.xml" action="back">Back</text>
-  <text style="Header__Title">Dynamic Elements</text>
+  <text style="Header__Back" href="/index.xml" action="back">Back</text>
+  <text style="Header__Title">Animation</text>
 </header>
 
 <body style="Body" scroll="true">
   <list>
 
-    <item key="replace" style="Item" href="/dynamic_elements/replace.xml">
-      <text style="Item__Label">Replace</text>
+    <item key="timing" style="Item" href="/animation/timing.xml">
+      <text style="Item__Label">Timing</text>
       <text style="Item__Chevron">></text>
     </item>
 
-    <item key="replace_inner" style="Item" href="/dynamic_elements/replace_inner.xml">
-      <text style="Item__Label">Replace Inner</text>
+    <item key="easing" style="Item" href="/animation/easing.xml">
+      <text style="Item__Label">Easing</text>
       <text style="Item__Chevron">></text>
     </item>
 
-    <item key="append" style="Item" href="/dynamic_elements/append.xml">
-      <text style="Item__Label">Append</text>
+    <item key="sequence" style="Item" href="/animation/sequence.xml">
+      <text style="Item__Label">Sequence</text>
       <text style="Item__Chevron">></text>
     </item>
 
-    <item key="prepend" style="Item" href="/dynamic_elements/prepend.xml">
-      <text style="Item__Label">Prepend</text>
+    <item key="parallel" style="Item" href="/animation/parallel.xml">
+      <text style="Item__Label">Parallel</text>
       <text style="Item__Chevron">></text>
     </item>
 
-    <item key="long_press" style="Item" href="/dynamic_elements/long_press.xml">
-      <text style="Item__Label">Long press</text>
+    <item key="delay" style="Item" href="/animation/delay.xml">
+      <text style="Item__Label">Delay</text>
+      <text style="Item__Chevron">></text>
+    </item>
+
+    <item key="combination" style="Item" href="/animation/combination.xml">
+      <text style="Item__Label">Combination</text>
       <text style="Item__Chevron">></text>
     </item>
 

@@ -79,40 +79,10 @@
 <body style="Body" scroll="true">
 
   <list>
-    <item key="layout" style="Item">
+    <item key="layout" style="Item" href="/ui_elements/index.xml">
       <view style="Item__Left">
         <text style="Item__Label">UI Elements</text>
-        <text style="Item__Label,Item__Label--WIP">TODO</text>
       </view>
-      <text style="Item__Chevron">></text>
-    </item>
-
-    <item key="styling" style="Item">
-      <view style="Item__Left">
-        <text style="Item__Label">Styling</text>
-        <text style="Item__Label,Item__Label--WIP">TODO</text>
-      </view>
-      <text style="Item__Chevron">></text>
-    </item>
-
-    <item key="animation" style="Item">
-      <view style="Item__Left">
-        <text style="Item__Label">Animation</text>
-        <text style="Item__Label,Item__Label--WIP">TODO</text>
-      </view>
-      <text style="Item__Chevron">></text>
-    </item>
-
-    <item key="navigation" style="Item">
-      <view style="Item__Left">
-        <text style="Item__Label">Navigation</text>
-        <text style="Item__Label,Item__Label--WIP">TODO</text>
-      </view>
-      <text style="Item__Chevron">></text>
-    </item>
-
-    <item key="dynamic-elements" style="Item" href="/dynamic_elements/index.xml">
-      <text style="Item__Label">Dynamic Elements</text>
       <text style="Item__Chevron">></text>
     </item>
 
@@ -135,6 +105,36 @@
       </view>
       <text style="Item__Chevron">></text>
     </item>
+
+    <item key="navigation" style="Item">
+      <view style="Item__Left">
+        <text style="Item__Label">Navigation</text>
+        <text style="Item__Label,Item__Label--WIP">TODO</text>
+      </view>
+      <text style="Item__Chevron">></text>
+    </item>
+
+    <item key="dynamic-elements" style="Item" href="/dynamic_elements/index.xml">
+      <text style="Item__Label">Dynamic Elements</text>
+      <text style="Item__Chevron">></text>
+    </item>
+
+    <item key="styling" style="Item">
+      <view style="Item__Left">
+        <text style="Item__Label">Styling</text>
+        <text style="Item__Label,Item__Label--WIP">TODO</text>
+      </view>
+      <text style="Item__Chevron">></text>
+    </item>
+
+    <item key="animation" style="Item" href="/animation/index.xml">
+      <view style="Item__Left">
+        <text style="Item__Label">Animation</text>
+      </view>
+      <text style="Item__Chevron">></text>
+    </item>
+
+
   </list>
 </body>
 </screen>

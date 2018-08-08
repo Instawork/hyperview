@@ -492,7 +492,11 @@ function body(element, navigation, stylesheet, animations) {
 function image(element, navigation, stylesheet, animations) {
   const imageProps = {};
   if (element.getAttribute('source')) {
-    imageProps.source = { uri: element.getAttribute('source')};
+    let source = element.getAttribute('source');
+    if (!source.startsWith('http')) {
+      source = ROOT + source;
+    }
+    imageProps.source = { uri: source };
   }
   const props = Object.assign(
     createProps(element, stylesheet, animations),

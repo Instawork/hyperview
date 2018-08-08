@@ -1,0 +1,117 @@
+<doc>
+
+<styles>
+  <rule id="Header"
+    height="72"
+    alignItems="center"
+    backgroundColor="white"
+    borderBottomWidth="1"
+    borderBottomColor="#eee"
+    paddingTop="24"
+    paddingLeft="24"
+    paddingRight="24"
+    flexDirection="row"
+  />
+  <rule id="Header__Back"
+    color="blue"
+    fontFamily="HKGrotesk-SemiBold"
+    fontSize="16"
+    paddingRight="16"
+  />
+  <rule id="Header__Title"
+    fontFamily="HKGrotesk-SemiBold"
+    fontSize="24"
+    color="black"
+  />
+  <rule id="Body"
+    backgroundColor="white"
+    flex="1"
+  />
+  <rule id="Description"
+    fontFamily="HKGrotesk-Regular"
+    fontSize="16"
+    margin="24"
+    marginBottom="0"
+  />
+  <rule id="Item"
+    borderBottomWidth="1"
+    borderBottomColor="#eee"
+    height="48"
+    flex="1"
+    flexDirection="row"
+    alignItems="center"
+    justifyContent="space-between"
+    paddingLeft="24"
+    paddingRight="24"
+  />
+  <rule id="Item__Label"
+    fontSize="18"
+    fontFamily="HKGrotesk-Regular"
+  />
+  <rule id="Item__Chevron"
+    fontSize="18"
+    fontFamily="HKGrotesk-Bold"
+  />
+
+  <rule id="Border"
+    flex="1"
+    padding="8"
+    borderColor="#e1e1e1"
+    borderWidth="1"
+    margin="24"
+  />
+  <rule id="Styled"
+    backgroundColor="#63CB76"
+    borderRadius="16"
+    height="40"
+  />
+  <rule id="Flex"
+    flex="1"
+    flexDirection="row"
+    justifyContent="space-between"
+  />
+  <rule id="Flex__Child"
+    width="40"
+  />
+</styles>
+
+<screen>
+<header style="Header">
+  <text style="Header__Back" href="/dynamic_elements/index.xml" action="back">Back</text>
+  <text style="Header__Title">View</text>
+</header>
+
+<body style="Body" scroll="true">
+  <text style="Description">
+    View
+  </text>
+  <view style="Border"></view>
+
+  <text style="Description">
+    Nested Views
+  </text>
+  <view style="Border">
+    <view style="Border">
+      <view style="Border">
+      </view>
+    </view>
+  </view>
+
+  <text style="Description">
+    Styled
+  </text>
+  <view style="Border,Styled">
+  </view>
+
+  <text style="Description">
+    Flex
+  </text>
+  <view style="Border,Flex">
+    <view style="Flex__Child,Styled"></view>
+    <view style="Flex__Child,Styled"></view>
+    <view style="Flex__Child,Styled"></view>
+  </view>
+</body>
+</screen>
+
+</doc>

@@ -59,35 +59,25 @@
 
 <screen>
 <header style="Header">
-  <text style="Header__Back" href="/list/index.xml" action="back">Back</text>
-  <text style="Header__Title">Dynamic Elements</text>
+  <text style="Header__Back" href="/index.xml" action="back">Back</text>
+  <text style="Header__Title">UI Elements</text>
 </header>
 
 <body style="Body" scroll="true">
   <list>
 
-    <item key="replace" style="Item" href="/dynamic_elements/replace.xml">
-      <text style="Item__Label">Replace</text>
+    <item key="view" style="Item" href="/ui_elements/view.xml">
+      <text style="Item__Label">View</text>
       <text style="Item__Chevron">></text>
     </item>
 
-    <item key="replace_inner" style="Item" href="/dynamic_elements/replace_inner.xml">
-      <text style="Item__Label">Replace Inner</text>
+    <item key="text" style="Item" href="/ui_elements/text.xml">
+      <text style="Item__Label">Text</text>
       <text style="Item__Chevron">></text>
     </item>
 
-    <item key="append" style="Item" href="/dynamic_elements/append.xml">
-      <text style="Item__Label">Append</text>
-      <text style="Item__Chevron">></text>
-    </item>
-
-    <item key="prepend" style="Item" href="/dynamic_elements/prepend.xml">
-      <text style="Item__Label">Prepend</text>
-      <text style="Item__Chevron">></text>
-    </item>
-
-    <item key="long_press" style="Item" href="/dynamic_elements/long_press.xml">
-      <text style="Item__Label">Long press</text>
+    <item key="image" style="Item" href="/ui_elements/image.xml">
+      <text style="Item__Label">Image</text>
       <text style="Item__Chevron">></text>
     </item>
 
