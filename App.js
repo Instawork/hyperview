@@ -884,8 +884,8 @@ class HyperScreen extends React.Component {
       this.setState({
         doc: preloadScreen,
         styles: preloadStyles,
-        animations,
         path,
+        animations,
       });
     } else {
       this.setState({
@@ -926,6 +926,7 @@ class HyperScreen extends React.Component {
   }
 
   // UPDATE FRAGMENTS ON SCREEN
+  /*
   onUpdate(href, action, currentElement, targetId) {
     const url = ROOT + href;
     fetch(url, {headers: {'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache', 'Expires': 0}})
@@ -995,6 +996,7 @@ class HyperScreen extends React.Component {
     parentClone.replaceChild(element, elementClone);
     return parentClone;
   }
+  */
 
   load() {
     const path = this.state.path;
