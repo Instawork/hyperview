@@ -55,6 +55,20 @@
     fontSize="18"
     fontFamily="HKGrotesk-Bold"
   />
+
+  <rule id="List__Header"
+    backgroundColor="#eee"
+    paddingLeft="24"
+    paddingRight="24"
+    height="48"
+    flex="1"
+    flexDirection="row"
+    alignItems="center"
+  />
+  <rule id="List__HeaderText"
+    fontSize="18"
+    fontFamily="HKGrotesk-Bold"
+  />
 </styles>
 
 <screen>
@@ -63,49 +77,80 @@
   <text style="Header__Title">Dynamic Elements</text>
 </header>
 
-<body style="Body" scroll="true">
-  <list>
+<body style="Body">
+  <sectionlist>
+    <section>
+      <sectiontitle style="List__Header">
+        <text style="List__HeaderText">Actions</text>
+      </sectiontitle>
 
-    <item key="replace" style="Item" href="/dynamic_elements/replace.xml">
-      <text style="Item__Label">Replace</text>
-      <text style="Item__Chevron">></text>
-    </item>
+      <item key="replace" style="Item" href="/dynamic_elements/replace.xml">
+        <text style="Item__Label">Replace</text>
+        <text style="Item__Chevron">></text>
+      </item>
 
-    <item key="replace_inner" style="Item" href="/dynamic_elements/replace_inner.xml">
-      <text style="Item__Label">Replace Inner</text>
-      <text style="Item__Chevron">></text>
-    </item>
+      <item key="replace_inner" style="Item" href="/dynamic_elements/replace_inner.xml">
+        <text style="Item__Label">Replace Inner</text>
+        <text style="Item__Chevron">></text>
+      </item>
 
-    <item key="append" style="Item" href="/dynamic_elements/append.xml">
-      <text style="Item__Label">Append</text>
-      <text style="Item__Chevron">></text>
-    </item>
+      <item key="append" style="Item" href="/dynamic_elements/append.xml">
+        <text style="Item__Label">Append</text>
+        <text style="Item__Chevron">></text>
+      </item>
 
-    <item key="prepend" style="Item" href="/dynamic_elements/prepend.xml">
-      <text style="Item__Label">Prepend</text>
-      <text style="Item__Chevron">></text>
-    </item>
+      <item key="prepend" style="Item" href="/dynamic_elements/prepend.xml">
+        <text style="Item__Label">Prepend</text>
+        <text style="Item__Chevron">></text>
+      </item>
+    </section>
 
-    <item key="press" style="Item" href="/dynamic_elements/press.xml">
-      <text style="Item__Label">Trigger: Press</text>
-      <text style="Item__Chevron">></text>
-    </item>
+    <section>
+      <sectiontitle style="List__Header">
+        <text style="List__HeaderText">Triggers</text>
+      </sectiontitle>
 
-    <item key="long_press" style="Item" href="/dynamic_elements/long_press.xml">
-      <text style="Item__Label">Trigger: Long press</text>
-      <text style="Item__Chevron">></text>
-    </item>
+      <item key="press" style="Item" href="/dynamic_elements/press.xml">
+        <text style="Item__Label">Press</text>
+        <text style="Item__Chevron">></text>
+      </item>
 
-    <item key="press_in" style="Item" href="/dynamic_elements/press_in.xml">
-      <text style="Item__Label">Trigger: Press In</text>
-      <text style="Item__Chevron">></text>
-    </item>
+      <item key="long_press" style="Item" href="/dynamic_elements/long_press.xml">
+        <text style="Item__Label">Long press</text>
+        <text style="Item__Chevron">></text>
+      </item>
 
-    <item key="press_out" style="Item" href="/dynamic_elements/press_out.xml">
-      <text style="Item__Label">Trigger: Press Out</text>
-      <text style="Item__Chevron">></text>
-    </item>
-  </list>
+      <item key="press_in" style="Item" href="/dynamic_elements/press_in.xml">
+        <text style="Item__Label">Press In</text>
+        <text style="Item__Chevron">></text>
+      </item>
+
+      <item key="press_out" style="Item" href="/dynamic_elements/press_out.xml">
+        <text style="Item__Label">Press Out</text>
+        <text style="Item__Chevron">></text>
+      </item>
+
+      <item key="visible" style="Item" href="/dynamic_elements/visible.xml">
+        <text style="Item__Label">Visible</text>
+        <text style="Item__Chevron">></text>
+      </item>
+
+      <item key="refresh" style="Item" href="/dynamic_elements/refresh.xml">
+        <text style="Item__Label">Refresh</text>
+        <text style="Item__Chevron">></text>
+      </item>
+    </section>
+    <section>
+      <sectiontitle style="List__Header">
+        <text style="List__HeaderText">Target</text>
+      </sectiontitle>
+    </section>
+    <section>
+      <sectiontitle style="List__Header">
+        <text style="List__HeaderText">Indicator</text>
+      </sectiontitle>
+    </section>
+  </sectionlist>
 </body>
 </screen>
 

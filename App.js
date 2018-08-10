@@ -23,8 +23,8 @@ import { NavigationActions } from 'react-navigation';
 import { DOMParser, XMLSerializer } from 'xmldom';
 
 //const ROOT = 'http://192.168.7.20:8080';
-const ROOT = 'http://10.1.10.14:8080';
-//const ROOT = 'http://127.0.0.1:8080';
+//const ROOT = 'http://10.1.10.14:8080';
+const ROOT = 'http://127.0.0.1:8080';
 
 
 const ROUTE_KEYS = {
@@ -229,6 +229,7 @@ class HyperRef extends React.Component {
     super(props);
     const { element } = props;
     this.state = {
+      refreshing: false,
       element
     };
 
@@ -260,29 +261,31 @@ class HyperRef extends React.Component {
         fetch(url, {headers: {'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache', 'Expires': 0}})
           .then((response) => response.text())
           .then((responseText) => {
-            const doc = this.parser.parseFromString(responseText);
+            const fragment = this.parser.parseFromString(responseText);
+            const fragmentElement = fragment.documentElement;
 
             let newElement = null;
             if (action == 'replace') {
-              newElement = doc.documentElement;
+              newElement = fragmentElement;
             } else if (action == 'replace-inner') {
               newElement = element.cloneNode(false);
-              newElement.appendChild(doc.documentElement);
+              newElement.appendChild(fragmentElement);
             } else if (action == 'append') {
               newElement = element.cloneNode(true);
-              newElement.appendChild(doc.documentElement);
+              newElement.appendChild(fragmentElement);
             } else if (action == 'prepend') {
               newElement = element.cloneNode(true);
               // If no children, append. Otherwise, insert before first child.
               if (newElement.hasChildNodes()) {
-                newElement.insertBefore(doc.documentElement, newElement.firstChild)
+                newElement.insertBefore(fragmentElement, newElement.firstChild)
               } else {
-                newElement.appendChild(doc.documentElement);
+                newElement.appendChild(fragmentElement);
               }
             }
 
             this.setState({
               element: newElement,
+              refreshing: false,
             });
           });
       }
@@ -290,7 +293,7 @@ class HyperRef extends React.Component {
   }
 
   render() {
-    const { element } = this.state;
+    const { element, refreshing } = this.state;
     const { navigation, stylesheet, animations } = this.props;
 
     const href = element.getAttribute('href');
@@ -323,9 +326,23 @@ class HyperRef extends React.Component {
         {
           onVisible: this.createActionHandler(element, navigation),
         },
-        ...renderChildren(element, navigation, stylesheet, animations)
+        renderElement(element, navigation, stylesheet, animations, {skipHref: true})
       );
     }
+
+    if (trigger == 'refresh') {
+      const refreshControl = React.createElement(
+        RefreshControl,
+        { refreshing, onRefresh: this.createActionHandler(element, navigation) },
+      );
+      return React.createElement(
+        ScrollView,
+        { refreshControl },
+        renderElement(element, navigation, stylesheet, animations, {skipHref: true})
+      );
+    }
+
+    return null;
   }
 }
 
@@ -469,14 +486,6 @@ function body(element, navigation, stylesheet, animations) {
   let component = props.animations ? Animated.View : View;
   if (element.getAttribute('scroll')) {
     component = props.animated ? Animated.ScrollView : ScrollView;
-  }
-
-  if (element.getAttribute('trigger') === 'refresh') {
-    const refresh = React.createElement(
-      RefreshControl,
-      { refreshing: false, onRefresh: () => { console.log('ref'); } },
-    );
-    props.refreshControl = refresh;
   }
 
   return React.createElement(
@@ -961,9 +970,6 @@ const MainStack = createStackNavigator(
   {
     initialRouteName: 'Stack',
     initialRouteParams: {
-      //href: '/dashboard/gigs',
-      //href: '/list/infinite_scroll.xml',
-      //href: '/list/index.xml',
       href: '/index.xml',
     }
   }

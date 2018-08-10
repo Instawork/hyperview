@@ -1,0 +1,138 @@
+<doc>
+
+<styles>
+  <rule id="Header"
+    height="72"
+    alignItems="center"
+    backgroundColor="white"
+    borderBottomWidth="1"
+    borderBottomColor="#eee"
+    paddingTop="24"
+    paddingLeft="24"
+    paddingRight="24"
+    flexDirection="row"
+  />
+  <rule id="Header__Back"
+    color="blue"
+    fontFamily="HKGrotesk-SemiBold"
+    fontSize="16"
+    paddingRight="16"
+  />
+  <rule id="Header__Title"
+    fontFamily="HKGrotesk-SemiBold"
+    fontSize="24"
+    color="black"
+  />
+  <rule id="Body"
+    backgroundColor="white"
+    flex="1"
+    marginBottom="40"
+  />
+  <rule id="Description"
+    fontFamily="HKGrotesk-SemiBold"
+    fontSize="16"
+    margin="24"
+    padding="16"
+    borderWidth="2"
+    borderColor="red"
+    borderRadius="4"
+  />
+
+  <rule
+    id="FormGroup"
+    marginLeft="24"
+    marginRight="24"
+    marginTop="48"
+    flex="1"
+  />
+  <rule
+    id="horizontalFormGroup"
+    flex="1"
+    flexDirection="row"
+  />
+  <rule id="outerInput"
+    flex="1"
+  />
+  <rule id="input"
+    borderBottomColor="#E1E1E1"
+    borderBottomWidth="1"
+    borderColor="#4E4D4D"
+    flex="1"
+    fontFamily="HKGrotesk-Regular"
+    fontSize="16"
+    paddingBottom="8"
+    paddingTop="8"
+  />
+  <rule id="input--focused"
+    borderBottomColor="#4778FF"
+  />
+  <rule id="input--error"
+    borderBottomColor="#FF4847"
+    color="#FF4847"
+  />
+  <rule id="label"
+    borderColor="#4E4D4D"
+    fontFamily="HKGrotesk-Bold"
+    fontSize="16"
+    lineHeight="24"
+    marginBottom="8"
+  />
+  <rule id="help"
+    borderColor="#FF4847"
+    fontFamily="HKGrotesk-Regular"
+    fontSize="16"
+    lineHeight="24"
+    marginTop="16"
+  />
+  <rule id="help--error"
+    color="#FF4847"
+  />
+
+</styles>
+
+<screen>
+<header style="Header">
+  <text style="Header__Back" href="/index.xml" action="back">Back</text>
+  <text style="Header__Title">Text Input</text>
+</header>
+
+<body style="Body" scroll="true" >
+  <view style="FormGroup">
+    <input style="input" outerStyles="outerInput" focusStyles="input,input--focused" placeholderTextColor="#8D9494" placeholder="First name">
+      <label style="label">Default input field</label>
+      <help style="help">Please enter your full name</help>
+    </input>
+  </view>
+
+  <view style="FormGroup">
+    <input style="input" outerStyles="outerInput" focusStyles="input,input--focused" placeholderTextColor="#8D9494" placeholder="First name" value="Milhouse">
+      <label style="label">Filled input field</label>
+      <help style="help">Please enter your full name</help>
+    </input>
+  </view>
+
+  <view style="FormGroup">
+    <input style="input,input--error" outerStyles="outerInput" placeholderTextColor="#8D9494" placeholder="First name">
+      <label style="label">Validation error</label>
+      <help style="help,help--error">Please enter your full name</help>
+    </input>
+  </view>
+
+  <view style="FormGroup">
+    <input style="input,input--error" outerStyles="outerInput" placeholderTextColor="#8D9494" placeholder="First name" value="Milhouse">
+      <label style="label">Filled validation error</label>
+      <help style="help,help--error">Name already taken</help>
+    </input>
+  </view>
+
+  <view style="FormGroup">
+    <label style="label">Horizontal Layout</label>
+    <view style="horizontalFormGroup">
+      <input style="input" outerStyles="outerInput" focusStyles="input,input--focused" placeholderTextColor="#8D9494" placeholder="First" />
+      <input style="input" outerStyles="outerInput" focusStyles="input,input--focused" placeholderTextColor="#8D9494" placeholder="Last" />
+    </view>
+  </view>
+</body>
+</screen>
+
+</doc>

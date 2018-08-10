@@ -73,66 +73,26 @@
 
 <screen>
 <header style="Header">
-  <text style="Header__Title">Hyperview Examples</text>
+  <text style="Header__Back" href="/index.xml" action="back">Back</text>
+  <text style="Header__Title">Forms</text>
 </header>
 
 <body style="Body" scroll="true">
 
   <list>
-    <item key="layout" style="Item" href="/ui_elements/index.xml">
+    <item key="text_input" style="Item" href="/forms/text_input.xml">
       <view style="Item__Left">
-        <text style="Item__Label">UI Elements</text>
+        <text style="Item__Label">Text Input</text>
       </view>
       <text style="Item__Chevron">></text>
     </item>
 
-    <item key="list" style="Item" href="/list/index.xml">
-      <text style="Item__Label">List</text>
-      <text style="Item__Chevron">></text>
-    </item>
-
-    <item key="sectionlist" style="Item" href="/sectionlist/index.xml">
+    <item key="text_area" style="Item" href="/forms/textarea.xml">
       <view style="Item__Left">
-        <text style="Item__Label">Section List</text>
+        <text style="Item__Label">Text Area</text>
       </view>
       <text style="Item__Chevron">></text>
     </item>
-
-    <item key="forms" style="Item"  href="/forms/index.xml">
-      <view style="Item__Left">
-        <text style="Item__Label">Forms</text>
-      </view>
-      <text style="Item__Chevron">></text>
-    </item>
-
-    <item key="navigation" style="Item">
-      <view style="Item__Left">
-        <text style="Item__Label">Navigation</text>
-        <text style="Item__Label,Item__Label--WIP">TODO</text>
-      </view>
-      <text style="Item__Chevron">></text>
-    </item>
-
-    <item key="dynamic-elements" style="Item" href="/dynamic_elements/index.xml">
-      <text style="Item__Label">Dynamic Elements</text>
-      <text style="Item__Chevron">></text>
-    </item>
-
-    <item key="styling" style="Item" href="/styling/index.xml">
-      <view style="Item__Left">
-        <text style="Item__Label">Styling</text>
-      </view>
-      <text style="Item__Chevron">></text>
-    </item>
-
-    <item key="animation" style="Item" href="/animation/index.xml">
-      <view style="Item__Left">
-        <text style="Item__Label">Animation</text>
-      </view>
-      <text style="Item__Chevron">></text>
-    </item>
-
-
   </list>
 </body>
 </screen>
