@@ -70,7 +70,7 @@ class HVFlatList extends React.Component {
         return item.getAttribute('key');
       },
       renderItem: ({ item }) => {
-        return renderElement(item, navigation, stylesheet, animations, onUpdate);
+        return renderElement(item, navigation, stylesheet, animations, onUpdate );
       },
     };
 
@@ -148,10 +148,10 @@ class HVSectionList extends React.Component {
         return item.getAttribute('key');
       },
       renderItem: ({ item, index, section }) => {
-        return renderElement(item, navigation, stylesheet, animations, onUpdate);
+        return renderElement(item, navigation, stylesheet, animations, onUpdate );
       },
       renderSectionHeader: ({section: { title }}) => {
-        return renderElement(title, navigation, stylesheet, animations, onUpdate);
+        return renderElement(title, navigation, stylesheet, animations, onUpdate );
       },
     };
 
@@ -180,7 +180,7 @@ class HVTextInput extends React.Component {
   }
 
   render() {
-    const { element, navigation, stylesheet, animations, onUpdate } = this.props;
+    const { element, navigation, stylesheet, animations } = this.props;
     const props = Object.assign(
       createProps(element, stylesheet, animations),
       {
@@ -204,8 +204,8 @@ class HVTextInput extends React.Component {
     const labelElement = getFirstTag(element, 'label');
     const helpElement = getFirstTag(element, 'help');
 
-    const label = labelElement ? text(labelElement, navigation, stylesheet, animations, onUpdate) : null;
-    const help = helpElement ? text(helpElement, navigation, stylesheet, animations, onUpdate) : null;
+    const label = labelElement ? text(labelElement, navigation, stylesheet, animations) : null;
+    const help = helpElement ? text(helpElement, navigation, stylesheet, animations) : null;
 
     let outerStyles = null;
     if (props.outerStyles) {
@@ -297,7 +297,7 @@ class HyperRef extends React.Component {
 
     const href = element.getAttribute('href');
     if (!href) {
-      return renderElement(element, navigation, stylesheet, animations, onUpdate, {skipHref: true});
+      return renderElement(element, navigation, stylesheet, animations, {skipHref: true});
     }
 
     const trigger = element.getAttribute('trigger') || 'press';
@@ -315,7 +315,7 @@ class HyperRef extends React.Component {
       return React.createElement(
         TouchableOpacity,
         props,
-        renderElement(element, navigation, stylesheet, animations, onUpdate, {skipHref: true}),
+        renderElement(element, navigation, stylesheet, animations, {skipHref: true}),
       );
     }
 
@@ -325,7 +325,7 @@ class HyperRef extends React.Component {
         {
           onVisible: this.createActionHandler(element, navigation),
         },
-        renderElement(element, navigation, stylesheet, animations, onUpdate, {skipHref: true})
+        renderElement(element, navigation, stylesheet, animations, {skipHref: true})
       );
     }
 
@@ -337,7 +337,7 @@ class HyperRef extends React.Component {
       return React.createElement(
         ScrollView,
         { refreshControl },
-        renderElement(element, navigation, stylesheet, animations, onUpdate, {skipHref: true})
+        renderElement(element, navigation, stylesheet, animations, {skipHref: true})
       );
     }
 
@@ -629,7 +629,7 @@ function text(element, navigation, stylesheet, animations, options) {
 /**
  *
  */
-function renderHeader(element, navigation, stylesheet, onUpdate) {
+function renderHeader(element, navigation, stylesheet, animations, onUpdate) {
   const headers = element.getElementsByTagName('header');
   if (!(headers && headers[0])) {
     return null;
@@ -640,7 +640,8 @@ function renderHeader(element, navigation, stylesheet, onUpdate) {
     header,
     navigation,
     stylesheet,
-    onUpdate,
+    animations,
+    onUpdate
   );
 
   navigation.setParams({
@@ -651,11 +652,11 @@ function renderHeader(element, navigation, stylesheet, onUpdate) {
 /**
  *
  */
-function renderChildren(element, navigation, stylesheet, animations, onUpdate) {
+function renderChildren(element, navigation, stylesheet, animations) {
   const children = [];
   if (element.childNodes !== null) {
     for (let i = 0; i < element.childNodes.length; ++i) {
-      let e = renderElement(element.childNodes.item(i), navigation, stylesheet, animations, onUpdate);
+      let e = renderElement(element.childNodes.item(i), navigation, stylesheet, animations);
       if (e) {
         children.push(e);
       }
@@ -667,30 +668,30 @@ function renderChildren(element, navigation, stylesheet, animations, onUpdate) {
 /**
  *
  */
-function renderElement(element, navigation, stylesheet, animations, onUpdate, options) {
+function renderElement(element, navigation, stylesheet, animations, options) {
   switch (element.tagName) {
     case 'body':
-      return body(element, navigation, stylesheet, animations, onUpdate); 
+      return body(element, navigation, stylesheet, animations); 
     case 'image':
-      return image(element, navigation, stylesheet, animations, onUpdate); 
+      return image(element, navigation, stylesheet, animations); 
     case 'input':
     case 'textarea':
-      return input(element, navigation, stylesheet, animations, onUpdate); 
+      return input(element, navigation, stylesheet, animations); 
     case 'text':
     case 'label':
     case 'help':
-      return text(element, navigation, stylesheet, animations, onUpdate, options); 
+      return text(element, navigation, stylesheet, animations, options); 
     case 'view':
     case 'header':
     case 'item':
     case 'sectiontitle':
-      return view(element, navigation, stylesheet, animations, onUpdate, options); 
+      return view(element, navigation, stylesheet, animations, options); 
     case 'list':
-      return list(element, navigation, stylesheet, animations, onUpdate); 
+      return list(element, navigation, stylesheet, animations); 
     case 'sectionlist':
-      return sectionlist(element, navigation, stylesheet, animations, onUpdate); 
+      return sectionlist(element, navigation, stylesheet, animations); 
     case 'map':
-      return map(element, navigation, stylesheet, animations, onUpdate); 
+      return map(element, navigation, stylesheet, animations); 
     case 'map-marker':
       return mapMarker(element, navigation, stylesheet); 
   }
@@ -926,7 +927,6 @@ class HyperScreen extends React.Component {
   }
 
   // UPDATE FRAGMENTS ON SCREEN
-  /*
   onUpdate(href, action, currentElement, targetId) {
     const url = ROOT + href;
     fetch(url, {headers: {'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache', 'Expires': 0}})
@@ -996,20 +996,17 @@ class HyperScreen extends React.Component {
     parentClone.replaceChild(element, elementClone);
     return parentClone;
   }
-  */
 
   load() {
     const path = this.state.path;
     const url = ROOT + path;
-    console.log('FETCHING: ', url);
     fetch(url, {headers: {'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache', 'Expires': 0}})
       .then((response) => response.text())
       .then((responseText) => {
-        console.log('FETCHED: ', responseText);
         const doc = this.parser.parseFromString(responseText);
         const animations = createAnimations(doc);
         const stylesheet = createStylesheet(doc);
-        const header = renderHeader(doc, this.props.navigation, stylesheet, this.onUpdate);
+        const header = renderHeader(doc, this.props.navigation, stylesheet, animations, this.onUpdate);
         this.props.navigation.setParams({ header });
         ROUTE_KEYS[getHrefKey(path)] = this.props.navigation.state.key;
 
