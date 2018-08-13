@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  ActivityIndicator,
   Animated,
   Button,
   Easing,
@@ -579,6 +580,17 @@ function sectionlist(element, navigation, stylesheet, animations, onUpdate) {
   );
 }
 
+
+/**
+ *
+ */
+function spinner(element, navigation, stylesheet, animations, onUpdate) {
+  return React.createElement(
+    ActivityIndicator,
+    {},
+  );
+}
+
 /**
  *
  */
@@ -658,6 +670,8 @@ function renderElement(element, navigation, stylesheet, animations, onUpdate, op
       return list(element, navigation, stylesheet, animations, onUpdate); 
     case 'sectionlist':
       return sectionlist(element, navigation, stylesheet, animations, onUpdate); 
+    case 'spinner':
+      return spinner(element, navigation, stylesheet, animations, onUpdate); 
     case 'map':
       return map(element, navigation, stylesheet, animations); 
     case 'map-marker':

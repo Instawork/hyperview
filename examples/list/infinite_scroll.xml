@@ -55,6 +55,13 @@
     fontSize="18"
     fontFamily="HKGrotesk-Bold"
   />
+
+  <rule id="Spinner"
+    flex="1"
+    flexDirection="row"
+    justifyContent="center"
+    padding="24"
+  />
 </styles>
 
 <screen>
@@ -150,8 +157,10 @@
     >
       <text style="Item__Label">List 20</text>
     </item>
-
   </list>
+  <view style="Spinner">
+    <spinner />
+  </view>
 </body>
 </screen>
 
