@@ -1,9 +1,21 @@
-<text
-  style="Description"
-  href="/list/index.xml"
-  target="push"
-  indicator="saveState"
->
-  Something got replaced!
-  Now you can press to navigate
-</text>
+<view>
+<item key="21" style="Item">
+  <text style="Item__Label">Added: List 21</text>
+</item>
+
+<item key="22" style="Item">
+  <text style="Item__Label">Added: List 22</text>
+</item>
+
+<item key="23" style="Item">
+  <text style="Item__Label">Added: List 23</text>
+</item>
+
+<item key="24" style="Item">
+  <text style="Item__Label">Added: List 24</text>
+</item>
+
+<item key="25" style="Item">
+  <text style="Item__Label">Added: List 25</text>
+</item>
+</view>

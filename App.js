@@ -22,9 +22,9 @@ import { NavigationActions } from 'react-navigation';
 
 import { DOMParser, XMLSerializer } from 'xmldom';
 
-//const ROOT = 'http://192.168.7.20:8080';
+const ROOT = 'http://192.168.7.20:8080';
 //const ROOT = 'http://10.1.10.14:8080';
-const ROOT = 'http://127.0.0.1:8080';
+//const ROOT = 'http://127.0.0.1:8080';
 
 
 const ROUTE_KEYS = {
@@ -40,26 +40,26 @@ class HVFlatList extends React.Component {
     this.parser = new DOMParser();
     this.state = {
       refreshing: false,
-      element: props.element,
     };
   }
 
   refresh() {
-    const element = this.state.element;
+    const { element, onUpdate } = this.props;
     this.setState({refreshing: true});
     const path = element.getAttribute('href');
-    const url = ROOT + path;
-    fetch(url, {headers: {'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache', 'Expires': 0}})
-      .then((response) => response.text())
-      .then((responseText) => {
-        const doc = this.parser.parseFromString(responseText);
-        this.setState({refreshing: false, element: doc.documentElement});
-      });
+    const action = element.getAttribute('action') || 'append';
+    const targetId = element.getAttribute('target') || null;
+
+    onUpdate(path, action, element, targetId, {
+      onEnd: () => {
+        this.setState({refreshing: false});
+      }
+    });
   }
 
   render() {
-    const { element, refreshing } = this.state;
-    const { navigation, stylesheet, animations, onUpdate } = this.props;
+    const { refreshing } = this.state;
+    const { element, navigation, stylesheet, animations, onUpdate } = this.props;
     const styleAttr = element.getAttribute('style');
     const style = styleAttr ? styleAttr.split(',').map((s) => stylesheet[s]) : null;
 
@@ -99,27 +99,26 @@ class HVSectionList extends React.Component {
     this.parser = new DOMParser();
     this.state = {
       refreshing: false,
-      element: props.element,
     };
   }
 
   refresh() {
-    console.log('REFRESHING!');
-    const element = this.state.element;
+    const { element, onUpdate } = this.props;
     this.setState({refreshing: true});
     const path = element.getAttribute('href');
-    const url = ROOT + path;
-    fetch(url, {headers: {'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache', 'Expires': 0}})
-      .then((response) => response.text())
-      .then((responseText) => {
-        const doc = this.parser.parseFromString(responseText);
-        this.setState({refreshing: false, element: doc.documentElement});
-      });
+    const action = element.getAttribute('action') || 'append';
+    const targetId = element.getAttribute('target') || null;
+
+    onUpdate(path, action, element, targetId, {
+      onEnd: () => {
+        this.setState({refreshing: false});
+      }
+    });
   }
 
   render() {
-    const { element, refreshing } = this.state;
-    const { navigation, stylesheet, animations, onUpdate } = this.props;
+    const { refreshing } = this.state;
+    const { element, navigation, stylesheet, animations, onUpdate } = this.props;
     const styleAttr = element.getAttribute('style');
     const style = styleAttr ? styleAttr.split(',').map((s) => stylesheet[s]) : null;
 
@@ -180,7 +179,7 @@ class HVTextInput extends React.Component {
   }
 
   render() {
-    const { element, navigation, stylesheet, animations } = this.props;
+    const { element, navigation, stylesheet, animations, onUpdate } = this.props;
     const props = Object.assign(
       createProps(element, stylesheet, animations),
       {
@@ -204,8 +203,8 @@ class HVTextInput extends React.Component {
     const labelElement = getFirstTag(element, 'label');
     const helpElement = getFirstTag(element, 'help');
 
-    const label = labelElement ? text(labelElement, navigation, stylesheet, animations) : null;
-    const help = helpElement ? text(helpElement, navigation, stylesheet, animations) : null;
+    const label = labelElement ? text(labelElement, navigation, stylesheet, animations, onUpdate) : null;
+    const help = helpElement ? text(helpElement, navigation, stylesheet, animations, onUpdate) : null;
 
     let outerStyles = null;
     if (props.outerStyles) {
@@ -226,10 +225,8 @@ class HVTextInput extends React.Component {
 class HyperRef extends React.Component {
   constructor(props) {
     super(props);
-    const { element } = props;
     this.state = {
       refreshing: false,
-      element
     };
 
     this.parser = new DOMParser();
@@ -246,7 +243,7 @@ class HyperRef extends React.Component {
     this.updateActions = ['replace', 'replace-inner', 'append', 'prepend'];
   }
 
-  createActionHandler(element, navigation) {
+  createActionHandler(element, navigation, onUpdate) {
     const action = element.getAttribute('action') || 'push';
 
     if (this.navActions.indexOf(action) >= 0) {
@@ -256,48 +253,19 @@ class HyperRef extends React.Component {
     if (this.updateActions.indexOf(action) >= 0) {
       return() => {
         const path = element.getAttribute('href');
-        const url = ROOT + path;
-        fetch(url, {headers: {'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache', 'Expires': 0}})
-          .then((response) => response.text())
-          .then((responseText) => {
-            const fragment = this.parser.parseFromString(responseText);
-            const fragmentElement = fragment.documentElement;
-
-            let newElement = null;
-            if (action == 'replace') {
-              newElement = fragmentElement;
-            } else if (action == 'replace-inner') {
-              newElement = element.cloneNode(false);
-              newElement.appendChild(fragmentElement);
-            } else if (action == 'append') {
-              newElement = element.cloneNode(true);
-              newElement.appendChild(fragmentElement);
-            } else if (action == 'prepend') {
-              newElement = element.cloneNode(true);
-              // If no children, append. Otherwise, insert before first child.
-              if (newElement.hasChildNodes()) {
-                newElement.insertBefore(fragmentElement, newElement.firstChild)
-              } else {
-                newElement.appendChild(fragmentElement);
-              }
-            }
-
-            this.setState({
-              element: newElement,
-              refreshing: false,
-            });
-          });
+        const targetId = element.getAttribute('target') || null;
+        onUpdate(path, action, element, targetId);
       }
     }
   }
 
   render() {
-    const { element, refreshing } = this.state;
-    const { navigation, stylesheet, animations, onUpdate } = this.props;
+    const { refreshing } = this.state;
+    const { element, navigation, stylesheet, animations, onUpdate } = this.props;
 
     const href = element.getAttribute('href');
     if (!href) {
-      return renderElement(element, navigation, stylesheet, animations, {skipHref: true});
+      return renderElement(element, navigation, stylesheet, animations, onUpdate, {skipHref: true});
     }
 
     const trigger = element.getAttribute('trigger') || 'press';
@@ -310,12 +278,12 @@ class HyperRef extends React.Component {
       };
       const triggerPropName = this.triggerPropNames[trigger];
       // For now only navigate.
-      props[triggerPropName] = this.createActionHandler(element, navigation);
+      props[triggerPropName] = this.createActionHandler(element, navigation, onUpdate);
 
       return React.createElement(
         TouchableOpacity,
         props,
-        renderElement(element, navigation, stylesheet, animations, {skipHref: true}),
+        renderElement(element, navigation, stylesheet, animations, onUpdate, {skipHref: true}),
       );
     }
 
@@ -323,21 +291,21 @@ class HyperRef extends React.Component {
       return React.createElement(
         VisibilityDetectingView,
         {
-          onVisible: this.createActionHandler(element, navigation),
+          onVisible: this.createActionHandler(element, navigation, onUpdate),
         },
-        renderElement(element, navigation, stylesheet, animations, {skipHref: true})
+        renderElement(element, navigation, stylesheet, animations, onUpdate, {skipHref: true})
       );
     }
 
     if (trigger == 'refresh') {
       const refreshControl = React.createElement(
         RefreshControl,
-        { refreshing, onRefresh: this.createActionHandler(element, navigation) },
+        { refreshing, onRefresh: this.createActionHandler(element, navigation, onUpdate) },
       );
       return React.createElement(
         ScrollView,
         { refreshControl },
-        renderElement(element, navigation, stylesheet, animations, {skipHref: true})
+        renderElement(element, navigation, stylesheet, animations, onUpdate, {skipHref: true})
       );
     }
 
@@ -346,7 +314,7 @@ class HyperRef extends React.Component {
 }
 
 
-function addHref(component, element, navigation, stylesheet, animations ) {
+function addHref(component, element, navigation, stylesheet, animations, onUpdate ) {
   const href = element.getAttribute('href');
   if (!href) {
     return component;
@@ -354,8 +322,8 @@ function addHref(component, element, navigation, stylesheet, animations ) {
 
   return React.createElement(
     HyperRef,
-    { element, navigation, stylesheet, animations },
-    ...renderChildren(element, navigation, stylesheet, animations)
+    { element, navigation, stylesheet, animations, onUpdate },
+    ...renderChildren(element, navigation, stylesheet, animations, onUpdate)
   );
 }
 
@@ -480,7 +448,7 @@ function createNavHandler(element, navigation) {
 /**
  *
  */
-function body(element, navigation, stylesheet, animations) {
+function body(element, navigation, stylesheet, animations, onUpdate) {
   const props = createProps(element, stylesheet, animations);
   let component = props.animations ? Animated.View : View;
   if (element.getAttribute('scroll')) {
@@ -490,14 +458,14 @@ function body(element, navigation, stylesheet, animations) {
   return React.createElement(
     component,
     props,
-    ...renderChildren(element, navigation, stylesheet, animations)
+    ...renderChildren(element, navigation, stylesheet, animations, onUpdate)
   );
 }
 
 /**
  *
  */
-function image(element, navigation, stylesheet, animations) {
+function image(element, navigation, stylesheet, animations, onUpdate) {
   const imageProps = {};
   if (element.getAttribute('source')) {
     let source = element.getAttribute('source');
@@ -519,10 +487,10 @@ function image(element, navigation, stylesheet, animations) {
 /**
  *
  */
-function input(element, navigation, stylesheet, animations) {
+function input(element, navigation, stylesheet, animations, onUpdate) {
   return React.createElement(
     HVTextInput,
-    { element, navigation, stylesheet, animations }
+    { element, navigation, stylesheet, animations, onUpdate }
   );
 }
 
@@ -580,50 +548,50 @@ function mapMarker(element, navigation, stylesheet) {
 /**
  *
  */
-function view(element, navigation, stylesheet, animations, options) {
+function view(element, navigation, stylesheet, animations, onUpdate, options) {
   const { skipHref } = options || {};
   const props = createProps(element, stylesheet, animations);
   let component = React.createElement(
     props.animations ? Animated.View : View,
     props,
-    ...renderChildren(element, navigation, stylesheet, animations)
+    ...renderChildren(element, navigation, stylesheet, animations, onUpdate)
   );
-  return skipHref ? component : addHref(component, element, navigation, stylesheet, animations);
+  return skipHref ? component : addHref(component, element, navigation, stylesheet, animations, onUpdate);
 }
 
 /**
  *
  */
-function list(element, navigation, stylesheet, animations) {
+function list(element, navigation, stylesheet, animations, onUpdate) {
   return React.createElement(
     HVFlatList,
-    { element, navigation, stylesheet, animations },
+    { element, navigation, stylesheet, animations, onUpdate },
   );
 }
 
 /**
  *
  */
-function sectionlist(element, navigation, stylesheet, animations) {
+function sectionlist(element, navigation, stylesheet, animations, onUpdate) {
   return React.createElement(
     HVSectionList,
-    { element, navigation, stylesheet, animations },
+    { element, navigation, stylesheet, animations, onUpdate },
   );
 }
 
 /**
  *
  */
-function text(element, navigation, stylesheet, animations, options) {
+function text(element, navigation, stylesheet, animations, onUpdate, options) {
   const { skipHref } = options || {};
   const props = createProps(element, stylesheet, animations);
   let component = React.createElement(
     props.animations? Animated.Text : Text,
     props,
-    ...renderChildren(element, navigation, stylesheet, animations)
+    ...renderChildren(element, navigation, stylesheet, animations, onUpdate)
   );
 
-  return skipHref ? component : addHref(component, element, navigation, stylesheet, animations);
+  return skipHref ? component : addHref(component, element, navigation, stylesheet, animations, onUpdate);
 }
 
 /**
@@ -652,11 +620,11 @@ function renderHeader(element, navigation, stylesheet, animations, onUpdate) {
 /**
  *
  */
-function renderChildren(element, navigation, stylesheet, animations) {
+function renderChildren(element, navigation, stylesheet, animations, onUpdate) {
   const children = [];
   if (element.childNodes !== null) {
     for (let i = 0; i < element.childNodes.length; ++i) {
-      let e = renderElement(element.childNodes.item(i), navigation, stylesheet, animations);
+      let e = renderElement(element.childNodes.item(i), navigation, stylesheet, animations, onUpdate);
       if (e) {
         children.push(e);
       }
@@ -668,28 +636,28 @@ function renderChildren(element, navigation, stylesheet, animations) {
 /**
  *
  */
-function renderElement(element, navigation, stylesheet, animations, options) {
+function renderElement(element, navigation, stylesheet, animations, onUpdate, options) {
   switch (element.tagName) {
     case 'body':
-      return body(element, navigation, stylesheet, animations); 
+      return body(element, navigation, stylesheet, animations, onUpdate); 
     case 'image':
-      return image(element, navigation, stylesheet, animations); 
+      return image(element, navigation, stylesheet, animations, onUpdate); 
     case 'input':
     case 'textarea':
-      return input(element, navigation, stylesheet, animations); 
+      return input(element, navigation, stylesheet, animations, onUpdate); 
     case 'text':
     case 'label':
     case 'help':
-      return text(element, navigation, stylesheet, animations, options); 
+      return text(element, navigation, stylesheet, animations, onUpdate, options); 
     case 'view':
     case 'header':
     case 'item':
     case 'sectiontitle':
-      return view(element, navigation, stylesheet, animations, options); 
+      return view(element, navigation, stylesheet, animations, onUpdate, options); 
     case 'list':
-      return list(element, navigation, stylesheet, animations); 
+      return list(element, navigation, stylesheet, animations, onUpdate); 
     case 'sectionlist':
-      return sectionlist(element, navigation, stylesheet, animations); 
+      return sectionlist(element, navigation, stylesheet, animations, onUpdate); 
     case 'map':
       return map(element, navigation, stylesheet, animations); 
     case 'map-marker':
@@ -866,12 +834,16 @@ class HyperScreen extends React.Component {
   constructor(props){
     super(props);
     this.parser = new DOMParser();
+    this.serializer = new XMLSerializer();
     this.needsLoad = false;
     this.state = {
       styles: null,
       doc: null,
       path: null,
     };
+    this.onUpdate = this.onUpdate.bind(this);
+    this.shallowClone = this.shallowClone.bind(this);
+    this.shallowCloneToRoot = this.shallowCloneToRoot.bind(this);
   }
 
   componentDidMount() {
@@ -927,7 +899,8 @@ class HyperScreen extends React.Component {
   }
 
   // UPDATE FRAGMENTS ON SCREEN
-  onUpdate(href, action, currentElement, targetId) {
+  onUpdate(href, action, currentElement, targetId, opts) {
+    const options = opts || {};
     const url = ROOT + href;
     fetch(url, {headers: {'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache', 'Expires': 0}})
       .then((response) => response.text())
@@ -935,7 +908,7 @@ class HyperScreen extends React.Component {
 
         let newRoot = this.state.doc;
 
-        const newElement = this.parser.parseFromString(responseText);
+        const newElement = this.parser.parseFromString(responseText).documentElement;
         let targetElement = targetId ? this.state.doc.getElementById(targetId) : currentElement;
         if (!targetElement) {
           targetElement = currentElement;
@@ -943,7 +916,7 @@ class HyperScreen extends React.Component {
 
         if (action == 'replace') {
           const parentElement = targetElement.parentNode;
-          parentElement.replaceChild(targetElement, newElement);
+          parentElement.replaceChild(newElement, targetElement);
           newRoot = this.shallowCloneToRoot(parentElement);
         }
 
@@ -972,6 +945,8 @@ class HyperScreen extends React.Component {
         this.setState({
           doc: newRoot,
         });
+
+        options.onEnd && options.onEnd();
       });
   }
 
@@ -979,21 +954,20 @@ class HyperScreen extends React.Component {
     const newElement = element.cloneNode(false);
     let childNode = element.firstChild;
     while (childNode !== null) {
-      let nextChild = childNoce.nextSibling;
+      let nextChild = childNode.nextSibling;
       newElement.appendChild(childNode);
-      childNode = nextCHild;
+      childNode = nextChild;
     }
     return newElement;
   }
 
   shallowCloneToRoot(element) {
-    const elementClone = shallowClone(element);
-    if (!element.parentNode) {
+    const elementClone = this.shallowClone(element);
+    if (element.nodeType == 9) {
       return elementClone;
     }
-
-    const parentClone = shallowCloneToRoot(element.parentNode);
-    parentClone.replaceChild(element, elementClone);
+    element.parentNode.replaceChild(elementClone, element);
+    const parentClone = this.shallowCloneToRoot(element.parentNode);
     return parentClone;
   }
 

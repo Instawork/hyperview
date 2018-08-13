@@ -144,6 +144,28 @@
       <sectiontitle style="List__Header">
         <text style="List__HeaderText">Target</text>
       </sectiontitle>
+
+      <item key="target_sibling" style="Item" href="/dynamic_elements/target_sibling.xml">
+        <text style="Item__Label">Sibling</text>
+        <text style="Item__Chevron">></text>
+      </item>
+      <item key="target_child" style="Item" href="/dynamic_elements/target_child.xml">
+        <text style="Item__Label">Child</text>
+        <text style="Item__Chevron">></text>
+      </item>
+      <item key="target_parent" style="Item" href="/dynamic_elements/target_parent.xml">
+        <text style="Item__Label">Parent</text>
+        <text style="Item__Chevron">></text>
+      </item>
+      <item key="target_parent_element" style="Item" href="/dynamic_elements/target_parent_element.xml">
+        <text style="Item__Label">Parent Element</text>
+        <text style="Item__Chevron">></text>
+      </item>
+
+      <item key="target_sibling_append" style="Item" href="/dynamic_elements/target_sibling_append.xml">
+        <text style="Item__Label">Sibling Append</text>
+        <text style="Item__Chevron">></text>
+      </item>
     </section>
     <section>
       <sectiontitle style="List__Header">
