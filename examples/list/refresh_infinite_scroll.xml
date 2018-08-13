@@ -70,9 +70,14 @@
   <text style="Header__Title">List With Infinite Scroll</text>
 </header>
 
-<body style="Body" scroll="true">
+<body style="Body">
+  <view
+    href="/list/_refresh_infinite_scroll_fragment.xml"
+    trigger="refresh"
+    action="replace"
+    target="myList"
+  >
   <list id="myList">
-
     <item key="1" style="Item">
       <text style="Item__Label">List 1</text>
     </item>

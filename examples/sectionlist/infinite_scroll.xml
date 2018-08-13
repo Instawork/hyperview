@@ -70,6 +70,13 @@
     fontSize="18"
     fontFamily="HKGrotesk-Bold"
   />
+
+  <rule id="Spinner"
+    flex="1"
+    flexDirection="row"
+    justifyContent="center"
+    padding="24"
+  />
 </styles>
 
 <screen>
@@ -184,12 +191,17 @@
         href="/sectionlist/_infinite_scroll_page2.xml"
         action="append"
         target="myList"
+        delay="1000"
+        indicator="myIndicator"
       >
         <text style="Item__Label">List 20</text>
       </item>
     </section>
 
   </sectionlist>
+  <view style="Spinner" id="myIndicator" hide="true">
+    <spinner />
+  </view>
 </body>
 </screen>
 

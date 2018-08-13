@@ -1,77 +1,7 @@
-<doc>
-
-<styles>
-  <rule id="Header"
-    height="72"
-    alignItems="center"
-    backgroundColor="white"
-    borderBottomWidth="1"
-    borderBottomColor="#eee"
-    paddingTop="24"
-    paddingLeft="24"
-    paddingRight="24"
-    flexDirection="row"
-  />
-  <rule id="Header__Back"
-    color="blue"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="16"
-    paddingRight="16"
-  />
-  <rule id="Header__Title"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="24"
-    color="black"
-  />
-  <rule id="Body"
-    backgroundColor="white"
-    flex="1"
-  />
-  <rule id="Description"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="16"
-    margin="24"
-    padding="16"
-    borderWidth="2"
-    borderColor="red"
-    borderRadius="4"
-  />
-  <rule id="Item"
-    borderBottomWidth="1"
-    borderBottomColor="#eee"
-    height="48"
-    flex="1"
-    flexDirection="row"
-    alignItems="center"
-    justifyContent="space-between"
-    paddingLeft="24"
-    paddingRight="24"
-  />
-  <rule id="Item__Label"
-    fontSize="18"
-    fontFamily="HKGrotesk-Regular"
-  />
-  <rule id="Item__Chevron"
-    fontSize="18"
-    fontFamily="HKGrotesk-Bold"
-  />
-
-  <rule id="Spinner"
-    flex="1"
-    flexDirection="row"
-    justifyContent="center"
-    padding="24"
-  />
-</styles>
-
-<screen>
-<header style="Header">
-  <text style="Header__Back" href="/list/index.xml" action="back">Back</text>
-  <text style="Header__Title">List With Infinite Scroll</text>
-</header>
-
-<body style="Body" scroll="true">
   <list id="myList">
+    <item key="0" style="Item">
+      <text style="Item__Label">New Item!</text>
+    </item>
 
     <item key="1" style="Item">
       <text style="Item__Label">List 1</text>
@@ -161,10 +91,3 @@
       <text style="Item__Label">List 20</text>
     </item>
   </list>
-  <view style="Spinner" id="myIndicator" hide="true">
-    <spinner />
-  </view>
-</body>
-</screen>
-
-</doc>

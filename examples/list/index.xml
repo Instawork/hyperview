@@ -81,6 +81,11 @@
       <text style="Item__Chevron">></text>
     </item>
 
+    <item key="refresh-infinite-scroll" style="Item" href="/list/refresh_infinite_scroll.xml">
+      <text style="Item__Label">Refresh And Infinite Scroll</text>
+      <text style="Item__Chevron">></text>
+    </item>
+
   </list>
 </body>
 </screen>

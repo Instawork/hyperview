@@ -77,7 +77,6 @@
 </header>
 
 <body style="Body" scroll="true">
-
   <list>
     <item key="layout" style="Item" href="/ui_elements/index.xml">
       <view style="Item__Left">

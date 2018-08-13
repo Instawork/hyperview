@@ -1,4 +1,10 @@
-<list href="/list/_refresh_load2.xml" action="replace" trigger="refresh" style="List">
+<list
+  style="List"
+  href="/list/_refresh_load2.xml"
+  action="replace"
+  trigger="refresh"
+  delay="1000"
+>
   <item key="new_item" style="Item">
     <text style="Item__Label,Item__Label--Special">New Item</text>
   </item>

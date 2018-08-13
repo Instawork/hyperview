@@ -171,6 +171,12 @@
       <sectiontitle style="List__Header">
         <text style="List__HeaderText">Indicator</text>
       </sectiontitle>
+
+      <item key="indicator" style="Item" href="/dynamic_elements/indicator.xml">
+        <text style="Item__Label">Indicator</text>
+        <text style="Item__Chevron">></text>
+      </item>
+
     </section>
   </sectionlist>
 </body>

@@ -23,13 +23,18 @@ import { NavigationActions } from 'react-navigation';
 
 import { DOMParser, XMLSerializer } from 'xmldom';
 
-const ROOT = 'http://192.168.7.20:8080';
+//const ROOT = 'http://192.168.7.20:8080';
 //const ROOT = 'http://10.1.10.14:8080';
-//const ROOT = 'http://127.0.0.1:8080';
+const ROOT = 'http://127.0.0.1:8080';
 
 
 const ROUTE_KEYS = {
 };
+
+
+function later(delay) {
+  return new Promise(resolve => setTimeout(resolve, delay));
+}
 
 
 /**
@@ -50,8 +55,15 @@ class HVFlatList extends React.Component {
     const path = element.getAttribute('href');
     const action = element.getAttribute('action') || 'append';
     const targetId = element.getAttribute('target') || null;
+    const indicatorId = element.getAttribute('indicator') || null;
+    const delay = element.getAttribute('delay');
+    const once = element.getAttribute('once') || null;
 
-    onUpdate(path, action, element, targetId, {
+    onUpdate(path, action, element, {
+      targetId,
+      indicatorId,
+      delay,
+      once,
       onEnd: () => {
         this.setState({refreshing: false});
       }
@@ -109,8 +121,15 @@ class HVSectionList extends React.Component {
     const path = element.getAttribute('href');
     const action = element.getAttribute('action') || 'append';
     const targetId = element.getAttribute('target') || null;
+    const indicatorId = element.getAttribute('indicator') || null;
+    const delay = element.getAttribute('delay');
+    const once = element.getAttribute('once') || null;
 
-    onUpdate(path, action, element, targetId, {
+    onUpdate(path, action, element, {
+      targetId,
+      indicatorId,
+      delay,
+      once,
       onEnd: () => {
         this.setState({refreshing: false});
       }
@@ -255,7 +274,10 @@ class HyperRef extends React.Component {
       return() => {
         const path = element.getAttribute('href');
         const targetId = element.getAttribute('target') || null;
-        onUpdate(path, action, element, targetId);
+        const indicatorId = element.getAttribute('indicator') || null;
+        const delay = element.getAttribute('delay');
+        const once = element.getAttribute('once') || null;
+        onUpdate(path, action, element, { targetId, indicatorId, delay, once });
       }
     }
   }
@@ -649,6 +671,13 @@ function renderChildren(element, navigation, stylesheet, animations, onUpdate) {
  *
  */
 function renderElement(element, navigation, stylesheet, animations, onUpdate, options) {
+
+  if (element.nodeType == 1) {
+    if (element.getAttribute('hide') == 'true') {
+      return null;
+    }
+  }
+
   switch (element.tagName) {
     case 'body':
       return body(element, navigation, stylesheet, animations, onUpdate); 
@@ -913,20 +942,43 @@ class HyperScreen extends React.Component {
   }
 
   // UPDATE FRAGMENTS ON SCREEN
-  onUpdate(href, action, currentElement, targetId, opts) {
+  onUpdate(href, action, currentElement, opts) {
     const options = opts || {};
+    const { targetId, indicatorId, delay, once, onEnd } = options;
+
     const url = ROOT + href;
-    fetch(url, {headers: {'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache', 'Expires': 0}})
+
+    if (once && currentElement.getAttribute('ranOnce')) {
+      console.log('already fetched: ', url);
+      onEnd && onEnd();
+      return;
+    }
+
+    let targetElement = targetId ? this.state.doc.getElementById(targetId) : currentElement;
+    if (!targetElement) {
+      targetElement = currentElement;
+    }
+
+    const indicatorElement = indicatorId ? this.state.doc.getElementById(indicatorId) : null;
+    if (indicatorElement) {
+      indicatorElement.setAttribute('hide', 'false');
+      const loadingRoot = this.shallowCloneToRoot(indicatorElement.parentNode);
+      this.setState({
+        doc: loadingRoot,
+      });
+    }
+
+    const fetchPromise = () => fetch(url, {headers: {'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache', 'Expires': 0}})
       .then((response) => response.text())
       .then((responseText) => {
-
         let newRoot = this.state.doc;
 
-        const newElement = this.parser.parseFromString(responseText).documentElement;
-        let targetElement = targetId ? this.state.doc.getElementById(targetId) : currentElement;
-        if (!targetElement) {
-          targetElement = currentElement;
+        if (once) {
+          currentElement.setAttribute('ranOnce', 'true');
+          newRoot = this.shallowCloneToRoot(currentElement.parentNode);
         }
+
+        const newElement = this.parser.parseFromString(responseText).documentElement;
 
         if (action == 'replace') {
           const parentElement = targetElement.parentNode;
@@ -956,12 +1008,23 @@ class HyperScreen extends React.Component {
           newRoot = this.shallowCloneToRoot(targetElement);
         }
 
+        if (indicatorElement) {
+          indicatorElement.setAttribute('hide', 'true');
+          newRoot = this.shallowCloneToRoot(indicatorElement.parentNode);
+        }
+
         this.setState({
           doc: newRoot,
         });
 
-        options.onEnd && options.onEnd();
+        onEnd && onEnd();
       });
+
+      if (delay) {
+        later(1000).then(fetchPromise);
+      } else {
+        fetchPromise();
+      }
   }
 
   shallowClone(element) {
@@ -1032,6 +1095,7 @@ const MainStack = createStackNavigator(
   {
     initialRouteName: 'Stack',
     initialRouteParams: {
+      //href: '/dynamic_elements/indicator.xml',
       href: '/index.xml',
     }
   }
