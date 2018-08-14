@@ -41,7 +41,7 @@
   action="append"
   target="myList"
   delay="1000"
-  indicator="myIndicator"
+  show-during-load="myIndicator"
   once="true"
 >
   <text style="Item__Label">Added: List 30</text>

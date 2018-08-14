@@ -55,13 +55,15 @@ class HVFlatList extends React.Component {
     const path = element.getAttribute('href');
     const action = element.getAttribute('action') || 'append';
     const targetId = element.getAttribute('target') || null;
-    const indicatorId = element.getAttribute('indicator') || null;
+    const showIndicatorIds = element.getAttribute('show-during-load') || null;
+    const hideIndicatorIds = element.getAttribute('hide-during-load') || null;
     const delay = element.getAttribute('delay');
     const once = element.getAttribute('once') || null;
 
     onUpdate(path, action, element, {
       targetId,
-      indicatorId,
+      showIndicatorIds,
+      hideIndicatorIds,
       delay,
       once,
       onEnd: () => {
@@ -121,13 +123,15 @@ class HVSectionList extends React.Component {
     const path = element.getAttribute('href');
     const action = element.getAttribute('action') || 'append';
     const targetId = element.getAttribute('target') || null;
-    const indicatorId = element.getAttribute('indicator') || null;
+    const showIndicatorIds = element.getAttribute('show-during-load') || null;
+    const hideIndicatorIds = element.getAttribute('hide-during-load') || null;
     const delay = element.getAttribute('delay');
     const once = element.getAttribute('once') || null;
 
     onUpdate(path, action, element, {
       targetId,
-      indicatorId,
+      showIndicatorIds,
+      hideIndicatorIds,
       delay,
       once,
       onEnd: () => {
@@ -274,10 +278,11 @@ class HyperRef extends React.Component {
       return() => {
         const path = element.getAttribute('href');
         const targetId = element.getAttribute('target') || null;
-        const indicatorId = element.getAttribute('indicator') || null;
+        const showIndicatorIds = element.getAttribute('show-during-load') || null;
+        const hideIndicatorIds = element.getAttribute('hide-during-load') || null;
         const delay = element.getAttribute('delay');
         const once = element.getAttribute('once') || null;
-        onUpdate(path, action, element, { targetId, indicatorId, delay, once });
+        onUpdate(path, action, element, { targetId, showIndicatorIds, hideIndicatorIds, delay, once });
       }
     }
   }
@@ -607,9 +612,10 @@ function sectionlist(element, navigation, stylesheet, animations, onUpdate) {
  *
  */
 function spinner(element, navigation, stylesheet, animations, onUpdate) {
+  const color = element.getAttribute('color') || undefined;
   return React.createElement(
     ActivityIndicator,
-    {},
+    { color },
   );
 }
 
@@ -944,38 +950,67 @@ class HyperScreen extends React.Component {
   // UPDATE FRAGMENTS ON SCREEN
   onUpdate(href, action, currentElement, opts) {
     const options = opts || {};
-    const { targetId, indicatorId, delay, once, onEnd } = options;
+    const { targetId, showIndicatorIds, hideIndicatorIds, delay, once, onEnd } = options;
+    const serializer = new XMLSerializer();
 
     const url = ROOT + href;
 
-    if (once && currentElement.getAttribute('ranOnce')) {
-      console.log('already fetched: ', url);
+    if (once && currentElement.getAttribute('ran-once')) {
+      // This action is only supposed to run once, and it already ran,
+      // so there's nothing more to do.
       onEnd && onEnd();
       return;
     }
 
-    let targetElement = targetId ? this.state.doc.getElementById(targetId) : currentElement;
-    if (!targetElement) {
-      targetElement = currentElement;
+    let newRoot = this.state.doc;
+    let changedIndicator = false;
+
+    // Update the DOM to show some indicators during the request.
+    if (showIndicatorIds) {
+      showIndicatorIds.split(' ').forEach((id) => {
+        const el = newRoot.getElementById(id);
+        if (el) {
+          el.setAttribute('hide', 'false');
+          newRoot = this.shallowCloneToRoot(el.parentNode);
+          changedIndicator = true;
+        }
+      });
     }
 
-    const indicatorElement = indicatorId ? this.state.doc.getElementById(indicatorId) : null;
-    if (indicatorElement) {
-      indicatorElement.setAttribute('hide', 'false');
-      const loadingRoot = this.shallowCloneToRoot(indicatorElement.parentNode);
+    // Update the DOM to hide some indicators during the request.
+    if (hideIndicatorIds) {
+      hideIndicatorIds.split(' ').forEach((id) => {
+        const el = newRoot.getElementById(id);
+        if (el) {
+          el.setAttribute('hide', 'true');
+          newRoot = this.shallowCloneToRoot(el.parentNode);
+          changedIndicator = true;
+        }
+      });
+    }
+
+    if (changedIndicator) {
       this.setState({
-        doc: loadingRoot,
+        doc: newRoot,
       });
     }
 
     const fetchPromise = () => fetch(url, {headers: {'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache', 'Expires': 0}})
       .then((response) => response.text())
       .then((responseText) => {
-        let newRoot = this.state.doc;
 
         if (once) {
-          currentElement.setAttribute('ranOnce', 'true');
+          // If the action is only supposed to run once, set an attribute indicating
+          // that it already ran, so that it won't run again next time the action is triggered.
+          currentElement.setAttribute('ran-once', 'true');
           newRoot = this.shallowCloneToRoot(currentElement.parentNode);
+        }
+
+        // If a target is specified and exists, use it. Otherwise, the action target defaults
+        // to the element triggering the action.
+        let targetElement = targetId ? newRoot.getElementById(targetId) : currentElement;
+        if (!targetElement) {
+          targetElement = currentElement;
         }
 
         const newElement = this.parser.parseFromString(responseText).documentElement;
@@ -1008,9 +1043,28 @@ class HyperScreen extends React.Component {
           newRoot = this.shallowCloneToRoot(targetElement);
         }
 
-        if (indicatorElement) {
-          indicatorElement.setAttribute('hide', 'true');
-          newRoot = this.shallowCloneToRoot(indicatorElement.parentNode);
+        // Update the DOM to hide the indicators shown during the request.
+        if (showIndicatorIds) {
+          showIndicatorIds.split(' ').forEach((id) => {
+            const el = newRoot.getElementById(id);
+            if (el) {
+              el.setAttribute('hide', 'true');
+              newRoot = this.shallowCloneToRoot(el.parentNode);
+              changedIndicator = true;
+            }
+          });
+        }
+
+        // Update the DOM to show the indicators hidden during the request.
+        if (hideIndicatorIds) {
+          hideIndicatorIds.split(' ').forEach((id) => {
+            const el = newRoot.getElementById(id);
+            if (el) {
+              el.setAttribute('hide', 'false');
+              newRoot = this.shallowCloneToRoot(el.parentNode);
+              changedIndicator = true;
+            }
+          });
         }
 
         this.setState({
@@ -1018,15 +1072,21 @@ class HyperScreen extends React.Component {
         });
 
         onEnd && onEnd();
-      });
-
-      if (delay) {
-        later(1000).then(fetchPromise);
-      } else {
-        fetchPromise();
       }
+    );
+
+    if (delay) {
+      later(delay).then(fetchPromise);
+    } else {
+      fetchPromise();
+    }
   }
 
+  /**
+   * Clones the element and moves all children from the original element
+   * to the clone. The returned element will be a new object, but all of the child
+   * nodes will be existing objects.
+   */
   shallowClone(element) {
     const newElement = element.cloneNode(false);
     let childNode = element.firstChild;
@@ -1038,6 +1098,11 @@ class HyperScreen extends React.Component {
     return newElement;
   }
 
+  /**
+   * Clones all elements from the given element up to the root of the DOM.
+   * Returns the new root object. Essentially, this produces a new DOM object
+   * that re-uses as many existing nodes as possible.
+   */
   shallowCloneToRoot(element) {
     const elementClone = this.shallowClone(element);
     if (element.nodeType == 9) {

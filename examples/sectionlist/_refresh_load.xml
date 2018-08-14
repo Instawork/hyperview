@@ -2,6 +2,7 @@
     trigger="refresh"
     action="replace"
     href="/sectionlist/_refresh_load2.xml"
+    delay="700"
   >
     <section>
       <sectiontitle style="List__Header">

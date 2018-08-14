@@ -61,7 +61,6 @@
     flex="1"
     flexDirection="column"
     alignItems="center"
-    justifyContent="center"
   />
   <rule id="Button__Label"
     color="white"
@@ -69,44 +68,28 @@
     fontSize="24"
   />
 
-  <rule id="Container"
-    borderRadius="16"
-    borderWidth="2"
-    borderColor="#e1e1e1"
-    padding="24"
-    margin="24"
-  />
-  <rule id="Container__Label"
-    color="black"
-    fontFamily="HKGrotesk-Regular"
-    fontSize="16"
+  <rule id="Spacer"
+    flex="1"
+    height="1024"
   />
 </styles>
 
 <screen>
 <header style="Header">
   <text style="Header__Back" href="/dynamic_elements/index.xml" action="back">Back</text>
-  <text style="Header__Title">Indicator</text>
+  <text style="Header__Title">Visible Once</text>
 </header>
 
 <body style="Body" scroll="true">
   <text style="Description">
-    Tapping the button below will request an XML fragment and replace the child element in the button. An indicator appears during loading.
+    Scrolling down to the button will append to the button content. Subsequent views will not trigger another append.
   </text>
 
-  <view
-      style="Button"
-      href="/dynamic_elements/_target_sibling_fragment.xml" 
-      action="replace"
-      target="container"
-      indicator="myIndicator"
-      delay="500"
-  >
-    <text style="Button__Label">Press me</text>
+  <view style="Spacer">
   </view>
 
-  <spinner hide="true" id="myIndicator" />
-  <view id="container" style="Container">
+  <view style="Button" href="/dynamic_elements/_append_fragment.xml" action="append" trigger="visible" once="true">
+    <text style="Button__Label">Scroll to me</text>
   </view>
 </body>
 </screen>

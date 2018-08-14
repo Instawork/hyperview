@@ -135,6 +135,11 @@
         <text style="Item__Chevron">></text>
       </item>
 
+      <item key="visible_once" style="Item" href="/dynamic_elements/visible_once.xml">
+        <text style="Item__Label">Visible Once</text>
+        <text style="Item__Chevron">></text>
+      </item>
+
       <item key="refresh" style="Item" href="/dynamic_elements/refresh.xml">
         <text style="Item__Label">Refresh</text>
         <text style="Item__Chevron">></text>
@@ -172,8 +177,38 @@
         <text style="List__HeaderText">Indicator</text>
       </sectiontitle>
 
-      <item key="indicator" style="Item" href="/dynamic_elements/indicator.xml">
-        <text style="Item__Label">Indicator</text>
+      <item key="show_indicator" style="Item" href="/dynamic_elements/show_indicator.xml">
+        <text style="Item__Label">Show Indicator</text>
+        <text style="Item__Chevron">></text>
+      </item>
+
+      <item key="show_multiple_indicators" style="Item" href="/dynamic_elements/show_multiple_indicators.xml">
+        <text style="Item__Label">Show Multiple Indicators</text>
+        <text style="Item__Chevron">></text>
+      </item>
+
+      <item key="hide_indicator" style="Item" href="/dynamic_elements/hide_indicator.xml">
+        <text style="Item__Label">Hide Indicator</text>
+        <text style="Item__Chevron">></text>
+      </item>
+
+      <item key="hide_multiple_indicators" style="Item" href="/dynamic_elements/hide_multiple_indicators.xml">
+        <text style="Item__Label">Hide Multiple Indicators</text>
+        <text style="Item__Chevron">></text>
+      </item>
+
+      <item key="show_hide_multiple_indicators" style="Item" href="/dynamic_elements/show_hide_multiple_indicators.xml">
+        <text style="Item__Label">Show/Hide Multiple Indicators</text>
+        <text style="Item__Chevron">></text>
+      </item>
+
+      <item key="inline_button_indicator" style="Item" href="/dynamic_elements/inline_button_indicator.xml">
+        <text style="Item__Label">Inline Button Indicator</text>
+        <text style="Item__Chevron">></text>
+      </item>
+
+      <item key="shimmer_indicator" style="Item" href="/dynamic_elements/shimmer_indicator.xml">
+        <text style="Item__Label">Shimmer Indicator</text>
         <text style="Item__Chevron">></text>
       </item>
 
