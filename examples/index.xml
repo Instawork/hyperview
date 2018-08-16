@@ -55,16 +55,6 @@
     fontSize="18"
     fontFamily="HKGrotesk-Regular"
   />
-  <rule id="Item__Label--WIP"
-    backgroundColor="#FBB90E"
-    color="white"
-    paddingLeft="4"
-    paddingRight="4"
-    fontFamily="HKGrotesk-Bold"
-    fontSize="12"
-    lineHeight="24"
-    marginLeft="8"
-  />
   <rule id="Item__Chevron"
     fontSize="18"
     fontFamily="HKGrotesk-Bold"
@@ -97,17 +87,16 @@
       <text style="Item__Chevron">></text>
     </item>
 
-    <item key="forms" style="Item"  href="/forms/index.xml">
+    <item key="forms" style="Item" href="/forms/index.xml">
       <view style="Item__Left">
         <text style="Item__Label">Forms</text>
       </view>
       <text style="Item__Chevron">></text>
     </item>
 
-    <item key="navigation" style="Item">
+    <item key="navigation" style="Item" href="/navigation/index.xml">
       <view style="Item__Left">
         <text style="Item__Label">Navigation</text>
-        <text style="Item__Label,Item__Label--WIP">TODO</text>
       </view>
       <text style="Item__Chevron">></text>
     </item>

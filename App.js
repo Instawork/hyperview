@@ -437,7 +437,7 @@ function createNavHandler(element, navigation) {
   let navHandler = null;
   const href = element.getAttribute('href');
   const action = element.getAttribute('action');
-  const preload = element.getAttribute('targetPreload');
+  const showIndicatorId = element.getAttribute('show-during-load');
   const delay = element.getAttribute('delay');
 
   if (!href) {
@@ -466,18 +466,19 @@ function createNavHandler(element, navigation) {
     navHandler = () => navigation.goBack();
   } else {
     navHandler = () => {
-      console.log('navigating to ', key, 'href: ', href, 'preload: ', preload);
+      console.log('navigating to ', key, 'href: ', href, 'indicator id: ', showIndicatorId);
       let preloadScreen = null;
-      if (preload) {
+      if (showIndicatorId) {
         const rootElement = element.ownerDocument;
         const screens = rootElement.getElementsByTagName('screen');
-        preloadScreen = Array.from(screens).find((s) => s.getAttribute('id') == preload);
+        preloadScreen = Array.from(screens).find((s) => s.getAttribute('id') == showIndicatorId);
       }
       navFunction(
         navRoute,
         {
           href,
           preloadScreen,
+          delay,
         },
         {},
         key
@@ -485,11 +486,7 @@ function createNavHandler(element, navigation) {
     }
   }
 
-  if (delay) {
-    return () => setTimeout(navHandler, delay);
-  } else {
-    return navHandler;
-  }
+  return navHandler;
 }
 
 /**
@@ -922,6 +919,8 @@ class HyperScreen extends React.Component {
 
     this.needsLoad = true;
     if (preloadScreen) {
+      const header = renderHeader(preloadScreen, this.props.navigation, preloadStyles, animations, this.onUpdate);
+      this.props.navigation.setParams({ header });
       this.setState({
         doc: preloadScreen,
         styles: preloadStyles,
@@ -1155,9 +1154,11 @@ class HyperScreen extends React.Component {
   }
 
   load() {
+    const delay = this.props.navigation.getParam('delay');
     const path = this.state.path;
+
     const url = ROOT + path;
-    fetch(url, {headers: {'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache', 'Expires': 0}})
+    const fetchPromise = () => fetch(url, {headers: {'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache', 'Expires': 0}})
       .then((response) => response.text())
       .then((responseText) => {
         const doc = this.parser.parseFromString(responseText);
@@ -1177,6 +1178,12 @@ class HyperScreen extends React.Component {
           animations: animations,
         });
       });
+
+    if (delay) {
+      later(delay).then(fetchPromise);
+    } else {
+      fetchPromise();
+    }
   }
 
   render() {

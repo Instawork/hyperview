@@ -1,0 +1,146 @@
+<doc>
+
+<styles>
+  <rule id="Header"
+    height="72"
+    alignItems="center"
+    backgroundColor="white"
+    borderBottomWidth="1"
+    borderBottomColor="#eee"
+    paddingTop="24"
+    paddingLeft="24"
+    paddingRight="24"
+    flexDirection="row"
+  />
+  <rule id="Header__Back"
+    color="blue"
+    fontFamily="HKGrotesk-SemiBold"
+    fontSize="16"
+    paddingRight="16"
+  />
+  <rule id="Header__Title"
+    fontFamily="HKGrotesk-SemiBold"
+    fontSize="24"
+    color="black"
+  />
+  <rule id="Body"
+    backgroundColor="white"
+    flex="1"
+  />
+  <rule id="Description"
+    fontFamily="HKGrotesk-Regular"
+    fontSize="16"
+    margin="24"
+    marginBottom="0"
+  />
+  <rule id="Item"
+    borderBottomWidth="1"
+    borderBottomColor="#eee"
+    height="48"
+    flex="1"
+    flexDirection="row"
+    alignItems="center"
+    justifyContent="space-between"
+    paddingLeft="24"
+    paddingRight="24"
+  />
+  <rule id="Item__Label"
+    fontSize="18"
+    fontFamily="HKGrotesk-Regular"
+  />
+  <rule id="Item__Chevron"
+    fontSize="18"
+    fontFamily="HKGrotesk-Bold"
+  />
+
+  <rule id="Button"
+    padding="24"
+    backgroundColor="#63CB76"
+    borderRadius="16"
+    margin="24"
+    flex="1"
+    flexDirection="row"
+    justifyContent="center"
+  />
+  <rule id="Button__Label"
+    color="white"
+    fontFamily="HKGrotesk-Bold"
+    fontSize="24"
+  />
+</styles>
+
+<screen>
+<header style="Header">
+  <text style="Header__Back" href="/navigation/index.xml" action="back">Back</text>
+  <text style="Header__Title">Push</text>
+</header>
+
+<body style="Body" scroll="true">
+  <text style="Description">
+    Tapping the button below will request an XML screen and push it onto the stack.
+  </text>
+
+  <view style="Button" href="/navigation/pushed.xml" action="push">
+    <text style="Button__Label">Push</text>
+  </view>
+
+  <view style="Button" href="/navigation/pushed.xml" action="push" show-during-load="loadingScreen" delay="1000">
+    <text style="Button__Label">Push with indicator</text>
+  </view>
+</body>
+</screen>
+
+<screen id="loadingScreen">
+<styles>
+  <rule id="Header"
+    height="72"
+    alignItems="center"
+    backgroundColor="white"
+    borderBottomWidth="1"
+    borderBottomColor="#eee"
+    paddingTop="24"
+    paddingLeft="24"
+    paddingRight="24"
+    flexDirection="row"
+  />
+  <rule id="Header__Back"
+    color="blue"
+    fontFamily="HKGrotesk-SemiBold"
+    fontSize="16"
+    paddingRight="16"
+  />
+  <rule id="Header__Title"
+    fontFamily="HKGrotesk-SemiBold"
+    fontSize="24"
+    color="black"
+  />
+  <rule id="Body"
+    backgroundColor="white"
+    flex="1"
+  />
+  <rule id="Description"
+    fontFamily="HKGrotesk-Regular"
+    fontSize="16"
+    margin="24"
+    marginBottom="0"
+  />
+  <rule id="Loading"
+    flex="1"
+    justifyContent="center"
+    alignItems="center"
+  />
+</styles>
+<header style="Header">
+  <text style="Header__Back" href="/navigation/index.xml" action="back">Back</text>
+  <text style="Header__Title">Loading...</text>
+</header>
+
+<body style="Body">
+  <view style="Loading">
+    <text style="Description">Custom loading screen...</text>
+    <spinner />
+  </view>
+</body>
+</screen>
+
+</doc>
