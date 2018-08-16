@@ -337,7 +337,21 @@ class HyperRef extends React.Component {
       );
     }
 
+    if (trigger == 'load') {
+      return renderElement(element, navigation, stylesheet, animations, onUpdate, {skipHref: true})
+    }
+
     return null;
+  }
+
+  componentDidMount() {
+    const { element, navigation, onUpdate } = this.props;
+    const href = element.getAttribute('href');
+    const trigger = element.getAttribute('trigger');
+    if (href && trigger == 'load') {
+      const handler = this.createActionHandler(element, navigation, onUpdate);
+      handler();
+    }
   }
 }
 
@@ -424,6 +438,7 @@ function createNavHandler(element, navigation) {
   const href = element.getAttribute('href');
   const action = element.getAttribute('action');
   const preload = element.getAttribute('targetPreload');
+  const delay = element.getAttribute('delay');
 
   if (!href) {
     return navHandler;
@@ -470,7 +485,11 @@ function createNavHandler(element, navigation) {
     }
   }
 
-  return navHandler;
+  if (delay) {
+    return () => setTimeout(navHandler, delay);
+  } else {
+    return navHandler;
+  }
 }
 
 /**

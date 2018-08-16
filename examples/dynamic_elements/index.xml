@@ -144,6 +144,11 @@
         <text style="Item__Label">Refresh</text>
         <text style="Item__Chevron">></text>
       </item>
+
+      <item key="load" style="Item" href="/dynamic_elements/load.xml">
+        <text style="Item__Label">Load</text>
+        <text style="Item__Chevron">></text>
+      </item>
     </section>
     <section>
       <sectiontitle style="List__Header">
