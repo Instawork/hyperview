@@ -68,52 +68,52 @@
 
 <body style="Body" scroll="true">
   <list>
-    <item key="layout" style="Item" href="/ui_elements/index.xml">
+    <item key="layout" style="Item" href="/ui_elements/index.xml" show-during-load="loadingScreen">
       <view style="Item__Left">
         <text style="Item__Label">UI Elements</text>
       </view>
       <text style="Item__Chevron">></text>
     </item>
 
-    <item key="list" style="Item" href="/list/index.xml">
+    <item key="list" style="Item" href="/list/index.xml" show-during-load="loadingScreen">
       <text style="Item__Label">List</text>
       <text style="Item__Chevron">></text>
     </item>
 
-    <item key="sectionlist" style="Item" href="/sectionlist/index.xml">
+    <item key="sectionlist" style="Item" href="/sectionlist/index.xml" show-during-load="loadingScreen">
       <view style="Item__Left">
         <text style="Item__Label">Section List</text>
       </view>
       <text style="Item__Chevron">></text>
     </item>
 
-    <item key="forms" style="Item" href="/forms/index.xml">
+    <item key="forms" style="Item" href="/forms/index.xml" show-during-load="loadingScreen">
       <view style="Item__Left">
         <text style="Item__Label">Forms</text>
       </view>
       <text style="Item__Chevron">></text>
     </item>
 
-    <item key="navigation" style="Item" href="/navigation/index.xml">
+    <item key="navigation" style="Item" href="/navigation/index.xml" show-during-load="loadingScreen">
       <view style="Item__Left">
         <text style="Item__Label">Navigation</text>
       </view>
       <text style="Item__Chevron">></text>
     </item>
 
-    <item key="dynamic-elements" style="Item" href="/dynamic_elements/index.xml">
+    <item key="dynamic-elements" style="Item" href="/dynamic_elements/index.xml" show-during-load="loadingScreen">
       <text style="Item__Label">Dynamic Elements</text>
       <text style="Item__Chevron">></text>
     </item>
 
-    <item key="styling" style="Item" href="/styling/index.xml">
+    <item key="styling" style="Item" href="/styling/index.xml" show-during-load="loadingScreen">
       <view style="Item__Left">
         <text style="Item__Label">Styling</text>
       </view>
       <text style="Item__Chevron">></text>
     </item>
 
-    <item key="animation" style="Item" href="/animation/index.xml">
+    <item key="animation" style="Item" href="/animation/index.xml" show-during-load="loadingScreen">
       <view style="Item__Left">
         <text style="Item__Label">Animation</text>
       </view>
@@ -123,6 +123,41 @@
 
   </list>
 </body>
+</screen>
+
+<screen id="loadingScreen">
+<styles>
+  <rule id="Header"
+    height="72"
+    alignItems="center"
+    backgroundColor="white"
+    borderBottomWidth="1"
+    borderBottomColor="#eee"
+    paddingTop="24"
+    paddingLeft="24"
+    paddingRight="24"
+    flexDirection="row"
+  />
+  <rule id="Header__Back"
+    color="blue"
+    fontFamily="HKGrotesk-SemiBold"
+    fontSize="16"
+    paddingRight="16"
+  />
+  <rule id="Header__Title"
+    fontFamily="HKGrotesk-SemiBold"
+    fontSize="24"
+    color="black"
+  />
+  <rule id="Body"
+    backgroundColor="white"
+    flex="1"
+  />
+</styles>
+<header style="Header">
+  <text style="Header__Back" href="/navigation/index.xml" action="back">Back</text>
+</header>
+<body style="Body" />
 </screen>
 
 </doc>

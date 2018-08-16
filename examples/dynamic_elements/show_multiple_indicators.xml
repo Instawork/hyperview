@@ -86,7 +86,7 @@
 <screen>
 <header style="Header">
   <text style="Header__Back" href="/dynamic_elements/index.xml" action="back">Back</text>
-  <text style="Header__Title">Show Indicator</text>
+  <text style="Header__Title">Show Multiple Indicators</text>
 </header>
 
 <body style="Body" scroll="true">

@@ -80,14 +80,14 @@
 <body style="Body" scroll="true">
 
   <list>
-    <item key="text_input" style="Item" href="/forms/text_input.xml">
+    <item key="text_input" style="Item" href="/forms/text_input.xml" show-during-load="loadingScreen">
       <view style="Item__Left">
         <text style="Item__Label">Text Input</text>
       </view>
       <text style="Item__Chevron">></text>
     </item>
 
-    <item key="text_area" style="Item" href="/forms/textarea.xml">
+    <item key="text_area" style="Item" href="/forms/textarea.xml" show-during-load="loadingScreen">
       <view style="Item__Left">
         <text style="Item__Label">Text Area</text>
       </view>
@@ -95,6 +95,41 @@
     </item>
   </list>
 </body>
+</screen>
+
+<screen id="loadingScreen">
+<styles>
+  <rule id="Header"
+    height="72"
+    alignItems="center"
+    backgroundColor="white"
+    borderBottomWidth="1"
+    borderBottomColor="#eee"
+    paddingTop="24"
+    paddingLeft="24"
+    paddingRight="24"
+    flexDirection="row"
+  />
+  <rule id="Header__Back"
+    color="blue"
+    fontFamily="HKGrotesk-SemiBold"
+    fontSize="16"
+    paddingRight="16"
+  />
+  <rule id="Header__Title"
+    fontFamily="HKGrotesk-SemiBold"
+    fontSize="24"
+    color="black"
+  />
+  <rule id="Body"
+    backgroundColor="white"
+    flex="1"
+  />
+</styles>
+<header style="Header">
+  <text style="Header__Back" href="/navigation/index.xml" action="back">Back</text>
+</header>
+<body style="Body" />
 </screen>
 
 </doc>

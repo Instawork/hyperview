@@ -98,7 +98,7 @@
 <screen>
 <header style="Header">
   <text style="Header__Back" href="/dynamic_elements/index.xml" action="back">Back</text>
-  <text style="Header__Title">Show/Hide Indicators</text>
+  <text style="Header__Title">Inline Indicator</text>
 </header>
 
 <body style="Body" scroll="true">

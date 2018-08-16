@@ -90,7 +90,7 @@
 <screen>
 <header style="Header">
   <text style="Header__Back" href="/dynamic_elements/index.xml" action="back">Back</text>
-  <text style="Header__Title">Hide Indicator</text>
+  <text style="Header__Title">Hide Multiple Indicators</text>
 </header>
 
 <body style="Body" scroll="true">

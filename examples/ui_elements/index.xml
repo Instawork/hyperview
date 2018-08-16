@@ -66,23 +66,58 @@
 <body style="Body" scroll="true">
   <list>
 
-    <item key="view" style="Item" href="/ui_elements/view.xml">
+    <item key="view" style="Item" href="/ui_elements/view.xml" show-during-load="loadingScreen">
       <text style="Item__Label">View</text>
       <text style="Item__Chevron">></text>
     </item>
 
-    <item key="text" style="Item" href="/ui_elements/text.xml">
+    <item key="text" style="Item" href="/ui_elements/text.xml" show-during-load="loadingScreen">
       <text style="Item__Label">Text</text>
       <text style="Item__Chevron">></text>
     </item>
 
-    <item key="image" style="Item" href="/ui_elements/image.xml">
+    <item key="image" style="Item" href="/ui_elements/image.xml" show-during-load="loadingScreen">
       <text style="Item__Label">Image</text>
       <text style="Item__Chevron">></text>
     </item>
 
   </list>
 </body>
+</screen>
+
+<screen id="loadingScreen">
+<styles>
+  <rule id="Header"
+    height="72"
+    alignItems="center"
+    backgroundColor="white"
+    borderBottomWidth="1"
+    borderBottomColor="#eee"
+    paddingTop="24"
+    paddingLeft="24"
+    paddingRight="24"
+    flexDirection="row"
+  />
+  <rule id="Header__Back"
+    color="blue"
+    fontFamily="HKGrotesk-SemiBold"
+    fontSize="16"
+    paddingRight="16"
+  />
+  <rule id="Header__Title"
+    fontFamily="HKGrotesk-SemiBold"
+    fontSize="24"
+    color="black"
+  />
+  <rule id="Body"
+    backgroundColor="white"
+    flex="1"
+  />
+</styles>
+<header style="Header">
+  <text style="Header__Back" href="/navigation/index.xml" action="back">Back</text>
+</header>
+<body style="Body" />
 </screen>
 
 </doc>

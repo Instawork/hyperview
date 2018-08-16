@@ -67,7 +67,7 @@
 <screen>
 <header style="Header">
   <text style="Header__Back" href="/list/index.xml" action="back">Back</text>
-  <text style="Header__Title">List With Infinite Scroll</text>
+  <text style="Header__Title">Refresh & Infinite Scroll</text>
 </header>
 
 <body style="Body">
