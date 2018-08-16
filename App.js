@@ -24,8 +24,8 @@ import { NavigationActions } from 'react-navigation';
 import { DOMParser, XMLSerializer } from 'xmldom';
 
 //const ROOT = 'http://192.168.7.20:8080';
-//const ROOT = 'http://10.1.10.14:8080';
-const ROOT = 'http://127.0.0.1:8080';
+const ROOT = 'http://10.1.10.14:8080';
+//const ROOT = 'http://127.0.0.1:8080';
 
 
 const ROUTE_KEYS = {
@@ -947,6 +947,31 @@ class HyperScreen extends React.Component {
     }
   }
 
+  fetchElement(href, root) {
+    if (href.startsWith('#')) {
+      return new Promise((resolve, reject) => {
+        const element = root.getElementById(href.slice(1));
+        if (element) {
+          resolve(element.cloneNode(true));
+        }
+        reject();
+      });
+    }
+
+    const url = ROOT + href;
+    return fetch(
+      url,
+      {
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': 0
+        }
+      })
+      .then((response) => response.text())
+      .then((responseText) => this.parser.parseFromString(responseText).documentElement);
+  }
+
   // UPDATE FRAGMENTS ON SCREEN
   onUpdate(href, action, currentElement, opts) {
     const options = opts || {};
@@ -995,9 +1020,8 @@ class HyperScreen extends React.Component {
       });
     }
 
-    const fetchPromise = () => fetch(url, {headers: {'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache', 'Expires': 0}})
-      .then((response) => response.text())
-      .then((responseText) => {
+    const fetchPromise = () => this.fetchElement(href, newRoot)
+      .then((newElement) => {
 
         if (once) {
           // If the action is only supposed to run once, set an attribute indicating
@@ -1012,8 +1036,6 @@ class HyperScreen extends React.Component {
         if (!targetElement) {
           targetElement = currentElement;
         }
-
-        const newElement = this.parser.parseFromString(responseText).documentElement;
 
         if (action == 'replace') {
           const parentElement = targetElement.parentNode;

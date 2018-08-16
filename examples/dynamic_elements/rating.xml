@@ -1,0 +1,139 @@
+<doc>
+
+<styles>
+  <rule id="Header"
+    height="72"
+    alignItems="center"
+    backgroundColor="white"
+    borderBottomWidth="1"
+    borderBottomColor="#eee"
+    paddingTop="24"
+    paddingLeft="24"
+    paddingRight="24"
+    flexDirection="row"
+  />
+  <rule id="Header__Back"
+    color="blue"
+    fontFamily="HKGrotesk-SemiBold"
+    fontSize="16"
+    paddingRight="16"
+  />
+  <rule id="Header__Title"
+    fontFamily="HKGrotesk-SemiBold"
+    fontSize="24"
+    color="black"
+  />
+  <rule id="Body"
+    backgroundColor="white"
+    flex="1"
+  />
+  <rule id="Description"
+    fontFamily="HKGrotesk-Regular"
+    fontSize="16"
+    margin="24"
+    marginBottom="0"
+  />
+  <rule id="Item"
+    borderBottomWidth="1"
+    borderBottomColor="#eee"
+    height="48"
+    flex="1"
+    flexDirection="row"
+    alignItems="center"
+    justifyContent="space-between"
+    paddingLeft="24"
+    paddingRight="24"
+  />
+  <rule id="Item__Label"
+    fontSize="18"
+    fontFamily="HKGrotesk-Regular"
+  />
+  <rule id="Item__Chevron"
+    fontSize="18"
+    fontFamily="HKGrotesk-Bold"
+  />
+
+  <rule id="Rating"
+    flex="1"
+    flexDirection="row"
+    margin="24"
+  />
+  <rule id="Rating__Star"
+    width="48"
+    height="48"
+    margin="8"
+    borderRadius="24"
+    backgroundColor="#e1e1e1"
+  />
+  <rule id="Rating__Star--Filled"
+    backgroundColor="#63CB76"
+  />
+
+</styles>
+
+<screen>
+<header style="Header">
+  <text style="Header__Back" href="/dynamic_elements/index.xml" action="back">Back</text>
+  <text style="Header__Title">Rating</text>
+</header>
+
+<body style="Body" scroll="true">
+  <text style="Description">
+    Tapping the circles below will activate the previous circles. This is done with fragment replacements from a hidden view.
+  </text>
+
+  <view id="rating">
+    <view style="Rating" id="star0">
+      <view style="Rating__Star" href="#star1" action="replace-inner" target="rating" />
+      <view style="Rating__Star" href="#star2" action="replace-inner" target="rating" />
+      <view style="Rating__Star" href="#star3" action="replace-inner" target="rating" />
+      <view style="Rating__Star" href="#star4" action="replace-inner" target="rating" />
+      <view style="Rating__Star" href="#star5" action="replace-inner" target="rating" />
+    </view>
+  </view>
+
+  <view hide="true">
+    <view style="Rating" id="star1">
+      <view style="Rating__Star,Rating__Star--Filled" href="#star1" action="replace-inner" target="rating" />
+      <view style="Rating__Star" href="#star2" action="replace-inner" target="rating" />
+      <view style="Rating__Star" href="#star3" action="replace-inner" target="rating" />
+      <view style="Rating__Star" href="#star4" action="replace-inner" target="rating" />
+      <view style="Rating__Star" href="#star5" action="replace-inner" target="rating" />
+    </view>
+
+    <view style="Rating" id="star2">
+      <view style="Rating__Star,Rating__Star--Filled" href="#star1" action="replace-inner" target="rating" />
+      <view style="Rating__Star,Rating__Star--Filled" href="#star2" action="replace-inner" target="rating" />
+      <view style="Rating__Star" href="#star3" action="replace-inner" target="rating" />
+      <view style="Rating__Star" href="#star4" action="replace-inner" target="rating" />
+      <view style="Rating__Star" href="#star5" action="replace-inner" target="rating" />
+    </view>
+
+    <view style="Rating" id="star3">
+      <view style="Rating__Star,Rating__Star--Filled" href="#star1" action="replace-inner" target="rating" />
+      <view style="Rating__Star,Rating__Star--Filled" href="#star2" action="replace-inner" target="rating" />
+      <view style="Rating__Star,Rating__Star--Filled" href="#star3" action="replace-inner" target="rating" />
+      <view style="Rating__Star" href="#star4" action="replace-inner" target="rating" />
+      <view style="Rating__Star" href="#star5" action="replace-inner" target="rating" />
+    </view>
+
+    <view style="Rating" id="star4">
+      <view style="Rating__Star,Rating__Star--Filled" href="#star1" action="replace-inner" target="rating" />
+      <view style="Rating__Star,Rating__Star--Filled" href="#star2" action="replace-inner" target="rating" />
+      <view style="Rating__Star,Rating__Star--Filled" href="#star3" action="replace-inner" target="rating" />
+      <view style="Rating__Star,Rating__Star--Filled" href="#star4" action="replace-inner" target="rating" />
+      <view style="Rating__Star" href="#star5" action="replace-inner" target="rating" />
+    </view>
+
+    <view style="Rating" id="star5">
+      <view style="Rating__Star,Rating__Star--Filled" href="#star1" action="replace-inner" target="rating" />
+      <view style="Rating__Star,Rating__Star--Filled" href="#star2" action="replace-inner" target="rating" />
+      <view style="Rating__Star,Rating__Star--Filled" href="#star3" action="replace-inner" target="rating" />
+      <view style="Rating__Star,Rating__Star--Filled" href="#star4" action="replace-inner" target="rating" />
+      <view style="Rating__Star,Rating__Star--Filled" href="#star5" action="replace-inner" target="rating" />
+    </view>
+  </view>
+</body>
+</screen>
+
+</doc>

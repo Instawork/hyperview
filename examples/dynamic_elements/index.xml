@@ -213,6 +213,22 @@
       </item>
 
     </section>
+
+    <section>
+      <sectiontitle style="List__Header">
+        <text style="List__HeaderText">Fragments</text>
+      </sectiontitle>
+
+      <item key="fragment_replace" style="Item" href="/dynamic_elements/fragment_replace.xml">
+        <text style="Item__Label">Replace</text>
+        <text style="Item__Chevron">></text>
+      </item>
+
+      <item key="rating" style="Item" href="/dynamic_elements/rating.xml">
+        <text style="Item__Label">Rating</text>
+        <text style="Item__Chevron">></text>
+      </item>
+    </section>
   </sectionlist>
 </body>
 </screen>
