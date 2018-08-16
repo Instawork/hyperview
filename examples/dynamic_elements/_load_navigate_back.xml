@@ -1,0 +1,9 @@
+<text
+  style="Button__Label"
+  trigger="load"
+  action="back"
+  href="/dynamic_elements/index.xml"
+  delay="300"
+>
+  Gonna go back...
+</text>

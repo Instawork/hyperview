@@ -24,8 +24,8 @@ import { NavigationActions } from 'react-navigation';
 import { DOMParser, XMLSerializer } from 'xmldom';
 
 //const ROOT = 'http://192.168.7.20:8080';
-const ROOT = 'http://10.1.10.14:8080';
-//const ROOT = 'http://127.0.0.1:8080';
+//const ROOT = 'http://10.1.10.14:8080';
+const ROOT = 'http://127.0.0.1:8080';
 
 
 const ROUTE_KEYS = {
