@@ -17,7 +17,7 @@ import {
   View,
 } from 'react-native';
 import VisibilityDetectingView from './VisibilityDetectingView.js';
-import { Font, MapView } from 'expo';
+import { Font } from 'expo';
 import { createStackNavigator } from 'react-navigation';
 import { NavigationActions } from 'react-navigation';
 
@@ -541,57 +541,6 @@ function input(element, navigation, stylesheet, animations, onUpdate) {
 /**
  *
  */
-function map(element, navigation, stylesheet) {
-  const mapProps = {};
-  const geocode = element.getAttribute('geocode');
-  if (geocode) {
-    const parts = geocode.split(',');
-    mapProps.initialRegion = {
-      latitude: parseFloat(parts[0]),
-      longitude: parseFloat(parts[1]),
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
-    };
-  }
-
-  const props = Object.assign(
-    createProps(element, stylesheet),
-    mapProps
-  );
-  return React.createElement(
-    MapView,
-    props,
-    ...renderChildren(element, navigation, stylesheet)
-  );
-}
-
-/**
- *
- */
-function mapMarker(element, navigation, stylesheet) {
-  const mapProps = {};
-  const geocode = element.getAttribute('geocode');
-  if (geocode) {
-    const parts = geocode.split(',');
-    mapProps.coordinate = {
-      latitude: parseFloat(parts[0]),
-      longitude: parseFloat(parts[1]),
-    };
-  }
-
-  const props = Object.assign(
-    createProps(element, stylesheet),
-    mapProps
-  );
-  return React.createElement(
-    MapView.Marker,
-    props
-  );
-}
-
-/**
- *
- */
 function view(element, navigation, stylesheet, animations, onUpdate, options) {
   const { skipHref } = options || {};
   const props = createProps(element, stylesheet, animations);
@@ -716,10 +665,6 @@ function renderElement(element, navigation, stylesheet, animations, onUpdate, op
       return sectionlist(element, navigation, stylesheet, animations, onUpdate); 
     case 'spinner':
       return spinner(element, navigation, stylesheet, animations, onUpdate); 
-    case 'map':
-      return map(element, navigation, stylesheet, animations); 
-    case 'map-marker':
-      return mapMarker(element, navigation, stylesheet); 
   }
 
   if (element.nodeValue && element.nodeValue.trim().length > 0) {

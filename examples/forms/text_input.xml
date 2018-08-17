@@ -21,8 +21,7 @@
           color="black" />
     <rule id="Body"
           backgroundColor="white"
-          flex="1"
-          marginBottom="40" />
+          flex="1" />
     <rule id="Description"
           fontFamily="HKGrotesk-SemiBold"
           fontSize="16"
@@ -70,7 +69,8 @@
     <rule id="help--error"
           color="#FF4847" />
     <rule id="Main"
-          flex="1" />
+          flex="1"
+          marginBottom="40" />
   </styles>
   <screen>
     <body style="Body">
