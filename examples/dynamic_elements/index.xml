@@ -1,278 +1,313 @@
 <doc>
-
-<styles>
-  <rule id="Header"
-    height="72"
-    alignItems="center"
-    backgroundColor="white"
-    borderBottomWidth="1"
-    borderBottomColor="#eee"
-    paddingTop="24"
-    paddingLeft="24"
-    paddingRight="24"
-    flexDirection="row"
-  />
-  <rule id="Header__Back"
-    color="blue"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="16"
-    paddingRight="16"
-  />
-  <rule id="Header__Title"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="24"
-    color="black"
-  />
-  <rule id="Body"
-    backgroundColor="white"
-    flex="1"
-  />
-  <rule id="Description"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="16"
-    margin="24"
-    padding="16"
-    borderWidth="2"
-    borderColor="red"
-    borderRadius="4"
-  />
-  <rule id="Item"
-    borderBottomWidth="1"
-    borderBottomColor="#eee"
-    height="48"
-    flex="1"
-    flexDirection="row"
-    alignItems="center"
-    justifyContent="space-between"
-    paddingLeft="24"
-    paddingRight="24"
-  />
-  <rule id="Item__Label"
-    fontSize="18"
-    fontFamily="HKGrotesk-Regular"
-  />
-  <rule id="Item__Chevron"
-    fontSize="18"
-    fontFamily="HKGrotesk-Bold"
-  />
-
-  <rule id="List__Header"
-    backgroundColor="#eee"
-    paddingLeft="24"
-    paddingRight="24"
-    height="48"
-    flex="1"
-    flexDirection="row"
-    alignItems="center"
-  />
-  <rule id="List__HeaderText"
-    fontSize="18"
-    fontFamily="HKGrotesk-Bold"
-  />
-</styles>
-
-<screen>
-
-<body style="Body">
-  <header style="Header">
-    <text style="Header__Back" href="/list/index.xml" action="back">Back</text>
-    <text style="Header__Title">Dynamic Elements</text>
-  </header>
-  <sectionlist>
-    <section>
-      <sectiontitle style="List__Header">
-        <text style="List__HeaderText">Actions</text>
-      </sectiontitle>
-
-      <item key="replace" style="Item" href="/dynamic_elements/replace.xml" show-during-load="loadingScreen">
-        <text style="Item__Label">Replace</text>
-        <text style="Item__Chevron">></text>
-      </item>
-
-      <item key="replace_inner" style="Item" href="/dynamic_elements/replace_inner.xml" show-during-load="loadingScreen">
-        <text style="Item__Label">Replace Inner</text>
-        <text style="Item__Chevron">></text>
-      </item>
-
-      <item key="append" style="Item" href="/dynamic_elements/append.xml" show-during-load="loadingScreen">
-        <text style="Item__Label">Append</text>
-        <text style="Item__Chevron">></text>
-      </item>
-
-      <item key="prepend" style="Item" href="/dynamic_elements/prepend.xml" show-during-load="loadingScreen">
-        <text style="Item__Label">Prepend</text>
-        <text style="Item__Chevron">></text>
-      </item>
-    </section>
-
-    <section>
-      <sectiontitle style="List__Header">
-        <text style="List__HeaderText">Triggers</text>
-      </sectiontitle>
-
-      <item key="press" style="Item" href="/dynamic_elements/press.xml" show-during-load="loadingScreen">
-        <text style="Item__Label">Press</text>
-        <text style="Item__Chevron">></text>
-      </item>
-
-      <item key="long_press" style="Item" href="/dynamic_elements/long_press.xml" show-during-load="loadingScreen">
-        <text style="Item__Label">Long press</text>
-        <text style="Item__Chevron">></text>
-      </item>
-
-      <item key="press_in" style="Item" href="/dynamic_elements/press_in.xml" show-during-load="loadingScreen">
-        <text style="Item__Label">Press In</text>
-        <text style="Item__Chevron">></text>
-      </item>
-
-      <item key="press_out" style="Item" href="/dynamic_elements/press_out.xml" show-during-load="loadingScreen">
-        <text style="Item__Label">Press Out</text>
-        <text style="Item__Chevron">></text>
-      </item>
-
-      <item key="visible" style="Item" href="/dynamic_elements/visible.xml" show-during-load="loadingScreen">
-        <text style="Item__Label">Visible</text>
-        <text style="Item__Chevron">></text>
-      </item>
-
-      <item key="visible_once" style="Item" href="/dynamic_elements/visible_once.xml" show-during-load="loadingScreen">
-        <text style="Item__Label">Visible Once</text>
-        <text style="Item__Chevron">></text>
-      </item>
-
-      <item key="refresh" style="Item" href="/dynamic_elements/refresh.xml" show-during-load="loadingScreen">
-        <text style="Item__Label">Refresh</text>
-        <text style="Item__Chevron">></text>
-      </item>
-
-      <item key="load" style="Item" href="/dynamic_elements/load.xml" show-during-load="loadingScreen">
-        <text style="Item__Label">Load</text>
-        <text style="Item__Chevron">></text>
-      </item>
-    </section>
-    <section>
-      <sectiontitle style="List__Header">
-        <text style="List__HeaderText">Target</text>
-      </sectiontitle>
-
-      <item key="target_sibling" style="Item" href="/dynamic_elements/target_sibling.xml" show-during-load="loadingScreen">
-        <text style="Item__Label">Sibling</text>
-        <text style="Item__Chevron">></text>
-      </item>
-      <item key="target_child" style="Item" href="/dynamic_elements/target_child.xml" show-during-load="loadingScreen">
-        <text style="Item__Label">Child</text>
-        <text style="Item__Chevron">></text>
-      </item>
-      <item key="target_parent" style="Item" href="/dynamic_elements/target_parent.xml" show-during-load="loadingScreen">
-        <text style="Item__Label">Parent</text>
-        <text style="Item__Chevron">></text>
-      </item>
-      <item key="target_parent_element" style="Item" href="/dynamic_elements/target_parent_element.xml" show-during-load="loadingScreen">
-        <text style="Item__Label">Parent Element</text>
-        <text style="Item__Chevron">></text>
-      </item>
-
-      <item key="target_sibling_append" style="Item" href="/dynamic_elements/target_sibling_append.xml" show-during-load="loadingScreen">
-        <text style="Item__Label">Sibling Append</text>
-        <text style="Item__Chevron">></text>
-      </item>
-    </section>
-    <section>
-      <sectiontitle style="List__Header">
-        <text style="List__HeaderText">Indicator</text>
-      </sectiontitle>
-
-      <item key="show_indicator" style="Item" href="/dynamic_elements/show_indicator.xml" show-during-load="loadingScreen">
-        <text style="Item__Label">Show Indicator</text>
-        <text style="Item__Chevron">></text>
-      </item>
-
-      <item key="show_multiple_indicators" style="Item" href="/dynamic_elements/show_multiple_indicators.xml" show-during-load="loadingScreen">
-        <text style="Item__Label">Show Multiple Indicators</text>
-        <text style="Item__Chevron">></text>
-      </item>
-
-      <item key="hide_indicator" style="Item" href="/dynamic_elements/hide_indicator.xml" show-during-load="loadingScreen">
-        <text style="Item__Label">Hide Indicator</text>
-        <text style="Item__Chevron">></text>
-      </item>
-
-      <item key="hide_multiple_indicators" style="Item" href="/dynamic_elements/hide_multiple_indicators.xml" show-during-load="loadingScreen">
-        <text style="Item__Label">Hide Multiple Indicators</text>
-        <text style="Item__Chevron">></text>
-      </item>
-
-      <item key="show_hide_multiple_indicators" style="Item" href="/dynamic_elements/show_hide_multiple_indicators.xml" show-during-load="loadingScreen">
-        <text style="Item__Label">Show/Hide Multiple Indicators</text>
-        <text style="Item__Chevron">></text>
-      </item>
-
-      <item key="inline_button_indicator" style="Item" href="/dynamic_elements/inline_button_indicator.xml" show-during-load="loadingScreen">
-        <text style="Item__Label">Inline Button Indicator</text>
-        <text style="Item__Chevron">></text>
-      </item>
-
-      <item key="shimmer_indicator" style="Item" href="/dynamic_elements/shimmer_indicator.xml" show-during-load="loadingScreen">
-        <text style="Item__Label">Shimmer Indicator</text>
-        <text style="Item__Chevron">></text>
-      </item>
-
-    </section>
-
-    <section>
-      <sectiontitle style="List__Header">
-        <text style="List__HeaderText">Fragments</text>
-      </sectiontitle>
-
-      <item key="fragment_replace" style="Item" href="/dynamic_elements/fragment_replace.xml" show-during-load="loadingScreen">
-        <text style="Item__Label">Replace</text>
-        <text style="Item__Chevron">></text>
-      </item>
-
-      <item key="rating" style="Item" href="/dynamic_elements/rating.xml" show-during-load="loadingScreen">
-        <text style="Item__Label">Rating</text>
-        <text style="Item__Chevron">></text>
-      </item>
-    </section>
-  </sectionlist>
-</body>
-</screen>
-
-<screen id="loadingScreen">
-<styles>
-  <rule id="Header"
-    height="72"
-    alignItems="center"
-    backgroundColor="white"
-    borderBottomWidth="1"
-    borderBottomColor="#eee"
-    paddingTop="24"
-    paddingLeft="24"
-    paddingRight="24"
-    flexDirection="row"
-  />
-  <rule id="Header__Back"
-    color="blue"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="16"
-    paddingRight="16"
-  />
-  <rule id="Header__Title"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="24"
-    color="black"
-  />
-  <rule id="Body"
-    backgroundColor="white"
-    flex="1"
-  />
-</styles>
-
-<body style="Body">
-  <header style="Header">
-    <text style="Header__Back" href="/navigation/index.xml" action="back">Back</text>
-  </header>
-</body>
-</screen>
-
+  <styles>
+    <rule id="Header"
+          height="72"
+          alignItems="center"
+          backgroundColor="white"
+          borderBottomWidth="1"
+          borderBottomColor="#eee"
+          paddingTop="24"
+          paddingLeft="24"
+          paddingRight="24"
+          flexDirection="row" />
+    <rule id="Header__Back"
+          color="blue"
+          fontFamily="HKGrotesk-SemiBold"
+          fontSize="16"
+          paddingRight="16" />
+    <rule id="Header__Title"
+          fontFamily="HKGrotesk-SemiBold"
+          fontSize="24"
+          color="black" />
+    <rule id="Body"
+          backgroundColor="white"
+          flex="1" />
+    <rule id="Description"
+          fontFamily="HKGrotesk-SemiBold"
+          fontSize="16"
+          margin="24"
+          padding="16"
+          borderWidth="2"
+          borderColor="red"
+          borderRadius="4" />
+    <rule id="Item"
+          borderBottomWidth="1"
+          borderBottomColor="#eee"
+          height="48"
+          flex="1"
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="space-between"
+          paddingLeft="24"
+          paddingRight="24" />
+    <rule id="Item__Label"
+          fontSize="18"
+          fontFamily="HKGrotesk-Regular" />
+    <rule id="Item__Chevron"
+          fontSize="18"
+          fontFamily="HKGrotesk-Bold" />
+    <rule id="List__Header"
+          backgroundColor="#eee"
+          paddingLeft="24"
+          paddingRight="24"
+          height="48"
+          flex="1"
+          flexDirection="row"
+          alignItems="center" />
+    <rule id="List__HeaderText"
+          fontSize="18"
+          fontFamily="HKGrotesk-Bold" />
+  </styles>
+  <screen>
+    <body style="Body">
+      <header style="Header">
+        <text style="Header__Back"
+              href="/list/index.xml"
+              action="back">Back</text>
+        <text style="Header__Title">Dynamic Elements</text>
+      </header>
+      <sectionlist>
+        <section>
+          <sectiontitle style="List__Header">
+            <text style="List__HeaderText">Actions</text>
+          </sectiontitle>
+          <item key="replace"
+                style="Item"
+                href="/dynamic_elements/replace.xml"
+                show-during-load="loadingScreen">
+            <text style="Item__Label">Replace</text>
+            <text style="Item__Chevron">&gt;</text>
+          </item>
+          <item key="replace_inner"
+                style="Item"
+                href="/dynamic_elements/replace_inner.xml"
+                show-during-load="loadingScreen">
+            <text style="Item__Label">Replace Inner</text>
+            <text style="Item__Chevron">&gt;</text>
+          </item>
+          <item key="append"
+                style="Item"
+                href="/dynamic_elements/append.xml"
+                show-during-load="loadingScreen">
+            <text style="Item__Label">Append</text>
+            <text style="Item__Chevron">&gt;</text>
+          </item>
+          <item key="prepend"
+                style="Item"
+                href="/dynamic_elements/prepend.xml"
+                show-during-load="loadingScreen">
+            <text style="Item__Label">Prepend</text>
+            <text style="Item__Chevron">&gt;</text>
+          </item>
+        </section>
+        <section>
+          <sectiontitle style="List__Header">
+            <text style="List__HeaderText">Triggers</text>
+          </sectiontitle>
+          <item key="press"
+                style="Item"
+                href="/dynamic_elements/press.xml"
+                show-during-load="loadingScreen">
+            <text style="Item__Label">Press</text>
+            <text style="Item__Chevron">&gt;</text>
+          </item>
+          <item key="long_press"
+                style="Item"
+                href="/dynamic_elements/long_press.xml"
+                show-during-load="loadingScreen">
+            <text style="Item__Label">Long press</text>
+            <text style="Item__Chevron">&gt;</text>
+          </item>
+          <item key="press_in"
+                style="Item"
+                href="/dynamic_elements/press_in.xml"
+                show-during-load="loadingScreen">
+            <text style="Item__Label">Press In</text>
+            <text style="Item__Chevron">&gt;</text>
+          </item>
+          <item key="press_out"
+                style="Item"
+                href="/dynamic_elements/press_out.xml"
+                show-during-load="loadingScreen">
+            <text style="Item__Label">Press Out</text>
+            <text style="Item__Chevron">&gt;</text>
+          </item>
+          <item key="visible"
+                style="Item"
+                href="/dynamic_elements/visible.xml"
+                show-during-load="loadingScreen">
+            <text style="Item__Label">Visible</text>
+            <text style="Item__Chevron">&gt;</text>
+          </item>
+          <item key="visible_once"
+                style="Item"
+                href="/dynamic_elements/visible_once.xml"
+                show-during-load="loadingScreen">
+            <text style="Item__Label">Visible Once</text>
+            <text style="Item__Chevron">&gt;</text>
+          </item>
+          <item key="refresh"
+                style="Item"
+                href="/dynamic_elements/refresh.xml"
+                show-during-load="loadingScreen">
+            <text style="Item__Label">Refresh</text>
+            <text style="Item__Chevron">&gt;</text>
+          </item>
+          <item key="load"
+                style="Item"
+                href="/dynamic_elements/load.xml"
+                show-during-load="loadingScreen">
+            <text style="Item__Label">Load</text>
+            <text style="Item__Chevron">&gt;</text>
+          </item>
+        </section>
+        <section>
+          <sectiontitle style="List__Header">
+            <text style="List__HeaderText">Target</text>
+          </sectiontitle>
+          <item key="target_sibling"
+                style="Item"
+                href="/dynamic_elements/target_sibling.xml"
+                show-during-load="loadingScreen">
+            <text style="Item__Label">Sibling</text>
+            <text style="Item__Chevron">&gt;</text>
+          </item>
+          <item key="target_child"
+                style="Item"
+                href="/dynamic_elements/target_child.xml"
+                show-during-load="loadingScreen">
+            <text style="Item__Label">Child</text>
+            <text style="Item__Chevron">&gt;</text>
+          </item>
+          <item key="target_parent"
+                style="Item"
+                href="/dynamic_elements/target_parent.xml"
+                show-during-load="loadingScreen">
+            <text style="Item__Label">Parent</text>
+            <text style="Item__Chevron">&gt;</text>
+          </item>
+          <item key="target_parent_element"
+                style="Item"
+                href="/dynamic_elements/target_parent_element.xml"
+                show-during-load="loadingScreen">
+            <text style="Item__Label">Parent Element</text>
+            <text style="Item__Chevron">&gt;</text>
+          </item>
+          <item key="target_sibling_append"
+                style="Item"
+                href="/dynamic_elements/target_sibling_append.xml"
+                show-during-load="loadingScreen">
+            <text style="Item__Label">Sibling Append</text>
+            <text style="Item__Chevron">&gt;</text>
+          </item>
+        </section>
+        <section>
+          <sectiontitle style="List__Header">
+            <text style="List__HeaderText">Indicator</text>
+          </sectiontitle>
+          <item key="show_indicator"
+                style="Item"
+                href="/dynamic_elements/show_indicator.xml"
+                show-during-load="loadingScreen">
+            <text style="Item__Label">Show Indicator</text>
+            <text style="Item__Chevron">&gt;</text>
+          </item>
+          <item key="show_multiple_indicators"
+                style="Item"
+                href="/dynamic_elements/show_multiple_indicators.xml"
+                show-during-load="loadingScreen">
+            <text style="Item__Label">Show Multiple Indicators</text>
+            <text style="Item__Chevron">&gt;</text>
+          </item>
+          <item key="hide_indicator"
+                style="Item"
+                href="/dynamic_elements/hide_indicator.xml"
+                show-during-load="loadingScreen">
+            <text style="Item__Label">Hide Indicator</text>
+            <text style="Item__Chevron">&gt;</text>
+          </item>
+          <item key="hide_multiple_indicators"
+                style="Item"
+                href="/dynamic_elements/hide_multiple_indicators.xml"
+                show-during-load="loadingScreen">
+            <text style="Item__Label">Hide Multiple Indicators</text>
+            <text style="Item__Chevron">&gt;</text>
+          </item>
+          <item key="show_hide_multiple_indicators"
+                style="Item"
+                href="/dynamic_elements/show_hide_multiple_indicators.xml"
+                show-during-load="loadingScreen">
+            <text style="Item__Label">Show/Hide Multiple Indicators</text>
+            <text style="Item__Chevron">&gt;</text>
+          </item>
+          <item key="inline_button_indicator"
+                style="Item"
+                href="/dynamic_elements/inline_button_indicator.xml"
+                show-during-load="loadingScreen">
+            <text style="Item__Label">Inline Button Indicator</text>
+            <text style="Item__Chevron">&gt;</text>
+          </item>
+          <item key="shimmer_indicator"
+                style="Item"
+                href="/dynamic_elements/shimmer_indicator.xml"
+                show-during-load="loadingScreen">
+            <text style="Item__Label">Shimmer Indicator</text>
+            <text style="Item__Chevron">&gt;</text>
+          </item>
+        </section>
+        <section>
+          <sectiontitle style="List__Header">
+            <text style="List__HeaderText">Fragments</text>
+          </sectiontitle>
+          <item key="fragment_replace"
+                style="Item"
+                href="/dynamic_elements/fragment_replace.xml"
+                show-during-load="loadingScreen">
+            <text style="Item__Label">Replace</text>
+            <text style="Item__Chevron">&gt;</text>
+          </item>
+          <item key="rating"
+                style="Item"
+                href="/dynamic_elements/rating.xml"
+                show-during-load="loadingScreen">
+            <text style="Item__Label">Rating</text>
+            <text style="Item__Chevron">&gt;</text>
+          </item>
+        </section>
+      </sectionlist>
+    </body>
+  </screen>
+  <screen id="loadingScreen">
+    <styles>
+      <rule id="Header"
+            height="72"
+            alignItems="center"
+            backgroundColor="white"
+            borderBottomWidth="1"
+            borderBottomColor="#eee"
+            paddingTop="24"
+            paddingLeft="24"
+            paddingRight="24"
+            flexDirection="row" />
+      <rule id="Header__Back"
+            color="blue"
+            fontFamily="HKGrotesk-SemiBold"
+            fontSize="16"
+            paddingRight="16" />
+      <rule id="Header__Title"
+            fontFamily="HKGrotesk-SemiBold"
+            fontSize="24"
+            color="black" />
+      <rule id="Body"
+            backgroundColor="white"
+            flex="1" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text style="Header__Back"
+              href="/navigation/index.xml"
+              action="back">Back</text>
+      </header>
+    </body>
+  </screen>
 </doc>

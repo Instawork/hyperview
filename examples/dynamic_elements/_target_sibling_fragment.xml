@@ -1,3 +1,4 @@
-<view id="container" style="Container">
+<view id="container"
+      style="Container">
   <text style="Container__Label">Replaced!</text>
 </view>

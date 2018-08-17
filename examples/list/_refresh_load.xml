@@ -1,31 +1,30 @@
-<list
-  style="List"
-  href="/list/_refresh_load2.xml"
-  action="replace"
-  trigger="refresh"
-  delay="1000"
->
-  <item key="new_item" style="Item">
+<list style="List"
+      href="/list/_refresh_load2.xml"
+      action="replace"
+      trigger="refresh"
+      delay="1000">
+  <item key="new_item"
+        style="Item">
     <text style="Item__Label,Item__Label--Special">New Item</text>
   </item>
-
-  <item key="1" style="Item">
+  <item key="1"
+        style="Item">
     <text style="Item__Label">List 1</text>
   </item>
-
-  <item key="2" style="Item">
+  <item key="2"
+        style="Item">
     <text style="Item__Label">List 2</text>
   </item>
-
-  <item key="3" style="Item">
+  <item key="3"
+        style="Item">
     <text style="Item__Label">List 3</text>
   </item>
-
-  <item key="4" style="Item">
+  <item key="4"
+        style="Item">
     <text style="Item__Label">List 4</text>
   </item>
-
-  <item key="5" style="Item">
+  <item key="5"
+        style="Item">
     <text style="Item__Label">List 5</text>
   </item>
 </list>

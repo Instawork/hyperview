@@ -1,130 +1,123 @@
 <doc>
-
-<styles>
-  <rule id="Header"
-    height="72"
-    alignItems="center"
-    backgroundColor="white"
-    borderBottomWidth="1"
-    borderBottomColor="#eee"
-    paddingTop="24"
-    paddingLeft="24"
-    paddingRight="24"
-    flexDirection="row"
-  />
-  <rule id="Header__Back"
-    color="blue"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="16"
-    paddingRight="16"
-  />
-  <rule id="Header__Title"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="24"
-    color="black"
-  />
-  <rule id="Body"
-    backgroundColor="white"
-    flex="1"
-  />
-  <rule id="Description"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="16"
-    margin="24"
-    padding="16"
-    borderWidth="2"
-    borderColor="red"
-    borderRadius="4"
-  />
-  <rule id="Item"
-    borderBottomWidth="1"
-    borderBottomColor="#eee"
-    height="48"
-    flex="1"
-    flexDirection="row"
-    alignItems="center"
-    justifyContent="space-between"
-    paddingLeft="24"
-    paddingRight="24"
-  />
-  <rule id="Item__Label"
-    fontSize="18"
-    fontFamily="HKGrotesk-Regular"
-  />
-  <rule id="Item__Chevron"
-    fontSize="18"
-    fontFamily="HKGrotesk-Bold"
-  />
-</styles>
-
-<screen>
-
-
-<body style="Body">
-  <header style="Header">
-    <text style="Header__Back" href="/list/index.xml" action="back">Back</text>
-    <text style="Header__Title">List</text>
-  </header>
-
-  <list>
-    <item key="basic" style="Item" href="/list/basic.xml" show-during-load="loadingScreen">
-      <text style="Item__Label">Basic List</text>
-      <text style="Item__Chevron">></text>
-    </item>
-
-    <item key="refresh" style="Item" href="/list/refresh.xml" show-during-load="loadingScreen">
-      <text style="Item__Label">List With Refresh</text>
-      <text style="Item__Chevron">></text>
-    </item>
-
-    <item key="infinite-scroll" style="Item" href="/list/infinite_scroll.xml" show-during-load="loadingScreen">
-      <text style="Item__Label">List With Infinite Scroll</text>
-      <text style="Item__Chevron">></text>
-    </item>
-
-    <item key="refresh-infinite-scroll" style="Item" href="/list/refresh_infinite_scroll.xml" show-during-load="loadingScreen">
-      <text style="Item__Label">Refresh And Infinite Scroll</text>
-      <text style="Item__Chevron">></text>
-    </item>
-  </list>
-</body>
-</screen>
-
-<screen id="loadingScreen">
-<styles>
-  <rule id="Header"
-    height="72"
-    alignItems="center"
-    backgroundColor="white"
-    borderBottomWidth="1"
-    borderBottomColor="#eee"
-    paddingTop="24"
-    paddingLeft="24"
-    paddingRight="24"
-    flexDirection="row"
-  />
-  <rule id="Header__Back"
-    color="blue"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="16"
-    paddingRight="16"
-  />
-  <rule id="Header__Title"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="24"
-    color="black"
-  />
-  <rule id="Body"
-    backgroundColor="white"
-    flex="1"
-  />
-</styles>
-
-<body style="Body">
-  <header style="Header">
-    <text style="Header__Back" href="/navigation/index.xml" action="back">Back</text>
-  </header>
-</body>
-</screen>
-
+  <styles>
+    <rule id="Header"
+          height="72"
+          alignItems="center"
+          backgroundColor="white"
+          borderBottomWidth="1"
+          borderBottomColor="#eee"
+          paddingTop="24"
+          paddingLeft="24"
+          paddingRight="24"
+          flexDirection="row" />
+    <rule id="Header__Back"
+          color="blue"
+          fontFamily="HKGrotesk-SemiBold"
+          fontSize="16"
+          paddingRight="16" />
+    <rule id="Header__Title"
+          fontFamily="HKGrotesk-SemiBold"
+          fontSize="24"
+          color="black" />
+    <rule id="Body"
+          backgroundColor="white"
+          flex="1" />
+    <rule id="Description"
+          fontFamily="HKGrotesk-SemiBold"
+          fontSize="16"
+          margin="24"
+          padding="16"
+          borderWidth="2"
+          borderColor="red"
+          borderRadius="4" />
+    <rule id="Item"
+          borderBottomWidth="1"
+          borderBottomColor="#eee"
+          height="48"
+          flex="1"
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="space-between"
+          paddingLeft="24"
+          paddingRight="24" />
+    <rule id="Item__Label"
+          fontSize="18"
+          fontFamily="HKGrotesk-Regular" />
+    <rule id="Item__Chevron"
+          fontSize="18"
+          fontFamily="HKGrotesk-Bold" />
+  </styles>
+  <screen>
+    <body style="Body">
+      <header style="Header">
+        <text style="Header__Back"
+              href="/list/index.xml"
+              action="back">Back</text>
+        <text style="Header__Title">List</text>
+      </header>
+      <list>
+        <item key="basic"
+              style="Item"
+              href="/list/basic.xml"
+              show-during-load="loadingScreen">
+          <text style="Item__Label">Basic List</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item key="refresh"
+              style="Item"
+              href="/list/refresh.xml"
+              show-during-load="loadingScreen">
+          <text style="Item__Label">List With Refresh</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item key="infinite-scroll"
+              style="Item"
+              href="/list/infinite_scroll.xml"
+              show-during-load="loadingScreen">
+          <text style="Item__Label">List With Infinite Scroll</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item key="refresh-infinite-scroll"
+              style="Item"
+              href="/list/refresh_infinite_scroll.xml"
+              show-during-load="loadingScreen">
+          <text style="Item__Label">Refresh And Infinite Scroll</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+      </list>
+    </body>
+  </screen>
+  <screen id="loadingScreen">
+    <styles>
+      <rule id="Header"
+            height="72"
+            alignItems="center"
+            backgroundColor="white"
+            borderBottomWidth="1"
+            borderBottomColor="#eee"
+            paddingTop="24"
+            paddingLeft="24"
+            paddingRight="24"
+            flexDirection="row" />
+      <rule id="Header__Back"
+            color="blue"
+            fontFamily="HKGrotesk-SemiBold"
+            fontSize="16"
+            paddingRight="16" />
+      <rule id="Header__Title"
+            fontFamily="HKGrotesk-SemiBold"
+            fontSize="24"
+            color="black" />
+      <rule id="Body"
+            backgroundColor="white"
+            flex="1" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text style="Header__Back"
+              href="/navigation/index.xml"
+              action="back">Back</text>
+      </header>
+    </body>
+  </screen>
 </doc>

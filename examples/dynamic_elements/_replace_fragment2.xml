@@ -1,3 +1,5 @@
-<view style="Button" href="/dynamic_elements/_replace_fragment3.xml" action="replace">
+<view style="Button"
+      href="/dynamic_elements/_replace_fragment3.xml"
+      action="replace">
   <text style="Button__Label">Press me again...</text>
 </view>

@@ -1,31 +1,26 @@
 <doc>
-
-<styles>
-  <rule id="Header"
-    height="72"
-    justifyContent="center"
-    alignItems="center"
-    backgroundColor="white"
-    borderBottomWidth="1"
-    borderBottomColor="black"
-  />
-  <rule id="Header__Title"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="24"
-    color="black"
-  />
-</styles>
-
-<screen>
-  <header style="Header">
-    <text style="Header__Title">Hyperview Examples</text>
-  </header>
-
-  <body>
-    <view href="/demo2.xml" target="push">
-      <text>hello 2</text>
-    </view>
-  </body>
-</screen>
-
+  <styles>
+    <rule id="Header"
+          height="72"
+          justifyContent="center"
+          alignItems="center"
+          backgroundColor="white"
+          borderBottomWidth="1"
+          borderBottomColor="black" />
+    <rule id="Header__Title"
+          fontFamily="HKGrotesk-SemiBold"
+          fontSize="24"
+          color="black" />
+  </styles>
+  <screen>
+    <header style="Header">
+      <text style="Header__Title">Hyperview Examples</text>
+    </header>
+    <body>
+      <view href="/demo2.xml"
+            target="push">
+        <text>hello 2</text>
+      </view>
+    </body>
+  </screen>
 </doc>

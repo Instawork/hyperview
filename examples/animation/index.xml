@@ -1,141 +1,139 @@
 <doc>
-
-<styles>
-  <rule id="Header"
-    height="72"
-    alignItems="center"
-    backgroundColor="white"
-    borderBottomWidth="1"
-    borderBottomColor="#eee"
-    paddingTop="24"
-    paddingLeft="24"
-    paddingRight="24"
-    flexDirection="row"
-  />
-  <rule id="Header__Back"
-    color="blue"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="16"
-    paddingRight="16"
-  />
-  <rule id="Header__Title"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="24"
-    color="black"
-  />
-  <rule id="Body"
-    backgroundColor="white"
-    flex="1"
-  />
-  <rule id="Description"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="16"
-    margin="24"
-    padding="16"
-    borderWidth="2"
-    borderColor="red"
-    borderRadius="4"
-  />
-  <rule id="Item"
-    borderBottomWidth="1"
-    borderBottomColor="#eee"
-    height="48"
-    flex="1"
-    flexDirection="row"
-    alignItems="center"
-    justifyContent="space-between"
-    paddingLeft="24"
-    paddingRight="24"
-  />
-  <rule id="Item__Label"
-    fontSize="18"
-    fontFamily="HKGrotesk-Regular"
-  />
-  <rule id="Item__Chevron"
-    fontSize="18"
-    fontFamily="HKGrotesk-Bold"
-  />
-  <rule id="Main" flex="1" />
-</styles>
-
-<screen>
-
-
-<body style="Body">
-<header style="Header">
-  <text style="Header__Back" href="/index.xml" action="back">Back</text>
-  <text style="Header__Title">Animation</text>
-</header>
-  <list>
-
-    <item key="timing" style="Item" href="/animation/timing.xml" show-during-load="loadingScreen">
-      <text style="Item__Label">Timing</text>
-      <text style="Item__Chevron">></text>
-    </item>
-
-    <item key="easing" style="Item" href="/animation/easing.xml" show-during-load="loadingScreen">
-      <text style="Item__Label">Easing</text>
-      <text style="Item__Chevron">></text>
-    </item>
-
-    <item key="sequence" style="Item" href="/animation/sequence.xml" show-during-load="loadingScreen">
-      <text style="Item__Label">Sequence</text>
-      <text style="Item__Chevron">></text>
-    </item>
-
-    <item key="parallel" style="Item" href="/animation/parallel.xml" show-during-load="loadingScreen">
-      <text style="Item__Label">Parallel</text>
-      <text style="Item__Chevron">></text>
-    </item>
-
-    <item key="delay" style="Item" href="/animation/delay.xml" show-during-load="loadingScreen">
-      <text style="Item__Label">Delay</text>
-      <text style="Item__Chevron">></text>
-    </item>
-
-    <item key="combination" style="Item" href="/animation/combination.xml" show-during-load="loadingScreen">
-      <text style="Item__Label">Combination</text>
-      <text style="Item__Chevron">></text>
-    </item>
-
-  </list>
-</body>
-</screen>
-
-<screen id="loadingScreen">
-<styles>
-  <rule id="Header"
-    height="72"
-    alignItems="center"
-    backgroundColor="white"
-    borderBottomWidth="1"
-    borderBottomColor="#eee"
-    paddingTop="24"
-    paddingLeft="24"
-    paddingRight="24"
-    flexDirection="row"
-  />
-  <rule id="Header__Back"
-    color="blue"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="16"
-    paddingRight="16"
-  />
-  <rule id="Header__Title"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="24"
-    color="black"
-  />
-  <rule id="Body"
-    backgroundColor="white"
-    flex="1"
-  />
-</styles>
-<body style="Body">
-<header style="Header">
-  <text style="Header__Back" href="/navigation/index.xml" action="back">Back</text>
-</header>
-</body>
-</screen>
-
+  <styles>
+    <rule id="Header"
+          height="72"
+          alignItems="center"
+          backgroundColor="white"
+          borderBottomWidth="1"
+          borderBottomColor="#eee"
+          paddingTop="24"
+          paddingLeft="24"
+          paddingRight="24"
+          flexDirection="row" />
+    <rule id="Header__Back"
+          color="blue"
+          fontFamily="HKGrotesk-SemiBold"
+          fontSize="16"
+          paddingRight="16" />
+    <rule id="Header__Title"
+          fontFamily="HKGrotesk-SemiBold"
+          fontSize="24"
+          color="black" />
+    <rule id="Body"
+          backgroundColor="white"
+          flex="1" />
+    <rule id="Description"
+          fontFamily="HKGrotesk-SemiBold"
+          fontSize="16"
+          margin="24"
+          padding="16"
+          borderWidth="2"
+          borderColor="red"
+          borderRadius="4" />
+    <rule id="Item"
+          borderBottomWidth="1"
+          borderBottomColor="#eee"
+          height="48"
+          flex="1"
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="space-between"
+          paddingLeft="24"
+          paddingRight="24" />
+    <rule id="Item__Label"
+          fontSize="18"
+          fontFamily="HKGrotesk-Regular" />
+    <rule id="Item__Chevron"
+          fontSize="18"
+          fontFamily="HKGrotesk-Bold" />
+    <rule id="Main"
+          flex="1" />
+  </styles>
+  <screen>
+    <body style="Body">
+      <header style="Header">
+        <text style="Header__Back"
+              href="/index.xml"
+              action="back">Back</text>
+        <text style="Header__Title">Animation</text>
+      </header>
+      <list>
+        <item key="timing"
+              style="Item"
+              href="/animation/timing.xml"
+              show-during-load="loadingScreen">
+          <text style="Item__Label">Timing</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item key="easing"
+              style="Item"
+              href="/animation/easing.xml"
+              show-during-load="loadingScreen">
+          <text style="Item__Label">Easing</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item key="sequence"
+              style="Item"
+              href="/animation/sequence.xml"
+              show-during-load="loadingScreen">
+          <text style="Item__Label">Sequence</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item key="parallel"
+              style="Item"
+              href="/animation/parallel.xml"
+              show-during-load="loadingScreen">
+          <text style="Item__Label">Parallel</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item key="delay"
+              style="Item"
+              href="/animation/delay.xml"
+              show-during-load="loadingScreen">
+          <text style="Item__Label">Delay</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item key="combination"
+              style="Item"
+              href="/animation/combination.xml"
+              show-during-load="loadingScreen">
+          <text style="Item__Label">Combination</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+      </list>
+    </body>
+  </screen>
+  <screen id="loadingScreen">
+    <styles>
+      <rule id="Header"
+            height="72"
+            alignItems="center"
+            backgroundColor="white"
+            borderBottomWidth="1"
+            borderBottomColor="#eee"
+            paddingTop="24"
+            paddingLeft="24"
+            paddingRight="24"
+            flexDirection="row" />
+      <rule id="Header__Back"
+            color="blue"
+            fontFamily="HKGrotesk-SemiBold"
+            fontSize="16"
+            paddingRight="16" />
+      <rule id="Header__Title"
+            fontFamily="HKGrotesk-SemiBold"
+            fontSize="24"
+            color="black" />
+      <rule id="Body"
+            backgroundColor="white"
+            flex="1" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text style="Header__Back"
+              href="/navigation/index.xml"
+              action="back">Back</text>
+      </header>
+    </body>
+  </screen>
 </doc>

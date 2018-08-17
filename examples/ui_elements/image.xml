@@ -1,88 +1,77 @@
 <doc>
-
-<styles>
-  <rule id="Header"
-    height="72"
-    alignItems="center"
-    backgroundColor="white"
-    borderBottomWidth="1"
-    borderBottomColor="#eee"
-    paddingTop="24"
-    paddingLeft="24"
-    paddingRight="24"
-    flexDirection="row"
-  />
-  <rule id="Header__Back"
-    color="blue"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="16"
-    paddingRight="16"
-  />
-  <rule id="Header__Title"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="24"
-    color="black"
-  />
-  <rule id="Body"
-    backgroundColor="white"
-    flex="1"
-  />
-  <rule id="Description"
-    fontFamily="HKGrotesk-Regular"
-    fontSize="16"
-    margin="24"
-    marginBottom="0"
-  />
-  <rule id="Item"
-    borderBottomWidth="1"
-    borderBottomColor="#eee"
-    height="48"
-    flex="1"
-    flexDirection="row"
-    alignItems="center"
-    justifyContent="space-between"
-    paddingLeft="24"
-    paddingRight="24"
-  />
-  <rule id="Item__Label"
-    fontSize="18"
-    fontFamily="HKGrotesk-Regular"
-  />
-  <rule id="Item__Chevron"
-    fontSize="18"
-    fontFamily="HKGrotesk-Bold"
-  />
-
-  <rule id="Image"
-    flex="1"
-    margin="24"
-    height="128"
-    width="128"
-  />
-  <rule id="Image__Styled"
-    borderRadius="64"
-    borderWidth="4"
-    borderColor="#e1e1e1"
-  />
-</styles>
-
-<screen>
-
-<body style="Body" scroll="true">
-  <header style="Header">
-    <text style="Header__Back" href="/dynamic_elements/index.xml" action="back">Back</text>
-    <text style="Header__Title">Image</text>
-  </header>
-  <text style="Description">
-    Image
-  </text>
-  <image style="Image" source="/ui_elements/image.jpg" />
-
-  <text style="Description">
-    Styled
-  </text>
-  <image style="Image,Image__Styled" source="/ui_elements/image.jpg" />
-</body>
-</screen>
-
+  <styles>
+    <rule id="Header"
+          height="72"
+          alignItems="center"
+          backgroundColor="white"
+          borderBottomWidth="1"
+          borderBottomColor="#eee"
+          paddingTop="24"
+          paddingLeft="24"
+          paddingRight="24"
+          flexDirection="row" />
+    <rule id="Header__Back"
+          color="blue"
+          fontFamily="HKGrotesk-SemiBold"
+          fontSize="16"
+          paddingRight="16" />
+    <rule id="Header__Title"
+          fontFamily="HKGrotesk-SemiBold"
+          fontSize="24"
+          color="black" />
+    <rule id="Body"
+          backgroundColor="white"
+          flex="1" />
+    <rule id="Description"
+          fontFamily="HKGrotesk-Regular"
+          fontSize="16"
+          margin="24"
+          marginBottom="0" />
+    <rule id="Item"
+          borderBottomWidth="1"
+          borderBottomColor="#eee"
+          height="48"
+          flex="1"
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="space-between"
+          paddingLeft="24"
+          paddingRight="24" />
+    <rule id="Item__Label"
+          fontSize="18"
+          fontFamily="HKGrotesk-Regular" />
+    <rule id="Item__Chevron"
+          fontSize="18"
+          fontFamily="HKGrotesk-Bold" />
+    <rule id="Image"
+          flex="1"
+          margin="24"
+          height="128"
+          width="128" />
+    <rule id="Image__Styled"
+          borderRadius="64"
+          borderWidth="4"
+          borderColor="#e1e1e1" />
+    <rule id="Main"
+          flex="1" />
+  </styles>
+  <screen>
+    <body style="Body">
+      <header style="Header">
+        <text style="Header__Back"
+              href="/dynamic_elements/index.xml"
+              action="back">Back</text>
+        <text style="Header__Title">Image</text>
+      </header>
+      <view style="Main"
+            scroll="true">
+        <text style="Description">Image</text>
+        <image style="Image"
+               source="/ui_elements/image.jpg" />
+        <text style="Description">Styled</text>
+        <image style="Image,Image__Styled"
+               source="/ui_elements/image.jpg" />
+      </view>
+    </body>
+  </screen>
 </doc>

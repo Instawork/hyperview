@@ -1,4 +1,6 @@
-<view style="Tree" href="/dynamic_elements/_append_fragment3.xml" action="append">
-    <text style="Tree__Label">a) dolor</text>
-    <text style="Tree__Label">b) sit</text>
+<view style="Tree"
+      href="/dynamic_elements/_append_fragment3.xml"
+      action="append">
+  <text style="Tree__Label">a) dolor</text>
+  <text style="Tree__Label">b) sit</text>
 </view>

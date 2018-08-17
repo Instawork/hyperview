@@ -1,4 +1,5 @@
 <view style="Container__Element">
-  <image style="Container__Image" source="/ui_elements/image.jpg" />
+  <image style="Container__Image"
+         source="/ui_elements/image.jpg" />
   <text style="Container__Label">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut</text>
 </view>

@@ -1,119 +1,143 @@
 <doc>
-
-<styles>
-  <rule id="Header"
-    height="72"
-    alignItems="center"
-    backgroundColor="white"
-    borderBottomWidth="1"
-    borderBottomColor="#eee"
-    paddingTop="24"
-    paddingLeft="24"
-    paddingRight="24"
-    flexDirection="row"
-  />
-  <rule id="Header__Back"
-    color="blue"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="16"
-    paddingRight="16"
-  />
-  <rule id="Header__Title"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="24"
-    color="black"
-  />
-  <rule id="Body"
-    backgroundColor="white"
-    flex="1"
-  />
-  <rule id="Description"
-    fontFamily="HKGrotesk-Regular"
-    fontSize="16"
-    margin="24"
-    marginBottom="0"
-  />
-  <rule id="Item"
-    borderBottomWidth="1"
-    borderBottomColor="#eee"
-    height="48"
-    flex="1"
-    flexDirection="row"
-    alignItems="center"
-    justifyContent="space-between"
-    paddingLeft="24"
-    paddingRight="24"
-  />
-  <rule id="Item__Label"
-    fontSize="18"
-    fontFamily="HKGrotesk-Regular"
-  />
-  <rule id="Item__Chevron"
-    fontSize="18"
-    fontFamily="HKGrotesk-Bold"
-  />
-
-  <rule id="View"
-    flex="1"
-    padding="8"
-    marginLeft="24"
-    marginRight="24"
-    marginTop="8"
-    backgroundColor="#63CB76"
-    borderRadius="16"
-    height="32"
-  />
-  <rule id="Main" flex="1" />
-</styles>
-
-<animated>
-  <value id="example1" from="0" property="opacity" />
-  <value id="example2" from="0" property="opacity" />
-  <value id="example3" from="0" property="opacity" />
-
-  <value id="example4" from="0" property="opacity" />
-  <value id="example5" from="0" property="opacity" />
-  <value id="example6" from="0" property="opacity" />
-
-  <animation type="sequence" id="example1">
-    <animation type="delay" duration="1000" />
-    <animation type="parallel">
-      <animation value="example1" to="1" duration="2000" />
-      <animation value="example2" to="1" duration="2000" />
-      <animation value="example3" to="1" duration="2000" />
+  <styles>
+    <rule id="Header"
+          height="72"
+          alignItems="center"
+          backgroundColor="white"
+          borderBottomWidth="1"
+          borderBottomColor="#eee"
+          paddingTop="24"
+          paddingLeft="24"
+          paddingRight="24"
+          flexDirection="row" />
+    <rule id="Header__Back"
+          color="blue"
+          fontFamily="HKGrotesk-SemiBold"
+          fontSize="16"
+          paddingRight="16" />
+    <rule id="Header__Title"
+          fontFamily="HKGrotesk-SemiBold"
+          fontSize="24"
+          color="black" />
+    <rule id="Body"
+          backgroundColor="white"
+          flex="1" />
+    <rule id="Description"
+          fontFamily="HKGrotesk-Regular"
+          fontSize="16"
+          margin="24"
+          marginBottom="0" />
+    <rule id="Item"
+          borderBottomWidth="1"
+          borderBottomColor="#eee"
+          height="48"
+          flex="1"
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="space-between"
+          paddingLeft="24"
+          paddingRight="24" />
+    <rule id="Item__Label"
+          fontSize="18"
+          fontFamily="HKGrotesk-Regular" />
+    <rule id="Item__Chevron"
+          fontSize="18"
+          fontFamily="HKGrotesk-Bold" />
+    <rule id="View"
+          flex="1"
+          padding="8"
+          marginLeft="24"
+          marginRight="24"
+          marginTop="8"
+          backgroundColor="#63CB76"
+          borderRadius="16"
+          height="32" />
+    <rule id="Main"
+          flex="1" />
+  </styles>
+  <animated>
+    <value id="example1"
+           from="0"
+           property="opacity" />
+    <value id="example2"
+           from="0"
+           property="opacity" />
+    <value id="example3"
+           from="0"
+           property="opacity" />
+    <value id="example4"
+           from="0"
+           property="opacity" />
+    <value id="example5"
+           from="0"
+           property="opacity" />
+    <value id="example6"
+           from="0"
+           property="opacity" />
+    <animation type="sequence"
+               id="example1">
+      <animation type="delay"
+                 duration="1000" />
+      <animation type="parallel">
+        <animation value="example1"
+                   to="1"
+                   duration="2000" />
+        <animation value="example2"
+                   to="1"
+                   duration="2000" />
+        <animation value="example3"
+                   to="1"
+                   duration="2000" />
+      </animation>
     </animation>
-  </animation>
-
-  <animation type="sequence" id="example2">
-    <animation value="example4" to="1" duration="2000" />
-    <animation type="delay" duration="1000" />
-    <animation value="example5" to="1" duration="2000" />
-    <animation type="delay" duration="1000" />
-    <animation value="example6" to="1" duration="2000" />
-  </animation>
-</animated>
-
-
-<screen>
-
-
-<body style="Body">
-<header style="Header">
-  <text style="Header__Back" href="/index.xml" action="back">Back</text>
-  <text style="Header__Title">Delay</text>
-</header>
-<view style="Main" scroll="1">
-  <text style="Description">Delay before</text>
-  <view style="View" animations="example1" animatedValues="example1"></view>
-  <view style="View" animations="example1" animatedValues="example2"></view>
-  <view style="View" animations="example1" animatedValues="example3"></view>
-
-  <text style="Description">Delay between</text>
-  <view style="View" animations="example2" animatedValues="example4"></view>
-  <view style="View" animations="example2" animatedValues="example5"></view>
-  <view style="View" animations="example2" animatedValues="example6"></view>
-</view>
-</body>
-</screen>
-
+    <animation type="sequence"
+               id="example2">
+      <animation value="example4"
+                 to="1"
+                 duration="2000" />
+      <animation type="delay"
+                 duration="1000" />
+      <animation value="example5"
+                 to="1"
+                 duration="2000" />
+      <animation type="delay"
+                 duration="1000" />
+      <animation value="example6"
+                 to="1"
+                 duration="2000" />
+    </animation>
+  </animated>
+  <screen>
+    <body style="Body">
+      <header style="Header">
+        <text style="Header__Back"
+              href="/index.xml"
+              action="back">Back</text>
+        <text style="Header__Title">Delay</text>
+      </header>
+      <view style="Main"
+            scroll="1">
+        <text style="Description">Delay before</text>
+        <view style="View"
+              animations="example1"
+              animatedValues="example1"></view>
+        <view style="View"
+              animations="example1"
+              animatedValues="example2"></view>
+        <view style="View"
+              animations="example1"
+              animatedValues="example3"></view>
+        <text style="Description">Delay between</text>
+        <view style="View"
+              animations="example2"
+              animatedValues="example4"></view>
+        <view style="View"
+              animations="example2"
+              animatedValues="example5"></view>
+        <view style="View"
+              animations="example2"
+              animatedValues="example6"></view>
+      </view>
+    </body>
+  </screen>
 </doc>

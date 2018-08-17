@@ -1,137 +1,125 @@
 <doc>
-
-<styles>
-  <rule id="Header"
-    height="72"
-    alignItems="center"
-    backgroundColor="white"
-    borderBottomWidth="1"
-    borderBottomColor="#eee"
-    paddingTop="24"
-    paddingLeft="24"
-    paddingRight="24"
-    flexDirection="row"
-  />
-  <rule id="Header__Back"
-    color="blue"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="16"
-    paddingRight="16"
-  />
-  <rule id="Header__Title"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="24"
-    color="black"
-  />
-  <rule id="Body"
-    backgroundColor="white"
-    flex="1"
-  />
-  <rule id="Description"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="16"
-    margin="24"
-    padding="16"
-    borderWidth="2"
-    borderColor="red"
-    borderRadius="4"
-  />
-  <rule id="Item"
-    borderBottomWidth="1"
-    borderBottomColor="#eee"
-    height="48"
-    flex="1"
-    flexDirection="row"
-    alignItems="center"
-    justifyContent="space-between"
-    paddingLeft="24"
-    paddingRight="24"
-  />
-  <rule id="Item__Left"
-    flex="1"
-    flexDirection="row"
-  />
-  <rule id="Item__Label"
-    fontSize="18"
-    fontFamily="HKGrotesk-Regular"
-  />
-  <rule id="Item__Label--WIP"
-    backgroundColor="#FBB90E"
-    color="white"
-    paddingLeft="4"
-    paddingRight="4"
-    fontFamily="HKGrotesk-Bold"
-    fontSize="12"
-    lineHeight="24"
-    marginLeft="8"
-  />
-  <rule id="Item__Chevron"
-    fontSize="18"
-    fontFamily="HKGrotesk-Bold"
-  />
-</styles>
-
-<screen>
-
-<body style="Body">
-<header style="Header">
-  <text style="Header__Back" href="/index.xml" action="back">Back</text>
-  <text style="Header__Title">Forms</text>
-</header>
-
-  <list>
-    <item key="text_input" style="Item" href="/forms/text_input.xml" show-during-load="loadingScreen">
-      <view style="Item__Left">
-        <text style="Item__Label">Text Input</text>
-      </view>
-      <text style="Item__Chevron">></text>
-    </item>
-
-    <item key="text_area" style="Item" href="/forms/textarea.xml" show-during-load="loadingScreen">
-      <view style="Item__Left">
-        <text style="Item__Label">Text Area</text>
-      </view>
-      <text style="Item__Chevron">></text>
-    </item>
-  </list>
-</body>
-</screen>
-
-<screen id="loadingScreen">
-<styles>
-  <rule id="Header"
-    height="72"
-    alignItems="center"
-    backgroundColor="white"
-    borderBottomWidth="1"
-    borderBottomColor="#eee"
-    paddingTop="24"
-    paddingLeft="24"
-    paddingRight="24"
-    flexDirection="row"
-  />
-  <rule id="Header__Back"
-    color="blue"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="16"
-    paddingRight="16"
-  />
-  <rule id="Header__Title"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="24"
-    color="black"
-  />
-  <rule id="Body"
-    backgroundColor="white"
-    flex="1"
-  />
-</styles>
-
-<body style="Body">
-<header style="Header">
-  <text style="Header__Back" href="/navigation/index.xml" action="back">Back</text>
-</header>
-</body>
-</screen>
-
+  <styles>
+    <rule id="Header"
+          height="72"
+          alignItems="center"
+          backgroundColor="white"
+          borderBottomWidth="1"
+          borderBottomColor="#eee"
+          paddingTop="24"
+          paddingLeft="24"
+          paddingRight="24"
+          flexDirection="row" />
+    <rule id="Header__Back"
+          color="blue"
+          fontFamily="HKGrotesk-SemiBold"
+          fontSize="16"
+          paddingRight="16" />
+    <rule id="Header__Title"
+          fontFamily="HKGrotesk-SemiBold"
+          fontSize="24"
+          color="black" />
+    <rule id="Body"
+          backgroundColor="white"
+          flex="1" />
+    <rule id="Description"
+          fontFamily="HKGrotesk-SemiBold"
+          fontSize="16"
+          margin="24"
+          padding="16"
+          borderWidth="2"
+          borderColor="red"
+          borderRadius="4" />
+    <rule id="Item"
+          borderBottomWidth="1"
+          borderBottomColor="#eee"
+          height="48"
+          flex="1"
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="space-between"
+          paddingLeft="24"
+          paddingRight="24" />
+    <rule id="Item__Left"
+          flex="1"
+          flexDirection="row" />
+    <rule id="Item__Label"
+          fontSize="18"
+          fontFamily="HKGrotesk-Regular" />
+    <rule id="Item__Label--WIP"
+          backgroundColor="#FBB90E"
+          color="white"
+          paddingLeft="4"
+          paddingRight="4"
+          fontFamily="HKGrotesk-Bold"
+          fontSize="12"
+          lineHeight="24"
+          marginLeft="8" />
+    <rule id="Item__Chevron"
+          fontSize="18"
+          fontFamily="HKGrotesk-Bold" />
+  </styles>
+  <screen>
+    <body style="Body">
+      <header style="Header">
+        <text style="Header__Back"
+              href="/index.xml"
+              action="back">Back</text>
+        <text style="Header__Title">Forms</text>
+      </header>
+      <list>
+        <item key="text_input"
+              style="Item"
+              href="/forms/text_input.xml"
+              show-during-load="loadingScreen">
+          <view style="Item__Left">
+            <text style="Item__Label">Text Input</text>
+          </view>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item key="text_area"
+              style="Item"
+              href="/forms/textarea.xml"
+              show-during-load="loadingScreen">
+          <view style="Item__Left">
+            <text style="Item__Label">Text Area</text>
+          </view>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+      </list>
+    </body>
+  </screen>
+  <screen id="loadingScreen">
+    <styles>
+      <rule id="Header"
+            height="72"
+            alignItems="center"
+            backgroundColor="white"
+            borderBottomWidth="1"
+            borderBottomColor="#eee"
+            paddingTop="24"
+            paddingLeft="24"
+            paddingRight="24"
+            flexDirection="row" />
+      <rule id="Header__Back"
+            color="blue"
+            fontFamily="HKGrotesk-SemiBold"
+            fontSize="16"
+            paddingRight="16" />
+      <rule id="Header__Title"
+            fontFamily="HKGrotesk-SemiBold"
+            fontSize="24"
+            color="black" />
+      <rule id="Body"
+            backgroundColor="white"
+            flex="1" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text style="Header__Back"
+              href="/navigation/index.xml"
+              action="back">Back</text>
+      </header>
+    </body>
+  </screen>
 </doc>

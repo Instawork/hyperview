@@ -1,232 +1,262 @@
 <doc>
-
-<styles>
-  <rule id="Header"
-    height="72"
-    alignItems="center"
-    backgroundColor="white"
-    borderBottomWidth="1"
-    borderBottomColor="#eee"
-    paddingTop="24"
-    paddingLeft="24"
-    paddingRight="24"
-    flexDirection="row"
-  />
-  <rule id="Header__Back"
-    color="blue"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="16"
-    paddingRight="16"
-  />
-  <rule id="Header__Title"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="24"
-    color="black"
-  />
-  <rule id="Body"
-    backgroundColor="#63CB76"
-    flex="1"
-  />
-  <rule id="Description"
-    fontFamily="HKGrotesk-Regular"
-    fontSize="16"
-    margin="24"
-    marginBottom="0"
-  />
-  <rule id="Item"
-    borderBottomWidth="1"
-    borderBottomColor="#eee"
-    height="48"
-    flex="1"
-    flexDirection="row"
-    alignItems="center"
-    justifyContent="space-between"
-    paddingLeft="24"
-    paddingRight="24"
-  />
-  <rule id="Item__Label"
-    fontSize="18"
-    fontFamily="HKGrotesk-Regular"
-  />
-  <rule id="Item__Chevron"
-    fontSize="18"
-    fontFamily="HKGrotesk-Bold"
-  />
-
-  <rule
-    id="hero"
-    paddingTop="16"
-    paddingBottom="16"
-    paddingLeft="24"
-    paddingRight="24"
-  />
-  <rule
-    id="title"
-    fontFamily="HKGrotesk-Bold"
-    fontSize="32"
-    lineHeight="40"
-    color="white"
-    fontWeight="500"
-  />
-  <rule
-    id="subtitle"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="20"
-    lineHeight="24"
-    color="#8D9494"
-  />
-  <rule id="steps"
-    marginTop="32"
-  />
-  <rule id="stepContainer"
-    flex="1"
-    flexDirection="row"
-    justifyContent="flex-start"
-    alignItems="flex-start"
-    marginBottom="24"
-  />
-  <rule id="step"
-    width="36"
-    height="36"
-    borderWidth="2"
-    borderRadius="18"
-    borderColor="white"
-    flex="0"
-    justifyContent="center"
-    alignItems="center"
-  />
-  <rule id="stepNumber"
-    color="white"
-    fontSize="24"
-    fontFamily="HKGrotesk-Bold"
-  />
-  <rule id="stepLabel"
-    color="white"
-    fontSize="24"
-    fontWeight="500"
-    marginLeft="16"
-    flex="1"
-    fontFamily="HKGrotesk-Medium"
-  />
-
-  <rule id="contactsContainer"
-    flex="1"
-    flexDirection="row"
-    justifyContent="center"
-    alignItems="center"
-  />
-  <rule id="contactsButton"
-    backgroundColor="white"
-    borderRadius="24"
-    height="48"
-    flex="0"
-    justifyContent="center"
-    alignItems="center"
-    paddingLeft="24"
-    paddingRight="24"
-    marginTop="24"
-  />
-  <rule id="contactsButton__Text"
-    color="#63CB76"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="18"
-  />
-  <rule id="Main" flex="1" />
-</styles>
-
-<animated>
-  <value id="title1Opacity" from="0" property="opacity" />
-  <value id="title2Opacity" from="0" property="opacity" />
-  <value id="title3Opacity" from="0" property="opacity" />
-
-  <value id="step1" from="-100" property="left" />
-  <value id="step2" from="-100" property="left" />
-  <value id="step3" from="-100" property="left" />
-
-  <value id="step1Label" from="0" property="opacity" />
-  <value id="step2Label" from="0" property="opacity" />
-  <value id="step3Label" from="0" property="opacity" />
-
-  <value id="buttonPos" from="100" property="top" />
-  <value id="buttonOpacity" from="0" property="opacity" />
-
-  <animation type="sequence" id="intro">
-    <animation type="parallel">
-      <animation value="title1Opacity" to="1" duration="1200" />
-      <animation value="title2Opacity" to="1" duration="1200" delay="100" />
-      <animation value="title3Opacity" to="1" duration="1200" delay="200" />
+  <styles>
+    <rule id="Header"
+          height="72"
+          alignItems="center"
+          backgroundColor="white"
+          borderBottomWidth="1"
+          borderBottomColor="#eee"
+          paddingTop="24"
+          paddingLeft="24"
+          paddingRight="24"
+          flexDirection="row" />
+    <rule id="Header__Back"
+          color="blue"
+          fontFamily="HKGrotesk-SemiBold"
+          fontSize="16"
+          paddingRight="16" />
+    <rule id="Header__Title"
+          fontFamily="HKGrotesk-SemiBold"
+          fontSize="24"
+          color="black" />
+    <rule id="Body"
+          backgroundColor="#63CB76"
+          flex="1" />
+    <rule id="Description"
+          fontFamily="HKGrotesk-Regular"
+          fontSize="16"
+          margin="24"
+          marginBottom="0" />
+    <rule id="Item"
+          borderBottomWidth="1"
+          borderBottomColor="#eee"
+          height="48"
+          flex="1"
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="space-between"
+          paddingLeft="24"
+          paddingRight="24" />
+    <rule id="Item__Label"
+          fontSize="18"
+          fontFamily="HKGrotesk-Regular" />
+    <rule id="Item__Chevron"
+          fontSize="18"
+          fontFamily="HKGrotesk-Bold" />
+    <rule id="hero"
+          paddingTop="16"
+          paddingBottom="16"
+          paddingLeft="24"
+          paddingRight="24" />
+    <rule id="title"
+          fontFamily="HKGrotesk-Bold"
+          fontSize="32"
+          lineHeight="40"
+          color="white"
+          fontWeight="500" />
+    <rule id="subtitle"
+          fontFamily="HKGrotesk-SemiBold"
+          fontSize="20"
+          lineHeight="24"
+          color="#8D9494" />
+    <rule id="steps"
+          marginTop="32" />
+    <rule id="stepContainer"
+          flex="1"
+          flexDirection="row"
+          justifyContent="flex-start"
+          alignItems="flex-start"
+          marginBottom="24" />
+    <rule id="step"
+          width="36"
+          height="36"
+          borderWidth="2"
+          borderRadius="18"
+          borderColor="white"
+          flex="0"
+          justifyContent="center"
+          alignItems="center" />
+    <rule id="stepNumber"
+          color="white"
+          fontSize="24"
+          fontFamily="HKGrotesk-Bold" />
+    <rule id="stepLabel"
+          color="white"
+          fontSize="24"
+          fontWeight="500"
+          marginLeft="16"
+          flex="1"
+          fontFamily="HKGrotesk-Medium" />
+    <rule id="contactsContainer"
+          flex="1"
+          flexDirection="row"
+          justifyContent="center"
+          alignItems="center" />
+    <rule id="contactsButton"
+          backgroundColor="white"
+          borderRadius="24"
+          height="48"
+          flex="0"
+          justifyContent="center"
+          alignItems="center"
+          paddingLeft="24"
+          paddingRight="24"
+          marginTop="24" />
+    <rule id="contactsButton__Text"
+          color="#63CB76"
+          fontFamily="HKGrotesk-SemiBold"
+          fontSize="18" />
+    <rule id="Main"
+          flex="1" />
+  </styles>
+  <animated>
+    <value id="title1Opacity"
+           from="0"
+           property="opacity" />
+    <value id="title2Opacity"
+           from="0"
+           property="opacity" />
+    <value id="title3Opacity"
+           from="0"
+           property="opacity" />
+    <value id="step1"
+           from="-100"
+           property="left" />
+    <value id="step2"
+           from="-100"
+           property="left" />
+    <value id="step3"
+           from="-100"
+           property="left" />
+    <value id="step1Label"
+           from="0"
+           property="opacity" />
+    <value id="step2Label"
+           from="0"
+           property="opacity" />
+    <value id="step3Label"
+           from="0"
+           property="opacity" />
+    <value id="buttonPos"
+           from="100"
+           property="top" />
+    <value id="buttonOpacity"
+           from="0"
+           property="opacity" />
+    <animation type="sequence"
+               id="intro">
+      <animation type="parallel">
+        <animation value="title1Opacity"
+                   to="1"
+                   duration="1200" />
+        <animation value="title2Opacity"
+                   to="1"
+                   duration="1200"
+                   delay="100" />
+        <animation value="title3Opacity"
+                   to="1"
+                   duration="1200"
+                   delay="200" />
+      </animation>
+      <animation value="step1"
+                 to="0"
+                 duration="500"
+                 easing="elastic" />
+      <animation value="step1Label"
+                 to="1"
+                 duration="300" />
+      <animation type="delay"
+                 duration="300" />
+      <animation value="step2"
+                 to="0"
+                 duration="500"
+                 easing="elastic" />
+      <animation value="step2Label"
+                 to="1"
+                 duration="300" />
+      <animation type="delay"
+                 duration="300" />
+      <animation value="step3"
+                 to="0"
+                 duration="500"
+                 easing="elastic" />
+      <animation value="step3Label"
+                 to="1"
+                 duration="300" />
+      <animation type="delay"
+                 duration="300" />
+      <animation type="parallel">
+        <animation value="buttonPos"
+                   to="0"
+                   duration="1500" />
+        <animation value="buttonOpacity"
+                   to="1"
+                   duration="1000"
+                   delay="500" />
+      </animation>
     </animation>
-
-    <animation value="step1" to="0" duration="500" easing="elastic" />
-    <animation value="step1Label" to="1" duration="300" />
-    <animation type="delay" duration="300" />
-
-    <animation value="step2" to="0" duration="500" easing="elastic"/>
-    <animation value="step2Label" to="1" duration="300" />
-    <animation type="delay" duration="300" />
-
-    <animation value="step3" to="0" duration="500" easing="elastic" />
-    <animation value="step3Label" to="1" duration="300" />
-    <animation type="delay" duration="300" />
-
-    <animation type="parallel">
-      <animation value="buttonPos" to="0" duration="1500" />
-      <animation value="buttonOpacity" to="1" duration="1000" delay="500" />
-    </animation>
-  </animation>
-</animated>
-
-<screen>
-
-
-<body style="Body">
-<header style="Header">
-  <text style="Header__Back" href="/index.xml" action="back">Back</text>
-  <text style="Header__Title">Combination</text>
-</header>
-<view style="Main" scroll="1">
-  <view style="hero">
-    <text style="title" animations="intro" animatedValues="title1Opacity">Earn $500</text>
-    <text style="title" animations="intro" animatedValues="title2Opacity">when you refer</text>
-    <text style="title" animations="intro" animatedValues="title3Opacity">a business</text>
-    <view style="steps">
-      <view style="stepContainer" animations="intro" animatedValues="step1">
-        <view style="step">
-          <text style="stepNumber">1</text>
+  </animated>
+  <screen>
+    <body style="Body">
+      <header style="Header">
+        <text style="Header__Back"
+              href="/index.xml"
+              action="back">Back</text>
+        <text style="Header__Title">Combination</text>
+      </header>
+      <view style="Main"
+            scroll="1">
+        <view style="hero">
+          <text style="title"
+                animations="intro"
+                animatedValues="title1Opacity">Earn $500</text>
+          <text style="title"
+                animations="intro"
+                animatedValues="title2Opacity">when you refer</text>
+          <text style="title"
+                animations="intro"
+                animatedValues="title3Opacity">a business</text>
+          <view style="steps">
+            <view style="stepContainer"
+                  animations="intro"
+                  animatedValues="step1">
+              <view style="step">
+                <text style="stepNumber">1</text>
+              </view>
+              <text style="stepLabel"
+                    animations="intro"
+                    animatedValues="step1Label">Text the code REFER29 to a business</text>
+            </view>
+            <view style="stepContainer"
+                  animations="intro"
+                  animatedValues="step2">
+              <view style="step">
+                <text style="stepNumber">2</text>
+              </view>
+              <text style="stepLabel"
+                    animations="intro"
+                    animatedValues="step2Label">The business signs up and posts a gig</text>
+            </view>
+            <view style="stepContainer"
+                  animations="intro"
+                  animatedValues="step3">
+              <view style="step">
+                <text style="stepNumber">3</text>
+              </view>
+              <text style="stepLabel"
+                    animations="intro"
+                    animatedValues="step3Label">You get a $500 credit to apply towards your gigs!</text>
+            </view>
+          </view>
+          <view style="contactsContainer">
+            <view style="contactsButton"
+                  animations="intro"
+                  animatedValues="buttonPos,buttonOpacity">
+              <text style="contactsButton__Text">Refer a business</text>
+            </view>
+          </view>
         </view>
-        <text style="stepLabel" animations="intro" animatedValues="step1Label">
-          Text the code REFER29 to a business
-        </text>
       </view>
-
-      <view style="stepContainer" animations="intro" animatedValues="step2">
-        <view style="step">
-          <text style="stepNumber">2</text>
-        </view>
-        <text style="stepLabel" animations="intro" animatedValues="step2Label">
-          The business signs up and posts a gig
-        </text>
-      </view>
-
-      <view style="stepContainer" animations="intro" animatedValues="step3">
-        <view style="step">
-          <text style="stepNumber">3</text>
-        </view>
-        <text style="stepLabel" animations="intro" animatedValues="step3Label">
-          You get a $500 credit to apply towards your gigs!
-        </text>
-      </view>
-    </view>
-
-    <view style="contactsContainer">
-      <view style="contactsButton" animations="intro" animatedValues="buttonPos,buttonOpacity">
-        <text style="contactsButton__Text">Refer a business</text>
-      </view>
-    </view>
-
-  </view>
-</view>
-</body>
-</screen>
-
+    </body>
+  </screen>
 </doc>
