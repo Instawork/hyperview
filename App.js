@@ -263,7 +263,7 @@ class HyperRef extends React.Component {
     };
 
     this.pressTriggers = ['press', 'longPress', 'pressIn', 'pressOut'];
-    this.navActions = ['push', 'new', 'back', 'navigate'];
+    this.navActions = ['push', 'new', 'back', 'close', 'navigate'];
     this.updateActions = ['replace', 'replace-inner', 'append', 'prepend'];
   }
 
@@ -462,7 +462,7 @@ function createNavHandler(element, navigation) {
     navRoute = 'Modal';
   }
 
-  if (action == 'back') {
+  if (action == 'back' || action == 'close') {
     navHandler = () => navigation.goBack();
   } else {
     navHandler = () => {

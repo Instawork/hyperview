@@ -72,7 +72,7 @@
 <screen>
 <body style="Body" scroll="true">
   <header style="Header">
-    <text style="Header__Back" href="/navigation/index.xml" action="back">Close</text>
+    <text style="Header__Back" href="/navigation/index.xml" action="close">Close</text>
     <text style="Header__Title">Opened</text>
   </header>
   <text style="Description">
