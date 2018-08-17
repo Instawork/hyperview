@@ -65,12 +65,12 @@
 </styles>
 
 <screen>
-<header style="Header">
-  <text style="Header__Back" href="/list/index.xml" action="back">Back</text>
-  <text style="Header__Title">List With Refresh</text>
-</header>
 
 <body style="Body">
+  <header style="Header">
+    <text style="Header__Back" href="/list/index.xml" action="back">Back</text>
+    <text style="Header__Title">List With Refresh</text>
+  </header>
   <text style="Description">Try multiple pull-to-refresh gestures on the list below.</text>
   <list
     style="List"

@@ -72,24 +72,28 @@
     flex="1"
     height="1024"
   />
+
+  <rule id="Main" flex="1" />
 </styles>
 
 <screen>
-<header style="Header">
-  <text style="Header__Back" href="/dynamic_elements/index.xml" action="back">Back</text>
-  <text style="Header__Title">Visible Once</text>
-</header>
 
-<body style="Body" scroll="true">
-  <text style="Description">
-    Scrolling down to the button will append to the button content. Subsequent views will not trigger another append.
-  </text>
+<body style="Body">
+  <header style="Header">
+    <text style="Header__Back" href="/dynamic_elements/index.xml" action="back">Back</text>
+    <text style="Header__Title">Visible Once</text>
+  </header>
+  <view style="Main" scroll="true">
+    <text style="Description">
+      Scrolling down to the button will append to the button content. Subsequent views will not trigger another append.
+    </text>
 
-  <view style="Spacer">
-  </view>
+    <view style="Spacer">
+    </view>
 
-  <view style="Button" href="/dynamic_elements/_append_fragment.xml" action="append" trigger="visible" once="true">
-    <text style="Button__Label">Scroll to me</text>
+    <view style="Button" href="/dynamic_elements/_append_fragment.xml" action="append" trigger="visible" once="true">
+      <text style="Button__Label">Scroll to me</text>
+    </view>
   </view>
 </body>
 </screen>

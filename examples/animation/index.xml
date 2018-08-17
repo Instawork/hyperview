@@ -55,15 +55,17 @@
     fontSize="18"
     fontFamily="HKGrotesk-Bold"
   />
+  <rule id="Main" flex="1" />
 </styles>
 
 <screen>
+
+
+<body style="Body">
 <header style="Header">
   <text style="Header__Back" href="/index.xml" action="back">Back</text>
   <text style="Header__Title">Animation</text>
 </header>
-
-<body style="Body" scroll="true">
   <list>
 
     <item key="timing" style="Item" href="/animation/timing.xml" show-during-load="loadingScreen">
@@ -129,10 +131,11 @@
     flex="1"
   />
 </styles>
+<body style="Body">
 <header style="Header">
   <text style="Header__Back" href="/navigation/index.xml" action="back">Back</text>
 </header>
-<body style="Body" />
+</body>
 </screen>
 
 </doc>

@@ -65,12 +65,11 @@
 </styles>
 
 <screen>
-<header style="Header">
-  <text style="Header__Back" href="/list/index.xml" action="back">Back</text>
-  <text style="Header__Title">Refresh & Infinite Scroll</text>
-</header>
-
 <body style="Body">
+  <header style="Header">
+    <text style="Header__Back" href="/list/index.xml" action="back">Back</text>
+    <text style="Header__Title">Refresh & Infinite Scroll</text>
+  </header>
   <view
     href="/list/_refresh_infinite_scroll_fragment.xml"
     trigger="refresh"

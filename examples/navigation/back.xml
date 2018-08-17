@@ -67,58 +67,75 @@
     fontFamily="HKGrotesk-Bold"
     fontSize="24"
   />
-
-  <rule id="BorderButton"
-    padding="8"
-    borderColor="#63CB76"
-    borderRadius="16"
-    borderWidth="4"
-    flex="1"
-    flexDirection="row"
-    justifyContent="center"
-    margin="8"
-  />
-  <rule id="BorderButton--Root"
-    margin="24"
-  />
-  <rule id="BorderButton__Label"
-    color="#222"
-    fontFamily="HKGrotesk-Bold"
-    fontSize="24"
-  />
-
-  <rule id="ButtonWrapper"
-    flex="1"
-    alignItems="center"
-  />
-
-  <rule id="Main" flex="1" />
 </styles>
 
 <screen>
 
 
+<body style="Body" scroll="true">
+  <header style="Header">
+    <text style="Header__Back" href="/navigation/index.xml" action="back">Back</text>
+    <text style="Header__Title">Back</text>
+  </header>
+
+  <text style="Description">
+    Tapping the button below will navigate back to the previous screen..
+  </text>
+
+  <view style="Button" href="/navigation/index.xml" action="back">
+    <text style="Button__Label">Back</text>
+  </view>
+</body>
+</screen>
+
+<screen id="loadingScreen">
+<styles>
+  <rule id="Header"
+    height="72"
+    alignItems="center"
+    backgroundColor="white"
+    borderBottomWidth="1"
+    borderBottomColor="#eee"
+    paddingTop="24"
+    paddingLeft="24"
+    paddingRight="24"
+    flexDirection="row"
+  />
+  <rule id="Header__Back"
+    color="blue"
+    fontFamily="HKGrotesk-SemiBold"
+    fontSize="16"
+    paddingRight="16"
+  />
+  <rule id="Header__Title"
+    fontFamily="HKGrotesk-SemiBold"
+    fontSize="24"
+    color="black"
+  />
+  <rule id="Body"
+    backgroundColor="white"
+    flex="1"
+  />
+  <rule id="Description"
+    fontFamily="HKGrotesk-Regular"
+    fontSize="16"
+    margin="24"
+    marginBottom="0"
+  />
+  <rule id="Loading"
+    flex="1"
+    justifyContent="center"
+    alignItems="center"
+  />
+</styles>
 <body style="Body">
-<header style="Header">
-  <text style="Header__Back" href="/dynamic_elements/index.xml" action="back">Back</text>
-  <text style="Header__Title">Replace Inner</text>
-</header>
-  <view style="Main" scroll="true">
-  <text style="Description">
-    Tapping the button below will request an XML fragment and replace the children of the element with the response.
-  </text>
-
-  <view style="Button" href="/dynamic_elements/_replace_inner_fragment.xml" action="replace-inner">
-    <text style="Button__Label">Press me</text>
-  </view>
-
-  <text style="Description">
-    In this example, the replaced element also has a replace-inner action, allowing for a nested interaction.
-  </text>
-
-  <view style="BorderButton" href="/dynamic_elements/_replace_inner_fragment2.xml" action="replace-inner">
-    <text style="BorderButton__Label">Press me</text>
-  </view>
+  <header style="Header">
+    <text style="Header__Back" href="/navigation/index.xml" action="back">Back</text>
+    <text style="Header__Title">Loading...</text>
+  </header>
+  <view style="Loading">
+    <text style="Description">Custom loading screen...</text>
+    <spinner />
   </view>
 </body>
 </screen>

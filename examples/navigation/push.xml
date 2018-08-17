@@ -67,15 +67,18 @@
     fontFamily="HKGrotesk-Bold"
     fontSize="24"
   />
+  <rule id="Main" flex="1" />
 </styles>
 
 <screen>
-<header style="Header">
-  <text style="Header__Back" href="/navigation/index.xml" action="back">Back</text>
-  <text style="Header__Title">Push</text>
-</header>
 
-<body style="Body" scroll="true">
+
+<body style="Body">
+  <header style="Header">
+    <text style="Header__Back" href="/navigation/index.xml" action="back">Back</text>
+    <text style="Header__Title">Push</text>
+  </header>
+  <view style="Main" scroll="true">
   <text style="Description">
     Tapping the button below will request an XML screen and push it onto the stack.
   </text>
@@ -86,6 +89,7 @@
 
   <view style="Button" href="/navigation/pushed.xml" action="push" show-during-load="loadingScreen" delay="1000">
     <text style="Button__Label">Push with indicator</text>
+  </view>
   </view>
 </body>
 </screen>
@@ -130,12 +134,11 @@
     alignItems="center"
   />
 </styles>
-<header style="Header">
-  <text style="Header__Back" href="/navigation/index.xml" action="back">Back</text>
-  <text style="Header__Title">Loading...</text>
-</header>
-
 <body style="Body">
+  <header style="Header">
+    <text style="Header__Back" href="/navigation/index.xml" action="back">Back</text>
+    <text style="Header__Title">Loading...</text>
+  </header>
   <view style="Loading">
     <text style="Description">Custom loading screen...</text>
     <spinner />

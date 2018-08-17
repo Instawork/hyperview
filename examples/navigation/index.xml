@@ -58,12 +58,11 @@
 </styles>
 
 <screen>
-<header style="Header">
-  <text style="Header__Back" href="/index.xml" action="back">Back</text>
-  <text style="Header__Title">Navigation</text>
-</header>
-
-<body style="Body" scroll="true">
+<body style="Body">
+  <header style="Header">
+    <text style="Header__Back" href="/index.xml" action="back">Back</text>
+    <text style="Header__Title">Navigation</text>
+  </header>
   <list>
 
     <item key="push" style="Item" href="/navigation/push.xml">
@@ -71,7 +70,7 @@
       <text style="Item__Chevron">></text>
     </item>
 
-    <item key="new" style="Item" href="/navigateion/new.xml">
+    <item key="new" style="Item" href="/navigation/new.xml">
       <text style="Item__Label">New</text>
       <text style="Item__Chevron">></text>
     </item>

@@ -58,12 +58,11 @@
 </styles>
 
 <screen>
-<header style="Header">
-  <text style="Header__Back" href="/index.xml" action="back">Back</text>
-  <text style="Header__Title">UI Elements</text>
-</header>
-
-<body style="Body" scroll="true">
+<body style="Body">
+  <header style="Header">
+    <text style="Header__Back" href="/index.xml" action="back">Back</text>
+    <text style="Header__Title">UI Elements</text>
+  </header>
   <list>
 
     <item key="view" style="Item" href="/ui_elements/view.xml" show-during-load="loadingScreen">
@@ -114,10 +113,11 @@
     flex="1"
   />
 </styles>
-<header style="Header">
-  <text style="Header__Back" href="/navigation/index.xml" action="back">Back</text>
-</header>
-<body style="Body" />
+<body style="Body">
+  <header style="Header">
+    <text style="Header__Back" href="/navigation/index.xml" action="back">Back</text>
+  </header>
+</body>
 </screen>
 
 </doc>

@@ -68,16 +68,19 @@
   <rule id="Rating__Star--Filled"
     backgroundColor="#63CB76"
   />
+  <rule id="Main" flex="1" />
 
 </styles>
 
 <screen>
+
+
+<body style="Body">
 <header style="Header">
   <text style="Header__Back" href="/dynamic_elements/index.xml" action="back">Back</text>
   <text style="Header__Title">Rating</text>
 </header>
-
-<body style="Body" scroll="true">
+<view style="Main" scroll="1">
   <text style="Description">
     Tapping the circles below will activate the previous circles. This is done with fragment replacements from a hidden view.
   </text>
@@ -133,6 +136,7 @@
       <view style="Rating__Star,Rating__Star--Filled" href="#star5" action="replace-inner" target="rating" />
     </view>
   </view>
+</view>
 </body>
 </screen>
 

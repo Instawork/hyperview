@@ -25,7 +25,6 @@
   />
   <rule id="Body"
     backgroundColor="#63CB76"
-    padding="24"
     flex="1"
   />
   <rule id="Description"
@@ -58,6 +57,8 @@
     id="hero"
     paddingTop="16"
     paddingBottom="16"
+    paddingLeft="24"
+    paddingRight="24"
   />
   <rule
     id="title"
@@ -130,6 +131,7 @@
     fontFamily="HKGrotesk-SemiBold"
     fontSize="18"
   />
+  <rule id="Main" flex="1" />
 </styles>
 
 <animated>
@@ -175,12 +177,14 @@
 </animated>
 
 <screen>
+
+
+<body style="Body">
 <header style="Header">
   <text style="Header__Back" href="/index.xml" action="back">Back</text>
   <text style="Header__Title">Combination</text>
 </header>
-
-<body style="Body" scroll="true">
+<view style="Main" scroll="1">
   <view style="hero">
     <text style="title" animations="intro" animatedValues="title1Opacity">Earn $500</text>
     <text style="title" animations="intro" animatedValues="title2Opacity">when you refer</text>
@@ -221,6 +225,7 @@
     </view>
 
   </view>
+</view>
 </body>
 </screen>
 

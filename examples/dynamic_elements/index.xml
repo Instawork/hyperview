@@ -72,12 +72,12 @@
 </styles>
 
 <screen>
-<header style="Header">
-  <text style="Header__Back" href="/list/index.xml" action="back">Back</text>
-  <text style="Header__Title">Dynamic Elements</text>
-</header>
 
 <body style="Body">
+  <header style="Header">
+    <text style="Header__Back" href="/list/index.xml" action="back">Back</text>
+    <text style="Header__Title">Dynamic Elements</text>
+  </header>
   <sectionlist>
     <section>
       <sectiontitle style="List__Header">
@@ -267,10 +267,12 @@
     flex="1"
   />
 </styles>
-<header style="Header">
-  <text style="Header__Back" href="/navigation/index.xml" action="back">Back</text>
-</header>
-<body style="Body" />
+
+<body style="Body">
+  <header style="Header">
+    <text style="Header__Back" href="/navigation/index.xml" action="back">Back</text>
+  </header>
+</body>
 </screen>
 
 </doc>

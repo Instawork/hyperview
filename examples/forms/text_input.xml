@@ -88,48 +88,52 @@
     color="#FF4847"
   />
 
+  <rule id="Main" flex="1" />
+
 </styles>
 
 <screen>
-<header style="Header">
-  <text style="Header__Back" href="/index.xml" action="back">Back</text>
-  <text style="Header__Title">Text Input</text>
-</header>
 
-<body style="Body" scroll="true" >
-  <view style="FormGroup">
-    <input style="input" outerStyles="outerInput" focusStyles="input,input--focused" placeholderTextColor="#8D9494" placeholder="First name">
-      <label style="label">Default input field</label>
-      <help style="help">Please enter your full name</help>
-    </input>
-  </view>
+<body style="Body">
+  <header style="Header">
+    <text style="Header__Back" href="/index.xml" action="back">Back</text>
+    <text style="Header__Title">Text Input</text>
+  </header>
+  <view style="Main" scroll="true">
+    <view style="FormGroup">
+      <input style="input" outerStyles="outerInput" focusStyles="input,input--focused" placeholderTextColor="#8D9494" placeholder="First name">
+        <label style="label">Default input field</label>
+        <help style="help">Please enter your full name</help>
+      </input>
+    </view>
 
-  <view style="FormGroup">
-    <input style="input" outerStyles="outerInput" focusStyles="input,input--focused" placeholderTextColor="#8D9494" placeholder="First name" value="Milhouse">
-      <label style="label">Filled input field</label>
-      <help style="help">Please enter your full name</help>
-    </input>
-  </view>
+    <view style="FormGroup">
+      <input style="input" outerStyles="outerInput" focusStyles="input,input--focused" placeholderTextColor="#8D9494" placeholder="First name" value="Milhouse">
+        <label style="label">Filled input field</label>
+        <help style="help">Please enter your full name</help>
+      </input>
+    </view>
 
-  <view style="FormGroup">
-    <input style="input,input--error" outerStyles="outerInput" placeholderTextColor="#8D9494" placeholder="First name">
-      <label style="label">Validation error</label>
-      <help style="help,help--error">Please enter your full name</help>
-    </input>
-  </view>
+    <view style="FormGroup">
+      <input style="input,input--error" outerStyles="outerInput" placeholderTextColor="#8D9494" placeholder="First name">
+        <label style="label">Validation error</label>
+        <help style="help,help--error">Please enter your full name</help>
+      </input>
+    </view>
 
-  <view style="FormGroup">
-    <input style="input,input--error" outerStyles="outerInput" placeholderTextColor="#8D9494" placeholder="First name" value="Milhouse">
-      <label style="label">Filled validation error</label>
-      <help style="help,help--error">Name already taken</help>
-    </input>
-  </view>
+    <view style="FormGroup">
+      <input style="input,input--error" outerStyles="outerInput" placeholderTextColor="#8D9494" placeholder="First name" value="Milhouse">
+        <label style="label">Filled validation error</label>
+        <help style="help,help--error">Name already taken</help>
+      </input>
+    </view>
 
-  <view style="FormGroup">
-    <label style="label">Horizontal Layout</label>
-    <view style="horizontalFormGroup">
-      <input style="input" outerStyles="outerInput" focusStyles="input,input--focused" placeholderTextColor="#8D9494" placeholder="First" />
-      <input style="input" outerStyles="outerInput" focusStyles="input,input--focused" placeholderTextColor="#8D9494" placeholder="Last" />
+    <view style="FormGroup">
+      <label style="label">Horizontal Layout</label>
+      <view style="horizontalFormGroup">
+        <input style="input" outerStyles="outerInput" focusStyles="input,input--focused" placeholderTextColor="#8D9494" placeholder="First" />
+        <input style="input" outerStyles="outerInput" focusStyles="input,input--focused" placeholderTextColor="#8D9494" placeholder="Last" />
+      </view>
     </view>
   </view>
 </body>

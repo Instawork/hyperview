@@ -81,15 +81,16 @@
     fontFamily="HKGrotesk-Regular"
     fontSize="16"
   />
+  <rule id="Main" flex="1" />
 </styles>
 
 <screen>
+<body style="Body">
 <header style="Header">
   <text style="Header__Back" href="/dynamic_elements/index.xml" action="back">Back</text>
   <text style="Header__Title">Target Sibling Append</text>
 </header>
-
-<body style="Body" scroll="true">
+<view style="Main" scroll="1">
   <text style="Description">
     Tapping the button below will request an XML fragment and append to the sibling area.
   </text>
@@ -101,6 +102,7 @@
   <view id="container" style="Container">
     <text style="Container__Label">Items:</text>
   </view>
+</view>
 
 </body>
 </screen>

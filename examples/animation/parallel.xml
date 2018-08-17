@@ -63,6 +63,7 @@
     borderRadius="16"
     height="32"
   />
+  <rule id="Main" flex="1" />
 </styles>
 
 <animated>
@@ -88,12 +89,13 @@
 </animated>
 
 <screen>
+
+<body style="Body">
 <header style="Header">
   <text style="Header__Back" href="/index.xml" action="back">Back</text>
   <text style="Header__Title">Parallel</text>
 </header>
-
-<body style="Body" scroll="true">
+<view style="Main" scroll="1">
   <text style="Description">Parallel</text>
   <view style="View" animations="example1" animatedValues="example1"></view>
   <view style="View" animations="example1" animatedValues="example2"></view>
@@ -103,6 +105,7 @@
   <view style="View" animations="example2" animatedValues="example4"></view>
   <view style="View" animations="example2" animatedValues="example5"></view>
   <view style="View" animations="example2" animatedValues="example6"></view>
+</view>
 </body>
 </screen>
 

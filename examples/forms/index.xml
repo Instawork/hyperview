@@ -72,12 +72,12 @@
 </styles>
 
 <screen>
+
+<body style="Body">
 <header style="Header">
   <text style="Header__Back" href="/index.xml" action="back">Back</text>
   <text style="Header__Title">Forms</text>
 </header>
-
-<body style="Body" scroll="true">
 
   <list>
     <item key="text_input" style="Item" href="/forms/text_input.xml" show-during-load="loadingScreen">
@@ -126,10 +126,12 @@
     flex="1"
   />
 </styles>
+
+<body style="Body">
 <header style="Header">
   <text style="Header__Back" href="/navigation/index.xml" action="back">Back</text>
 </header>
-<body style="Body" />
+</body>
 </screen>
 
 </doc>

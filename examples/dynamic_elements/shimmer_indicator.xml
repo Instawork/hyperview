@@ -107,15 +107,18 @@
     borderRadius="32"
     backgroundColor="#e1e1e1"
   />
+  <rule id="Main" flex="1" />
 </styles>
 
 <screen>
+
+
+<body style="Body">
 <header style="Header">
   <text style="Header__Back" href="/dynamic_elements/index.xml" action="back">Back</text>
   <text style="Header__Title">Shimmer Indicator</text>
 </header>
-
-<body style="Body" scroll="true">
+<view style="Main" scroll="1">
   <text style="Description">
     Tapping the button below will request an XML fragment and replace the child element in the button. An indicator appears during loading.
   </text>
@@ -141,6 +144,7 @@
   </view>
   <view id="container" style="Container">
   </view>
+</view>
 </body>
 </screen>
 

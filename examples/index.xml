@@ -62,11 +62,11 @@
 </styles>
 
 <screen>
-<header style="Header">
-  <text style="Header__Title">Hyperview Examples</text>
-</header>
+<body style="Body">
+  <header style="Header">
+    <text style="Header__Title">Hyperview Examples</text>
+  </header>
 
-<body style="Body" scroll="true">
   <list>
     <item key="layout" style="Item" href="/ui_elements/index.xml" show-during-load="loadingScreen">
       <view style="Item__Left">
@@ -154,10 +154,12 @@
     flex="1"
   />
 </styles>
-<header style="Header">
-  <text style="Header__Back" href="/navigation/index.xml" action="back">Back</text>
-</header>
-<body style="Body" />
+
+<body style="Body">
+  <header style="Header">
+    <text style="Header__Back" href="/navigation/index.xml" action="back">Back</text>
+  </header>
+</body>
 </screen>
 
 </doc>

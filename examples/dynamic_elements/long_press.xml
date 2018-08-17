@@ -67,21 +67,24 @@
     fontFamily="HKGrotesk-Bold"
     fontSize="24"
   />
+
+  <rule id="Main" flex="1" />
 </styles>
 
 <screen>
-<header style="Header">
-  <text style="Header__Back" href="/dynamic_elements/index.xml" action="back">Back</text>
-  <text style="Header__Title">Long Press</text>
-</header>
+<body style="Body">
+  <header style="Header">
+    <text style="Header__Back" href="/dynamic_elements/index.xml" action="back">Back</text>
+    <text style="Header__Title">Long Press</text>
+  </header>
+  <view style="Main" scroll="true">
+    <text style="Description">
+      Long-presing the button will replace the content.
+    </text>
 
-<body style="Body" scroll="true">
-  <text style="Description">
-    Long-presing the button will replace the content.
-  </text>
-
-  <view style="Button" href="/dynamic_elements/_replace_fragment.xml" action="replace" trigger="longPress">
-    <text style="Button__Label">Press me</text>
+    <view style="Button" href="/dynamic_elements/_replace_fragment.xml" action="replace" trigger="longPress">
+      <text style="Button__Label">Press me</text>
+    </view>
   </view>
 </body>
 </screen>

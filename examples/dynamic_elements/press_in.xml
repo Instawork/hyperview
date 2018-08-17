@@ -67,21 +67,26 @@
     fontFamily="HKGrotesk-Bold"
     fontSize="24"
   />
+
+  <rule id="Main" flex="1" />
 </styles>
 
 <screen>
+
+<body style="Body">
 <header style="Header">
   <text style="Header__Back" href="/dynamic_elements/index.xml" action="back">Back</text>
   <text style="Header__Title">Press In</text>
-</header>
+  </header>
 
-<body style="Body" scroll="true">
+  <view style="Main" scroll="true">
   <text style="Description">
     Press-in on the button will replace the content.
   </text>
 
   <view style="Button" href="/dynamic_elements/_replace_fragment.xml" action="replace" trigger="pressIn">
     <text style="Button__Label">Press me</text>
+  </view>
   </view>
 </body>
 </screen>

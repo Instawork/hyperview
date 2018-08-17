@@ -82,15 +82,19 @@
     fontFamily="HKGrotesk-Bold"
     fontSize="12"
   />
+
+  <rule id="Main" flex="1" />
 </styles>
 
 <screen>
+
+
+<body style="Body">
 <header style="Header">
   <text style="Header__Back" href="/dynamic_elemens/index.xml" action="back">Back</text>
   <text style="Header__Title">Prepend</text>
 </header>
-
-<body style="Body" scroll="true">
+  <view style="Main" scroll="true">
   <text style="Description">
     Tapping the button below will request an XML fragment and prepend it to the button.
   </text>
@@ -106,6 +110,7 @@
   <view style="Tree,Tree--Root" href="/dynamic_elements/_prepend_fragment2.xml" action="prepend">
     <text style="Tree__Label">1. Lorem</text>
     <text style="Tree__Label">2. Ipsum</text>
+  </view>
   </view>
 </body>
 </screen>

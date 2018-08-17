@@ -67,29 +67,33 @@
     fontFamily="HKGrotesk-Bold"
     fontSize="24"
   />
+
+  <rule id="Main" flex="1" />
 </styles>
 
 <screen>
+
+<body style="Body">
 <header style="Header">
   <text style="Header__Back" href="/dynamic_elements/index.xml" action="back">Back</text>
   <text style="Header__Title">Replace</text>
 </header>
+  <view style="Main" scroll="true">
+    <text style="Description">
+      Tapping the button below will request an XML fragment and replace the element with the response.
+    </text>
 
-<body style="Body" scroll="true">
-  <text style="Description">
-    Tapping the button below will request an XML fragment and replace the element with the response.
-  </text>
+    <view style="Button" href="/dynamic_elements/_replace_fragment.xml" action="replace">
+      <text style="Button__Label">Press me</text>
+    </view>
 
-  <view style="Button" href="/dynamic_elements/_replace_fragment.xml" action="replace">
-    <text style="Button__Label">Press me</text>
-  </view>
+    <text style="Description">
+      In this example, the replaced element also has an href, which now requests a different XML fragment.
+    </text>
 
-  <text style="Description">
-    In this example, the replaced element also has an href, which now requests a different XML fragment.
-  </text>
-
-  <view style="Button" href="/dynamic_elements/_replace_fragment2.xml" action="replace">
-    <text style="Button__Label">Press me</text>
+    <view style="Button" href="/dynamic_elements/_replace_fragment2.xml" action="replace">
+      <text style="Button__Label">Press me</text>
+    </view>
   </view>
 </body>
 </screen>

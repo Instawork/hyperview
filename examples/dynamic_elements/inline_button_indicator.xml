@@ -93,15 +93,18 @@
     marginLeft="24"
     marginRight="24"
   />
+  <rule id="Main" flex="1" />
 </styles>
 
 <screen>
+
+
+<body style="Body">
 <header style="Header">
   <text style="Header__Back" href="/dynamic_elements/index.xml" action="back">Back</text>
   <text style="Header__Title">Inline Indicator</text>
 </header>
-
-<body style="Body" scroll="true">
+<view style="Main" scroll="1">
   <text style="Description">
     Tapping the button below will request an XML fragment and replace the child element below. The button shows a spinner and alternate text during the loading.
   </text>
@@ -126,6 +129,7 @@
 
   <view id="container" style="Container">
   </view>
+</view>
 </body>
 </screen>
 

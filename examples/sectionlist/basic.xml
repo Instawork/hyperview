@@ -73,12 +73,11 @@
 </styles>
 
 <screen>
-<header style="Header">
-  <text style="Header__Back" href="/list/index.xml" action="back">Back</text>
-  <text style="Header__Title">Basic Section List</text>
-</header>
-
 <body style="Body">
+  <header style="Header">
+    <text style="Header__Back" href="/list/index.xml" action="back">Back</text>
+    <text style="Header__Title">Basic Section List</text>
+  </header>
   <sectionlist>
     <section>
       <sectiontitle style="List__Header">

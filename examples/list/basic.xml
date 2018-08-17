@@ -58,14 +58,13 @@
 </styles>
 
 <screen>
-<header style="Header">
-  <text style="Header__Back" href="/list/index.xml" action="back">Back</text>
-  <text style="Header__Title">Basic List</text>
-</header>
+  <body style="Body">
+  <header style="Header">
+    <text style="Header__Back" href="/list/index.xml" action="back">Back</text>
+    <text style="Header__Title">Basic List</text>
+  </header>
 
-<body style="Body" scroll="true">
   <list>
-
     <item key="1" style="Item">
       <text style="Item__Label">List 1</text>
     </item>

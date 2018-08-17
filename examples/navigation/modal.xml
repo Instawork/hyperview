@@ -67,59 +67,17 @@
     fontFamily="HKGrotesk-Bold"
     fontSize="24"
   />
-
-  <rule id="BorderButton"
-    padding="8"
-    borderColor="#63CB76"
-    borderRadius="16"
-    borderWidth="4"
-    flex="1"
-    flexDirection="row"
-    justifyContent="center"
-    margin="8"
-  />
-  <rule id="BorderButton--Root"
-    margin="24"
-  />
-  <rule id="BorderButton__Label"
-    color="#222"
-    fontFamily="HKGrotesk-Bold"
-    fontSize="24"
-  />
-
-  <rule id="ButtonWrapper"
-    flex="1"
-    alignItems="center"
-  />
-
-  <rule id="Main" flex="1" />
 </styles>
 
 <screen>
-
-
-<body style="Body">
-<header style="Header">
-  <text style="Header__Back" href="/dynamic_elements/index.xml" action="back">Back</text>
-  <text style="Header__Title">Replace Inner</text>
-</header>
-  <view style="Main" scroll="true">
+<body style="Body" scroll="true">
+  <header style="Header">
+    <text style="Header__Back" href="/navigation/index.xml" action="back">Close</text>
+    <text style="Header__Title">Opened</text>
+  </header>
   <text style="Description">
-    Tapping the button below will request an XML fragment and replace the children of the element with the response.
+    Opened a new modal screen!
   </text>
-
-  <view style="Button" href="/dynamic_elements/_replace_inner_fragment.xml" action="replace-inner">
-    <text style="Button__Label">Press me</text>
-  </view>
-
-  <text style="Description">
-    In this example, the replaced element also has a replace-inner action, allowing for a nested interaction.
-  </text>
-
-  <view style="BorderButton" href="/dynamic_elements/_replace_inner_fragment2.xml" action="replace-inner">
-    <text style="BorderButton__Label">Press me</text>
-  </view>
-  </view>
 </body>
 </screen>
 

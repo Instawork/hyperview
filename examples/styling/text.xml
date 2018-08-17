@@ -91,16 +91,17 @@
   <rule id="Text--Green"
     color="#63CB76"
   />
+  <rule id="Main" flex="1" />
 
 </styles>
 
 <screen>
+<body style="Body">
 <header style="Header">
   <text style="Header__Back" href="/index.xml" action="back">Back</text>
   <text style="Header__Title">Text Styling</text>
 </header>
-
-<body style="Body" scroll="true">
+<view style="Main" scroll="1">
   <text style="Text,Text--Small">Small</text>
   <text style="Text,Text--Medium">Medium</text>
   <text style="Text,Text--Large">Large</text>
@@ -112,6 +113,7 @@
   <text style="Text,Text--Medium,Text--BoldWeight">Bold</text>
 
   <text style="Text,Text--Medium,Text--BoldWeight,Text--Green">Color</text>
+</view>
 </body>
 </screen>
 

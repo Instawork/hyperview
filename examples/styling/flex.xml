@@ -95,16 +95,17 @@
   <rule id="FlexAlignCenter"
     alignItems="center"
   />
+  <rule id="Main" flex="1" />
 
 </styles>
-
 <screen>
+
+  <body style="Body">
 <header style="Header">
   <text style="Header__Back" href="/index.xml" action="back">Back</text>
   <text style="Header__Title">Flex Styling</text>
 </header>
-
-<body style="Body" scroll="true">
+<view style="Main" scroll="1">
   <text style="Description">Flex Horizontal</text>
   <view style="FlexContainer,FlexHorizontal">
     <view style="FlexChild"></view>
@@ -174,6 +175,7 @@
     <view style="FlexChild"></view>
     <view style="FlexChild"></view>
   </view>
+</view>
 </body>
 </screen>
 

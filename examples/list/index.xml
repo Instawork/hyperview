@@ -58,14 +58,15 @@
 </styles>
 
 <screen>
-<header style="Header">
-  <text style="Header__Back" href="/list/index.xml" action="back">Back</text>
-  <text style="Header__Title">List</text>
-</header>
 
-<body style="Body" scroll="true">
+
+<body style="Body">
+  <header style="Header">
+    <text style="Header__Back" href="/list/index.xml" action="back">Back</text>
+    <text style="Header__Title">List</text>
+  </header>
+
   <list>
-
     <item key="basic" style="Item" href="/list/basic.xml" show-during-load="loadingScreen">
       <text style="Item__Label">Basic List</text>
       <text style="Item__Chevron">></text>
@@ -85,7 +86,6 @@
       <text style="Item__Label">Refresh And Infinite Scroll</text>
       <text style="Item__Chevron">></text>
     </item>
-
   </list>
 </body>
 </screen>
@@ -119,10 +119,12 @@
     flex="1"
   />
 </styles>
-<header style="Header">
-  <text style="Header__Back" href="/navigation/index.xml" action="back">Back</text>
-</header>
-<body style="Body" />
+
+<body style="Body">
+  <header style="Header">
+    <text style="Header__Back" href="/navigation/index.xml" action="back">Back</text>
+  </header>
+</body>
 </screen>
 
 </doc>

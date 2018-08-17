@@ -458,7 +458,7 @@ function createNavHandler(element, navigation) {
     // Return to the screen, if it exists
     navFunction = navigation.navigate;
     key = ROUTE_KEYS[getHrefKey(href)];
-  } else if (action == 'modal') {
+  } else if (action == 'new') {
     navRoute = 'Modal';
   }
 
@@ -595,8 +595,24 @@ function mapMarker(element, navigation, stylesheet) {
 function view(element, navigation, stylesheet, animations, onUpdate, options) {
   const { skipHref } = options || {};
   const props = createProps(element, stylesheet, animations);
+  const scrollable = element.getAttribute('scroll');
+  let c = View;
+  if (props.animations) {
+    if (scrollable) {
+      c = Animated.ScrollView;
+    } else {
+      c = Animated.View;
+    }
+  } else {
+    if (scrollable) {
+      c = ScrollView;
+    } else {
+      c = View;
+    }
+  }
+
   let component = React.createElement(
-    props.animations ? Animated.View : View,
+    c,
     props,
     ...renderChildren(element, navigation, stylesheet, animations, onUpdate)
   );
@@ -648,29 +664,6 @@ function text(element, navigation, stylesheet, animations, onUpdate, options) {
   );
 
   return skipHref ? component : addHref(component, element, navigation, stylesheet, animations, onUpdate);
-}
-
-/**
- *
- */
-function renderHeader(element, navigation, stylesheet, animations, onUpdate) {
-  const headers = element.getElementsByTagName('header');
-  if (!(headers && headers[0])) {
-    return null;
-  }
-  const header = headers[0];
-
-  headerComponent = renderElement(
-    header,
-    navigation,
-    stylesheet,
-    animations,
-    onUpdate
-  );
-
-  navigation.setParams({
-    headerComponent,
-  });
 }
 
 /**
@@ -882,20 +875,6 @@ function createAnimation(element, animatedValues) {
  *
  */
 class HyperScreen extends React.Component {
-  static navigationOptions = ({ navigation, navigationOptions, screenProps }) => {
-    const header = navigation.getParam('headerComponent');
-    const headerRight = navigation.getParam('headerRight');
-    const headerLeft = navigation.getParam('headerLeft');
-    const options = {
-      header,
-      headerRight,
-    };
-    if (headerLeft) {
-      options.headerLeft = headerLeft;
-    }
-    return options;
-  }
-
   constructor(props){
     super(props);
     this.parser = new DOMParser();
@@ -919,8 +898,6 @@ class HyperScreen extends React.Component {
 
     this.needsLoad = true;
     if (preloadScreen) {
-      const header = renderHeader(preloadScreen, this.props.navigation, preloadStyles, animations, this.onUpdate);
-      this.props.navigation.setParams({ header });
       this.setState({
         doc: preloadScreen,
         styles: preloadStyles,
@@ -1164,8 +1141,6 @@ class HyperScreen extends React.Component {
         const doc = this.parser.parseFromString(responseText);
         const animations = createAnimations(doc);
         const stylesheet = createStylesheet(doc);
-        const header = renderHeader(doc, this.props.navigation, stylesheet, animations, this.onUpdate);
-        this.props.navigation.setParams({ header });
         ROUTE_KEYS[getHrefKey(path)] = this.props.navigation.state.key;
 
         Object.entries(animations.timings).forEach(([key, timing]) => {
@@ -1210,7 +1185,8 @@ const MainStack = createStackNavigator(
     initialRouteParams: {
       //href: '/dynamic_elements/indicator.xml',
       href: '/index.xml',
-    }
+    },
+    headerMode: 'none',
   }
 );
 

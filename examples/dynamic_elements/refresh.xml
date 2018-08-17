@@ -67,15 +67,18 @@
     fontFamily="HKGrotesk-Bold"
     fontSize="24"
   />
+  <rule id="Main" flex="1" />
 </styles>
 
 <screen>
+
+
+<body style="Body">
 <header style="Header">
   <text style="Header__Back" href="/dynamic_elements/index.xml" action="back">Back</text>
   <text style="Header__Title">Pull to Refresh</text>
 </header>
-
-<body style="Body">
+<view style="Main">
   <text style="Description">
     Pull to refresh on the button will replace the content.
   </text>
@@ -83,6 +86,7 @@
   <view style="Button" href="/dynamic_elements/_replace_inner_fragment.xml" action="replace-inner" trigger="refresh">
     <text style="Button__Label">Refresh me</text>
   </view>
+</view>
 </body>
 </screen>
 

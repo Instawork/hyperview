@@ -81,15 +81,18 @@
     fontFamily="HKGrotesk-Regular"
     fontSize="16"
   />
+  <rule id="Main" flex="1" />
 </styles>
 
 <screen>
+
+
+<body style="Body">
 <header style="Header">
   <text style="Header__Back" href="/dynamic_elements/index.xml" action="back">Back</text>
   <text style="Header__Title">Load</text>
 </header>
-
-<body style="Body" scroll="true">
+<view style="Main" scroll="1">
   <text style="Description">
     A hidden view below will automatically trigger a request and load the content into the container.
   </text>
@@ -118,9 +121,12 @@
       href="/dynamic_elements/_load_navigate_back.xml" 
       action="replace-inner"
       delay="300"
+      show-during-load="saving"
   >
     <text style="Button__Label">Press me</text>
   </view>
+  <spinner id="saving" hide="true" />
+</view>
 </body>
 </screen>
 

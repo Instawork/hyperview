@@ -87,27 +87,32 @@
     color="#FF4847"
   />
 
+  <rule id="Main" flex="1" />
+
 </styles>
 
 <screen>
-<header style="Header">
-  <text style="Header__Back" href="/index.xml" action="back">Back</text>
-  <text style="Header__Title">Textarea</text>
-</header>
 
-<body style="Body" scroll="true" >
-  <view style="FormGroup">
-    <textarea style="input" outerStyles="outerInput" focusStyles="input,input--focused" placeholderTextColor="#8D9494" placeholder="Instructions">
-      <label style="label">Multi-line textarea</label>
-      <help style="help">Please enter your gig instructions</help>
-    </textarea>
-  </view>
+<body style="Body">
+  <header style="Header">
+    <text style="Header__Back" href="/index.xml" action="back">Back</text>
+    <text style="Header__Title">Textarea</text>
+  </header>
 
-  <view style="FormGroup">
-    <textarea style="input,input--error" outerStyles="outerInput" placeholderTextColor="#8D9494" placeholder="Instructions">
-      <label style="label">Multi-line validation error</label>
-      <help style="help,help--error">Please enter your gig instructions</help>
-    </textarea>
+  <view style="Main" scroll="true">
+    <view style="FormGroup">
+      <textarea style="input" outerStyles="outerInput" focusStyles="input,input--focused" placeholderTextColor="#8D9494" placeholder="Instructions">
+        <label style="label">Multi-line textarea</label>
+        <help style="help">Please enter your gig instructions</help>
+      </textarea>
+    </view>
+
+    <view style="FormGroup">
+      <textarea style="input,input--error" outerStyles="outerInput" placeholderTextColor="#8D9494" placeholder="Instructions">
+        <label style="label">Multi-line validation error</label>
+        <help style="help,help--error">Please enter your gig instructions</help>
+      </textarea>
+    </view>
   </view>
 </body>
 </screen>

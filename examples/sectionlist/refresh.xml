@@ -76,12 +76,11 @@
 </styles>
 
 <screen>
+<body style="Body">
 <header style="Header">
   <text style="Header__Back" href="/list/index.xml" action="back">Back</text>
   <text style="Header__Title">Section List with Refresh</text>
 </header>
-
-<body style="Body">
   <text style="Description">Try multiple pull-to-refresh gestures on the section list below.</text>
   <sectionlist
     trigger="refresh"

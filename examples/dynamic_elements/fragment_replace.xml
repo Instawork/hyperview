@@ -67,15 +67,18 @@
     fontFamily="HKGrotesk-Bold"
     fontSize="24"
   />
+  <rule id="Main" flex="1" />
 </styles>
 
 <screen>
+
+
+<body style="Body">
 <header style="Header">
   <text style="Header__Back" href="/dynamic_elements/index.xml" action="back">Back</text>
   <text style="Header__Title">Fragment Replace</text>
 </header>
-
-<body style="Body" scroll="true">
+<view style="Main" scroll="1">
   <text style="Description">
     Tapping the button below will replace the content with a copy of the fragment below.
   </text>
@@ -101,6 +104,7 @@
       <text style="Button__Label">From hidden fragment</text>
     </view>
   </view>
+</view>
 </body>
 </screen>
 

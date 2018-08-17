@@ -81,15 +81,18 @@
     fontFamily="HKGrotesk-Regular"
     fontSize="16"
   />
+  <rule id="Main" flex="1" />
 </styles>
 
 <screen>
+
+
+  <body style="Body">
 <header style="Header">
   <text style="Header__Back" href="/dynamic_elements/index.xml" action="back">Back</text>
   <text style="Header__Title">Target Child</text>
 </header>
-
-<body style="Body" scroll="true">
+<view style="Main" scroll="1">
   <text style="Description">
     Tapping the button below will request an XML fragment and replace the child element in the button.
   </text>
@@ -100,6 +103,7 @@
       <text style="Container__Label">Waiting...</text>
     </view>
   </view>
+</view>
 </body>
 </screen>
 

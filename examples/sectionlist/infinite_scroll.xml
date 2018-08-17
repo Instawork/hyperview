@@ -80,12 +80,12 @@
 </styles>
 
 <screen>
-<header style="Header">
-  <text style="Header__Back" href="/list/index.xml" action="back">Back</text>
-  <text style="Header__Title">Section List Infinite Scroll</text>
-</header>
 
 <body style="Body">
+  <header style="Header">
+    <text style="Header__Back" href="/list/index.xml" action="back">Back</text>
+    <text style="Header__Title">Section List Infinite Scroll</text>
+  </header>
   <sectionlist id="myList">
     <section>
       <sectiontitle style="List__Header">

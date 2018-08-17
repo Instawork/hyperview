@@ -61,6 +61,7 @@
     borderRadius="16"
     height="40"
   />
+  <rule id="Main" flex="1" />
 </styles>
 
 <animated>
@@ -73,17 +74,18 @@
 </animated>
 
 <screen>
+<body style="Body" scroll="true">
 <header style="Header">
   <text style="Header__Back" href="/index.xml" action="back">Back</text>
   <text style="Header__Title">Easing</text>
 </header>
-
-<body style="Body" scroll="true">
+<view style="Main" scroll="1">
   <text style="Description">Linear</text>
   <view style="View" animations="example1" animatedValues="example1"></view>
 
   <text style="Description">Elastic</text>
   <view style="View" animations="example2" animatedValues="example2"></view>
+</view>
 </body>
 </screen>
 

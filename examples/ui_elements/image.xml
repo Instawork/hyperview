@@ -67,12 +67,12 @@
 </styles>
 
 <screen>
-<header style="Header">
-  <text style="Header__Back" href="/dynamic_elements/index.xml" action="back">Back</text>
-  <text style="Header__Title">Image</text>
-</header>
 
 <body style="Body" scroll="true">
+  <header style="Header">
+    <text style="Header__Back" href="/dynamic_elements/index.xml" action="back">Back</text>
+    <text style="Header__Title">Image</text>
+  </header>
   <text style="Description">
     Image
   </text>

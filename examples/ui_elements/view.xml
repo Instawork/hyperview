@@ -76,12 +76,13 @@
 </styles>
 
 <screen>
-<header style="Header">
-  <text style="Header__Back" href="/dynamic_elements/index.xml" action="back">Back</text>
-  <text style="Header__Title">View</text>
-</header>
 
 <body style="Body" scroll="true">
+  <header style="Header">
+    <text style="Header__Back" href="/dynamic_elements/index.xml" action="back">Back</text>
+    <text style="Header__Title">View</text>
+  </header>
+
   <text style="Description">
     View
   </text>

@@ -28,13 +28,10 @@
     flex="1"
   />
   <rule id="Description"
-    fontFamily="HKGrotesk-SemiBold"
+    fontFamily="HKGrotesk-Regular"
     fontSize="16"
     margin="24"
-    padding="16"
-    borderWidth="2"
-    borderColor="red"
-    borderRadius="4"
+    marginBottom="0"
   />
   <rule id="Item"
     borderBottomWidth="1"
@@ -55,33 +52,46 @@
     fontSize="18"
     fontFamily="HKGrotesk-Bold"
   />
+
+  <rule id="Button"
+    padding="24"
+    backgroundColor="#63CB76"
+    borderRadius="16"
+    margin="24"
+    flex="1"
+    flexDirection="row"
+    justifyContent="center"
+  />
+  <rule id="Button__Label"
+    color="white"
+    fontFamily="HKGrotesk-Bold"
+    fontSize="24"
+  />
+  <rule id="Main" flex="1" />
 </styles>
 
 <screen>
 
+
 <body style="Body">
-<header style="Header">
-  <text style="Header__Back" href="/index.xml" action="back">Back</text>
-  <text style="Header__Title">Section List</text>
-</header>
-  <list>
+  <header style="Header">
+    <text style="Header__Back" href="/navigation/index.xml" action="back">Back</text>
+    <text style="Header__Title">Navigate</text>
+  </header>
 
-    <item key="basic" style="Item" href="/sectionlist/basic.xml" show-during-load="loadingScreen">
-      <text style="Item__Label">Basic Section List</text>
-      <text style="Item__Chevron">></text>
-    </item>
+  <view style="Main" scroll="true">
+  <text style="Description">
+    Tapping the button below will request an XML screen and push it onto the stack.
+  </text>
 
-    <item key="refresh" style="Item" href="/sectionlist/refresh.xml" show-during-load="loadingScreen">
-      <text style="Item__Label">Section List With Refresh</text>
-      <text style="Item__Chevron">></text>
-    </item>
+  <view style="Button" href="/index.xml" action="navigate">
+    <text style="Button__Label">Navigate to home</text>
+  </view>
 
-    <item key="infinite-scroll" style="Item" href="/sectionlist/infinite_scroll.xml" show-during-load="loadingScreen">
-      <text style="Item__Label">Section List With Infinite Scroll</text>
-      <text style="Item__Chevron">></text>
-    </item>
-
-  </list>
+  <view style="Button" href="/navigation/pushed.xml" action="navigate" show-during-load="loadingScreen" delay="1000">
+    <text style="Button__Label">Navigate with indicator</text>
+  </view>
+  </view>
 </body>
 </screen>
 
@@ -113,12 +123,27 @@
     backgroundColor="white"
     flex="1"
   />
+  <rule id="Description"
+    fontFamily="HKGrotesk-Regular"
+    fontSize="16"
+    margin="24"
+    marginBottom="0"
+  />
+  <rule id="Loading"
+    flex="1"
+    justifyContent="center"
+    alignItems="center"
+  />
 </styles>
-
 <body style="Body">
   <header style="Header">
     <text style="Header__Back" href="/navigation/index.xml" action="back">Back</text>
+    <text style="Header__Title">Loading...</text>
   </header>
+  <view style="Loading">
+    <text style="Description">Custom loading screen...</text>
+    <spinner />
+  </view>
 </body>
 </screen>
 
