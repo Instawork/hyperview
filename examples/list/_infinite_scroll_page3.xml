@@ -1,4 +1,4 @@
-<view>
+<view xmlns="https://instawork.com/hyperview">
   <item key="31"
         style="Item">
     <text style="Item__Label">Added: List 31</text>

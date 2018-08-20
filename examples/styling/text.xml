@@ -1,120 +1,98 @@
-<doc>
-
-<styles>
-  <rule id="Header"
-    height="72"
-    alignItems="center"
-    backgroundColor="white"
-    borderBottomWidth="1"
-    borderBottomColor="#eee"
-    paddingTop="24"
-    paddingLeft="24"
-    paddingRight="24"
-    flexDirection="row"
-  />
-  <rule id="Header__Back"
-    color="blue"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="16"
-    paddingRight="16"
-  />
-  <rule id="Header__Title"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="24"
-    color="black"
-  />
-  <rule id="Body"
-    backgroundColor="white"
-    flex="1"
-  />
-  <rule id="Description"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="16"
-    margin="24"
-    padding="16"
-    borderWidth="2"
-    borderColor="red"
-    borderRadius="4"
-  />
-  <rule id="Item"
-    borderBottomWidth="1"
-    borderBottomColor="#eee"
-    height="48"
-    flex="1"
-    flexDirection="row"
-    alignItems="center"
-    justifyContent="space-between"
-    paddingLeft="24"
-    paddingRight="24"
-  />
-  <rule id="Item__Label"
-    fontSize="18"
-    fontFamily="HKGrotesk-Regular"
-  />
-  <rule id="Item__Chevron"
-    fontSize="18"
-    fontFamily="HKGrotesk-Bold"
-  />
-
-  <rule id="Text"
-    fontFamily="HKGrotesk-Regular"
-    marginTop="8"
-    marginBottom="8"
-    marginLeft="24"
-    marginRight="24"
-  />
-  <rule id="Text--Small"
-    fontSize="8"
-  />
-  <rule id="Text--Medium"
-    fontSize="32"
-  />
-  <rule id="Text--Large"
-    fontSize="72"
-  />
-  <rule id="Text--LightWeight"
-    fontFamily="HKGrotesk-Light"
-  />
-  <rule id="Text--RegularWeight"
-    fontFamily="HKGrotesk-Regular"
-  />
-  <rule id="Text--MediumWeight"
-    fontFamily="HKGrotesk-Medium"
-  />
-  <rule id="Text--SemiBoldWeight"
-    fontFamily="HKGrotesk-SemiBold"
-  />
-  <rule id="Text--BoldWeight"
-    fontFamily="HKGrotesk-Bold"
-  />
-
-  <rule id="Text--Green"
-    color="#63CB76"
-  />
-  <rule id="Main" flex="1" />
-
-</styles>
-
-<screen>
-<body style="Body">
-<header style="Header">
-  <text style="Header__Back" href="/index.xml" action="back">Back</text>
-  <text style="Header__Title">Text Styling</text>
-</header>
-<view style="Main" scroll="1">
-  <text style="Text,Text--Small">Small</text>
-  <text style="Text,Text--Medium">Medium</text>
-  <text style="Text,Text--Large">Large</text>
-
-  <text style="Text,Text--Medium,Text--LightWeight">Light</text>
-  <text style="Text,Text--Medium,Text--RegularWeight">Regular</text>
-  <text style="Text,Text--Medium,Text--MediumWeight">Medium</text>
-  <text style="Text,Text--Medium,Text--SemiBoldWeight">Semi-Bold</text>
-  <text style="Text,Text--Medium,Text--BoldWeight">Bold</text>
-
-  <text style="Text,Text--Medium,Text--BoldWeight,Text--Green">Color</text>
-</view>
-</body>
-</screen>
-
+<doc xmlns="https://instawork.com/hyperview">
+  <screen>
+    <styles>
+      <rule alignItems="center"
+            backgroundColor="white"
+            borderBottomColor="#eee"
+            borderBottomWidth="1"
+            flexDirection="row"
+            height="72"
+            id="Header"
+            paddingLeft="24"
+            paddingRight="24"
+            paddingTop="24" />
+      <rule color="blue"
+            fontFamily="HKGrotesk-SemiBold"
+            fontSize="16"
+            id="Header__Back"
+            paddingRight="16" />
+      <rule color="black"
+            fontFamily="HKGrotesk-SemiBold"
+            fontSize="24"
+            id="Header__Title" />
+      <rule backgroundColor="white"
+            flex="1"
+            id="Body" />
+      <rule borderColor="red"
+            borderRadius="4"
+            borderWidth="2"
+            fontFamily="HKGrotesk-SemiBold"
+            fontSize="16"
+            id="Description"
+            margin="24"
+            padding="16" />
+      <rule alignItems="center"
+            borderBottomColor="#eee"
+            borderBottomWidth="1"
+            flex="1"
+            flexDirection="row"
+            height="48"
+            id="Item"
+            justifyContent="space-between"
+            paddingLeft="24"
+            paddingRight="24" />
+      <rule fontFamily="HKGrotesk-Regular"
+            fontSize="18"
+            id="Item__Label" />
+      <rule fontFamily="HKGrotesk-Bold"
+            fontSize="18"
+            id="Item__Chevron" />
+      <rule fontFamily="HKGrotesk-Regular"
+            id="Text"
+            marginBottom="8"
+            marginLeft="24"
+            marginRight="24"
+            marginTop="8" />
+      <rule fontSize="8"
+            id="Text--Small" />
+      <rule fontSize="32"
+            id="Text--Medium" />
+      <rule fontSize="72"
+            id="Text--Large" />
+      <rule fontFamily="HKGrotesk-Light"
+            id="Text--LightWeight" />
+      <rule fontFamily="HKGrotesk-Regular"
+            id="Text--RegularWeight" />
+      <rule fontFamily="HKGrotesk-Medium"
+            id="Text--MediumWeight" />
+      <rule fontFamily="HKGrotesk-SemiBold"
+            id="Text--SemiBoldWeight" />
+      <rule fontFamily="HKGrotesk-Bold"
+            id="Text--BoldWeight" />
+      <rule color="#63CB76"
+            id="Text--Green" />
+      <rule flex="1"
+            id="Main" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text action="back"
+              href="/index.xml"
+              style="Header__Back">Back</text>
+        <text style="Header__Title">Text Styling</text>
+      </header>
+      <view scroll="1"
+            style="Main">
+        <text style="Text,Text--Small">Small</text>
+        <text style="Text,Text--Medium">Medium</text>
+        <text style="Text,Text--Large">Large</text>
+        <text style="Text,Text--Medium,Text--LightWeight">Light</text>
+        <text style="Text,Text--Medium,Text--RegularWeight">Regular</text>
+        <text style="Text,Text--Medium,Text--MediumWeight">Medium</text>
+        <text style="Text,Text--Medium,Text--SemiBoldWeight">Semi-Bold</text>
+        <text style="Text,Text--Medium,Text--BoldWeight">Bold</text>
+        <text style="Text,Text--Medium,Text--BoldWeight,Text--Green">Color</text>
+      </view>
+    </body>
+  </screen>
 </doc>

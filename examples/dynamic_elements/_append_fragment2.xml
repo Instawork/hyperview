@@ -1,6 +1,7 @@
-<view style="Tree"
+<view action="append"
       href="/dynamic_elements/_append_fragment3.xml"
-      action="append">
+      style="Tree"
+      xmlns="https://instawork.com/hyperview">
   <text style="Tree__Label">a) dolor</text>
   <text style="Tree__Label">b) sit</text>
 </view>

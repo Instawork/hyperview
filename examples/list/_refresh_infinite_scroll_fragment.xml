@@ -1,4 +1,5 @@
-<list id="myList">
+<list id="myList"
+      xmlns="https://instawork.com/hyperview">
   <item key="0"
         style="Item">
     <text style="Item__Label">New Item!</text>
@@ -79,15 +80,15 @@
         style="Item">
     <text style="Item__Label">List 19</text>
   </item>
-  <item key="20"
-        style="Item"
-        trigger="visible"
-        href="/list/_infinite_scroll_page2.xml"
-        action="append"
-        target="myList"
+  <item action="append"
         delay="1000"
+        href="/list/_infinite_scroll_page2.xml"
+        key="20"
+        once="true"
         show-during-load="myIndicator"
-        once="true">
+        style="Item"
+        target="myList"
+        trigger="visible">
     <text style="Item__Label">List 20</text>
   </item>
 </list>

@@ -1,6 +1,7 @@
-<view style="Tree"
+<view action="prepend"
       href="/dynamic_elements/_prepend_fragment2.xml"
-      action="prepend">
+      style="Tree"
+      xmlns="https://instawork.com/hyperview">
   <text style="Tree__Label">i) amet</text>
   <text style="Tree__Label">ii) consectetur</text>
   <text style="Tree__Label">iii) adipiscing</text>

@@ -1,1 +1,2 @@
-<text style="Button__Label">Prepended!</text>
+<text style="Button__Label"
+      xmlns="https://instawork.com/hyperview">Prepended!</text>

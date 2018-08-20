@@ -1,5 +1,6 @@
-<view style="BorderButton"
+<view action="replace-inner"
       href="/dynamic_elements/_replace_inner_fragment2.xml"
-      action="replace-inner">
+      style="BorderButton"
+      xmlns="https://instawork.com/hyperview">
   <text style="BorderButton__Label">Press me again</text>
 </view>

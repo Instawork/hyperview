@@ -1,124 +1,124 @@
-<doc>
-  <styles>
-    <rule id="Header"
-          height="72"
-          alignItems="center"
-          backgroundColor="white"
-          borderBottomWidth="1"
-          borderBottomColor="#eee"
-          paddingTop="24"
-          paddingLeft="24"
-          paddingRight="24"
-          flexDirection="row" />
-    <rule id="Header__Back"
-          color="blue"
-          fontFamily="HKGrotesk-SemiBold"
-          fontSize="16"
-          paddingRight="16" />
-    <rule id="Header__Title"
-          fontFamily="HKGrotesk-SemiBold"
-          fontSize="24"
-          color="black" />
-    <rule id="Body"
-          backgroundColor="white"
-          flex="1" />
-    <rule id="Description"
-          fontFamily="HKGrotesk-SemiBold"
-          fontSize="16"
-          margin="24"
-          padding="16"
-          borderWidth="2"
-          borderColor="red"
-          borderRadius="4" />
-    <rule id="Item"
-          borderBottomWidth="1"
-          borderBottomColor="#eee"
-          height="48"
-          flex="1"
-          flexDirection="row"
-          alignItems="center"
-          justifyContent="space-between"
-          paddingLeft="24"
-          paddingRight="24" />
-    <rule id="Item__Left"
-          flex="1"
-          flexDirection="row" />
-    <rule id="Item__Label"
-          fontSize="18"
-          fontFamily="HKGrotesk-Regular" />
-    <rule id="Item__Chevron"
-          fontSize="18"
-          fontFamily="HKGrotesk-Bold" />
-  </styles>
+<doc xmlns="https://instawork.com/hyperview">
   <screen>
+    <styles>
+      <rule alignItems="center"
+            backgroundColor="white"
+            borderBottomColor="#eee"
+            borderBottomWidth="1"
+            flexDirection="row"
+            height="72"
+            id="Header"
+            paddingLeft="24"
+            paddingRight="24"
+            paddingTop="24" />
+      <rule color="blue"
+            fontFamily="HKGrotesk-SemiBold"
+            fontSize="16"
+            id="Header__Back"
+            paddingRight="16" />
+      <rule color="black"
+            fontFamily="HKGrotesk-SemiBold"
+            fontSize="24"
+            id="Header__Title" />
+      <rule backgroundColor="white"
+            flex="1"
+            id="Body" />
+      <rule borderColor="red"
+            borderRadius="4"
+            borderWidth="2"
+            fontFamily="HKGrotesk-SemiBold"
+            fontSize="16"
+            id="Description"
+            margin="24"
+            padding="16" />
+      <rule alignItems="center"
+            borderBottomColor="#eee"
+            borderBottomWidth="1"
+            flex="1"
+            flexDirection="row"
+            height="48"
+            id="Item"
+            justifyContent="space-between"
+            paddingLeft="24"
+            paddingRight="24" />
+      <rule flex="1"
+            flexDirection="row"
+            id="Item__Left" />
+      <rule fontFamily="HKGrotesk-Regular"
+            fontSize="18"
+            id="Item__Label" />
+      <rule fontFamily="HKGrotesk-Bold"
+            fontSize="18"
+            id="Item__Chevron" />
+    </styles>
     <body style="Body">
       <header style="Header">
         <text style="Header__Title">Hyperview Examples</text>
       </header>
       <list>
-        <item key="layout"
-              style="Item"
-              href="/ui_elements/index.xml"
-              show-during-load="loadingScreen">
+        <item href="/ui_elements/index.xml"
+              key="layout"
+              show-during-load="loadingScreen"
+              style="Item">
           <view style="Item__Left">
             <text style="Item__Label">UI Elements</text>
           </view>
           <text style="Item__Chevron">&gt;</text>
         </item>
-        <item key="list"
-              style="Item"
-              href="/list/index.xml"
-              show-during-load="loadingScreen">
+        <item href="/list/index.xml"
+              key="list"
+              show-during-load="loadingScreen"
+              style="Item">
           <text style="Item__Label">List</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
-        <item key="sectionlist"
-              style="Item"
-              href="/sectionlist/index.xml"
-              show-during-load="loadingScreen">
+        <item href="/sectionlist/index.xml"
+              key="sectionlist"
+              show-during-load="loadingScreen"
+              style="Item">
           <view style="Item__Left">
             <text style="Item__Label">Section List</text>
           </view>
           <text style="Item__Chevron">&gt;</text>
         </item>
-        <item key="forms"
-              style="Item"
-              href="/forms/index.xml"
-              show-during-load="loadingScreen">
+        <item href="/forms/index.xml"
+              key="forms"
+              show-during-load="loadingScreen"
+              style="Item">
           <view style="Item__Left">
             <text style="Item__Label">Forms</text>
           </view>
           <text style="Item__Chevron">&gt;</text>
         </item>
-        <item key="navigation"
-              style="Item"
-              href="/navigation/index.xml"
-              show-during-load="loadingScreen">
+        <item href="/navigation/index.xml"
+              key="navigation"
+              show-during-load="loadingScreen"
+              style="Item">
           <view style="Item__Left">
             <text style="Item__Label">Navigation</text>
           </view>
           <text style="Item__Chevron">&gt;</text>
         </item>
-        <item key="dynamic-elements"
-              style="Item"
-              href="/dynamic_elements/index.xml"
-              show-during-load="loadingScreen">
+        <item href="/dynamic_elements/index.xml"
+              key="dynamic-elements"
+              show-during-load="loadingScreen"
+              style="Item">
           <text style="Item__Label">Dynamic Elements</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
-        <item key="styling"
-              style="Item"
-              href="/styling/index.xml"
-              show-during-load="loadingScreen">
+        <item href="/styling/index.xml"
+              key="styling"
+              show-during-load="loadingScreen"
+              style="Item">
           <view style="Item__Left">
             <text style="Item__Label">Styling</text>
           </view>
           <text style="Item__Chevron">&gt;</text>
         </item>
-        <item key="animation"
-              style="Item"
-              href="/animation/index.xml"
-              show-during-load="loadingScreen">
+        <item href="/animation/index.xml"
+              key="animation"
+              show-during-load="loadingScreen"
+              style="Item">
           <view style="Item__Left">
             <text style="Item__Label">Animation</text>
           </view>
@@ -129,34 +129,34 @@
   </screen>
   <screen id="loadingScreen">
     <styles>
-      <rule id="Header"
-            height="72"
-            alignItems="center"
+      <rule alignItems="center"
             backgroundColor="white"
-            borderBottomWidth="1"
             borderBottomColor="#eee"
-            paddingTop="24"
+            borderBottomWidth="1"
+            flexDirection="row"
+            height="72"
+            id="Header"
             paddingLeft="24"
             paddingRight="24"
-            flexDirection="row" />
-      <rule id="Header__Back"
-            color="blue"
+            paddingTop="24" />
+      <rule color="blue"
             fontFamily="HKGrotesk-SemiBold"
             fontSize="16"
+            id="Header__Back"
             paddingRight="16" />
-      <rule id="Header__Title"
+      <rule color="black"
             fontFamily="HKGrotesk-SemiBold"
             fontSize="24"
-            color="black" />
-      <rule id="Body"
-            backgroundColor="white"
-            flex="1" />
+            id="Header__Title" />
+      <rule backgroundColor="white"
+            flex="1"
+            id="Body" />
     </styles>
     <body style="Body">
       <header style="Header">
-        <text style="Header__Back"
+        <text action="back"
               href="/navigation/index.xml"
-              action="back">Back</text>
+              style="Header__Back">Back</text>
       </header>
     </body>
   </screen>

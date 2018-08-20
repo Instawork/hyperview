@@ -1,5 +1,6 @@
-<view style="Button"
+<view action="replace"
       href="/dynamic_elements/_replace_fragment2.xml"
-      action="replace">
+      style="Button"
+      xmlns="https://instawork.com/hyperview">
   <text style="Button__Label">Replaced! Again...</text>
 </view>

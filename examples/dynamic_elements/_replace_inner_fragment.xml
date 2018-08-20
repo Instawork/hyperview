@@ -1,1 +1,2 @@
-<text style="Button__Label">Replaced inner!</text>
+<text style="Button__Label"
+      xmlns="https://instawork.com/hyperview">Replaced inner!</text>

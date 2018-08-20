@@ -1,4 +1,4 @@
-<view>
+<view xmlns="https://instawork.com/hyperview">
   <item key="21"
         style="Item">
     <text style="Item__Label">Added: List 21</text>
@@ -35,15 +35,15 @@
         style="Item">
     <text style="Item__Label">Added: List 29</text>
   </item>
-  <item key="30"
-        style="Item"
-        trigger="visible"
-        href="/list/_infinite_scroll_page3.xml"
-        action="append"
-        target="myList"
+  <item action="append"
         delay="1000"
+        href="/list/_infinite_scroll_page3.xml"
+        key="30"
+        once="true"
         show-during-load="myIndicator"
-        once="true">
+        style="Item"
+        target="myList"
+        trigger="visible">
     <text style="Item__Label">Added: List 30</text>
   </item>
 </view>

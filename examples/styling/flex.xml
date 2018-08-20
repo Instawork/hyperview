@@ -1,182 +1,154 @@
-<doc>
-
-<styles>
-  <rule id="Header"
-    height="72"
-    alignItems="center"
-    backgroundColor="white"
-    borderBottomWidth="1"
-    borderBottomColor="#eee"
-    paddingTop="24"
-    paddingLeft="24"
-    paddingRight="24"
-    flexDirection="row"
-  />
-  <rule id="Header__Back"
-    color="blue"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="16"
-    paddingRight="16"
-  />
-  <rule id="Header__Title"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="24"
-    color="black"
-  />
-  <rule id="Body"
-    backgroundColor="white"
-    flex="1"
-  />
-  <rule id="Description"
-    fontFamily="HKGrotesk-SemiBold"
-    fontSize="16"
-    margin="24"
-  />
-  <rule id="Item"
-    borderBottomWidth="1"
-    borderBottomColor="#eee"
-    height="48"
-    flex="1"
-    flexDirection="row"
-    alignItems="center"
-    justifyContent="space-between"
-    paddingLeft="24"
-    paddingRight="24"
-  />
-  <rule id="Item__Label"
-    fontSize="18"
-    fontFamily="HKGrotesk-Regular"
-  />
-  <rule id="Item__Chevron"
-    fontSize="18"
-    fontFamily="HKGrotesk-Bold"
-  />
-
-  <rule id="FlexContainer"
-    marginLeft="24"
-    marginRight="24"
-    padding="8"
-    borderWidth="2"
-    borderColor="#e1e1e1"
-    borderRadius="8"
-    flex="1"
-  />
-  <rule id="FlexChild"
-    margin="8"
-    width="32"
-    height="32"
-    borderRadius="8"
-    backgroundColor="#63CB76"
-  />
-  <rule id="FlexHorizontal"
-    height="64"
-    flexDirection="row"
-  />
-  <rule id="FlexHorizontal--Large"
-    height="128"
-  />
-  <rule id="FlexVertical"
-    width="64"
-    height="300"
-    flexDirection="column"
-  />
-  <rule id="FlexVertical--Large"
-    width="128"
-  />
-  <rule id="FlexJustifyEnd"
-    justifyContent="flex-end"
-  />
-  <rule id="FlexJustifyCenter"
-    justifyContent="center"
-  />
-  <rule id="FlexAlignEnd"
-    alignItems="flex-end"
-  />
-  <rule id="FlexAlignCenter"
-    alignItems="center"
-  />
-  <rule id="Main" flex="1" />
-
-</styles>
-<screen>
-
-  <body style="Body">
-<header style="Header">
-  <text style="Header__Back" href="/index.xml" action="back">Back</text>
-  <text style="Header__Title">Flex Styling</text>
-</header>
-<view style="Main" scroll="1">
-  <text style="Description">Flex Horizontal</text>
-  <view style="FlexContainer,FlexHorizontal">
-    <view style="FlexChild"></view>
-    <view style="FlexChild"></view>
-    <view style="FlexChild"></view>
-  </view>
-
-  <text style="Description">Flex Horizontal Justify End</text>
-  <view style="FlexContainer,FlexHorizontal,FlexJustifyEnd">
-    <view style="FlexChild"></view>
-    <view style="FlexChild"></view>
-    <view style="FlexChild"></view>
-  </view>
-
-  <text style="Description">Flex Horizontal Justify Center</text>
-  <view style="FlexContainer,FlexHorizontal,FlexJustifyCenter">
-    <view style="FlexChild"></view>
-    <view style="FlexChild"></view>
-    <view style="FlexChild"></view>
-  </view>
-
-  <text style="Description">Flex Horizontal Justify Center Align End</text>
-  <view style="FlexContainer,FlexHorizontal,FlexHorizontal--Large,FlexJustifyCenter,FlexAlignEnd">
-    <view style="FlexChild"></view>
-    <view style="FlexChild"></view>
-    <view style="FlexChild"></view>
-  </view>
-
-  <text style="Description">Flex Horizontal Justify Center Align Center</text>
-  <view style="FlexContainer,FlexHorizontal,FlexHorizontal--Large,FlexJustifyCenter,FlexAlignCenter">
-    <view style="FlexChild"></view>
-    <view style="FlexChild"></view>
-    <view style="FlexChild"></view>
-  </view>
-
-  <text style="Description">Flex Vertical</text>
-  <view style="FlexContainer,FlexVertical">
-    <view style="FlexChild"></view>
-    <view style="FlexChild"></view>
-    <view style="FlexChild"></view>
-  </view>
-
-  <text style="Description">Flex Vertical Justify End</text>
-  <view style="FlexContainer,FlexVertical,FlexJustifyEnd">
-    <view style="FlexChild"></view>
-    <view style="FlexChild"></view>
-    <view style="FlexChild"></view>
-  </view>
-
-  <text style="Description">Flex Vertical Justify Center</text>
-  <view style="FlexContainer,FlexVertical,FlexJustifyCenter">
-    <view style="FlexChild"></view>
-    <view style="FlexChild"></view>
-    <view style="FlexChild"></view>
-  </view>
-
-  <text style="Description">Flex Vertical Justify Center Align End</text>
-  <view style="FlexContainer,FlexVertical,FlexVertical--Large,FlexJustifyCenter,FlexAlignEnd">
-    <view style="FlexChild"></view>
-    <view style="FlexChild"></view>
-    <view style="FlexChild"></view>
-  </view>
-
-  <text style="Description">Flex Vertical Justify Center Align Center</text>
-  <view style="FlexContainer,FlexVertical,FlexVertical--Large,FlexJustifyCenter,FlexAlignCenter">
-    <view style="FlexChild"></view>
-    <view style="FlexChild"></view>
-    <view style="FlexChild"></view>
-  </view>
-</view>
-</body>
-</screen>
-
+<doc xmlns="https://instawork.com/hyperview">
+  <screen>
+    <styles>
+      <rule alignItems="center"
+            backgroundColor="white"
+            borderBottomColor="#eee"
+            borderBottomWidth="1"
+            flexDirection="row"
+            height="72"
+            id="Header"
+            paddingLeft="24"
+            paddingRight="24"
+            paddingTop="24" />
+      <rule color="blue"
+            fontFamily="HKGrotesk-SemiBold"
+            fontSize="16"
+            id="Header__Back"
+            paddingRight="16" />
+      <rule color="black"
+            fontFamily="HKGrotesk-SemiBold"
+            fontSize="24"
+            id="Header__Title" />
+      <rule backgroundColor="white"
+            flex="1"
+            id="Body" />
+      <rule fontFamily="HKGrotesk-SemiBold"
+            fontSize="16"
+            id="Description"
+            margin="24" />
+      <rule alignItems="center"
+            borderBottomColor="#eee"
+            borderBottomWidth="1"
+            flex="1"
+            flexDirection="row"
+            height="48"
+            id="Item"
+            justifyContent="space-between"
+            paddingLeft="24"
+            paddingRight="24" />
+      <rule fontFamily="HKGrotesk-Regular"
+            fontSize="18"
+            id="Item__Label" />
+      <rule fontFamily="HKGrotesk-Bold"
+            fontSize="18"
+            id="Item__Chevron" />
+      <rule borderColor="#e1e1e1"
+            borderRadius="8"
+            borderWidth="2"
+            flex="1"
+            id="FlexContainer"
+            marginLeft="24"
+            marginRight="24"
+            padding="8" />
+      <rule backgroundColor="#63CB76"
+            borderRadius="8"
+            height="32"
+            id="FlexChild"
+            margin="8"
+            width="32" />
+      <rule flexDirection="row"
+            height="64"
+            id="FlexHorizontal" />
+      <rule height="128"
+            id="FlexHorizontal--Large" />
+      <rule flexDirection="column"
+            height="300"
+            id="FlexVertical"
+            width="64" />
+      <rule id="FlexVertical--Large"
+            width="128" />
+      <rule id="FlexJustifyEnd"
+            justifyContent="flex-end" />
+      <rule id="FlexJustifyCenter"
+            justifyContent="center" />
+      <rule alignItems="flex-end"
+            id="FlexAlignEnd" />
+      <rule alignItems="center"
+            id="FlexAlignCenter" />
+      <rule flex="1"
+            id="Main" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text action="back"
+              href="/index.xml"
+              style="Header__Back">Back</text>
+        <text style="Header__Title">Flex Styling</text>
+      </header>
+      <view scroll="1"
+            style="Main">
+        <text style="Description">Flex Horizontal</text>
+        <view style="FlexContainer,FlexHorizontal">
+          <view style="FlexChild" />
+          <view style="FlexChild" />
+          <view style="FlexChild" />
+        </view>
+        <text style="Description">Flex Horizontal Justify End</text>
+        <view style="FlexContainer,FlexHorizontal,FlexJustifyEnd">
+          <view style="FlexChild" />
+          <view style="FlexChild" />
+          <view style="FlexChild" />
+        </view>
+        <text style="Description">Flex Horizontal Justify Center</text>
+        <view style="FlexContainer,FlexHorizontal,FlexJustifyCenter">
+          <view style="FlexChild" />
+          <view style="FlexChild" />
+          <view style="FlexChild" />
+        </view>
+        <text style="Description">Flex Horizontal Justify Center Align End</text>
+        <view style="FlexContainer,FlexHorizontal,FlexHorizontal--Large,FlexJustifyCenter,FlexAlignEnd">
+          <view style="FlexChild" />
+          <view style="FlexChild" />
+          <view style="FlexChild" />
+        </view>
+        <text style="Description">Flex Horizontal Justify Center Align Center</text>
+        <view style="FlexContainer,FlexHorizontal,FlexHorizontal--Large,FlexJustifyCenter,FlexAlignCenter">
+          <view style="FlexChild" />
+          <view style="FlexChild" />
+          <view style="FlexChild" />
+        </view>
+        <text style="Description">Flex Vertical</text>
+        <view style="FlexContainer,FlexVertical">
+          <view style="FlexChild" />
+          <view style="FlexChild" />
+          <view style="FlexChild" />
+        </view>
+        <text style="Description">Flex Vertical Justify End</text>
+        <view style="FlexContainer,FlexVertical,FlexJustifyEnd">
+          <view style="FlexChild" />
+          <view style="FlexChild" />
+          <view style="FlexChild" />
+        </view>
+        <text style="Description">Flex Vertical Justify Center</text>
+        <view style="FlexContainer,FlexVertical,FlexJustifyCenter">
+          <view style="FlexChild" />
+          <view style="FlexChild" />
+          <view style="FlexChild" />
+        </view>
+        <text style="Description">Flex Vertical Justify Center Align End</text>
+        <view style="FlexContainer,FlexVertical,FlexVertical--Large,FlexJustifyCenter,FlexAlignEnd">
+          <view style="FlexChild" />
+          <view style="FlexChild" />
+          <view style="FlexChild" />
+        </view>
+        <text style="Description">Flex Vertical Justify Center Align Center</text>
+        <view style="FlexContainer,FlexVertical,FlexVertical--Large,FlexJustifyCenter,FlexAlignCenter">
+          <view style="FlexChild" />
+          <view style="FlexChild" />
+          <view style="FlexChild" />
+        </view>
+      </view>
+    </body>
+  </screen>
 </doc>

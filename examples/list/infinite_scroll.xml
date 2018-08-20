@@ -1,63 +1,63 @@
-<doc>
-  <styles>
-    <rule id="Header"
-          height="72"
-          alignItems="center"
-          backgroundColor="white"
-          borderBottomWidth="1"
-          borderBottomColor="#eee"
-          paddingTop="24"
-          paddingLeft="24"
-          paddingRight="24"
-          flexDirection="row" />
-    <rule id="Header__Back"
-          color="blue"
-          fontFamily="HKGrotesk-SemiBold"
-          fontSize="16"
-          paddingRight="16" />
-    <rule id="Header__Title"
-          fontFamily="HKGrotesk-SemiBold"
-          fontSize="24"
-          color="black" />
-    <rule id="Body"
-          backgroundColor="white"
-          flex="1" />
-    <rule id="Description"
-          fontFamily="HKGrotesk-SemiBold"
-          fontSize="16"
-          margin="24"
-          padding="16"
-          borderWidth="2"
-          borderColor="red"
-          borderRadius="4" />
-    <rule id="Item"
-          borderBottomWidth="1"
-          borderBottomColor="#eee"
-          height="48"
-          flex="1"
-          flexDirection="row"
-          alignItems="center"
-          justifyContent="space-between"
-          paddingLeft="24"
-          paddingRight="24" />
-    <rule id="Item__Label"
-          fontSize="18"
-          fontFamily="HKGrotesk-Regular" />
-    <rule id="Item__Chevron"
-          fontSize="18"
-          fontFamily="HKGrotesk-Bold" />
-    <rule id="Spinner"
-          flex="1"
-          flexDirection="row"
-          justifyContent="center"
-          padding="24" />
-  </styles>
+<doc xmlns="https://instawork.com/hyperview">
   <screen>
+    <styles>
+      <rule alignItems="center"
+            backgroundColor="white"
+            borderBottomColor="#eee"
+            borderBottomWidth="1"
+            flexDirection="row"
+            height="72"
+            id="Header"
+            paddingLeft="24"
+            paddingRight="24"
+            paddingTop="24" />
+      <rule color="blue"
+            fontFamily="HKGrotesk-SemiBold"
+            fontSize="16"
+            id="Header__Back"
+            paddingRight="16" />
+      <rule color="black"
+            fontFamily="HKGrotesk-SemiBold"
+            fontSize="24"
+            id="Header__Title" />
+      <rule backgroundColor="white"
+            flex="1"
+            id="Body" />
+      <rule borderColor="red"
+            borderRadius="4"
+            borderWidth="2"
+            fontFamily="HKGrotesk-SemiBold"
+            fontSize="16"
+            id="Description"
+            margin="24"
+            padding="16" />
+      <rule alignItems="center"
+            borderBottomColor="#eee"
+            borderBottomWidth="1"
+            flex="1"
+            flexDirection="row"
+            height="48"
+            id="Item"
+            justifyContent="space-between"
+            paddingLeft="24"
+            paddingRight="24" />
+      <rule fontFamily="HKGrotesk-Regular"
+            fontSize="18"
+            id="Item__Label" />
+      <rule fontFamily="HKGrotesk-Bold"
+            fontSize="18"
+            id="Item__Chevron" />
+      <rule flex="1"
+            flexDirection="row"
+            id="Spinner"
+            justifyContent="center"
+            padding="24" />
+    </styles>
     <body style="Body">
       <header style="Header">
-        <text style="Header__Back"
+        <text action="back"
               href="/list/index.xml"
-              action="back">Back</text>
+              style="Header__Back">Back</text>
         <text style="Header__Title">List With Infinite Scroll</text>
       </header>
       <list id="myList">
@@ -137,21 +137,21 @@
               style="Item">
           <text style="Item__Label">List 19</text>
         </item>
-        <item key="20"
-              style="Item"
-              trigger="visible"
-              href="/list/_infinite_scroll_page2.xml"
-              action="append"
-              target="myList"
+        <item action="append"
               delay="1000"
+              href="/list/_infinite_scroll_page2.xml"
+              key="20"
+              once="true"
               show-during-load="myIndicator"
-              once="true">
+              style="Item"
+              target="myList"
+              trigger="visible">
           <text style="Item__Label">List 20</text>
         </item>
       </list>
-      <view style="Spinner"
+      <view hide="true"
             id="myIndicator"
-            hide="true">
+            style="Spinner">
         <spinner />
       </view>
     </body>

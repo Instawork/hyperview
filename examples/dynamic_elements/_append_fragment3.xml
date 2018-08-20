@@ -1,6 +1,7 @@
-<view style="Tree"
+<view action="append"
       href="/dynamic_elements/_append_fragment2.xml"
-      action="append">
+      style="Tree"
+      xmlns="https://instawork.com/hyperview">
   <text style="Tree__Label">i) amet</text>
   <text style="Tree__Label">ii) consectetur</text>
   <text style="Tree__Label">iii) adipiscing</text>
