@@ -411,7 +411,6 @@ function addHref(component, element, navigation, stylesheet, animations, onUpdat
     return component;
   }
 
-  const serializer = new XMLSerializer();
   return React.createElement(
     HyperRef,
     { element, navigation, stylesheet, animations, onUpdate },
@@ -876,7 +875,6 @@ class HyperScreen extends React.Component {
   constructor(props){
     super(props);
     this.parser = new DOMParser();
-    this.serializer = new XMLSerializer();
     this.needsLoad = false;
     this.state = {
       styles: null,
@@ -968,7 +966,6 @@ class HyperScreen extends React.Component {
   onUpdate(href, action, currentElement, opts) {
     const options = opts || {};
     const { targetId, showIndicatorIds, hideIndicatorIds, delay, once, onEnd } = options;
-    const serializer = new XMLSerializer();
 
     const url = ROOT + href;
 
