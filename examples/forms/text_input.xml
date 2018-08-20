@@ -83,7 +83,7 @@
       <view scroll="true"
             style="Main">
         <view style="FormGroup">
-          <input focusStyles="input,input--focused"
+          <input focusStyles="input input--focused"
                  outerStyles="outerInput"
                  placeholder="First name"
                  placeholderTextColor="#8D9494"
@@ -93,7 +93,7 @@
           </input>
         </view>
         <view style="FormGroup">
-          <input focusStyles="input,input--focused"
+          <input focusStyles="input input--focused"
                  outerStyles="outerInput"
                  placeholder="First name"
                  placeholderTextColor="#8D9494"
@@ -109,7 +109,7 @@
                  placeholderTextColor="#8D9494"
                  style="input input--error">
             <label style="label">Validation error</label>
-            <help style="help,help--error">Please enter your full name</help>
+            <help style="help help--error">Please enter your full name</help>
           </input>
         </view>
         <view style="FormGroup">
@@ -119,18 +119,18 @@
                  style="input input--error"
                  value="Milhouse">
             <label style="label">Filled validation error</label>
-            <help style="help,help--error">Name already taken</help>
+            <help style="help help--error">Name already taken</help>
           </input>
         </view>
         <view style="FormGroup">
           <label style="label">Horizontal Layout</label>
           <view style="horizontalFormGroup">
-            <input focusStyles="input,input--focused"
+            <input focusStyles="input input--focused"
                    outerStyles="outerInput"
                    placeholder="First"
                    placeholderTextColor="#8D9494"
                    style="input" />
-            <input focusStyles="input,input--focused"
+            <input focusStyles="input input--focused"
                    outerStyles="outerInput"
                    placeholder="Last"
                    placeholderTextColor="#8D9494"

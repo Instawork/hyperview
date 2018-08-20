@@ -82,7 +82,7 @@
       <view scroll="true"
             style="Main">
         <view style="FormGroup">
-          <textarea focusStyles="input,input--focused"
+          <textarea focusStyles="input input--focused"
                     outerStyles="outerInput"
                     placeholder="Instructions"
                     placeholderTextColor="#8D9494"
@@ -97,7 +97,7 @@
                     placeholderTextColor="#8D9494"
                     style="input input--error">
             <label style="label">Multi-line validation error</label>
-            <help style="help,help--error">Please enter your gig instructions</help>
+            <help style="help help--error">Please enter your gig instructions</help>
           </textarea>
         </view>
       </view>
