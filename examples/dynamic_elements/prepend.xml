@@ -88,7 +88,7 @@
         <text style="Description">In this example, the replaced element also has an href with an prepend action, demonstrating loading of a nested structure.</text>
         <view action="prepend"
               href="/dynamic_elements/_prepend_fragment2.xml"
-              style="Tree,Tree--Root">
+              style="Tree Tree--Root">
           <text style="Tree__Label">1. Lorem</text>
           <text style="Tree__Label">2. Ipsum</text>
         </view>

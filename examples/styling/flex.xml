@@ -89,61 +89,61 @@
       <view scroll="1"
             style="Main">
         <text style="Description">Flex Horizontal</text>
-        <view style="FlexContainer,FlexHorizontal">
+        <view style="FlexContainer FlexHorizontal">
           <view style="FlexChild" />
           <view style="FlexChild" />
           <view style="FlexChild" />
         </view>
         <text style="Description">Flex Horizontal Justify End</text>
-        <view style="FlexContainer,FlexHorizontal,FlexJustifyEnd">
+        <view style="FlexContainer FlexHorizontal FlexJustifyEnd">
           <view style="FlexChild" />
           <view style="FlexChild" />
           <view style="FlexChild" />
         </view>
         <text style="Description">Flex Horizontal Justify Center</text>
-        <view style="FlexContainer,FlexHorizontal,FlexJustifyCenter">
+        <view style="FlexContainer FlexHorizontal FlexJustifyCenter">
           <view style="FlexChild" />
           <view style="FlexChild" />
           <view style="FlexChild" />
         </view>
         <text style="Description">Flex Horizontal Justify Center Align End</text>
-        <view style="FlexContainer,FlexHorizontal,FlexHorizontal--Large,FlexJustifyCenter,FlexAlignEnd">
+        <view style="FlexContainer FlexHorizontal FlexHorizontal--Large FlexJustifyCenter FlexAlignEnd">
           <view style="FlexChild" />
           <view style="FlexChild" />
           <view style="FlexChild" />
         </view>
         <text style="Description">Flex Horizontal Justify Center Align Center</text>
-        <view style="FlexContainer,FlexHorizontal,FlexHorizontal--Large,FlexJustifyCenter,FlexAlignCenter">
+        <view style="FlexContainer FlexHorizontal FlexHorizontal--Large FlexJustifyCenter FlexAlignCenter">
           <view style="FlexChild" />
           <view style="FlexChild" />
           <view style="FlexChild" />
         </view>
         <text style="Description">Flex Vertical</text>
-        <view style="FlexContainer,FlexVertical">
+        <view style="FlexContainer FlexVertical">
           <view style="FlexChild" />
           <view style="FlexChild" />
           <view style="FlexChild" />
         </view>
         <text style="Description">Flex Vertical Justify End</text>
-        <view style="FlexContainer,FlexVertical,FlexJustifyEnd">
+        <view style="FlexContainer FlexVertical FlexJustifyEnd">
           <view style="FlexChild" />
           <view style="FlexChild" />
           <view style="FlexChild" />
         </view>
         <text style="Description">Flex Vertical Justify Center</text>
-        <view style="FlexContainer,FlexVertical,FlexJustifyCenter">
+        <view style="FlexContainer FlexVertical FlexJustifyCenter">
           <view style="FlexChild" />
           <view style="FlexChild" />
           <view style="FlexChild" />
         </view>
         <text style="Description">Flex Vertical Justify Center Align End</text>
-        <view style="FlexContainer,FlexVertical,FlexVertical--Large,FlexJustifyCenter,FlexAlignEnd">
+        <view style="FlexContainer FlexVertical FlexVertical--Large FlexJustifyCenter FlexAlignEnd">
           <view style="FlexChild" />
           <view style="FlexChild" />
           <view style="FlexChild" />
         </view>
         <text style="Description">Flex Vertical Justify Center Align Center</text>
-        <view style="FlexContainer,FlexVertical,FlexVertical--Large,FlexJustifyCenter,FlexAlignCenter">
+        <view style="FlexContainer FlexVertical FlexVertical--Large FlexJustifyCenter FlexAlignCenter">
           <view style="FlexChild" />
           <view style="FlexChild" />
           <view style="FlexChild" />

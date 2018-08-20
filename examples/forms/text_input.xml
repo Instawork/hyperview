@@ -107,7 +107,7 @@
           <input outerStyles="outerInput"
                  placeholder="First name"
                  placeholderTextColor="#8D9494"
-                 style="input,input--error">
+                 style="input input--error">
             <label style="label">Validation error</label>
             <help style="help,help--error">Please enter your full name</help>
           </input>
@@ -116,7 +116,7 @@
           <input outerStyles="outerInput"
                  placeholder="First name"
                  placeholderTextColor="#8D9494"
-                 style="input,input--error"
+                 style="input input--error"
                  value="Milhouse">
             <label style="label">Filled validation error</label>
             <help style="help,help--error">Name already taken</help>

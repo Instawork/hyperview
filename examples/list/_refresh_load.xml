@@ -6,7 +6,7 @@
       trigger="refresh">
   <item key="new_item"
         style="Item">
-    <text style="Item__Label,Item__Label--Special">New Item</text>
+    <text style="Item__Label Item__Label--Special">New Item</text>
   </item>
   <item key="1"
         style="Item">

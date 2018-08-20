@@ -70,7 +70,7 @@
                style="Image" />
         <text style="Description">Styled</text>
         <image source="/ui_elements/image.jpg"
-               style="Image,Image__Styled" />
+               style="Image Image__Styled" />
       </view>
     </body>
   </screen>

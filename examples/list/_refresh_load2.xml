@@ -17,7 +17,7 @@
   </item>
   <item key="another_new_item"
         style="Item">
-    <text style="Item__Label,Item__Label--Special">Another New Item</text>
+    <text style="Item__Label Item__Label--Special">Another New Item</text>
   </item>
   <item key="3"
         style="Item">

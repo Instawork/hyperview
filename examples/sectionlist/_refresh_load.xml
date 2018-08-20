@@ -13,7 +13,7 @@
     </item>
     <item key="2"
           style="Item">
-      <text style="Item__Label,Item__Label--Special">List 2 Changed!</text>
+      <text style="Item__Label Item__Label--Special">List 2 Changed!</text>
     </item>
     <item key="3"
           style="Item">
@@ -25,7 +25,7 @@
     </item>
     <item key="5"
           style="Item">
-      <text style="Item__Label,Item__Label--Special">List 5 Added!</text>
+      <text style="Item__Label Item__Label--Special">List 5 Added!</text>
     </item>
   </section>
   <section>
@@ -38,11 +38,11 @@
     </item>
     <item key="7"
           style="Item">
-      <text style="Item__Label,Item__Label--Special">List 7 Added!</text>
+      <text style="Item__Label Item__Label--Special">List 7 Added!</text>
     </item>
     <item key="8"
           style="Item">
-      <text style="Item__Label,Item__Label--Special">List 8 Added!</text>
+      <text style="Item__Label Item__Label--Special">List 8 Added!</text>
     </item>
   </section>
 </sectionlist>

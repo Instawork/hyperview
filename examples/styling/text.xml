@@ -83,15 +83,15 @@
       </header>
       <view scroll="1"
             style="Main">
-        <text style="Text,Text--Small">Small</text>
-        <text style="Text,Text--Medium">Medium</text>
-        <text style="Text,Text--Large">Large</text>
-        <text style="Text,Text--Medium,Text--LightWeight">Light</text>
-        <text style="Text,Text--Medium,Text--RegularWeight">Regular</text>
-        <text style="Text,Text--Medium,Text--MediumWeight">Medium</text>
-        <text style="Text,Text--Medium,Text--SemiBoldWeight">Semi-Bold</text>
-        <text style="Text,Text--Medium,Text--BoldWeight">Bold</text>
-        <text style="Text,Text--Medium,Text--BoldWeight,Text--Green">Color</text>
+        <text style="Text Text--Small">Small</text>
+        <text style="Text Text--Medium">Medium</text>
+        <text style="Text Text--Large">Large</text>
+        <text style="Text Text--Medium Text--LightWeight">Light</text>
+        <text style="Text Text--Medium Text--RegularWeight">Regular</text>
+        <text style="Text Text--Medium Text--MediumWeight">Medium</text>
+        <text style="Text Text--Medium Text--SemiBoldWeight">Semi-Bold</text>
+        <text style="Text Text--Medium Text--BoldWeight">Bold</text>
+        <text style="Text Text--Medium Text--BoldWeight Text--Green">Color</text>
       </view>
     </body>
   </screen>

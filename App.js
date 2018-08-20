@@ -78,7 +78,7 @@ class HVFlatList extends React.Component {
     const { refreshing } = this.state;
     const { element, navigation, stylesheet, animations, onUpdate } = this.props;
     const styleAttr = element.getAttribute('style');
-    const style = styleAttr ? styleAttr.split(',').map((s) => stylesheet[s]) : null;
+    const style = styleAttr ? styleAttr.split(' ').map((s) => stylesheet[s]) : null;
 
     const listProps = {
       style,
@@ -146,7 +146,7 @@ class HVSectionList extends React.Component {
     const { refreshing } = this.state;
     const { element, navigation, stylesheet, animations, onUpdate } = this.props;
     const styleAttr = element.getAttribute('style');
-    const style = styleAttr ? styleAttr.split(',').map((s) => stylesheet[s]) : null;
+    const style = styleAttr ? styleAttr.split(' ').map((s) => stylesheet[s]) : null;
 
     const sectionElements = element.getElementsByTagNameNS(HYPERVIEW_NS, 'section');
     const sections = [];
@@ -218,7 +218,7 @@ class HVTextInput extends React.Component {
     );
 
     if (this.state.focused && props.focusStyles) {
-      props.style = props.focusStyles.split(',').map((s) => stylesheet[s]);
+      props.style = props.focusStyles.split(' ').map((s) => stylesheet[s]);
     }
 
     const input = React.createElement(
@@ -234,7 +234,7 @@ class HVTextInput extends React.Component {
 
     let outerStyles = null;
     if (props.outerStyles) {
-      outerStyles = props.outerStyles.split(',').map((s) => stylesheet[s]);
+      outerStyles = props.outerStyles.split(' ').map((s) => stylesheet[s]);
     }
 
     return React.createElement(
@@ -467,10 +467,10 @@ function createProps(element, stylesheet, animations) {
     }
   }
   if (props.style) {
-    props.style = props.style.split(',').map((s) => stylesheet[s]);
+    props.style = props.style.split(' ').map((s) => stylesheet[s]);
   }
   if (props.animatedValues) {
-    const values = props.animatedValues.split(',').forEach((v) => {
+    const values = props.animatedValues.split(' ').forEach((v) => {
       const value = animations.values[v];
       const property = animations.properties[v];
       if (value !== undefined && property !== undefined) {
