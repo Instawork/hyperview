@@ -1,5 +1,5 @@
-<view id="container"
-      style="Container"
-      xmlns="https://instawork.com/hyperview">
+<view xmlns="https://instawork.com/hyperview"
+      id="container"
+      style="Container">
   <text style="Container__Label">Replaced!</text>
 </view>

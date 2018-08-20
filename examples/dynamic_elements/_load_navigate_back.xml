@@ -1,6 +1,6 @@
-<text action="back"
+<text xmlns="https://instawork.com/hyperview"
+      action="back"
       delay="300"
       href="/dynamic_elements/index.xml"
       style="Button__Label"
-      trigger="load"
-      xmlns="https://instawork.com/hyperview">Gonna go back...</text>
+      trigger="load">Gonna go back...</text>

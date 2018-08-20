@@ -1,17 +1,17 @@
 <doc xmlns="https://instawork.com/hyperview">
   <screen>
     <styles>
-      <rule alignItems="center"
-            backgroundColor="white"
-            borderBottomColor="black"
-            borderBottomWidth="1"
-            height="72"
-            id="Header"
-            justifyContent="center" />
-      <rule color="black"
-            fontFamily="HKGrotesk-SemiBold"
-            fontSize="24"
-            id="Header__Title" />
+      <style alignItems="center"
+             backgroundColor="white"
+             borderBottomColor="black"
+             borderBottomWidth="1"
+             height="72"
+             id="Header"
+             justifyContent="center" />
+      <style color="black"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="24"
+             id="Header__Title" />
     </styles>
     <header style="Header">
       <text style="Header__Title">Hyperview Examples</text>

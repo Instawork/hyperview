@@ -1,9 +1,9 @@
-<list action="replace"
+<list xmlns="https://instawork.com/hyperview"
+      action="replace"
       delay="1000"
       href="/list/_refresh_load2.xml"
       style="List"
-      trigger="refresh"
-      xmlns="https://instawork.com/hyperview">
+      trigger="refresh">
   <item key="new_item"
         style="Item">
     <text style="Item__Label,Item__Label--Special">New Item</text>

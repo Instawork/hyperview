@@ -1,5 +1,5 @@
-<list id="myList"
-      xmlns="https://instawork.com/hyperview">
+<list xmlns="https://instawork.com/hyperview"
+      id="myList">
   <item key="0"
         style="Item">
     <text style="Item__Label">New Item!</text>

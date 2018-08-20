@@ -1,5 +1,5 @@
-<view style="Container__Element"
-      xmlns="https://instawork.com/hyperview">
+<view xmlns="https://instawork.com/hyperview"
+      style="Container__Element">
   <image source="/ui_elements/image.jpg"
          style="Container__Image" />
   <text style="Container__Label">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut</text>

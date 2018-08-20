@@ -762,7 +762,7 @@ function createStylesheet(element) {
   const styles = element.getElementsByTagNameNS(HYPERVIEW_NS, 'styles');
   const stylesheet = {};
   if (styles && styles[0]) {
-    const ruleElements = styles[0].getElementsByTagNameNS(HYPERVIEW_NS, 'rule');
+    const ruleElements = styles[0].getElementsByTagNameNS(HYPERVIEW_NS, 'style');
 
     for (let i = 0; i < ruleElements.length; ++i) {
       const ruleElement = ruleElements.item(i);

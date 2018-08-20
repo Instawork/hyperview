@@ -1,2 +1,2 @@
-<text style="Button__Label"
-      xmlns="https://instawork.com/hyperview">Appended!</text>
+<text xmlns="https://instawork.com/hyperview"
+      style="Button__Label">Appended!</text>

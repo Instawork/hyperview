@@ -1,8 +1,8 @@
-<sectionlist action="replace"
+<sectionlist xmlns="https://instawork.com/hyperview"
+             action="replace"
              delay="700"
              href="/sectionlist/_refresh_load2.xml"
-             trigger="refresh"
-             xmlns="https://instawork.com/hyperview">
+             trigger="refresh">
   <section>
     <sectiontitle style="List__Header">
       <text style="List__HeaderText">Section 1</text>
