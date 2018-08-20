@@ -27,6 +27,8 @@ import { DOMParser, XMLSerializer } from 'xmldom';
 //const ROOT = 'http://10.1.10.14:8080';
 const ROOT = 'http://127.0.0.1:8080';
 
+const HYPERVIEW_NS = 'https://instawork.com/hyperview';
+
 
 const ROUTE_KEYS = {
 };
@@ -80,7 +82,7 @@ class HVFlatList extends React.Component {
 
     const listProps = {
       style,
-      data: element.getElementsByTagName('item'),
+      data: element.getElementsByTagNameNS(HYPERVIEW_NS, 'item'),
       keyExtractor: (item, index) => {
         return item.getAttribute('key');
       },
@@ -146,18 +148,18 @@ class HVSectionList extends React.Component {
     const styleAttr = element.getAttribute('style');
     const style = styleAttr ? styleAttr.split(',').map((s) => stylesheet[s]) : null;
 
-    const sectionElements = element.getElementsByTagName('section');
+    const sectionElements = element.getElementsByTagNameNS(HYPERVIEW_NS, 'section');
     const sections = [];
 
     for (let i = 0; i < sectionElements.length; ++i) {
       const sectionElement = sectionElements.item(i);
-      const itemElements = sectionElement.getElementsByTagName('item');
+      const itemElements = sectionElement.getElementsByTagNameNS(HYPERVIEW_NS, 'item');
       const items = [];
       for (let j = 0; j < itemElements.length; ++j) {
         const itemElement = itemElements.item(j);
         items.push(itemElement);
       }
-      const titleElement = sectionElement.getElementsByTagName('sectiontitle').item(0);
+      const titleElement = sectionElement.getElementsByTagNameNS(HYPERVIEW_NS, 'sectiontitle').item(0);
       sections.push({
         title: titleElement,
         data: items,
@@ -289,7 +291,7 @@ class HyperRef extends React.Component {
 
   getBehaviorElements() {
     const { element } = this.props;
-    const behaviorElements = Array.from(element.getElementsByTagName('behavior'));
+    const behaviorElements = Array.from(element.getElementsByTagNameNS(HYPERVIEW_NS, 'behavior'));
     if (element.getAttribute('href')) {
       behaviorElements.unshift(element);
     }
@@ -426,7 +428,7 @@ function getHrefKey(href) {
 }
 
 function getFirstTag(rootNode, tagName) {
-  elements = rootNode.getElementsByTagName(tagName);
+  elements = rootNode.getElementsByTagNameNS(HYPERVIEW_NS, tagName);
   if (elements  && elements[0]) {
     return elements[0];
   }
@@ -521,7 +523,7 @@ function createNavHandler(element, navigation) {
       let preloadScreen = null;
       if (showIndicatorId) {
         const rootElement = element.ownerDocument;
-        const screens = rootElement.getElementsByTagName('screen');
+        const screens = rootElement.getElementsByTagNameNS(HYPERVIEW_NS, 'screen');
         preloadScreen = Array.from(screens).find((s) => s.getAttribute('id') == showIndicatorId);
       }
       navFunction(
@@ -757,10 +759,10 @@ function createStylesheet(element) {
     "left",
     "right",
   ];
-  const styles = element.getElementsByTagName('styles');
+  const styles = element.getElementsByTagNameNS(HYPERVIEW_NS, 'styles');
   const stylesheet = {};
   if (styles && styles[0]) {
-    const ruleElements = styles[0].getElementsByTagName('rule');
+    const ruleElements = styles[0].getElementsByTagNameNS(HYPERVIEW_NS, 'rule');
 
     for (let i = 0; i < ruleElements.length; ++i) {
       const ruleElement = ruleElements.item(i);
@@ -1163,7 +1165,7 @@ class HyperScreen extends React.Component {
         </View>
       );
     }
-    const body = this.state.doc.getElementsByTagName('body')[0];
+    const body = this.state.doc.getElementsByTagNameNS(HYPERVIEW_NS, 'body')[0];
     return renderElement(body, this.props.navigation, this.state.styles, this.state.animations, this.onUpdate);
   }
 }
@@ -1178,8 +1180,8 @@ const MainStack = createStackNavigator(
   {
     initialRouteName: 'Stack',
     initialRouteParams: {
-      href: '/dynamic_elements/index.xml',
-      //href: '/index.xml',
+      //href: '/dynamic_elements/index.xml',
+      href: '/index.xml',
     },
     headerMode: 'none',
   }

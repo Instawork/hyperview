@@ -70,9 +70,9 @@
         <text style="Header__Back"
               href="/dynamic_elements/index.xml"
               action="back">Back</text>
-        <text style="Header__Title">Multiple Behaviors</text>
+        <text style="Header__Title">Multiple Same Behaviors</text>
       </header>
-      <view style="Main">
+      <view style="Main" scroll="true">
         <text style="Description">The button below has behaviors for presses that prepend events in two places.</text>
         <view style="Button">
           <behavior trigger="pressIn"
