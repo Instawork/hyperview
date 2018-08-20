@@ -108,6 +108,14 @@
                     href="#pressout-fragment"
                     target="right-container"
                     trigger="pressOut" />
+          <behavior action="prepend"
+                    href="#load-fragment"
+                    target="left-container"
+                    trigger="load" />
+          <behavior action="prepend"
+                    href="#load-fragment"
+                    target="right-container"
+                    trigger="load" />
           <text style="Button__Label">Press me</text>
         </view>
         <view style="Containers">

@@ -1,4 +1,4 @@
-<doc xmlns="https://instawork.com/hyperview">
+<doc xmlns="https://instawork.com/hyperview" xmlns:redux="https://instawork.com/hyperview-redux">
   <screen>
     <styles>
       <style alignItems="center"
@@ -65,31 +65,6 @@
           </view>
           <text style="Item__Chevron">&gt;</text>
         </item>
-        <item href="/list/index.xml"
-              key="list"
-              show-during-load="loadingScreen"
-              style="Item">
-          <text style="Item__Label">List</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/sectionlist/index.xml"
-              key="sectionlist"
-              show-during-load="loadingScreen"
-              style="Item">
-          <view style="Item__Left">
-            <text style="Item__Label">Section List</text>
-          </view>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/forms/index.xml"
-              key="forms"
-              show-during-load="loadingScreen"
-              style="Item">
-          <view style="Item__Left">
-            <text style="Item__Label">Forms</text>
-          </view>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
         <item href="/navigation/index.xml"
               key="navigation"
               show-during-load="loadingScreen"
@@ -100,10 +75,17 @@
           <text style="Item__Chevron">&gt;</text>
         </item>
         <item href="/dynamic_elements/index.xml"
-              key="dynamic-elements"
+              key="behaviors"
               show-during-load="loadingScreen"
               style="Item">
-          <text style="Item__Label">Dynamic Elements</text>
+          <text style="Item__Label">Behaviors</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/advanced_behaviors/index.xml"
+              key="advanced-behaviors"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Advanced Behaviors</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
         <item href="/styling/index.xml"

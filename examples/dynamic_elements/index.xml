@@ -64,7 +64,7 @@
         <text action="back"
               href="/list/index.xml"
               style="Header__Back">Back</text>
-        <text style="Header__Title">Dynamic Elements</text>
+        <text style="Header__Title">Behaviors</text>
       </header>
       <sectionlist>
         <section>
@@ -217,7 +217,7 @@
         </section>
         <section>
           <sectiontitle style="List__Header">
-            <text style="List__HeaderText">Indicator</text>
+            <text style="List__HeaderText">Indicators</text>
           </sectiontitle>
           <item href="/dynamic_elements/show_indicator.xml"
                 key="show_indicator"
