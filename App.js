@@ -267,101 +267,133 @@ class HyperRef extends React.Component {
     this.updateActions = ['replace', 'replace-inner', 'append', 'prepend'];
   }
 
-  createActionHandler(element, navigation, onUpdate) {
-    const action = element.getAttribute('action') || 'push';
+  createActionHandler(element, behaviorElement, navigation, onUpdate) {
+    const action = behaviorElement.getAttribute('action') || 'push';
 
     if (this.navActions.indexOf(action) >= 0) {
-      return createNavHandler(element, navigation);
+      return createNavHandler(behaviorElement, navigation);
     }
 
     if (this.updateActions.indexOf(action) >= 0) {
       return() => {
-        const path = element.getAttribute('href');
-        const targetId = element.getAttribute('target') || null;
-        const showIndicatorIds = element.getAttribute('show-during-load') || null;
-        const hideIndicatorIds = element.getAttribute('hide-during-load') || null;
-        const delay = element.getAttribute('delay');
-        const once = element.getAttribute('once') || null;
+        const path = behaviorElement.getAttribute('href');
+        const targetId = behaviorElement.getAttribute('target') || null;
+        const showIndicatorIds = behaviorElement.getAttribute('show-during-load') || null;
+        const hideIndicatorIds = behaviorElement.getAttribute('hide-during-load') || null;
+        const delay = behaviorElement.getAttribute('delay');
+        const once = behaviorElement.getAttribute('once') || null;
         onUpdate(path, action, element, { targetId, showIndicatorIds, hideIndicatorIds, delay, once });
       }
     }
   }
 
+  getBehaviorElements() {
+    const { element } = this.props;
+    const behaviorElements = Array.from(element.getElementsByTagName('behavior'));
+    if (element.getAttribute('href')) {
+      behaviorElements.unshift(element);
+    }
+    return behaviorElements;
+  }
+
   render() {
     const { refreshing } = this.state;
     const { element, navigation, stylesheet, animations, onUpdate } = this.props;
+    const behaviorElements = this.getBehaviorElements();
+    const pressBehaviors = behaviorElements.filter((e) => this.pressTriggers.indexOf(e.getAttribute('trigger') || 'press') >= 0);
+    const visibleBehaviors = behaviorElements.filter((e) => e.getAttribute('trigger') == 'visible');
+    const refreshBehaviors = behaviorElements.filter((e) => e.getAttribute('trigger') == 'refresh');
 
-    const href = element.getAttribute('href');
-    if (!href) {
-      return renderElement(element, navigation, stylesheet, animations, onUpdate, {skipHref: true});
-    }
-
-    const trigger = element.getAttribute('trigger') || 'press';
+    let renderedComponent = renderElement(element, navigation, stylesheet, animations, onUpdate, {skipHref: true});
 
     // Render pressable element
-    if (this.pressTriggers.indexOf(trigger) >= 0) {
+    if (pressBehaviors.length > 0) {
       const props = {
         // Component will use touchable opacity to trigger href.
         activeOpacity: 0.5,
       };
-      const triggerPropName = this.triggerPropNames[trigger];
-      // For now only navigate.
-      props[triggerPropName] = this.createActionHandler(element, navigation, onUpdate);
+      pressBehaviors.forEach((behaviorElement) => {
+        const href = behaviorElement.getAttribute('href');
+        const trigger = behaviorElement.getAttribute('trigger') || 'press';
+        const triggerPropName = this.triggerPropNames[trigger];
+        props[triggerPropName] = this.createActionHandler(element, behaviorElement, navigation, onUpdate);
+      });
 
-      return React.createElement(
+      // Fix a conflict between onPressOut and onPress triggering at the same time.
+      if (props.onPressOut && props.onPress) {
+        const onPressHandler = props.onPress;
+        props.onPress = () => {
+          setTimeout(onPressHandler, 0);
+        }
+      }
+
+      renderedComponent = React.createElement(
         TouchableOpacity,
         props,
-        renderElement(element, navigation, stylesheet, animations, onUpdate, {skipHref: true}),
+        renderedComponent,
       );
     }
 
-    if (trigger == 'visible') {
-      return React.createElement(
-        VisibilityDetectingView,
-        {
-          onVisible: this.createActionHandler(element, navigation, onUpdate),
-        },
-        renderElement(element, navigation, stylesheet, animations, onUpdate, {skipHref: true})
+    // Wrap component in a scrollview with a refresh control to trigger
+    // the refresh behaviors.
+    if (refreshBehaviors.length > 0) {
+      const refreshHandlers = refreshBehaviors.map((behaviorElement) => 
+        this.createActionHandler(element, behaviorElement, navigation, onUpdate)
       );
-    }
+      const onRefresh = () => refreshHandlers.forEach((h) => { h() });
 
-    if (trigger == 'refresh') {
       const refreshControl = React.createElement(
         RefreshControl,
-        { refreshing, onRefresh: this.createActionHandler(element, navigation, onUpdate) },
+        { refreshing, onRefresh },
       );
-      return React.createElement(
+      renderedComponent = React.createElement(
         ScrollView,
         { refreshControl },
-        renderElement(element, navigation, stylesheet, animations, onUpdate, {skipHref: true})
+        renderedComponent,
       );
     }
 
-    if (trigger == 'load') {
-      return renderElement(element, navigation, stylesheet, animations, onUpdate, {skipHref: true})
+    // Wrap component in a VisibilityDetectingView to trigger visibility behaviors.
+    if (visibleBehaviors.length > 0) {
+      const visibleHandlers = visibleBehaviors.map((behaviorElement) => 
+        this.createActionHandler(element, behaviorElement, navigation, onUpdate)
+      );
+      const onVisible = () => visibleHandlers.forEach((h) => { h() });
+
+      renderedComponent = React.createElement(
+        VisibilityDetectingView,
+        { onVisible },
+        renderedComponent,
+      );
     }
 
-    return null;
+    return renderedComponent;
   }
 
   componentDidMount() {
     const { element, navigation, onUpdate } = this.props;
-    const href = element.getAttribute('href');
-    const trigger = element.getAttribute('trigger');
-    if (href && trigger == 'load') {
-      const handler = this.createActionHandler(element, navigation, onUpdate);
-      handler();
-    }
+    const behaviorElements = this.getBehaviorElements();
+    const loadBehaviors = behaviorElements.filter((e) => e.getAttribute('trigger') == 'load');
+
+    loadBehaviors.forEach((behaviorElement) => {
+      const handler = this.createActionHandler(element, behaviorElement, navigation, onUpdate);
+      setTimeout(handler, 0);
+    });
   }
 }
 
 
 function addHref(component, element, navigation, stylesheet, animations, onUpdate ) {
   const href = element.getAttribute('href');
-  if (!href) {
+  const behaviorElements = getChildElementsByTagName(element, 'behavior');
+  const hasBehaviors = href || behaviorElements.length > 0;
+  if (!hasBehaviors) {
     return component;
   }
 
+  const serializer = new XMLSerializer();
+  console.log('Creating hyperref for: ');
+  console.log(serializer.serializeToString(element));
   return React.createElement(
     HyperRef,
     { element, navigation, stylesheet, animations, onUpdate },
@@ -383,6 +415,10 @@ function getFirstTag(rootNode, tagName) {
     return elements[0];
   }
   return null;
+}
+
+function getChildElementsByTagName(element, tagName) {
+  return Array.from(element.childNodes).filter((n) => n.nodeType == 1 && n.tagName == tagName);
 }
 
 
@@ -466,7 +502,6 @@ function createNavHandler(element, navigation) {
     navHandler = () => navigation.goBack();
   } else {
     navHandler = () => {
-      console.log('navigating to ', key, 'href: ', href, 'indicator id: ', showIndicatorId);
       let preloadScreen = null;
       if (showIndicatorId) {
         const rootElement = element.ownerDocument;
@@ -881,7 +916,6 @@ class HyperScreen extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.needsLoad) {
-      console.log('LOADING: ', this.state.path);
       this.load(this.state.path);
       this.needsLoad = false;
     }
@@ -1128,8 +1162,8 @@ const MainStack = createStackNavigator(
   {
     initialRouteName: 'Stack',
     initialRouteParams: {
-      //href: '/dynamic_elements/indicator.xml',
-      href: '/index.xml',
+      href: '/dynamic_elements/index.xml',
+      //href: '/index.xml',
     },
     headerMode: 'none',
   }

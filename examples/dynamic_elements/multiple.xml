@@ -1,0 +1,121 @@
+<doc>
+  <styles>
+    <rule id="Header"
+          height="72"
+          alignItems="center"
+          backgroundColor="white"
+          borderBottomWidth="1"
+          borderBottomColor="#eee"
+          paddingTop="24"
+          paddingLeft="24"
+          paddingRight="24"
+          flexDirection="row" />
+    <rule id="Header__Back"
+          color="blue"
+          fontFamily="HKGrotesk-SemiBold"
+          fontSize="16"
+          paddingRight="16" />
+    <rule id="Header__Title"
+          fontFamily="HKGrotesk-SemiBold"
+          fontSize="24"
+          color="black" />
+    <rule id="Body"
+          backgroundColor="white"
+          flex="1" />
+    <rule id="Description"
+          fontFamily="HKGrotesk-Regular"
+          fontSize="16"
+          margin="24"
+          marginBottom="0" />
+    <rule id="Item"
+          borderBottomWidth="1"
+          borderBottomColor="#eee"
+          height="48"
+          flex="1"
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="space-between"
+          paddingLeft="24"
+          paddingRight="24" />
+    <rule id="Item__Label"
+          fontSize="18"
+          fontFamily="HKGrotesk-Regular" />
+    <rule id="Item__Chevron"
+          fontSize="18"
+          fontFamily="HKGrotesk-Bold" />
+    <rule id="Button"
+          padding="24"
+          backgroundColor="#63CB76"
+          borderRadius="16"
+          margin="24"
+          flexDirection="row"
+          justifyContent="center" />
+    <rule id="Button__Label"
+          color="white"
+          fontFamily="HKGrotesk-Bold"
+          fontSize="24" />
+    <rule id="Main" />
+  </styles>
+  <screen>
+    <body style="Body">
+      <header style="Header">
+        <text style="Header__Back"
+              href="/dynamic_elements/index.xml"
+              action="back">Back</text>
+        <text style="Header__Title">Multiple Behaviors</text>
+      </header>
+      <view style="Main">
+        <text style="Description">The button below has behaviors for presses, refresh, and load.</text>
+        <view style="Button">
+          <behavior trigger="pressIn"
+                    href="#pressin-fragment"
+                    target="container"
+                    action="prepend" />
+          <behavior trigger="press"
+                    href="#press-fragment"
+                    target="container"
+                    action="prepend" />
+          <behavior trigger="longPress"
+                    href="#longpress-fragment"
+                    target="container"
+                    action="prepend" />
+          <behavior trigger="pressOut"
+                    href="#pressout-fragment"
+                    target="container"
+                    action="prepend" />
+          <behavior trigger="refresh"
+                    href="#refresh-fragment"
+                    target="container"
+                    action="prepend" />
+          <behavior trigger="load"
+                    href="#load-fragment"
+                    target="container"
+                    action="prepend" />
+          <behavior trigger="visible"
+                    href="#visible-fragment"
+                    target="container"
+                    action="prepend" />
+          <text style="Button__Label">Press me</text>
+        </view>
+        <view id="container"
+              scroll="true" />
+        <view hide="true">
+          <text style="Description"
+                id="pressin-fragment">Press-in</text>
+          <text style="Description"
+                id="press-fragment">Press</text>
+          <text style="Description"
+                id="pressout-fragment">Press-out</text>
+          <text style="Description"
+                id="longpress-fragment">Long-press</text>
+          <text style="Description"
+                id="refresh-fragment">Refresh</text>
+          <text style="Description"
+                id="load-fragment">Load</text>
+          <text style="Description"
+                id="visible-fragment">Visible</text>
+        </view>
+      </view>
+    </body>
+  </screen>
+</doc>

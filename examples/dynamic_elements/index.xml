@@ -71,6 +71,20 @@
           <sectiontitle style="List__Header">
             <text style="List__HeaderText">Actions</text>
           </sectiontitle>
+          <item key="multiple"
+                style="Item"
+                href="/dynamic_elements/multiple.xml"
+                show-during-load="loadingScreen">
+            <text style="Item__Label">Multiple</text>
+            <text style="Item__Chevron">&gt;</text>
+          </item>
+          <item key="multiple-same"
+                style="Item"
+                href="/dynamic_elements/multiple_same.xml"
+                show-during-load="loadingScreen">
+            <text style="Item__Label">Multiple Same</text>
+            <text style="Item__Chevron">&gt;</text>
+          </item>
           <item key="replace"
                 style="Item"
                 href="/dynamic_elements/replace.xml"
