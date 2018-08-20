@@ -304,6 +304,8 @@ class HyperRef extends React.Component {
     const visibleBehaviors = behaviorElements.filter((e) => e.getAttribute('trigger') == 'visible');
     const refreshBehaviors = behaviorElements.filter((e) => e.getAttribute('trigger') == 'refresh');
 
+    // Render the component based on the XML element. Depending on the applied behaviors, this component
+    // will be wrapped with others to provide the necessary interaction.
     let renderedComponent = renderElement(element, navigation, stylesheet, animations, onUpdate, {skipHref: true});
 
     // Render pressable element
@@ -312,18 +314,34 @@ class HyperRef extends React.Component {
         // Component will use touchable opacity to trigger href.
         activeOpacity: 0.5,
       };
-      pressBehaviors.forEach((behaviorElement) => {
+
+      // With multiple behaviors for the same trigger, we need to stagger
+      // the updates a bit so that each update operates on the latest DOM.
+      // Ideally, we could apply multiple DOM updates at a time.
+      const time = 0;
+
+      pressBehaviors.forEach((behaviorElement, index) => {
         const href = behaviorElement.getAttribute('href');
         const trigger = behaviorElement.getAttribute('trigger') || 'press';
         const triggerPropName = this.triggerPropNames[trigger];
-        props[triggerPropName] = this.createActionHandler(element, behaviorElement, navigation, onUpdate);
+        const handler = this.createActionHandler(element, behaviorElement, navigation, onUpdate);
+        if (props[triggerPropName]) {
+          const oldHandler = props[triggerPropName];
+          props[triggerPropName] = () => {
+            oldHandler();
+            setTimeout(handler, time);
+            time++;
+          }
+        } else {
+          props[triggerPropName] = handler;
+        }
       });
 
       // Fix a conflict between onPressOut and onPress triggering at the same time.
       if (props.onPressOut && props.onPress) {
         const onPressHandler = props.onPress;
         props.onPress = () => {
-          setTimeout(onPressHandler, 0);
+          setTimeout(onPressHandler, time);
         }
       }
 
@@ -392,8 +410,6 @@ function addHref(component, element, navigation, stylesheet, animations, onUpdat
   }
 
   const serializer = new XMLSerializer();
-  console.log('Creating hyperref for: ');
-  console.log(serializer.serializeToString(element));
   return React.createElement(
     HyperRef,
     { element, navigation, stylesheet, animations, onUpdate },
