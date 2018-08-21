@@ -1,4 +1,5 @@
-<doc xmlns="https://instawork.com/hyperview" xmlns:redux="https://instawork.com/hyperview-redux">
+<doc xmlns="https://instawork.com/hyperview"
+     xmlns:redux="https://instawork.com/hyperview-redux">
   <screen>
     <styles>
       <style alignItems="center"

@@ -63,7 +63,6 @@
           <text style="Item__Label">Multiple Different Behaviors</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
-
         <item href="/advanced_behaviors/multiple_same.xml"
               key="multiple_same"
               show-during-load="loadingScreen"
@@ -71,7 +70,6 @@
           <text style="Item__Label">Multiple Same Behaviors</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
-
         <item href="/advanced_behaviors/custom_toast.xml"
               key="custom_toast"
               show-during-load="loadingScreen"
@@ -79,7 +77,6 @@
           <text style="Item__Label">Custom: Toast</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
-
         <item href="/advanced_behaviors/custom_web.xml"
               key="custom_web"
               show-during-load="loadingScreen"
@@ -87,7 +84,6 @@
           <text style="Item__Label">Custom: Web</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
-
         <item href="/advanced_behaviors/custom_intercom.xml"
               key="custom_intercom"
               show-during-load="loadingScreen"
@@ -95,7 +91,6 @@
           <text style="Item__Label">Custom: Intercom</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
-
         <item href="/advanced_behaviors/custom_amplitude.xml"
               key="custom_amplitude"
               show-during-load="loadingScreen"

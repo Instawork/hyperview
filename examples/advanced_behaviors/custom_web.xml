@@ -1,4 +1,5 @@
-<doc xmlns="https://instawork.com/hyperview" xmlns:redux="https://instawork.com/hyperview-redux">
+<doc xmlns="https://instawork.com/hyperview"
+     xmlns:redux="https://instawork.com/hyperview-redux">
   <screen>
     <styles>
       <style alignItems="center"
@@ -49,37 +50,28 @@
               style="Header__Back">Back</text>
         <text style="Header__Title">Custom: Web</text>
       </header>
-
-      <view style="Main" scroll="true">
+      <view style="Main"
+            scroll="true">
         <text style="Description">Examples of using Redux behavior to open web views as modals.</text>
         <view style="Button">
-          <behavior
-            trigger="press"
-            action="redux"
-            redux:action="WEB_BROWSER/OPEN_BOOK_GIG"
-          />
+          <behavior trigger="press"
+                    action="redux"
+                    redux:action="WEB_BROWSER/OPEN_BOOK_GIG" />
           <text style="Button__Label">Book a Gig</text>
         </view>
-
         <view style="Button">
-          <behavior
-            trigger="press"
-            action="redux"
-            redux:action="WEB_BROWSER/OPEN_GIGS_POLICIES"
-          />
+          <behavior trigger="press"
+                    action="redux"
+                    redux:action="WEB_BROWSER/OPEN_GIGS_POLICIES" />
           <text style="Button__Label">Gigs Policies</text>
         </view>
-
         <view style="Button">
-          <behavior
-            trigger="press"
-            action="redux"
-            redux:action="WEB_BROWSER/OPEN_HOW_GIGS_WORK"
-          />
+          <behavior trigger="press"
+                    action="redux"
+                    redux:action="WEB_BROWSER/OPEN_HOW_GIGS_WORK" />
           <text style="Button__Label">How Gigs Work</text>
         </view>
       </view>
-
     </body>
   </screen>
   <screen id="loadingScreen">

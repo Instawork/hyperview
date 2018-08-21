@@ -1,4 +1,5 @@
-<doc xmlns="https://instawork.com/hyperview" xmlns:amp="https://instawork.com/hyperview-amplitude">
+<doc xmlns="https://instawork.com/hyperview"
+     xmlns:amp="https://instawork.com/hyperview-amplitude">
   <screen>
     <styles>
       <style alignItems="center"
@@ -49,23 +50,20 @@
               style="Header__Back">Back</text>
         <text style="Header__Title">Custom: Amplitude</text>
       </header>
-      <view style="Main" scroll="true">
+      <view style="Main"
+            scroll="true">
         <text style="Description">Examples of using custom behaviors to log Amplitude Events. Note that logging Amplitude events will not cause any visible change. If you run this code with the remote debugger, you should see log statements in the console.</text>
         <view style="Button">
-          <behavior
-            trigger="press"
-            action="amplitude"
-            amp:event="hyperview-demo/log-event-button/press"
-          />
+          <behavior trigger="press"
+                    action="amplitude"
+                    amp:event="hyperview-demo/log-event-button/press" />
           <text style="Button__Label">Log Event</text>
         </view>
         <view style="Button">
-          <behavior
-            trigger="press"
-            action="amplitude"
-            amp:event="hyperview-demo/log-event-with-props-button/press"
-            amp:event-props="{&quot;id&quot;:123}"
-          />
+          <behavior trigger="press"
+                    action="amplitude"
+                    amp:event="hyperview-demo/log-event-with-props-button/press"
+                    amp:event-props="{&quot;id&quot;:123}" />
           <text style="Button__Label">Log Event with Props</text>
         </view>
       </view>
