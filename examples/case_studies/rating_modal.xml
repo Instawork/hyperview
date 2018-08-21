@@ -4,15 +4,14 @@
     <styles>
       <style alignItems="center"
              backgroundColor="white"
-             borderBottomColor="#eee"
-             borderBottomWidth="1"
              flexDirection="row"
              height="72"
              id="Header"
              paddingLeft="24"
              paddingRight="24"
              paddingTop="24" />
-      <style width="32" height="32"
+      <style width="32"
+             height="32"
              id="Header__Close"
              marginRight="16" />
       <style color="black"
@@ -24,6 +23,8 @@
              id="Body" />
       <style backgroundColor="white"
              flex="1"
+             borderWidth="1"
+             borderColor="red"
              id="Main" />
       <style color="black"
              fontFamily="HKGrotesk-Bold"
@@ -175,9 +176,9 @@
     <body style="Body">
       <header style="Header">
         <image action="close"
-              source="http://127.0.0.1:8080/case_studies/close@2x.png"
-              href="/index.xml"
-              style="Header__Close" />
+               source="http://127.0.0.1:8080/case_studies/close@2x.png"
+               href="/index.xml"
+               style="Header__Close" />
       </header>
       <view style="Main"
             scroll="true">

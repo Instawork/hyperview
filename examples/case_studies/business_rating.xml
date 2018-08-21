@@ -10,13 +10,10 @@
            paddingLeft="24"
            paddingRight="24"
            paddingTop="24" />
-    <style 
-      height="19"
-      width="24"
+    <style height="19"
+           width="24"
            id="Header__Back"
-           marginRight="16"
-           />
-
+           marginRight="16" />
     <style color="black"
            fontFamily="HKGrotesk-SemiBold"
            fontSize="24"
@@ -89,9 +86,9 @@
   <body style="Body">
     <header style="Header">
       <image action="back"
-            href="/index.xml"
-            style="Header__Back" source="http://127.0.0.1:8080/case_studies/back@2x.png" />
-          <text style="Header__Title">Dishwasher</text>
+             href="/index.xml"
+             style="Header__Back"
+             source="http://127.0.0.1:8080/case_studies/back@2x.png" />
     </header>
     <view style="Main"
           scroll="true">
@@ -107,6 +104,8 @@
           <item key="a"
                 action="new"
                 href="/case_studies/rating_modal.xml"
+                show-during-load="loadingScreen"
+                delay="500"
                 style="ShiftItem">
             <image source="http://127.0.0.1:8080/case_studies/image.jpg"
                    style="ShiftItem__Avatar" />
@@ -150,6 +149,8 @@
           <item key="b"
                 action="new"
                 href="/case_studies/rating_modal.xml"
+                show-during-load="loadingScreen"
+                delay="500"
                 style="ShiftItem">
             <image source="http://127.0.0.1:8080/case_studies/image.jpg"
                    style="ShiftItem__Avatar" />
@@ -207,9 +208,10 @@
            paddingLeft="24"
            paddingRight="24"
            paddingTop="24" />
-      <style width="32" height="32"
-             id="Header__Close"
-             marginRight="16" />
+    <style width="32"
+           height="32"
+           id="Header__Close"
+           marginRight="16" />
     <style backgroundColor="white"
            flex="1"
            id="Body" />
@@ -229,9 +231,9 @@
   <body style="Body">
     <header style="Header">
       <image action="close"
-            source="http://127.0.0.1:8080/case_studies/close@2x.png"
-            href="/index.xml"
-            style="Header__Close" />
+             source="http://127.0.0.1:8080/case_studies/close@2x.png"
+             href="/index.xml"
+             style="Header__Close" />
     </header>
     <text style="Title">Rate the Instaworker</text>
     <view style="Loading">
