@@ -107,6 +107,15 @@
           </view>
           <text style="Item__Chevron">&gt;</text>
         </item>
+        <item href="/case_studies/index.xml"
+              key="case_studies"
+              show-during-load="loadingScreen"
+              style="Item">
+          <view style="Item__Left">
+            <text style="Item__Label">Case Studies</text>
+          </view>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
       </list>
     </body>
   </screen>
