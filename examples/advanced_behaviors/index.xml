@@ -87,6 +87,22 @@
           <text style="Item__Label">Custom: Web</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
+
+        <item href="/advanced_behaviors/custom_intercom.xml"
+              key="custom_intercom"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Custom: Intercom</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+
+        <item href="/advanced_behaviors/custom_amplitude.xml"
+              key="custom_amplitude"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Custom: Amplitude</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
       </list>
     </body>
   </screen>

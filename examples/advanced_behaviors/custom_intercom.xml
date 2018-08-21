@@ -1,0 +1,107 @@
+<doc xmlns="https://instawork.com/hyperview" xmlns:intercom="https://instawork.com/hyperview-intercom">
+  <screen>
+    <styles>
+      <style alignItems="center"
+             backgroundColor="white"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flexDirection="row"
+             height="72"
+             id="Header"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="24" />
+      <style color="blue"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="16"
+             id="Header__Back"
+             paddingRight="16" />
+      <style color="black"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="24"
+             id="Header__Title" />
+      <style backgroundColor="white"
+             flex="1"
+             id="Body" />
+      <style fontFamily="HKGrotesk-SemiBold"
+             fontSize="16"
+             id="Description"
+             margin="24" />
+      <style backgroundColor="#63CB76"
+             borderRadius="16"
+             flex="1"
+             flexDirection="row"
+             id="Button"
+             justifyContent="center"
+             margin="24"
+             padding="24" />
+      <style color="white"
+             fontFamily="HKGrotesk-Bold"
+             fontSize="24"
+             id="Button__Label" />
+      <style flex="1"
+             id="Main" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text action="back"
+              href="/index.xml"
+              style="Header__Back">Back</text>
+        <text style="Header__Title">Custom: Toast</text>
+      </header>
+      <view style="Main" scroll="true">
+        <text style="Description">Examples of using custom behaviors to trigger Intercom actions</text>
+        <view style="Button">
+          <behavior
+            trigger="press"
+            action="intercom"
+            intercom:action="open"
+          />
+          <text style="Button__Label">Open Intercom</text>
+        </view>
+        <view style="Button">
+          <behavior
+            trigger="press"
+            action="intercom"
+            intercom:action="open"
+            intercom:message="Hello World!"
+          />
+          <text style="Button__Label">Open Intercom with Message</text>
+        </view>
+      </view>
+    </body>
+  </screen>
+  <screen id="loadingScreen">
+    <styles>
+      <style alignItems="center"
+             backgroundColor="white"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flexDirection="row"
+             height="72"
+             id="Header"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="24" />
+      <style color="blue"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="16"
+             id="Header__Back"
+             paddingRight="16" />
+      <style color="black"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="24"
+             id="Header__Title" />
+      <style backgroundColor="white"
+             flex="1"
+             id="Body" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text action="back"
+              href="/navigation/index.xml"
+              style="Header__Back">Back</text>
+      </header>
+    </body>
+  </screen>
+</doc>
