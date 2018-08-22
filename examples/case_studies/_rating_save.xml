@@ -1,11 +1,14 @@
-<text xmlns="https://instawork.com/hyperview"
+<view style="BottomSheet__Button"
+      xmlns="https://instawork.com/hyperview"
       xmlns:redux="https://instawork.com/hyperview-redux"
-      style="BottomSheet__ButtonLabel">
-<behavior action="close"
-          delay="300"
-          href="/dynamic_elements/index.xml"
-          trigger="load" />
-<behavior trigger="load"
-          action="redux"
-          redux:action="TOAST/SHOW_TOAST"
-          redux:extra="{&quot;payload&quot;:{&quot;toast&quot;:{&quot;colorScheme&quot;:&quot;positive&quot;,&quot;message&quot;:&quot;Thank you for your rating&quot;}}}" />Saved!!!</text>
+      id="savedButton">
+  <behavior action="close"
+            delay="300"
+            href="/dynamic_elements/index.xml"
+            trigger="load" />
+  <behavior trigger="load"
+            action="redux"
+            redux:action="TOAST/SHOW_TOAST"
+            redux:extra="{&quot;payload&quot;:{&quot;toast&quot;:{&quot;colorScheme&quot;:&quot;positive&quot;,&quot;message&quot;:&quot;Thank you for your rating&quot;}}}" />
+  <text style="BottomSheet__ButtonLabel">Saved!!!</text>
+</view>

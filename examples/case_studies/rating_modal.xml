@@ -234,7 +234,7 @@
               target="saveButtonContainer"
               show-during-load="savingButton"
               hide-during-load="saveButton"
-              action="replace-inner">
+              action="replace">
           <view id="saveButton"
                 style="BottomSheet__Button">
             <text id="saveLabel"
