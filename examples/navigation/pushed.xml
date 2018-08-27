@@ -61,7 +61,7 @@
           style="Body">
       <header style="Header">
         <text action="back"
-              href="/navigation/index.xml"
+              href="#"
               style="Header__Back">Back</text>
         <text style="Header__Title">Pushed</text>
       </header>

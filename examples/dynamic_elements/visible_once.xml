@@ -65,7 +65,7 @@
     <body style="Body">
       <header style="Header">
         <text action="back"
-              href="/dynamic_elements/index.xml"
+              href="#"
               style="Header__Back">Back</text>
         <text style="Header__Title">Visible Once</text>
       </header>

@@ -1,5 +1,5 @@
 <doc xmlns="https://instawork.com/hyperview"
-     xmlns:redux="https://instawork.com/hyperview-redux">
+     xmlns:ns1="https://instawork.com/hyperview-redux">
   <screen>
     <styles>
       <style alignItems="center"
@@ -46,39 +46,39 @@
     <body style="Body">
       <header style="Header">
         <text action="back"
-              href="/index.xml"
+              href="#"
               style="Header__Back">Back</text>
         <text style="Header__Title">Custom: Toast</text>
       </header>
-      <view style="Main"
-            scroll="true">
+      <view scroll="true"
+            style="Main">
         <text style="Description">Examples of using Redux behaviors to show customized toasts.</text>
         <view style="Button">
-          <behavior trigger="press"
-                    action="redux"
-                    redux:action="TOAST/SHOW_TOAST"
-                    redux:extra="{&quot;payload&quot;:{&quot;toast&quot;:{&quot;colorScheme&quot;:&quot;positive&quot;,&quot;message&quot;:&quot;Hello World!&quot;}}}" />
+          <behavior action="redux"
+                    trigger="press"
+                    ns1:action="TOAST/SHOW_TOAST"
+                    ns1:extra="{&quot;payload&quot;:{&quot;toast&quot;:{&quot;colorScheme&quot;:&quot;positive&quot;,&quot;message&quot;:&quot;Hello World!&quot;}}}" />
           <text style="Button__Label">Success Toast</text>
         </view>
         <view style="Button">
-          <behavior trigger="press"
-                    action="redux"
-                    redux:action="TOAST/SHOW_TOAST"
-                    redux:extra="{&quot;payload&quot;:{&quot;toast&quot;:{&quot;colorScheme&quot;:&quot;neutral&quot;,&quot;message&quot;:&quot;Hello World!&quot;}}}" />
+          <behavior action="redux"
+                    trigger="press"
+                    ns1:action="TOAST/SHOW_TOAST"
+                    ns1:extra="{&quot;payload&quot;:{&quot;toast&quot;:{&quot;colorScheme&quot;:&quot;neutral&quot;,&quot;message&quot;:&quot;Hello World!&quot;}}}" />
           <text style="Button__Label">Neutral Toast</text>
         </view>
         <view style="Button">
-          <behavior trigger="press"
-                    action="redux"
-                    redux:action="TOAST/SHOW_TOAST"
-                    redux:extra="{&quot;payload&quot;:{&quot;toast&quot;:{&quot;colorScheme&quot;:&quot;negative&quot;,&quot;message&quot;:&quot;Hello World!&quot;}}}" />
+          <behavior action="redux"
+                    trigger="press"
+                    ns1:action="TOAST/SHOW_TOAST"
+                    ns1:extra="{&quot;payload&quot;:{&quot;toast&quot;:{&quot;colorScheme&quot;:&quot;negative&quot;,&quot;message&quot;:&quot;Hello World!&quot;}}}" />
           <text style="Button__Label">Negative Toast</text>
         </view>
         <view style="Button">
-          <behavior trigger="press"
-                    action="redux"
-                    redux:action="TOAST/SHOW_TOAST"
-                    redux:extra="{&quot;payload&quot;:{&quot;toast&quot;:{&quot;colorScheme&quot;:&quot;negative&quot;,&quot;message&quot;:&quot;Hello World!&quot;,&quot;icon&quot;:&quot;gigs&quot;}}}" />
+          <behavior action="redux"
+                    trigger="press"
+                    ns1:action="TOAST/SHOW_TOAST"
+                    ns1:extra="{&quot;payload&quot;:{&quot;toast&quot;:{&quot;colorScheme&quot;:&quot;negative&quot;,&quot;message&quot;:&quot;Hello World!&quot;,&quot;icon&quot;:&quot;gigs&quot;}}}" />
           <text style="Button__Label">Negative Toast with Icon</text>
         </view>
       </view>
@@ -112,7 +112,7 @@
     <body style="Body">
       <header style="Header">
         <text action="back"
-              href="/navigation/index.xml"
+              href="#"
               style="Header__Back">Back</text>
       </header>
     </body>

@@ -1,5 +1,4 @@
-<doc xmlns="https://instawork.com/hyperview"
-     xmlns:redux="https://instawork.com/hyperview-redux">
+<doc xmlns="https://instawork.com/hyperview">
   <screen>
     <styles>
       <style alignItems="center"
@@ -116,6 +115,15 @@
           </view>
           <text style="Item__Chevron">&gt;</text>
         </item>
+        <item href="http://localhost:8080/biz_app/gigs/groups"
+              key="biz_app"
+              show-during-load="loadingScreen"
+              style="Item">
+          <view style="Item__Left">
+            <text style="Item__Label">Biz App</text>
+          </view>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
       </list>
     </body>
   </screen>
@@ -147,7 +155,7 @@
     <body style="Body">
       <header style="Header">
         <text action="back"
-              href="/navigation/index.xml"
+              href="#"
               style="Header__Back">Back</text>
       </header>
     </body>
