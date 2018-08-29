@@ -74,6 +74,13 @@
           <text style="Item__Label">Back</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
+        <item href="/navigation/close.xml"
+              action="new"
+              key="close"
+              style="Item">
+          <text style="Item__Label">Close</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
         <item href="/navigation/navigate.xml"
               key="navigate"
               style="Item">
