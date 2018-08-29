@@ -49,12 +49,20 @@
              fontSize="16"
              id="input"
              paddingBottom="8"
-             paddingTop="8" />
-      <style borderBottomColor="#4778FF"
-             id="input--focused" />
+             paddingTop="8">
+
+        <modifier focused="true">
+          <style borderBottomColor="#4778FF" />
+        </modifier>
+      </style>
       <style borderBottomColor="#FF4847"
              color="#FF4847"
-             id="input--error" />
+             id="input--error"
+      > 
+        <modifier focused="true">
+          <style borderBottomColor="#FF4847" />
+        </modifier>
+      </style>
       <style borderColor="#4E4D4D"
              fontFamily="HKGrotesk-Bold"
              fontSize="16"
@@ -82,23 +90,45 @@
       <view scroll="true"
             style="Main">
         <view style="FormGroup">
-          <textarea focusStyles="input input--focused"
-                    outerStyles="outerInput"
-                    placeholder="Instructions"
-                    placeholderTextColor="#8D9494"
-                    style="input">
-            <label style="label">Multi-line textarea</label>
-            <help style="help">Please enter your gig instructions</help>
-          </textarea>
+          <text style="label">Multi-line text-area</text>
+          <text-area
+            placeholder="Instructions"
+            placeholderTextColor="#8D9494"
+            style="input">
+          <text style="help">Please enter your gig instructions</text>
+          </text-area>
         </view>
         <view style="FormGroup">
-          <textarea outerStyles="outerInput"
-                    placeholder="Instructions"
-                    placeholderTextColor="#8D9494"
-                    style="input input--error">
-            <label style="label">Multi-line validation error</label>
-            <help style="help help--error">Please enter your gig instructions</help>
-          </textarea>
+          <text style="label">Multi-line filled</text>
+          <text-area
+            placeholder="Instructions"
+            placeholderTextColor="#8D9494"
+            style="input" value="One
+two
+three
+four">
+          </text-area>
+        </view>
+        <view style="FormGroup">
+          <text style="label">Multi-line validation error</text>
+          <text-area
+            placeholder="Instructions"
+            placeholderTextColor="#8D9494"
+            style="input input--error">
+          </text-area>
+          <text style="help help--error">Please enter your gig instructions</text>
+        </view>
+        <view style="FormGroup">
+          <text style="label">Multi-line filled with validation error</text>
+          <text-area
+            placeholder="Instructions"
+            placeholderTextColor="#8D9494"
+            style="input input--error" value="One
+two
+three
+four">
+          </text-area>
+          <text style="help help--error">Please enter your gig instructions</text>
         </view>
       </view>
     </body>

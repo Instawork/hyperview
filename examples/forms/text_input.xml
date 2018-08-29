@@ -49,12 +49,20 @@
              fontSize="16"
              id="input"
              paddingBottom="8"
-             paddingTop="8" />
-      <style borderBottomColor="#4778FF"
-             id="input--focused" />
+             paddingTop="8">
+
+        <modifier focused="true">
+          <style borderBottomColor="#4778FF" />
+        </modifier>
+      </style>
       <style borderBottomColor="#FF4847"
              color="#FF4847"
-             id="input--error" />
+             id="input--error"
+      > 
+        <modifier focused="true">
+          <style borderBottomColor="#FF4847" />
+        </modifier>
+      </style>
       <style borderColor="#4E4D4D"
              fontFamily="HKGrotesk-Bold"
              fontSize="16"
@@ -83,55 +91,42 @@
       <view scroll="true"
             style="Main">
         <view style="FormGroup">
-          <input focusStyles="input input--focused"
-                 outerStyles="outerInput"
+            <text style="label">Default input field</text>
+            <text-field
                  placeholder="First name"
                  placeholderTextColor="#8D9494"
-                 style="input">
-            <label style="label">Default input field</label>
-            <help style="help">Please enter your full name</help>
+                 style="input" />
+            <text style="help">Please enter your full name</text>
           </input>
         </view>
         <view style="FormGroup">
-          <input focusStyles="input input--focused"
-                 outerStyles="outerInput"
-                 placeholder="First name"
-                 placeholderTextColor="#8D9494"
-                 style="input"
-                 value="Milhouse">
-            <label style="label">Filled input field</label>
-            <help style="help">Please enter your full name</help>
-          </input>
+            <text style="label">Filled input field</text>
+            <text-field style="input" value="Milhouse" placeholder="First name" placeholderTextColor="#8D9494" />
+            <text style="help">Please enter your full name</text>
         </view>
         <view style="FormGroup">
-          <input outerStyles="outerInput"
-                 placeholder="First name"
-                 placeholderTextColor="#8D9494"
-                 style="input input--error">
-            <label style="label">Validation error</label>
-            <help style="help help--error">Please enter your full name</help>
-          </input>
+          <text style="label">Validation error</text>
+          <text-field style="input input--error" placeholder="First name" placeholderTextColor="#8D9494" />
+          <text style="help help--error">Please enter your full name</text>
         </view>
         <view style="FormGroup">
-          <input outerStyles="outerInput"
+            <text style="label">Filled validation error</text>
+            <text-field 
                  placeholder="First name"
                  placeholderTextColor="#8D9494"
                  style="input input--error"
-                 value="Milhouse">
-            <label style="label">Filled validation error</label>
-            <help style="help help--error">Name already taken</help>
+                 value="Milhouse" />
+            <text style="help help--error">Name already taken</text>
           </input>
         </view>
         <view style="FormGroup">
-          <label style="label">Horizontal Layout</label>
+          <text style="label">Horizontal Layout</text>
           <view style="horizontalFormGroup">
-            <input focusStyles="input input--focused"
-                   outerStyles="outerInput"
+            <text-field
                    placeholder="First"
                    placeholderTextColor="#8D9494"
                    style="input" />
-            <input focusStyles="input input--focused"
-                   outerStyles="outerInput"
+            <text-field
                    placeholder="Last"
                    placeholderTextColor="#8D9494"
                    style="input" />
