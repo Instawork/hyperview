@@ -1,0 +1,129 @@
+<doc xmlns="https://instawork.com/hyperview">
+  <screen>
+    <styles>
+      <style alignItems="center"
+             backgroundColor="white"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flexDirection="row"
+             height="72"
+             id="Header"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="24" />
+      <style color="blue"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="16"
+             id="Header__Back"
+             paddingRight="16" />
+      <style color="black"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="24"
+             id="Header__Title" />
+      <style backgroundColor="white"
+             flex="1"
+             id="Body" />
+      <style borderColor="red"
+             borderRadius="4"
+             borderWidth="2"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="16"
+             id="Description"
+             margin="24"
+             padding="16" />
+      </style>
+
+      <style id="Select"
+        marginTop="24"
+      />
+      <style id="Select__Separator"
+        borderTopWidth="1"
+        borderTopColor="#e1e3e3"
+        marginLeft="24"
+        marginRight="24"
+      />
+      <style id="Select__Option"
+        flex="1"
+        flexDirection="row"
+        alignItems="center"
+        justifyContent="space-between"
+        paddingLeft="24"
+        paddingRight="24"
+        paddingBottom="16"
+        paddingTop="16"
+      />
+      <style id="Select__RadioOuter"
+        width="20"
+        height="20"
+        borderRadius="10"
+        borderWidth="1"
+        borderColor="#bdc4c4"
+      >
+        <modifier pressed="true">
+          <style borderColor="#8d9494" borderWidth="1" />
+        </modifier>
+        <modifier selected="true">
+          <style borderColor="#4778ff" borderWidth="2" />
+        </modifier>
+      </style>
+
+      <style id="Select__RadioInner"
+        width="10"
+        height="10"
+        borderRadius="5"
+        opacity="0"
+        marginTop="3"
+        marginLeft="3"
+      >
+        <modifier selected="true">
+          <style backgroundColor="#4778ff" opacity="1" />
+        </modifier>
+      </style>
+
+      <style id="Select__Label"
+             fontFamily="HKGrotesk-Regular"
+             color="#4e4d4d"
+             fontSize="16"
+             lineHeight="18"
+      >
+        <modifier selected="true">
+          <style color="#312f2f" />
+        </modifier>
+        <modifier pressed="true">
+          <style color="#312f2f" />
+        </modifier>
+      </style>
+    </styles>
+
+    <body style="Body">
+      <header style="Header">
+        <text action="back"
+              href="#"
+              style="Header__Back">Back</text>
+        <text style="Header__Title">Select Single</text>
+      </header>
+      <view scroll="true" style="Main">
+
+        <select-single style="Select" name="choice">
+          <view style="Select__Separator" />
+          <option style="Select__Option" value="paid_parking">
+            <text style="Select__Label">Paid parking</text>
+            <view style="Select__RadioOuter"><view style="Select__RadioInner"></view></view>
+          </option>
+          <view style="Select__Separator" />
+          <option style="Select__Option" value="free_parking">
+            <text style="Select__Label">Free parking</text>
+            <view style="Select__RadioOuter"><view style="Select__RadioInner"></view></view>
+          </option>
+          <view style="Select__Separator" />
+          <option style="Select__Option" value="unknown_parking">
+            <text style="Select__Label">Unknown</text>
+            <view style="Select__RadioOuter"><view style="Select__RadioInner"></view></view>
+          </option>
+          <view style="Select__Separator" />
+        </select-single>
+
+      </view>
+    </body>
+  </screen>
+</doc>
