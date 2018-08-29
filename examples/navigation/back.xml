@@ -71,6 +71,14 @@
             style="Button">
         <text style="Button__Label">Back</text>
       </view>
+
+      <text style="Description">Tapping the button below will navigate back to the previous screen..</text>
+      <view action="back"
+            href="/navigation/push.xml"
+            delay="500"
+            style="Button">
+        <text style="Button__Label">Back to other</text>
+      </view>
     </body>
   </screen>
   <screen id="loadingScreen">
