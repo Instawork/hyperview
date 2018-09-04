@@ -71,20 +71,6 @@
           <sectiontitle style="List__Header">
             <text style="List__HeaderText">Actions</text>
           </sectiontitle>
-          <item href="/dynamic_elements/multiple.xml"
-                key="multiple"
-                show-during-load="loadingScreen"
-                style="Item">
-            <text style="Item__Label">Multiple</text>
-            <text style="Item__Chevron">&gt;</text>
-          </item>
-          <item href="/dynamic_elements/multiple_same.xml"
-                key="multiple-same"
-                show-during-load="loadingScreen"
-                style="Item">
-            <text style="Item__Label">Multiple Same</text>
-            <text style="Item__Chevron">&gt;</text>
-          </item>
           <item href="/dynamic_elements/replace.xml"
                 key="replace"
                 show-during-load="loadingScreen"
@@ -172,6 +158,13 @@
                 show-during-load="loadingScreen"
                 style="Item">
             <text style="Item__Label">Load</text>
+            <text style="Item__Chevron">&gt;</text>
+          </item>
+          <item href="/dynamic_elements/select.xml"
+                key="select"
+                show-during-load="loadingScreen"
+                style="Item">
+            <text style="Item__Label">Select</text>
             <text style="Item__Chevron">&gt;</text>
           </item>
         </section>

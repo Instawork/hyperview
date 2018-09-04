@@ -86,7 +86,6 @@
           </view>
           <text style="Item__Chevron">&gt;</text>
         </item>
-
         <item href="/forms/select_single.xml"
               key="select_single"
               show-during-load="loadingScreen"

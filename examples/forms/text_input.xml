@@ -51,6 +51,9 @@
              paddingBottom="8"
              paddingTop="8">
 
+        <modifier pressed="true">
+          <style borderBottomColor="green" />
+        </modifier>
         <modifier focused="true">
           <style borderBottomColor="#4778FF" />
         </modifier>
@@ -95,9 +98,9 @@
             <text-field
                  placeholder="First name"
                  placeholderTextColor="#8D9494"
-                 style="input" />
+                 style="input"
+            />
             <text style="help">Please enter your full name</text>
-          </input>
         </view>
         <view style="FormGroup">
             <text style="label">Filled input field</text>
@@ -117,7 +120,6 @@
                  style="input input--error"
                  value="Milhouse" />
             <text style="help help--error">Name already taken</text>
-          </input>
         </view>
         <view style="FormGroup">
           <text style="label">Horizontal Layout</text>

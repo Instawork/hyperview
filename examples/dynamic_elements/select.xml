@@ -1,0 +1,188 @@
+<doc xmlns="https://instawork.com/hyperview">
+  <screen>
+    <styles>
+      <style alignItems="center"
+             backgroundColor="white"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flexDirection="row"
+             height="72"
+             id="Header"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="24" />
+      <style color="blue"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="16"
+             id="Header__Back"
+             paddingRight="16" />
+      <style color="black"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="24"
+             id="Header__Title" />
+      <style backgroundColor="white"
+             flex="1"
+             id="Body" />
+      <style fontFamily="HKGrotesk-Regular"
+             fontSize="16"
+             id="Description"
+             margin="24"
+             marginBottom="0" />
+      <style alignItems="center"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flex="1"
+             flexDirection="row"
+             height="48"
+             id="Item"
+             justifyContent="space-between"
+             paddingLeft="24"
+             paddingRight="24" />
+      <style fontFamily="HKGrotesk-Regular"
+             fontSize="18"
+             id="Item__Label" />
+      <style fontFamily="HKGrotesk-Bold"
+             fontSize="18"
+             id="Item__Chevron" />
+      <style alignItems="center"
+             backgroundColor="#63CB76"
+             borderRadius="16"
+             flex="1"
+             flexDirection="column"
+             id="Button"
+             justifyContent="center"
+             margin="24"
+             padding="24" />
+      <style color="white"
+             fontFamily="HKGrotesk-Bold"
+             fontSize="24"
+             id="Button__Label" />
+      <style borderColor="#e1e1e1"
+             borderRadius="16"
+             borderWidth="2"
+             id="Container"
+             margin="24"
+             padding="24" />
+      <style color="black"
+             fontFamily="HKGrotesk-Regular"
+             fontSize="16"
+             id="Container__Label" />
+      <style flex="1"
+             id="Main" />
+      <style id="Select"
+             marginTop="24" />
+      <style id="Select__Separator"
+             borderTopWidth="1"
+             borderTopColor="#e1e3e3"
+             marginLeft="24"
+             marginRight="24" />
+      <style id="Select__Option"
+             flex="1"
+             flexDirection="row"
+             alignItems="center"
+             justifyContent="space-between"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingBottom="16"
+             paddingTop="16" />
+      <style id="Select__RadioOuter"
+             width="20"
+             height="20"
+             borderRadius="10"
+             borderWidth="1"
+             borderColor="#bdc4c4">
+        <modifier pressed="true">
+          <style borderColor="#8d9494"
+                 borderWidth="1" />
+        </modifier>
+        <modifier selected="true">
+          <style borderColor="#4778ff"
+                 borderWidth="2" />
+        </modifier>
+      </style>
+      <style id="Select__RadioInner"
+             width="10"
+             height="10"
+             borderRadius="5"
+             opacity="0"
+             marginTop="3"
+             marginLeft="3">
+        <modifier selected="true">
+          <style backgroundColor="#4778ff"
+                 opacity="1" />
+        </modifier>
+      </style>
+      <style id="Select__Label"
+             fontFamily="HKGrotesk-Regular"
+             color="#4e4d4d"
+             fontSize="16"
+             lineHeight="18">
+        <modifier selected="true">
+          <style color="#312f2f" />
+        </modifier>
+        <modifier pressed="true">
+          <style color="#312f2f" />
+        </modifier>
+      </style>
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text action="back"
+              href="#"
+              style="Header__Back">Back</text>
+        <text style="Header__Title">Select</text>
+      </header>
+      <view scroll="1"
+            style="Main">
+        <text style="Description">Selecting an option replaces the contents below the container. Notice that clicking a selected option does nothing, select only triggers when an unselected option is selected.</text>
+        <select-single style="Select"
+                       name="choice">
+          <view style="Select__Separator" />
+          <option style="Select__Option"
+                  value="option1"
+                  trigger="select"
+                  href="#option1Selected"
+                  action="prepend"
+                  target="container">
+            <text style="Select__Label">Option 1</text>
+            <view style="Select__RadioOuter">
+              <view style="Select__RadioInner"></view>
+            </view>
+          </option>
+          <view style="Select__Separator" />
+          <option style="Select__Option"
+                  value="option2"
+                  trigger="select"
+                  href="#option2Selected"
+                  action="prepend"
+                  target="container">
+            <text style="Select__Label">Option 2</text>
+            <view style="Select__RadioOuter">
+              <view style="Select__RadioInner"></view>
+            </view>
+          </option>
+          <view style="Select__Separator" />
+          <option style="Select__Option"
+                  value="option3"
+                  trigger="select"
+                  href="#option3Selected"
+                  action="prepend"
+                  target="container">
+            <text style="Select__Label">Option 3</text>
+            <view style="Select__RadioOuter">
+              <view style="Select__RadioInner"></view>
+            </view>
+          </option>
+          <view style="Select__Separator" />
+        </select-single>
+        <view id="container"
+              style="Container" />
+      </view>
+      <view hide="true">
+        <text id="option1Selected">Option 1 selected</text>
+        <text id="option2Selected">Option 2 selected</text>
+        <text id="option3Selected">Option 3 selected</text>
+      </view>
+    </body>
+  </screen>
+</doc>

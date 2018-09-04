@@ -1,0 +1,42 @@
+<view style="FormGroup"
+      xmlns="https://instawork.com/hyperview">
+  <text style="label">Location Information</text>
+  <select-single style="SelectCustom"
+                 name="parking">
+    <option style="SelectCustom__Option"
+            value="paid_parking">
+      <view style="SelectCustom__ImageWrapper">
+        <image style="SelectCustom__Image SelectCustom__Image--Unselected"
+               source="/forms/unselected.png" />
+        <image style="SelectCustom__Image SelectCustom__Image--Selected"
+               source="/forms/selected.png" />
+      </view>
+      <text style="SelectCustom__Label">Paid parking</text>
+    </option>
+    <option style="SelectCustom__Option"
+            value="free_parking"
+            selected="true">
+      <view style="SelectCustom__ImageWrapper">
+        <image style="SelectCustom__Image SelectCustom__Image--Unselected"
+               source="/forms/unselected.png" />
+        <image style="SelectCustom__Image SelectCustom__Image--Selected"
+               source="/forms/selected.png" />
+      </view>
+      <text style="SelectCustom__Label">Free parking</text>
+    </option>
+    <option style="SelectCustom__Option"
+            value="unknown_parking">
+      <view style="SelectCustom__ImageWrapper">
+        <image style="SelectCustom__Image SelectCustom__Image--Unselected"
+               source="/forms/unselected.png" />
+        <image style="SelectCustom__Image SelectCustom__Image--Selected"
+               source="/forms/selected.png" />
+      </view>
+      <text style="SelectCustom__Label">Unknown</text>
+    </option>
+  </select-single>
+  <text-area placeholder="Any extra instructions?"
+             placeholderTextColor="#8D9494"
+             style="input"
+             name="location_instructions" />
+</view>
