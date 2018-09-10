@@ -143,7 +143,7 @@
                   trigger="select"
                   href="#option1Selected"
                   action="prepend"
-                  target="container">
+                  target="container1">
             <text style="Select__Label">Option 1</text>
             <view style="Select__RadioOuter">
               <view style="Select__RadioInner"></view>
@@ -155,7 +155,7 @@
                   trigger="select"
                   href="#option2Selected"
                   action="prepend"
-                  target="container">
+                  target="container1">
             <text style="Select__Label">Option 2</text>
             <view style="Select__RadioOuter">
               <view style="Select__RadioInner"></view>
@@ -167,7 +167,7 @@
                   trigger="select"
                   href="#option3Selected"
                   action="prepend"
-                  target="container">
+                  target="container1">
             <text style="Select__Label">Option 3</text>
             <view style="Select__RadioOuter">
               <view style="Select__RadioInner"></view>
@@ -175,8 +175,55 @@
           </option>
           <view style="Select__Separator" />
         </select-single>
-        <view id="container"
+        <view id="container1"
               style="Container" />
+
+
+        <text style="Description">Selecting an option replaces the contents below the container.</text>
+        <select-multiple style="Select"
+                       name="choice">
+          <view style="Select__Separator" />
+          <option style="Select__Option"
+                  value="option1"
+                  trigger="select"
+                  href="#option1Selected"
+                  action="prepend"
+                  target="container2">
+            <text style="Select__Label">Option 1</text>
+            <view style="Select__RadioOuter">
+              <view style="Select__RadioInner"></view>
+            </view>
+          </option>
+          <view style="Select__Separator" />
+          <option style="Select__Option"
+                  value="option2"
+                  trigger="select"
+                  href="#option2Selected"
+                  action="prepend"
+                  target="container2">
+            <text style="Select__Label">Option 2</text>
+            <view style="Select__RadioOuter">
+              <view style="Select__RadioInner"></view>
+            </view>
+          </option>
+          <view style="Select__Separator" />
+          <option style="Select__Option"
+                  value="option3"
+                  trigger="select"
+                  href="#option3Selected"
+                  action="prepend"
+                  target="container2">
+            <text style="Select__Label">Option 3</text>
+            <view style="Select__RadioOuter">
+              <view style="Select__RadioInner"></view>
+            </view>
+          </option>
+          <view style="Select__Separator" />
+        </select-multiple>
+        <view id="container2"
+              style="Container" />
+
+
       </view>
       <view hide="true">
         <text id="option1Selected">Option 1 selected</text>

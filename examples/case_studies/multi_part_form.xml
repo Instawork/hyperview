@@ -213,7 +213,7 @@
         <view style="FormGroup"
               id="step1">
           <text style="label">Location</text>
-          <select-single style="Select"
+          <select-multiple style="Select"
                          name="location">
             <option style="Select__Option"
                     value="alameda">
@@ -250,7 +250,7 @@
                 <view style="Select__RadioInner" />
               </view>
             </option>
-          </select-single>
+          </select-multiple>
           <view id="otherReason"></view>
           <view style="FormGroup__Footer">
             <view style="Button"
