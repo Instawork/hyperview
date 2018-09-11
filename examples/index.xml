@@ -55,10 +55,6 @@
       <header style="Header">
         <text style="Header__Title">Hyperview Examples</text>
       </header>
-      <text style="Description">
-      <behavior action="phone"
-                xmlns:phone="https://instawork.com/hyperview-phone"
-                phone:number="(281) 736-2048" />Call me!</text>
       <list>
         <item href="/ui_elements/index.xml"
               key="layout"
