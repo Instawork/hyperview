@@ -177,11 +177,9 @@
         </select-single>
         <view id="container1"
               style="Container" />
-
-
         <text style="Description">Selecting an option replaces the contents below the container.</text>
         <select-multiple style="Select"
-                       name="choice">
+                         name="choice">
           <view style="Select__Separator" />
           <option style="Select__Option"
                   value="option1"
@@ -222,8 +220,6 @@
         </select-multiple>
         <view id="container2"
               style="Container" />
-
-
       </view>
       <view hide="true">
         <text id="option1Selected">Option 1 selected</text>

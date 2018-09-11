@@ -214,7 +214,7 @@
               id="step1">
           <text style="label">Location</text>
           <select-multiple style="Select"
-                         name="location">
+                           name="location">
             <option style="Select__Option"
                     value="alameda">
               <behavior trigger="select"
