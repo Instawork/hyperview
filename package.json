@@ -14,7 +14,7 @@
     "android": "react-native-scripts android",
     "ios": "react-native-scripts ios",
     "test": "jest",
-    "demo": "http-server -c-1 ./examples",
+    "demo": "http-server -c-1 -p 8085 ./examples",
     "lint": "tidy -xml -m --wrap 4000 --indent-attributes y --indent n -i examples/*.xml examples/**/*.xml"
   },
   "jest": {

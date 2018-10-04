@@ -124,6 +124,15 @@
           </view>
           <text style="Item__Chevron">&gt;</text>
         </item>
+        <item href="http://localhost:8080/worker_app/gigs/shifts/mqMzLo8/feedback"
+              key="worker_app"
+              show-during-load="loadingScreen"
+              style="Item">
+          <view style="Item__Left">
+            <text style="Item__Label">Worker App</text>
+          </view>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
       </list>
     </body>
   </screen>
