@@ -1,4 +1,0 @@
-<view xmlns="https://instawork.com/hyperview"
-      style="Button">
-  <text style="Button__Label">Replaced!</text>
-</view>
