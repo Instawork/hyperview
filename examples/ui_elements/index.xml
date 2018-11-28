@@ -1,0 +1,148 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style alignItems="center"
+             backgroundColor="white"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flexDirection="row"
+             height="72"
+             id="Header"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="24" />
+      <style color="blue"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="16"
+             id="Header__Back"
+             paddingRight="16" />
+      <style color="black"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="24"
+             id="Header__Title" />
+      <style backgroundColor="white"
+             flex="1"
+             id="Body" />
+      <style borderColor="red"
+             borderRadius="4"
+             borderWidth="2"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="16"
+             id="Description"
+             margin="24"
+             padding="16" />
+      <style alignItems="center"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flex="1"
+             flexDirection="row"
+             height="48"
+             id="Item"
+             justifyContent="space-between"
+             paddingLeft="24"
+             paddingRight="24" />
+      <style fontFamily="HKGrotesk-Regular"
+             fontSize="18"
+             id="Item__Label" />
+      <style fontFamily="HKGrotesk-Bold"
+             fontSize="18"
+             id="Item__Chevron" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text action="back"
+              href="#"
+              style="Header__Back">Back</text>
+        <text style="Header__Title">UI Elements</text>
+      </header>
+      <list>
+        <item href="/ui_elements/view.xml"
+              key="view"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">View</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/ui_elements/scroll_view.xml"
+              key="scroll-view"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Scroll Views</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/ui_elements/text.xml"
+              key="text"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Text</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/ui_elements/image.xml"
+              key="image"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Image</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/ui_elements/list/index.xml"
+              key="list"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">List</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/ui_elements/sectionlist/index.xml"
+              key="sectionlist"
+              show-during-load="loadingScreen"
+              style="Item">
+          <view style="Item__Left">
+            <text style="Item__Label">Section List</text>
+          </view>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/ui_elements/forms/index.xml"
+              key="forms"
+              show-during-load="loadingScreen"
+              style="Item">
+          <view style="Item__Left">
+            <text style="Item__Label">Forms</text>
+          </view>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+      </list>
+    </body>
+  </screen>
+  <screen id="loadingScreen">
+    <styles>
+      <style alignItems="center"
+             backgroundColor="white"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flexDirection="row"
+             height="72"
+             id="Header"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="24" />
+      <style color="blue"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="16"
+             id="Header__Back"
+             paddingRight="16" />
+      <style color="black"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="24"
+             id="Header__Title" />
+      <style backgroundColor="white"
+             flex="1"
+             id="Body" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text action="back"
+              href="#"
+              style="Header__Back">Back</text>
+      </header>
+    </body>
+  </screen>
+</doc>

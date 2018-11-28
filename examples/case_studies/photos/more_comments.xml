@@ -1,0 +1,14 @@
+<view xmlns="https://hyperview.org/hyperview">
+ <view style="Comment">
+    <text style="Comment__Author" href="/case_studies/photos/user.xml">data</text>
+    <text style="Comment__Content">love it!</text>
+  </view>
+  <view style="Comment">
+    <text style="Comment__Author" href="/case_studies/photos/user.xml">geordi</text>
+    <text style="Comment__Content">Ahhhh wish I was there...</text>
+  </view>
+  <view style="Comment">
+    <text style="Comment__Author" href="/case_studies/photos/user.xml">jean.luc.p</text>
+    <text style="Comment__Content">Engage!</text>
+  </view>
+</view>

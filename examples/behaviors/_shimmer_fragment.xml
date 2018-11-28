@@ -1,0 +1,6 @@
+<view xmlns="https://hyperview.org/hyperview"
+      style="Container__Element">
+  <image source="/ui_elements/image.jpg"
+         style="Container__Image" />
+  <text style="Container__Label">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut</text>
+</view>

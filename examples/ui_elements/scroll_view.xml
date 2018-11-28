@@ -1,0 +1,119 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style alignItems="center"
+             backgroundColor="white"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flexDirection="row"
+             height="72"
+             id="Header"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="24" />
+      <style color="blue"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="16"
+             id="Header__Back"
+             paddingRight="16" />
+      <style color="black"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="24"
+             id="Header__Title" />
+      <style backgroundColor="white"
+             flex="1"
+             id="Body" />
+      <style fontFamily="HKGrotesk-Regular"
+             fontSize="16"
+             id="Description"
+             margin="24"
+             marginBottom="0" />
+      <style alignItems="center"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flex="1"
+             flexDirection="row"
+             height="48"
+             id="Item"
+             justifyContent="space-between"
+             paddingLeft="24"
+             paddingRight="24" />
+      <style fontFamily="HKGrotesk-Regular"
+             fontSize="18"
+             id="Item__Label" />
+      <style fontFamily="HKGrotesk-Bold"
+             fontSize="18"
+             id="Item__Chevron" />
+      <style borderColor="#e1e1e1"
+             borderWidth="1"
+             flex="1"
+             id="Border"
+             margin="24"
+             padding="8" />
+      <style flex="1"
+             id="Main" />
+
+      <style id="ScrollContainer"
+        margin="24"
+        height="200"
+        borderWidth="1"
+        height="160"
+        borderColor="#e1e1e1"
+        borderRadius="16"
+      />
+
+      <style id="ScrollContainer--Vertical"
+        flexDirection="column"
+      />
+
+      <style id="ScrollContainer--Horizontal"
+        flexDirection="row"
+      />
+
+      <style backgroundColor="#63CB76"
+             borderRadius="16"
+             height="40"
+             margin="8"
+             id="ScrollChild" />
+
+      <style 
+             height="40"
+             id="ScrollChild--Vertical" />
+
+      <style 
+             width="40"
+             id="ScrollChild--Horizontal" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text action="back"
+              href="#"
+              style="Header__Back">Back</text>
+        <text style="Header__Title">Scroll Views</text>
+      </header>
+      <view>
+        <text style="Description">Vertical Scroll</text>
+        <view scroll="true" style="ScrollContainer ScrollContainer--Vertical">
+          <view style="ScrollChild ScrollChild--Vertical" />
+          <view style="ScrollChild ScrollChild--Vertical" />
+          <view style="ScrollChild ScrollChild--Vertical" />
+          <view style="ScrollChild ScrollChild--Vertical" />
+          <view style="ScrollChild ScrollChild--Vertical" />
+          <view style="ScrollChild ScrollChild--Vertical" />
+        </view>
+
+        <text style="Description">Horizontal Scroll</text>
+        <view scroll="true" scroll-orientation="horizontal" style="ScrollContainer ScrollContainer--Horizontal">
+          <view style="ScrollChild ScrollChild--Horizontal" />
+          <view style="ScrollChild ScrollChild--Horizontal" />
+          <view style="ScrollChild ScrollChild--Horizontal" />
+          <view style="ScrollChild ScrollChild--Horizontal" />
+          <view style="ScrollChild ScrollChild--Horizontal" />
+          <view style="ScrollChild ScrollChild--Horizontal" />
+          <view style="ScrollChild ScrollChild--Horizontal" />
+        </view>
+
+      </view>
+    </body>
+  </screen>
+</doc>

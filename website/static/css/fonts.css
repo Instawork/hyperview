@@ -1,0 +1,114 @@
+@font-face {
+  font-family: 'Hkgrotesk';
+  src: url("/fonts/HKGrotesk-Light.otf") format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Hkgrotesk';
+  src: url("/fonts/HKGrotesk-LightItalic.otf") format('opentype');
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Hkgrotesk';
+  src: url("/fonts/HKGrotesk-Regular.otf") format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Hkgrotesk';
+  src: url("/fonts/HKGrotesk-Italic.otf") format('opentype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Hkgrotesk';
+  src: url("/fonts/HKGrotesk-MediumItalic.otf") format('opentype');
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Hkgrotesk';
+  src: url("/fonts/HKGrotesk-Medium.otf") format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Hkgrotesk';
+  src: url("/fonts/HKGrotesk-SemiBoldItalic.otf") format('opentype');
+  font-weight: 600;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Hkgrotesk';
+  src: url("/fonts/HKGrotesk-SemiBold.otf") format('opentype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Hkgrotesk';
+  src: url("/fonts/HKGrotesk-Bold.otf") format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Hkgrotesk';
+  src: url("/fonts/HKGrotesk-BoldItalic.otf") format('opentype');
+  font-weight: 700;
+  font-style: italic;
+}
+
+body {
+  font-family: 'Hkgrotesk';
+}
+
+h0 {
+  font-weight: bold;
+  font-size: 56px;
+  line-height: 72px;
+  color: #4E4D4D;
+}
+
+h1 {
+  font-weight: bold;
+  font-size: 48px;
+  line-height: 56px;
+  color: #4E4D4D;
+}
+
+h2 {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: 48px;
+  color: #4E4D4D;
+}
+
+h3 {
+  font-weight: bold;
+  font-size: 32px;
+  line-height: 40px;
+  color: #4E4D4D;
+}
+
+h4 {
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 32px;
+  color: #4E4D4D;
+}
+
+p {
+  font-size: 16px;
+  line-height: 24px;
+  color: #4E4D4D;
+}

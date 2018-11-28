@@ -1,0 +1,8 @@
+<form id="myForm" xmlns="https://hyperview.org/hyperview">
+  <view style="FormGroup">
+    <text style="Label">Label line</text>
+    <text-field name="data" value="" style="Input Input--Error" placeholder="Placeholder" placeholderTextColor="#8D9494" />
+    <text style="Help Help--Error">This input is required.</text>
+  </view>
+  <text style="Submit" href="/case_studies/basic_form/submit2.xml" target="myForm" action="replace" show-during-load="mySpinner" delay="500">Submit</text>
+</form>

@@ -1,0 +1,50 @@
+// @flow
+
+import * as Namespaces from 'hyperview/src/services/namespaces';
+import * as Render from 'hyperview/src/services/render';
+import React, { PureComponent } from 'react';
+import { LOCAL_NAME } from 'hyperview/src/types';
+import type { Props } from './types';
+import { View } from 'react-native';
+import { createProps } from 'hyperview/src/services';
+
+export default class HvSelectSingle extends PureComponent<Props> {
+  static namespaceURI = Namespaces.HYPERVIEW;
+  static localName = LOCAL_NAME.SELECT_SINGLE;
+  constructor(props: Props) {
+    super(props);
+    this.onSelect = this.onSelect.bind(this);
+  }
+
+  /**
+   * Callback passed to children. Option components invoke this callback when selected.
+   * SingleSelect will update the XML DOM so that only the selected option is has a
+   * selected=true attribute.
+   */
+  onSelect = (selectedValue: string) => {
+    const { element, onUpdate } = this.props;
+    const newElement = element.cloneNode(true);
+    const options = newElement.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'option');
+    for (let i = 0; i < options.length; i += 1) {
+      const opt = options.item(i);
+      const value = opt.getAttribute('value');
+      opt.setAttribute('selected', value === selectedValue ? 'true' : 'false');
+    }
+    onUpdate('#', 'swap', element, { newElement });
+  }
+
+  render() {
+    const { element, stylesheets, animations, onUpdate, options } = this.props;
+    if (element.getAttribute('hide') === 'true') {
+      return null;
+    }
+    const props = createProps(element, stylesheets, animations, { ...options });
+    return React.createElement(
+      View,
+      props,
+      ...Render.renderChildren(
+        element, stylesheets, animations, onUpdate, { ...options, onSelect: this.onSelect },
+      ),
+    );
+  }
+}

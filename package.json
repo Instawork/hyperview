@@ -1,0 +1,55 @@
+{
+  "name": "hyperview",
+  "version": "0.5.0",
+  "private": true,
+  "main": "./App.js",
+  "scripts": {
+    "generate": "babel-node ./scripts/generate",
+    "storybook": "storybook start -p 7007",
+    "test:flow": "flow",
+    "test:lint": "eslint .",
+    "test:render": "jest test/render.test.js --forceExit",
+    "test:unit": "jest --testPathPattern src",
+    "test:xmlserver": "http-server -c-1 -p 8085 ./examples",
+    "test": "yarn test:flow && yarn test:lint && yarn test:render && yarn test:unit"
+  },
+  "dependencies": {
+    "url-parse": "1.4.3",
+    "xmldom": "0.1.27"
+  },
+  "peerDependencies": {
+    "react": "16.2.0",
+    "react-native": "0.52.2",
+    "react-native-keyboard-aware-scrollview": "2.0.0",
+    "react-navigation": "1.0.0-beta.11"
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "3.3.15",
+    "@storybook/addon-storyshots": "3.3.15",
+    "@storybook/react-native": "3.3.15",
+    "babel-cli": "6.26.0",
+    "babel-eslint": "8.2.1",
+    "babel-plugin-module-resolver": "3.0.0",
+    "babel-preset-react-native": "4.0.0",
+    "eslint-plugin-instawork": "0.0.2",
+    "eslint": "4.17.0",
+    "flow-bin": "0.61.0",
+    "glob": "7.1.2",
+    "http-server": "0.11.1",
+    "humps": "2.0.1",
+    "jest": "23.1.0",
+    "mkdirp": "0.5.1",
+    "react-dom": "16.2.1",
+    "react-native-keyboard-aware-scrollview": "2.0.0",
+    "react-native": "0.52.2",
+    "react-navigation": "1.0.0-beta.11",
+    "react-test-renderer": "16.3.1",
+    "react": "16.2.0"
+  },
+  "jest": {
+    "preset": "react-native",
+    "moduleNameMapper": {
+      "\\.(png|jpg|jpeg|ttf|mp4|mov)$": "<rootDir>/test/assets-transformer.js"
+    }
+  }
+}

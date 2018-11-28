@@ -1,0 +1,105 @@
+<doc xmlns="https://hyperview.org/hyperview"
+     xmlns:ns1="https://instawork.com/hyperview-amplitude">
+  <screen>
+    <styles>
+      <style alignItems="center"
+             backgroundColor="white"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flexDirection="row"
+             height="72"
+             id="Header"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="24" />
+      <style color="blue"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="16"
+             id="Header__Back"
+             paddingRight="16" />
+      <style color="black"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="24"
+             id="Header__Title" />
+      <style backgroundColor="white"
+             flex="1"
+             id="Body" />
+      <style fontFamily="HKGrotesk-SemiBold"
+             fontSize="16"
+             id="Description"
+             margin="24" />
+      <style backgroundColor="#63CB76"
+             borderRadius="16"
+             flex="1"
+             flexDirection="row"
+             id="Button"
+             justifyContent="center"
+             margin="24"
+             padding="24" />
+      <style color="white"
+             fontFamily="HKGrotesk-Bold"
+             fontSize="24"
+             id="Button__Label" />
+      <style flex="1"
+             id="Main" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text action="back"
+              href="#"
+              style="Header__Back">Back</text>
+        <text style="Header__Title">Custom: Amplitude</text>
+      </header>
+      <view scroll="true"
+            style="Main">
+        <text style="Description">Examples of using custom behaviors to log Amplitude Events. Note that logging Amplitude events will not cause any visible change. If you run this code with the remote debugger, you should see log statements in the console.</text>
+        <view style="Button">
+          <behavior action="amplitude"
+                    trigger="press"
+                    ns1:event="hyperview-demo/log-event-button/press" />
+          <text style="Button__Label">Log Event</text>
+        </view>
+        <view style="Button">
+          <behavior action="amplitude"
+                    trigger="press"
+                    ns1:event="hyperview-demo/log-event-with-props-button/press"
+                    ns1:event-props="{&quot;id&quot;:123}" />
+          <text style="Button__Label">Log Event with Props</text>
+        </view>
+      </view>
+    </body>
+  </screen>
+  <screen id="loadingScreen">
+    <styles>
+      <style alignItems="center"
+             backgroundColor="white"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flexDirection="row"
+             height="72"
+             id="Header"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="24" />
+      <style color="blue"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="16"
+             id="Header__Back"
+             paddingRight="16" />
+      <style color="black"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="24"
+             id="Header__Title" />
+      <style backgroundColor="white"
+             flex="1"
+             id="Body" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text action="back"
+              href="#"
+              style="Header__Back">Back</text>
+      </header>
+    </body>
+  </screen>
+</doc>

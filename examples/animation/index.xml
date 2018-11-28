@@ -1,0 +1,139 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style alignItems="center"
+             backgroundColor="white"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flexDirection="row"
+             height="72"
+             id="Header"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="24" />
+      <style color="blue"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="16"
+             id="Header__Back"
+             paddingRight="16" />
+      <style color="black"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="24"
+             id="Header__Title" />
+      <style backgroundColor="white"
+             flex="1"
+             id="Body" />
+      <style borderColor="red"
+             borderRadius="4"
+             borderWidth="2"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="16"
+             id="Description"
+             margin="24"
+             padding="16" />
+      <style alignItems="center"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flex="1"
+             flexDirection="row"
+             height="48"
+             id="Item"
+             justifyContent="space-between"
+             paddingLeft="24"
+             paddingRight="24" />
+      <style fontFamily="HKGrotesk-Regular"
+             fontSize="18"
+             id="Item__Label" />
+      <style fontFamily="HKGrotesk-Bold"
+             fontSize="18"
+             id="Item__Chevron" />
+      <style flex="1"
+             id="Main" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text action="back"
+              href="#"
+              style="Header__Back">Back</text>
+        <text style="Header__Title">Animation</text>
+      </header>
+      <list>
+        <item href="/animation/timing.xml"
+              key="timing"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Timing</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/animation/easing.xml"
+              key="easing"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Easing</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/animation/sequence.xml"
+              key="sequence"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Sequence</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/animation/parallel.xml"
+              key="parallel"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Parallel</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/animation/delay.xml"
+              key="delay"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Delay</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/animation/combination.xml"
+              key="combination"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Combination</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+      </list>
+    </body>
+  </screen>
+  <screen id="loadingScreen">
+    <styles>
+      <style alignItems="center"
+             backgroundColor="white"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flexDirection="row"
+             height="72"
+             id="Header"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="24" />
+      <style color="blue"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="16"
+             id="Header__Back"
+             paddingRight="16" />
+      <style color="black"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="24"
+             id="Header__Title" />
+      <style backgroundColor="white"
+             flex="1"
+             id="Body" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text action="back"
+              href="#"
+              style="Header__Back">Back</text>
+      </header>
+    </body>
+  </screen>
+</doc>

@@ -1,0 +1,67 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style id="Body"
+        backgroundColor="white"
+        flex="1"
+      />
+      <style id="Select__Option"
+        flex="1"
+        flexDirection="row"
+        alignItems="center"
+        justifyContent="space-between"
+        paddingLeft="24"
+        paddingRight="24"
+        paddingBottom="16"
+        paddingTop="16"
+      />
+      <style id="Select__RadioOuter"
+        width="20"
+        height="20"
+        borderRadius="10"
+        borderWidth="1"
+        borderColor="#bdc4c4"
+      >
+        <modifier pressed="true">
+          <style borderColor="#8d9494" borderWidth="1" />
+        </modifier>
+        <modifier selected="true">
+          <style borderColor="#4778ff" borderWidth="2" />
+        </modifier>
+      </style>
+
+      <style id="Select__RadioInner"
+        width="10"
+        height="10"
+        borderRadius="5"
+        opacity="0"
+        marginTop="3"
+        marginLeft="3"
+      >
+        <modifier selected="true">
+          <style backgroundColor="#4778ff" opacity="1" />
+        </modifier>
+      </style>
+
+      <style id="Select__Label"
+        fontFamily="HKGrotesk-Regular"
+        color="#4e4d4d"
+        fontSize="16"
+        lineHeight="18"
+      >
+        <modifier selected="true">
+          <style color="#312f2f" />
+        </modifier>
+        <modifier pressed="true">
+          <style color="#312f2f" />
+        </modifier>
+      </style>
+    </styles>
+    <body style="Body">
+      <option style="Select__Option" value="paid_parking" selected="true">
+        <text style="Select__Label">Paid parking</text>
+        <view style="Select__RadioOuter"><view style="Select__RadioInner"></view></view>
+      </option>
+    </body>
+  </screen>
+</doc>

@@ -1,0 +1,134 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style alignItems="center"
+             backgroundColor="white"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flexDirection="row"
+             height="72"
+             id="Header"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="24" />
+      <style color="blue"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="16"
+             id="Header__Back"
+             paddingRight="16" />
+      <style color="black"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="24"
+             id="Header__Title" />
+      <style backgroundColor="white"
+             flex="1"
+             id="Body" />
+      <style fontFamily="HKGrotesk-Regular"
+             fontSize="16"
+             id="Description"
+             margin="24"
+             marginBottom="0" />
+      <style alignItems="center"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flex="1"
+             flexDirection="row"
+             height="48"
+             id="Item"
+             justifyContent="space-between"
+             paddingLeft="24"
+             paddingRight="24" />
+      <style fontFamily="HKGrotesk-Regular"
+             fontSize="18"
+             id="Item__Label" />
+      <style fontFamily="HKGrotesk-Bold"
+             fontSize="18"
+             id="Item__Chevron" />
+      <style backgroundColor="#63CB76"
+             borderRadius="16"
+             flex="1"
+             flexDirection="row"
+             id="Button"
+             justifyContent="center"
+             margin="24"
+             padding="24" />
+      <style color="white"
+             fontFamily="HKGrotesk-Bold"
+             fontSize="24"
+             id="Button__Label" />
+      <style flex="1"
+             id="Main" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text action="back"
+              href="#"
+              style="Header__Back">Back</text>
+        <text style="Header__Title">Navigate</text>
+      </header>
+      <view scroll="true"
+            style="Main">
+        <text style="Description">Tapping the button below will request an XML screen and push it onto the stack.</text>
+        <view action="navigate"
+              href="/index.xml"
+              style="Button">
+          <text style="Button__Label">Navigate to home</text>
+        </view>
+        <view action="navigate"
+              delay="1000"
+              href="/navigation/pushed.xml"
+              show-during-load="loadingScreen"
+              style="Button">
+          <text style="Button__Label">Navigate with indicator</text>
+        </view>
+      </view>
+    </body>
+  </screen>
+  <screen id="loadingScreen">
+    <styles>
+      <style alignItems="center"
+             backgroundColor="white"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flexDirection="row"
+             height="72"
+             id="Header"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="24" />
+      <style color="blue"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="16"
+             id="Header__Back"
+             paddingRight="16" />
+      <style color="black"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="24"
+             id="Header__Title" />
+      <style backgroundColor="white"
+             flex="1"
+             id="Body" />
+      <style fontFamily="HKGrotesk-Regular"
+             fontSize="16"
+             id="Description"
+             margin="24"
+             marginBottom="0" />
+      <style alignItems="center"
+             flex="1"
+             id="Loading"
+             justifyContent="center" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text action="back"
+              href="#"
+              style="Header__Back">Back</text>
+        <text style="Header__Title">Loading...</text>
+      </header>
+      <view style="Loading">
+        <text style="Description">Custom loading screen...</text>
+        <spinner />
+      </view>
+    </body>
+  </screen>
+</doc>

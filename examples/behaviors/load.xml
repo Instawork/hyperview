@@ -1,0 +1,108 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style alignItems="center"
+             backgroundColor="white"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flexDirection="row"
+             height="72"
+             id="Header"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="24" />
+      <style color="blue"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="16"
+             id="Header__Back"
+             paddingRight="16" />
+      <style color="black"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="24"
+             id="Header__Title" />
+      <style backgroundColor="white"
+             flex="1"
+             id="Body" />
+      <style fontFamily="HKGrotesk-Regular"
+             fontSize="16"
+             id="Description"
+             margin="24"
+             marginBottom="0" />
+      <style alignItems="center"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flex="1"
+             flexDirection="row"
+             height="48"
+             id="Item"
+             justifyContent="space-between"
+             paddingLeft="24"
+             paddingRight="24" />
+      <style fontFamily="HKGrotesk-Regular"
+             fontSize="18"
+             id="Item__Label" />
+      <style fontFamily="HKGrotesk-Bold"
+             fontSize="18"
+             id="Item__Chevron" />
+      <style alignItems="center"
+             backgroundColor="#63CB76"
+             borderRadius="16"
+             flex="1"
+             flexDirection="column"
+             id="Button"
+             justifyContent="center"
+             margin="24"
+             padding="24" />
+      <style color="white"
+             fontFamily="HKGrotesk-Bold"
+             fontSize="24"
+             id="Button__Label" />
+      <style borderColor="#e1e1e1"
+             borderRadius="16"
+             borderWidth="2"
+             id="Container"
+             margin="24"
+             padding="24" />
+      <style color="black"
+             fontFamily="HKGrotesk-Regular"
+             fontSize="16"
+             id="Container__Label" />
+      <style flex="1"
+             id="Main" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text action="back"
+              href="#"
+              style="Header__Back">Back</text>
+        <text style="Header__Title">Load</text>
+      </header>
+      <view scroll="1"
+            style="Main">
+        <text style="Description">A hidden view below will automatically trigger a request and load the content into the container.</text>
+        <view action="replace"
+              delay="300"
+              href="/behaviors/_target_sibling_fragment.xml"
+              show-during-load="myIndicator"
+              target="container"
+              trigger="load">
+          <text style="Button__Label">Auto</text>
+        </view>
+        <spinner hide="true"
+                 id="myIndicator" />
+        <view id="container"
+              style="Container" />
+        <text style="Description">Pressing the button below will request and load a fragment that navigates back on load. This can be used when submitting forms that should dismiss a modal.</text>
+        <view action="replace"
+              delay="300"
+              href="/behaviors/_load_navigate_back.xml"
+              show-during-load="saving"
+              style="Button">
+          <text style="Button__Label">Press me</text>
+        </view>
+        <spinner hide="true"
+                 id="saving" />
+      </view>
+    </body>
+  </screen>
+</doc>

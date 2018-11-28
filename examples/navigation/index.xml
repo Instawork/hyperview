@@ -1,0 +1,93 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style alignItems="center"
+             backgroundColor="white"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flexDirection="row"
+             height="72"
+             id="Header"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="24" />
+      <style color="blue"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="16"
+             id="Header__Back"
+             paddingRight="16" />
+      <style color="black"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="24"
+             id="Header__Title" />
+      <style backgroundColor="white"
+             flex="1"
+             id="Body" />
+      <style borderColor="red"
+             borderRadius="4"
+             borderWidth="2"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="16"
+             id="Description"
+             margin="24"
+             padding="16" />
+      <style alignItems="center"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flex="1"
+             flexDirection="row"
+             height="48"
+             id="Item"
+             justifyContent="space-between"
+             paddingLeft="24"
+             paddingRight="24" />
+      <style fontFamily="HKGrotesk-Regular"
+             fontSize="18"
+             id="Item__Label" />
+      <style fontFamily="HKGrotesk-Bold"
+             fontSize="18"
+             id="Item__Chevron" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text action="back"
+              href="#"
+              style="Header__Back">Back</text>
+        <text style="Header__Title">Navigation</text>
+      </header>
+      <list>
+        <item href="/navigation/push.xml"
+              key="push"
+              style="Item">
+          <text style="Item__Label">Push</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/navigation/new.xml"
+              key="new"
+              style="Item">
+          <text style="Item__Label">New</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/navigation/back.xml"
+              key="back"
+              style="Item">
+          <text style="Item__Label">Back</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/navigation/close.xml"
+              action="new"
+              key="close"
+              style="Item">
+          <text style="Item__Label">Close</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/navigation/navigate.xml"
+              key="navigate"
+              style="Item">
+          <text style="Item__Label">Navigate</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+      </list>
+    </body>
+  </screen>
+</doc>

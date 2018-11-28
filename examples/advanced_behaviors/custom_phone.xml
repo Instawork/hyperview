@@ -1,0 +1,65 @@
+<doc xmlns="https://hyperview.org/hyperview"
+     xmlns:ns1="https://instawork.com/hyperview-phone">
+  <screen>
+    <styles>
+      <style alignItems="center"
+             backgroundColor="white"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flexDirection="row"
+             height="72"
+             id="Header"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="24" />
+      <style color="blue"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="16"
+             id="Header__Back"
+             paddingRight="16" />
+      <style color="black"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="24"
+             id="Header__Title" />
+      <style backgroundColor="white"
+             flex="1"
+             id="Body" />
+      <style fontFamily="HKGrotesk-SemiBold"
+             fontSize="16"
+             id="Description"
+             margin="24" />
+      <style backgroundColor="#63CB76"
+             borderRadius="16"
+             flex="1"
+             flexDirection="row"
+             id="Button"
+             justifyContent="center"
+             margin="24"
+             padding="24" />
+      <style color="white"
+             fontFamily="HKGrotesk-Bold"
+             fontSize="24"
+             id="Button__Label" />
+      <style flex="1"
+             id="Main" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text action="back"
+              href="#"
+              style="Header__Back">Back</text>
+        <text style="Header__Title">Custom: Phone</text>
+      </header>
+      <view scroll="true"
+            style="Main">
+        <text style="Description">Examples of using custom behaviors to trigger phone actions. Note that these will be no-ops in the simulator.</text>
+        <view style="Button">
+          <behavior action="phone"
+                    trigger="press"
+                    ns1:number="(555) 555-5555" />
+          <text style="Button__Label">Call</text>
+        </view>
+      </view>
+    </body>
+  </screen>
+</doc>

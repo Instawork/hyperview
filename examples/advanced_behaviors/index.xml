@@ -1,0 +1,151 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style alignItems="center"
+             backgroundColor="white"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flexDirection="row"
+             height="72"
+             id="Header"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="24" />
+      <style color="blue"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="16"
+             id="Header__Back"
+             paddingRight="16" />
+      <style color="black"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="24"
+             id="Header__Title" />
+      <style backgroundColor="white"
+             flex="1"
+             id="Body" />
+      <style borderColor="red"
+             borderRadius="4"
+             borderWidth="2"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="16"
+             id="Description"
+             margin="24"
+             padding="16" />
+      <style alignItems="center"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flex="1"
+             flexDirection="row"
+             height="48"
+             id="Item"
+             justifyContent="space-between"
+             paddingLeft="24"
+             paddingRight="24" />
+      <style fontFamily="HKGrotesk-Regular"
+             fontSize="18"
+             id="Item__Label" />
+      <style fontFamily="HKGrotesk-Bold"
+             fontSize="18"
+             id="Item__Chevron" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text action="back"
+              href="#"
+              style="Header__Back">Back</text>
+        <text style="Header__Title">Advanced Behaviors</text>
+      </header>
+      <list>
+        <item href="/advanced_behaviors/multiple.xml"
+              key="multiple"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Multiple Different Behaviors</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/advanced_behaviors/multiple_same.xml"
+              key="multiple_same"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Multiple Same Behaviors</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/advanced_behaviors/custom_toast.xml"
+              key="custom_toast"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Custom: Toast</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/advanced_behaviors/custom_web.xml"
+              key="custom_web"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Custom: Web</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/advanced_behaviors/custom_intercom.xml"
+              key="custom_intercom"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Custom: Intercom</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/advanced_behaviors/custom_amplitude.xml"
+              key="custom_amplitude"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Custom: Amplitude</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/advanced_behaviors/custom_phone.xml"
+              key="custom_phone"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Custom: Phone</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/advanced_behaviors/custom_share.xml"
+              key="custom_share"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Custom: Share</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+      </list>
+    </body>
+  </screen>
+  <screen id="loadingScreen">
+    <styles>
+      <style alignItems="center"
+             backgroundColor="white"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flexDirection="row"
+             height="72"
+             id="Header"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="24" />
+      <style color="blue"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="16"
+             id="Header__Back"
+             paddingRight="16" />
+      <style color="black"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="24"
+             id="Header__Title" />
+      <style backgroundColor="white"
+             flex="1"
+             id="Body" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text action="back"
+              href="#"
+              style="Header__Back">Back</text>
+      </header>
+    </body>
+  </screen>
+</doc>
