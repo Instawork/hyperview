@@ -1,0 +1,16 @@
+version: 2
+
+jobs:
+  test:
+    docker:
+      - image: circleci/node:8.7
+    steps:
+      - checkout
+      - yarn generate ci
+      - yarn test
+
+workflows:
+  version: 2
+  test-pr:
+    jobs:
+      - test
