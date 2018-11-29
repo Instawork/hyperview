@@ -1,18 +1,34 @@
 {
   "name": "hyperview",
   "version": "0.5.0",
-  "private": true,
-  "main": "./App.js",
+  "main": "lib/index.js",
+  "description": "React Native client for Hyperview XML",
+  "homepage": "https://hyperview.org",
+  "keywords": [
+    "hyperview",
+    "react-native-hyperview",
+    "hyperview-xml"
+  ],
+  "bugs": {
+    "url": "https://github.com/Instawork/hyperview/issues",
+    "email": "engineering-contact@instawork.com"
+  },
+  "licence": "MIT",
   "scripts": {
+    "build": "babel src --out-dir lib",
     "generate": "babel-node ./scripts/generate",
+    "preversion": "yarn test && yarn build",
+    "release:patch": "npm version patch && npm publish && git push --follow-tags",
+    "release:minor": "npm version minor && npm publish && git push --follow-tags",
+    "release:major": "npm version major && npm publish && git push --follow-tags",
     "storybook": "storybook start -p 7007",
     "test:flow": "flow",
     "test:generators": "yarn generate test && git diff --quiet HEAD",
-    "test:lint": "eslint .",
+    "test:lint": "eslint src",
     "test:render": "jest test/render.test.js --forceExit",
     "test:unit": "jest --testPathPattern src",
     "test:xmlserver": "http-server -c-1 -p 8085 ./examples",
-    "test": "yarn test:flow && yarn test:lint && yarn test:render && yarn test:unit"
+    "test": "yarn generate test && yarn test:flow && yarn test:lint && yarn test:render && yarn test:unit"
   },
   "dependencies": {
     "url-parse": "1.4.3",

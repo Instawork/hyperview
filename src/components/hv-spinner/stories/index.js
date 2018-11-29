@@ -8,7 +8,7 @@ import { action } from '@storybook/addon-actions';
 const createStory = Helpers.stories(HvSpinner);
 createStory('basic', ({ element, stylesheets }) => (
   <HvSpinner
-    animations={[]}
+    animations={null}
     element={element}
     onUpdate={action('onUpdate')}
     options={Helpers.getOptions()}
@@ -17,7 +17,7 @@ createStory('basic', ({ element, stylesheets }) => (
 ));
 createStory('colored', ({ element, stylesheets }) => (
   <HvSpinner
-    animations={[]}
+    animations={null}
     element={element}
     onUpdate={action('onUpdate')}
     options={Helpers.getOptions()}

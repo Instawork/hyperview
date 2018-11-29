@@ -8,7 +8,7 @@ import { action } from '@storybook/addon-actions';
 const createStory = Helpers.stories(HvList);
 createStory('basic', ({ element, stylesheets }) => (
   <HvList
-    animations={[]}
+    animations={null}
     element={element}
     onUpdate={action('onUpdate')}
     options={Helpers.getOptions()}
@@ -17,7 +17,7 @@ createStory('basic', ({ element, stylesheets }) => (
 ));
 createStory('infinite_scroll', ({ element, stylesheets }) => (
   <HvList
-    animations={[]}
+    animations={null}
     element={element}
     onUpdate={action('onUpdate')}
     options={Helpers.getOptions()}

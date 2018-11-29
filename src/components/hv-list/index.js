@@ -53,6 +53,7 @@ export default class HvList extends PureComponent<Props, State> {
 
     const listProps = {
       style,
+      // $FlowFixMe: see node_modules/react-native/Libraries/Lists/FlatList.js:73
       data: element.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'item'),
       keyExtractor: item => item.getAttribute('key'),
       // $FlowFixMe: return value should be of ?React.Element<any>

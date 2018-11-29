@@ -3,6 +3,7 @@
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import React, { PureComponent } from 'react';
+import type { DOMString } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { Props } from './types';
 import { View } from 'react-native';
@@ -21,14 +22,16 @@ export default class HvSelectSingle extends PureComponent<Props> {
    * SingleSelect will update the XML DOM so that only the selected option is has a
    * selected=true attribute.
    */
-  onSelect = (selectedValue: string) => {
+  onSelect = (selectedValue: ?DOMString) => {
     const { element, onUpdate } = this.props;
     const newElement = element.cloneNode(true);
     const options = newElement.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'option');
     for (let i = 0; i < options.length; i += 1) {
       const opt = options.item(i);
-      const value = opt.getAttribute('value');
-      opt.setAttribute('selected', value === selectedValue ? 'true' : 'false');
+      if (opt) {
+        const value = opt.getAttribute('value');
+        opt.setAttribute('selected', value === selectedValue ? 'true' : 'false');
+      }
     }
     onUpdate('#', 'swap', element, { newElement });
   }

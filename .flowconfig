@@ -15,7 +15,6 @@
 
 ; Ignore metro
 .*/node_modules/metro/.*
-App.js
 
 [include]
 src/Services/
