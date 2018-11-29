@@ -119,3 +119,14 @@ article p img, article iframe {
     padding: 0;
   }
 }
+
+.homeImages {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.homeImage {
+  width: 20%;
+  height: 20%;
+}

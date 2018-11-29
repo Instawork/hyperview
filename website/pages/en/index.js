@@ -120,6 +120,44 @@ class Index extends React.Component {
       <div>
         <HomeSplash language={language} />
         <div className="mainContainer">
+
+          <Feature
+            align="left"
+            background="light"
+            title="Serve your app as XML"
+      content="On the web, pages are rendered in a browser by fetching HTML content from a server. With Hyperview, screens are rendered in your mobile app by fetching [Hyperview XML (HXML)](/docs/guide_html) content from a server. HXML's design reflects the UI and interaction patterns of today's mobile interfaces.<p><a href='/docs/example_navigation' class='button'>See HXML examples</a></p>"
+            image={imgUrl('home/syntax.svg')}
+          />
+
+          <div className="container darkBackground paddingBottom paddingTop">
+            <div className="wrapper">
+              <div className="homeImages">
+                  <a className="homeImage" href="/docs/example_instawork">
+                    <img src="/img/instawork/list_small.png" />
+                  </a>
+                  <a className="homeImage" href="/docs/example_instawork">
+                    <img src="/img/instawork/rating_small.png" />
+                  </a>
+
+                  <a className="homeImage" href="/docs/example_photo_sharing">
+                    <img src="/img/example_photos_small2.png" />
+                  </a>
+
+                  <a className="homeImage" href="/docs/example_photo_sharing">
+                    <img src="/img/example_photos_small3.png" />
+                  </a>
+              </div>
+            </div>
+          </div>
+
+          <Feature
+            align="right"
+            background="light"
+            title="Work with any backend web technology"
+            content="Use battle-tested web technologies like Django, Rails, or Node. Any HTTP server can host a Hyperview app. You can even deploy your app as a collection of static XML files if you want!"
+            image={imgUrl('home/backend.svg')}
+          />
+
           <Feature
             align="left"
             background="light"
@@ -134,27 +172,13 @@ class Index extends React.Component {
             content="Unlike traditional native apps, every user always runs the most recent version of your code. With no version fragmentation, you can be more productive by eliminating the need to support and maintain older app versions."
             image={imgUrl('home/version.svg')}
           />
-          <Feature
-            align="left"
-            background="light"
-            title="Use a familiar but powerful declarative syntax"
-            content="Developers familiar with HTML or React's JSX will feel comfortable with [Hyperview XML (HXML)](/docs/guide_html). Unlike HTML, HXML&apos;s elements map to the building blocks of mobile interfaces. HXML&apos;s [behavior syntax](/docs/reference_behavior_attributes) supports [sophisticated user interactions](/docs/example_tabs) without client-side scripting."
-            image={imgUrl('home/syntax.svg')}
-          />
-          <Feature
-            align="right"
-            background="light"
-            title="Work with any backend web technology"
-            content="Use battle-tested web technologies like Django, Rails, or Node. Any HTTP server can host a Hyperview app. You can even deploy your app as a collection of static XML files if you want!"
-            image={imgUrl('home/backend.svg')}
-          />
         </div>
 
         <Container padding={['bottom']} className="comparison">
           <h3>The best choice for networked mobile apps</h3>
 
           <p className="comparison__info">
-Hyperview is a great fit for network-based mobile applications, such as social networks, marketplaces, media/content browsing, etc. If your app relies on offline access or storing data locally, Hyperview won't be the right choice. But any app that reads and writes data to the cloud can greatly benefit from Hyperview's unique combination of features.
+Hyperview is a great fit for network-based mobile applications, such as social networks, marketplaces, media/content browsing, etc. If your app relies on offline data or local computations, Hyperview won't be the right choice. But any app that reads and writes data to the cloud can greatly benefit from Hyperview's unique combination of features.
           </p>
       
           <table className="comparison__table">
