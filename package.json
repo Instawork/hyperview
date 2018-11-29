@@ -7,6 +7,7 @@
     "generate": "babel-node ./scripts/generate",
     "storybook": "storybook start -p 7007",
     "test:flow": "flow",
+    "test:generators": "yarn generate test && git diff --quiet HEAD",
     "test:lint": "eslint .",
     "test:render": "jest test/render.test.js --forceExit",
     "test:unit": "jest --testPathPattern src",

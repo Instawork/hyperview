@@ -1,0 +1,6 @@
+flow-typed
+*.gen.js
+website/
+/App.js
+/VisibilityDetectingView.js
+/mask.js

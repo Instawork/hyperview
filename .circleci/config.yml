@@ -6,8 +6,12 @@ jobs:
       - image: circleci/node:8.7
     steps:
       - checkout
-      - yarn generate ci
-      - yarn test
+      - run: yarn
+      - run: yarn test:generators
+      - run: yarn test:flow
+      - run: yarn test:lint
+      - run: yarn test:render
+      - run: yarn test:unit
 
 workflows:
   version: 2
