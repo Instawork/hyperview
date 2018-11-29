@@ -1,4 +1,4 @@
-<doc xmlns="https://instawork.com/hyperview">
+<doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
       <style alignItems="center"
@@ -61,7 +61,7 @@
           style="Body">
       <header style="Header">
         <text action="close"
-              href="/navigation/index.xml"
+              href="/navigation/new.xml"
               style="Header__Back">Close</text>
         <text style="Header__Title">Opened</text>
       </header>

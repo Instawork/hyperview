@@ -1,4 +1,4 @@
-<doc xmlns="https://instawork.com/hyperview">
+<doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
       <style alignItems="center"
@@ -74,7 +74,7 @@
           </view>
           <text style="Item__Chevron">&gt;</text>
         </item>
-        <item href="/dynamic_elements/index.xml"
+        <item href="/behaviors/index.xml"
               key="behaviors"
               show-during-load="loadingScreen"
               style="Item">
@@ -115,7 +115,7 @@
           </view>
           <text style="Item__Chevron">&gt;</text>
         </item>
-        <item href="http://localhost:8080/biz_app/gigs/groups"
+        <item href="http://localhost:8080/biz_app/gigs/groups/"
               key="biz_app"
               show-during-load="loadingScreen"
               style="Item">

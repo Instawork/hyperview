@@ -1,5 +1,5 @@
 <view style="FormGroup"
-      xmlns="https://instawork.com/hyperview">
+      xmlns="https://hyperview.org/hyperview">
   <text style="label">Location Information</text>
   <select-single style="SelectCustom"
                  name="parking">

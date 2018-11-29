@@ -1,0 +1,108 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style id="Main" flex="1" paddingTop="24" backgroundColor="white" />
+      <style id="Header" flex="0" flexDirection="row" paddingLeft="16" paddingRight="16" alignItems="center" backgroundColor="white" paddingTop="16" paddingBottom="16" justifyContent="space-between" borderBottomWidth="1" borderBottomColor="#BDC4C4" />
+      <style id="Header__Section" flex="1" />
+      <style id="Header__Back" fontSize="16" lineHeight="20" color="#4E4D4D" textAlign="left" />
+      <style id="Header__Title" fontSize="24" fontWeight="bold" lineHeight="32" color="#4E4D4D" textAlign="center" />
+
+      <style id="Content" flex="1" />
+
+      <style id="Profile" flexDirection="row" padding="16" />
+      <style id="Profile__Image" width="64" height="64" borderRadius="32" marginRight="16"/>
+
+      <style id="Stats" flexDirection="row" flex="1" />
+      <style id="Stat" flexDirection="column" alignItems="center" marginLeft="16" marginRight="16" />
+      <style id="Stat__Number" fontSize="18" lineHeight="24" color="#4E4D4D" fontWeight="bold" />
+      <style id="Stat__Label" fontWeight="normal" fontSize="14" color="#BDC4C4" />
+
+      <style id="Bio" paddingLeft="16" paddingRight="16" paddingBottom="16" />
+      <style id="Bio__Paragraph" fontSize="14" lineHeight="18" color="#4E4D4D" fontWeight="600" />
+
+      <style id="Tabs" flex="1" flexDirection="row" justifyContent="space-between" marginBottom="8" />
+      <style id="Tab" flex="1" flexDirection="row" justifyContent="center" alignItems="center" padding="8" />
+      <style id="Tab__Image" width="24" height="24" />
+
+      <style id="Images" flex="1" flexDirection="row" flexWrap="wrap" borderWidth="1" borderColor="white" />
+      <style id="Image" width="124" height="124" borderColor="white" borderWidth="1" />
+    </styles>
+    <body style="Main">
+
+      <header style="Header">
+        <view style="Header__Section">
+          <text style="Header__Back" action="back" href="#">Back</text>
+        </view>
+
+        <view style="Header__Section">
+          <text style="Header__Title">data</text>
+        </view>
+
+        <view style="Header__Section">
+        </view>
+      </header>
+
+      <view style="Content" scroll="true">
+
+        <view style="Profile">
+          <image source="/case_studies/photos/avatars/data.jpg" style="Profile__Image" />
+          <view style="Stats">
+            <view style="Stat">
+              <text style="Stat__Number">3431</text>
+              <text style="Stat__Label">posts</text>
+            </view>
+            <view style="Stat">
+              <text style="Stat__Number">6530</text>
+              <text style="Stat__Label">followers</text>
+            </view>
+            <view style="Stat">
+              <text style="Stat__Number">217</text>
+              <text style="Stat__Label">following</text>
+            </view>
+          </view>
+        </view>
+
+        <view style="Bio">
+          <text style="Bio__Paragraph">
+            Data
+          </text>
+          <text style="Bio__Paragraph">
+            I'm a synthetic life form with artificial intelligence. Love long walks on the beach and pumpkin spice everything!
+          </text>
+        </view>
+
+        <view style="Tabs">
+          <view style="Tab">
+            <image style="Tab__Image" source="/case_studies/photos/icons/grid2.png" />
+          </view>
+
+          <view style="Tab">
+            <image style="Tab__Image" source="/case_studies/photos/icons/list2.png" />
+          </view>
+
+          <view style="Tab">
+            <image style="Tab__Image" source="/case_studies/photos/icons/location2.png" />
+          </view>
+
+          <view style="Tab">
+            <image style="Tab__Image" source="/case_studies/photos/icons/tag2.png" />
+          </view>
+        </view>
+
+        <view style="Images">
+            <image style="Image" source="/case_studies/photos/photos/coffee.jpeg" />
+            <image style="Image" source="/case_studies/photos/photos/concert.jpeg" />
+            <image style="Image" source="/case_studies/photos/photos/dinner.jpeg" />
+            <image style="Image" source="/case_studies/photos/photos/feet.jpeg" />
+            <image style="Image" source="/case_studies/photos/photos/inspiration1.jpeg" />
+            <image style="Image" source="/case_studies/photos/photos/salad.jpg" />
+            <image style="Image" source="/case_studies/photos/photos/sign.jpeg" />
+            <image style="Image" source="/case_studies/photos/photos/trev.jpeg" />
+            <image style="Image" source="/case_studies/photos/photos/water.jpeg" />
+        </view>
+
+      </view>
+
+    </body>
+  </screen>
+</doc>

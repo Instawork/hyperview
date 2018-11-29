@@ -1,0 +1,56 @@
+<section-list xmlns="https://hyperview.org/hyperview"
+             action="replace"
+             delay="700"
+             href="/ui_elements/sectionlist/_refresh_load.xml"
+             trigger="refresh">
+  <section>
+    <section-title style="List__Header">
+      <text style="List__HeaderText">Section 1</text>
+    </section-title>
+    <item key="1"
+          style="Item">
+      <text style="Item__Label">List 1</text>
+    </item>
+    <item key="2"
+          style="Item">
+      <text style="Item__Label">List 2 Changed!</text>
+    </item>
+    <item key="3"
+          style="Item">
+      <text style="Item__Label">List 3</text>
+    </item>
+    <item key="4"
+          style="Item">
+      <text style="Item__Label">List 4</text>
+    </item>
+    <item key="5"
+          style="Item">
+      <text style="Item__Label">List 5 Added!</text>
+    </item>
+  </section>
+  <section>
+    <section-title style="List__Header">
+      <text style="List__HeaderText">Section 2</text>
+    </section-title>
+    <item key="6"
+          style="Item">
+      <text style="Item__Label">List 6</text>
+    </item>
+    <item key="7"
+          style="Item">
+      <text style="Item__Label">List 7</text>
+    </item>
+    <item key="8"
+          style="Item">
+      <text style="Item__Label">List 8</text>
+    </item>
+    <item key="9"
+          style="Item">
+      <text style="Item__Label">List 9</text>
+    </item>
+    <item key="10"
+          style="Item">
+      <text style="Item__Label">List 10</text>
+    </item>
+  </section>
+</section-list>

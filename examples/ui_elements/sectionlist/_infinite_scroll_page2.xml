@@ -1,0 +1,25 @@
+<section xmlns="https://hyperview.org/hyperview">
+  <section-title style="List__Header">
+    <text style="List__HeaderText">Added: Section 5</text>
+  </section-title>
+  <item key="16"
+        style="Item">
+    <text style="Item__Label">Added: List 21</text>
+  </item>
+  <item key="17"
+        style="Item">
+    <text style="Item__Label">Added: List 22</text>
+  </item>
+  <item key="18"
+        style="Item">
+    <text style="Item__Label">Added: List 23</text>
+  </item>
+  <item key="19"
+        style="Item">
+    <text style="Item__Label">Added: List 24</text>
+  </item>
+  <item key="20"
+        style="Item">
+    <text style="Item__Label">Added: List 25</text>
+  </item>
+</section>

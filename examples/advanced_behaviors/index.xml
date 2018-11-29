@@ -1,4 +1,4 @@
-<doc xmlns="https://instawork.com/hyperview">
+<doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
       <style alignItems="center"
@@ -103,6 +103,13 @@
               show-during-load="loadingScreen"
               style="Item">
           <text style="Item__Label">Custom: Phone</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/advanced_behaviors/custom_share.xml"
+              key="custom_share"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Custom: Share</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
       </list>

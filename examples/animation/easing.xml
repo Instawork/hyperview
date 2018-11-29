@@ -1,4 +1,4 @@
-<doc xmlns="https://instawork.com/hyperview">
+<doc xmlns="https://hyperview.org/hyperview">
   <animated>
     <value from="-500"
            id="example1"

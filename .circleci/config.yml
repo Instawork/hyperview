@@ -1,0 +1,20 @@
+version: 2
+
+jobs:
+  test:
+    docker:
+      - image: circleci/node:8.7
+    steps:
+      - checkout
+      - run: yarn
+      - run: yarn test:generators
+      - run: yarn test:flow
+      - run: yarn test:lint
+      - run: yarn test:render
+      - run: yarn test:unit
+
+workflows:
+  version: 2
+  test-pr:
+    jobs:
+      - test

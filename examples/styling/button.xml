@@ -1,4 +1,4 @@
-<doc xmlns="https://instawork.com/hyperview">
+<doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
       <style alignItems="center"
@@ -58,6 +58,8 @@
              fontFamily="HKGrotesk-Bold"
              fontSize="24"
              id="Button__Label" />
+      <style id="Button--Disabled" opacity="0.5" />
+
     </styles>
     <body style="Body">
       <header style="Header">
@@ -71,6 +73,11 @@
         <text style="Description">Regular</text>
         <view style="Button">
           <text style="Button__Label">Hello</text>
+        </view>
+
+        <text style="Description">Disabled</text>
+        <view style="Button Button--Disabled">
+          <text style="Button__Label">Disabled</text>
         </view>
       </view>
     </body>

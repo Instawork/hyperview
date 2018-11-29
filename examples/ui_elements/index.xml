@@ -1,4 +1,4 @@
-<doc xmlns="https://instawork.com/hyperview">
+<doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
       <style alignItems="center"
@@ -84,14 +84,14 @@
           <text style="Item__Label">Image</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
-        <item href="/list/index.xml"
+        <item href="/ui_elements/list/index.xml"
               key="list"
               show-during-load="loadingScreen"
               style="Item">
           <text style="Item__Label">List</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
-        <item href="/sectionlist/index.xml"
+        <item href="/ui_elements/sectionlist/index.xml"
               key="sectionlist"
               show-during-load="loadingScreen"
               style="Item">
@@ -100,7 +100,7 @@
           </view>
           <text style="Item__Chevron">&gt;</text>
         </item>
-        <item href="/forms/index.xml"
+        <item href="/ui_elements/forms/index.xml"
               key="forms"
               show-during-load="loadingScreen"
               style="Item">

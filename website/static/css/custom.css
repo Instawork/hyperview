@@ -1,0 +1,121 @@
+/* your custom css */
+
+@media only screen and (min-device-width: 360px) and (max-device-width: 736px) {
+}
+
+@media only screen and (min-width: 1024px) {
+}
+
+@media only screen and (max-width: 1023px) {
+}
+
+@media only screen and (min-width: 1400px) {
+}
+
+@media only screen and (min-width: 1500px) {
+}
+
+@media only screen and (max-width: 1024px) {
+  .reactNavSearchWrapper input#search_input_react {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+  }
+}
+
+.headerTitleWithLogo {
+  display: block !important;
+}
+
+.nav-footer .copyright a {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+article p img, article iframe {
+  box-shadow: 0px 3px 20px rgba(0,0,0,0.2);
+  padding: 8px;
+  margin: 32px auto 32px;
+  border-radius: 4px;
+}
+
+.headerTitleWithLogo {
+  color: white;
+  font-weight: 500;
+}
+
+.postHeaderTitle {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: 48px;
+  color: #4E4D4D;
+}
+
+.button {
+  text-transform: none;
+}
+
+.container .featureContent,
+.container .featureImage {
+  width: 50%;
+}
+.container .featureImage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container .featureImage img {
+  max-width: 300px;
+}
+.container.container-left .wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.container.container-left .featureContent {
+  text-align: right;
+}
+.container.container-right .wrapper {
+  display: flex;
+  flex-direction: row-reverse;
+}
+@media (max-width: 735px) {
+  .container.container-left .wrapper {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+  .container.container-right .wrapper {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+  .container.container-left .featureContent,
+  .container.container-right .featureContent {
+    text-align: center;
+    width: auto;
+  }
+}
+
+.lightBackground {
+}
+.darkBackground p {
+  color: white;
+}
+
+.comparison .wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.comparison__table {
+  width: auto;
+  text-align: center;
+}
+.comparison__info {
+  font-size: 20px;
+  line-height: 28px;
+  text-align: center;
+  padding: 0 64px;
+}
+@media (max-width: 735px) {
+  .comparison__info {
+    padding: 0;
+  }
+}

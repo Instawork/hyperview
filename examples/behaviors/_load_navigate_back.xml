@@ -1,0 +1,8 @@
+<view xmlns="https://hyperview.org/hyperview"
+      action="back"
+      delay="300"
+      href="/behaviors/index.xml"
+      style="Button"
+      trigger="load">
+  <text style="Button__Label">Gonna go back...</text>
+</view>

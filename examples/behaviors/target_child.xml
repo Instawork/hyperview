@@ -1,0 +1,96 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style alignItems="center"
+             backgroundColor="white"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flexDirection="row"
+             height="72"
+             id="Header"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="24" />
+      <style color="blue"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="16"
+             id="Header__Back"
+             paddingRight="16" />
+      <style color="black"
+             fontFamily="HKGrotesk-SemiBold"
+             fontSize="24"
+             id="Header__Title" />
+      <style backgroundColor="white"
+             flex="1"
+             id="Body" />
+      <style fontFamily="HKGrotesk-Regular"
+             fontSize="16"
+             id="Description"
+             margin="24"
+             marginBottom="0" />
+      <style alignItems="center"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flex="1"
+             flexDirection="row"
+             height="48"
+             id="Item"
+             justifyContent="space-between"
+             paddingLeft="24"
+             paddingRight="24" />
+      <style fontFamily="HKGrotesk-Regular"
+             fontSize="18"
+             id="Item__Label" />
+      <style fontFamily="HKGrotesk-Bold"
+             fontSize="18"
+             id="Item__Chevron" />
+      <style alignItems="center"
+             backgroundColor="#63CB76"
+             borderRadius="16"
+             flex="1"
+             flexDirection="column"
+             id="Button"
+             justifyContent="center"
+             margin="24"
+             padding="24" />
+      <style color="white"
+             fontFamily="HKGrotesk-Bold"
+             fontSize="24"
+             id="Button__Label" />
+      <style borderColor="#e1e1e1"
+             borderRadius="16"
+             borderWidth="2"
+             id="Container"
+             margin="24"
+             padding="24" />
+      <style color="black"
+             fontFamily="HKGrotesk-Regular"
+             fontSize="16"
+             id="Container__Label" />
+      <style flex="1"
+             id="Main" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text action="back"
+              href="#"
+              style="Header__Back">Back</text>
+        <text style="Header__Title">Target Child</text>
+      </header>
+      <view scroll="1"
+            style="Main">
+        <text style="Description">Tapping the button below will request an XML fragment and replace the child element in the button.</text>
+        <view action="replace"
+              href="/behaviors/_target_sibling_fragment.xml"
+              style="Button"
+              target="container">
+          <text style="Button__Label">Press me</text>
+          <view id="container"
+                style="Container">
+            <text style="Container__Label">Waiting...</text>
+          </view>
+        </view>
+      </view>
+    </body>
+  </screen>
+</doc>

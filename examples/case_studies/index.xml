@@ -1,4 +1,4 @@
-<doc xmlns="https://instawork.com/hyperview">
+<doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
       <style alignItems="center"
@@ -63,18 +63,74 @@
           <text style="Item__Label">Rating by Business</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
-        <item href="/case_studies/multi_part_form.xml"
-              key="form"
-              show-during-load="loadingScreen"
-              style="Item">
-          <text style="Item__Label">Multi-part Form</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
         <item href="/case_studies/feedback_widget.xml"
               key="feedback_widget"
               show-during-load="loadingScreen"
               style="Item">
           <text style="Item__Label">Feedback Widget</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/case_studies/infinite_scroll/index.xml"
+              key="infinite_scroll"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Infinite scroll</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/case_studies/lazy_load/index.xml"
+              key="lazy_load"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Lazy load</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/case_studies/pull_to_refresh/index.xml"
+              key="pull_to_refresh"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Pull to refresh</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/case_studies/tabs/index.xml"
+              key="tabs"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Tabs</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/case_studies/navigation/index.xml"
+              key="navigation"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Navigation</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/case_studies/delayed_navigation/index.xml"
+              key="delayed_navigation"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Delayed navigation</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/case_studies/basic_form/index.xml"
+              key="basic_form"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Basic forms</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/case_studies/advanced_form/index.xml"
+              key="advanced_form"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Advanced forms</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/case_studies/photos/index.xml"
+              key="photos"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Photo sharing app</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
       </list>

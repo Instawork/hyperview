@@ -1,267 +1,77 @@
-import React from 'react';
+import * as Components from 'hyperview/src/services/components';
+import * as Namespaces from 'hyperview/src/services/namespaces';
+import * as Render from 'hyperview/src/services/render';
+import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import {
   ActivityIndicator,
   Animated,
-  Button,
+  Dimensions,
   Easing,
-  FlatList,
-  SectionList,
   Image,
   RefreshControl,
   ScrollView,
-  StyleSheet,
   Text,
-  TextInput,
-  TouchableHighlight,
   TouchableOpacity,
   View,
 } from 'react-native';
+import { DOMParser } from 'xmldom';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import React from 'react';
 import VisibilityDetectingView from './VisibilityDetectingView.js';
-import { Font } from 'expo';
-import { createStackNavigator } from 'react-navigation';
-import { NavigationActions } from 'react-navigation';
+import { createProps, getFirstTag } from 'hyperview/src/services';
+import urlParse from 'url-parse';
 
-import { DOMParser, XMLSerializer } from 'xmldom';
+const HYPERVIEW_NS = Namespaces.HYPERVIEW;
+const AMPLITUDE_NS = Namespaces.AMPLITUDE;
+const PHONE_NS = Namespaces.PHONE;
+const INTERCOM_NS = Namespaces.INTERCOM;
+const REDUX_NS = Namespaces.REDUX;
+const SHARE_NS = Namespaces.SHARE;
 
-//const ROOT = 'http://192.168.7.20:8080';
-//const ROOT = 'http://10.1.10.14:8080';
-const ROOT = 'http://127.0.0.1:8080';
+const ROUTE_KEYS = {};
+const PRELOAD_SCREEN = {};
 
-const HYPERVIEW_NS = 'https://instawork.com/hyperview';
+const HYPERVIEW_VERSION = '0.6';
 
-
-const ROUTE_KEYS = {
-};
-
+function uid() {
+  return Date.now(); // Not trully unique but sufficient for our use-case
+}
 
 function later(delay) {
   return new Promise(resolve => setTimeout(resolve, delay));
 }
 
+function getHyperviewHeaders() {
+  const { width, height } = Dimensions.get('window');
+  return {
+    'X-Hyperview-Version': HYPERVIEW_VERSION,
+    'X-Hyperview-Dimensions': `${width}w ${height}h`,
+  };
+}
 
 /**
  * STATEFUL COMPONENTS
  */
-class HVFlatList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.parser = new DOMParser();
-    this.state = {
-      refreshing: false,
-    };
-  }
-
-  refresh() {
-    const { element, onUpdate } = this.props;
-    this.setState({refreshing: true});
-    const path = element.getAttribute('href');
-    const action = element.getAttribute('action') || 'append';
-    const targetId = element.getAttribute('target') || null;
-    const showIndicatorIds = element.getAttribute('show-during-load') || null;
-    const hideIndicatorIds = element.getAttribute('hide-during-load') || null;
-    const delay = element.getAttribute('delay');
-    const once = element.getAttribute('once') || null;
-
-    onUpdate(path, action, element, {
-      targetId,
-      showIndicatorIds,
-      hideIndicatorIds,
-      delay,
-      once,
-      onEnd: () => {
-        this.setState({refreshing: false});
-      }
-    });
-  }
-
-  render() {
-    const { refreshing } = this.state;
-    const { element, navigation, stylesheet, animations, onUpdate } = this.props;
-    const styleAttr = element.getAttribute('style');
-    const style = styleAttr ? styleAttr.split(' ').map((s) => stylesheet[s]) : null;
-
-    const listProps = {
-      style,
-      data: element.getElementsByTagNameNS(HYPERVIEW_NS, 'item'),
-      keyExtractor: (item, index) => {
-        return item.getAttribute('key');
-      },
-      renderItem: ({ item }) => {
-        return renderElement(item, navigation, stylesheet, animations, onUpdate );
-      },
-    };
-
-    let refreshProps = {};
-    if (element.getAttribute('trigger') === 'refresh') {
-      refreshProps = {
-        onRefresh: () => { this.refresh() },
-        refreshing,
-      };
-    }
-
-    return React.createElement(
-      FlatList,
-      Object.assign(listProps, refreshProps),
-    );
-  }
-}
 
 
+ 
 /**
- * STATEFUL COMPONENTS
+ * Component that handles dispatching behaviors based on the appropriate
+ * triggers.
  */
-class HVSectionList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.parser = new DOMParser();
-    this.state = {
-      refreshing: false,
-    };
-  }
-
-  refresh() {
-    const { element, onUpdate } = this.props;
-    this.setState({refreshing: true});
-    const path = element.getAttribute('href');
-    const action = element.getAttribute('action') || 'append';
-    const targetId = element.getAttribute('target') || null;
-    const showIndicatorIds = element.getAttribute('show-during-load') || null;
-    const hideIndicatorIds = element.getAttribute('hide-during-load') || null;
-    const delay = element.getAttribute('delay');
-    const once = element.getAttribute('once') || null;
-
-    onUpdate(path, action, element, {
-      targetId,
-      showIndicatorIds,
-      hideIndicatorIds,
-      delay,
-      once,
-      onEnd: () => {
-        this.setState({refreshing: false});
-      }
-    });
-  }
-
-  render() {
-    const { refreshing } = this.state;
-    const { element, navigation, stylesheet, animations, onUpdate } = this.props;
-    const styleAttr = element.getAttribute('style');
-    const style = styleAttr ? styleAttr.split(' ').map((s) => stylesheet[s]) : null;
-
-    const sectionElements = element.getElementsByTagNameNS(HYPERVIEW_NS, 'section');
-    const sections = [];
-
-    for (let i = 0; i < sectionElements.length; ++i) {
-      const sectionElement = sectionElements.item(i);
-      const itemElements = sectionElement.getElementsByTagNameNS(HYPERVIEW_NS, 'item');
-      const items = [];
-      for (let j = 0; j < itemElements.length; ++j) {
-        const itemElement = itemElements.item(j);
-        items.push(itemElement);
-      }
-      const titleElement = sectionElement.getElementsByTagNameNS(HYPERVIEW_NS, 'sectiontitle').item(0);
-      sections.push({
-        title: titleElement,
-        data: items,
-      });
-    }
-
-    const listProps = {
-      style,
-      sections,
-      keyExtractor: (item, index) => {
-        return item.getAttribute('key');
-      },
-      renderItem: ({ item, index, section }) => {
-        return renderElement(item, navigation, stylesheet, animations, onUpdate );
-      },
-      renderSectionHeader: ({section: { title }}) => {
-        return renderElement(title, navigation, stylesheet, animations, onUpdate );
-      },
-    };
-
-    let refreshProps = {};
-    if (element.getAttribute('trigger') === 'refresh') {
-      refreshProps = {
-        onRefresh: () => { this.refresh() },
-        refreshing,
-      };
-    }
-
-    return React.createElement(
-      SectionList,
-      Object.assign(listProps, refreshProps),
-    );
-  }
-}
-
-
-class HVTextInput extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      focused: false,
-    };
-  }
-
-  render() {
-    const { element, navigation, stylesheet, animations, onUpdate } = this.props;
-    const props = Object.assign(
-      createProps(element, stylesheet, animations),
-      {
-        multiline: element.tagName == 'textarea',
-      },
-      {
-        onFocus: () => this.setState({focused: true}),
-        onBlur: () => this.setState({focused: false}),
-      }
-    );
-
-    if (this.state.focused && props.focusStyles) {
-      props.style = props.focusStyles.split(' ').map((s) => stylesheet[s]);
-    }
-
-    const input = React.createElement(
-      TextInput,
-      props,
-    );
-
-    const labelElement = getFirstTag(element, 'label');
-    const helpElement = getFirstTag(element, 'help');
-
-    const label = labelElement ? text(labelElement, navigation, stylesheet, animations, onUpdate) : null;
-    const help = helpElement ? text(helpElement, navigation, stylesheet, animations, onUpdate) : null;
-
-    let outerStyles = null;
-    if (props.outerStyles) {
-      outerStyles = props.outerStyles.split(' ').map((s) => stylesheet[s]);
-    }
-
-    return React.createElement(
-      View,
-      {style: outerStyles},
-      label,
-      input,
-      help
-    );
-  }
-}
-
-
 class HyperRef extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       refreshing: false,
+      pressed: false,
     };
 
-    this.parser = new DOMParser();
-
-    this.triggerPropNames = {
-      'press': 'onPress',
-      'longPress': 'onLongPress',
-      'pressIn': 'onPressIn',
-      'pressOut': 'onPressOut',
+    this.pressTriggerPropNames = {
+      press: 'onPress',
+      longPress: 'onLongPress',
+      pressIn: 'onPressIn',
+      pressOut: 'onPressOut',
     };
 
     this.pressTriggers = ['press', 'longPress', 'pressIn', 'pressOut'];
@@ -269,82 +79,112 @@ class HyperRef extends React.Component {
     this.updateActions = ['replace', 'replace-inner', 'append', 'prepend'];
   }
 
-  createActionHandler(element, behaviorElement, navigation, onUpdate) {
+  createActionHandler = (element, behaviorElement, onUpdate) => {
     const action = behaviorElement.getAttribute('action') || 'push';
 
     if (this.navActions.indexOf(action) >= 0) {
-      return createNavHandler(behaviorElement, navigation);
-    }
-
-    if (this.updateActions.indexOf(action) >= 0) {
-      return() => {
-        const path = behaviorElement.getAttribute('href');
-        const targetId = behaviorElement.getAttribute('target') || null;
-        const showIndicatorIds = behaviorElement.getAttribute('show-during-load') || null;
-        const hideIndicatorIds = behaviorElement.getAttribute('hide-during-load') || null;
+      return () => {
+        const href = behaviorElement.getAttribute('href');
+        const showIndicatorId = behaviorElement.getAttribute('show-during-load');
         const delay = behaviorElement.getAttribute('delay');
-        const once = behaviorElement.getAttribute('once') || null;
-        onUpdate(path, action, element, { targetId, showIndicatorIds, hideIndicatorIds, delay, once });
-      }
+        onUpdate(href, action, element, { showIndicatorId, delay });
+      };
+    } else if (this.updateActions.indexOf(action) >= 0) {
+      return () => {
+        const href = behaviorElement.getAttribute('href');
+        const verb = behaviorElement.getAttribute('verb');
+        const targetId = behaviorElement.getAttribute('target');
+        const showIndicatorIds = behaviorElement.getAttribute('show-during-load');
+        const hideIndicatorIds = behaviorElement.getAttribute('hide-during-load');
+        const delay = behaviorElement.getAttribute('delay');
+        const once = behaviorElement.getAttribute('once');
+        onUpdate(
+          href, action, element,
+          { verb, targetId, showIndicatorIds, hideIndicatorIds, delay, once },
+        );
+      };
     }
-  }
-
-  getBehaviorElements() {
-    const { element } = this.props;
-    const behaviorElements = Array.from(element.getElementsByTagNameNS(HYPERVIEW_NS, 'behavior'));
-    if (element.getAttribute('href')) {
-      behaviorElements.unshift(element);
-    }
-    return behaviorElements;
+    //
+    // Custom behavior
+    return () => onUpdate(null, action, element, { custom: true, behaviorElement });
   }
 
   render() {
-    const { refreshing } = this.state;
-    const { element, navigation, stylesheet, animations, onUpdate } = this.props;
-    const behaviorElements = this.getBehaviorElements();
-    const pressBehaviors = behaviorElements.filter((e) => this.pressTriggers.indexOf(e.getAttribute('trigger') || 'press') >= 0);
-    const visibleBehaviors = behaviorElements.filter((e) => e.getAttribute('trigger') == 'visible');
-    const refreshBehaviors = behaviorElements.filter((e) => e.getAttribute('trigger') == 'refresh');
+    const { refreshing, pressed } = this.state;
+    const { element, stylesheets, animations, onUpdate, options } = this.props;
+    const behaviorElements = getBehaviorElements(element);
+    const pressBehaviors = behaviorElements.filter(e => this.pressTriggers.indexOf(e.getAttribute('trigger') || 'press') >= 0);
+    const visibleBehaviors = behaviorElements.filter(e => e.getAttribute('trigger') === 'visible');
+    const refreshBehaviors = behaviorElements.filter(e => e.getAttribute('trigger') === 'refresh');
 
-    // Render the component based on the XML element. Depending on the applied behaviors, this component
-    // will be wrapped with others to provide the necessary interaction.
-    let renderedComponent = renderElement(element, navigation, stylesheet, animations, onUpdate, {skipHref: true});
+    // Render the component based on the XML element. Depending on the applied behaviors,
+    // this component will be wrapped with others to provide the necessary interaction.
+    let renderedComponent = Render.renderElement(
+      element, stylesheets, animations, onUpdate, { ...options, pressed, skipHref: true },
+    );
+
+    const styleAttr = element.getAttribute('href-style');
+    const hrefStyle = styleAttr ? styleAttr.split(' ').map(s => stylesheets.regular[s]) : null;
 
     // Render pressable element
     if (pressBehaviors.length > 0) {
       const props = {
         // Component will use touchable opacity to trigger href.
-        activeOpacity: 0.5,
+        activeOpacity: 1,
+        style: hrefStyle,
       };
 
       // With multiple behaviors for the same trigger, we need to stagger
       // the updates a bit so that each update operates on the latest DOM.
       // Ideally, we could apply multiple DOM updates at a time.
-      const time = 0;
+      let time = 0;
 
-      pressBehaviors.forEach((behaviorElement, index) => {
-        const href = behaviorElement.getAttribute('href');
+      pressBehaviors.forEach((behaviorElement) => {
         const trigger = behaviorElement.getAttribute('trigger') || 'press';
-        const triggerPropName = this.triggerPropNames[trigger];
-        const handler = this.createActionHandler(element, behaviorElement, navigation, onUpdate);
+        const triggerPropName = this.pressTriggerPropNames[trigger];
+        const handler = this.createActionHandler(element, behaviorElement, onUpdate);
         if (props[triggerPropName]) {
           const oldHandler = props[triggerPropName];
           props[triggerPropName] = () => {
             oldHandler();
             setTimeout(handler, time);
-            time++;
-          }
+            time += 1;
+          };
         } else {
           props[triggerPropName] = handler;
         }
       });
+
+      if (props.onPressIn) {
+        const oldHandler = props.onPressIn;
+        props.onPressIn = () => {
+          this.setState({ pressed: true });
+          oldHandler();
+        };
+      } else {
+        props.onPressIn = () => {
+          this.setState({ pressed: true });
+        };
+      }
+
+      if (props.onPressOut) {
+        const oldHandler = props.onPressOut;
+        props.onPressOut = () => {
+          this.setState({ pressed: false });
+          oldHandler();
+        };
+      } else {
+        props.onPressOut = () => {
+          this.setState({ pressed: false });
+        };
+      }
 
       // Fix a conflict between onPressOut and onPress triggering at the same time.
       if (props.onPressOut && props.onPress) {
         const onPressHandler = props.onPress;
         props.onPress = () => {
           setTimeout(onPressHandler, time);
-        }
+        };
       }
 
       renderedComponent = React.createElement(
@@ -357,10 +197,10 @@ class HyperRef extends React.Component {
     // Wrap component in a scrollview with a refresh control to trigger
     // the refresh behaviors.
     if (refreshBehaviors.length > 0) {
-      const refreshHandlers = refreshBehaviors.map((behaviorElement) => 
-        this.createActionHandler(element, behaviorElement, navigation, onUpdate)
+      const refreshHandlers = refreshBehaviors.map(behaviorElement =>
+        this.createActionHandler(element, behaviorElement, onUpdate),
       );
-      const onRefresh = () => refreshHandlers.forEach((h) => { h() });
+      const onRefresh = () => refreshHandlers.forEach(h => h());
 
       const refreshControl = React.createElement(
         RefreshControl,
@@ -368,21 +208,21 @@ class HyperRef extends React.Component {
       );
       renderedComponent = React.createElement(
         ScrollView,
-        { refreshControl },
+        { refreshControl, style: hrefStyle },
         renderedComponent,
       );
     }
 
     // Wrap component in a VisibilityDetectingView to trigger visibility behaviors.
     if (visibleBehaviors.length > 0) {
-      const visibleHandlers = visibleBehaviors.map((behaviorElement) => 
-        this.createActionHandler(element, behaviorElement, navigation, onUpdate)
+      const visibleHandlers = visibleBehaviors.map(behaviorElement =>
+        this.createActionHandler(element, behaviorElement, onUpdate),
       );
-      const onVisible = () => visibleHandlers.forEach((h) => { h() });
+      const onVisible = () => visibleHandlers.forEach(h => h());
 
       renderedComponent = React.createElement(
         VisibilityDetectingView,
-        { onVisible },
+        { onVisible, style: hrefStyle },
         renderedComponent,
       );
     }
@@ -390,20 +230,32 @@ class HyperRef extends React.Component {
     return renderedComponent;
   }
 
+  componentDidUpdate(prevProps) {
+    const { element, onUpdate } = this.props;
+    if (prevProps.element === element) {
+      return;
+    }
+    const behaviorElements = getBehaviorElements(element);
+    const loadBehaviors = behaviorElements.filter(e => e.getAttribute('trigger') === 'load');
+    loadBehaviors.forEach((behaviorElement) => {
+      const handler = this.createActionHandler(element, behaviorElement, onUpdate);
+      setTimeout(handler, 0);
+    });
+  }
+
   componentDidMount() {
-    const { element, navigation, onUpdate } = this.props;
-    const behaviorElements = this.getBehaviorElements();
-    const loadBehaviors = behaviorElements.filter((e) => e.getAttribute('trigger') == 'load');
+    const { element, onUpdate } = this.props;
+    const behaviorElements = getBehaviorElements(element);
+    const loadBehaviors = behaviorElements.filter(e => e.getAttribute('trigger') === 'load');
 
     loadBehaviors.forEach((behaviorElement) => {
-      const handler = this.createActionHandler(element, behaviorElement, navigation, onUpdate);
+      const handler = this.createActionHandler(element, behaviorElement, onUpdate);
       setTimeout(handler, 0);
     });
   }
 }
 
-
-function addHref(component, element, navigation, stylesheet, animations, onUpdate ) {
+function addHref(component, element, stylesheets, animations, onUpdate, options) {
   const href = element.getAttribute('href');
   const behaviorElements = getChildElementsByTagName(element, 'behavior');
   const hasBehaviors = href || behaviorElements.length > 0;
@@ -413,11 +265,10 @@ function addHref(component, element, navigation, stylesheet, animations, onUpdat
 
   return React.createElement(
     HyperRef,
-    { element, navigation, stylesheet, animations, onUpdate },
-    ...renderChildren(element, navigation, stylesheet, animations, onUpdate)
+    { element, stylesheets, animations, onUpdate, options },
+    ...Render.renderChildren(element, stylesheets, animations, onUpdate, options),
   );
 }
-
 
 /**
  * UTILITIES
@@ -426,367 +277,119 @@ function getHrefKey(href) {
   return href.split('?')[0];
 }
 
-function getFirstTag(rootNode, tagName) {
-  elements = rootNode.getElementsByTagNameNS(HYPERVIEW_NS, tagName);
-  if (elements  && elements[0]) {
-    return elements[0];
+/**
+ * Searches the parent chain from the given element until it finds an
+ * element with the given tag name. If no ancestor with the tagName is found,
+ * returns null.
+ */
+function getAncestorByTagName(element, tagName) {
+  let parentNode = element.parentNode;
+  while (parentNode !== null && parentNode.tagName !== tagName) {
+    parentNode = parentNode.parentNode || null;
   }
-  return null;
+  return parentNode;
 }
 
 function getChildElementsByTagName(element, tagName) {
-  return Array.from(element.childNodes).filter((n) => n.nodeType == 1 && n.tagName == tagName);
+  return Array.from(element.childNodes).filter(n => n.nodeType === 1 && n.tagName === tagName);
 }
 
-
 /**
- *
+ * Returns array of all direct child nodes that are behavior elements. Additionally,
+ * the element itself can be considered a behavior element if it has an href.
  */
-function createProps(element, stylesheet, animations) {
-  const numericRules = [
-    'numberOfLines',
-  ];
-  const booleanRules = [
-    'multiline',
-  ];
-
-  const props = {};
-  if (element.attributes === null) {
-    return props;
+function getBehaviorElements(element) {
+  const behaviorElements = Array.from(element.childNodes).filter(n => n.tagName === 'behavior');
+  if (element.getAttribute('href')) {
+    behaviorElements.unshift(element);
   }
-  for (let i = 0; i < element.attributes.length; ++i) {
-    let attr = element.attributes.item(i);
-    if (numericRules.indexOf(attr.name) >= 0) {
-      let intValue = parseInt(attr.value, 10);
-      props[attr.name] = intValue || 0;
-    } else if (booleanRules.indexOf(attr.name) >= 0) {
-      props[attr.name] = attr.value == 'true';
-    } else {
-      props[attr.name] = attr.value;
-    }
-  }
-  if (props.style) {
-    props.style = props.style.split(' ').map((s) => stylesheet[s]);
-  }
-  if (props.animatedValues) {
-    const values = props.animatedValues.split(' ').forEach((v) => {
-      const value = animations.values[v];
-      const property = animations.properties[v];
-      if (value !== undefined && property !== undefined) {
-        const animatedStyle = {};
-        animatedStyle[property] = value;
-        props.style = props.style || [];
-        props.style.push(animatedStyle);
-      }
-    });
-  }
-  return props;
+  return behaviorElements;
 }
 
 /**
  *
  */
-function createNavHandler(element, navigation) {
-  let navHandler = null;
-  const href = element.getAttribute('href');
-  const action = element.getAttribute('action');
-  const showIndicatorId = element.getAttribute('show-during-load');
-  const delay = element.getAttribute('delay');
-
-  if (!href) {
-    return navHandler;
-  }
-
-  let navFunction = navigation.push;
-  let navRoute = 'Stack';
-  let key = null;
-
-  if (action == 'push') {
-    // push a new screen on the stack
-    navFunction = navigation.push;
-  } else if (action == 'replace') {
-    // replace current screen
-    navFunction = navigation.replace;
-  } else if (action == 'navigate') {
-    // Return to the screen, if it exists
-    navFunction = navigation.navigate;
-    key = ROUTE_KEYS[getHrefKey(href)];
-  } else if (action == 'new') {
-    navRoute = 'Modal';
-  }
-
-  if (action == 'back' || action == 'close') {
-    navHandler = () => navigation.goBack();
-  } else {
-    navHandler = () => {
-      let preloadScreen = null;
-      if (showIndicatorId) {
-        const rootElement = element.ownerDocument;
-        const screens = rootElement.getElementsByTagNameNS(HYPERVIEW_NS, 'screen');
-        preloadScreen = Array.from(screens).find((s) => s.getAttribute('id') == showIndicatorId);
-      }
-      navFunction(
-        navRoute,
-        {
-          href,
-          preloadScreen,
-          delay,
-        },
-        {},
-        key
-      );
-    }
-  }
-
-  return navHandler;
-}
-
-/**
- *
- */
-function body(element, navigation, stylesheet, animations, onUpdate) {
-  const props = createProps(element, stylesheet, animations);
-  let component = props.animations ? Animated.View : View;
-  if (element.getAttribute('scroll')) {
-    component = props.animated ? Animated.ScrollView : ScrollView;
-  }
-
-  return React.createElement(
-    component,
-    props,
-    ...renderChildren(element, navigation, stylesheet, animations, onUpdate)
-  );
-}
-
-/**
- *
- */
-function image(element, navigation, stylesheet, animations, onUpdate) {
+export function image(element, stylesheets, animations, onUpdate, options) {
+  const { skipHref } = options || {};
   const imageProps = {};
   if (element.getAttribute('source')) {
     let source = element.getAttribute('source');
-    if (!source.startsWith('http')) {
-      source = ROOT + source;
-    }
+    source = urlParse(source, options.screenUrl, true).toString();
     imageProps.source = { uri: source };
   }
   const props = Object.assign(
-    createProps(element, stylesheet, animations),
-    imageProps
+    createProps(element, stylesheets, animations, options),
+    imageProps,
   );
-  return React.createElement(
+  const component = React.createElement(
     props.animations ? Animated.Image : Image,
-    props
+    props,
   );
+  return skipHref ?
+    component :
+    addHref(component, element, stylesheets, animations, onUpdate, options);
 }
 
 /**
  *
  */
-function input(element, navigation, stylesheet, animations, onUpdate) {
-  return React.createElement(
-    HVTextInput,
-    { element, navigation, stylesheet, animations, onUpdate }
-  );
-}
-
-/**
- *
- */
-function view(element, navigation, stylesheet, animations, onUpdate, options) {
-  const { skipHref } = options || {};
-  const props = createProps(element, stylesheet, animations);
-  const scrollable = element.getAttribute('scroll');
+export function view(element, stylesheets, animations, onUpdate, options) {
+  let viewOptions = options;
+  const { skipHref } = viewOptions || {};
+  const props = createProps(element, stylesheets, animations, viewOptions);
+  const scrollable = !!element.getAttribute('scroll');
   let c = View;
+  const inputRefs = [];
   if (props.animations) {
-    if (scrollable) {
-      c = Animated.ScrollView;
-    } else {
-      c = Animated.View;
-    }
-  } else {
-    if (scrollable) {
-      c = ScrollView;
-    } else {
-      c = View;
+    c = scrollable ? Animated.ScrollView : Animated.View;
+  } else if (scrollable) {
+    const textFields = element.getElementsByTagNameNS(HYPERVIEW_NS, 'text-field');
+    const textAreas = element.getElementsByTagNameNS(HYPERVIEW_NS, 'text-area');
+    const hasFields = textFields.length > 0 || textAreas.length > 0;
+    c = hasFields ? KeyboardAwareScrollView : ScrollView;
+    if (hasFields) {
+      props.extraScrollHeight = 32;
+      props.keyboardOpeningTime = 0;
+      props.keyboardShouldPersistTaps = 'handled';
+      props.scrollEventThrottle = 16;
+      props.getTextInputRefs = () => inputRefs;
+      const registerInputHandler = ref => inputRefs.push(ref);
+      viewOptions = { ...viewOptions, registerInputHandler };
     }
   }
 
-  let component = React.createElement(
+  if (scrollable) {
+    const scrollDirection = element.getAttribute('scroll-orientation');
+    if (scrollDirection === 'horizontal') {
+      props.horizontal = true;
+    }
+  }
+
+  const component = React.createElement(
     c,
     props,
-    ...renderChildren(element, navigation, stylesheet, animations, onUpdate)
+    ...Render.renderChildren(element, stylesheets, animations, onUpdate, viewOptions),
   );
-  return skipHref ? component : addHref(component, element, navigation, stylesheet, animations, onUpdate);
+  return skipHref ?
+    component :
+    addHref(component, element, stylesheets, animations, onUpdate, viewOptions);
 }
 
 /**
  *
  */
-function list(element, navigation, stylesheet, animations, onUpdate) {
-  return React.createElement(
-    HVFlatList,
-    { element, navigation, stylesheet, animations, onUpdate },
-  );
-}
-
-/**
- *
- */
-function sectionlist(element, navigation, stylesheet, animations, onUpdate) {
-  return React.createElement(
-    HVSectionList,
-    { element, navigation, stylesheet, animations, onUpdate },
-  );
-}
-
-
-/**
- *
- */
-function spinner(element, navigation, stylesheet, animations, onUpdate) {
-  const color = element.getAttribute('color') || undefined;
-  return React.createElement(
-    ActivityIndicator,
-    { color },
-  );
-}
-
-/**
- *
- */
-function text(element, navigation, stylesheet, animations, onUpdate, options) {
+export function text(element, stylesheets, animations, onUpdate, options) {
   const { skipHref } = options || {};
-  const props = createProps(element, stylesheet, animations);
-  let component = React.createElement(
-    props.animations? Animated.Text : Text,
+  const props = createProps(element, stylesheets, animations, options);
+  const component = React.createElement(
+    props.animations ? Animated.Text : Text,
     props,
-    ...renderChildren(element, navigation, stylesheet, animations, onUpdate)
+    ...Render.renderChildren(element, stylesheets, animations, onUpdate, options),
   );
 
-  return skipHref ? component : addHref(component, element, navigation, stylesheet, animations, onUpdate);
-}
-
-/**
- *
- */
-function renderChildren(element, navigation, stylesheet, animations, onUpdate) {
-  const children = [];
-  if (element.childNodes !== null) {
-    for (let i = 0; i < element.childNodes.length; ++i) {
-      let e = renderElement(element.childNodes.item(i), navigation, stylesheet, animations, onUpdate);
-      if (e) {
-        children.push(e);
-      }
-    }
-  }
-  return children;
-}
-
-/**
- *
- */
-function renderElement(element, navigation, stylesheet, animations, onUpdate, options) {
-
-  if (element.nodeType == 1) {
-    if (element.getAttribute('hide') == 'true') {
-      return null;
-    }
-  }
-
-  switch (element.tagName) {
-    case 'body':
-      return body(element, navigation, stylesheet, animations, onUpdate); 
-    case 'image':
-      return image(element, navigation, stylesheet, animations, onUpdate); 
-    case 'input':
-    case 'textarea':
-      return input(element, navigation, stylesheet, animations, onUpdate); 
-    case 'text':
-    case 'label':
-    case 'help':
-      return text(element, navigation, stylesheet, animations, onUpdate, options); 
-    case 'view':
-    case 'header':
-    case 'item':
-    case 'sectiontitle':
-      return view(element, navigation, stylesheet, animations, onUpdate, options); 
-    case 'list':
-      return list(element, navigation, stylesheet, animations, onUpdate); 
-    case 'sectionlist':
-      return sectionlist(element, navigation, stylesheet, animations, onUpdate); 
-    case 'spinner':
-      return spinner(element, navigation, stylesheet, animations, onUpdate); 
-  }
-
-  if (element.nodeValue && element.nodeValue.trim().length > 0) {
-    return element.nodeValue.trim();
-  }
-  return null;
-}
-
-/**
- *
- */
-function createStylesheet(element) {
-  const numericRules = [
-    'borderBottomWidth',
-    'borderLeftWidth',
-    'borderRadius',
-    'borderRightWidth',
-    'borderTopWidth',
-    'borderWidth',
-    'flex',
-    'flexGrow',
-    'flexShrink',
-    'fontSize',
-    'height',
-    'lineHeight',
-    'margin',
-    'marginBottom',
-    'marginLeft',
-    'marginRight',
-    'marginTop',
-    'padding',
-    'paddingBottom',
-    'paddingLeft',
-    'paddingRight',
-    'paddingTop',
-    'width',
-    "top",
-    "bottom",
-    "left",
-    "right",
-  ];
-  const styles = element.getElementsByTagNameNS(HYPERVIEW_NS, 'styles');
-  const stylesheet = {};
-  if (styles && styles[0]) {
-    const ruleElements = styles[0].getElementsByTagNameNS(HYPERVIEW_NS, 'style');
-
-    for (let i = 0; i < ruleElements.length; ++i) {
-      const ruleElement = ruleElements.item(i);
-      const ruleId = ruleElement.getAttribute('id');
-      if (!ruleId) {
-        return;
-      }
-
-      const ruleStyles = {};
-      for (let j = 0; j < ruleElement.attributes.length; ++j) {
-        let attr = ruleElement.attributes.item(j);
-        if (attr.name !== 'id') {
-          if (numericRules.indexOf(attr.name) >= 0) {
-            let intValue = parseInt(attr.value, 10);
-            ruleStyles[attr.name] = intValue || 0;
-          } else {
-            ruleStyles[attr.name] = attr.value;
-          }
-        }
-      }
-      stylesheet[ruleId] = ruleStyles;
-    };
-  }
-
-  return StyleSheet.create(stylesheet); 
+  return skipHref ?
+    component :
+    addHref(component, element, stylesheets, animations, onUpdate, options);
 }
 
 /**
@@ -811,14 +414,14 @@ function createAnimations(element) {
     return returnValue;
   }
 
-  const childElements = Array.from(animated.childNodes).filter((n) => n.nodeType == 1) || [];
+  const childElements = Array.from(animated.childNodes).filter(n => n.nodeType === 1) || [];
 
-  const valueElements = childElements.filter((e) => e.tagName == 'value');
-  const animationElements = childElements.filter((e) => e.tagName == 'animation');
+  const valueElements = childElements.filter(e => e.tagName === 'value');
+  const animationElements = childElements.filter(e => e.tagName === 'animation');
 
   valueElements.forEach((v) => {
     const id = v.getAttribute('id');
-    const fromValue = parseInt(v.getAttribute('from'));
+    const fromValue = parseInt(v.getAttribute('from'), 10);
     const property = v.getAttribute('property');
     animatedValues[id] = new Animated.Value(fromValue);
     animatedProperties[id] = property;
@@ -834,62 +437,76 @@ function createAnimations(element) {
 function createAnimation(element, animatedValues) {
   const type = element.getAttribute('type');
 
-  if (type == 'sequence' || type == 'parallel') {
-    const animations = Array.from(element.childNodes).filter((n) => n.nodeType == 1).map((e) => {
-      return createAnimation(e, animatedValues);
-    });
-    let animation = type == 'sequence' ? Animated.sequence(animations) : Animated.parallel(animations);
+  if (type === 'sequence' || type === 'parallel') {
+    const animations = Array.from(element.childNodes).filter(n => n.nodeType === 1).map(e => (
+      createAnimation(e, animatedValues)
+    ));
+    let animation = type === 'sequence' ? Animated.sequence(animations) : Animated.parallel(animations);
     if (element.getAttribute('loop')) {
       animation = Animated.loop(animation);
     }
     return animation;
-
-  } else if (type == 'delay') {
-    const duration = parseInt(element.getAttribute('duration'));
+  } else if (type === 'delay') {
+    const duration = parseInt(element.getAttribute('duration'), 10);
     return Animated.delay(duration);
-  } else {
-    const value = element.getAttribute('value');
-    const toValue = parseFloat(element.getAttribute('to'));
-    const duration = parseInt(element.getAttribute('duration'));
-    const delay = parseInt(element.getAttribute('delay'));
-    const easingFunc = element.getAttribute('easing') || 'linear';
-    const easing = Easing[easingFunc]();
-    return Animated.timing(
-      animatedValues[value],
-      {
-        toValue,
-        duration,
-        delay,
-        easing,
-      }
-    );
   }
 
-  return null;
+  const value = element.getAttribute('value');
+  const toValue = parseFloat(element.getAttribute('to'));
+  const duration = parseInt(element.getAttribute('duration'), 10);
+  const delay = parseInt(element.getAttribute('delay'), 10);
+  const easingFunc = element.getAttribute('easing') || 'linear';
+  const easing = Easing[easingFunc]();
+  return Animated.timing(
+    animatedValues[value],
+    {
+      toValue,
+      duration,
+      delay,
+      easing,
+    },
+  );
 }
 
 /**
  *
  */
-class HyperScreen extends React.Component {
-  constructor(props){
+export default class HyperScreen extends React.Component {
+  static createProps = createProps;
+  static renderChildren = Render.renderChildren;
+
+  constructor(props) {
     super(props);
+
+    this.navActions = ['push', 'new', 'back', 'close', 'navigate'];
+    this.updateActions = ['replace', 'replace-inner', 'append', 'prepend'];
+
     this.parser = new DOMParser();
     this.needsLoad = false;
     this.state = {
       styles: null,
       doc: null,
-      path: null,
+      url: null,
+      error: false,
     };
     this.onUpdate = this.onUpdate.bind(this);
     this.shallowClone = this.shallowClone.bind(this);
     this.shallowCloneToRoot = this.shallowCloneToRoot.bind(this);
+    this.reload = this.reload.bind(this);
+
+    this.componentRegistry = Components.getRegistry(this.props.components);
   }
 
   componentDidMount() {
-    const path = this.props.navigation.getParam('href', null);
-    const preloadScreen = this.props.navigation.getParam('preloadScreen');
-    const preloadStyles = preloadScreen ? createStylesheet(preloadScreen) : null;
+    // The screen may be rendering via a navigation from another HyperScreen.
+    // In this case, the url to load in the screen will be passed via navigation props.
+    // Otherwise, use the entrypoint URL provided as a prop to the first HyperScreen.
+    const url = this.props.navigation.state.params.url || this.props.entrypointUrl || null;
+
+    const preloadScreen = this.props.navigation.state.params.preloadScreen
+      ? PRELOAD_SCREEN[this.props.navigation.state.params.preloadScreen]
+      : null;
+    const preloadStyles = preloadScreen ? Stylesheets.createStylesheets(preloadScreen) : {};
     const animations = createAnimations(preloadScreen);
 
     this.needsLoad = true;
@@ -897,47 +514,199 @@ class HyperScreen extends React.Component {
       this.setState({
         doc: preloadScreen,
         styles: preloadStyles,
-        path,
+        error: false,
+        url,
         animations,
       });
     } else {
       this.setState({
-        path: path,
+        error: false,
+        url,
       });
     }
   }
 
+  /**
+   * Potentially updates state when navigating back to the mounted screen.
+   * If the navigation params have a different URL than the screen's URL, Update the
+   * preload screen and URL to load.
+   */
   componentWillReceiveProps(nextProps) {
-    const newHref = nextProps.navigation.state.params.href;
-    const oldHref = this.props.navigation.state.params.href;
+    const newUrl = nextProps.navigation.state.params.url;
+    const oldUrl = this.props.navigation.state.params.url;
+    const newPreloadScreen = nextProps.navigation.state.params.preloadScreen;
+    const oldPreloadScreen = this.props.navigation.state.params.preloadScreen;
 
-    if (newHref != oldHref) {
-      const preloadScreen = nextProps.navigation.getParam('preloadScreen');
-      const stylesheet = preloadScreen ? createStylesheet(preloadScreen) : null;
-      const animations = createAnimations(preloadScreen);
+    if (newPreloadScreen !== oldPreloadScreen) {
+      delete PRELOAD_SCREEN[oldPreloadScreen];
+    }
+
+    // TODO: If the preload screen is changing, delete the old one from
+    // PRELOAD_SCREENS to prevent memory leaks.
+
+    if (newUrl !== oldUrl) {
       this.needsLoad = true;
+
+      const preloadScreen = newPreloadScreen
+        ? PRELOAD_SCREEN[newPreloadScreen]
+        : null;
+
+      const doc = preloadScreen || this.state.doc;
+      const styles = preloadScreen ? Stylesheets.createStylesheets(preloadScreen) : this.state.styles;
+      const animations = preloadScreen ? createAnimations(preloadScreen) : this.state.animations;
 
       Object.entries(animations.timings).forEach(([key, timing]) => {
         timing.start();
       });
 
-      this.setState({
-        doc: preloadScreen,
-        styles: stylesheet,
-        animations: animations,
-        path: newHref,
-      });
+      this.setState({ doc, styles, animations, url: newUrl });
     }
   }
 
+  /**
+   * Clear out the preload screen associated with this screen.
+   */
+  componentWillUnmount() {
+    const { preloadScreen } = this.props.navigation.state.params;
+    if (preloadScreen && PRELOAD_SCREEN[preloadScreen]) {
+      delete PRELOAD_SCREEN[preloadScreen];
+    }
+  }
+
+  /**
+   * Fetch data from the url if the screen should reload.
+   */
   componentDidUpdate(prevProps, prevState) {
     if (this.needsLoad) {
-      this.load(this.state.path);
+      this.load(this.state.url);
       this.needsLoad = false;
     }
   }
 
-  fetchElement(href, root) {
+  /**
+   * Performs a full load of the screen.
+   */
+  load = () => {
+    const delay = this.props.navigation.state.params.delay;
+    const url = this.state.url;
+
+    const fetchPromise = () => this.props.fetch(url, { headers: getHyperviewHeaders() })
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        return response.text();
+      })
+      .then((responseText) => {
+        const doc = this.parser.parseFromString(responseText);
+        const animations = createAnimations(doc);
+        const stylesheets = Stylesheets.createStylesheets(doc);
+        ROUTE_KEYS[getHrefKey(url)] = this.props.navigation.state.key;
+
+        Object.entries(animations.timings).forEach(([key, timing]) => {
+          timing.start();
+        });
+
+        this.setState({
+          doc,
+          styles: stylesheets,
+          animations,
+          error: false,
+        });
+      })
+      .catch((reason) => {
+        this.setState({
+          error: true,
+        });
+        throw reason;
+      });
+
+    if (delay) {
+      later(parseInt(delay, 10)).then(fetchPromise);
+    } else {
+      fetchPromise();
+    }
+  }
+
+  /**
+   * Reload if an error occured.
+   */
+  reload = () => {
+    this.needsLoad = true;
+    this.setState({
+      error: false,
+    });
+  }
+
+  /**
+   * Renders the XML doc into React components. Shows blank screen until the XML doc is available.
+   */
+  render() {
+    const { doc, url, error } = this.state;
+    if (error) {
+      return (
+        <View style={{ backgroundColor: 'white', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <Text>An error occured</Text>
+          <TouchableOpacity onPress={this.reload}>
+            <Text style={{ color: '#4778FF', marginTop: 16 }}>Reload</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+    if (!doc) {
+      return (
+        <View style={{ backgroundColor: 'white', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <ActivityIndicator />
+        </View>
+      );
+    }
+    const body = this.state.doc.getElementsByTagNameNS(HYPERVIEW_NS, 'body')[0];
+    return Render.renderElement(
+      body,
+      this.state.styles,
+      this.state.animations,
+      this.onUpdate,
+      {
+        screenUrl: url,
+        componentRegistry: this.componentRegistry,
+      },
+    );
+  }
+
+  /**
+   * Returns a navigation object similar to the one provided by React Navigation,
+   * but connected to props injected by the parent app.
+   */
+  getNavigation = () => ({
+    back: this.props.back,
+    push: this.props.push,
+    replace: this.props.replace,
+    navigate: this.props.navigate,
+    openModal: this.props.openModal,
+    closeModal: this.props.closeModal,
+  })
+
+  /**
+   * Turns the href into a fetchable URL.
+   * If the href is fully qualified, return it.
+   * Otherwise, pull the protocol/domain/port from the screen's URL and append the href.
+   */
+  getUrlFromHref = (href) => {
+    const rootUrl = urlParse(href, this.state.url, true);
+    return rootUrl.toString();
+  }
+
+  /**
+   * Fetches the provided reference.
+   * - If the references is an id reference (starting with #),
+   *   returns a clone of that element.
+   * - If the reference is a full URL, fetches the URL.
+   * - If the reference is a path, fetches the path from the host of the URL
+   *   used to render the screen.
+   * Returns a promise that resolves to a DOM element.
+   */
+  fetchElement = (href, verb, root, formData) => {
+    verb = verb || 'GET';
     if (href.startsWith('#')) {
       return new Promise((resolve, reject) => {
         const element = root.getElementById(href.slice(1));
@@ -948,27 +717,149 @@ class HyperScreen extends React.Component {
       });
     }
 
-    const url = ROOT + href;
-    return fetch(
-      url,
-      {
-        headers: {
-          'Cache-Control': 'no-cache, no-store, must-revalidate',
-          'Pragma': 'no-cache',
-          'Expires': 0
-        }
-      })
-      .then((response) => response.text())
-      .then((responseText) => this.parser.parseFromString(responseText).documentElement);
+    let url = this.getUrlFromHref(href);
+    if (verb === 'GET' && formData) {
+      // For GET requests, we can't include a body so we encode the form data as a query
+      // string in the URL.
+      const queryString = formData.getParts().map(
+        e => `${encodeURIComponent(e.fieldName)}=${encodeURIComponent(e.string)}`).join('&');
+      url = `${url}?${queryString}`;
+    }
+    const options = {
+      method: verb,
+      headers: getHyperviewHeaders(),
+      // For non-GET requests, include the formdata as the body of the request.
+      body: verb === 'GET' ? undefined : formData,
+    };
+
+    return this.props.fetch(url, options)
+      .then(response => response.text())
+      .then(responseText => this.parser.parseFromString(responseText).documentElement);
   }
 
-  // UPDATE FRAGMENTS ON SCREEN
-  onUpdate(href, action, currentElement, opts) {
+  /**
+   * Creates a FormData object for the given element. Finds the closest form element ancestor
+   * and adds data for all inputs contained in the form. Returns null if the element has no
+   * form ancestor.
+   */
+  getFormData = (element) => {
+    const formElement = getAncestorByTagName(element, 'form');
+    if (!formElement) {
+      return null;
+    }
+    const formData = new FormData();
+    ['text-area', 'text-field', 'select-single', 'select-multiple']
+      // Get all inputs in the form
+      .reduce((acc, tag) => (
+        acc.concat(Array.from(formElement.getElementsByTagNameNS(HYPERVIEW_NS, tag)))
+      ), [])
+      // Append the form data for each input
+      .forEach((input) => {
+        const name = input.getAttribute('name');
+        if (input.tagName === 'select-single' || input.tagName === 'select-multiple') {
+          // Add each selected option to the form data
+          Array.from(input.getElementsByTagNameNS(HYPERVIEW_NS, 'option'))
+            .filter(opt => opt.getAttribute('selected') === 'true')
+            .forEach(opt => formData.append(name, opt.getAttribute('value')));
+        } else {
+          // Add the text input to the form data
+          formData.append(name, input.getAttribute('value'));
+        }
+      });
+    return formData;
+  }
+
+  /**
+   *
+   */
+  onUpdate = (href, action, currentElement, opts) => {
+    if (this.navActions.indexOf(action) >= 0) {
+      this.onNavigate(href, action, currentElement, opts);
+    } else if (this.updateActions.indexOf(action) >= 0) {
+      this.onUpdateFragment(href, action, currentElement, opts);
+    } else if (action === 'swap') {
+      this.onSwap(currentElement, opts.newElement);
+    } else {
+      const { behaviorElement } = opts;
+      this.onCustomUpdate(behaviorElement);
+    }
+  }
+
+  /**
+   *
+   */
+  onNavigate = (href, action, element, opts) => {
+    const navigation = this.getNavigation();
+    const { showIndicatorId, delay } = opts;
+
+    let navFunction = navigation.push;
+    let key = null;
+
+    const url = this.getUrlFromHref(href);
+
+    if (action === 'push') {
+      // push a new screen on the stack
+      navFunction = navigation.push;
+    } else if (action === 'replace') {
+      // replace current screen
+      navFunction = navigation.replace;
+    } else if (action === 'navigate') {
+      // Return to the screen, if it exists
+      navFunction = navigation.navigate;
+      key = ROUTE_KEYS[getHrefKey(url)];
+    } else if (action === 'new') {
+      navFunction = navigation.openModal;
+    } else if (action === 'close') {
+      navFunction = navigation.closeModal;
+    } else if (action === 'back') {
+      navFunction = navigation.back;
+    }
+
+    const navHandler = () => {
+      let preloadScreen = null;
+      if (showIndicatorId) {
+        const screens = this.state.doc.getElementsByTagNameNS(HYPERVIEW_NS, 'screen');
+        preloadScreen = uid();
+        PRELOAD_SCREEN[preloadScreen] = Array.from(screens).find(s => s.getAttribute('id') === showIndicatorId);
+      }
+
+      const routeParams = ((action === 'back' || action === 'close') && href === '#') ? undefined : { url, preloadScreen, delay };
+      navFunction(routeParams, key);
+    };
+
+    navHandler();
+  }
+
+  /**
+   * Handler for behaviors on the screen.
+   * @param href {string} A reference to the XML to fetch. Can be local (via id reference prepended
+   *        by #) or a
+   * remote resource.
+   * @param action {string} The name of the action to perform with the returned XML.
+   * @param currentElement {Element} The XML DOM element triggering the behavior.
+   * @param options {Object} Optional attributes:
+   *  - verb: The HTTP method to use for the request
+   *  - targetId: An id reference of the element to apply the action to. Defaults to currentElement
+   *    if not provided.
+   *  - showIndicatorIds: Space-separated list of id references to show during the fetch.
+   *  - hideIndicatorIds: Space-separated list of id references to hide during the fetch.
+   *  - delay: Minimum time to wait to fetch the resource. Indicators will be shown/hidden during
+   *    this time.
+   *  - once: If true, the action should only trigger once. If already triggered, onUpdate will be
+   *    a no-op.
+   *  - onEnd: Callback to run when the resource is fetched.
+   *  - behaviorElement: The behavior element triggering the behavior. Can be different from
+   *    the currentElement.
+   */
+  onUpdateFragment = (href, action, currentElement, opts) => {
     const options = opts || {};
-    const { targetId, showIndicatorIds, hideIndicatorIds, delay, once, onEnd } = options;
+    const {
+      verb, targetId, showIndicatorIds, hideIndicatorIds, delay, once, onEnd, behaviorElement,
+    } = options;
 
-    const url = ROOT + href;
+    const formData = this.getFormData(currentElement);
 
+    // TODO: Check ran-once on the behavior element, not current element.
     if (once && currentElement.getAttribute('ran-once')) {
       // This action is only supposed to run once, and it already ran,
       // so there's nothing more to do.
@@ -1003,18 +894,20 @@ class HyperScreen extends React.Component {
       });
     }
 
+    // Render the indicator modifications
     if (changedIndicator) {
       this.setState({
         doc: newRoot,
       });
     }
 
-    const fetchPromise = () => this.fetchElement(href, newRoot)
+    // Fetch the resource, then perform the action on the target and undo indicators.
+    const fetchPromise = () => this.fetchElement(href, verb, newRoot, formData)
       .then((newElement) => {
-
+        // If the action is only supposed to run once, set an attribute indicating
+        // that it already ran, so that it won't run again next time the action is triggered.
+        // TODO: Store ran-once on the behavior element, not current element.
         if (once) {
-          // If the action is only supposed to run once, set an attribute indicating
-          // that it already ran, so that it won't run again next time the action is triggered.
           currentElement.setAttribute('ran-once', 'true');
           newRoot = this.shallowCloneToRoot(currentElement.parentNode);
         }
@@ -1026,17 +919,17 @@ class HyperScreen extends React.Component {
           targetElement = currentElement;
         }
 
-        if (action == 'replace') {
+        if (action === 'replace') {
           const parentElement = targetElement.parentNode;
           parentElement.replaceChild(newElement, targetElement);
           newRoot = this.shallowCloneToRoot(parentElement);
         }
 
-        if (action == 'replace-inner') {
+        if (action === 'replace-inner') {
           let child = targetElement.firstChild;
           // Remove the target's children
           while (child !== null) {
-            let nextChild = child.nextSibling;
+            const nextChild = child.nextSibling;
             targetElement.removeChild(child);
             child = nextChild;
           }
@@ -1044,12 +937,12 @@ class HyperScreen extends React.Component {
           newRoot = this.shallowCloneToRoot(targetElement);
         }
 
-        if (action == 'append') {
+        if (action === 'append') {
           targetElement.appendChild(newElement);
           newRoot = this.shallowCloneToRoot(targetElement);
         }
 
-        if (action == 'prepend') {
+        if (action === 'prepend') {
           targetElement.insertBefore(newElement, targetElement.firstChild);
           newRoot = this.shallowCloneToRoot(targetElement);
         }
@@ -1078,18 +971,77 @@ class HyperScreen extends React.Component {
           });
         }
 
+        // Re-render the modifications
         this.setState({
           doc: newRoot,
         });
 
         onEnd && onEnd();
-      }
-    );
+      });
 
     if (delay) {
-      later(delay).then(fetchPromise);
+      later(parseInt(delay, 10)).then(fetchPromise);
     } else {
       fetchPromise();
+    }
+  }
+
+  /**
+   * Used internally to update the state of things like select forms.
+   */
+  onSwap = (currentElement, newElement) => {
+    const parentElement = currentElement.parentNode;
+    parentElement.replaceChild(newElement, currentElement);
+    const newRoot = this.shallowCloneToRoot(parentElement);
+    this.setState({
+      doc: newRoot,
+    });
+  }
+
+  /**
+   * Extensions for custom behaviors. Depends on callback props injected by the parent app.
+   */
+  onCustomUpdate = (behaviorElement) => {
+    const action = behaviorElement.getAttribute('action');
+    if (action === 'redux') {
+      const reduxAction = behaviorElement.getAttributeNS(REDUX_NS, 'action');
+      const extraNode = behaviorElement.getAttributeNodeNS(REDUX_NS, 'extra');
+      if (reduxAction && this.props.dispatchReduxAction) {
+        const extra = extraNode ? JSON.parse(extraNode.value) : null;
+        this.props.dispatchReduxAction({
+          type: reduxAction,
+          ...extra,
+        });
+      }
+    } else if (action === 'intercom') {
+      const intercomAction = behaviorElement.getAttributeNS(INTERCOM_NS, 'action');
+      if (intercomAction === 'open' && this.props.openHelpDesk) {
+        const topic = behaviorElement.getAttributeNS(INTERCOM_NS, 'topic');
+        this.props.openHelpDesk(topic);
+      }
+    } else if (action === 'amplitude') {
+      const name = behaviorElement.getAttributeNS(AMPLITUDE_NS, 'event');
+      if (name && this.props.logEvent) {
+        const propNode = behaviorElement.getAttributeNodeNS(AMPLITUDE_NS, 'event-props');
+        const properties = propNode ? JSON.parse(propNode.value) : undefined;
+        this.props.logEvent({ name, properties });
+      }
+    } else if (action === 'phone') {
+      const number = behaviorElement.getAttributeNS(PHONE_NS, 'number');
+      if (number && this.props.onCall) {
+        this.props.onCall(number);
+      }
+    } else if (action === 'share') {
+      // This share API is based off https://facebook.github.io/react-native/docs/0.52/share
+      const dialogTitle = behaviorElement.getAttributeNS(SHARE_NS, 'dialog-title');
+      const message = behaviorElement.getAttributeNS(SHARE_NS, 'message');
+      const subject = behaviorElement.getAttributeNS(SHARE_NS, 'subject');
+      const title = behaviorElement.getAttributeNS(SHARE_NS, 'title');
+      const url = behaviorElement.getAttributeNS(SHARE_NS, 'url');
+
+      if ((message || url) && this.props.onShare) {
+        this.props.onShare({ dialogTitle, message, subject, title, url });
+      }
     }
   }
 
@@ -1098,11 +1050,11 @@ class HyperScreen extends React.Component {
    * to the clone. The returned element will be a new object, but all of the child
    * nodes will be existing objects.
    */
-  shallowClone(element) {
+  shallowClone = (element) => {
     const newElement = element.cloneNode(false);
     let childNode = element.firstChild;
     while (childNode !== null) {
-      let nextChild = childNode.nextSibling;
+      const nextChild = childNode.nextSibling;
       newElement.appendChild(childNode);
       childNode = nextChild;
     }
@@ -1114,118 +1066,15 @@ class HyperScreen extends React.Component {
    * Returns the new root object. Essentially, this produces a new DOM object
    * that re-uses as many existing nodes as possible.
    */
-  shallowCloneToRoot(element) {
+  shallowCloneToRoot = (element) => {
     const elementClone = this.shallowClone(element);
-    if (element.nodeType == 9) {
+    if (element.nodeType === 9) {
       return elementClone;
     }
     element.parentNode.replaceChild(elementClone, element);
     const parentClone = this.shallowCloneToRoot(element.parentNode);
     return parentClone;
   }
-
-  load() {
-    const delay = this.props.navigation.getParam('delay');
-    const path = this.state.path;
-
-    const url = ROOT + path;
-    const fetchPromise = () => fetch(url, {headers: {'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache', 'Expires': 0}})
-      .then((response) => response.text())
-      .then((responseText) => {
-        const doc = this.parser.parseFromString(responseText);
-        const animations = createAnimations(doc);
-        const stylesheet = createStylesheet(doc);
-        ROUTE_KEYS[getHrefKey(path)] = this.props.navigation.state.key;
-
-        Object.entries(animations.timings).forEach(([key, timing]) => {
-          timing.start();
-        });
-
-        this.setState({
-          doc: doc,
-          styles: stylesheet,
-          animations: animations,
-        });
-      });
-
-    if (delay) {
-      later(delay).then(fetchPromise);
-    } else {
-      fetchPromise();
-    }
-  }
-
-  render() {
-    if(!this.state.doc) {
-      return (
-        <View style={{backgroundColor: 'white', flex: 1}}>
-        </View>
-      );
-    }
-    const body = this.state.doc.getElementsByTagNameNS(HYPERVIEW_NS, 'body')[0];
-    return renderElement(body, this.props.navigation, this.state.styles, this.state.animations, this.onUpdate);
-  }
 }
 
-/**
- *
- */
-const MainStack = createStackNavigator(
-  {
-    Stack: HyperScreen,
-  },
-  {
-    initialRouteName: 'Stack',
-    initialRouteParams: {
-      //href: '/dynamic_elements/index.xml',
-      href: '/index.xml',
-    },
-    headerMode: 'none',
-  }
-);
-
-/**
- *
- */
-const RootStack = createStackNavigator(
-  {
-    Main: MainStack,
-    Modal: HyperScreen,
-  },
-  {
-    mode: 'modal',
-    headerMode: 'none',
-    initialRouteName: 'Main',
-  }
-);
-
-/**
- *
- */
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      fontLoaded: false,
-    };
-  }
-
-  async componentDidMount() {
-    await Font.loadAsync({
-      'HKGrotesk-Bold': require('./assets/fonts/HKGrotesk-Bold.otf'),
-      'HKGrotesk-SemiBold': require('./assets/fonts/HKGrotesk-SemiBold.otf'),
-      'HKGrotesk-Medium': require('./assets/fonts/HKGrotesk-Medium.otf'),
-      'HKGrotesk-Regular': require('./assets/fonts/HKGrotesk-Regular.otf'),
-      'HKGrotesk-Light': require('./assets/fonts/HKGrotesk-Light.otf'),
-    });
-
-    this.setState({ fontLoaded: true });
-  }
-
-  render() {
-    if (!this.state.fontLoaded) {
-      return null;
-    }
-    return <RootStack />;
-  }
-}
+export * from 'hyperview/src/types';
