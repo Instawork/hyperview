@@ -8,7 +8,7 @@ import { action } from '@storybook/addon-actions';
 const createStory = Helpers.stories(HvSelectSingle);
 createStory('basic', ({ element, stylesheets }) => (
   <HvSelectSingle
-    animations={[]}
+    animations={null}
     element={element}
     onUpdate={action('onUpdate')}
     options={Helpers.getOptions()}

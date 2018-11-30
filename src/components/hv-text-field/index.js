@@ -5,7 +5,7 @@ import type { Props, State } from './types';
 import React, { PureComponent } from 'react';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { TextInput } from 'react-native';
-import TinyMask from 'hyperview/mask.js';
+import TinyMask from 'hyperview/src/mask.js';
 import { createProps } from 'hyperview/src/services';
 
 export default class HvTextField extends PureComponent<Props, State> {

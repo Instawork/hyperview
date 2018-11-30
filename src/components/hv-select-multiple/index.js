@@ -3,6 +3,7 @@
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import React, { PureComponent } from 'react';
+import type { DOMString } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { Props } from './types';
 import { View } from 'react-native';
@@ -20,16 +21,18 @@ export default class HvSelectMultiple extends PureComponent<Props> {
    * Callback passed to children. Option components invoke this callback when toggles.
    * Will update the XML DOM to toggle the option with the given value.
    */
-  onToggle = (selectedValue: string) => {
+  onToggle = (selectedValue: ?DOMString) => {
     const { element, onUpdate } = this.props;
     const newElement = element.cloneNode(true);
     const options = newElement.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'option');
     for (let i = 0; i < options.length; i += 1) {
       const option = options.item(i);
-      const value = option.getAttribute('value');
-      if (value === selectedValue) {
-        const selected = option.getAttribute('selected') === 'true';
-        option.setAttribute('selected', selected ? 'false' : 'true');
+      if (option) {
+        const value = option.getAttribute('value');
+        if (value === selectedValue) {
+          const selected = option.getAttribute('selected') === 'true';
+          option.setAttribute('selected', selected ? 'false' : 'true');
+        }
       }
     }
     onUpdate('#', 'swap', element, { newElement });

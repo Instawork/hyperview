@@ -4,13 +4,13 @@
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type { Animations, Element, HvComponentOnUpdate, HvComponentOptions, StyleSheets } from 'hyperview/src/types';
 import { LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
-import { image, text, view } from 'hyperview/App';
+import { image, text, view } from 'hyperview/src';
 import React from 'react';
 
 export const renderElement = (
   element: Element,
   stylesheets: StyleSheets,
-  animations: Animations,
+  animations: ?Animations,
   onUpdate: HvComponentOnUpdate,
   options: HvComponentOptions,
 ) => {
@@ -68,7 +68,7 @@ export const renderElement = (
 export const renderChildren = (
   element: Element,
   stylesheets: StyleSheets,
-  animations: Animations,
+  animations: ?Animations,
   onUpdate: HvComponentOnUpdate,
   options: HvComponentOptions,
 ) => {

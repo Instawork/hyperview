@@ -51,17 +51,19 @@ export default class HvSectionList extends PureComponent<Props, State> {
 
     for (let i = 0; i < sectionElements.length; i += 1) {
       const sectionElement = sectionElements.item(i);
-      const itemElements = sectionElement.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'item');
-      const items = [];
-      for (let j = 0; j < itemElements.length; j += 1) {
-        const itemElement = itemElements.item(j);
-        items.push(itemElement);
+      if (sectionElement) {
+        const itemElements = sectionElement.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'item');
+        const items = [];
+        for (let j = 0; j < itemElements.length; j += 1) {
+          const itemElement = itemElements.item(j);
+          items.push(itemElement);
+        }
+        const titleElement = sectionElement.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'section-title').item(0);
+        sections.push({
+          title: titleElement,
+          data: items,
+        });
       }
-      const titleElement = sectionElement.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'section-title').item(0);
-      sections.push({
-        title: titleElement,
-        data: items,
-      });
     }
 
     const listProps = {
@@ -74,6 +76,7 @@ export default class HvSectionList extends PureComponent<Props, State> {
       ),
       // $FlowFixMe: return value should be of ?React.Element<any>
       renderSectionHeader: ({ section: { title } }) => (
+        // $FlowFixMe
         Render.renderElement(title, stylesheets, animations, onUpdate, options)
       ),
     };

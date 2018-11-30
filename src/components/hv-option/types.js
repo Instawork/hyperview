@@ -1,16 +1,11 @@
 // @flow
 
-import type { Animations, DOMString, Element, HvComponentOptions, StyleSheets } from 'hyperview';
+import type { Animations, Element, HvComponentOnUpdate, HvComponentOptions, StyleSheets } from 'hyperview/src/types';
 
 export type Props = {|
-  animations: Animations,
+  animations: ?Animations,
   element: Element,
-  onUpdate: (
-    path: DOMString,
-    action: DOMString,
-    element: Element,
-    options: HvComponentOptions,
-  ) => void,
+  onUpdate: HvComponentOnUpdate,
   options: HvComponentOptions,
   stylesheets: StyleSheets,
 |};

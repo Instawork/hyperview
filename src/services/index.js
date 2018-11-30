@@ -31,7 +31,7 @@ export const getFirstTag = (document: Document, localName: LocalName) => {
 export const createProps = (
   element: Element,
   stylesheets: StyleSheets,
-  animations: Animations,
+  animations: ?Animations,
   options: HvComponentOptions,
 ) => {
   const numericRules = [
@@ -98,13 +98,15 @@ export const createProps = (
 
   if (props.animatedValues) {
     props.animatedValues.split(' ').forEach((v) => {
-      const value = animations.values[v];
-      const property = animations.properties[v];
-      if (value !== undefined && property !== undefined) {
-        const animatedStyle = {};
-        animatedStyle[property] = value;
-        props.style = props.style || [];
-        props.style.push(animatedStyle);
+      if (animations) {
+        const value = animations.values[v];
+        const property = animations.properties[v];
+        if (value !== undefined && property !== undefined) {
+          const animatedStyle = {};
+          animatedStyle[property] = value;
+          props.style = props.style || [];
+          props.style.push(animatedStyle);
+        }
       }
     });
   }

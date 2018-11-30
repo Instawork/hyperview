@@ -8,7 +8,7 @@ import { action } from '@storybook/addon-actions';
 const createStory = Helpers.stories(HvTextArea);
 createStory('basic', ({ element, stylesheets }) => (
   <HvTextArea
-    animations={[]}
+    animations={null}
     element={element}
     onUpdate={action('onUpdate')}
     options={Helpers.getOptions()}

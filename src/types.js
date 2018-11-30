@@ -1,6 +1,6 @@
 // @flow
 
-import type { ComponentType } from 'react';
+import type { ComponentType, ElementRef } from 'react';
 import type { StyleSheet } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 
 export type DOMString = string;
@@ -46,7 +46,7 @@ export type NodeType = $Values<typeof NODE_TYPE>;
 
 export type Node = {
   +attributes: ?NamedNodeMap,
-  +childNodes: ?NodeList,
+  +childNodes: ?NodeList<Node>,
   +firstChild: ?Node,
   +lastChild: ?Node,
   +localName: ?LocalName,
@@ -59,7 +59,6 @@ export type Node = {
   +parentNode: ?Node,
   +previousSibling: ?Node,
   appendChild: (newChild: Node) => Node,
-  cloneNode: (deep: boolean) => Node,
   hasAttributes: () => boolean,
   hasChildNodes: () => boolean,
   insertBefore: (newChild: Node, refChild: Node) => Node,
@@ -107,20 +106,21 @@ export type Document = Node & {
   createProcessingInstruction: (target: DOMString, data: DOMString) => ProcessingInstruction,
   createTextNode: (data: DOMString) => Node,
   getElementById: (elementId: DOMString) => ?Element,
-  getElementsByTagName: (tagName: DOMString) => NodeList,
-  getElementsByTagNameNS: (namespaceURI: NamespaceURI, localName: LocalName) => NodeList,
+  getElementsByTagName: (tagName: DOMString) => NodeList<Element>,
+  getElementsByTagNameNS: (namespaceURI: NamespaceURI, localName: LocalName) => NodeList<Element>,
   importNode: (importedNode: Node, deep: boolean) => Node,
 };
 
 export type Element = Node & {
+  cloneNode: (deep: boolean) => Element,
   tagName: DOMString,
   localName: LocalName,
   getAttribute: (name: DOMString) => ?DOMString,
   getAttributeNode: (name: DOMString) => ?Attribute,
   getAttributeNodeNS: (namespaceURI: NamespaceURI, localName: LocalName) => ?Attribute,
   getAttributeNS: (namespaceURI: NamespaceURI, localName: LocalName) => ?DOMString,
-  getElementsByTagName: (name: DOMString) => NodeList,
-  getElementsByTagNameNS: (namespaceURI: NamespaceURI, localName: LocalName) => NodeList,
+  getElementsByTagName: (name: DOMString) => NodeList<Element>,
+  getElementsByTagNameNS: (namespaceURI: NamespaceURI, localName: LocalName) => NodeList<Element>,
   hasAttribute: (name: DOMString) => boolean,
   hasAttributeNS: (namespaceURI: NamespaceURI, localName: LocalName) => boolean,
   removeAttribute: (name: DOMString) => void,
@@ -166,9 +166,9 @@ export type CDATASection = CharacterData & {
   nodeType: typeof NODE_TYPE.CDATA_SECTION_NODE,
 };
 
-export type NodeList = {
+export type NodeList<T> = {
   length: number,
-  item: (index: number) => ?Node,
+  item: (index: number) => ?T,
 };
 
 export type NamedNodeMap = {
@@ -202,22 +202,32 @@ export type ComponentRegistry = {
 };
 
 export type HvComponentOptions = {
-  componentRegistry: ComponentRegistry,
-  pressed: ?boolean,
-  focused: ?boolean,
-  selected: ?boolean,
-  pressedSelected: ?boolean,
+  behaviorElement?: ?Element,
+  componentRegistry?: ComponentRegistry,
+  delay?: ?DOMString,
+  focused?: ?boolean,
+  hideIndicatorIds?: ?DOMString,
+  once?: ?DOMString,
+  onEnd?: ?() => void,
+  onSelect?: ?(value: ?DOMString) => void,
+  onToggle?: ?(value: ?DOMString) => void,
+  pressed?: ?boolean,
+  pressedSelected?: ?boolean,
+  registerInputHandler?: (ref: ?ElementRef<*>) => void,
+  selected?: ?boolean,
+  showIndicatorIds?: ?DOMString,
+  targetId?: ?DOMString,
 };
 
 export type HvComponentOnUpdate = (
-  path: DOMString,
+  path: ?DOMString,
   action: DOMString,
   element: Element,
   options: HvComponentOptions,
 ) => void;
 
 export type HvComponentProps = {|
-  animations: Animations,
+  animations: ?Animations,
   element: Element,
   onUpdate: HvComponentOnUpdate,
   options: HvComponentOptions,
