@@ -63,7 +63,7 @@ const ProjectTitle = () => (
     <br />
     as easy as creating a website.
     <small>
-    Hyperview is a new hypermedia format and cross-platform client
+    Hyperview is a new hypermedia format and React Native client
     <br />
     for developing server-driven mobile apps.
     </small>
