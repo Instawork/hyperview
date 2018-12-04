@@ -19,6 +19,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import React from 'react';
 import VisibilityDetectingView from './VisibilityDetectingView.js';
 import { createProps, getFirstTag } from 'hyperview/src/services';
+import { version } from '../package.json';
 import urlParse from 'url-parse';
 
 const HYPERVIEW_NS = Namespaces.HYPERVIEW;
@@ -31,7 +32,7 @@ const SHARE_NS = Namespaces.SHARE;
 const ROUTE_KEYS = {};
 const PRELOAD_SCREEN = {};
 
-const HYPERVIEW_VERSION = '0.6';
+const HYPERVIEW_VERSION = version;
 
 function uid() {
   return Date.now(); // Not trully unique but sufficient for our use-case
