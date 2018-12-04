@@ -50,7 +50,7 @@ A `<view>` element can only appear anywhere within a `<screen>` element.
 ## Attributes
 * [Behavior attributes](#behavior-attributes)
 * [`style`](#style)
-* [`number-of-lines`](#number-of-lines)
+* [`numberOfLines`](#numberoflines)
 * [`id`](#id)
 * [`hide`](#hide)
 
@@ -64,7 +64,7 @@ A `<view>` element accepts the standard [behavior attributes](/docs/reference_be
 
 A space-separated list of styles to apply to the element. See [Styles](/docs/reference_style). Note that text style rules will cannot be applied to a `<view>`.
 
-#### `number-of-lines`
+#### `numberOfLines`
 | Type     | Required |
 | -------- | -------- |
 | integer  | No       |
