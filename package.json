@@ -35,10 +35,9 @@
     "xmldom": "0.1.27"
   },
   "peerDependencies": {
-    "react": "16.2.0",
-    "react-native": "0.52.2",
-    "react-native-keyboard-aware-scrollview": "2.0.0",
-    "react-navigation": "1.0.0-beta.11"
+    "react": ">= 16.2.0",
+    "react-native": " >= 0.52.2",
+    "react-native-keyboard-aware-scrollview": "^2.0.0"
   },
   "devDependencies": {
     "@storybook/addon-actions": "3.3.15",
