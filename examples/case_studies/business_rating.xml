@@ -63,12 +63,12 @@
            id="ShiftItem__Info"
            marginLeft="16" />
     <style color="#4E4D4D"
-           fontFamily="HKGrotesk-Regular"
+           fontWeight="normal"
            fontSize="16"
            id="ShiftItem__WorkerName"
            lineHeight="24" />
     <style color="#8D9494"
-           fontFamily="HKGrotesk-Regular"
+           fontWeight="normal"
            fontSize="16"
            id="ShiftItem__Details"
            lineHeight="24" />

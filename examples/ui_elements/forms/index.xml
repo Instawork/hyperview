@@ -44,7 +44,7 @@
       <style flex="1"
              flexDirection="row"
              id="Item__Left" />
-      <style fontFamily="HKGrotesk-Regular"
+      <style fontWeight="normal"
              fontSize="18"
              id="Item__Label" />
       <style backgroundColor="#FBB90E"

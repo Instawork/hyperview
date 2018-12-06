@@ -80,7 +80,7 @@
       </style>
 
       <style id="Select__Label"
-             fontFamily="HKGrotesk-Regular"
+             fontWeight="normal"
              color="#4e4d4d"
              fontSize="16"
              lineHeight="18"
@@ -116,7 +116,7 @@
         </modifier>
       </style>
       <style id="SelectCustom__Label"
-             fontFamily="HKGrotesk-Regular"
+             fontWeight="normal"
              color="#4e4d4d"
              fontSize="16"
              lineHeight="18"

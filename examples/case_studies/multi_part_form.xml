@@ -72,7 +72,7 @@
         </modifier>
       </style>
       <style id="Select__Label"
-             fontFamily="HKGrotesk-Regular"
+             fontWeight="normal"
              color="#4e4d4d"
              fontSize="16"
              lineHeight="18">
@@ -104,7 +104,7 @@
         </modifier>
       </style>
       <style id="SelectCustom__Label"
-             fontFamily="HKGrotesk-Regular"
+             fontWeight="normal"
              color="#4e4d4d"
              fontSize="16"
              lineHeight="18"
@@ -145,7 +145,7 @@
              borderBottomWidth="1"
              borderColor="#4E4D4D"
              flex="1"
-             fontFamily="HKGrotesk-Regular"
+             fontWeight="normal"
              fontSize="16"
              id="input"
              marginLeft="24"
@@ -172,7 +172,7 @@
              lineHeight="24"
              marginBottom="8" />
       <style borderColor="#FF4847"
-             fontFamily="HKGrotesk-Regular"
+             fontWeight="normal"
              fontSize="16"
              marginLeft="24"
              marginRight="24"
@@ -197,7 +197,7 @@
              paddingBottom="8" />
       <style id="Button__Label"
              color="white"
-             fontFamily="HKGrotesk-Regular"
+             fontWeight="normal"
              fontSize="16"
              lineHeight="18" />
     </styles>

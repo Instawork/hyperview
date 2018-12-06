@@ -45,7 +45,7 @@
              borderBottomWidth="1"
              borderColor="#4E4D4D"
              flex="1"
-             fontFamily="HKGrotesk-Regular"
+             fontWeight="normal"
              fontSize="16"
              id="input"
              paddingBottom="8"
@@ -70,7 +70,7 @@
              lineHeight="24"
              marginBottom="8" />
       <style borderColor="#FF4847"
-             fontFamily="HKGrotesk-Regular"
+             fontWeight="normal"
              fontSize="16"
              id="help"
              lineHeight="24"

@@ -5,7 +5,7 @@
       <style id="Main" flex="1" marginBottom="40" />
 
       <style  id="FormGroup" flex="1" marginLeft="24" marginRight="24" marginTop="24" />
-      <style id="Input" borderBottomColor="#E1E1E1" borderBottomWidth="1" borderColor="#4E4D4D" flex="1" fontFamily="HKGrotesk-Regular" fontSize="16" paddingBottom="8" paddingTop="8">
+      <style id="Input" borderBottomColor="#E1E1E1" borderBottomWidth="1" borderColor="#4E4D4D" flex="1" fontWeight="normal" fontSize="16" paddingBottom="8" paddingTop="8">
         <modifier focused="true">
           <style borderBottomColor="#4778FF" />
         </modifier>
@@ -16,7 +16,7 @@
         </modifier>
       </style>
       <style id="Label" borderColor="#4E4D4D" fontFamily="HKGrotesk-Bold" fontSize="16" lineHeight="24" marginBottom="8" />
-      <style id="Help" borderColor="#FF4847" fontFamily="HKGrotesk-Regular" fontSize="16" lineHeight="24" marginTop="16" />
+      <style id="Help" borderColor="#FF4847" fontWeight="normal" fontSize="16" lineHeight="24" marginTop="16" />
       <style id="Help--Error" color="#FF4847" />
       <style id="Submit" color="#4778FF" marginLeft="24" marginTop="16" fontSize="16" lineHeight="24" fontFamily="HKGrotesk-Bold" fontWeight="bold" />
     </styles>
