@@ -164,7 +164,7 @@
         </modifier>
       </style>
       <style borderColor="#4E4D4D"
-             fontFamily="HKGrotesk-Bold"
+             fontWeight="bold"
              fontSize="16"
              id="label"
              marginLeft="24"

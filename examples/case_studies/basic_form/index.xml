@@ -15,10 +15,10 @@
           <style borderBottomColor="#FF4847" />
         </modifier>
       </style>
-      <style id="Label" borderColor="#4E4D4D" fontFamily="HKGrotesk-Bold" fontSize="16" lineHeight="24" marginBottom="8" />
+      <style id="Label" borderColor="#4E4D4D" fontWeight="bold" fontSize="16" lineHeight="24" marginBottom="8" />
       <style id="Help" borderColor="#FF4847" fontWeight="normal" fontSize="16" lineHeight="24" marginTop="16" />
       <style id="Help--Error" color="#FF4847" />
-      <style id="Submit" color="#4778FF" marginLeft="24" marginTop="16" fontSize="16" lineHeight="24" fontFamily="HKGrotesk-Bold" fontWeight="bold" />
+      <style id="Submit" color="#4778FF" marginLeft="24" marginTop="16" fontSize="16" lineHeight="24" fontWeight="bold" fontWeight="bold" />
     </styles>
     <body style="Body" scroll="true">
       <form id="myForm">

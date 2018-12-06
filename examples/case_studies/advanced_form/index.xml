@@ -37,7 +37,7 @@
         </modifier>
       </style>
 
-      <style id="Tag__Label" fontFamily="HKGrotesk-Bold" color="#4e4d4d" fontSize="16" lineHeight="18">
+      <style id="Tag__Label" fontWeight="bold" color="#4e4d4d" fontSize="16" lineHeight="18">
         <modifier selected="true">
           <style color="white" />
         </modifier>

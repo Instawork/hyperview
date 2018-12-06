@@ -24,7 +24,7 @@
              flex="1"
              id="Main" />
       <style color="black"
-             fontFamily="HKGrotesk-Bold"
+             fontWeight="bold"
              fontSize="32"
              id="Title"
              lineHeight="40"
@@ -36,7 +36,7 @@
              id="Section"
              marginBottom="24"
              marginTop="24" />
-      <style fontFamily="HKGrotesk-Bold"
+      <style fontWeight="bold"
              fontSize="20"
              id="Section__Header"
              lineHeight="24"
@@ -119,7 +119,7 @@
              id="WorkerInfo__Avatar"
              width="72" />
       <style color="#4E4D4D"
-             fontFamily="HKGrotesk-Bold"
+             fontWeight="bold"
              fontSize="16"
              id="WorkerInfo__Name"
              lineHeight="24"
@@ -156,7 +156,7 @@
              color="#FF4847"
              id="input--error" />
       <style borderColor="#4E4D4D"
-             fontFamily="HKGrotesk-Bold"
+             fontWeight="bold"
              fontSize="16"
              id="label"
              lineHeight="24"

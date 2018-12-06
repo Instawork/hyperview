@@ -49,14 +49,14 @@
              id="Item__Label" />
       <style backgroundColor="#FBB90E"
              color="white"
-             fontFamily="HKGrotesk-Bold"
+             fontWeight="bold"
              fontSize="12"
              id="Item__Label--WIP"
              lineHeight="24"
              marginLeft="8"
              paddingLeft="4"
              paddingRight="4" />
-      <style fontFamily="HKGrotesk-Bold"
+      <style fontWeight="bold"
              fontSize="18"
              id="Item__Chevron" />
     </styles>

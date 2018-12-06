@@ -32,7 +32,7 @@
     <style flexDirection="row"
            id="Section__Top"
            justifyContent="space-between" />
-    <style fontFamily="HKGrotesk-Bold"
+    <style fontWeight="bold"
            fontSize="20"
            id="Section__Header"
            lineHeight="24"
@@ -216,7 +216,7 @@
            flex="1"
            id="Body" />
     <style color="black"
-           fontFamily="HKGrotesk-Bold"
+           fontWeight="bold"
            fontSize="32"
            id="Title"
            lineHeight="40"

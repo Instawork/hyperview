@@ -37,7 +37,7 @@
              margin="24"
              padding="24" />
       <style color="white"
-             fontFamily="HKGrotesk-Bold"
+             fontWeight="bold"
              fontSize="24"
              id="Button__Label" />
       <style flex="1"

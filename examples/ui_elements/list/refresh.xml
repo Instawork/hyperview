@@ -46,7 +46,7 @@
              id="Item__Label" />
       <style color="red"
              id="Item__Label--Special" />
-      <style fontFamily="HKGrotesk-Bold"
+      <style fontWeight="bold"
              fontSize="18"
              id="Item__Chevron" />
       <style flex="1"
