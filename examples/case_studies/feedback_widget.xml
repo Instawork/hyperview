@@ -15,7 +15,7 @@
            marginRight="16"
            width="24" />
     <style color="black"
-           fontFamily="HKGrotesk-SemiBold"
+           fontWeight="600"
            fontSize="24"
            id="Header__Title" />
     <style backgroundColor="white"
@@ -45,7 +45,7 @@
            backgroundColor="#ff4847" />
     <style id="Compliment__Label"
            color="white"
-           fontFamily="HKGrotesk-SemiBold"
+           fontWeight="600"
            fontSize="16" />
     <style id="Compliment__Badge"
            backgroundColor="white"
@@ -56,7 +56,7 @@
            flex="0" />
     <style id="Compliment__BadgeLabel"
            color="#4e4d4d"
-           fontFamily="HKGrotesk-SemiBold"
+           fontWeight="600"
            fontSize="12"
            textAlign="center" />
     <style id="FeedbackContainer"

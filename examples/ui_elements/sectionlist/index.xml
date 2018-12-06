@@ -12,12 +12,12 @@
              paddingRight="24"
              paddingTop="24" />
       <style color="blue"
-             fontFamily="HKGrotesk-SemiBold"
+             fontWeight="600"
              fontSize="16"
              id="Header__Back"
              paddingRight="16" />
       <style color="black"
-             fontFamily="HKGrotesk-SemiBold"
+             fontWeight="600"
              fontSize="24"
              id="Header__Title" />
       <style backgroundColor="white"
@@ -26,7 +26,7 @@
       <style borderColor="red"
              borderRadius="4"
              borderWidth="2"
-             fontFamily="HKGrotesk-SemiBold"
+             fontWeight="600"
              fontSize="16"
              id="Description"
              margin="24"
@@ -41,10 +41,10 @@
              justifyContent="space-between"
              paddingLeft="24"
              paddingRight="24" />
-      <style fontFamily="HKGrotesk-Regular"
+      <style fontWeight="normal"
              fontSize="18"
              id="Item__Label" />
-      <style fontFamily="HKGrotesk-Bold"
+      <style fontWeight="bold"
              fontSize="18"
              id="Item__Chevron" />
     </styles>
@@ -93,12 +93,12 @@
              paddingRight="24"
              paddingTop="24" />
       <style color="blue"
-             fontFamily="HKGrotesk-SemiBold"
+             fontWeight="600"
              fontSize="16"
              id="Header__Back"
              paddingRight="16" />
       <style color="black"
-             fontFamily="HKGrotesk-SemiBold"
+             fontWeight="600"
              fontSize="24"
              id="Header__Title" />
       <style backgroundColor="white"

@@ -12,18 +12,18 @@
              paddingRight="24"
              paddingTop="24" />
       <style color="blue"
-             fontFamily="HKGrotesk-SemiBold"
+             fontWeight="600"
              fontSize="16"
              id="Header__Back"
              paddingRight="16" />
       <style color="black"
-             fontFamily="HKGrotesk-SemiBold"
+             fontWeight="600"
              fontSize="24"
              id="Header__Title" />
       <style backgroundColor="white"
              flex="1"
              id="Body" />
-      <style fontFamily="HKGrotesk-SemiBold"
+      <style fontWeight="600"
              fontSize="16"
              id="Description"
              marginLeft="24"
@@ -72,7 +72,7 @@
         </modifier>
       </style>
       <style id="Select__Label"
-             fontFamily="HKGrotesk-Regular"
+             fontWeight="normal"
              color="#4e4d4d"
              fontSize="16"
              lineHeight="18">
@@ -104,14 +104,14 @@
         </modifier>
       </style>
       <style id="SelectCustom__Label"
-             fontFamily="HKGrotesk-Regular"
+             fontWeight="normal"
              color="#4e4d4d"
              fontSize="16"
              lineHeight="18"
              textAlign="center">
         <modifier selected="true">
           <style color="#4778FF"
-                 fontFamily="HKGrotesk-Medium" />
+                 fontWeight="500" />
         </modifier>
       </style>
       <style id="SelectCustom__ImageWrapper"
@@ -145,7 +145,7 @@
              borderBottomWidth="1"
              borderColor="#4E4D4D"
              flex="1"
-             fontFamily="HKGrotesk-Regular"
+             fontWeight="normal"
              fontSize="16"
              id="input"
              marginLeft="24"
@@ -164,7 +164,7 @@
         </modifier>
       </style>
       <style borderColor="#4E4D4D"
-             fontFamily="HKGrotesk-Bold"
+             fontWeight="bold"
              fontSize="16"
              id="label"
              marginLeft="24"
@@ -172,7 +172,7 @@
              lineHeight="24"
              marginBottom="8" />
       <style borderColor="#FF4847"
-             fontFamily="HKGrotesk-Regular"
+             fontWeight="normal"
              fontSize="16"
              marginLeft="24"
              marginRight="24"
@@ -197,7 +197,7 @@
              paddingBottom="8" />
       <style id="Button__Label"
              color="white"
-             fontFamily="HKGrotesk-Regular"
+             fontWeight="normal"
              fontSize="16"
              lineHeight="18" />
     </styles>

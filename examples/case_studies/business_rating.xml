@@ -15,7 +15,7 @@
            marginRight="16"
            width="24" />
     <style color="black"
-           fontFamily="HKGrotesk-SemiBold"
+           fontWeight="600"
            fontSize="24"
            id="Header__Title" />
     <style backgroundColor="white"
@@ -32,7 +32,7 @@
     <style flexDirection="row"
            id="Section__Top"
            justifyContent="space-between" />
-    <style fontFamily="HKGrotesk-Bold"
+    <style fontWeight="bold"
            fontSize="20"
            id="Section__Header"
            lineHeight="24"
@@ -40,7 +40,7 @@
            marginLeft="24"
            marginRight="24" />
     <style color="#4778FF"
-           fontFamily="HKGrotesk-SemiBold"
+           fontWeight="600"
            fontSize="16"
            id="Section__Action"
            lineHeight="24"
@@ -63,12 +63,12 @@
            id="ShiftItem__Info"
            marginLeft="16" />
     <style color="#4E4D4D"
-           fontFamily="HKGrotesk-Regular"
+           fontWeight="normal"
            fontSize="16"
            id="ShiftItem__WorkerName"
            lineHeight="24" />
     <style color="#8D9494"
-           fontFamily="HKGrotesk-Regular"
+           fontWeight="normal"
            fontSize="16"
            id="ShiftItem__Details"
            lineHeight="24" />
@@ -216,7 +216,7 @@
            flex="1"
            id="Body" />
     <style color="black"
-           fontFamily="HKGrotesk-Bold"
+           fontWeight="bold"
            fontSize="32"
            id="Title"
            lineHeight="40"

@@ -21,7 +21,7 @@
         </modifier>
       </style>
 
-      <style id="Select__Label" fontFamily="HKGrotesk-Regular" color="#4e4d4d" fontSize="16" lineHeight="18">
+      <style id="Select__Label" fontWeight="normal" color="#4e4d4d" fontSize="16" lineHeight="18">
         <modifier selected="true">
           <style color="#312f2f" />
         </modifier>
@@ -37,7 +37,7 @@
         </modifier>
       </style>
 
-      <style id="Tag__Label" fontFamily="HKGrotesk-Bold" color="#4e4d4d" fontSize="16" lineHeight="18">
+      <style id="Tag__Label" fontWeight="bold" color="#4e4d4d" fontSize="16" lineHeight="18">
         <modifier selected="true">
           <style color="white" />
         </modifier>
@@ -45,7 +45,7 @@
 
       <style id="OtherLocation" />
       <style id="FormGroup" flex="1" marginLeft="24" marginRight="24" />
-      <style id="Input" borderBottomColor="#E1E1E1" borderBottomWidth="1" borderColor="#4E4D4D" flex="1" fontFamily="HKGrotesk-Regular" fontSize="16" paddingBottom="8" paddingTop="8">
+      <style id="Input" borderBottomColor="#E1E1E1" borderBottomWidth="1" borderColor="#4E4D4D" flex="1" fontWeight="normal" fontSize="16" paddingBottom="8" paddingTop="8">
         <modifier focused="true">
           <style borderBottomColor="#4778FF" />
         </modifier>

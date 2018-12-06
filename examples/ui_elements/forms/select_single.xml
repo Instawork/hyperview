@@ -12,19 +12,19 @@
              paddingRight="24"
              paddingTop="24" />
       <style color="blue"
-             fontFamily="HKGrotesk-SemiBold"
+             fontWeight="600"
              fontSize="16"
              id="Header__Back"
              paddingRight="16" />
       <style color="black"
-             fontFamily="HKGrotesk-SemiBold"
+             fontWeight="600"
              fontSize="24"
              id="Header__Title" />
       <style backgroundColor="white"
              flex="1"
              id="Body" />
       <style 
-             fontFamily="HKGrotesk-SemiBold"
+             fontWeight="600"
              fontSize="16"
              id="Description"
              marginLeft="24"
@@ -80,7 +80,7 @@
       </style>
 
       <style id="Select__Label"
-             fontFamily="HKGrotesk-Regular"
+             fontWeight="normal"
              color="#4e4d4d"
              fontSize="16"
              lineHeight="18"
@@ -116,14 +116,14 @@
         </modifier>
       </style>
       <style id="SelectCustom__Label"
-             fontFamily="HKGrotesk-Regular"
+             fontWeight="normal"
              color="#4e4d4d"
              fontSize="16"
              lineHeight="18"
              textAlign="center"
       >
         <modifier selected="true">
-          <style color="#4778FF" fontFamily="HKGrotesk-Medium" />
+          <style color="#4778FF" fontWeight="500" />
         </modifier>
       </style>
 
