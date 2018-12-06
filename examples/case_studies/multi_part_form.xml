@@ -111,7 +111,7 @@
              textAlign="center">
         <modifier selected="true">
           <style color="#4778FF"
-                 fontFamily="HKGrotesk-Medium" />
+                 fontWeight="500" />
         </modifier>
       </style>
       <style id="SelectCustom__ImageWrapper"

@@ -103,7 +103,7 @@
       <style backgroundColor="#80AAFF"
              id="BottomSheet__Button--Disabled" />
       <style color="white"
-             fontFamily="HKGrotesk-Medium"
+             fontWeight="500"
              fontSize="16"
              id="BottomSheet__ButtonLabel"
              lineHeight="24" />

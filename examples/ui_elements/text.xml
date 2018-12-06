@@ -44,7 +44,7 @@
       <style fontWeight="bold"
              fontSize="18"
              id="Item__Chevron" />
-      <style fontFamily="HKGrotesk-Medium"
+      <style fontWeight="500"
              fontSize="24"
              id="Basic"
              margin="24" />

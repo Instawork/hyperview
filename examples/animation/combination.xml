@@ -170,7 +170,7 @@
              id="stepNumber" />
       <style color="white"
              flex="1"
-             fontFamily="HKGrotesk-Medium"
+             fontWeight="500"
              fontSize="24"
              fontWeight="500"
              id="stepLabel"

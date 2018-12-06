@@ -123,7 +123,7 @@
              textAlign="center"
       >
         <modifier selected="true">
-          <style color="#4778FF" fontFamily="HKGrotesk-Medium" />
+          <style color="#4778FF" fontWeight="500" />
         </modifier>
       </style>
 

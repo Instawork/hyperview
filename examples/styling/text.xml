@@ -59,11 +59,11 @@
              id="Text--Medium" />
       <style fontSize="72"
              id="Text--Large" />
-      <style fontFamily="HKGrotesk-Light"
+      <style fontWeight="300"
              id="Text--LightWeight" />
       <style fontWeight="normal"
              id="Text--RegularWeight" />
-      <style fontFamily="HKGrotesk-Medium"
+      <style fontWeight="500"
              id="Text--MediumWeight" />
       <style fontWeight="600"
              id="Text--SemiBoldWeight" />
