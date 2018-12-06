@@ -59,12 +59,12 @@
              paddingRight="24"
              paddingTop="24" />
       <style color="blue"
-             fontFamily="HKGrotesk-SemiBold"
+             fontWeight="600"
              fontSize="16"
              id="Header__Back"
              paddingRight="16" />
       <style color="black"
-             fontFamily="HKGrotesk-SemiBold"
+             fontWeight="600"
              fontSize="24"
              id="Header__Title" />
       <style backgroundColor="white"

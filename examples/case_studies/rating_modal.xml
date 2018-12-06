@@ -14,7 +14,7 @@
              marginRight="16"
              width="32" />
       <style color="black"
-             fontFamily="HKGrotesk-SemiBold"
+             fontWeight="600"
              fontSize="24"
              id="Header__Title" />
       <style backgroundColor="white"

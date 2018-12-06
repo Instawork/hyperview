@@ -99,12 +99,12 @@
              paddingRight="24"
              paddingTop="24" />
       <style color="blue"
-             fontFamily="HKGrotesk-SemiBold"
+             fontWeight="600"
              fontSize="16"
              id="Header__Back"
              paddingRight="16" />
       <style color="black"
-             fontFamily="HKGrotesk-SemiBold"
+             fontWeight="600"
              fontSize="24"
              id="Header__Title" />
       <style backgroundColor="#63CB76"
@@ -143,7 +143,7 @@
              id="title"
              lineHeight="40" />
       <style color="#8D9494"
-             fontFamily="HKGrotesk-SemiBold"
+             fontWeight="600"
              fontSize="20"
              id="subtitle"
              lineHeight="24" />
@@ -191,7 +191,7 @@
              paddingLeft="24"
              paddingRight="24" />
       <style color="#63CB76"
-             fontFamily="HKGrotesk-SemiBold"
+             fontWeight="600"
              fontSize="18"
              id="contactsButton__Text" />
       <style flex="1"

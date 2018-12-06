@@ -15,7 +15,7 @@
            marginRight="16"
            width="24" />
     <style color="black"
-           fontFamily="HKGrotesk-SemiBold"
+           fontWeight="600"
            fontSize="24"
            id="Header__Title" />
     <style backgroundColor="white"
@@ -40,7 +40,7 @@
            marginLeft="24"
            marginRight="24" />
     <style color="#4778FF"
-           fontFamily="HKGrotesk-SemiBold"
+           fontWeight="600"
            fontSize="16"
            id="Section__Action"
            lineHeight="24"
