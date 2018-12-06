@@ -4,12 +4,21 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
+import HyperviewScreen from '../screens/HyperviewScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
-const HomeStack = createStackNavigator({
-  Home: HomeScreen,
-});
+const HomeStack = createStackNavigator(
+  {
+    Home: HyperviewScreen,
+  },
+  {
+    headerMode: 'none',
+    initialRouteParams: {
+      entrypointUrl: 'http://10.1.10.14:8086/index.xml',
+    },
+  },
+);
 
 HomeStack.navigationOptions = {
   tabBarLabel: 'Home',

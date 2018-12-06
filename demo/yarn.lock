@@ -2790,8 +2790,9 @@ http-signature@~1.2.0:
     jsprim "^1.2.2"
     sshpk "^1.7.0"
 
-"hyperview@file:..":
+hyperview@^0.6.0:
   version "0.6.0"
+  resolved "https://registry.yarnpkg.com/hyperview/-/hyperview-0.6.0.tgz#57516de1c93caaaf0b477db0339ee6a023818e70"
   dependencies:
     url-parse "1.4.3"
     xmldom "0.1.27"
@@ -4759,6 +4760,10 @@ react-native-gesture-handler@1.0.9:
     hoist-non-react-statics "^2.3.1"
     invariant "^2.2.2"
     prop-types "^15.5.10"
+
+react-native-keyboard-aware-scrollview@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-scrollview/-/react-native-keyboard-aware-scrollview-2.0.0.tgz#a7e2cc31b7230893db5dc05eb6fed3f358500a55"
 
 react-native-maps@expo/react-native-maps#v0.22.1-exp.0:
   version "0.22.1"
