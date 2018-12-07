@@ -3,23 +3,22 @@ import Hyperview from 'hyperview';
 
 export default class HyperviewScreen extends React.PureComponent {
   goBack = (params, key) => {
-    console.log('GO BACK');
-    console.log(params, key);
-    this.props.navigation.pop();
+    const navigation = this.props.navigation;
+    navigation.pop();
   }
 
   closeModal = (params, key) => {
-    console.log('CLOSE MODAL');
-    console.log(params, key);
-    this.props.navigation.pop();
+    const navigation = this.props.navigation;
+    navigation.pop();
   }
 
   push = (params, key) => {
     // If we're in a modal stack, push the next screen on the modal stack.
     // If we're in the main stack, push the next screen in the main stack.
     // Modal stacks will have modal param set.
-    const modal = this.props.navigation.getParam('modal', false);
-    this.props.navigation.push(
+    const navigation = this.props.navigation;
+    const modal = navigation.getParam('modal', false);
+    navigation.push(
       modal ? 'ModalStack' : 'MainStack',
       {
         modal,
@@ -29,22 +28,28 @@ export default class HyperviewScreen extends React.PureComponent {
   }
 
   navigate = (params, key) => {
-    this.props.navigation.navigate({ routeName: 'MainStack', params, key });
+    const navigation = this.props.navigation;
+    navigation.navigate({ routeName: 'MainStack', params, key });
   }
 
   openModal = (params, key) => {
-    this.props.navigation.push('Modal', params);
+    const navigation = this.props.navigation;
+    navigation.push('Modal', params);
   }
 
+  /**
+   * fetch function used by Hyperview screens. By default, it adds
+   * header to prevent caching requests.
+   */
   fetchWrapper = (input, init = { headers: {} }) => {
     return fetch(input, {
       ...init,
       headers: {
-        ...init.headers,
-
+        // Don't cache requests for the demo
         'Cache-Control': 'no-cache, no-store, must-revalidate',
         Pragma: 'no-cache',
         Expires: 0,
+        ...init.headers,
       }
     });
   }
