@@ -1,6 +1,7 @@
-# React Native Hyperview Client
-
 [![CircleCI](https://circleci.com/gh/Instawork/hyperview.svg?style=svg)](https://circleci.com/gh/Instawork/hyperview)
+
+# Hyperview:
+## Native mobile apps, as easy as creating a website.
 
 [Hyperview](https://hyperview.org) is a new hypermedia format and React Native client for developing server-driven mobile apps.
 
@@ -11,15 +12,19 @@
 
 See the [Hyperview website](https://hyperview.org) for more information about Hyperview and Hyperview XML.
 
+## Hyperview XML
+- See examples of how to create rich, interactive apps with Hyperview XML [here](https://hyperview.org/docs/example_navigation)
+- See the full references for Hyperview XML [here](https://hyperview.org/docs/reference_screen)
+
 ## Hyperview React Native Client
-This is a React Native implementation of a Hyperview Client. It can either be integrated into an existing React Native app, or used to create a self-contained RN app.
+This repo contains a React Native implementation of the Hyperview Client. It can either be integrated into an existing React Native app, or used to create a self-contained RN app.
 
 ### Requirements
 The Hyperview client only has two required dependencies:
 - url-parse 1.4.3
 - xmldom 0.1.27
 
-More importantly, the Hyperview client is designed to be incorporated into an existing React Native project, and thus has the following peer dependencies:
+More importantly, the client is designed to be incorporated into an existing React Native project, and thus has the following peer dependencies:
 - react >= 16.2.0
 - react-native >= 0.52.2
 - react-native-keyboard-aware-scrollview 2.0.0
