@@ -31,6 +31,6 @@ export default createStackNavigator({
   headerMode: 'none',
   initialRouteName: 'Main',
   initialRouteParams: {
-    url: 'http://0.0.0.0:8087/index.xml',
+    url: 'http://0.0.0.0:8085/index.xml',
   }
 });
