@@ -1,10 +1,36 @@
 import React from 'react';
-import { createSwitchNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation';
+import HyperviewScreen from '../screens/HyperviewScreen';
 
-import MainTabNavigator from './MainTabNavigator';
+const MainStackNavigator = createStackNavigator(
+  {
+    MainStack: HyperviewScreen,
+  },
+  {
+    headerMode: 'none',
+  },
+);
 
-export default createSwitchNavigator({
-  // You could add another route here for authentication.
-  // Read more at https://reactnavigation.org/docs/en/auth-flow.html
-  Main: MainTabNavigator,
+const ModalStackNavigator = createStackNavigator(
+  {
+    ModalStack: HyperviewScreen,
+  },
+  {
+    headerMode: 'none',
+    initialRouteParams: {
+      modal: true,
+    },
+  },
+);
+
+export default createStackNavigator({
+  Main: MainStackNavigator,
+  Modal: ModalStackNavigator,
+}, {
+  mode: 'modal',
+  headerMode: 'none',
+  initialRouteName: 'Main',
+  initialRouteParams: {
+    url: 'http://0.0.0.0:8087/index.xml',
+  }
 });
