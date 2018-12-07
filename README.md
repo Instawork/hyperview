@@ -90,3 +90,8 @@ Whether you're using a physical device or simulator, you should now see a Hyperv
 ![example](./demo/assets/images/example.gif)
 
 The example server simply serves files from the [./examples](/examples) directory. You can modify or add files in [./examples](/examples) and the server will update without restarting.
+
+#### Troubleshooting
+> This version of the Expo app is out of date. Uninstall the app and run again to upgrade.
+
+If you see this warning message on the Expo development server webpage, you need to uninstall the Expo app from the simulator or physical device and install the latest version. On a physical device, this means getting the latest version from an app store. In the simulator or AVD, this means uninstalling and re-running `yarn ios` or `yarn android`.
