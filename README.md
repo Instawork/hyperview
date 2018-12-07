@@ -1,7 +1,7 @@
 [![CircleCI](https://circleci.com/gh/Instawork/hyperview.svg?style=svg)](https://circleci.com/gh/Instawork/hyperview)
 
 ![logo](./demo/assets/images/icon_small.png)
-# Hyperview: Native mobile apps, as easy as creating a website.
+# Native mobile apps, as easy as creating a website.
 
 [Hyperview](https://hyperview.org) is a new hypermedia format and React Native client for developing server-driven mobile apps.
 
