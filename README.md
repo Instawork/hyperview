@@ -36,6 +36,7 @@ It also contains a demo Expo project that can connect to the example XML server,
 #### Running the example server
 From the repo root directory:
 ```
+yarn
 yarn test:xmlserver
 ```
 This will start an HTTP server listening on port 8085. It simply serves files from the [./examples](/examples) directory. You can view the XML from a web browser: http://localhost:8085/index.xml
@@ -43,7 +44,7 @@ This will start an HTTP server listening on port 8085. It simply serves files fr
 You can modify or add files in [./examples](/examples) and the server will update without restarting.
 
 #### Starting the demo app
-First, install the demo dependencies and start the development server. From thr repo root directory:
+Keep the example server running. Then, install the demo dependencies and start the development server. From the repo root directory:
 ```
 cd demo
 yarn
