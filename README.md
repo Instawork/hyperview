@@ -1,4 +1,4 @@
-![logo](./demo/assets/images/icon_small.png)
+[![logo](./demo/assets/images/icon_small.png)](https://hyperview.org)
 # Native mobile apps, as easy as creating a website.
 
 [Hyperview](https://hyperview.org) is a new hypermedia format and React Native client for developing server-driven mobile apps.
