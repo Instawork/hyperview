@@ -1,5 +1,3 @@
-[![CircleCI](https://circleci.com/gh/Instawork/hyperview.svg?style=svg)](https://circleci.com/gh/Instawork/hyperview)
-
 ![logo](./demo/assets/images/icon_small.png)
 # Native mobile apps, as easy as creating a website.
 
@@ -17,6 +15,7 @@ See the [Hyperview website](https://hyperview.org) for more information about Hy
 - See the full references for Hyperview XML [here](https://hyperview.org/docs/reference_screen)
 
 ## Hyperview React Native Client
+[![CircleCI](https://circleci.com/gh/Instawork/hyperview.svg?style=svg)](https://circleci.com/gh/Instawork/hyperview)
 This repo contains a React Native implementation of the Hyperview Client. It can either be integrated into an existing React Native app, or used to create a self-contained RN app.
 
 ### Requirements
