@@ -2,6 +2,7 @@
   "guide": {
     "Guides": [
       "guide_introduction",
+      "guide_installation",
       "guide_html"
     ]
   },
