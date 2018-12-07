@@ -1,6 +1,6 @@
 [![CircleCI](https://circleci.com/gh/Instawork/hyperview.svg?style=svg)](https://circleci.com/gh/Instawork/hyperview)
 
-[!logo][demo/assets/images/icon_small.png]
+[!logo](demo/assets/images/icon_small.png)
 # Hyperview: Native mobile apps, as easy as creating a website.
 
 [Hyperview](https://hyperview.org) is a new hypermedia format and React Native client for developing server-driven mobile apps.
@@ -56,4 +56,4 @@ The development server should open a webpage (http://localhost:19002) that shows
 > NOTE: To access the example server from an actual device, you will need to update `navigation/AppNavigator.js`. In that file, `initialRouteParams` is set to `http://0.0.0.0:8085/index.xml`. Change the URL host to the IP of the machine running the example server.
 
 The XML will from the example server should appear in the app:
-[!example][demo/assets/images/example.gif]
+[!example](demo/assets/images/example.gif)
