@@ -33,29 +33,60 @@ More importantly, the client is designed to be incorporated into an existing Rea
 This repo contains an example XML server that serves Hyperview XML to showcase the available features. 
 It also contains a demo Expo project that can connect to the example XML server, or any other Hyperview endpoint.
 
-#### Running the example server
+#### 1. Run the example server
 From the repo root directory:
 ```
 yarn
 yarn test:xmlserver
 ```
-This will start an HTTP server listening on port 8085. It simply serves files from the [./examples](/examples) directory. You can view the XML from a web browser: http://localhost:8085/index.xml
+This will start an HTTP server listening on port 8085. 
 
-You can modify or add files in [./examples](/examples) and the server will update without restarting.
 
-#### Starting the demo app
-Keep the example server running. Then, install the demo dependencies and start the development server. From the repo root directory:
+#### 2. Start the demo app
+In a separate shell, install the demo dependencies and start the development server. From the repo root directory:
 ```
 cd demo
 yarn
+```
+
+The next step depends on whether you want to run the demo app in the iOS simulator, on an Android Virtual Device, or on a physical mobile device.
+
+##### Running on the iOS simulator
+From the `demo/` directory:
+```
+yarn ios
+```
+This will open the iOS simulator and install the demo app in the simulator. It will then start the Expo development server to load the demo app.
+
+##### Running on an Android Virtual Device
+From the `demo/` directory:
+```
+yarn android
+```
+This will open the iOS simulator and install the demo app in the simulator. It will then start the Expo development server to load the demo app.
+
+##### Running on a physical device
+On your physical mobile device, install the Expo client
+- [iOS App Store](https://itunes.apple.com/us/app/expo-client/id982107779?mt=8)
+- [Google Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent)
+
+Make sure your mobile device and development machine are connected to the same network.
+
+Open [/demo/navigation/AppNavigator.js]('/demo/navigation/AppNavigator.js') in a text editor. In `initialRouteParams`, replace the host in the url (`http://0.0.0.0:8085/index.xml`) with the IP of your machine. This is needed in order for your physical device to be able to request the example XML files from your development machine.
+
+From the `demo/` directory on your development machine:
+```
 yarn start
 ```
-The development server should open a webpage (http://localhost:19002) that shows logs and provides options for running the app in the iOS simulator, Android Virtual Device, or on an actual device.
-- To run the demo app in the iOS simulator, press the "Run on iOS simulator" link in the left-hand toolbar.
-- To run the demo app on an Android Virtual Device, press the "Run on Android device/emulator" link in the left-hand toolbar.
-- To run the demo app on an actual device, scan the QR code with your device's camera, then open the link in the Expo app.
-> NOTE: To access the example server from an actual device, you will need to update `navigation/AppNavigator.js`. In that file, `initialRouteParams` is set to `http://0.0.0.0:8085/index.xml`. Change the URL host to the IP of the machine running the example server.
+This command will start an Expo development server and open a webpage (http://localhost:19002). This webpage will display a QR code.
 
-The XML will from the example server should appear in the app:
+- On your iOS device, open the Camera app and point it at the QR code on your screen. The Camera app should show an "Open in Expo" notification. Tap this notification.
+- On your Android device, use the Expo app to scan the QR code on your screen.
+
+
+#### 3. You're all set!
+Whether you're using a physical device or simulator, you should now see a Hyperview screen rendered from the example server:
 
 ![example](./demo/assets/images/example.gif)
+
+The example server simply serves files from the [./examples](/examples) directory. You can modify or add files in [./examples](/examples) and the server will update without restarting.
