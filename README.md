@@ -33,9 +33,9 @@ From the repo root directory:
 ```
 yarn test:xmlserver
 ```
-This will start an HTTP server listening on port 8085. It simply serves files from the `[./examples](/examples)` directory. You can view the XML from a web browser: http://localhost:8085/index.xml
+This will start an HTTP server listening on port 8085. It simply serves files from the [./examples](/examples) directory. You can view the XML from a web browser: http://localhost:8085/index.xml
 
-You can modify or add files in `[./examples](/examples)` and the server will update without restarting.
+You can modify or add files in [./examples](/examples) and the server will update without restarting.
 
 #### Starting the demo app
 First, install the demo dependencies and start the development server. From thr repo root directory:
