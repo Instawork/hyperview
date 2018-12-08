@@ -66,6 +66,9 @@
     "preset": "react-native",
     "moduleNameMapper": {
       "\\.(png|jpg|jpeg|ttf|mp4|mov)$": "<rootDir>/test/assets-transformer.js"
-    }
+    },
+    "modulePathIgnorePatterns": [
+      "./demo/"
+    ]
   }
 }

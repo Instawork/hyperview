@@ -4,3 +4,4 @@ website/
 /src/index.js
 /src/VisibilityDetectingView.js
 /src/mask.js
+/demo/*
