@@ -72,7 +72,7 @@ On your physical mobile device, install the Expo client
 
 Make sure your mobile device and development machine are connected to the same network.
 
-Open [/demo/navigation/AppNavigator.js]('/demo/navigation/AppNavigator.js') in a text editor. In `initialRouteParams`, replace the host in the url (`http://0.0.0.0:8085/index.xml`) with the IP of your machine. This is needed in order for your physical device to be able to request the example XML files from your development machine.
+Open [/demo/navigation/AppNavigator.js](/demo/navigation/AppNavigator.js) in a text editor. In `initialRouteParams`, replace the host in the url (`http://0.0.0.0:8085/index.xml`) with the IP of your machine. This is needed in order for your physical device to be able to request the example XML files from your development machine.
 
 From the `demo/` directory on your development machine:
 ```
