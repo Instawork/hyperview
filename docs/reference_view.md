@@ -57,7 +57,7 @@ A `<view>` element accepts the standard [behavior attributes](/docs/reference_be
 | -------- | -------- |
 | string   | No       |
 
-A space-separated list of styles to apply to the element. See [Styles](/docs/reference_style). Note that text style rules will cannot be applied to a `<view>`.
+A space-separated list of styles to apply to the element. See [Styles](/docs/reference_style). Note that text style rules cannot be applied to a `<view>`.
 
 #### `scroll`
 | Type     | Required |

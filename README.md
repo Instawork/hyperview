@@ -63,7 +63,7 @@ From the `demo/` directory:
 ```
 yarn android
 ```
-This will open the iOS simulator and install the demo app in the simulator. It will then start the Expo development server to load the demo app.
+This will open an AVD and install the demo app in the emulator. It will then start the Expo development server to load the demo app.
 
 ##### Running on a physical device
 On your physical mobile device, install the Expo client
