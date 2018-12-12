@@ -28,9 +28,9 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
-    {doc: 'guide_introduction', label: 'Guide'},
+    {doc: 'guide_introduction', label: 'Guides'},
     {doc: 'example_navigation', label: 'Examples'},
-    {doc: 'reference_screen', label: 'Reference'},
+    {doc: 'reference_index', label: 'Reference'},
   ],
 
   /* path to images for header/footer */

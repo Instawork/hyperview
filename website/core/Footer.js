@@ -37,7 +37,7 @@ class Footer extends React.Component {
             <a href={this.docUrl('example_pull_to_refresh')}>
               Examples
             </a>
-            <a href={this.docUrl('reference_screen')}>
+            <a href={this.docUrl('reference_index')}>
               Hyperview Reference
             </a>
           </div>
