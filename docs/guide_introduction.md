@@ -28,7 +28,7 @@ The thin client approach on the web allows developers to fully define their app 
 
 So if the thin client paradigm empowered us on the web, why couldn't we use it to develop our mobile apps?
 
-You can certainly use web technologies to write a mobile app, Apache Cordova is probably the best known framework that uses this approach. However, HTML wasn't designed with mobile UIs in mind. This means using HTML on mobile requires hacks and extensions using JavaScript. This slows down development and results in a sub-par experience.
+We toyed with using web technologies to develop our mobile apps, but we hit limits since HTML wasn't designed to express mobile UIs. It required hacks and extensions using JavaScript to replicate common interactions. This slowed down development and resulted in a sub-par experience.
 
 Instead, we decided to create a new thin client and a new hypermedia format, designed for writing native mobile apps, without the baggage of HTML.
 
@@ -38,3 +38,5 @@ Hyperview is our open-source project to bring the benefits of thin-client, HATEO
 
 - **Hyperview XML (HXML)** is an XML-based format to describe native mobile UIs. It supports common UI elements like headers, scroll views, lists, text field, and much more. It also supports styling and a behavior syntax for describing user interactions (touches, gestures, input interaction) without the need for scripting.
 - **Hyperview Client** is a cross-platform library for rendering HXML in mobile apps. Implemented in React Native, it can be embedded in existing apps, or you can use it to create a new app from scratch.
+
+Instawork uses Hyperview in production 

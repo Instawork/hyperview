@@ -15,7 +15,8 @@
       </view>
       <view
         style="Section2"
-        trigger="load"
+        trigger="visible"
+        delay="500"
         once="true"
         href="/case_studies/lazy_load/section2.xml"
         action="replace"
@@ -25,7 +26,8 @@
       </view>
       <view
         style="Section3"
-        trigger="load"
+        trigger="visible"
+        delay="500"
         once="true"
         href="/case_studies/lazy_load/section3.xml"
         action="replace"

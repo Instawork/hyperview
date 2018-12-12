@@ -1,7 +1,8 @@
 {
-  "guide": {
+  "guides": {
     "Guides": [
       "guide_introduction",
+      "guide_installation",
       "guide_html"
     ]
   },
@@ -24,6 +25,9 @@
   },
 
   "reference": {
+    "Reference": [
+      "reference_index"
+    ],
     "Behaviors": [
       "reference_behavior_attributes",
       "reference_behavior"
