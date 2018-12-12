@@ -28,7 +28,7 @@ The thin client approach on the web allows developers to fully define their app 
 
 So if the thin client paradigm empowered us on the web, why couldn't we use it to develop our mobile apps?
 
-We toyed with using web technologies to develop our mobile apps, but we hit limits since HTML wasn't designed to express mobile UIs. It required requires hacks and extensions using JavaScript to replicate common interactions. This slowed down development and resulted in a sub-par experience.
+We toyed with using web technologies to develop our mobile apps, but we hit limits since HTML wasn't designed to express mobile UIs. It required hacks and extensions using JavaScript to replicate common interactions. This slowed down development and resulted in a sub-par experience.
 
 Instead, we decided to create a new thin client and a new hypermedia format, designed for writing native mobile apps, without the baggage of HTML.
 
