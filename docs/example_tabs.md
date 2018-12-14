@@ -7,6 +7,10 @@ sidebar_label: Tabs
 By using [`<select-single>`](/docs/reference_selectsingle) with selection styles and behaviors, we can create a tabbed interface that allows a user to switch between two pieces of content on one screen.
 ![example_tabs1](/img/example_tabs4.gif)
 
+<div style="text-align:center;margin-bottom:1em;">
+  <a class="button" href="https://github.com/Instawork/hyperview/tree/master/examples/case_studies/tabs">See the full code</a>
+</div>
+
 Let's start with the markup for the tabs. Since only one tab can be selected at a time, we can use `<select-single>` to capture this state:
 
 ```xml

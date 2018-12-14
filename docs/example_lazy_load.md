@@ -8,6 +8,10 @@ The [previous example](/docs/example_infinite_scroll) showed how to implement an
 
 ![lazy load](/img/example_lazy_load1.gif)
 
+<div style="text-align:center;margin-bottom:1em;">
+  <a class="button" href="https://github.com/Instawork/hyperview/tree/master/examples/case_studies/lazy_load">See the full code</a>
+</div>
+
 ```xml
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>

@@ -8,6 +8,9 @@
   },
 
   "examples": {
+    "Examples": [
+       "example_index"
+    ],
     "Interactions": [
        "example_navigation",
        "example_delayed_navigation",
@@ -61,7 +64,7 @@
       "reference_modifier"
     ],
     "Hyperview Client": [
-      "reference_client_requests",
+      "reference_hyperview_component",
       "reference_custom_elements",
       "reference_custom_behaviors"
     ]

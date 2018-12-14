@@ -8,6 +8,10 @@ Hyperview has built-in support for the pull-to-refresh gesture on [`<list>`](ref
 
 ![pull to refresh](/img/example_pull_to_refresh1.gif)
 
+<div style="text-align:center;margin-bottom:1em;">
+  <a class="button" href="https://github.com/Instawork/hyperview/tree/master/examples/case_studies/pull_to_refresh">See the full code</a>
+</div>
+
 ```xml
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>

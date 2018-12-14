@@ -34,7 +34,7 @@ class Footer extends React.Component {
           </a>
           <div>
             <h5>Docs</h5>
-            <a href={this.docUrl('example_pull_to_refresh')}>
+            <a href={this.docUrl('example_index')}>
               Examples
             </a>
             <a href={this.docUrl('reference_index')}>
