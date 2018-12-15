@@ -5,7 +5,7 @@ sidebar_label: "Introduction"
 ---
 
 ### The state of mobile development
-At [Instawork](https://instawork.com), we observed a marked difference in developer productivity between our mobile and web platforms.
+At [Instawork](https://instawork.com), we observed a marked difference in developer productivity between our mobile and [web platforms](https://engineering.instawork.com/iterating-with-simplicity-evolving-a-django-app-with-intercooler-js-8ed8e69d8a52).
 
 On *mobile*:
 - we released code once a week,

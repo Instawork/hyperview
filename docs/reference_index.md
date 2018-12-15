@@ -45,8 +45,8 @@ Style elements in HXML define rules for the appearance of display and input elem
 - [`<style>`](/docs/reference_style): A single style rule with unique id in the screen, can set multiple appearance properties.
 - [`<modifier>`](/docs/reference_modifier): Defines an appearance that should override the default for a style under certain local conditions, such as a user tap, selection, etc.
 
-### React Native Client: Coming Soon
+### React Native Client
 The Hyperview RN Client is a library that can parse and render HXML in a React Native app.
-- The `Hyperview` class defines a component that takes an endpoint URL and configuration props to render Hyperview screens in an app.
-- **Custom Components**: The Hyperview client can be extended by registering custom HXML elements and tags with custom RN components.
-- **Custom Behaviors**: The Hyperview client can be extended by registering custom callbacks that can be triggered via `<behavior>` elements in the HXML
+- The [`Hyperview`](/docs/reference_hyperview_component) class defines a component that takes an endpoint URL and configuration props to render Hyperview screens in an app.
+- [Custom Components](/docs/reference_custom_elements): The Hyperview client can be extended by registering custom HXML elements and tags with custom RN components. This can be used to add elements with rich interactions, such as maps.
+- [Custom Behaviors](/docs/reference_custom_behaviors): The Hyperview client can be extended by registering custom callbacks that can be triggered via `<behavior>` elements in the HXML. Supports features like dispatching Redux actions, triggering phone calls and share sheets, event logging, etc.
