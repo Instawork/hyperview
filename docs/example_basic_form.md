@@ -7,6 +7,10 @@ sidebar_label: Basic forms
 Hyperview supports sending user input with requests through the [`<form>`](/docs/reference_form) element. Using server-side validation, the response can either show validation errors, or accept the input and take the user to a next page.
 ![main](/img/basic_form/main.png)
 
+<div style="text-align:center;margin-bottom:1em;">
+  <a class="button" href="https://github.com/Instawork/hyperview/tree/master/examples/case_studies/basic_form">See the full code</a>
+</div>
+
 ### Styling inputs
 
 Form & input elements have no default styling in Hyperview, to give developers maximum flexibility over the look & feel of their app. Before we start creating a form, it's helpful to define a few base styles for UI elements that will be used frequently:

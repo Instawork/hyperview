@@ -29,7 +29,7 @@ const siteConfig = {
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
     {doc: 'guide_introduction', label: 'Guides'},
-    {doc: 'example_navigation', label: 'Examples'},
+    {doc: 'example_index', label: 'Examples'},
     {doc: 'reference_index', label: 'Reference'},
   ],
 

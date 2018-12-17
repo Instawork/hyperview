@@ -88,7 +88,7 @@ class HomeSplash extends React.Component {
           <PromoSection>
             <Button href="https://github.com/instawork/hyperview">Try It Out</Button>
             <Button href={docUrl('guide_introduction', language)}>Learn more</Button>
-            <Button href={docUrl('example_navigation', language)}>Examples</Button>
+            <Button href={docUrl('example_index', language)}>Examples</Button>
           </PromoSection>
         </div>
       </SplashContainer>
@@ -125,7 +125,7 @@ class Index extends React.Component {
             align="left"
             background="light"
             title="Serve your app as XML"
-      content="On the web, pages are rendered in a browser by fetching HTML content from a server. With Hyperview, screens are rendered in your mobile app by fetching [Hyperview XML (HXML)](/docs/guide_html) content from a server. HXML's design reflects the UI and interaction patterns of today's mobile interfaces.<p><a href='/docs/example_navigation' class='button'>See HXML examples</a></p>"
+      content="On the web, pages are rendered in a browser by fetching HTML content from a server. With Hyperview, screens are rendered in your mobile app by fetching [Hyperview XML (HXML)](/docs/guide_html) content from a server. HXML's design reflects the UI and interaction patterns of today's mobile interfaces.<p><a href='/docs/example_index' class='button'>See HXML examples</a></p>"
             image={imgUrl('home/syntax.svg')}
           />
 

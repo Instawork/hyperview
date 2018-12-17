@@ -5,7 +5,7 @@ sidebar_label: "Introduction"
 ---
 
 ### The state of mobile development
-At [Instawork](https://instawork.com), we observed a marked difference in developer productivity between our mobile and web platforms.
+At [Instawork](https://instawork.com), we observed a marked difference in developer productivity between our mobile and [web platforms](https://engineering.instawork.com/iterating-with-simplicity-evolving-a-django-app-with-intercooler-js-8ed8e69d8a52).
 
 On *mobile*:
 - we released code once a week,
@@ -39,4 +39,26 @@ Hyperview is our open-source project to bring the benefits of thin-client, HATEO
 - **Hyperview XML (HXML)** is an XML-based format to describe native mobile UIs. It supports common UI elements like headers, scroll views, lists, text field, and much more. It also supports styling and a behavior syntax for describing user interactions (touches, gestures, input interaction) without the need for scripting.
 - **Hyperview Client** is a cross-platform library for rendering HXML in mobile apps. Implemented in React Native, it can be embedded in existing apps, or you can use it to create a new app from scratch.
 
-Instawork uses Hyperview in production 
+In other words:
+
+> On the web, we have **HTML** and **web browsers**.
+>
+> On mobile we have **HXML** and the **Hyperview Client**.
+
+Instawork uses Hyperview in our production apps to get all of the benefits of the thin-client paradigm in a mobile world:
+- We can update out mobile apps many times a day by deploying our backend
+- All of our users get our updates immediately without needing to download a new binary
+- Developers can be super-productive by building the backend and frontend simultaneously in one codebase
+
+Hyperview has been a total game-changer for how we work at Instawork. The improvements to our developer productivity have allowed us to ship new features more quickly, improve our app's performance, and minimize context switching between mobile and web development. For fast-changing networked mobile apps, Hyperview offers an unbeatable set of tradeoffs.
+
+### Getting started
+There are many ways to gets started with Hyperview:
+
+- If you want to learn Hyperview by reading example code, head over to the [Examples](/docs/example_index) section.
+
+- To get a full sense of the elements and behaviors available in Hyperview, check out the full [HXML Reference](/docs/reference_index).
+
+- If you're coming from a web/HTML background, you may want to start with our guide highlighting some of the differences between [HTML and HXML](/docs/guide_html).
+
+- Or, to run a demo yourself, check out our [Getting started](/docs/guide_installation) guide on the next page!
