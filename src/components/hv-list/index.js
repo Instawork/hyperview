@@ -40,7 +40,8 @@ export default class HvList extends PureComponent<Props, State> {
         const hideIndicatorIds = e.getAttribute('hide-during-load');
         const delay = e.getAttribute('delay');
         const once = e.getAttribute('once');
-        const onEnd = i === 0 ? () => this.setState({ refreshing: false }) : null;
+        const onEnd =
+          i === 0 ? () => this.setState({ refreshing: false }) : null;
         onUpdate(path, action, element, {
           targetId,
           showIndicatorIds,
@@ -51,13 +52,15 @@ export default class HvList extends PureComponent<Props, State> {
           behaviorElement: e,
         });
       });
-  }
+  };
 
   render() {
     const { refreshing } = this.state;
     const { element, stylesheets, animations, onUpdate, options } = this.props;
     const styleAttr = element.getAttribute('style');
-    const style = styleAttr ? styleAttr.split(' ').map(s => stylesheets.regular[s]) : null;
+    const style = styleAttr
+      ? styleAttr.split(' ').map(s => stylesheets.regular[s])
+      : null;
 
     const listProps = {
       style,
@@ -79,11 +82,9 @@ export default class HvList extends PureComponent<Props, State> {
       };
     }
 
-    return React.createElement(
-      FlatList, {
-        ...listProps,
-        ...refreshProps,
-      },
-    );
+    return React.createElement(FlatList, {
+      ...listProps,
+      ...refreshProps,
+    });
   }
 }

@@ -9,7 +9,14 @@
  */
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import type { Animations, Document, Element, HvComponentOptions, LocalName, StyleSheets } from 'hyperview/src/types';
+import type {
+  Animations,
+  Document,
+  Element,
+  HvComponentOptions,
+  LocalName,
+  StyleSheets,
+} from 'hyperview/src/types';
 
 /**
  * This file is currently a dumping place for every functions used accross
@@ -17,9 +24,9 @@ import type { Animations, Document, Element, HvComponentOptions, LocalName, Styl
  */
 
 export const getBehaviorElements = (element: any) => {
-  const behaviorElements = Array
-    .from(element.childNodes)
-    .filter(n => n.tagName === 'behavior');
+  const behaviorElements = Array.from(element.childNodes).filter(
+    n => n.tagName === 'behavior',
+  );
 
   if (element.getAttribute('href')) {
     behaviorElements.unshift(element);
@@ -29,7 +36,10 @@ export const getBehaviorElements = (element: any) => {
 };
 
 export const getFirstTag = (document: Document, localName: LocalName) => {
-  const elements = document.getElementsByTagNameNS(Namespaces.HYPERVIEW, localName);
+  const elements = document.getElementsByTagNameNS(
+    Namespaces.HYPERVIEW,
+    localName,
+  );
   if (elements && elements[0]) {
     return elements[0];
   }
@@ -42,12 +52,8 @@ export const createProps = (
   animations: ?Animations,
   options: HvComponentOptions,
 ) => {
-  const numericRules = [
-    'numberOfLines',
-  ];
-  const booleanRules = [
-    'multiline',
-  ];
+  const numericRules = ['numberOfLines'];
+  const booleanRules = ['multiline'];
 
   const props = {};
   if (!element.attributes) {
@@ -77,7 +83,9 @@ export const createProps = (
     let styleRules = styleIds.map(s => stylesheets.regular[s]);
 
     if (options.pressed) {
-      let pressedRules = styleIds.map(s => stylesheets.pressed[s]).filter(r => !!r);
+      let pressedRules = styleIds
+        .map(s => stylesheets.pressed[s])
+        .filter(r => !!r);
       if (pressedRules.length === 0) {
         pressedRules = [{ opacity: 0.7 }];
       }
@@ -85,19 +93,23 @@ export const createProps = (
     }
 
     if (options.focused) {
-      const focusedRules = styleIds.map(s => stylesheets.focused[s]).filter(r => !!r);
+      const focusedRules = styleIds
+        .map(s => stylesheets.focused[s])
+        .filter(r => !!r);
       styleRules = styleRules.concat(focusedRules);
     }
 
     if (options.selected) {
-      const selectedRules = styleIds.map(s => stylesheets.selected[s]).filter(r => !!r);
+      const selectedRules = styleIds
+        .map(s => stylesheets.selected[s])
+        .filter(r => !!r);
       styleRules = styleRules.concat(selectedRules);
     }
 
     if (options.pressedSelected) {
-      const pressedSelectedRules = (
-        styleIds.map(s => stylesheets.pressedSelected[s]).filter(r => !!r)
-      );
+      const pressedSelectedRules = styleIds
+        .map(s => stylesheets.pressedSelected[s])
+        .filter(r => !!r);
       styleRules = styleRules.concat(pressedSelectedRules);
     }
 
@@ -105,7 +117,7 @@ export const createProps = (
   }
 
   if (props.animatedValues) {
-    props.animatedValues.split(' ').forEach((v) => {
+    props.animatedValues.split(' ').forEach(v => {
       if (animations) {
         const value = animations.values[v];
         const property = animations.properties[v];

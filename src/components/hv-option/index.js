@@ -45,8 +45,10 @@ export default class HvOption extends PureComponent<Props, State> {
   triggerSelectBehaviors = () => {
     const { element, onUpdate } = this.props;
     const behaviorElements = getBehaviorElements(element);
-    const selectBehaviors = behaviorElements.filter(e => e.getAttribute('trigger') === 'select');
-    selectBehaviors.forEach((behaviorElement) => {
+    const selectBehaviors = behaviorElements.filter(
+      e => e.getAttribute('trigger') === 'select',
+    );
+    selectBehaviors.forEach(behaviorElement => {
       const href = behaviorElement.getAttribute('href');
       const action = behaviorElement.getAttribute('action');
       const verb = behaviorElement.getAttribute('verb');
@@ -55,18 +57,25 @@ export default class HvOption extends PureComponent<Props, State> {
       const hideIndicatorIds = behaviorElement.getAttribute('hide-during-load');
       const delay = behaviorElement.getAttribute('delay');
       const once = behaviorElement.getAttribute('once');
-      onUpdate(
-        href, action, element,
-        { verb, targetId, showIndicatorIds, hideIndicatorIds, delay, once, behaviorElement },
-      );
+      onUpdate(href, action, element, {
+        verb,
+        targetId,
+        showIndicatorIds,
+        hideIndicatorIds,
+        delay,
+        once,
+        behaviorElement,
+      });
     });
-  }
+  };
 
   triggerDeselectBehaviors = () => {
     const { element, onUpdate } = this.props;
     const behaviorElements = getBehaviorElements(element);
-    const deselectBehaviors = behaviorElements.filter(e => e.getAttribute('trigger') === 'deselect');
-    deselectBehaviors.forEach((behaviorElement) => {
+    const deselectBehaviors = behaviorElements.filter(
+      e => e.getAttribute('trigger') === 'deselect',
+    );
+    deselectBehaviors.forEach(behaviorElement => {
       const href = behaviorElement.getAttribute('href');
       const action = behaviorElement.getAttribute('action');
       const verb = behaviorElement.getAttribute('verb');
@@ -75,12 +84,17 @@ export default class HvOption extends PureComponent<Props, State> {
       const hideIndicatorIds = behaviorElement.getAttribute('hide-during-load');
       const delay = behaviorElement.getAttribute('delay');
       const once = behaviorElement.getAttribute('once');
-      onUpdate(
-        href, action, element,
-        { verb, targetId, showIndicatorIds, hideIndicatorIds, delay, once, behaviorElement },
-      );
+      onUpdate(href, action, element, {
+        verb,
+        targetId,
+        showIndicatorIds,
+        hideIndicatorIds,
+        delay,
+        once,
+        behaviorElement,
+      });
     });
-  }
+  };
 
   render() {
     const { element, stylesheets, animations, onUpdate, options } = this.props;
@@ -92,7 +106,12 @@ export default class HvOption extends PureComponent<Props, State> {
 
     // Updates options with pressed/selected state, so that child element can render
     // using the appropriate modifier styles.
-    const newOptions = { ...options, selected, pressed, pressedSelected: pressed && selected };
+    const newOptions = {
+      ...options,
+      selected,
+      pressed,
+      pressedSelected: pressed && selected,
+    };
     const props = createProps(element, stylesheets, animations, newOptions);
 
     // Option renders as an outer TouchableWithoutFeedback view and inner view.
@@ -126,7 +145,13 @@ export default class HvOption extends PureComponent<Props, State> {
       React.createElement(
         View,
         props,
-        ...Render.renderChildren(element, stylesheets, animations, onUpdate, newOptions),
+        ...Render.renderChildren(
+          element,
+          stylesheets,
+          animations,
+          onUpdate,
+          newOptions,
+        ),
       ),
     );
   }

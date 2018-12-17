@@ -15,7 +15,9 @@ const getComponentPath = (componentName: string) => {
   return `hyperview/src/components/${baseName}`;
 };
 
-export const stories = (Component: HvComponent<*>): (template: string, render: any) => Node => {
+export const stories = (
+  Component: HvComponent<*>,
+): ((template: string, render: any) => Node) => {
   const componentPath = getComponentPath(Component.name);
   const s = storiesOf(Component.name, module);
   return (templateName: string, render: any) => {

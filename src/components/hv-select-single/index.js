@@ -33,16 +33,22 @@ export default class HvSelectSingle extends PureComponent<Props> {
   onSelect = (selectedValue: ?DOMString) => {
     const { element, onUpdate } = this.props;
     const newElement = element.cloneNode(true);
-    const options = newElement.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'option');
+    const options = newElement.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      'option',
+    );
     for (let i = 0; i < options.length; i += 1) {
       const opt = options.item(i);
       if (opt) {
         const value = opt.getAttribute('value');
-        opt.setAttribute('selected', value === selectedValue ? 'true' : 'false');
+        opt.setAttribute(
+          'selected',
+          value === selectedValue ? 'true' : 'false',
+        );
       }
     }
     onUpdate('#', 'swap', element, { newElement });
-  }
+  };
 
   render() {
     const { element, stylesheets, animations, onUpdate, options } = this.props;
@@ -53,9 +59,10 @@ export default class HvSelectSingle extends PureComponent<Props> {
     return React.createElement(
       View,
       props,
-      ...Render.renderChildren(
-        element, stylesheets, animations, onUpdate, { ...options, onSelect: this.onSelect },
-      ),
+      ...Render.renderChildren(element, stylesheets, animations, onUpdate, {
+        ...options,
+        onSelect: this.onSelect,
+      }),
     );
   }
 }

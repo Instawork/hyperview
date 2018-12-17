@@ -23,7 +23,7 @@ export default class HvSectionList extends PureComponent<Props, State> {
   props: Props;
   state: State = {
     refreshing: false,
-  }
+  };
 
   refresh = () => {
     const { element, onUpdate } = this.props;
@@ -46,27 +46,37 @@ export default class HvSectionList extends PureComponent<Props, State> {
         this.setState({ refreshing: false });
       },
     });
-  }
+  };
 
   render() {
     const { refreshing } = this.state;
     const { element, stylesheets, animations, onUpdate, options } = this.props;
     const styleAttr = element.getAttribute('style');
-    const style = styleAttr ? styleAttr.split(' ').map(s => stylesheets.regular[s]) : null;
+    const style = styleAttr
+      ? styleAttr.split(' ').map(s => stylesheets.regular[s])
+      : null;
 
-    const sectionElements = element.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'section');
+    const sectionElements = element.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      'section',
+    );
     const sections = [];
 
     for (let i = 0; i < sectionElements.length; i += 1) {
       const sectionElement = sectionElements.item(i);
       if (sectionElement) {
-        const itemElements = sectionElement.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'item');
+        const itemElements = sectionElement.getElementsByTagNameNS(
+          Namespaces.HYPERVIEW,
+          'item',
+        );
         const items = [];
         for (let j = 0; j < itemElements.length; j += 1) {
           const itemElement = itemElements.item(j);
           items.push(itemElement);
         }
-        const titleElement = sectionElement.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'section-title').item(0);
+        const titleElement = sectionElement
+          .getElementsByTagNameNS(Namespaces.HYPERVIEW, 'section-title')
+          .item(0);
         sections.push({
           title: titleElement,
           data: items,
@@ -79,14 +89,12 @@ export default class HvSectionList extends PureComponent<Props, State> {
       sections,
       keyExtractor: item => item.getAttribute('key'),
       // $FlowFixMe: return value should be of ?React.Element<any>
-      renderItem: ({ item }) => (
-        Render.renderElement(item, stylesheets, animations, onUpdate, options)
-      ),
+      renderItem: ({ item }) =>
+        Render.renderElement(item, stylesheets, animations, onUpdate, options),
       // $FlowFixMe: return value should be of ?React.Element<any>
-      renderSectionHeader: ({ section: { title } }) => (
+      renderSectionHeader: ({ section: { title } }) =>
         // $FlowFixMe
-        Render.renderElement(title, stylesheets, animations, onUpdate, options)
-      ),
+        Render.renderElement(title, stylesheets, animations, onUpdate, options),
     };
 
     let refreshProps = {};
@@ -97,12 +105,9 @@ export default class HvSectionList extends PureComponent<Props, State> {
       };
     }
 
-    return React.createElement(
-      SectionList,
-      {
-        ...listProps,
-        ...refreshProps,
-      },
-    );
+    return React.createElement(SectionList, {
+      ...listProps,
+      ...refreshProps,
+    });
   }
 }

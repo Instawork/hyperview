@@ -44,7 +44,7 @@ export default class HvTextField extends PureComponent<Props, State> {
     // In those situations, we want the formatted value to be an empty string
     // (for proper serialization).
     return mask.mask(value) || '';
-  }
+  };
 
   render() {
     const { element, stylesheets, animations, options } = this.props;
@@ -63,7 +63,7 @@ export default class HvTextField extends PureComponent<Props, State> {
       keyboardType,
       onFocus: () => this.setState({ focused: true }),
       onBlur: () => this.setState({ focused: false }),
-      onChangeText: (value) => {
+      onChangeText: value => {
         // Render the formatted value and store the formatted value
         // in state (on the XML element).
         const formattedValue = this.getFormattedValue(value);
@@ -72,9 +72,6 @@ export default class HvTextField extends PureComponent<Props, State> {
       },
     };
 
-    return React.createElement(
-      TextInput,
-      props,
-    );
+    return React.createElement(TextInput, props);
   }
 }

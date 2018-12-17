@@ -9,7 +9,13 @@
  */
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import type { Animations, Element, HvComponentOnUpdate, HvComponentOptions, StyleSheets } from 'hyperview/src/types';
+import type {
+  Animations,
+  Element,
+  HvComponentOnUpdate,
+  HvComponentOptions,
+  StyleSheets,
+} from 'hyperview/src/types';
 import { LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
 import { image, text, view } from 'hyperview/src';
 import React from 'react';
@@ -48,13 +54,14 @@ export const renderElement = (
   }
 
   if (
-    element.namespaceURI
-    && element.localName
-    && options.componentRegistry
-    && options.componentRegistry[element.namespaceURI]
-    && options.componentRegistry[element.namespaceURI][element.localName]
+    element.namespaceURI &&
+    element.localName &&
+    options.componentRegistry &&
+    options.componentRegistry[element.namespaceURI] &&
+    options.componentRegistry[element.namespaceURI][element.localName]
   ) {
-    const Component = options.componentRegistry[element.namespaceURI][element.localName];
+    const Component =
+      options.componentRegistry[element.namespaceURI][element.localName];
     return (
       <Component
         element={element}
