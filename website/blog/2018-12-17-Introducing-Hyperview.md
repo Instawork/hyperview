@@ -6,11 +6,11 @@ title: Introducing Hyperview: a server-driven mobile app framework
 
 In a [recent blog post](https://engineering.instawork.com/iterating-with-simplicity-evolving-a-django-app-with-intercooler-js-8ed8e69d8a52), I explained why the Instawork engineering team moved our web development from the popular SPA + API architecture to server-side rendered web pages. Server-side rendering lets us develop new features quickly using a single language (Python) and a single integrated framework (Django). Adding Intercooler.js to the mix gives us SPA-like interactivity, while still keeping all business logic and HTML rendering on the server.
 
-The level of productivity we were able to achieve with Django + Intercooler was incredible, but the impact was relatively small. That's because Instawork's main platform is not the web, but mobile. The vast majority of our users access our product through native iOS and Android apps. And on mobile, we were still using the very architecture we just ditched on the web: a [thick client](https://en.wikipedia.org/wiki/Fat_client) (written in React Native) pulling data through a JSON API.
+The level of productivity we were able to achieve with Django + Intercooler was incredible, but the impact was relatively small. That's because Instawork's main platform is not the web, but mobile. The vast majority of our users access Instawork through native iOS and Android apps. And on mobile, we were still using the very architecture we just ditched on the web: a [thick client](https://en.wikipedia.org/wiki/Fat_client) (written in React Native) pulling data through a JSON API.
 
-Thick clients are the industry-standard architecture for native mobile apps, but we started questioning why it seemed to be the only option. Thick clients make sense for some categories of apps like games, photo tools, or anything that relies primarily on local state & data. But a thick client is not a great fit for networked apps like marketplaces or social networks, where an Internect connection is a requirement for the app to function. We came to a realization:
+Thick clients are the industry-standard architecture for native mobile apps, but we started questioning why it seemed to be the only option. Thick clients make sense for some categories of apps like games, photo tools, or anything that relies on local state & data. But a thick client is not a great fit for networked apps like marketplaces or social networks, where an Internect connection is a requirement for the app to function. The root of the problem:
 
-> *When implementing a networked app as a thick client, business logic must necessarily be split and duplicated between the backend and frontend.*
+> *Implementing a networked app as a thick client requires business logic to be split and duplicated between the backend and frontend.*
 
 - A thick client needs to know the possible API endpoints and JSON format of those endpoints, resulting in duplicated code.
 - A thick client contains logic determining how to validate user input and what kind of inputs to ask for. The server also needs to perform this validation, resulting in more duplicated code.
@@ -20,7 +20,7 @@ The code duplications add complexity and development time, since the same logic 
 
 Once we realized that networked apps are a poor fit for thick clients, we started looking for a [thin-client](https://en.wikipedia.org/wiki/Thin_client) mobile framework to adopt. The best solution out there seemed to be HTML + JS web apps bundled in a native wrapper (such as [Cordova](https://cordova.apache.org/)). We found this solution to be a little clunky for our needs: HTML was not designed with mobile UIs in mind, resulting in poor performance and less than ideal UX.
 
-**We didn't find an existing thin-client framework for mobile apps. So we built our own.**
+**We didn't find an existing thin-client framework for native mobile apps. So we built our own.**
 
 <img src="/img/icon_small.png" style="border:none;box-shadow:none" />
 
@@ -110,7 +110,7 @@ The example contains three `<behavior>` elements, which declare (respectively):
 With HXML, it's possible to create a rich mobile UI in pure XML, without the need for client-side scripting. In fact, HXML doesn't even support scripting, meaning **all state and business logic remains in one place on the server**.
 
 ### Hyperview client
-The Hyperview client library exposes a [`Hyperview`](/docs/reference_hyperview_component) React Native component that can be added to the navigation of an existing React Native app. The most important prop passed to the `Hyperview` component is `entrypointUrl`. When the component mounts, it will make a request to the entrypoint URL, expecting HXML in the response. Once the client receives the response, the HXML gets rendered on the current screen. As described above, the HXML may contain behaviors that will result in navigations or updates to the current screen. The client handles these behaviors by making subsequent
+The Hyperview client library exposes a [`Hyperview`](/docs/reference_hyperview_component) React Native component that can be added to the navigation of an existing React Native app. The most important prop passed to the `Hyperview` component is `entrypointUrl`. When the component mounts, it will make a request to the entrypoint URL, expecting HXML in the response. Once the client receives the response, the HXML gets rendered on the current screen. Behaviors in the HXML will result in navigations or updates to the current screen. The client handles these behaviors by making subsequent requests for new bits of HXML, and the cycle can continue indefinitely.
 
 In other words, think of the Hyperview client like a web browser, but for HXML. The entrypoint URL is like a hard-coded address in the toolbar, pointing at your homepage. The homepage contains links and forms that result in more requests for more HXML. The true power of the thin client becomes apparent when you realize that with a single entrypoint URL and server-driven layouts, there are endless possibilities to add and modify screens and interactions in your mobile app.
 
