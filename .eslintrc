@@ -1,7 +1,8 @@
 {
-  "extends": "plugin:instawork/recommended",
-  "plugins": [ "instawork" ],
+  "extends": ["plugin:instawork/recommended", "prettier"],
+  "plugins": ["instawork", "prettier"],
   "rules": {
+    "prettier/prettier": "error",
     "instawork/props-no-function": "error",
     "no-underscore-dangle": ["error"],
     "import/no-extraneous-dependencies": [

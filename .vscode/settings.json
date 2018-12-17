@@ -1,3 +1,4 @@
 {
-    "flow.pathToFlow": "${workspaceRoot}/node_modules/.bin/flow"
+    "flow.pathToFlow": "${workspaceRoot}/node_modules/.bin/flow",
+    "editor.formatOnSave": true
 }
