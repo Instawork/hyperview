@@ -14,10 +14,16 @@
     "email": "engineering-contact@instawork.com"
   },
   "licence": "MIT",
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
   "scripts": {
     "build": "babel src --out-dir lib",
     "generate": "babel-node ./scripts/generate",
     "preversion": "yarn test && yarn build",
+    "prettify": "pretty-quick",
     "release:patch": "npm version patch && npm publish && git push --follow-tags",
     "release:minor": "npm version minor && npm publish && git push --follow-tags",
     "release:major": "npm version major && npm publish && git push --follow-tags",
@@ -55,9 +61,11 @@
     "glob": "7.1.2",
     "http-server": "0.11.1",
     "humps": "2.0.1",
+    "husky": "1.2.1",
     "jest": "23.1.0",
     "mkdirp": "0.5.1",
     "prettier": "1.15.3",
+    "pretty-quick": "1.8.0",
     "react": "16.2.0",
     "react-dom": "16.2.1",
     "react-native": "0.52.2",
