@@ -85,8 +85,8 @@ In HTML, the basic user interaction is the hyperlink: users click an element, an
 Hyperlinks on their own are not expressive enough to build interactive web apps, so developers use Javascript to create more complex interactions.
 
 In HXML, the [behavior syntax](https://hyperview.org/docs/reference_behavior_attributes) can express a large class of user interactions with declarative markup. 
-- The [`trigger`](https://hyperview.org/docs/reference_behavior_attributes#trigger) allows behaviors to execute not just on press, but under many other types of user interactions, such as a pull-to-refresh.
-- The [`action`](https://hyperview.org/docs/reference_behavior_attributes#action) allows a behavior to navigate to a new screen. But it also supports modifying the current screen by replacing, appending, or prepending HXML content to elements. `action` gives developers the power of AJAX without needing to write callbacks or promises in code.
+- The [`trigger`](https://hyperview.org/docs/reference_behavior_attributes#trigger) attribute allows behaviors to execute not just on press, but under many other types of user interactions, such as a pull-to-refresh.
+- The [`action`](https://hyperview.org/docs/reference_behavior_attributes#action) attribute allows a behavior to navigate to a new screen. But it also supports modifying the current screen by replacing, appending, or prepending HXML content to elements. `action` gives developers the power of AJAX without needing to write callbacks or promises in code.
 - Declarative loading states can [hide or show](https://hyperview.org/docs/reference_behavior_attributes#show-during-load) parts of the screen while requests are in-flight.
 
 Take this example HXML snippet:
