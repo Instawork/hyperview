@@ -28,14 +28,14 @@ Instawork is excited to announce [Hyperview](https://hyperview.org), our open-so
 
 [**Hyperview XML (HXML)**](/docs/reference_index#hyperview-xml): a new XML-based format for describing mobile app screens and user interactions. HXML's building blocks reflect the UI patterns of today's mobile interfaces. Features like stack & modal navigation or infinite-scrolling lists can be defined with a few simple XML attributes and tags.
 
-[**Hyperview Client**](https://github.com/instawork/hyperview): a mobile library (on top of React Native) that can render HXML. After integrating the client into your app, can render any HXML screen & interaction with a series of HTTP requests specified in the HXML.
+[**Hyperview Client**](https://github.com/instawork/hyperview): a mobile library (on top of React Native) that can render HXML. The client can render any HXML screen and handle navigations & interactions by making further HXML requests.
 
-*On the web, pages are rendered in a browser by fetching HTML content from a server.*
+*On the web, pages are rendered in a browser by fetching HTML.*
 
-*With Hyperview, screens are rendered in your mobile app by fetching Hyperview XML (HXML) content from a server.*
+*With Hyperview, screens are rendered in your mobile app by fetching Hyperview XML (HXML).*
 
 ### HXML
-In HXML, mobile app screens are defined using the XML format using a well-defined [set of attributes and tags](/docs/reference_index#hyperview-xml). The experience writing HXML should feel familiar to anyone who's worked with HTML:
+In HXML, mobile app screens are defined in XML format using a core set of [attributes and tags](/docs/reference_index#hyperview-xml). The experience writing HXML should feel familiar to anyone who's worked with HTML:
 
 ```xml
 <doc xmlns="https://hyperview.org/hyperview">
@@ -137,7 +137,7 @@ In a thick client/JSON API architecture, developers need to make many architectu
 <li class="question">How do I store the data for my feature?</li>
 <li class="question">Do I extend an existing API endpoint and resource or create a new one?</li>
 <li class="question">How do I model the user interactions as HTTP requests?</li>
-<li class="question">Will my changed impact the performance of other clients using the same API?</li>
+<li class="question">Will my changes impact the performance of other clients using the same API?</li>
 <li class="question">Is my API design generic enough to serve use-cases beyond the current feature I'm building?</li>
 <li class="question">In order to make the design generic, am I exposing too much data?</li>
 <li class="question">Are my API changes compatible with older client versions?</li>
@@ -150,7 +150,7 @@ With Hyperview, the API-related architecture decisions go away, and the develope
 <li class="question">How do I store the data for my feature?</li>
 <li class="question deleted">Do I extend an existing API endpoint and resource or create a new one?</li>
 <li class="question">How do I model the user interactions as HTTP requests?</li>
-<li class="question deleted">Will my changed impact the performance of other clients using the same API?</li>
+<li class="question deleted">Will my changes impact the performance of other clients using the same API?</li>
 <li class="question deleted">Is my API design generic enough to serve use-cases beyond the current feature I'm building?</li>
 <li class="question deleted">In order to make the design generic, am I exposing too much data?</li>
 <li class="question deleted">Are my API changes compatible with older client versions?</li>
@@ -161,13 +161,13 @@ With Hyperview, the API-related architecture decisions go away, and the develope
 We didn't set out to make our app faster with Hyperview, but that's exactly what happened. In our older code, screens would sometimes require data from multiple API requests before they could be rendered. With Hyperview, each screen just makes one request, significantly reducing latency. Additionally, the Hyperview response contains only the data needed by the screen, unlike generic API requests that may return extraneous data.
 
 #### Instant updates
-When we're ready to ship a feature, we just deploy our backend. Our apps pick up the new HXML content the next time users open the app. If we discover a bug, we just rollback our backend and 0 users remain affected. Hyperview enables Continuous Delivery and Continuous Integration strategies for native mobile apps.
+When we're ready to ship a feature, we just deploy our backend. Our apps pick up the new HXML content the next time users open the app. If we discover a bug, we just rollback our backend and 0 users remain affected. Hyperview enables Continuous Integration and Continuous Delivery strategies for native mobile apps.
 
 #### Consistent experience for all of our users
 Since our Hyperview screens are always pulling the latest designs from our backend, we can assume that every user sees the same version and feature set. This is incredibly important for efficacy and fairness in a two-sided marketplace like Instawork. With Hyperview, we know that users aren't disadvantaged because they're using an older version of our app.
 
 ### Get started today
-Hyperview is truly the best way to develop networked apps for mobile devices. Based on our experience at Instawork, it takes some time to adjust to a thin-client paradigm when working with mobile apps, but once you get used to it, you won't want to go back. There are many ways to get started:
+Hyperview is truly the best way to develop networked apps for mobile devices. Based on our experience at Instawork, it takes some time to adjust to a thin-client paradigm when working with mobile apps, but once you get used to it, you will not want to go back! There are many ways to get started:
 
 - If you want to learn Hyperview by reading example code, head over to the [Examples](/docs/example_index) section.
 
