@@ -26,7 +26,7 @@ function screen({ url }) => (
 )
 ```
 
-The `logEvent`  callback takes a dictionary with two properties:
+The `logEvent` callback takes an object argument with two properties:
 
 | Property    | Type     | Required | Description |
 | ----------- | -------- | -------- | ----------- |
