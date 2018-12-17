@@ -130,3 +130,11 @@ article p img, article iframe {
   width: 20%;
   height: 20%;
 }
+
+li.question {
+  font-style: italic;
+}
+li.question.deleted {
+  text-decoration: line-through;
+  opacity: 0.3;
+}

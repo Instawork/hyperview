@@ -31,6 +31,7 @@ const siteConfig = {
     {doc: 'guide_introduction', label: 'Guides'},
     {doc: 'example_index', label: 'Examples'},
     {doc: 'reference_index', label: 'Reference'},
+    {blog: true, label: 'Blog'}
   ],
 
   /* path to images for header/footer */
