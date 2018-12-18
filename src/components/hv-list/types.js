@@ -8,7 +8,13 @@
  *
  */
 
-import type { Animations, Element, HvComponentOnUpdate, HvComponentOptions, StyleSheets } from 'hyperview/src/types';
+import type {
+  Animations,
+  Element,
+  HvComponentOnUpdate,
+  HvComponentOptions,
+  StyleSheets,
+} from 'hyperview/src/types';
 
 export type Props = {|
   animations: ?Animations,

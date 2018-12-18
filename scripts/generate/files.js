@@ -24,7 +24,7 @@ const read = (filePath: string) => {
 
 /**
  * Writes to a file if its contents have changed (in UTF8). Prints to console if file was changed.
-*/
+ */
 const writeIfChanged = (filePath: string, contents: string) => {
   if (fs.existsSync(filePath) && read(filePath) === contents) {
     return;

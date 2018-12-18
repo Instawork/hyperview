@@ -17,7 +17,12 @@ const projectPath = path.join(__dirname, '../..');
 
 const stories = glob
   .sync(path.join(__dirname, '../../src/**/stories/index.js'))
-  .map(storyPath => `import '../${path.relative(projectPath, storyPath).replace(/\\/g, '/')}';`)
+  .map(
+    storyPath =>
+      `import '../${path
+        .relative(projectPath, storyPath)
+        .replace(/\\/g, '/')}';`,
+  )
   .sort();
 
 const lines = [

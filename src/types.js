@@ -81,7 +81,7 @@ export type Attribute = Node & {
   nodeType: typeof NODE_TYPE.ATTRIBUTE_NODE,
   +name: DOMString,
   +specified: true,
-  ownerElement: Element
+  ownerElement: Element,
 };
 
 export type DocumentType = {
@@ -94,8 +94,16 @@ export type DocumentType = {
 };
 
 export type DOMImplementation = {
-  createDocument: (namespaceURI: NamespaceURI, qualifiedName: DOMString, doctype: DocumentType) => Document,
-  createDocumentType: (qualifiedName: DOMString, publicId: DOMString, systemId: DOMString) => DocumentType,
+  createDocument: (
+    namespaceURI: NamespaceURI,
+    qualifiedName: DOMString,
+    doctype: DocumentType,
+  ) => Document,
+  createDocumentType: (
+    qualifiedName: DOMString,
+    publicId: DOMString,
+    systemId: DOMString,
+  ) => DocumentType,
   hasFeature: (feature: DOMString, version: DOMString) => boolean,
 };
 
@@ -104,18 +112,30 @@ export type Document = Node & {
   documentElement: Element,
   implementation: DOMImplementation,
   createAttribute: (name: DOMString) => Attribute,
-  createAttributeNS: (namespaceURI: NamespaceURI, qualifiedName: DOMString) => Attribute,
+  createAttributeNS: (
+    namespaceURI: NamespaceURI,
+    qualifiedName: DOMString,
+  ) => Attribute,
   createCDATASection: (data: DOMString) => CDATASection,
   createComment: (data: DOMString) => Comment,
   createDocumentFragment: () => DocumentFragment,
   createElement: (tagName: DOMString) => Element,
-  createElementNS: (namespaceURI: NamespaceURI, qualifiedName: DOMString) => Node,
+  createElementNS: (
+    namespaceURI: NamespaceURI,
+    qualifiedName: DOMString,
+  ) => Node,
   createEntityReference: (name: DOMString) => EntityReference,
-  createProcessingInstruction: (target: DOMString, data: DOMString) => ProcessingInstruction,
+  createProcessingInstruction: (
+    target: DOMString,
+    data: DOMString,
+  ) => ProcessingInstruction,
   createTextNode: (data: DOMString) => Node,
   getElementById: (elementId: DOMString) => ?Element,
   getElementsByTagName: (tagName: DOMString) => NodeList<Element>,
-  getElementsByTagNameNS: (namespaceURI: NamespaceURI, localName: LocalName) => NodeList<Element>,
+  getElementsByTagNameNS: (
+    namespaceURI: NamespaceURI,
+    localName: LocalName,
+  ) => NodeList<Element>,
   importNode: (importedNode: Node, deep: boolean) => Node,
 };
 
@@ -125,10 +145,19 @@ export type Element = Node & {
   localName: LocalName,
   getAttribute: (name: DOMString) => ?DOMString,
   getAttributeNode: (name: DOMString) => ?Attribute,
-  getAttributeNodeNS: (namespaceURI: NamespaceURI, localName: LocalName) => ?Attribute,
-  getAttributeNS: (namespaceURI: NamespaceURI, localName: LocalName) => ?DOMString,
+  getAttributeNodeNS: (
+    namespaceURI: NamespaceURI,
+    localName: LocalName,
+  ) => ?Attribute,
+  getAttributeNS: (
+    namespaceURI: NamespaceURI,
+    localName: LocalName,
+  ) => ?DOMString,
   getElementsByTagName: (name: DOMString) => NodeList<Element>,
-  getElementsByTagNameNS: (namespaceURI: NamespaceURI, localName: LocalName) => NodeList<Element>,
+  getElementsByTagNameNS: (
+    namespaceURI: NamespaceURI,
+    localName: LocalName,
+  ) => NodeList<Element>,
   hasAttribute: (name: DOMString) => boolean,
   hasAttributeNS: (namespaceURI: NamespaceURI, localName: LocalName) => boolean,
   removeAttribute: (name: DOMString) => void,
@@ -137,7 +166,11 @@ export type Element = Node & {
   setAttribute: (name: DOMString, value: DOMString) => void,
   setAttributeNode: (attribute: Attribute) => Attribute,
   setAttributeNodeNS: (attribute: Attribute) => Attribute,
-  setAttributeNS: (namespaceURI: NamespaceURI, qualifiedName: LocalName, value: DOMString) => void,
+  setAttributeNS: (
+    namespaceURI: NamespaceURI,
+    qualifiedName: LocalName,
+    value: DOMString,
+  ) => void,
 };
 
 export type DocumentFragment = Node;
@@ -165,12 +198,12 @@ export type Text = CharacterData & {
 };
 
 export type Comment = CharacterData & {
-  nodeName: "#comment",
+  nodeName: '#comment',
   nodeType: typeof NODE_TYPE.COMMENT_NODE,
 };
 
 export type CDATASection = CharacterData & {
-  nodeName: "#cdata-section",
+  nodeName: '#cdata-section',
   nodeType: typeof NODE_TYPE.CDATA_SECTION_NODE,
 };
 
@@ -181,11 +214,17 @@ export type NodeList<T> = {
 
 export type NamedNodeMap = {
   getNamedItem: (key: string) => ?Attribute,
-  getNamedItemNS: (namespaceURI: NamespaceURI, localName: LocalName) => ?Attribute,
+  getNamedItemNS: (
+    namespaceURI: NamespaceURI,
+    localName: LocalName,
+  ) => ?Attribute,
   item: (index: number) => ?Attribute,
   length: number,
   removeNamedItem: (key: string) => ?Attribute,
-  removeNamedItemNS: (namespaceURI: NamespaceURI, localName: LocalName) => ?Attribute,
+  removeNamedItemNS: (
+    namespaceURI: NamespaceURI,
+    localName: LocalName,
+  ) => ?Attribute,
   setNamedItem: (attribute: Attribute) => ?Attribute,
   setNamedItemNS: (attribute: Attribute) => ?Attribute,
 };
@@ -199,8 +238,8 @@ export type StyleSheets = {
 };
 
 export type Animations = {
-  values: {[string]: string},
-  properties: {[string]: string},
+  values: { [string]: string },
+  properties: { [string]: string },
 };
 
 export type ComponentRegistry = {

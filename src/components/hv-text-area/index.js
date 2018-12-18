@@ -44,15 +44,12 @@ export default class HvTextArea extends PureComponent<Props, State> {
       keyboardType,
       onFocus: () => this.setState({ focused: true }),
       onBlur: () => this.setState({ focused: false }),
-      onChangeText: (value) => {
+      onChangeText: value => {
         this.setState({ value });
         element.setAttribute('value', value);
       },
     };
 
-    return React.createElement(
-      TextInput,
-      props,
-    );
+    return React.createElement(TextInput, props);
   }
 }

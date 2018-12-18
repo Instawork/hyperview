@@ -128,15 +128,23 @@ const STYLE_ATTRIBUTE_CONVERTERS = {
   textShadowRadius: number,
 };
 
-function createStylesheet(document: Document, modifiers = {}): StyleSheetType<*> {
+function createStylesheet(
+  document: Document,
+  modifiers = {},
+): StyleSheetType<*> {
   const styles = getFirstTag(document, 'styles');
   const stylesheet = {};
   if (styles) {
-    const styleElements = styles.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'style');
+    const styleElements = styles.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      'style',
+    );
 
     for (let i = 0; i < styleElements.length; i += 1) {
       const styleElement = styleElements.item(i);
-      const hasModifier = styleElement.parentNode && styleElement.parentNode.tagName === 'modifier';
+      const hasModifier =
+        styleElement.parentNode &&
+        styleElement.parentNode.tagName === 'modifier';
 
       let styleId = styleElement.getAttribute('id');
       if (hasModifier) {
@@ -156,7 +164,8 @@ function createStylesheet(document: Document, modifiers = {}): StyleSheetType<*>
       for (let j = 0; j < modifierEntries.length; j += 1) {
         const [modifier, state] = modifierEntries[j];
 
-        const elementModifierState = styleElement.parentNode.getAttribute(modifier) === 'true';
+        const elementModifierState =
+          styleElement.parentNode.getAttribute(modifier) === 'true';
 
         if (elementModifierState !== state) {
           matchesModifiers = false;
@@ -186,11 +195,31 @@ function createStylesheet(document: Document, modifiers = {}): StyleSheetType<*>
 
 export function createStylesheets(document: Document): StyleSheets {
   const styles = {
-    regular: createStylesheet(document, { selected: false, pressed: false, focused: false }),
-    selected: createStylesheet(document, { selected: true, pressed: false, focused: false }),
-    pressed: createStylesheet(document, { selected: false, pressed: true, focused: false }),
-    focused: createStylesheet(document, { selected: false, pressed: false, focused: true }),
-    pressedSelected: createStylesheet(document, { selected: true, pressed: true, focused: false }),
+    regular: createStylesheet(document, {
+      selected: false,
+      pressed: false,
+      focused: false,
+    }),
+    selected: createStylesheet(document, {
+      selected: true,
+      pressed: false,
+      focused: false,
+    }),
+    pressed: createStylesheet(document, {
+      selected: false,
+      pressed: true,
+      focused: false,
+    }),
+    focused: createStylesheet(document, {
+      selected: false,
+      pressed: false,
+      focused: true,
+    }),
+    pressedSelected: createStylesheet(document, {
+      selected: true,
+      pressed: true,
+      focused: false,
+    }),
   };
   return styles;
 }

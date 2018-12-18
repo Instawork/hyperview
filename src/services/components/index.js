@@ -31,13 +31,14 @@ const HYPERVIEW_COMPONENTS = [
 
 export const getRegistry = (
   components: HvComponent<*>[] = [],
-): ComponentRegistry => [
-  ...HYPERVIEW_COMPONENTS,
-  ...components,
-].reduce((registry, component) => ({
-  ...registry,
-  [component.namespaceURI]: {
-    ...registry[component.namespaceURI],
-    [component.localName]: component,
-  },
-}), {});
+): ComponentRegistry =>
+  [...HYPERVIEW_COMPONENTS, ...components].reduce(
+    (registry, component) => ({
+      ...registry,
+      [component.namespaceURI]: {
+        ...registry[component.namespaceURI],
+        [component.localName]: component,
+      },
+    }),
+    {},
+  );

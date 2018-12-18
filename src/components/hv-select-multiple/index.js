@@ -32,7 +32,10 @@ export default class HvSelectMultiple extends PureComponent<Props> {
   onToggle = (selectedValue: ?DOMString) => {
     const { element, onUpdate } = this.props;
     const newElement = element.cloneNode(true);
-    const options = newElement.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'option');
+    const options = newElement.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      'option',
+    );
     for (let i = 0; i < options.length; i += 1) {
       const option = options.item(i);
       if (option) {
@@ -44,7 +47,7 @@ export default class HvSelectMultiple extends PureComponent<Props> {
       }
     }
     onUpdate('#', 'swap', element, { newElement });
-  }
+  };
 
   render() {
     const { element, stylesheets, animations, onUpdate, options } = this.props;
@@ -55,10 +58,10 @@ export default class HvSelectMultiple extends PureComponent<Props> {
     return React.createElement(
       View,
       props,
-      ...Render.renderChildren(
-        element, stylesheets, animations, onUpdate,
-        { ...options, onToggle: this.onToggle },
-      ),
+      ...Render.renderChildren(element, stylesheets, animations, onUpdate, {
+        ...options,
+        onToggle: this.onToggle,
+      }),
     );
   }
 }
