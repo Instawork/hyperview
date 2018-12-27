@@ -63,7 +63,7 @@ function getHyperviewHeaders() {
  */
 
 
- 
+
 /**
  * Component that handles dispatching behaviors based on the appropriate
  * triggers.
@@ -1039,6 +1039,10 @@ export default class HyperScreen extends React.Component {
       const number = behaviorElement.getAttributeNS(PHONE_NS, 'number');
       if (number && this.props.onCall) {
         this.props.onCall(number);
+      }
+    } else if (action === 'ask-rating') {
+      if (this.props.onAskRating) {
+        this.props.onAskRating();
       }
     } else if (action === 'share') {
       // This share API is based off https://facebook.github.io/react-native/docs/0.52/share
