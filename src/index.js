@@ -1058,16 +1058,27 @@ export default class HyperScreen extends React.Component {
         this.props.onShare({ dialogTitle, message, subject, title, url });
       }
     } else if (action === 'alert') {
+      // Shows an alert with options that can trigger other behaviors.
+
       const title = behaviorElement.getAttributeNS(HYPERVIEW_ALERT_NS, 'title');
       const message = behaviorElement.getAttributeNS(HYPERVIEW_ALERT_NS, 'message');
 
-      const options = Array.from(behaviorElement.childNodes).filter(
+      // Get the immediate alert:option nodes. We don't use getElementsByTagname to
+      // avoid getting options for nested alerts.
+      const optionElements = Array.from(behaviorElement.childNodes).filter(
         n => n.namespaceURI === HYPERVIEW_ALERT_NS && n.localName === 'option'
-      ).map(option => ({
-        text: option.getAttributeNS(HYPERVIEW_ALERT_NS, 'label'),
+      )
+        
+      // Create the options for the alert.
+      // NOTE: Android supports at most 3 options.
+      const options = optionElements.map(optionElement => ({
+        text: optionElement.getAttributeNS(HYPERVIEW_ALERT_NS, 'label'),
         onPress: () => {
-          getBehaviorElements(option).filter(
-            e => e.getAttribute('trigger') === null || e.getAttribute('trigger') === 'press'
+          getBehaviorElements(optionElement).filter(
+            // Only behaviors with "press" trigger will get executed.
+            // "press" is also the default trigger, so if no trigger is specified,
+            // the behavior will also execute.
+            e => !e.getAttribute('trigger') || e.getAttribute('trigger') === 'press'
           ).forEach(behaviorElement => {
             const href = behaviorElement.getAttribute('href');
             const action = behaviorElement.getAttribute('action');
@@ -1077,7 +1088,7 @@ export default class HyperScreen extends React.Component {
             const hideIndicatorIds = behaviorElement.getAttribute('hide-during-load');
             const delay = behaviorElement.getAttribute('delay');
             const once = behaviorElement.getAttribute('once');
-            this.onUpdate(href, action, option, {
+            this.onUpdate(href, action, optionElement, {
               verb,
               targetId,
               showIndicatorIds,
@@ -1090,6 +1101,7 @@ export default class HyperScreen extends React.Component {
         }
       }));
 
+      // Show alert
       Alert.alert(title, message, options);
     }
   }
