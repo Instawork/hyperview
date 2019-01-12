@@ -8,7 +8,11 @@
  *
  */
 
+// Core Namespaces
 export const HYPERVIEW = 'https://hyperview.org/hyperview';
+export const HYPERVIEW_ALERT = 'https://hyperview.org/hyperview-alert';
+
+// Custom namespaces
 export const AMPLITUDE = 'https://instawork.com/hyperview-amplitude';
 export const PHONE = 'https://instawork.com/hyperview-phone';
 export const INTERCOM = 'https://instawork.com/hyperview-intercom';

@@ -12,6 +12,7 @@ import * as Render from 'hyperview/src/services/render';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import {
   ActivityIndicator,
+  Alert,
   Animated,
   Dimensions,
   Easing,
@@ -31,6 +32,7 @@ import { version } from '../package.json';
 import urlParse from 'url-parse';
 
 const HYPERVIEW_NS = Namespaces.HYPERVIEW;
+const HYPERVIEW_ALERT_NS = Namespaces.HYPERVIEW_ALERT;
 const AMPLITUDE_NS = Namespaces.AMPLITUDE;
 const PHONE_NS = Namespaces.PHONE;
 const INTERCOM_NS = Namespaces.INTERCOM;
@@ -1055,6 +1057,57 @@ export default class HyperScreen extends React.Component {
       if ((message || url) && this.props.onShare) {
         this.props.onShare({ dialogTitle, message, subject, title, url });
       }
+    } else if (action === 'alert') {
+      // Shows an alert with options that can trigger other behaviors.
+
+      const title = behaviorElement.getAttributeNS(HYPERVIEW_ALERT_NS, 'title');
+      const message = behaviorElement.getAttributeNS(HYPERVIEW_ALERT_NS, 'message');
+
+      // Get the immediate alert:option nodes. We don't use getElementsByTagname to
+      // avoid getting options for nested alerts.
+      const optionElements = Array.from(behaviorElement.childNodes).filter(
+        n => n.namespaceURI === HYPERVIEW_ALERT_NS && n.localName === 'option'
+      )
+        
+      // Create the options for the alert.
+      // NOTE: Android supports at most 3 options.
+      const options = optionElements.map(optionElement => ({
+        text: optionElement.getAttributeNS(HYPERVIEW_ALERT_NS, 'label'),
+        onPress: () => {
+          getBehaviorElements(optionElement).filter(
+            // Only behaviors with "press" trigger will get executed.
+            // "press" is also the default trigger, so if no trigger is specified,
+            // the behavior will also execute.
+            e => !e.getAttribute('trigger') || e.getAttribute('trigger') === 'press'
+          ).forEach((behaviorElement, i) => {
+            const href = behaviorElement.getAttribute('href');
+            const action = behaviorElement.getAttribute('action');
+            const verb = behaviorElement.getAttribute('verb');
+            const targetId = behaviorElement.getAttribute('target');
+            const showIndicatorIds = behaviorElement.getAttribute('show-during-load');
+            const hideIndicatorIds = behaviorElement.getAttribute('hide-during-load');
+            const delay = behaviorElement.getAttribute('delay');
+            const once = behaviorElement.getAttribute('once');
+
+            // With multiple behaviors for the same trigger, we need to stagger
+            // the updates a bit so that each update operates on the latest DOM.
+            // Ideally, we could apply multiple DOM updates at a time.
+            later(i).then(() => this.onUpdate(href, action, optionElement, {
+                verb,
+                targetId,
+                showIndicatorIds,
+                hideIndicatorIds,
+                delay,
+                once,
+                behaviorElement,
+              })
+            )
+          });
+        }
+      }));
+
+      // Show alert
+      Alert.alert(title, message, options);
     }
   }
 
