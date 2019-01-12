@@ -1,5 +1,8 @@
 ## Hyperview changelog
 
+0.7
+- Added support for "alert" behavior.
+
 0.6
 - Change default namespace from `https://instawork.com/hyperview` to `https://hyperview.org/hyperview`
 
