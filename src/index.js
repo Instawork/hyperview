@@ -1079,7 +1079,7 @@ export default class HyperScreen extends React.Component {
             // "press" is also the default trigger, so if no trigger is specified,
             // the behavior will also execute.
             e => !e.getAttribute('trigger') || e.getAttribute('trigger') === 'press'
-          ).forEach(behaviorElement => {
+          ).forEach((behaviorElement, i) => {
             const href = behaviorElement.getAttribute('href');
             const action = behaviorElement.getAttribute('action');
             const verb = behaviorElement.getAttribute('verb');
@@ -1088,15 +1088,20 @@ export default class HyperScreen extends React.Component {
             const hideIndicatorIds = behaviorElement.getAttribute('hide-during-load');
             const delay = behaviorElement.getAttribute('delay');
             const once = behaviorElement.getAttribute('once');
-            this.onUpdate(href, action, optionElement, {
-              verb,
-              targetId,
-              showIndicatorIds,
-              hideIndicatorIds,
-              delay,
-              once,
-              behaviorElement,
-            });
+
+            // With multiple behaviors for the same trigger, we need to stagger
+            // the updates a bit so that each update operates on the latest DOM.
+            // Ideally, we could apply multiple DOM updates at a time.
+            later(i).then(() => this.onUpdate(href, action, optionElement, {
+                verb,
+                targetId,
+                showIndicatorIds,
+                hideIndicatorIds,
+                delay,
+                once,
+                behaviorElement,
+              })
+            )
           });
         }
       }));

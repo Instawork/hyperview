@@ -53,72 +53,28 @@
         <text action="back"
               href="#"
               style="Header__Back">Back</text>
-        <text style="Header__Title">Advanced Behaviors</text>
+        <text style="Header__Title">Alert</text>
       </header>
       <list>
-        <item href="/advanced_behaviors/multiple.xml"
-              key="multiple"
+        <item href="/advanced_behaviors/alert/options.xml"
+              key="options"
               show-during-load="loadingScreen"
               style="Item">
-          <text style="Item__Label">Multiple Different Behaviors</text>
+          <text style="Item__Label">Options</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
-        <item href="/advanced_behaviors/multiple_same.xml"
-              key="multiple_same"
+        <item href="/advanced_behaviors/alert/behavior.xml"
+              key="behavior"
               show-during-load="loadingScreen"
               style="Item">
-          <text style="Item__Label">Multiple Same Behaviors</text>
+          <text style="Item__Label">Single Behavior</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
-        <item href="/advanced_behaviors/alert/index.xml"
-              key="alert"
+        <item href="/advanced_behaviors/alert/multiple_behaviors.xml"
+              key="multiple_behaviors"
               show-during-load="loadingScreen"
               style="Item">
-          <view style="Item__Left">
-            <text style="Item__Label">Alert</text>
-          </view>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/advanced_behaviors/custom_toast.xml"
-              key="custom_toast"
-              show-during-load="loadingScreen"
-              style="Item">
-          <text style="Item__Label">Custom: Toast</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/advanced_behaviors/custom_web.xml"
-              key="custom_web"
-              show-during-load="loadingScreen"
-              style="Item">
-          <text style="Item__Label">Custom: Web</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/advanced_behaviors/custom_intercom.xml"
-              key="custom_intercom"
-              show-during-load="loadingScreen"
-              style="Item">
-          <text style="Item__Label">Custom: Intercom</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/advanced_behaviors/custom_amplitude.xml"
-              key="custom_amplitude"
-              show-during-load="loadingScreen"
-              style="Item">
-          <text style="Item__Label">Custom: Amplitude</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/advanced_behaviors/custom_phone.xml"
-              key="custom_phone"
-              show-during-load="loadingScreen"
-              style="Item">
-          <text style="Item__Label">Custom: Phone</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/advanced_behaviors/custom_share.xml"
-              key="custom_share"
-              show-during-load="loadingScreen"
-              style="Item">
-          <text style="Item__Label">Custom: Share</text>
+          <text style="Item__Label">Multiple Behaviors</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
       </list>
