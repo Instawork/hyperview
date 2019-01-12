@@ -12,6 +12,7 @@ import * as Render from 'hyperview/src/services/render';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import {
   ActivityIndicator,
+  Alert,
   Animated,
   Dimensions,
   Easing,
@@ -31,6 +32,7 @@ import { version } from '../package.json';
 import urlParse from 'url-parse';
 
 const HYPERVIEW_NS = Namespaces.HYPERVIEW;
+const HYPERVIEW_ALERT_NS = Namespaces.HYPERVIEW_ALERT;
 const AMPLITUDE_NS = Namespaces.AMPLITUDE;
 const PHONE_NS = Namespaces.PHONE;
 const INTERCOM_NS = Namespaces.INTERCOM;
@@ -1055,6 +1057,40 @@ export default class HyperScreen extends React.Component {
       if ((message || url) && this.props.onShare) {
         this.props.onShare({ dialogTitle, message, subject, title, url });
       }
+    } else if (action === 'alert') {
+      const title = behaviorElement.getAttributeNS(HYPERVIEW_ALERT_NS, 'title');
+      const message = behaviorElement.getAttributeNS(HYPERVIEW_ALERT_NS, 'message');
+
+      const options = Array.from(behaviorElement.childNodes).filter(
+        n => n.namespaceURI === HYPERVIEW_ALERT_NS && n.localName === 'option'
+      ).map(option => ({
+        text: option.getAttributeNS(HYPERVIEW_ALERT_NS, 'label'),
+        onPress: () => {
+          getBehaviorElements(option).filter(
+            e => e.getAttribute('trigger') === null || e.getAttribute('trigger') === 'press'
+          ).forEach(behaviorElement => {
+            const href = behaviorElement.getAttribute('href');
+            const action = behaviorElement.getAttribute('action');
+            const verb = behaviorElement.getAttribute('verb');
+            const targetId = behaviorElement.getAttribute('target');
+            const showIndicatorIds = behaviorElement.getAttribute('show-during-load');
+            const hideIndicatorIds = behaviorElement.getAttribute('hide-during-load');
+            const delay = behaviorElement.getAttribute('delay');
+            const once = behaviorElement.getAttribute('once');
+            this.onUpdate(href, action, option, {
+              verb,
+              targetId,
+              showIndicatorIds,
+              hideIndicatorIds,
+              delay,
+              once,
+              behaviorElement,
+            });
+          });
+        }
+      }));
+
+      Alert.alert(title, message, options);
     }
   }
 

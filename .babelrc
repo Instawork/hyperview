@@ -5,5 +5,8 @@
       "root": ["."],
       "alias": {"hyperview": "./"}
     }]
-  ]
+  ],
+  "ignore": [
+    "demo"
+  ],
 }

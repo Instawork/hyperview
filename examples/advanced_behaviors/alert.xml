@@ -1,0 +1,130 @@
+<doc xmlns="https://hyperview.org/hyperview"
+     xmlns:ns1="https://instawork.com/hyperview-redux"
+     xmlns:alert="https://hyperview.org/hyperview-alert"
+>
+  <screen>
+    <styles>
+      <style alignItems="center"
+             backgroundColor="white"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flexDirection="row"
+             height="72"
+             id="Header"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="24" />
+      <style color="blue"
+             fontWeight="600"
+             fontSize="16"
+             id="Header__Back"
+             paddingRight="16" />
+      <style color="black"
+             fontWeight="600"
+             fontSize="24"
+             id="Header__Title" />
+      <style backgroundColor="white"
+             flex="1"
+             id="Body" />
+      <style fontWeight="600"
+             fontSize="16"
+             id="Description"
+             margin="24" />
+      <style backgroundColor="#63CB76"
+             borderRadius="16"
+             flex="1"
+             flexDirection="row"
+             id="Button"
+             justifyContent="center"
+             margin="24"
+             padding="24" />
+      <style color="white"
+             fontWeight="bold"
+             fontSize="24"
+             id="Button__Label" />
+      <style flex="1"
+             id="Main" />
+      <style borderColor="#e1e1e1"
+             borderRadius="16"
+             borderWidth="2"
+             id="Container"
+             margin="24"
+             padding="24" />
+      <style color="black"
+             fontWeight="normal"
+             fontSize="16"
+             id="Container__Label" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text action="back"
+              href="#"
+              style="Header__Back">Back</text>
+        <text style="Header__Title">Alert</text>
+      </header>
+
+      <view scroll="true"
+            style="Main">
+
+        <text style="Description">Alert options can trigger navigation behaviors.</text>
+        <view style="Button">
+          <behavior
+            trigger="press"
+            action="alert"
+            alert:title="Alert title"
+            alert:message="Alert message"
+          >
+            <alert:option alert:label="Push" trigger="press" href="/index.xml" action="push" />
+            <alert:option alert:label="Back" trigger="press" href="#" action="back" />
+            <alert:option alert:label="Cancel" />
+          </behavior>
+          <text style="Button__Label">Navigation options</text>
+        </view>
+
+        <text style="Description">Alert options can trigger update behaviors.</text>
+        <view style="Button">
+          <behavior
+            trigger="press"
+            action="alert"
+            alert:title="Alert title"
+            alert:message="Alert message"
+          >
+            <alert:option alert:label="Append" trigger="press" href="#option1" action="append" target="alert1Container" />
+            <alert:option alert:label="Prepend" trigger="press" href="#option2" action="prepend" target="alert1Container" />
+            <alert:option alert:label="Replace" trigger="press" href="#option3" action="replace-inner" target="alert1Container" />
+          </behavior>
+          <text style="Button__Label">Update options</text>
+        </view>
+        <view id="alert1Container" style="Container">
+        </view>
+        <view hide="true">
+          <text id="option1" style="Container__Label">Appended</text>
+          <text id="option2" style="Container__Label">Prepended</text>
+          <text id="option3" style="Container__Label">Replace</text>
+        </view>
+
+        <text style="Description">Alert options can trigger other action types, including alerts</text>
+        <view style="Button">
+          <behavior
+            trigger="press"
+            action="alert"
+            alert:title="Alert title"
+            alert:message="Alert message"
+          >
+            <alert:option alert:label="Another Alert">
+              <behavior
+                trigger="press"
+                action="alert"
+                alert:title="Second Alert"
+                alert:message="Press for another alert"
+              >
+                <alert:option alert:label="Close" />
+              </behavior>
+            </alert:option>
+          </behavior>
+          <text style="Button__Label">Nested</text>
+        </view>
+      </view>
+    </body>
+  </screen>
+</doc>
