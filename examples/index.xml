@@ -56,6 +56,15 @@
         <text style="Header__Title">Hyperview Examples</text>
       </header>
       <list>
+        <item href="/screen/index.xml"
+              key="layout"
+              show-during-load="loadingScreen"
+              style="Item">
+          <view style="Item__Left">
+            <text style="Item__Label">Screen Replace</text>
+          </view>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
         <item href="/ui_elements/index.xml"
               key="layout"
               show-during-load="loadingScreen"

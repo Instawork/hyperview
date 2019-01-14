@@ -1,0 +1,19 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style id="text"
+             height="200"
+             width="200"
+      />
+    </styles>
+    <body>
+      <text href="#secondScreen" style="text">Hello</text>
+    </body>
+  </screen>
+  <screen id="secondScreen">
+    <body>
+      <text>Second screen!</text>
+      <text href="/test">Test</text>
+    </body>
+  </screen>
+</doc>
