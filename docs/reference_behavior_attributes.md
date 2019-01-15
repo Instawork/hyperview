@@ -1,7 +1,7 @@
 ---
 id: reference_behavior_attributes
-title: 'Behavior Attributes'
-sidebar_label: 'Behavior Attributes'
+title: Behavior Attributes
+sidebar_label: Behavior Attributes
 ---
 
 Behavior attributes are the main way to add interactivity to a Hyperview app. Behavior attributes enable rich interactions with a declarative syntax, powered by server-side logic.
