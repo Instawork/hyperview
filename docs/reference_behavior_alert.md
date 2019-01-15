@@ -1,7 +1,7 @@
 ---
 id: reference_behavior_alert
-title: 'System Alert Behavior'
-sidebar_label: 'Alert'
+title: System Alert Behavior
+sidebar_label: Alert
 ---
 
 System alerts can be triggered via behaviors. The alert can display a title, message, and between 1 and 3 labeled options. Each option has other behaviors associated with it. These associated behaviors get triggered when the user selects the corresponding option.
