@@ -8,7 +8,7 @@ When demoing [Hyperview](https://hyperview.org) to new engineers, there's one co
 
 > "XML, really? It's bloated and outdated. Why not use JSON? It's the future."
 
-These comments imply that JSON is the "one true file format" that should be used for everything, but I don't believe there's such a thing. Each format makes tradeoffs in encoding, flexibility, and expressiveness to best suit a specific use case.
+These comments imply that JSON is the "one true file format" that should be used for everything, but we don't believe there's such a thing. Each format makes tradeoffs in encoding, flexibility, and expressiveness to best suit a specific use case.
 - A format optimized for size will use a binary encoding that won't be human-readable.
 - A format optimized for extensibility will take longer to decode than a format designed for a narrow use case.
 - A format designed for flat data (like CSV) will struggle to represent nested data.
@@ -51,7 +51,7 @@ A particular strength of JSON is its support for nested data structures. Notice 
   <User first="Pam" last="Beesly" favoriteMovies="Legally Blonde" />
 </Users>
 ```
-This solution is not ideal. We're not using XML semantics to represent the list of movies, meaning we can't rely on XML syntax validation to verify the data. The clients reading the data will need to know how to split on commas and unescape the data in this particular attribtue. So both writing and reading the data is error-prone. To address these shortcoming, we should use XML syntax to represent the list of movies. This means creating child elements for each movie:
+This solution is not ideal. We're not using XML semantics to represent the list of movies, meaning we can't rely on XML syntax validation to verify the data. The clients reading the data will need to know how to split on commas and unescape the data in this particular attribtue. So both writing and reading the data is error-prone. To address these shortcomings, we should use XML syntax to represent the list of movies. This means creating child elements for each movie:
 ```
 <Users>
   <User first="Michael" last="Scott">
@@ -135,7 +135,7 @@ In JSON, we represent each employee as an object with key/value pairs for the na
   ]
 }
 ```
-Notice that its hard to distinguish a node's properties from the relationships. It's common to prefix the relationship keys with "$" or "_" to make the distinction clearer, but this is a hack akin to using a delimiter in an XML attribute. When writing the JSON, we can cause errors by forgetting the predix. Likewise when reading the JSON, we can't loop through the keys in an object without remembering to filter out the ones starting with the prefix. Both reading and writing the data is now error-prone and inelegant.
+Notice that it's hard to distinguish a node's properties from the relationships. It's common to prefix the relationship keys with "$" or "_" to make the distinction clearer, but this is a hack akin to using a delimiter in an XML attribute. When writing the JSON, we can cause errors by forgetting the prefix. Likewise when reading the JSON, we can't loop through the keys in an object without remembering to filter out the ones starting with the prefix. Both reading and writing the data is now error-prone and inelegant.
 
 XML really shines when it comes to tree data: elements are nodes, attributes are node properties, and child elements imply the reporting relationship:
 ```
@@ -149,7 +149,7 @@ XML really shines when it comes to tree data: elements are nodes, attributes are
 </Employee>
 ```
 Compared to the JSON example, it's much easier to get a sense of the underlying structure of the data.
-Attributes of the employee (name and title) are cleanly separated from the employee relationships. The relationships are both easier to visualize when writing the file, and the code to read the data can operate on the oversll structure without touching node properties. There's no chance of accidentally interpreting the relationship data as an employee attribute like in the JSON example.
+Attributes of the employee (name and title) are cleanly separated from the employee relationships. The relationships are both easier to visualize when writing the file, and the code to read the data can operate on the overall structure without touching node properties. There's no chance of accidentally interpreting the relationship data as an employee attribute like in the JSON example.
 
 The advantages of XML over JSON for trees becomes more pronounced when we introduce different node types. Assume we wanted to introduce departments into the org chart above. In XML, we can just use an element with a new tag name:
 
@@ -215,7 +215,7 @@ JSON doesn't have a concept of node types, so again we need to introduce a new s
 ```
 Now it's JSON's turn to be bloated and hard-to read. Meanwhile, the XML version represents the tree data succinctly without obscuring the underlying structure.
 
-These two examples highlight the relative strengths of weaknesses of JSON and XML when representing different types of data:
+These two examples highlight the relative strengths and weaknesses of JSON and XML when representing different types of data:
 - JSON excels at representing a collection of homogenous objects, where object properties can be composite data types
 - XML excels at representing trees with heterogeneous objects, where object properties are simple data types
 
