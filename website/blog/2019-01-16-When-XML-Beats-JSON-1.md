@@ -225,7 +225,7 @@ Hyperview's goal is to bring a web-like development experience to mobile:
 - In Hyperview, a server responds to an HTTP request with a response to render a mobile app screen.
 
 In order to fill the role of HTML/CSS for mobile apps, Hyperview's file format must be able to define the layout and structure of an app screen's UI.
-And component trees are the best way to represent UI layouts. Every major UI framework out there uses a component tree. Xcode even offers an exploded 3D view that really highlights the underlying tree structure of a screen: each component has a parent component, and everything rolls up up to a shared root component.
+And component trees are the best way to represent UI layouts. Every major UI framework out there uses a component tree. Xcode even offers an exploded 3D view that really highlights the underlying tree structure of a screen: each component has a parent component, and everything rolls up to a shared root component.
 
 <img src="/img/blog_tree_layout.png" />
 
