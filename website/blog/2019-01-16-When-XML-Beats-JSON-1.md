@@ -213,7 +213,7 @@ JSON doesn't have a concept of node types, so again we need to introduce a new s
   }
 }
 ```
-Now it's JSON's turn to be bloated and hard-to read. Meanwhile, the XML version represents the tree data succinctly without obscuring the underlying structure.
+Now it's JSON's turn to be bloated and hard-to-read. Meanwhile, the XML version represents the tree data succinctly without obscuring the underlying structure.
 
 These two examples highlight the relative strengths and weaknesses of JSON and XML when representing different types of data:
 - JSON excels at representing a collection of homogenous objects, where object properties can be composite data types
