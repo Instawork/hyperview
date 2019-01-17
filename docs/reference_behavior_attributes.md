@@ -224,6 +224,8 @@ When the user presses "Hello", content for the next screen will be requested fro
 
 #### Document fragments
 
+> **NOTE**: Document fragments do not currently work with navigation behaviors, just update behaviors. Future versions of the Hyperview client will support document fragments with navigation behaviors.
+
 In the "document fragment" format, `href` is an element id prepended by a `#`. The id must refer to an element in the current document.
 
 For example, assume the following doc is loaded from `https://mysite.com/home`:
