@@ -31,11 +31,12 @@ import { createProps, getFirstTag } from 'hyperview/src/services';
 import { version } from '../package.json';
 import urlParse from 'url-parse';
 
-const HYPERVIEW_NS = Namespaces.HYPERVIEW;
-const HYPERVIEW_ALERT_NS = Namespaces.HYPERVIEW_ALERT;
 const AMPLITUDE_NS = Namespaces.AMPLITUDE;
-const PHONE_NS = Namespaces.PHONE;
+const CALL_OR_TEXT_NS = Namespaces.CALL_OR_TEXT;
+const HYPERVIEW_ALERT_NS = Namespaces.HYPERVIEW_ALERT;
+const HYPERVIEW_NS = Namespaces.HYPERVIEW;
 const INTERCOM_NS = Namespaces.INTERCOM;
+const PHONE_NS = Namespaces.PHONE;
 const REDUX_NS = Namespaces.REDUX;
 const SHARE_NS = Namespaces.SHARE;
 
@@ -1041,6 +1042,12 @@ export default class HyperScreen extends React.Component {
       const number = behaviorElement.getAttributeNS(PHONE_NS, 'number');
       if (number && this.props.onCall) {
         this.props.onCall(number);
+      }
+    } else if (action === 'call-or-text') {
+      const contactName = behaviorElement.getAttributeNS(CALL_OR_TEXT_NS, 'name');
+      const number = behaviorElement.getAttributeNS(CALL_OR_TEXT_NS, 'number');
+      if (number && this.props.onCallOrText) {
+        this.props.onCallOrText(contactName, number);
       }
     } else if (action === 'ask-rating') {
       if (this.props.onAskRating) {
