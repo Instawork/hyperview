@@ -31,13 +31,14 @@ import { createProps, getFirstTag } from 'hyperview/src/services';
 import { version } from '../package.json';
 import urlParse from 'url-parse';
 
-const HYPERVIEW_NS = Namespaces.HYPERVIEW;
-const HYPERVIEW_ALERT_NS = Namespaces.HYPERVIEW_ALERT;
 const AMPLITUDE_NS = Namespaces.AMPLITUDE;
-const PHONE_NS = Namespaces.PHONE;
+const HYPERVIEW_ALERT_NS = Namespaces.HYPERVIEW_ALERT;
+const HYPERVIEW_NS = Namespaces.HYPERVIEW;
 const INTERCOM_NS = Namespaces.INTERCOM;
+const PHONE_NS = Namespaces.PHONE;
 const REDUX_NS = Namespaces.REDUX;
 const SHARE_NS = Namespaces.SHARE;
+const SMS_NS = Namespaces.SMS;
 
 const ROUTE_KEYS = {};
 const PRELOAD_SCREEN = {};
@@ -1042,6 +1043,11 @@ export default class HyperScreen extends React.Component {
       if (number && this.props.onCall) {
         this.props.onCall(number);
       }
+    } else if (action === 'sms') {
+      const number = behaviorElement.getAttributeNS(SMS_NS, 'number');
+      if (number && this.props.onSms) {
+        this.props.onSms(number);
+      }
     } else if (action === 'ask-rating') {
       if (this.props.onAskRating) {
         this.props.onAskRating();
@@ -1068,7 +1074,7 @@ export default class HyperScreen extends React.Component {
       const optionElements = Array.from(behaviorElement.childNodes).filter(
         n => n.namespaceURI === HYPERVIEW_ALERT_NS && n.localName === 'option'
       )
-        
+
       // Create the options for the alert.
       // NOTE: Android supports at most 3 options.
       const options = optionElements.map(optionElement => ({
