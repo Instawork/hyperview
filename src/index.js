@@ -785,7 +785,9 @@ export default class HyperScreen extends React.Component {
    *
    */
   onUpdate = (href, action, currentElement, opts) => {
-    if (this.navActions.indexOf(action) >= 0) {
+    if (action === 'reload') {
+      this.reload();
+    } else if (this.navActions.indexOf(action) >= 0) {
       this.onNavigate(href, action, currentElement, opts);
     } else if (this.updateActions.indexOf(action) >= 0) {
       this.onUpdateFragment(href, action, currentElement, opts);
