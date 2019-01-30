@@ -1,0 +1,128 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style alignItems="center"
+             backgroundColor="white"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flexDirection="row"
+             height="72"
+             id="Header"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="24" />
+      <style color="blue"
+             fontWeight="600"
+             fontSize="16"
+             id="Header__Back"
+             paddingRight="16" />
+      <style color="black"
+             fontWeight="600"
+             fontSize="24"
+             id="Header__Title" />
+      <style backgroundColor="white"
+             flex="1"
+             id="Body" />
+      <style fontWeight="normal"
+             fontSize="16"
+             id="Description"
+             margin="24"
+             marginBottom="0" />
+      <style alignItems="center"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flex="1"
+             flexDirection="row"
+             height="48"
+             id="Item"
+             justifyContent="space-between"
+             paddingLeft="24"
+             paddingRight="24" />
+      <style fontWeight="normal"
+             fontSize="18"
+             id="Item__Label" />
+      <style fontWeight="bold"
+             fontSize="18"
+             id="Item__Chevron" />
+      <style backgroundColor="#63CB76"
+             borderRadius="16"
+             flex="1"
+             flexDirection="row"
+             id="Button"
+             justifyContent="center"
+             margin="24"
+             padding="24" />
+      <style color="white"
+             fontWeight="bold"
+             fontSize="24"
+             id="Button__Label" />
+      <style flex="1"
+             id="Main" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text action="back"
+              href="#"
+              style="Header__Back">Back</text>
+        <text style="Header__Title">Reload</text>
+      </header>
+      <view scroll="true"
+            style="Main">
+        <text style="Description">Tapping the button below will reload this entire screen. Modifications to the file will appear without navigation.</text>
+        <view action="reload"
+              show-during-load="loadingScreen"
+              href="#"
+              style="Button">
+          <text style="Button__Label">Reload!</text>
+        </view>
+      </view>
+    </body>
+  </screen>
+  <screen id="loadingScreen">
+    <styles>
+      <style alignItems="center"
+             backgroundColor="white"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flexDirection="row"
+             height="72"
+             id="Header"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="24" />
+      <style color="blue"
+             fontWeight="600"
+             fontSize="16"
+             id="Header__Back"
+             paddingRight="16" />
+      <style color="black"
+             fontWeight="600"
+             fontSize="24"
+             id="Header__Title" />
+      <style backgroundColor="white"
+             flex="1"
+             id="Body" />
+      <style fontWeight="normal"
+             fontSize="16"
+             id="Description"
+             margin="24"
+             marginBottom="0" />
+      <style alignItems="center"
+             flex="1"
+             id="Loading"
+             justifyContent="center" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text action="back"
+              href="#"
+              style="Header__Back">Back</text>
+        <text style="Header__Title">Loading...</text>
+      </header>
+      <view style="Loading">
+        <text style="Description">Custom loading screen...</text>
+        <spinner />
+      </view>
+    </body>
+  </screen>
+</doc>
