@@ -87,6 +87,12 @@
           <text style="Item__Label">Navigate</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
+        <item href="/navigation/reload.xml"
+              key="reload"
+              style="Item">
+          <text style="Item__Label">Reload</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
       </list>
     </body>
   </screen>
