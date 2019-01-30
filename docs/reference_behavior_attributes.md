@@ -279,9 +279,9 @@ The `verb` attribute defines the HTTP method used to request the content specifi
 
 ## action
 
-| Type                                                                             | Required |
-| -------------------------------------------------------------------------------- | -------- |
-| **push** (default), new, back, navigate, replace, replace-inner, append, prepend | No       |
+| Type                                                                                     | Required |
+| ---------------------------------------------------------------------------------------- | -------- |
+| **push** (default), new, back, navigate, replace, replace-inner, append, prepend, reload | No       |
 
 The `action` attribute defines what to do with the Hyperview XML resource described by the `href` attribute. The possible actions are divided into **navigation actions**, which load or navigate to a screen, and **update actions**, which update the elements on the current screen.
 
@@ -291,6 +291,7 @@ The navigation actions include:
 - [`new`](#new)
 - [`back`](#back)
 - [`navigate`](#navigate)
+- [`reload`](#reload)
 
 The update actions include:
 
@@ -389,6 +390,10 @@ When the user presses "Go to second screen", the second screen will be opened on
 ### `navigate`
 
 The `navigate` navigation action will either push a screen onto the stack, or unwind the stack to a screen loaded from the given URL.
+
+### `reload`
+
+The `reload` navigation action will re-request the current screen. This is similar to a reload button in a web browser.
 
 ### `replace`
 

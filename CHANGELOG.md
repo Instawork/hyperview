@@ -1,6 +1,10 @@
 ## Hyperview changelog
 
-0.8
+0.9
+
+- Added support for "reload" behavior
+
+  0.8
 
 - Added support for "sms" behavior
 
