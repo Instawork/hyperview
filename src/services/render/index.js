@@ -28,11 +28,19 @@ export const renderElement = (
   options: HvComponentOptions,
 ) => {
   if (element.nodeType === NODE_TYPE.ELEMENT_NODE) {
+    // Hidden elements don't get rendered
     if (element.getAttribute('hide') === 'true') {
       return null;
     }
   }
-  if (element.namespaceURI === Namespaces.HYPERVIEW) {
+  if (element.nodeType === NODE_TYPE.COMMENT_NODE) {
+    // XML comments don't get rendered.
+    return null;
+  }
+  if (
+    element.nodeType === NODE_TYPE.ELEMENT_NODE &&
+    element.namespaceURI === Namespaces.HYPERVIEW
+  ) {
     switch (element.localName) {
       case LOCAL_NAME.BODY:
       case LOCAL_NAME.VIEW:
@@ -48,33 +56,54 @@ export const renderElement = (
       case LOCAL_NAME.TEXT:
         // TODO: Create HvText component
         return text(element, stylesheets, animations, onUpdate, options);
+      case LOCAL_NAME.BEHAVIOR:
+      case LOCAL_NAME.MODIFIER:
+      case LOCAL_NAME.STYLES:
+      case LOCAL_NAME.STYLE:
+        // Non-UI elements don't get rendered
+        return null;
       default:
         break;
     }
   }
 
   if (
+    element.nodeType === NODE_TYPE.ELEMENT_NODE &&
     element.namespaceURI &&
-    element.localName &&
-    options.componentRegistry &&
-    options.componentRegistry[element.namespaceURI] &&
-    options.componentRegistry[element.namespaceURI][element.localName]
+    element.localName
   ) {
-    const Component =
-      options.componentRegistry[element.namespaceURI][element.localName];
-    return (
-      <Component
-        element={element}
-        stylesheets={stylesheets}
-        animations={animations}
-        onUpdate={onUpdate}
-        options={options}
-      />
-    );
+    if (
+      options.componentRegistry &&
+      options.componentRegistry[element.namespaceURI] &&
+      options.componentRegistry[element.namespaceURI][element.localName]
+    ) {
+      const Component =
+        options.componentRegistry[element.namespaceURI][element.localName];
+      return (
+        <Component
+          element={element}
+          stylesheets={stylesheets}
+          animations={animations}
+          onUpdate={onUpdate}
+          options={options}
+        />
+      );
+    } else {
+      // No component registered for the namespace/local name.
+      // Warn in case this was an unintended mistake.
+      console.warn(
+        `No component registered for tag <${element.localName}> (namespace: ${
+          element.namespaceURI
+        })`,
+      );
+    }
   }
 
-  if (element.nodeValue && element.nodeValue.trim().length > 0) {
-    return element.nodeValue.trim();
+  if (element.nodeType === NODE_TYPE.TEXT_NODE) {
+    // Render non-empty text nodes
+    if (element.nodeValue && element.nodeValue.trim().length > 0) {
+      return element.nodeValue.trim();
+    }
   }
   return null;
 };
