@@ -493,7 +493,14 @@ export default class HyperScreen extends React.Component {
     this.navActions = ['push', 'new', 'back', 'close', 'navigate'];
     this.updateActions = ['replace', 'replace-inner', 'append', 'prepend'];
 
-    this.parser = new DOMParser();
+    this.parser = new DOMParser({
+      locator: {},
+      errorHandler: {
+        warning: (w) => console.warn(w),
+        error: (e) => console.error(e),
+        fatalError: (e) => console.error(e),
+      },
+    });
     this.needsLoad = false;
     this.state = {
       styles: null,
@@ -610,10 +617,19 @@ export default class HyperScreen extends React.Component {
         return response.text();
       })
       .then((responseText) => {
-        const doc = this.parser.parseFromString(responseText);
+        let doc = this.parser.parseFromString(responseText);
+        let error = false;
         const animations = createAnimations(doc);
         const stylesheets = Stylesheets.createStylesheets(doc);
         ROUTE_KEYS[getHrefKey(url)] = this.props.navigation.state.key;
+
+        // Make sure the full screen has a body tag. Otherwise, the response is malformed.
+        const bodyElements = doc.getElementsByTagNameNS(HYPERVIEW_NS, 'body');
+        if (bodyElements.length == 0) {
+          console.error(`No <body> tag found in ${url}.`);
+          doc = false;
+          error = true;
+        }
 
         Object.entries(animations.timings).forEach(([key, timing]) => {
           timing.start();
@@ -623,7 +639,7 @@ export default class HyperScreen extends React.Component {
           doc,
           styles: stylesheets,
           animations,
-          error: false,
+          error,
         });
       })
       .catch((reason) => {
@@ -672,7 +688,7 @@ export default class HyperScreen extends React.Component {
         </View>
       );
     }
-    const body = this.state.doc.getElementsByTagNameNS(HYPERVIEW_NS, 'body')[0];
+    const body = doc.getElementsByTagNameNS(HYPERVIEW_NS, 'body')[0];
     return Render.renderElement(
       body,
       this.state.styles,
