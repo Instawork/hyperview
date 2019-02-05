@@ -15,21 +15,25 @@ export type DOMString = string;
 export type NamespaceURI = string;
 
 export const LOCAL_NAME = {
-  IMAGE: 'image',
-  LIST: 'list',
-  OPTION: 'option',
-  SECTION_LIST: 'section-list',
-  SELECT_MULTIPLE: 'select-multiple',
-  SELECT_SINGLE: 'select-single',
-  TEXT_FIELD: 'text-field',
+  BEHAVIOR: 'behavior',
   BODY: 'body',
   FORM: 'form',
   HEADER: 'header',
+  IMAGE: 'image',
   ITEM: 'item',
+  LIST: 'list',
+  MODIFIER: 'modifier',
+  OPTION: 'option',
+  SECTION_LIST: 'section-list',
   SECTION_TITLE: 'section-title',
+  SELECT_MULTIPLE: 'select-multiple',
+  SELECT_SINGLE: 'select-single',
   SPINNER: 'spinner',
-  TEXT_AREA: 'text-area',
+  STYLE: 'style',
+  STYLES: 'styles',
   TEXT: 'text',
+  TEXT_AREA: 'text-area',
+  TEXT_FIELD: 'text-field',
   VIEW: 'view',
 };
 

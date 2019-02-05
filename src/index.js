@@ -1116,6 +1116,9 @@ export default class HyperScreen extends React.Component {
 
       // Show alert
       Alert.alert(title, message, options);
+    } else {
+      // No behavior detected.
+      console.warn(`No behavior registered for action "${action}"`);
     }
   }
 
