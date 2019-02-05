@@ -496,7 +496,7 @@ export default class HyperScreen extends React.Component {
     this.parser = new DOMParser({
       locator: {},
       errorHandler: {
-        warning: (w) => console.warn(w),
+        warning: (w) => console.error(w),
         error: (e) => console.error(e),
         fatalError: (e) => console.error(e),
       },
@@ -623,12 +623,26 @@ export default class HyperScreen extends React.Component {
         const stylesheets = Stylesheets.createStylesheets(doc);
         ROUTE_KEYS[getHrefKey(url)] = this.props.navigation.state.key;
 
-        // Make sure the full screen has a body tag. Otherwise, the response is malformed.
-        const bodyElements = doc.getElementsByTagNameNS(HYPERVIEW_NS, 'body');
-        if (bodyElements.length == 0) {
-          console.error(`No <body> tag found in ${url}.`);
+        // Make sure the XML has the required elements: <doc>, <screen>, <body>.
+        const docElement = getFirstTag(doc, 'doc');
+        if (!docElement) {
+          console.error(`No <doc> tag found in the response from ${url}.`);
           doc = false;
           error = true;
+        } else {
+          const screenElement = getFirstTag(docElement, 'screen');
+          if (!screenElement) {
+            console.error(`No <screen> tag found in the <doc> tag from ${url}.`);
+            doc = false;
+            error = true;
+          } else {
+            const bodyElement = getFirstTag(screenElement, 'body');
+            if (!bodyElement) {
+              console.error(`No <body> tag found in the <screen> tag from ${url}.`);
+              doc = false;
+              error = true;
+            }
+          }
         }
 
         Object.entries(animations.timings).forEach(([key, timing]) => {
