@@ -490,10 +490,23 @@ export default class HyperScreen extends React.Component {
   constructor(props) {
     super(props);
 
+    this.onUpdate = this.onUpdate.bind(this);
+    this.shallowClone = this.shallowClone.bind(this);
+    this.shallowCloneToRoot = this.shallowCloneToRoot.bind(this);
+    this.reload = this.reload.bind(this);
+    this.parseError = this.parseError.bind(this);
+
     this.navActions = ['push', 'new', 'back', 'close', 'navigate'];
     this.updateActions = ['replace', 'replace-inner', 'append', 'prepend'];
 
-    this.parser = new DOMParser();
+    this.parser = new DOMParser({
+      locator: {},
+      errorHandler: {
+        warning: this.parseError,
+        error: this.parseError,
+        fatalError: this.parseError,
+      },
+    });
     this.needsLoad = false;
     this.state = {
       styles: null,
@@ -501,12 +514,19 @@ export default class HyperScreen extends React.Component {
       url: null,
       error: false,
     };
-    this.onUpdate = this.onUpdate.bind(this);
-    this.shallowClone = this.shallowClone.bind(this);
-    this.shallowCloneToRoot = this.shallowCloneToRoot.bind(this);
-    this.reload = this.reload.bind(this);
 
     this.componentRegistry = Components.getRegistry(this.props.components);
+  }
+
+  /**
+   * Callback for parser errors. Logs error to console and shows error screen.
+   */
+  parseError(e) {
+    console.error(e);
+    this.setState({
+      doc: null,
+      error: true,
+    });
   }
 
   componentDidMount() {
@@ -610,10 +630,33 @@ export default class HyperScreen extends React.Component {
         return response.text();
       })
       .then((responseText) => {
-        const doc = this.parser.parseFromString(responseText);
+        let doc = this.parser.parseFromString(responseText);
+        let error = false;
         const animations = createAnimations(doc);
         const stylesheets = Stylesheets.createStylesheets(doc);
         ROUTE_KEYS[getHrefKey(url)] = this.props.navigation.state.key;
+
+        // Make sure the XML has the required elements: <doc>, <screen>, <body>.
+        const docElement = getFirstTag(doc, 'doc');
+        if (!docElement) {
+          console.error(`No <doc> tag found in the response from ${url}.`);
+          doc = null;
+          error = true;
+        } else {
+          const screenElement = getFirstTag(docElement, 'screen');
+          if (!screenElement) {
+            console.error(`No <screen> tag found in the <doc> tag from ${url}.`);
+            doc = null;
+            error = true;
+          } else {
+            const bodyElement = getFirstTag(screenElement, 'body');
+            if (!bodyElement) {
+              console.error(`No <body> tag found in the <screen> tag from ${url}.`);
+              doc = null;
+              error = true;
+            }
+          }
+        }
 
         Object.entries(animations.timings).forEach(([key, timing]) => {
           timing.start();
@@ -623,7 +666,7 @@ export default class HyperScreen extends React.Component {
           doc,
           styles: stylesheets,
           animations,
-          error: false,
+          error,
         });
       })
       .catch((reason) => {
@@ -672,7 +715,7 @@ export default class HyperScreen extends React.Component {
         </View>
       );
     }
-    const body = this.state.doc.getElementsByTagNameNS(HYPERVIEW_NS, 'body')[0];
+    const body = doc.getElementsByTagNameNS(HYPERVIEW_NS, 'body')[0];
     return Render.renderElement(
       body,
       this.state.styles,
