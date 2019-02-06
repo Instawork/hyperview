@@ -1,10 +1,11 @@
 ---
 id: example_index
-title: "Examples"
-sidebar_label: "Index"
+title: Examples
+sidebar_label: Index
 ---
 
 ### Interactions
+
 The following examples demonstrate how to use Hyperview behaviors to perform common mobile interactions.
 
 <div style="display:flex;justify-content:space-around">
@@ -26,7 +27,6 @@ The following examples demonstrate how to use Hyperview behaviors to perform com
     <img src="/img/examples_index/tags.png" />
   </p>
 </div>
-
 
 - [Navigation](/docs/example_navigation): Moving between screens, with custom screen loading states
 - [Delayed navigation](/docs/example_delayed_navigation): Moving to a screen after a server response

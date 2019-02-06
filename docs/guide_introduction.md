@@ -1,18 +1,21 @@
 ---
 id: guide_introduction
-title: "Introduction"
-sidebar_label: "Introduction"
+title: Introduction
+sidebar_label: Introduction
 ---
 
 ### The state of mobile development
+
 At [Instawork](https://instawork.com), we observed a marked difference in developer productivity between our mobile and [web platforms](https://engineering.instawork.com/iterating-with-simplicity-evolving-a-django-app-with-intercooler-js-8ed8e69d8a52).
 
-On *mobile*:
+On _mobile_:
+
 - we released code once a week,
 - it took 2 weeks for 80% of our users to get the update,
 - developer productivity was slowed down by the need to work across backend and frontend codebases.
 
-On *the web*:
+On _the web_:
+
 - we could release updates to our app many times a day,
 - all of our users always saw our updates immediately,
 - developers could build new features quickly by working in a single codebase.
@@ -46,6 +49,7 @@ In other words:
 > On mobile we have **HXML** and the **Hyperview Client**.
 
 Instawork uses Hyperview in our production apps to get all of the benefits of the thin-client paradigm in a mobile world:
+
 - We can update out mobile apps many times a day by deploying our backend
 - All of our users get our updates immediately without needing to download a new binary
 - Developers can be super-productive by building the backend and frontend simultaneously in one codebase
@@ -53,6 +57,7 @@ Instawork uses Hyperview in our production apps to get all of the benefits of th
 Hyperview has been a total game-changer for how we work at Instawork. The improvements to our developer productivity have allowed us to ship new features more quickly, improve our app's performance, and minimize context switching between mobile and web development. For fast-changing networked mobile apps, Hyperview offers an unbeatable set of tradeoffs.
 
 ### Getting started
+
 There are many ways to gets started with Hyperview:
 
 - If you want to learn Hyperview by reading example code, head over to the [Examples](/docs/example_index) section.

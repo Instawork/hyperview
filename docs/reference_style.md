@@ -1,7 +1,7 @@
 ---
 id: reference_style
-title: "<style>"
-sidebar_label: "<style>"
+title: <style>
+sidebar_label: <style>
 ---
 
 The `<style>` element defines specific style rules that can be used by elements of a screen.
@@ -25,89 +25,96 @@ The `<style>` element defines specific style rules that can be used by elements 
 The `<styles>` element above contains one [`<style>`](/docs/reference_style) with id "Main". The view in the body of the screen uses that style.
 
 ## Structure
+
 A `<style>` element should only appear as a direct child of a `<styles>` element or `<modifier>` element.
 
 ## Attributes
-* [`id`](#id)
-* [Layout rules](#layout-rules)
-  * [`alignContent`](#aligncontent)
-  * [`alignItems`](#alignitems)
-  * [`alignSelf`](#alignself)
-  * [`borderBottomWidth`](#borderbottomwidth)
-  * [`borderLeftWidth`](#borderleftwidth)
-  * [`borderRightWidth`](#borderrightwidth)
-  * [`borderTopWidth`](#bordertopwidth)
-  * [`borderWidth`](#borderwidth)
-  * [`bottom`](#bottom)
-  * [`display`](#display)
-  * [`flex`](#flex)
-  * [`flexBasis`](#flexbasis)
-  * [`flexDirection`](#flexdirection)
-  * [`flexGrow`](#flexgrow)
-  * [`flexShrink`](#flexshrink)
-  * [`flexWrap`](#flexwrap)
-  * [`height`](#height)
-  * [`justifyContent`](#justifycontent)
-  * [`left`](#left)
-  * [`margin`](#margin)
-  * [`marginBottom`](#marginbottom)
-  * [`marginHorizontal`](#marginhorizontal)
-  * [`marginLeft`](#marginleft)
-  * [`marginRight`](#marginright)
-  * [`marginTop`](#margintop)
-  * [`marginVertical`](#marginvertical)
-  * [`maxHeight`](#maxheight)
-  * [`maxWidth`](#maxwidth)
-  * [`minHeight`](#minheight)
-  * [`minWidth`](#minwidth)
-  * [`overflow`](#overflow)
-  * [`padding`](#padding)
-  * [`paddingBottom`](#paddingbottom)
-  * [`paddingHorizontal`](#paddinghorizontal)
-  * [`paddingLeft`](#paddingleft)
-  * [`paddingRight`](#paddingright)
-  * [`paddingTop`](#paddingtop)
-  * [`paddingVertical`](#paddingvertical)
-  * [`position`](#position)
-  * [`right`](#right)
-  * [`top`](#top)
-  * [`width`](#width)
 
-* [View & image rules](#view-image-rules)
-  * [`borderRightColor`](#borderrightcolor)
-  * [`borderBottomColor`](#borderbottomcolor)
-  * [`borderBottomLeftRadius`](#borderbottomleftradius)
-  * [`borderBottomRightRadius`](#borderbottomrightradius)
-  * [`borderColor`](#bordercolor)
-  * [`borderLeftColor`](#borderleftcolor)
-  * [`borderRadius`](#borderradius)
-  * [`backgroundColor`](#backgroundcolor)
-  * [`borderStyle`](#borderstyle)
-  * [`borderTopColor`](#bordertopcolor)
-  * [`borderTopLeftRadius`](#bordertopleftradius)
-  * [`borderTopRightRadius`](#bordertoprightradius)
-  * [`opacity`](#opacity)
+- [`id`](#id)
+- [Layout rules](#layout-rules)
 
-* [Text rules](#text-rules)
-  * [`color`](#color)
-  * [`fontSize`](#fontsize)
-  * [`fontStyle`](#fontstyle)
-  * [`fontWeight`](#fontweight)
-  * [`lineHeight`](#lineheight)
-  * [`textAlign`](#textalign)
-  * [`textShadowColor`](#textshadowcolor)
-  * [`fontFamily`](#fontfamily)
-  * [`textShadowRadius`](#textshadowradius)
+  - [`alignContent`](#aligncontent)
+  - [`alignItems`](#alignitems)
+  - [`alignSelf`](#alignself)
+  - [`borderBottomWidth`](#borderbottomwidth)
+  - [`borderLeftWidth`](#borderleftwidth)
+  - [`borderRightWidth`](#borderrightwidth)
+  - [`borderTopWidth`](#bordertopwidth)
+  - [`borderWidth`](#borderwidth)
+  - [`bottom`](#bottom)
+  - [`display`](#display)
+  - [`flex`](#flex)
+  - [`flexBasis`](#flexbasis)
+  - [`flexDirection`](#flexdirection)
+  - [`flexGrow`](#flexgrow)
+  - [`flexShrink`](#flexshrink)
+  - [`flexWrap`](#flexwrap)
+  - [`height`](#height)
+  - [`justifyContent`](#justifycontent)
+  - [`left`](#left)
+  - [`margin`](#margin)
+  - [`marginBottom`](#marginbottom)
+  - [`marginHorizontal`](#marginhorizontal)
+  - [`marginLeft`](#marginleft)
+  - [`marginRight`](#marginright)
+  - [`marginTop`](#margintop)
+  - [`marginVertical`](#marginvertical)
+  - [`maxHeight`](#maxheight)
+  - [`maxWidth`](#maxwidth)
+  - [`minHeight`](#minheight)
+  - [`minWidth`](#minwidth)
+  - [`overflow`](#overflow)
+  - [`padding`](#padding)
+  - [`paddingBottom`](#paddingbottom)
+  - [`paddingHorizontal`](#paddinghorizontal)
+  - [`paddingLeft`](#paddingleft)
+  - [`paddingRight`](#paddingright)
+  - [`paddingTop`](#paddingtop)
+  - [`paddingVertical`](#paddingvertical)
+  - [`position`](#position)
+  - [`right`](#right)
+  - [`top`](#top)
+  - [`width`](#width)
+
+- [View & image rules](#view-image-rules)
+
+  - [`borderRightColor`](#borderrightcolor)
+  - [`borderBottomColor`](#borderbottomcolor)
+  - [`borderBottomLeftRadius`](#borderbottomleftradius)
+  - [`borderBottomRightRadius`](#borderbottomrightradius)
+  - [`borderColor`](#bordercolor)
+  - [`borderLeftColor`](#borderleftcolor)
+  - [`borderRadius`](#borderradius)
+  - [`backgroundColor`](#backgroundcolor)
+  - [`borderStyle`](#borderstyle)
+  - [`borderTopColor`](#bordertopcolor)
+  - [`borderTopLeftRadius`](#bordertopleftradius)
+  - [`borderTopRightRadius`](#bordertoprightradius)
+  - [`opacity`](#opacity)
+
+- [Text rules](#text-rules)
+  - [`color`](#color)
+  - [`fontSize`](#fontsize)
+  - [`fontStyle`](#fontstyle)
+  - [`fontWeight`](#fontweight)
+  - [`lineHeight`](#lineheight)
+  - [`textAlign`](#textalign)
+  - [`textShadowColor`](#textshadowcolor)
+  - [`fontFamily`](#fontfamily)
+  - [`textShadowRadius`](#textshadowradius)
 
 ### `id`
-| Type     | Required |
-| -------- | -------- |
-| string   | No       |
+
+| Type   | Required |
+| ------ | -------- |
+| string | No       |
 
 A global attribute uniquely identifying the element in the whole document. This id is used by elements in the `<screen>` to apply styles.
+
 > `id` is required when `<style>` is a direct child of a `<styles>` element. `id` will be ignored if the `<style>` is a direct child of a `<modifier>` element.
 
 ### Layout rules
+
 `<style>` attributes support the following [layout props](https://facebook.github.io/react-native/docs/layout-props) from React Native.
 
 > Layout rules can only be applied to most elements with a few exceptions (such as `<spinner>`).
@@ -116,24 +123,24 @@ A global attribute uniquely identifying the element in the whole document. This 
 
 `alignContent` controls how rows align in the cross direction, overriding the `alignContent` of the parent. See https://developer.mozilla.org/en-US/docs/Web/CSS/align-content for more details.
 
-| Type                                                                                 | Required |
-| ------------------------------------------------------------------------------------ | -------- |
+| Type                                                                           | Required |
+| ------------------------------------------------------------------------------ | -------- |
 | 'flex-start', 'flex-end', 'center', 'stretch', 'space-between', 'space-around' | No       |
 
 #### `alignItems`
 
 `alignItems` aligns children in the cross direction. For example, if children are flowing vertically, `alignItems` controls how they align horizontally. It works like `align-items` in CSS (default: stretch). See https://developer.mozilla.org/en-US/docs/Web/CSS/align-items for more details.
 
-| Type                                                            | Required |
-| --------------------------------------------------------------- | -------- |
+| Type                                                      | Required |
+| --------------------------------------------------------- | -------- |
 | 'flex-start', 'flex-end', 'center', 'stretch', 'baseline' | No       |
 
 #### `alignSelf`
 
 `alignSelf` controls how a child aligns in the cross direction, overriding the `alignItems` of the parent. It works like `align-self` in CSS (default: auto). See https://developer.mozilla.org/en-US/docs/Web/CSS/align-self for more details.
 
-| Type                                                                    | Required |
-| ----------------------------------------------------------------------- | -------- |
+| Type                                                              | Required |
+| ----------------------------------------------------------------- | -------- |
 | 'auto', 'flex-start', 'flex-end', 'center', 'stretch', 'baseline' | No       |
 
 #### `borderBottomWidth`
@@ -194,8 +201,8 @@ See https://developer.mozilla.org/en-US/docs/Web/CSS/bottom for more details of 
 
 It works similarly to `display` in CSS, but only support 'flex' and 'none'. 'flex' is the default.
 
-| Type                 | Required |
-| -------------------- | -------- |
+| Type           | Required |
+| -------------- | -------- |
 | 'none', 'flex' | No       |
 
 #### `flex`
@@ -214,16 +221,16 @@ flexGrow, flexShrink, and flexBasis work the same as in CSS.
 
 #### `flexBasis`
 
-| Type           | Required |
-| -------------- | -------- |
-| number         | No       |
+| Type   | Required |
+| ------ | -------- |
+| number | No       |
 
 #### `flexDirection`
 
 `flexDirection` controls which directions children of a container go. `row` goes left to right, `column` goes top to bottom, and you may be able to guess what the other two do. It works like `flex-direction` in CSS, except the default is `column`. See https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction for more details.
 
-| Type                                                   | Required |
-| ------------------------------------------------------ | -------- |
+| Type                                             | Required |
+| ------------------------------------------------ | -------- |
 | 'row', 'row-reverse', 'column', 'column-reverse' | No       |
 
 #### `flexGrow`
@@ -242,8 +249,8 @@ flexGrow, flexShrink, and flexBasis work the same as in CSS.
 
 `flexWrap` controls whether children can wrap around after they hit the end of a flex container. It works like `flex-wrap` in CSS (default: nowrap). See https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap for more details. Note it does not work anymore with `alignItems: stretch` (the default), so you may want to use `alignItems: flex-start` for example.
 
-| Type                   | Required |
-| ---------------------- | -------- |
+| Type             | Required |
+| ---------------- | -------- |
 | 'wrap', 'nowrap' | No       |
 
 #### `height`
@@ -260,8 +267,8 @@ It works similarly to `height` in CSS, but in Hyperview you must use points or p
 
 `justifyContent` aligns children in the main direction. For example, if children are flowing vertically, `justifyContent` controls how they align vertically. It works like `justify-content` in CSS (default: flex-start). See https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content for more details.
 
-| Type                                                                                      | Required |
-| ----------------------------------------------------------------------------------------- | -------- |
+| Type                                                                                | Required |
+| ----------------------------------------------------------------------------------- | -------- |
 | 'flex-start', 'flex-end', 'center', 'space-between', 'space-around', 'space-evenly' | No       |
 
 #### `left`
@@ -384,8 +391,8 @@ See https://developer.mozilla.org/en-US/docs/Web/CSS/min-width for more details.
 
 `overflow` controls how children are measured and displayed. `overflow: hidden` causes views to be clipped while `overflow: scroll` causes views to be measured independently of their parents main axis. It works like `overflow` in CSS (default: visible). See https://developer.mozilla.org/en/docs/Web/CSS/overflow for more details. `overflow: visible` only works on iOS. On Android, all views will clip their children.
 
-| Type                                | Required |
-| ----------------------------------- | -------- |
+| Type                          | Required |
+| ----------------------------- | -------- |
 | 'visible', 'hidden', 'scroll' | No       |
 
 #### `padding`
@@ -432,8 +439,8 @@ Setting `paddingHorizontal` is like setting both of `paddingLeft` and `paddingRi
 
 `paddingTop` works like `padding-top` in CSS. See https://developer.mozilla.org/en-US/docs/Web/CSS/padding-top for more details.
 
-| Type            | Required |
-| --------------- | -------- |
+| Type           | Required |
+| -------------- | -------- |
 | number, string | No       |
 
 #### `paddingVertical`
@@ -452,8 +459,8 @@ If you want to position a child using specific numbers of logical pixels relativ
 
 If you want to position a child relative to something that is not its parent, just don't use styles for that. Use the component tree.
 
-| Type                         | Required |
-| ---------------------------- | -------- |
+| Type                   | Required |
+| ---------------------- | -------- |
 | 'absolute', 'relative' | No       |
 
 #### `right`
@@ -491,20 +498,21 @@ It works similarly to `width` in CSS, but in Hyperview you must use points or pe
 | number, string | No       |
 
 ### View & image rules
+
 `<style>` elements support the following attributes for `<view>` and `<image>` as defined in [React Native](https://facebook.github.io/react-native/docs/view-style-props).
 
 > View rules will only be applied to `<view>` and `<image>` elements. Adding these rules to other elements will cause a warning in the client.
 
 #### `borderRightColor`
 
-| Type               | Required |
-| ------------------ | -------- |
+| Type  | Required |
+| ----- | -------- |
 | color | No       |
 
 #### `borderBottomColor`
 
-| Type               | Required |
-| ------------------ | -------- |
+| Type  | Required |
+| ----- | -------- |
 | color | No       |
 
 #### `borderBottomLeftRadius`
@@ -521,14 +529,14 @@ It works similarly to `width` in CSS, but in Hyperview you must use points or pe
 
 #### `borderColor`
 
-| Type               | Required |
-| ------------------ | -------- |
+| Type  | Required |
+| ----- | -------- |
 | color | No       |
 
 #### `borderLeftColor`
 
-| Type               | Required |
-| ------------------ | -------- |
+| Type  | Required |
+| ----- | -------- |
 | color | No       |
 
 #### `borderRadius`
@@ -539,20 +547,20 @@ It works similarly to `width` in CSS, but in Hyperview you must use points or pe
 
 #### `backgroundColor`
 
-| Type               | Required |
-| ------------------ | -------- |
+| Type  | Required |
+| ----- | -------- |
 | color | No       |
 
 #### `borderStyle`
 
-| Type                              | Required |
-| --------------------------------- | -------- |
+| Type                        | Required |
+| --------------------------- | -------- |
 | 'solid', 'dotted', 'dashed' | No       |
 
 #### `borderTopColor`
 
-| Type               | Required |
-| ------------------ | -------- |
+| Type  | Required |
+| ----- | -------- |
 | color | No       |
 
 #### `borderTopLeftRadius`
@@ -573,17 +581,17 @@ It works similarly to `width` in CSS, but in Hyperview you must use points or pe
 | ------ | -------- |
 | number | No       |
 
-
 ### Text rules
+
 `<style>` elements support the following attributes for `<text>` as defined in [React Native](https://facebook.github.io/react-native/docs/text-style-props).
 
 > Text rules will only be applied to `<text>` elements. Adding these rules to other elements will cause a warning in the client.
 
 #### `color`
 
-| Type               | Required |
-| ------------------ | -------- |
-| color              | No       |
+| Type  | Required |
+| ----- | -------- |
+| color | No       |
 
 #### `fontSize`
 
@@ -593,15 +601,16 @@ It works similarly to `width` in CSS, but in Hyperview you must use points or pe
 
 #### `fontStyle`
 
-| Type                     | Required |
-| ------------------------ | -------- |
+| Type               | Required |
+| ------------------ | -------- |
 | 'normal', 'italic' | No       |
 
 #### `fontWeight`
+
 fromSpecifies font weight. The values 'normal' and 'bold' are supported for most fonts. Not all fonts have a variant for each of the numeric values, in that case the closest one is chosen.
 
-| Type                                                                                  | Required |
-| ------------------------------------------------------------------------------------- | -------- |
+| Type                                                                            | Required |
+| ------------------------------------------------------------------------------- | -------- |
 | 'normal', 'bold', '100', '200', '300', '400', '500', '600', '700', '800', '900' | No       |
 
 #### `lineHeight`
@@ -614,15 +623,15 @@ fromSpecifies font weight. The values 'normal' and 'bold' are supported for most
 
 Specifies text alignment. The value 'justify' is only supported on iOS and fallbacks to `left` on Android.
 
-| Type                                               | Required |
-| -------------------------------------------------- | -------- |
+| Type                                         | Required |
+| -------------------------------------------- | -------- |
 | 'auto', 'left', 'right', 'center', 'justify' | No       |
 
 #### `textShadowColor`
 
-| Type               | Required |
-| ------------------ | -------- |
-|  color             | No       |
+| Type  | Required |
+| ----- | -------- |
+| color | No       |
 
 #### `fontFamily`
 
