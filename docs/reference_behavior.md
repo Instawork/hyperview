@@ -1,7 +1,7 @@
 ---
 id: reference_behavior
-title: "<behavior>"
-sidebar_label: "<behavior>"
+title: <behavior>
+sidebar_label: <behavior>
 ---
 
 The `<behavior>` element allows adding multiple behaviors to UI elements such as `<view>`, `<text>`, `<image>`, etc.
@@ -15,6 +15,7 @@ The `<behavior>` element allows adding multiple behaviors to UI elements such as
 ```
 
 The example above shows a button with two behaviors:
+
 - When the button is pressed, we request "/display" and push the content as a new screen.
 - When the button is long-pressed, we request "/edit" and show the content as a modal.
 
@@ -28,7 +29,9 @@ The example above shows a button with two behaviors:
 ```
 
 ## Structure
+
 A `<behavior>` element defines a behavior that applies to its direct parent element. The following elements can contain `<behavior>` elements as a direct child:
+
 - [`<view>`](/docs/reference_view)
 - [`<text>`](/docs/reference_text)
 - [`<image>`](/docs/reference_image)
@@ -36,10 +39,10 @@ A `<behavior>` element defines a behavior that applies to its direct parent elem
 - [`<section-list>`](/docs/reference_sectionlist)
 - [`<option>`](/docs/reference_option)
 
-
 ## Attributes
-* [Behavior attributes](#behavior-attributes)
 
+- [Behavior attributes](#behavior-attributes)
 
 #### Behavior attributes
+
 A `<behavior>` element accepts the standard [behavior attributes](behaviors). The supported triggers depend on the parent element.

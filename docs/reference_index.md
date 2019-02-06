@@ -1,19 +1,24 @@
 ---
 id: reference_index
-title: "Reference"
-sidebar_label: "Index"
+title: Reference
+sidebar_label: Index
 ---
 
 ### Hyperview XML
+
 Hyperview XML (HXML) is a hypermedia, XML-based format used to define mobile app screens. HXML provides a set of tags and attributes that define a screen's layout, styling, and available user interactions.
 
 #### Behaviors
+
 Behaviors in HXML define actions that should happen in the app, in response to a user-based trigger. Behaviors can either be specified as attributes on other HXML elements, or as a child `<behavior>` element.
+
 - [Behavior attributes](/docs/reference_behavior_attributes) Goes in-depth about the HXML attributes used to define a behavior.
 - [`<behavior>`](/docs/reference_behavior): An element that accepts behavior attributes and applies the behavior to the parent element. Often used when an element needs to define multiple behaviors.
 
 #### Display Elements
+
 Display elements in HXML can be combined to define the layout of a screen.
+
 - [`<doc>`](/docs/reference_doc): The top-level element in HXML, used to include multiple screens in one response.
 - [`<screen>`](/docs/reference_screen): A single screen of a mobile app.
 - [`<header>`](/docs/reference_header): The header of a mobile app screen.
@@ -29,6 +34,7 @@ Display elements in HXML can be combined to define the layout of a screen.
 - [`<spinner>`](/docs/reference_spinner): Activity indicator element.
 
 #### Input Elements
+
 Input elements in HXML allow users to set local state on a Hyperview screen. This state can be serialized with backend requests, or used for client-side interactions.
 
 - [`<form>`](/docs/reference_form): An element used to group together several inputs for request serialization.
@@ -39,6 +45,7 @@ Input elements in HXML allow users to set local state on a Hyperview screen. Thi
 - [`<option>`](/docs/reference_option): An element that groups many `<option>` elements, and allows any number of options to be selected/deselected.
 
 #### Style Elements
+
 Style elements in HXML define rules for the appearance of display and input elements.o
 
 - [`<styles>`](/docs/reference_styles): Groups together all of the `<style>` rules for a screen.
@@ -46,7 +53,9 @@ Style elements in HXML define rules for the appearance of display and input elem
 - [`<modifier>`](/docs/reference_modifier): Defines an appearance that should override the default for a style under certain local conditions, such as a user tap, selection, etc.
 
 ### React Native Client
+
 The Hyperview RN Client is a library that can parse and render HXML in a React Native app.
+
 - The [`Hyperview`](/docs/reference_hyperview_component) class defines a component that takes an endpoint URL and configuration props to render Hyperview screens in an app.
 - [Custom Elements](/docs/reference_custom_elements): The Hyperview client can be extended by registering custom HXML elements and tags with custom RN components. This can be used to add elements with rich interactions, such as maps.
 - [Custom Behaviors](/docs/reference_custom_behaviors): The Hyperview client can be extended by registering custom callbacks that can be triggered via `<behavior>` elements in the HXML. Supports features like dispatching Redux actions, triggering phone calls and share sheets, event logging, etc.

@@ -1,7 +1,7 @@
 ---
 id: reference_custom_elements
-title: "Custom elements"
-sidebar_label: "Custom elements"
+title: Custom elements
+sidebar_label: Custom elements
 ---
 
 > **NOTE**: custom elements are still under active development. The architecture will be changing in the near future to add more flexibility.
@@ -9,21 +9,22 @@ sidebar_label: "Custom elements"
 The `Hyperview` can be extended with custom elements that can be referenced and configured via HXML. Custom elements allow you to create rich, interactive client-side components, while controlling the layout of these elements from the backend server.
 
 #### Creating custom elements
+
 Custom Hyperview elements are backed by a React Native component. Any React Native component can be a custom element. There are only two required static class properties for custom components:
 
-| Property      | Type   | Required | Description |
-| ------------- | -------| -------- | ----------- |
-|  namespaceURI | string | Yes      | The XML namespace for the element |
-|  localName    | string | Yes      | The local tag name (within the XML namespace) for the element |
+| Property     | Type   | Required | Description                                                   |
+| ------------ | ------ | -------- | ------------------------------------------------------------- |
+| namespaceURI | string | Yes      | The XML namespace for the element                             |
+| localName    | string | Yes      | The local tag name (within the XML namespace) for the element |
 
 When rendering the component, Hyperview will pass screen context to `render()` as props. The component is free to use these props if it wants to render sub-children:
 
-| Prop          | Type   | Description |
-| ------------- | -------| ----------- |
-| element       | xmldom Element object | The element DOM object from the HXML |
-| stylesheets   | object | RN Stylesheets defined in the screen's HXML |
-| animations   | object | Unsupported object defining animated values |
-| onUpdates   | function | Callback that triggers a behavior |
+| Prop        | Type                  | Description                                 |
+| ----------- | --------------------- | ------------------------------------------- |
+| element     | xmldom Element object | The element DOM object from the HXML        |
+| stylesheets | object                | RN Stylesheets defined in the screen's HXML |
+| animations  | object                | Unsupported object defining animated values |
+| onUpdates   | function              | Callback that triggers a behavior           |
 
 For example, if we wanted to expose a map element within Hyperview, we can wrap `MapView` from `react-native-maps` in a class that adds the two required properties:
 
@@ -36,7 +37,6 @@ export default class HyperviewMap extends PureComponent<Props> {
   static localName = 'map';
 
   render() {
-
     // Parses the HXML elements attributes.
     // Returns styles and custom props.
     const props = Hyperview.createProps(
@@ -62,14 +62,10 @@ export default class HyperviewMap extends PureComponent<Props> {
     };
 
     return (
-      <MapView
-        {...props}
-        region={region}
-        liteMode
-      >
+      <MapView {...props} region={region} liteMode>
         {children}
       </MapView>
-    )
+    );
   }
 }
 ```
@@ -89,6 +85,7 @@ function screen({ url }) => (
 ```
 
 #### Using in HXML
+
 Now that the custom element is registered with the Hyperview component, you can reference it in HXML using the provided namespace and tag name:
 
 ```xml
