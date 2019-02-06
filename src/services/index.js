@@ -10,7 +10,6 @@
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type {
-  Animations,
   Document,
   Element,
   HvComponentOptions,
@@ -49,7 +48,6 @@ export const getFirstTag = (document: Document, localName: LocalName) => {
 export const createProps = (
   element: Element,
   stylesheets: StyleSheets,
-  animations: ?Animations,
   options: HvComponentOptions,
 ) => {
   const numericRules = ['numberOfLines'];
@@ -116,19 +114,5 @@ export const createProps = (
     props.style = styleRules;
   }
 
-  if (props.animatedValues) {
-    props.animatedValues.split(' ').forEach(v => {
-      if (animations) {
-        const value = animations.values[v];
-        const property = animations.properties[v];
-        if (value !== undefined && property !== undefined) {
-          const animatedStyle = {};
-          animatedStyle[property] = value;
-          props.style = props.style || [];
-          props.style.push(animatedStyle);
-        }
-      }
-    });
-  }
   return props;
 };

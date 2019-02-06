@@ -97,7 +97,7 @@ export default class HvOption extends PureComponent<Props, State> {
   };
 
   render() {
-    const { element, stylesheets, animations, onUpdate, options } = this.props;
+    const { element, stylesheets, onUpdate, options } = this.props;
     const { pressed } = this.state;
     const { onSelect, onToggle } = options;
 
@@ -112,7 +112,7 @@ export default class HvOption extends PureComponent<Props, State> {
       pressed,
       pressedSelected: pressed && selected,
     };
-    const props = createProps(element, stylesheets, animations, newOptions);
+    const props = createProps(element, stylesheets, newOptions);
 
     // Option renders as an outer TouchableWithoutFeedback view and inner view.
     // The outer view handles presses, the inner view handles styling.
@@ -145,13 +145,7 @@ export default class HvOption extends PureComponent<Props, State> {
       React.createElement(
         View,
         props,
-        ...Render.renderChildren(
-          element,
-          stylesheets,
-          animations,
-          onUpdate,
-          newOptions,
-        ),
+        ...Render.renderChildren(element, stylesheets, onUpdate, newOptions),
       ),
     );
   }

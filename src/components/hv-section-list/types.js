@@ -9,7 +9,6 @@
  */
 
 import type {
-  Animations,
   Element,
   HvComponentOnUpdate,
   HvComponentOptions,
@@ -17,7 +16,6 @@ import type {
 } from 'hyperview/src/types';
 
 export type Props = {|
-  animations: ?Animations,
   element: Element,
   onUpdate: HvComponentOnUpdate,
   options: HvComponentOptions,

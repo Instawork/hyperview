@@ -241,11 +241,6 @@ export type StyleSheets = {
   pressedSelected: StyleSheet<*>,
 };
 
-export type Animations = {
-  values: { [string]: string },
-  properties: { [string]: string },
-};
-
 export type ComponentRegistry = {
   [string]: {
     [string]: HvComponent<*>,
@@ -278,7 +273,6 @@ export type HvComponentOnUpdate = (
 ) => void;
 
 export type HvComponentProps = {|
-  animations: ?Animations,
   element: Element,
   onUpdate: HvComponentOnUpdate,
   options: HvComponentOptions,

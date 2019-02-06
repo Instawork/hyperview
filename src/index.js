@@ -13,7 +13,6 @@ import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import {
   ActivityIndicator,
   Alert,
-  Animated,
   Dimensions,
   Easing,
   Image,
@@ -123,7 +122,7 @@ class HyperRef extends React.Component {
 
   render() {
     const { refreshing, pressed } = this.state;
-    const { element, stylesheets, animations, onUpdate, options } = this.props;
+    const { element, stylesheets, onUpdate, options } = this.props;
     const behaviorElements = getBehaviorElements(element);
     const pressBehaviors = behaviorElements.filter(e => this.pressTriggers.indexOf(e.getAttribute('trigger') || 'press') >= 0);
     const visibleBehaviors = behaviorElements.filter(e => e.getAttribute('trigger') === 'visible');
@@ -132,7 +131,7 @@ class HyperRef extends React.Component {
     // Render the component based on the XML element. Depending on the applied behaviors,
     // this component will be wrapped with others to provide the necessary interaction.
     let renderedComponent = Render.renderElement(
-      element, stylesheets, animations, onUpdate, { ...options, pressed, skipHref: true },
+      element, stylesheets, onUpdate, { ...options, pressed, skipHref: true },
     );
 
     const styleAttr = element.getAttribute('href-style');
@@ -267,7 +266,7 @@ class HyperRef extends React.Component {
   }
 }
 
-function addHref(component, element, stylesheets, animations, onUpdate, options) {
+function addHref(component, element, stylesheets, onUpdate, options) {
   const href = element.getAttribute('href');
   const behaviorElements = getChildElementsByTagName(element, 'behavior');
   const hasBehaviors = href || behaviorElements.length > 0;
@@ -277,8 +276,8 @@ function addHref(component, element, stylesheets, animations, onUpdate, options)
 
   return React.createElement(
     HyperRef,
-    { element, stylesheets, animations, onUpdate, options },
-    ...Render.renderChildren(element, stylesheets, animations, onUpdate, options),
+    { element, stylesheets, onUpdate, options },
+    ...Render.renderChildren(element, stylesheets, onUpdate, options),
   );
 }
 
@@ -321,7 +320,7 @@ function getBehaviorElements(element) {
 /**
  *
  */
-export function image(element, stylesheets, animations, onUpdate, options) {
+export function image(element, stylesheets, onUpdate, options) {
   const { skipHref } = options || {};
   const imageProps = {};
   if (element.getAttribute('source')) {
@@ -330,31 +329,29 @@ export function image(element, stylesheets, animations, onUpdate, options) {
     imageProps.source = { uri: source };
   }
   const props = Object.assign(
-    createProps(element, stylesheets, animations, options),
+    createProps(element, stylesheets, options),
     imageProps,
   );
   const component = React.createElement(
-    props.animations ? Animated.Image : Image,
+    Image,
     props,
   );
   return skipHref ?
     component :
-    addHref(component, element, stylesheets, animations, onUpdate, options);
+    addHref(component, element, stylesheets, onUpdate, options);
 }
 
 /**
  *
  */
-export function view(element, stylesheets, animations, onUpdate, options) {
+export function view(element, stylesheets, onUpdate, options) {
   let viewOptions = options;
   const { skipHref } = viewOptions || {};
-  const props = createProps(element, stylesheets, animations, viewOptions);
+  const props = createProps(element, stylesheets, viewOptions);
   const scrollable = !!element.getAttribute('scroll');
   let c = View;
   const inputRefs = [];
-  if (props.animations) {
-    c = scrollable ? Animated.ScrollView : Animated.View;
-  } else if (scrollable) {
+  if (scrollable) {
     const textFields = element.getElementsByTagNameNS(HYPERVIEW_NS, 'text-field');
     const textAreas = element.getElementsByTagNameNS(HYPERVIEW_NS, 'text-area');
     const hasFields = textFields.length > 0 || textAreas.length > 0;
@@ -380,104 +377,28 @@ export function view(element, stylesheets, animations, onUpdate, options) {
   const component = React.createElement(
     c,
     props,
-    ...Render.renderChildren(element, stylesheets, animations, onUpdate, viewOptions),
+    ...Render.renderChildren(element, stylesheets, onUpdate, viewOptions),
   );
   return skipHref ?
     component :
-    addHref(component, element, stylesheets, animations, onUpdate, viewOptions);
+    addHref(component, element, stylesheets, onUpdate, viewOptions);
 }
 
 /**
  *
  */
-export function text(element, stylesheets, animations, onUpdate, options) {
+export function text(element, stylesheets, onUpdate, options) {
   const { skipHref } = options || {};
-  const props = createProps(element, stylesheets, animations, options);
+  const props = createProps(element, stylesheets, options);
   const component = React.createElement(
-    props.animations ? Animated.Text : Text,
+    Text,
     props,
-    ...Render.renderChildren(element, stylesheets, animations, onUpdate, options),
+    ...Render.renderChildren(element, stylesheets, onUpdate, options),
   );
 
   return skipHref ?
     component :
-    addHref(component, element, stylesheets, animations, onUpdate, options);
-}
-
-/**
- *
- */
-function createAnimations(element) {
-  const animatedValues = {};
-  const animatedTimings = {};
-  const animatedProperties = {};
-  const returnValue = {
-    values: animatedValues,
-    timings: animatedTimings,
-    properties: animatedProperties,
-  };
-
-  if (!element) {
-    return returnValue;
-  }
-
-  const animated = getFirstTag(element, 'animated');
-  if (!animated) {
-    return returnValue;
-  }
-
-  const childElements = Array.from(animated.childNodes).filter(n => n.nodeType === 1) || [];
-
-  const valueElements = childElements.filter(e => e.tagName === 'value');
-  const animationElements = childElements.filter(e => e.tagName === 'animation');
-
-  valueElements.forEach((v) => {
-    const id = v.getAttribute('id');
-    const fromValue = parseInt(v.getAttribute('from'), 10);
-    const property = v.getAttribute('property');
-    animatedValues[id] = new Animated.Value(fromValue);
-    animatedProperties[id] = property;
-  });
-
-  animationElements.forEach((v) => {
-    const id = v.getAttribute('id');
-    animatedTimings[id] = createAnimation(v, animatedValues);
-  });
-  return returnValue;
-}
-
-function createAnimation(element, animatedValues) {
-  const type = element.getAttribute('type');
-
-  if (type === 'sequence' || type === 'parallel') {
-    const animations = Array.from(element.childNodes).filter(n => n.nodeType === 1).map(e => (
-      createAnimation(e, animatedValues)
-    ));
-    let animation = type === 'sequence' ? Animated.sequence(animations) : Animated.parallel(animations);
-    if (element.getAttribute('loop')) {
-      animation = Animated.loop(animation);
-    }
-    return animation;
-  } else if (type === 'delay') {
-    const duration = parseInt(element.getAttribute('duration'), 10);
-    return Animated.delay(duration);
-  }
-
-  const value = element.getAttribute('value');
-  const toValue = parseFloat(element.getAttribute('to'));
-  const duration = parseInt(element.getAttribute('duration'), 10);
-  const delay = parseInt(element.getAttribute('delay'), 10);
-  const easingFunc = element.getAttribute('easing') || 'linear';
-  const easing = Easing[easingFunc]();
-  return Animated.timing(
-    animatedValues[value],
-    {
-      toValue,
-      duration,
-      delay,
-      easing,
-    },
-  );
+    addHref(component, element, stylesheets, onUpdate, options);
 }
 
 /**
@@ -539,7 +460,6 @@ export default class HyperScreen extends React.Component {
       ? PRELOAD_SCREEN[this.props.navigation.state.params.preloadScreen]
       : null;
     const preloadStyles = preloadScreen ? Stylesheets.createStylesheets(preloadScreen) : {};
-    const animations = createAnimations(preloadScreen);
 
     this.needsLoad = true;
     if (preloadScreen) {
@@ -548,7 +468,6 @@ export default class HyperScreen extends React.Component {
         styles: preloadStyles,
         error: false,
         url,
-        animations,
       });
     } else {
       this.setState({
@@ -585,13 +504,8 @@ export default class HyperScreen extends React.Component {
 
       const doc = preloadScreen || this.state.doc;
       const styles = preloadScreen ? Stylesheets.createStylesheets(preloadScreen) : this.state.styles;
-      const animations = preloadScreen ? createAnimations(preloadScreen) : this.state.animations;
 
-      Object.entries(animations.timings).forEach(([key, timing]) => {
-        timing.start();
-      });
-
-      this.setState({ doc, styles, animations, url: newUrl });
+      this.setState({ doc, styles, url: newUrl });
     }
   }
 
@@ -632,7 +546,6 @@ export default class HyperScreen extends React.Component {
       .then((responseText) => {
         let doc = this.parser.parseFromString(responseText);
         let error = false;
-        const animations = createAnimations(doc);
         const stylesheets = Stylesheets.createStylesheets(doc);
         ROUTE_KEYS[getHrefKey(url)] = this.props.navigation.state.key;
 
@@ -658,14 +571,9 @@ export default class HyperScreen extends React.Component {
           }
         }
 
-        Object.entries(animations.timings).forEach(([key, timing]) => {
-          timing.start();
-        });
-
         this.setState({
           doc,
           styles: stylesheets,
-          animations,
           error,
         });
       })
@@ -719,7 +627,6 @@ export default class HyperScreen extends React.Component {
     return Render.renderElement(
       body,
       this.state.styles,
-      this.state.animations,
       this.onUpdate,
       {
         screenUrl: url,

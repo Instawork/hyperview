@@ -50,15 +50,15 @@ export default class HvSelectMultiple extends PureComponent<Props> {
   };
 
   render() {
-    const { element, stylesheets, animations, onUpdate, options } = this.props;
+    const { element, stylesheets, onUpdate, options } = this.props;
     if (element.getAttribute('hide') === 'true') {
       return null;
     }
-    const props = createProps(element, stylesheets, animations, { ...options });
+    const props = createProps(element, stylesheets, { ...options });
     return React.createElement(
       View,
       props,
-      ...Render.renderChildren(element, stylesheets, animations, onUpdate, {
+      ...Render.renderChildren(element, stylesheets, onUpdate, {
         ...options,
         onToggle: this.onToggle,
       }),
