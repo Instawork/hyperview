@@ -50,7 +50,7 @@ export default class HvSectionList extends PureComponent<Props, State> {
 
   render() {
     const { refreshing } = this.state;
-    const { element, stylesheets, animations, onUpdate, options } = this.props;
+    const { element, stylesheets, onUpdate, options } = this.props;
     const styleAttr = element.getAttribute('style');
     const style = styleAttr
       ? styleAttr.split(' ').map(s => stylesheets.regular[s])
@@ -90,11 +90,11 @@ export default class HvSectionList extends PureComponent<Props, State> {
       keyExtractor: item => item.getAttribute('key'),
       // $FlowFixMe: return value should be of ?React.Element<any>
       renderItem: ({ item }) =>
-        Render.renderElement(item, stylesheets, animations, onUpdate, options),
+        Render.renderElement(item, stylesheets, onUpdate, options),
       // $FlowFixMe: return value should be of ?React.Element<any>
       renderSectionHeader: ({ section: { title } }) =>
         // $FlowFixMe
-        Render.renderElement(title, stylesheets, animations, onUpdate, options),
+        Render.renderElement(title, stylesheets, onUpdate, options),
     };
 
     let refreshProps = {};

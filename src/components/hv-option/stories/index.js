@@ -16,7 +16,6 @@ import { action } from '@storybook/addon-actions';
 const createStory = Helpers.stories(HvOption);
 createStory('basic', ({ element, stylesheets }) => (
   <HvOption
-    animations={null}
     element={element}
     onUpdate={action('onUpdate')}
     options={Helpers.getOptions()}
@@ -25,7 +24,6 @@ createStory('basic', ({ element, stylesheets }) => (
 ));
 createStory('pre_selected', ({ element, stylesheets }) => (
   <HvOption
-    animations={null}
     element={element}
     onUpdate={action('onUpdate')}
     options={Helpers.getOptions()}
@@ -35,7 +33,6 @@ createStory('pre_selected', ({ element, stylesheets }) => (
 
 createStory('custom', ({ element, stylesheets }) => (
   <HvOption
-    animations={null}
     element={element}
     onUpdate={action('onUpdate')}
     options={Helpers.getOptions()}

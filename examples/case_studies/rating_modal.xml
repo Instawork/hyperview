@@ -219,7 +219,7 @@
           </view>
         </view>
         <view style="FormGroup">
-          <textarea focusStyles="input input--focused"
+          <text-area focusStyles="input input--focused"
                     outerStyles="outerInput"
                     placeholder="Any other feedback?"
                     placeholderTextColor="#8D9494"

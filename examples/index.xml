@@ -97,15 +97,6 @@
           </view>
           <text style="Item__Chevron">&gt;</text>
         </item>
-        <item href="/animation/index.xml"
-              key="animation"
-              show-during-load="loadingScreen"
-              style="Item">
-          <view style="Item__Left">
-            <text style="Item__Label">Animation</text>
-          </view>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
         <item href="/case_studies/index.xml"
               key="case_studies"
               show-during-load="loadingScreen"

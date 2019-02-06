@@ -10,7 +10,6 @@
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type {
-  Animations,
   Element,
   HvComponentOnUpdate,
   HvComponentOptions,
@@ -23,7 +22,6 @@ import React from 'react';
 export const renderElement = (
   element: Element,
   stylesheets: StyleSheets,
-  animations: ?Animations,
   onUpdate: HvComponentOnUpdate,
   options: HvComponentOptions,
 ) => {
@@ -49,13 +47,13 @@ export const renderElement = (
       case LOCAL_NAME.ITEM:
       case LOCAL_NAME.SECTION_TITLE:
         // TODO: Create HvView component
-        return view(element, stylesheets, animations, onUpdate, options);
+        return view(element, stylesheets, onUpdate, options);
       case LOCAL_NAME.IMAGE:
         // TODO: Create HvImage component
-        return image(element, stylesheets, animations, onUpdate, options);
+        return image(element, stylesheets, onUpdate, options);
       case LOCAL_NAME.TEXT:
         // TODO: Create HvText component
-        return text(element, stylesheets, animations, onUpdate, options);
+        return text(element, stylesheets, onUpdate, options);
       case LOCAL_NAME.BEHAVIOR:
       case LOCAL_NAME.MODIFIER:
       case LOCAL_NAME.STYLES:
@@ -83,7 +81,6 @@ export const renderElement = (
         <Component
           element={element}
           stylesheets={stylesheets}
-          animations={animations}
           onUpdate={onUpdate}
           options={options}
         />
@@ -111,7 +108,6 @@ export const renderElement = (
 export const renderChildren = (
   element: Element,
   stylesheets: StyleSheets,
-  animations: ?Animations,
   onUpdate: HvComponentOnUpdate,
   options: HvComponentOptions,
 ) => {
@@ -122,7 +118,6 @@ export const renderChildren = (
       const e = renderElement(
         element.childNodes.item(i),
         stylesheets,
-        animations,
         onUpdate,
         { ...options, skipHref: false },
       );

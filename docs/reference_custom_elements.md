@@ -23,7 +23,6 @@ When rendering the component, Hyperview will pass screen context to `render()` a
 | ----------- | --------------------- | ------------------------------------------- |
 | element     | xmldom Element object | The element DOM object from the HXML        |
 | stylesheets | object                | RN Stylesheets defined in the screen's HXML |
-| animations  | object                | Unsupported object defining animated values |
 | onUpdates   | function              | Callback that triggers a behavior           |
 
 For example, if we wanted to expose a map element within Hyperview, we can wrap `MapView` from `react-native-maps` in a class that adds the two required properties:
@@ -42,14 +41,12 @@ export default class HyperviewMap extends PureComponent<Props> {
     const props = Hyperview.createProps(
       this.props.element,
       this.props.stylesheets,
-      this.props.animations,
       this.props.options,
     );
     // Render any HXML sub-elements using Hyperview.
     const children = Hyperview.renderChildren(
       this.props.element,
       this.props.stylesheets,
-      this.props.animations,
       this.props.onUpdate,
       this.props.options,
     );

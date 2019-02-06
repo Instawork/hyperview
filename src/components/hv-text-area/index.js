@@ -28,7 +28,7 @@ export default class HvTextArea extends PureComponent<Props, State> {
   }
 
   render() {
-    const { element, stylesheets, animations, options } = this.props;
+    const { element, stylesheets, options } = this.props;
 
     if (element.getAttribute('hide') === 'true') {
       return null;
@@ -37,7 +37,7 @@ export default class HvTextArea extends PureComponent<Props, State> {
     const { focused } = this.state;
     const keyboardType = element.getAttribute('keyboard-type') || undefined;
     const props = {
-      ...createProps(element, stylesheets, animations, { ...options, focused }),
+      ...createProps(element, stylesheets, { ...options, focused }),
       ref: options.registerInputHandler,
       multiline: true,
       value: this.state.value,
