@@ -1,7 +1,7 @@
 ---
 id: reference_custom_elements
-title: "Custom elements"
-sidebar_label: "Custom elements"
+title: Custom elements
+sidebar_label: Custom elements
 ---
 
 > **NOTE**: custom elements are still under active development. The architecture will be changing in the near future to add more flexibility.
@@ -28,12 +28,12 @@ When rendering the component, Hyperview will pass screen context to `render()` a
 For example, if we wanted to expose a map element within Hyperview, we can wrap `MapView` from `react-native-maps` in a class that adds the two required properties:
 
 ```es6
-import Hyperview from "hyperview";
-import MapView from "react-native-maps";
+import Hyperview from 'hyperview';
+import MapView from 'react-native-maps';
 
 export default class HyperviewMap extends PureComponent<Props> {
-  static namespaceURI = "https://instawork.com/hyperview-map";
-  static localName = "map";
+  static namespaceURI = 'https://instawork.com/hyperview-map';
+  static localName = 'map';
 
   render() {
     // Parses the HXML elements attributes.
@@ -54,8 +54,8 @@ export default class HyperviewMap extends PureComponent<Props> {
     const region = {
       latitude: parseFloat(props.latitude),
       longitude: parseFloat(props.longitude),
-      latitudeDelta: parseFloat(props["latitude-delta"]),
-      longitudeDelta: parseFloat(props["longitude-delta"]),
+      latitudeDelta: parseFloat(props['latitude-delta']),
+      longitudeDelta: parseFloat(props['longitude-delta']),
     };
 
     return (
