@@ -1,7 +1,7 @@
 ---
 id: reference_hyperview_component
-title: "Hyperview component"
-sidebar_label: "Hyperview component"
+title: Hyperview component
+sidebar_label: Hyperview component
 ---
 
 The `hyperview` npm module exports the `Hyperview` React Native component. `Hyperview` takes props to load a particular URL (with an HXML response).

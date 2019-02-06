@@ -1,7 +1,7 @@
 ---
 id: reference_form
-title: "<form>"
-sidebar_label: "<form>"
+title: <form>
+sidebar_label: <form>
 ---
 
 The `<form>` element represents a group of input elements that should be serialized into the request. Any behaviors within the `<form>` that result in a remote request will include the form's input values. The encoding of the input values depend on the request method:
@@ -31,6 +31,7 @@ The `<form>` element represents a group of input elements that should be seriali
 ```
 
 In the example above, when the user presses the "Submit" label, Hyperview will make the following request (with headers and body):
+
 ```
 POST /feedback
 
@@ -48,32 +49,36 @@ Content-Disposition: form-data; name="feedback"
 Great work!
 ```
 
-
 ## Structure
+
 A `<form>` element can appear anywhere within a `<screen>` element. It can contain any type of element, but it should contain some input elements to serve as a grouping.
 
 ## Attributes
-* [`style`](#style)
-* [`id`](#id)
-* [`hide`](#hide)
+
+- [`style`](#style)
+- [`id`](#id)
+- [`hide`](#hide)
 
 #### `style`
-| Type     | Required |
-| -------- | -------- |
-| string   | No       |
+
+| Type   | Required |
+| ------ | -------- |
+| string | No       |
 
 A space-separated list of styles to apply to the element. See [Styles](/docs/reference_style). Note that text style rules cannot be applied to a `<form>`.
 
 #### `id`
-| Type     | Required |
-| -------- | -------- |
-| string   | No       |
+
+| Type   | Required |
+| ------ | -------- |
+| string | No       |
 
 A global attribute uniquely identifying the element in the whole document.
 
 #### `hide`
-| Type     | Required |
-| -------- | -------- |
-| **false** (default), true   | No       |
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| **false** (default), true | No       |
 
 If `hide="true"`, the element will not be rendered on screen. If the element or any of the element's children have a behavior that triggers on "load" or "visible", those behaviors will not trigger while the element is hidden.
