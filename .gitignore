@@ -15,3 +15,5 @@ website/i18n/*
 .yalc
 .yalcignore
 demo/yalc.lock
+
+.idea/

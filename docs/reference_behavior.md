@@ -45,4 +45,4 @@ A `<behavior>` element defines a behavior that applies to its direct parent elem
 
 #### Behavior attributes
 
-A `<behavior>` element accepts the standard [behavior attributes](behaviors). The supported triggers depend on the parent element.
+A `<behavior>` element accepts the standard [behavior attributes](/docs/reference_behavior_attributes). The supported triggers depend on the parent element.
