@@ -22,7 +22,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { DOMParser } from 'xmldom';
+import { DOMParser, XMLSerializer } from 'xmldom';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import React from 'react';
 import VisibilityDetectingView from './VisibilityDetectingView.js';
@@ -428,6 +428,7 @@ export default class HyperScreen extends React.Component {
         fatalError: this.parseError,
       },
     });
+    this.serializer = new XMLSerializer();
     this.needsLoad = false;
     this.state = {
       styles: null,
@@ -939,6 +940,11 @@ export default class HyperScreen extends React.Component {
         this.setState({
           doc: newRoot,
         });
+
+        // in dev mode log the updated xml for debugging purposes
+        if (__DEV__) {
+          console.log('Updated XML:', this.serializer.serializeToString(newRoot.documentElement));
+        }
 
         onEnd && onEnd();
       });
