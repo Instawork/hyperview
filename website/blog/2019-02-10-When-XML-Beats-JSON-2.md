@@ -4,10 +4,10 @@ authorURL: https://github.com/adamstep
 title: When XML beats JSON: Extensibility
 ---
 
-In [Part 1](/blog/2019/01/16/When-XML-Beats-JSON-1) of this series of blog posts, we explored the relative strengths and weaknesses of JSON and XML when representing various data structures. For key-value based data, JSON was the clear winner. But XML beat JSON when it comes to representing tree structures. Since UI layouts are commonly represented as trees, XML is the natural choice for a UI framework like Hyperview.
+In [Part 1](/blog/2019/01/16/When-XML-Beats-JSON-1) of this series of blog posts, we explored the relative strengths and weaknesses of JSON and XML when representing various data structures. For key-value based data, JSON is the clear winner. But XML beats JSON when it comes to representing tree structures. Since UI layouts are commonly represented as trees, XML is the natural choice for a UI framework like Hyperview.
 
 Another imporant consideration for Hyperview was extensibility. Extensibility matters for a couple of reasons:
-- We wanted to keep the core UI elements limited to the bare essentials. But we didn't want the framework to be limited to only those core elements. We wouldn't include a map UI element in the core, but it should be possible for developers to add a customed map element to their Hyperview app.
+- We want to keep the core UI elements limited to the bare essentials. But we don't want the framework to be limited to *only* those core elements. We wouldn't include a map UI element in the core, but it should be possible for developers to add a customed map element to their Hyperview app.
 - Developers should have the freedom to integrate with services or technologies they already use. Some developers may use Mixpanel for tracking UI events, others may use Amplitude or an in-house system. Hyperview should remain agnostic and support all of these cases.
 
 ### What's the X for?
@@ -24,7 +24,7 @@ To illustrate how we can embed different vocabularies in the same XML document, 
   - `latitude`: the latitude of the marker
   - `longitude`: the longitude of the marker
 
-Usng this new vocabulary, we can describe a map containing two markers:
+Using this new vocabulary, we can describe a map containing two markers:
 ```
 <map latitude="37.65" longitude="-122.50" latitude-delta="0.1" longitude-delta="0.05">
   <marker latitude="37.65" longitude="-122.46"/>
