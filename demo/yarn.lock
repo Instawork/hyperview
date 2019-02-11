@@ -2790,9 +2790,10 @@ http-signature@~1.2.0:
     jsprim "^1.2.2"
     sshpk "^1.7.0"
 
-hyperview@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/hyperview/-/hyperview-0.6.0.tgz#57516de1c93caaaf0b477db0339ee6a023818e70"
+hyperview@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/hyperview/-/hyperview-0.9.0.tgz#2257400027da6e98e288efce52477cd2a0b1aae3"
+  integrity sha512-CdWtalGis7Ge3YFH76uFI4Uq4ETneySVgT8lGvgStnQY0H8Q8YvkprRbZCiv865Ixgh3Tjft8gFDRHab/99iyw==
   dependencies:
     url-parse "1.4.3"
     xmldom "0.1.27"

@@ -21,6 +21,7 @@
   },
   "scripts": {
     "build": "babel src --out-dir lib",
+    "build:demo": "babel src --out-dir demo/node_modules/hyperview/lib --watch",
     "generate": "babel-node ./scripts/generate",
     "preversion": "yarn test && yarn build",
     "prettify": "pretty-quick",
