@@ -126,6 +126,9 @@ const STYLE_ATTRIBUTE_CONVERTERS = {
   textShadowColor: string,
   fontFamily: string,
   textShadowRadius: number,
+
+  // image attributes
+  resizeMode: string,
 };
 
 function createStylesheet(
