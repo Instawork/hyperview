@@ -57,6 +57,7 @@ export default class HvTextField extends PureComponent<Props, State> {
     const keyboardType = element.getAttribute('keyboard-type') || undefined;
     const props = {
       ...createProps(element, stylesheets, { ...options, focused }),
+      autoFocus: element.getAttribute('auto-focus') === 'true',
       ref: options.registerInputHandler,
       multiline: false,
       value: this.state.value,
