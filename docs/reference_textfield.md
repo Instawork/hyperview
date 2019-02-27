@@ -36,7 +36,7 @@ A `<text-field>` element can appear anywhere within a `<form>` element.
 - [`style`](#style)
 - [`id`](#id)
 - [`hide`](#hide)
-- [`autofocus`](#autofocus)
+- [`auto-focus`](#auto-focus)
 
 #### `name`
 
@@ -123,7 +123,7 @@ A global attribute uniquely identifying the element in the whole document.
 
 If `hide="true"`, the element will not be rendered on screen. If the element or any of the element's children have a behavior that triggers on "load" or "visible", those behaviors will not trigger while the element is hidden.
 
-#### `autofocus`
+#### `auto-focus`
 
 | Type                      | Required |
 | ------------------------- | -------- |
