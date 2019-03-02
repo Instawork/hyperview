@@ -703,7 +703,7 @@ export default class HyperScreen extends React.Component {
   /**
    * Creates a FormData object for the given element. Finds the closest form element ancestor
    * and adds data for all inputs contained in the form. Returns null if the element has no
-   * form ancestor.
+   * form ancestor, or if there is no form data to send
    */
   getFormData = (element) => {
     const formElement = getAncestorByTagName(element, 'form');
@@ -729,7 +729,14 @@ export default class HyperScreen extends React.Component {
           formData.append(name, input.getAttribute('value'));
         }
       });
-    return formData;
+
+    let formHasData = false;
+    for (var key of formData.keys()) {
+      formHasData = true;
+      break;
+    }
+
+    return formHasData ? formData : null;
   }
 
   /**
