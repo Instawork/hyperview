@@ -27,7 +27,7 @@ export const getBehaviorElements = (element: any) => {
     n => n.tagName === 'behavior',
   );
 
-  if (element.getAttribute('href')) {
+  if (element.getAttribute('href') || element.getAttribute('action')) {
     behaviorElements.unshift(element);
   }
 
