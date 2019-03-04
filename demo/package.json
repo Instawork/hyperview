@@ -13,6 +13,7 @@
   "dependencies": {
     "@expo/samples": "2.1.1",
     "expo": "^31.0.2",
+    "expo-cli": "^2.11.6",
     "hyperview": "^0.9.0",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
