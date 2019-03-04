@@ -87,6 +87,7 @@ This will open the iOS simulator and install the demo app in the simulator. It w
 From the `demo/` directory:
 
 ```
+adb reverse tcp:8085 tcp:8085
 yarn android
 ```
 
