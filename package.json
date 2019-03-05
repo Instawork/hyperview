@@ -21,7 +21,7 @@
   },
   "scripts": {
     "build": "babel src --out-dir lib",
-    "build:demo": "babel src --out-dir demo/node_modules/hyperview/lib --watch",
+    "build:demo": "babel-node ./scripts/build-demo",
     "generate": "babel-node ./scripts/generate",
     "preversion": "yarn test && yarn build",
     "prettify": "pretty-quick",
@@ -54,6 +54,7 @@
     "babel-eslint": "8.2.1",
     "babel-plugin-module-resolver": "3.0.0",
     "babel-preset-react-native": "4.0.0",
+    "chokidar": "2.1.2",
     "eslint": "4.17.0",
     "eslint-config-prettier": "3.3.0",
     "eslint-plugin-instawork": "0.0.2",
