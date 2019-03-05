@@ -1,0 +1,16 @@
+#! /usr/bin/env sh
+
+# This script helps developers testing their local changes in the compagnon demo app
+
+ROOT_DIR=$(cd "$(dirname "$0")/..";pwd -P)
+
+cd $ROOT_DIR
+
+# Initially copies every files from `src/` to `demo/node_modules/hyperview/src`
+cp -R src demo/node_modules/hyperview
+
+# Adjust main file in `demo/node_modules/hyperview` to be `src/index.js`
+sed -i.bak 's/lib\/index.js/src\/index.js/g' demo/node_modules/hyperview/package.json
+
+# Run a watcher on every files in `src/` and copy any modified files over to `demo/node_modules/hyperview/src`
+npx chokidar "src/**/*.js" -c "cp {path} demo/node_modules/hyperview/{path}"
