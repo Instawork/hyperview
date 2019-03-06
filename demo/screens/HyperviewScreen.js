@@ -7,6 +7,7 @@
  */
 
 import React, { PureComponent } from 'react';
+import { Alert } from 'react-native';
 import Hyperview from 'hyperview';
 
 export default class HyperviewScreen extends React.PureComponent {
@@ -62,6 +63,18 @@ export default class HyperviewScreen extends React.PureComponent {
     });
   }
 
+  callPhone = (phoneNumber: string) => {
+    Alert.alert('On a real app, this would call ' + phoneNumber);
+  }
+
+  askRating = () => {
+    Alert.alert('On a real app, this would ask for app store rating');
+  }
+
+  sendSms = (phoneNumber: string) => {
+    Alert.alert('On a real app, this would send an SMS to ' + phoneNumber);
+  }
+
   render() {
     const navigation = this.props.navigation;
     const entrypointUrl = navigation.state.params.url;
@@ -74,6 +87,9 @@ export default class HyperviewScreen extends React.PureComponent {
         fetch={this.fetchWrapper}
         navigate={this.navigate}
         navigation={navigation}
+        onAskRating={this.askRating}
+        onCall={this.callPhone}
+        onSms={this.sendSms}
         openModal={this.openModal}
         push={this.push}
         replace={navigation.replace}
