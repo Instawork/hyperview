@@ -286,7 +286,7 @@ export type HvComponent<Props> = ComponentType<Props> & {
 
 export type HvBehavior = {
   action: string,
-  callback: (element: Element, onUpdate: HvComponentOnUpdate) => any,
+  callback: (element: Element, onUpdate: HvComponentOnUpdate) => void,
 };
 
 export type BehaviorRegistry = {
