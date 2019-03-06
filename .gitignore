@@ -1,6 +1,10 @@
 .DS_Store
 yarn-error.log
 
+# Vim swapfiles
+*.swp
+*.swo
+
 node_modules/
 lib/
 
