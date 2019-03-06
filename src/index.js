@@ -311,7 +311,7 @@ function getChildElementsByTagName(element, tagName) {
  */
 function getBehaviorElements(element) {
   const behaviorElements = Array.from(element.childNodes).filter(n => n.tagName === 'behavior');
-  if (element.getAttribute('href')) {
+  if (element.getAttribute('href') || element.getAttribute('action')) {
     behaviorElements.unshift(element);
   }
   return behaviorElements;
