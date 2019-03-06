@@ -79,6 +79,13 @@
           </view>
           <text style="Item__Chevron">&gt;</text>
         </item>
+        <item href="/advanced_behaviors/custom_ask_rating.xml"
+              key="custom_ask_rating"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Custom: Ask rating</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
         <item href="/advanced_behaviors/custom_toast.xml"
               key="custom_toast"
               show-during-load="loadingScreen"

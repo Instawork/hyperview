@@ -1,0 +1,63 @@
+<doc xmlns="https://hyperview.org/hyperview"
+     xmlns:ask-rating="https://instawork.com/hyperview-ask-rating">
+  <screen>
+    <styles>
+      <style alignItems="center"
+             backgroundColor="white"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flexDirection="row"
+             height="72"
+             id="Header"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="24" />
+      <style color="blue"
+             fontWeight="600"
+             fontSize="16"
+             id="Header__Back"
+             paddingRight="16" />
+      <style color="black"
+             fontWeight="600"
+             fontSize="24"
+             id="Header__Title" />
+      <style backgroundColor="white"
+             flex="1"
+             id="Body" />
+      <style fontWeight="600"
+             fontSize="16"
+             id="Description"
+             margin="24" />
+      <style backgroundColor="#63CB76"
+             borderRadius="16"
+             flex="1"
+             flexDirection="row"
+             id="Button"
+             justifyContent="center"
+             margin="24"
+             padding="24" />
+      <style color="white"
+             fontWeight="bold"
+             fontSize="24"
+             id="Button__Label" />
+      <style flex="1"
+             id="Main" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text action="back"
+              href="#"
+              style="Header__Back">Back</text>
+        <text style="Header__Title">Custom: Ask rating</text>
+      </header>
+      <view scroll="true"
+            style="Main">
+        <text style="Description">Examples of using custom behaviors to trigger asking for ratings.</text>
+        <view style="Button">
+          <behavior action="ask-rating" trigger="press" />
+          <text style="Button__Label">Ask rating</text>
+        </view>
+      </view>
+    </body>
+  </screen>
+</doc>
