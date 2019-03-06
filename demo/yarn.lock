@@ -3873,10 +3873,8 @@ humanize-ms@^1.2.1:
   dependencies:
     ms "^2.0.0"
 
-hyperview@^0.9.0:
+"hyperview@file:..":
   version "0.9.0"
-  resolved "https://registry.yarnpkg.com/hyperview/-/hyperview-0.9.0.tgz#2257400027da6e98e288efce52477cd2a0b1aae3"
-  integrity sha512-CdWtalGis7Ge3YFH76uFI4Uq4ETneySVgT8lGvgStnQY0H8Q8YvkprRbZCiv865Ixgh3Tjft8gFDRHab/99iyw==
   dependencies:
     url-parse "1.4.3"
     xmldom "0.1.27"

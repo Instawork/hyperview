@@ -116,3 +116,6 @@ export const createProps = (
 
   return props;
 };
+
+export const later = (delayMs: number): Promise<void> =>
+  new Promise(resolve => setTimeout(resolve, delayMs));
