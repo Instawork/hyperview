@@ -6,6 +6,7 @@
  *
  */
 
+import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Components from 'hyperview/src/services/components';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
@@ -46,10 +47,6 @@ const HYPERVIEW_VERSION = version;
 
 function uid() {
   return Date.now(); // Not trully unique but sufficient for our use-case
-}
-
-function later(delay) {
-  return new Promise(resolve => setTimeout(resolve, delay));
 }
 
 function getHyperviewHeaders() {
@@ -306,18 +303,6 @@ function getChildElementsByTagName(element, tagName) {
 }
 
 /**
- * Returns array of all direct child nodes that are behavior elements. Additionally,
- * the element itself can be considered a behavior element if it has an href.
- */
-function getBehaviorElements(element) {
-  const behaviorElements = Array.from(element.childNodes).filter(n => n.tagName === 'behavior');
-  if (element.getAttribute('href')) {
-    behaviorElements.unshift(element);
-  }
-  return behaviorElements;
-}
-
-/**
  *
  */
 export function image(element, stylesheets, onUpdate, options) {
@@ -437,6 +422,7 @@ export default class HyperScreen extends React.Component {
       error: false,
     };
 
+    this.behaviorRegistry = Behaviors.getRegistry(this.props.behaviors);
     this.componentRegistry = Components.getRegistry(this.props.components);
   }
 
@@ -969,109 +955,13 @@ export default class HyperScreen extends React.Component {
   }
 
   /**
-   * Extensions for custom behaviors. Depends on callback props injected by the parent app.
+   * Extensions for custom behaviors.
    */
-  onCustomUpdate = (behaviorElement) => {
+  onCustomUpdate = (behaviorElement: Element) => {
     const action = behaviorElement.getAttribute('action');
-    if (action === 'redux') {
-      const reduxAction = behaviorElement.getAttributeNS(REDUX_NS, 'action');
-      const extraNode = behaviorElement.getAttributeNodeNS(REDUX_NS, 'extra');
-      if (reduxAction && this.props.dispatchReduxAction) {
-        const extra = extraNode ? JSON.parse(extraNode.value) : null;
-        this.props.dispatchReduxAction({
-          type: reduxAction,
-          ...extra,
-        });
-      }
-    } else if (action === 'intercom') {
-      const intercomAction = behaviorElement.getAttributeNS(INTERCOM_NS, 'action');
-      if (intercomAction === 'open' && this.props.openHelpDesk) {
-        const topic = behaviorElement.getAttributeNS(INTERCOM_NS, 'topic');
-        this.props.openHelpDesk(topic);
-      }
-    } else if (action === 'amplitude') {
-      const name = behaviorElement.getAttributeNS(AMPLITUDE_NS, 'event');
-      if (name && this.props.logEvent) {
-        const propNode = behaviorElement.getAttributeNodeNS(AMPLITUDE_NS, 'event-props');
-        const properties = propNode ? JSON.parse(propNode.value) : undefined;
-        this.props.logEvent({ name, properties });
-      }
-    } else if (action === 'phone') {
-      const number = behaviorElement.getAttributeNS(PHONE_NS, 'number');
-      if (number && this.props.onCall) {
-        this.props.onCall(number);
-      }
-    } else if (action === 'sms') {
-      const number = behaviorElement.getAttributeNS(SMS_NS, 'number');
-      if (number && this.props.onSms) {
-        this.props.onSms(number);
-      }
-    } else if (action === 'ask-rating') {
-      if (this.props.onAskRating) {
-        this.props.onAskRating();
-      }
-    } else if (action === 'share') {
-      // This share API is based off https://facebook.github.io/react-native/docs/0.52/share
-      const dialogTitle = behaviorElement.getAttributeNS(SHARE_NS, 'dialog-title');
-      const message = behaviorElement.getAttributeNS(SHARE_NS, 'message');
-      const subject = behaviorElement.getAttributeNS(SHARE_NS, 'subject');
-      const title = behaviorElement.getAttributeNS(SHARE_NS, 'title');
-      const url = behaviorElement.getAttributeNS(SHARE_NS, 'url');
-
-      if ((message || url) && this.props.onShare) {
-        this.props.onShare({ dialogTitle, message, subject, title, url });
-      }
-    } else if (action === 'alert') {
-      // Shows an alert with options that can trigger other behaviors.
-
-      const title = behaviorElement.getAttributeNS(HYPERVIEW_ALERT_NS, 'title');
-      const message = behaviorElement.getAttributeNS(HYPERVIEW_ALERT_NS, 'message');
-
-      // Get the immediate alert:option nodes. We don't use getElementsByTagname to
-      // avoid getting options for nested alerts.
-      const optionElements = Array.from(behaviorElement.childNodes).filter(
-        n => n.namespaceURI === HYPERVIEW_ALERT_NS && n.localName === 'option'
-      )
-
-      // Create the options for the alert.
-      // NOTE: Android supports at most 3 options.
-      const options = optionElements.map(optionElement => ({
-        text: optionElement.getAttributeNS(HYPERVIEW_ALERT_NS, 'label'),
-        onPress: () => {
-          getBehaviorElements(optionElement).filter(
-            // Only behaviors with "press" trigger will get executed.
-            // "press" is also the default trigger, so if no trigger is specified,
-            // the behavior will also execute.
-            e => !e.getAttribute('trigger') || e.getAttribute('trigger') === 'press'
-          ).forEach((behaviorElement, i) => {
-            const href = behaviorElement.getAttribute('href');
-            const action = behaviorElement.getAttribute('action');
-            const verb = behaviorElement.getAttribute('verb');
-            const targetId = behaviorElement.getAttribute('target');
-            const showIndicatorIds = behaviorElement.getAttribute('show-during-load');
-            const hideIndicatorIds = behaviorElement.getAttribute('hide-during-load');
-            const delay = behaviorElement.getAttribute('delay');
-            const once = behaviorElement.getAttribute('once');
-
-            // With multiple behaviors for the same trigger, we need to stagger
-            // the updates a bit so that each update operates on the latest DOM.
-            // Ideally, we could apply multiple DOM updates at a time.
-            later(i).then(() => this.onUpdate(href, action, optionElement, {
-                verb,
-                targetId,
-                showIndicatorIds,
-                hideIndicatorIds,
-                delay,
-                once,
-                behaviorElement,
-              })
-            )
-          });
-        }
-      }));
-
-      // Show alert
-      Alert.alert(title, message, options);
+    const behavior = this.behaviorRegistry[action];
+    if (behavior) {
+      behavior.callback(behaviorElement, this.onUpdate);
     } else {
       // No behavior detected.
       console.warn(`No behavior registered for action "${action}"`);

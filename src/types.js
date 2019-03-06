@@ -267,7 +267,7 @@ export type HvComponentOptions = {
 
 export type HvComponentOnUpdate = (
   path: ?DOMString,
-  action: DOMString,
+  action: ?DOMString,
   element: Element,
   options: HvComponentOptions,
 ) => void;
@@ -282,4 +282,13 @@ export type HvComponentProps = {|
 export type HvComponent<Props> = ComponentType<Props> & {
   localName: LocalName | string,
   namespaceURI: NamespaceURI,
+};
+
+export type HvBehavior = {
+  action: string,
+  callback: (element: Element, onUpdate: HvComponentOnUpdate) => any,
+};
+
+export type BehaviorRegistry = {
+  [string]: HvBehavior,
 };
