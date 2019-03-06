@@ -121,6 +121,13 @@
           <text style="Item__Label">Custom: Share</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
+        <item href="/advanced_behaviors/custom_sms.xml"
+              key="custom_sms"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Custom: SMS</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
       </list>
     </body>
   </screen>
