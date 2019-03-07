@@ -731,7 +731,7 @@ export default class HyperScreen extends React.Component {
       });
 
     let formHasData = false;
-    for (var key of formData.keys()) {
+    for (let key of formData.keys()) {
       formHasData = true;
       break;
     }
