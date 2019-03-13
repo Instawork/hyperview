@@ -44,7 +44,7 @@ It also contains a demo Expo project that can connect to the example XML server,
 
 From the repo root directory:
 
-```
+```sh
 yarn
 yarn test:xmlserver
 ```
@@ -55,28 +55,18 @@ This will start an HTTP server listening on port 8085.
 
 In a separate shell, install the demo dependencies and start the development server. From the repo root directory:
 
-```
+```sh
 cd demo
 yarn
 ```
 
 The next step depends on whether you want to run the demo app in the iOS simulator, on an Android Virtual Device, or on a physical mobile device.
 
-While developing hyperview features using the demo app you may also run hyperview builds in watch mode. This will directly reflect the changes in the `demo/` app as you make changes to hyperview `src`. From the project root run:
-
-```sh
-yarn build:demo
-```
-
-> **Tip**
->
-> You may stop this with <kbd>Ctrl</kbd> + <kbd>C</kbd>
-
 ##### Running on the iOS simulator
 
 From the `demo/` directory:
 
-```
+```sh
 yarn ios
 ```
 
@@ -86,7 +76,7 @@ This will open the iOS simulator and install the demo app in the simulator. It w
 
 From the `demo/` directory:
 
-```
+```sh
 adb reverse tcp:8085 tcp:8085
 yarn android
 ```
@@ -106,7 +96,7 @@ Open [/demo/navigation/AppNavigator.js](/demo/navigation/AppNavigator.js) in a t
 
 From the `demo/` directory on your development machine:
 
-```
+```sh
 yarn start
 ```
 
@@ -114,6 +104,20 @@ This command will start an Expo development server and open a webpage (http://lo
 
 - On your iOS device, open the Camera app and point it at the QR code on your screen. The Camera app should show an "Open in Expo" notification. Tap this notification.
 - On your Android device, use the Expo app to scan the QR code on your screen.
+
+#### Developing hyperview core features
+
+As you're developing new features for hyperview core, you can use the demo app along with this special command to help you quickly test your changes:
+
+```sh
+yarn build:demo
+```
+
+This command will update the installed hyperview package to use the untransformed code (so that it can easily be debugged), watch any changes made to `src/` and copy them into `demo/node_modules/hyperview/src`.
+
+> **Tip**
+>
+> You may stop this with <kbd>Ctrl</kbd> + <kbd>C</kbd>
 
 #### 3. You're all set!
 
