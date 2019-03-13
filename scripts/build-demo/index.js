@@ -2,26 +2,26 @@
 
 const childProcess = require('child_process');
 const chokidar = require('chokidar');
-const path = require('path');
+const pathModule = require('path');
 
-const PROJECT_DIR = path.join(__dirname, '../..');
-const SRC_DIR = path.join(PROJECT_DIR, 'src');
-const HYPERVIEW_DIR = path.join(PROJECT_DIR, 'demo/node_modules/hyperview');
+const PROJECT_DIR = pathModule.join(__dirname, '../..');
+const SRC_DIR = pathModule.join(PROJECT_DIR, 'src');
+const HYPERVIEW_DIR = pathModule.join(
+  PROJECT_DIR,
+  'demo/node_modules/hyperview',
+);
 
 const updatePackageJson = () => {
-  console.log('Updating package.json...');
+  console.log('Updating package.json…');
   const cmd = `sed -i.bak 's/lib\\/index.js/src\\/index.js/g' ${HYPERVIEW_DIR}/package.json`;
   childProcess.execSync(cmd);
-  console.log('Done!');
 };
 
-const syncFiles = () => {
-  console.log('Syncing files...');
-  const cmd = `rsync -v -r --delete ${SRC_DIR} ${HYPERVIEW_DIR}`;
+const syncFiles = (event, path = SRC_DIR) => {
+  console.log(`Syncing ${path}…`);
+  const cmd = `rsync -v -r --delete ${path} ${HYPERVIEW_DIR}`;
   childProcess.execSync(cmd);
-  console.log('Done!');
 };
 
 updatePackageJson();
-syncFiles();
 chokidar.watch(SRC_DIR).on('all', syncFiles);
