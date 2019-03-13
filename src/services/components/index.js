@@ -9,6 +9,7 @@
  */
 
 import type { ComponentRegistry, HvComponent } from 'hyperview/src/types';
+import HvImage from 'hyperview/src/components/hv-image';
 import HvList from 'hyperview/src/components/hv-list';
 import HvOption from 'hyperview/src/components/hv-option';
 import HvSectionList from 'hyperview/src/components/hv-section-list';
@@ -27,7 +28,10 @@ const HYPERVIEW_COMPONENTS = [
   HvSpinner,
   HvTextArea,
   HvTextField,
+  HvImage,
 ];
+
+console.warn(HYPERVIEW_COMPONENTS);
 
 export const getRegistry = (
   components: HvComponent<*>[] = [],

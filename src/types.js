@@ -260,7 +260,9 @@ export type HvComponentOptions = {
   pressed?: ?boolean,
   pressedSelected?: ?boolean,
   registerInputHandler?: (ref: ?ElementRef<*>) => void,
+  screenUrl?: ?string,
   selected?: ?boolean,
+  skipHref?: ?boolean,
   showIndicatorIds?: ?DOMString,
   targetId?: ?DOMString,
 };

@@ -9,13 +9,18 @@
  */
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
+import * as Render from 'hyperview/src/services/render';
 import type {
   Document,
   Element,
+  HvComponentOnUpdate,
   HvComponentOptions,
   LocalName,
   StyleSheets,
 } from 'hyperview/src/types';
+import type { ComponentType } from 'react';
+import HyperRef from 'hyperview/src/components/hyper-ref';
+import React from 'react';
 
 /**
  * This file is currently a dumping place for every functions used accross
@@ -119,3 +124,29 @@ export const createProps = (
 
 export const later = (delayMs: number): Promise<void> =>
   new Promise(resolve => setTimeout(resolve, delayMs));
+
+const getChildElementsByTagName = (element: Element, tagName: string) =>
+  Array.from(element.childNodes).filter(
+    n => n.nodeType === 1 && n.tagName === tagName,
+  );
+
+export const addHref = (
+  component: ComponentType,
+  element: Element,
+  stylesheets: StyleSheets,
+  onUpdate: HvComponentOnUpdate,
+  options: HvComponentOptions,
+) => {
+  const href = element.getAttribute('href');
+  const behaviorElements = getChildElementsByTagName(element, 'behavior');
+  const hasBehaviors = href || behaviorElements.length > 0;
+  if (!hasBehaviors) {
+    return component;
+  }
+
+  return React.createElement(
+    HyperRef,
+    { element, stylesheets, onUpdate, options },
+    ...Render.renderChildren(element, stylesheets, onUpdate, options),
+  );
+};
