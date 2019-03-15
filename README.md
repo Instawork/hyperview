@@ -110,10 +110,16 @@ This command will start an Expo development server and open a webpage (http://lo
 As you're developing new features for hyperview core, you can use the demo app along with this special command to help you quickly test your changes:
 
 ```sh
-yarn build:demo
+yarn sync
 ```
 
 This command will update the installed hyperview package to use the untransformed code (so that it can easily be debugged), watch any changes made to `src/` and copy them into `demo/node_modules/hyperview/src`.
+
+You can also pass as an additional argument the root path of your own react-native app where you've installed hyperview to perform the same sync/watch operation. e.g.
+
+```sh
+yarn sync ../projects/my-cool-app
+```
 
 > **Tip**
 >
