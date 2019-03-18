@@ -126,6 +126,21 @@
           </behavior>
           <text style="Button__Label">Nested</text>
         </view>
+        <view style="Button">
+          <behavior
+            xmlns:alert="https://hyperview.org/hyperview-alert"
+            xmlns:phone="https://hyperview.org/hyperview-phone"
+            xmlns:sms="https://hyperview.org/hyperview-sms"
+            trigger="press"
+            action="alert"
+            alert:title="Choose an action"
+          >
+            <alert:option alert:label="Call phone" action="phone" phone:number="(555) 555-5555" />
+            <alert:option alert:label="Send SMS" action="sms" sms:number="(555) 555-5555" />
+            <alert:option alert:label="Close" />
+          </behavior>
+          <text style="Button__Label">Other actions</text>
+        </view>
       </view>
     </body>
   </screen>
