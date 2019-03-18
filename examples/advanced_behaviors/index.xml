@@ -79,41 +79,6 @@
           </view>
           <text style="Item__Chevron">&gt;</text>
         </item>
-        <item href="/advanced_behaviors/custom_toast.xml"
-              key="custom_toast"
-              show-during-load="loadingScreen"
-              style="Item">
-          <text style="Item__Label">Custom: Toast</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/advanced_behaviors/custom_web.xml"
-              key="custom_web"
-              show-during-load="loadingScreen"
-              style="Item">
-          <text style="Item__Label">Custom: Web</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/advanced_behaviors/custom_intercom.xml"
-              key="custom_intercom"
-              show-during-load="loadingScreen"
-              style="Item">
-          <text style="Item__Label">Custom: Intercom</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/advanced_behaviors/custom_amplitude.xml"
-              key="custom_amplitude"
-              show-during-load="loadingScreen"
-              style="Item">
-          <text style="Item__Label">Custom: Amplitude</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/advanced_behaviors/custom_phone.xml"
-              key="custom_phone"
-              show-during-load="loadingScreen"
-              style="Item">
-          <text style="Item__Label">Custom: Phone</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
         <item href="/advanced_behaviors/custom_share.xml"
               key="custom_share"
               show-during-load="loadingScreen"

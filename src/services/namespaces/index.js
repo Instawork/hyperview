@@ -13,9 +13,4 @@ export const HYPERVIEW = 'https://hyperview.org/hyperview';
 export const HYPERVIEW_ALERT = 'https://hyperview.org/hyperview-alert';
 
 // Custom namespaces
-export const AMPLITUDE = 'https://instawork.com/hyperview-amplitude';
-export const INTERCOM = 'https://instawork.com/hyperview-intercom';
-export const PHONE = 'https://instawork.com/hyperview-phone';
-export const REDUX = 'https://instawork.com/hyperview-redux';
 export const SHARE = 'https://instawork.com/hyperview-share';
-export const SMS = 'https://instawork.com/hyperview-sms';
