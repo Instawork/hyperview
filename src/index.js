@@ -696,7 +696,10 @@ export default class HyperScreen extends React.Component {
     if (!formElement) {
       return null;
     }
+
     const formData = new FormData();
+    let formHasData = false;
+
     ['text-area', 'text-field', 'select-single', 'select-multiple']
       // Get all inputs in the form
       .reduce((acc, tag) => (
@@ -709,19 +712,18 @@ export default class HyperScreen extends React.Component {
           // Add each selected option to the form data
           Array.from(input.getElementsByTagNameNS(HYPERVIEW_NS, 'option'))
             .filter(opt => opt.getAttribute('selected') === 'true')
-            .forEach(opt => formData.append(name, opt.getAttribute('value')));
+            .forEach(opt => {
+              formData.append(name, opt.getAttribute('value'));
+              formHasData = true;
+            });
         } else {
           // Add the text input to the form data
           formData.append(name, input.getAttribute('value'));
+          formHasData = true;
         }
       });
 
-    let formHasData = false;
-    for (let key of formData.keys()) {
-      formHasData = true;
-      break;
-    }
-
+    // Ensure that we only return form data with content in it. Otherwise, it will crash on Android
     return formHasData ? formData : null;
   }
 
