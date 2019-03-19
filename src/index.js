@@ -689,14 +689,17 @@ export default class HyperScreen extends React.Component {
   /**
    * Creates a FormData object for the given element. Finds the closest form element ancestor
    * and adds data for all inputs contained in the form. Returns null if the element has no
-   * form ancestor.
+   * form ancestor, or if there is no form data to send
    */
   getFormData = (element) => {
     const formElement = getAncestorByTagName(element, 'form');
     if (!formElement) {
       return null;
     }
+
     const formData = new FormData();
+    let formHasData = false;
+
     ['text-area', 'text-field', 'select-single', 'select-multiple']
       // Get all inputs in the form
       .reduce((acc, tag) => (
@@ -709,13 +712,19 @@ export default class HyperScreen extends React.Component {
           // Add each selected option to the form data
           Array.from(input.getElementsByTagNameNS(HYPERVIEW_NS, 'option'))
             .filter(opt => opt.getAttribute('selected') === 'true')
-            .forEach(opt => formData.append(name, opt.getAttribute('value')));
+            .forEach(opt => {
+              formData.append(name, opt.getAttribute('value'));
+              formHasData = true;
+            });
         } else {
           // Add the text input to the form data
           formData.append(name, input.getAttribute('value'));
+          formHasData = true;
         }
       });
-    return formData;
+
+    // Ensure that we only return form data with content in it. Otherwise, it will crash on Android
+    return formHasData ? formData : null;
   }
 
   /**
