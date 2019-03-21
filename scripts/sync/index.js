@@ -2,16 +2,18 @@
 
 const childProcess = require('child_process');
 const chokidar = require('chokidar');
-const pathModule = require('path');
+const path = require('path');
 
-const PROJECT_DIR = pathModule.join(__dirname, '../..');
-const SRC_DIR = pathModule.join(PROJECT_DIR, 'src');
+const PROJECT_DIR = path.join(__dirname, '../..');
+const SRC_DIRNAME = 'src';
+const SRC_DIR = path.join(PROJECT_DIR, SRC_DIRNAME);
 const DEST_PROJECT_REL_PATH = process.argv[2] || './demo';
-const HYPERVIEW_DIR = pathModule.join(
+const HYPERVIEW_DIR = path.join(
   PROJECT_DIR,
   DEST_PROJECT_REL_PATH,
   '/node_modules/hyperview',
 );
+const HYPERVIEW_SRC_DIR = path.join(HYPERVIEW_DIR, SRC_DIRNAME);
 
 const updatePackageJson = () => {
   console.log('Updating package.json…');
@@ -19,9 +21,13 @@ const updatePackageJson = () => {
   childProcess.execSync(cmd);
 };
 
-const syncFiles = (event, path = SRC_DIR) => {
-  console.log(`Syncing ${path} with ${HYPERVIEW_DIR}…`);
-  const cmd = `rsync -v -r --delete ${path} ${HYPERVIEW_DIR}`;
+const syncFiles = (event, originPath) => {
+  const relativeOriginPath = originPath.replace(SRC_DIR, '');
+  const destinationPath = path.dirname(
+    path.join(HYPERVIEW_SRC_DIR, relativeOriginPath),
+  );
+  console.log(`Syncing ${originPath} with ${destinationPath}/…`);
+  const cmd = `rsync -v -r --delete ${originPath} ${destinationPath}/`;
   childProcess.execSync(cmd);
 };
 
