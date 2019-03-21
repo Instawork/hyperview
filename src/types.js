@@ -35,6 +35,7 @@ export const LOCAL_NAME = {
   TEXT_AREA: 'text-area',
   TEXT_FIELD: 'text-field',
   VIEW: 'view',
+  WEB_VIEW: 'web-view',
 };
 
 export type LocalName = $Values<typeof LOCAL_NAME>;
