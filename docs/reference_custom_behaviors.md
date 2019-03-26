@@ -4,42 +4,81 @@ title: Custom behaviors
 sidebar_label: Custom behaviors
 ---
 
-> **NOTE**: custom behaviors are still under active development. The architecture will be changing in the near future to add more flexibility.
+The Hyperview client supports custom behaviors to trigger your own React Native code from user interactions. Unlike [custom elements](/docs/reference_custom_elements), custom behaviors extend the [behavior attribute syntax](/docs/reference_behavior_attributes) so that you can attach new behaviors to any existing element.
 
-The Hyperview client currently supports a limited number of custom behaviors for deeper integrations with mobile app functionality. These custom behaviors are configured by passing callback props to the `Hyperview` component.
+Custom behaviors have a limitation compared to first-class [behaviors](/docs/reference_behavior_attributes#action). The native behaviors in Hyperview are **two-way**: they can be triggered from the HXML, and then modify the HXML. Custom behaviors are only **one-way**: they can be triggered from the HXML, but the code that executes cannot modify the HXML.
+
+Despite this limitation, custom behaviors are useful for integrations such as:
+
+- event tracking and logging
+- client-side state management libraries like Redux
+- native APIs like phone calls, share sheets, message composers, etc.
+
+Custom behaviors are registered with the `Hyperview` component via the `behaviors` prop.
+
+| Property  | Type  | Required | Description                                              |
+| --------- | ----- | -------- | -------------------------------------------------------- |
+| behaviors | array | No       | Array of objects with "action" and "callback" properties |
+
+Each registered behavior consists of two properties:
+
+- `action`: The name of the action that will trigger the custom behaviors
+- `callback`: The function to run when the behavior triggers. The callback takes one param: the [XML element](https://github.com/jindw/xmldom#dom-level2-method-and-attribute) that triggers the behavior.
+
+To trigger the custom behavior, use the registered action name as the `action` attribute in a `<behavior>` element. For example, if you registered an action with the name `foo`, you would trigger it like this:
+
+```xml
+<text>
+  <behavior trigger="press" action="foo" />
+  Test
+</text>
+```
+
+Note that custom behaviors could be used with any `trigger` attribute. You can trigger custom behavior on load, long press, etc. You can also add extra namespaced attributes to the behavior attributes. These will get passed to the callback as part of the XML element:
+
+```xml
+<doc xmlns:foo="https://instawork.com/foo">
+  <text>
+    <behavior trigger="press" action="foo" foo:param1="bar" />
+    Test
+  </text>
+</doc>
+```
+
+Below are some examples of custom behaviors used at Instawork to build our mobile apps:
 
 ## Event logging
 
 If you have support for event tracking (via Amplitude or another service) available in your React Native code, you can specify when to log events with a custom behavior in HXML. Instawork uses Amplitude (hence the Amplitude naming conventions), but any logging system can be exposed in HXML using this technique.
 
-#### Configuring the client
-
-To hook into Amplitude, add a `logEvent` callback prop to the `Hyperview` component:
+To hook into Amplitude, pass a custom behavior to the `Hyperview` component:
 
 ```es6
 import Amplitude from 'amplitude'; // your custom tracking library
+
+const amplitudeBehavior = {
+  action: 'amplitude',
+  callback: (element: Element) => {
+    const NAMESPACE_URI = 'https://instawork.com/hyperview-amplitude';
+    const name = element.getAttributeNS(NAMESPACE_URI, 'event');
+    if (name) {
+      const propNode = element.getAttributeNodeNS(NAMESPACE_URI, 'event-props');
+      const properties = propNode ? JSON.parse(propNode.value) : undefined;
+      Amplitude.logEvent({ name, properties });
+    }
+  },
+};
 
 function screen({ url }) => (
   <Hyperview
     entrypointUrl={url}
     fetch={fetch}
-    logEvent={({ name, properties }) => Amplitude.track(name, properties); }
+    behaviors={[amplitudeBehavior]}
   />
 )
 ```
 
-The `logEvent` callback takes an object argument with two properties:
-
-| Property   | Type   | Required | Description                                   |
-| ---------- | ------ | -------- | --------------------------------------------- |
-| name       | string | Yes      | The name of the event to log.                 |
-| properties | object | No       | Object containing key/value event properties. |
-
-Note that the `logEvent` callback can attach to any logging service, but at Instawork we use Amplitude.
-
-#### Using in HXML
-
-Add a `<behavior>` element with `action="amplitude"`. The attributes `amp:event` and `amp:event-props` specify the event name and event properties to log when the behavior executes.
+To use this custom behavior, add a `<behavior>` element with `action="amplitude"`. The attributes `amp:event` and `amp:event-props` specify the event name and event properties to log when the behavior executes.
 
 ```xml
 <view xmlns:amp="https://instawork.com/hyperview-amplitude">
@@ -67,35 +106,33 @@ Note that amplitude behaviors require that the HXML doc define a namespace for `
 
 ## Phone calls
 
-HXML behaviors can trigger calling or sending an SMS to a given phone number via a callback passed to the `Hyperview` component.
-
-#### Configuring the client
-
-To hook into calling functionality, add an `onCall` callback prop to the `Hyperview` component:
+If your app needs to allow the user to make phone calls, integrate the `react-native-communications` library and then add a custom behavior to trigger the system's phone caller.
 
 ```es6
 import { phonecall } from 'react-native-communications';
+
+const NAMESPACE_URI = 'https://instawork.com/hyperview-phone';
+
+const phoneCallBehavior = {
+  action: 'phone',
+  callback: (element: Element) => {
+    const number = element.getAttributeNS(NAMESPACE_URI, 'number');
+    if (number) {
+      phonecall(number);
+    }
+  },
+};
 
 function screen({ url }) => (
   <Hyperview
     entrypointUrl={url}
     fetch={fetch}
-    onCall={(num) => phonecall(num, false); }
+    behaviors={[phoneCallBehavior]}
   />
 )
 ```
 
-The `onCall` prop takes a function with one parameter:
-
-| Parameter | Type   | Required | Description               |
-| --------- | ------ | -------- | ------------------------- |
-| num       | string | Yes      | The phone number to call. |
-
-Note that the `onCall` callback can trigger any sort of UI or call capability implemented in React Native.
-
-#### Using in HXML
-
-Add a `<behavior>` element with `action="phone"`. The attributes `phone:number` specifies the number to call.
+To use this custom behavior, add a `<behavior>` element with `action="phone"`. The attributes `phone:number` specifies the number to call.
 
 ```xml
 <view xmlns:phone="https://instawork.com/hyperview-phone">
@@ -112,73 +149,45 @@ Add a `<behavior>` element with `action="phone"`. The attributes `phone:number` 
 
 The above example would show a UI to confirm the call to the given number.
 
-## Share sheet
-
-Share buttons are common in mobile apps. To hook into the mobile device's native sharing functionality, you can use the custom share behavior.
-
-#### Configuring the client
-
-To hook into the system's share functionality, add an `onShare` callback prop to the `Hyperview` component:
-
-```es6
-import { Share } from 'react-native';
-
-function screen({ url }) => (
-  <Hyperview
-    entrypointUrl={url}
-    fetch={fetch}
-    onShare={Share.share}
-  />
-)
-```
-
-#### Using in HXML
-
-Add a `<behavior>` element with `action="share"`. The attributes `share:dialog-title`, `share:message`, `share:subject`, and `share:url` cnofigure the share dialog. `share:message` and `share:url` are the required attributes.
-
-```xml
-<view xmlns:share="https://instawork.com/hyperview-share">
-  <text>
-    <behavior
-      trigger="press"
-      action="share"
-      share:dialog-title="Share achievement!"
-      share:message="Share your achievement with friends"
-      share:subject="I just unlocked the Pro achievement."
-      share:url="https://badges.com/achievements/123"
-    />
-    Share achievement
-  </text>
-</view>
-```
-
-The above example would trigger the system share dialog with options to share the title/message/subject/url on a social platform of choice.
-
 ## Redux actions
 
-If you're adding Hyperview to an existing React Native + Redux app, it can be useful to dispatch Redux actions from Hyperview screens. A custom behavior supports Redux action dispatch by adding a callback to the `Hyperview` components.
+If you're adding Hyperview to an existing React Native + Redux app, it can be useful to dispatch Redux actions from Hyperview screens. A custom behavior supports Redux action dispatch by adding a custom behavior to the `Hyperview` component.
 
 #### Configuring the client
 
-To hook into Redux, add a `dispatchReduxAction` callback prop to the `Hyperview` component:
+To hook into Redux, add a custom behavior that reads the `action` and `extra` attributes
 
 ```es6
-import { store } from './redux'; // instantiated redux store for the app
+import { dispatch } from './redux'; // instantiated redux store for the app
+import type { Element } from 'hyperview';
+
+const NAMESPACE_URI = 'https://instawork.com/hyperview-redux';
+
+const reduxBehavior = {
+  action: 'redux',
+  callback: (element: Element) => {
+    const reduxAction = element.getAttributeNS(NAMESPACE_URI, 'action');
+    const extraNode = element.getAttributeNodeNS(NAMESPACE_URI, 'extra');
+    if (reduxAction) {
+      const extra = extraNode ? JSON.parse(extraNode.value) : null;
+      dispatch({
+        type: reduxAction,
+        ...extra,
+      });
+    }
+  },
+});
 
 function screen({ url }) => (
   <Hyperview
     entrypointUrl={url}
     fetch={fetch}
-    dispatchReduxAction={store.dispatch}
+    behaviors={[reduxBehavior]}
   />
 )
 ```
 
-The `dispatchReduxAction` prop takes a function with one parameter, the Redux action. Reduct actions must contains a `type` property, and can optionally contain additional properties to customize the action.
-
-#### Using in HXML
-
-Add a `<behavior>` element with `action="redux"`. The attributes `redux:action` specifies the action type, and `redux:extra` contains an encoded JSON object of action prioerties.
+To trigger a Redux action from HXML, add a `<behavior>` element with `action="redux"`. The attributes `redux:action` specifies the action type, and `redux:extra` contains an encoded JSON object of action prioerties.
 
 ```xml
 <view xmlns:redux="https://instawork.com/hyperview-redux">
@@ -189,7 +198,7 @@ Add a `<behavior>` element with `action="redux"`. The attributes `redux:action` 
       redux:action="TOAST/SHOW_TOAST"
       redux:extra="{&quot;payload&quot;:{&quot;toast&quot;:{&quot;colorScheme&quot;:&quot;positive&quot;,&quot;message&quot;:&quot;Hello World!&quot;}}}"
     />
-    Dispatch Reduz
+    Dispatch Redux
   </text>
 </view>
 ```
