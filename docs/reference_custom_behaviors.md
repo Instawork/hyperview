@@ -23,7 +23,7 @@ Custom behaviors are registered with the `Hyperview` component via the `behavior
 Each registered behavior consists of two properties:
 
 - `action`: The name of the action that will trigger the custom behaviors
-- `callback`: The function to run when the behavior triggers. The callback takes one param: the [XML element](https://github.com/jindw/xmldom#dom-level2-method-and-attribute) that triggers the behavior.
+- `callback`: The function to run when the behavior triggers. The callback takes one param: the [XML element](https://github.com/Instawork/hyperview/blob/master/src/types.js#L147) that triggers the behavior.
 
 To trigger the custom behavior, use the registered action name as the `action` attribute in a `<behavior>` element. For example, if you registered an action with the name `foo`, you would trigger it like this:
 
