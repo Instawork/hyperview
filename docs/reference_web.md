@@ -1,10 +1,10 @@
 ---
 id: reference_web
-title: <web>
-sidebar_label: <web>
+title: <web-view>
+sidebar_label: <web-view>
 ---
 
-The `<web>` element shows a web view with HTML content loaded via a URL.
+The `<web-view>` element shows a web view with HTML content loaded via a URL.
 
 ```xml
 <doc xmlns="https://hyperview.org/hyperview">
@@ -22,7 +22,7 @@ The `<web>` element shows a web view with HTML content loaded via a URL.
 
 ## Structure
 
-A `<web>` element can appear anywhere within a `<body>` element.
+A `<web-view>` element can appear anywhere within a `<body>` element.
 
 ## Attributes
 
@@ -30,7 +30,6 @@ A `<web>` element can appear anywhere within a `<body>` element.
 - [`activity-indicator-color`](#activity-indicator-color)
 - [`injected-java-script`](#injected-java-script)
 - [`id`](#id)
-- [`style`](#style)
 
 #### `url`
 
@@ -63,11 +62,3 @@ A string of Javascript that gets injected into the loaded web view. Can be used 
 | string | No       |
 
 A global attribute uniquely identifying the element in the whole document.
-
-#### `style`
-
-| Type   | Required |
-| ------ | -------- |
-| string | No       |
-
-A space-separated list of styles to apply to the element. See [Styles](/docs/reference_style). Note that text style rules cannot be applied to a `<view>`.
