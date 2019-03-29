@@ -102,6 +102,10 @@ export const renderElement = (
       return element.nodeValue.trim();
     }
   }
+
+  if (element.nodeType === NODE_TYPE.CDATA_SECTION_NODE) {
+    return element.nodeValue;
+  }
   return null;
 };
 
