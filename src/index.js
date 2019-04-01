@@ -656,7 +656,7 @@ export default class HyperScreen extends React.Component {
    */
   fetchElement = (href, verb, root, formData) => {
     verb = verb || 'GET';
-    if (href.startsWith('#')) {
+    if (href[0] === '#') {
       return new Promise((resolve, reject) => {
         const element = root.getElementById(href.slice(1));
         if (element) {
