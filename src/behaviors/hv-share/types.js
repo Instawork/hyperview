@@ -8,12 +8,13 @@
  *
  */
 
+export type Content = {
+  message: string,
+  title?: string,
+  url?: string,
+};
+
 // copied from react-native/Share/Share.js
-
-export type Content =
-  | { title?: string, message: string }
-  | { title?: string, url: string };
-
 export type Options = {
   dialogTitle?: string,
   excludedActivityTypes?: Array<string>,
