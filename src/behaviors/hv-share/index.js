@@ -19,15 +19,14 @@ const getContent = (
   url: ?DOMString,
 ): ?Content => {
   if (message) {
-    if (title) {
+    if (title && url) {
+      return { message, title, url };
+    } else if (title) {
       return { message, title };
+    } else if (url) {
+      return { message, url };
     }
     return { message };
-  } else if (url) {
-    if (title) {
-      return { url, title };
-    }
-    return { url };
   }
   return null;
 };
