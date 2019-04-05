@@ -65,11 +65,16 @@ export const renderElement = (
     }
   }
 
-  if (
-    element.nodeType === NODE_TYPE.ELEMENT_NODE &&
-    element.namespaceURI &&
-    element.localName
-  ) {
+  if (element.nodeType === NODE_TYPE.ELEMENT_NODE) {
+    if (!element.namespaceURI) {
+      console.warn('`namespaceURI` missing for node:', element.toString());
+      return null;
+    }
+    if (!element.localName) {
+      console.warn('`localName` missing for node:', element.toString());
+      return null;
+    }
+
     if (
       options.componentRegistry &&
       options.componentRegistry[element.namespaceURI] &&
