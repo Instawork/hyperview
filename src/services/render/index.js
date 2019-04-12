@@ -104,7 +104,7 @@ export const renderElement = (
   if (element.nodeType === NODE_TYPE.TEXT_NODE) {
     // Render non-empty text nodes
     if (element.nodeValue && element.nodeValue.trim().length > 0) {
-      return element.nodeValue.trim();
+      return element.nodeValue.trim().replace(/\s+/g, ' ');
     }
   }
 
