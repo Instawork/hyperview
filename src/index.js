@@ -437,14 +437,22 @@ export default class HyperScreen extends React.Component {
     });
   }
 
+  getNavigationState = () => {
+    if (this.props.navigation) {
+      return this.props.navigation.state;
+    }
+    return { params: {} };
+  }
+
   componentDidMount() {
+    const { params } = this.getNavigationState();
     // The screen may be rendering via a navigation from another HyperScreen.
     // In this case, the url to load in the screen will be passed via navigation props.
     // Otherwise, use the entrypoint URL provided as a prop to the first HyperScreen.
-    const url = this.props.navigation.state.params.url || this.props.entrypointUrl || null;
+    const url = params.url || this.props.entrypointUrl || null;
 
-    const preloadScreen = this.props.navigation.state.params.preloadScreen
-      ? PRELOAD_SCREEN[this.props.navigation.state.params.preloadScreen]
+    const preloadScreen = params.preloadScreen
+      ? PRELOAD_SCREEN[params.preloadScreen]
       : null;
     const preloadStyles = preloadScreen ? Stylesheets.createStylesheets(preloadScreen) : {};
 
@@ -470,10 +478,11 @@ export default class HyperScreen extends React.Component {
    * preload screen and URL to load.
    */
   componentWillReceiveProps(nextProps) {
-    const newUrl = nextProps.navigation.state.params.url;
-    const oldUrl = this.props.navigation.state.params.url;
-    const newPreloadScreen = nextProps.navigation.state.params.preloadScreen;
-    const oldPreloadScreen = this.props.navigation.state.params.preloadScreen;
+    const { params } = this.getNavigationState();
+    const newUrl = params.url;
+    const oldUrl = params.url;
+    const newPreloadScreen = params.preloadScreen;
+    const oldPreloadScreen = params.preloadScreen;
 
     if (newPreloadScreen !== oldPreloadScreen) {
       delete PRELOAD_SCREEN[oldPreloadScreen];
@@ -500,7 +509,8 @@ export default class HyperScreen extends React.Component {
    * Clear out the preload screen associated with this screen.
    */
   componentWillUnmount() {
-    const { preloadScreen } = this.props.navigation.state.params;
+    const { params } = this.getNavigationState();
+    const { preloadScreen } = params;
     if (preloadScreen && PRELOAD_SCREEN[preloadScreen]) {
       delete PRELOAD_SCREEN[preloadScreen];
     }
@@ -520,7 +530,8 @@ export default class HyperScreen extends React.Component {
    * Performs a full load of the screen.
    */
   load = () => {
-    const delay = this.props.navigation.state.params.delay;
+    const { params, key: routeKey } = this.getNavigationState();
+    const { delay } = params;
     const url = this.state.url;
 
     const fetchPromise = () => this.props.fetch(url, { headers: getHyperviewHeaders() })
@@ -534,7 +545,7 @@ export default class HyperScreen extends React.Component {
         let doc = this.parser.parseFromString(responseText);
         let error = false;
         const stylesheets = Stylesheets.createStylesheets(doc);
-        ROUTE_KEYS[getHrefKey(url)] = this.props.navigation.state.key;
+        ROUTE_KEYS[getHrefKey(url)] = routeKey;
 
         // Make sure the XML has the required elements: <doc>, <screen>, <body>.
         const docElement = getFirstTag(doc, 'doc');
