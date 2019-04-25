@@ -18,6 +18,7 @@ import HvSelectSingle from 'hyperview/src/components/hv-select-single';
 import HvSpinner from 'hyperview/src/components/hv-spinner';
 import HvTextArea from 'hyperview/src/components/hv-text-area';
 import HvTextField from 'hyperview/src/components/hv-text-field';
+import HvWebView from 'hyperview/src/components/hv-web-view';
 
 const HYPERVIEW_COMPONENTS = [
   HvList,
@@ -29,6 +30,7 @@ const HYPERVIEW_COMPONENTS = [
   HvTextArea,
   HvTextField,
   HvImage,
+  HvWebView,
 ];
 
 console.warn(HYPERVIEW_COMPONENTS);

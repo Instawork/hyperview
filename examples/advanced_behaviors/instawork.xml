@@ -87,7 +87,7 @@
         </view>
         <view style="Button">
           <behavior
-            action="ask-ratings"
+            action="ask-rating"
             trigger="press"
           />
           <text style="Button__Label">Ask ratings</text>

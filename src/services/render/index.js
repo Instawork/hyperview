@@ -65,11 +65,16 @@ export const renderElement = (
     }
   }
 
-  if (
-    element.nodeType === NODE_TYPE.ELEMENT_NODE &&
-    element.namespaceURI &&
-    element.localName
-  ) {
+  if (element.nodeType === NODE_TYPE.ELEMENT_NODE) {
+    if (!element.namespaceURI) {
+      console.warn('`namespaceURI` missing for node:', element.toString());
+      return null;
+    }
+    if (!element.localName) {
+      console.warn('`localName` missing for node:', element.toString());
+      return null;
+    }
+
     if (
       options.componentRegistry &&
       options.componentRegistry[element.namespaceURI] &&
@@ -99,8 +104,12 @@ export const renderElement = (
   if (element.nodeType === NODE_TYPE.TEXT_NODE) {
     // Render non-empty text nodes
     if (element.nodeValue && element.nodeValue.trim().length > 0) {
-      return element.nodeValue.trim();
+      return element.nodeValue.trim().replace(/\s+/g, ' ');
     }
+  }
+
+  if (element.nodeType === NODE_TYPE.CDATA_SECTION_NODE) {
+    return element.nodeValue;
   }
   return null;
 };

@@ -8,3 +8,4 @@ import '../src/components/hv-select-single/stories/index.js';
 import '../src/components/hv-spinner/stories/index.js';
 import '../src/components/hv-text-area/stories/index.js';
 import '../src/components/hv-text-field/stories/index.js';
+import '../src/components/hv-web-view/stories/index.js';

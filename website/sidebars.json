@@ -34,7 +34,8 @@
     "Behaviors": [
       "reference_behavior_attributes",
       "reference_behavior",
-      "reference_behavior_alert"
+      "reference_behavior_alert",
+      "reference_behavior_share"
     ],
     "Display Elements": [
       "reference_doc",
@@ -49,7 +50,8 @@
       "reference_section",
       "reference_sectiontitle",
       "reference_item",
-      "reference_spinner"
+      "reference_spinner",
+      "reference_web"
     ],
     "Input Elements": [
       "reference_form",

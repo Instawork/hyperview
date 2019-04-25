@@ -1729,4 +1729,17 @@ four">
   </screen>
 </doc>
 `,
+  'hyperview/src/components/hv-web-view/stories/basic.xml':
+  `<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <body style="Body">
+      <web-view
+        url="https://hyperview.org"
+        activity-indicator-color="blue"
+        injected-java-script="alert('Hello Hyperview user!')"
+      />
+    </body>
+  </screen>
+</doc>
+`,
 };
