@@ -16,8 +16,6 @@ import {
   Alert,
   Dimensions,
   Easing,
-  Image,
-  RefreshControl,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -28,7 +26,7 @@ import HyperRef from 'hyperview/src/core/hyper-ref';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import React from 'react';
 import VisibilityDetectingView from './VisibilityDetectingView.js';
-import { createProps, getBehaviorElements, getFirstTag } from 'hyperview/src/services';
+import { addHref, createProps, getBehaviorElements, getFirstTag, later } from 'hyperview/src/services';
 import { version } from '../package.json';
 import urlParse from 'url-parse';
 
@@ -58,21 +56,6 @@ function getHyperviewHeaders() {
   };
 }
 
-function addHref(component, element, stylesheets, onUpdate, options) {
-  const href = element.getAttribute('href');
-  const behaviorElements = getChildElementsByTagName(element, 'behavior');
-  const hasBehaviors = href || behaviorElements.length > 0;
-  if (!hasBehaviors) {
-    return component;
-  }
-
-  return React.createElement(
-    HyperRef,
-    { element, stylesheets, onUpdate, options },
-    ...Render.renderChildren(element, stylesheets, onUpdate, options),
-  );
-}
-
 /**
  * UTILITIES
  */
@@ -91,34 +74,6 @@ function getAncestorByTagName(element, tagName) {
     parentNode = parentNode.parentNode || null;
   }
   return parentNode;
-}
-
-function getChildElementsByTagName(element, tagName) {
-  return Array.from(element.childNodes).filter(n => n.nodeType === 1 && n.tagName === tagName);
-}
-
-/**
- *
- */
-export function image(element, stylesheets, onUpdate, options) {
-  const { skipHref } = options || {};
-  const imageProps = {};
-  if (element.getAttribute('source')) {
-    let source = element.getAttribute('source');
-    source = urlParse(source, options.screenUrl, true).toString();
-    imageProps.source = { uri: source };
-  }
-  const props = Object.assign(
-    createProps(element, stylesheets, options),
-    imageProps,
-  );
-  const component = React.createElement(
-    Image,
-    props,
-  );
-  return skipHref ?
-    component :
-    addHref(component, element, stylesheets, onUpdate, options);
 }
 
 /**

@@ -1,5 +1,24 @@
 // DO NOT EDIT: Auto-generate this file by running `yarn generate`
 export default {
+  'hyperview/src/components/hv-image/stories/basic.xml':
+  `<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style id="Body"
+        backgroundColor="white"
+        flex="1"
+      />
+      <style id="img"
+        width="200"
+        height="200"
+      />
+    </styles>
+    <body style="Body">
+      <image source="https://upload.wikimedia.org/wikipedia/en/a/a4/Guns-N-Roses-1987.jpg" style="img" />
+    </body>
+  </screen>
+</doc>
+`,
   'hyperview/src/components/hv-list/stories/basic.xml':
   `<doc xmlns="https://hyperview.org/hyperview">
   <screen>
