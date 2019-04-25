@@ -262,6 +262,7 @@ export type HvComponentOptions = {
   pressedSelected?: ?boolean,
   registerInputHandler?: (ref: ?ElementRef<*>) => void,
   selected?: ?boolean,
+  skipHref?: ?boolean,
   showIndicatorIds?: ?DOMString,
   targetId?: ?DOMString,
 };
@@ -293,3 +294,46 @@ export type HvBehavior = {
 export type BehaviorRegistry = {
   [string]: HvBehavior,
 };
+
+// https://hyperview.org/docs/reference_behavior_attributes#trigger
+export const TRIGGERS = Object.freeze({
+  DESELECT: 'deselect',
+  LOAD: 'load',
+  LONG_PRESS: 'longPress',
+  PRESS_IN: 'pressIn',
+  PRESS_OUT: 'pressOut',
+  PRESS: 'press',
+  REFRESH: 'refresh',
+  SELECT: 'select',
+  VISIBLE: 'visible',
+});
+
+export type Trigger = $Values<typeof TRIGGERS>;
+
+export const PRESS_TRIGGERS = Object.freeze([
+  TRIGGERS.LONG_PRESS,
+  TRIGGERS.PRESS_IN,
+  TRIGGERS.PRESS_OUT,
+  TRIGGERS.PRESS,
+]);
+
+export type PressTrigger = 'longPress' | 'pressIn' | 'pressOut' | 'press';
+
+// https://hyperview.org/docs/reference_behavior_attributes#action
+export const ACTIONS = {
+  APPEND: 'append',
+  BACK: 'back',
+  NAVIGATE: 'navigate',
+  NEW: 'new',
+  PREPEND: 'prepend',
+  PUSH: 'push',
+  RELOAD: 'reload',
+  REPLACE_INNER: 'replace-inner',
+  REPLACE: 'replace',
+};
+
+export type Action = $Values<typeof ACTIONS>;
+
+export type NavAction = 'push' | 'new' | 'back' | 'navigate' | 'reload';
+
+export type UpdateAction = 'push' | 'new' | 'back' | 'navigate' | 'close';
