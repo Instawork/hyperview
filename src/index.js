@@ -437,15 +437,15 @@ export default class HyperScreen extends React.Component {
     });
   }
 
-  getNavigationState = () => {
-    if (this.props.navigation) {
-      return this.props.navigation.state;
+  getNavigationState = (props) => {
+    if (props.navigation) {
+      return props.navigation.state;
     }
     return { params: {} };
   }
 
   componentDidMount() {
-    const { params } = this.getNavigationState();
+    const { params } = this.getNavigationState(this.props);
     // The screen may be rendering via a navigation from another HyperScreen.
     // In this case, the url to load in the screen will be passed via navigation props.
     // Otherwise, use the entrypoint URL provided as a prop to the first HyperScreen.
@@ -478,11 +478,13 @@ export default class HyperScreen extends React.Component {
    * preload screen and URL to load.
    */
   componentWillReceiveProps(nextProps) {
-    const { params } = this.getNavigationState();
-    const newUrl = params.url;
-    const oldUrl = params.url;
-    const newPreloadScreen = params.preloadScreen;
-    const oldPreloadScreen = params.preloadScreen;
+    const oldNavigationState = this.getNavigationState(this.props);
+    const newNavigationState = this.getNavigationState(nextProps);
+
+    const newUrl = newNavigationState.params.url;
+    const oldUrl = oldNavigationState.params.url;
+    const newPreloadScreen = newNavigationState.params.preloadScreen;
+    const oldPreloadScreen = oldNavigationState.params.preloadScreen;
 
     if (newPreloadScreen !== oldPreloadScreen) {
       delete PRELOAD_SCREEN[oldPreloadScreen];
@@ -509,7 +511,7 @@ export default class HyperScreen extends React.Component {
    * Clear out the preload screen associated with this screen.
    */
   componentWillUnmount() {
-    const { params } = this.getNavigationState();
+    const { params } = this.getNavigationState(this.props);
     const { preloadScreen } = params;
     if (preloadScreen && PRELOAD_SCREEN[preloadScreen]) {
       delete PRELOAD_SCREEN[preloadScreen];
@@ -530,7 +532,7 @@ export default class HyperScreen extends React.Component {
    * Performs a full load of the screen.
    */
   load = () => {
-    const { params, key: routeKey } = this.getNavigationState();
+    const { params, key: routeKey } = this.getNavigationState(this.props);
     const { delay } = params;
     const url = this.state.url;
 
