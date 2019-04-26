@@ -27,7 +27,7 @@ import { DOMParser, XMLSerializer } from 'xmldom';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import React from 'react';
 import VisibilityDetectingView from './VisibilityDetectingView.js';
-import { createProps, getBehaviorElements, getFirstTag } from 'hyperview/src/services';
+import { createProps, getBehaviorElements, getFirstTag, later } from 'hyperview/src/services';
 import { version } from '../package.json';
 import urlParse from 'url-parse';
 
