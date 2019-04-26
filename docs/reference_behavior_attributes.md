@@ -279,9 +279,9 @@ The `verb` attribute defines the HTTP method used to request the content specifi
 
 ## action
 
-| Type                                                                                     | Required |
-| ---------------------------------------------------------------------------------------- | -------- |
-| **push** (default), new, back, navigate, replace, replace-inner, append, prepend, reload | No       |
+| Type                                                                                                       | Required |
+| ---------------------------------------------------------------------------------------------------------- | -------- |
+| **push** (default), new, back, close, navigate, deep-link, replace, replace-inner, append, prepend, reload | No       |
 
 The `action` attribute defines what to do with the Hyperview XML resource described by the `href` attribute. The possible actions are divided into **navigation actions**, which load or navigate to a screen, and **update actions**, which update the elements on the current screen.
 
@@ -290,16 +290,17 @@ The navigation actions include:
 - [`push`](#push)
 - [`new`](#new)
 - [`back`](#back)
+- [`close`](#close)
 - [`navigate`](#navigate)
 - [`reload`](#reload)
+- [`deep-link`](#deep-link)
 
 The update actions include:
 
-- [`push`](#push)
-- [`new`](#new)
-- [`back`](#back)
-- [`close`](#close)
-- [`navigate`](#navigate)
+- [`replace`](#replace)
+- [`replace-inner`](#replace-inner)
+- [`append`](#append)
+- [`prepend`](#prepend)
 
 ### `push`
 
@@ -394,6 +395,10 @@ The `navigate` navigation action will either push a screen onto the stack, or un
 ### `reload`
 
 The `reload` navigation action will re-request the current screen. This is similar to a reload button in a web browser.
+
+### `deep-link`
+
+The `deep-link` navigation action delegates the navigation to the operating system, in order to decide which app should open the given URL.
 
 ### `replace`
 

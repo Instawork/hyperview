@@ -68,22 +68,3 @@ export const PRESS_TRIGGERS_PROP_NAMES: {
   [TRIGGERS.PRESS_OUT]: PRESS_PROP_NAMES.ON_PRESS_OUT,
   [TRIGGERS.PRESS]: PRESS_PROP_NAMES.ON_PRESS,
 };
-
-export const NAV_ACTIONS = {
-  BACK: 'back',
-  CLOSE: 'close',
-  NAVIGATE: 'navigate',
-  NEW: 'new',
-  PUSH: 'push',
-};
-
-export type NavAction = $Values<typeof NAV_ACTIONS>;
-
-export const UPDATE_ACTIONS = {
-  REPLACE: 'replace',
-  REPLACE_INNER: 'replace-inner',
-  APPEND: 'append',
-  PREPEND: 'prepend',
-};
-
-export type UpdateAction = $Values<typeof UPDATE_ACTIONS>;
