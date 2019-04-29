@@ -261,7 +261,9 @@ export type HvComponentOptions = {
   pressed?: ?boolean,
   pressedSelected?: ?boolean,
   registerInputHandler?: (ref: ?ElementRef<*>) => void,
+  screenUrl?: ?string,
   selected?: ?boolean,
+  skipHref?: ?boolean,
   showIndicatorIds?: ?DOMString,
   targetId?: ?DOMString,
 };
@@ -293,3 +295,85 @@ export type HvBehavior = {
 export type BehaviorRegistry = {
   [string]: HvBehavior,
 };
+
+// https://hyperview.org/docs/reference_behavior_attributes#trigger
+export const TRIGGERS = Object.freeze({
+  DESELECT: 'deselect',
+  LOAD: 'load',
+  LONG_PRESS: 'longPress',
+  PRESS_IN: 'pressIn',
+  PRESS_OUT: 'pressOut',
+  PRESS: 'press',
+  REFRESH: 'refresh',
+  SELECT: 'select',
+  VISIBLE: 'visible',
+});
+
+export type Trigger = $Values<typeof TRIGGERS>;
+
+export const PRESS_TRIGGERS = Object.freeze([
+  TRIGGERS.LONG_PRESS,
+  TRIGGERS.PRESS_IN,
+  TRIGGERS.PRESS_OUT,
+  TRIGGERS.PRESS,
+]);
+
+export type PressTrigger = 'longPress' | 'pressIn' | 'pressOut' | 'press';
+
+// https://hyperview.org/docs/reference_behavior_attributes#action
+export const ACTIONS = {
+  APPEND: 'append',
+  BACK: 'back',
+  CLOSE: 'close',
+  DEEP_LINK: 'deep-link',
+  NAVIGATE: 'navigate',
+  NEW: 'new',
+  PREPEND: 'prepend',
+  PUSH: 'push',
+  RELOAD: 'reload',
+  REPLACE_INNER: 'replace-inner',
+  REPLACE: 'replace',
+  SWAP: 'swap',
+};
+
+export const NAV_ACTIONS = {
+  BACK: ACTIONS.BACK,
+  CLOSE: ACTIONS.CLOSE,
+  DEEP_LINK: ACTIONS.DEEP_LINK,
+  NAVIGATE: ACTIONS.NAVIGATE,
+  NEW: ACTIONS.NEW,
+  PUSH: ACTIONS.PUSH,
+};
+
+export type NavAction = $Values<typeof NAV_ACTIONS>;
+
+export const UPDATE_ACTIONS = {
+  REPLACE: ACTIONS.REPLACE,
+  REPLACE_INNER: ACTIONS.REPLACE_INNER,
+  APPEND: ACTIONS.APPEND,
+  PREPEND: ACTIONS.PREPEND,
+};
+
+export type UpdateAction = $Values<typeof UPDATE_ACTIONS>;
+
+export type BehaviorOptions = {|
+  newElement: Element,
+  behaviorElement: Element,
+  showIndicatorId?: string,
+  delay?: number,
+|};
+
+export type NavigationRouteParams = {|
+  delay: ?number,
+  preloadScreen: ?number,
+  url: string,
+|};
+
+export type NavigationProps = {|
+  back: (routeParams: ?NavigationRouteParams) => void,
+  closeModal: (routeParams: ?NavigationRouteParams) => void,
+  navigate: (routeParams: NavigationRouteParams, key: ?string) => void,
+  openModal: (routeParams: ?NavigationRouteParams) => void,
+  push: (routeParams: NavigationRouteParams) => void,
+  replace: (routeParams: NavigationRouteParams) => void,
+|};

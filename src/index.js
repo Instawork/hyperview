@@ -16,19 +16,21 @@ import {
   Alert,
   Dimensions,
   Easing,
-  Image,
-  RefreshControl,
+  Linking,
   ScrollView,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 import { DOMParser, XMLSerializer } from 'xmldom';
+import HyperRef from 'hyperview/src/core/hyper-ref';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import Navigation from 'hyperview/src/services/navigation';
 import React from 'react';
 import VisibilityDetectingView from './VisibilityDetectingView.js';
-import { createProps, getBehaviorElements, getFirstTag, later } from 'hyperview/src/services';
+import { addHref, createProps, getBehaviorElements, getFirstTag, getUrlFromHref, later } from 'hyperview/src/services';
 import { version } from '../package.json';
+import { ACTIONS, NAV_ACTIONS, UPDATE_ACTIONS } from 'hyperview/src/types';
 import urlParse from 'url-parse';
 
 const AMPLITUDE_NS = Namespaces.AMPLITUDE;
@@ -40,14 +42,7 @@ const REDUX_NS = Namespaces.REDUX;
 const SHARE_NS = Namespaces.SHARE;
 const SMS_NS = Namespaces.SMS;
 
-const ROUTE_KEYS = {};
-const PRELOAD_SCREEN = {};
-
 const HYPERVIEW_VERSION = version;
-
-function uid() {
-  return Date.now(); // Not trully unique but sufficient for our use-case
-}
 
 function getHyperviewHeaders() {
   const { width, height } = Dimensions.get('window');
@@ -55,234 +50,6 @@ function getHyperviewHeaders() {
     'X-Hyperview-Version': HYPERVIEW_VERSION,
     'X-Hyperview-Dimensions': `${width}w ${height}h`,
   };
-}
-
-/**
- * STATEFUL COMPONENTS
- */
-
-
-
-/**
- * Component that handles dispatching behaviors based on the appropriate
- * triggers.
- */
-class HyperRef extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      refreshing: false,
-      pressed: false,
-    };
-
-    this.pressTriggerPropNames = {
-      press: 'onPress',
-      longPress: 'onLongPress',
-      pressIn: 'onPressIn',
-      pressOut: 'onPressOut',
-    };
-
-    this.pressTriggers = ['press', 'longPress', 'pressIn', 'pressOut'];
-    this.navActions = ['push', 'new', 'back', 'close', 'navigate'];
-    this.updateActions = ['replace', 'replace-inner', 'append', 'prepend'];
-  }
-
-  createActionHandler = (element, behaviorElement, onUpdate) => {
-    const action = behaviorElement.getAttribute('action') || 'push';
-
-    if (this.navActions.indexOf(action) >= 0) {
-      return () => {
-        const href = behaviorElement.getAttribute('href');
-        const showIndicatorId = behaviorElement.getAttribute('show-during-load');
-        const delay = behaviorElement.getAttribute('delay');
-        onUpdate(href, action, element, { showIndicatorId, delay });
-      };
-    } else if (this.updateActions.indexOf(action) >= 0) {
-      return () => {
-        const href = behaviorElement.getAttribute('href');
-        const verb = behaviorElement.getAttribute('verb');
-        const targetId = behaviorElement.getAttribute('target');
-        const showIndicatorIds = behaviorElement.getAttribute('show-during-load');
-        const hideIndicatorIds = behaviorElement.getAttribute('hide-during-load');
-        const delay = behaviorElement.getAttribute('delay');
-        const once = behaviorElement.getAttribute('once');
-        onUpdate(
-          href, action, element,
-          { verb, targetId, showIndicatorIds, hideIndicatorIds, delay, once },
-        );
-      };
-    }
-    //
-    // Custom behavior
-    return () => onUpdate(null, action, element, { custom: true, behaviorElement });
-  }
-
-  render() {
-    const { refreshing, pressed } = this.state;
-    const { element, stylesheets, onUpdate, options } = this.props;
-    const behaviorElements = getBehaviorElements(element);
-    const pressBehaviors = behaviorElements.filter(e => this.pressTriggers.indexOf(e.getAttribute('trigger') || 'press') >= 0);
-    const visibleBehaviors = behaviorElements.filter(e => e.getAttribute('trigger') === 'visible');
-    const refreshBehaviors = behaviorElements.filter(e => e.getAttribute('trigger') === 'refresh');
-
-    // Render the component based on the XML element. Depending on the applied behaviors,
-    // this component will be wrapped with others to provide the necessary interaction.
-    let renderedComponent = Render.renderElement(
-      element, stylesheets, onUpdate, { ...options, pressed, skipHref: true },
-    );
-
-    const styleAttr = element.getAttribute('href-style');
-    const hrefStyle = styleAttr ? styleAttr.split(' ').map(s => stylesheets.regular[s]) : null;
-
-    // Render pressable element
-    if (pressBehaviors.length > 0) {
-      const props = {
-        // Component will use touchable opacity to trigger href.
-        activeOpacity: 1,
-        style: hrefStyle,
-      };
-
-      // With multiple behaviors for the same trigger, we need to stagger
-      // the updates a bit so that each update operates on the latest DOM.
-      // Ideally, we could apply multiple DOM updates at a time.
-      let time = 0;
-
-      pressBehaviors.forEach((behaviorElement) => {
-        const trigger = behaviorElement.getAttribute('trigger') || 'press';
-        const triggerPropName = this.pressTriggerPropNames[trigger];
-        const handler = this.createActionHandler(element, behaviorElement, onUpdate);
-        if (props[triggerPropName]) {
-          const oldHandler = props[triggerPropName];
-          props[triggerPropName] = () => {
-            oldHandler();
-            setTimeout(handler, time);
-            time += 1;
-          };
-        } else {
-          props[triggerPropName] = handler;
-        }
-      });
-
-      if (props.onPressIn) {
-        const oldHandler = props.onPressIn;
-        props.onPressIn = () => {
-          this.setState({ pressed: true });
-          oldHandler();
-        };
-      } else {
-        props.onPressIn = () => {
-          this.setState({ pressed: true });
-        };
-      }
-
-      if (props.onPressOut) {
-        const oldHandler = props.onPressOut;
-        props.onPressOut = () => {
-          this.setState({ pressed: false });
-          oldHandler();
-        };
-      } else {
-        props.onPressOut = () => {
-          this.setState({ pressed: false });
-        };
-      }
-
-      // Fix a conflict between onPressOut and onPress triggering at the same time.
-      if (props.onPressOut && props.onPress) {
-        const onPressHandler = props.onPress;
-        props.onPress = () => {
-          setTimeout(onPressHandler, time);
-        };
-      }
-
-      renderedComponent = React.createElement(
-        TouchableOpacity,
-        props,
-        renderedComponent,
-      );
-    }
-
-    // Wrap component in a scrollview with a refresh control to trigger
-    // the refresh behaviors.
-    if (refreshBehaviors.length > 0) {
-      const refreshHandlers = refreshBehaviors.map(behaviorElement =>
-        this.createActionHandler(element, behaviorElement, onUpdate),
-      );
-      const onRefresh = () => refreshHandlers.forEach(h => h());
-
-      const refreshControl = React.createElement(
-        RefreshControl,
-        { refreshing, onRefresh },
-      );
-      renderedComponent = React.createElement(
-        ScrollView,
-        { refreshControl, style: hrefStyle },
-        renderedComponent,
-      );
-    }
-
-    // Wrap component in a VisibilityDetectingView to trigger visibility behaviors.
-    if (visibleBehaviors.length > 0) {
-      const visibleHandlers = visibleBehaviors.map(behaviorElement =>
-        this.createActionHandler(element, behaviorElement, onUpdate),
-      );
-      const onVisible = () => visibleHandlers.forEach(h => h());
-
-      renderedComponent = React.createElement(
-        VisibilityDetectingView,
-        { onVisible, style: hrefStyle },
-        renderedComponent,
-      );
-    }
-
-    return renderedComponent;
-  }
-
-  componentDidUpdate(prevProps) {
-    const { element, onUpdate } = this.props;
-    if (prevProps.element === element) {
-      return;
-    }
-    const behaviorElements = getBehaviorElements(element);
-    const loadBehaviors = behaviorElements.filter(e => e.getAttribute('trigger') === 'load');
-    loadBehaviors.forEach((behaviorElement) => {
-      const handler = this.createActionHandler(element, behaviorElement, onUpdate);
-      setTimeout(handler, 0);
-    });
-  }
-
-  componentDidMount() {
-    const { element, onUpdate } = this.props;
-    const behaviorElements = getBehaviorElements(element);
-    const loadBehaviors = behaviorElements.filter(e => e.getAttribute('trigger') === 'load');
-
-    loadBehaviors.forEach((behaviorElement) => {
-      const handler = this.createActionHandler(element, behaviorElement, onUpdate);
-      setTimeout(handler, 0);
-    });
-  }
-}
-
-function addHref(component, element, stylesheets, onUpdate, options) {
-  const href = element.getAttribute('href');
-  const behaviorElements = getChildElementsByTagName(element, 'behavior');
-  const hasBehaviors = href || behaviorElements.length > 0;
-  if (!hasBehaviors) {
-    return component;
-  }
-
-  return React.createElement(
-    HyperRef,
-    { element, stylesheets, onUpdate, options },
-    ...Render.renderChildren(element, stylesheets, onUpdate, options),
-  );
-}
-
-/**
- * UTILITIES
- */
-function getHrefKey(href) {
-  return href.split('?')[0];
 }
 
 /**
@@ -296,34 +63,6 @@ function getAncestorByTagName(element, tagName) {
     parentNode = parentNode.parentNode || null;
   }
   return parentNode;
-}
-
-function getChildElementsByTagName(element, tagName) {
-  return Array.from(element.childNodes).filter(n => n.nodeType === 1 && n.tagName === tagName);
-}
-
-/**
- *
- */
-export function image(element, stylesheets, onUpdate, options) {
-  const { skipHref } = options || {};
-  const imageProps = {};
-  if (element.getAttribute('source')) {
-    let source = element.getAttribute('source');
-    source = urlParse(source, options.screenUrl, true).toString();
-    imageProps.source = { uri: source };
-  }
-  const props = Object.assign(
-    createProps(element, stylesheets, options),
-    imageProps,
-  );
-  const component = React.createElement(
-    Image,
-    props,
-  );
-  return skipHref ?
-    component :
-    addHref(component, element, stylesheets, onUpdate, options);
 }
 
 /**
@@ -402,7 +141,6 @@ export default class HyperScreen extends React.Component {
     this.reload = this.reload.bind(this);
     this.parseError = this.parseError.bind(this);
 
-    this.navActions = ['push', 'new', 'back', 'close', 'navigate'];
     this.updateActions = ['replace', 'replace-inner', 'append', 'prepend'];
 
     this.parser = new DOMParser({
@@ -424,6 +162,11 @@ export default class HyperScreen extends React.Component {
 
     this.behaviorRegistry = Behaviors.getRegistry(this.props.behaviors);
     this.componentRegistry = Components.getRegistry(this.props.components);
+    this.navigation = new Navigation(
+      this.state.url,
+      this.state.doc,
+      this.getNavigation(),
+    )
   }
 
   /**
@@ -452,7 +195,7 @@ export default class HyperScreen extends React.Component {
     const url = params.url || this.props.entrypointUrl || null;
 
     const preloadScreen = params.preloadScreen
-      ? PRELOAD_SCREEN[params.preloadScreen]
+      ? this.navigation.getPreloadScreen(params.preloadScreen)
       : null;
     const preloadStyles = preloadScreen ? Stylesheets.createStylesheets(preloadScreen) : {};
 
@@ -487,17 +230,17 @@ export default class HyperScreen extends React.Component {
     const oldPreloadScreen = oldNavigationState.params.preloadScreen;
 
     if (newPreloadScreen !== oldPreloadScreen) {
-      delete PRELOAD_SCREEN[oldPreloadScreen];
+      this.navigation.removePreloadScreen(oldPreloadScreen);
     }
 
     // TODO: If the preload screen is changing, delete the old one from
-    // PRELOAD_SCREENS to prevent memory leaks.
+    // this.navigation.preloadScreens to prevent memory leaks.
 
     if (newUrl !== oldUrl) {
       this.needsLoad = true;
 
       const preloadScreen = newPreloadScreen
-        ? PRELOAD_SCREEN[newPreloadScreen]
+        ? this.navigation.getPreloadScreen(newPreloadScreen)
         : null;
 
       const doc = preloadScreen || this.state.doc;
@@ -513,8 +256,8 @@ export default class HyperScreen extends React.Component {
   componentWillUnmount() {
     const { params } = this.getNavigationState(this.props);
     const { preloadScreen } = params;
-    if (preloadScreen && PRELOAD_SCREEN[preloadScreen]) {
-      delete PRELOAD_SCREEN[preloadScreen];
+    if (preloadScreen && this.navigation.getPreloadScreen(preloadScreen)) {
+      this.navigation.remove(preloadScreen);
     }
   }
 
@@ -547,7 +290,7 @@ export default class HyperScreen extends React.Component {
         let doc = this.parser.parseFromString(responseText);
         let error = false;
         const stylesheets = Stylesheets.createStylesheets(doc);
-        ROUTE_KEYS[getHrefKey(url)] = routeKey;
+        this.navigation.setRouteKey(url, routeKey);
 
         // Make sure the XML has the required elements: <doc>, <screen>, <body>.
         const docElement = getFirstTag(doc, 'doc');
@@ -649,16 +392,6 @@ export default class HyperScreen extends React.Component {
   })
 
   /**
-   * Turns the href into a fetchable URL.
-   * If the href is fully qualified, return it.
-   * Otherwise, pull the protocol/domain/port from the screen's URL and append the href.
-   */
-  getUrlFromHref = (href) => {
-    const rootUrl = urlParse(href, this.state.url, true);
-    return rootUrl.toString();
-  }
-
-  /**
    * Fetches the provided reference.
    * - If the references is an id reference (starting with #),
    *   returns a clone of that element.
@@ -679,7 +412,7 @@ export default class HyperScreen extends React.Component {
       });
     }
 
-    let url = this.getUrlFromHref(href);
+    let url = getUrlFromHref(href, this.state.url);
     if (verb === 'GET' && formData) {
       // For GET requests, we can't include a body so we encode the form data as a query
       // string in the URL.
@@ -744,63 +477,22 @@ export default class HyperScreen extends React.Component {
    *
    */
   onUpdate = (href, action, currentElement, opts) => {
-    if (action === 'reload') {
+    if (action === ACTIONS.RELOAD) {
       this.reload();
-    } else if (this.navActions.indexOf(action) >= 0) {
-      this.onNavigate(href, action, currentElement, opts);
-    } else if (this.updateActions.indexOf(action) >= 0) {
+    } else if (action === ACTIONS.DEEP_LINK) {
+      Linking.openURL(href);
+    } else if (Object.values(NAV_ACTIONS).includes(action)) {
+      this.navigation.setUrl(this.state.url);
+      this.navigation.setDocument(this.state.doc);
+      this.navigation.navigate(href, action, currentElement, opts);
+    } else if (Object.values(UPDATE_ACTIONS).includes(action)) {
       this.onUpdateFragment(href, action, currentElement, opts);
-    } else if (action === 'swap') {
+    } else if (action === ACTIONS.SWAP) {
       this.onSwap(currentElement, opts.newElement);
     } else {
       const { behaviorElement } = opts;
       this.onCustomUpdate(behaviorElement);
     }
-  }
-
-  /**
-   *
-   */
-  onNavigate = (href, action, element, opts) => {
-    const navigation = this.getNavigation();
-    const { showIndicatorId, delay } = opts;
-
-    let navFunction = navigation.push;
-    let key = null;
-
-    const url = this.getUrlFromHref(href);
-
-    if (action === 'push') {
-      // push a new screen on the stack
-      navFunction = navigation.push;
-    } else if (action === 'replace') {
-      // replace current screen
-      navFunction = navigation.replace;
-    } else if (action === 'navigate') {
-      // Return to the screen, if it exists
-      navFunction = navigation.navigate;
-      key = ROUTE_KEYS[getHrefKey(url)];
-    } else if (action === 'new') {
-      navFunction = navigation.openModal;
-    } else if (action === 'close') {
-      navFunction = navigation.closeModal;
-    } else if (action === 'back') {
-      navFunction = navigation.back;
-    }
-
-    const navHandler = () => {
-      let preloadScreen = null;
-      if (showIndicatorId) {
-        const screens = this.state.doc.getElementsByTagNameNS(HYPERVIEW_NS, 'screen');
-        preloadScreen = uid();
-        PRELOAD_SCREEN[preloadScreen] = Array.from(screens).find(s => s.getAttribute('id') === showIndicatorId);
-      }
-
-      const routeParams = ((action === 'back' || action === 'close') && href === '#') ? undefined : { url, preloadScreen, delay };
-      navFunction(routeParams, key);
-    };
-
-    navHandler();
   }
 
   /**

@@ -16,7 +16,7 @@ import type {
   StyleSheets,
 } from 'hyperview/src/types';
 import { LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
-import { image, text, view } from 'hyperview/src';
+import { text, view } from 'hyperview/src';
 import React from 'react';
 
 export const renderElement = (
@@ -48,9 +48,6 @@ export const renderElement = (
       case LOCAL_NAME.SECTION_TITLE:
         // TODO: Create HvView component
         return view(element, stylesheets, onUpdate, options);
-      case LOCAL_NAME.IMAGE:
-        // TODO: Create HvImage component
-        return image(element, stylesheets, onUpdate, options);
       case LOCAL_NAME.TEXT:
         // TODO: Create HvText component
         return text(element, stylesheets, onUpdate, options);
