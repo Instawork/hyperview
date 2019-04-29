@@ -16,8 +16,7 @@ import {
   Alert,
   Dimensions,
   Easing,
-  Image,
-  RefreshControl,
+  Linking,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -26,10 +25,12 @@ import {
 import { DOMParser, XMLSerializer } from 'xmldom';
 import HyperRef from 'hyperview/src/core/hyper-ref';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import Navigation from 'hyperview/src/services/navigation';
 import React from 'react';
 import VisibilityDetectingView from './VisibilityDetectingView.js';
-import { createProps, getBehaviorElements, getFirstTag } from 'hyperview/src/services';
+import { addHref, createProps, getBehaviorElements, getFirstTag, getUrlFromHref, later } from 'hyperview/src/services';
 import { version } from '../package.json';
+import { ACTIONS, NAV_ACTIONS, UPDATE_ACTIONS } from 'hyperview/src/types';
 import urlParse from 'url-parse';
 
 const AMPLITUDE_NS = Namespaces.AMPLITUDE;
@@ -41,14 +42,7 @@ const REDUX_NS = Namespaces.REDUX;
 const SHARE_NS = Namespaces.SHARE;
 const SMS_NS = Namespaces.SMS;
 
-const ROUTE_KEYS = {};
-const PRELOAD_SCREEN = {};
-
 const HYPERVIEW_VERSION = version;
-
-function uid() {
-  return Date.now(); // Not trully unique but sufficient for our use-case
-}
 
 function getHyperviewHeaders() {
   const { width, height } = Dimensions.get('window');
@@ -56,28 +50,6 @@ function getHyperviewHeaders() {
     'X-Hyperview-Version': HYPERVIEW_VERSION,
     'X-Hyperview-Dimensions': `${width}w ${height}h`,
   };
-}
-
-function addHref(component, element, stylesheets, onUpdate, options) {
-  const href = element.getAttribute('href');
-  const behaviorElements = getChildElementsByTagName(element, 'behavior');
-  const hasBehaviors = href || behaviorElements.length > 0;
-  if (!hasBehaviors) {
-    return component;
-  }
-
-  return React.createElement(
-    HyperRef,
-    { element, stylesheets, onUpdate, options },
-    ...Render.renderChildren(element, stylesheets, onUpdate, options),
-  );
-}
-
-/**
- * UTILITIES
- */
-function getHrefKey(href) {
-  return href.split('?')[0];
 }
 
 /**
@@ -91,34 +63,6 @@ function getAncestorByTagName(element, tagName) {
     parentNode = parentNode.parentNode || null;
   }
   return parentNode;
-}
-
-function getChildElementsByTagName(element, tagName) {
-  return Array.from(element.childNodes).filter(n => n.nodeType === 1 && n.tagName === tagName);
-}
-
-/**
- *
- */
-export function image(element, stylesheets, onUpdate, options) {
-  const { skipHref } = options || {};
-  const imageProps = {};
-  if (element.getAttribute('source')) {
-    let source = element.getAttribute('source');
-    source = urlParse(source, options.screenUrl, true).toString();
-    imageProps.source = { uri: source };
-  }
-  const props = Object.assign(
-    createProps(element, stylesheets, options),
-    imageProps,
-  );
-  const component = React.createElement(
-    Image,
-    props,
-  );
-  return skipHref ?
-    component :
-    addHref(component, element, stylesheets, onUpdate, options);
 }
 
 /**
@@ -197,7 +141,6 @@ export default class HyperScreen extends React.Component {
     this.reload = this.reload.bind(this);
     this.parseError = this.parseError.bind(this);
 
-    this.navActions = ['push', 'new', 'back', 'close', 'navigate'];
     this.updateActions = ['replace', 'replace-inner', 'append', 'prepend'];
 
     this.parser = new DOMParser({
@@ -219,6 +162,11 @@ export default class HyperScreen extends React.Component {
 
     this.behaviorRegistry = Behaviors.getRegistry(this.props.behaviors);
     this.componentRegistry = Components.getRegistry(this.props.components);
+    this.navigation = new Navigation(
+      this.state.url,
+      this.state.doc,
+      this.getNavigation(),
+    )
   }
 
   /**
@@ -239,7 +187,7 @@ export default class HyperScreen extends React.Component {
     const url = this.props.navigation.state.params.url || this.props.entrypointUrl || null;
 
     const preloadScreen = this.props.navigation.state.params.preloadScreen
-      ? PRELOAD_SCREEN[this.props.navigation.state.params.preloadScreen]
+      ? this.navigation.getPreloadScreen(this.props.navigation.state.params.preloadScreen)
       : null;
     const preloadStyles = preloadScreen ? Stylesheets.createStylesheets(preloadScreen) : {};
 
@@ -271,17 +219,17 @@ export default class HyperScreen extends React.Component {
     const oldPreloadScreen = this.props.navigation.state.params.preloadScreen;
 
     if (newPreloadScreen !== oldPreloadScreen) {
-      delete PRELOAD_SCREEN[oldPreloadScreen];
+      this.navigation.removePreloadScreen(oldPreloadScreen);
     }
 
     // TODO: If the preload screen is changing, delete the old one from
-    // PRELOAD_SCREENS to prevent memory leaks.
+    // this.navigation.preloadScreens to prevent memory leaks.
 
     if (newUrl !== oldUrl) {
       this.needsLoad = true;
 
       const preloadScreen = newPreloadScreen
-        ? PRELOAD_SCREEN[newPreloadScreen]
+        ? this.navigation.getPreloadScreen(newPreloadScreen)
         : null;
 
       const doc = preloadScreen || this.state.doc;
@@ -296,8 +244,8 @@ export default class HyperScreen extends React.Component {
    */
   componentWillUnmount() {
     const { preloadScreen } = this.props.navigation.state.params;
-    if (preloadScreen && PRELOAD_SCREEN[preloadScreen]) {
-      delete PRELOAD_SCREEN[preloadScreen];
+    if (preloadScreen && this.navigation.getPreloadScreen(preloadScreen)) {
+      this.navigation.remove(preloadScreen);
     }
   }
 
@@ -329,7 +277,7 @@ export default class HyperScreen extends React.Component {
         let doc = this.parser.parseFromString(responseText);
         let error = false;
         const stylesheets = Stylesheets.createStylesheets(doc);
-        ROUTE_KEYS[getHrefKey(url)] = this.props.navigation.state.key;
+        this.navigation.setRouteKey(url, this.props.navigation.state.key);
 
         // Make sure the XML has the required elements: <doc>, <screen>, <body>.
         const docElement = getFirstTag(doc, 'doc');
@@ -431,16 +379,6 @@ export default class HyperScreen extends React.Component {
   })
 
   /**
-   * Turns the href into a fetchable URL.
-   * If the href is fully qualified, return it.
-   * Otherwise, pull the protocol/domain/port from the screen's URL and append the href.
-   */
-  getUrlFromHref = (href) => {
-    const rootUrl = urlParse(href, this.state.url, true);
-    return rootUrl.toString();
-  }
-
-  /**
    * Fetches the provided reference.
    * - If the references is an id reference (starting with #),
    *   returns a clone of that element.
@@ -461,7 +399,7 @@ export default class HyperScreen extends React.Component {
       });
     }
 
-    let url = this.getUrlFromHref(href);
+    let url = getUrlFromHref(href, this.state.url);
     if (verb === 'GET' && formData) {
       // For GET requests, we can't include a body so we encode the form data as a query
       // string in the URL.
@@ -526,63 +464,22 @@ export default class HyperScreen extends React.Component {
    *
    */
   onUpdate = (href, action, currentElement, opts) => {
-    if (action === 'reload') {
+    if (action === ACTIONS.RELOAD) {
       this.reload();
-    } else if (this.navActions.indexOf(action) >= 0) {
-      this.onNavigate(href, action, currentElement, opts);
-    } else if (this.updateActions.indexOf(action) >= 0) {
+    } else if (action === ACTIONS.DEEP_LINK) {
+      Linking.openURL(href);
+    } else if (Object.values(NAV_ACTIONS).includes(action)) {
+      this.navigation.setUrl(this.state.url);
+      this.navigation.setDocument(this.state.doc);
+      this.navigation.navigate(href, action, currentElement, opts);
+    } else if (Object.values(UPDATE_ACTIONS).includes(action)) {
       this.onUpdateFragment(href, action, currentElement, opts);
-    } else if (action === 'swap') {
+    } else if (action === ACTIONS.SWAP) {
       this.onSwap(currentElement, opts.newElement);
     } else {
       const { behaviorElement } = opts;
       this.onCustomUpdate(behaviorElement);
     }
-  }
-
-  /**
-   *
-   */
-  onNavigate = (href, action, element, opts) => {
-    const navigation = this.getNavigation();
-    const { showIndicatorId, delay } = opts;
-
-    let navFunction = navigation.push;
-    let key = null;
-
-    const url = this.getUrlFromHref(href);
-
-    if (action === 'push') {
-      // push a new screen on the stack
-      navFunction = navigation.push;
-    } else if (action === 'replace') {
-      // replace current screen
-      navFunction = navigation.replace;
-    } else if (action === 'navigate') {
-      // Return to the screen, if it exists
-      navFunction = navigation.navigate;
-      key = ROUTE_KEYS[getHrefKey(url)];
-    } else if (action === 'new') {
-      navFunction = navigation.openModal;
-    } else if (action === 'close') {
-      navFunction = navigation.closeModal;
-    } else if (action === 'back') {
-      navFunction = navigation.back;
-    }
-
-    const navHandler = () => {
-      let preloadScreen = null;
-      if (showIndicatorId) {
-        const screens = this.state.doc.getElementsByTagNameNS(HYPERVIEW_NS, 'screen');
-        preloadScreen = uid();
-        PRELOAD_SCREEN[preloadScreen] = Array.from(screens).find(s => s.getAttribute('id') === showIndicatorId);
-      }
-
-      const routeParams = ((action === 'back' || action === 'close') && href === '#') ? undefined : { url, preloadScreen, delay };
-      navFunction(routeParams, key);
-    };
-
-    navHandler();
   }
 
   /**

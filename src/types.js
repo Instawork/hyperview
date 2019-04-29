@@ -261,6 +261,7 @@ export type HvComponentOptions = {
   pressed?: ?boolean,
   pressedSelected?: ?boolean,
   registerInputHandler?: (ref: ?ElementRef<*>) => void,
+  screenUrl?: ?string,
   selected?: ?boolean,
   skipHref?: ?boolean,
   showIndicatorIds?: ?DOMString,
@@ -323,6 +324,8 @@ export type PressTrigger = 'longPress' | 'pressIn' | 'pressOut' | 'press';
 export const ACTIONS = {
   APPEND: 'append',
   BACK: 'back',
+  CLOSE: 'close',
+  DEEP_LINK: 'deep-link',
   NAVIGATE: 'navigate',
   NEW: 'new',
   PREPEND: 'prepend',
@@ -330,10 +333,47 @@ export const ACTIONS = {
   RELOAD: 'reload',
   REPLACE_INNER: 'replace-inner',
   REPLACE: 'replace',
+  SWAP: 'swap',
 };
 
-export type Action = $Values<typeof ACTIONS>;
+export const NAV_ACTIONS = {
+  BACK: ACTIONS.BACK,
+  CLOSE: ACTIONS.CLOSE,
+  DEEP_LINK: ACTIONS.DEEP_LINK,
+  NAVIGATE: ACTIONS.NAVIGATE,
+  NEW: ACTIONS.NEW,
+  PUSH: ACTIONS.PUSH,
+};
 
-export type NavAction = 'push' | 'new' | 'back' | 'navigate' | 'reload';
+export type NavAction = $Values<typeof NAV_ACTIONS>;
 
-export type UpdateAction = 'push' | 'new' | 'back' | 'navigate' | 'close';
+export const UPDATE_ACTIONS = {
+  REPLACE: ACTIONS.REPLACE,
+  REPLACE_INNER: ACTIONS.REPLACE_INNER,
+  APPEND: ACTIONS.APPEND,
+  PREPEND: ACTIONS.PREPEND,
+};
+
+export type UpdateAction = $Values<typeof UPDATE_ACTIONS>;
+
+export type BehaviorOptions = {|
+  newElement: Element,
+  behaviorElement: Element,
+  showIndicatorId?: string,
+  delay?: number,
+|};
+
+export type NavigationRouteParams = {|
+  delay: ?number,
+  preloadScreen: ?number,
+  url: string,
+|};
+
+export type NavigationProps = {|
+  back: (routeParams: ?NavigationRouteParams) => void,
+  closeModal: (routeParams: ?NavigationRouteParams) => void,
+  navigate: (routeParams: NavigationRouteParams, key: ?string) => void,
+  openModal: (routeParams: ?NavigationRouteParams) => void,
+  push: (routeParams: NavigationRouteParams) => void,
+  replace: (routeParams: NavigationRouteParams) => void,
+|};
