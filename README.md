@@ -133,6 +133,28 @@ Whether you're using a physical device or simulator, you should now see a Hyperv
 
 The example server simply serves files from the [./examples](/examples) directory. You can modify or add files in [./examples](/examples) and the server will update without restarting.
 
+#### Running storybook
+
+1. Run the following to generate storybook. You would need the `application_key` which is the `string` passed as a first argument to the method `AppRegistry.registerComponent` in your root react-native component:
+
+```bash
+yarn generate <application_key>
+```
+
+2. Start the storybook by running following in repo root:
+
+```bash
+yarn storybook
+```
+
+3. Now you may open [http://localhost:7007](http://localhost:7007) on your browser to view storybook controls.
+
+4. Start the app registered as `application_key`.
+
+> **Note**
+>
+> If you're getting issues about duplicate modules try removing the `node_modules` from `/demo` and retry.
+
 #### Troubleshooting
 
 > This version of the Expo app is out of date. Uninstall the app and run again to upgrade.
