@@ -124,10 +124,10 @@ The example server simply serves files from the [./examples](/examples) director
 
 #### Running storybook
 
-1. Run the following to generate storybook:
+1. Run the following to generate storybook. You would need the `application_key` which is the `string` passed as a first argument to the method `AppRegistry.registerComponent` in your root react-native component:
 
 ```bash
-yarn generate applicant
+yarn generate <application_key>
 ```
 
 2. Start the storybook by running following in repo root:
@@ -138,7 +138,7 @@ yarn storybook
 
 3. Now you may open [http://localhost:7007](http://localhost:7007) on your browser to view storybook controls.
 
-4. Start the applicant-app.
+4. Start the app registered as `application_key`.
 
 > **Note**
 >
