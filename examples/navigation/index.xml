@@ -93,6 +93,12 @@
           <text style="Item__Label">Reload</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
+        <item href="/navigation/deep-links.xml"
+              key="deep-links"
+              style="Item">
+          <text style="Item__Label">Deep links</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
       </list>
     </body>
   </screen>
