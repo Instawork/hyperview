@@ -4,7 +4,7 @@ title: <text-area>
 sidebar_label: <text-area>
 ---
 
-The `<text-area>` element represents multi-line input fields When pressed, the text area focuses and a keyboard appears to accept user input. The value entered into the `<text-area>` gets serialized as form data when a `<form>` gets submitted.
+The `<text-area>` element represents multi-line input fields. When pressed, the text area focuses and a keyboard appears to accept user input. The value entered into the `<text-area>` gets serialized as form data when a `<form>` gets submitted.
 
 ```xml
 <screen>
