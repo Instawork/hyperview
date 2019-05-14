@@ -4,7 +4,7 @@ title: <text-area>
 sidebar_label: <text-area>
 ---
 
-The `<text-area>` .
+The `<text-area>` element represents multi-line input fields When pressed, the text area focuses and a keyboard appears to accept user input. The value entered into the `<text-area>` gets serialized as form data when a `<form>` gets submitted.
 
 ```xml
 <screen>
@@ -14,6 +14,14 @@ The `<text-area>` .
   />
 </screen>
 ```
+
+## Appearance
+
+By default, the text area will appear as one row of text, but will expand vertically to accomodate the entered text.
+![default text-area](/img/reference_textarea1.png)
+
+You can also specify the height of the text area using styles. With a fixed height, the inside of the text area will scroll to show the entered text.
+![default text-area](/img/reference_textarea2.png)
 
 ## Structure
 
