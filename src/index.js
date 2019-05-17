@@ -11,6 +11,7 @@ import * as Components from 'hyperview/src/services/components';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
+import * as UrlService from 'hyperview/src/services/url';
 import {
   ActivityIndicator,
   Alert,
@@ -28,7 +29,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import Navigation from 'hyperview/src/services/navigation';
 import React from 'react';
 import VisibilityDetectingView from './VisibilityDetectingView.js';
-import { addHref, createProps, getBehaviorElements, getFirstTag, getUrlFromHref, later } from 'hyperview/src/services';
+import { addHref, createProps, getBehaviorElements, getFirstTag, later } from 'hyperview/src/services';
 import { version } from '../package.json';
 import { ACTIONS, NAV_ACTIONS, UPDATE_ACTIONS } from 'hyperview/src/types';
 import urlParse from 'url-parse';
@@ -412,14 +413,18 @@ export default class HyperScreen extends React.Component {
       });
     }
 
-    let url = getUrlFromHref(href, this.state.url);
-    if (verb === 'GET' && formData) {
-      // For GET requests, we can't include a body so we encode the form data as a query
-      // string in the URL.
-      const queryString = formData.getParts().map(
-        e => `${encodeURIComponent(e.fieldName)}=${encodeURIComponent(e.string)}`).join('&');
-      url = `${url}?${queryString}`;
-    }
+    // For GET requests, we can't include a body so we encode the form data as a query
+    // string in the URL.
+    const url = verb === 'GET' && formData
+      ? UrlService.addParamsToUrl(
+          UrlService.getUrlFromHref(href, this.state.url),
+          formData.getParts().map(p => ({
+            name: p.fieldName,
+            value: p.string,
+          })),
+      )
+      : UrlService.getUrlFromHref(href, this.state.url);
+
     const options = {
       method: verb,
       headers: getHyperviewHeaders(),
