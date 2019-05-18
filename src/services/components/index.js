@@ -12,6 +12,8 @@ import type { ComponentRegistry, HvComponent } from 'hyperview/src/types';
 import HvImage from 'hyperview/src/components/hv-image';
 import HvList from 'hyperview/src/components/hv-list';
 import HvOption from 'hyperview/src/components/hv-option';
+import HvPicker from 'hyperview/src/components/hv-picker';
+import HvPickerField from 'hyperview/src/components/hv-picker-field';
 import HvSectionList from 'hyperview/src/components/hv-section-list';
 import HvSelectMultiple from 'hyperview/src/components/hv-select-multiple';
 import HvSelectSingle from 'hyperview/src/components/hv-select-single';
@@ -23,6 +25,8 @@ import HvWebView from 'hyperview/src/components/hv-web-view';
 const HYPERVIEW_COMPONENTS = [
   HvList,
   HvOption,
+  HvPicker,
+  HvPickerField,
   HvSectionList,
   HvSelectMultiple,
   HvSelectSingle,

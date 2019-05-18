@@ -104,6 +104,15 @@
           </view>
           <text style="Item__Chevron">&gt;</text>
         </item>
+        <item href="/ui_elements/forms/picker.xml"
+              key="picker"
+              show-during-load="loadingScreen"
+              style="Item">
+          <view style="Item__Left">
+            <text style="Item__Label">Picker</text>
+          </view>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
       </list>
     </body>
   </screen>

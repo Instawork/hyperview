@@ -1,0 +1,103 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style alignItems="center"
+             backgroundColor="white"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flexDirection="row"
+             height="72"
+             id="Header"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="24" />
+      <style color="blue"
+             fontWeight="600"
+             fontSize="16"
+             id="Header__Back"
+             paddingRight="16" />
+      <style color="black"
+             fontWeight="600"
+             fontSize="24"
+             id="Header__Title" />
+      <style backgroundColor="white"
+             flex="1"
+             id="Body" />
+      <style 
+             fontWeight="600"
+             fontSize="16"
+             id="Description"
+             marginLeft="24"
+             marginRight="24"
+             marginTop="24"
+             />
+
+      <style flex="1"
+             id="FormGroup"
+             marginLeft="24"
+             marginRight="24"
+             marginTop="48" />
+
+
+      <style borderBottomColor="#E1E1E1"
+             borderBottomWidth="1"
+             borderColor="#4E4D4D"
+             flex="1"
+             fontWeight="normal"
+             fontSize="16"
+             id="input"
+             paddingBottom="8"
+             paddingTop="8"
+        >
+        <modifier pressed="true">
+          <style borderBottomColor="green" />
+        </modifier>
+        <modifier focused="true">
+          <style borderBottomColor="#4778FF" />
+        </modifier>
+      </style>
+
+    </styles>
+
+    <body style="Body">
+      <header style="Header">
+        <text action="back"
+              href="#"
+              style="Header__Back">Back</text>
+        <text style="Header__Title">Picker</text>
+      </header>
+      <view scroll="true" style="Main">
+
+        <text style="Description">Simple Picker</text>
+
+        <!--picker name="choice">
+          <picker-item label="Choice 0" value="0" />
+          <picker-item label="Choice 1" value="1" />
+          <picker-item label="Choice 2" value="2" />
+          <picker-item label="Choice 3" value="3" />
+        </picker-->
+
+        <view style="FormGroup">
+            <text style="label">Default input field</text>
+
+            <picker-field placeholder="Select name" placeholderTextColor="#8D9494" style="input">
+              <picker-item label="Choice 0" value="0" />
+              <picker-item label="Choice 1" value="1" />
+              <picker-item label="Choice 2" value="2" />
+              <picker-item label="Choice 3" value="3" />
+              <picker-item label="Choice 4" value="4" />
+              <picker-item label="Choice 5" value="5" />
+              <picker-item label="Choice 6" value="6" />
+            </picker-field>
+        </view>
+
+        <view style="FormGroup">
+            <text style="label">Filled input field</text>
+            <text-field style="input" value="" placeholder="First name" placeholderTextColor="#8D9494" />
+            <text style="help">Please enter your full name</text>
+        </view>
+
+      </view>
+    </body>
+  </screen>
+</doc>
