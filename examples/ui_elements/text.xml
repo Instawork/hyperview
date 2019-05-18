@@ -78,8 +78,13 @@
         <text style="Bold">World of 
         <text style="Color">HyperView!</text></text></text>
         <text style="Basic">
+<<<<<<< HEAD
 <![CDATA[Escaped with <![CDATA[]>: <hello><world>]]>
         </text>
+=======
+          <![CDATA[Escaped with <![CDATA[]>: <hello><world>]]>
+</text>
+>>>>>>> run tidy
       </view>
     </body>
   </screen>

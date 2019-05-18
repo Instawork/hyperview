@@ -6,13 +6,18 @@
      xmlns:sms="https://instawork.com/hyperview-sms">
   <screen>
     <styles>
+<<<<<<< HEAD
       <style id="Header"
              alignItems="center"
+=======
+      <style alignItems="center"
+>>>>>>> run tidy
              backgroundColor="white"
              borderBottomColor="#eee"
              borderBottomWidth="1"
              flexDirection="row"
              height="72"
+<<<<<<< HEAD
              paddingLeft="24"
              paddingRight="24"
              paddingTop="24" />
@@ -46,6 +51,42 @@
              fontWeight="bold" />
       <style id="Main"
              flex="1" />
+=======
+             id="Header"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="24" />
+      <style color="blue"
+             fontWeight="600"
+             fontSize="16"
+             id="Header__Back"
+             paddingRight="16" />
+      <style color="black"
+             fontWeight="600"
+             fontSize="24"
+             id="Header__Title" />
+      <style backgroundColor="white"
+             flex="1"
+             id="Body" />
+      <style fontWeight="600"
+             fontSize="16"
+             id="Description"
+             margin="24" />
+      <style backgroundColor="#63CB76"
+             borderRadius="16"
+             flex="1"
+             flexDirection="row"
+             id="Button"
+             justifyContent="center"
+             margin="24"
+             padding="24" />
+      <style color="white"
+             fontWeight="bold"
+             fontSize="24"
+             id="Button__Label" />
+      <style flex="1"
+             id="Main" />
+>>>>>>> run tidy
     </styles>
     <body style="Body">
       <header style="Header">
@@ -59,9 +100,15 @@
         <text style="Description">Instawork custom behaviors</text>
         <view style="Button">
           <behavior action="amplitude"
+<<<<<<< HEAD
                     amplitude:event="foo"
                     amplitude:event-props="{&quot;bar&quot;: &quot;baz&quot;}"
                     trigger="press" />
+=======
+                    trigger="press"
+                    amplitude:event="foo"
+                    amplitude:event-props="{&quot;bar&quot;: &quot;baz&quot;}" />
+>>>>>>> run tidy
           <text style="Button__Label">Log amplitude event</text>
         </view>
         <view style="Button">
