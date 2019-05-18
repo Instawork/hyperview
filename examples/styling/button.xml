@@ -58,6 +58,7 @@
              color="white"
              fontSize="24"
 <<<<<<< HEAD
+<<<<<<< HEAD
              fontWeight="bold" />
       <style id="Button--Disabled"
              opacity="0.5" />
@@ -74,6 +75,9 @@
       </style>
 =======
              id="Button__Label" />
+=======
+             fontWeight="bold" />
+>>>>>>> sort id at top
       <style id="Button--Disabled"
              opacity="0.5" />
 >>>>>>> run tidy

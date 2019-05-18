@@ -67,6 +67,7 @@
       </header>
       <text style="Description">Opened a new modal screen!</text>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <view action="new"
             href="/navigation/modal.xml"
             style="Button">
@@ -77,14 +78,21 @@
             style="Button">
 =======
       <view style="Button"
+=======
+      <view action="new"
+>>>>>>> sort id at top
             href="/navigation/modal.xml"
-            action="new">
+            style="Button">
         <text style="Button__Label">Open another modal</text>
       </view>
-      <view style="Button"
+      <view action="push"
             href="/navigation/modal.xml"
+<<<<<<< HEAD
             action="push">
 >>>>>>> run tidy
+=======
+            style="Button">
+>>>>>>> sort id at top
         <text style="Button__Label">Push on the stack</text>
       </view>
     </body>
