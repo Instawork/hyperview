@@ -6,124 +6,93 @@
      xmlns:sms="https://instawork.com/hyperview-sms">
   <screen>
     <styles>
-      <style
-        alignItems="center"
-        backgroundColor="white"
-        borderBottomColor="#eee"
-        borderBottomWidth="1"
-        flexDirection="row"
-        height="72"
-        id="Header"
-        paddingLeft="24"
-        paddingRight="24"
-        paddingTop="24"
-      />
-      <style
-        color="blue"
-        fontWeight="600"
-        fontSize="16"
-        id="Header__Back"
-        paddingRight="16"
-      />
-      <style
-        color="black"
-        fontWeight="600"
-        fontSize="24"
-        id="Header__Title"
-      />
-      <style
-        backgroundColor="white"
-        flex="1"
-        id="Body"
-      />
-      <style
-        fontWeight="600"
-        fontSize="16"
-        id="Description"
-        margin="24"
-      />
-      <style
-        backgroundColor="#63CB76"
-        borderRadius="16"
-        flex="1"
-        flexDirection="row"
-        id="Button"
-        justifyContent="center"
-        margin="24"
-        padding="24"
-      />
-      <style
-        color="white"
-        fontWeight="bold"
-        fontSize="24"
-        id="Button__Label"
-      />
-      <style
-        flex="1"
-        id="Main"
-      />
+      <style alignItems="center"
+             backgroundColor="white"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flexDirection="row"
+             height="72"
+             id="Header"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="24" />
+      <style color="blue"
+             fontWeight="600"
+             fontSize="16"
+             id="Header__Back"
+             paddingRight="16" />
+      <style color="black"
+             fontWeight="600"
+             fontSize="24"
+             id="Header__Title" />
+      <style backgroundColor="white"
+             flex="1"
+             id="Body" />
+      <style fontWeight="600"
+             fontSize="16"
+             id="Description"
+             margin="24" />
+      <style backgroundColor="#63CB76"
+             borderRadius="16"
+             flex="1"
+             flexDirection="row"
+             id="Button"
+             justifyContent="center"
+             margin="24"
+             padding="24" />
+      <style color="white"
+             fontWeight="bold"
+             fontSize="24"
+             id="Button__Label" />
+      <style flex="1"
+             id="Main" />
     </styles>
     <body style="Body">
       <header style="Header">
-        <text
-          action="back"
-          href="#"
-          style="Header__Back"
-        >
-          Back
-        </text>
+        <text action="back"
+              href="#"
+              style="Header__Back">Back</text>
         <text style="Header__Title">Custom: Instawork</text>
       </header>
-      <view scroll="true" style="Main">
+      <view scroll="true"
+            style="Main">
         <text style="Description">Instawork custom behaviors</text>
         <view style="Button">
-          <behavior
-            action="amplitude"
-            trigger="press"
-            amplitude:event="foo"
-            amplitude:event-props="{&quot;bar&quot;: &quot;baz&quot;}"
-          />
+          <behavior action="amplitude"
+                    trigger="press"
+                    amplitude:event="foo"
+                    amplitude:event-props="{&quot;bar&quot;: &quot;baz&quot;}" />
           <text style="Button__Label">Log amplitude event</text>
         </view>
         <view style="Button">
-          <behavior
-            action="ask-rating"
-            trigger="press"
-          />
+          <behavior action="ask-rating"
+                    trigger="press" />
           <text style="Button__Label">Ask ratings</text>
         </view>
         <view style="Button">
-          <behavior
-            action="intercom"
-            intercom:action="open"
-            intercom:topic="testing"
-            trigger="press"
-          />
+          <behavior action="intercom"
+                    intercom:action="open"
+                    intercom:topic="testing"
+                    trigger="press" />
           <text style="Button__Label">Intercom</text>
         </view>
         <view style="Button">
-          <behavior
-            action="phone"
-            phone:number="555-123-4567"
-            trigger="press"
-          />
+          <behavior action="phone"
+                    phone:number="555-123-4567"
+                    trigger="press" />
           <text style="Button__Label">Phone</text>
         </view>
         <view style="Button">
-          <behavior
-            action="redux"
-            redux:action="FOO"
-            redux:extra="{&quot;bar&quot;: &quot;baz&quot;}"
-            trigger="press"
-          />
+          <behavior action="redux"
+                    redux:action="FOO"
+                    redux:extra="{&quot;bar&quot;: &quot;baz&quot;}"
+                    trigger="press" />
           <text style="Button__Label">Redux</text>
         </view>
         <view style="Button">
-          <behavior
-            action="sms"
-            phone:number="555-123-4567"
-            trigger="press"
-          />
+          <behavior action="sms"
+                    phone:number="555-123-4567"
+                    trigger="press" />
           <text style="Button__Label">SMS</text>
         </view>
       </view>

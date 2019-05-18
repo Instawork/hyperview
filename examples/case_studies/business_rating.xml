@@ -86,7 +86,7 @@
   <body style="Body">
     <header style="Header">
       <image action="back"
-        href="/case_studies/index.xml"
+             href="/case_studies/index.xml"
              source="/case_studies/back@2x.png"
              style="Header__Back" />
     </header>

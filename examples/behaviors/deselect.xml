@@ -175,10 +175,8 @@
           </option>
           <view style="Select__Separator" />
         </select-single>
-
         <view id="container1"
               style="Container" />
-
         <text style="Description">Selecting an option prepends content below the container.</text>
         <select-multiple style="Select"
                          name="choice">

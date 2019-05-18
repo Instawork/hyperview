@@ -220,10 +220,10 @@
         </view>
         <view style="FormGroup">
           <text-area focusStyles="input input--focused"
-                    outerStyles="outerInput"
-                    placeholder="Any other feedback?"
-                    placeholderTextColor="#8D9494"
-                    style="input" />
+                     outerStyles="outerInput"
+                     placeholder="Any other feedback?"
+                     placeholderTextColor="#8D9494"
+                     style="input" />
         </view>
       </view>
       <view style="BottomSheet">

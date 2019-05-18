@@ -52,36 +52,25 @@
              padding="8" />
       <style flex="1"
              id="Main" />
-
       <style id="ScrollContainer"
-        margin="24"
-        height="200"
-        borderWidth="1"
-        height="160"
-        borderColor="#e1e1e1"
-        borderRadius="16"
-      />
-
+             margin="24"
+             height="200"
+             borderWidth="1"
+             height="160"
+             borderColor="#e1e1e1"
+             borderRadius="16" />
       <style id="ScrollContainer--Vertical"
-        flexDirection="column"
-      />
-
+             flexDirection="column" />
       <style id="ScrollContainer--Horizontal"
-        flexDirection="row"
-      />
-
+             flexDirection="row" />
       <style backgroundColor="#63CB76"
              borderRadius="16"
              height="40"
              margin="8"
              id="ScrollChild" />
-
-      <style 
-             height="40"
+      <style height="40"
              id="ScrollChild--Vertical" />
-
-      <style 
-             width="40"
+      <style width="40"
              id="ScrollChild--Horizontal" />
     </styles>
     <body style="Body">
@@ -93,7 +82,8 @@
       </header>
       <view>
         <text style="Description">Vertical Scroll</text>
-        <view scroll="true" style="ScrollContainer ScrollContainer--Vertical">
+        <view scroll="true"
+              style="ScrollContainer ScrollContainer--Vertical">
           <view style="ScrollChild ScrollChild--Vertical" />
           <view style="ScrollChild ScrollChild--Vertical" />
           <view style="ScrollChild ScrollChild--Vertical" />
@@ -101,9 +91,10 @@
           <view style="ScrollChild ScrollChild--Vertical" />
           <view style="ScrollChild ScrollChild--Vertical" />
         </view>
-
         <text style="Description">Horizontal Scroll</text>
-        <view scroll="true" scroll-orientation="horizontal" style="ScrollContainer ScrollContainer--Horizontal">
+        <view scroll="true"
+              scroll-orientation="horizontal"
+              style="ScrollContainer ScrollContainer--Horizontal">
           <view style="ScrollChild ScrollChild--Horizontal" />
           <view style="ScrollChild ScrollChild--Horizontal" />
           <view style="ScrollChild ScrollChild--Horizontal" />
@@ -112,7 +103,6 @@
           <view style="ScrollChild ScrollChild--Horizontal" />
           <view style="ScrollChild ScrollChild--Horizontal" />
         </view>
-
       </view>
     </body>
   </screen>

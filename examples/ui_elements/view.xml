@@ -88,9 +88,6 @@
           <view style="Flex__Child Styled" />
           <view style="Flex__Child Styled" />
         </view>
-
-
-
       </view>
     </body>
   </screen>
