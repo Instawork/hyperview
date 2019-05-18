@@ -14,30 +14,51 @@ import React, { PureComponent } from 'react';
 import type { DOMString } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { Props } from './types';
-import { View, Modal, Picker, Text, TouchableOpacity } from 'react-native';
-import { createProps } from 'hyperview/src/services';
+import {
+  Modal,
+  Picker,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
+import { createProps, createStyleProp } from 'hyperview/src/services';
 
 export default class HvPickerField extends PureComponent<Props> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.PICKER_FIELD;
-  state: {
-    value: '',
-    label: '',
-    pickerValue: '',
-    showPicker: false,
-  };
 
   constructor(props: Props) {
     const { element } = props;
     super(props);
+    const value = element.getAttribute('value');
     this.state = {
-      value: element.getAttribute('value') || '',
-      pickerValue: element.getAttribute('value') || '',
+      value: value,
+      label: this.getLabelForValue(value),
+      pickerValue: null,
+      showPicker: false,
+      fieldPressed: false,
+      savePressed: false,
+      cancelPressed: false,
     };
 
     this.openPickerModal = this.openPickerModal.bind(this);
     this.cancelPickerModal = this.cancelPickerModal.bind(this);
     this.savePickerModal = this.savePickerModal.bind(this);
+  }
+
+  getLabelForValue(value) {
+    const { element } = this.props;
+    const item = Array.from(
+      element.getElementsByTagNameNS(
+        Namespaces.HYPERVIEW,
+        LOCAL_NAME.PICKER_ITEM,
+      ),
+    ).find(e => e.getAttribute('value') == value);
+    if (item) {
+      return item.getAttribute('label');
+    }
+    return null;
   }
 
   openPickerModal = () => {
@@ -48,7 +69,6 @@ export default class HvPickerField extends PureComponent<Props> {
   };
 
   cancelPickerModal = () => {
-    console.log('cancel modal');
     this.setState({
       showPicker: false,
     });
@@ -88,7 +108,24 @@ export default class HvPickerField extends PureComponent<Props> {
   }
 
   renderPickerModal() {
-    const picker = this.renderPicker();
+    const { element, stylesheets, onUpdate, options } = this.props;
+    const modalStyle = createStyleProp(element, stylesheets, {
+      ...options,
+      styleAttr: 'modal-style',
+    });
+    const cancelTextStyle = createStyleProp(element, stylesheets, {
+      ...options,
+      pressed: this.state.cancelPressed,
+      styleAttr: 'modal-text-style',
+    });
+    const saveTextStyle = createStyleProp(element, stylesheets, {
+      ...options,
+      pressed: this.state.savePressed,
+      styleAttr: 'modal-text-style',
+    });
+    const cancelLabel = element.getAttribute('cancel-label') || 'Cancel';
+    const saveLabel = element.getAttribute('save-label') || 'Save';
+
     return (
       <Modal
         animationType="slide"
@@ -102,19 +139,30 @@ export default class HvPickerField extends PureComponent<Props> {
             justifyContent: 'flex-end',
           }}
         >
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              background: 'white',
-              paddingLeft: 24,
-              paddingRight: 24,
-            }}
-          >
-            <Text onPress={this.cancelPickerModal}>Cancel</Text>
-            <Text onPress={this.savePickerModal}>Done</Text>
+          <View style={modalStyle}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}
+            >
+              <TouchableWithoutFeedback
+                onPressIn={() => this.setState({ cancelPressed: true })}
+                onPressOut={() => this.setState({ cancelPressed: false })}
+                onPress={this.cancelPickerModal}
+              >
+                <Text style={cancelTextStyle}>{cancelLabel}</Text>
+              </TouchableWithoutFeedback>
+              <TouchableWithoutFeedback
+                onPressIn={() => this.setState({ savePressed: true })}
+                onPressOut={() => this.setState({ savePressed: false })}
+                onPress={this.savePickerModal}
+              >
+                <Text style={saveTextStyle}>{saveLabel}</Text>
+              </TouchableWithoutFeedback>
+            </View>
+            {this.renderPicker()}
           </View>
-          {picker}
         </View>
       </Modal>
     );
@@ -126,21 +174,42 @@ export default class HvPickerField extends PureComponent<Props> {
       return null;
     }
 
-    const props = {
-      ...createProps(element, stylesheets, options),
-    };
+    const focused = this.state.showPicker;
+    const pressed = this.state.fieldPressed;
+    const props = createProps(element, stylesheets, {
+      ...options,
+      focused,
+      pressed,
+      styleAttr: 'field-style',
+    });
+    const fieldTextStyle = createStyleProp(element, stylesheets, {
+      ...options,
+      focused,
+      pressed,
+      styleAttr: 'field-text-style',
+    });
+    const value = element.getAttribute('value');
+    const placeholderTextColor = element.getAttribute('placeholderTextColor');
 
-    const placeholder =
-      element.getAttribute('placeholder') || 'Select an option';
-    const label = element.getAttribute('value') || placeholder;
+    if (!value && placeholderTextColor) {
+      fieldTextStyle.push({ color: placeholderTextColor });
+    }
+
+    const label = value
+      ? this.getLabelForValue(value) || value
+      : element.getAttribute('placeholder') || '';
 
     return (
-      <TouchableOpacity onPress={this.openPickerModal}>
+      <TouchableWithoutFeedback
+        onPressIn={() => this.setState({ fieldPressed: true })}
+        onPressOut={() => this.setState({ fieldPressed: false })}
+        onPress={this.openPickerModal}
+      >
         <View {...props}>
-          <Text>{label}</Text>
+          <Text style={fieldTextStyle}>{label}</Text>
           {this.renderPickerModal()}
         </View>
-      </TouchableOpacity>
+      </TouchableWithoutFeedback>
     );
   }
 }

@@ -268,6 +268,7 @@ export type HvComponentOptions = {
   selected?: ?boolean,
   skipHref?: ?boolean,
   showIndicatorIds?: ?DOMString,
+  styleAttr?: ?DOMString,
   targetId?: ?DOMString,
 };
 

@@ -49,6 +49,53 @@ export const getFirstTag = (document: Document, localName: LocalName) => {
   return null;
 };
 
+export const createStyleProp = (
+  element: Element,
+  stylesheets: StyleSheets,
+  options: HvComponentOptions,
+) => {
+  const styleAttr = options.styleAttr || 'style';
+  if (!element.getAttribute(styleAttr)) {
+    return [];
+  }
+
+  const styleIds = element.getAttribute(styleAttr).split(' ');
+  let styleRules = styleIds.map(s => stylesheets.regular[s]);
+
+  if (options.pressed) {
+    let pressedRules = styleIds
+      .map(s => stylesheets.pressed[s])
+      .filter(r => !!r);
+    if (pressedRules.length === 0) {
+      pressedRules = [{ opacity: 0.7 }];
+    }
+    styleRules = styleRules.concat(pressedRules);
+  }
+
+  if (options.focused) {
+    const focusedRules = styleIds
+      .map(s => stylesheets.focused[s])
+      .filter(r => !!r);
+    styleRules = styleRules.concat(focusedRules);
+  }
+
+  if (options.selected) {
+    const selectedRules = styleIds
+      .map(s => stylesheets.selected[s])
+      .filter(r => !!r);
+    styleRules = styleRules.concat(selectedRules);
+  }
+
+  if (options.pressedSelected) {
+    const pressedSelectedRules = styleIds
+      .map(s => stylesheets.pressedSelected[s])
+      .filter(r => !!r);
+    styleRules = styleRules.concat(pressedSelectedRules);
+  }
+
+  return styleRules;
+};
+
 export const createProps = (
   element: Element,
   stylesheets: StyleSheets,
@@ -80,44 +127,8 @@ export const createProps = (
       }
     }
   }
-  if (props.style) {
-    const styleIds = props.style.split(' ');
-    let styleRules = styleIds.map(s => stylesheets.regular[s]);
 
-    if (options.pressed) {
-      let pressedRules = styleIds
-        .map(s => stylesheets.pressed[s])
-        .filter(r => !!r);
-      if (pressedRules.length === 0) {
-        pressedRules = [{ opacity: 0.7 }];
-      }
-      styleRules = styleRules.concat(pressedRules);
-    }
-
-    if (options.focused) {
-      const focusedRules = styleIds
-        .map(s => stylesheets.focused[s])
-        .filter(r => !!r);
-      styleRules = styleRules.concat(focusedRules);
-    }
-
-    if (options.selected) {
-      const selectedRules = styleIds
-        .map(s => stylesheets.selected[s])
-        .filter(r => !!r);
-      styleRules = styleRules.concat(selectedRules);
-    }
-
-    if (options.pressedSelected) {
-      const pressedSelectedRules = styleIds
-        .map(s => stylesheets.pressedSelected[s])
-        .filter(r => !!r);
-      styleRules = styleRules.concat(pressedSelectedRules);
-    }
-
-    props.style = styleRules;
-  }
-
+  props.style = createStyleProp(element, stylesheets, options);
   return props;
 };
 

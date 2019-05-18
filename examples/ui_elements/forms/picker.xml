@@ -38,7 +38,6 @@
              marginRight="24"
              marginTop="48" />
 
-
       <style borderBottomColor="#E1E1E1"
              borderBottomWidth="1"
              borderColor="#4E4D4D"
@@ -50,10 +49,102 @@
              paddingTop="8"
         >
         <modifier pressed="true">
-          <style borderBottomColor="green" />
+          <style borderBottomColor="#4778FF" />
         </modifier>
         <modifier focused="true">
           <style borderBottomColor="#4778FF" />
+        </modifier>
+      </style>
+      <style fontWeight="normal"
+             fontSize="16"
+             id="input__text"
+      >
+      </style>
+      <style borderBottomColor="#FF4847"
+             id="input--error"
+      > 
+        <modifier focused="true">
+          <style borderBottomColor="#FF4847" />
+        </modifier>
+      </style>
+      <style color="#FF4847"
+             id="input__text--error"
+        >
+      </style>
+
+      <style borderColor="#4E4D4D"
+             fontWeight="bold"
+             fontSize="16"
+             id="label"
+             lineHeight="24"
+             marginBottom="8" />
+      <style borderColor="#FF4847"
+             fontWeight="normal"
+             fontSize="16"
+             id="help"
+             lineHeight="24"
+             marginTop="16" />
+      <style color="#FF4847"
+             id="help--error" />
+
+      <style id="pickermodal"
+        backgroundColor="white"
+        borderTopWidth="1"
+        borderTopColor="#E1E1E1"
+      />
+      <style id="pickermodal__text"
+        padding="24"
+        paddingBottom="0"
+        fontWeight="600"
+        fontSize="16"
+        color="blue"
+      >
+        <modifier pressed="true">
+          <style opacity="0.5" />
+        </modifier>
+      </style>
+
+      <style borderColor="#E1E1E1"
+             borderWidth="2"
+             borderRadius="4"
+             borderColor="#4E4D4D"
+             flex="1"
+             fontWeight="normal"
+             id="inputcustom"
+             paddingBottom="8"
+             paddingTop="8"
+             paddingLeft="8"
+             paddingRight="8"
+             marginBottom="40"
+        >
+        <modifier pressed="true">
+          <style borderColor="#4778FF" />
+        </modifier>
+        <modifier focused="true">
+          <style borderColor="#4778FF" />
+        </modifier>
+      </style>
+      <style fontWeight="600"
+             fontSize="18"
+             color="purple"
+             id="inputcustom__text"
+      >
+      </style>
+
+      <style id="pickermodalcustom"
+        backgroundColor="purple"
+        borderTopWidth="1"
+        borderTopColor="#E1E1E1"
+      />
+      <style id="pickermodalcustom__text"
+        padding="24"
+        paddingBottom="0"
+        fontWeight="600"
+        fontSize="20"
+        color="white"
+      >
+        <modifier pressed="true">
+          <style color="yellow" />
         </modifier>
       </style>
 
@@ -68,19 +159,18 @@
       </header>
       <view scroll="true" style="Main">
 
-        <text style="Description">Simple Picker</text>
-
-        <!--picker name="choice">
-          <picker-item label="Choice 0" value="0" />
-          <picker-item label="Choice 1" value="1" />
-          <picker-item label="Choice 2" value="2" />
-          <picker-item label="Choice 3" value="3" />
-        </picker-->
+        <text style="Description">Picker fields open a system-appropriate modal to choose a single value from a list of options. On iOS, styles can be applied to the modal and save/cancel labels.</text>
 
         <view style="FormGroup">
-            <text style="label">Default input field</text>
-
-            <picker-field placeholder="Select name" placeholderTextColor="#8D9494" style="input">
+            <text style="label">Default picker field</text>
+            <picker-field
+              placeholder="Select choice"
+              placeholderTextColor="#8D9494"
+              field-style="input"
+              field-text-style="input__text"
+              modal-style="pickermodal"
+              modal-text-style="pickermodal__text"
+            >
               <picker-item label="Choice 0" value="0" />
               <picker-item label="Choice 1" value="1" />
               <picker-item label="Choice 2" value="2" />
@@ -92,9 +182,111 @@
         </view>
 
         <view style="FormGroup">
-            <text style="label">Filled input field</text>
-            <text-field style="input" value="" placeholder="First name" placeholderTextColor="#8D9494" />
-            <text style="help">Please enter your full name</text>
+            <text style="label">Filled picker field</text>
+            <picker-field
+              value="3"
+              placeholder="Select choice"
+              placeholderTextColor="#8D9494"
+              field-style="input"
+              field-text-style="input__text"
+              modal-style="pickermodal"
+              modal-text-style="pickermodal__text"
+            >
+              <picker-item label="Choice 0" value="0" />
+              <picker-item label="Choice 1" value="1" />
+              <picker-item label="Choice 2" value="2" />
+              <picker-item label="Choice 3" value="3" />
+              <picker-item label="Choice 4" value="4" />
+              <picker-item label="Choice 5" value="5" />
+              <picker-item label="Choice 6" value="6" />
+            </picker-field>
+        </view>
+
+        <view style="FormGroup">
+            <text style="label">De-selectable picker field</text>
+            <picker-field
+              value="3"
+              placeholder="Select choice"
+              placeholderTextColor="#8D9494"
+              field-style="input"
+              field-text-style="input__text"
+              modal-style="pickermodal"
+              modal-text-style="pickermodal__text"
+            >
+              <picker-item label="No choice" value="" />
+              <picker-item label="Choice 0" value="0" />
+              <picker-item label="Choice 1" value="1" />
+              <picker-item label="Choice 2" value="2" />
+              <picker-item label="Choice 3" value="3" />
+              <picker-item label="Choice 4" value="4" />
+              <picker-item label="Choice 5" value="5" />
+              <picker-item label="Choice 6" value="6" />
+            </picker-field>
+        </view>
+
+        <view style="FormGroup">
+            <text style="label">Validation error</text>
+            <picker-field
+              placeholder="Select choice"
+              placeholderTextColor="#8D9494"
+              field-style="input input--error"
+              field-text-style="input__text input__text--error"
+              modal-style="pickermodal"
+              modal-text-style="pickermodal__text"
+            >
+              <picker-item label="Choice 0" value="0" />
+              <picker-item label="Choice 1" value="1" />
+              <picker-item label="Choice 2" value="2" />
+              <picker-item label="Choice 3" value="3" />
+              <picker-item label="Choice 4" value="4" />
+              <picker-item label="Choice 5" value="5" />
+              <picker-item label="Choice 6" value="6" />
+            </picker-field>
+            <text style="help help--error">Please select a choice</text>
+        </view>
+
+        <view style="FormGroup">
+            <text style="label">Filled validation error</text>
+            <picker-field
+              value="3"
+              placeholder="Select choice"
+              placeholderTextColor="#8D9494"
+              field-style="input input--error"
+              field-text-style="input__text input__text--error"
+              modal-style="pickermodal"
+              modal-text-style="pickermodal__text"
+            >
+              <picker-item label="Choice 0" value="0" />
+              <picker-item label="Choice 1" value="1" />
+              <picker-item label="Choice 2" value="2" />
+              <picker-item label="Choice 3" value="3" />
+              <picker-item label="Choice 4" value="4" />
+              <picker-item label="Choice 5" value="5" />
+              <picker-item label="Choice 6" value="6" />
+            </picker-field>
+            <text style="help help--error">Please select a different choice</text>
+        </view>
+
+        <view style="FormGroup">
+            <text style="label">Customized</text>
+            <picker-field
+              placeholder="Select choice"
+              placeholderTextColor="#8D9494"
+              field-style="inputcustom"
+              field-text-style="inputcustom__text"
+              modal-style="pickermodalcustom"
+              modal-text-style="pickermodalcustom__text"
+              save-label="Set choice"
+              cancel-label="Nevermind"
+            >
+              <picker-item label="Choice 0" value="0" />
+              <picker-item label="Choice 1" value="1" />
+              <picker-item label="Choice 2" value="2" />
+              <picker-item label="Choice 3" value="3" />
+              <picker-item label="Choice 4" value="4" />
+              <picker-item label="Choice 5" value="5" />
+              <picker-item label="Choice 6" value="6" />
+            </picker-field>
         </view>
 
       </view>
