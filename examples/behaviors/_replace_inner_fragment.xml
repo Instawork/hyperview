@@ -1,2 +1,2 @@
-<text xmlns="https://hyperview.org/hyperview"
-      style="Button__Label">Replaced inner!</text>
+<text style="Button__Label"
+      xmlns="https://hyperview.org/hyperview">Replaced inner!</text>

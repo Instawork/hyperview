@@ -2,46 +2,46 @@
      xmlns:ns1="https://instawork.com/hyperview-share">
   <screen>
     <styles>
-      <style alignItems="center"
+      <style id="Header"
+             alignItems="center"
              backgroundColor="white"
              borderBottomColor="#eee"
              borderBottomWidth="1"
              flexDirection="row"
              height="72"
-             id="Header"
              paddingLeft="24"
              paddingRight="24"
              paddingTop="24" />
-      <style color="blue"
-             fontWeight="600"
+      <style id="Header__Back"
+             color="blue"
              fontSize="16"
-             id="Header__Back"
+             fontWeight="600"
              paddingRight="16" />
-      <style color="black"
-             fontWeight="600"
+      <style id="Header__Title"
+             color="black"
              fontSize="24"
-             id="Header__Title" />
-      <style backgroundColor="white"
-             flex="1"
-             id="Body" />
-      <style fontWeight="600"
+             fontWeight="600" />
+      <style id="Body"
+             backgroundColor="white"
+             flex="1" />
+      <style id="Description"
              fontSize="16"
-             id="Description"
+             fontWeight="600"
              margin="24" />
-      <style backgroundColor="#63CB76"
+      <style id="Button"
+             backgroundColor="#63CB76"
              borderRadius="16"
              flex="1"
              flexDirection="row"
-             id="Button"
              justifyContent="center"
              margin="24"
              padding="24" />
-      <style color="white"
-             fontWeight="bold"
+      <style id="Button__Label"
+             color="white"
              fontSize="24"
-             id="Button__Label" />
-      <style flex="1"
-             id="Main" />
+             fontWeight="bold" />
+      <style id="Main"
+             flex="1" />
     </styles>
     <body style="Body">
       <header style="Header">
@@ -55,31 +55,31 @@
         <text style="Description">Examples of using custom behaviors to trigger system sharing.</text>
         <view style="Button">
           <behavior action="share"
-                    trigger="press"
-                    ns1:message="Test message" />
+                    ns1:message="Test message"
+                    trigger="press" />
           <text style="Button__Label">Message-only</text>
         </view>
         <view style="Button">
           <behavior action="share"
-                    trigger="press"
-                    ns1:url="https://www.xkcd.com" />
+                    ns1:url="https://www.xkcd.com"
+                    trigger="press" />
           <text style="Button__Label">URL-only</text>
         </view>
         <view style="Button">
           <behavior action="share"
-                    trigger="press"
+                    ns1:message="Test message"
                     ns1:url="https://www.xkcd.com"
-                    ns1:message="Test message" />
+                    trigger="press" />
           <text style="Button__Label">Message and URL</text>
         </view>
         <view style="Button">
           <behavior action="share"
-                    trigger="press"
                     ns1:dialogTitle="This is the dialog title"
                     ns1:message="Test message"
                     ns1:subject="This is the subject"
                     ns1:title="This is the title"
-                    ns1:url="https://www.xkcd.com" />
+                    ns1:url="https://www.xkcd.com"
+                    trigger="press" />
           <text style="Button__Label">Title, subject, message, and URL</text>
         </view>
       </view>
