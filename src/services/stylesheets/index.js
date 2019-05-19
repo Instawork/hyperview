@@ -195,9 +195,11 @@ function createStylesheet(
         }
       }
 
+      // Shadow offset numbers needs to be be converted into a single object
+      // on the style sheet.
       if (
-        rules['shadowOffsetX'] !== undefined ||
-        rules['shadowOffsetY'] !== undefined
+        rules.shadowOffsetX !== undefined ||
+        rules.shadowOffsetY !== undefined
       ) {
         rules.shadowOffset = {
           width: rules.shadowOffsetX,
