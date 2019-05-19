@@ -91,6 +91,11 @@ A `<style>` element should only appear as a direct child of a `<styles>` element
   - [`borderTopLeftRadius`](#bordertopleftradius)
   - [`borderTopRightRadius`](#bordertoprightradius)
   - [`opacity`](#opacity)
+  - [`shadowColor`](#shadowcolor)
+  - [`shadowOffsetX`](#shadowoffsetx)
+  - [`shadowOffsetY`](#shadowoffsety)
+  - [`shadowOpacity`](#shadowopacity)
+  - [`shadowRadius`](#shadowradius)
 
 - [Text rules](#text-rules)
   - [`color`](#color)
@@ -576,6 +581,36 @@ It works similarly to `width` in CSS, but in Hyperview you must use points or pe
 | number | No       |
 
 #### `opacity`
+
+| Type   | Required |
+| ------ | -------- |
+| number | No       |
+
+#### `shadowColor`
+
+| Type  | Required |
+| ----- | -------- |
+| color | No       |
+
+#### `shadowOffsetX`
+
+| Type   | Required |
+| ------ | -------- |
+| number | No       |
+
+#### `shadowOffsetY`
+
+| Type   | Required |
+| ------ | -------- |
+| number | No       |
+
+#### `shadowOpacity`
+
+| Type        | Required |
+| ----------- | -------- |
+| float (0-1) | No       |
+
+#### `shadowRadius`
 
 | Type   | Required |
 | ------ | -------- |
