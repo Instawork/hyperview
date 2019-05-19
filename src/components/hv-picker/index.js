@@ -9,18 +9,15 @@
  */
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import * as Render from 'hyperview/src/services/render';
+import type { Props, State } from './types';
 import React, { PureComponent } from 'react';
-import type { DOMString } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import type { Props } from './types';
 import { Picker } from 'react-native';
-import { createProps } from 'hyperview/src/services';
 
-export default class HvPicker extends PureComponent<Props> {
+export default class HvPicker extends PureComponent<Props, State> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.PICKER;
-  state: {
+  state: State = {
     value: '',
   };
 
@@ -33,14 +30,14 @@ export default class HvPicker extends PureComponent<Props> {
   }
 
   render() {
-    const { element, stylesheets, onUpdate, options } = this.props;
+    const { element } = this.props;
     if (element.getAttribute('hide') === 'true') {
       return null;
     }
 
     const props = {
       onValueChange: value => {
-        this.setState({ value: value });
+        this.setState({ value });
         element.setAttribute('value', value);
       },
       selectedValue: this.state.value,

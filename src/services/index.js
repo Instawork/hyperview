@@ -59,7 +59,8 @@ export const createStyleProp = (
     return [];
   }
 
-  const styleIds = element.getAttribute(styleAttr).split(' ');
+  const styleValue = element.getAttribute(styleAttr) || '';
+  const styleIds = styleValue.split(' ');
   let styleRules = styleIds.map(s => stylesheets.regular[s]);
 
   if (options.pressed) {

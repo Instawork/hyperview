@@ -9,57 +9,57 @@
  */
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import * as Render from 'hyperview/src/services/render';
 import React, { PureComponent } from 'react';
 import type { DOMString } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import type { Props } from './types';
+import type { Props, State } from './types';
 import {
   Modal,
   Picker,
-  StyleSheet,
   Text,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import { createProps, createStyleProp } from 'hyperview/src/services';
 
-export default class HvPickerField extends PureComponent<Props> {
+export default class HvPickerField extends PureComponent<Props, State> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.PICKER_FIELD;
+  state: State = {
+    value: null,
+    label: null,
+    pickerValue: null,
+    showPicker: false,
+    fieldPressed: false,
+    savePressed: false,
+    cancelPressed: false,
+  };
 
   constructor(props: Props) {
     const { element } = props;
     super(props);
     const value = element.getAttribute('value');
-    this.state = {
-      value: value,
-      label: this.getLabelForValue(value),
-      pickerValue: null,
-      showPicker: false,
-      fieldPressed: false,
-      savePressed: false,
-      cancelPressed: false,
-    };
+    this.state.value = value;
+    this.state.label = value ? this.getLabelForValue(value) : '';
 
     this.openPickerModal = this.openPickerModal.bind(this);
     this.cancelPickerModal = this.cancelPickerModal.bind(this);
     this.savePickerModal = this.savePickerModal.bind(this);
   }
 
-  getLabelForValue(value) {
+  getLabelForValue = (value: DOMString): ?string => {
     const { element } = this.props;
     const item = Array.from(
       element.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
         LOCAL_NAME.PICKER_ITEM,
       ),
-    ).find(e => e.getAttribute('value') == value);
-    if (item) {
-      return item.getAttribute('label');
+    ).find(e => e.getAttribute('value') === value);
+    if (!item) {
+      return null;
     }
-    return null;
-  }
+    return item.getAttribute('label');
+  };
 
   openPickerModal = () => {
     this.setState({
@@ -80,13 +80,13 @@ export default class HvPickerField extends PureComponent<Props> {
       showPicker: false,
       value: this.state.pickerValue,
     });
-    element.setAttribute('value', this.state.pickerValue);
+    element.setAttribute('value', this.state.pickerValue || '');
   };
 
-  renderPicker() {
+  renderPicker = () => {
     const { element } = this.props;
     const props = {
-      onValueChange: (value, index) => {
+      onValueChange: value => {
         this.setState({ pickerValue: value });
       },
       selectedValue: this.state.pickerValue,
@@ -97,18 +97,20 @@ export default class HvPickerField extends PureComponent<Props> {
         Namespaces.HYPERVIEW,
         LOCAL_NAME.PICKER_ITEM,
       ),
-    ).map(item =>
-      React.createElement(Picker.Item, {
-        label: item.getAttribute('label'),
-        value: item.getAttribute('value'),
-      }),
-    );
+    ).map(item => {
+      const label = item.getAttribute('label');
+      const value = item.getAttribute('value');
+      if (!label || !value) {
+        return null;
+      }
+      return React.createElement(Picker.Item, { label, value });
+    });
 
     return React.createElement(Picker, props, ...children);
-  }
+  };
 
-  renderPickerModal() {
-    const { element, stylesheets, onUpdate, options } = this.props;
+  renderPickerModal = () => {
+    const { element, stylesheets, options } = this.props;
     const modalStyle = createStyleProp(element, stylesheets, {
       ...options,
       styleAttr: 'modal-style',
@@ -129,7 +131,7 @@ export default class HvPickerField extends PureComponent<Props> {
     return (
       <Modal
         animationType="slide"
-        transparent={true}
+        transparent
         visible={this.state.showPicker}
         onRequestClose={this.cancelPickerModal}
       >
@@ -166,10 +168,10 @@ export default class HvPickerField extends PureComponent<Props> {
         </View>
       </Modal>
     );
-  }
+  };
 
   render() {
-    const { element, stylesheets, onUpdate, options } = this.props;
+    const { element, stylesheets, options } = this.props;
     if (element.getAttribute('hide') === 'true') {
       return null;
     }
