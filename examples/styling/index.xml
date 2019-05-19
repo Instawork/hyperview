@@ -79,6 +79,13 @@
           <text style="Item__Label">Button Styling</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
+        <item href="/styling/shadows.xml"
+              key="shadow"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Shadow Styling</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
       </list>
     </body>
   </screen>

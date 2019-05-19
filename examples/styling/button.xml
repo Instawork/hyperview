@@ -60,6 +60,17 @@
              fontWeight="bold" />
       <style id="Button--Disabled"
              opacity="0.5" />
+      <style id="Button--Shadow"
+        shadowColor="black"
+        shadowOffsetX="0"
+        shadowOffsetY="4"
+        shadowOpacity="0.5"
+        shadowRadius="4"
+      >
+        <modifier pressed="true">
+          <style shadowOffsetY="1" shadowRadius="1" />
+        </modifier>
+      </style>
     </styles>
     <body style="Body">
       <header style="Header">
@@ -71,12 +82,17 @@
       <view scroll="1"
             style="Main">
         <text style="Description">Regular</text>
-        <view style="Button">
+        <view style="Button" action="reload" href="styling/button.xml">
           <text style="Button__Label">Hello</text>
         </view>
         <text style="Description">Disabled</text>
         <view style="Button Button--Disabled">
           <text style="Button__Label">Disabled</text>
+        </view>
+
+        <text style="Description">Shadow</text>
+        <view style="Button Button--Shadow" action="reload" href="styling/button.xml">
+          <text style="Button__Label">Shadow</text>
         </view>
       </view>
     </body>
