@@ -451,7 +451,8 @@ export default class HyperScreen extends React.Component {
     const formData = new FormData();
     let formHasData = false;
 
-    ['text-area', 'text-field', 'select-single', 'select-multiple']
+    // TODO: It would be more flexible to grab any element with a name and value.
+    ['text-area', 'text-field', 'select-single', 'select-multiple', 'picker-field']
       // Get all inputs in the form
       .reduce((acc, tag) => (
         acc.concat(Array.from(formElement.getElementsByTagNameNS(HYPERVIEW_NS, tag)))
