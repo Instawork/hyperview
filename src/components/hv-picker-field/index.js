@@ -9,10 +9,6 @@
  */
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import React, { PureComponent } from 'react';
-import type { DOMString } from 'hyperview/src/types';
-import { LOCAL_NAME } from 'hyperview/src/types';
-import type { Props, State } from './types';
 import {
   Modal,
   Picker,
@@ -20,11 +16,16 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import type { Props, State } from './types';
+import React, { PureComponent } from 'react';
 import { createProps, createStyleProp } from 'hyperview/src/services';
+import type { DOMString } from 'hyperview/src/types';
+import { LOCAL_NAME } from 'hyperview/src/types';
 
 export default class HvPickerField extends PureComponent<Props, State> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.PICKER_FIELD;
+  props: Props;
   state: State = {
     value: null,
     label: null,
@@ -49,16 +50,14 @@ export default class HvPickerField extends PureComponent<Props, State> {
 
   getLabelForValue = (value: DOMString): ?string => {
     const { element } = this.props;
-    const item = Array.from(
-      element.getElementsByTagNameNS(
-        Namespaces.HYPERVIEW,
-        LOCAL_NAME.PICKER_ITEM,
-      ),
-    ).find(e => e.getAttribute('value') === value);
-    if (!item) {
-      return null;
-    }
-    return item.getAttribute('label');
+    const elements = element.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      LOCAL_NAME.PICKER_ITEM,
+    );
+    const item = Array.from(elements).find(
+      e => e.getAttribute('value') === value,
+    );
+    return item ? item.getAttribute('label') : null;
   };
 
   openPickerModal = () => {
@@ -98,6 +97,9 @@ export default class HvPickerField extends PureComponent<Props, State> {
         LOCAL_NAME.PICKER_ITEM,
       ),
     ).map(item => {
+      if (!item) {
+        return null;
+      }
       const label = item.getAttribute('label');
       const value = item.getAttribute('value');
       if (!label || !value) {

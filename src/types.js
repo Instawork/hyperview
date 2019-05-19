@@ -24,7 +24,6 @@ export const LOCAL_NAME = {
   LIST: 'list',
   MODIFIER: 'modifier',
   OPTION: 'option',
-  PICKER: 'picker',
   PICKER_FIELD: 'picker-field',
   PICKER_ITEM: 'picker-item',
   SECTION_LIST: 'section-list',
