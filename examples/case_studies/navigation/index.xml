@@ -1,32 +1,43 @@
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
-      <style id="Body" backgroundColor="white" flex="1" padding="48" />
-      <style id="Label" fontSize="18" lineHeight="24" />
-      <style id="Label--Link" color="blue" fontSize="18">
+      <style id="Body"
+             backgroundColor="white"
+             flex="1"
+             padding="48" />
+      <style id="Label"
+             fontSize="18"
+             lineHeight="24" />
+      <style id="Label--Link"
+             color="blue"
+             fontSize="18">
         <modifier pressed="true">
-          <style color="red" fontWeight="bold" />
+          <style color="red"
+                 fontWeight="bold" />
         </modifier>
       </style>
     </styles>
     <body style="Body">
       <text style="Label">This is screen 1.</text>
-      <text
-        style="Label Label--Link"
-        href="/case_studies/navigation/screen2.xml"
-        delay="800"
-        show-during-load="screen2Loading"
-      >
-        Click me
-      </text>
+      <text delay="800"
+            href="/case_studies/navigation/screen2.xml"
+            show-during-load="screen2Loading"
+            style="Label Label--Link">Click me</text>
     </body>
   </screen>
-
   <screen id="screen2Loading">
     <styles>
-      <style id="Body" backgroundColor="white" flex="1" padding="48" alignItems="center" />
-      <style id="Label" fontSize="18" lineHeight="24" fontWeight="bold" />
-      <style id="Spinner" paddingBottom="24" />
+      <style id="Body"
+             alignItems="center"
+             backgroundColor="white"
+             flex="1"
+             padding="48" />
+      <style id="Label"
+             fontSize="18"
+             fontWeight="bold"
+             lineHeight="24" />
+      <style id="Spinner"
+             paddingBottom="24" />
     </styles>
     <body style="Body">
       <view style="Spinner">

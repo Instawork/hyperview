@@ -1,10 +1,17 @@
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
-      <style id="Body" backgroundColor="white" flex="1" paddingTop="40" paddingLeft="24" />
-      <style id="Main" flex="1" marginBottom="40" />
+      <style id="Body"
+             backgroundColor="white"
+             flex="1"
+             paddingLeft="24"
+             paddingTop="40" />
+      <style id="Main"
+             flex="1"
+             marginBottom="40" />
     </styles>
-    <body style="Body" scroll="true">
+    <body scroll="true"
+          style="Body">
       <text>Next page</text>
     </body>
   </screen>

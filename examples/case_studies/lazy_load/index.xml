@@ -1,37 +1,58 @@
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
-      <style id="Body" backgroundColor="white" flex="1" paddingTop="48" />
-      <style id="Section1" height="640" backgroundColor="#4778FF" flex="1" padding="48" />
-      <style id="Section2" height="640" backgroundColor="#63CB76" flex="1" padding="48" />
-      <style id="Section3" height="640" backgroundColor="#C56BFF" flex="1" padding="48" />
-      <style id="Label" color="white" textAlign="center" fontSize="48" fontWeight="bold" />
-      <style id="Content" marginTop="32" textAlign="center" color="white" fontSize="18" fontWeight="normal" />
+      <style id="Body"
+             backgroundColor="white"
+             flex="1"
+             paddingTop="48" />
+      <style id="Section1"
+             backgroundColor="#4778FF"
+             flex="1"
+             height="640"
+             padding="48" />
+      <style id="Section2"
+             backgroundColor="#63CB76"
+             flex="1"
+             height="640"
+             padding="48" />
+      <style id="Section3"
+             backgroundColor="#C56BFF"
+             flex="1"
+             height="640"
+             padding="48" />
+      <style id="Label"
+             color="white"
+             fontSize="48"
+             fontWeight="bold"
+             textAlign="center" />
+      <style id="Content"
+             color="white"
+             fontSize="18"
+             fontWeight="normal"
+             marginTop="32"
+             textAlign="center" />
     </styles>
-    <body style="Body" scroll="true">
+    <body scroll="true"
+          style="Body">
       <view style="Section1">
         <text style="Label">Section 1</text>
         <text style="Content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</text>
       </view>
-      <view
-        style="Section2"
-        trigger="visible"
-        delay="500"
-        once="true"
-        href="/case_studies/lazy_load/section2.xml"
-        action="replace"
-      >
+      <view action="replace"
+            delay="500"
+            href="/case_studies/lazy_load/section2.xml"
+            once="true"
+            style="Section2"
+            trigger="visible">
         <spinner color="white" />
         <text style="Content">Loading...</text>
       </view>
-      <view
-        style="Section3"
-        trigger="visible"
-        delay="500"
-        once="true"
-        href="/case_studies/lazy_load/section3.xml"
-        action="replace"
-      >
+      <view action="replace"
+            delay="500"
+            href="/case_studies/lazy_load/section3.xml"
+            once="true"
+            style="Section3"
+            trigger="visible">
         <spinner color="white" />
         <text style="Content">Loading...</text>
       </view>
