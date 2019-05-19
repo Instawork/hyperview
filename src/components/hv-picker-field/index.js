@@ -126,7 +126,7 @@ export default class HvPickerField extends PureComponent<Props, State> {
       }
       const label = item.getAttribute('label');
       const value = item.getAttribute('value');
-      if (!label || !value) {
+      if (!label || value === null) {
         return null;
       }
       return React.createElement(Picker.Item, { label, value });
