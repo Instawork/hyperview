@@ -20,7 +20,6 @@ import {
   Modal,
   Picker,
   Platform,
-  StyleSheet,
   Text,
   TouchableWithoutFeedback,
   View,
@@ -29,6 +28,8 @@ import type { Props, State } from './types';
 import React, { PureComponent } from 'react';
 import { createProps, createStyleProp } from 'hyperview/src/services';
 import { LOCAL_NAME } from 'hyperview/src/types';
+import type { Node as ReactNode } from 'react';
+import type { StyleSheet as StyleSheetType } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 
 /**
  * A picker field renders a form field with values that come from a pre-defined list.
@@ -117,7 +118,7 @@ export default class HvPickerField extends PureComponent<Props, State> {
    * Renders the picker component. Picker items come from the
    * <picker-item> elements in the <picker-field> element.
    */
-  renderPicker = (style: StyleSheet.Styles) => {
+  renderPicker = (style: StyleSheetType<*>) => {
     const element: Element = this.props.element;
     const props = {
       onValueChange: value => {
@@ -129,7 +130,7 @@ export default class HvPickerField extends PureComponent<Props, State> {
 
     // Gets all of the <picker-item> elements. All picker item elements
     // with a value and label are turned into options for the picker.
-    const children: Array<React.Element<any>> = Array.from(
+    const children: Array<ReactNode> = Array.from(
       element.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
         LOCAL_NAME.PICKER_ITEM,
@@ -221,15 +222,19 @@ export default class HvPickerField extends PureComponent<Props, State> {
    * when pressed so the user can select an option. The selected option gets applied immediately. The user
    * can cancel by hitting the back button or tapping outside of the modal.
    */
-  renderAndroid = () => {
+  renderAndroid = (): ReactNode => {
     const element: Element = this.props.element;
     const stylesheets: StyleSheets = this.props.stylesheets;
     const options: HvComponentOptions = this.props.options;
-    const fieldStyle = createStyleProp(element, stylesheets, {
-      ...options,
-      styleAttr: 'field-style',
-    });
-    const textStyle = createStyleProp(element, stylesheets, {
+    const fieldStyle: StyleSheetType<*> = createStyleProp(
+      element,
+      stylesheets,
+      {
+        ...options,
+        styleAttr: 'field-style',
+      },
+    );
+    const textStyle: StyleSheetType<*> = createStyleProp(element, stylesheets, {
       ...options,
       styleAttr: 'field-text-style',
     });
@@ -242,7 +247,7 @@ export default class HvPickerField extends PureComponent<Props, State> {
    * action buttons along the bottom of the screen. After selecting an option, the user must press the save button.
    * To cancel, the user must press the cancel button.
    */
-  renderiOS = () => {
+  renderiOS = (): ReactNode => {
     const element: Element = this.props.element;
     const stylesheets: StyleSheets = this.props.stylesheets;
     const options: HvComponentOptions = this.props.options;
