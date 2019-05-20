@@ -1,86 +1,78 @@
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
-      <style alignItems="center"
+      <style id="Header"
+             alignItems="center"
              backgroundColor="white"
              borderBottomColor="#eee"
              borderBottomWidth="1"
              flexDirection="row"
              height="72"
-             id="Header"
              paddingLeft="24"
              paddingRight="24"
              paddingTop="24" />
-      <style color="blue"
-             fontWeight="600"
+      <style id="Header__Back"
+             color="blue"
              fontSize="16"
-             id="Header__Back"
+             fontWeight="600"
              paddingRight="16" />
-      <style color="black"
-             fontWeight="600"
+      <style id="Header__Title"
+             color="black"
              fontSize="24"
-             id="Header__Title" />
-      <style backgroundColor="white"
-             flex="1"
-             id="Body" />
-      <style fontWeight="600"
+             fontWeight="600" />
+      <style id="Body"
+             backgroundColor="white"
+             flex="1" />
+      <style id="Description"
              fontSize="16"
-             id="Description"
+             fontWeight="600"
              margin="24"
              marginBottom="0" />
-      <style alignItems="center"
+      <style id="Item"
+             alignItems="center"
              borderBottomColor="#eee"
              borderBottomWidth="1"
              flex="1"
              flexDirection="row"
              height="48"
-             id="Item"
              justifyContent="space-between"
              paddingLeft="24"
              paddingRight="24" />
-      <style fontWeight="normal"
+      <style id="Item__Label"
              fontSize="18"
-             id="Item__Label" />
-      <style fontWeight="bold"
+             fontWeight="normal" />
+      <style id="Item__Chevron"
              fontSize="18"
-             id="Item__Chevron" />
-      <style flex="1"
-             id="Main" />
-      <style backgroundColor="#63CB76"
+             fontWeight="bold" />
+      <style id="Main"
+             flex="1" />
+      <style id="Button"
+             backgroundColor="#63CB76"
              borderRadius="16"
              flex="1"
              flexDirection="row"
-             id="Button"
              justifyContent="center"
              margin="24"
              padding="24" />
-      <style color="white"
-             fontWeight="bold"
+      <style id="Button__Label"
+             color="white"
              fontSize="24"
-             id="Button__Label" />
-      <style id="Button--Disabled" opacity="0.5" />
-
+             fontWeight="bold" />
+      <style id="Button--Disabled"
+             opacity="0.5" />
       <style id="Button--Shadow"
-        shadowColor="black"
-        shadowOffsetX="0"
-        shadowOffsetY="4"
-        shadowOpacity="0.5"
-        shadowRadius="4"
-      />
-
+             shadowColor="black"
+             shadowOffsetX="0"
+             shadowOffsetY="4"
+             shadowOpacity="0.5"
+             shadowRadius="4" />
       <style id="Button--BlueShadow"
-        shadowColor="blue"
-      />
-
+             shadowColor="blue" />
       <style id="Button--BigRadius"
-        shadowRadius="10"
-      />
-
+             shadowRadius="10" />
       <style id="Button--Offset"
-        shadowOffsetX="5"
-        shadowOffsetY="-5"
-      />
-
+             shadowOffsetX="5"
+             shadowOffsetY="-5" />
     </styles>
     <body style="Body">
       <header style="Header">
@@ -95,17 +87,14 @@
         <view style="Button Button--Shadow">
           <text style="Button__Label">Hello</text>
         </view>
-
         <text style="Description">Shadow color</text>
         <view style="Button Button--Shadow Button--BlueShadow">
           <text style="Button__Label">Hello</text>
         </view>
-
         <text style="Description">Radius</text>
         <view style="Button Button--Shadow Button--BigRadius">
           <text style="Button__Label">Hello</text>
         </view>
-
         <text style="Description">Offset</text>
         <view style="Button Button--Shadow Button--Offset">
           <text style="Button__Label">Hello</text>
