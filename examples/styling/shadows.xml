@@ -65,37 +65,39 @@
              shadowOffsetX="0"
              shadowOffsetY="4"
              shadowOpacity="0.5"
-             shadowRadius="4">
-        <modifier pressed="true">
-          <style shadowOffsetY="1"
-                 shadowRadius="1" />
-        </modifier>
-      </style>
+             shadowRadius="4" />
+      <style id="Button--BlueShadow"
+             shadowColor="blue" />
+      <style id="Button--BigRadius"
+             shadowRadius="10" />
+      <style id="Button--Offset"
+             shadowOffsetX="5"
+             shadowOffsetY="-5" />
     </styles>
     <body style="Body">
       <header style="Header">
         <text action="back"
               href="#"
               style="Header__Back">Back</text>
-        <text style="Header__Title">Button Styling</text>
+        <text style="Header__Title">Shadow Styling</text>
       </header>
       <view scroll="1"
             style="Main">
         <text style="Description">Regular</text>
-        <view action="reload"
-              href="styling/button.xml"
-              style="Button">
+        <view style="Button Button--Shadow">
           <text style="Button__Label">Hello</text>
         </view>
-        <text style="Description">Disabled</text>
-        <view style="Button Button--Disabled">
-          <text style="Button__Label">Disabled</text>
+        <text style="Description">Shadow color</text>
+        <view style="Button Button--Shadow Button--BlueShadow">
+          <text style="Button__Label">Hello</text>
         </view>
-        <text style="Description">Shadow</text>
-        <view action="reload"
-              href="styling/button.xml"
-              style="Button Button--Shadow">
-          <text style="Button__Label">Shadow</text>
+        <text style="Description">Radius</text>
+        <view style="Button Button--Shadow Button--BigRadius">
+          <text style="Button__Label">Hello</text>
+        </view>
+        <text style="Description">Offset</text>
+        <view style="Button Button--Shadow Button--Offset">
+          <text style="Button__Label">Hello</text>
         </view>
       </view>
     </body>

@@ -115,6 +115,11 @@ const STYLE_ATTRIBUTE_CONVERTERS = {
   borderTopLeftRadius: number,
   borderTopRightRadius: number,
   opacity: floatNumber,
+  shadowColor: string,
+  shadowOffsetX: number,
+  shadowOffsetY: number,
+  shadowOpacity: floatNumber,
+  shadowRadius: number,
 
   // text attributes
   color: string,
@@ -189,6 +194,21 @@ function createStylesheet(
           rules[attr.name] = converter(attr.value);
         }
       }
+
+      // Shadow offset numbers needs to be be converted into a single object
+      // on the style sheet.
+      if (
+        rules.shadowOffsetX !== undefined ||
+        rules.shadowOffsetY !== undefined
+      ) {
+        rules.shadowOffset = {
+          width: rules.shadowOffsetX,
+          height: rules.shadowOffsetY,
+        };
+        delete rules.shadowOffsetX;
+        delete rules.shadowOffsetY;
+      }
+
       stylesheet[styleId] = rules;
     }
   }
