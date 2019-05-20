@@ -20,13 +20,10 @@ import {
 } from 'react-native';
 import type { Props, State } from './types';
 import React, { PureComponent } from 'react';
-import { createProps, createStyleProp } from 'hyperview/src/services';
 import type { DOMString, Element, NodeList } from 'hyperview/src/types';
-import {
-  HvComponentOptions,
-  LOCAL_NAME,
-  StyleSheets,
-} from 'hyperview/src/types';
+import type { HvComponentOptions, StyleSheets } from 'hyperview/src/types';
+import { createProps, createStyleProp } from 'hyperview/src/services';
+import { LOCAL_NAME } from 'hyperview/src/types';
 
 /**
  * A picker field renders a form field with values that come from a pre-defined list.
