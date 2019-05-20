@@ -20,7 +20,6 @@ import type {
 } from 'hyperview/src/types';
 import HyperRef from 'hyperview/src/core/hyper-ref';
 import React from 'react';
-import urlParse from 'url-parse';
 
 /**
  * This file is currently a dumping place for every functions used accross
@@ -147,14 +146,4 @@ export const addHref = (
     { element, stylesheets, onUpdate, options },
     ...Render.renderChildren(element, stylesheets, onUpdate, options),
   );
-};
-
-/**
- * Turns the href into a fetchable URL.
- * If the href is fully qualified, return it.
- * Otherwise, pull the protocol/domain/port from base URL and append the href.
- */
-export const getUrlFromHref = (href: string, baseUrl: string): string => {
-  const rootUrl = urlParse(href, baseUrl, true);
-  return rootUrl.toString();
 };

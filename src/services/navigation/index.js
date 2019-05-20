@@ -1,6 +1,7 @@
 // @flow
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
+import * as UrlService from 'hyperview/src/services/url';
 import type {
   BehaviorOptions,
   Document,
@@ -10,7 +11,6 @@ import type {
   NodeList,
 } from 'hyperview/src/types';
 import { NAV_ACTIONS } from 'hyperview/src/types';
-import { getUrlFromHref } from 'hyperview/src/services';
 
 const ANCHOR_ID_SEPARATOR = '#';
 const QUERY_SEPARATOR = '?';
@@ -61,7 +61,7 @@ export default class Navigation {
     opts: BehaviorOptions,
   ): void => {
     const { showIndicatorId, delay } = opts;
-    const url = getUrlFromHref(href, this.url);
+    const url = UrlService.getUrlFromHref(href, this.url);
 
     let preloadScreen = null;
     if (showIndicatorId) {
