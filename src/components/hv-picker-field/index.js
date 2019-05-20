@@ -9,6 +9,13 @@
  */
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
+import type {
+  DOMString,
+  Element,
+  HvComponentOptions,
+  NodeList,
+  StyleSheets,
+} from 'hyperview/src/types';
 import {
   Modal,
   Picker,
@@ -20,8 +27,6 @@ import {
 } from 'react-native';
 import type { Props, State } from './types';
 import React, { PureComponent } from 'react';
-import type { DOMString, Element, NodeList } from 'hyperview/src/types';
-import type { HvComponentOptions, StyleSheets } from 'hyperview/src/types';
 import { createProps, createStyleProp } from 'hyperview/src/services';
 import { LOCAL_NAME } from 'hyperview/src/types';
 
