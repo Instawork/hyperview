@@ -12,6 +12,8 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import {
   Modal,
   Picker,
+  Platform,
+  StyleSheet,
   Text,
   TouchableWithoutFeedback,
   View,
@@ -19,8 +21,12 @@ import {
 import type { Props, State } from './types';
 import React, { PureComponent } from 'react';
 import { createProps, createStyleProp } from 'hyperview/src/services';
-import type { DOMString } from 'hyperview/src/types';
-import { LOCAL_NAME } from 'hyperview/src/types';
+import type { DOMString, Element, NodeList } from 'hyperview/src/types';
+import {
+  HvComponentOptions,
+  LOCAL_NAME,
+  StyleSheets,
+} from 'hyperview/src/types';
 
 /**
  * A picker field renders a form field with values that come from a pre-defined list.
@@ -42,15 +48,11 @@ export default class HvPickerField extends PureComponent<Props, State> {
   };
 
   constructor(props: Props) {
-    const { element } = props;
     super(props);
-    const value = element.getAttribute('value');
+    const element: Element = props.element;
+    const value: ?DOMString = element.getAttribute('value');
     this.state.value = value;
     this.state.label = value ? this.getLabelForValue(value) : '';
-
-    this.openPickerModal = this.openPickerModal.bind(this);
-    this.cancelPickerModal = this.cancelPickerModal.bind(this);
-    this.savePickerModal = this.savePickerModal.bind(this);
   }
 
   /**
@@ -58,14 +60,23 @@ export default class HvPickerField extends PureComponent<Props, State> {
    * If the value doesn't have a picker item, returns null.
    */
   getLabelForValue = (value: DOMString): ?string => {
-    const { element } = this.props;
-    const elements = element.getElementsByTagNameNS(
+    const element: Element = this.props.element;
+    const pickerItemElements: NodeList<Element> = element.getElementsByTagNameNS(
       Namespaces.HYPERVIEW,
       LOCAL_NAME.PICKER_ITEM,
     );
-    const item = Array.from(elements).find(
-      e => e.getAttribute('value') === value,
-    );
+
+    let item: ?Element = null;
+    for (let i = 0; i < pickerItemElements.length; i += 1) {
+      const pickerItemElement: ?Element = pickerItemElements.item(i);
+      if (
+        pickerItemElement &&
+        pickerItemElement.getAttribute('value') === value
+      ) {
+        item = pickerItemElement;
+        break;
+      }
+    }
     return item ? item.getAttribute('label') : null;
   };
 
@@ -92,7 +103,7 @@ export default class HvPickerField extends PureComponent<Props, State> {
    * Hides the picker and applies the chosen value to the field.
    */
   savePickerModal = () => {
-    const { element } = this.props;
+    const element: Element = this.props.element;
     this.setState({
       showPicker: false,
       value: this.state.pickerValue,
@@ -104,33 +115,33 @@ export default class HvPickerField extends PureComponent<Props, State> {
    * Renders the picker component. Picker items come from the
    * <picker-item> elements in the <picker-field> element.
    */
-  renderPicker = () => {
-    const { element } = this.props;
+  renderPicker = (style: StyleSheet.Styles) => {
+    const element: Element = this.props.element;
     const props = {
       onValueChange: value => {
         this.setState({ pickerValue: value });
       },
       selectedValue: this.state.pickerValue,
+      style,
     };
 
     // Gets all of the <picker-item> elements. All picker item elements
     // with a value and label are turned into options for the picker.
-    const children = Array.from(
+    const children: Array<React.Element<any>> = Array.from(
       element.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
         LOCAL_NAME.PICKER_ITEM,
       ),
-    ).map(item => {
-      if (!item) {
-        return null;
-      }
-      const label = item.getAttribute('label');
-      const value = item.getAttribute('value');
-      if (!label || value === null) {
-        return null;
-      }
-      return React.createElement(Picker.Item, { label, value });
-    });
+    )
+      .filter(Boolean)
+      .map((item: Element) => {
+        const label: ?DOMString = item.getAttribute('label');
+        const value: ?DOMString = item.getAttribute('value');
+        if (!label || value === null) {
+          return null;
+        }
+        return React.createElement(Picker.Item, { label, value });
+      });
 
     return React.createElement(Picker, props, ...children);
   };
@@ -140,7 +151,9 @@ export default class HvPickerField extends PureComponent<Props, State> {
    * Uses styles defined on the <picker-field> element for the modal and buttons.
    */
   renderPickerModal = () => {
-    const { element, stylesheets, options } = this.props;
+    const element: Element = this.props.element;
+    const stylesheets: StyleSheets = this.props.stylesheets;
+    const options: HvComponentOptions = this.props.options;
     const modalStyle = createStyleProp(element, stylesheets, {
       ...options,
       styleAttr: 'modal-style',
@@ -155,8 +168,9 @@ export default class HvPickerField extends PureComponent<Props, State> {
       pressed: this.state.savePressed,
       styleAttr: 'modal-text-style',
     });
-    const cancelLabel = element.getAttribute('cancel-label') || 'Cancel';
-    const saveLabel = element.getAttribute('save-label') || 'Save';
+    const cancelLabel: string =
+      element.getAttribute('cancel-label') || 'Cancel';
+    const saveLabel: string = element.getAttribute('save-label') || 'Save';
 
     return (
       <Modal
@@ -200,8 +214,36 @@ export default class HvPickerField extends PureComponent<Props, State> {
     );
   };
 
-  render() {
-    const { element, stylesheets, options } = this.props;
+  /**
+   * On Android, we render a view containing the system picker. Android's system picker opens a modal
+   * when pressed so the user can select an option. The selected option gets applied immediately. The user
+   * can cancel by hitting the back button or tapping outside of the modal.
+   */
+  renderAndroid = () => {
+    const element: Element = this.props.element;
+    const stylesheets: StyleSheets = this.props.stylesheets;
+    const options: HvComponentOptions = this.props.options;
+    const fieldStyle = createStyleProp(element, stylesheets, {
+      ...options,
+      styleAttr: 'field-style',
+    });
+    const textStyle = createStyleProp(element, stylesheets, {
+      ...options,
+      styleAttr: 'field-text-style',
+    });
+    const pickerComponent = this.renderPicker(textStyle);
+    return <View style={fieldStyle}>{pickerComponent}</View>;
+  };
+
+  /**
+   * On iOS, we render a view containing a text label. Pressing the view opens a modal with a system picker and
+   * action buttons along the bottom of the screen. After selecting an option, the user must press the save button.
+   * To cancel, the user must press the cancel button.
+   */
+  renderiOS = () => {
+    const element: Element = this.props.element;
+    const stylesheets: StyleSheets = this.props.stylesheets;
+    const options: HvComponentOptions = this.props.options;
     if (element.getAttribute('hide') === 'true') {
       return null;
     }
@@ -243,5 +285,9 @@ export default class HvPickerField extends PureComponent<Props, State> {
         </View>
       </TouchableWithoutFeedback>
     );
+  };
+
+  render() {
+    return Platform.OS === 'ios' ? this.renderiOS() : this.renderAndroid();
   }
 }
