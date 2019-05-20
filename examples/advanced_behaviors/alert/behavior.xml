@@ -1,58 +1,57 @@
 <doc xmlns="https://hyperview.org/hyperview"
-     xmlns:ns1="https://instawork.com/hyperview-redux"
->
+     xmlns:ns1="https://instawork.com/hyperview-redux">
   <screen>
     <styles>
-      <style alignItems="center"
+      <style id="Header"
+             alignItems="center"
              backgroundColor="white"
              borderBottomColor="#eee"
              borderBottomWidth="1"
              flexDirection="row"
              height="72"
-             id="Header"
              paddingLeft="24"
              paddingRight="24"
              paddingTop="24" />
-      <style color="blue"
-             fontWeight="600"
+      <style id="Header__Back"
+             color="blue"
              fontSize="16"
-             id="Header__Back"
+             fontWeight="600"
              paddingRight="16" />
-      <style color="black"
-             fontWeight="600"
+      <style id="Header__Title"
+             color="black"
              fontSize="24"
-             id="Header__Title" />
-      <style backgroundColor="white"
-             flex="1"
-             id="Body" />
-      <style fontWeight="600"
+             fontWeight="600" />
+      <style id="Body"
+             backgroundColor="white"
+             flex="1" />
+      <style id="Description"
              fontSize="16"
-             id="Description"
+             fontWeight="600"
              margin="24" />
-      <style backgroundColor="#63CB76"
+      <style id="Button"
+             backgroundColor="#63CB76"
              borderRadius="16"
              flex="1"
              flexDirection="row"
-             id="Button"
              justifyContent="center"
              margin="24"
              padding="24" />
-      <style color="white"
-             fontWeight="bold"
+      <style id="Button__Label"
+             color="white"
              fontSize="24"
-             id="Button__Label" />
-      <style flex="1"
-             id="Main" />
-      <style borderColor="#e1e1e1"
+             fontWeight="bold" />
+      <style id="Main"
+             flex="1" />
+      <style id="Container"
+             borderColor="#e1e1e1"
              borderRadius="16"
              borderWidth="2"
-             id="Container"
              margin="24"
              padding="24" />
-      <style color="black"
-             fontWeight="normal"
+      <style id="Container__Label"
+             color="black"
              fontSize="16"
-             id="Container__Label" />
+             fontWeight="normal" />
     </styles>
     <body style="Body">
       <header style="Header">
@@ -61,65 +60,74 @@
               style="Header__Back">Back</text>
         <text style="Header__Title">Behavior</text>
       </header>
-
       <view scroll="true"
             style="Main">
-
         <text style="Description">Alert options can trigger navigation behaviors.</text>
         <view style="Button">
-          <behavior
-            xmlns:alert="https://hyperview.org/hyperview-alert"
-            trigger="press"
-            action="alert"
-            alert:title="Navigation"
-            alert:message="Pressing the options below will navigate screens."
-          >
-            <alert:option alert:label="Push" trigger="press" href="/advanced_behaviors/alert/index.xml" action="push" />
-            <alert:option alert:label="Back" trigger="press" href="#" action="back" />
+          <behavior action="alert"
+                    alert:message="Pressing the options below will navigate screens."
+                    alert:title="Navigation"
+                    trigger="press"
+                    xmlns:alert="https://hyperview.org/hyperview-alert">
+            <alert:option action="push"
+                          alert:label="Push"
+                          href="/advanced_behaviors/alert/index.xml"
+                          trigger="press" />
+            <alert:option action="back"
+                          alert:label="Back"
+                          href="#"
+                          trigger="press" />
             <alert:option alert:label="Cancel" />
           </behavior>
           <text style="Button__Label">Navigation options</text>
         </view>
-
         <text style="Description">Alert options can trigger update behaviors.</text>
         <view style="Button">
-          <behavior
-            xmlns:alert="https://hyperview.org/hyperview-alert"
-            trigger="press"
-            action="alert"
-            alert:title="Updates"
-            alert:message="Pressing the options below will change the content in the screen container."
-          >
-            <alert:option alert:label="Append" trigger="press" href="#option1" action="append" target="alert1Container" />
-            <alert:option alert:label="Prepend" trigger="press" href="#option2" action="prepend" target="alert1Container" />
-            <alert:option alert:label="Replace" trigger="press" href="#option3" action="replace-inner" target="alert1Container" />
+          <behavior action="alert"
+                    alert:message="Pressing the options below will change the content in the screen container."
+                    alert:title="Updates"
+                    trigger="press"
+                    xmlns:alert="https://hyperview.org/hyperview-alert">
+            <alert:option action="append"
+                          alert:label="Append"
+                          href="#option1"
+                          target="alert1Container"
+                          trigger="press" />
+            <alert:option action="prepend"
+                          alert:label="Prepend"
+                          href="#option2"
+                          target="alert1Container"
+                          trigger="press" />
+            <alert:option action="replace-inner"
+                          alert:label="Replace"
+                          href="#option3"
+                          target="alert1Container"
+                          trigger="press" />
           </behavior>
           <text style="Button__Label">Update options</text>
         </view>
-        <view id="alert1Container" style="Container">
-        </view>
+        <view id="alert1Container"
+              style="Container"></view>
         <view hide="true">
-          <text id="option1" style="Container__Label">Appended</text>
-          <text id="option2" style="Container__Label">Prepended</text>
-          <text id="option3" style="Container__Label">Replace</text>
+          <text id="option1"
+                style="Container__Label">Appended</text>
+          <text id="option2"
+                style="Container__Label">Prepended</text>
+          <text id="option3"
+                style="Container__Label">Replace</text>
         </view>
-
         <text style="Description">Alert options can trigger other action types, including alerts</text>
         <view style="Button">
-          <behavior
-            xmlns:alert="https://hyperview.org/hyperview-alert"
-            trigger="press"
-            action="alert"
-            alert:title="First alert"
-            alert:message="Press to open a second alert."
-          >
+          <behavior action="alert"
+                    alert:message="Press to open a second alert."
+                    alert:title="First alert"
+                    trigger="press"
+                    xmlns:alert="https://hyperview.org/hyperview-alert">
             <alert:option alert:label="Open Second Alert">
-              <behavior
-                trigger="press"
-                action="alert"
-                alert:title="Second Alert"
-                alert:message="Press to close the second alert."
-              >
+              <behavior action="alert"
+                        alert:message="Press to close the second alert."
+                        alert:title="Second Alert"
+                        trigger="press">
                 <alert:option alert:label="Close" />
               </behavior>
             </alert:option>
@@ -127,16 +135,18 @@
           <text style="Button__Label">Nested</text>
         </view>
         <view style="Button">
-          <behavior
-            xmlns:alert="https://hyperview.org/hyperview-alert"
-            xmlns:phone="https://hyperview.org/hyperview-phone"
-            xmlns:sms="https://hyperview.org/hyperview-sms"
-            trigger="press"
-            action="alert"
-            alert:title="Choose an action"
-          >
-            <alert:option alert:label="Call phone" action="phone" phone:number="(555) 555-5555" />
-            <alert:option alert:label="Send SMS" action="sms" sms:number="(555) 555-5555" />
+          <behavior action="alert"
+                    alert:title="Choose an action"
+                    trigger="press"
+                    xmlns:alert="https://hyperview.org/hyperview-alert"
+                    xmlns:phone="https://hyperview.org/hyperview-phone"
+                    xmlns:sms="https://hyperview.org/hyperview-sms">
+            <alert:option action="phone"
+                          alert:label="Call phone"
+                          phone:number="(555) 555-5555" />
+            <alert:option action="sms"
+                          alert:label="Send SMS"
+                          sms:number="(555) 555-5555" />
             <alert:option alert:label="Close" />
           </behavior>
           <text style="Button__Label">Other actions</text>

@@ -1,2 +1,2 @@
-<text xmlns="https://hyperview.org/hyperview"
-      style="Button__Label">Prepended!</text>
+<text style="Button__Label"
+      xmlns="https://hyperview.org/hyperview">Prepended!</text>

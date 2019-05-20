@@ -1,8 +1,8 @@
-<list xmlns="https://hyperview.org/hyperview"
-      action="replace"
+<list action="replace"
       href="/ui_elements/list/_refresh_load.xml"
       style="List"
-      trigger="refresh">
+      trigger="refresh"
+      xmlns="https://hyperview.org/hyperview">
   <item key="new_item"
         style="Item">
     <text style="Item__Label">New Item</text>

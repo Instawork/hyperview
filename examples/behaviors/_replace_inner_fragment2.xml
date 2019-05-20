@@ -1,6 +1,6 @@
-<view xmlns="https://hyperview.org/hyperview"
-      action="replace-inner"
+<view action="replace-inner"
       href="/behaviors/_replace_inner_fragment2.xml"
-      style="BorderButton">
+      style="BorderButton"
+      xmlns="https://hyperview.org/hyperview">
   <text style="BorderButton__Label">Press me again</text>
 </view>

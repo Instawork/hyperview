@@ -1,88 +1,76 @@
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
-      <style alignItems="center"
+      <style id="Header"
+             alignItems="center"
              backgroundColor="white"
              borderBottomColor="#eee"
              borderBottomWidth="1"
              flexDirection="row"
              height="72"
-             id="Header"
              paddingLeft="24"
              paddingRight="24"
              paddingTop="24" />
-      <style color="blue"
-             fontWeight="600"
+      <style id="Header__Back"
+             color="blue"
              fontSize="16"
-             id="Header__Back"
+             fontWeight="600"
              paddingRight="16" />
-      <style color="black"
-             fontWeight="600"
+      <style id="Header__Title"
+             color="black"
              fontSize="24"
-             id="Header__Title" />
-      <style backgroundColor="white"
-             flex="1"
-             id="Body" />
-      <style fontWeight="normal"
+             fontWeight="600" />
+      <style id="Body"
+             backgroundColor="white"
+             flex="1" />
+      <style id="Description"
              fontSize="16"
-             id="Description"
+             fontWeight="normal"
              margin="24"
              marginBottom="0" />
-      <style alignItems="center"
+      <style id="Item"
+             alignItems="center"
              borderBottomColor="#eee"
              borderBottomWidth="1"
              flex="1"
              flexDirection="row"
              height="48"
-             id="Item"
              justifyContent="space-between"
              paddingLeft="24"
              paddingRight="24" />
-      <style fontWeight="normal"
+      <style id="Item__Label"
              fontSize="18"
-             id="Item__Label" />
-      <style fontWeight="bold"
+             fontWeight="normal" />
+      <style id="Item__Chevron"
              fontSize="18"
-             id="Item__Chevron" />
-      <style borderColor="#e1e1e1"
+             fontWeight="bold" />
+      <style id="Border"
+             borderColor="#e1e1e1"
              borderWidth="1"
              flex="1"
-             id="Border"
              margin="24"
              padding="8" />
-      <style flex="1"
-             id="Main" />
-
+      <style id="Main"
+             flex="1" />
       <style id="ScrollContainer"
-        margin="24"
-        height="200"
-        borderWidth="1"
-        height="160"
-        borderColor="#e1e1e1"
-        borderRadius="16"
-      />
-
+             borderColor="#e1e1e1"
+             borderRadius="16"
+             borderWidth="1"
+             height="160"
+             margin="24" />
       <style id="ScrollContainer--Vertical"
-        flexDirection="column"
-      />
-
+             flexDirection="column" />
       <style id="ScrollContainer--Horizontal"
-        flexDirection="row"
-      />
-
-      <style backgroundColor="#63CB76"
+             flexDirection="row" />
+      <style id="ScrollChild"
+             backgroundColor="#63CB76"
              borderRadius="16"
              height="40"
-             margin="8"
-             id="ScrollChild" />
-
-      <style 
-             height="40"
-             id="ScrollChild--Vertical" />
-
-      <style 
-             width="40"
-             id="ScrollChild--Horizontal" />
+             margin="8" />
+      <style id="ScrollChild--Vertical"
+             height="40" />
+      <style id="ScrollChild--Horizontal"
+             width="40" />
     </styles>
     <body style="Body">
       <header style="Header">
@@ -93,7 +81,8 @@
       </header>
       <view>
         <text style="Description">Vertical Scroll</text>
-        <view scroll="true" style="ScrollContainer ScrollContainer--Vertical">
+        <view scroll="true"
+              style="ScrollContainer ScrollContainer--Vertical">
           <view style="ScrollChild ScrollChild--Vertical" />
           <view style="ScrollChild ScrollChild--Vertical" />
           <view style="ScrollChild ScrollChild--Vertical" />
@@ -101,9 +90,10 @@
           <view style="ScrollChild ScrollChild--Vertical" />
           <view style="ScrollChild ScrollChild--Vertical" />
         </view>
-
         <text style="Description">Horizontal Scroll</text>
-        <view scroll="true" scroll-orientation="horizontal" style="ScrollContainer ScrollContainer--Horizontal">
+        <view scroll="true"
+              scroll-orientation="horizontal"
+              style="ScrollContainer ScrollContainer--Horizontal">
           <view style="ScrollChild ScrollChild--Horizontal" />
           <view style="ScrollChild ScrollChild--Horizontal" />
           <view style="ScrollChild ScrollChild--Horizontal" />
@@ -112,7 +102,6 @@
           <view style="ScrollChild ScrollChild--Horizontal" />
           <view style="ScrollChild ScrollChild--Horizontal" />
         </view>
-
       </view>
     </body>
   </screen>

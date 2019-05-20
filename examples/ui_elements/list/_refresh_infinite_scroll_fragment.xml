@@ -1,5 +1,5 @@
-<list xmlns="https://hyperview.org/hyperview"
-      id="myList">
+<list id="myList"
+      xmlns="https://hyperview.org/hyperview">
   <item key="0"
         style="Item">
     <text style="Item__Label">New Item!</text>

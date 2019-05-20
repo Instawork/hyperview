@@ -1,8 +1,8 @@
-<section-list xmlns="https://hyperview.org/hyperview"
-             action="replace"
-             delay="700"
-             href="/ui_elements/sectionlist/_refresh_load2.xml"
-             trigger="refresh">
+<section-list action="replace"
+              delay="700"
+              href="/ui_elements/sectionlist/_refresh_load2.xml"
+              trigger="refresh"
+              xmlns="https://hyperview.org/hyperview">
   <section>
     <section-title style="List__Header">
       <text style="List__HeaderText">Section 1</text>

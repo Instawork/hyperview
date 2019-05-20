@@ -1,55 +1,55 @@
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
-      <style alignItems="center"
+      <style id="Header"
+             alignItems="center"
              backgroundColor="white"
              borderBottomColor="#eee"
              borderBottomWidth="1"
              flexDirection="row"
              height="72"
-             id="Header"
              paddingLeft="24"
              paddingRight="24"
              paddingTop="24" />
-      <style color="blue"
-             fontWeight="600"
+      <style id="Header__Back"
+             color="blue"
              fontSize="16"
-             id="Header__Back"
-             paddingRight="16" />
-      <style color="black"
              fontWeight="600"
+             paddingRight="16" />
+      <style id="Header__Title"
+             color="black"
              fontSize="24"
-             id="Header__Title" />
-      <style backgroundColor="white"
-             flex="1"
-             id="Body" />
-      <style borderColor="red"
+             fontWeight="600" />
+      <style id="Body"
+             backgroundColor="white"
+             flex="1" />
+      <style id="Description"
+             borderColor="red"
              borderRadius="4"
              borderWidth="2"
-             fontWeight="600"
              fontSize="16"
-             id="Description"
+             fontWeight="600"
              margin="24"
              padding="16" />
-      <style alignItems="center"
+      <style id="Item"
+             alignItems="center"
              borderBottomColor="#eee"
              borderBottomWidth="1"
              flex="1"
              flexDirection="row"
              height="48"
-             id="Item"
              justifyContent="space-between"
              paddingLeft="24"
              paddingRight="24" />
-      <style fontWeight="normal"
+      <style id="Item__Label"
              fontSize="18"
-             id="Item__Label" />
-      <style fontWeight="bold"
+             fontWeight="normal" />
+      <style id="Item__Chevron"
              fontSize="18"
-             id="Item__Chevron" />
-      <style flex="1"
+             fontWeight="bold" />
+      <style id="Spinner"
+             flex="1"
              flexDirection="row"
-             id="Spinner"
              justifyContent="center"
              padding="24" />
     </styles>
@@ -149,8 +149,8 @@
           <text style="Item__Label">List 20</text>
         </item>
       </list>
-      <view hide="true"
-            id="myIndicator"
+      <view id="myIndicator"
+            hide="true"
             style="Spinner">
         <spinner />
       </view>

@@ -1,1 +1,3 @@
-<text xmlns="https://hyperview.org/hyperview" id="image1-num-likes" style="Comments__Likes">8 likes</text>
+<text id="image1-num-likes"
+      style="Comments__Likes"
+      xmlns="https://hyperview.org/hyperview">8 likes</text>

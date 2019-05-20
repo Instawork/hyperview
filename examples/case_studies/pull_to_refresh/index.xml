@@ -1,33 +1,34 @@
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
-      <style
-        id="Main" flex="1" paddingTop="48" paddingLeft="24" paddingRight="24" backgroundColor="white"
-      />
-
-      <style
-        id="Item"
-        flex="1"
-        justifyContent="center"
-        height="48"
-        borderBottomWidth="1"
-        borderBottomColor="#eee"
-      />
+      <style id="Main"
+             backgroundColor="white"
+             flex="1"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="48" />
+      <style id="Item"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flex="1"
+             height="48"
+             justifyContent="center" />
     </styles>
     <body style="Main">
-      <list
-        trigger="refresh"
-        href="/case_studies/pull_to_refresh/refresh.xml"
-        action="replace"
-        delay="800"
-      >
-        <item key="1" style="Item">
+      <list action="replace"
+            delay="800"
+            href="/case_studies/pull_to_refresh/refresh.xml"
+            trigger="refresh">
+        <item key="1"
+              style="Item">
           <text style="Item__Label">Item 1</text>
         </item>
-        <item key="2" style="Item">
+        <item key="2"
+              style="Item">
           <text style="Item__Label">Item 2</text>
         </item>
-        <item key="3" style="Item">
+        <item key="3"
+              style="Item">
           <text style="Item__Label">Item 3</text>
         </item>
       </list>
