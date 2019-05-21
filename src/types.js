@@ -40,6 +40,14 @@ export const LOCAL_NAME = {
   WEB_VIEW: 'web-view',
 };
 
+export const FORM_NAMES = [
+  LOCAL_NAME.TEXT_AREA,
+  LOCAL_NAME.TEXT_FIELD,
+  LOCAL_NAME.SELECT_SINGLE,
+  LOCAL_NAME.SELECT_MULTIPLE,
+  LOCAL_NAME.PICKER_FIELD,
+];
+
 export type LocalName = $Values<typeof LOCAL_NAME>;
 
 export const NODE_TYPE = {

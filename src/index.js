@@ -31,7 +31,7 @@ import React from 'react';
 import VisibilityDetectingView from './VisibilityDetectingView.js';
 import { addHref, createProps, getBehaviorElements, getFirstTag, later } from 'hyperview/src/services';
 import { version } from '../package.json';
-import { ACTIONS, NAV_ACTIONS, UPDATE_ACTIONS } from 'hyperview/src/types';
+import { ACTIONS, FORM_NAMES, NAV_ACTIONS, UPDATE_ACTIONS } from 'hyperview/src/types';
 import urlParse from 'url-parse';
 
 const AMPLITUDE_NS = Namespaces.AMPLITUDE;
@@ -452,7 +452,7 @@ export default class HyperScreen extends React.Component {
     let formHasData = false;
 
     // TODO: It would be more flexible to grab any element with a name and value.
-    ['text-area', 'text-field', 'select-single', 'select-multiple', 'picker-field']
+    FORM_NAMES
       // Get all inputs in the form
       .reduce((acc, tag) => (
         acc.concat(Array.from(formElement.getElementsByTagNameNS(HYPERVIEW_NS, tag)))
