@@ -272,7 +272,7 @@
                         modal-text-style="PickerModalCustom__text"
                         placeholder="Select choice"
                         placeholderTextColor="#8D9494"
-                        save-label="Set choice">
+                        done-label="Set choice">
             <picker-item label="Choice 0"
                          value="0" />
             <picker-item label="Choice 1"

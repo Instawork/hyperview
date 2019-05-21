@@ -30,6 +30,7 @@ import { createProps, createStyleProp } from 'hyperview/src/services';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { Node as ReactNode } from 'react';
 import type { StyleSheet as StyleSheetType } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
+import styles from './styles';
 
 /**
  * A picker field renders a form field with values that come from a pre-defined list.
@@ -50,17 +51,29 @@ export default class HvPickerField extends PureComponent<Props, State> {
     this.state = {
       // on iOS, value is used to display the selected choice when
       // the picker modal is hidden
-      value: value,
+      value,
       // on iOS, pickerValue is used to display the selected choice
       // in the picker modal. On Android, the picker is shown in-line on the screen,
       // so this value gets displayed.
       pickerValue: value,
-      showPicker: false,
+      focused: false,
       fieldPressed: false,
-      savePressed: false,
+      donePressed: false,
       cancelPressed: false,
     };
   }
+
+  toggleFieldPress = () => {
+    this.setState({ fieldPressed: !this.state.fieldPressed });
+  };
+
+  toggleCancelPress = () => {
+    this.setState({ cancelPressed: !this.state.cancelPressed });
+  };
+
+  toggleSavePress = () => {
+    this.setState({ donePressed: !this.state.donePressed });
+  };
 
   /**
    * Gets the label from the picker items for the given value.
@@ -90,29 +103,29 @@ export default class HvPickerField extends PureComponent<Props, State> {
   /**
    * Shows the picker, defaulting to the field's value.
    */
-  openPickerModal = () => {
+  onFieldPress = () => {
     this.setState({
       pickerValue: this.state.value,
-      showPicker: true,
+      focused: true,
     });
   };
 
   /**
    * Hides the picker without applying the chosen value.
    */
-  cancelPickerModal = () => {
+  onModalCancel = () => {
     this.setState({
-      showPicker: false,
+      focused: false,
     });
   };
 
   /**
    * Hides the picker and applies the chosen value to the field.
    */
-  savePickerModal = () => {
+  onModalDone = () => {
     const element: Element = this.props.element;
     this.setState({
-      showPicker: false,
+      focused: false,
       value: this.state.pickerValue,
     });
     element.setAttribute('value', this.state.pickerValue || '');
@@ -122,7 +135,7 @@ export default class HvPickerField extends PureComponent<Props, State> {
    * Renders the picker component. Picker items come from the
    * <picker-item> elements in the <picker-field> element.
    */
-  renderPicker = (style: StyleSheetType<*>) => {
+  renderPicker = (style: StyleSheetType<*>): ReactNode => {
     const element: Element = this.props.element;
     const props = {
       onValueChange: value => {
@@ -154,10 +167,10 @@ export default class HvPickerField extends PureComponent<Props, State> {
   };
 
   /**
-   * Renders a bottom sheet with cancel/save buttons and a picker component.
+   * Renders a bottom sheet with cancel/done buttons and a picker component.
    * Uses styles defined on the <picker-field> element for the modal and buttons.
    */
-  renderPickerModal = () => {
+  renderPickerModal = (): ReactNode => {
     const element: Element = this.props.element;
     const stylesheets: StyleSheets = this.props.stylesheets;
     const options: HvComponentOptions = this.props.options;
@@ -178,52 +191,42 @@ export default class HvPickerField extends PureComponent<Props, State> {
         styleAttr: 'modal-text-style',
       },
     );
-    const saveTextStyle: Array<StyleSheetType<*>> = createStyleProp(
+    const doneTextStyle: Array<StyleSheetType<*>> = createStyleProp(
       element,
       stylesheets,
       {
         ...options,
-        pressed: this.state.savePressed,
+        pressed: this.state.donePressed,
         styleAttr: 'modal-text-style',
       },
     );
     const cancelLabel: string =
       element.getAttribute('cancel-label') || 'Cancel';
-    const saveLabel: string = element.getAttribute('save-label') || 'Save';
+    const doneLabel: string = element.getAttribute('done-label') || 'Done';
 
     return (
       <Modal
         animationType="slide"
         transparent
-        visible={this.state.showPicker}
-        onRequestClose={this.cancelPickerModal}
+        visible={this.state.focused}
+        onRequestClose={this.onModalCancel}
       >
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'flex-end',
-          }}
-        >
+        <View style={styles.modalWrapper}>
           <View style={modalStyle}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}
-            >
+            <View style={styles.modalActions}>
               <TouchableWithoutFeedback
-                onPressIn={() => this.setState({ cancelPressed: true })}
-                onPressOut={() => this.setState({ cancelPressed: false })}
-                onPress={this.cancelPickerModal}
+                onPressIn={this.toggleCancelPress}
+                onPressOut={this.toggleCancelPress}
+                onPress={this.onModalCancel}
               >
                 <Text style={cancelTextStyle}>{cancelLabel}</Text>
               </TouchableWithoutFeedback>
               <TouchableWithoutFeedback
-                onPressIn={() => this.setState({ savePressed: true })}
-                onPressOut={() => this.setState({ savePressed: false })}
-                onPress={this.savePickerModal}
+                onPressIn={this.toggleSavePress}
+                onPressOut={this.toggleSavePress}
+                onPress={this.onModalDone}
               >
-                <Text style={saveTextStyle}>{saveLabel}</Text>
+                <Text style={doneTextStyle}>{doneLabel}</Text>
               </TouchableWithoutFeedback>
             </View>
             {this.renderPicker()}
@@ -271,7 +274,7 @@ export default class HvPickerField extends PureComponent<Props, State> {
       return null;
     }
 
-    const focused: boolean = this.state.showPicker;
+    const focused: boolean = this.state.focused;
     const pressed: boolean = this.state.fieldPressed;
     const props = createProps(element, stylesheets, {
       ...options,
@@ -299,9 +302,9 @@ export default class HvPickerField extends PureComponent<Props, State> {
 
     return (
       <TouchableWithoutFeedback
-        onPressIn={() => this.setState({ fieldPressed: true })}
-        onPressOut={() => this.setState({ fieldPressed: false })}
-        onPress={this.openPickerModal}
+        onPressIn={this.toggleFieldPress}
+        onPressOut={this.toggleFieldPress}
+        onPress={this.onFieldPress}
       >
         <View {...props}>
           <Text style={fieldTextStyle}>{label}</Text>
@@ -311,7 +314,7 @@ export default class HvPickerField extends PureComponent<Props, State> {
     );
   };
 
-  render() {
+  render(): ReactNode {
     return Platform.OS === 'ios' ? this.renderiOS() : this.renderAndroid();
   }
 }
