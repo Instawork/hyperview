@@ -24,6 +24,8 @@ export const LOCAL_NAME = {
   LIST: 'list',
   MODIFIER: 'modifier',
   OPTION: 'option',
+  PICKER_FIELD: 'picker-field',
+  PICKER_ITEM: 'picker-item',
   SECTION_LIST: 'section-list',
   SECTION_TITLE: 'section-title',
   SELECT_MULTIPLE: 'select-multiple',
@@ -37,6 +39,14 @@ export const LOCAL_NAME = {
   VIEW: 'view',
   WEB_VIEW: 'web-view',
 };
+
+export const FORM_NAMES = [
+  LOCAL_NAME.TEXT_AREA,
+  LOCAL_NAME.TEXT_FIELD,
+  LOCAL_NAME.SELECT_SINGLE,
+  LOCAL_NAME.SELECT_MULTIPLE,
+  LOCAL_NAME.PICKER_FIELD,
+];
 
 export type LocalName = $Values<typeof LOCAL_NAME>;
 
@@ -265,6 +275,7 @@ export type HvComponentOptions = {
   selected?: ?boolean,
   skipHref?: ?boolean,
   showIndicatorIds?: ?DOMString,
+  styleAttr?: ?DOMString,
   targetId?: ?DOMString,
 };
 

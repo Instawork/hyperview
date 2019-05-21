@@ -10,6 +10,7 @@
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
+import { DEFAULT_PRESS_OPACITY, STYLE_ATTRIBUTE_SEPARATOR } from './types';
 import type {
   Document,
   Element,
@@ -20,6 +21,7 @@ import type {
 } from 'hyperview/src/types';
 import HyperRef from 'hyperview/src/core/hyper-ref';
 import React from 'react';
+import type { StyleSheet } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 
 /**
  * This file is currently a dumping place for every functions used accross
@@ -47,6 +49,56 @@ export const getFirstTag = (document: Document, localName: LocalName) => {
     return elements[0];
   }
   return null;
+};
+
+export const createStyleProp = (
+  element: Element,
+  stylesheets: StyleSheets,
+  options: HvComponentOptions,
+): Array<StyleSheet<*>> => {
+  const styleAttr: string = options.styleAttr || 'style';
+  if (!element.getAttribute(styleAttr)) {
+    return [];
+  }
+
+  const styleValue: string = element.getAttribute(styleAttr) || '';
+  const styleIds: Array<string> = styleValue.split(STYLE_ATTRIBUTE_SEPARATOR);
+  let styleRules: Array<StyleSheet<*>> = styleIds.map(
+    styleId => stylesheets.regular[styleId],
+  );
+
+  if (options.pressed) {
+    let pressedRules = styleIds
+      .map(styleId => stylesheets.pressed[styleId])
+      .filter(Boolean);
+    if (pressedRules.length === 0) {
+      pressedRules = [{ opacity: DEFAULT_PRESS_OPACITY }];
+    }
+    styleRules = styleRules.concat(pressedRules);
+  }
+
+  if (options.focused) {
+    const focusedRules = styleIds
+      .map(s => stylesheets.focused[s])
+      .filter(Boolean);
+    styleRules = styleRules.concat(focusedRules);
+  }
+
+  if (options.selected) {
+    const selectedRules = styleIds
+      .map(s => stylesheets.selected[s])
+      .filter(Boolean);
+    styleRules = styleRules.concat(selectedRules);
+  }
+
+  if (options.pressedSelected) {
+    const pressedSelectedRules = styleIds
+      .map(s => stylesheets.pressedSelected[s])
+      .filter(Boolean);
+    styleRules = styleRules.concat(pressedSelectedRules);
+  }
+
+  return styleRules;
 };
 
 export const createProps = (
@@ -80,44 +132,8 @@ export const createProps = (
       }
     }
   }
-  if (props.style) {
-    const styleIds = props.style.split(' ');
-    let styleRules = styleIds.map(s => stylesheets.regular[s]);
 
-    if (options.pressed) {
-      let pressedRules = styleIds
-        .map(s => stylesheets.pressed[s])
-        .filter(r => !!r);
-      if (pressedRules.length === 0) {
-        pressedRules = [{ opacity: 0.7 }];
-      }
-      styleRules = styleRules.concat(pressedRules);
-    }
-
-    if (options.focused) {
-      const focusedRules = styleIds
-        .map(s => stylesheets.focused[s])
-        .filter(r => !!r);
-      styleRules = styleRules.concat(focusedRules);
-    }
-
-    if (options.selected) {
-      const selectedRules = styleIds
-        .map(s => stylesheets.selected[s])
-        .filter(r => !!r);
-      styleRules = styleRules.concat(selectedRules);
-    }
-
-    if (options.pressedSelected) {
-      const pressedSelectedRules = styleIds
-        .map(s => stylesheets.pressedSelected[s])
-        .filter(r => !!r);
-      styleRules = styleRules.concat(pressedSelectedRules);
-    }
-
-    props.style = styleRules;
-  }
-
+  props.style = createStyleProp(element, stylesheets, options);
   return props;
 };
 
