@@ -62,14 +62,22 @@ export default class HvList extends PureComponent<Props, State> {
       ? styleAttr.split(' ').map(s => stylesheets.regular[s])
       : null;
 
+    const horizontal =
+      element.getAttribute('scroll-orientation') === 'horizontal';
+    const showScrollIndicator =
+      element.getAttribute('shows-scroll-indicator') !== 'false';
+
     const listProps = {
       style,
       // $FlowFixMe: see node_modules/react-native/Libraries/Lists/FlatList.js:73
       data: element.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'item'),
+      horizontal,
       keyExtractor: item => item.getAttribute('key'),
       // $FlowFixMe: return value should be of ?React.Element<any>
       renderItem: ({ item }) =>
         Render.renderElement(item, stylesheets, onUpdate, options),
+      showsHorizontalScrollIndicator: horizontal && showScrollIndicator,
+      showsVerticalScrollIndicator: !horizontal && showScrollIndicator,
     };
 
     let refreshProps = {};
