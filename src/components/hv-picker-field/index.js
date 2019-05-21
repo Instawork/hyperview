@@ -33,29 +33,33 @@ import type { StyleSheet as StyleSheetType } from 'react-native/Libraries/StyleS
 
 /**
  * A picker field renders a form field with values that come from a pre-defined list.
- * - On iOS, pressing the field brings up a bottom sheet with a picker.
- * - On Android, pressing the field shows the system picker.
+ * - On iOS, pressing the field brings up a custom bottom sheet with a picker and action buttons.
+ * - On Android, the system picker is rendered inline on the screen. Pressing the picker
+ *   opens a system dialog.
  */
 export default class HvPickerField extends PureComponent<Props, State> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.PICKER_FIELD;
   props: Props;
-  state: State = {
-    value: null,
-    label: null,
-    pickerValue: null,
-    showPicker: false,
-    fieldPressed: false,
-    savePressed: false,
-    cancelPressed: false,
-  };
+  state: State;
 
   constructor(props: Props) {
     super(props);
     const element: Element = props.element;
     const value: ?DOMString = element.getAttribute('value');
-    this.state.value = value;
-    this.state.label = value ? this.getLabelForValue(value) : '';
+    this.state = {
+      // on iOS, value is used to display the selected choice when
+      // the picker modal is hidden
+      value: value,
+      // on iOS, pickerValue is used to display the selected choice
+      // in the picker modal. On Android, the picker is shown in-line on the screen,
+      // so this value gets displayed.
+      pickerValue: value,
+      showPicker: false,
+      fieldPressed: false,
+      savePressed: false,
+      cancelPressed: false,
+    };
   }
 
   /**
@@ -157,20 +161,32 @@ export default class HvPickerField extends PureComponent<Props, State> {
     const element: Element = this.props.element;
     const stylesheets: StyleSheets = this.props.stylesheets;
     const options: HvComponentOptions = this.props.options;
-    const modalStyle = createStyleProp(element, stylesheets, {
-      ...options,
-      styleAttr: 'modal-style',
-    });
-    const cancelTextStyle = createStyleProp(element, stylesheets, {
-      ...options,
-      pressed: this.state.cancelPressed,
-      styleAttr: 'modal-text-style',
-    });
-    const saveTextStyle = createStyleProp(element, stylesheets, {
-      ...options,
-      pressed: this.state.savePressed,
-      styleAttr: 'modal-text-style',
-    });
+    const modalStyle: Array<StyleSheetType<*>> = createStyleProp(
+      element,
+      stylesheets,
+      {
+        ...options,
+        styleAttr: 'modal-style',
+      },
+    );
+    const cancelTextStyle: Array<StyleSheetType<*>> = createStyleProp(
+      element,
+      stylesheets,
+      {
+        ...options,
+        pressed: this.state.cancelPressed,
+        styleAttr: 'modal-text-style',
+      },
+    );
+    const saveTextStyle: Array<StyleSheetType<*>> = createStyleProp(
+      element,
+      stylesheets,
+      {
+        ...options,
+        pressed: this.state.savePressed,
+        styleAttr: 'modal-text-style',
+      },
+    );
     const cancelLabel: string =
       element.getAttribute('cancel-label') || 'Cancel';
     const saveLabel: string = element.getAttribute('save-label') || 'Save';
@@ -255,8 +271,8 @@ export default class HvPickerField extends PureComponent<Props, State> {
       return null;
     }
 
-    const focused = this.state.showPicker;
-    const pressed = this.state.fieldPressed;
+    const focused: boolean = this.state.showPicker;
+    const pressed: boolean = this.state.fieldPressed;
     const props = createProps(element, stylesheets, {
       ...options,
       focused,
@@ -269,14 +285,15 @@ export default class HvPickerField extends PureComponent<Props, State> {
       pressed,
       styleAttr: 'field-text-style',
     });
-    const value = element.getAttribute('value');
-    const placeholderTextColor = element.getAttribute('placeholderTextColor');
-
+    const value: ?DOMString = element.getAttribute('value');
+    const placeholderTextColor: ?DOMString = element.getAttribute(
+      'placeholderTextColor',
+    );
     if (!value && placeholderTextColor) {
       fieldTextStyle.push({ color: placeholderTextColor });
     }
 
-    const label = value
+    const label: string = value
       ? this.getLabelForValue(value) || value
       : element.getAttribute('placeholder') || '';
 

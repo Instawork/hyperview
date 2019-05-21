@@ -22,7 +22,6 @@ export type Props = {|
 
 export type State = {|
   value: ?string,
-  label: ?string,
   pickerValue: ?string,
   showPicker: boolean,
   fieldPressed: boolean,
