@@ -90,6 +90,7 @@ A `<style>` element should only appear as a direct child of a `<styles>` element
   - [`borderTopColor`](#bordertopcolor)
   - [`borderTopLeftRadius`](#bordertopleftradius)
   - [`borderTopRightRadius`](#bordertoprightradius)
+  - [`elevation`](#elevation)
   - [`opacity`](#opacity)
   - [`shadowColor`](#shadowcolor)
   - [`shadowOffsetX`](#shadowoffsetx)
@@ -580,6 +581,14 @@ It works similarly to `width` in CSS, but in Hyperview you must use points or pe
 | ------ | -------- |
 | number | No       |
 
+#### `elevation`
+
+**NOTE**: Elevation only works on Android. For iOS, use [shadow style attributes](#shadowcolor).
+
+| Type   | Required |
+| ------ | -------- |
+| number | No       |
+
 #### `opacity`
 
 | Type   | Required |
@@ -588,11 +597,15 @@ It works similarly to `width` in CSS, but in Hyperview you must use points or pe
 
 #### `shadowColor`
 
+**NOTE**: `shadowColor` only works on iOS. For Android, use [elevation](#elevation).
+
 | Type  | Required |
 | ----- | -------- |
 | color | No       |
 
 #### `shadowOffsetX`
+
+**NOTE**: `shadowColor` only works on iOS. For Android, use [elevation](#elevation).
 
 | Type   | Required |
 | ------ | -------- |
@@ -600,17 +613,23 @@ It works similarly to `width` in CSS, but in Hyperview you must use points or pe
 
 #### `shadowOffsetY`
 
+**NOTE**: `shadowColor` only works on iOS. For Android, use [elevation](#elevation).
+
 | Type   | Required |
 | ------ | -------- |
 | number | No       |
 
 #### `shadowOpacity`
 
+**NOTE**: `shadowColor` only works on iOS. For Android, use [elevation](#elevation).
+
 | Type        | Required |
 | ----------- | -------- |
 | float (0-1) | No       |
 
 #### `shadowRadius`
+
+**NOTE**: `shadowColor` only works on iOS. For Android, use [elevation](#elevation).
 
 | Type   | Required |
 | ------ | -------- |
