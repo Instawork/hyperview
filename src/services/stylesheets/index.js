@@ -68,6 +68,7 @@ const STYLE_ATTRIBUTE_CONVERTERS = {
   borderWidth: number,
   bottom: numberOrPercent,
   display: string,
+  elevation: number,
   flex: number,
   flexBasis: number,
   flexDirection: string,
