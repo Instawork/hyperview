@@ -266,13 +266,13 @@
         <view style="FormGroup">
           <text style="label">Customized</text>
           <picker-field cancel-label="Nevermind"
+                        done-label="Set choice"
                         field-style="InputCustom"
                         field-text-style="InputCustom__Text"
                         modal-style="PickerModalCustom"
                         modal-text-style="PickerModalCustom__text"
                         placeholder="Select choice"
-                        placeholderTextColor="#8D9494"
-                        done-label="Set choice">
+                        placeholderTextColor="#8D9494">
             <picker-item label="Choice 0"
                          value="0" />
             <picker-item label="Choice 1"
