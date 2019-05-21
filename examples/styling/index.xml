@@ -83,7 +83,14 @@
               key="shadow"
               show-during-load="loadingScreen"
               style="Item">
-          <text style="Item__Label">Shadow Styling</text>
+          <text style="Item__Label">Shadow Styling (iOS only)</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item href="/styling/elevation.xml"
+              key="elevation"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Elevation Styling (Android only)</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
       </list>
