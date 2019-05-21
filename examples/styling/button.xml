@@ -57,8 +57,6 @@
       <style id="Button__Label"
              color="white"
              fontSize="24"
-<<<<<<< HEAD
-<<<<<<< HEAD
              fontWeight="bold" />
       <style id="Button--Disabled"
              opacity="0.5" />
@@ -73,14 +71,6 @@
                  shadowRadius="1" />
         </modifier>
       </style>
-=======
-             id="Button__Label" />
-=======
-             fontWeight="bold" />
->>>>>>> sort id at top
-      <style id="Button--Disabled"
-             opacity="0.5" />
->>>>>>> run tidy
     </styles>
     <body style="Body">
       <header style="Header">

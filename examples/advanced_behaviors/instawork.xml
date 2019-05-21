@@ -6,24 +6,13 @@
      xmlns:sms="https://instawork.com/hyperview-sms">
   <screen>
     <styles>
-<<<<<<< HEAD
-<<<<<<< HEAD
       <style id="Header"
              alignItems="center"
-=======
-      <style alignItems="center"
->>>>>>> run tidy
-=======
-      <style id="Header"
-             alignItems="center"
->>>>>>> sort id at top
              backgroundColor="white"
              borderBottomColor="#eee"
              borderBottomWidth="1"
              flexDirection="row"
              height="72"
-<<<<<<< HEAD
-<<<<<<< HEAD
              paddingLeft="24"
              paddingRight="24"
              paddingTop="24" />
@@ -57,50 +46,6 @@
              fontWeight="bold" />
       <style id="Main"
              flex="1" />
-=======
-             id="Header"
-=======
->>>>>>> sort id at top
-             paddingLeft="24"
-             paddingRight="24"
-             paddingTop="24" />
-      <style id="Header__Back"
-             color="blue"
-             fontSize="16"
-             fontWeight="600"
-             paddingRight="16" />
-      <style id="Header__Title"
-             color="black"
-             fontSize="24"
-             fontWeight="600" />
-      <style id="Body"
-             backgroundColor="white"
-             flex="1" />
-      <style id="Description"
-             fontSize="16"
-             fontWeight="600"
-             margin="24" />
-      <style id="Button"
-             backgroundColor="#63CB76"
-             borderRadius="16"
-             flex="1"
-             flexDirection="row"
-             justifyContent="center"
-             margin="24"
-             padding="24" />
-      <style id="Button__Label"
-             color="white"
-             fontSize="24"
-<<<<<<< HEAD
-             id="Button__Label" />
-      <style flex="1"
-             id="Main" />
->>>>>>> run tidy
-=======
-             fontWeight="bold" />
-      <style id="Main"
-             flex="1" />
->>>>>>> sort id at top
     </styles>
     <body style="Body">
       <header style="Header">
@@ -114,21 +59,9 @@
         <text style="Description">Instawork custom behaviors</text>
         <view style="Button">
           <behavior action="amplitude"
-<<<<<<< HEAD
-<<<<<<< HEAD
                     amplitude:event="foo"
                     amplitude:event-props="{&quot;bar&quot;: &quot;baz&quot;}"
                     trigger="press" />
-=======
-                    trigger="press"
-                    amplitude:event="foo"
-                    amplitude:event-props="{&quot;bar&quot;: &quot;baz&quot;}" />
->>>>>>> run tidy
-=======
-                    amplitude:event="foo"
-                    amplitude:event-props="{&quot;bar&quot;: &quot;baz&quot;}"
-                    trigger="press" />
->>>>>>> sort id at top
           <text style="Button__Label">Log amplitude event</text>
         </view>
         <view style="Button">
