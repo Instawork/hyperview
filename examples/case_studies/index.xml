@@ -126,6 +126,13 @@
           <text style="Item__Label">Advanced forms</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
+        <item href="/case_studies/form_select_clear/index.xml"
+              key="form_select_clear"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Form select/clear all</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
         <item href="/case_studies/photos/index.xml"
               key="photos"
               show-during-load="loadingScreen"
