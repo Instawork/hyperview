@@ -70,8 +70,7 @@
              paddingRight="24"
              paddingTop="16" />
       <style id="Button"
-        padding="24"
-        />
+             padding="24" />
       <style id="Button__Text"
              color="blue"
              fontSize="16"
@@ -120,14 +119,14 @@
         <view style="Buttons">
           <view style="Button">
             <text action="replace-inner"
-                  style="Button__Text"
                   href="#clearForm"
+                  style="Button__Text"
                   target="form">Clear selection</text>
           </view>
           <view style="Button">
             <text action="replace-inner"
-                  style="Button__Text"
                   href="#filledForm"
+                  style="Button__Text"
                   target="form">Select all</text>
           </view>
         </view>
