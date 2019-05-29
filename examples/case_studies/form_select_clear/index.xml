@@ -1,5 +1,88 @@
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
+
+    <view hide="true">
+      <view id="clearForm">
+        <select-multiple name="choice"
+                         style="Select">
+          <view style="Select__Separator" />
+          <option style="Select__Option"
+                  value="sf">
+            <text style="Select__Label">Downtown San Francisco</text>
+            <view style="Select__RadioOuter">
+              <view style="Select__RadioInner"></view>
+            </view>
+          </option>
+          <view style="Select__Separator" />
+          <option style="Select__Option"
+                  value="eb">
+            <text style="Select__Label">East Bay</text>
+            <view style="Select__RadioOuter">
+              <view style="Select__RadioInner"></view>
+            </view>
+          </option>
+          <view style="Select__Separator" />
+          <option style="Select__Option"
+                  value="nb">
+            <text style="Select__Label">North Bay</text>
+            <view style="Select__RadioOuter">
+              <view style="Select__RadioInner"></view>
+            </view>
+          </option>
+          <view style="Select__Separator" />
+          <option style="Select__Option"
+                  value="sb">
+            <text style="Select__Label">South Bay</text>
+            <view style="Select__RadioOuter">
+              <view style="Select__RadioInner"></view>
+            </view>
+          </option>
+        </select-multiple>
+      </view>
+      <view id="filledForm">
+        <select-multiple name="choice"
+                         style="Select">
+          <view style="Select__Separator" />
+          <option selected="true"
+                  style="Select__Option"
+                  value="sf">
+            <text style="Select__Label">Downtown San Francisco</text>
+            <view style="Select__RadioOuter">
+              <view style="Select__RadioInner"></view>
+            </view>
+          </option>
+          <view style="Select__Separator" />
+          <option selected="true"
+                  style="Select__Option"
+                  value="eb">
+            <text style="Select__Label">East Bay</text>
+            <view style="Select__RadioOuter">
+              <view style="Select__RadioInner"></view>
+            </view>
+          </option>
+          <view style="Select__Separator" />
+          <option selected="true"
+                  style="Select__Option"
+                  value="nb">
+            <text style="Select__Label">North Bay</text>
+            <view style="Select__RadioOuter">
+              <view style="Select__RadioInner"></view>
+            </view>
+          </option>
+          <view style="Select__Separator" />
+          <option selected="true"
+                  style="Select__Option"
+                  value="sb">
+            <text style="Select__Label">South Bay</text>
+            <view style="Select__RadioOuter">
+              <view style="Select__RadioInner"></view>
+            </view>
+          </option>
+        </select-multiple>
+      </view>
+    </view>
+
+
     <styles>
       <style id="Body"
              backgroundColor="white"
@@ -132,85 +215,5 @@
         </view>
       </form>
     </body>
-    <view hide="true">
-      <view id="clearForm">
-        <select-multiple name="choice"
-                         style="Select">
-          <view style="Select__Separator" />
-          <option style="Select__Option"
-                  value="sf">
-            <text style="Select__Label">Downtown San Francisco</text>
-            <view style="Select__RadioOuter">
-              <view style="Select__RadioInner"></view>
-            </view>
-          </option>
-          <view style="Select__Separator" />
-          <option style="Select__Option"
-                  value="eb">
-            <text style="Select__Label">East Bay</text>
-            <view style="Select__RadioOuter">
-              <view style="Select__RadioInner"></view>
-            </view>
-          </option>
-          <view style="Select__Separator" />
-          <option style="Select__Option"
-                  value="nb">
-            <text style="Select__Label">North Bay</text>
-            <view style="Select__RadioOuter">
-              <view style="Select__RadioInner"></view>
-            </view>
-          </option>
-          <view style="Select__Separator" />
-          <option style="Select__Option"
-                  value="sb">
-            <text style="Select__Label">South Bay</text>
-            <view style="Select__RadioOuter">
-              <view style="Select__RadioInner"></view>
-            </view>
-          </option>
-        </select-multiple>
-      </view>
-      <view id="filledForm">
-        <select-multiple name="choice"
-                         style="Select">
-          <view style="Select__Separator" />
-          <option selected="true"
-                  style="Select__Option"
-                  value="sf">
-            <text style="Select__Label">Downtown San Francisco</text>
-            <view style="Select__RadioOuter">
-              <view style="Select__RadioInner"></view>
-            </view>
-          </option>
-          <view style="Select__Separator" />
-          <option selected="true"
-                  style="Select__Option"
-                  value="eb">
-            <text style="Select__Label">East Bay</text>
-            <view style="Select__RadioOuter">
-              <view style="Select__RadioInner"></view>
-            </view>
-          </option>
-          <view style="Select__Separator" />
-          <option selected="true"
-                  style="Select__Option"
-                  value="nb">
-            <text style="Select__Label">North Bay</text>
-            <view style="Select__RadioOuter">
-              <view style="Select__RadioInner"></view>
-            </view>
-          </option>
-          <view style="Select__Separator" />
-          <option selected="true"
-                  style="Select__Option"
-                  value="sb">
-            <text style="Select__Label">South Bay</text>
-            <view style="Select__RadioOuter">
-              <view style="Select__RadioInner"></view>
-            </view>
-          </option>
-        </select-multiple>
-      </view>
-    </view>
   </screen>
 </doc>
