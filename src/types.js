@@ -17,6 +17,7 @@ export type NamespaceURI = string;
 export const LOCAL_NAME = {
   BEHAVIOR: 'behavior',
   BODY: 'body',
+  DATE_FIELD: 'date-field',
   FORM: 'form',
   HEADER: 'header',
   IMAGE: 'image',

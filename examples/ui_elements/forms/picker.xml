@@ -138,6 +138,12 @@
         <text style="Description">Picker fields open a system-appropriate modal to choose a single value from a list of options. On iOS, styles can be applied to the modal and save/cancel labels.</text>
         <view style="FormGroup">
           <text style="label">Default picker field</text>
+          <date-field field-style="Input"
+                        field-text-style="Input__Text"
+                        modal-style="PickerModal"
+                        modal-text-style="PickerModal__text"
+                        placeholder="Select choice"
+          />
           <picker-field field-style="Input"
                         field-text-style="Input__Text"
                         modal-style="PickerModal"
