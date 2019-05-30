@@ -17,6 +17,7 @@ export type NamespaceURI = string;
 export const LOCAL_NAME = {
   BEHAVIOR: 'behavior',
   BODY: 'body',
+  DATE_FIELD: 'date-field',
   FORM: 'form',
   HEADER: 'header',
   IMAGE: 'image',
@@ -46,6 +47,7 @@ export const FORM_NAMES = [
   LOCAL_NAME.SELECT_SINGLE,
   LOCAL_NAME.SELECT_MULTIPLE,
   LOCAL_NAME.PICKER_FIELD,
+  LOCAL_NAME.DATE_FIELD,
 ];
 
 export type LocalName = $Values<typeof LOCAL_NAME>;

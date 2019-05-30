@@ -1,0 +1,285 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style id="Header"
+             alignItems="center"
+             backgroundColor="white"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flexDirection="row"
+             height="72"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="24" />
+      <style id="Header__Back"
+             color="blue"
+             fontSize="16"
+             fontWeight="600"
+             paddingRight="16" />
+      <style id="Header__Title"
+             color="black"
+             fontSize="24"
+             fontWeight="600" />
+      <style id="Body"
+             backgroundColor="white"
+             flex="1" />
+      <style id="Description"
+             fontSize="16"
+             fontWeight="600"
+             marginLeft="24"
+             marginRight="24"
+             marginTop="24" />
+      <style id="FormGroup"
+             flex="1"
+             marginLeft="24"
+             marginRight="24"
+             marginTop="48" />
+      <style id="Input"
+             borderBottomColor="#E1E1E1"
+             borderBottomWidth="1"
+             borderColor="#4E4D4D"
+             flex="1"
+             fontSize="16"
+             fontWeight="normal"
+             paddingBottom="8"
+             paddingTop="8">
+        <modifier pressed="true">
+          <style borderBottomColor="#4778FF" />
+        </modifier>
+        <modifier focused="true">
+          <style borderBottomColor="#4778FF" />
+        </modifier>
+      </style>
+      <style id="Input__Text"
+             fontSize="16"
+             fontWeight="normal"></style>
+      <style id="Input--Error"
+             borderBottomColor="#FF4847">
+        <modifier focused="true">
+          <style borderBottomColor="#FF4847" />
+        </modifier>
+      </style>
+      <style id="Input__Text--Error"
+             color="#FF4847"></style>
+      <style id="label"
+             borderColor="#4E4D4D"
+             fontSize="16"
+             fontWeight="bold"
+             lineHeight="24"
+             marginBottom="8" />
+      <style id="help"
+             borderColor="#FF4847"
+             fontSize="16"
+             fontWeight="normal"
+             lineHeight="24"
+             marginTop="16" />
+      <style id="help--error"
+             color="#FF4847" />
+      <style id="PickerModal"
+             backgroundColor="white"
+             borderTopColor="#E1E1E1"
+             borderTopWidth="1" />
+      <style id="PickerModal__text"
+             color="blue"
+             fontSize="16"
+             fontWeight="600"
+             padding="24"
+             paddingBottom="0">
+        <modifier pressed="true">
+          <style opacity="0.5" />
+        </modifier>
+      </style>
+      <style id="InputCustom"
+             borderColor="#4E4D4D"
+             borderRadius="4"
+             borderWidth="2"
+             flex="1"
+             fontWeight="normal"
+             marginBottom="40"
+             paddingBottom="8"
+             paddingLeft="8"
+             paddingRight="8"
+             paddingTop="8">
+        <modifier pressed="true">
+          <style borderColor="#4778FF" />
+        </modifier>
+        <modifier focused="true">
+          <style borderColor="#4778FF" />
+        </modifier>
+      </style>
+      <style id="InputCustom__Text"
+             color="purple"
+             fontSize="18"
+             fontWeight="600"></style>
+      <style id="PickerModalCustom"
+             backgroundColor="purple"
+             borderTopColor="#E1E1E1"
+             borderTopWidth="1" />
+      <style id="PickerModalCustom__text"
+             color="white"
+             fontSize="20"
+             fontWeight="600"
+             padding="24"
+             paddingBottom="0">
+        <modifier pressed="true">
+          <style color="yellow" />
+        </modifier>
+      </style>
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text action="back"
+              href="#"
+              style="Header__Back">Back</text>
+        <text style="Header__Title">Date field</text>
+      </header>
+      <view scroll="true"
+            style="Main">
+        <text style="Description">
+            Date fields open a system-appropriate modal to choose a date value. On iOS, styles can be applied to the modal and save/cancel labels.
+        </text>
+        <text style="Description">
+            Label formatting is determined by the client. In these examples, wer're using moment.js for the formatting.
+        </text>
+        <view style="FormGroup">
+          <text style="label">Default date field</text>
+          <date-field field-style="Input"
+                      label-format="MMMM D, YYYY"
+                      field-text-style="Input__Text"
+                      modal-style="PickerModal"
+                      modal-text-style="PickerModal__text"
+                      placeholder="Select date"
+                      placeholderTextColor="#8D9494"
+          />
+        </view>
+
+        <view style="FormGroup">
+          <text style="label">Filled date field</text>
+          <date-field field-style="Input"
+                      value="2018-03-07"
+                      label-format="MMMM D, YYYY"
+                      field-text-style="Input__Text"
+                      modal-style="PickerModal"
+                      modal-text-style="PickerModal__text"
+                      placeholder="Select date"
+                      placeholderTextColor="#8D9494"
+          />
+        </view>
+
+        <view style="FormGroup">
+          <text style="label">Label format examples (using moment.js)</text>
+          <date-field field-style="Input"
+                      value="2018-03-07"
+                      label-format="MMMM D, YYYY"
+                      field-text-style="Input__Text"
+                      modal-style="PickerModal"
+                      modal-text-style="PickerModal__text"
+                      placeholder="Select date"
+                      placeholderTextColor="#8D9494"
+          />
+          <date-field field-style="Input"
+                      value="2018-03-07"
+                      label-format="L"
+                      field-text-style="Input__Text"
+                      modal-style="PickerModal"
+                      modal-text-style="PickerModal__text"
+                      placeholder="Select date"
+                      placeholderTextColor="#8D9494"
+          />
+          <date-field field-style="Input"
+                      value="2018-03-07"
+                      label-format="MMMM [the] Do, [`]YY"
+                      field-text-style="Input__Text"
+                      modal-style="PickerModal"
+                      modal-text-style="PickerModal__text"
+                      placeholder="Select date"
+                      placeholderTextColor="#8D9494"
+          />
+        </view>
+
+        <view style="FormGroup">
+          <text style="label">Min date (May 5, 2018)</text>
+          <date-field field-style="Input"
+                      min="2018-05-05"
+                      label-format="MMMM D, YYYY"
+                      field-text-style="Input__Text"
+                      modal-style="PickerModal"
+                      modal-text-style="PickerModal__text"
+                      placeholder="Select date"
+                      placeholderTextColor="#8D9494"
+          />
+        </view>
+
+        <view style="FormGroup">
+          <text style="label">Max date (May 5, 2024)</text>
+          <date-field field-style="Input"
+                      max="2024-05-05"
+                      label-format="MMMM D, YYYY"
+                      field-text-style="Input__Text"
+                      modal-style="PickerModal"
+                      modal-text-style="PickerModal__text"
+                      placeholder="Select date"
+                      placeholderTextColor="#8D9494"
+          />
+        </view>
+
+        <view style="FormGroup">
+          <text style="label">Min/Max date (May 5, 2018 - 2024)</text>
+          <date-field field-style="Input"
+                      min="2018-05-05"
+                      max="2024-05-05"
+                      label-format="MMMM D, YYYY"
+                      field-text-style="Input__Text"
+                      modal-style="PickerModal"
+                      modal-text-style="PickerModal__text"
+                      placeholder="Select date"
+                      placeholderTextColor="#8D9494"
+          />
+        </view>
+
+        <view style="FormGroup">
+          <text style="label">Validation error</text>
+          <date-field field-style="Input Input--Error"
+                      label-format="MMMM D, YYYY"
+                      field-text-style="Input__Text Input__Text--Error"
+                      modal-style="PickerModal"
+                      modal-text-style="PickerModal__text"
+                      placeholder="Select date"
+                      placeholderTextColor="#8D9494"
+          />
+          <text style="help help--error">Please select a date</text>
+        </view>
+
+        <view style="FormGroup">
+          <text style="label">Filled validation error</text>
+          <date-field field-style="Input Input--Error"
+                      value="2018-03-07"
+                      label-format="MMMM D, YYYY"
+                      field-text-style="Input__Text Input__Text--Error"
+                      modal-style="PickerModal"
+                      modal-text-style="PickerModal__text"
+                      placeholder="Select date"
+                      placeholderTextColor="#8D9494"
+          />
+          <text style="help help--error">Please select a different date</text>
+        </view>
+
+        <view style="FormGroup">
+          <text style="label">Customized</text>
+
+          <date-field field-style="InputCustom"
+                      value="2018-03-07"
+                      label-format="MMMM D, YYYY"
+                      field-text-style="InputCustom__Text"
+                      modal-style="PickerModalCustom"
+                      modal-text-style="PickerModalCustom__text"
+                      placeholder="Select date"
+                      placeholderTextColor="#8D9494"
+          />
+        </view>
+
+      </view>
+    </body>
+  </screen>
+</doc>
+
