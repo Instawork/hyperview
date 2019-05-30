@@ -10,9 +10,16 @@
 
 import type { BehaviorRegistry, HvBehavior } from 'hyperview/src/types';
 import HvAlert from 'hyperview/src/behaviors/hv-alert';
+import HvDeselectOption from 'hyperview/src/behaviors/hv-deselect-option';
+import HvSelectOption from 'hyperview/src/behaviors/hv-select-option';
 import HvShare from 'hyperview/src/behaviors/hv-share';
 
-const HYPERVIEW_BEHAVIORS = [HvAlert, HvShare];
+const HYPERVIEW_BEHAVIORS = [
+  HvAlert,
+  HvDeselectOption,
+  HvSelectOption,
+  HvShare,
+];
 
 export const getRegistry = (behaviors: HvBehavior[] = []): BehaviorRegistry =>
   [...HYPERVIEW_BEHAVIORS, ...behaviors].reduce(

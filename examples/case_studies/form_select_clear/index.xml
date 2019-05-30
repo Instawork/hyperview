@@ -1,88 +1,6 @@
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
 
-    <view hide="true">
-      <view id="clearForm">
-        <select-multiple name="choice"
-                         style="Select">
-          <view style="Select__Separator" />
-          <option style="Select__Option"
-                  value="sf">
-            <text style="Select__Label">Downtown San Francisco</text>
-            <view style="Select__RadioOuter">
-              <view style="Select__RadioInner"></view>
-            </view>
-          </option>
-          <view style="Select__Separator" />
-          <option style="Select__Option"
-                  value="eb">
-            <text style="Select__Label">East Bay</text>
-            <view style="Select__RadioOuter">
-              <view style="Select__RadioInner"></view>
-            </view>
-          </option>
-          <view style="Select__Separator" />
-          <option style="Select__Option"
-                  value="nb">
-            <text style="Select__Label">North Bay</text>
-            <view style="Select__RadioOuter">
-              <view style="Select__RadioInner"></view>
-            </view>
-          </option>
-          <view style="Select__Separator" />
-          <option style="Select__Option"
-                  value="sb">
-            <text style="Select__Label">South Bay</text>
-            <view style="Select__RadioOuter">
-              <view style="Select__RadioInner"></view>
-            </view>
-          </option>
-        </select-multiple>
-      </view>
-      <view id="filledForm">
-        <select-multiple name="choice"
-                         style="Select">
-          <view style="Select__Separator" />
-          <option selected="true"
-                  style="Select__Option"
-                  value="sf">
-            <text style="Select__Label">Downtown San Francisco</text>
-            <view style="Select__RadioOuter">
-              <view style="Select__RadioInner"></view>
-            </view>
-          </option>
-          <view style="Select__Separator" />
-          <option selected="true"
-                  style="Select__Option"
-                  value="eb">
-            <text style="Select__Label">East Bay</text>
-            <view style="Select__RadioOuter">
-              <view style="Select__RadioInner"></view>
-            </view>
-          </option>
-          <view style="Select__Separator" />
-          <option selected="true"
-                  style="Select__Option"
-                  value="nb">
-            <text style="Select__Label">North Bay</text>
-            <view style="Select__RadioOuter">
-              <view style="Select__RadioInner"></view>
-            </view>
-          </option>
-          <view style="Select__Separator" />
-          <option selected="true"
-                  style="Select__Option"
-                  value="sb">
-            <text style="Select__Label">South Bay</text>
-            <view style="Select__RadioOuter">
-              <view style="Select__RadioInner"></view>
-            </view>
-          </option>
-        </select-multiple>
-      </view>
-    </view>
-
-
     <styles>
       <style id="Body"
              backgroundColor="white"
@@ -158,6 +76,10 @@
              color="blue"
              fontSize="16"
              fontWeight="700" />
+      <style id="Description"
+             fontSize="16"
+             fontWeight="600"
+             margin="24" />
     </styles>
     <body scroll="true"
           style="Body">
@@ -167,6 +89,7 @@
                            style="Select">
             <view style="Select__Separator" />
             <option style="Select__Option"
+                    id="choice_sf"
                     value="sf">
               <text style="Select__Label">Downtown San Francisco</text>
               <view style="Select__RadioOuter">
@@ -175,6 +98,8 @@
             </option>
             <view style="Select__Separator" />
             <option style="Select__Option"
+                    id="choice_id"
+                    id="choice_eb"
                     value="eb">
               <text style="Select__Label">East Bay</text>
               <view style="Select__RadioOuter">
@@ -183,6 +108,7 @@
             </option>
             <view style="Select__Separator" />
             <option style="Select__Option"
+                    id="choice_nb"
                     value="nb">
               <text style="Select__Label">North Bay</text>
               <view style="Select__RadioOuter">
@@ -191,7 +117,9 @@
             </option>
             <view style="Select__Separator" />
             <option style="Select__Option"
+                    id="choice_sb"
                     value="sb">
+
               <text style="Select__Label">South Bay</text>
               <view style="Select__RadioOuter">
                 <view style="Select__RadioInner"></view>
@@ -201,18 +129,31 @@
         </view>
         <view style="Buttons">
           <view style="Button">
-            <text action="replace-inner"
-                  href="#clearForm"
-                  style="Button__Text"
-                  target="form">Clear selection</text>
+            <text style="Button__Text">Clear selection</text>
+            <behavior action="deselect-option" target="choice_sf" />
+            <behavior action="deselect-option" target="choice_eb" />
+            <behavior action="deselect-option" target="choice_nb" />
+            <behavior action="deselect-option" target="choice_sb" />
           </view>
           <view style="Button">
-            <text action="replace-inner"
-                  href="#filledForm"
-                  style="Button__Text"
-                  target="form">Select all</text>
+            <text style="Button__Text">Select all</text>
+            <behavior action="select-option" target="choice_sf" />
+            <behavior action="select-option" target="choice_eb" />
+            <behavior action="select-option" target="choice_nb" />
+            <behavior action="select-option" target="choice_sb" />
           </view>
         </view>
+
+        <view style="Buttons">
+          <view style="Button" href="/case_studies/form_select_clear/submit.xml" target="submitMessage" action="replace-inner" show-during-load="spinner" hide-during-load="submitMessage" delay="200">
+            <text style="Button__Text">Submit</text>
+          </view>
+        </view>
+
+        <spinner id="spinner" hide="true" />
+        <view id="submitMessage" style="Description">
+        </view>
+
       </form>
     </body>
   </screen>

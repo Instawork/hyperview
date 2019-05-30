@@ -82,6 +82,7 @@ export type Node = {
   +parentNode: ?Node,
   +previousSibling: ?Node,
   appendChild: (newChild: Node) => Node,
+  cloneNode: (deep: boolean) => Element,
   hasAttributes: () => boolean,
   hasChildNodes: () => boolean,
   insertBefore: (newChild: Node, refChild: Node) => Node,
@@ -155,7 +156,6 @@ export type Document = Node & {
 };
 
 export type Element = Node & {
-  cloneNode: (deep: boolean) => Element,
   tagName: DOMString,
   localName: LocalName,
   getAttribute: (name: DOMString) => ?DOMString,

@@ -17,6 +17,7 @@ import type {
   HvComponentOnUpdate,
   HvComponentOptions,
   LocalName,
+  Node,
   StyleSheets,
 } from 'hyperview/src/types';
 import HyperRef from 'hyperview/src/core/hyper-ref';
@@ -49,6 +50,45 @@ export const getFirstTag = (document: Document, localName: LocalName) => {
     return elements[0];
   }
   return null;
+};
+
+/**
+ * Clones the element and moves all children from the original element
+ * to the clone. The returned element will be a new object, but all of the child
+ * nodes will be existing objects.
+ */
+export const shallowClone = (element: Node): Node => {
+  const newElement: Element = element.cloneNode(false);
+  let childNode: ?Node = element.firstChild;
+  while (childNode !== null) {
+    // This if is redundant with the while condition but it's needed to make Flow happy
+    // by verifying that childNode is not null
+    if (childNode) {
+      const nextChild = childNode.nextSibling;
+      newElement.appendChild(childNode);
+      childNode = nextChild;
+    }
+  }
+  return newElement;
+};
+
+/**
+ * Clones all elements from the given element up to the root of the DOM.
+ * Returns the new root object. Essentially, this produces a new DOM object
+ * that re-uses as many existing nodes as possible.
+ */
+export const shallowCloneToRoot = (element: Node): Node => {
+  const elementClone: Node = shallowClone(element);
+  if (element.nodeType === 9) {
+    return elementClone;
+  }
+  const parentNode: ?Node = element.parentNode;
+  if (parentNode) {
+    parentNode.replaceChild(elementClone, element);
+    const parentClone = shallowCloneToRoot(parentNode);
+    return parentClone;
+  }
+  return elementClone;
 };
 
 export const createStyleProp = (
