@@ -1,11 +1,21 @@
-import * as Namespaces from 'hyperview/src/services/namespaces';
+// @flow
+
+/**
+ * Copyright (c) Garuda Labs, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
 import type {
   DOMString,
   Document,
   Element,
   HvComponentOnUpdate,
+  Node,
 } from 'hyperview/src/types';
-import { getFirstTag, shallowCloneToRoot } from 'hyperview/src/services';
+import { shallowCloneToRoot } from 'hyperview/src/services';
 
 export default {
   action: 'select-option',
@@ -13,16 +23,15 @@ export default {
     element: Element,
     onUpdate: HvComponentOnUpdate,
     doc: Document,
-  ): Element => {
+  ): ?Node => {
     const targetId: ?DOMString = element.getAttribute('target');
-    if (!targetId) {
-      return;
+    if (targetId) {
+      const targetElement: ?Element = doc.getElementById(targetId);
+      if (targetElement) {
+        targetElement.setAttribute('selected', 'true');
+        return shallowCloneToRoot(targetElement);
+      }
     }
-    const targetElement = doc.getElementById(targetId);
-    if (!targetElement) {
-      return;
-    }
-    targetElement.setAttribute('selected', true);
-    return shallowCloneToRoot(targetElement);
+    return null;
   },
 };
