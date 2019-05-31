@@ -120,6 +120,8 @@
                     id="choice_sb"
                     value="sb">
 
+              <behavior trigger="select" href="#selectMessage" action="replace-inner" target="message" />
+
               <text style="Select__Label">South Bay</text>
               <view style="Select__RadioOuter">
                 <view style="Select__RadioInner"></view>
@@ -145,13 +147,19 @@
         </view>
 
         <view style="Buttons">
-          <view style="Button" href="/case_studies/form_select_clear/submit.xml" target="submitMessage" action="replace-inner" show-during-load="spinner" hide-during-load="submitMessage" delay="200">
+          <view style="Button" href="/case_studies/form_select_clear/submit.xml" target="message" action="replace-inner" show-during-load="spinner" hide-during-load="message" delay="200">
             <text style="Button__Text">Submit</text>
           </view>
         </view>
 
         <spinner id="spinner" hide="true" />
-        <view id="submitMessage" style="Description">
+        <view id="message" style="Description">
+        </view>
+
+        <view hide="true">
+          <text id="selectMessage">
+            Selected option
+          </text>
         </view>
 
       </form>

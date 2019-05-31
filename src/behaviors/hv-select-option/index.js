@@ -29,6 +29,7 @@ export default {
       const targetElement: ?Element = doc.getElementById(targetId);
       if (targetElement) {
         targetElement.setAttribute('selected', 'true');
+        targetElement.setAttribute('select-triggered', 'true');
         return shallowCloneToRoot(targetElement);
       }
     }

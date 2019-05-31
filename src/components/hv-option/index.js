@@ -29,16 +29,33 @@ export default class HvOption extends PureComponent<Props, State> {
   };
 
   componentDidUpdate(prevProps: Props) {
-    const { element } = this.props;
+    const { element, options } = this.props;
     const prevElement = prevProps.element;
     const selected = element.getAttribute('selected') === 'true';
     const prevSelected = prevElement.getAttribute('selected') === 'true';
     if (selected && !prevSelected) {
       this.triggerSelectBehaviors();
+      element.removeAttribute('select-triggered');
     }
 
     if (!selected && prevSelected) {
       this.triggerDeselectBehaviors();
+      element.removeAttribute('deselect-triggered');
+    }
+
+    const value = element.getAttribute('value');
+    const { onSelect, onToggle } = options;
+
+    const selectTriggeredThroughBehavior =
+      element.getAttribute('select-triggered') === 'true';
+
+    if (selectTriggeredThroughBehavior) {
+      if (onSelect) {
+        onSelect(value);
+      }
+      if (onToggle) {
+        onToggle(value);
+      }
     }
   }
 
