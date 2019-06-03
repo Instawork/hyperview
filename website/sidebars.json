@@ -59,7 +59,9 @@
       "reference_textarea",
       "reference_selectsingle",
       "reference_selectmultiple",
-      "reference_option"
+      "reference_option",
+      "reference_pickerfield",
+      "reference_pickeritem"
     ],
     "Style Elements": [
       "reference_styles",
