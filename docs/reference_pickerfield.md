@@ -37,7 +37,7 @@ Like other input elements, the selected value of the picker gets serialized by t
 
 ## Structure
 
-A `<picker-field`> element can appear anywhere within a `<form>` element. Its children must only be `<picker-item>` elements.
+A `<picker-field`> element can appear anywhere within a `<form>` element. Its children must only be [`<picker-item>`](/docs/reference_pickeritem) elements.
 
 ## Attributes
 
