@@ -23,6 +23,7 @@ Like other input elements, the selected value of the picker gets serialized by t
 ```xml
 <picker-field field-style="Input"
               field-text-style="Input__Text"
+              name="user_choice"
               placeholder="Select choice">
   <picker-item label="Choice 0"
                value="0" />
@@ -131,7 +132,7 @@ A space-separated list of styles to apply to the buttons in the iOS bottom-sheet
 | ------ | -------- |
 | string | No       |
 
-A global attribute uniquely identifying the element in the whole document.
+A global attribute uniquely identifying the element in the whole document. Add an id if you need to reference this element in behavior attributes (either as a [target](/docs/reference_behavior_attributes#target) or href [source](/docs/reference_behavior_attributes#document-fragments)).
 
 #### `hide`
 
