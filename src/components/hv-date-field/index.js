@@ -48,11 +48,11 @@ export default class HvDateField extends PureComponent<Props, State> {
     this.state = {
       // on iOS, value is used to display the selected choice when
       // the picker modal is hidden
-      value: new Date(),
+      value: new Date(value),
       // on iOS, pickerValue is used to display the selected choice
       // in the picker modal. On Android, the picker is shown in-line on the screen,
       // so this value gets displayed.
-      pickerValue: new Date(),
+      pickerValue: new Date(value),
       focused: false,
       fieldPressed: false,
       donePressed: false,
@@ -77,7 +77,11 @@ export default class HvDateField extends PureComponent<Props, State> {
    * If the value doesn't have a picker item, returns null.
    */
   getLabelForValue = (value: Date): ?string => {
-    return value.toLocaleDateString();
+    var options = {
+      month: 'long',
+      year: 'numeric',
+    };
+    return value ? value.toLocaleDateString('en-US', options) : '';
   };
 
   /**
@@ -110,7 +114,7 @@ export default class HvDateField extends PureComponent<Props, State> {
     });
     element.setAttribute(
       'value',
-      this.state.pickerValue.toLocaleDateString() || '',
+      this.getLabelForValue(this.state.pickerValue),
     );
   };
 
