@@ -72,10 +72,10 @@
               style="Header__Back">Back</text>
         <text style="Header__Title">Dispatch Event</text>
       </header>
-      <view action="append" trigger="refresh" scroll="true" href="/advanced_behaviors/dispatch_event_append.xml"
+      <view action="append" trigger="refresh" scroll="true" href="/advanced_behaviors/dispatch_event/dispatch_event_append.xml"
             style="Main">
         <text style="Description">Dispatch events to load screens</text>
-        <view style="Button" href="/advanced_behaviors/dispatch_event_source.xml">
+        <view style="Button" href="/advanced_behaviors/dispatch_event/dispatch_event_source.xml">
           <text style="Button__Label">Open new screen</text>
         </view>
       </view>

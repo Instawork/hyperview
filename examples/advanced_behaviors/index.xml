@@ -86,7 +86,7 @@
           <text style="Item__Label">Custom: Share</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
-        <item href="/advanced_behaviors/dispatch_event.xml"
+        <item href="/advanced_behaviors/dispatch_event/dispatch_event.xml"
               key="dispatch_event"
               show-during-load="loadingScreen"
               style="Item">
