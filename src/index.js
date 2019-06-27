@@ -126,6 +126,9 @@ export function text(element, stylesheets, onUpdate, options) {
     addHref(component, element, stylesheets, onUpdate, options);
 }
 
+//export const FormatDateContext = React.createContext((date, format) => 'hello');
+export const FormatDateContext = React.createContext('hello');
+
 /**
  *
  */
@@ -368,7 +371,7 @@ export default class HyperScreen extends React.Component {
       );
     }
     const body = doc.getElementsByTagNameNS(HYPERVIEW_NS, 'body')[0];
-    return Render.renderElement(
+    const screenElement = Render.renderElement(
       body,
       this.state.styles,
       this.onUpdate,
@@ -376,6 +379,12 @@ export default class HyperScreen extends React.Component {
         screenUrl: url,
         componentRegistry: this.componentRegistry,
       },
+    );
+
+    return (
+      <FormatDateContext.Provider value={'blah'}>
+        {screenElement}
+      </FormatDateContext.Provider>
     );
   }
 

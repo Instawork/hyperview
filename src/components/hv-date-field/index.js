@@ -31,6 +31,7 @@ import { LOCAL_NAME } from 'hyperview/src/types';
 import type { Node as ReactNode } from 'react';
 import type { StyleSheet as StyleSheetType } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 import styles from './styles';
+import { FormatDateContext } from 'hyperview/src';
 
 /**
  * TODO
@@ -38,6 +39,7 @@ import styles from './styles';
 export default class HvDateField extends PureComponent<Props, State> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.DATE_FIELD;
+  static contextType = FormatDateContext;
   props: Props;
   state: State;
 
@@ -77,11 +79,8 @@ export default class HvDateField extends PureComponent<Props, State> {
    * If the value doesn't have a picker item, returns null.
    */
   getLabelForValue = (value: Date): ?string => {
-    var options = {
-      month: 'long',
-      year: 'numeric',
-    };
-    return value ? value.toLocaleDateString('en-US', options) : '';
+    const formatter = this.context;
+    return formatter(value, 'MMMM YYYY');
   };
 
   /**
@@ -303,7 +302,9 @@ export default class HvDateField extends PureComponent<Props, State> {
         onPress={this.onFieldPress}
       >
         <View {...props}>
-          <Text style={fieldTextStyle}>{label}</Text>
+          <FormatDateContext.Consumer>
+            {value => <Text style={fieldTextStyle}>{this.context}</Text>}
+          </FormatDateContext.Consumer>
           {this.renderPickerModal()}
         </View>
       </TouchableWithoutFeedback>
