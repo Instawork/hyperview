@@ -24,15 +24,15 @@ import {
   View,
 } from 'react-native';
 import { DOMParser, XMLSerializer } from 'xmldom';
-import HyperRef from 'hyperview/src/core/hyper-ref';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import Navigation from 'hyperview/src/services/navigation';
 import React from 'react';
 import VisibilityDetectingView from './VisibilityDetectingView.js';
 import { addHref, createProps, getBehaviorElements, getFirstTag, later } from 'hyperview/src/services';
 import { version } from '../package.json';
-import { ACTIONS, FORM_NAMES, NAV_ACTIONS, UPDATE_ACTIONS } from 'hyperview/src/types';
+import { ACTIONS, FORM_NAMES, NAV_ACTIONS, ON_EVENT_DISPATCH, UPDATE_ACTIONS,  } from 'hyperview/src/types';
 import urlParse from 'url-parse';
+import eventEmitter from 'tiny-emitter/instance';
 
 const AMPLITUDE_NS = Namespaces.AMPLITUDE;
 const HYPERVIEW_ALERT_NS = Namespaces.HYPERVIEW_ALERT;
@@ -495,6 +495,13 @@ export default class HyperScreen extends React.Component {
       this.onUpdateFragment(href, action, currentElement, opts);
     } else if (action === ACTIONS.SWAP) {
       this.onSwap(currentElement, opts.newElement);
+    } else if (action === ACTIONS.DISPATCH_EVENT) {
+      const { behaviorElement } = opts;
+      const eventName = behaviorElement.getAttribute('event-name');
+      if (!eventName) {
+        throw new Error('dispatch-event requires an event-name attribute to be present');
+      }
+      eventEmitter.emit(ON_EVENT_DISPATCH, eventName);
     } else {
       const { behaviorElement } = opts;
       this.onCustomUpdate(behaviorElement);

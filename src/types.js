@@ -312,6 +312,7 @@ export const TRIGGERS = Object.freeze({
   DESELECT: 'deselect',
   LOAD: 'load',
   LONG_PRESS: 'longPress',
+  ON_EVENT: 'on-event',
   PRESS_IN: 'pressIn',
   PRESS_OUT: 'pressOut',
   PRESS: 'press',
@@ -337,6 +338,7 @@ export const ACTIONS = {
   BACK: 'back',
   CLOSE: 'close',
   DEEP_LINK: 'deep-link',
+  DISPATCH_EVENT: 'dispatch-event',
   NAVIGATE: 'navigate',
   NEW: 'new',
   PREPEND: 'prepend',
@@ -388,3 +390,5 @@ export type NavigationProps = {|
   push: (routeParams: NavigationRouteParams) => void,
   replace: (routeParams: NavigationRouteParams) => void,
 |};
+
+export const ON_EVENT_DISPATCH = 'hyperview:on-event';

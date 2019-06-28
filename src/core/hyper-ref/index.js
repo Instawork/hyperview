@@ -17,6 +17,7 @@ import type {
 } from 'hyperview/src/types';
 import {
   NAV_ACTIONS,
+  ON_EVENT_DISPATCH,
   PRESS_TRIGGERS,
   TRIGGERS,
   UPDATE_ACTIONS,
@@ -24,6 +25,7 @@ import {
 import type { PressHandlers, Props, State } from './types';
 import React, { PureComponent } from 'react';
 import { RefreshControl, ScrollView, TouchableOpacity } from 'react-native';
+import eventEmitter from 'tiny-emitter/instance';
 import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
 import { getBehaviorElements } from 'hyperview/src/services';
 
@@ -40,6 +42,9 @@ export default class HyperRef extends PureComponent<Props, State> {
 
   componentDidMount() {
     this.triggerLoadBehaviors();
+
+    // Register event listener for on-event triggers
+    eventEmitter.on(ON_EVENT_DISPATCH, this.onEventDispatch);
   }
 
   componentDidUpdate(prevProps: Props) {
@@ -48,6 +53,33 @@ export default class HyperRef extends PureComponent<Props, State> {
     }
     this.triggerLoadBehaviors();
   }
+
+  componentWillUnmount() {
+    // Remove event listener for on-event triggers to avoid memory leaks
+    eventEmitter.off(ON_EVENT_DISPATCH, this.onEventDispatch);
+  }
+
+  onEventDispatch = (eventName: string) => {
+    const behaviorElements = getBehaviorElements(this.props.element);
+    const onEventBehaviors = behaviorElements.filter(e => {
+      if (e.getAttribute(ATTRIBUTES.TRIGGER) === TRIGGERS.ON_EVENT) {
+        const currentAttributeEventName = e.getAttribute('event-name');
+        if (!currentAttributeEventName) {
+          throw new Error('on-event trigger requires an event-name attribute');
+        }
+        return currentAttributeEventName === eventName;
+      }
+      return false;
+    });
+    onEventBehaviors.forEach(behaviorElement => {
+      const handler = this.createActionHandler(
+        this.props.element,
+        behaviorElement,
+        this.props.onUpdate,
+      );
+      handler();
+    });
+  };
 
   createActionHandler = (
     element: Element,
