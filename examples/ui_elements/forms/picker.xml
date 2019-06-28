@@ -139,10 +139,11 @@
         <view style="FormGroup">
           <text style="label">Default picker field</text>
           <date-field field-style="Input"
-                        field-text-style="Input__Text"
-                        modal-style="PickerModal"
-                        modal-text-style="PickerModal__text"
-                        placeholder="Select choice"
+                      format="MMMM D, YYYY"
+                      field-text-style="Input__Text"
+                      modal-style="PickerModal"
+                      modal-text-style="PickerModal__text"
+                      placeholder="Select choice"
           />
           <picker-field field-style="Input"
                         field-text-style="Input__Text"

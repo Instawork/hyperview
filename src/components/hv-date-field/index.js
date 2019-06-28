@@ -50,11 +50,11 @@ export default class HvDateField extends PureComponent<Props, State> {
     this.state = {
       // on iOS, value is used to display the selected choice when
       // the picker modal is hidden
-      value: new Date(value),
+      value: value ? new Date(value) : null,
       // on iOS, pickerValue is used to display the selected choice
       // in the picker modal. On Android, the picker is shown in-line on the screen,
       // so this value gets displayed.
-      pickerValue: new Date(value),
+      pickerValue: value ? new Date(value) : new Date(),
       focused: false,
       fieldPressed: false,
       donePressed: false,
@@ -75,20 +75,10 @@ export default class HvDateField extends PureComponent<Props, State> {
   };
 
   /**
-   * Gets the label from the picker items for the given value.
-   * If the value doesn't have a picker item, returns null.
-   */
-  getLabelForValue = (value: Date): ?string => {
-    const formatter = this.context;
-    return formatter(value, 'MMMM YYYY');
-  };
-
-  /**
    * Shows the picker, defaulting to the field's value.
    */
   onFieldPress = () => {
     this.setState({
-      pickerValue: this.state.value,
       focused: true,
     });
   };
@@ -111,10 +101,7 @@ export default class HvDateField extends PureComponent<Props, State> {
       focused: false,
       value: this.state.pickerValue,
     });
-    element.setAttribute(
-      'value',
-      this.getLabelForValue(this.state.pickerValue),
-    );
+    element.setAttribute('value', this.state.pickerValue.toISOString());
   };
 
   /**
@@ -139,26 +126,6 @@ export default class HvDateField extends PureComponent<Props, State> {
         maximumDate={maximumDate}
       />
     );
-
-    // Gets all of the <picker-item> elements. All picker item elements
-    // with a value and label are turned into options for the picker.
-    const children: Array<ReactNode> = Array.from(
-      element.getElementsByTagNameNS(
-        Namespaces.HYPERVIEW,
-        LOCAL_NAME.PICKER_ITEM,
-      ),
-    )
-      .filter(Boolean)
-      .map((item: Element) => {
-        const label: ?DOMString = item.getAttribute('label');
-        const value: ?DOMString = item.getAttribute('value');
-        if (!label || value === null) {
-          return null;
-        }
-        return React.createElement(Picker.Item, { label, value });
-      });
-
-    return React.createElement(Picker, props, ...children);
   };
 
   /**
@@ -256,6 +223,35 @@ export default class HvDateField extends PureComponent<Props, State> {
     return <View style={fieldStyle}>{pickerComponent}</View>;
   };
 
+  renderLabel = (formatter): ReactNode => {
+    const element: Element = this.props.element;
+    const value: ?Date = this.state.value;
+    const stylesheets: StyleSheets = this.props.stylesheets;
+    const options: HvComponentOptions = this.props.options;
+    const placeholderTextColor: ?DOMString = element.getAttribute(
+      'placeholderTextColor',
+    );
+    const focused: boolean = this.state.focused;
+    const pressed: boolean = this.state.fieldPressed;
+    const fieldTextStyle = createStyleProp(element, stylesheets, {
+      ...options,
+      focused,
+      pressed,
+      styleAttr: 'field-text-style',
+    });
+    if (!value && placeholderTextColor) {
+      fieldTextStyle.push({ color: placeholderTextColor });
+    }
+
+    const formatString = element.getAttribute('format');
+
+    const label: string = value
+      ? formatter(value, formatString)
+      : element.getAttribute('placeholder') || '';
+
+    return <Text style={fieldTextStyle}>{label}</Text>;
+  };
+
   /**
    * On iOS, we render a view containing a text label. Pressing the view opens a modal with a system picker and
    * action buttons along the bottom of the screen. After selecting an option, the user must press the save button.
@@ -277,23 +273,6 @@ export default class HvDateField extends PureComponent<Props, State> {
       pressed,
       styleAttr: 'field-style',
     });
-    const fieldTextStyle = createStyleProp(element, stylesheets, {
-      ...options,
-      focused,
-      pressed,
-      styleAttr: 'field-text-style',
-    });
-    const value: ?DOMString = element.getAttribute('value');
-    const placeholderTextColor: ?DOMString = element.getAttribute(
-      'placeholderTextColor',
-    );
-    if (!value && placeholderTextColor) {
-      fieldTextStyle.push({ color: placeholderTextColor });
-    }
-
-    const label: string = value
-      ? value
-      : element.getAttribute('placeholder') || '';
 
     return (
       <TouchableWithoutFeedback
@@ -303,7 +282,7 @@ export default class HvDateField extends PureComponent<Props, State> {
       >
         <View {...props}>
           <FormatDateContext.Consumer>
-            {value => <Text style={fieldTextStyle}>{this.context}</Text>}
+            {formatter => this.renderLabel(formatter)}
           </FormatDateContext.Consumer>
           {this.renderPickerModal()}
         </View>

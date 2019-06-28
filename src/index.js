@@ -126,8 +126,7 @@ export function text(element, stylesheets, onUpdate, options) {
     addHref(component, element, stylesheets, onUpdate, options);
 }
 
-//export const FormatDateContext = React.createContext((date, format) => 'hello');
-export const FormatDateContext = React.createContext('hello');
+export const FormatDateContext = React.createContext((date, format) => 'hello');
 
 /**
  *
@@ -382,7 +381,7 @@ export default class HyperScreen extends React.Component {
     );
 
     return (
-      <FormatDateContext.Provider value={'blah'}>
+      <FormatDateContext.Provider value={this.props.formatDate}>
         {screenElement}
       </FormatDateContext.Provider>
     );
