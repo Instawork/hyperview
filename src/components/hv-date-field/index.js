@@ -16,7 +16,6 @@ import type {
   StyleSheets,
 } from 'hyperview/src/types';
 import {
-  DatePickerAndroid,
   DatePickerIOS,
   Modal,
   Platform,
@@ -144,7 +143,6 @@ export default class HvDateField extends PureComponent<Props, State> {
   renderPicker = (): ReactNode => {
     const minValue: ?DOMString = this.props.element.getAttribute('min');
     const maxValue: ?DOMString = this.props.element.getAttribute('max');
-    console.log('min value: ', minValue);
     const minDate: ?Date = this.createDateFromString(minValue);
     const maxDate: ?Date = this.createDateFromString(maxValue);
     const onDateChange = (value: Date) => {
@@ -242,26 +240,14 @@ export default class HvDateField extends PureComponent<Props, State> {
    * when pressed so the user can select an option. The selected option gets applied immediately. The user
    * can cancel by hitting the back button or tapping outside of the modal.
    */
-  renderAndroid = (): ReactNode => {
-    const element: Element = this.props.element;
-    const stylesheets: StyleSheets = this.props.stylesheets;
-    const options: HvComponentOptions = this.props.options;
-    const fieldStyle: StyleSheetType<*> = createStyleProp(
-      element,
-      stylesheets,
-      {
-        ...options,
-        styleAttr: 'field-style',
-      },
-    );
-    const textStyle: StyleSheetType<*> = createStyleProp(element, stylesheets, {
-      ...options,
-      styleAttr: 'field-text-style',
-    });
-    const pickerComponent = this.renderPicker();
-    return <View style={fieldStyle}>{pickerComponent}</View>;
-  };
+  // TODO: Android implementation
+  renderAndroid = (): ReactNode => null;
 
+  /**
+   * Renders the text part of the field. If the field has a selected value,
+   * use the provided format to display the value. Otherwise, uses the
+   * placeholder value and style.
+   */
   renderLabel = (formatter: Function): ReactNode => {
     const element: Element = this.props.element;
     const value: ?Date = this.state.value;
