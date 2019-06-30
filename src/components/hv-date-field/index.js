@@ -13,10 +13,10 @@ import type {
   DOMString,
   Element,
   HvComponentOptions,
-  NodeList,
   StyleSheets,
 } from 'hyperview/src/types';
 import {
+  DatePickerAndroid,
   DatePickerIOS,
   Modal,
   Platform,
@@ -27,14 +27,17 @@ import {
 import type { Props, State } from './types';
 import React, { PureComponent } from 'react';
 import { createProps, createStyleProp } from 'hyperview/src/services';
+import { FormatDateContext } from 'hyperview/src';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { Node as ReactNode } from 'react';
 import type { StyleSheet as StyleSheetType } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 import styles from './styles';
-import { FormatDateContext } from 'hyperview/src';
 
 /**
- * TODO
+ * A date field renders a form field with ISO date fields (YYYY-MM-DD).
+ * Focusing the field brings up a system-appropriate UI for date selection:
+ * - On iOS, pressing the field brings up a custom bottom sheet with a picker and action buttons.
+ * - On Android, pressing the field brings up the system date picker modal.
  */
 export default class HvDateField extends PureComponent<Props, State> {
   static namespaceURI = Namespaces.HYPERVIEW;
@@ -46,21 +49,46 @@ export default class HvDateField extends PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     const element: Element = props.element;
-    const value: ?DOMString = element.getAttribute('value');
+    const stringValue: ?DOMString = element.getAttribute('value');
+    const value: ?Date = this.createDateFromString(stringValue);
+    const pickerValue: Date = value || new Date();
     this.state = {
-      // on iOS, value is used to display the selected choice when
-      // the picker modal is hidden
-      value: value ? new Date(value) : null,
-      // on iOS, pickerValue is used to display the selected choice
-      // in the picker modal. On Android, the picker is shown in-line on the screen,
-      // so this value gets displayed.
-      pickerValue: value ? new Date(value) : new Date(),
+      // Date that's selected in the field. Can be null.
+      value,
+      // Date shown when the picker opens, must be set to a default to display.
+      pickerValue,
       focused: false,
       fieldPressed: false,
       donePressed: false,
       cancelPressed: false,
     };
   }
+
+  /**
+   * Given a ISO date string (YYYY-MM-DD), returns a Date object. If the string
+   * cannot be parsed or is falsey, returns null.
+   */
+  createDateFromString = (value: ?string): ?Date => {
+    if (!value) {
+      return null;
+    }
+    const [year, month, day] = value.split('-').map(p => parseInt(p, 10));
+    return new Date(year, month - 1, day);
+  };
+
+  /**
+   * Given a Date object, returns an ISO date string (YYYY-MM-DD). If the Date
+   * object is null, returns an empty string.
+   */
+  createStringFromDate = (date: ?Date): string => {
+    if (!date) {
+      return '';
+    }
+    const year = date.getUTCFullYear();
+    const month = date.getUTCMonth() + 1;
+    const day = date.getUTCDate();
+    return `${year}-${month}-${day}`;
+  };
 
   toggleFieldPress = () => {
     this.setState({ fieldPressed: !this.state.fieldPressed });
@@ -101,36 +129,47 @@ export default class HvDateField extends PureComponent<Props, State> {
       focused: false,
       value: this.state.pickerValue,
     });
-    element.setAttribute('value', this.state.pickerValue.toISOString());
+    // In addition to updating the state, we update the XML element to ensure the
+    // selected value gets serialized in the parent form.
+    element.setAttribute(
+      'value',
+      this.createStringFromDate(this.state.pickerValue),
+    );
   };
 
   /**
    * Renders the picker component. Picker items come from the
    * <picker-item> elements in the <picker-field> element.
    */
-  renderPicker = (style: StyleSheetType<*>): ReactNode => {
-    const element: Element = this.props.element;
-
-    const minimumDate: ?Date = null;
-    const maximumDate: ?Date = null;
+  renderPicker = (): ReactNode => {
+    const minValue: ?DOMString = this.props.element.getAttribute('min');
+    const maxValue: ?DOMString = this.props.element.getAttribute('max');
+    console.log('min value: ', minValue);
+    const minDate: ?Date = this.createDateFromString(minValue);
+    const maxDate: ?Date = this.createDateFromString(maxValue);
     const onDateChange = (value: Date) => {
       this.setState({ pickerValue: value });
     };
 
-    return (
-      <DatePickerIOS
-        date={this.state.pickerValue}
-        mode="date"
-        onDateChange={onDateChange}
-        minimumDate={maximumDate}
-        maximumDate={maximumDate}
-      />
-    );
+    const props: Object = {
+      date: this.state.pickerValue,
+      mode: 'date',
+      onDateChange,
+    };
+    if (minDate) {
+      props.minimumDate = minDate;
+    }
+    if (maxDate) {
+      props.maximumDate = maxDate;
+    }
+
+    return <DatePickerIOS {...props} />;
   };
 
   /**
    * Renders a bottom sheet with cancel/done buttons and a picker component.
    * Uses styles defined on the <picker-field> element for the modal and buttons.
+   * This is used on iOS only.
    */
   renderPickerModal = (): ReactNode => {
     const element: Element = this.props.element;
@@ -219,11 +258,11 @@ export default class HvDateField extends PureComponent<Props, State> {
       ...options,
       styleAttr: 'field-text-style',
     });
-    const pickerComponent = this.renderPicker(textStyle);
+    const pickerComponent = this.renderPicker();
     return <View style={fieldStyle}>{pickerComponent}</View>;
   };
 
-  renderLabel = (formatter): ReactNode => {
+  renderLabel = (formatter: Function): ReactNode => {
     const element: Element = this.props.element;
     const value: ?Date = this.state.value;
     const stylesheets: StyleSheets = this.props.stylesheets;
@@ -243,10 +282,10 @@ export default class HvDateField extends PureComponent<Props, State> {
       fieldTextStyle.push({ color: placeholderTextColor });
     }
 
-    const formatString = element.getAttribute('format');
+    const labelFormat = element.getAttribute('label-format');
 
     const label: string = value
-      ? formatter(value, formatString)
+      ? formatter(value, labelFormat)
       : element.getAttribute('placeholder') || '';
 
     return <Text style={fieldTextStyle}>{label}</Text>;

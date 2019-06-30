@@ -22,7 +22,7 @@ export type Props = {|
 
 export type State = {|
   value: ?Date,
-  pickerValue: ?Date,
+  pickerValue: Date,
   focused: boolean,
   fieldPressed: boolean,
   donePressed: boolean,

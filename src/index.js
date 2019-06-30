@@ -126,7 +126,9 @@ export function text(element, stylesheets, onUpdate, options) {
     addHref(component, element, stylesheets, onUpdate, options);
 }
 
-export const FormatDateContext = React.createContext((date, format) => 'hello');
+// Provides the date format function to use in date fields
+// in the screen.
+export const FormatDateContext = React.createContext();
 
 /**
  *
