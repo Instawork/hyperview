@@ -128,7 +128,7 @@ export function text(element, stylesheets, onUpdate, options) {
 
 // Provides the date format function to use in date fields
 // in the screen.
-export const FormatDateContext = React.createContext();
+export const DateFormatContext = React.createContext();
 
 /**
  *
@@ -383,9 +383,9 @@ export default class HyperScreen extends React.Component {
     );
 
     return (
-      <FormatDateContext.Provider value={this.props.formatDate}>
+      <DateFormatContext.Provider value={this.props.formatDate}>
         {screenElement}
-      </FormatDateContext.Provider>
+      </DateFormatContext.Provider>
     );
   }
 
