@@ -31,7 +31,7 @@ import type {
 import type { Props, State } from './types';
 import React, { PureComponent } from 'react';
 import { createProps, createStyleProp } from 'hyperview/src/services';
-import { FormatDateContext } from 'hyperview/src';
+import { DateFormatContext } from 'hyperview/src';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { Node as ReactNode } from 'react';
 import type { StyleSheet as StyleSheetType } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
@@ -46,7 +46,6 @@ import styles from './styles';
 export default class HvDateField extends PureComponent<Props, State> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.DATE_FIELD;
-  static contextType = FormatDateContext;
   props: Props;
   state: State;
 
@@ -69,6 +68,7 @@ export default class HvDateField extends PureComponent<Props, State> {
   }
 
   componentDidUpdate = async (prevProps: Props, prevState: State) => {
+    // TODO: move to React hooks once we adopt them across the codebase.
     if (Platform.OS === 'android') {
       if (!prevState.fieldPressed && this.state.fieldPressed) {
         this.showPickerAndroid();
@@ -103,15 +103,15 @@ export default class HvDateField extends PureComponent<Props, State> {
   };
 
   toggleFieldPress = () => {
-    this.setState({ fieldPressed: !this.state.fieldPressed });
+    this.setState(prevState => ({ fieldPressed: !prevState.fieldPressed }));
   };
 
   toggleCancelPress = () => {
-    this.setState({ cancelPressed: !this.state.cancelPressed });
+    this.setState(prevState => ({ cancelPressed: !prevState.cancelPressed }));
   };
 
   toggleSavePress = () => {
-    this.setState({ donePressed: !this.state.donePressed });
+    this.setState(prevState => ({ donePressed: !prevState.donePressed }));
   };
 
   /**
@@ -137,10 +137,10 @@ export default class HvDateField extends PureComponent<Props, State> {
    */
   onModalDone = () => {
     const element: Element = this.props.element;
-    this.setState({
+    this.setState(prevState => ({
       focused: false,
-      value: this.state.pickerValue,
-    });
+      value: prevState.pickerValue,
+    }));
     // In addition to updating the state, we update the XML element to ensure the
     // selected value gets serialized in the parent form.
     element.setAttribute(
@@ -157,11 +157,17 @@ export default class HvDateField extends PureComponent<Props, State> {
   showPickerAndroid = async () => {
     const maxValue: ?DOMString = this.props.element.getAttribute('max');
     const minValue: ?DOMString = this.props.element.getAttribute('min');
+    const minDate: ?Date = this.createDateFromString(minValue);
+    const maxDate: ?Date = this.createDateFromString(maxValue);
     const options: DatePickerAndroidOptions = {
       date: this.state.pickerValue,
-      maxDate: this.createDateFromString(maxValue),
-      minDate: this.createDateFromString(minValue),
     };
+    if (minDate) {
+      options.minDate = minDate;
+    }
+    if (maxDate) {
+      options.maxDate = maxDate;
+    }
     const openAction: DatePickerOpenAction = await DatePickerAndroid.open(
       options,
     );
@@ -344,9 +350,9 @@ export default class HvDateField extends PureComponent<Props, State> {
         onPress={this.onFieldPress}
       >
         <View {...props}>
-          <FormatDateContext.Consumer>
+          <DateFormatContext.Consumer>
             {formatter => this.renderLabel(formatter)}
-          </FormatDateContext.Consumer>
+          </DateFormatContext.Consumer>
           {iosPicker}
         </View>
       </TouchableWithoutFeedback>
