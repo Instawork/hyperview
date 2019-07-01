@@ -24,10 +24,6 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import type {
-  Options as DatePickerAndroidOptions,
-  DatePickerOpenAction,
-} from 'react-native/Libraries/Components/DatePickerAndroid/DatePickerAndroidTypes';
 import type { Props, State } from './types';
 import React, { PureComponent } from 'react';
 import { createProps, createStyleProp } from 'hyperview/src/services';
@@ -159,7 +155,7 @@ export default class HvDateField extends PureComponent<Props, State> {
     const minValue: ?DOMString = this.props.element.getAttribute('min');
     const minDate: ?Date = this.createDateFromString(minValue);
     const maxDate: ?Date = this.createDateFromString(maxValue);
-    const options: DatePickerAndroidOptions = {
+    const options: Object = {
       date: this.state.pickerValue,
     };
     if (minDate) {
@@ -168,9 +164,7 @@ export default class HvDateField extends PureComponent<Props, State> {
     if (maxDate) {
       options.maxDate = maxDate;
     }
-    const openAction: DatePickerOpenAction = await DatePickerAndroid.open(
-      options,
-    );
+    const openAction = await DatePickerAndroid.open(options);
     const { action, year, month, day } = openAction;
     if (action === DatePickerAndroid.dateSetAction) {
       // Selected year, month (0-11), day
