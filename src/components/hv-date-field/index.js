@@ -16,6 +16,7 @@ import type {
   StyleSheets,
 } from 'hyperview/src/types';
 import {
+  DatePickerAndroid,
   DatePickerIOS,
   Modal,
   Platform,
@@ -23,6 +24,10 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import type {
+  Options as DatePickerAndroidOptions,
+  DatePickerOpenAction,
+} from 'react-native/Libraries/Components/DatePickerAndroid/DatePickerAndroidTypes';
 import type { Props, State } from './types';
 import React, { PureComponent } from 'react';
 import { createProps, createStyleProp } from 'hyperview/src/services';
@@ -62,6 +67,14 @@ export default class HvDateField extends PureComponent<Props, State> {
       cancelPressed: false,
     };
   }
+
+  componentDidUpdate = async (prevProps: Props, prevState: State) => {
+    if (Platform.OS === 'android') {
+      if (!prevState.fieldPressed && this.state.fieldPressed) {
+        this.showPickerAndroid();
+      }
+    }
+  };
 
   /**
    * Given a ISO date string (YYYY-MM-DD), returns a Date object. If the string
@@ -137,10 +150,36 @@ export default class HvDateField extends PureComponent<Props, State> {
   };
 
   /**
-   * Renders the picker component. Picker items come from the
-   * <picker-item> elements in the <picker-field> element.
+   * Date picker on Android is implemented as an async function.
+   * This gets triggered when field pressed state changes from false to true.
+   * This is used on Android only.
    */
-  renderPicker = (): ReactNode => {
+  showPickerAndroid = async () => {
+    const maxValue: ?DOMString = this.props.element.getAttribute('max');
+    const minValue: ?DOMString = this.props.element.getAttribute('min');
+    const options: DatePickerAndroidOptions = {
+      date: this.state.pickerValue,
+      maxDate: this.createDateFromString(maxValue),
+      minDate: this.createDateFromString(minValue),
+    };
+    const openAction: DatePickerOpenAction = await DatePickerAndroid.open(
+      options,
+    );
+    const { action, year, month, day } = openAction;
+    if (action === DatePickerAndroid.dateSetAction) {
+      // Selected year, month (0-11), day
+      this.setState({ pickerValue: new Date(year, month, day) });
+      this.onModalDone();
+    } else {
+      this.onModalCancel();
+    }
+  };
+
+  /**
+   * Renders the date picker component, with the given min and max dates.
+   * This is used on iOS only.
+   */
+  renderPickeriOS = (): ReactNode => {
     const minValue: ?DOMString = this.props.element.getAttribute('min');
     const maxValue: ?DOMString = this.props.element.getAttribute('max');
     const minDate: ?Date = this.createDateFromString(minValue);
@@ -169,7 +208,11 @@ export default class HvDateField extends PureComponent<Props, State> {
    * Uses styles defined on the <picker-field> element for the modal and buttons.
    * This is used on iOS only.
    */
-  renderPickerModal = (): ReactNode => {
+  renderPickerModaliOS = (): ReactNode => {
+    if (Platform.OS === 'android') {
+      return null;
+    }
+
     const element: Element = this.props.element;
     const stylesheets: StyleSheets = this.props.stylesheets;
     const options: HvComponentOptions = this.props.options;
@@ -228,20 +271,12 @@ export default class HvDateField extends PureComponent<Props, State> {
                 <Text style={doneTextStyle}>{doneLabel}</Text>
               </TouchableWithoutFeedback>
             </View>
-            {this.renderPicker()}
+            {this.renderPickeriOS()}
           </View>
         </View>
       </Modal>
     );
   };
-
-  /**
-   * On Android, we render a view containing the system picker. Android's system picker opens a modal
-   * when pressed so the user can select an option. The selected option gets applied immediately. The user
-   * can cancel by hitting the back button or tapping outside of the modal.
-   */
-  // TODO: Android implementation
-  renderAndroid = (): ReactNode => null;
 
   /**
    * Renders the text part of the field. If the field has a selected value,
@@ -269,7 +304,6 @@ export default class HvDateField extends PureComponent<Props, State> {
     }
 
     const labelFormat = element.getAttribute('label-format');
-
     const label: string = value
       ? formatter(value, labelFormat)
       : element.getAttribute('placeholder') || '';
@@ -278,11 +312,12 @@ export default class HvDateField extends PureComponent<Props, State> {
   };
 
   /**
-   * On iOS, we render a view containing a text label. Pressing the view opens a modal with a system picker and
-   * action buttons along the bottom of the screen. After selecting an option, the user must press the save button.
-   * To cancel, the user must press the cancel button.
+   * Renders the field (view and text label).
+   * Pressing the field will focus it and:
+   * - on iOS, bring up a bottom sheet with date picker
+   * - on Android, show the system date picker
    */
-  renderiOS = (): ReactNode => {
+  render = (): ReactNode => {
     const element: Element = this.props.element;
     const stylesheets: StyleSheets = this.props.stylesheets;
     const options: HvComponentOptions = this.props.options;
@@ -299,6 +334,9 @@ export default class HvDateField extends PureComponent<Props, State> {
       styleAttr: 'field-style',
     });
 
+    const iosPicker =
+      Platform.OS === 'ios' ? this.renderPickerModaliOS() : null;
+
     return (
       <TouchableWithoutFeedback
         onPressIn={this.toggleFieldPress}
@@ -309,13 +347,9 @@ export default class HvDateField extends PureComponent<Props, State> {
           <FormatDateContext.Consumer>
             {formatter => this.renderLabel(formatter)}
           </FormatDateContext.Consumer>
-          {this.renderPickerModal()}
+          {iosPicker}
         </View>
       </TouchableWithoutFeedback>
     );
   };
-
-  render(): ReactNode {
-    return Platform.OS === 'ios' ? this.renderiOS() : this.renderAndroid();
-  }
 }
