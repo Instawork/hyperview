@@ -78,7 +78,11 @@
       <style id="PickerModal"
              backgroundColor="white"
              borderTopColor="#E1E1E1"
-             borderTopWidth="1" />
+             borderTopWidth="1"
+             shadowOffsetX="0"
+             shadowOffsetY="-5"
+             shadowOpacity="0.2"
+             shadowRadius="5" />
       <style id="PickerModal__text"
              color="blue"
              fontSize="16"
@@ -135,151 +139,125 @@
       </header>
       <view scroll="true"
             style="Main">
-        <text style="Description">
-            Date fields open a system-appropriate modal to choose a date value. On iOS, styles can be applied to the modal and save/cancel labels.
-        </text>
-        <text style="Description">
-            Label formatting is determined by the client. In these examples, wer're using moment.js for the formatting.
-        </text>
+        <text style="Description">Date fields open a system-appropriate modal to choose a date value. On iOS, styles can be applied to the modal and save/cancel labels.</text>
+        <text style="Description">Label formatting is determined by the client. In these examples, wer're using moment.js for the formatting.</text>
         <view style="FormGroup">
           <text style="label">Default date field</text>
           <date-field field-style="Input"
-                      label-format="MMMM D, YYYY"
                       field-text-style="Input__Text"
+                      label-format="MMMM D, YYYY"
                       modal-style="PickerModal"
                       modal-text-style="PickerModal__text"
                       placeholder="Select date"
-                      placeholderTextColor="#8D9494"
-          />
+                      placeholderTextColor="#8D9494" />
         </view>
-
         <view style="FormGroup">
           <text style="label">Filled date field</text>
           <date-field field-style="Input"
-                      value="2018-03-07"
-                      label-format="MMMM D, YYYY"
                       field-text-style="Input__Text"
+                      label-format="MMMM D, YYYY"
                       modal-style="PickerModal"
                       modal-text-style="PickerModal__text"
                       placeholder="Select date"
                       placeholderTextColor="#8D9494"
-          />
+                      value="2018-03-07" />
         </view>
-
         <view style="FormGroup">
           <text style="label">Label format examples (using moment.js)</text>
           <date-field field-style="Input"
-                      value="2018-03-07"
+                      field-text-style="Input__Text"
                       label-format="MMMM D, YYYY"
-                      field-text-style="Input__Text"
                       modal-style="PickerModal"
                       modal-text-style="PickerModal__text"
                       placeholder="Select date"
                       placeholderTextColor="#8D9494"
-          />
+                      value="2018-03-07" />
           <date-field field-style="Input"
-                      value="2018-03-07"
+                      field-text-style="Input__Text"
                       label-format="L"
-                      field-text-style="Input__Text"
                       modal-style="PickerModal"
                       modal-text-style="PickerModal__text"
                       placeholder="Select date"
                       placeholderTextColor="#8D9494"
-          />
+                      value="2018-03-07" />
           <date-field field-style="Input"
-                      value="2018-03-07"
-                      label-format="MMMM [the] Do, [`]YY"
                       field-text-style="Input__Text"
+                      label-format="MMMM [the] Do, [`]YY"
                       modal-style="PickerModal"
                       modal-text-style="PickerModal__text"
                       placeholder="Select date"
                       placeholderTextColor="#8D9494"
-          />
+                      value="2018-03-07" />
         </view>
-
         <view style="FormGroup">
           <text style="label">Min date (May 5, 2018)</text>
           <date-field field-style="Input"
-                      min="2018-05-05"
-                      label-format="MMMM D, YYYY"
                       field-text-style="Input__Text"
+                      label-format="MMMM D, YYYY"
+                      min="2018-05-05"
                       modal-style="PickerModal"
                       modal-text-style="PickerModal__text"
                       placeholder="Select date"
-                      placeholderTextColor="#8D9494"
-          />
+                      placeholderTextColor="#8D9494" />
         </view>
-
         <view style="FormGroup">
           <text style="label">Max date (May 5, 2024)</text>
           <date-field field-style="Input"
-                      max="2024-05-05"
-                      label-format="MMMM D, YYYY"
                       field-text-style="Input__Text"
+                      label-format="MMMM D, YYYY"
+                      max="2024-05-05"
                       modal-style="PickerModal"
                       modal-text-style="PickerModal__text"
                       placeholder="Select date"
-                      placeholderTextColor="#8D9494"
-          />
+                      placeholderTextColor="#8D9494" />
         </view>
-
         <view style="FormGroup">
           <text style="label">Min/Max date (May 5, 2018 - 2024)</text>
           <date-field field-style="Input"
-                      min="2018-05-05"
-                      max="2024-05-05"
-                      label-format="MMMM D, YYYY"
                       field-text-style="Input__Text"
+                      label-format="MMMM D, YYYY"
+                      max="2024-05-05"
+                      min="2018-05-05"
                       modal-style="PickerModal"
                       modal-text-style="PickerModal__text"
                       placeholder="Select date"
-                      placeholderTextColor="#8D9494"
-          />
+                      placeholderTextColor="#8D9494" />
         </view>
-
         <view style="FormGroup">
           <text style="label">Validation error</text>
           <date-field field-style="Input Input--Error"
-                      label-format="MMMM D, YYYY"
                       field-text-style="Input__Text Input__Text--Error"
+                      label-format="MMMM D, YYYY"
                       modal-style="PickerModal"
                       modal-text-style="PickerModal__text"
                       placeholder="Select date"
-                      placeholderTextColor="#8D9494"
-          />
+                      placeholderTextColor="#8D9494" />
           <text style="help help--error">Please select a date</text>
         </view>
-
         <view style="FormGroup">
           <text style="label">Filled validation error</text>
           <date-field field-style="Input Input--Error"
-                      value="2018-03-07"
-                      label-format="MMMM D, YYYY"
                       field-text-style="Input__Text Input__Text--Error"
+                      label-format="MMMM D, YYYY"
                       modal-style="PickerModal"
                       modal-text-style="PickerModal__text"
                       placeholder="Select date"
                       placeholderTextColor="#8D9494"
-          />
+                      value="2018-03-07" />
           <text style="help help--error">Please select a different date</text>
         </view>
-
         <view style="FormGroup">
           <text style="label">Customized</text>
-
           <date-field field-style="InputCustom"
-                      value="2018-03-07"
-                      label-format="MMMM D, YYYY"
                       field-text-style="InputCustom__Text"
+                      label-format="MMMM D, YYYY"
                       modal-style="PickerModalCustom"
                       modal-text-style="PickerModalCustom__text"
                       placeholder="Select date"
                       placeholderTextColor="#8D9494"
-          />
+                      value="2018-03-07" />
         </view>
-
       </view>
     </body>
   </screen>
 </doc>
-
