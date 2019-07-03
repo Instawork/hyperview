@@ -142,6 +142,16 @@
         <text style="Description">Date fields open a system-appropriate modal to choose a date value. On iOS, styles can be applied to the modal and save/cancel labels.</text>
         <text style="Description">Label formatting is determined by the client. In these examples, wer're using moment.js for the formatting.</text>
         <view style="FormGroup">
+          <text style="label"></text>
+          <text style="label"></text>
+          <text style="label"></text>
+          <text style="label"></text>
+          <text style="label"></text>
+          <text style="label"></text>
+          <text style="label"></text>
+          <text style="label"></text>
+          <text style="label"></text>
+          <text style="label"></text>
           <text style="label">Default date field</text>
           <date-field field-style="Input"
                       field-text-style="Input__Text"
