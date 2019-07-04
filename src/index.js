@@ -498,8 +498,21 @@ export default class HyperScreen extends React.Component {
     } else if (action === ACTIONS.DISPATCH_EVENT) {
       const { behaviorElement } = opts;
       const eventName = behaviorElement.getAttribute('event-name');
+      const trigger = behaviorElement.getAttribute('trigger');
+      // Check for event loop formation
+      if (trigger === 'on-event') {
+        throw new Error('trigger="on-event" and action="dispatch-event" cannot be used on the same element');
+      }
       if (!eventName) {
         throw new Error('dispatch-event requires an event-name attribute to be present');
+      }
+      // Log the dispatched action before emitting to ensure it appears first in logs
+      if (__DEV__) {
+        const emitterElement: Element = behaviorElement.cloneNode(false);
+        console.log(
+          `[dispatch-event] action [${eventName}] emitted by:`,
+          this.serializer.serializeToString(emitterElement),
+        );
       }
       eventEmitter.emit(ON_EVENT_DISPATCH, eventName);
     } else {
