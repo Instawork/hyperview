@@ -64,6 +64,11 @@
              marginRight="24" />
       <style id="Container"
              flex="1" />
+      <style id="Append"
+             marginLeft="24"
+             fontSize="16"
+             color="hotpink"
+      />
     </styles>
     <body style="Body">
       <header style="Header">
