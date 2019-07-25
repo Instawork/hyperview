@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "url-parse": "1.4.3",
-    "xmldom": "0.1.27"
+    "xmldom": "git+ssh://git@github.com:Instawork/xmldom#805273f91687bd4ecf541577f6ed9a0dd17405c9"
   },
   "peerDependencies": {
     "react": ">= 16.6.0",
