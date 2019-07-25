@@ -503,10 +503,10 @@ export default class HyperScreen extends React.Component {
       const once = behaviorElement.getAttribute('once');
       const delay = behaviorElement.getAttribute('delay');
 
-      if (once && ranOnce) {
+      if (once === 'true' && ranOnce === 'true') {
         return;
-      } else if (once) {
-        behaviorElement.setAttribute('ran-once', true);
+      } else if (once === 'true') {
+        behaviorElement.setAttribute('ran-once', 'true');
       }
 
       // Check for event loop formation
@@ -530,7 +530,7 @@ export default class HyperScreen extends React.Component {
       }
 
       if (delay) {
-        setTimeout(dispatchEvent, delay);
+        setTimeout(dispatchEvent, parseInt(delay, 10));
       } else {
         dispatchEvent();
       }
