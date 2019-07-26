@@ -23,7 +23,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { DOMParser, XMLSerializer } from 'xmldom';
+import { DOMParser, XMLSerializer } from 'xmldom-instawork';
 import HyperRef from 'hyperview/src/core/hyper-ref';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import Navigation from 'hyperview/src/services/navigation';
