@@ -2,7 +2,7 @@
 
 import * as Components from 'hyperview/src/services/components';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
-import { DOMParser } from 'xmldom';
+import { DOMParser } from 'xmldom-instawork';
 import type { HvComponent } from 'hyperview/src/types';
 import type { Node } from 'react';
 import { getFirstTag } from 'hyperview/src/services';
