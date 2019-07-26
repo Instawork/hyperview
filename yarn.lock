@@ -9118,15 +9118,16 @@ xmldoc@^0.4.0:
   dependencies:
     sax "~1.1.1"
 
+xmldom-instawork@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/xmldom-instawork/-/xmldom-instawork-0.0.1.tgz#57c7351a68126d3407c6a685588bc51eef8e3623"
+  integrity sha512-i+txX8H1jFxoAPgJyAHhErk5+ede5pb51w0yknWL6ITPrv4Vu8W1GRzAYh5eH32HKw5n5yh3IWvGjcidKRa6DQ==
+  dependencies:
+    string.prototype.matchall "3.0.1"
+
 xmldom@0.1.x:
   version "0.1.27"
   resolved "https://registry.yarnpkg.com/xmldom/-/xmldom-0.1.27.tgz#d501f97b3bdb403af8ef9ecc20573187aadac0e9"
-
-"xmldom@git+ssh://git@github.com:Instawork/xmldom#805273f91687bd4ecf541577f6ed9a0dd17405c9":
-  version "0.1.28"
-  resolved "git+ssh://git@github.com:Instawork/xmldom#805273f91687bd4ecf541577f6ed9a0dd17405c9"
-  dependencies:
-    string.prototype.matchall "3.0.1"
 
 xpipe@^1.0.5:
   version "1.0.5"
