@@ -27,7 +27,7 @@ This repo contains a React Native implementation of the Hyperview Client. It can
 The Hyperview client only has two required dependencies:
 
 - url-parse 1.4.3
-- xmldom 0.1.27
+- xmldom-instawork 0.0.1
 
 More importantly, the client is designed to be incorporated into an existing React Native project, and thus has the following peer dependencies:
 

@@ -12,7 +12,7 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import type { Props, State } from './types';
 import React, { PureComponent } from 'react';
-import { DOMParser } from 'xmldom';
+import { DOMParser } from 'xmldom-instawork';
 import { FlatList } from 'react-native';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { getBehaviorElements } from 'hyperview/src/services';

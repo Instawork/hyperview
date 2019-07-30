@@ -1,6 +1,6 @@
 {
   "name": "hyperview",
-  "version": "0.14.0",
+  "version": "0.15.1",
   "main": "lib/index.js",
   "description": "React Native client for Hyperview XML",
   "homepage": "https://hyperview.org",
@@ -41,11 +41,11 @@
   "dependencies": {
     "tiny-emitter": "2.1.0",
     "url-parse": "1.4.3",
-    "xmldom": "0.1.27"
+    "xmldom-instawork": "0.0.1"
   },
   "peerDependencies": {
-    "react": ">= 16.2.0",
-    "react-native": " >= 0.52.2",
+    "react": ">= 16.6.0",
+    "react-native": " >= 0.57.2",
     "react-native-keyboard-aware-scrollview": "^2.0.0"
   },
   "devDependencies": {
