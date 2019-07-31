@@ -63,7 +63,7 @@ export default class HvDateField extends PureComponent<Props, State> {
     };
   }
 
-  componentDidUpdate = async (prevProps: Props, prevState: State) => {
+  componentDidUpdate = (prevProps: Props, prevState: State) => {
     // TODO: move to React hooks once we adopt them across the codebase.
     if (Platform.OS === 'android') {
       if (!prevState.fieldPressed && this.state.fieldPressed) {
