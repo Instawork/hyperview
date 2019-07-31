@@ -42,12 +42,20 @@ const getOptions = (dialogTitle: ?DOMString, subject: ?DOMString): Options => {
 };
 
 // `url` is not supported on android. See https://facebook.github.io/react-native/docs/share
-const platformSpecificContent = content => {
-  if (Platform.OS === 'android' && content.url) {
-    const msg = content.message + ' ' + content.url;
-    return { ...content, message: msg };
+const platformSpecificContent = (
+  message: ?DOMString,
+  title: ?DOMString,
+  url: ?DOMString,
+): ?Content => {
+  const content = getContent(message, title, url);
+  if (content) {
+    if (Platform.OS === 'android' && content.url) {
+      const msg = `${content.message} ${content.url}`;
+      return { ...content, message: msg };
+    }
+    return content;
   }
-  return content;
+  return null;
 };
 
 export default {
@@ -69,10 +77,10 @@ export default {
     const title: ?DOMString = element.getAttributeNS(Namespaces.SHARE, 'title');
     const url: ?DOMString = element.getAttributeNS(Namespaces.SHARE, 'url');
 
-    const content = getContent(message, title, url);
+    const content = platformSpecificContent(message, title, url);
     if (content) {
       const options = getOptions(dialogTitle, subject);
-      Share.share(platformSpecificContent(content), options);
+      Share.share(content, options);
     }
   },
 };
