@@ -15,6 +15,7 @@
     "expo": "^33.0.2",
     "expo-cli": "^2.11.6",
     "hyperview": "*",
+    "moment": "^2.24.0",
     "react": "16.8.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
     "react-native-keyboard-aware-scrollview": "^2.0.0",

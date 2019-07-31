@@ -8,6 +8,7 @@
 
 import React, { PureComponent } from 'react';
 import Hyperview from 'hyperview';
+import moment from 'moment';
 
 export default class HyperviewScreen extends React.PureComponent {
   goBack = (params, key) => {
@@ -45,6 +46,8 @@ export default class HyperviewScreen extends React.PureComponent {
     navigation.push('Modal', params);
   }
 
+  formatDate = (date, format) => moment(date).format(format);
+
   /**
    * fetch function used by Hyperview screens. By default, it adds
    * header to prevent caching requests.
@@ -77,6 +80,7 @@ export default class HyperviewScreen extends React.PureComponent {
         openModal={this.openModal}
         push={this.push}
         replace={navigation.replace}
+        formatDate={this.formatDate}
       />
     );
   }

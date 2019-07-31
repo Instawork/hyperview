@@ -70,7 +70,7 @@
     "mkdirp": "0.5.1",
     "prettier": "1.15.3",
     "pretty-quick": "1.8.0",
-    "react": "16.2.0",
+    "react": "16.6.0",
     "react-dom": "16.2.1",
     "react-native": "0.52.2",
     "react-native-keyboard-aware-scrollview": "2.0.0",

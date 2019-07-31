@@ -113,6 +113,15 @@
           </view>
           <text style="Item__Chevron">&gt;</text>
         </item>
+        <item href="/ui_elements/forms/date_field.xml"
+              key="date_field"
+              show-during-load="loadingScreen"
+              style="Item">
+          <view style="Item__Left">
+            <text style="Item__Label">Date field</text>
+          </view>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
       </list>
     </body>
   </screen>

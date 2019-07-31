@@ -127,6 +127,10 @@ export function text(element, stylesheets, onUpdate, options) {
     addHref(component, element, stylesheets, onUpdate, options);
 }
 
+// Provides the date format function to use in date fields
+// in the screen.
+export const DateFormatContext = React.createContext();
+
 /**
  *
  */
@@ -369,7 +373,7 @@ export default class HyperScreen extends React.Component {
       );
     }
     const body = doc.getElementsByTagNameNS(HYPERVIEW_NS, 'body')[0];
-    return Render.renderElement(
+    const screenElement = Render.renderElement(
       body,
       this.state.styles,
       this.onUpdate,
@@ -377,6 +381,12 @@ export default class HyperScreen extends React.Component {
         screenUrl: url,
         componentRegistry: this.componentRegistry,
       },
+    );
+
+    return (
+      <DateFormatContext.Provider value={this.props.formatDate}>
+        {screenElement}
+      </DateFormatContext.Provider>
     );
   }
 
