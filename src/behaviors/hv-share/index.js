@@ -11,7 +11,7 @@
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type { Content, Options } from './types';
 import type { DOMString, Element } from 'hyperview/src/types';
-import { Share } from 'react-native';
+import { Platform, Share } from 'react-native';
 
 const getContent = (
   message: ?DOMString,
@@ -41,6 +41,15 @@ const getOptions = (dialogTitle: ?DOMString, subject: ?DOMString): Options => {
   return {};
 };
 
+// `url` is not supported on android. See https://facebook.github.io/react-native/docs/share
+const platformSpecificContent = content => {
+  if (Platform.OS === 'android' && content.url) {
+    const msg = content.message + ' ' + content.url;
+    return { ...content, message: msg };
+  }
+  return content;
+};
+
 export default {
   action: 'share',
   callback: (element: Element) => {
@@ -63,7 +72,7 @@ export default {
     const content = getContent(message, title, url);
     if (content) {
       const options = getOptions(dialogTitle, subject);
-      Share.share(content, options);
+      Share.share(platformSpecificContent(content), options);
     }
   },
 };
