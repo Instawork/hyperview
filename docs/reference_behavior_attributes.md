@@ -25,9 +25,9 @@ The rest of the document describes in-depth how these attributes work together.
 
 ## trigger
 
-| Type                                                                                        | Required |
-| ------------------------------------------------------------------------------------------- | -------- |
-| **press** (default), longPress, pressIn, pressOut, visible, refresh, load, select, deselect | No       |
+| Type                                                                                                  | Required |
+| ----------------------------------------------------------------------------------------------------- | -------- |
+| **press** (default), longPress, pressIn, pressOut, visible, refresh, load, select, deselect, on-event | No       |
 
 ### `press`
 
@@ -119,6 +119,21 @@ These elements support the `deselect` trigger:
 
 - [`<option>`](/docs/reference_option)
 
+### `on-event`
+
+Triggers when the element captures an event with the specified `event-name`. This trigger requires an `event-name` attribute to be present and may be triggered from any hyperview screen.
+
+These elements support the `on-event` trigger:
+
+- [`<view>`](/docs/reference_view)
+- [`<text>`](/docs/reference_text)
+
+The `on-event` trigger may also be combined with [`once`](#once) and [`delay`](#delay).
+
+> **Debugging tip**
+>
+> In `__DEV__` mode, the console will log the element which captures an event
+
 ### Supported triggers
 
 Not all elements support behavior attributes or `<behavior>` elements. Those that do may not support every trigger. This list below defines which elements can have behaviors, and which triggers they support.
@@ -134,6 +149,7 @@ Not all elements support behavior attributes or `<behavior>` elements. Those tha
 - [visible](#visible)
 - [refresh](#refresh)
 - [load](#load)
+- [on-event](#on-event)
 
 #### `<text>`
 
@@ -145,6 +161,7 @@ Not all elements support behavior attributes or `<behavior>` elements. Those tha
   - [visible](#visible)
   - [refresh](#refresh)
   - [load](#load)
+  - [on-event](#on-event)
 
 #### `<image>`
 
@@ -279,9 +296,9 @@ The `verb` attribute defines the HTTP method used to request the content specifi
 
 ## action
 
-| Type                                                                                                       | Required |
-| ---------------------------------------------------------------------------------------------------------- | -------- |
-| **push** (default), new, back, close, navigate, deep-link, replace, replace-inner, append, prepend, reload | No       |
+| Type                                                                                                                       | Required |
+| -------------------------------------------------------------------------------------------------------------------------- | -------- |
+| **push** (default), new, back, close, navigate, deep-link, replace, replace-inner, append, prepend, reload, dispatch-event | No       |
 
 The `action` attribute defines what to do with the Hyperview XML resource described by the `href` attribute. The possible actions are divided into **navigation actions**, which load or navigate to a screen, and **update actions**, which update the elements on the current screen.
 
@@ -301,6 +318,7 @@ The update actions include:
 - [`replace-inner`](#replace-inner)
 - [`append`](#append)
 - [`prepend`](#prepend)
+- [`dispatch-event`](#dispatch-event)
 
 ### `push`
 
@@ -423,6 +441,16 @@ When using `append`, the fetched content must be a document fragment, ie not a `
 The `prepend` update action will add the fetched content as the first child of the target element on the current screen. By default, the target element is the element that triggered the behavior execution, although that can be controlled with the [`target`](#target) attribute.
 
 When using `append`, the fetched content must be a document fragment, ie not a `<doc>` or `<screen>` but a `<view>`, `<text>`, etc.
+
+### `dispatch-event`
+
+The `dispatch-event` action fires an event specified with the `event-name` attribute on the element. The element must have an `event-name` attribute. A matching event (having same `event-name`) will then trigger [`on-event`](#on-event) behavior on any hyperview screen(s).
+
+The `dispatch-event` action may also be combined with [`once`](#once) and [`delay`](#delay).
+
+> **Debugging tip**
+>
+> In `__DEV__` mode, the console will log the element which dispatches an event
 
 ## target
 
