@@ -121,7 +121,7 @@ These elements support the `deselect` trigger:
 
 ### `on-event`
 
-Triggers when the element captures an event with the specified `event-name`. This trigger requires an `event-name` attribute to be present.
+Triggers when the element captures an event with the specified `event-name`. This trigger requires an `event-name` attribute to be present and may be triggered from any hyperview screen.
 
 These elements support the `on-event` trigger:
 
@@ -444,7 +444,7 @@ When using `append`, the fetched content must be a document fragment, ie not a `
 
 ### `dispatch-event`
 
-The `dispatch-event` action fires an event specified with the `event-name` attribute on the element. The element must have an `event-name` attribute. A matching event (having same `event-name`) will then trigger [`on-event`](#on-event) behavior.
+The `dispatch-event` action fires an event specified with the `event-name` attribute on the element. The element must have an `event-name` attribute. A matching event (having same `event-name`) will then trigger [`on-event`](#on-event) behavior on any hyperview screen(s).
 
 The `dispatch-event` action may also be combined with [`once`](#once) and [`delay`](#delay).
 
