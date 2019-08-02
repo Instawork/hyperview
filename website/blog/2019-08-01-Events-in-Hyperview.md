@@ -4,7 +4,7 @@ authorURL: https://twitter.com/divyanshu013
 title: Events in Hyperview
 ---
 
-We recently added an **elements management system** with **events** in Hyperview [PR #81](https://github.com/Instawork/hyperview/pull/81). This makes it easier to communicate between different Hyperview screens.
+We recently added an **elements management system** with **events** in Hyperview [PR #81](https://github.com/Instawork/hyperview/pull/81). This makes it easier to communicate between different Hyperview screens. Thanks to [adamstep](https://github.com/adamstep) and [flochtililoch](https://github.com/flochtililoch) for valuable feedback and coming up with the API design.
 
 ## Problem
 
@@ -56,6 +56,14 @@ With the `press` trigger the `dispatch-event` action will fire an event *(intern
 
 - When added to a **listener behavior** (with `trigger="on-event"`), the behavior would respond to the dispatched event after the specified delay (in milliseconds)
 - When added to the **dispatching behavior** (with `action="dispatch-event"`), the behavior will dispatch the event after the specified delay (in milliseconds)
+
+## Examples
+
+Some more examples where events fit in are:
+
+1. When actions on one screen might affect another screen, for example interacting with an element might update some element in another screen which is beneath the current screen in the navigation stack.
+
+2. Events can help in **decoupling UI elements**. A dispatching element doesn't need to know about the receiver element (for example target id). This way, UI elements can be responsive (keep their behaviors nested under the element, rather than in a different place).
 
 ## Debugging tip
 
