@@ -89,7 +89,7 @@ These elements support the `refresh` trigger:
 - [`<text>`](/docs/reference_text)
 - [`<image>`](/docs/reference_image)
 - [`<list>`](/docs/reference_list)
-- [`<section-list>`](/docs/reference_section_list)
+- [`<section-list>`](/docs/reference_sectionlist)
 
 ### `load`
 

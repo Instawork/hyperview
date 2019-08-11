@@ -88,7 +88,7 @@
              fontSize="16"
              fontWeight="600"
              padding="24"
-             paddingBottom="0">
+             marginBottom="16">
         <modifier pressed="true">
           <style opacity="0.5" />
         </modifier>
