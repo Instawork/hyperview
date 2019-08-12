@@ -174,7 +174,7 @@ export const addHref = (
 export const shallowClone = (element: Element): Element => {
   const newElement: Element = element.cloneNode(false);
   let childNode: ?Node = element.firstChild;
-  while (childNode !== null) {
+  while (childNode) {
     const nextChild: ?Node = childNode.nextSibling;
     newElement.appendChild(childNode);
     childNode = nextChild;
@@ -188,11 +188,18 @@ export const shallowClone = (element: Element): Element => {
  * that re-uses as many existing nodes as possible.
  */
 export const shallowCloneToRoot = (element: Element): Document => {
-  const elementClone = shallowClone(element);
+  const elementClone: Element = shallowClone(element);
   if (element.nodeType === 9) {
-    return elementClone;
+    // Need to typecast here because Flow doesn't know that nodeType of 9 is a Document.
+    return (elementClone: any);
   }
-  element.parentNode.replaceChild(elementClone, element);
-  const parentClone: Document = shallowCloneToRoot(element.parentNode);
-  return parentClone;
+
+  // Need to check parentNode to satisfy Flow
+  const parentNode: ?Node = element.parentNode;
+  if (!parentNode) {
+    return (elementClone: any);
+  }
+
+  parentNode.replaceChild(elementClone, element);
+  return shallowCloneToRoot((parentNode: any));
 };
