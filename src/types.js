@@ -288,6 +288,10 @@ export type HvComponentOnUpdate = (
   options: HvComponentOptions,
 ) => void;
 
+export type HvGetRoot = () => Document;
+
+export type HvUpdateRoot = (root: Document) => void;
+
 export type HvComponentProps = {|
   element: Element,
   onUpdate: HvComponentOnUpdate,
@@ -302,7 +306,12 @@ export type HvComponent<Props> = ComponentType<Props> & {
 
 export type HvBehavior = {
   action: string,
-  callback: (element: Element, onUpdate: HvComponentOnUpdate) => void,
+  callback: (
+    element: Element,
+    onUpdate: HvComponentOnUpdate,
+    getRoot: HvGetRoot,
+    updateRoot?: HvUpdateRoot,
+  ) => void,
 };
 
 export type BehaviorRegistry = {

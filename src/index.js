@@ -731,7 +731,9 @@ export default class HyperScreen extends React.Component {
     const action = behaviorElement.getAttribute('action');
     const behavior = this.behaviorRegistry[action];
     if (behavior) {
-      behavior.callback(behaviorElement, this.onUpdate);
+      const updateRoot = (newRoot) => this.setState({ doc: newRoot });
+      const getRoot = () => this.state.doc;
+      behavior.callback(behaviorElement, this.onUpdate, getRoot, updateRoot);
     } else {
       // No behavior detected.
       console.warn(`No behavior registered for action "${action}"`);
