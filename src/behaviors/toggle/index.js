@@ -1,6 +1,7 @@
 // @flow
 
 import type {
+  DOMString,
   Element,
   Document,
   HvComponentOnUpdate,

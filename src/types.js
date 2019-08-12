@@ -310,7 +310,7 @@ export type HvBehavior = {
     element: Element,
     onUpdate: HvComponentOnUpdate,
     getRoot: HvGetRoot,
-    updateRoot?: HvUpdateRoot,
+    updateRoot: HvUpdateRoot,
   ) => void,
 };
 
