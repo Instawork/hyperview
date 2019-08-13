@@ -12,18 +12,15 @@ export const toggleIndicators = (
   ids: Array<string>,
   showIndicators: boolean,
   root: Document,
-): Document => {
-  let newRoot = root;
-  ids.forEach(id => {
+): Document =>
+  ids.reduce((newRoot, id) => {
     const indicatorElement: ?Element = root.getElementById(id);
     if (!indicatorElement) {
-      return;
+      return newRoot;
     }
     indicatorElement.setAttribute('hide', showIndicators ? 'false' : 'true');
-    newRoot = shallowCloneToRoot(indicatorElement);
-  });
-  return newRoot;
-};
+    return shallowCloneToRoot(indicatorElement);
+  }, root);
 
 /**
  * Returns a new Document object that shows the "show" indicators

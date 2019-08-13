@@ -11,9 +11,9 @@
 import type { BehaviorRegistry, HvBehavior } from 'hyperview/src/types';
 import HvAlert from 'hyperview/src/behaviors/hv-alert';
 import HvShare from 'hyperview/src/behaviors/hv-share';
-import Toggle from 'hyperview/src/behaviors/toggle';
+import HvToggle from 'hyperview/src/behaviors/hv-toggle';
 
-const HYPERVIEW_BEHAVIORS = [HvAlert, HvShare, Toggle];
+const HYPERVIEW_BEHAVIORS = [HvAlert, HvShare, HvToggle];
 
 export const getRegistry = (behaviors: HvBehavior[] = []): BehaviorRegistry =>
   [...HYPERVIEW_BEHAVIORS, ...behaviors].reduce(
