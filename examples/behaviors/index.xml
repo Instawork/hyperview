@@ -99,6 +99,14 @@
             <text style="Item__Label">Prepend</text>
             <text style="Item__Chevron">&gt;</text>
           </item>
+          <item href="/behaviors/toggle.xml"
+                key="toggle"
+                show-during-load="loadingScreen"
+                style="Item">
+            <text style="Item__Label">Toggle</text>
+            <text style="Item__Chevron">&gt;</text>
+          </item>
+
         </section>
         <section>
           <section-title style="List__Header">

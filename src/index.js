@@ -29,7 +29,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import Navigation from 'hyperview/src/services/navigation';
 import React from 'react';
 import VisibilityDetectingView from './VisibilityDetectingView.js';
-import { addHref, createProps, getBehaviorElements, getFirstTag, later } from 'hyperview/src/services';
+import { addHref, createProps, getBehaviorElements, getFirstTag, later, shallowCloneToRoot } from 'hyperview/src/services';
 import { version } from '../package.json';
 import { ACTIONS, FORM_NAMES, NAV_ACTIONS, ON_EVENT_DISPATCH, UPDATE_ACTIONS } from 'hyperview/src/types';
 import urlParse from 'url-parse';
@@ -142,8 +142,6 @@ export default class HyperScreen extends React.Component {
     super(props);
 
     this.onUpdate = this.onUpdate.bind(this);
-    this.shallowClone = this.shallowClone.bind(this);
-    this.shallowCloneToRoot = this.shallowCloneToRoot.bind(this);
     this.reload = this.reload.bind(this);
     this.parseError = this.parseError.bind(this);
 
@@ -597,7 +595,7 @@ export default class HyperScreen extends React.Component {
         const el = newRoot.getElementById(id);
         if (el) {
           el.setAttribute('hide', 'false');
-          newRoot = this.shallowCloneToRoot(el.parentNode);
+          newRoot = shallowCloneToRoot(el.parentNode);
           changedIndicator = true;
         }
       });
@@ -609,7 +607,7 @@ export default class HyperScreen extends React.Component {
         const el = newRoot.getElementById(id);
         if (el) {
           el.setAttribute('hide', 'true');
-          newRoot = this.shallowCloneToRoot(el.parentNode);
+          newRoot = shallowCloneToRoot(el.parentNode);
           changedIndicator = true;
         }
       });
@@ -630,7 +628,7 @@ export default class HyperScreen extends React.Component {
         // TODO: Store ran-once on the behavior element, not current element.
         if (once) {
           currentElement.setAttribute('ran-once', 'true');
-          newRoot = this.shallowCloneToRoot(currentElement.parentNode);
+          newRoot = shallowCloneToRoot(currentElement.parentNode);
         }
 
         // If a target is specified and exists, use it. Otherwise, the action target defaults
@@ -643,7 +641,7 @@ export default class HyperScreen extends React.Component {
         if (action === 'replace') {
           const parentElement = targetElement.parentNode;
           parentElement.replaceChild(newElement, targetElement);
-          newRoot = this.shallowCloneToRoot(parentElement);
+          newRoot = shallowCloneToRoot(parentElement);
         }
 
         if (action === 'replace-inner') {
@@ -655,17 +653,17 @@ export default class HyperScreen extends React.Component {
             child = nextChild;
           }
           targetElement.appendChild(newElement);
-          newRoot = this.shallowCloneToRoot(targetElement);
+          newRoot = shallowCloneToRoot(targetElement);
         }
 
         if (action === 'append') {
           targetElement.appendChild(newElement);
-          newRoot = this.shallowCloneToRoot(targetElement);
+          newRoot = shallowCloneToRoot(targetElement);
         }
 
         if (action === 'prepend') {
           targetElement.insertBefore(newElement, targetElement.firstChild);
-          newRoot = this.shallowCloneToRoot(targetElement);
+          newRoot = shallowCloneToRoot(targetElement);
         }
 
         // Update the DOM to hide the indicators shown during the request.
@@ -674,7 +672,7 @@ export default class HyperScreen extends React.Component {
             const el = newRoot.getElementById(id);
             if (el) {
               el.setAttribute('hide', 'true');
-              newRoot = this.shallowCloneToRoot(el.parentNode);
+              newRoot = shallowCloneToRoot(el.parentNode);
               changedIndicator = true;
             }
           });
@@ -686,7 +684,7 @@ export default class HyperScreen extends React.Component {
             const el = newRoot.getElementById(id);
             if (el) {
               el.setAttribute('hide', 'false');
-              newRoot = this.shallowCloneToRoot(el.parentNode);
+              newRoot = shallowCloneToRoot(el.parentNode);
               changedIndicator = true;
             }
           });
@@ -718,7 +716,7 @@ export default class HyperScreen extends React.Component {
   onSwap = (currentElement, newElement) => {
     const parentElement = currentElement.parentNode;
     parentElement.replaceChild(newElement, currentElement);
-    const newRoot = this.shallowCloneToRoot(parentElement);
+    const newRoot = shallowCloneToRoot(parentElement);
     this.setState({
       doc: newRoot,
     });
@@ -731,42 +729,13 @@ export default class HyperScreen extends React.Component {
     const action = behaviorElement.getAttribute('action');
     const behavior = this.behaviorRegistry[action];
     if (behavior) {
-      behavior.callback(behaviorElement, this.onUpdate);
+      const updateRoot = (newRoot) => this.setState({ doc: newRoot });
+      const getRoot = () => this.state.doc;
+      behavior.callback(behaviorElement, this.onUpdate, getRoot, updateRoot);
     } else {
       // No behavior detected.
       console.warn(`No behavior registered for action "${action}"`);
     }
-  }
-
-  /**
-   * Clones the element and moves all children from the original element
-   * to the clone. The returned element will be a new object, but all of the child
-   * nodes will be existing objects.
-   */
-  shallowClone = (element) => {
-    const newElement = element.cloneNode(false);
-    let childNode = element.firstChild;
-    while (childNode !== null) {
-      const nextChild = childNode.nextSibling;
-      newElement.appendChild(childNode);
-      childNode = nextChild;
-    }
-    return newElement;
-  }
-
-  /**
-   * Clones all elements from the given element up to the root of the DOM.
-   * Returns the new root object. Essentially, this produces a new DOM object
-   * that re-uses as many existing nodes as possible.
-   */
-  shallowCloneToRoot = (element) => {
-    const elementClone = this.shallowClone(element);
-    if (element.nodeType === 9) {
-      return elementClone;
-    }
-    element.parentNode.replaceChild(elementClone, element);
-    const parentClone = this.shallowCloneToRoot(element.parentNode);
-    return parentClone;
   }
 }
 

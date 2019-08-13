@@ -17,6 +17,7 @@ import type {
   HvComponentOnUpdate,
   HvComponentOptions,
   LocalName,
+  Node,
   StyleSheets,
 } from 'hyperview/src/types';
 import HyperRef from 'hyperview/src/core/hyper-ref';
@@ -148,11 +149,12 @@ export const addHref = (
   options: HvComponentOptions,
 ) => {
   const href = element.getAttribute('href');
+  const action = element.getAttribute('action');
   const childNodes = element.childNodes ? Array.from(element.childNodes) : [];
   const behaviorElements = childNodes.filter(
     n => n && n.nodeType === 1 && n.tagName === 'behavior',
   );
-  const hasBehaviors = href || behaviorElements.length > 0;
+  const hasBehaviors = href || action || behaviorElements.length > 0;
   if (!hasBehaviors) {
     return component;
   }
@@ -162,4 +164,42 @@ export const addHref = (
     { element, stylesheets, onUpdate, options },
     ...Render.renderChildren(element, stylesheets, onUpdate, options),
   );
+};
+
+/**
+ * Clones the element and moves all children from the original element
+ * to the clone. The returned element will be a new object, but all of the child
+ * nodes will be existing objects.
+ */
+export const shallowClone = (element: Element): Element => {
+  const newElement: Element = element.cloneNode(false);
+  let childNode: ?Node = element.firstChild;
+  while (childNode) {
+    const nextChild: ?Node = childNode.nextSibling;
+    newElement.appendChild(childNode);
+    childNode = nextChild;
+  }
+  return newElement;
+};
+
+/**
+ * Clones all elements from the given element up to the root of the DOM.
+ * Returns the new root object. Essentially, this produces a new DOM object
+ * that re-uses as many existing nodes as possible.
+ */
+export const shallowCloneToRoot = (element: Element): Document => {
+  const elementClone: Element = shallowClone(element);
+  if (element.nodeType === 9) {
+    // Need to typecast here because Flow doesn't know that nodeType of 9 is a Document.
+    return (elementClone: any);
+  }
+
+  // Need to check parentNode to satisfy Flow
+  const parentNode: ?Node = element.parentNode;
+  if (!parentNode) {
+    return (elementClone: any);
+  }
+
+  parentNode.replaceChild(elementClone, element);
+  return shallowCloneToRoot((parentNode: any));
 };
