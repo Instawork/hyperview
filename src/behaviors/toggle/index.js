@@ -2,46 +2,17 @@
 
 import type {
   DOMString,
-  Element,
   Document,
+  Element,
   HvComponentOnUpdate,
   HvGetRoot,
   HvUpdateRoot,
 } from 'hyperview/src/types';
+import { later, shallowCloneToRoot } from 'hyperview/src/services';
 import {
-  getBehaviorElements,
-  later,
-  shallowCloneToRoot,
-} from 'hyperview/src/services';
-
-const toggleIndicators = (
-  ids: Array<string>,
-  showIndicators: boolean,
-  root: Document,
-): Document => {
-  let newRoot = root;
-  ids.forEach(id => {
-    const indicatorElement: ?Element = root.getElementById(id);
-    if (!indicatorElement) {
-      return;
-    }
-    indicatorElement.setAttribute('hide', showIndicators ? 'false' : 'true');
-    newRoot = shallowCloneToRoot(indicatorElement);
-  });
-  return newRoot;
-};
-
-const setIndicators = (
-  showIndicatorIds: Array<string>,
-  hideIndicatorIds: Array<string>,
-  set: boolean,
-  root: Document,
-): Document => {
-  let newRoot: Document = root;
-  newRoot = toggleIndicators(showIndicatorIds, set, newRoot);
-  newRoot = toggleIndicators(hideIndicatorIds, !set, newRoot);
-  return newRoot;
-};
+  setIndicatorsAfterLoad,
+  setIndicatorsBeforeLoad,
+} from 'hyperview/src/behaviors/utils';
 
 export default {
   action: 'toggle',
@@ -56,16 +27,14 @@ export default {
       return;
     }
 
-    const delayAttr: ?DOMString = element.getAttribute('delay');
-    let delay: number = delayAttr ? parseInt(delayAttr) : 0;
-    if (isNaN(delay)) {
-      delay = 0;
-    }
+    const delayAttr: string = element.getAttribute('delay') || '0';
+    const parsedDelay: number = parseInt(delayAttr, 10);
+    const delay: number = isNaN(parsedDelay) ? 0 : parsedDelay;
 
-    const showIndicatorIds = (
+    const showIndicatorIds: Array<string> = (
       element.getAttribute('show-during-load') || ''
     ).split(' ');
-    const hideIndicatorIds = (
+    const hideIndicatorIds: Array<string> = (
       element.getAttribute('hide-during-load') || ''
     ).split(' ');
 
@@ -76,30 +45,39 @@ export default {
         return;
       }
 
+      // Toggle the hide attribute of the target
       const isCurrentlyHidden: boolean =
         targetElement.getAttribute('hide') === 'true';
       const newToggleState: string = isCurrentlyHidden ? 'false' : 'true';
       targetElement.setAttribute('hide', newToggleState);
       let newRoot: Document = shallowCloneToRoot(targetElement);
-      newRoot = setIndicators(
-        showIndicatorIds,
-        hideIndicatorIds,
-        false,
-        newRoot,
-      );
+
+      // If using the delay, we need to undo the indicators shown earlier.
+      if (delay > 0) {
+        newRoot = setIndicatorsAfterLoad(
+          showIndicatorIds,
+          hideIndicatorIds,
+          newRoot,
+        );
+      }
+      // Update the DOM with the new toggle state and finished indicators.
       updateRoot(newRoot);
     };
 
     if (delay === 0) {
+      // If there's no delay, toggle immediately without showing/hiding
+      // any indicators.
       toggleElement();
     } else {
-      const newRoot = setIndicators(
+      // If there's a delay, first trigger the indicators before the toggle.
+      const newRoot = setIndicatorsBeforeLoad(
         showIndicatorIds,
         hideIndicatorIds,
-        true,
         getRoot(),
       );
+      // Update the DOM to reflect the new state of the indicators.
       updateRoot(newRoot);
+      // Wait for the delay then toggle the target.
       later(delay).then(toggleElement);
     }
   },

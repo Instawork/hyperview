@@ -10,13 +10,7 @@
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type { Content, Options } from './types';
-import type {
-  DOMString,
-  Element,
-  HvComponentOnUpdate,
-  HvGetRoot,
-  HvUpdateRoot,
-} from 'hyperview/src/types';
+import type { DOMString, Element } from 'hyperview/src/types';
 import { Platform, Share } from 'react-native';
 
 const getContent = (
@@ -66,12 +60,7 @@ const platformSpecificContent = (
 
 export default {
   action: 'share',
-  callback: (
-    element: Element,
-    onUpdate: HvComponentOnUpdate,
-    getRoot: HvGetRoot,
-    updateRoot: HvUpdateRoot,
-  ) => {
+  callback: (element: Element) => {
     // This share API is based off https://facebook.github.io/react-native/docs/0.52/share
     const dialogTitle: ?DOMString = element.getAttributeNS(
       Namespaces.SHARE,

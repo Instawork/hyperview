@@ -9,23 +9,13 @@
  */
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import type {
-  Element,
-  HvComponentOnUpdate,
-  HvGetRoot,
-  HvUpdateRoot,
-} from 'hyperview/src/types';
+import type { Element, HvComponentOnUpdate } from 'hyperview/src/types';
 import { getBehaviorElements, later } from 'hyperview/src/services';
 import { Alert } from 'react-native';
 
 export default {
   action: 'alert',
-  callback: (
-    element: Element,
-    onUpdate: HvComponentOnUpdate,
-    getRoot: HvGetRoot,
-    updateRoot: HvUpdateRoot,
-  ) => {
+  callback: (element: Element, onUpdate: HvComponentOnUpdate) => {
     const title = element.getAttributeNS(Namespaces.HYPERVIEW_ALERT, 'title');
     const message = element.getAttributeNS(
       Namespaces.HYPERVIEW_ALERT,
