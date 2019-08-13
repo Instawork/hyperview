@@ -12,7 +12,7 @@ import { later, shallowCloneToRoot } from 'hyperview/src/services';
 import {
   setIndicatorsAfterLoad,
   setIndicatorsBeforeLoad,
-} from 'hyperview/src/behaviors/utils';
+} from 'hyperview/src/services/behaviors';
 
 export default {
   action: 'toggle',
@@ -78,7 +78,9 @@ export default {
       // Update the DOM to reflect the new state of the indicators.
       updateRoot(newRoot);
       // Wait for the delay then toggle the target.
-      later(delay).then(toggleElement);
+      later(delay)
+        .then(toggleElement)
+        .catch(toggleElement);
     }
   },
 };
