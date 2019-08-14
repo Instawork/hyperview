@@ -91,7 +91,7 @@
         </view>
         <text id="hide2-content" style="Hide">Content to be hidden</text>
 
-        <text style="Description">When toggling with delay, you can use indicators.</text>
+        <text style="Description">When hiding with delay, you can use indicators.</text>
         <view action="hide"
               target="hide3-content"
               delay="1000"
