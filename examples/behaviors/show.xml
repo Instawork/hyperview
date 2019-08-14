@@ -59,11 +59,12 @@
       <style id="Show"
              color="red"
              fontSize="18"
-             textAlign="center"
-             fontWeight="bold" />
+             fontWeight="bold"
+             textAlign="center" />
       <style id="Main"
              flex="1" />
-      <style id="Spacer" height="40" />
+      <style id="Spacer"
+             height="40" />
     </styles>
     <body style="Body">
       <header style="Header">
@@ -76,43 +77,52 @@
             style="Main">
         <text style="Description">Tapping the button below will show the visibility of the element below.</text>
         <view action="show"
-              target="show1-content"
-              style="Button">
+              style="Button"
+              target="show1-content">
           <text style="Button__Label">Show</text>
         </view>
-        <text id="show1-content" style="Show" hide="true">Content to be shown</text>
-
+        <text id="show1-content"
+              hide="true"
+              style="Show">Content to be shown</text>
         <text style="Description">Show can work with the delay attribute. In this example, the show will be delayed 1 second.</text>
         <view action="show"
-              target="show2-content"
               delay="1000"
-              style="Button">
+              style="Button"
+              target="show2-content">
           <text style="Button__Label">Show with Delay</text>
         </view>
-        <text id="show2-content" style="Show" hide="true">Content to be shown</text>
-
+        <text id="show2-content"
+              hide="true"
+              style="Show">Content to be shown</text>
         <text style="Description">When showing with delay, you can use indicators.</text>
         <view action="show"
-              target="show3-content"
               delay="1000"
               show-during-load="show3-spinner"
-              style="Button">
+              style="Button"
+              target="show3-content">
           <text style="Button__Label">Show with Spinner</text>
-          <view id="show3-spinner" hide="true">
+          <view id="show3-spinner"
+                hide="true">
             <spinner color="white" />
           </view>
         </view>
-        <text id="show3-content" style="Show" hide="true">Content to be shown</text>
-
+        <text id="show3-content"
+              hide="true"
+              style="Show">Content to be shown</text>
         <text style="Description">You can show multiple elements at once. The button below will show content A and B with one press</text>
         <view style="Button">
-          <behavior action="show" target="show4-content" />
-          <behavior action="show" target="show5-content" />
+          <behavior action="show"
+                    target="show4-content" />
+          <behavior action="show"
+                    target="show5-content" />
           <text style="Button__Label">Show Multiple</text>
         </view>
-        <text id="show4-content" style="Show" hide="true">Content A</text>
-        <text id="show5-content" style="Show" hide="true">Content B</text>
-
+        <text id="show4-content"
+              hide="true"
+              style="Show">Content A</text>
+        <text id="show5-content"
+              hide="true"
+              style="Show">Content B</text>
         <view style="Spacer" />
       </view>
     </body>

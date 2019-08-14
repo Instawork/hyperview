@@ -65,10 +65,9 @@
       <style id="Container"
              flex="1" />
       <style id="Append"
-             marginLeft="24"
-             fontSize="16"
              color="hotpink"
-      />
+             fontSize="16"
+             marginLeft="24" />
     </styles>
     <body style="Body">
       <header style="Header">
@@ -77,10 +76,15 @@
               style="Header__Back">Back</text>
         <text style="Header__Title">Dispatch Event</text>
       </header>
-      <view action="append" trigger="on-event" event-name="test-event" scroll="true" href="/advanced_behaviors/dispatch_event/dispatch_event_append.xml"
-            style="Main">
+      <view action="append"
+            event-name="test-event"
+            href="/advanced_behaviors/dispatch_event/dispatch_event_append.xml"
+            scroll="true"
+            style="Main"
+            trigger="on-event">
         <text style="Description">Dispatch events to load screens</text>
-        <view style="Button" href="/advanced_behaviors/dispatch_event/dispatch_event_source.xml">
+        <view href="/advanced_behaviors/dispatch_event/dispatch_event_source.xml"
+              style="Button">
           <text style="Button__Label">Open new screen</text>
         </view>
       </view>

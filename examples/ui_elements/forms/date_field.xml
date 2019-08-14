@@ -87,8 +87,8 @@
              color="blue"
              fontSize="16"
              fontWeight="600"
-             padding="24"
-             marginBottom="16">
+             marginBottom="16"
+             padding="24">
         <modifier pressed="true">
           <style opacity="0.5" />
         </modifier>

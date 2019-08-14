@@ -59,11 +59,12 @@
       <style id="Toggle"
              color="red"
              fontSize="18"
-             textAlign="center"
-             fontWeight="bold" />
+             fontWeight="bold"
+             textAlign="center" />
       <style id="Main"
              flex="1" />
-      <style id="Spacer" height="40" />
+      <style id="Spacer"
+             height="40" />
     </styles>
     <body style="Body">
       <header style="Header">
@@ -76,43 +77,48 @@
             style="Main">
         <text style="Description">Tapping the button below will toggle the visibility of the element below.</text>
         <view action="toggle"
-              target="toggle1-content"
-              style="Button">
+              style="Button"
+              target="toggle1-content">
           <text style="Button__Label">Toggle</text>
         </view>
-        <text id="toggle1-content" style="Toggle">Content to be toggled</text>
-
+        <text id="toggle1-content"
+              style="Toggle">Content to be toggled</text>
         <text style="Description">Toggle can work with the delay attribute. In this example, the toggle will be delayed 1 second.</text>
         <view action="toggle"
-              target="toggle2-content"
               delay="1000"
-              style="Button">
+              style="Button"
+              target="toggle2-content">
           <text style="Button__Label">Toggle with Delay</text>
         </view>
-        <text id="toggle2-content" style="Toggle">Content to be toggled</text>
-
+        <text id="toggle2-content"
+              style="Toggle">Content to be toggled</text>
         <text style="Description">When toggling with delay, you can use indicators.</text>
         <view action="toggle"
-              target="toggle3-content"
               delay="1000"
               show-during-load="toggle3-spinner"
-              style="Button">
+              style="Button"
+              target="toggle3-content">
           <text style="Button__Label">Toggle with Spinner</text>
-          <view id="toggle3-spinner" hide="true">
+          <view id="toggle3-spinner"
+                hide="true">
             <spinner color="white" />
           </view>
         </view>
-        <text id="toggle3-content" style="Toggle">Content to be toggled</text>
-
+        <text id="toggle3-content"
+              style="Toggle">Content to be toggled</text>
         <text style="Description">You can toggle multiple elements at once. The button below will toggle content A and B with one press</text>
         <view style="Button">
-          <behavior action="toggle" target="toggle4-content" />
-          <behavior action="toggle" target="toggle5-content" />
+          <behavior action="toggle"
+                    target="toggle4-content" />
+          <behavior action="toggle"
+                    target="toggle5-content" />
           <text style="Button__Label">Toggle Multiple</text>
         </view>
-        <text id="toggle4-content" style="Toggle">Content A</text>
-        <text id="toggle5-content" style="Toggle" hide="true">Content B</text>
-
+        <text id="toggle4-content"
+              style="Toggle">Content A</text>
+        <text id="toggle5-content"
+              hide="true"
+              style="Toggle">Content B</text>
         <view style="Spacer" />
       </view>
     </body>

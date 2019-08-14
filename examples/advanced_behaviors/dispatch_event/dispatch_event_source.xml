@@ -76,7 +76,9 @@
             style="Main">
         <text style="Description">Dispatch events to load previous screen</text>
         <view style="Button">
-          <behavior trigger="press" action="dispatch-event" event-name="test-event" />
+          <behavior action="dispatch-event"
+                    event-name="test-event"
+                    trigger="press" />
           <text style="Button__Label">Reload previous</text>
         </view>
       </view>
