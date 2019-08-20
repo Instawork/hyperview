@@ -34,6 +34,7 @@ More importantly, the client is designed to be incorporated into an existing Rea
 - react >= 16.2.0
 - react-native >= 0.52.2
 - react-native-keyboard-aware-scrollview 2.0.0
+- react-native-webview 5.12.0
 
 ### Getting Started
 
