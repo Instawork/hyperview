@@ -9,10 +9,11 @@
  */
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import { ActivityIndicator, WebView } from 'react-native';
 import React, { PureComponent } from 'react';
+import { ActivityIndicator } from 'react-native';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { Props } from './types';
+import WebView from 'react-native-webview';
 import { createProps } from 'hyperview/src/services';
 
 export default class HvWebView extends PureComponent<Props> {
