@@ -55,6 +55,16 @@
       <header style="Header">
         <text style="Header__Title">Hyperview Examples</text>
       </header>
+
+      <event-source src="127.0.0.1:3000/hub" authorization="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZXJjdXJlIjp7InN1YnNjcmliZSI6WyJjaGF0Il0sInB1Ymxpc2giOlsiY2hhdCJdfX0.XzqO-0P6iphN3A9L3r5n1Pf1lkV7AJKJgI6c--sXYEY" />
+
+      <text>
+          <behavior trigger="on-event" event-name="something" action="show" target="showEl" />
+          Hello
+      </text>
+
+      <text id="showEl" hide="true">Something happened!</text>
+
       <list>
         <item href="/ui_elements/index.xml"
               key="layout"

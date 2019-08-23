@@ -30,6 +30,7 @@ import { XMLSerializer } from 'xmldom';
 // eslint-disable-next-line import/no-internal-modules
 import eventEmitter from 'tiny-emitter/instance';
 import { getBehaviorElements } from 'hyperview/src/services';
+import { EventSourceContext } from 'hyperview/src/components/hv-event-source';
 
 /**
  * Component that handles dispatching behaviors based on the appropriate
@@ -42,11 +43,20 @@ export default class HyperRef extends PureComponent<Props, State> {
     pressed: false,
   };
 
+  static contextType = EventSourceContext;
+
   componentDidMount() {
     this.triggerLoadBehaviors();
 
     // Register event listener for on-event triggers
     eventEmitter.on(ON_EVENT_DISPATCH, this.onEventDispatch);
+
+    if (this.context) {
+      const eventNames = getBehaviorElements(this.props.element)
+        .filter(e => e.getAttribute(ATTRIBUTES.TRIGGER) === TRIGGERS.ON_EVENT)
+        .map(e => e.getAttribute('event-name'));
+      this.context.registerEvents(eventNames);
+    }
   }
 
   componentDidUpdate(prevProps: Props) {

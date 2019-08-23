@@ -48,7 +48,7 @@ export default class HvOption extends PureComponent<Props, State> {
     const selectBehaviors = behaviorElements.filter(
       e => e.getAttribute('trigger') === 'select',
     );
-    selectBehaviors.forEach(behaviorElement => {
+    selectBehaviors.forEach((behaviorElement, index) => {
       const href = behaviorElement.getAttribute('href');
       const action = behaviorElement.getAttribute('action');
       const verb = behaviorElement.getAttribute('verb');
@@ -57,15 +57,19 @@ export default class HvOption extends PureComponent<Props, State> {
       const hideIndicatorIds = behaviorElement.getAttribute('hide-during-load');
       const delay = behaviorElement.getAttribute('delay');
       const once = behaviorElement.getAttribute('once');
-      onUpdate(href, action, element, {
-        verb,
-        targetId,
-        showIndicatorIds,
-        hideIndicatorIds,
-        delay,
-        once,
-        behaviorElement,
-      });
+      setTimeout(
+        () =>
+          onUpdate(href, action, element, {
+            verb,
+            targetId,
+            showIndicatorIds,
+            hideIndicatorIds,
+            delay,
+            once,
+            behaviorElement,
+          }),
+        index + 1,
+      );
     });
   };
 
@@ -75,7 +79,7 @@ export default class HvOption extends PureComponent<Props, State> {
     const deselectBehaviors = behaviorElements.filter(
       e => e.getAttribute('trigger') === 'deselect',
     );
-    deselectBehaviors.forEach(behaviorElement => {
+    deselectBehaviors.forEach((behaviorElement, index) => {
       const href = behaviorElement.getAttribute('href');
       const action = behaviorElement.getAttribute('action');
       const verb = behaviorElement.getAttribute('verb');
@@ -84,15 +88,19 @@ export default class HvOption extends PureComponent<Props, State> {
       const hideIndicatorIds = behaviorElement.getAttribute('hide-during-load');
       const delay = behaviorElement.getAttribute('delay');
       const once = behaviorElement.getAttribute('once');
-      onUpdate(href, action, element, {
-        verb,
-        targetId,
-        showIndicatorIds,
-        hideIndicatorIds,
-        delay,
-        once,
-        behaviorElement,
-      });
+      setTimeout(
+        () =>
+          onUpdate(href, action, element, {
+            verb,
+            targetId,
+            showIndicatorIds,
+            hideIndicatorIds,
+            delay,
+            once,
+            behaviorElement,
+          }),
+        index + 1,
+      );
     });
   };
 

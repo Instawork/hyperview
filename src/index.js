@@ -629,6 +629,9 @@ export default class HyperScreen extends React.Component {
         if (once) {
           currentElement.setAttribute('ran-once', 'true');
           newRoot = shallowCloneToRoot(currentElement.parentNode);
+        } else {
+          // NOTE(adam): hack!
+          newRoot = this.state.doc;
         }
 
         // If a target is specified and exists, use it. Otherwise, the action target defaults
