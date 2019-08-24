@@ -23,7 +23,7 @@ import {
   UPDATE_ACTIONS,
 } from 'hyperview/src/types';
 import type { PressHandlers, Props, State } from './types';
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { RefreshControl, ScrollView, TouchableOpacity } from 'react-native';
 import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
 import { XMLSerializer } from 'xmldom';
@@ -36,14 +36,12 @@ import { EventSourceContext } from 'hyperview/src/components/hv-event-source';
  * Component that handles dispatching behaviors based on the appropriate
  * triggers.
  */
-export default class HyperRef extends PureComponent<Props, State> {
+export default class HyperRef extends Component<Props, State> {
   props: Props;
   state: State = {
     refreshing: false,
     pressed: false,
   };
-
-  static contextType = EventSourceContext;
 
   componentDidMount() {
     this.triggerLoadBehaviors();
@@ -312,3 +310,5 @@ export default class HyperRef extends PureComponent<Props, State> {
     return renderedComponent;
   }
 }
+
+HyperRef.contextType = EventSourceContext;

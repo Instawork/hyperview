@@ -6,8 +6,10 @@ import React, { PureComponent } from 'react';
 import type { Props } from './types';
 import type { DOMString } from 'hyperview/src/types';
 import RNEventSource from 'react-native-event-source';
+import eventEmitter from 'tiny-emitter/instance';
+import { ON_EVENT_DISPATCH } from 'hyperview/src/types';
 
-export const EventSourceContext = React.createContext('event-source');
+export const EventSourceContext = React.createContext();
 
 export default class HvEventSource extends PureComponent<Props> {
   static namespaceURI = Namespaces.HYPERVIEW;
@@ -21,7 +23,7 @@ export default class HvEventSource extends PureComponent<Props> {
     this.eventSource = null;
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const { element } = this.props;
     const host: ?DOMString = element.getAttribute('src');
     const options = {};
@@ -36,14 +38,18 @@ export default class HvEventSource extends PureComponent<Props> {
     this.eventSource = new RNEventSource(host, options);
 
     this.eventObject = {
-      registerEvents: events => registerEvents(events),
+      registerEvents: events => this.registerEvents(events),
     };
   }
 
   registerEvents(events) {
-    events.forEach(e =>
-      this.eventSource.addEventListener(e, () => console.log('GOT EVENT: ', e)),
-    );
+    events.forEach(e => {
+      if (this.eventSource) {
+        this.eventSource.addEventListener(e, () => {
+          eventEmitter.emit(ON_EVENT_DISPATCH, e);
+        });
+      }
+    });
   }
 
   componentWillUnmount() {
@@ -55,10 +61,10 @@ export default class HvEventSource extends PureComponent<Props> {
 
   render() {
     const { element, stylesheets, onUpdate, options } = this.props;
-    return (
-      <EventSourceContext.Provider value={this.eventSource}>
-        {...Render.renderChildren(element, stylesheets, onUpdate, options)}
-      </EventSourceContext.Provider>
+    return React.createElement(
+      EventSourceContext.Provider,
+      { value: this.eventObject },
+      ...Render.renderChildren(element, stylesheets, onUpdate, options),
     );
   }
 }
