@@ -39,10 +39,12 @@ export default class HvEventSource extends PureComponent<Props> {
 
     this.eventObject = {
       registerEvents: events => this.registerEvents(events),
+      unregisterEvents: events => this.unregisterEvents(events),
     };
   }
 
   registerEvents(events) {
+    console.log('registering: ', events);
     events.forEach(e => {
       if (this.eventSource) {
         this.eventSource.addEventListener(e, () => {
@@ -52,9 +54,21 @@ export default class HvEventSource extends PureComponent<Props> {
     });
   }
 
+  unregisterEvents(events) {
+    console.log('unregistering: ', events);
+    /*
+    events.forEach(e => {
+      if (this.eventSource) {
+        this.eventSource.removeEventListener(e, () => {
+          eventEmitter.emit(ON_EVENT_DISPATCH, e);
+        });
+      }
+    });
+    */
+  }
+
   componentWillUnmount() {
     if (this.eventSource) {
-      this.eventSource.removeAllListeners();
       this.eventSource.close();
     }
   }

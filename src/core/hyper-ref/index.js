@@ -67,6 +67,13 @@ export default class HyperRef extends Component<Props, State> {
   componentWillUnmount() {
     // Remove event listener for on-event triggers to avoid memory leaks
     eventEmitter.off(ON_EVENT_DISPATCH, this.onEventDispatch);
+
+    if (this.context) {
+      const eventNames = getBehaviorElements(this.props.element)
+        .filter(e => e.getAttribute(ATTRIBUTES.TRIGGER) === TRIGGERS.ON_EVENT)
+        .map(e => e.getAttribute('event-name'));
+      this.context.unregisterEvents(eventNames);
+    }
   }
 
   onEventDispatch = (eventName: string) => {
