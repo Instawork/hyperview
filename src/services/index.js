@@ -125,10 +125,11 @@ export const createProps = (
       } else {
         props[attr.name] = attr.value;
 
-        // Add the id attribute as a test id
+        // Add the id attribute as a test id and accessibility label
         // (for testing automation purposes).
         if (attr.name === 'id') {
-          props.testId = attr.value;
+          props.testID = attr.value;
+          props.accessibilityLabel = attr.value;
         }
       }
     }
