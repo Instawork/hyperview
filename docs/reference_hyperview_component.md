@@ -11,12 +11,9 @@ Here's a minimal example to render one screen:
 ```es6
 import Hyperview from 'hyperview';
 
-function screen({ url }) => (
-  <Hyperview
-    entrypointUrl={url}
-    fetch={fetch}
-  />
-);
+function Screen({ url }) {
+  return <Hyperview entrypointUrl={url} fetch={fetch} />;
+}
 ```
 
 - `entrypointUrl` is the URL for the screen. `Hyperview` will make a `GET` request to fetch the URL. The response should be an HXML doc, that will be parsed and rendered on-screen.

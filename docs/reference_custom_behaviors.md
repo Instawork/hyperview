@@ -69,13 +69,15 @@ const amplitudeBehavior = {
   },
 };
 
-function screen({ url }) => (
-  <Hyperview
-    entrypointUrl={url}
-    fetch={fetch}
-    behaviors={[amplitudeBehavior]}
-  />
-)
+function Screen({ url }) {
+  return (
+    <Hyperview
+      entrypointUrl={url}
+      fetch={fetch}
+      behaviors={[amplitudeBehavior]}
+    />
+  );
+}
 ```
 
 To use this custom behavior, add a `<behavior>` element with `action="amplitude"`. The attributes `amp:event` and `amp:event-props` specify the event name and event properties to log when the behavior executes.
@@ -123,13 +125,15 @@ const phoneCallBehavior = {
   },
 };
 
-function screen({ url }) => (
-  <Hyperview
-    entrypointUrl={url}
-    fetch={fetch}
-    behaviors={[phoneCallBehavior]}
-  />
-)
+function Screen({ url }) {
+  return (
+    <Hyperview
+      entrypointUrl={url}
+      fetch={fetch}
+      behaviors={[phoneCallBehavior]}
+    />
+  );
+}
 ```
 
 To use this custom behavior, add a `<behavior>` element with `action="phone"`. The attributes `phone:number` specifies the number to call.
@@ -176,15 +180,13 @@ const reduxBehavior = {
       });
     }
   },
-});
+};
 
-function screen({ url }) => (
-  <Hyperview
-    entrypointUrl={url}
-    fetch={fetch}
-    behaviors={[reduxBehavior]}
-  />
-)
+function Screen({ url }) {
+  return (
+    <Hyperview entrypointUrl={url} fetch={fetch} behaviors={[reduxBehavior]} />
+  );
+}
 ```
 
 To trigger a Redux action from HXML, add a `<behavior>` element with `action="redux"`. The attributes `redux:action` specifies the action type, and `redux:extra` contains an encoded JSON object of action prioerties.
