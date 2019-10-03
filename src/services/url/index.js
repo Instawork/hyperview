@@ -19,7 +19,7 @@ const QUERY_PARAM_SEPARATOR = '&';
  * Otherwise, pull the protocol/domain/port from base URL and append the href.
  */
 export const getUrlFromHref = (href: string, baseUrl: string): string => {
-  const rootUrl = urlParse(href, baseUrl, true);
+  const rootUrl = urlParse(href, baseUrl, false);
   return rootUrl.toString();
 };
 

@@ -21,6 +21,11 @@ describe('getUrlFromHref', () => {
     const baseUrl = 'http://baz';
     expect(Url.getUrlFromHref(href, baseUrl)).toEqual('http://baz/bar');
   });
+  it('preserves multiple query params', () => {
+    const href = '/bar?a=1&a=2';
+    const baseUrl = 'http://baz';
+    expect(Url.getUrlFromHref(href, baseUrl)).toEqual('http://baz/bar?a=1&a=2');
+  });
 });
 
 describe('addParamsToUrl', () => {
