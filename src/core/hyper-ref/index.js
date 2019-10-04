@@ -16,6 +16,7 @@ import type {
   PressTrigger,
 } from 'hyperview/src/types';
 import {
+  ACTIONS,
   NAV_ACTIONS,
   ON_EVENT_DISPATCH,
   PRESS_TRIGGERS,
@@ -106,7 +107,12 @@ export default class HyperRef extends PureComponent<Props, State> {
     const action =
       behaviorElement.getAttribute(ATTRIBUTES.ACTION) || NAV_ACTIONS.PUSH;
 
-    if (Object.values(NAV_ACTIONS).indexOf(action) >= 0) {
+    if (action === ACTIONS.RELOAD) {
+      return () => {
+        const href = behaviorElement.getAttribute(ATTRIBUTES.HREF);
+        onUpdate(href, action, element, {});
+      };
+    } else if (Object.values(NAV_ACTIONS).indexOf(action) >= 0) {
       return () => {
         const href = behaviorElement.getAttribute(ATTRIBUTES.HREF);
         const showIndicatorId = behaviorElement.getAttribute(

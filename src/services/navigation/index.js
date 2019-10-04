@@ -10,6 +10,7 @@ import type {
   NavigationProps,
   NodeList,
 } from 'hyperview/src/types';
+import { getFormData } from 'hyperview/src/services';
 import { NAV_ACTIONS } from 'hyperview/src/types';
 
 const ANCHOR_ID_SEPARATOR = '#';
@@ -61,7 +62,21 @@ export default class Navigation {
     opts: BehaviorOptions,
   ): void => {
     const { showIndicatorId, delay } = opts;
-    const url = UrlService.getUrlFromHref(href, this.url);
+    const formData = getFormData(element);
+
+    const baseUrl = UrlService.getUrlFromHref(href, this.url);
+    const url =
+      href == '#'
+        ? href
+        : formData
+        ? UrlService.addParamsToUrl(
+            baseUrl,
+            formData.getParts().map(p => ({
+              name: p.fieldName,
+              value: p.string,
+            })),
+          )
+        : baseUrl;
 
     let preloadScreen = null;
     if (showIndicatorId) {
