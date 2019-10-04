@@ -8,6 +8,7 @@
  *
  */
 
+import type { FormDataGetParts } from 'hyperview/src/services/url/types';
 import urlParse from 'url-parse';
 
 const QUERY_SEPARATOR = '?';
@@ -50,19 +51,7 @@ export const addFormDataToUrl = (url: string, formData: ?FormData): string => {
     return url;
   }
 
-  const entries: Array<[string, FormDataEntryValue]> = Array.from(
-    formData.entries(),
-  );
-  const params: Array<{ name: string, value: string }> = entries.reduce(
-    (acc, entry) => {
-      const name: string = entry[0];
-      const value: FormDataEntryValue = entry[1];
-      if (typeof value === 'string') {
-        acc.push({ name, value });
-      }
-      return acc;
-    },
-    [],
-  );
+  const parts = ((formData: any): FormDataGetParts).getParts();
+  const params = parts.map(p => ({ name: p.fieldName, value: p.string }));
   return addParamsToUrl(url, params);
 };
