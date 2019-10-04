@@ -65,12 +65,22 @@
               style="Header__Back">Close</text>
         <text style="Header__Title">Close</text>
       </header>
-      <text style="Description">Tapping the button below will navigate back to the previous screen..</text>
+      <text style="Description">Tapping the button below will navigate back to the previous screen.</text>
       <view action="close"
-            href="/navigation/index.xml"
+            href="#"
             style="Button">
         <text style="Button__Label">Close</text>
       </view>
+      <text style="Description">Tapping the button below will navigate back to the previous screen, but with query params from the form.</text>
+      <form>
+        <text-field name="param1" value="value1" />
+        <text-field name="param2" value="value2" />
+        <view action="close"
+              href="/navigation/index.xml"
+              style="Button">
+          <text style="Button__Label">Close</text>
+        </view>
+      </form>
       <text style="Description">Tapping the button below will navigate back to a different screen</text>
       <view action="close"
             delay="200"

@@ -64,19 +64,17 @@ export default class Navigation {
     const { showIndicatorId, delay } = opts;
     const formData = getFormData(element);
 
+    // Serialize form data as query params, if present.
     const baseUrl = UrlService.getUrlFromHref(href, this.url);
-    const url =
-      href == '#'
-        ? href
-        : formData
-        ? UrlService.addParamsToUrl(
-            baseUrl,
-            formData.getParts().map(p => ({
-              name: p.fieldName,
-              value: p.string,
-            })),
-          )
-        : baseUrl;
+    const url = formData
+      ? UrlService.addParamsToUrl(
+          baseUrl,
+          formData.getParts().map(p => ({
+            name: p.fieldName,
+            value: p.string,
+          })),
+        )
+      : baseUrl;
 
     let preloadScreen = null;
     if (showIndicatorId) {

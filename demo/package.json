@@ -13,7 +13,7 @@
   "dependencies": {
     "@expo/samples": "2.1.1",
     "expo": "^33.0.2",
-    "expo-cli": "^2.11.6",
+    "expo-cli": "^3.2.2",
     "hyperview": "*",
     "moment": "^2.24.0",
     "react": "16.8.3",
