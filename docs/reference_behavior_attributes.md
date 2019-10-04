@@ -326,11 +326,15 @@ The `push` navigation action will push a new screen onto the stack, and the fetc
 
 When using `push`, the fetched content must be either a full Hyperview XML document (with `<doc>` root), or a `<screen>` element from the current screen's document.
 
+If the element triggering the push is a [`<form>`](/docs/reference_form) or contained in a `<form>` element, the form's data will be serialized as query parameters and included in the request. The form data has no effect when the href refers to a local `<screen>` element.
+
 ### `new`
 
 The `new` navigation action will open a new screen on top of the current screen, and the fetched content will be displayed in the new screen.
 
 When using `new`, the fetched content must be either a full Hyperview XML document (with `<doc>` root), or a `<screen>` element from the current screen's document.
+
+If the element triggering the modal is a [`<form>`](/docs/reference_form) or contained in a `<form>` element, the form's data will be serialized as query parameters and included in the request. The form data has no effect when the href refers to a local `<screen>` element.
 
 ### `back`
 
@@ -369,6 +373,8 @@ When the user presses "Go to second screen", the second screen will be pushed on
 
 > Use `href="#"` to navigate back to the previous screen without reloading or knowing the URL.
 
+If the element triggering the back navigation is a [`<form>`](/docs/reference_form) or contained in a `<form>` element, the form's data will be serialized as query parameters and included in the request. The form data has no effect when the href refers to a local `<screen>` element.
+
 ### `close`
 
 The `close` navigation action will undo a `new`, by closing the current modal screen and revealing the previous screen on the stack.
@@ -406,6 +412,8 @@ When the user presses "Go to second screen", the second screen will be opened on
 
 > Use `href="#"` to close the modal without reloading or knowing the URL of the previous screen.
 
+If the element triggering the close navigation is a [`<form>`](/docs/reference_form) or contained in a `<form>` element, the form's data will be serialized as query parameters and included in the request. The form data has no effect when the href refers to a local `<screen>` element.
+
 ### `navigate`
 
 The `navigate` navigation action will either push a screen onto the stack, or unwind the stack to a screen loaded from the given URL.
@@ -413,6 +421,8 @@ The `navigate` navigation action will either push a screen onto the stack, or un
 ### `reload`
 
 The `reload` navigation action will re-request the current screen. This is similar to a reload button in a web browser.
+
+If the reload behavior contains an `href`, the given `href` will be used to request the new content for the current screen.
 
 ### `deep-link`
 
