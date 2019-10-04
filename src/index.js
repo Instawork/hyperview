@@ -228,7 +228,7 @@ export default class HyperScreen extends React.Component {
     // TODO: If the preload screen is changing, delete the old one from
     // this.navigation.preloadScreens to prevent memory leaks.
 
-    if (newUrl !== oldUrl) {
+    if (newUrl && newUrl !== oldUrl) {
       this.needsLoad = true;
 
       const preloadScreen = newPreloadScreen
