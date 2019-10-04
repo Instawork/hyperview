@@ -271,8 +271,8 @@ export const getFormData = (element: Element): ?FormData => {
         return;
       }
       if (
-        input.tagName === 'select-single' ||
-        input.tagName === 'select-multiple'
+        input.tagName === LOCAL_NAME.SELECT_SINGLE ||
+        input.tagName === LOCAL_NAME.SELECT_MULTIPLE
       ) {
         // Add each selected option to the form data
         const optionElements: NodeList<Element> = input.getElementsByTagNameNS(
