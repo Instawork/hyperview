@@ -18,8 +18,10 @@ import type {
   HvComponentOptions,
   LocalName,
   Node,
+  NodeList,
   StyleSheets,
 } from 'hyperview/src/types';
+import { FORM_NAMES, LOCAL_NAME } from 'hyperview/src/types';
 import HyperRef from 'hyperview/src/core/hyper-ref';
 import React from 'react';
 import type { StyleSheet } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
@@ -203,4 +205,97 @@ export const shallowCloneToRoot = (element: Element): Document => {
 
   parentNode.replaceChild(elementClone, element);
   return shallowCloneToRoot((parentNode: any));
+};
+
+/**
+ * Searches the parent chain from the given element until it finds an
+ * element with the given tag name. If no ancestor with the tagName is found,
+ * returns null.
+ */
+export const getAncestorByTagName = (
+  element: Element,
+  tagName: string,
+): ?Element => {
+  let parentNode: ?Node = element.parentNode;
+  if (!parentNode) {
+    return null;
+  }
+
+  while (parentNode.tagName !== tagName) {
+    parentNode = parentNode.parentNode;
+    if (!parentNode) {
+      return null;
+    }
+  }
+  return ((parentNode: any): Element);
+};
+
+/**
+ * Creates a FormData object for the given element. Finds the closest form element ancestor
+ * and adds data for all inputs contained in the form. Returns null if the element has no
+ * form ancestor, or if there is no form data to send.
+ * If the given element is a form element, its form data will be returned.
+ */
+export const getFormData = (element: Element): ?FormData => {
+  const formElement: ?Element =
+    element.tagName === 'form'
+      ? element
+      : getAncestorByTagName(element, 'form');
+  if (!formElement) {
+    return null;
+  }
+
+  const formData: FormData = new FormData();
+  let formHasData = false;
+
+  // TODO: It would be more flexible to grab any element with a name and value.
+  FORM_NAMES
+    // Get all inputs in the form
+    .reduce((acc: Array<Element>, tag: LocalName) => {
+      const inputElements: NodeList<Element> = formElement.getElementsByTagNameNS(
+        Namespaces.HYPERVIEW,
+        tag,
+      );
+      for (let i = 0; i < inputElements.length; i += 1) {
+        const inputElement = inputElements.item(i);
+        if (inputElement) {
+          acc.push(inputElement);
+        }
+      }
+      return acc;
+    }, [])
+    // Append the form data for each input
+    .forEach((input: Element) => {
+      const name: ?string = input.getAttribute('name');
+      if (!name) {
+        return;
+      }
+      if (
+        input.tagName === LOCAL_NAME.SELECT_SINGLE ||
+        input.tagName === LOCAL_NAME.SELECT_MULTIPLE
+      ) {
+        // Add each selected option to the form data
+        const optionElements: NodeList<Element> = input.getElementsByTagNameNS(
+          Namespaces.HYPERVIEW,
+          LOCAL_NAME.OPTION,
+        );
+        for (let i = 0; i < optionElements.length; i += 1) {
+          const optionElement = optionElements.item(i);
+          if (
+            optionElement &&
+            optionElement.getAttribute('selected') === 'true'
+          ) {
+            formData.append(name, optionElement.getAttribute('value') || '');
+            formHasData = true;
+          }
+        }
+      } else {
+        // Add the text input to the form data
+        formData.append(name, input.getAttribute('value') || '');
+        formHasData = true;
+      }
+    });
+
+  // Ensure that we only return form data with content in it. Otherwise, it will crash on Android
+  return formHasData ? formData : null;
 };

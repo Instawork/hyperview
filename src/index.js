@@ -29,7 +29,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import Navigation from 'hyperview/src/services/navigation';
 import React from 'react';
 import VisibilityDetectingView from './VisibilityDetectingView.js';
-import { addHref, createProps, getBehaviorElements, getFirstTag, later, shallowCloneToRoot } from 'hyperview/src/services';
+import { addHref, createProps, getBehaviorElements, getFirstTag, later, shallowCloneToRoot, getFormData } from 'hyperview/src/services';
 import { version } from '../package.json';
 import { ACTIONS, FORM_NAMES, NAV_ACTIONS, ON_EVENT_DISPATCH, UPDATE_ACTIONS } from 'hyperview/src/types';
 import urlParse from 'url-parse';
@@ -54,18 +54,6 @@ function getHyperviewHeaders() {
   };
 }
 
-/**
- * Searches the parent chain from the given element until it finds an
- * element with the given tag name. If no ancestor with the tagName is found,
- * returns null.
- */
-function getAncestorByTagName(element, tagName) {
-  let parentNode = element.parentNode;
-  while (parentNode !== null && parentNode.tagName !== tagName) {
-    parentNode = parentNode.parentNode || null;
-  }
-  return parentNode;
-}
 
 /**
  *
@@ -240,7 +228,7 @@ export default class HyperScreen extends React.Component {
     // TODO: If the preload screen is changing, delete the old one from
     // this.navigation.preloadScreens to prevent memory leaks.
 
-    if (newUrl !== oldUrl) {
+    if (newUrl && newUrl !== oldUrl) {
       this.needsLoad = true;
 
       const preloadScreen = newPreloadScreen
@@ -340,11 +328,17 @@ export default class HyperScreen extends React.Component {
 
   /**
    * Reload if an error occured.
+   * @param opt_href: Optional string href to use when reloading the screen. If not provided,
+   * the screen's current URL will be used.
    */
-  reload = () => {
+  reload = (opt_href) => {
+    const url = (opt_href === undefined || opt_href === '#')
+      ? this.state.url
+      : UrlService.getUrlFromHref(opt_href, this.state.url);
     this.needsLoad = true;
     this.setState({
       error: false,
+      url,
     });
   }
 
@@ -357,7 +351,7 @@ export default class HyperScreen extends React.Component {
       return (
         <View style={{ backgroundColor: 'white', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
           <Text>An error occured</Text>
-          <TouchableOpacity onPress={this.reload}>
+          <TouchableOpacity onPress={() => this.reload()}>
             <Text style={{ color: '#4778FF', marginTop: 16 }}>Reload</Text>
           </TouchableOpacity>
         </View>
@@ -424,14 +418,8 @@ export default class HyperScreen extends React.Component {
 
     // For GET requests, we can't include a body so we encode the form data as a query
     // string in the URL.
-    const url = verb === 'GET' && formData
-      ? UrlService.addParamsToUrl(
-          UrlService.getUrlFromHref(href, this.state.url),
-          formData.getParts().map(p => ({
-            name: p.fieldName,
-            value: p.string,
-          })),
-      )
+    const url = verb === 'GET'
+      ? UrlService.addFormDataToUrl(UrlService.getUrlFromHref(href, this.state.url), formData)
       : UrlService.getUrlFromHref(href, this.state.url);
 
     const options = {
@@ -446,54 +434,14 @@ export default class HyperScreen extends React.Component {
       .then(responseText => this.parser.parseFromString(responseText).documentElement);
   }
 
-  /**
-   * Creates a FormData object for the given element. Finds the closest form element ancestor
-   * and adds data for all inputs contained in the form. Returns null if the element has no
-   * form ancestor, or if there is no form data to send
-   */
-  getFormData = (element) => {
-    const formElement = getAncestorByTagName(element, 'form');
-    if (!formElement) {
-      return null;
-    }
 
-    const formData = new FormData();
-    let formHasData = false;
-
-    // TODO: It would be more flexible to grab any element with a name and value.
-    FORM_NAMES
-      // Get all inputs in the form
-      .reduce((acc, tag) => (
-        acc.concat(Array.from(formElement.getElementsByTagNameNS(HYPERVIEW_NS, tag)))
-      ), [])
-      // Append the form data for each input
-      .forEach((input) => {
-        const name = input.getAttribute('name');
-        if (input.tagName === 'select-single' || input.tagName === 'select-multiple') {
-          // Add each selected option to the form data
-          Array.from(input.getElementsByTagNameNS(HYPERVIEW_NS, 'option'))
-            .filter(opt => opt.getAttribute('selected') === 'true')
-            .forEach(opt => {
-              formData.append(name, opt.getAttribute('value'));
-              formHasData = true;
-            });
-        } else {
-          // Add the text input to the form data
-          formData.append(name, input.getAttribute('value'));
-          formHasData = true;
-        }
-      });
-
-    // Ensure that we only return form data with content in it. Otherwise, it will crash on Android
-    return formHasData ? formData : null;
-  }
 
   /**
    *
    */
   onUpdate = (href, action, currentElement, opts) => {
     if (action === ACTIONS.RELOAD) {
-      this.reload();
+      this.reload(href);
     } else if (action === ACTIONS.DEEP_LINK) {
       Linking.openURL(href);
     } else if (Object.values(NAV_ACTIONS).includes(action)) {
@@ -576,7 +524,7 @@ export default class HyperScreen extends React.Component {
       verb, targetId, showIndicatorIds, hideIndicatorIds, delay, once, onEnd, behaviorElement,
     } = options;
 
-    const formData = this.getFormData(currentElement);
+    const formData = getFormData(currentElement);
 
     // TODO: Check ran-once on the behavior element, not current element.
     if (once && currentElement.getAttribute('ran-once')) {

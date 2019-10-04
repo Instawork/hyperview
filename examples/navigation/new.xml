@@ -58,6 +58,24 @@
              fontWeight="bold" />
       <style id="Main"
              flex="1" />
+      <style id="input"
+             borderBottomColor="#E1E1E1"
+             borderBottomWidth="1"
+             borderColor="#4E4D4D"
+             flex="1"
+             fontSize="16"
+             fontWeight="normal"
+             marginLeft="24"
+             marginRight="24"
+             paddingBottom="8"
+             paddingTop="8">
+        <modifier pressed="true">
+          <style borderBottomColor="green" />
+        </modifier>
+        <modifier focused="true">
+          <style borderBottomColor="#4778FF" />
+        </modifier>
+      </style>
     </styles>
     <body style="Body">
       <header style="Header">
@@ -81,6 +99,16 @@
               style="Button">
           <text style="Button__Label">New with indicator</text>
         </view>
+        <form>
+          <view action="new"
+                delay="1000"
+                href="/navigation/modal.xml"
+                show-during-load="loadingScreen"
+                style="Button">
+            <text style="Button__Label">New with params</text>
+          </view>
+          <text-field style="input" name="param1" value="value1" />
+        </form>
       </view>
     </body>
   </screen>

@@ -8,6 +8,7 @@
  *
  */
 
+import type { FormDataGetParts } from 'hyperview/src/services/url/types';
 import urlParse from 'url-parse';
 
 const QUERY_SEPARATOR = '?';
@@ -40,4 +41,17 @@ export const addParamsToUrl = (
     ),
   );
   return `${baseUrl}${QUERY_SEPARATOR}${query.join(QUERY_PARAM_SEPARATOR)}`;
+};
+
+/**
+ * Add FormData as query params to a url. Ignores files in the formdata.
+ */
+export const addFormDataToUrl = (url: string, formData: ?FormData): string => {
+  if (!formData) {
+    return url;
+  }
+
+  const parts = ((formData: any): FormDataGetParts).getParts();
+  const params = parts.map(p => ({ name: p.fieldName, value: p.string }));
+  return addParamsToUrl(url, params);
 };

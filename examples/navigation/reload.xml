@@ -75,6 +75,14 @@
               style="Button">
           <text style="Button__Label">Reload!</text>
         </view>
+
+        <text style="Description">Tapping the button below will reload this screen with a new URL</text>
+        <view action="reload"
+              href="/navigation/index.xml"
+              show-during-load="loadingScreen"
+              style="Button">
+          <text style="Button__Label">Reload different screen</text>
+        </view>
       </view>
     </body>
   </screen>

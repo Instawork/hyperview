@@ -9,19 +9,21 @@
  */
 
 import * as Render from 'hyperview/src/services/render';
-import { ATTRIBUTES, PRESS_TRIGGERS_PROP_NAMES } from './types';
-import type {
-  Element,
-  HvComponentOnUpdate,
-  PressTrigger,
-} from 'hyperview/src/types';
 import {
+  ACTIONS,
   NAV_ACTIONS,
   ON_EVENT_DISPATCH,
   PRESS_TRIGGERS,
   TRIGGERS,
   UPDATE_ACTIONS,
 } from 'hyperview/src/types';
+import { ATTRIBUTES, PRESS_TRIGGERS_PROP_NAMES } from './types';
+import type {
+  Element,
+  HvComponentOnUpdate,
+  PressTrigger,
+} from 'hyperview/src/types';
+
 import type { PressHandlers, Props, State } from './types';
 import React, { PureComponent } from 'react';
 import { RefreshControl, ScrollView, TouchableOpacity } from 'react-native';
@@ -106,7 +108,12 @@ export default class HyperRef extends PureComponent<Props, State> {
     const action =
       behaviorElement.getAttribute(ATTRIBUTES.ACTION) || NAV_ACTIONS.PUSH;
 
-    if (Object.values(NAV_ACTIONS).indexOf(action) >= 0) {
+    if (action === ACTIONS.RELOAD) {
+      return () => {
+        const href = behaviorElement.getAttribute(ATTRIBUTES.HREF);
+        onUpdate(href, action, element, {});
+      };
+    } else if (Object.values(NAV_ACTIONS).indexOf(action) >= 0) {
       return () => {
         const href = behaviorElement.getAttribute(ATTRIBUTES.HREF);
         const showIndicatorId = behaviorElement.getAttribute(

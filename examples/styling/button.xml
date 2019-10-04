@@ -85,7 +85,7 @@
             style="Main">
         <text style="Description">Regular</text>
         <view action="reload"
-              href="styling/button.xml"
+              href="/styling/button.xml"
               style="Button">
           <text style="Button__Label">Hello</text>
         </view>
@@ -95,7 +95,7 @@
         </view>
         <text style="Description">Shadow</text>
         <view action="reload"
-              href="styling/button.xml"
+              href="/styling/button.xml"
               style="Button Button--Shadow">
           <text style="Button__Label">Shadow</text>
         </view>

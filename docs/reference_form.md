@@ -4,7 +4,9 @@ title: <form>
 sidebar_label: <form>
 ---
 
-The `<form>` element represents a group of input elements that should be serialized into the request. Any behaviors within the `<form>` that result in a remote request will include the form's input values. The encoding of the input values depend on the request method:
+The `<form>` element represents a group of input elements that should be serialized into the request. Any behaviors within the `<form>` that result in a remote request will include the form's input values. This applies to both update and navigation actions.
+
+The encoding of the input values depend on the request method:
 
 - For **POST** requests, the body will be encoded as `multipart/form-data`.
 - For **GET** requests, the input values will be added as query parameters.
