@@ -9,12 +9,6 @@
  */
 
 import * as Render from 'hyperview/src/services/render';
-import { ATTRIBUTES, PRESS_TRIGGERS_PROP_NAMES } from './types';
-import type {
-  Element,
-  HvComponentOnUpdate,
-  PressTrigger,
-} from 'hyperview/src/types';
 import {
   ACTIONS,
   NAV_ACTIONS,
@@ -23,6 +17,13 @@ import {
   TRIGGERS,
   UPDATE_ACTIONS,
 } from 'hyperview/src/types';
+import { ATTRIBUTES, PRESS_TRIGGERS_PROP_NAMES } from './types';
+import type {
+  Element,
+  HvComponentOnUpdate,
+  PressTrigger,
+} from 'hyperview/src/types';
+
 import type { PressHandlers, Props, State } from './types';
 import React, { PureComponent } from 'react';
 import { RefreshControl, ScrollView, TouchableOpacity } from 'react-native';

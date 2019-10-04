@@ -10,8 +10,8 @@ import type {
   NavigationProps,
   NodeList,
 } from 'hyperview/src/types';
-import { getFormData } from 'hyperview/src/services';
 import { NAV_ACTIONS } from 'hyperview/src/types';
+import { getFormData } from 'hyperview/src/services';
 
 const ANCHOR_ID_SEPARATOR = '#';
 const QUERY_SEPARATOR = '?';
@@ -62,19 +62,11 @@ export default class Navigation {
     opts: BehaviorOptions,
   ): void => {
     const { showIndicatorId, delay } = opts;
-    const formData = getFormData(element);
+    const formData: ?FormData = getFormData(element);
 
     // Serialize form data as query params, if present.
     const baseUrl = UrlService.getUrlFromHref(href, this.url);
-    const url = formData
-      ? UrlService.addParamsToUrl(
-          baseUrl,
-          formData.getParts().map(p => ({
-            name: p.fieldName,
-            value: p.string,
-          })),
-        )
-      : baseUrl;
+    const url = UrlService.addFormDataToUrl(baseUrl, formData);
 
     let preloadScreen = null;
     if (showIndicatorId) {

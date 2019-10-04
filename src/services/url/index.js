@@ -41,3 +41,28 @@ export const addParamsToUrl = (
   );
   return `${baseUrl}${QUERY_SEPARATOR}${query.join(QUERY_PARAM_SEPARATOR)}`;
 };
+
+/**
+ * Add FormData as query params to a url. Ignores files in the formdata.
+ */
+export const addFormDataToUrl = (url: string, formData: ?FormData): string => {
+  if (!formData) {
+    return url;
+  }
+
+  const entries: Array<[string, FormDataEntryValue]> = Array.from(
+    formData.entries(),
+  );
+  const params: Array<{ name: string, value: string }> = entries.reduce(
+    (acc, entry) => {
+      const name: string = entry[0];
+      const value: FormDataEntryValue = entry[1];
+      if (typeof value === 'string') {
+        acc.push({ name, value });
+      }
+      return acc;
+    },
+    [],
+  );
+  return addParamsToUrl(url, params);
+};

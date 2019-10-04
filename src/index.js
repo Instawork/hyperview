@@ -418,14 +418,8 @@ export default class HyperScreen extends React.Component {
 
     // For GET requests, we can't include a body so we encode the form data as a query
     // string in the URL.
-    const url = verb === 'GET' && formData
-      ? UrlService.addParamsToUrl(
-          UrlService.getUrlFromHref(href, this.state.url),
-          formData.getParts().map(p => ({
-            name: p.fieldName,
-            value: p.string,
-          })),
-      )
+    const url = verb === 'GET'
+      ? UrlService.addFormDataToUrl(UrlService.getUrlFromHref(href, this.state.url), formData)
       : UrlService.getUrlFromHref(href, this.state.url);
 
     const options = {
