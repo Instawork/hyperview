@@ -81,7 +81,7 @@
               href="/navigation/index.xml"
               show-during-load="loadingScreen"
               style="Button">
-          <text style="Button__Label">Reload!</text>
+          <text style="Button__Label">Reload different screen</text>
         </view>
       </view>
     </body>

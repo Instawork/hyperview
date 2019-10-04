@@ -12,18 +12,18 @@
   },
   "dependencies": {
     "@expo/samples": "2.1.1",
-    "expo": "^33.0.2",
+    "expo": "^35.0.0",
     "expo-cli": "^3.2.2",
-    "hyperview": "*",
+    "hyperview": "0.16.3",
     "moment": "^2.24.0",
     "react": "16.8.3",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
     "react-native-keyboard-aware-scrollview": "^2.0.0",
     "react-navigation": "^2.18.2"
   },
   "devDependencies": {
-    "babel-preset-expo": "^5.0.0",
-    "jest-expo": "^31.0.0"
+    "babel-preset-expo": "^7.0.0",
+    "jest-expo": "^35.0.0"
   },
   "private": true
 }

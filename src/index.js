@@ -332,7 +332,9 @@ export default class HyperScreen extends React.Component {
    * the screen's current URL will be used.
    */
   reload = (opt_href) => {
-    const url = opt_href ? UrlService.getUrlFromHref(opt_href, this.state.url) : this.state.url;
+    const url = (opt_href === undefined || opt_href === '#')
+      ? this.state.url
+      : UrlService.getUrlFromHref(opt_href, this.state.url);
     this.needsLoad = true;
     this.setState({
       error: false,

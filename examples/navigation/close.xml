@@ -76,7 +76,7 @@
         <text-field name="param1" value="value1" />
         <text-field name="param2" value="value2" />
         <view action="close"
-              href="/navigation/index.xml"
+              href="/navigation/index.xml?test=1"
               style="Button">
           <text style="Button__Label">Close</text>
         </view>
