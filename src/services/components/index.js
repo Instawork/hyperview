@@ -18,6 +18,7 @@ import HvSectionList from 'hyperview/src/components/hv-section-list';
 import HvSelectMultiple from 'hyperview/src/components/hv-select-multiple';
 import HvSelectSingle from 'hyperview/src/components/hv-select-single';
 import HvSpinner from 'hyperview/src/components/hv-spinner';
+import HvSwitch from 'hyperview/src/components/hv-switch';
 import HvTextArea from 'hyperview/src/components/hv-text-area';
 import HvTextField from 'hyperview/src/components/hv-text-field';
 import HvWebView from 'hyperview/src/components/hv-web-view';
@@ -31,6 +32,7 @@ const HYPERVIEW_COMPONENTS = [
   HvSelectMultiple,
   HvSelectSingle,
   HvSpinner,
+  HvSwitch,
   HvTextArea,
   HvTextField,
   HvImage,

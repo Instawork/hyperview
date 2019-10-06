@@ -34,6 +34,7 @@ export const LOCAL_NAME = {
   SPINNER: 'spinner',
   STYLE: 'style',
   STYLES: 'styles',
+  SWITCH: 'switch',
   TEXT: 'text',
   TEXT_AREA: 'text-area',
   TEXT_FIELD: 'text-field',
@@ -48,6 +49,7 @@ export const FORM_NAMES = [
   LOCAL_NAME.SELECT_MULTIPLE,
   LOCAL_NAME.PICKER_FIELD,
   LOCAL_NAME.DATE_FIELD,
+  LOCAL_NAME.SWITCH,
 ];
 
 export type LocalName = $Values<typeof LOCAL_NAME>;

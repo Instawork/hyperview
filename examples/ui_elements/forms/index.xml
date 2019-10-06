@@ -122,6 +122,15 @@
           </view>
           <text style="Item__Chevron">&gt;</text>
         </item>
+        <item href="/ui_elements/forms/switch.xml"
+              key="switch"
+              show-during-load="loadingScreen"
+              style="Item">
+          <view style="Item__Left">
+            <text style="Item__Label">Switch</text>
+          </view>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
       </list>
     </body>
   </screen>
