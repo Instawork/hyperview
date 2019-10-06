@@ -22,9 +22,8 @@ export default class HvSwitch extends PureComponent<Props, State> {
   state: State;
 
   constructor(props: Props) {
-    const { element } = props;
     super(props);
-    const initialValue = element.getAttribute('value') === 'on';
+    const initialValue = props.element.getAttribute('value') === 'on';
     this.state = {
       value: initialValue,
     };
