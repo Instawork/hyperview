@@ -63,6 +63,14 @@ export default class HvPickerField extends PureComponent<Props, State> {
     };
   }
 
+  componentDidUpdate() {
+    const { element } = this.props;
+    const newValue = element.getAttribute('value') || '';
+    if (newValue !== this.state.value) {
+      this.setState({ value: newValue });
+    }
+  }
+
   toggleFieldPress = () => {
     this.setState({ fieldPressed: !this.state.fieldPressed });
   };

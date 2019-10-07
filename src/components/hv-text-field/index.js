@@ -46,6 +46,16 @@ export default class HvTextField extends PureComponent<Props, State> {
     return mask.mask(value) || '';
   };
 
+  componentDidUpdate() {
+    const { element } = this.props;
+    const newValue = this.getFormattedValue(
+      element.getAttribute('value') || '',
+    );
+    if (newValue !== this.state.value) {
+      this.setState({ value: newValue });
+    }
+  }
+
   render() {
     const { element, stylesheets, options } = this.props;
 

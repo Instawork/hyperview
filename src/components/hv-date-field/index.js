@@ -70,6 +70,19 @@ export default class HvDateField extends PureComponent<Props, State> {
         this.showPickerAndroid();
       }
     }
+
+    const { element } = this.props;
+    if (element.hasAttribute('value')) {
+      const newValue = element.getAttribute('value') || '';
+      const newDate = this.createDateFromString(newValue);
+      // NOTE(adam): We convert from date to strings for the comparison to normalize the representation.
+      if (
+        this.createStringFromDate(newDate) !==
+        this.createStringFromDate(this.state.value)
+      ) {
+        this.setState({ value: newDate, pickerValue: newDate || new Date() });
+      }
+    }
   };
 
   /**

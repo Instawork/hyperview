@@ -16,12 +16,20 @@ import type {
 } from 'hyperview/src/types';
 import HvAlert from 'hyperview/src/behaviors/hv-alert';
 import HvHide from 'hyperview/src/behaviors/hv-hide';
+import HvSetValue from 'hyperview/src/behaviors/hv-set-value';
 import HvShare from 'hyperview/src/behaviors/hv-share';
 import HvShow from 'hyperview/src/behaviors/hv-show';
 import HvToggle from 'hyperview/src/behaviors/hv-toggle';
 import { shallowCloneToRoot } from 'hyperview/src/services';
 
-const HYPERVIEW_BEHAVIORS = [HvAlert, HvHide, HvShare, HvShow, HvToggle];
+const HYPERVIEW_BEHAVIORS = [
+  HvAlert,
+  HvHide,
+  HvSetValue,
+  HvShare,
+  HvShow,
+  HvToggle,
+];
 
 export const getRegistry = (behaviors: HvBehavior[] = []): BehaviorRegistry =>
   [...HYPERVIEW_BEHAVIORS, ...behaviors].reduce(

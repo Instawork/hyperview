@@ -93,6 +93,13 @@
           <text style="Item__Label">Dispatch Event</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
+        <item href="/advanced_behaviors/set_value/index.xml"
+              key="set_value"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Set Value</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
       </list>
     </body>
   </screen>
