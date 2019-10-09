@@ -18,6 +18,9 @@ import { createStyleProp } from 'hyperview/src/services';
 export default class HvSwitch extends PureComponent<Props, State> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.SWITCH;
+  props: Props;
+  state: State;
+
   constructor(props: Props) {
     const { element } = props;
     super(props);
@@ -28,17 +31,19 @@ export default class HvSwitch extends PureComponent<Props, State> {
   }
 
   render() {
-    const { element, stylesheets } = this.props;
-
-    if (element.getAttribute('hide') === 'true') {
+    if (this.props.element.getAttribute('hide') === 'true') {
       return null;
     }
 
     const unselectedStyle = StyleSheet.flatten(
-      createStyleProp(element, stylesheets, { selected: false }),
+      createStyleProp(this.props.element, this.props.stylesheets, {
+        selected: false,
+      }),
     );
     const selectedStyle = StyleSheet.flatten(
-      createStyleProp(element, stylesheets, { selected: true }),
+      createStyleProp(this.props.element, this.props.stylesheets, {
+        selected: true,
+      }),
     );
 
     const props = {
@@ -54,7 +59,7 @@ export default class HvSwitch extends PureComponent<Props, State> {
         // Render the formatted value and store the formatted value
         // in state (on the XML element).
         this.setState({ value });
-        element.setAttribute('value', value ? 'on' : 'off');
+        this.props.element.setAttribute('value', value ? 'on' : 'off');
       },
     };
 
