@@ -61,7 +61,8 @@
       "reference_selectmultiple",
       "reference_option",
       "reference_pickerfield",
-      "reference_pickeritem"
+      "reference_pickeritem",
+      "reference_switch"
     ],
     "Style Elements": [
       "reference_styles",
