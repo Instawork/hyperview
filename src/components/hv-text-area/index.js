@@ -31,6 +31,7 @@ export default class HvTextArea extends PureComponent<Props, State> {
     const { element } = this.props;
     const newValue = element.getAttribute('value') || '';
     if (newValue !== this.state.value) {
+      // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ value: newValue });
     }
   }

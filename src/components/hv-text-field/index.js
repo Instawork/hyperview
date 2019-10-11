@@ -52,6 +52,7 @@ export default class HvTextField extends PureComponent<Props, State> {
       element.getAttribute('value') || '',
     );
     if (newValue !== this.state.value) {
+      // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ value: newValue });
     }
   }
