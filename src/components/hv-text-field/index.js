@@ -11,6 +11,7 @@
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type { Props, State } from './types';
 import React, { PureComponent } from 'react';
+import type { Element } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { TextInput } from 'react-native';
 import TinyMask from 'hyperview/src/mask.js';
@@ -46,11 +47,13 @@ export default class HvTextField extends PureComponent<Props, State> {
 
   static getDerivedStateFromProps(nextProps: Props, prevState: State) {
     const { element } = nextProps;
-    const value = HvTextField.getFormattedValue(
+    const newValue = HvTextField.getFormattedValue(
       element,
       element.getAttribute('value') || '',
     );
-    return value !== prevState.value ? { value } : {};
+    return newValue !== prevState.value
+      ? { focused: prevState.focused, value: newValue }
+      : prevState;
   }
 
   render() {

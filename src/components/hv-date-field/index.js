@@ -100,10 +100,18 @@ export default class HvDateField extends PureComponent<Props, State> {
         HvDateField.createStringFromDate(newDate) !==
         HvDateField.createStringFromDate(prevState.value)
       ) {
-        return { value: newDate, pickerValue: newDate || new Date() };
+        const { focused, fieldPressed, donePressed, cancelPressed } = prevState;
+        return {
+          cancelPressed,
+          donePressed,
+          fieldPressed,
+          focused,
+          pickerValue: newDate || new Date(),
+          value: newDate,
+        };
       }
     }
-    return {};
+    return prevState;
   }
 
   componentDidUpdate = (prevProps: Props, prevState: State) => {
