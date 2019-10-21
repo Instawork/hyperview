@@ -27,13 +27,9 @@ export default class HvTextArea extends PureComponent<Props, State> {
     };
   }
 
-  componentDidUpdate() {
-    const { element } = this.props;
-    const newValue = element.getAttribute('value') || '';
-    if (newValue !== this.state.value) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ value: newValue });
-    }
+  static getDerivedStateFromProps(nextProps: Props, prevState: State) {
+    const value = nextProps.element.getAttribute('value') || '';
+    return value !== prevState.value ? { value } : {};
   }
 
   render() {

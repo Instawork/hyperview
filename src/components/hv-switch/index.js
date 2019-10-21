@@ -29,12 +29,9 @@ export default class HvSwitch extends PureComponent<Props, State> {
     };
   }
 
-  componentDidUpdate() {
-    const newValue = this.props.element.getAttribute('value') === 'on';
-    if (newValue !== this.state.value) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ value: newValue });
-    }
+  static getDerivedStateFromProps(nextProps: Props, prevState: State) {
+    const value = nextProps.element.getAttribute('value') === 'on';
+    return value !== prevState.value ? { value } : {};
   }
 
   render() {

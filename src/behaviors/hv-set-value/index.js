@@ -1,5 +1,6 @@
 // @flow
 
+import * as Behaviors from 'hyperview/src/services/behaviors';
 import type {
   DOMString,
   Document,
@@ -9,10 +10,8 @@ import type {
   HvUpdateRoot,
 } from 'hyperview/src/types';
 import { later, shallowCloneToRoot } from 'hyperview/src/services';
-import {
-  setIndicatorsAfterLoad,
-  setIndicatorsBeforeLoad,
-} from 'hyperview/src/services/behaviors';
+
+const ID_SEPARATOR = ' ';
 
 export default {
   action: 'set-value',
@@ -24,6 +23,7 @@ export default {
   ) => {
     const targetId: ?DOMString = element.getAttribute('target');
     if (!targetId) {
+      console.warn('[behaviors/set-value]: missing "target" attribute');
       return;
     }
 
@@ -35,10 +35,10 @@ export default {
 
     const showIndicatorIds: Array<string> = (
       element.getAttribute('show-during-load') || ''
-    ).split(' ');
+    ).split(ID_SEPARATOR);
     const hideIndicatorIds: Array<string> = (
       element.getAttribute('hide-during-load') || ''
-    ).split(' ');
+    ).split(ID_SEPARATOR);
 
     const setValue = () => {
       const doc: Document = getRoot();
@@ -53,7 +53,7 @@ export default {
 
       // If using delay, we need to undo the indicators shown earlier.
       if (delay > 0) {
-        newRoot = setIndicatorsAfterLoad(
+        newRoot = Behaviors.setIndicatorsAfterLoad(
           showIndicatorIds,
           hideIndicatorIds,
           newRoot,
@@ -69,7 +69,7 @@ export default {
       setValue();
     } else {
       // If there's a delay, first trigger the indicators before the show.
-      const newRoot = setIndicatorsBeforeLoad(
+      const newRoot = Behaviors.setIndicatorsBeforeLoad(
         showIndicatorIds,
         hideIndicatorIds,
         getRoot(),

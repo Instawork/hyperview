@@ -33,9 +33,7 @@ export default class HvTextField extends PureComponent<Props, State> {
    * Currently supports the "mask" attribute, which will be applied
    * to format the provided value.
    */
-  getFormattedValue = (value: string) => {
-    const { element } = this.props;
-
+  static getFormattedValue = (element: Element, value: string) => {
     if (!element.hasAttribute('mask')) {
       return value;
     }
@@ -46,15 +44,13 @@ export default class HvTextField extends PureComponent<Props, State> {
     return mask.mask(value) || '';
   };
 
-  componentDidUpdate() {
-    const { element } = this.props;
-    const newValue = this.getFormattedValue(
+  static getDerivedStateFromProps(nextProps: Props, prevState: State) {
+    const { element } = nextProps;
+    const value = HvTextField.getFormattedValue(
+      element,
       element.getAttribute('value') || '',
     );
-    if (newValue !== this.state.value) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ value: newValue });
-    }
+    return value !== prevState.value ? { value } : {};
   }
 
   render() {
@@ -78,7 +74,7 @@ export default class HvTextField extends PureComponent<Props, State> {
       onChangeText: value => {
         // Render the formatted value and store the formatted value
         // in state (on the XML element).
-        const formattedValue = this.getFormattedValue(value);
+        const formattedValue = HvTextField.getFormattedValue(element, value);
         this.setState({ value: formattedValue });
         element.setAttribute('value', formattedValue);
       },
