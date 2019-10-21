@@ -28,7 +28,7 @@ import type { PressHandlers, Props, State } from './types';
 import React, { PureComponent } from 'react';
 import { RefreshControl, ScrollView, TouchableOpacity } from 'react-native';
 import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
-import { XMLSerializer } from 'xmldom';
+import { XMLSerializer } from 'xmldom-instawork';
 // eslint-disable-next-line import/no-internal-modules
 import eventEmitter from 'tiny-emitter/instance';
 import { getBehaviorElements } from 'hyperview/src/services';

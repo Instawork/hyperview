@@ -1,5 +1,6 @@
 // @flow
 
+import * as Behaviors from 'hyperview/src/services/behaviors';
 import type {
   DOMString,
   Document,
@@ -9,10 +10,6 @@ import type {
   HvUpdateRoot,
 } from 'hyperview/src/types';
 import { later, shallowCloneToRoot } from 'hyperview/src/services';
-import {
-  setIndicatorsAfterLoad,
-  setIndicatorsBeforeLoad,
-} from 'hyperview/src/services/behaviors';
 
 export default {
   action: 'show',
@@ -51,7 +48,7 @@ export default {
 
       // If using delay, we need to undo the indicators shown earlier.
       if (delay > 0) {
-        newRoot = setIndicatorsAfterLoad(
+        newRoot = Behaviors.setIndicatorsAfterLoad(
           showIndicatorIds,
           hideIndicatorIds,
           newRoot,
@@ -67,7 +64,7 @@ export default {
       showElement();
     } else {
       // If there's a delay, first trigger the indicators before the show.
-      const newRoot = setIndicatorsBeforeLoad(
+      const newRoot = Behaviors.setIndicatorsBeforeLoad(
         showIndicatorIds,
         hideIndicatorIds,
         getRoot(),

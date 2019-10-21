@@ -1,5 +1,72 @@
 // DO NOT EDIT: Auto-generate this file by running `yarn generate`
 export default {
+  'hyperview/src/components/hv-date-field/stories/basic.xml':
+  `<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style
+        id="Body"
+        backgroundColor="white"
+        flex="1"
+      />
+      <style
+        id="Input"
+        borderBottomColor="#E1E1E1"
+        borderBottomWidth="1"
+        borderColor="#4E4D4D"
+        flex="1"
+        paddingBottom="8"
+        paddingTop="8"
+      >
+        <modifier pressed="true">
+          <style borderBottomColor="#4778FF" />
+        </modifier>
+        <modifier focused="true">
+          <style borderBottomColor="#4778FF" />
+        </modifier>
+      </style>
+      <style
+        id="Input__Text"
+        fontSize="16"
+        fontWeight="normal"
+      />
+      <style
+        id="PickerModal"
+        backgroundColor="white"
+        borderTopColor="#E1E1E1"
+        borderTopWidth="1"
+        shadowOffsetX="0"
+        shadowOffsetY="-5"
+        shadowOpacity="0.2"
+        shadowRadius="5"
+      />
+      <style
+        id="PickerModal__text"
+        color="blue"
+        fontSize="16"
+        fontWeight="600"
+        marginBottom="16"
+        padding="24"
+      >
+        <modifier pressed="true">
+          <style opacity="0.5" />
+        </modifier>
+      </style>
+    </styles>
+    <body style="Body">
+      <date-field
+        field-style="Input"
+        field-text-style="Input__Text"
+        label-format="MMMM D, YYYY"
+        modal-style="PickerModal"
+        modal-text-style="PickerModal__text"
+        placeholder="Select date"
+        placeholderTextColor="#8D9494"
+      />
+    </body>
+  </screen>
+</doc>
+`,
   'hyperview/src/components/hv-image/stories/basic.xml':
   `<doc xmlns="https://hyperview.org/hyperview">
   <screen>
@@ -1675,6 +1742,30 @@ export default {
     </styles>
     <body style="Body">
       <spinner color="red" />
+    </body>
+  </screen>
+</doc>
+`,
+  'hyperview/src/components/hv-switch/stories/basic.xml':
+  `<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style
+        id="Body"
+        backgroundColor="white"
+        flex="1"
+      />
+      <style
+        id="switch"
+        backgroundColor="#E1E1E1"
+      >
+        <modifier selected="true">
+          <style backgroundColor="#4778FF" />
+        </modifier>
+      </style>
+    </styles>
+    <body style="Body">
+      <switch style="switch" name="switch1" value="on" />
     </body>
   </screen>
 </doc>
