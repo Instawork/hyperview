@@ -11,6 +11,7 @@
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type { Props, State } from './types';
 import React, { PureComponent } from 'react';
+import type { Element } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { TextInput } from 'react-native';
 import TinyMask from 'hyperview/src/mask.js';
@@ -33,9 +34,7 @@ export default class HvTextField extends PureComponent<Props, State> {
    * Currently supports the "mask" attribute, which will be applied
    * to format the provided value.
    */
-  getFormattedValue = (value: string) => {
-    const { element } = this.props;
-
+  static getFormattedValue = (element: Element, value: string) => {
     if (!element.hasAttribute('mask')) {
       return value;
     }
@@ -45,6 +44,17 @@ export default class HvTextField extends PureComponent<Props, State> {
     // (for proper serialization).
     return mask.mask(value) || '';
   };
+
+  static getDerivedStateFromProps(nextProps: Props, prevState: State) {
+    const { element } = nextProps;
+    const newValue = HvTextField.getFormattedValue(
+      element,
+      element.getAttribute('value') || '',
+    );
+    return newValue !== prevState.value
+      ? { focused: prevState.focused, value: newValue }
+      : prevState;
+  }
 
   render() {
     const { element, stylesheets, options } = this.props;
@@ -67,7 +77,7 @@ export default class HvTextField extends PureComponent<Props, State> {
       onChangeText: value => {
         // Render the formatted value and store the formatted value
         // in state (on the XML element).
-        const formattedValue = this.getFormattedValue(value);
+        const formattedValue = HvTextField.getFormattedValue(element, value);
         this.setState({ value: formattedValue });
         element.setAttribute('value', formattedValue);
       },

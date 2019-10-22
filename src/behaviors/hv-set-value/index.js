@@ -11,8 +11,10 @@ import type {
 } from 'hyperview/src/types';
 import { later, shallowCloneToRoot } from 'hyperview/src/services';
 
+const ID_SEPARATOR = ' ';
+
 export default {
-  action: 'show',
+  action: 'set-value',
   callback: (
     element: Element,
     onUpdate: HvComponentOnUpdate,
@@ -21,8 +23,11 @@ export default {
   ) => {
     const targetId: ?DOMString = element.getAttribute('target');
     if (!targetId) {
+      console.warn('[behaviors/set-value]: missing "target" attribute');
       return;
     }
+
+    const newValue: string = element.getAttribute('value') || '';
 
     const delayAttr: string = element.getAttribute('delay') || '0';
     const parsedDelay: number = parseInt(delayAttr, 10);
@@ -30,12 +35,12 @@ export default {
 
     const showIndicatorIds: Array<string> = (
       element.getAttribute('show-during-load') || ''
-    ).split(' ');
+    ).split(ID_SEPARATOR);
     const hideIndicatorIds: Array<string> = (
       element.getAttribute('hide-during-load') || ''
-    ).split(' ');
+    ).split(ID_SEPARATOR);
 
-    const showElement = () => {
+    const setValue = () => {
       const doc: Document = getRoot();
       const targetElement: ?Element = doc.getElementById(targetId);
       if (!targetElement) {
@@ -43,7 +48,7 @@ export default {
       }
 
       // Show the target
-      targetElement.setAttribute('hide', 'false');
+      targetElement.setAttribute('value', newValue);
       let newRoot: Document = shallowCloneToRoot(targetElement);
 
       // If using delay, we need to undo the indicators shown earlier.
@@ -61,7 +66,7 @@ export default {
     if (delay === 0) {
       // If there's no delay, show target immediately without showing/hiding
       // any indicators.
-      showElement();
+      setValue();
     } else {
       // If there's a delay, first trigger the indicators before the show.
       const newRoot = Behaviors.setIndicatorsBeforeLoad(
@@ -73,8 +78,8 @@ export default {
       updateRoot(newRoot);
       // Wait for the delay then show the target.
       later(delay)
-        .then(showElement)
-        .catch(showElement);
+        .then(setValue)
+        .catch(setValue);
     }
   },
 };

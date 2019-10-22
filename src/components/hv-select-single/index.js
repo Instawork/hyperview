@@ -25,6 +25,17 @@ export default class HvSelectSingle extends PureComponent<Props> {
     this.onSelect = this.onSelect.bind(this);
   }
 
+  componentDidUpdate() {
+    const { element } = this.props;
+    if (element.hasAttribute('value')) {
+      // NOTE(adam): we need to remove the attribute before
+      // selection, since selection will update the component.
+      const newValue = element.getAttribute('value');
+      element.removeAttribute('value');
+      this.onSelect(newValue);
+    }
+  }
+
   /**
    * Callback passed to children. Option components invoke this callback when selected.
    * SingleSelect will update the XML DOM so that only the selected option is has a

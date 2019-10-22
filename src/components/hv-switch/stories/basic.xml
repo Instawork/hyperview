@@ -1,0 +1,22 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style
+        id="Body"
+        backgroundColor="white"
+        flex="1"
+      />
+      <style
+        id="switch"
+        backgroundColor="#E1E1E1"
+      >
+        <modifier selected="true">
+          <style backgroundColor="#4778FF" />
+        </modifier>
+      </style>
+    </styles>
+    <body style="Body">
+      <switch style="switch" name="switch1" value="on" />
+    </body>
+  </screen>
+</doc>

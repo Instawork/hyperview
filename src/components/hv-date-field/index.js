@@ -49,7 +49,7 @@ export default class HvDateField extends PureComponent<Props, State> {
     super(props);
     const element: Element = props.element;
     const stringValue: ?DOMString = element.getAttribute('value');
-    const value: ?Date = this.createDateFromString(stringValue);
+    const value: ?Date = HvDateField.createDateFromString(stringValue);
     const pickerValue: Date = value || new Date();
     this.state = {
       // Date that's selected in the field. Can be null.
@@ -63,32 +63,11 @@ export default class HvDateField extends PureComponent<Props, State> {
     };
   }
 
-  componentDidUpdate = (prevProps: Props, prevState: State) => {
-    // TODO: move to React hooks once we adopt them across the codebase.
-    if (Platform.OS === 'android') {
-      if (!prevState.fieldPressed && this.state.fieldPressed) {
-        this.showPickerAndroid();
-      }
-    }
-  };
-
-  /**
-   * Given a ISO date string (YYYY-MM-DD), returns a Date object. If the string
-   * cannot be parsed or is falsey, returns null.
-   */
-  createDateFromString = (value: ?string): ?Date => {
-    if (!value) {
-      return null;
-    }
-    const [year, month, day] = value.split('-').map(p => parseInt(p, 10));
-    return new Date(year, month - 1, day);
-  };
-
   /**
    * Given a Date object, returns an ISO date string (YYYY-MM-DD). If the Date
    * object is null, returns an empty string.
    */
-  createStringFromDate = (date: ?Date): string => {
+  static createStringFromDate = (date: ?Date): string => {
     if (!date) {
       return '';
     }
@@ -96,6 +75,52 @@ export default class HvDateField extends PureComponent<Props, State> {
     const month = date.getUTCMonth() + 1;
     const day = date.getUTCDate();
     return `${year}-${month}-${day}`;
+  };
+
+  /**
+   * Given a ISO date string (YYYY-MM-DD), returns a Date object. If the string
+   * cannot be parsed or is falsey, returns null.
+   */
+  static createDateFromString = (value: ?string): ?Date => {
+    if (!value) {
+      return null;
+    }
+    const [year, month, day] = value.split('-').map(p => parseInt(p, 10));
+    return new Date(year, month - 1, day);
+  };
+
+  static getDerivedStateFromProps(nextProps: Props, prevState: State): State {
+    const { element } = nextProps;
+    if (element.hasAttribute('value')) {
+      const newValue = element.getAttribute('value') || '';
+      const newDate = HvDateField.createDateFromString(newValue);
+
+      // NOTE(adam): We convert from date to strings for the comparison to normalize the representation.
+      if (
+        HvDateField.createStringFromDate(newDate) !==
+        HvDateField.createStringFromDate(prevState.value)
+      ) {
+        const { focused, fieldPressed, donePressed, cancelPressed } = prevState;
+        return {
+          cancelPressed,
+          donePressed,
+          fieldPressed,
+          focused,
+          pickerValue: newDate || new Date(),
+          value: newDate,
+        };
+      }
+    }
+    return prevState;
+  }
+
+  componentDidUpdate = (prevProps: Props, prevState: State) => {
+    // TODO: move to React hooks once we adopt them across the codebase.
+    if (Platform.OS === 'android') {
+      if (!prevState.fieldPressed && this.state.fieldPressed) {
+        this.showPickerAndroid();
+      }
+    }
   };
 
   toggleFieldPress = () => {
@@ -141,7 +166,7 @@ export default class HvDateField extends PureComponent<Props, State> {
     // selected value gets serialized in the parent form.
     element.setAttribute(
       'value',
-      this.createStringFromDate(this.state.pickerValue),
+      HvDateField.createStringFromDate(this.state.pickerValue),
     );
   };
 
@@ -153,8 +178,8 @@ export default class HvDateField extends PureComponent<Props, State> {
   showPickerAndroid = async () => {
     const maxValue: ?DOMString = this.props.element.getAttribute('max');
     const minValue: ?DOMString = this.props.element.getAttribute('min');
-    const minDate: ?Date = this.createDateFromString(minValue);
-    const maxDate: ?Date = this.createDateFromString(maxValue);
+    const minDate: ?Date = HvDateField.createDateFromString(minValue);
+    const maxDate: ?Date = HvDateField.createDateFromString(maxValue);
     const options: Object = {
       date: this.state.pickerValue,
     };
@@ -182,8 +207,8 @@ export default class HvDateField extends PureComponent<Props, State> {
   renderPickeriOS = (): ReactNode => {
     const minValue: ?DOMString = this.props.element.getAttribute('min');
     const maxValue: ?DOMString = this.props.element.getAttribute('max');
-    const minDate: ?Date = this.createDateFromString(minValue);
-    const maxDate: ?Date = this.createDateFromString(maxValue);
+    const minDate: ?Date = HvDateField.createDateFromString(minValue);
+    const maxDate: ?Date = HvDateField.createDateFromString(maxValue);
     const onDateChange = (value: Date) => {
       this.setState({ pickerValue: value });
     };
@@ -261,14 +286,18 @@ export default class HvDateField extends PureComponent<Props, State> {
                 onPressOut={this.toggleCancelPress}
                 onPress={this.onModalCancel}
               >
-                <Text style={cancelTextStyle}>{cancelLabel}</Text>
+                <View>
+                  <Text style={cancelTextStyle}>{cancelLabel}</Text>
+                </View>
               </TouchableWithoutFeedback>
               <TouchableWithoutFeedback
                 onPressIn={this.toggleSavePress}
                 onPressOut={this.toggleSavePress}
                 onPress={this.onModalDone}
               >
-                <Text style={doneTextStyle}>{doneLabel}</Text>
+                <View>
+                  <Text style={doneTextStyle}>{doneLabel}</Text>
+                </View>
               </TouchableWithoutFeedback>
             </View>
             {this.renderPickeriOS()}

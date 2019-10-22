@@ -27,6 +27,11 @@ export default class HvTextArea extends PureComponent<Props, State> {
     };
   }
 
+  static getDerivedStateFromProps(nextProps: Props, prevState: State) {
+    const value = nextProps.element.getAttribute('value') || '';
+    return value !== prevState.value ? { value } : {};
+  }
+
   render() {
     const { element, stylesheets, options } = this.props;
 

@@ -63,6 +63,11 @@ export default class HvPickerField extends PureComponent<Props, State> {
     };
   }
 
+  static getDerivedStateFromProps(nextProps: Props, prevState: State) {
+    const value = nextProps.element.getAttribute('value') || '';
+    return value !== prevState.value ? { value } : {};
+  }
+
   toggleFieldPress = () => {
     this.setState({ fieldPressed: !this.state.fieldPressed });
   };
@@ -219,14 +224,18 @@ export default class HvPickerField extends PureComponent<Props, State> {
                 onPressOut={this.toggleCancelPress}
                 onPress={this.onModalCancel}
               >
-                <Text style={cancelTextStyle}>{cancelLabel}</Text>
+                <View>
+                  <Text style={cancelTextStyle}>{cancelLabel}</Text>
+                </View>
               </TouchableWithoutFeedback>
               <TouchableWithoutFeedback
                 onPressIn={this.toggleSavePress}
                 onPressOut={this.toggleSavePress}
                 onPress={this.onModalDone}
               >
-                <Text style={doneTextStyle}>{doneLabel}</Text>
+                <View>
+                  <Text style={doneTextStyle}>{doneLabel}</Text>
+                </View>
               </TouchableWithoutFeedback>
             </View>
             {this.renderPicker()}
