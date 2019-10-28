@@ -279,6 +279,9 @@ export default class HyperScreen extends React.Component {
         return response.text();
       })
       .then((responseText) => {
+        if (typeof this.props.onParseBefore === 'function') {
+          this.props.onParseBefore(url);
+        }
         let doc = this.parser.parseFromString(responseText);
         let error = false;
         const stylesheets = Stylesheets.createStylesheets(doc);
@@ -311,6 +314,9 @@ export default class HyperScreen extends React.Component {
           styles: stylesheets,
           error,
         });
+        if (typeof this.props.onParseAfter === 'function') {
+          this.props.onParseAfter(url);
+        }
       })
       .catch((reason) => {
         this.setState({
