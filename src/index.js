@@ -437,7 +437,15 @@ export default class HyperScreen extends React.Component {
 
     return this.props.fetch(url, options)
       .then(response => response.text())
-      .then(responseText => this.parser.parseFromString(responseText).documentElement);
+      .then(responseText => {
+        if (typeof this.props.onParseBefore === 'function') {
+          this.props.onParseBefore(url);
+        }
+        const parsed = this.parser.parseFromString(responseText).documentElement)
+        if (typeof this.props.onParseAfter === 'function') {
+          this.props.onParseAfter(url);
+        }
+      };
   }
 
 
