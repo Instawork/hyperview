@@ -296,9 +296,9 @@ The `verb` attribute defines the HTTP method used to request the content specifi
 
 ## action
 
-| Type                                                                                                                       | Required |
-| -------------------------------------------------------------------------------------------------------------------------- | -------- |
-| **push** (default), new, back, close, navigate, deep-link, replace, replace-inner, append, prepend, reload, dispatch-event | No       |
+| Type                                                                                                                                                      | Required |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| **push** (default), new, back, close, navigate, deep-link, replace, replace-inner, append, prepend, reload, dispatch-event, show, hide, toggle, set-value | No       |
 
 The `action` attribute defines what to do with the Hyperview XML resource described by the `href` attribute. The possible actions are divided into **navigation actions**, which load or navigate to a screen, and **update actions**, which update the elements on the current screen.
 
@@ -319,6 +319,10 @@ The update actions include:
 - [`append`](#append)
 - [`prepend`](#prepend)
 - [`dispatch-event`](#dispatch-event)
+- [`show`](#show)
+- [`hide`](#hide)
+- [`toggle`](#toggle)
+- [`set-value`](#set-value)
 
 ### `push`
 
@@ -462,6 +466,69 @@ The `dispatch-event` action may also be combined with [`once`](#once) and [`dela
 >
 > In `__DEV__` mode, the console will log the element which dispatches an event
 
+### `show`
+
+The `show` action will show the target element if the target is currently hidden (with `hide="true"`). If the target is not hidden, this action will have no effect. This action can be used in conjunction with [`delay`](#delay) to show the element after the given number of milliseconds. When using `delay`, you can also specify [`show-during-load`](#show-during-load) and [`hide-during-load`](#hide-during-load) attributes to show and hide indicators during the delay.
+
+```xml
+<view action="show" style="Button" target="show-content">
+  <text style="Button__Label">Show</text>
+</view>
+<text id="show-content" hide="true">Content to be shown</text>
+```
+
+In this example, pressing "Show" will show the text below. See [the repo](https://github.com/Instawork/hyperview/blob/master/examples/behaviors/show.xml) for more examples.
+
+### `hide`
+
+The `hide` action will hide the target element by applying `hide="true"` to the target. If the target is already hidden, this action will have no effect. This action can be used in conjunction with [`delay`](#delay) to hide the element after the given number of milliseconds. When using `delay`, you can also specify [`show-during-load`](#show-during-load) and [`hide-during-load`](#hide-during-load) attributes to show and hide indicators during the delay.
+
+```xml
+<view action="hide" style="Button" target="hide-content">
+  <text style="Button__Label">Hide</text>
+</view>
+<text id="hide-content">Content to be hidden</text>
+```
+
+In this example, pressing "Hide" will hide the text below. See [the repo](https://github.com/Instawork/hyperview/blob/master/examples/behaviors/hide.xml) for more examples.
+
+### `toggle`
+
+The `toggle` action will toggle the visibility of the target element by applying or removing `hide="true"`. If the target is already hidden, this action will show it. If the target is not hidden, this action will hide it. This action can be used in conjunction with [`delay`](#delay) to toggle the element after the given number of milliseconds. When using `delay`, you can also specify [`show-during-load`](#show-during-load) and [`hide-during-load`](#hide-during-load) attributes to show and hide indicators during the delay.
+
+```xml
+<view action="toggle" style="Button" target="toggle-content">
+  <text style="Button__Label">Hide</text>
+</view>
+<text id="toggle-content">Content to be toggled</text>
+```
+
+In this example, pressing "Toggle" will toggle the text below. See [the repo](https://github.com/Instawork/hyperview/blob/master/examples/behaviors/toggle.xml) for more examples.
+
+### `set-value`
+
+The `set-value` action allows setting the input value of the target element. The behavior attributes must include a [`value`](#value) attribute specifying the new value.
+
+Note that the target element must only be one of the following elements:
+
+- [`<text-field>`](/docs/reference_textfield)
+- [`<text-area>`](/docs/reference_textarea)
+- [`<picker-field>`](/docs/reference_pickerfield)
+- [`<date-field>`](/docs/reference_datefield)
+- [`<select-single>`](/docs/reference_selectsingle)
+- [`<switch>`](/docs/reference_switch)
+
+Notable, `<select-multiple>` is not currently supported. Also note that using `set-value` will ignore any validation or restrictions set by the input element, like masks or other requirements.
+
+```xml
+<text-field id="id_tf" />
+<text style="link" action="set-value" value="Test" target="id_tf">Set</text>
+<text style="link" action="set-value" value="" target="id_tf">Clear value</text>
+```
+
+In this example, pressing "Set" will fill in the text field with "Test". Pressing "Clear value" will fill in the text field with "".
+See [the repo](https://github.com/Instawork/hyperview/blob/master/examples/advanced_behaviors/set_value/index.xml) for more examples.
+
 ## target
 
 | Type   | Required |
@@ -550,3 +617,11 @@ This attribute is used commonly in examples to demonstrate loading states. It ca
 | true, **false** (default) | No       |
 
 `once="true"` specifies that the behavior should only execute the first time it triggers. If not provided, the default is to execute the behavior on each trigger . This attribute is often used in conjunction with the "visible" trigger, so that we only execute the behavior the first time an element scrolls into view.
+
+## value
+
+| Type   | Required                                              |
+| ------ | ----------------------------------------------------- |
+| string | Required when `action="set-value"`, otherwise ignored |
+
+When the behavior action is [`set-value`](#set-value), this attribute defines the value that will be set on the target input element.
