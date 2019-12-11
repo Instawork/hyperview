@@ -462,7 +462,7 @@ export default class HyperScreen extends React.Component {
     } else if (Object.values(NAV_ACTIONS).includes(action)) {
       this.navigation.setUrl(this.state.url);
       this.navigation.setDocument(this.state.doc);
-      this.navigation.navigate(href, action, currentElement, opts);
+      this.navigation.navigate(href || Navigation.ANCHOR_ID_SEPARATOR, action, currentElement, opts);
     } else if (Object.values(UPDATE_ACTIONS).includes(action)) {
       this.onUpdateFragment(href, action, currentElement, opts);
     } else if (action === ACTIONS.SWAP) {

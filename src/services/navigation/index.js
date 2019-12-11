@@ -13,7 +13,7 @@ import type {
 import { NAV_ACTIONS } from 'hyperview/src/types';
 import { getFormData } from 'hyperview/src/services';
 
-const ANCHOR_ID_SEPARATOR = '#';
+export const ANCHOR_ID_SEPARATOR = '#';
 const QUERY_SEPARATOR = '?';
 
 const getHrefKey = (href: string): string => href.split(QUERY_SEPARATOR)[0];
