@@ -303,6 +303,7 @@ export type HvComponentProps = {|
 
 export type HvComponent<Props> = ComponentType<Props> & {
   localName: LocalName | string,
+  localNameAliases: Array<LocalName | string>,
   namespaceURI: NamespaceURI,
 };
 

@@ -23,6 +23,7 @@ import { LOCAL_NAME } from 'hyperview/src/types';
 export default class HvOption extends PureComponent<Props, State> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.OPTION;
+  static localNameAliases = [];
   props: Props;
   state: State = {
     pressed: false,

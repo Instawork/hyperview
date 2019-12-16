@@ -19,6 +19,7 @@ import { SectionList } from 'react-native';
 export default class HvSectionList extends PureComponent<Props, State> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.SECTION_LIST;
+  static localNameAliases = [];
   parser: DOMParser = new DOMParser();
   props: Props;
   state: State = {

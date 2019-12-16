@@ -19,6 +19,7 @@ import { createProps } from 'hyperview/src/services';
 export default class HvWebView extends PureComponent<Props> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.WEB_VIEW;
+  static localNameAliases = [];
   props: Props;
   render() {
     const props: any = createProps(

@@ -41,6 +41,7 @@ import styles from './styles';
 export default class HvPickerField extends PureComponent<Props, State> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.PICKER_FIELD;
+  static localNameAliases = [];
   props: Props;
   state: State;
 

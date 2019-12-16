@@ -18,101 +18,27 @@ import {
   Dimensions,
   Easing,
   Linking,
-  ScrollView,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 import { DOMParser, XMLSerializer } from 'xmldom-instawork';
 import HyperRef from 'hyperview/src/core/hyper-ref';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import Navigation from 'hyperview/src/services/navigation';
 import React from 'react';
 import VisibilityDetectingView from './VisibilityDetectingView.js';
-import { addHref, createProps, getBehaviorElements, getFirstTag, later, shallowCloneToRoot, getFormData } from 'hyperview/src/services';
+import { createProps, getBehaviorElements, getFirstTag, later, shallowCloneToRoot, getFormData } from 'hyperview/src/services';
 import { version } from '../package.json';
 import { ACTIONS, FORM_NAMES, NAV_ACTIONS, ON_EVENT_DISPATCH, UPDATE_ACTIONS } from 'hyperview/src/types';
 import urlParse from 'url-parse';
 import eventEmitter from 'tiny-emitter/instance';
 
-const AMPLITUDE_NS = Namespaces.AMPLITUDE;
-const HYPERVIEW_ALERT_NS = Namespaces.HYPERVIEW_ALERT;
-const HYPERVIEW_NS = Namespaces.HYPERVIEW;
-const INTERCOM_NS = Namespaces.INTERCOM;
-const PHONE_NS = Namespaces.PHONE;
-const REDUX_NS = Namespaces.REDUX;
-const SHARE_NS = Namespaces.SHARE;
-const SMS_NS = Namespaces.SMS;
-
-const HYPERVIEW_VERSION = version;
-
 function getHyperviewHeaders() {
   const { width, height } = Dimensions.get('window');
   return {
-    'X-Hyperview-Version': HYPERVIEW_VERSION,
+    'X-Hyperview-Version': version,
     'X-Hyperview-Dimensions': `${width}w ${height}h`,
   };
-}
-
-
-/**
- *
- */
-export function view(element, stylesheets, onUpdate, options) {
-  let viewOptions = options;
-  const { skipHref } = viewOptions || {};
-  const props = createProps(element, stylesheets, viewOptions);
-  const scrollable = !!element.getAttribute('scroll');
-  let c = View;
-  const inputRefs = [];
-  if (scrollable) {
-    const textFields = element.getElementsByTagNameNS(HYPERVIEW_NS, 'text-field');
-    const textAreas = element.getElementsByTagNameNS(HYPERVIEW_NS, 'text-area');
-    const hasFields = textFields.length > 0 || textAreas.length > 0;
-    c = hasFields ? KeyboardAwareScrollView : ScrollView;
-    if (hasFields) {
-      props.extraScrollHeight = 32;
-      props.keyboardOpeningTime = 0;
-      props.keyboardShouldPersistTaps = 'handled';
-      props.scrollEventThrottle = 16;
-      props.getTextInputRefs = () => inputRefs;
-      const registerInputHandler = ref => inputRefs.push(ref);
-      viewOptions = { ...viewOptions, registerInputHandler };
-    }
-  }
-
-  if (scrollable) {
-    const scrollDirection = element.getAttribute('scroll-orientation');
-    if (scrollDirection === 'horizontal') {
-      props.horizontal = true;
-    }
-  }
-
-  const component = React.createElement(
-    c,
-    props,
-    ...Render.renderChildren(element, stylesheets, onUpdate, viewOptions),
-  );
-  return skipHref ?
-    component :
-    addHref(component, element, stylesheets, onUpdate, viewOptions);
-}
-
-/**
- *
- */
-export function text(element, stylesheets, onUpdate, options) {
-  const { skipHref } = options || {};
-  const props = createProps(element, stylesheets, options);
-  const component = React.createElement(
-    Text,
-    props,
-    ...Render.renderChildren(element, stylesheets, onUpdate, options),
-  );
-
-  return skipHref ?
-    component :
-    addHref(component, element, stylesheets, onUpdate, options);
 }
 
 // Provides the date format function to use in date fields
@@ -370,7 +296,7 @@ export default class HyperScreen extends React.Component {
         </View>
       );
     }
-    const body = doc.getElementsByTagNameNS(HYPERVIEW_NS, 'body')[0];
+    const body = doc.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'body')[0];
     const screenElement = Render.renderElement(
       body,
       this.state.styles,

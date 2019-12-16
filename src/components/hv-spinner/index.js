@@ -17,6 +17,7 @@ import type { Props } from './types';
 export default class HvSpinner extends PureComponent<Props> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.SPINNER;
+  static localNameAliases = [];
   props: Props;
 
   render() {

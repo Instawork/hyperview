@@ -20,6 +20,7 @@ import { getBehaviorElements } from 'hyperview/src/services';
 export default class HvList extends PureComponent<Props, State> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.LIST;
+  static localNameAliases = [];
   parser: DOMParser = new DOMParser();
   props: Props;
   state: State = {
