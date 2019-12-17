@@ -152,6 +152,17 @@
                       placeholderTextColor="#8D9494" />
         </view>
         <view style="FormGroup">
+          <text style="label">Date field in spinner mode</text>
+          <date-field field-style="Input"
+                      field-text-style="Input__Text"
+                      label-format="MMMM D, YYYY"
+                      modal-style="PickerModal"
+                      modal-text-style="PickerModal__text"
+                      mode="spinner"
+                      placeholder="Select date"
+                      placeholderTextColor="#8D9494" />
+        </view>
+        <view style="FormGroup">
           <text style="label">Filled date field</text>
           <date-field field-style="Input"
                       field-text-style="Input__Text"
