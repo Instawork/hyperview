@@ -28,6 +28,7 @@ A `<date-field>` element can appear anywhere within a `<form>` element.
 
 - [`name`](#name)
 - [`label-format`](#label-format)
+- [`mode`](#mode)
 - [`value`](#value)
 - [`placeholder`](#placeholder)
 - [`min`](#min)
@@ -54,6 +55,14 @@ The name of the field within a `<form>` element. This name will be used when ser
 | string | Yes      |
 
 Desired format of the date for the label. This uses the formatter function passed to the root hyperview component in your app via the `formatDate` prop. For example, if you're using [`moment`](https://momentjs.com/docs/#/displaying/), you could pass the following values: `MMMM D, YYYY`, `L`, etc.
+
+#### `mode`
+
+| Type   | Required                   |
+| ------ | -------------------------- |
+| string | No (defaults to `default`) |
+
+Sets the date picker mode for Android only. Possible values are `calendar`, `spinner` and `default`.
 
 #### `value`
 
