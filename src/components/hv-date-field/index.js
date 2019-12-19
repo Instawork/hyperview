@@ -178,6 +178,7 @@ export default class HvDateField extends PureComponent<Props, State> {
   showPickerAndroid = async () => {
     const maxValue: ?DOMString = this.props.element.getAttribute('max');
     const minValue: ?DOMString = this.props.element.getAttribute('min');
+    const mode: ?string = this.props.element.getAttribute('mode');
     const minDate: ?Date = HvDateField.createDateFromString(minValue);
     const maxDate: ?Date = HvDateField.createDateFromString(maxValue);
     const options: Object = {
@@ -189,6 +190,7 @@ export default class HvDateField extends PureComponent<Props, State> {
     if (maxDate) {
       options.maxDate = maxDate;
     }
+    options.mode = mode || 'default';
     const openAction = await DatePickerAndroid.open(options);
     const { action, year, month, day } = openAction;
     if (action === DatePickerAndroid.dateSetAction) {
