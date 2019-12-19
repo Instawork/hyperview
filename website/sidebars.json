@@ -62,7 +62,8 @@
       "reference_option",
       "reference_pickerfield",
       "reference_pickeritem",
-      "reference_switch"
+      "reference_switch",
+      "reference_datefield"
     ],
     "Style Elements": [
       "reference_styles",
