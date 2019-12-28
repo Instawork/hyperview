@@ -5754,9 +5754,9 @@ humanize-ms@^1.2.1:
   dependencies:
     ms "^2.0.0"
 
-hyperview@0.16.3:
-  version "0.16.3"
-  resolved "https://registry.yarnpkg.com/hyperview/-/hyperview-0.16.3.tgz#1dfedda516437a78833623bf5bb19b1b561d10d2"
+hyperview@0.20.0:
+  version "0.20.0"
+  resolved "https://registry.yarnpkg.com/hyperview/-/hyperview-0.20.0.tgz#e8b604dc048e3a0f4ed1abefd8e62ffa912cc9f3"
   dependencies:
     react-native-webview "5.12.0"
     tiny-emitter "2.1.0"
