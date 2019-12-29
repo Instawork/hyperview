@@ -9,10 +9,15 @@
 import React, { PureComponent } from 'react';
 import Hyperview from 'hyperview';
 import moment from 'moment';
+import LRU from 'lru-cache';
 
-
-const fetchCache = {};
-
+const fetchCache = new LRU({
+  length: (n, key) => {
+    return n.size;
+  },
+  max: 5e7, // 50 MB
+  updateAgeOnGet: false,
+});
 
 export default class HyperviewScreen extends React.PureComponent {
   goBack = (params, key) => {
@@ -53,44 +58,43 @@ export default class HyperviewScreen extends React.PureComponent {
   formatDate = (date, format) => moment(date).format(format);
 
   cachedFetch = (url, options) => {
-    let expiry = 1 * 60; // 5 min default
-    if (typeof options === 'number') {
-      expiry = options;
-      options = undefined;
-    } else if (typeof options === 'object') {
-      // I hope you didn't set it to 0 seconds
-      expiry = options.seconds || expiry;
-    }
-    // Use the URL as the cache key to sessionStorage
+    console.log(`cache size: ${fetchCache.length}`);
     let cacheKey = url;
-    let cached = fetchCache[cacheKey];
-    let whenCached = fetchCache[cacheKey + ':ts'];
-    if (cached !== null && whenCached !== null) {
+    let cached = fetchCache.get(cacheKey);
+    if (cached !== undefined) {
       console.log('found in cache!');
-
-      let age = (Date.now() - whenCached) / 1000;
-      if (age < expiry) {
-        console.log('not expired, using!');
-        let response = cached.clone();
-        return Promise.resolve(response)
-      } else {
-        console.log('expired, deleting');
-        // We need to clean up this old key
-        delete fetchCache[cacheKey];
-        delete fetchCache[cacheKey + ':ts'];
-      }
+      let response = cached.response.clone();
+      response.headers.set('warning', '110 hyperview "Response is stale"');
+      return Promise.resolve(response);
     }
 
     console.log('not in cache, fetching...');
     return fetch(url, options).then(response => {
-      // let's only store in cache if the content-type is
-      // JSON or something non-binary
-      if (response.status === 200) {
-        console.log('caching...');
-        fetchCache[cacheKey] = response.clone();
-        fetchCache[cacheKey+':ts'] = Date.now();
+      // todo: check here if cacheable  
+      if (!response.ok) {
+        return response;
       }
-      return response;
+
+      const clonedResponse = response.clone();
+      response.blob().then(blob => {
+        const cacheValue = {
+          response: clonedResponse,
+          size: blob.size,
+        };
+
+        let expiry = 1 * 60 * 1000; // 5 min default
+        if (typeof options === 'number') {
+          expiry = options;
+          options = undefined;
+        } else if (typeof options === 'object') {
+          expiry = options.seconds || expiry;
+        }
+
+        console.log('caching...');
+        fetchCache.set(cacheKey, cacheValue, expiry);
+      });
+
+      return clonedResponse;
     });
   };
 

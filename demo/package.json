@@ -15,6 +15,7 @@
     "expo": "^35.0.0",
     "expo-cli": "^3.2.2",
     "hyperview": "0.20.0",
+    "lru-cache": "^5.1.1",
     "moment": "^2.24.0",
     "react": "16.8.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",

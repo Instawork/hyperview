@@ -272,13 +272,15 @@ export default class HyperScreen extends React.Component {
     const url = this.state.url;
 
     const fetchPromise = () => this.props.fetch(url, { headers: getHyperviewHeaders() })
-      .then((response) => {
+      .then(async (response) => {
         if (!response.ok) {
           throw Error(response.statusText);
         }
-        return response.text();
+        const warningHeader = response.headers.get('warning');
+        const responseText = await response.text();
+        return { warningHeader, responseText };
       })
-      .then((responseText) => {
+      .then(({ responseText, warningHeader }) => {
         if (typeof this.props.onParseBefore === 'function') {
           this.props.onParseBefore(url);
         }
