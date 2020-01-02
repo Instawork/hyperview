@@ -13,6 +13,10 @@ import {
   ACTIONS,
   NAV_ACTIONS,
   ON_EVENT_DISPATCH,
+  ON_RESPONSE_REVALIDATED,
+  ON_RESPONSE_STALE_NETWORK_ERROR,
+  ON_RESPONSE_STALE_REVALIDATING,
+  ON_RESPONSE_STALE_SERVER_ERROR,
   PRESS_TRIGGERS,
   TRIGGERS,
   UPDATE_ACTIONS,
@@ -30,8 +34,8 @@ import { RefreshControl, ScrollView, TouchableOpacity } from 'react-native';
 import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
 import { XMLSerializer } from 'xmldom-instawork';
 // eslint-disable-next-line import/no-internal-modules
-import globalEventEmitter from 'tiny-emitter/instance';
 import { getBehaviorElements } from 'hyperview/src/services';
+import globalEventEmitter from 'tiny-emitter/instance';
 
 /**
  * Component that handles dispatching behaviors based on the appropriate
@@ -45,19 +49,32 @@ export default class HyperRef extends PureComponent<Props, State> {
   };
 
   componentDidMount() {
+    const { options } = this.props;
     this.triggerLoadBehaviors();
 
     // Register event listener for on-event triggers
     globalEventEmitter.on(ON_EVENT_DISPATCH, this.onEventDispatch);
 
-    this.props.options.screenEventEmitter.on(
-      'response-stale',
-      this.onResponseStale,
-    );
-    this.props.options.screenEventEmitter.on(
-      'response-revalidated',
-      this.onResponseRevalidated,
-    );
+    // Register event listeners for screen-only events
+    if (options.screenEventEmitter) {
+      const { screenEventEmitter } = options;
+      screenEventEmitter.on(
+        ON_RESPONSE_STALE_REVALIDATING,
+        this.onResponseStaleRevalidating,
+      );
+      screenEventEmitter.on(
+        ON_RESPONSE_REVALIDATED,
+        this.onResponseRevalidated,
+      );
+      screenEventEmitter.on(
+        ON_RESPONSE_STALE_SERVER_ERROR,
+        this.onResponseStaleServerError,
+      );
+      screenEventEmitter.on(
+        ON_RESPONSE_STALE_NETWORK_ERROR,
+        this.onResponseStaleNetworkError,
+      );
+    }
   }
 
   componentDidUpdate(prevProps: Props) {
@@ -68,8 +85,31 @@ export default class HyperRef extends PureComponent<Props, State> {
   }
 
   componentWillUnmount() {
+    const { options } = this.props;
+
     // Remove event listener for on-event triggers to avoid memory leaks
     globalEventEmitter.off(ON_EVENT_DISPATCH, this.onEventDispatch);
+
+    // Remove event listeners for screen-only events
+    if (options.screenEventEmitter) {
+      const { screenEventEmitter } = options;
+      screenEventEmitter.off(
+        ON_RESPONSE_STALE_REVALIDATING,
+        this.onResponseStaleRevalidating,
+      );
+      screenEventEmitter.off(
+        ON_RESPONSE_REVALIDATED,
+        this.onResponseRevalidated,
+      );
+      screenEventEmitter.off(
+        ON_RESPONSE_STALE_SERVER_ERROR,
+        this.onResponseStaleServerError,
+      );
+      screenEventEmitter.off(
+        ON_RESPONSE_STALE_NETWORK_ERROR,
+        this.onResponseStaleNetworkError,
+      );
+    }
   }
 
   onEventDispatch = (eventName: string) => {
@@ -109,51 +149,38 @@ export default class HyperRef extends PureComponent<Props, State> {
     });
   };
 
-  onResponseStale = (eventName: string) => {
-    const behaviorElements = getBehaviorElements(this.props.element);
-    const responseStaleBehaviors = behaviorElements.filter(
-      e => e.getAttribute(ATTRIBUTES.TRIGGER) === 'response-stale',
-    );
-    responseStaleBehaviors.forEach(behaviorElement => {
-      const handler = this.createActionHandler(
-        this.props.element,
-        behaviorElement,
-        this.props.onUpdate,
-      );
-      handler();
-      if (__DEV__) {
-        const listenerElement: Element = behaviorElement.cloneNode(false);
-        const serializer = new XMLSerializer();
-        console.log(
-          `[response-stale] trigger on element:`,
-          serializer.serializeToString(listenerElement),
-        );
-      }
-    });
-  };
+  onResponseStaleRevalidating = this.createScreenEventHandler(
+    'response-stale-revalidating',
+  );
 
-  onResponseRevalidated = (eventName: string) => {
-    const behaviorElements = getBehaviorElements(this.props.element);
-    const responseStaleBehaviors = behaviorElements.filter(
-      e => e.getAttribute(ATTRIBUTES.TRIGGER) === 'response-revalidated',
-    );
-    responseStaleBehaviors.forEach(behaviorElement => {
-      const handler = this.createActionHandler(
-        this.props.element,
-        behaviorElement,
-        this.props.onUpdate,
-      );
-      handler();
-      if (__DEV__) {
-        const listenerElement: Element = behaviorElement.cloneNode(false);
-        const serializer = new XMLSerializer();
-        console.log(
-          `[response-stale] trigger on element:`,
-          serializer.serializeToString(listenerElement),
+  onResponseRevalidated = this.createScreenEventHandler('response-evalidated');
+
+  onResponseStaleServerError = this.createScreenEventHandler(
+    'response-stale-server-error',
+  );
+
+  onResponseStaleNetworkError = this.createScreenEventHandler(
+    'response-stale-network-error',
+  );
+
+  createScreenEventHandler = (triggerName: string) => () =>
+    getBehaviorElements(this.props.element)
+      .filter(e => e.getAttribute(ATTRIBUTES.TRIGGER) === triggerName)
+      .forEach(triggeredElement => {
+        const handler = this.createActionHandler(
+          this.props.element,
+          triggeredElement,
+          this.props.onUpdate,
         );
-      }
-    });
-  };
+        handler();
+        if (__DEV__) {
+          const serializer = new XMLSerializer();
+          console.log(
+            `[${triggerName}] triggered on element:`,
+            serializer.serializeToString(triggeredElement.cloneNode(false)),
+          );
+        }
+      });
 
   createActionHandler = (
     element: Element,

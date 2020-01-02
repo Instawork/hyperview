@@ -1,3 +1,5 @@
+// @flow
+
 import LRU from 'lru-cache';
 
 const cachedFetch = (url, options, cache, baseFetch) => {
@@ -40,7 +42,7 @@ const cachedFetch = (url, options, cache, baseFetch) => {
   });
 };
 
-export const createCache = size =>
+export const createCache = (size: number) =>
   new LRU({
     length: (n, key) => {
       return n.size;

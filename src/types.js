@@ -262,10 +262,17 @@ export type ComponentRegistry = {
   },
 };
 
+export type EventEmitter = {
+  on: (event: string, callback: () => void, ctx?: any) => any,
+  once: (event: string, callback: () => void, ctx?: any) => any,
+  emit: (event: string, ...args: Array<any>) => any,
+  off: (event: string, callback: () => void, ctx?: any) => any,
+};
+
 export type HvComponentOptions = {
   behaviorElement?: ?Element,
   componentRegistry?: ComponentRegistry,
-  screenEventEmitter?: Object,
+  screenEventEmitter?: EventEmitter,
   delay?: ?DOMString,
   focused?: ?boolean,
   hideIndicatorIds?: ?DOMString,
@@ -406,3 +413,14 @@ export type NavigationProps = {|
 |};
 
 export const ON_EVENT_DISPATCH = 'hyperview:on-event';
+
+export const ON_RESPONSE_STALE_REVALIDATING =
+  'hyperview:on-response-stale-revalidating';
+
+export const ON_RESPONSE_REVALIDATED = 'hyperview:on-response-revalidated';
+
+export const ON_RESPONSE_STALE_SERVER_ERROR =
+  'hyperview:on-response-stale-server-error';
+
+export const ON_RESPONSE_STALE_NETWORK_ERROR =
+  'hyperview:on-response-stale-network-error';

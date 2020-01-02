@@ -7,6 +7,7 @@
  */
 
 import * as Behaviors from 'hyperview/src/services/behaviors';
+import * as Cache from 'hyperview/src/services/cache';
 import * as Components from 'hyperview/src/services/components';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
@@ -31,10 +32,24 @@ import React from 'react';
 import VisibilityDetectingView from './VisibilityDetectingView.js';
 import { addHref, createProps, getBehaviorElements, getFirstTag, later, shallowCloneToRoot, getFormData } from 'hyperview/src/services';
 import { version } from '../package.json';
-import { ACTIONS, FORM_NAMES, NAV_ACTIONS, ON_EVENT_DISPATCH, UPDATE_ACTIONS } from 'hyperview/src/types';
+import {
+  ACTIONS,
+  FORM_NAMES,
+  NAV_ACTIONS,
+  ON_EVENT_DISPATCH,
+  ON_RESPONSE_REVALIDATED,
+  ON_RESPONSE_STALE_NETWORK_ERROR,
+  ON_RESPONSE_STALE_REVALIDATING,
+  ON_RESPONSE_STALE_SERVER_ERROR,
+  UPDATE_ACTIONS
+} from 'hyperview/src/types';
 import urlParse from 'url-parse';
 import Emitter from 'tiny-emitter';
-import eventEmitter from 'tiny-emitter/instance';
+import globalEventEmitter from 'tiny-emitter/instance';
+
+// Re-export the Cache module so that the embedding app can
+// configure the cache.
+export {Cache};
 
 
 const AMPLITUDE_NS = Namespaces.AMPLITUDE;
@@ -266,7 +281,7 @@ export default class HyperScreen extends React.Component {
     }
 
     if (!prevState.warningHeader && this.state.warningHeader) {
-      this.screenEventEmitter.emit('response-stale');
+      this.screenEventEmitter.emit(ON_RESPONSE_STALE_REVALIDATED);
     }
   }
 
@@ -280,7 +295,7 @@ export default class HyperScreen extends React.Component {
 
     const fetchOptions = {
       headers: getHyperviewHeaders(),
-      onRevalidate: () => this.screenEventEmitter.emit('response-revalidated'),
+      onRevalidate: () => this.screenEventEmitter.emit(ON_RESPONSE_REVALIDATED),
     };
     const fetchPromise = () => this.props.fetch(url, fetchOptions)
       .then(async (response) => {
@@ -513,7 +528,7 @@ export default class HyperScreen extends React.Component {
             this.serializer.serializeToString(emitterElement),
           );
         }
-        eventEmitter.emit(ON_EVENT_DISPATCH, eventName);
+        globalEventEmitter.emit(ON_EVENT_DISPATCH, eventName);
       }
 
       if (delay) {

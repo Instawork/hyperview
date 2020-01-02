@@ -7,8 +7,7 @@
  */
 
 import React, { PureComponent } from 'react';
-import Hyperview from 'hyperview';
-import * as Cache from 'hyperview/src/services/cache';
+import Hyperview, { Cache } from 'hyperview';
 import moment from 'moment';
 
 const hyperviewCache = Cache.createCache(5e7); // 50 MB
