@@ -33,7 +33,9 @@ import { addHref, createProps, getBehaviorElements, getFirstTag, later, shallowC
 import { version } from '../package.json';
 import { ACTIONS, FORM_NAMES, NAV_ACTIONS, ON_EVENT_DISPATCH, UPDATE_ACTIONS } from 'hyperview/src/types';
 import urlParse from 'url-parse';
+import Emitter from 'tiny-emitter';
 import eventEmitter from 'tiny-emitter/instance';
+
 
 const AMPLITUDE_NS = Namespaces.AMPLITUDE;
 const HYPERVIEW_ALERT_NS = Namespaces.HYPERVIEW_ALERT;
@@ -154,6 +156,7 @@ export default class HyperScreen extends React.Component {
 
     this.behaviorRegistry = Behaviors.getRegistry(this.props.behaviors);
     this.componentRegistry = Components.getRegistry(this.props.components);
+    this.screenEventEmitter = new Emitter();
     this.navigation = new Navigation(
       this.state.url,
       this.state.doc,
@@ -261,6 +264,10 @@ export default class HyperScreen extends React.Component {
       this.load(this.state.url);
       this.needsLoad = false;
     }
+
+    if (!prevState.warningHeader && this.state.warningHeader) {
+      this.screenEventEmitter.emit('response-stale');
+    }
   }
 
   /**
@@ -271,7 +278,11 @@ export default class HyperScreen extends React.Component {
     const { delay } = params;
     const url = this.state.url;
 
-    const fetchPromise = () => this.props.fetch(url, { headers: getHyperviewHeaders() })
+    const fetchOptions = {
+      headers: getHyperviewHeaders(),
+      onRevalidate: () => this.screenEventEmitter.emit('response-revalidated'),
+    };
+    const fetchPromise = () => this.props.fetch(url, fetchOptions)
       .then(async (response) => {
         if (!response.ok) {
           throw Error(response.statusText);
@@ -313,6 +324,7 @@ export default class HyperScreen extends React.Component {
 
         this.setState({
           doc,
+          warningHeader,
           styles: stylesheets,
           error,
         });
@@ -380,6 +392,7 @@ export default class HyperScreen extends React.Component {
       {
         screenUrl: url,
         componentRegistry: this.componentRegistry,
+        screenEventEmitter: this.screenEventEmitter,
       },
     );
 

@@ -39,6 +39,7 @@
     "test": "yarn generate test && yarn test:flow && yarn test:lint && yarn test:render && yarn test:unit"
   },
   "dependencies": {
+    "lru-cache": "^5.1.1",
     "react-native-webview": "5.12.0",
     "tiny-emitter": "2.1.0",
     "url-parse": "1.4.3",

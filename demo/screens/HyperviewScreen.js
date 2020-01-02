@@ -8,16 +8,10 @@
 
 import React, { PureComponent } from 'react';
 import Hyperview from 'hyperview';
+import * as Cache from 'hyperview/src/services/cache';
 import moment from 'moment';
-import LRU from 'lru-cache';
 
-const fetchCache = new LRU({
-  length: (n, key) => {
-    return n.size;
-  },
-  max: 5e7, // 50 MB
-  updateAgeOnGet: false,
-});
+const hyperviewCache = Cache.createCache(5e7); // 50 MB
 
 export default class HyperviewScreen extends React.PureComponent {
   goBack = (params, key) => {
@@ -57,53 +51,12 @@ export default class HyperviewScreen extends React.PureComponent {
 
   formatDate = (date, format) => moment(date).format(format);
 
-  cachedFetch = (url, options) => {
-    console.log(`cache size: ${fetchCache.length}`);
-    let cacheKey = url;
-    let cached = fetchCache.get(cacheKey);
-    if (cached !== undefined) {
-      console.log('found in cache!');
-      let response = cached.response.clone();
-      response.headers.set('warning', '110 hyperview "Response is stale"');
-      return Promise.resolve(response);
-    }
-
-    console.log('not in cache, fetching...');
-    return fetch(url, options).then(response => {
-      // todo: check here if cacheable  
-      if (!response.ok) {
-        return response;
-      }
-
-      const clonedResponse = response.clone();
-      response.blob().then(blob => {
-        const cacheValue = {
-          response: clonedResponse,
-          size: blob.size,
-        };
-
-        let expiry = 1 * 60 * 1000; // 5 min default
-        if (typeof options === 'number') {
-          expiry = options;
-          options = undefined;
-        } else if (typeof options === 'object') {
-          expiry = options.seconds || expiry;
-        }
-
-        console.log('caching...');
-        fetchCache.set(cacheKey, cacheValue, expiry);
-      });
-
-      return clonedResponse;
-    });
-  };
-
   /**
    * fetch function used by Hyperview screens. By default, it adds
    * header to prevent caching requests.
    */
   fetchWrapper = (input, init = { headers: {} }) => {
-    return this.cachedFetch(input, {
+    return Cache.wrapFetch(hyperviewCache, fetch)(input, {
       ...init,
       headers: {
         // Don't cache requests for the demo

@@ -265,6 +265,7 @@ export type ComponentRegistry = {
 export type HvComponentOptions = {
   behaviorElement?: ?Element,
   componentRegistry?: ComponentRegistry,
+  screenEventEmitter?: Object,
   delay?: ?DOMString,
   focused?: ?boolean,
   hideIndicatorIds?: ?DOMString,

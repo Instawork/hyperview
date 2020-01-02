@@ -55,6 +55,19 @@
               style="Header__Back">Back</text>
         <text style="Header__Title">UI Elements</text>
       </header>
+      <view id="status-stale" hide="true">
+        <spinner />
+        <text>Stale response</text>
+      </view>
+      <view id="status-revalidated" hide="true">
+        <text>Revalidated</text>
+      </view>
+
+      <behavior trigger="response-stale" action="show" target="status-stale" />
+      <behavior trigger="response-revalidated" action="hide" target="status-stale" />
+      <behavior trigger="response-revalidated" action="show" target="status-revalidated" />
+      <behavior trigger="response-revalidated" action="hide" target="status-revalidated" delay="1000" />
+
       <list>
         <item href="/ui_elements/view.xml"
               key="view"
