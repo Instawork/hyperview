@@ -1,8 +1,28 @@
 // @flow
 
+/**
+ * Copyright (c) Garuda Labs, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
+import type {
+  Fetch,
+  HttpCache,
+  HttpCacheValue,
+  RequestOptions,
+  Response,
+} from 'hyperview/src/services/cache/types';
 import LRU from 'lru-cache';
 
-const cachedFetch = (url, options, cache, baseFetch) => {
+const cachedFetch = (
+  url: string,
+  options: RequestOptions,
+  cache: HttpCache,
+  baseFetch: Fetch,
+): Promise<Response> => {
   console.log(`HV cache size: ${cache.length}`);
   const cacheKey = url;
   const cached = cache.get(cacheKey);
@@ -28,7 +48,7 @@ const cachedFetch = (url, options, cache, baseFetch) => {
 
     const clonedResponse = response.clone();
     response.blob().then(blob => {
-      const cacheValue = {
+      const cacheValue: HttpCacheValue = {
         response: clonedResponse,
         size: blob.size,
       };
@@ -42,14 +62,20 @@ const cachedFetch = (url, options, cache, baseFetch) => {
   });
 };
 
-export const createCache = (size: number) =>
+/**
+ * Creates an HTTP cache to use with fetch(). The cache will be
+ */
+export const createCache = (size: number): HttpCache =>
   new LRU({
-    length: (n, key) => {
-      return n.size;
-    },
+    length: (value: HttpCacheValue) => value.size,
     max: size,
     updateAgeOnGet: false,
   });
 
-export const wrapFetch = (cache, baseFetch) => (url, options) =>
-  cachedFetch(url, options, cache, baseFetch);
+/**
+ * Returns an implementation of fetch() that wraps the given implementation in an HTTP cache.
+ */
+export const wrapFetch = (cache: HttpCache, baseFetch: Fetch): Fetch => (
+  url: string,
+  options: RequestOptions,
+): Promise<Response> => cachedFetch(url, options, cache, baseFetch);
