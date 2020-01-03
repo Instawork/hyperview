@@ -33,8 +33,8 @@ import React, { PureComponent } from 'react';
 import { RefreshControl, ScrollView, TouchableOpacity } from 'react-native';
 import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
 import { XMLSerializer } from 'xmldom-instawork';
-// eslint-disable-next-line import/no-internal-modules
 import { getBehaviorElements } from 'hyperview/src/services';
+// eslint-disable-next-line import/no-internal-modules
 import globalEventEmitter from 'tiny-emitter/instance';
 
 /**

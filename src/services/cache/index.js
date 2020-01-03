@@ -41,7 +41,6 @@ const cachedFetch = (
 
   console.log('HV not in cache, fetching...');
   return baseFetch(url, options).then(response => {
-    // todo: check here if cacheable
     if (!response.ok) {
       return response;
     }
