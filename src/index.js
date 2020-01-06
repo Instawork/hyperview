@@ -26,7 +26,7 @@ import {
 import { DOMParser, XMLSerializer } from 'xmldom-instawork';
 import HyperRef from 'hyperview/src/core/hyper-ref';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
-import Navigation from 'hyperview/src/services/navigation';
+import Navigation, { ANCHOR_ID_SEPARATOR } from 'hyperview/src/services/navigation';
 import React from 'react';
 import VisibilityDetectingView from './VisibilityDetectingView.js';
 import { addHref, createProps, getBehaviorElements, getFirstTag, later, shallowCloneToRoot, getFormData } from 'hyperview/src/services';
@@ -462,7 +462,7 @@ export default class HyperScreen extends React.Component {
     } else if (Object.values(NAV_ACTIONS).includes(action)) {
       this.navigation.setUrl(this.state.url);
       this.navigation.setDocument(this.state.doc);
-      this.navigation.navigate(href || Navigation.ANCHOR_ID_SEPARATOR, action, currentElement, opts);
+      this.navigation.navigate(href || ANCHOR_ID_SEPARATOR, action, currentElement, opts);
     } else if (Object.values(UPDATE_ACTIONS).includes(action)) {
       this.onUpdateFragment(href, action, currentElement, opts);
     } else if (action === ACTIONS.SWAP) {
