@@ -149,20 +149,6 @@ export default class HyperRef extends PureComponent<Props, State> {
     });
   };
 
-  onResponseStaleRevalidating = this.createScreenEventHandler(
-    'response-stale-revalidating',
-  );
-
-  onResponseRevalidated = this.createScreenEventHandler('response-evalidated');
-
-  onResponseStaleServerError = this.createScreenEventHandler(
-    'response-stale-server-error',
-  );
-
-  onResponseStaleNetworkError = this.createScreenEventHandler(
-    'response-stale-network-error',
-  );
-
   createScreenEventHandler = (triggerName: string) => () =>
     getBehaviorElements(this.props.element)
       .filter(e => e.getAttribute(ATTRIBUTES.TRIGGER) === triggerName)
@@ -181,6 +167,20 @@ export default class HyperRef extends PureComponent<Props, State> {
           );
         }
       });
+
+  onResponseStaleRevalidating = this.createScreenEventHandler(
+    'response-stale-revalidating',
+  );
+
+  onResponseRevalidated = this.createScreenEventHandler('response-evalidated');
+
+  onResponseStaleServerError = this.createScreenEventHandler(
+    'response-stale-server-error',
+  );
+
+  onResponseStaleNetworkError = this.createScreenEventHandler(
+    'response-stale-network-error',
+  );
 
   createActionHandler = (
     element: Element,
