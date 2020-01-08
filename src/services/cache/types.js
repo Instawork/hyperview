@@ -15,6 +15,7 @@ export type { Fetch, Request, Response };
 export type RequestOptions = {
   method?: string,
   onRevalidate?: () => void,
+  headers?: { [key: string]: any },
 };
 
 type Cache<K, V> = {
@@ -39,6 +40,7 @@ type CacheOptions<K, V> = {
 export type HttpCacheValue = {
   size: number,
   response: Response,
+  policy: any,
 };
 
 export type HttpCache = Cache<string, HttpCacheValue>;

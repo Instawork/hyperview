@@ -281,7 +281,7 @@ export default class HyperScreen extends React.Component {
     }
 
     if (!prevState.warningHeader && this.state.warningHeader) {
-      this.screenEventEmitter.emit(ON_RESPONSE_REVALIDATED);
+      this.screenEventEmitter.emit(ON_RESPONSE_STALE_REVALIDATING);
     }
   }
 
