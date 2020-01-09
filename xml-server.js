@@ -1,8 +1,9 @@
 const express = require('express');
+const morgan = require('morgan');
 const app = express();
 const port = process.argv[2];
 
-app.get('/', (req, res) => res.send('Hello World!'));
+app.use(morgan(':method :url :status\nCache-Control: :res[cache-control]'));
 
 const cacheControlDirectives = [
   'max-age',
@@ -15,7 +16,7 @@ var cacheHeaders = function(req, res, next) {
     const param = req.query[directive];
     return s + (param ? ` ${directive}=${param}` : '');
   }, '');
-  res.set('Cache-Control', cacheControl);
+  res.set('Cache-Control', 'private' + cacheControl);
   next();
 };
 

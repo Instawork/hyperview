@@ -35,7 +35,7 @@
     "test:lint": "eslint src",
     "test:render": "jest test/render.test.js --forceExit",
     "test:unit": "jest --testPathPattern src",
-    "test:xmlserver": "node server.js 8085",
+    "test:xmlserver": "node xml-server.js 8085",
     "test": "yarn generate test && yarn test:flow && yarn test:lint && yarn test:render && yarn test:unit"
   },
   "dependencies": {
@@ -69,6 +69,7 @@
     "husky": "1.2.1",
     "jest": "23.1.0",
     "mkdirp": "0.5.1",
+    "morgan": "^1.9.1",
     "prettier": "1.15.3",
     "pretty-quick": "1.8.0",
     "react": "16.6.0",
