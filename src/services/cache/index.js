@@ -22,51 +22,79 @@ const cachePolicyOptions = {
   shared: false,
 };
 
-const cachedFetch = (
+const revalidateCacheHit = (
+  url: string,
+  cacheValue: HttpCacheValue,
+  options: RequestOptions,
+  cache: HttpCache,
+  baseFetch: Fetch,
+): Promise<Response> => {
+  const { response, policy } = cacheValue;
+
+  const revalidationHeaders = policy.revalidationHeaders(options);
+  const revalidationOptions = { ...options, headers: revalidationHeaders };
+
+  console.log(`revalidating ${url}...`);
+
+  return baseFetch(url, revalidationOptions).then(revalidationResponse => {
+    const revalidation = policy.revalidatedPolicy(
+      options,
+      revalidationResponse,
+    );
+    const revalidatedPolicy = revalidation.policy;
+    const modified: boolean = revalidation.modified;
+
+    console.log(modified ? 'modified' : 'not modified');
+    const newResponse = modified ? revalidationResponse : response.clone();
+    const clonedResponse = newResponse.clone();
+
+    newResponse.blob().then(blob => {
+      const newCacheValue: HttpCacheValue = {
+        response: clonedResponse,
+        size: blob.size,
+        policy: revalidatedPolicy,
+      };
+      const expiry = revalidatedPolicy.timeToLive();
+      console.log(`caching ${url} for ${expiry}ms`);
+      cache.set(url, newCacheValue, expiry);
+    });
+
+    return clonedResponse;
+  });
+};
+
+const handleCacheHit = (
+  url: string,
+  cacheValue: HttpCacheValue,
+  options: RequestOptions,
+  cache: HttpCache,
+  baseFetch: Fetch,
+): Promise<Response> => {
+  const { response, policy } = cacheValue;
+
+  console.log(`cache hit for ${url}`);
+  if (policy.satisfiesWithoutRevalidation(options)) {
+    console.log(`cached response can be used without revalidation`);
+    const newResponse = response.clone();
+    newResponse.headers = policy.responseHeaders();
+    return Promise.resolve(newResponse);
+  }
+
+  console.log(`cached response needs to be revalidated`);
+  return revalidateCacheHit(url, cacheValue, options, cache, baseFetch);
+};
+
+const handleCacheMiss = (
   url: string,
   options: RequestOptions,
   cache: HttpCache,
   baseFetch: Fetch,
 ): Promise<Response> => {
-  console.log(`HV cache size: ${cache.length}`);
-  const cacheKey = url;
-
-  const cacheValue: HttpCacheValue = cache.get(cacheKey);
-  if (cacheValue !== undefined) {
-    console.log('HV found in cache!');
-    const oldResponse = cacheValue.response.clone();
-    const oldPolicy = cacheValue.policy;
-
-    if (!oldPolicy.satisfiesWithoutRevalidation(options)) {
-      // The value in the cache needs to be revalidated before we use it.
-      const newHeaders = oldPolicy.revalidationHeaders(options);
-      const newOptions = {
-        ...options,
-        headers: newHeaders,
-      };
-      baseFetch(url, newOptions).then(newResponse => {
-        const { policy, modified } = oldPolicy.revalidatedPolicy(
-          options,
-          newResponse,
-        );
-        const response = modified ? newResponse : oldResponse;
-        const newCacheValue: HttpCacheValue = {
-          response,
-        };
-        cache.set(cacheKey, newCacheValue, policy.timeToLive());
-      });
-    }
-
-    // We can use the old response to respond to the request
-    oldResponse.headers = oldPolicy.responseHeaders();
-    return Promise.resolve(oldResponse);
-  }
-
-  console.log('HV not in cache, fetching...');
+  console.log(`cache miss for ${url}`);
   return baseFetch(url, options).then(response => {
     const cachePolicy = new CachePolicy(options, response, cachePolicyOptions);
     if (!cachePolicy.storable()) {
-      console.log('response not cacheable');
+      console.log(`response for ${url} is not cacheable`);
       return response;
     }
 
@@ -77,14 +105,28 @@ const cachedFetch = (
         size: blob.size,
         policy: cachePolicy,
       };
-
       const expiry = cachePolicy.timeToLive();
-      console.log(`caching for ${expiry}ms...`);
-      cache.set(cacheKey, cacheValue, expiry);
+      console.log(`caching ${url} for ${expiry}ms`);
+      cache.set(url, cacheValue, expiry);
     });
 
     return clonedResponse;
   });
+};
+
+const cachedFetch = (
+  url: string,
+  options: RequestOptions,
+  cache: HttpCache,
+  baseFetch: Fetch,
+): Promise<Response> => {
+  console.log(`HV cache size: ${cache.length}`);
+
+  const cacheValue: HttpCacheValue = cache.get(url);
+  if (cacheValue !== undefined) {
+    return handleCacheHit(url, cacheValue, options, cache, baseFetch);
+  }
+  return handleCacheMiss(url, options, cache, baseFetch);
 };
 
 /**

@@ -56,7 +56,7 @@
         <text style="Header__Title">Hyperview Examples</text>
       </header>
       <list>
-        <item href="/ui_elements/index.xml"
+        <item href="/ui_elements/index.xml?max-age=30"
               key="layout"
               show-during-load="loadingScreen"
               style="Item">
