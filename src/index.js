@@ -703,3 +703,4 @@ export default class HyperScreen extends React.Component {
 }
 
 export * from 'hyperview/src/types';
+export { Namespaces };
