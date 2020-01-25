@@ -8,6 +8,7 @@
  *
  */
 
+import * as ComponentsInternal from './internal';
 import type { ComponentRegistry, HvComponent } from 'hyperview/src/types';
 import HvDateField from 'hyperview/src/components/hv-date-field';
 import HvImage from 'hyperview/src/components/hv-image';
@@ -51,13 +52,7 @@ export const getRegistry = (
       ...registry,
       [component.namespaceURI]: {
         ...registry[component.namespaceURI],
-        ...[component.localName, ...(component.localNameAliases || [])].reduce(
-          (acc, localName) => ({
-            ...acc,
-            [localName]: component,
-          }),
-          {},
-        ),
+        ...ComponentsInternal.registerComponent(component),
       },
     }),
     {},
