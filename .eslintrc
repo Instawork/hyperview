@@ -1,10 +1,12 @@
 {
-  "extends": ["plugin:instawork/recommended", "prettier"],
-  "plugins": ["instawork", "prettier"],
+  "extends": [
+    "plugin:instawork/recommended"
+  ],
+  "plugins": [
+    "instawork"
+  ],
   "rules": {
-    "prettier/prettier": "error",
     "instawork/props-no-function": "error",
-    "no-underscore-dangle": ["error"],
     "import/no-extraneous-dependencies": [
       "warn",
       {
@@ -24,17 +26,35 @@
       }
     ],
     "import/no-internal-modules": [
-      "warn", {
+      "warn",
+      {
         "allow": [
           "hyperview/**",
           "react-native/Libraries/StyleSheet/StyleSheetTypes"
         ]
       }
-    ]
+    ],
+    "max-len": [
+      "warn",
+      {
+        "code": 100
+      }
+    ],
+    "import/no-cycle": "off",
+    "lines-between-class-members": "off",
+    "no-else-return": "off",
+    "no-restricted-globals": "off",
+    "prefer-destructuring": "off",
+    "react/destructuring-assignment": "off",
+    "react/jsx-sort-props": "off",
+    "react/no-access-state-in-setstate": "off",
+    "sort-keys": "off"
   },
   "overrides": [
     {
-      "files": [ "**/types.js" ],
+      "files": [
+        "**/types.js"
+      ],
       "rules": {
         "no-use-before-define": "off",
         "max-len": "off"

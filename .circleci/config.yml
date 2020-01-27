@@ -3,7 +3,7 @@ version: 2
 jobs:
   test:
     docker:
-      - image: circleci/node:8.7
+      - image: circleci/node:10.18.1
     steps:
       - checkout
       - run: yarn
