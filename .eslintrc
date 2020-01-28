@@ -34,12 +34,6 @@
         ]
       }
     ],
-    "max-len": [
-      "warn",
-      {
-        "code": 100
-      }
-    ],
     "import/no-cycle": "off",
     "lines-between-class-members": "off",
     "no-else-return": "off",
