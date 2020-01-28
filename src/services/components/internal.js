@@ -10,7 +10,9 @@
 
 import type { HvComponent } from 'hyperview/src/types';
 
-export const registerComponent = (component: HvComponent<*>) =>
+export const registerComponent = (
+  component: HvComponent,
+): { [string]: HvComponent } =>
   [component.localName, ...(component.localNameAliases || [])].reduce(
     (acc, localName) => ({
       ...acc,
