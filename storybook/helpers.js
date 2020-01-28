@@ -16,7 +16,7 @@ const getComponentPath = (componentName: string) => {
 };
 
 export const stories = (
-  Component: HvComponent<*>,
+  Component: HvComponent,
 ): ((template: string, render: any) => Node) => {
   const componentPath = getComponentPath(Component.name);
   const s = storiesOf(Component.name, module);

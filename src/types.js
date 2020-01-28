@@ -258,7 +258,7 @@ export type StyleSheets = {
 
 export type ComponentRegistry = {
   [string]: {
-    [string]: HvComponent<*>,
+    [string]: HvComponent,
   },
 };
 
@@ -301,7 +301,7 @@ export type HvComponentProps = {|
   stylesheets: StyleSheets,
 |};
 
-export type HvComponent<Props> = ComponentType<Props> & {
+export type HvComponent = ComponentType<HvComponentProps> & {
   localName: LocalName | string,
   namespaceURI: NamespaceURI,
 };
