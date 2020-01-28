@@ -10,18 +10,17 @@
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
+import type { DOMString, HvComponentProps } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
-import type { DOMString } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import type { Props } from './types';
 import { View } from 'react-native';
 import { createProps } from 'hyperview/src/services';
 
-export default class HvSelectSingle extends PureComponent<Props> {
+export default class HvSelectSingle extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.SELECT_SINGLE;
   static localNameAliases = [];
-  constructor(props: Props) {
+  constructor(props: HvComponentProps) {
     super(props);
     this.onSelect = this.onSelect.bind(this);
   }

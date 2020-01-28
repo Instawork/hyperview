@@ -8,20 +8,7 @@
  *
  */
 
-import type {
-  Element,
-  HvComponentOnUpdate,
-  HvComponentOptions,
-  StyleSheets,
-} from 'hyperview/src/types';
 import type { StyleSheet } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
-
-export type Props = {|
-  element: Element,
-  onUpdate: HvComponentOnUpdate,
-  options: HvComponentOptions,
-  stylesheets: StyleSheets,
-|};
 
 export type InternalProps = {|
   accessibilityLabel?: ?string,

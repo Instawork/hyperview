@@ -9,19 +9,22 @@
  */
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import type { Props, State } from './types';
+import type { Element, HvComponentProps } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
-import type { Element } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
+import type { State } from './types';
 import { TextInput } from 'react-native';
 import TinyMask from 'hyperview/src/mask.js';
 import { createProps } from 'hyperview/src/services';
 
-export default class HvTextField extends PureComponent<Props, State> {
+export default class HvTextField extends PureComponent<
+  HvComponentProps,
+  State,
+> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.TEXT_FIELD;
   static localNameAliases = [];
-  constructor(props: Props) {
+  constructor(props: HvComponentProps) {
     const { element } = props;
     super(props);
     this.state = {
@@ -46,7 +49,10 @@ export default class HvTextField extends PureComponent<Props, State> {
     return mask.mask(value) || '';
   };
 
-  static getDerivedStateFromProps(nextProps: Props, prevState: State) {
+  static getDerivedStateFromProps(
+    nextProps: HvComponentProps,
+    prevState: State,
+  ) {
     const { element } = nextProps;
     const newValue = HvTextField.getFormattedValue(
       element,

@@ -9,17 +9,18 @@
  */
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import type { Props, State } from './types';
 import React, { PureComponent } from 'react';
+import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
+import type { State } from './types';
 import { TextInput } from 'react-native';
 import { createProps } from 'hyperview/src/services';
 
-export default class HvTextArea extends PureComponent<Props, State> {
+export default class HvTextArea extends PureComponent<HvComponentProps, State> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.TEXT_AREA;
   static localNameAliases = [];
-  constructor(props: Props) {
+  constructor(props: HvComponentProps) {
     const { element } = props;
     super(props);
     this.state = {
@@ -28,7 +29,10 @@ export default class HvTextArea extends PureComponent<Props, State> {
     };
   }
 
-  static getDerivedStateFromProps(nextProps: Props, prevState: State) {
+  static getDerivedStateFromProps(
+    nextProps: HvComponentProps,
+    prevState: State,
+  ) {
     const value = nextProps.element.getAttribute('value') || '';
     return value !== prevState.value ? { value } : {};
   }

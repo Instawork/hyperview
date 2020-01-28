@@ -10,14 +10,15 @@
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
-import type { InternalProps, Props } from './types';
 import React, { PureComponent } from 'react';
 import { ScrollView, View } from 'react-native';
 import { addHref, createProps } from 'hyperview/src/services';
+import type { HvComponentProps } from 'hyperview/src/types';
+import type { InternalProps } from './types';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { LOCAL_NAME } from 'hyperview/src/types';
 
-export default class HvView extends PureComponent<Props> {
+export default class HvView extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.VIEW;
   static localNameAliases = [
@@ -27,7 +28,7 @@ export default class HvView extends PureComponent<Props> {
     LOCAL_NAME.ITEM,
     LOCAL_NAME.SECTION_TITLE,
   ];
-  props: Props;
+  props: HvComponentProps;
 
   render() {
     const { element, stylesheets, onUpdate, options } = this.props;

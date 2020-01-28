@@ -11,16 +11,16 @@
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import React, { PureComponent } from 'react';
 import { addHref, createProps } from 'hyperview/src/services';
+import type { HvComponentProps } from 'hyperview/src/types';
 import { Image } from 'react-native';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import type { Props } from './types';
 import urlParse from 'url-parse';
 
-export default class HvImage extends PureComponent<Props> {
+export default class HvImage extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.IMAGE;
   static localNameAliases = [];
-  props: Props;
+  props: HvComponentProps;
 
   render() {
     const { element, stylesheets, onUpdate, options } = this.props;

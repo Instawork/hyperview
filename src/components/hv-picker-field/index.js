@@ -13,6 +13,7 @@ import type {
   DOMString,
   Element,
   HvComponentOptions,
+  HvComponentProps,
   NodeList,
   StyleSheets,
 } from 'hyperview/src/types';
@@ -24,11 +25,11 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import type { Props, State } from './types';
 import React, { PureComponent } from 'react';
 import { createProps, createStyleProp } from 'hyperview/src/services';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { Node as ReactNode } from 'react';
+import type { State } from './types';
 import type { StyleSheet as StyleSheetType } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 import styles from './styles';
 
@@ -38,14 +39,17 @@ import styles from './styles';
  * - On Android, the system picker is rendered inline on the screen. Pressing the picker
  *   opens a system dialog.
  */
-export default class HvPickerField extends PureComponent<Props, State> {
+export default class HvPickerField extends PureComponent<
+  HvComponentProps,
+  State,
+> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.PICKER_FIELD;
   static localNameAliases = [];
-  props: Props;
+  props: HvComponentProps;
   state: State;
 
-  constructor(props: Props) {
+  constructor(props: HvComponentProps) {
     super(props);
     const element: Element = props.element;
     const value: ?DOMString = element.getAttribute('value');
@@ -64,7 +68,10 @@ export default class HvPickerField extends PureComponent<Props, State> {
     };
   }
 
-  static getDerivedStateFromProps(nextProps: Props, prevState: State) {
+  static getDerivedStateFromProps(
+    nextProps: HvComponentProps,
+    prevState: State,
+  ) {
     const value = nextProps.element.getAttribute('value') || '';
     return value !== prevState.value ? { value } : {};
   }

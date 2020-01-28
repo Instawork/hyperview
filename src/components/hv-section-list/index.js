@@ -10,18 +10,22 @@
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
-import type { Props, State } from './types';
 import React, { PureComponent } from 'react';
 import { DOMParser } from 'xmldom-instawork';
+import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { SectionList } from 'react-native';
+import type { State } from './types';
 
-export default class HvSectionList extends PureComponent<Props, State> {
+export default class HvSectionList extends PureComponent<
+  HvComponentProps,
+  State,
+> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.SECTION_LIST;
   static localNameAliases = [];
   parser: DOMParser = new DOMParser();
-  props: Props;
+  props: HvComponentProps;
   state: State = {
     refreshing: false,
   };

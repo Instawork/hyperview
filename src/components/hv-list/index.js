@@ -10,19 +10,21 @@
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
-import type { Props, State } from './types';
 import React, { PureComponent } from 'react';
 import { DOMParser } from 'xmldom-instawork';
 import { FlatList } from 'react-native';
+import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
+import type { State } from './types';
 import { getBehaviorElements } from 'hyperview/src/services';
 
-export default class HvList extends PureComponent<Props, State> {
+export default class HvList extends PureComponent<HvComponentProps, State> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.LIST;
   static localNameAliases = [];
+  static localNameAliases = [];
   parser: DOMParser = new DOMParser();
-  props: Props;
+  props: HvComponentProps;
   state: State = {
     refreshing: false,
   };
