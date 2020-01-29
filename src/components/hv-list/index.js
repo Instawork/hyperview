@@ -22,7 +22,6 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.LIST;
   static localNameAliases = [];
-  static localNameAliases = [];
   parser: DOMParser = new DOMParser();
   props: HvComponentProps;
   state: State = {
