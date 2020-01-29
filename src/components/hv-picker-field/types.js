@@ -8,18 +8,6 @@
  *
  */
 
-import type {
-  Element,
-  HvComponentOptions,
-  StyleSheets,
-} from 'hyperview/src/types';
-
-export type Props = {|
-  element: Element,
-  options: HvComponentOptions,
-  stylesheets: StyleSheets,
-|};
-
 export type State = {|
   value: ?string,
   pickerValue: ?string,

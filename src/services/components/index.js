@@ -40,7 +40,7 @@ const HYPERVIEW_COMPONENTS = [
 ];
 
 export const getRegistry = (
-  components: HvComponent<*>[] = [],
+  components: HvComponent[] = [],
 ): ComponentRegistry =>
   [...HYPERVIEW_COMPONENTS, ...components].reduce(
     (registry, component) => ({

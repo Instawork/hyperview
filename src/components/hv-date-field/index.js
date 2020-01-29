@@ -13,6 +13,7 @@ import type {
   DOMString,
   Element,
   HvComponentOptions,
+  HvComponentProps,
   StyleSheets,
 } from 'hyperview/src/types';
 import {
@@ -24,12 +25,12 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import type { Props, State } from './types';
 import React, { PureComponent } from 'react';
 import { createProps, createStyleProp } from 'hyperview/src/services';
 import { DateFormatContext } from 'hyperview/src';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { Node as ReactNode } from 'react';
+import type { State } from './types';
 import type { StyleSheet as StyleSheetType } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 import styles from './styles';
 
@@ -39,13 +40,16 @@ import styles from './styles';
  * - On iOS, pressing the field brings up a custom bottom sheet with a picker and action buttons.
  * - On Android, pressing the field brings up the system date picker modal.
  */
-export default class HvDateField extends PureComponent<Props, State> {
+export default class HvDateField extends PureComponent<
+  HvComponentProps,
+  State,
+> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.DATE_FIELD;
-  props: Props;
+  props: HvComponentProps;
   state: State;
 
-  constructor(props: Props) {
+  constructor(props: HvComponentProps) {
     super(props);
     const element: Element = props.element;
     const stringValue: ?DOMString = element.getAttribute('value');
@@ -89,7 +93,10 @@ export default class HvDateField extends PureComponent<Props, State> {
     return new Date(year, month - 1, day);
   };
 
-  static getDerivedStateFromProps(nextProps: Props, prevState: State): State {
+  static getDerivedStateFromProps(
+    nextProps: HvComponentProps,
+    prevState: State,
+  ): State {
     const { element } = nextProps;
     if (element.hasAttribute('value')) {
       const newValue = element.getAttribute('value') || '';
@@ -114,7 +121,7 @@ export default class HvDateField extends PureComponent<Props, State> {
     return prevState;
   }
 
-  componentDidUpdate = (prevProps: Props, prevState: State) => {
+  componentDidUpdate = (prevProps: HvComponentProps, prevState: State) => {
     // TODO: move to React hooks once we adopt them across the codebase.
     if (Platform.OS === 'android') {
       if (!prevState.fieldPressed && this.state.fieldPressed) {

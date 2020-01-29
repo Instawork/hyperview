@@ -9,19 +9,20 @@
  */
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import type { Props, State } from './types';
 import React, { PureComponent } from 'react';
 import { StyleSheet, Switch } from 'react-native';
+import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
+import type { State } from './types';
 import { createStyleProp } from 'hyperview/src/services';
 
-export default class HvSwitch extends PureComponent<Props, State> {
+export default class HvSwitch extends PureComponent<HvComponentProps, State> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.SWITCH;
-  props: Props;
+  props: HvComponentProps;
   state: State;
 
-  constructor(props: Props) {
+  constructor(props: HvComponentProps) {
     super(props);
     const initialValue = props.element.getAttribute('value') === 'on';
     this.state = {
@@ -29,7 +30,10 @@ export default class HvSwitch extends PureComponent<Props, State> {
     };
   }
 
-  static getDerivedStateFromProps(nextProps: Props, prevState: State) {
+  static getDerivedStateFromProps(
+    nextProps: HvComponentProps,
+    prevState: State,
+  ) {
     const value = nextProps.element.getAttribute('value') === 'on';
     return value !== prevState.value ? { value } : {};
   }

@@ -11,13 +11,13 @@
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import React, { PureComponent } from 'react';
 import { ActivityIndicator } from 'react-native';
+import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import type { Props } from './types';
 
-export default class HvSpinner extends PureComponent<Props> {
+export default class HvSpinner extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.SPINNER;
-  props: Props;
+  props: HvComponentProps;
 
   render() {
     const { element } = this.props;

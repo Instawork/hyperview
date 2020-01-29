@@ -10,25 +10,26 @@
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
-import type { Props, State } from './types';
 import React, { PureComponent } from 'react';
 import { TouchableWithoutFeedback, View } from 'react-native';
 import { createProps, getBehaviorElements } from 'hyperview/src/services';
+import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
+import type { State } from './types';
 
 /**
  * A component representing an option in a single-select or multiple-select list.
  * Has a local pressed state. The selected state is read from the element attribute.
  */
-export default class HvOption extends PureComponent<Props, State> {
+export default class HvOption extends PureComponent<HvComponentProps, State> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.OPTION;
-  props: Props;
+  props: HvComponentProps;
   state: State = {
     pressed: false,
   };
 
-  componentDidUpdate(prevProps: Props) {
+  componentDidUpdate(prevProps: HvComponentProps) {
     const { element } = this.props;
     const prevElement = prevProps.element;
     const selected = element.getAttribute('selected') === 'true';
