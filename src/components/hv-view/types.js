@@ -13,6 +13,7 @@ import type { StyleSheet } from 'react-native/Libraries/StyleSheet/StyleSheetTyp
 export type InternalProps = {|
   accessibilityLabel?: ?string,
   extraScrollHeight?: ?number,
+  id?: ?string,
   keyboardOpeningTime?: ?number,
   keyboardShouldPersistTaps?: ?string,
   scrollEventThrottle?: ?number,

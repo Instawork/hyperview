@@ -11,6 +11,7 @@ import * as Components from 'hyperview/src/services/components';
 import * as Events from 'hyperview/src/services/events';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
+import * as ScrollContext from 'hyperview/src/services/scroll-context';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as UrlService from 'hyperview/src/services/url';
 import {
@@ -49,13 +50,7 @@ function getHyperviewHeaders() {
 // in the screen.
 export const DateFormatContext = React.createContext();
 
-/**
- *
- */
-export default class HyperScreen extends React.Component {
-  static createProps = createProps;
-  static renderChildren = Render.renderChildren;
-
+class HyperScreen extends React.Component {
   constructor(props) {
     super(props);
 
@@ -631,5 +626,9 @@ export default class HyperScreen extends React.Component {
   }
 }
 
+export default ScrollContext.withProvider(HyperScreen);
 export * from 'hyperview/src/types';
 export { Events, Namespaces };
+export * from 'hyperview/src/services';
+export * from 'hyperview/src/services/render';
+export * from 'hyperview/src/services/scroll-context';

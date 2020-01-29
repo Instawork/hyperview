@@ -10,6 +10,7 @@
 
 import * as Events from 'hyperview/src/services/events';
 import * as Render from 'hyperview/src/services/render';
+import * as ScrollContext from 'hyperview/src/services/scroll-context';
 import {
   ACTIONS,
   NAV_ACTIONS,
@@ -30,6 +31,10 @@ import { RefreshControl, ScrollView, TouchableOpacity } from 'react-native';
 import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
 import { XMLSerializer } from 'xmldom-instawork';
 import { getBehaviorElements } from 'hyperview/src/services';
+
+const ScrollViewWithScrollContext = ScrollContext.withScrollableComponent(
+  ScrollView,
+);
 
 /**
  * Component that handles dispatching behaviors based on the appropriate
@@ -283,9 +288,10 @@ export default class HyperRef extends PureComponent<Props, State> {
         refreshing,
         onRefresh,
       });
+      const id = element.getAttribute('id');
       renderedComponent = React.createElement(
-        ScrollView,
-        { refreshControl, style: hrefStyle },
+        ScrollViewWithScrollContext,
+        { id, refreshControl, style: hrefStyle },
         renderedComponent,
       );
     }

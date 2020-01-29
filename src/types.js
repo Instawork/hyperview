@@ -409,3 +409,14 @@ export type NavigationProps = {|
 |};
 
 export const ON_EVENT_DISPATCH = 'hyperview:on-event';
+
+export type ScrollOffset = {|
+  x: number,
+  y: number,
+|};
+
+export type ScrollviewsRegistry = {|
+  [routeKey: string]: {
+    [viewId: string]: ?ScrollOffset,
+  },
+|};

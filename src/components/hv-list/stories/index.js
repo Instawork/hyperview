@@ -9,13 +9,16 @@
  */
 
 import * as Helpers from 'hyperview/storybook/helpers';
+import * as ScrollContext from 'hyperview/src/services/scroll-context';
 import HvList from 'hyperview/src/components/hv-list';
 import React from 'react';
 import { action } from '@storybook/addon-actions';
 
+const HvListWithScrollContext = ScrollContext.withProvider(HvList);
+
 const createStory = Helpers.stories(HvList);
 createStory('basic', ({ element, stylesheets }) => (
-  <HvList
+  <HvListWithScrollContext
     element={element}
     onUpdate={action('onUpdate')}
     options={Helpers.getOptions()}
@@ -23,7 +26,7 @@ createStory('basic', ({ element, stylesheets }) => (
   />
 ));
 createStory('infinite_scroll', ({ element, stylesheets }) => (
-  <HvList
+  <HvListWithScrollContext
     element={element}
     onUpdate={action('onUpdate')}
     options={Helpers.getOptions()}

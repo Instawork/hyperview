@@ -10,6 +10,7 @@
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
+import * as ScrollContext from 'hyperview/src/services/scroll-context';
 import React, { PureComponent } from 'react';
 import { ScrollView, View } from 'react-native';
 import { addHref, createProps } from 'hyperview/src/services';
@@ -17,6 +18,13 @@ import type { HvComponentProps } from 'hyperview/src/types';
 import type { InternalProps } from './types';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { LOCAL_NAME } from 'hyperview/src/types';
+
+const ScrollViewWithScrollContext = ScrollContext.withScrollableComponent(
+  ScrollView,
+);
+const KeyboardAwareScrollViewWithScrollContext = ScrollContext.withScrollableComponent(
+  KeyboardAwareScrollView,
+);
 
 export default class HvView extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
@@ -36,7 +44,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
     const { skipHref } = viewOptions || {};
     const props: InternalProps = createProps(element, stylesheets, viewOptions);
     const scrollable = !!element.getAttribute('scroll');
-    let c = View;
+    let Component = View;
     const inputRefs = [];
     if (scrollable) {
       const textFields = element.getElementsByTagNameNS(
@@ -48,7 +56,11 @@ export default class HvView extends PureComponent<HvComponentProps> {
         'text-area',
       );
       const hasFields = textFields.length > 0 || textAreas.length > 0;
-      c = hasFields ? KeyboardAwareScrollView : ScrollView;
+      Component = hasFields
+        ? KeyboardAwareScrollViewWithScrollContext
+        : ScrollViewWithScrollContext;
+
+      props.id = element.getAttribute('id');
       if (hasFields) {
         props.extraScrollHeight = 32;
         props.keyboardOpeningTime = 0;
@@ -68,7 +80,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
     }
 
     const component = React.createElement(
-      c,
+      Component,
       props,
       ...Render.renderChildren(element, stylesheets, onUpdate, viewOptions),
     );

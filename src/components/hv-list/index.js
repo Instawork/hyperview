@@ -10,6 +10,7 @@
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
+import * as ScrollContext from 'hyperview/src/services/scroll-context';
 import React, { PureComponent } from 'react';
 import { DOMParser } from 'xmldom-instawork';
 import { FlatList } from 'react-native';
@@ -17,6 +18,10 @@ import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { State } from './types';
 import { getBehaviorElements } from 'hyperview/src/services';
+
+const FlatListWithScrollContext = ScrollContext.withScrollableComponent(
+  FlatList,
+);
 
 export default class HvList extends PureComponent<HvComponentProps, State> {
   static namespaceURI = Namespaces.HYPERVIEW;
@@ -70,6 +75,7 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
       element.getAttribute('shows-scroll-indicator') !== 'false';
 
     const listProps = {
+      id: element.getAttribute('id'),
       style,
       // $FlowFixMe: see node_modules/react-native/Libraries/Lists/FlatList.js:73
       data: element.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'item'),
@@ -92,7 +98,7 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
       };
     }
 
-    return React.createElement(FlatList, {
+    return React.createElement(FlatListWithScrollContext, {
       ...listProps,
       ...refreshProps,
     });

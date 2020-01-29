@@ -9,13 +9,16 @@
  */
 
 import * as Helpers from 'hyperview/storybook/helpers';
+import * as ScrollContext from 'hyperview/src/services/scroll-context';
 import HvView from 'hyperview/src/components/hv-view';
 import React from 'react';
 import { action } from '@storybook/addon-actions';
 
+const HvViewWithScrollContext = ScrollContext.withProvider(HvView);
+
 const createStory = Helpers.stories(HvView);
 createStory('basic', ({ element, stylesheets }) => (
-  <HvView
+  <HvViewWithScrollContext
     element={element}
     onUpdate={action('onUpdate')}
     options={Helpers.getOptions()}
@@ -23,7 +26,7 @@ createStory('basic', ({ element, stylesheets }) => (
   />
 ));
 createStory('scrollview', ({ element, stylesheets }) => (
-  <HvView
+  <HvViewWithScrollContext
     element={element}
     onUpdate={action('onUpdate')}
     options={Helpers.getOptions()}

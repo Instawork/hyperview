@@ -24,9 +24,11 @@
       }
     ],
     "import/no-internal-modules": [
-      "warn", {
+      "warn",
+      {
         "allow": [
           "hyperview/**",
+          "react-native/Libraries/Components/ScrollView/ScrollView",
           "react-native/Libraries/StyleSheet/StyleSheetTypes"
         ]
       }
@@ -34,7 +36,7 @@
   },
   "overrides": [
     {
-      "files": [ "**/types.js" ],
+      "files": ["**/types.js"],
       "rules": {
         "no-use-before-define": "off",
         "max-len": "off"

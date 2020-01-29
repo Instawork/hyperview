@@ -10,12 +10,17 @@
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
+import * as ScrollContext from 'hyperview/src/services/scroll-context';
 import React, { PureComponent } from 'react';
 import { DOMParser } from 'xmldom-instawork';
 import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { SectionList } from 'react-native';
 import type { State } from './types';
+
+const SectionListWithScrollContext = ScrollContext.withScrollableComponent(
+  SectionList,
+);
 
 export default class HvSectionList extends PureComponent<
   HvComponentProps,
@@ -90,6 +95,7 @@ export default class HvSectionList extends PureComponent<
     }
 
     const listProps = {
+      id: element.getAttribute('id'),
       style,
       sections,
       keyExtractor: item => item.getAttribute('key'),
@@ -110,7 +116,7 @@ export default class HvSectionList extends PureComponent<
       };
     }
 
-    return React.createElement(SectionList, {
+    return React.createElement(SectionListWithScrollContext, {
       ...listProps,
       ...refreshProps,
     });
