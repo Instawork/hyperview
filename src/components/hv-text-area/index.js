@@ -19,6 +19,7 @@ import { createProps } from 'hyperview/src/services';
 export default class HvTextArea extends PureComponent<HvComponentProps, State> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.TEXT_AREA;
+  static localNameAliases = [];
   constructor(props: HvComponentProps) {
     const { element } = props;
     super(props);

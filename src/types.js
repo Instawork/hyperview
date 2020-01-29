@@ -8,7 +8,7 @@
  *
  */
 
-import type { ComponentType, ElementRef } from 'react';
+import type { ElementRef } from 'react';
 import type { StyleSheet } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 
 export type DOMString = string;
@@ -301,10 +301,14 @@ export type HvComponentProps = {|
   stylesheets: StyleSheets,
 |};
 
-export type HvComponent = ComponentType<HvComponentProps> & {
+export type HvComponentStatics = {
   localName: LocalName | string,
+  localNameAliases: Array<LocalName | string>,
   namespaceURI: NamespaceURI,
 };
+
+export type HvComponent = Class<React$Component<HvComponentProps, any>> &
+  HvComponentStatics;
 
 export type HvBehavior = {
   action: string,

@@ -2115,6 +2115,300 @@ four">
   </screen>
 </doc>
 `,
+  'hyperview/src/components/hv-text/stories/basic.xml':
+  `<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style id="Header"
+             alignItems="center"
+             backgroundColor="white"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flexDirection="row"
+             height="72"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="24" />
+      <style id="Header__Back"
+             color="blue"
+             fontSize="16"
+             fontWeight="600"
+             paddingRight="16" />
+      <style id="Header__Title"
+             color="black"
+             fontSize="24"
+             fontWeight="600" />
+      <style id="Body"
+             backgroundColor="white"
+             flex="1" />
+      <style id="Description"
+             fontSize="16"
+             fontWeight="normal"
+             margin="24"
+             marginBottom="0" />
+      <style id="Item"
+             alignItems="center"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flex="1"
+             flexDirection="row"
+             height="48"
+             justifyContent="space-between"
+             paddingLeft="24"
+             paddingRight="24" />
+      <style id="Item__Label"
+             fontSize="18"
+             fontWeight="normal" />
+      <style id="Item__Chevron"
+             fontSize="18"
+             fontWeight="bold" />
+      <style id="Basic"
+             fontSize="24"
+             fontWeight="500"
+             margin="24" />
+      <style id="Bold"
+             fontSize="16"
+             fontWeight="bold"
+             margin="24" />
+      <style id="Color"
+             backgroundColor="#63CB76"
+             color="white"
+             fontSize="32"
+             fontWeight="bold"
+             margin="24"
+             padding="16" />
+      <style id="Main"
+             flex="1" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text action="back"
+              href="#"
+              style="Header__Back">Back</text>
+        <text style="Header__Title">Text</text>
+      </header>
+      <view scroll="true"
+            style="Main">
+        <text style="Description">Text</text>
+        <text style="Basic">Hello, world!</text>
+        <text style="Description">Nested Text</text>
+        <text style="Basic">Hello,
+        <text style="Bold">World of
+        <text style="Color">HyperView!</text></text></text>
+        <text style="Basic">
+<![CDATA[Escaped with <![CDATA[]>: <hello><world>]]>
+        </text>
+      </view>
+    </body>
+  </screen>
+</doc>
+`,
+  'hyperview/src/components/hv-view/stories/basic.xml':
+  `<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style id="Header"
+             alignItems="center"
+             backgroundColor="white"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flexDirection="row"
+             height="72"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="24" />
+      <style id="Header__Back"
+             color="blue"
+             fontSize="16"
+             fontWeight="600"
+             paddingRight="16" />
+      <style id="Header__Title"
+             color="black"
+             fontSize="24"
+             fontWeight="600" />
+      <style id="Body"
+             backgroundColor="white"
+             flex="1" />
+      <style id="Description"
+             fontSize="16"
+             fontWeight="normal"
+             margin="24"
+             marginBottom="0" />
+      <style id="Item"
+             alignItems="center"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flex="1"
+             flexDirection="row"
+             height="48"
+             justifyContent="space-between"
+             paddingLeft="24"
+             paddingRight="24" />
+      <style id="Item__Label"
+             fontSize="18"
+             fontWeight="normal" />
+      <style id="Item__Chevron"
+             fontSize="18"
+             fontWeight="bold" />
+      <style id="Border"
+             borderColor="#e1e1e1"
+             borderWidth="1"
+             flex="1"
+             margin="24"
+             padding="8" />
+      <style id="Styled"
+             backgroundColor="#63CB76"
+             borderRadius="16"
+             height="40" />
+      <style id="Flex"
+             flex="1"
+             flexDirection="row"
+             justifyContent="space-between" />
+      <style id="Flex__Child"
+             width="40" />
+      <style id="Main"
+             flex="1" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text action="back"
+              href="#"
+              style="Header__Back">Back</text>
+        <text style="Header__Title">View</text>
+      </header>
+      <view scroll="true"
+            style="Main">
+        <text style="Description">View</text>
+        <view style="Border" />
+        <text style="Description">Nested Views</text>
+        <view style="Border">
+          <view style="Border">
+            <view style="Border" />
+          </view>
+        </view>
+        <text style="Description">Styled</text>
+        <view style="Border Styled" />
+        <text style="Description">Flex</text>
+        <view style="Border Flex">
+          <view style="Flex__Child Styled" />
+          <view style="Flex__Child Styled" />
+          <view style="Flex__Child Styled" />
+        </view>
+      </view>
+    </body>
+  </screen>
+</doc>
+`,
+  'hyperview/src/components/hv-view/stories/scrollview.xml':
+  `<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style id="Header"
+             alignItems="center"
+             backgroundColor="white"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flexDirection="row"
+             height="72"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="24" />
+      <style id="Header__Back"
+             color="blue"
+             fontSize="16"
+             fontWeight="600"
+             paddingRight="16" />
+      <style id="Header__Title"
+             color="black"
+             fontSize="24"
+             fontWeight="600" />
+      <style id="Body"
+             backgroundColor="white"
+             flex="1" />
+      <style id="Description"
+             fontSize="16"
+             fontWeight="normal"
+             margin="24"
+             marginBottom="0" />
+      <style id="Item"
+             alignItems="center"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flex="1"
+             flexDirection="row"
+             height="48"
+             justifyContent="space-between"
+             paddingLeft="24"
+             paddingRight="24" />
+      <style id="Item__Label"
+             fontSize="18"
+             fontWeight="normal" />
+      <style id="Item__Chevron"
+             fontSize="18"
+             fontWeight="bold" />
+      <style id="Border"
+             borderColor="#e1e1e1"
+             borderWidth="1"
+             flex="1"
+             margin="24"
+             padding="8" />
+      <style id="Main"
+             flex="1" />
+      <style id="ScrollContainer"
+             borderColor="#e1e1e1"
+             borderRadius="16"
+             borderWidth="1"
+             height="160"
+             margin="24" />
+      <style id="ScrollContainer--Vertical"
+             flexDirection="column" />
+      <style id="ScrollContainer--Horizontal"
+             flexDirection="row" />
+      <style id="ScrollChild"
+             backgroundColor="#63CB76"
+             borderRadius="16"
+             height="40"
+             margin="8" />
+      <style id="ScrollChild--Vertical"
+             height="40" />
+      <style id="ScrollChild--Horizontal"
+             width="40" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text action="back"
+              href="#"
+              style="Header__Back">Back</text>
+        <text style="Header__Title">Scroll Views</text>
+      </header>
+      <view>
+        <text style="Description">Vertical Scroll</text>
+        <view scroll="true"
+              style="ScrollContainer ScrollContainer--Vertical">
+          <view style="ScrollChild ScrollChild--Vertical" />
+          <view style="ScrollChild ScrollChild--Vertical" />
+          <view style="ScrollChild ScrollChild--Vertical" />
+          <view style="ScrollChild ScrollChild--Vertical" />
+          <view style="ScrollChild ScrollChild--Vertical" />
+          <view style="ScrollChild ScrollChild--Vertical" />
+        </view>
+        <text style="Description">Horizontal Scroll</text>
+        <view scroll="true"
+              scroll-orientation="horizontal"
+              style="ScrollContainer ScrollContainer--Horizontal">
+          <view style="ScrollChild ScrollChild--Horizontal" />
+          <view style="ScrollChild ScrollChild--Horizontal" />
+          <view style="ScrollChild ScrollChild--Horizontal" />
+          <view style="ScrollChild ScrollChild--Horizontal" />
+          <view style="ScrollChild ScrollChild--Horizontal" />
+          <view style="ScrollChild ScrollChild--Horizontal" />
+          <view style="ScrollChild ScrollChild--Horizontal" />
+        </view>
+      </view>
+    </body>
+  </screen>
+</doc>
+`,
   'hyperview/src/components/hv-web-view/stories/basic.xml':
   `<doc xmlns="https://hyperview.org/hyperview">
   <screen>

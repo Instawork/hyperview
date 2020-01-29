@@ -45,6 +45,7 @@ export default class HvPickerField extends PureComponent<
 > {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.PICKER_FIELD;
+  static localNameAliases = [];
   props: HvComponentProps;
   state: State;
 

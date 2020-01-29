@@ -8,6 +8,7 @@
  *
  */
 
+import * as ComponentsInternal from './internal';
 import type { ComponentRegistry, HvComponent } from 'hyperview/src/types';
 import HvDateField from 'hyperview/src/components/hv-date-field';
 import HvImage from 'hyperview/src/components/hv-image';
@@ -19,8 +20,10 @@ import HvSelectMultiple from 'hyperview/src/components/hv-select-multiple';
 import HvSelectSingle from 'hyperview/src/components/hv-select-single';
 import HvSpinner from 'hyperview/src/components/hv-spinner';
 import HvSwitch from 'hyperview/src/components/hv-switch';
+import HvText from 'hyperview/src/components/hv-text';
 import HvTextArea from 'hyperview/src/components/hv-text-area';
 import HvTextField from 'hyperview/src/components/hv-text-field';
+import HvView from 'hyperview/src/components/hv-view';
 import HvWebView from 'hyperview/src/components/hv-web-view';
 
 const HYPERVIEW_COMPONENTS = [
@@ -33,9 +36,11 @@ const HYPERVIEW_COMPONENTS = [
   HvSelectSingle,
   HvSpinner,
   HvSwitch,
+  HvText,
   HvTextArea,
   HvTextField,
   HvImage,
+  HvView,
   HvWebView,
 ];
 
@@ -47,7 +52,7 @@ export const getRegistry = (
       ...registry,
       [component.namespaceURI]: {
         ...registry[component.namespaceURI],
-        [component.localName]: component,
+        ...ComponentsInternal.registerComponent(component),
       },
     }),
     {},

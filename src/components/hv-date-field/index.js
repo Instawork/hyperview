@@ -46,6 +46,7 @@ export default class HvDateField extends PureComponent<
 > {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.DATE_FIELD;
+  static localNameAliases = [];
   props: HvComponentProps;
   state: State;
 

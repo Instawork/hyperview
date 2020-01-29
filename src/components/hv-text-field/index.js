@@ -23,6 +23,7 @@ export default class HvTextField extends PureComponent<
 > {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.TEXT_FIELD;
+  static localNameAliases = [];
   constructor(props: HvComponentProps) {
     const { element } = props;
     super(props);
