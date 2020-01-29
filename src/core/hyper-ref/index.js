@@ -8,11 +8,11 @@
  *
  */
 
+import * as Events from 'hyperview/src/services/events';
 import * as Render from 'hyperview/src/services/render';
 import {
   ACTIONS,
   NAV_ACTIONS,
-  ON_EVENT_DISPATCH,
   PRESS_TRIGGERS,
   TRIGGERS,
   UPDATE_ACTIONS,
@@ -29,8 +29,6 @@ import React, { PureComponent } from 'react';
 import { RefreshControl, ScrollView, TouchableOpacity } from 'react-native';
 import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
 import { XMLSerializer } from 'xmldom-instawork';
-// eslint-disable-next-line import/no-internal-modules
-import eventEmitter from 'tiny-emitter/instance';
 import { getBehaviorElements } from 'hyperview/src/services';
 
 /**
@@ -48,7 +46,7 @@ export default class HyperRef extends PureComponent<Props, State> {
     this.triggerLoadBehaviors();
 
     // Register event listener for on-event triggers
-    eventEmitter.on(ON_EVENT_DISPATCH, this.onEventDispatch);
+    Events.subscribe(this.onEventDispatch);
   }
 
   componentDidUpdate(prevProps: Props) {
@@ -60,7 +58,7 @@ export default class HyperRef extends PureComponent<Props, State> {
 
   componentWillUnmount() {
     // Remove event listener for on-event triggers to avoid memory leaks
-    eventEmitter.off(ON_EVENT_DISPATCH, this.onEventDispatch);
+    Events.unsubscribe(this.onEventDispatch);
   }
 
   onEventDispatch = (eventName: string) => {

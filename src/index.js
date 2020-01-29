@@ -8,6 +8,7 @@
 
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Components from 'hyperview/src/services/components';
+import * as Events from 'hyperview/src/services/events';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
@@ -31,7 +32,10 @@ import { createProps, getBehaviorElements, getFirstTag, later, shallowCloneToRoo
 import { version } from '../package.json';
 import { ACTIONS, FORM_NAMES, NAV_ACTIONS, ON_EVENT_DISPATCH, UPDATE_ACTIONS } from 'hyperview/src/types';
 import urlParse from 'url-parse';
-import eventEmitter from 'tiny-emitter/instance';
+
+
+// Shared instance, used in dev mode only
+const devXMLSerializer: ?XMLSerializer = __DEV__ ? new XMLSerializer() : null;
 
 function getHyperviewHeaders() {
   const { width, height } = Dimensions.get('window');
@@ -69,7 +73,6 @@ export default class HyperScreen extends React.Component {
         fatalError: this.parseError,
       },
     });
-    this.serializer = new XMLSerializer();
     this.needsLoad = false;
     this.state = {
       styles: null,
@@ -415,22 +418,22 @@ export default class HyperScreen extends React.Component {
         throw new Error('dispatch-event requires an event-name attribute to be present');
       }
 
-      const dispatchEvent = () => {
+      const dispatch = () => {
         // Log the dispatched action before emitting to ensure it appears first in logs
-        if (__DEV__) {
+        if (devXMLSerializer) {
           const emitterElement: Element = behaviorElement.cloneNode(false);
           console.log(
             `[dispatch-event] action [${eventName}] emitted by:`,
-            this.serializer.serializeToString(emitterElement),
+            devXMLSerializer.serializeToString(emitterElement),
           );
         }
-        eventEmitter.emit(ON_EVENT_DISPATCH, eventName);
+        Events.dispatch(eventName);
       }
 
       if (delay) {
-        setTimeout(dispatchEvent, parseInt(delay, 10));
+        setTimeout(dispatch, parseInt(delay, 10));
       } else {
-        dispatchEvent();
+        dispatch();
       }
     } else {
       const { behaviorElement } = opts;
@@ -585,8 +588,8 @@ export default class HyperScreen extends React.Component {
         });
 
         // in dev mode log the updated xml for debugging purposes
-        if (__DEV__) {
-          console.log('Updated XML:', this.serializer.serializeToString(newRoot.documentElement));
+        if (devXMLSerializer) {
+          console.log('Updated XML:', devXMLSerializer.serializeToString(newRoot.documentElement));
         }
 
         onEnd && onEnd();
@@ -629,4 +632,4 @@ export default class HyperScreen extends React.Component {
 }
 
 export * from 'hyperview/src/types';
-export { Namespaces };
+export { Events, Namespaces };
