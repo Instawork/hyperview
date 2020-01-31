@@ -201,6 +201,7 @@
                        style="Rating__Star" />
                 <image source="/case_studies/star_filled@2x.png"
                        style="Rating__Star--Filled" />
+                <behavior trigger="select" action="dispatch-event" event-name="select1" />
               </option>
 
               <option value="2">
@@ -208,6 +209,7 @@
                        style="Rating__Star" />
                 <image source="/case_studies/star_filled@2x.png"
                        style="Rating__Star--Filled" />
+                <behavior trigger="select" action="dispatch-event" event-name="select2" />
               </option>
 
               <option value="3">
@@ -215,6 +217,7 @@
                        style="Rating__Star" />
                 <image source="/case_studies/star_filled@2x.png"
                        style="Rating__Star--Filled" />
+                <behavior trigger="select" action="dispatch-event" event-name="select3" />
               </option>
 
               <option value="4">
@@ -222,6 +225,7 @@
                        style="Rating__Star" />
                 <image source="/case_studies/star_filled@2x.png"
                        style="Rating__Star--Filled" />
+                <behavior trigger="select" action="dispatch-event" event-name="select4" />
               </option>
 
               <option value="5">
@@ -229,19 +233,46 @@
                        style="Rating__Star" />
                 <image source="/case_studies/star_filled@2x.png"
                        style="Rating__Star--Filled" />
+                <behavior trigger="select" action="dispatch-event" event-name="select5" />
               </option>
 
             </select-single>
 
           </view>
         </view>
-        <view style="FormGroup">
+
+        <view>
+          <view style="FormGroup" id="heading">
+          </view>
+
+          <behavior trigger="on-event" event-name="select1" action="replace-inner" href="#heading-1" target="heading" />
+          <behavior trigger="on-event" event-name="select2" action="replace-inner" href="#heading-2" target="heading" />
+          <behavior trigger="on-event" event-name="select3" action="replace-inner" href="#heading-3" target="heading" />
+          <behavior trigger="on-event" event-name="select4" action="replace-inner" href="#heading-4" target="heading" />
+          <behavior trigger="on-event" event-name="select5" action="replace-inner" href="#heading-5" target="heading" />
+
+          <view hide="true">
+            <text id="heading-1">Too bad, can you tell us more?</text>
+            <text id="heading-2">Too bad, can you tell us more?</text>
+            <text id="heading-3">What could be better?</text>
+            <text id="heading-4">That's good</text>
+            <text id="heading-5">Great!</text>
+          </view>
+        </view>
+
+        <behavior trigger="on-event" event-name="select1" action="show" target="other-feedback" />
+        <behavior trigger="on-event" event-name="select2" action="show" target="other-feedback" />
+        <behavior trigger="on-event" event-name="select3" action="show" target="other-feedback" />
+        <behavior trigger="on-event" event-name="select4" action="show" target="other-feedback" />
+        <behavior trigger="on-event" event-name="select5" action="show" target="other-feedback" />
+        <view style="FormGroup" hide="true" id="other-feedback">
           <text-area focusStyles="input input--focused"
                      outerStyles="outerInput"
                      placeholder="Any other feedback?"
                      placeholderTextColor="#8D9494"
                      style="input" />
         </view>
+
       </view>
       <view style="BottomSheet">
         <view id="saveButtonContainer"
