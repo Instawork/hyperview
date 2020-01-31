@@ -105,14 +105,18 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
 
     const value = element.getAttribute('value');
     const selected = element.getAttribute('selected') === 'true';
+    const selectedAsCumulative =
+      element.getAttribute('selected-as-cumulative') === 'true';
+
+    const renderAsSelected = selected || selectedAsCumulative;
 
     // Updates options with pressed/selected state, so that child element can render
     // using the appropriate modifier styles.
     const newOptions = {
       ...options,
-      selected,
       pressed,
-      pressedSelected: pressed && selected,
+      selected: renderAsSelected,
+      pressedSelected: pressed && renderAsSelected,
     };
     const props = createProps(element, stylesheets, newOptions);
 

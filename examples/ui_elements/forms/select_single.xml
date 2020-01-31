@@ -139,6 +139,25 @@
                  width="32" />
         </modifier>
       </style>
+
+
+      <style id="SelectBars"
+        flexDirection="row"
+        justifyContent="center"
+        marginTop="24"
+        marginBottom="40"
+        paddingBottom="24"
+      >
+      <style id="SelectBar"
+        width="32"
+        height="40"
+        backgroundColor="#ddd"
+        marginRight="16"
+      >
+        <modifier selected="true">
+          <style backgroundColor="#4778ff" />
+        </modifier>
+      </style>
     </styles>
     <body style="Body">
       <header style="Header">
@@ -149,6 +168,8 @@
       </header>
       <view scroll="true"
             style="Main">
+
+
         <text style="Description">Simple Select</text>
         <select-single name="choice"
                        style="Select">
@@ -243,6 +264,17 @@
             <text style="SelectCustom__Label">Unknown</text>
           </option>
         </select-single>
+
+
+        <text style="Description">Cumulative</text>
+        <select-single style="SelectBars" cumulative="true">
+          <option style="SelectBar" value="1" />
+          <option style="SelectBar" value="2" />
+          <option style="SelectBar" value="3" />
+          <option style="SelectBar" value="4" />
+          <option style="SelectBar" value="5" />
+        </select-single>
+
       </view>
     </body>
   </screen>

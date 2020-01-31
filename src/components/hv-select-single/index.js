@@ -46,16 +46,51 @@ export default class HvSelectSingle extends PureComponent<HvComponentProps> {
     const newElement = element.cloneNode(true);
     const options = newElement.getElementsByTagNameNS(
       Namespaces.HYPERVIEW,
-      'option',
+      LOCAL_NAME.OPTION,
     );
+
+    const isCumulative: boolean =
+      newElement.getAttribute('cumulative') === 'true';
+
+    // Calculate the index of the selected index. This is
+    // used in the cumulative mode, to render the preceding
+    // options as selected.
+    let selectedIndex: ?number = null;
     for (let i = 0; i < options.length; i += 1) {
       const opt = options.item(i);
       if (opt) {
         const value = opt.getAttribute('value');
+        if (value === selectedValue) {
+          selectedIndex = i;
+        }
+      }
+    }
+
+    for (let i = 0; i < options.length; i += 1) {
+      const opt = options.item(i);
+      if (opt) {
+        const value = opt.getAttribute('value');
+        // Only the option with the selected value
+        // should be rendered as selected.
         opt.setAttribute(
           'selected',
           value === selectedValue ? 'true' : 'false',
         );
+        // If using the cumulative mode, all options
+        // should be updated with a flag indicating if
+        // they should render as selected. Options
+        // preceding the selected one should be selected,
+        // the later options should be unselected.
+        if (
+          isCumulative &&
+          selectedIndex !== null &&
+          selectedIndex !== undefined
+        ) {
+          opt.setAttribute(
+            'selected-as-cumulative',
+            i < selectedIndex ? 'true' : 'false',
+          );
+        }
       }
     }
     onUpdate('#', 'swap', element, { newElement });

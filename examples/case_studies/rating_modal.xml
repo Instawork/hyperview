@@ -76,11 +76,16 @@
              flexDirection="row"
              margin="0"
              marginTop="24" />
-      <style id="Rating__Star"
-             height="40"
-             marginRight="10"
-             width="40" />
-      <style id="Rating__Star--Filled" />
+      <style id="Rating__Star" height="40" width="40" marginRight="10">
+        <modifier selected="true">
+          <style height="0" width="0" />
+        </modifier>
+      </style>
+      <style id="Rating__Star--Filled" height="0" width="0" marginRight="10">
+        <modifier selected="true">
+          <style height="40" width="40" />
+        </modifier>
+      </style>
       <style id="BottomSheet"
              borderTopColor="#e1e1e1"
              borderTopWidth="1"
@@ -188,34 +193,46 @@
           <text style="WorkerInfo__Time">Fri Aug 3, 7:00 PM - 1:00 AM</text>
           <view id="rating"
                 style="RatingContainer">
-            <view id="star0"
-                  style="Rating">
-              <image action="replace-inner"
-                     href="#star1"
-                     source="/case_studies/star_empty@2x.png"
-                     style="Rating__Star"
-                     target="rating" />
-              <image action="replace-inner"
-                     href="#star2"
-                     source="/case_studies/star_empty@2x.png"
-                     style="Rating__Star"
-                     target="rating" />
-              <image action="replace-inner"
-                     href="#star3"
-                     source="/case_studies/star_empty@2x.png"
-                     style="Rating__Star"
-                     target="rating" />
-              <image action="replace-inner"
-                     href="#star4"
-                     source="/case_studies/star_empty@2x.png"
-                     style="Rating__Star"
-                     target="rating" />
-              <image action="replace-inner"
-                     href="#star5"
-                     source="/case_studies/star_empty@2x.png"
-                     style="Rating__Star"
-                     target="rating" />
-            </view>
+
+            <select-single cumulative="true" style="Rating">
+
+              <option value="1">
+                <image source="/case_studies/star_empty@2x.png"
+                       style="Rating__Star" />
+                <image source="/case_studies/star_filled@2x.png"
+                       style="Rating__Star--Filled" />
+              </option>
+
+              <option value="2">
+                <image source="/case_studies/star_empty@2x.png"
+                       style="Rating__Star" />
+                <image source="/case_studies/star_filled@2x.png"
+                       style="Rating__Star--Filled" />
+              </option>
+
+              <option value="3">
+                <image source="/case_studies/star_empty@2x.png"
+                       style="Rating__Star" />
+                <image source="/case_studies/star_filled@2x.png"
+                       style="Rating__Star--Filled" />
+              </option>
+
+              <option value="4">
+                <image source="/case_studies/star_empty@2x.png"
+                       style="Rating__Star" />
+                <image source="/case_studies/star_filled@2x.png"
+                       style="Rating__Star--Filled" />
+              </option>
+
+              <option value="5">
+                <image source="/case_studies/star_empty@2x.png"
+                       style="Rating__Star" />
+                <image source="/case_studies/star_filled@2x.png"
+                       style="Rating__Star--Filled" />
+              </option>
+
+            </select-single>
+
           </view>
         </view>
         <view style="FormGroup">
@@ -248,147 +265,5 @@
         </view>
       </view>
     </body>
-    <view hide="true">
-      <view id="star1"
-            style="Rating">
-        <image action="replace-inner"
-               href="#star1"
-               source="star_filled@2x.png"
-               style="Rating__Star Rating__Star--Filled"
-               target="rating" />
-        <image action="replace-inner"
-               href="#star2"
-               source="/case_studies/star_empty@2x.png"
-               style="Rating__Star"
-               target="rating" />
-        <image action="replace-inner"
-               href="#star3"
-               source="/case_studies/star_empty@2x.png"
-               style="Rating__Star"
-               target="rating" />
-        <image action="replace-inner"
-               href="#star4"
-               source="/case_studies/star_empty@2x.png"
-               style="Rating__Star"
-               target="rating" />
-        <image action="replace-inner"
-               href="#star5"
-               source="/case_studies/star_empty@2x.png"
-               style="Rating__Star"
-               target="rating" />
-      </view>
-      <view id="star2"
-            style="Rating">
-        <image action="replace-inner"
-               href="#star1"
-               source="/case_studies/star_filled@2x.png"
-               style="Rating__Star Rating__Star--Filled"
-               target="rating" />
-        <image action="replace-inner"
-               href="#star2"
-               source="/case_studies/star_filled@2x.png"
-               style="Rating__Star Rating__Star--Filled"
-               target="rating" />
-        <image action="replace-inner"
-               href="#star3"
-               source="/case_studies/star_empty@2x.png"
-               style="Rating__Star"
-               target="rating" />
-        <image action="replace-inner"
-               href="#star4"
-               source="/case_studies/star_empty@2x.png"
-               style="Rating__Star"
-               target="rating" />
-        <image action="replace-inner"
-               href="#star5"
-               source="/case_studies/star_empty@2x.png"
-               style="Rating__Star"
-               target="rating" />
-      </view>
-      <view id="star3"
-            style="Rating">
-        <image action="replace-inner"
-               href="#star1"
-               source="/case_studies/star_filled@2x.png"
-               style="Rating__Star Rating__Star--Filled"
-               target="rating" />
-        <image action="replace-inner"
-               href="#star2"
-               source="/case_studies/star_filled@2x.png"
-               style="Rating__Star Rating__Star--Filled"
-               target="rating" />
-        <image action="replace-inner"
-               href="#star3"
-               source="/case_studies/star_filled@2x.png"
-               style="Rating__Star Rating__Star--Filled"
-               target="rating" />
-        <image action="replace-inner"
-               href="#star4"
-               source="/case_studies/star_empty@2x.png"
-               style="Rating__Star"
-               target="rating" />
-        <image action="replace-inner"
-               href="#star5"
-               source="/case_studies/star_empty@2x.png"
-               style="Rating__Star"
-               target="rating" />
-      </view>
-      <view id="star4"
-            style="Rating">
-        <image action="replace-inner"
-               href="#star1"
-               source="/case_studies/star_filled@2x.png"
-               style="Rating__Star Rating__Star--Filled"
-               target="rating" />
-        <image action="replace-inner"
-               href="#star2"
-               source="/case_studies/star_filled@2x.png"
-               style="Rating__Star Rating__Star--Filled"
-               target="rating" />
-        <image action="replace-inner"
-               href="#star3"
-               source="/case_studies/star_filled@2x.png"
-               style="Rating__Star Rating__Star--Filled"
-               target="rating" />
-        <image action="replace-inner"
-               href="#star4"
-               source="/case_studies/star_filled@2x.png"
-               style="Rating__Star Rating__Star--Filled"
-               target="rating" />
-        <image action="replace-inner"
-               href="#star5"
-               source="/case_studies/star_empty@2x.png"
-               style="Rating__Star"
-               target="rating" />
-      </view>
-      <view id="star5"
-            style="Rating">
-        <image action="replace-inner"
-               href="#star1"
-               source="/case_studies/star_filled@2x.png"
-               style="Rating__Star Rating__Star--Filled"
-               target="rating" />
-        <image action="replace-inner"
-               href="#star2"
-               source="/case_studies/star_filled@2x.png"
-               style="Rating__Star Rating__Star--Filled"
-               target="rating" />
-        <image action="replace-inner"
-               href="#star3"
-               source="/case_studies/star_filled@2x.png"
-               style="Rating__Star Rating__Star--Filled"
-               target="rating" />
-        <image action="replace-inner"
-               href="#star4"
-               source="/case_studies/star_filled@2x.png"
-               style="Rating__Star Rating__Star--Filled"
-               target="rating" />
-        <image action="replace-inner"
-               href="#star5"
-               source="/case_studies/star_filled@2x.png"
-               style="Rating__Star Rating__Star--Filled"
-               target="rating" />
-      </view>
-    </view>
   </screen>
 </doc>
