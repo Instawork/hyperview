@@ -23,6 +23,7 @@ The entire Gigs tab within the app is implemented using Hyperview.
 This article highlights some of the techniques used to create a production-level app using Hyperview.
 
 ### Main screen layout
+
 The main screen of Instawork Gigs uses a tabbed layout. The first tab loads a list of upcoming gigs, while the Receipts tab shows information about past gigs. The basic layout looks like this:
 
 ```xml
@@ -42,11 +43,13 @@ The main screen of Instawork Gigs uses a tabbed layout. The first tab loads a li
   </view>
 </view>
 ```
+
 - `tabsAndContent` wraps the tab bar and content area. The content area can include a list or empty state. This element is targeted for replacement when the user presses a tab.
 - `shiftGroupList` represents the list of gigs in either tab. The list is replaced when doing a pull-to-refresh. Gigs are also appended to this list when loading more items.
 - `shiftGroupListLoad` contains markup for a loading state. This loading state gets displayed while we make a request during a tab switch.
 
 ### Tabs
+
 Tabs are implemented using the technique described in the earlier [example](/docs/example_tabs).
 
 ![tabs](/img/instawork/tabs.gif)
@@ -84,9 +87,11 @@ Tabs are implemented using the technique described in the earlier [example](/doc
   </option>
 </select-single>
 ```
+
 Tabs are implemented as a `<select-single>` element. When a user selects a tab, we request content from the server and replace `tabsAndContent` with the response. During the request, we hide the current list and show the placeholder.
 
 The styles for the tabs use modifier styles to represent the selected state:
+
 ```xml
 <style id="TabBar" flexDirection="row"/>
 <style id="TabBar__Tab" flex="0" borderBottomColor="#E1E3E3" borderBottomWidth="1">
@@ -133,6 +138,7 @@ When reaching the bottom of the list, the app requests more content from the ser
 ![tabs](/img/instawork/scroll.gif)
 
 If the server knows that there are more items in the list, it adds a final `<item>` that displays a spinner.
+
 ```xml
 <list id="shiftGroupList" trigger="refresh" href="/biz_app/gigs/groups?type=receipts&page=1" action="replace" target="tabsAndContent">
   <item
@@ -147,20 +153,25 @@ If the server knows that there are more items in the list, it adds a final `<ite
   </item>
 </list>
 ```
+
 This spinner item contains behavior attributes that control the load:
+
 - `trigger="visible"` executes the behavior when the spinner appears on screen
 - `once="true"` executes the behavior only the first time the spinner appears
 - `action="replace"` replaces the spinner item with the server response.
 
 The server response contains a `<view>` wrapper around the new `<item>` elements to add to the list:
+
 ```xml
 <view xmlns="https://instawork.com/hyperview">
   <!-- more items here -->
 </view>
 ```
+
 Replacing the spinner item with the new content also takes care of removing the spinner when the behavior finishes executing.
 
 ### Loading states
+
 On the past gigs screen, tapping on a worker opens a modal where the user can rate the worker. Note that while loading the modal, we show a custom loading state: "Rate the Instaworker" appears immediately while loading the modal.
 
 ![tabs](/img/instawork/loading.gif)
@@ -190,6 +201,7 @@ Each star also has an `href` (with a query param that pre-selects the pressed st
 ```
 
 Styles for the worker item:
+
 ```xml
 <style id="ShiftItem" paddingLeft="24" paddingRight="24" flex="1" flexDirection="row" justifyContent="flex-start" marginBottom="16"/>
 <style id="ShiftItem__Info" marginLeft="16" flex="1" flexDirection="column" justifyContent="center"/>
@@ -250,75 +262,60 @@ We can now add `show-during-load="loadingScreen"` to the worker item. This tells
 
 > On the backend, we use the same template and styles for the loading screen and loaded modal. That way, the layout of both matches, making it look like the close button and title don't get reloaded. However, behind the scenes, the entire screen gets replaced with the content from the server.
 
-
 ### Star ratings
 
-The prominent UI of the rating modal consists of selecting a number of stars between 1 and 5. Typically, selecting one option out of many would be best handled by a `<select-single>` element. However, in this case the UI requires making it appear that a specific number of stars were selected. For example, if the users presses the fourth star, stars 1, 2, 3, and 4 need to appear selected.
+The prominent UI of the rating modal consists of selecting a number of stars between 1 and 5. From a data perpsective, `<select-single>` will correctly capture a single select value for the rating: 1, 2, 3, 4, or 5. From a UI perspective, however, we want all preceding stars to appear selected as well.
 
 ![tabs](/img/instawork/ratings.gif)
 
-The solution we used depends on behaviors that replace content with hidden fragments on the screen. The unit of replacement is a "rating container". A "rating container" represents a specific star selection, and consists of the markup to render the selected stars, along with a hidden `<text-field>` with the selected value.
+This can be achieved by setting `cumulative="true"` on the `<select-single>` element.
 
 Here's the rating container representing 3 selected stars:
 
 ```xml
-<view id="star3" style="Rating">
-  <image source="/static/img/biz-app/star_filled%402x.png" action="replace-inner" href="#star1" style="Rating__Star" target="rating">
-    <behavior action="replace-inner" target="ratingError" href="#null"/>
-  </image>
-  <image source="/static/img/biz-app/star_filled%402x.png" action="replace-inner" href="#star2" style="Rating__Star" target="rating">
-    <behavior action="replace-inner" target="ratingError" href="#null"/>
-  </image>
-  <image source="/static/img/biz-app/star_filled%402x.png" action="replace-inner" href="#star3" style="Rating__Star" target="rating">
-    <behavior action="replace-inner" target="ratingError" href="#null"/>
-  </image>
-  <image source="/static/img/biz-app/star_empty%402x.png" action="replace-inner" href="#star4" style="Rating__Star" target="rating">
-    <behavior action="replace-inner" target="ratingError" href="#null"/>
-  </image>
-  <image source="/static/img/biz-app/star_empty%402x.png" action="replace-inner" href="#star5" style="Rating__Star" target="rating">
-    <behavior action="replace-inner" target="ratingError" href="#null"/>
-  </image>
+<select-single cumulative="true" style="Rating">
 
-  <text-field name="rating_by_business" value="3" hide="true"/>
-</view>
+  <option value="1">
+    <image source="/case_studies/star_empty@2x.png" style="Rating__Star" />
+    <image source="/case_studies/star_filled@2x.png" style="Rating__Star--Filled" />
+  </option>
+
+  <option value="2">
+    <image source="/case_studies/star_empty@2x.png" style="Rating__Star" />
+    <image source="/case_studies/star_filled@2x.png" style="Rating__Star--Filled" />
+  </option>
+
+  <option value="3" selected="true">
+    <image source="/case_studies/star_empty@2x.png" style="Rating__Star" />
+    <image source="/case_studies/star_filled@2x.png" style="Rating__Star--Filled" />
+  </option>
+
+  <option value="4">
+    <image source="/case_studies/star_empty@2x.png" style="Rating__Star" />
+    <image source="/case_studies/star_filled@2x.png" style="Rating__Star--Filled" />
+  </option>
+
+  <option value="5">
+    <image source="/case_studies/star_empty@2x.png" style="Rating__Star" />
+    <image source="/case_studies/star_filled@2x.png" style="Rating__Star--Filled" />
+  </option>
+
+</select-single>
 ```
 
-Note that the first 3 stars use a filled image, the last two use an empty image. Each star image has a press behavior that will replace the inner content of `"rating"` with the rating container representing that number of stars.
+Each option includes the filled and empty star image. However, thanks fo modifiers in the styles, only one of the images will be rendered based on the state of the option:
 
-Also note the [`<text-field>`](/docs/reference_textfield) at the bottom of the container with name `name="rating_by_business"` and `value="3"`.
-
-The rating containers for stars 1-5 are included in the doc outside of the screen in a hidden wrapper.
 ```xml
-<screen>
-  <form style="Flex">
-    <view id="rating" style="RatingContainer">
-      <!-- rating containers get swapped in here -->
-      <!-- Currently, 3 stars are selected -->
-      <view id="star3" style="Rating"><!-- markup for 3 stars selected--></view>
-    </view>
-
-    <view
-        href="/biz_app/gigs/shifts/dj4kXoN/feedback"
-        verb="POST"
-        target="body"
-        show-during-load="savingButton"
-        hide-during-load="saveButton"
-        action="replace"
-    >
-      <view id="saveButton" style="BottomSheet__Button">
-        <text id="saveLabel" style="BottomSheet__ButtonLabel">Done</text>
-      </view>
-    </view>
-  </form>
-</screen>
-
-<view hide="true">
-  <view id="star1" style="Rating"><!-- markup for 1 star selected--></view>
-  <view id="star2" style="Rating"><!-- markup for 2 stars selected--></view>
-  <view id="star3" style="Rating"><!-- markup for 3 stars selected--></view>
-  <view id="star4" style="Rating"><!-- markup for 4 stars selected--></view>
-  <view id="star5" style="Rating"><!-- markup for 5 stars selected--></view>
-</view>
+<style id="Rating__Star" height="40" width="40">
+  <modifier selected="true">
+    <style height="0" width="0" />
+  </modifier>
+</style>
+<style id="Rating__Star--Filled" height="0" width="0">
+  <modifier selected="true">
+    <style height="40" width="40" />
+  </modifier>
+</style>
 ```
 
-When the user presses "Done", we make a `POST` request to the server. Since the "Done" button is contained in a [`<form>`](/docs/reference_form) element, any input field in the form will be serialized with the request. This means that the hidden field with `name="rating_by_business"` will be sent to the backend, reflecting the UI state.
+Thanks to `cumulative="true"`, the first and second star will use the "selected" modifier style, even though only the third star is selected.

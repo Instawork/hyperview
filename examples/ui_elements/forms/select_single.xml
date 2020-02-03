@@ -275,6 +275,15 @@
           <option style="SelectBar" value="5" />
         </select-single>
 
+        <text style="Description">Cumulative and selected</text>
+        <select-single style="SelectBars" cumulative="true">
+          <option style="SelectBar" value="1" />
+          <option style="SelectBar" value="2" />
+          <option style="SelectBar" value="3" selected="true" />
+          <option style="SelectBar" value="4" />
+          <option style="SelectBar" value="5" />
+        </select-single>
+
       </view>
     </body>
   </screen>

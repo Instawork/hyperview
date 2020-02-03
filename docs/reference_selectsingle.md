@@ -33,6 +33,7 @@ A `<select-single>` element most often appears within a `<form>` element. Howeve
 ## Attributes
 
 - [`name`](#name)
+- [`cumulative`](#cumulative)
 - [`style`](#style)
 - [`id`](#id)
 - [`hide`](#hide)
@@ -44,6 +45,26 @@ A `<select-single>` element most often appears within a `<form>` element. Howeve
 | string | **Yes**  |
 
 The name of the selection input within a `<form>` element. This name will be used when serializing a form to form data that gets sent in a server request.
+
+#### `cumulative`
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| **false** (default), true | No       |
+
+Use `cumulative="true"` to render all preceding `<option>`s as selected and all subsequent `<options>` as unselected. The most frequent application is for rating UIs, like a 1-5 star rating. For example:
+
+```xml
+<select-single style="Stars" cumulative="true">
+  <option style="Star" value="1" />
+  <option style="Star" value="2" />
+  <option style="Star" value="3" />
+  <option style="Star" value="4" />
+  <option style="Star" value="5" />
+</select-single>
+```
+
+When the user presses the star option with value 3, stars 1 and 2 will also render as selected. However, the `<select-single>` input will only have a value of 3.
 
 #### `style`
 
