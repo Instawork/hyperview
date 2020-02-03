@@ -79,15 +79,13 @@ export default class HyperRef extends PureComponent<Props, State> {
       }
       return false;
     });
-    let time = 0;
     onEventBehaviors.forEach(behaviorElement => {
       const handler = this.createActionHandler(
         this.props.element,
         behaviorElement,
         this.props.onUpdate,
       );
-      setTimeout(handler, time);
-      time += 1;
+      setTimeout(handler, 0);
       if (__DEV__) {
         const listenerElement: Element = behaviorElement.cloneNode(false);
         const caughtEvent: string = behaviorElement.getAttribute('event-name');
