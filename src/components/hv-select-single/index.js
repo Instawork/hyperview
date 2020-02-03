@@ -56,12 +56,14 @@ export default class HvSelectSingle extends PureComponent<HvComponentProps> {
     // used in the cumulative mode, to render the preceding
     // options as selected.
     let selectedIndex: ?number = null;
-    for (let i = 0; i < options.length; i += 1) {
-      const opt = options.item(i);
-      if (opt) {
-        const value = opt.getAttribute('value');
-        if (value === selectedValue) {
-          selectedIndex = i;
+    if (isCumulative) {
+      for (let i = 0; i < options.length; i += 1) {
+        const opt = options.item(i);
+        if (opt) {
+          const value = opt.getAttribute('value');
+          if (value === selectedValue) {
+            selectedIndex = i;
+          }
         }
       }
     }
