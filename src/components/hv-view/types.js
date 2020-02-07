@@ -16,6 +16,7 @@ export type InternalProps = {|
   keyboardOpeningTime?: ?number,
   keyboardShouldPersistTaps?: ?string,
   scrollEventThrottle?: ?number,
+  scrollToInputAdditionalOffset?: ?number,
   getTextInputRefs?: ?() => [],
   horizontal?: ?boolean,
   style?: ?Array<StyleSheet<*>>,

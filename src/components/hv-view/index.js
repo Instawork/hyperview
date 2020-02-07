@@ -50,7 +50,19 @@ export default class HvView extends PureComponent<HvComponentProps> {
       const hasFields = textFields.length > 0 || textAreas.length > 0;
       c = hasFields ? KeyboardAwareScrollView : ScrollView;
       if (hasFields) {
-        props.extraScrollHeight = 32;
+        const scrollToInputAdditionalOffset = element.getAttribute(
+          'scroll-to-input-offset',
+        );
+        const defaultScrollToInputAdditionalOffset = 120;
+        if (scrollToInputAdditionalOffset) {
+          const parsedOffset = parseInt(scrollToInputAdditionalOffset, 10);
+          props.scrollToInputAdditionalOffset = isNaN(parsedOffset)
+            ? 0
+            : defaultScrollToInputAdditionalOffset;
+        } else {
+          props.scrollToInputAdditionalOffset = defaultScrollToInputAdditionalOffset;
+        }
+
         props.keyboardOpeningTime = 0;
         props.keyboardShouldPersistTaps = 'handled';
         props.scrollEventThrottle = 16;
