@@ -53,9 +53,15 @@ export default class HvView extends PureComponent<HvComponentProps> {
         const scrollToInputAdditionalOffset = element.getAttribute(
           'scroll-to-input-offset',
         );
-        props.scrollToInputAdditionalOffset = scrollToInputAdditionalOffset
-          ? parseInt(scrollToInputAdditionalOffset, 10)
-          : 120;
+        const defaultScrollToInputAdditionalOffset = 120;
+        if (scrollToInputAdditionalOffset) {
+          const parsedOffset = parseInt(scrollToInputAdditionalOffset, 10);
+          props.scrollToInputAdditionalOffset = isNaN(parsedOffset)
+            ? 0
+            : defaultScrollToInputAdditionalOffset;
+        } else {
+          props.scrollToInputAdditionalOffset = defaultScrollToInputAdditionalOffset;
+        }
 
         props.keyboardOpeningTime = 0;
         props.keyboardShouldPersistTaps = 'handled';

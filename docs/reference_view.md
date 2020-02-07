@@ -49,6 +49,7 @@ A `<view>` element can only appear anywhere within a `<screen>` element.
 - [`style`](#style)
 - [`scroll`](#scroll)
 - [`scroll-orientation`](#scroll-orientation)
+- [`scroll-to-input-offset`](#scroll-to-input-offset)
 - [`id`](#id)
 - [`hide`](#hide)
 
@@ -79,6 +80,14 @@ An attribute indicating whether the content in the can be scrollable. The style 
 | **vertical** (default), horizontal | No       |
 
 An attribute indicating the direction in which the view will scroll.
+
+#### `scroll-to-input-offset`
+
+| Type   | Required                |
+| ------ | ----------------------- |
+| number | No (defauls to **120**) |
+
+An attribute defining an additional scroll offset to be applied to the view, when a `<text-field>` or `<text-area>` is focused. Only work in combination with attribute `scroll` set to `"true"`.
 
 #### `id`
 
