@@ -77,7 +77,9 @@ export default class HvSectionList extends PureComponent<
         const items = [];
         for (let j = 0; j < itemElements.length; j += 1) {
           const itemElement = itemElements.item(j);
-          items.push(itemElement);
+          if (itemElement && itemElement.parentNode === sectionElement) {
+            items.push(itemElement);
+          }
         }
         const titleElement = sectionElement
           .getElementsByTagNameNS(Namespaces.HYPERVIEW, 'section-title')

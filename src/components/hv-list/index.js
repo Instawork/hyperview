@@ -69,10 +69,22 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
     const showScrollIndicator =
       element.getAttribute('shows-scroll-indicator') !== 'false';
 
+    // $FlowFixMe: call of method `getElementsByTagNameNS`. Method cannot be called on any member of intersection type
+    const itemElements = element.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      'item',
+    );
+    const items = [];
+    for (let j = 0; j < itemElements.length; j += 1) {
+      const itemElement = itemElements.item(j);
+      if (itemElement.parentNode === element) {
+        items.push(itemElement);
+      }
+    }
+
     const listProps = {
       style,
-      // $FlowFixMe: see node_modules/react-native/Libraries/Lists/FlatList.js:73
-      data: element.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'item'),
+      data: items,
       horizontal,
       keyExtractor: item => item.getAttribute('key'),
       // $FlowFixMe: return value should be of ?React.Element<any>
