@@ -129,6 +129,7 @@ const STYLE_ATTRIBUTE_CONVERTERS = {
   fontWeight: string,
   lineHeight: number,
   textAlign: string,
+  textDecorationLine: string,
   textShadowColor: string,
   fontFamily: string,
   textShadowRadius: number,
