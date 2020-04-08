@@ -1,0 +1,4 @@
+<view id="me" xmlns="https://hyperview.org/hyperview">
+  <behavior trigger="load" once="true" action="replace" target="me" href="/case_studies/poll/2.xml" delay="1000" />
+  <text>1st poll</text>
+</view>
