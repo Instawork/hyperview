@@ -175,9 +175,9 @@ export default class HvDateField extends PureComponent<
     );
 
     // Hide the modal
-    this.setState(prevState => ({
+    this.setState({
       focused: false,
-    }));
+    });
   };
 
   /**
