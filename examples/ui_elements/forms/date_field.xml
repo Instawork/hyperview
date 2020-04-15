@@ -210,6 +210,15 @@
                       modal-text-style="PickerModal__text"
                       placeholder="Select date"
                       placeholderTextColor="#8D9494" />
+          <date-field field-style="Input"
+                      field-text-style="Input__Text"
+                      label-format="MMMM D, YYYY"
+                      min="2018-05-05"
+                      modal-style="PickerModal"
+                      modal-text-style="PickerModal__text"
+                      mode="spinner"
+                      placeholder="Select date (spinner)"
+                      placeholderTextColor="#8D9494" />
         </view>
         <view style="FormGroup">
           <text style="label">Max date (May 5, 2024)</text>
@@ -220,6 +229,15 @@
                       modal-style="PickerModal"
                       modal-text-style="PickerModal__text"
                       placeholder="Select date"
+                      placeholderTextColor="#8D9494" />
+          <date-field field-style="Input"
+                      field-text-style="Input__Text"
+                      label-format="MMMM D, YYYY"
+                      max="2024-05-05"
+                      modal-style="PickerModal"
+                      modal-text-style="PickerModal__text"
+                      mode="spinner"
+                      placeholder="Select date (spinner)"
                       placeholderTextColor="#8D9494" />
         </view>
         <view style="FormGroup">
@@ -232,6 +250,16 @@
                       modal-style="PickerModal"
                       modal-text-style="PickerModal__text"
                       placeholder="Select date"
+                      placeholderTextColor="#8D9494" />
+          <date-field field-style="Input"
+                      field-text-style="Input__Text"
+                      label-format="MMMM D, YYYY"
+                      max="2024-05-05"
+                      min="2018-05-05"
+                      modal-style="PickerModal"
+                      modal-text-style="PickerModal__text"
+                      mode="spinner"
+                      placeholder="Select date (spinner)"
                       placeholderTextColor="#8D9494" />
         </view>
         <view style="FormGroup">
