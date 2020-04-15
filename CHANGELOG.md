@@ -1,5 +1,9 @@
 # Hyperview changelog
 
+**Version 0.24.1**
+
+- fix: <date-field> input can be set multiple times.
+
 **Version 0.10.1**
 
 - Proper support for behaviors that don't involve href (#38)
