@@ -39,6 +39,9 @@ export default createStackNavigator({
   headerMode: 'none',
   initialRouteName: 'Main',
   initialRouteParams: {
-    url: 'http://0.0.0.0:8085/index.xml',
+    //url: 'http://0.0.0.0:8085/index.xml',
+    url: 'http://192.168.7.70:8085/index.xml',
+    //url: 'http://basic-blog.local/',
+    //url: 'http://0e310e51.ngrok.io/',
   }
 });

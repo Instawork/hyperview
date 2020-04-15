@@ -166,16 +166,18 @@ export default class HvDateField extends PureComponent<
    */
   onModalDone = () => {
     const element: Element = this.props.element;
-    this.setState(prevState => ({
-      focused: false,
-      value: prevState.pickerValue,
-    }));
     // In addition to updating the state, we update the XML element to ensure the
     // selected value gets serialized in the parent form.
+    // The value in the component state will be derived from the element prop
     element.setAttribute(
       'value',
       HvDateField.createStringFromDate(this.state.pickerValue),
     );
+
+    // Hide the modal
+    this.setState(prevState => ({
+      focused: false,
+    }));
   };
 
   /**
