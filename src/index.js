@@ -468,6 +468,9 @@ export default class HyperScreen extends React.Component {
       verb, targetId, showIndicatorIds, hideIndicatorIds, delay, once, onEnd, behaviorElement,
     } = options;
 
+    const showIndicatorIdList = showIndicatorIds ? showIndicatorIds.split(' ') : [];
+    const hideIndicatorIdList = hideIndicatorIds ? hideIndicatorIds.split(' ') : [];
+
     const formData = getFormData(currentElement);
 
     // TODO: Check ran-once on the behavior element, not current element.
@@ -479,7 +482,7 @@ export default class HyperScreen extends React.Component {
     }
 
     let newRoot = this.state.doc;
-    newRoot = Behaviors.setIndicatorsBeforeLoad(showIndicatorIds || [], hideIndicatorIds || [], newRoot);
+    newRoot = Behaviors.setIndicatorsBeforeLoad(showIndicatorIdList, hideIndicatorIdList, newRoot);
     // Re-render the modifications
     this.setState({
       doc: newRoot,
@@ -504,7 +507,7 @@ export default class HyperScreen extends React.Component {
         }
 
         newRoot = Behaviors.performUpdate(action, targetElement, newElement);
-        newRoot = Behaviors.setIndicatorsAfterLoad(showIndicatorIds || [], hideIndicatorIds || [], newRoot);
+        newRoot = Behaviors.setIndicatorsAfterLoad(showIndicatorIdList, hideIndicatorIdList, newRoot);
         // Re-render the modifications
         this.setState({
           doc: newRoot,

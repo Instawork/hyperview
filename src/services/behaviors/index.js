@@ -53,7 +53,7 @@ export const toggleIndicators = (
   root: Document,
 ): Document =>
   ids.reduce((newRoot, id) => {
-    const indicatorElement: ?Element = root.getElementById(id);
+    const indicatorElement: ?Element = newRoot.getElementById(id);
     if (!indicatorElement) {
       return newRoot;
     }
