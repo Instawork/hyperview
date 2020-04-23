@@ -129,8 +129,10 @@ export const performUpdate = (
     const firstChild = targetElement.firstChild;
     if (firstChild) {
       targetElement.insertBefore(newElement, firstChild);
-      return shallowCloneToRoot(targetElement);
+    } else {
+      targetElement.appendChild(newElement);
     }
+    return shallowCloneToRoot(targetElement);
   }
 
   return shallowCloneToRoot(targetElement);
