@@ -226,7 +226,7 @@ const visitNode = (node: Node, callback: (n: Node) => boolean): boolean => {
     if (visitNode(childNode, callback)) {
       return true;
     }
-    childNode = node.nextSibling;
+    childNode = childNode.nextSibling;
   }
   return false;
 };
