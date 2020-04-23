@@ -13,6 +13,8 @@ import type {
   Document,
   Element,
   HvBehavior,
+  Node,
+  UpdateAction,
 } from 'hyperview/src/types';
 import HvAlert from 'hyperview/src/behaviors/hv-alert';
 import HvHide from 'hyperview/src/behaviors/hv-hide';
@@ -87,4 +89,49 @@ export const setIndicatorsAfterLoad = (
   newRoot = toggleIndicators(showIndicatorIds, false, newRoot);
   newRoot = toggleIndicators(hideIndicatorIds, true, newRoot);
   return newRoot;
+};
+
+/**
+ * Returns a new Document object where the given action was applied to the target element
+ * with the new element.
+ */
+export const performUpdate = (
+  action: UpdateAction,
+  targetElement: Element,
+  newElement: Element,
+): Document => {
+  if (action === 'replace') {
+    const parentNode: ?Node = targetElement.parentNode;
+    if (parentNode) {
+      parentNode.replaceChild(newElement, targetElement);
+      return shallowCloneToRoot((parentNode: any));
+    }
+  }
+
+  if (action === 'replace-inner') {
+    let child: ?Node = targetElement.firstChild;
+    // Remove the target's children
+    while (child !== null && child !== undefined) {
+      const nextChild: ?Node = child.nextSibling;
+      targetElement.removeChild(child);
+      child = nextChild;
+    }
+    targetElement.appendChild(newElement);
+    return shallowCloneToRoot(targetElement);
+  }
+
+  if (action === 'append') {
+    targetElement.appendChild(newElement);
+    return shallowCloneToRoot(targetElement);
+  }
+
+  if (action === 'prepend') {
+    const firstChild = targetElement.firstChild;
+    if (firstChild) {
+      targetElement.insertBefore(newElement, firstChild);
+      return shallowCloneToRoot(targetElement);
+    }
+  }
+
+  return shallowCloneToRoot(targetElement);
 };

@@ -479,38 +479,11 @@ export default class HyperScreen extends React.Component {
     }
 
     let newRoot = this.state.doc;
-    let changedIndicator = false;
-
-    // Update the DOM to show some indicators during the request.
-    if (showIndicatorIds) {
-      showIndicatorIds.split(' ').forEach((id) => {
-        const el = newRoot.getElementById(id);
-        if (el) {
-          el.setAttribute('hide', 'false');
-          newRoot = shallowCloneToRoot(el.parentNode);
-          changedIndicator = true;
-        }
-      });
-    }
-
-    // Update the DOM to hide some indicators during the request.
-    if (hideIndicatorIds) {
-      hideIndicatorIds.split(' ').forEach((id) => {
-        const el = newRoot.getElementById(id);
-        if (el) {
-          el.setAttribute('hide', 'true');
-          newRoot = shallowCloneToRoot(el.parentNode);
-          changedIndicator = true;
-        }
-      });
-    }
-
-    // Render the indicator modifications
-    if (changedIndicator) {
-      this.setState({
-        doc: newRoot,
-      });
-    }
+    newRoot = Behaviors.setIndicatorsBeforeLoad(showIndicatorIds || [], hideIndicatorIds || [], newRoot);
+    // Re-render the modifications
+    this.setState({
+      doc: newRoot,
+    });
 
     // Fetch the resource, then perform the action on the target and undo indicators.
     const fetchPromise = () => this.fetchElement(href, verb, newRoot, formData)
@@ -530,58 +503,8 @@ export default class HyperScreen extends React.Component {
           targetElement = currentElement;
         }
 
-        if (action === 'replace') {
-          const parentElement = targetElement.parentNode;
-          parentElement.replaceChild(newElement, targetElement);
-          newRoot = shallowCloneToRoot(parentElement);
-        }
-
-        if (action === 'replace-inner') {
-          let child = targetElement.firstChild;
-          // Remove the target's children
-          while (child !== null) {
-            const nextChild = child.nextSibling;
-            targetElement.removeChild(child);
-            child = nextChild;
-          }
-          targetElement.appendChild(newElement);
-          newRoot = shallowCloneToRoot(targetElement);
-        }
-
-        if (action === 'append') {
-          targetElement.appendChild(newElement);
-          newRoot = shallowCloneToRoot(targetElement);
-        }
-
-        if (action === 'prepend') {
-          targetElement.insertBefore(newElement, targetElement.firstChild);
-          newRoot = shallowCloneToRoot(targetElement);
-        }
-
-        // Update the DOM to hide the indicators shown during the request.
-        if (showIndicatorIds) {
-          showIndicatorIds.split(' ').forEach((id) => {
-            const el = newRoot.getElementById(id);
-            if (el) {
-              el.setAttribute('hide', 'true');
-              newRoot = shallowCloneToRoot(el.parentNode);
-              changedIndicator = true;
-            }
-          });
-        }
-
-        // Update the DOM to show the indicators hidden during the request.
-        if (hideIndicatorIds) {
-          hideIndicatorIds.split(' ').forEach((id) => {
-            const el = newRoot.getElementById(id);
-            if (el) {
-              el.setAttribute('hide', 'false');
-              newRoot = shallowCloneToRoot(el.parentNode);
-              changedIndicator = true;
-            }
-          });
-        }
-
+        newRoot = Behaviors.performUpdate(action, targetElement, newElement);
+        newRoot = Behaviors.setIndicatorsAfterLoad(showIndicatorIds || [], hideIndicatorIds || [], newRoot);
         // Re-render the modifications
         this.setState({
           doc: newRoot,
