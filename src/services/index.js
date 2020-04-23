@@ -221,12 +221,12 @@ const visitNode = (node: Node, callback: (n: Node) => boolean): boolean => {
     return true;
   }
 
-  if (node.firstChild && (node = node.firstChild)) {
-    do {
-      if (visitNode(node, callback)) {
-        return true;
-      }
-    } while (node.nextSibling && (node = node.nextSibling));
+  let childNode: ?Node = node.firstChild;
+  while (childNode) {
+    if (visitNode(childNode, callback)) {
+      return true;
+    }
+    childNode = node.nextSibling;
   }
   return false;
 };
@@ -238,11 +238,11 @@ const visitNode = (node: Node, callback: (n: Node) => boolean): boolean => {
  */
 export const getElementByTimeoutId = (doc: Document, id: string): ?Element => {
   let foundElement: ?Element = null;
-  const callback = function(node: Node): boolean {
-    if (node.nodeType == NODE_TYPE.ELEMENT_NODE) {
+  const callback = (node: Node): boolean => {
+    if (node.nodeType === NODE_TYPE.ELEMENT_NODE) {
       // We know the node is an element, so we can safely cast it.
       const element: Element = (node: any);
-      if (element.getAttribute(HV_TIMEOUT_ID_ATTR) == id) {
+      if (element.getAttribute(HV_TIMEOUT_ID_ATTR) === id) {
         foundElement = element;
         return true;
       }
