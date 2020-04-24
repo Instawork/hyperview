@@ -16,6 +16,7 @@ import type {
   Node,
   UpdateAction,
 } from 'hyperview/src/types';
+import { ACTIONS } from 'hyperview/src/types';
 import HvAlert from 'hyperview/src/behaviors/hv-alert';
 import HvHide from 'hyperview/src/behaviors/hv-hide';
 import HvSetValue from 'hyperview/src/behaviors/hv-set-value';
@@ -100,7 +101,7 @@ export const performUpdate = (
   targetElement: Element,
   newElement: Element,
 ): Document => {
-  if (action === 'replace') {
+  if (action === ACTIONS.REPLACE) {
     const parentNode: ?Node = targetElement.parentNode;
     if (parentNode) {
       parentNode.replaceChild(newElement, targetElement);
@@ -108,7 +109,7 @@ export const performUpdate = (
     }
   }
 
-  if (action === 'replace-inner') {
+  if (action === ACTIONS.REPLACE_INNER) {
     let child: ?Node = targetElement.firstChild;
     // Remove the target's children
     while (child !== null && child !== undefined) {
@@ -120,12 +121,12 @@ export const performUpdate = (
     return shallowCloneToRoot(targetElement);
   }
 
-  if (action === 'append') {
+  if (action === ACTIONS.APPEND) {
     targetElement.appendChild(newElement);
     return shallowCloneToRoot(targetElement);
   }
 
-  if (action === 'prepend') {
+  if (action === ACTIONS.PREPEND) {
     const firstChild = targetElement.firstChild;
     if (firstChild) {
       targetElement.insertBefore(newElement, firstChild);
