@@ -13,7 +13,10 @@ import type {
   Document,
   Element,
   HvBehavior,
+  Node,
+  UpdateAction,
 } from 'hyperview/src/types';
+import { ACTIONS } from 'hyperview/src/types';
 import HvAlert from 'hyperview/src/behaviors/hv-alert';
 import HvHide from 'hyperview/src/behaviors/hv-hide';
 import HvSetValue from 'hyperview/src/behaviors/hv-set-value';
@@ -51,7 +54,7 @@ export const toggleIndicators = (
   root: Document,
 ): Document =>
   ids.reduce((newRoot, id) => {
-    const indicatorElement: ?Element = root.getElementById(id);
+    const indicatorElement: ?Element = newRoot.getElementById(id);
     if (!indicatorElement) {
       return newRoot;
     }
@@ -87,4 +90,51 @@ export const setIndicatorsAfterLoad = (
   newRoot = toggleIndicators(showIndicatorIds, false, newRoot);
   newRoot = toggleIndicators(hideIndicatorIds, true, newRoot);
   return newRoot;
+};
+
+/**
+ * Returns a new Document object where the given action was applied to the target element
+ * with the new element.
+ */
+export const performUpdate = (
+  action: UpdateAction,
+  targetElement: Element,
+  newElement: Element,
+): Document => {
+  if (action === ACTIONS.REPLACE) {
+    const parentNode: ?Node = targetElement.parentNode;
+    if (parentNode) {
+      parentNode.replaceChild(newElement, targetElement);
+      return shallowCloneToRoot((parentNode: any));
+    }
+  }
+
+  if (action === ACTIONS.REPLACE_INNER) {
+    let child: ?Node = targetElement.firstChild;
+    // Remove the target's children
+    while (child !== null && child !== undefined) {
+      const nextChild: ?Node = child.nextSibling;
+      targetElement.removeChild(child);
+      child = nextChild;
+    }
+    targetElement.appendChild(newElement);
+    return shallowCloneToRoot(targetElement);
+  }
+
+  if (action === ACTIONS.APPEND) {
+    targetElement.appendChild(newElement);
+    return shallowCloneToRoot(targetElement);
+  }
+
+  if (action === ACTIONS.PREPEND) {
+    const firstChild = targetElement.firstChild;
+    if (firstChild) {
+      targetElement.insertBefore(newElement, firstChild);
+    } else {
+      targetElement.appendChild(newElement);
+    }
+    return shallowCloneToRoot(targetElement);
+  }
+
+  return shallowCloneToRoot(targetElement);
 };

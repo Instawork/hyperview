@@ -28,7 +28,7 @@ import HyperRef from 'hyperview/src/core/hyper-ref';
 import Navigation, { ANCHOR_ID_SEPARATOR } from 'hyperview/src/services/navigation';
 import React from 'react';
 import VisibilityDetectingView from './VisibilityDetectingView.js';
-import { createProps, getBehaviorElements, getFirstTag, later, shallowCloneToRoot, getFormData } from 'hyperview/src/services';
+import { createProps, getBehaviorElements, getFirstTag, later, shallowCloneToRoot, getFormData, getElementByTimeoutId, removeTimeoutId, setTimeoutId } from 'hyperview/src/services';
 import { version } from '../package.json';
 import { ACTIONS, FORM_NAMES, NAV_ACTIONS, ON_EVENT_DISPATCH, UPDATE_ACTIONS } from 'hyperview/src/types';
 import urlParse from 'url-parse';
@@ -468,120 +468,42 @@ export default class HyperScreen extends React.Component {
       verb, targetId, showIndicatorIds, hideIndicatorIds, delay, once, onEnd, behaviorElement,
     } = options;
 
+    const showIndicatorIdList = showIndicatorIds ? showIndicatorIds.split(' ') : [];
+    const hideIndicatorIdList = hideIndicatorIds ? hideIndicatorIds.split(' ') : [];
+
     const formData = getFormData(currentElement);
 
     // TODO: Check ran-once on the behavior element, not current element.
-    if (once && currentElement.getAttribute('ran-once')) {
-      // This action is only supposed to run once, and it already ran,
-      // so there's nothing more to do.
-      onEnd && onEnd();
-      return;
+    if (once) {
+      if (currentElement.getAttribute('ran-once')) {
+        // This action is only supposed to run once, and it already ran,
+        // so there's nothing more to do.
+        onEnd && onEnd();
+        return;
+      } else {
+        currentElement.setAttribute('ran-once', 'true');
+      }
     }
 
     let newRoot = this.state.doc;
-    let changedIndicator = false;
-
-    // Update the DOM to show some indicators during the request.
-    if (showIndicatorIds) {
-      showIndicatorIds.split(' ').forEach((id) => {
-        const el = newRoot.getElementById(id);
-        if (el) {
-          el.setAttribute('hide', 'false');
-          newRoot = shallowCloneToRoot(el.parentNode);
-          changedIndicator = true;
-        }
-      });
-    }
-
-    // Update the DOM to hide some indicators during the request.
-    if (hideIndicatorIds) {
-      hideIndicatorIds.split(' ').forEach((id) => {
-        const el = newRoot.getElementById(id);
-        if (el) {
-          el.setAttribute('hide', 'true');
-          newRoot = shallowCloneToRoot(el.parentNode);
-          changedIndicator = true;
-        }
-      });
-    }
-
-    // Render the indicator modifications
-    if (changedIndicator) {
-      this.setState({
-        doc: newRoot,
-      });
-    }
+    newRoot = Behaviors.setIndicatorsBeforeLoad(showIndicatorIdList, hideIndicatorIdList, newRoot);
+    // Re-render the modifications
+    this.setState({
+      doc: newRoot,
+    });
 
     // Fetch the resource, then perform the action on the target and undo indicators.
-    const fetchPromise = () => this.fetchElement(href, verb, newRoot, formData)
+    const fetchAndUpdate = () => this.fetchElement(href, verb, newRoot, formData)
       .then((newElement) => {
-        // If the action is only supposed to run once, set an attribute indicating
-        // that it already ran, so that it won't run again next time the action is triggered.
-        // TODO: Store ran-once on the behavior element, not current element.
-        if (once) {
-          currentElement.setAttribute('ran-once', 'true');
-          newRoot = shallowCloneToRoot(currentElement.parentNode);
-        }
-
         // If a target is specified and exists, use it. Otherwise, the action target defaults
         // to the element triggering the action.
-        let targetElement = targetId ? newRoot.getElementById(targetId) : currentElement;
+        let targetElement = targetId ? this.state.doc.getElementById(targetId) : currentElement;
         if (!targetElement) {
           targetElement = currentElement;
         }
 
-        if (action === 'replace') {
-          const parentElement = targetElement.parentNode;
-          parentElement.replaceChild(newElement, targetElement);
-          newRoot = shallowCloneToRoot(parentElement);
-        }
-
-        if (action === 'replace-inner') {
-          let child = targetElement.firstChild;
-          // Remove the target's children
-          while (child !== null) {
-            const nextChild = child.nextSibling;
-            targetElement.removeChild(child);
-            child = nextChild;
-          }
-          targetElement.appendChild(newElement);
-          newRoot = shallowCloneToRoot(targetElement);
-        }
-
-        if (action === 'append') {
-          targetElement.appendChild(newElement);
-          newRoot = shallowCloneToRoot(targetElement);
-        }
-
-        if (action === 'prepend') {
-          targetElement.insertBefore(newElement, targetElement.firstChild);
-          newRoot = shallowCloneToRoot(targetElement);
-        }
-
-        // Update the DOM to hide the indicators shown during the request.
-        if (showIndicatorIds) {
-          showIndicatorIds.split(' ').forEach((id) => {
-            const el = newRoot.getElementById(id);
-            if (el) {
-              el.setAttribute('hide', 'true');
-              newRoot = shallowCloneToRoot(el.parentNode);
-              changedIndicator = true;
-            }
-          });
-        }
-
-        // Update the DOM to show the indicators hidden during the request.
-        if (hideIndicatorIds) {
-          hideIndicatorIds.split(' ').forEach((id) => {
-            const el = newRoot.getElementById(id);
-            if (el) {
-              el.setAttribute('hide', 'false');
-              newRoot = shallowCloneToRoot(el.parentNode);
-              changedIndicator = true;
-            }
-          });
-        }
-
+        newRoot = Behaviors.performUpdate(action, targetElement, newElement);
+        newRoot = Behaviors.setIndicatorsAfterLoad(showIndicatorIdList, hideIndicatorIdList, newRoot);
         // Re-render the modifications
         this.setState({
           doc: newRoot,
@@ -596,9 +518,37 @@ export default class HyperScreen extends React.Component {
       });
 
     if (delay) {
-      later(parseInt(delay, 10)).then(fetchPromise);
+      /**
+       * Delayed behaviors will only trigger after a given amount of time.
+       * During that time, the DOM may change and the triggering element may no longer
+       * be in the document. When that happens, we don't want to trigger the behavior after the time
+       * elapses. To track this, we store the timeout id (generated by setTimeout) on the triggering
+       * element, and then look it up in the document after the elapsed time. If the timeout id is not
+       * present, we update the indicators but don't execute the behavior.
+       */
+      var delayMs = parseInt(delay, 10);
+      var timeoutId = null;
+      timeoutId = setTimeout(() => {
+        // Check the current doc for an element with the same timeout ID
+        const timeoutElement = getElementByTimeoutId(this.state.doc, timeoutId.toString());
+        if (timeoutElement) {
+          // Element with the same ID exists, we can execute the behavior
+          removeTimeoutId(timeoutElement);
+          fetchAndUpdate();
+        } else {
+          // Element with the same ID does not exist, we don't execute the behavior and undo the indicators.
+          newRoot = Behaviors.setIndicatorsAfterLoad(showIndicatorIdList, hideIndicatorIdList, this.state.doc);
+          this.setState({
+            doc: newRoot,
+          });
+          onEnd && onEnd();
+        }
+      }, delayMs);
+      // Store the timeout ID
+      setTimeoutId(currentElement, timeoutId.toString());
     } else {
-      fetchPromise();
+      // If there's no delay, fetch immediately and update the doc when done.
+      fetchAndUpdate();
     }
   }
 

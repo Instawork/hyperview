@@ -10,7 +10,11 @@
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
-import { DEFAULT_PRESS_OPACITY, STYLE_ATTRIBUTE_SEPARATOR } from './types';
+import {
+  DEFAULT_PRESS_OPACITY,
+  HV_TIMEOUT_ID_ATTR,
+  STYLE_ATTRIBUTE_SEPARATOR,
+} from './types';
 import type {
   Document,
   Element,
@@ -21,7 +25,7 @@ import type {
   NodeList,
   StyleSheets,
 } from 'hyperview/src/types';
-import { FORM_NAMES, LOCAL_NAME } from 'hyperview/src/types';
+import { FORM_NAMES, LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
 import HyperRef from 'hyperview/src/core/hyper-ref';
 import React from 'react';
 import type { StyleSheet } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
@@ -205,6 +209,62 @@ export const shallowCloneToRoot = (element: Element): Document => {
 
   parentNode.replaceChild(elementClone, element);
   return shallowCloneToRoot((parentNode: any));
+};
+
+/**
+ * Taken from internals of xmldom library. Allows us to run a callback on a node tree.
+ * @param callback return true for continue,false for break
+ * @return boolean true: break visit;
+ */
+const visitNode = (node: Node, callback: (n: Node) => boolean): boolean => {
+  if (callback(node)) {
+    return true;
+  }
+
+  let childNode: ?Node = node.firstChild;
+  while (childNode) {
+    if (visitNode(childNode, callback)) {
+      return true;
+    }
+    childNode = childNode.nextSibling;
+  }
+  return false;
+};
+
+/**
+ * Returns the element with the given timeout id.
+ * Note this is different from the element's regular id, this is
+ * used for tracking delayed behaviors.
+ */
+export const getElementByTimeoutId = (doc: Document, id: string): ?Element => {
+  let foundElement: ?Element = null;
+  const callback = (node: Node): boolean => {
+    if (node.nodeType === NODE_TYPE.ELEMENT_NODE) {
+      // We know the node is an element, so we can safely cast it.
+      const element: Element = (node: any);
+      if (element.getAttribute(HV_TIMEOUT_ID_ATTR) === id) {
+        foundElement = element;
+        return true;
+      }
+    }
+    return false;
+  };
+  visitNode(doc, callback);
+  return foundElement;
+};
+
+/**
+ * Sets a timeout id on the given element.
+ */
+export const setTimeoutId = (element: Element, id: string) => {
+  element.setAttribute(HV_TIMEOUT_ID_ATTR, id);
+};
+
+/**
+ * Removed the timeout id from the given element.
+ */
+export const removeTimeoutId = (element: Element) => {
+  element.removeAttribute(HV_TIMEOUT_ID_ATTR);
 };
 
 /**
