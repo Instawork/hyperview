@@ -95,6 +95,7 @@
           <text style="label">Default input field</text>
           <text-field placeholder="First name"
                       placeholderTextColor="#8D9494"
+                      name="text"
                       style="input" />
           <text style="help">Please enter your full name</text>
         </view>
@@ -102,6 +103,7 @@
           <text style="label">Filled input field</text>
           <text-field placeholder="First name"
                       placeholderTextColor="#8D9494"
+                      name="text"
                       style="input"
                       value="Milhouse" />
           <text style="help">Please enter your full name</text>
@@ -110,6 +112,7 @@
           <text style="label">Validation error</text>
           <text-field placeholder="First name"
                       placeholderTextColor="#8D9494"
+                      name="text"
                       style="input input--error" />
           <text style="help help--error">Please enter your full name</text>
         </view>
@@ -117,6 +120,7 @@
           <text style="label">Filled validation error</text>
           <text-field placeholder="First name"
                       placeholderTextColor="#8D9494"
+                      name="text"
                       style="input input--error"
                       value="Milhouse" />
           <text style="help help--error">Name already taken</text>
@@ -126,9 +130,11 @@
           <view style="horizontalFormGroup">
             <text-field placeholder="First"
                         placeholderTextColor="#8D9494"
+                        name="text"
                         style="input" />
             <text-field placeholder="Last"
                         placeholderTextColor="#8D9494"
+                        name="text"
                         style="input" />
           </view>
         </view>
@@ -137,6 +143,7 @@
           <text-field keyboard-type="phone-pad"
                       placeholder="Phone number"
                       placeholderTextColor="#8D9494"
+                      name="text"
                       style="input"
                       value="(281) 555-2048" />
         </view>
@@ -145,6 +152,7 @@
           <text-field keyboard-type="number-pad"
                       placeholder="SSN"
                       placeholderTextColor="#8D9494"
+                      name="text"
                       style="input"
                       value="600 80 5555" />
         </view>
@@ -153,6 +161,7 @@
           <text-field keyboard-type="email-address"
                       placeholder="Email"
                       placeholderTextColor="#8D9494"
+                      name="text"
                       style="input"
                       value="gigsy@instawork.com" />
         </view>
@@ -162,6 +171,7 @@
                       mask="(999) 999-9999"
                       placeholder="Phone number"
                       placeholderTextColor="#8D9494"
+                      name="text"
                       style="input"
                       value="" />
         </view>
@@ -171,6 +181,7 @@
                       mask="9999"
                       placeholder="4-digit code"
                       placeholderTextColor="#8D9494"
+                      name="text"
                       style="input"
                       value="" />
         </view>
@@ -180,6 +191,7 @@
                       mask="999 99 9999"
                       placeholder="SSN or Tax ID"
                       placeholderTextColor="#8D9494"
+                      name="text"
                       style="input"
                       value="" />
         </view>

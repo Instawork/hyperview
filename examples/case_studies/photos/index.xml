@@ -168,7 +168,7 @@
         </view>
       </view>
       <section-list>
-        <section key="stories">
+        <section>
           <section-title></section-title>
           <item key="stories">
             <view scroll-orientation="horizontal"
@@ -211,7 +211,7 @@
             </view>
           </item>
         </section>
-        <section key="1">
+        <section>
           <section-title style="ImageHeader">
             <view style="ImageHeader__Left">
               <image href="/case_studies/photos/index.xml"
@@ -286,7 +286,7 @@
             </view>
           </item>
         </section>
-        <section key="2">
+        <section>
           <section-title style="ImageHeader">
             <view style="ImageHeader__Left">
               <image source="/case_studies/photos/avatars/picard.jpg"
@@ -343,7 +343,7 @@
             </view>
           </item>
         </section>
-        <section key="3">
+        <section>
           <section-title style="ImageHeader">
             <view style="ImageHeader__Left">
               <image source="/case_studies/photos/avatars/worf.jpg"
@@ -392,7 +392,7 @@
             </view>
           </item>
         </section>
-        <section key="4">
+        <section>
           <section-title style="ImageHeader">
             <view style="ImageHeader__Left">
               <image source="/case_studies/photos/avatars/deanna.png"
