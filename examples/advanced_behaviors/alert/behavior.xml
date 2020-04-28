@@ -139,8 +139,8 @@
                     alert:title="Choose an action"
                     trigger="press"
                     xmlns:alert="https://hyperview.org/hyperview-alert"
-                    xmlns:phone="https://hyperview.org/hyperview-phone"
-                    xmlns:sms="https://hyperview.org/hyperview-sms">
+                    xmlns:phone="https://instawork.com/hyperview-phone"
+                    xmlns:sms="https://instawork.com/hyperview-sms">
             <alert:option action="phone"
                           alert:label="Call phone"
                           phone:number="(555) 555-5555" />

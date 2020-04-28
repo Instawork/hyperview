@@ -1,0 +1,10 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  attributeFormDefault="qualified"
+  elementFormDefault="qualified"
+  targetNamespace="https://instawork.com/hyperview-phone"
+>
+
+  <xs:attributeGroup name="phoneAttributes">
+    <xs:attribute name="number" type="xs:string" />
+  </xs:attributeGroup>
+</xs:schema>
