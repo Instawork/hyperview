@@ -50,7 +50,8 @@
              fontWeight="bold" />
       <style id="Main"
              flex="1"
-             alignItems="center" />
+             alignItems="center"
+             margin="24" />
     </styles>
     <body style="Body">
       <header style="Header">
