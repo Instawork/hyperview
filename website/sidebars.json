@@ -19,7 +19,8 @@
        "example_lazy_load",
        "example_tabs",
        "example_basic_form",
-       "example_advanced_form"
+       "example_advanced_form",
+       "example_event_dispatch"
     ],
     "Case Studies": [
        "example_instawork",
