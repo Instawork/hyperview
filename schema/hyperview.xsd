@@ -316,6 +316,7 @@
     <xs:attribute name="hide-during-load" type="xs:string"/>
     <xs:attribute name="delay" type="xs:nonNegativeInteger"/>
     <xs:attribute name="event-name" type="xs:string"/>
+    <xs:attribute name="new-value" type="xs:string"/>
 
     <xs:attributeGroup ref="alert:alertAttributes" />
     <xs:attributeGroup ref="amp:amplitudeAttributes" />

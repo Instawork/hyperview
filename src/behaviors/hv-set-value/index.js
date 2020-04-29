@@ -27,7 +27,7 @@ export default {
       return;
     }
 
-    const newValue: string = element.getAttribute('value') || '';
+    const newValue: string = element.getAttribute('new-value') || '';
 
     const delayAttr: string = element.getAttribute('delay') || '0';
     const parsedDelay: number = parseInt(delayAttr, 10);
