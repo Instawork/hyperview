@@ -79,10 +79,10 @@
              fontSize="16"
              fontWeight="normal"
              paddingBottom="8"
-             paddingTop="8">
+             paddingTop="8"/>
       <style id="input__text"
              fontSize="16"
-             fontWeight="normal"></style>
+             fontWeight="normal">
         <modifier pressed="true">
           <style borderBottomColor="green" />
         </modifier>

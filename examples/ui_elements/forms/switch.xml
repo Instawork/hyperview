@@ -75,7 +75,6 @@
              marginTop="16" />
       <style id="help--error"
              color="#FF4847" />
-      </style>
       <style id="switch"
         backgroundColor="#E1E1E1"
       >
@@ -123,6 +122,7 @@
             <text style="Button__Label">Serialize</text>
           </view>
         </form>
+      </view>
     </body>
   </screen>
 </doc>

@@ -90,14 +90,15 @@
         <view style="FormGroup">
           <text style="label">Multi-line text-area</text>
           <text-area placeholder="Instructions"
+                     name="textarea"
                      placeholderTextColor="#8D9494"
-                     style="input">
-            <text style="help">Please enter your gig instructions</text>
-          </text-area>
+                     style="input"></text-area>
+          <text style="help">Please enter your gig instructions</text>
         </view>
         <view style="FormGroup">
           <text style="label">Multi-line filled</text>
           <text-area placeholder="Instructions"
+                     name="textarea"
                      placeholderTextColor="#8D9494"
                      style="input"
                      value="One two three four"></text-area>
@@ -105,6 +106,7 @@
         <view style="FormGroup">
           <text style="label">Multi-line validation error</text>
           <text-area placeholder="Instructions"
+                     name="textarea"
                      placeholderTextColor="#8D9494"
                      style="input input--error"></text-area>
           <text style="help help--error">Please enter your gig instructions</text>
@@ -112,6 +114,7 @@
         <view style="FormGroup">
           <text style="label">Multi-line filled with validation error</text>
           <text-area placeholder="Instructions"
+                     name="textarea"
                      placeholderTextColor="#8D9494"
                      style="input input--error"
                      value="One two three four"></text-area>

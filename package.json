@@ -36,6 +36,7 @@
     "test:render": "jest test/render.test.js --forceExit",
     "test:unit": "jest --testPathPattern src",
     "test:xmlserver": "http-server -c-1 -p 8085 ./examples",
+    "test:validate-xml": "find examples/ -name '*.xml' | xargs xmllint --schema schema/hyperview.xsd --noout",
     "test": "yarn generate test && yarn test:flow && yarn test:lint && yarn test:render && yarn test:unit"
   },
   "dependencies": {

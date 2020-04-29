@@ -219,10 +219,9 @@
           </view>
         </view>
         <view style="FormGroup">
-          <text-area focusStyles="input input--focused"
-                     outerStyles="outerInput"
-                     placeholder="Any other feedback?"
+          <text-area placeholder="Any other feedback?"
                      placeholderTextColor="#8D9494"
+                     name="other_feedback"
                      style="input" />
         </view>
       </view>

@@ -148,6 +148,7 @@
                       label-format="MMMM D, YYYY"
                       modal-style="PickerModal"
                       modal-text-style="PickerModal__text"
+                      name="date"
                       placeholder="Select date"
                       placeholderTextColor="#8D9494" />
         </view>
@@ -159,6 +160,7 @@
                       modal-style="PickerModal"
                       modal-text-style="PickerModal__text"
                       mode="spinner"
+                      name="date"
                       placeholder="Select date"
                       placeholderTextColor="#8D9494" />
         </view>
@@ -169,6 +171,7 @@
                       label-format="MMMM D, YYYY"
                       modal-style="PickerModal"
                       modal-text-style="PickerModal__text"
+                      name="date"
                       placeholder="Select date"
                       placeholderTextColor="#8D9494"
                       value="2018-03-07" />
@@ -180,6 +183,7 @@
                       label-format="MMMM D, YYYY"
                       modal-style="PickerModal"
                       modal-text-style="PickerModal__text"
+                      name="date"
                       placeholder="Select date"
                       placeholderTextColor="#8D9494"
                       value="2018-03-07" />
@@ -188,6 +192,7 @@
                       label-format="L"
                       modal-style="PickerModal"
                       modal-text-style="PickerModal__text"
+                      name="date"
                       placeholder="Select date"
                       placeholderTextColor="#8D9494"
                       value="2018-03-07" />
@@ -196,6 +201,7 @@
                       label-format="MMMM [the] Do, [`]YY"
                       modal-style="PickerModal"
                       modal-text-style="PickerModal__text"
+                      name="date"
                       placeholder="Select date"
                       placeholderTextColor="#8D9494"
                       value="2018-03-07" />
@@ -208,6 +214,7 @@
                       min="2018-05-05"
                       modal-style="PickerModal"
                       modal-text-style="PickerModal__text"
+                      name="date"
                       placeholder="Select date"
                       placeholderTextColor="#8D9494" />
           <date-field field-style="Input"
@@ -217,6 +224,7 @@
                       modal-style="PickerModal"
                       modal-text-style="PickerModal__text"
                       mode="spinner"
+                      name="date"
                       placeholder="Select date (spinner)"
                       placeholderTextColor="#8D9494" />
         </view>
@@ -228,6 +236,7 @@
                       max="2024-05-05"
                       modal-style="PickerModal"
                       modal-text-style="PickerModal__text"
+                      name="date"
                       placeholder="Select date"
                       placeholderTextColor="#8D9494" />
           <date-field field-style="Input"
@@ -237,6 +246,7 @@
                       modal-style="PickerModal"
                       modal-text-style="PickerModal__text"
                       mode="spinner"
+                      name="date"
                       placeholder="Select date (spinner)"
                       placeholderTextColor="#8D9494" />
         </view>
@@ -249,6 +259,7 @@
                       min="2018-05-05"
                       modal-style="PickerModal"
                       modal-text-style="PickerModal__text"
+                      name="date"
                       placeholder="Select date"
                       placeholderTextColor="#8D9494" />
           <date-field field-style="Input"
@@ -259,6 +270,7 @@
                       modal-style="PickerModal"
                       modal-text-style="PickerModal__text"
                       mode="spinner"
+                      name="date"
                       placeholder="Select date (spinner)"
                       placeholderTextColor="#8D9494" />
         </view>
@@ -269,6 +281,7 @@
                       label-format="MMMM D, YYYY"
                       modal-style="PickerModal"
                       modal-text-style="PickerModal__text"
+                      name="date"
                       placeholder="Select date"
                       placeholderTextColor="#8D9494" />
           <text style="help help--error">Please select a date</text>
@@ -280,6 +293,7 @@
                       label-format="MMMM D, YYYY"
                       modal-style="PickerModal"
                       modal-text-style="PickerModal__text"
+                      name="date"
                       placeholder="Select date"
                       placeholderTextColor="#8D9494"
                       value="2018-03-07" />
@@ -292,6 +306,7 @@
                       label-format="MMMM D, YYYY"
                       modal-style="PickerModalCustom"
                       modal-text-style="PickerModalCustom__text"
+                      name="date"
                       placeholder="Select date"
                       placeholderTextColor="#8D9494"
                       value="2018-03-07" />

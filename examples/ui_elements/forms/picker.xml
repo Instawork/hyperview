@@ -146,6 +146,7 @@
                         field-text-style="Input__Text"
                         modal-style="PickerModal"
                         modal-text-style="PickerModal__text"
+                        name="picker"
                         placeholder="Select choice"
                         placeholderTextColor="#8D9494">
             <picker-item label="Choice 0"
@@ -170,6 +171,7 @@
                         field-text-style="Input__Text"
                         modal-style="PickerModal"
                         modal-text-style="PickerModal__text"
+                        name="picker"
                         placeholder="Select choice"
                         placeholderTextColor="#8D9494"
                         value="3">
@@ -195,6 +197,7 @@
                         field-text-style="Input__Text"
                         modal-style="PickerModal"
                         modal-text-style="PickerModal__text"
+                        name="picker"
                         placeholder="Select choice"
                         placeholderTextColor="#8D9494"
                         value="3">
@@ -222,6 +225,7 @@
                         field-text-style="Input__Text Input__Text--Error"
                         modal-style="PickerModal"
                         modal-text-style="PickerModal__text"
+                        name="picker"
                         placeholder="Select choice"
                         placeholderTextColor="#8D9494">
             <picker-item label="Choice 0"
@@ -247,6 +251,7 @@
                         field-text-style="Input__Text Input__Text--Error"
                         modal-style="PickerModal"
                         modal-text-style="PickerModal__text"
+                        name="picker"
                         placeholder="Select choice"
                         placeholderTextColor="#8D9494"
                         value="3">
@@ -275,6 +280,7 @@
                         field-text-style="InputCustom__Text"
                         modal-style="PickerModalCustom"
                         modal-text-style="PickerModalCustom__text"
+                        name="picker"
                         placeholder="Select choice"
                         placeholderTextColor="#8D9494">
             <picker-item label="Choice 0"
