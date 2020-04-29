@@ -3,7 +3,6 @@
   elementFormDefault="qualified"
   targetNamespace="https://instawork.com/hyperview-share"
 >
-
   <xs:attributeGroup name="shareAttributes">
     <xs:attribute name="dialogTitle" type="xs:string" />
     <xs:attribute name="message" type="xs:string" />

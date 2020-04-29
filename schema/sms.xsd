@@ -3,7 +3,6 @@
   elementFormDefault="qualified"
   targetNamespace="https://instawork.com/hyperview-sms"
 >
-
   <xs:attributeGroup name="smsAttributes">
     <xs:attribute name="number" type="xs:string" />
   </xs:attributeGroup>
