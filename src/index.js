@@ -16,34 +16,25 @@ import * as UrlService from 'hyperview/src/services/url';
 import {
   ActivityIndicator,
   Alert,
-  Dimensions,
   Easing,
   Linking,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import { DOMParser, XMLSerializer } from 'xmldom-instawork';
+import { XMLSerializer } from 'xmldom-instawork';
 import HyperRef from 'hyperview/src/core/hyper-ref';
 import Navigation, { ANCHOR_ID_SEPARATOR } from 'hyperview/src/services/navigation';
+import { Parser } from 'hyperview/src/services/dom';
 import React from 'react';
 import VisibilityDetectingView from './VisibilityDetectingView.js';
 import { createProps, getBehaviorElements, getFirstTag, later, shallowCloneToRoot, getFormData, getElementByTimeoutId, removeTimeoutId, setTimeoutId } from 'hyperview/src/services';
-import { version } from '../package.json';
 import { ACTIONS, FORM_NAMES, NAV_ACTIONS, ON_EVENT_DISPATCH, UPDATE_ACTIONS } from 'hyperview/src/types';
 import urlParse from 'url-parse';
 
 
 // Shared instance, used in dev mode only
 const devXMLSerializer: ?XMLSerializer = __DEV__ ? new XMLSerializer() : null;
-
-function getHyperviewHeaders() {
-  const { width, height } = Dimensions.get('window');
-  return {
-    'X-Hyperview-Version': version,
-    'X-Hyperview-Dimensions': `${width}w ${height}h`,
-  };
-}
 
 // Provides the date format function to use in date fields
 // in the screen.
@@ -61,18 +52,14 @@ export default class HyperScreen extends React.Component {
 
     this.onUpdate = this.onUpdate.bind(this);
     this.reload = this.reload.bind(this);
-    this.parseError = this.parseError.bind(this);
 
     this.updateActions = ['replace', 'replace-inner', 'append', 'prepend'];
+    this.parser = new Parser(
+      this.props.fetch,
+      this.props.onParseBefore,
+      this.props.onParseAfter
+    );
 
-    this.parser = new DOMParser({
-      locator: {},
-      errorHandler: {
-        warning: this.parseError,
-        error: this.parseError,
-        fatalError: this.parseError,
-      },
-    });
     this.needsLoad = false;
     this.state = {
       styles: null,
@@ -88,17 +75,6 @@ export default class HyperScreen extends React.Component {
       this.state.doc,
       this.getNavigation(),
     )
-  }
-
-  /**
-   * Callback for parser errors. Logs error to console and shows error screen.
-   */
-  parseError(e) {
-    console.error(e);
-    this.setState({
-      doc: null,
-      error: true,
-    });
   }
 
   getNavigationState = (props) => {
@@ -195,69 +171,48 @@ export default class HyperScreen extends React.Component {
   /**
    * Performs a full load of the screen.
    */
-  load = () => {
+  load = async () => {
     const { params, key: routeKey } = this.getNavigationState(this.props);
-    const { delay } = params;
-    const url = this.state.url;
 
-    const fetchPromise = () => this.props.fetch(url, { headers: getHyperviewHeaders() })
-      .then((response) => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-        return response.text();
-      })
-      .then((responseText) => {
-        if (typeof this.props.onParseBefore === 'function') {
-          this.props.onParseBefore(url);
-        }
-        let doc = this.parser.parseFromString(responseText);
-        let error = false;
-        const stylesheets = Stylesheets.createStylesheets(doc);
-        this.navigation.setRouteKey(url, routeKey);
+    try {
+      if (params.delay) {
+        await later(parseInt(params.delay, 10));
+      }
 
-        // Make sure the XML has the required elements: <doc>, <screen>, <body>.
-        const docElement = getFirstTag(doc, 'doc');
-        if (!docElement) {
-          console.error(`No <doc> tag found in the response from ${url}.`);
-          doc = null;
-          error = true;
-        } else {
-          const screenElement = getFirstTag(docElement, 'screen');
-          if (!screenElement) {
-            console.error(`No <screen> tag found in the <doc> tag from ${url}.`);
-            doc = null;
-            error = true;
-          } else {
-            const bodyElement = getFirstTag(screenElement, 'body');
-            if (!bodyElement) {
-              console.error(`No <body> tag found in the <screen> tag from ${url}.`);
-              doc = null;
-              error = true;
-            }
-          }
-        }
+      const url = this.state.url;
+      const doc = await this.parser.load(url);
 
-        this.setState({
-          doc,
-          styles: stylesheets,
-          error,
-        });
-        if (typeof this.props.onParseAfter === 'function') {
-          this.props.onParseAfter(url);
-        }
-      })
-      .catch((reason) => {
-        this.setState({
-          error: true,
-        });
-        throw reason;
+      // Make sure the XML has the required elements: <doc>, <screen>, <body>.
+      const docElement = getFirstTag(doc, 'doc');
+      if (!docElement) {
+        throw new Error(`No <doc> tag found in the response from ${url}.`);
+      }
+
+      const screenElement = getFirstTag(docElement, 'screen');
+      if (!screenElement) {
+        throw new Error(`No <screen> tag found in the <doc> tag from ${url}.`);
+      }
+
+      const bodyElement = getFirstTag(screenElement, 'body');
+      if (!bodyElement) {
+        throw new Error(`No <body> tag found in the <screen> tag from ${url}.`);
+      }
+
+      const stylesheets = Stylesheets.createStylesheets(doc);
+      this.navigation.setRouteKey(url, routeKey);
+      this.setState({
+        doc,
+        styles: stylesheets,
+        error: false,
       });
 
-    if (delay) {
-      later(parseInt(delay, 10)).then(fetchPromise);
-    } else {
-      fetchPromise();
+    } catch (err) {
+      this.setState({
+        doc: null,
+        styles: null,
+        error: true,
+      });
+      console.error(err.message);
     }
   }
 
@@ -339,8 +294,7 @@ export default class HyperScreen extends React.Component {
    *   used to render the screen.
    * Returns a promise that resolves to a DOM element.
    */
-  fetchElement = (href, verb, root, formData) => {
-    verb = verb || 'GET';
+  fetchElement = async (href, method, root, formData) => {
     if (href[0] === '#') {
       return new Promise((resolve, reject) => {
         const element = root.getElementById(href.slice(1));
@@ -351,31 +305,18 @@ export default class HyperScreen extends React.Component {
       });
     }
 
-    // For GET requests, we can't include a body so we encode the form data as a query
-    // string in the URL.
-    const url = verb === 'GET'
-      ? UrlService.addFormDataToUrl(UrlService.getUrlFromHref(href, this.state.url), formData)
-      : UrlService.getUrlFromHref(href, this.state.url);
-
-    const options = {
-      method: verb,
-      headers: getHyperviewHeaders(),
-      // For non-GET requests, include the formdata as the body of the request.
-      body: verb === 'GET' ? undefined : formData,
-    };
-
-    return this.props.fetch(url, options)
-      .then(response => response.text())
-      .then(responseText => {
-        if (typeof this.props.onParseBefore === 'function') {
-          this.props.onParseBefore(url);
-        }
-        const parsed = this.parser.parseFromString(responseText).documentElement;
-        if (typeof this.props.onParseAfter === 'function') {
-          this.props.onParseAfter(url);
-        }
-        return parsed;
+    try {
+      const url = UrlService.getUrlFromHref(href, this.state.url, method);
+      const document = await this.parser.load(url, formData, );
+      return document.documentElement;
+    } catch (err) {
+      this.setState({
+        doc: null,
+        styles: null,
+        error: true,
       });
+      console.error(err.message);
+    }
   }
 
 

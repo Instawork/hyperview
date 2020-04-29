@@ -58,7 +58,6 @@ export default class HyperviewScreen extends React.PureComponent {
       headers: {
         // Don't cache requests for the demo
         'Cache-Control': 'no-cache, no-store, must-revalidate',
-        Accept: 'application/xml',
         Pragma: 'no-cache',
         Expires: 0,
         ...init.headers,
