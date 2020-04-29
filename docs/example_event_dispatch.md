@@ -10,15 +10,11 @@ Consider a screen which shows a list of contacts along with a status.
 Another screen shows the details of a single person with an option add them to your network.
 Every time a person is added, we want the list on the first screen to show the updated status.
 
-<!-- Replace with correct gif -->
-
 ![final](/img/event_dispatch/final.gif)
 
 <div style="text-align:center;margin-bottom:1em;">
   <a class="button" href="https://github.com/Instawork/hyperview/tree/master/examples/advanced_behaviors/dispatch_events_multiple">See the full code</a>
 </div>
-
-<!-- markup with different steps & gifs? -->
 
 Let's start with the markup for the list of people and the default status. Clicking on an item will open a new screen with the person's information.
 
@@ -64,8 +60,6 @@ Let's start with the markup for the list of people and the default status. Click
   </screen>
 </doc>
 ```
-
-<!-- Replace with correct gif -->
 
 The result:
 ![list_item](/img/event_dispatch/list_item.gif)
@@ -151,7 +145,7 @@ Adding a contact dispatches an `added-item*` event which triggers the listener t
 
 ![status_update](/img/event_dispatch/status_update.gif)
 
-We can dispatch multiple behaviors which can trigger different actions. Extending the above example, lets say we want to go back to the previous screen when a contact is added.
+We can dispatch multiple events which can trigger different actions. Extending the above example, lets say we want to go back to the previous screen when a contact is added.
 We do this by dispatching another event `go-back` when the add button is pressed. When caught, it will navigate back to the previous screen.
 
 **Info Screen**
@@ -178,7 +172,5 @@ We do this by dispatching another event `go-back` when the add button is pressed
 ```
 
 Note: We can also have multiple listeners for the same event. In the above example, we could trigger the `back` action on the `added-item1` event itself.
-
-<!-- Replace with correct gif -->
 
 ![back_on_add](/img/event_dispatch/back_on_add.gif)
