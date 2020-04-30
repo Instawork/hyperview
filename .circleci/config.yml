@@ -3,7 +3,7 @@ version: 2
 jobs:
   test:
     docker:
-      - image: circleci/node:8.7
+      - image: instawork/hyperview-ci:1.0.0
     steps:
       - checkout
       - run: yarn
