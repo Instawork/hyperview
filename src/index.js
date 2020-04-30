@@ -296,18 +296,16 @@ export default class HyperScreen extends React.Component {
    */
   fetchElement = async (href, method, root, formData) => {
     if (href[0] === '#') {
-      return new Promise((resolve, reject) => {
-        const element = root.getElementById(href.slice(1));
-        if (element) {
-          resolve(element.cloneNode(true));
-        }
-        reject();
-      });
+      const element = root.getElementById(href.slice(1));
+      if (element) {
+        return element.cloneNode(true);
+      }
+      throw new Error();
     }
 
     try {
       const url = UrlService.getUrlFromHref(href, this.state.url, method);
-      const document = await this.parser.load(url, formData, );
+      const document = await this.parser.load(url, formData);
       return document.documentElement;
     } catch (err) {
       this.setState({
