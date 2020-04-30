@@ -114,7 +114,7 @@ export const createProps = (
   options: HvComponentOptions,
 ) => {
   const numericRules = ['numberOfLines'];
-  const booleanRules = ['multiline'];
+  const booleanRules = ['multiline', 'selectable'];
 
   const props = {};
   if (!element.attributes) {
