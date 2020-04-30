@@ -36,6 +36,7 @@ The following examples demonstrate how to use Hyperview behaviors to perform com
 - [Tabs](/docs/example_tabs): Load different subsections of a screen
 - [Basic forms](/docs/example_basic_form): Style text inputs with validation, and show an indicator while submitting
 - [Advanced forms](/docs/example_advanced_form): Render radio buttons and tag selectors with core Hyperview elements
+- [Event dispatch](/docs/example_event_dispatch): Communicating between screens, with Hyperview events
 
 ### Case Studies
 
