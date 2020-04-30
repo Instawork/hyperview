@@ -284,9 +284,9 @@ An unspecified `href` looks like "#". This can only be used with `back` and `clo
 
 ## verb
 
-| Type                                        | Required |
-| ------------------------------------------- | -------- |
-| **get** (default), post, put, patch, delete | No       |
+| Type                    | Required |
+| ----------------------- | -------- |
+| **get** (default), post | No       |
 
 The `verb` attribute defines the HTTP method used to request the content specified by `href`. If not specified, defaults to "get".
 

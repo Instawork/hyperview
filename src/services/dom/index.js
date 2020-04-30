@@ -14,7 +14,7 @@ import { CONTENT_TYPE, HTTP_HEADERS, HTTP_METHODS } from './types';
 import { ParserError, ParserFatalError, ParserWarning } from './errors';
 import { DOMParser } from 'xmldom-instawork';
 import { Dimensions } from 'react-native';
-import type { Document as DocumentType } from 'hyperview/src/types';
+import type { Document } from 'hyperview/src/types';
 import { version } from 'hyperview/package.json';
 
 const { width, height } = Dimensions.get('window');
@@ -58,7 +58,7 @@ export class Parser {
     baseUrl: string,
     data: ?FormData,
     method: ?HttpMethod = HTTP_METHODS.GET,
-  ): any => {
+  ): Promise<Document> => {
     // For GET requests, we can't include a body so we encode the form data as a query
     // string in the URL.
     const url =
@@ -79,7 +79,7 @@ export class Parser {
     if (this.onBeforeParse) {
       this.onBeforeParse(url);
     }
-    const document: DocumentType = parser.parseFromString(responseText);
+    const document = parser.parseFromString(responseText);
     if (this.onAfterParse) {
       this.onAfterParse(url);
     }
