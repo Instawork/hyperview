@@ -10,6 +10,7 @@
 
 import * as Dom from 'hyperview/src/services/dom';
 import * as UrlService from 'hyperview/src/services/url';
+import { version } from 'hyperview/package.json';
 
 // Mock instawork-xmldom module
 const mockExpectedDocument = { foo: 'bar' };
@@ -52,7 +53,7 @@ describe('Parser', () => {
           headers: {
             Accept: 'application/xml',
             'X-Hyperview-Dimensions': '750w 1334h',
-            'X-Hyperview-Version': '0.24.2',
+            'X-Hyperview-Version': version,
           },
           method: 'GET',
         };
@@ -92,7 +93,7 @@ describe('Parser', () => {
           headers: {
             Accept: 'application/xml',
             'X-Hyperview-Dimensions': '750w 1334h',
-            'X-Hyperview-Version': '0.24.2',
+            'X-Hyperview-Version': version,
           },
           method: 'GET',
         });
@@ -120,7 +121,7 @@ describe('Parser', () => {
           headers: {
             Accept: 'application/xml',
             'X-Hyperview-Dimensions': '750w 1334h',
-            'X-Hyperview-Version': '0.24.2',
+            'X-Hyperview-Version': version,
           },
           method: 'POST',
         });
