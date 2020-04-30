@@ -12,6 +12,7 @@ jobs:
       - run: yarn test:lint
       - run: yarn test:render
       - run: yarn test:unit
+      - run: yarn test:validate-xml
 
 workflows:
   version: 2

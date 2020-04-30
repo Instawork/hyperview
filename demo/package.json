@@ -14,7 +14,7 @@
     "@expo/samples": "2.1.1",
     "expo": "^35.0.0",
     "expo-cli": "^3.2.2",
-    "hyperview": "0.16.3",
+    "hyperview": "0.25.0",
     "moment": "^2.24.0",
     "react": "16.8.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",

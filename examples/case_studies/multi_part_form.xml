@@ -268,15 +268,18 @@
         </view>
         <view id="step2"></view>
       </form>
-    </body>
-    <view hide="true">
-      <view id="null" />
-      <view id="otherLocationInput">
-        <text-field name="location_other"
-                    placeholder="Location Name"
-                    placeholderTextColor="#8D9494"
-                    style="input" />
+
+      <view hide="true">
+        <view id="null" />
+        <view id="otherLocationInput">
+          <text-field name="location_other"
+                      placeholder="Location Name"
+                      placeholderTextColor="#8D9494"
+                      style="input" />
+        </view>
       </view>
-    </view>
+
+    </body>
+
   </screen>
 </doc>

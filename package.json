@@ -37,7 +37,7 @@
     "test:unit": "jest --testPathPattern src",
     "test:xmlserver": "http-server -c-1 -p 8085 ./examples",
     "test:validate-xml": "find examples/ -name '*.xml' | xargs xmllint --schema schema/hyperview.xsd --noout",
-    "test": "yarn generate test && yarn test:flow && yarn test:lint && yarn test:render && yarn test:unit"
+    "test": "yarn generate test && yarn test:flow && yarn test:lint && yarn test:render && yarn test:unit && yarn test:validate-xml"
   },
   "dependencies": {
     "react-native-webview": "5.12.0",

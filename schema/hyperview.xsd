@@ -666,8 +666,11 @@
   <xs:element name="list">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="hv:item"/>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="hv:behavior"/>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="hv:item"/>
+          <xs:element ref="hv:items"/>
+          <xs:element ref="hv:behavior"/>
+        </xs:choice>
       </xs:sequence>
       <xs:attribute name="itemHeight" type="xs:positiveInteger"/>
       <xs:attribute name="style" type="hv:styleList"/>
@@ -680,8 +683,10 @@
   <xs:element name="section-list">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="hv:section"/>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="hv:behavior"/>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="hv:section"/>
+          <xs:element ref="hv:behavior"/>
+        </xs:choice>
       </xs:sequence>
       <xs:attribute name="style" type="hv:styleList"/>
       <xs:attribute name="id" type="xs:NCName"/>
@@ -711,6 +716,14 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="items">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="hv:item"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="item">
     <xs:complexType>
       <xs:group ref="hv:nonListViewChildren"/>
@@ -736,6 +749,7 @@
       <xs:attribute name="style" type="hv:styleList"/>
       <xs:attribute name="id" type="xs:NCName"/>
       <xs:attribute name="hide" type="xs:boolean"/>
+      <xs:attributeGroup ref="hv:scrollAttributes"/>
     </xs:complexType>
   </xs:element>
 

@@ -1,4 +1,4 @@
-<view xmlns="https://hyperview.org/hyperview">
+<items xmlns="https://hyperview.org/hyperview">
   <item key="21"
         style="Item">
     <text style="Item__Label">Added: List 21</text>
@@ -46,4 +46,4 @@
         trigger="visible">
     <text style="Item__Label">Added: List 30</text>
   </item>
-</view>
+</items>
