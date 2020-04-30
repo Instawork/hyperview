@@ -74,12 +74,13 @@
         <text style="Description">Text</text>
         <text style="Basic">Hello, world!</text>
         <text style="Description">Nested Text</text>
-        <text style="Basic">Hello, 
-        <text style="Bold">World of 
+        <text style="Basic">Hello,
+        <text style="Bold">World of
         <text style="Color">HyperView!</text></text></text>
         <text style="Basic">
 <![CDATA[Escaped with <![CDATA[]>: <hello><world>]]>
         </text>
+        <text style="Basic" selectable="true">Select me!</text>
       </view>
     </body>
   </screen>
