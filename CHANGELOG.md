@@ -1,5 +1,10 @@
 # Hyperview changelog
 
+**Version 0.25.0**
+
+- fix!: Remove ambiguity with "value" attribute in "set-value" behavior
+BREAKING CHANGE: The attribute has been renamed from "value" to "new-value".
+
 **Version 0.24.1**
 
 - fix: <date-field> input can be set multiple times.
