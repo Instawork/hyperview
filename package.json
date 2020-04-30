@@ -86,6 +86,9 @@
     },
     "modulePathIgnorePatterns": [
       "./demo/"
+    ],
+    "setupFiles": [
+      "./test/setup.js"
     ]
   }
 }
