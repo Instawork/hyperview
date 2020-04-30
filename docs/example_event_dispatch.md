@@ -25,15 +25,15 @@ Let's start with the markup for the list of people and the default status. Click
   <screen>
     <body style="Main">
       <list>
-        <item style="Item" href="/item1">
+        <item key="1" style="Item" href="/item1">
             <text style="Item__Label">Jeeves</text>
             <text style="Item__Add">Add</text>
         </item>
-        <item style="Item" href="/item2">
+        <item key="2" style="Item" href="/item2">
             <text style="Item__Label">Wooster</text>
             <text style="Item__Add">Add</text>
         </item>
-        <item style="Item" href="/item3">
+        <item key="3" style="Item" href="/item3">
             <text style="Item__Label">Emsworth</text>
             <text style="Item__Add">Add</text>
         </item>
@@ -105,7 +105,7 @@ Also create an XML fragment with the updated status, which will replace the defa
   <screen>
     <body style="Main">
       <list>
-        <item style="Item" href="/item1">
+        <item key="1" style="Item" href="/item1">
             <text style="Item__Label">Jeeves</text>
             <text action="replace"
                   event-name="added-item1"
@@ -115,7 +115,7 @@ Also create an XML fragment with the updated status, which will replace the defa
             <text style="Item__Add">Add</text>
             </text>
         </item>
-        <item style="Item" href="/item2">
+        <item key="2" style="Item" href="/item2">
             <text style="Item__Label">Wooster</text>
             <view action="replace"
                   event-name="added-item2"
@@ -125,7 +125,7 @@ Also create an XML fragment with the updated status, which will replace the defa
             <text style="Item__Add">Add</text>
             </view>
         </item>
-        <item style="Item" href="/item3">
+        <item key="3" style="Item" href="/item3">
             <text style="Item__Label">Emsworth</text>
             <view action="replace"
                   event-name="added-item3"
