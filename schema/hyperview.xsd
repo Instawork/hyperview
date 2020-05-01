@@ -317,6 +317,7 @@
         <xs:element ref="hv:text-area"/>
         <xs:element ref="hv:text-field"/>
         <xs:element ref="hv:view"/>
+        <xs:element ref="hv:web-view"/>
       </xs:choice>
     </xs:sequence>
   </xs:group>
@@ -916,6 +917,16 @@
       <xs:attribute name="hide" type="xs:boolean"/>
       <xs:attribute name="style" type="hv:styleList"/>
       <xs:attribute name="selected" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="web-view">
+    <xs:complexType>
+      <xs:attribute name="url" type="xs:string"/>
+      <xs:attribute name="html" type="xs:string"/>
+      <xs:attribute name="activity-indicator-color" type="hv:color"/>
+      <xs:attribute name="injected-java-script" type="xs:string"/>
+      <xs:attribute name="id" type="xs:ID"/>
     </xs:complexType>
   </xs:element>
 

@@ -26,18 +26,27 @@ A `<web-view>` element can appear anywhere within a `<body>` element.
 
 ## Attributes
 
-- [`url`](#color)
+- [`url`](#url)
+- [`html`](#html)
 - [`activity-indicator-color`](#activity-indicator-color)
 - [`injected-java-script`](#injected-java-script)
 - [`id`](#id)
 
 #### `url`
 
-| Type   | Required |
-| ------ | -------- |
-| string | **Yes**  |
+| Type   | Required                                 |
+| ------ | ---------------------------------------- |
+| string | **Yes** (unless `html` attribute is set) |
 
 The URL to load in the web view.
+
+#### `html`
+
+| Type   | Required                                |
+| ------ | --------------------------------------- |
+| string | **Yes** (unless `url` attribute is set) |
+
+The HTML content to load in the web view.
 
 #### `activity-indicator-color`
 
