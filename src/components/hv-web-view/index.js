@@ -29,7 +29,7 @@ export default class HvWebView extends PureComponent<HvComponentProps> {
     );
     const color = props['activity-indicator-color'];
     const injectedJavaScript = props['injected-java-script'];
-    const source = { uri: props.url };
+    const source = { uri: props.url, html: props.html };
     return (
       <WebView
         injectedJavaScript={injectedJavaScript}
