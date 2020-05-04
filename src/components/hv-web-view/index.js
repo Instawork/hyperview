@@ -16,6 +16,8 @@ import { LOCAL_NAME } from 'hyperview/src/types';
 import WebView from 'react-native-webview';
 import { createProps } from 'hyperview/src/services';
 
+const NOOP = () => {};
+
 export default class HvWebView extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.WEB_VIEW;
@@ -33,6 +35,7 @@ export default class HvWebView extends PureComponent<HvComponentProps> {
     return (
       <WebView
         injectedJavaScript={injectedJavaScript}
+        onMessage={NOOP} // https://github.com/react-native-community/react-native-webview/issues/1311
         renderLoading={() => <ActivityIndicator color={color} />}
         source={source}
         startInLoadingState
