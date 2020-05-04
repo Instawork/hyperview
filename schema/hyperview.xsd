@@ -1,0 +1,933 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  elementFormDefault="qualified"
+  targetNamespace="https://hyperview.org/hyperview"
+  xmlns:hv="https://hyperview.org/hyperview"
+  xmlns:alert="https://hyperview.org/hyperview-alert"
+  xmlns:amp="https://instawork.com/hyperview-amplitude"
+  xmlns:intercom="https://instawork.com/hyperview-intercom"
+  xmlns:phone="https://instawork.com/hyperview-phone"
+  xmlns:redux="https://instawork.com/hyperview-redux"
+  xmlns:share="https://instawork.com/hyperview-share"
+  xmlns:sms="https://instawork.com/hyperview-sms"
+>
+
+  <xs:import namespace="https://hyperview.org/hyperview-alert" schemaLocation="alert.xsd"/>
+  <xs:import namespace="https://instawork.com/hyperview-amplitude" schemaLocation="amplitude.xsd"/>
+  <xs:import namespace="https://instawork.com/hyperview-intercom" schemaLocation="intercom.xsd"/>
+  <xs:import namespace="https://instawork.com/hyperview-phone" schemaLocation="phone.xsd"/>
+  <xs:import namespace="https://instawork.com/hyperview-redux" schemaLocation="redux.xsd"/>
+  <xs:import namespace="https://instawork.com/hyperview-share" schemaLocation="share.xsd"/>
+  <xs:import namespace="https://instawork.com/hyperview-sms" schemaLocation="sms.xsd"/>
+
+  <xs:simpleType name="action">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="push"/>
+      <xs:enumeration value="new"/>
+      <xs:enumeration value="back"/>
+      <xs:enumeration value="close"/>
+      <xs:enumeration value="navigate"/>
+      <xs:enumeration value="reload"/>
+      <xs:enumeration value="deep-link"/>
+      <xs:enumeration value="dispatch-event"/>
+      <xs:enumeration value="replace"/>
+      <xs:enumeration value="replace-inner"/>
+      <xs:enumeration value="append"/>
+      <xs:enumeration value="prepend"/>
+      <xs:enumeration value="show"/>
+      <xs:enumeration value="hide"/>
+      <xs:enumeration value="toggle"/>
+      <xs:enumeration value="set-value"/>
+      <xs:enumeration value="ask-rating"/>
+
+      <xs:enumeration value="alert"/>
+      <xs:enumeration value="amplitude"/>
+      <xs:enumeration value="intercom"/>
+      <xs:enumeration value="phone"/>
+      <xs:enumeration value="redux"/>
+      <xs:enumeration value="share"/>
+      <xs:enumeration value="sms"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="trigger">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="press"/>
+      <xs:enumeration value="longPress"/>
+      <xs:enumeration value="pressIn"/>
+      <xs:enumeration value="pressOut"/>
+      <xs:enumeration value="visible"/>
+      <xs:enumeration value="refresh"/>
+      <xs:enumeration value="load"/>
+      <xs:enumeration value="select"/>
+      <xs:enumeration value="deselect"/>
+      <xs:enumeration value="on-event"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="hex3">
+    <xs:restriction base="xs:token">
+      <xs:pattern value="#[0-9a-fA-F]{3}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="hex6">
+    <xs:restriction base="xs:token">
+      <xs:pattern value="#[0-9a-fA-F]{6}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="hex8">
+    <xs:restriction base="xs:token">
+      <xs:pattern value="#[0-9a-fA-F]{8}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="rgb">
+    <xs:restriction base="xs:token">
+      <xs:pattern value="rgb\(\d{1,3},\s*\d{1,3},\s*\d{1,3}\)"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="rgba">
+    <xs:restriction base="xs:token">
+      <xs:pattern value="rgba\(\d{1,3},\s*\d{1,3},\s*\d{1,3},\s*(0?\.\d+|1|1.0+)\)"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="hsl">
+    <xs:restriction base="xs:token">
+      <xs:pattern value="hsl\((\d{1,2}|1\d{2}|2\d{2}|3[0-5][0-9]|360),\s*(\d{1,2}|100)%,\s*(\d{1,2}|100)%\)"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="hsla">
+    <xs:restriction base="xs:token">
+      <xs:pattern value="hsla\((\d{1,2}|1\d{2}|2\d{2}|3[0-5][0-9]|360),\s*(\d{1,2}|100)%,\s*(\d{1,2}|100)%,\s*(0?\.\d+|1|1.0+)\)"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="named-color">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="aliceblue"/>
+      <xs:enumeration value="antiquewhite"/>
+      <xs:enumeration value="aqua"/>
+      <xs:enumeration value="aquamarine"/>
+      <xs:enumeration value="azure"/>
+      <xs:enumeration value="beige"/>
+      <xs:enumeration value="bisque"/>
+      <xs:enumeration value="black"/>
+      <xs:enumeration value="blanchedalmond"/>
+      <xs:enumeration value="blue"/>
+      <xs:enumeration value="blueviolet"/>
+      <xs:enumeration value="brown"/>
+      <xs:enumeration value="burlywood"/>
+      <xs:enumeration value="cadetblue"/>
+      <xs:enumeration value="chartreuse"/>
+      <xs:enumeration value="chocolate"/>
+      <xs:enumeration value="coral"/>
+      <xs:enumeration value="cornflowerblue"/>
+      <xs:enumeration value="cornsilk"/>
+      <xs:enumeration value="crimson"/>
+      <xs:enumeration value="cyan"/>
+      <xs:enumeration value="darkblue"/>
+      <xs:enumeration value="darkcyan"/>
+      <xs:enumeration value="darkgoldenrod"/>
+      <xs:enumeration value="darkgray"/>
+      <xs:enumeration value="darkgreen"/>
+      <xs:enumeration value="darkgrey"/>
+      <xs:enumeration value="darkkhaki"/>
+      <xs:enumeration value="darkmagenta"/>
+      <xs:enumeration value="darkolivegreen"/>
+      <xs:enumeration value="darkorange"/>
+      <xs:enumeration value="darkorchid"/>
+      <xs:enumeration value="darkred"/>
+      <xs:enumeration value="darksalmon"/>
+      <xs:enumeration value="darkseagreen"/>
+      <xs:enumeration value="darkslateblue"/>
+      <xs:enumeration value="darkslategrey"/>
+      <xs:enumeration value="darkturquoise"/>
+      <xs:enumeration value="darkviolet"/>
+      <xs:enumeration value="deeppink"/>
+      <xs:enumeration value="deepskyblue"/>
+      <xs:enumeration value="dimgray"/>
+      <xs:enumeration value="dimgrey"/>
+      <xs:enumeration value="dodgerblue"/>
+      <xs:enumeration value="firebrick"/>
+      <xs:enumeration value="floralwhite"/>
+      <xs:enumeration value="forestgreen"/>
+      <xs:enumeration value="fuchsia"/>
+      <xs:enumeration value="gainsboro"/>
+      <xs:enumeration value="ghostwhite"/>
+      <xs:enumeration value="gold"/>
+      <xs:enumeration value="goldenrod"/>
+      <xs:enumeration value="gray"/>
+      <xs:enumeration value="green"/>
+      <xs:enumeration value="greenyellow"/>
+      <xs:enumeration value="grey"/>
+      <xs:enumeration value="honeydew"/>
+      <xs:enumeration value="hotpink"/>
+      <xs:enumeration value="indianred"/>
+      <xs:enumeration value="indigo"/>
+      <xs:enumeration value="ivory"/>
+      <xs:enumeration value="khaki"/>
+      <xs:enumeration value="lavender"/>
+      <xs:enumeration value="lavenderblush"/>
+      <xs:enumeration value="lawngreen"/>
+      <xs:enumeration value="lemonchiffon"/>
+      <xs:enumeration value="lightblue"/>
+      <xs:enumeration value="lightcoral"/>
+      <xs:enumeration value="lightcyan"/>
+      <xs:enumeration value="lightgoldenrodyellow"/>
+      <xs:enumeration value="lightgray"/>
+      <xs:enumeration value="lightgreen"/>
+      <xs:enumeration value="lightgrey"/>
+      <xs:enumeration value="lightpink"/>
+      <xs:enumeration value="lightsalmon"/>
+      <xs:enumeration value="lightseagreen"/>
+      <xs:enumeration value="lightskyblue"/>
+      <xs:enumeration value="lightslategrey"/>
+      <xs:enumeration value="lightsteelblue"/>
+      <xs:enumeration value="lightyellow"/>
+      <xs:enumeration value="lime"/>
+      <xs:enumeration value="limegreen"/>
+      <xs:enumeration value="linen"/>
+      <xs:enumeration value="magenta"/>
+      <xs:enumeration value="maroon"/>
+      <xs:enumeration value="mediumaquamarine"/>
+      <xs:enumeration value="mediumblue"/>
+      <xs:enumeration value="mediumorchid"/>
+      <xs:enumeration value="mediumpurple"/>
+      <xs:enumeration value="mediumseagreen"/>
+      <xs:enumeration value="mediumslateblue"/>
+      <xs:enumeration value="mediumspringgreen"/>
+      <xs:enumeration value="mediumturquoise"/>
+      <xs:enumeration value="mediumvioletred"/>
+      <xs:enumeration value="midnightblue"/>
+      <xs:enumeration value="mintcream"/>
+      <xs:enumeration value="mistyrose"/>
+      <xs:enumeration value="moccasin"/>
+      <xs:enumeration value="navajowhite"/>
+      <xs:enumeration value="navy"/>
+      <xs:enumeration value="oldlace"/>
+      <xs:enumeration value="olive"/>
+      <xs:enumeration value="olivedrab"/>
+      <xs:enumeration value="orange"/>
+      <xs:enumeration value="orangered"/>
+      <xs:enumeration value="orchid"/>
+      <xs:enumeration value="palegoldenrod"/>
+      <xs:enumeration value="palegreen"/>
+      <xs:enumeration value="paleturquoise"/>
+      <xs:enumeration value="palevioletred"/>
+      <xs:enumeration value="papayawhip"/>
+      <xs:enumeration value="peachpuff"/>
+      <xs:enumeration value="peru"/>
+      <xs:enumeration value="pink"/>
+      <xs:enumeration value="plum"/>
+      <xs:enumeration value="powderblue"/>
+      <xs:enumeration value="purple"/>
+      <xs:enumeration value="rebeccapurple"/>
+      <xs:enumeration value="red"/>
+      <xs:enumeration value="rosybrown"/>
+      <xs:enumeration value="royalblue"/>
+      <xs:enumeration value="saddlebrown"/>
+      <xs:enumeration value="salmon"/>
+      <xs:enumeration value="sandybrown"/>
+      <xs:enumeration value="seagreen"/>
+      <xs:enumeration value="seashell"/>
+      <xs:enumeration value="sienna"/>
+      <xs:enumeration value="silver"/>
+      <xs:enumeration value="skyblue"/>
+      <xs:enumeration value="slateblue"/>
+      <xs:enumeration value="slategray"/>
+      <xs:enumeration value="snow"/>
+      <xs:enumeration value="springgreen"/>
+      <xs:enumeration value="steelblue"/>
+      <xs:enumeration value="tan"/>
+      <xs:enumeration value="teal"/>
+      <xs:enumeration value="thistle"/>
+      <xs:enumeration value="tomato"/>
+      <xs:enumeration value="turquoise"/>
+      <xs:enumeration value="violet"/>
+      <xs:enumeration value="wheat"/>
+      <xs:enumeration value="white"/>
+      <xs:enumeration value="whitesmoke"/>
+      <xs:enumeration value="yellow"/>
+      <xs:enumeration value="yellowgreen"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="color">
+    <xs:union memberTypes="hv:hex3 hv:hex6 hv:hex8 hv:rgb hv:rgba hv:hsl hv:hsla hv:named-color" />
+  </xs:simpleType>
+
+  <xs:simpleType name="date">
+    <xs:restriction base="xs:token">
+      <xs:pattern value="\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="pointsOrPercent">
+    <xs:union memberTypes="xs:NMTOKEN">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+        </xs:restriction>
+      </xs:simpleType>
+
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:pattern value="\d+%"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+
+
+  <xs:simpleType name="styleList">
+    <xs:list itemType="xs:NCName" />
+  </xs:simpleType>
+
+  <xs:group name="baseChildren">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="hv:behavior"/>
+        <xs:element ref="hv:image"/>
+        <xs:element ref="hv:spinner"/>
+        <xs:element ref="hv:text"/>
+        <xs:element ref="hv:view"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:group>
+
+  <xs:group name="nonListViewChildren">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="hv:behavior"/>
+        <xs:element ref="hv:date-field"/>
+        <xs:element ref="hv:form"/>
+        <xs:element ref="hv:image"/>
+        <xs:element ref="hv:option"/>
+        <xs:element ref="hv:picker-field"/>
+        <xs:element ref="hv:spinner"/>
+        <xs:element ref="hv:select-single"/>
+        <xs:element ref="hv:select-multiple"/>
+        <xs:element ref="hv:switch"/>
+        <xs:element ref="hv:text"/>
+        <xs:element ref="hv:text-area"/>
+        <xs:element ref="hv:text-field"/>
+        <xs:element ref="hv:view"/>
+        <xs:element ref="hv:web-view"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:group>
+
+  <xs:group name="viewChildren">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:group ref="hv:nonListViewChildren"/>
+        <xs:element ref="hv:list"/>
+        <xs:element ref="hv:section-list"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:group>
+
+  <xs:attributeGroup name="behaviorAttributes">
+    <xs:attribute name="action" type="hv:action" />
+    <xs:attribute name="target" type="xs:IDREF"/>
+    <xs:attribute name="href" type="xs:string"/>
+    <xs:attribute name="once" type="xs:boolean"/>
+    <xs:attribute name="trigger" type="hv:trigger"/>
+    <xs:attribute name="show-during-load" type="xs:IDREFS"/>
+    <xs:attribute name="hide-during-load" type="xs:IDREFS"/>
+    <xs:attribute name="delay" type="xs:nonNegativeInteger"/>
+    <xs:attribute name="event-name" type="xs:NCName"/>
+    <xs:attribute name="new-value" type="xs:string"/>
+
+    <xs:attributeGroup ref="alert:alertAttributes" />
+    <xs:attributeGroup ref="amp:amplitudeAttributes" />
+    <xs:attributeGroup ref="intercom:intercomAttributes" />
+    <xs:attributeGroup ref="phone:phoneAttributes" />
+    <xs:attributeGroup ref="redux:reduxAttributes" />
+    <xs:attributeGroup ref="share:shareAttributes" />
+    <xs:attributeGroup ref="sms:smsAttributes" />
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="scrollAttributes">
+    <xs:attribute name="scroll" type="xs:boolean"/>
+    <xs:attribute name="scroll-orientation">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="horizontal"/>
+          <xs:enumeration value="vertical"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+
+  <xs:element name="doc">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="unbounded" ref="hv:screen"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="screen">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="hv:styles"/>
+        <xs:element minOccurs="1" maxOccurs="1" ref="hv:body"/>
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:ID"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="styles">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="hv:style"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="style">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="hv:modifier"/>
+      </xs:sequence>
+
+      <xs:attribute name="alignContent">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="flex-start"/>
+            <xs:enumeration value="flex-end"/>
+            <xs:enumeration value="center"/>
+            <xs:enumeration value="stretch"/>
+            <xs:enumeration value="space-between"/>
+            <xs:enumeration value="space-around"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+
+      <xs:attribute name="alignItems">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="flex-start"/>
+            <xs:enumeration value="flex-end"/>
+            <xs:enumeration value="center"/>
+            <xs:enumeration value="stretch"/>
+            <xs:enumeration value="baseline"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+
+      <xs:attribute name="alignSelf">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="flex-start"/>
+            <xs:enumeration value="flex-end"/>
+            <xs:enumeration value="center"/>
+            <xs:enumeration value="stretch"/>
+            <xs:enumeration value="baseline"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+
+      <xs:attribute name="backgroundColor" type="hv:color"/>
+
+      <xs:attribute name="borderBottomColor" type="hv:color"/>
+
+      <xs:attribute name="borderBottomWidth" type="xs:nonNegativeInteger"/>
+
+      <xs:attribute name="borderColor" type="hv:color"/>
+
+      <xs:attribute name="borderLeftWidth" type="xs:nonNegativeInteger"/>
+
+      <xs:attribute name="borderRadius" type="xs:nonNegativeInteger"/>
+
+      <xs:attribute name="borderRightWidth" type="xs:nonNegativeInteger"/>
+
+      <xs:attribute name="borderTopColor" type="hv:color"/>
+
+      <xs:attribute name="borderTopWidth" type="xs:nonNegativeInteger"/>
+
+      <xs:attribute name="borderWidth" type="xs:nonNegativeInteger"/>
+
+      <xs:attribute name="bottom" type="xs:integer"/>
+
+      <xs:attribute name="color" type="hv:color"/>
+      <xs:attribute name="elevation" type="xs:nonNegativeInteger"/>
+
+      <xs:attribute name="flex">
+        <xs:simpleType>
+          <xs:restriction base="xs:integer">
+            <xs:minInclusive value="-1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+
+      <xs:attribute name="flexDirection">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="row"/>
+            <xs:enumeration value="row-reverse"/>
+            <xs:enumeration value="column"/>
+            <xs:enumeration value="column-reverse"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+
+      <xs:attribute name="flexGrow" type="xs:integer"/>
+
+      <xs:attribute name="flexShrink" type="xs:integer"/>
+
+      <xs:attribute name="flexWrap">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="wrap"/>
+            <xs:enumeration value="nowrap"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+
+      <xs:attribute name="fontFamily" type="xs:string"/>
+      <xs:attribute name="fontSize" type="xs:positiveInteger"/>
+      <xs:attribute name="fontStyle">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="normal"/>
+            <xs:enumeration value="italic"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+
+      <xs:attribute name="fontWeight">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="normal"/>
+            <xs:enumeration value="bold"/>
+            <xs:enumeration value="100"/>
+            <xs:enumeration value="200"/>
+            <xs:enumeration value="300"/>
+            <xs:enumeration value="400"/>
+            <xs:enumeration value="500"/>
+            <xs:enumeration value="600"/>
+            <xs:enumeration value="700"/>
+            <xs:enumeration value="800"/>
+            <xs:enumeration value="900"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+
+      <xs:attribute name="height" type="hv:pointsOrPercent" />
+
+      <xs:attribute name="id" type="xs:NCName"/>
+
+      <xs:attribute name="justifyContent">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="flex-start" />
+            <xs:enumeration value="flex-end" />
+            <xs:enumeration value="center" />
+            <xs:enumeration value="space-between" />
+            <xs:enumeration value="space-around" />
+            <xs:enumeration value="space-evenly" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+
+      <xs:attribute name="left" type="hv:pointsOrPercent"/>
+      <xs:attribute name="lineHeight" type="xs:integer"/>
+      <xs:attribute name="margin" type="xs:integer"/>
+      <xs:attribute name="marginBottom" type="xs:integer"/>
+      <xs:attribute name="marginHorizontal" type="xs:integer"/>
+      <xs:attribute name="marginLeft" type="xs:integer"/>
+      <xs:attribute name="marginRight" type="xs:integer"/>
+      <xs:attribute name="marginTop" type="xs:integer"/>
+      <xs:attribute name="marginVertical" type="xs:integer"/>
+      <xs:attribute name="maxHeight" type="hv:pointsOrPercent"/>
+      <xs:attribute name="maxWidth" type="hv:pointsOrPercent"/>
+      <xs:attribute name="minHeight" type="hv:pointsOrPercent"/>
+      <xs:attribute name="minWidth" type="hv:pointsOrPercent"/>
+
+      <xs:attribute name="opacity">
+        <xs:simpleType>
+          <xs:restriction base="xs:decimal">
+            <xs:minInclusive value="0.0"/>
+            <xs:maxInclusive value="1.0"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+
+      <xs:attribute name="overflow">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="visible" />
+            <xs:enumeration value="hidden" />
+            <xs:enumeration value="scroll" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+
+      <xs:attribute name="padding" type="hv:pointsOrPercent"/>
+      <xs:attribute name="paddingBottom" type="hv:pointsOrPercent"/>
+      <xs:attribute name="paddingHorizontal" type="hv:pointsOrPercent"/>
+      <xs:attribute name="paddingLeft" type="hv:pointsOrPercent"/>
+      <xs:attribute name="paddingRight" type="hv:pointsOrPercent"/>
+      <xs:attribute name="paddingTop" type="hv:pointsOrPercent"/>
+      <xs:attribute name="paddingVertical" type="hv:pointsOrPercent"/>
+
+      <xs:attribute name="position">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="absolute" />
+            <xs:enumeration value="relative" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+
+      <xs:attribute name="right" type="hv:pointsOrPercent"/>
+      <xs:attribute name="shadowColor" type="hv:color"/>
+      <xs:attribute name="shadowOffsetX" type="xs:integer"/>
+      <xs:attribute name="shadowOffsetY" type="xs:decimal"/>
+      <xs:attribute name="shadowOpacity" type="xs:decimal"/>
+      <xs:attribute name="shadowRadius" type="xs:decimal"/>
+
+      <xs:attribute name="textAlign">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="auto" />
+            <xs:enumeration value="left" />
+            <xs:enumeration value="right" />
+            <xs:enumeration value="center" />
+            <xs:enumeration value="justify" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+
+      <xs:attribute name="textDecorationLine" type="xs:NCName"/>
+      <xs:attribute name="top" type="hv:pointsOrPercent"/>
+      <xs:attribute name="width" type="hv:pointsOrPercent"/>
+
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="modifier">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="hv:style"/>
+      </xs:sequence>
+      <xs:attribute name="focused" type="xs:boolean"/>
+      <xs:attribute name="pressed" type="xs:boolean"/>
+      <xs:attribute name="selected" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="body">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="hv:header"/>
+        <xs:group ref="hv:viewChildren"/>
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="style" type="hv:styleList"/>
+      <xs:attributeGroup ref="hv:scrollAttributes"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="header">
+    <xs:complexType>
+      <xs:group ref="hv:viewChildren"/>
+      <xs:attribute name="style" type="hv:styleList"/>
+      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="hide" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="view">
+    <xs:complexType>
+      <xs:group ref="hv:viewChildren"/>
+      <xs:attribute name="style" type="hv:styleList"/>
+      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="hide" type="xs:boolean"/>
+      <xs:attributeGroup ref="hv:behaviorAttributes"/>
+      <xs:attributeGroup ref="hv:scrollAttributes"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="image">
+    <xs:complexType>
+      <xs:attribute name="source" use="required" type="xs:anyURI"/>
+      <xs:attribute name="style" type="hv:styleList" use="required"/>
+      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="hide" type="xs:boolean"/>
+      <xs:attributeGroup ref="hv:behaviorAttributes"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="text">
+    <xs:complexType mixed="true">
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="hv:text"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="hv:behavior"/>
+      </xs:sequence>
+      <xs:attribute name="numberOfLines" type="xs:positiveInteger"/>
+      <xs:attribute name="style" type="hv:styleList"/>
+      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="hide" type="xs:boolean"/>
+      <xs:attribute name="selectable" type="xs:boolean"/>
+      <xs:attributeGroup ref="hv:behaviorAttributes"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="behavior">
+    <xs:complexType>
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="alert:option" />
+      </xs:sequence>
+      <xs:attributeGroup ref="hv:behaviorAttributes"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="list">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="hv:item"/>
+          <xs:element ref="hv:items"/>
+          <xs:element ref="hv:behavior"/>
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="itemHeight" type="xs:positiveInteger"/>
+      <xs:attribute name="style" type="hv:styleList"/>
+      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="hide" type="xs:boolean"/>
+      <xs:attributeGroup ref="hv:behaviorAttributes"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="section-list">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="hv:section"/>
+          <xs:element ref="hv:behavior"/>
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="style" type="hv:styleList"/>
+      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="hide" type="xs:boolean"/>
+      <xs:attributeGroup ref="hv:behaviorAttributes"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="section">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="1" ref="hv:section-title"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="hv:item"/>
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:NCName"/>
+      <xs:attribute name="hide" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="section-title">
+    <xs:complexType>
+      <xs:group ref="hv:nonListViewChildren"/>
+      <xs:attribute name="style" type="hv:styleList"/>
+      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="hide" type="xs:boolean"/>
+      <xs:attributeGroup ref="hv:behaviorAttributes"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="items">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="hv:item"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="item">
+    <xs:complexType>
+      <xs:group ref="hv:nonListViewChildren"/>
+      <xs:attribute name="key" use="required" />
+      <xs:attribute name="style" type="hv:styleList"/>
+      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="hide" type="xs:boolean"/>
+      <xs:attributeGroup ref="hv:behaviorAttributes"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="spinner">
+    <xs:complexType>
+      <xs:attribute name="color" type="hv:color" />
+      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="hide" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="form">
+    <xs:complexType>
+      <xs:group ref="hv:viewChildren"/>
+      <xs:attribute name="style" type="hv:styleList"/>
+      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="hide" type="xs:boolean"/>
+      <xs:attributeGroup ref="hv:scrollAttributes"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="date-field">
+    <xs:complexType>
+      <xs:attribute name="name" use="required" type="xs:string"/>
+      <xs:attribute name="label-format" type="xs:string"/>
+      <xs:attribute name="mode">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="calendar"/>
+            <xs:enumeration value="spinner"/>
+            <xs:enumeration value="default"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="value" type="xs:string"/>
+      <xs:attribute name="placeholder" type="xs:string"/>
+      <xs:attribute name="placeholderTextColor" type="hv:color"/>
+      <xs:attribute name="min" type="hv:date"/>
+      <xs:attribute name="max" type="hv:date"/>
+      <xs:attribute name="field-style" type="hv:styleList"/>
+      <xs:attribute name="field-text-style" type="hv:styleList"/>
+      <xs:attribute name="modal-style" type="hv:styleList"/>
+      <xs:attribute name="modal-text-style" type="hv:styleList"/>
+      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="hide" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="picker-field">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="unbounded" ref="hv:picker-item"/>
+      </xs:sequence>
+      <xs:attribute name="name" use="required" type="xs:string"/>
+      <xs:attribute name="value" type="xs:string"/>
+      <xs:attribute name="placeholder" type="xs:string"/>
+      <xs:attribute name="placeholderTextColor" type="hv:color"/>
+      <xs:attribute name="done-label" type="xs:string"/>
+      <xs:attribute name="cancel-label" type="xs:string"/>
+      <xs:attribute name="field-style" type="hv:styleList"/>
+      <xs:attribute name="field-text-style" type="hv:styleList"/>
+      <xs:attribute name="modal-style" type="hv:styleList"/>
+      <xs:attribute name="modal-text-style" type="hv:styleList"/>
+      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="hide" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="picker-item">
+    <xs:complexType>
+      <xs:attribute name="label" use="required" type="xs:string"/>
+      <xs:attribute name="value" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="switch">
+    <xs:complexType>
+      <xs:attribute name="name" use="required" type="xs:string"/>
+      <xs:attribute name="value">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="on"/>
+            <xs:enumeration value="off"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="hide" type="xs:boolean"/>
+      <xs:attribute name="style" type="hv:styleList"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="text-field">
+    <xs:complexType>
+      <xs:attribute name="name" use="required" type="xs:string"/>
+      <xs:attribute name="value" type="xs:string"/>
+      <xs:attribute name="placeholder" type="xs:string"/>
+      <xs:attribute name="placeholderTextColor" type="hv:color"/>
+      <xs:attribute name="keyboard-type">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="default"/>
+            <xs:enumeration value="number-pad"/>
+            <xs:enumeration value="decimal-pad"/>
+            <xs:enumeration value="phone-pad"/>
+            <xs:enumeration value="email-address"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="mask" type="xs:string"/>
+      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="hide" type="xs:boolean"/>
+      <xs:attribute name="style" type="hv:styleList"/>
+      <xs:attribute name="auto-focus" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="text-area">
+    <xs:complexType>
+      <xs:attribute name="name" use="required" type="xs:string"/>
+      <xs:attribute name="value" type="xs:string"/>
+      <xs:attribute name="placeholder" type="xs:string"/>
+      <xs:attribute name="placeholderTextColor" type="hv:color"/>
+      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="hide" type="xs:boolean"/>
+      <xs:attribute name="style"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="select-single">
+    <xs:complexType>
+      <xs:group ref="hv:viewChildren"/>
+      <xs:attribute name="name" use="required" type="xs:string"/>
+      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="hide" type="xs:boolean"/>
+      <xs:attribute name="style" type="hv:styleList"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="select-multiple">
+    <xs:complexType>
+      <xs:group ref="hv:viewChildren"/>
+      <xs:attribute name="name" use="required" type="xs:string"/>
+      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="hide" type="xs:boolean"/>
+      <xs:attribute name="style" type="hv:styleList"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="option">
+    <xs:complexType>
+      <xs:group ref="hv:baseChildren"/>
+      <xs:attributeGroup ref="hv:behaviorAttributes"/>
+      <xs:attribute name="value" type="xs:string"/>
+      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="hide" type="xs:boolean"/>
+      <xs:attribute name="style" type="hv:styleList"/>
+      <xs:attribute name="selected" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="web-view">
+    <xs:complexType>
+      <xs:attribute name="url" type="xs:string"/>
+      <xs:attribute name="html" type="xs:string"/>
+      <xs:attribute name="activity-indicator-color" type="hv:color"/>
+      <xs:attribute name="injected-java-script" type="xs:string"/>
+      <xs:attribute name="id" type="xs:ID"/>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

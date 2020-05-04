@@ -284,9 +284,9 @@ An unspecified `href` looks like "#". This can only be used with `back` and `clo
 
 ## verb
 
-| Type                                        | Required |
-| ------------------------------------------- | -------- |
-| **get** (default), post, put, patch, delete | No       |
+| Type                    | Required |
+| ----------------------- | -------- |
+| **get** (default), post | No       |
 
 The `verb` attribute defines the HTTP method used to request the content specified by `href`. If not specified, defaults to "get".
 
@@ -507,7 +507,7 @@ In this example, pressing "Toggle" will toggle the text below. See [the repo](ht
 
 ### `set-value`
 
-The `set-value` action allows setting the input value of the target element. The behavior attributes must include a [`value`](#value) attribute specifying the new value.
+The `set-value` action allows setting the input value of the target element. The behavior attributes must include a [`new-value`](#new-value) attribute specifying the new value.
 
 Note that the target element must only be one of the following elements:
 
@@ -522,8 +522,8 @@ Notable, `<select-multiple>` is not currently supported. Also note that using `s
 
 ```xml
 <text-field id="id_tf" />
-<text style="link" action="set-value" value="Test" target="id_tf">Set</text>
-<text style="link" action="set-value" value="" target="id_tf">Clear value</text>
+<text style="link" action="set-value" new-value="Test" target="id_tf">Set</text>
+<text style="link" action="set-value" new-value="" target="id_tf">Clear value</text>
 ```
 
 In this example, pressing "Set" will fill in the text field with "Test". Pressing "Clear value" will fill in the text field with "".
@@ -618,7 +618,7 @@ This attribute is used commonly in examples to demonstrate loading states. It ca
 
 `once="true"` specifies that the behavior should only execute the first time it triggers. If not provided, the default is to execute the behavior on each trigger . This attribute is often used in conjunction with the "visible" trigger, so that we only execute the behavior the first time an element scrolls into view.
 
-## value
+## new-value
 
 | Type   | Required                                              |
 | ------ | ----------------------------------------------------- |

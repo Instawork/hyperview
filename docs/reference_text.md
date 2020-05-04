@@ -56,6 +56,7 @@ A `<view>` element can only appear anywhere within a `<screen>` element.
 - [`numberOfLines`](#numberoflines)
 - [`id`](#id)
 - [`hide`](#hide)
+- [`selectable`](#selectable)
 
 #### Behavior attributes
 
@@ -92,3 +93,11 @@ A global attribute uniquely identifying the element in the whole document.
 | **false** (default), true | No       |
 
 If `hide="true"`, the element will not be rendered on screen. If the element or any of the element's children have a behavior that triggers on "load" or "visible", those behaviors will not trigger while the element is hidden.
+
+#### `selectable`
+
+| Type    | Required |
+| ------- | -------- |
+| boolean | No       |
+
+A boolean that allows users to select the content of `<text>` element.

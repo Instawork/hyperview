@@ -79,10 +79,10 @@
              fontSize="16"
              fontWeight="normal"
              paddingBottom="8"
-             paddingTop="8">
+             paddingTop="8"/>
       <style id="input__text"
              fontSize="16"
-             fontWeight="normal"></style>
+             fontWeight="normal">
         <modifier pressed="true">
           <style borderBottomColor="green" />
         </modifier>
@@ -155,62 +155,62 @@
         <view style="FormGroup">
           <view style="links">
             <text style="link">
-              <behavior action="set-value" value="Multi" target="id_tf" />
-              <behavior action="set-value" value="Multi" target="id_ta" />
-              <behavior action="set-value" value="Ramen" target="id_ss" />
-              <behavior action="set-value" value="2" target="id_pf" />
-              <behavior action="set-value" value="2019-04-02" target="id_df" />
-              <behavior action="set-value" value="on" target="id_s" />
+              <behavior action="set-value" new-value="Multi" target="id_tf" />
+              <behavior action="set-value" new-value="Multi" target="id_ta" />
+              <behavior action="set-value" new-value="Ramen" target="id_ss" />
+              <behavior action="set-value" new-value="2" target="id_pf" />
+              <behavior action="set-value" new-value="2019-04-02" target="id_df" />
+              <behavior action="set-value" new-value="on" target="id_s" />
               Set all
             </text>
             <text style="link">
-              <behavior action="set-value" value="" target="id_tf" />
-              <behavior action="set-value" value="" target="id_ta" />
-              <behavior action="set-value" value="" target="id_pf" />
-              <behavior action="set-value" value="" target="id_ss" />
-              <behavior action="set-value" value="" target="id_df" />
-              <behavior action="set-value" value="off" target="id_s" />
+              <behavior action="set-value" new-value="" target="id_tf" />
+              <behavior action="set-value" new-value="" target="id_ta" />
+              <behavior action="set-value" new-value="" target="id_pf" />
+              <behavior action="set-value" new-value="" target="id_ss" />
+              <behavior action="set-value" new-value="" target="id_df" />
+              <behavior action="set-value" new-value="off" target="id_s" />
               Clear all
             </text>
           </view>
           <view style="links">
             <text style="link">
-              <behavior action="set-value" value="Multi" target="id_tf" delay="500" />
-              <behavior action="set-value" value="Multi" target="id_ta" delay="1000" />
-              <behavior action="set-value" value="Ramen" target="id_ss" delay="1500" />
-              <behavior action="set-value" value="2" target="id_pf" delay="2000" />
-              <behavior action="set-value" value="2019-04-02" target="id_df" delay="2500" />
-              <behavior action="set-value" value="on" target="id_s" delay="3000" />
+              <behavior action="set-value" new-value="Multi" target="id_tf" delay="500" />
+              <behavior action="set-value" new-value="Multi" target="id_ta" delay="1000" />
+              <behavior action="set-value" new-value="Ramen" target="id_ss" delay="1500" />
+              <behavior action="set-value" new-value="2" target="id_pf" delay="2000" />
+              <behavior action="set-value" new-value="2019-04-02" target="id_df" delay="2500" />
+              <behavior action="set-value" new-value="on" target="id_s" delay="3000" />
               Set all with delay
             </text>
             <text style="link">
-              <behavior action="set-value" value="" target="id_tf" delay="500" />
-              <behavior action="set-value" value="" target="id_ta" delay="1000" />
-              <behavior action="set-value" value="" target="id_ss" delay="1500" />
-              <behavior action="set-value" value="" target="id_pf" delay="2000" />
-              <behavior action="set-value" value="" target="id_df" delay="2500" />
-              <behavior action="set-value" value="off" target="id_s" delay="3000" />
+              <behavior action="set-value" new-value="" target="id_tf" delay="500" />
+              <behavior action="set-value" new-value="" target="id_ta" delay="1000" />
+              <behavior action="set-value" new-value="" target="id_ss" delay="1500" />
+              <behavior action="set-value" new-value="" target="id_pf" delay="2000" />
+              <behavior action="set-value" new-value="" target="id_df" delay="2500" />
+              <behavior action="set-value" new-value="off" target="id_s" delay="3000" />
               Clear all with delay
             </text>
           </view>
 
           <view style="links">
             <text style="link">
-              <behavior action="set-value" value="Multi" target="id_tf" delay="500" show-during-load="id_tf_loading" />
-              <behavior action="set-value" value="Multi" target="id_ta" delay="1000" show-during-load="id_ta_loading" />
-              <behavior action="set-value" value="Ramen" target="id_ss" delay="1500" show-during-load="id_ss_loading" />
-              <behavior action="set-value" value="2" target="id_pf" delay="2000" show-during-load="id_pf_loading" />
-              <behavior action="set-value" value="2019-04-02" target="id_df" delay="2500" show-during-load="id_df_loading" />
-              <behavior action="set-value" value="on" target="id_s" delay="3000" show-during-load="id_s_loading" />
+              <behavior action="set-value" new-value="Multi" target="id_tf" delay="500" show-during-load="id_tf_loading" />
+              <behavior action="set-value" new-value="Multi" target="id_ta" delay="1000" show-during-load="id_ta_loading" />
+              <behavior action="set-value" new-value="Ramen" target="id_ss" delay="1500" show-during-load="id_ss_loading" />
+              <behavior action="set-value" new-value="2" target="id_pf" delay="2000" show-during-load="id_pf_loading" />
+              <behavior action="set-value" new-value="2019-04-02" target="id_df" delay="2500" show-during-load="id_df_loading" />
+              <behavior action="set-value" new-value="on" target="id_s" delay="3000" show-during-load="id_s_loading" />
               Set all with indicator
             </text>
             <text style="link">
-              <behavior action="set-value" value="" target="id_tf" delay="500" show-during-load="id_tf_loading" />
-              <behavior action="set-value" value="" target="id_ta" delay="1000" show-during-load="id_ta_loading" />
-              <behavior action="set-value" value="" target="id_ss" delay="1500" show-during-load="id_ss_loading" />
-              <behavior action="set-value" value="" target="id_pf" delay="2000" show-during-load="id_pf_loading" />
-              <behavior action="set-value" value="" target="id_df" delay="2500" show-during-load="id_df_loading" />
-              <behavior action="set-value" value="off" target="id_s" delay="3000" show-during-load="id_s_loading" />
+              <behavior action="set-value" new-value="" target="id_tf" delay="500" show-during-load="id_tf_loading" />
+              <behavior action="set-value" new-value="" target="id_ta" delay="1000" show-during-load="id_ta_loading" />
+              <behavior action="set-value" new-value="" target="id_ss" delay="1500" show-during-load="id_ss_loading" />
+              <behavior action="set-value" new-value="" target="id_pf" delay="2000" show-during-load="id_pf_loading" />
+              <behavior action="set-value" new-value="" target="id_df" delay="2500" show-during-load="id_df_loading" />
+              <behavior action="set-value" new-value="off" target="id_s" delay="3000" show-during-load="id_s_loading" />
               Clear all with indicator
             </text>
           </view>
@@ -224,10 +224,10 @@
                       placeholder="Text field"
                       placeholderTextColor="#8D9494"
                       style="input" />
-          <text style="link" action="set-value" value="Test" target="id_tf">
+          <text style="link" action="set-value" new-value="Test" target="id_tf">
             Set value to "Test"
           </text>
-          <text style="link" action="set-value" value="" target="id_tf">
+          <text style="link" action="set-value" new-value="" target="id_tf">
             Clear value
           </text>
         </view>
@@ -240,10 +240,10 @@
                       placeholder="Text area"
                       placeholderTextColor="#8D9494"
                       style="input" />
-          <text style="link" action="set-value" value="Test&#10;Multi&#10;Line" target="id_ta">
+          <text style="link" action="set-value" new-value="Test&#10;Multi&#10;Line" target="id_ta">
             Set multi-line value
           </text>
-          <text style="link" action="set-value" value="" target="id_ta">
+          <text style="link" action="set-value" new-value="" target="id_ta">
             Clear value
           </text>
         </view>
@@ -269,10 +269,10 @@
               <text style="Tag__Label">Chinese</text>
             </option>
           </select-single>
-          <text style="link" action="set-value" value="Sushi" target="id_ss">
+          <text style="link" action="set-value" new-value="Sushi" target="id_ss">
             Select "Sushi"
           </text>
-          <text style="link" action="set-value" value="bogus" target="id_ss">
+          <text style="link" action="set-value" new-value="bogus" target="id_ss">
             Clear
           </text>
         </view>
@@ -301,10 +301,10 @@
             <picker-item label="Choice 4"
                          value="4" />
           </picker-field>
-          <text style="link" action="set-value" value="4" target="id_pf">
+          <text style="link" action="set-value" new-value="4" target="id_pf">
             Select 4
           </text>
-          <text style="link" action="set-value" value="" target="id_pf">
+          <text style="link" action="set-value" new-value="" target="id_pf">
             Clear
           </text>
         </view>
@@ -318,12 +318,13 @@
                       label-format="MMMM D, YYYY"
                       modal-style="PickerModal"
                       modal-text-style="PickerModal__text"
+                      name="df"
                       placeholder="Select date"
                       placeholderTextColor="#8D9494" />
-          <text style="link" action="set-value" value="2019-10-06" target="id_df">
+          <text style="link" action="set-value" new-value="2019-10-06" target="id_df">
             Select "2019-10-06"
           </text>
-          <text style="link" action="set-value" value="" target="id_df">
+          <text style="link" action="set-value" new-value="" target="id_df">
             Clear
           </text>
         </view>
@@ -332,10 +333,10 @@
         <view style="FormGroup">
           <text style="label" hide="true" id="id_s_loading">Loading...</text>
           <switch id="id_s" name="s" value="off" />
-          <text style="link" action="set-value" value="on" target="id_s">
+          <text style="link" action="set-value" new-value="on" target="id_s">
             Turn on
           </text>
-          <text style="link" action="set-value" value="off" target="id_s">
+          <text style="link" action="set-value" new-value="off" target="id_s">
             Turn off
           </text>
         </view>
