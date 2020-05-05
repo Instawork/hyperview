@@ -305,7 +305,7 @@ export default class HyperScreen extends React.Component {
 
     try {
       const url = UrlService.getUrlFromHref(href, this.state.url, method);
-      const document = await this.parser.load(url, formData);
+      const document = await this.parser.load(url, formData, method);
       return document.documentElement;
     } catch (err) {
       this.setState({
