@@ -248,6 +248,7 @@
       <xs:enumeration value="teal"/>
       <xs:enumeration value="thistle"/>
       <xs:enumeration value="tomato"/>
+      <xs:enumeration value="transparent"/>
       <xs:enumeration value="turquoise"/>
       <xs:enumeration value="violet"/>
       <xs:enumeration value="wheat"/>
@@ -318,6 +319,7 @@
         <xs:element ref="hv:text-field"/>
         <xs:element ref="hv:view"/>
         <xs:element ref="hv:web-view"/>
+        <xs:any namespace="##other" processContents="lax" />
       </xs:choice>
     </xs:sequence>
   </xs:group>
@@ -341,6 +343,16 @@
     <xs:attribute name="show-during-load" type="xs:IDREFS"/>
     <xs:attribute name="hide-during-load" type="xs:IDREFS"/>
     <xs:attribute name="delay" type="xs:nonNegativeInteger"/>
+    <xs:attribute name="verb">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="get"/>
+          <xs:enumeration value="GET"/>
+          <xs:enumeration value="post"/>
+          <xs:enumeration value="POST"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
     <xs:attribute name="event-name" type="xs:NCName"/>
     <xs:attribute name="new-value" type="xs:string"/>
 
@@ -370,6 +382,7 @@
       <xs:sequence>
         <xs:element minOccurs="1" maxOccurs="unbounded" ref="hv:screen"/>
       </xs:sequence>
+      <xs:anyAttribute namespace="##other" processContents="lax" />
     </xs:complexType>
   </xs:element>
 
