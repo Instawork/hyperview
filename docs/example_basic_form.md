@@ -131,7 +131,7 @@ Now that we have styling for form group elements, we can incorporate the [`<form
       <text
           style="Submit"
           href="/case_studies/basic_form/submit.xml"
-          verb="POST"
+          verb="post"
           target="myForm"
           action="replace"
           show-during-load="mySpinner"
@@ -145,7 +145,7 @@ Now that we have styling for form group elements, we can incorporate the [`<form
 ```
 The markup above wraps the input in a `<form>` element with id="myForm". Within the form, we've added a submit link with behavior attributes:
 - `href="/case_studies/basic_form/submit.xml"` specifies the remote request path.
-- `verb="POST"` specifies the HTTP request method used to make the request.
+- `verb="post"` specifies the HTTP request method used to make the request.
 - `target="myForm"` and `action="replace"` tells Hyperview that the response content should replace the form on the current screen. This allows the response to show validation errors on the same screen.
 - `show-during-load="mySpinner"` indicates that the spinner should be toggled while making the HTTP request.
 
@@ -160,7 +160,7 @@ The result depends on the server response. Assuming the server determines the fo
   <text
       style="Submit"
       href="/case_studies/basic_form/submit.xml"
-      verb="POST"
+      verb="post"
       target="myForm"
       action="replace"
       show-during-load="mySpinner"
