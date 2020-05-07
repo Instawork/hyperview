@@ -299,7 +299,7 @@ The rating containers for stars 1-5 are included in the doc outside of the scree
 
     <view
         href="/biz_app/gigs/shifts/dj4kXoN/feedback"
-        verb="POST"
+        verb="post"
         target="body"
         show-during-load="savingButton"
         hide-during-load="saveButton"

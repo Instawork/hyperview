@@ -55,7 +55,7 @@ describe('Parser', () => {
             'X-Hyperview-Dimensions': '750w 1334h',
             'X-Hyperview-Version': version,
           },
-          method: 'GET',
+          method: 'get',
         };
         const responseText = 'foobarbaz';
         responseTextMock.mockResolvedValue(responseText);
@@ -95,7 +95,7 @@ describe('Parser', () => {
             'X-Hyperview-Dimensions': '750w 1334h',
             'X-Hyperview-Version': version,
           },
-          method: 'GET',
+          method: 'get',
         });
         expect(document).toEqual(mockExpectedDocument);
       });
@@ -110,7 +110,7 @@ describe('Parser', () => {
         const responseText = 'foobarbaz';
         responseTextMock.mockResolvedValue(responseText);
 
-        const document = await parser.load(url, data, 'POST');
+        const document = await parser.load(url, data, 'post');
 
         expect(urlServiceAddFormDataToUrlMock).toHaveBeenCalledTimes(0);
         expect(mockParseFromString).toHaveBeenCalledWith(responseText);
@@ -123,7 +123,7 @@ describe('Parser', () => {
             'X-Hyperview-Dimensions': '750w 1334h',
             'X-Hyperview-Version': version,
           },
-          method: 'POST',
+          method: 'post',
         });
         expect(document).toEqual(mockExpectedDocument);
       });

@@ -347,9 +347,7 @@
       <xs:simpleType>
         <xs:restriction base="xs:string">
           <xs:enumeration value="get"/>
-          <xs:enumeration value="GET"/>
           <xs:enumeration value="post"/>
-          <xs:enumeration value="POST"/>
         </xs:restriction>
       </xs:simpleType>
     </xs:attribute>

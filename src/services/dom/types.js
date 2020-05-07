@@ -16,8 +16,8 @@ export const HTTP_HEADERS = {
 };
 
 export const HTTP_METHODS = {
-  GET: 'GET',
-  POST: 'POST',
+  GET: 'get',
+  POST: 'post',
 };
 
 export type HttpMethod = $Values<typeof HTTP_METHODS>;
