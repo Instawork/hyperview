@@ -6,7 +6,7 @@ jobs:
       - image: instawork/hyperview-ci:1.0.0
     steps:
       - checkout
-      - run: yarn
+      - run: yarn --ignore-optional
       - run: yarn test:generators
       - run: yarn test:flow
       - run: yarn test:lint
