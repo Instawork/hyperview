@@ -4,26 +4,23 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "eject": "expo eject",
-    "test": "node ./node_modules/jest/bin/jest.js --watchAll"
-  },
-  "jest": {
-    "preset": "jest-expo"
+    "web": "expo start --web",
+    "eject": "expo eject"
   },
   "dependencies": {
-    "@expo/samples": "2.1.1",
-    "expo": "^35.0.0",
-    "expo-cli": "^3.2.2",
-    "hyperview": "0.25.0",
-    "moment": "^2.24.0",
-    "react": "16.8.3",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
-    "react-native-keyboard-aware-scrollview": "^2.0.0",
+    "expo": "~37.0.3",
+    "hyperview": "0.27.0",
+    "react": "~16.9.0",
+    "react-dom": "~16.9.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.1.tar.gz",
+    "react-native-keyboard-aware-scrollview": "^2.1.0",
+    "react-native-web": "~0.11.7",
     "react-navigation": "^2.18.2"
   },
   "devDependencies": {
-    "babel-preset-expo": "^7.0.0",
-    "jest-expo": "^35.0.0"
+    "@babel/core": "^7.8.6",
+    "babel-preset-expo": "~8.1.0",
+    "expo-cli": "^3.20.3"
   },
   "private": true
 }
