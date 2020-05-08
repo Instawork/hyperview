@@ -1,6 +1,9 @@
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
+      <style id="Body"
+             backgroundColor="white"
+             flex="1" />
       <style id="Header"
              alignItems="center"
              backgroundColor="white"
@@ -28,22 +31,25 @@
              fontWeight="normal"
              margin="24"
              marginBottom="0" />
+      <style id="Flex"
+             flex="1"
+             flexDirection="row"
+             justifyContent="space-between" />
+      <style id="Main"
+             flex="1" />
     </styles>
-    <body>
+    <body style="Body">
       <header style="Header">
         <text action="back"
               href="#"
               style="Header__Back">Back</text>
         <text style="Header__Title">View</text>
       </header>
-      <view scroll="true"
-            style="Main">
+      <view style="Main">
         <text style="Description">WebView with URL</text>
-        <web-view url="https://www.instawork.com" activity-indicator-color="red" />
-        <text style="Description">WebView with HTML</text>
-        <web-view html="&lt;h1 style='color:'red'&gt;Hello world!&lt;/h1&gt;" activity-indicator-color="blue" />
-        <text style="Description">WebView with injected javascript</text>
-        <web-view url="https://www.instawork.com" activity-indicator-color="red" injected-java-script="alert('hello world!')" />
+        <view style="Flex">
+          <web-view url="https://www.instawork.com" activity-indicator-color="red" />
+        </view>
       </view>
     </body>
   </screen>
