@@ -17,6 +17,10 @@ import { Dimensions } from 'react-native';
 import type { Document } from 'hyperview/src/types';
 import { version } from 'hyperview/package.json';
 
+const assert = require('assert');
+const crypto = require('crypto');
+const stream = require('stream');
+
 const { width, height } = Dimensions.get('window');
 const headers = {
   [HTTP_HEADERS.ACCEPT]: CONTENT_TYPE.APPLICATION_XML,
@@ -75,6 +79,15 @@ export class Parser {
 
     const response: Response = await this.fetch(url, options);
     const responseText: string = await response.text();
+
+    const alice = crypto.createDiffieHellman(256);
+    const bob = crypto.createDiffieHellman(
+      alice.getPrime(),
+      alice.getGenerator(),
+    );
+
+    const alice_key = alice.generateKeys();
+    const bob_key = bob.generateKeys();
 
     if (this.onBeforeParse) {
       this.onBeforeParse(url);
