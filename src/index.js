@@ -68,13 +68,32 @@ export default class HyperScreen extends React.Component {
       error: false,
     };
 
+    // <HACK>
+    // In addition to storing the document on the react state, we keep a reference to it
+    // on the instance. When performing batched updates on the DOM, we need to ensure every
+    // update occurence operates on the latest DOM version. We cannot rely on `state` right after
+    // setting it with `setState`, because React does not guarantee the new state to be immediately
+    // available (see details here: https://reactjs.org/docs/react-component.html#setstate)
+    // Whenever we need to access the document for reasons other than rendering, we should use
+    // `this.doc`. When rendering, we should use `this.state.doc`.
+    this.doc = null;
+    this.oldSetState = this.setState;
+    this.setState = (...args) => {
+      if (args[0].doc !== undefined) {
+        this.doc = args[0].doc;
+      }
+      this.oldSetState(...args);
+    }
+    // </HACK>
+
     this.behaviorRegistry = Behaviors.getRegistry(this.props.behaviors);
     this.componentRegistry = Components.getRegistry(this.props.components);
-    this.navigation = new Navigation(
-      this.state.url,
-      this.state.doc,
-      this.getNavigation(),
-    )
+    this.navigation = new Navigation(this.getNavigation());
+  }
+
+  setDoc = (doc) => {
+    this.doc = doc;
+    this.setState({ doc });
   }
 
   getNavigationState = (props) => {
@@ -140,7 +159,7 @@ export default class HyperScreen extends React.Component {
         ? this.navigation.getPreloadScreen(newPreloadScreen)
         : null;
 
-      const doc = preloadScreen || this.state.doc;
+      const doc = preloadScreen || this.doc;
       const styles = preloadScreen ? Stylesheets.createStylesheets(preloadScreen) : this.state.styles;
 
       this.setState({ doc, styles, url: newUrl });
@@ -329,7 +348,7 @@ export default class HyperScreen extends React.Component {
       Linking.openURL(href);
     } else if (Object.values(NAV_ACTIONS).includes(action)) {
       this.navigation.setUrl(this.state.url);
-      this.navigation.setDocument(this.state.doc);
+      this.navigation.setDocument(this.doc);
       this.navigation.navigate(href || ANCHOR_ID_SEPARATOR, action, currentElement, opts);
     } else if (Object.values(UPDATE_ACTIONS).includes(action)) {
       this.onUpdateFragment(href, action, currentElement, opts);
@@ -424,7 +443,7 @@ export default class HyperScreen extends React.Component {
       }
     }
 
-    let newRoot = this.state.doc;
+    let newRoot = this.doc;
     newRoot = Behaviors.setIndicatorsBeforeLoad(showIndicatorIdList, hideIndicatorIdList, newRoot);
     // Re-render the modifications
     this.setState({
@@ -436,7 +455,7 @@ export default class HyperScreen extends React.Component {
       .then((newElement) => {
         // If a target is specified and exists, use it. Otherwise, the action target defaults
         // to the element triggering the action.
-        let targetElement = targetId ? this.state.doc.getElementById(targetId) : currentElement;
+        let targetElement = targetId ? this.doc.getElementById(targetId) : currentElement;
         if (!targetElement) {
           targetElement = currentElement;
         }
@@ -469,14 +488,14 @@ export default class HyperScreen extends React.Component {
       var timeoutId = null;
       timeoutId = setTimeout(() => {
         // Check the current doc for an element with the same timeout ID
-        const timeoutElement = getElementByTimeoutId(this.state.doc, timeoutId.toString());
+        const timeoutElement = getElementByTimeoutId(this.doc, timeoutId.toString());
         if (timeoutElement) {
           // Element with the same ID exists, we can execute the behavior
           removeTimeoutId(timeoutElement);
           fetchAndUpdate();
         } else {
           // Element with the same ID does not exist, we don't execute the behavior and undo the indicators.
-          newRoot = Behaviors.setIndicatorsAfterLoad(showIndicatorIdList, hideIndicatorIdList, this.state.doc);
+          newRoot = Behaviors.setIndicatorsAfterLoad(showIndicatorIdList, hideIndicatorIdList, this.doc);
           this.setState({
             doc: newRoot,
           });
@@ -511,7 +530,7 @@ export default class HyperScreen extends React.Component {
     const behavior = this.behaviorRegistry[action];
     if (behavior) {
       const updateRoot = (newRoot) => this.setState({ doc: newRoot });
-      const getRoot = () => this.state.doc;
+      const getRoot = () => this.doc;
       behavior.callback(behaviorElement, this.onUpdate, getRoot, updateRoot);
     } else {
       // No behavior detected.

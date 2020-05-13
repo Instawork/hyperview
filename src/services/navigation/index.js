@@ -19,15 +19,13 @@ const QUERY_SEPARATOR = '?';
 const getHrefKey = (href: string): string => href.split(QUERY_SEPARATOR)[0];
 
 export default class Navigation {
-  url: string;
-  document: Document;
+  url: string = null;
+  document: Document = null;
   navigation: NavigationProps;
   preloadScreens: { [number]: Element } = {};
   routeKeys: { [string]: string } = {};
 
-  constructor(url: string, document: Document, navigation: NavigationProps) {
-    this.url = url;
-    this.document = document;
+  constructor(navigation: NavigationProps) {
     this.navigation = navigation;
   }
 
