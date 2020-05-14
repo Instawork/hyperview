@@ -9,8 +9,8 @@
  */
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
+import { ActivityIndicator, StyleSheet } from 'react-native';
 import React, { PureComponent } from 'react';
-import { ActivityIndicator } from 'react-native';
 import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import WebView from 'react-native-webview';
@@ -36,7 +36,12 @@ export default class HvWebView extends PureComponent<HvComponentProps> {
       <WebView
         injectedJavaScript={injectedJavaScript}
         onMessage={NOOP} // https://github.com/react-native-community/react-native-webview/issues/1311
-        renderLoading={() => <ActivityIndicator color={color} />}
+        renderLoading={() => (
+          <ActivityIndicator
+            color={color}
+            style={StyleSheet.absoluteFillObject}
+          />
+        )}
         source={source}
         startInLoadingState
       />
