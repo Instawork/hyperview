@@ -19,13 +19,14 @@ const QUERY_SEPARATOR = '?';
 const getHrefKey = (href: string): string => href.split(QUERY_SEPARATOR)[0];
 
 export default class Navigation {
-  url: string = null;
-  document: Document = null;
+  url: string;
+  document: ?Document = null;
   navigation: NavigationProps;
   preloadScreens: { [number]: Element } = {};
   routeKeys: { [string]: string } = {};
 
-  constructor(navigation: NavigationProps) {
+  constructor(url: string, navigation: NavigationProps) {
+    this.url = url;
     this.navigation = navigation;
   }
 
@@ -67,7 +68,7 @@ export default class Navigation {
     const url = UrlService.addFormDataToUrl(baseUrl, formData);
 
     let preloadScreen = null;
-    if (showIndicatorId) {
+    if (showIndicatorId && this.document) {
       const screens: NodeList<Element> = this.document.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
         'screen',
