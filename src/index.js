@@ -91,11 +91,6 @@ export default class HyperScreen extends React.Component {
     this.navigation = new Navigation(props.entrypointUrl, this.getNavigation());
   }
 
-  setDoc = (doc) => {
-    this.doc = doc;
-    this.setState({ doc });
-  }
-
   getNavigationState = (props) => {
     if (props.navigation) {
       return props.navigation.state;
