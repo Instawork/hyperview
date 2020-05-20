@@ -8,13 +8,15 @@
  *
  */
 
+import * as Errors from './errors';
 import * as UrlService from 'hyperview/src/services/url';
 import type { BeforeAfterParseHandler, Fetch, HttpMethod } from './types';
 import { CONTENT_TYPE, HTTP_HEADERS, HTTP_METHODS } from './types';
-import { ParserError, ParserFatalError, ParserWarning } from './errors';
 import { DOMParser } from 'xmldom-instawork';
 import { Dimensions } from 'react-native';
 import type { Document } from 'hyperview/src/types';
+import { LOCAL_NAME } from 'hyperview/src/types';
+import { getFirstTag } from 'hyperview/src/services';
 import { version } from 'hyperview/package.json';
 
 const { width, height } = Dimensions.get('window');
@@ -28,13 +30,13 @@ const parser = new DOMParser({
   locator: {},
   errorHandler: {
     error: (error: string) => {
-      throw new ParserError(error);
+      throw new Errors.XMLParserError(error);
     },
     fatalError: (error: string) => {
-      throw new ParserFatalError(error);
+      throw new Errors.XMLParserFatalError(error);
     },
     warning: (error: string) => {
-      throw new ParserWarning(error);
+      throw new Errors.XMLParserWarning(error);
     },
   },
 });
@@ -76,6 +78,15 @@ export class Parser {
     const response: Response = await this.fetch(url, options);
     const responseText: string = await response.text();
 
+    if (response.status >= 500) {
+      throw new Errors.ServerError(
+        url,
+        responseText,
+        response.headers,
+        response.status,
+      );
+    }
+
     if (this.onBeforeParse) {
       this.onBeforeParse(url);
     }
@@ -85,4 +96,49 @@ export class Parser {
     }
     return document;
   };
+
+  loadDocument = async (baseUrl: string): Promise<Document> => {
+    const doc = await this.load(baseUrl);
+    const docElement = getFirstTag(doc, LOCAL_NAME.DOC);
+    if (!docElement) {
+      throw new Errors.XMLRequiredElementNotFound(LOCAL_NAME.DOC, baseUrl);
+    }
+
+    const screenElement = getFirstTag(docElement, LOCAL_NAME.SCREEN);
+    if (!screenElement) {
+      throw new Errors.XMLRequiredElementNotFound(LOCAL_NAME.SCREEN, baseUrl);
+    }
+
+    const bodyElement = getFirstTag(screenElement, LOCAL_NAME.BODY);
+    if (!bodyElement) {
+      throw new Errors.XMLRequiredElementNotFound(LOCAL_NAME.BODY, baseUrl);
+    }
+    return doc;
+  };
+
+  loadElement = async (
+    baseUrl: string,
+    data: ?FormData,
+    method: ?HttpMethod = HTTP_METHODS.GET,
+  ): Promise<Document> => {
+    const doc = await this.load(baseUrl, data, method);
+    const docElement = getFirstTag(doc, LOCAL_NAME.DOC);
+    if (docElement) {
+      throw new Errors.XMLRestrictedElementFound(LOCAL_NAME.DOC, baseUrl);
+    }
+
+    const screenElement = getFirstTag(doc, LOCAL_NAME.SCREEN);
+    if (screenElement) {
+      throw new Errors.XMLRestrictedElementFound(LOCAL_NAME.SCREEN, baseUrl);
+    }
+
+    const bodyElement = getFirstTag(doc, LOCAL_NAME.BODY);
+    if (bodyElement) {
+      throw new Errors.XMLRestrictedElementFound(LOCAL_NAME.BODY, baseUrl);
+    }
+    return doc;
+  };
 }
+
+export * from './errors';
+export * from './types';

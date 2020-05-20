@@ -128,5 +128,21 @@ describe('Parser', () => {
         expect(document).toEqual(mockExpectedDocument);
       });
     });
+    // it.todo('parser warning', () => {});
+    // it.todo('parser error', () => {});
+    // it.todo('parser fatal error', () => {});
+    // it.todo('server error', () => {});
   });
+  // describe('loadDocument', () => {
+  // it.todo('missing <doc>');
+  // it.todo('missing <screen>');
+  // it.todo('missing <body>');
+  // it.todo('valid response');
+  // });
+  // describe('loadElement', () => {
+  // it.todo('with <doc> present');
+  // it.todo('with <screen> present');
+  // it.todo('with <body> present');
+  // it.todo('valid response');
+  // });
 });
