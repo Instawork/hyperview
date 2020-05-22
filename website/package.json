@@ -2,7 +2,7 @@
   "scripts": {
     "examples": "docusaurus-examples",
     "start": "docusaurus-start",
-    "build": "docusaurus-build",
+    "build": "docusaurus-build && npm run build-schema",
     "build-schema": "./build-schema.sh",
     "publish-gh-pages": "docusaurus-publish",
     "write-translations": "docusaurus-write-translations",
