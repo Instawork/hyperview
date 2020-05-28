@@ -13,24 +13,16 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as UrlService from 'hyperview/src/services/url';
-import {
-  ActivityIndicator,
-  Alert,
-  Easing,
-  Linking,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Linking } from 'react-native';
 import { XMLSerializer } from 'xmldom-instawork';
+import LoadError from 'hyperview/src/core/components/load-error';
+import Loading from 'hyperview/src/core/components/loading';
 import HyperRef from 'hyperview/src/core/hyper-ref';
 import Navigation, { ANCHOR_ID_SEPARATOR } from 'hyperview/src/services/navigation';
 import { Parser } from 'hyperview/src/services/dom';
 import React from 'react';
-import VisibilityDetectingView from './VisibilityDetectingView.js';
-import { createProps, getBehaviorElements, getFirstTag, later, shallowCloneToRoot, getFormData, getElementByTimeoutId, removeTimeoutId, setTimeoutId } from 'hyperview/src/services';
-import { ACTIONS, FORM_NAMES, NAV_ACTIONS, ON_EVENT_DISPATCH, UPDATE_ACTIONS } from 'hyperview/src/types';
-import urlParse from 'url-parse';
+import { createProps, getFirstTag, later, shallowCloneToRoot, getFormData, getElementByTimeoutId, removeTimeoutId, setTimeoutId } from 'hyperview/src/services';
+import { ACTIONS, NAV_ACTIONS, UPDATE_ACTIONS } from 'hyperview/src/types';
 
 
 // Shared instance, used in dev mode only
@@ -253,19 +245,12 @@ export default class HyperScreen extends React.Component {
     const { doc, url, error } = this.state;
     if (error) {
       return (
-        <View style={{ backgroundColor: 'white', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Text>An error occured</Text>
-          <TouchableOpacity onPress={() => this.reload()}>
-            <Text style={{ color: '#4778FF', marginTop: 16 }}>Reload</Text>
-          </TouchableOpacity>
-        </View>
+        <LoadError onPressReload={this.reload} />
       );
     }
     if (!doc) {
       return (
-        <View style={{ backgroundColor: 'white', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <ActivityIndicator />
-        </View>
+        <Loading />
       );
     }
     const body = doc.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'body')[0];
