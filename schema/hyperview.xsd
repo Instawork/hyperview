@@ -638,6 +638,7 @@
   <xs:element name="body">
     <xs:complexType>
       <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="hv:behavior"/>
         <xs:element minOccurs="0" maxOccurs="1" ref="hv:header"/>
         <xs:group ref="hv:viewChildren"/>
       </xs:sequence>
