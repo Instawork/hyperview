@@ -307,6 +307,7 @@
         <xs:element ref="hv:behavior"/>
         <xs:element ref="hv:date-field"/>
         <xs:element ref="hv:form"/>
+        <xs:element ref="hv:header"/>
         <xs:element ref="hv:image"/>
         <xs:element ref="hv:option"/>
         <xs:element ref="hv:picker-field"/>
@@ -637,11 +638,7 @@
 
   <xs:element name="body">
     <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="hv:behavior"/>
-        <xs:element minOccurs="0" maxOccurs="1" ref="hv:header"/>
-        <xs:group ref="hv:viewChildren"/>
-      </xs:sequence>
+      <xs:group ref="hv:viewChildren"/>
       <xs:attribute name="id" type="xs:ID"/>
       <xs:attribute name="style" type="hv:styleList"/>
       <xs:attributeGroup ref="hv:scrollAttributes"/>
