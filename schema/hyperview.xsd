@@ -888,6 +888,7 @@
       <xs:attribute name="hide" type="xs:boolean"/>
       <xs:attribute name="style" type="hv:styleList"/>
       <xs:attribute name="auto-focus" type="xs:boolean"/>
+      <xs:attribute name="underlineColorAndroid" type="hv:color"/>
     </xs:complexType>
   </xs:element>
 
@@ -899,6 +900,7 @@
       <xs:attribute name="placeholderTextColor" type="hv:color"/>
       <xs:attribute name="id" type="xs:ID"/>
       <xs:attribute name="hide" type="xs:boolean"/>
+      <xs:attribute name="underlineColorAndroid" type="hv:color"/>
       <xs:attribute name="style"/>
     </xs:complexType>
   </xs:element>
