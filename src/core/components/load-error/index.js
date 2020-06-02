@@ -43,7 +43,9 @@ export default class LoadError extends PureComponent<Props> {
             </body>
           </screen>
         </doc>`;
-        return `data:${Dom.CONTENT_TYPE.APPLICATION_XML};base64,${btoa(xml)}`;
+        return `data:${Dom.CONTENT_TYPE.APPLICATION_XML};base64,${btoa(
+          xml.replace(/[\u00A0-\u2666]/g, c => `&#${c.charCodeAt(0)};`),
+        )}`;
       }
       default:
         return null;
