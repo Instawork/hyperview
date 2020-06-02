@@ -8,6 +8,7 @@
 
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Components from 'hyperview/src/services/components';
+import * as Dom from 'hyperview/src/services/dom';
 import * as Events from 'hyperview/src/services/events';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
@@ -19,9 +20,8 @@ import LoadError from 'hyperview/src/core/components/load-error';
 import Loading from 'hyperview/src/core/components/loading';
 import HyperRef from 'hyperview/src/core/hyper-ref';
 import Navigation, { ANCHOR_ID_SEPARATOR } from 'hyperview/src/services/navigation';
-import { Parser } from 'hyperview/src/services/dom';
 import React from 'react';
-import { createProps, getFirstTag, later, shallowCloneToRoot, getFormData, getElementByTimeoutId, removeTimeoutId, setTimeoutId } from 'hyperview/src/services';
+import { createProps, later, shallowCloneToRoot, getFormData, getElementByTimeoutId, removeTimeoutId, setTimeoutId } from 'hyperview/src/services';
 import { ACTIONS, NAV_ACTIONS, UPDATE_ACTIONS } from 'hyperview/src/types';
 
 
@@ -46,7 +46,7 @@ export default class HyperScreen extends React.Component {
     this.reload = this.reload.bind(this);
 
     this.updateActions = ['replace', 'replace-inner', 'append', 'prepend'];
-    this.parser = new Parser(
+    this.parser = new Dom.Parser(
       this.props.fetch,
       this.props.onParseBefore,
       this.props.onParseAfter
@@ -107,12 +107,12 @@ export default class HyperScreen extends React.Component {
       this.setState({
         doc: preloadScreen,
         styles: preloadStyles,
-        error: false,
+        error: null,
         url,
       });
     } else {
       this.setState({
-        error: false,
+        error: null,
         url,
       });
     }
@@ -186,39 +186,21 @@ export default class HyperScreen extends React.Component {
       }
 
       const url = this.state.url;
-      const doc = await this.parser.load(url);
-
-      // Make sure the XML has the required elements: <doc>, <screen>, <body>.
-      const docElement = getFirstTag(doc, 'doc');
-      if (!docElement) {
-        throw new Error(`No <doc> tag found in the response from ${url}.`);
-      }
-
-      const screenElement = getFirstTag(docElement, 'screen');
-      if (!screenElement) {
-        throw new Error(`No <screen> tag found in the <doc> tag from ${url}.`);
-      }
-
-      const bodyElement = getFirstTag(screenElement, 'body');
-      if (!bodyElement) {
-        throw new Error(`No <body> tag found in the <screen> tag from ${url}.`);
-      }
-
+      const doc = await this.parser.loadDocument(url);
       const stylesheets = Stylesheets.createStylesheets(doc);
       this.navigation.setRouteKey(url, routeKey);
       this.setState({
         doc,
         styles: stylesheets,
-        error: false,
+        error: null,
       });
 
     } catch (err) {
       this.setState({
         doc: null,
         styles: null,
-        error: true,
+        error: err,
       });
-      console.error(err.message);
     }
   }
 
@@ -233,7 +215,7 @@ export default class HyperScreen extends React.Component {
       : UrlService.getUrlFromHref(opt_href, this.state.url);
     this.needsLoad = true;
     this.setState({
-      error: false,
+      error: null,
       url,
     });
   }
@@ -245,7 +227,11 @@ export default class HyperScreen extends React.Component {
     const { doc, url, error } = this.state;
     if (error) {
       return (
-        <LoadError onPressReload={this.reload} />
+        <LoadError
+          onPressReload={() => this.reload()}
+          onPressViewDetails={(uri: string) => this.props.openModal({url: uri})}
+          error={error}
+        />
       );
     }
     if (!doc) {
@@ -304,15 +290,14 @@ export default class HyperScreen extends React.Component {
 
     try {
       const url = UrlService.getUrlFromHref(href, this.state.url, method);
-      const document = await this.parser.load(url, formData, method);
-      return document.documentElement;
+      const doc = await this.parser.loadElement(url, formData, method);
+      return doc.documentElement;
     } catch (err) {
       this.setState({
         doc: null,
         styles: null,
-        error: true,
+        error: err,
       });
-      console.error(err.message);
     }
   }
 

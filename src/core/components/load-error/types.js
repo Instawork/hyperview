@@ -9,5 +9,7 @@
  */
 
 export type Props = {|
+  error: ?Error,
   onPressReload: () => void,
+  onPressViewDetails: (uri: string) => void,
 |};

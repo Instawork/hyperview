@@ -359,3 +359,11 @@ export const getFormData = (element: Element): ?FormData => {
   // Ensure that we only return form data with content in it. Otherwise, it will crash on Android
   return formHasData ? formData : null;
 };
+
+export const encodeXml = (xml: string): string =>
+  xml
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
