@@ -301,7 +301,7 @@
 
   <xs:simpleType name="eventName">
     <xs:restriction base="xs:token">
-      <xs:pattern value="[0-9a-zA-Z\-\./]+"/>
+      <xs:pattern value="[0-9a-zA-Z_\-\./]+"/>
     </xs:restriction>
   </xs:simpleType>
 
