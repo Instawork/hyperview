@@ -284,6 +284,21 @@
     </xs:union>
   </xs:simpleType>
 
+  <xs:simpleType name="margin">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:integer" />
+      </xs:simpleType>
+
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="auto" />
+        </xs:restriction>
+      </xs:simpleType>
+
+    </xs:union>
+  </xs:simpleType>
+
   <xs:simpleType name="eventName">
     <xs:restriction base="xs:token">
       <xs:pattern value="[0-9a-zA-Z\-\./]+"/>
@@ -578,13 +593,13 @@
 
       <xs:attribute name="left" type="hv:pointsOrPercent"/>
       <xs:attribute name="lineHeight" type="xs:integer"/>
-      <xs:attribute name="margin" type="xs:integer"/>
-      <xs:attribute name="marginBottom" type="xs:integer"/>
-      <xs:attribute name="marginHorizontal" type="xs:integer"/>
-      <xs:attribute name="marginLeft" type="xs:integer"/>
-      <xs:attribute name="marginRight" type="xs:integer"/>
-      <xs:attribute name="marginTop" type="xs:integer"/>
-      <xs:attribute name="marginVertical" type="xs:integer"/>
+      <xs:attribute name="margin" type="hv:margin"/>
+      <xs:attribute name="marginBottom" type="hv:margin"/>
+      <xs:attribute name="marginHorizontal" type="hv:margin"/>
+      <xs:attribute name="marginLeft" type="hv:margin"/>
+      <xs:attribute name="marginRight" type="hv:margin"/>
+      <xs:attribute name="marginTop" type="hv:margin"/>
+      <xs:attribute name="marginVertical" type="hv:margin"/>
       <xs:attribute name="maxHeight" type="hv:pointsOrPercent"/>
       <xs:attribute name="maxWidth" type="hv:pointsOrPercent"/>
       <xs:attribute name="minHeight" type="hv:pointsOrPercent"/>
