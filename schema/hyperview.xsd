@@ -466,6 +466,16 @@
 
       <xs:attribute name="borderRightWidth" type="xs:nonNegativeInteger"/>
 
+      <xs:attribute name="borderStyle">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="solid"/>
+            <xs:enumeration value="dotted"/>
+            <xs:enumeration value="dashed"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+
       <xs:attribute name="borderTopColor" type="hv:color"/>
 
       <xs:attribute name="borderTopWidth" type="xs:nonNegativeInteger"/>
