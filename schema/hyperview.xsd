@@ -927,6 +927,16 @@
       <xs:attribute name="style" type="hv:styleList"/>
       <xs:attribute name="auto-focus" type="xs:boolean"/>
       <xs:attribute name="underlineColorAndroid" type="hv:color"/>
+      <xs:attribute name="clearButtonMode">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="never"/>
+            <xs:enumeration value="while-editing"/>
+            <xs:enumeration value="unless-editing"/>
+            <xs:enumeration value="always"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
     </xs:complexType>
   </xs:element>
 
