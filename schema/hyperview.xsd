@@ -284,6 +284,12 @@
     </xs:union>
   </xs:simpleType>
 
+  <xs:simpleType name="eventName">
+    <xs:restriction base="xs:token">
+      <xs:pattern value="[0-9a-zA-Z\-\./]+"/>
+    </xs:restriction>
+  </xs:simpleType>
+
 
   <xs:simpleType name="styleList">
     <xs:list itemType="xs:NCName" />
@@ -352,7 +358,7 @@
         </xs:restriction>
       </xs:simpleType>
     </xs:attribute>
-    <xs:attribute name="event-name" type="xs:NCName"/>
+    <xs:attribute name="event-name" type="hv:eventName"/>
     <xs:attribute name="new-value" type="xs:string"/>
 
     <xs:attributeGroup ref="alert:alertAttributes" />
