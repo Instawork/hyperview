@@ -718,6 +718,9 @@
 
   <xs:element name="image">
     <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="hv:behavior"/>
+      </xs:sequence>
       <xs:attribute name="source" use="required" type="xs:anyURI"/>
       <xs:attribute name="style" type="hv:styleList" use="required"/>
       <xs:attribute name="id" type="hv:ID"/>
