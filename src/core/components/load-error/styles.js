@@ -16,9 +16,16 @@ export default StyleSheet.create({
     marginTop: 16,
   },
   container: {
-    alignItems: 'center',
     backgroundColor: 'white',
     flex: 1,
     justifyContent: 'center',
+  },
+  header: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 24,
+  },
+  title: {
+    textAlign: 'center',
   },
 });
