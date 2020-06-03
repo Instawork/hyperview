@@ -20,7 +20,12 @@ export default class LoadError extends PureComponent<Props> {
 
   getDetailsUri = () => {
     const error = this.props.error;
-    if (!__DEV__ || !error || !(error instanceof Dom.ServerError)) {
+    if (
+      !__DEV__ ||
+      !global.btoa ||
+      !error ||
+      !(error instanceof Dom.ServerError)
+    ) {
       return null;
     }
     const { responseText, responseHeaders } = error;
@@ -82,6 +87,8 @@ export default class LoadError extends PureComponent<Props> {
           <Text style={styles.button}>View details</Text>
         </TouchableOpacity>
       );
+    } else if (__DEV__ && !global.btoa) {
+      return <Text>Enable Debug mode to see details</Text>;
     }
     return null;
   };
