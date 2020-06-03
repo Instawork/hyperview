@@ -329,6 +329,7 @@
         <xs:element ref="hv:spinner"/>
         <xs:element ref="hv:text"/>
         <xs:element ref="hv:view"/>
+        <xs:any namespace="##other" processContents="lax" />
       </xs:choice>
     </xs:sequence>
   </xs:group>
