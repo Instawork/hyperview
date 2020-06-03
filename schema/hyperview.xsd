@@ -946,6 +946,8 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>
+      <!-- Needed to support address-input. Eventually, we should allow attributes from other namespaces. -->
+      <xs:attribute name="type" type="xs:string"/>
     </xs:complexType>
   </xs:element>
 
