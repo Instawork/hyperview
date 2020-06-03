@@ -284,6 +284,38 @@
     </xs:union>
   </xs:simpleType>
 
+  <xs:simpleType name="margin">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:integer" />
+      </xs:simpleType>
+
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="auto" />
+        </xs:restriction>
+      </xs:simpleType>
+
+    </xs:union>
+  </xs:simpleType>
+
+  <xs:simpleType name="eventName">
+    <xs:restriction base="xs:token">
+      <xs:pattern value="[0-9a-zA-Z_\-\./]+"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ID">
+    <xs:restriction base="xs:token" />
+  </xs:simpleType>
+
+  <xs:simpleType name="IDREF">
+    <xs:restriction base="hv:ID" />
+  </xs:simpleType>
+
+  <xs:simpleType name="IDREFS">
+    <xs:list itemType="hv:ID" />
+  </xs:simpleType>
 
   <xs:simpleType name="styleList">
     <xs:list itemType="xs:NCName" />
@@ -297,6 +329,7 @@
         <xs:element ref="hv:spinner"/>
         <xs:element ref="hv:text"/>
         <xs:element ref="hv:view"/>
+        <xs:any namespace="##other" processContents="lax" />
       </xs:choice>
     </xs:sequence>
   </xs:group>
@@ -307,6 +340,7 @@
         <xs:element ref="hv:behavior"/>
         <xs:element ref="hv:date-field"/>
         <xs:element ref="hv:form"/>
+        <xs:element ref="hv:header"/>
         <xs:element ref="hv:image"/>
         <xs:element ref="hv:option"/>
         <xs:element ref="hv:picker-field"/>
@@ -336,12 +370,12 @@
 
   <xs:attributeGroup name="behaviorAttributes">
     <xs:attribute name="action" type="hv:action" />
-    <xs:attribute name="target" type="xs:IDREF"/>
+    <xs:attribute name="target" type="hv:IDREF"/>
     <xs:attribute name="href" type="xs:string"/>
     <xs:attribute name="once" type="xs:boolean"/>
     <xs:attribute name="trigger" type="hv:trigger"/>
-    <xs:attribute name="show-during-load" type="xs:IDREFS"/>
-    <xs:attribute name="hide-during-load" type="xs:IDREFS"/>
+    <xs:attribute name="show-during-load" type="hv:IDREFS"/>
+    <xs:attribute name="hide-during-load" type="hv:IDREFS"/>
     <xs:attribute name="delay" type="xs:nonNegativeInteger"/>
     <xs:attribute name="verb">
       <xs:simpleType>
@@ -351,7 +385,7 @@
         </xs:restriction>
       </xs:simpleType>
     </xs:attribute>
-    <xs:attribute name="event-name" type="xs:NCName"/>
+    <xs:attribute name="event-name" type="hv:eventName"/>
     <xs:attribute name="new-value" type="xs:string"/>
 
     <xs:attributeGroup ref="alert:alertAttributes" />
@@ -390,7 +424,7 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="hv:styles"/>
         <xs:element minOccurs="1" maxOccurs="1" ref="hv:body"/>
       </xs:sequence>
-      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="id" type="hv:ID"/>
     </xs:complexType>
   </xs:element>
 
@@ -456,8 +490,26 @@
       <xs:attribute name="borderLeftWidth" type="xs:nonNegativeInteger"/>
 
       <xs:attribute name="borderRadius" type="xs:nonNegativeInteger"/>
+      <xs:attribute name="borderBottomEndRadius" type="xs:nonNegativeInteger"/>
+      <xs:attribute name="borderBottomLeftRadius" type="xs:nonNegativeInteger"/>
+      <xs:attribute name="borderBottomRightRadius" type="xs:nonNegativeInteger"/>
+      <xs:attribute name="borderBottomStartRadius" type="xs:nonNegativeInteger"/>
+      <xs:attribute name="borderTopEndRadius" type="xs:nonNegativeInteger"/>
+      <xs:attribute name="borderTopLeftRadius" type="xs:nonNegativeInteger"/>
+      <xs:attribute name="borderTopRightRadius" type="xs:nonNegativeInteger"/>
+      <xs:attribute name="borderTopStartRadius" type="xs:nonNegativeInteger"/>
 
       <xs:attribute name="borderRightWidth" type="xs:nonNegativeInteger"/>
+
+      <xs:attribute name="borderStyle">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="solid"/>
+            <xs:enumeration value="dotted"/>
+            <xs:enumeration value="dashed"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
 
       <xs:attribute name="borderTopColor" type="hv:color"/>
 
@@ -550,13 +602,13 @@
 
       <xs:attribute name="left" type="hv:pointsOrPercent"/>
       <xs:attribute name="lineHeight" type="xs:integer"/>
-      <xs:attribute name="margin" type="xs:integer"/>
-      <xs:attribute name="marginBottom" type="xs:integer"/>
-      <xs:attribute name="marginHorizontal" type="xs:integer"/>
-      <xs:attribute name="marginLeft" type="xs:integer"/>
-      <xs:attribute name="marginRight" type="xs:integer"/>
-      <xs:attribute name="marginTop" type="xs:integer"/>
-      <xs:attribute name="marginVertical" type="xs:integer"/>
+      <xs:attribute name="margin" type="hv:margin"/>
+      <xs:attribute name="marginBottom" type="hv:margin"/>
+      <xs:attribute name="marginHorizontal" type="hv:margin"/>
+      <xs:attribute name="marginLeft" type="hv:margin"/>
+      <xs:attribute name="marginRight" type="hv:margin"/>
+      <xs:attribute name="marginTop" type="hv:margin"/>
+      <xs:attribute name="marginVertical" type="hv:margin"/>
       <xs:attribute name="maxHeight" type="hv:pointsOrPercent"/>
       <xs:attribute name="maxWidth" type="hv:pointsOrPercent"/>
       <xs:attribute name="minHeight" type="hv:pointsOrPercent"/>
@@ -637,11 +689,8 @@
 
   <xs:element name="body">
     <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="1" ref="hv:header"/>
-        <xs:group ref="hv:viewChildren"/>
-      </xs:sequence>
-      <xs:attribute name="id" type="xs:ID"/>
+      <xs:group ref="hv:viewChildren"/>
+      <xs:attribute name="id" type="hv:ID"/>
       <xs:attribute name="style" type="hv:styleList"/>
       <xs:attributeGroup ref="hv:scrollAttributes"/>
     </xs:complexType>
@@ -651,7 +700,7 @@
     <xs:complexType>
       <xs:group ref="hv:viewChildren"/>
       <xs:attribute name="style" type="hv:styleList"/>
-      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="id" type="hv:ID"/>
       <xs:attribute name="hide" type="xs:boolean"/>
     </xs:complexType>
   </xs:element>
@@ -660,7 +709,7 @@
     <xs:complexType>
       <xs:group ref="hv:viewChildren"/>
       <xs:attribute name="style" type="hv:styleList"/>
-      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="id" type="hv:ID"/>
       <xs:attribute name="hide" type="xs:boolean"/>
       <xs:attributeGroup ref="hv:behaviorAttributes"/>
       <xs:attributeGroup ref="hv:scrollAttributes"/>
@@ -669,9 +718,12 @@
 
   <xs:element name="image">
     <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="hv:behavior"/>
+      </xs:sequence>
       <xs:attribute name="source" use="required" type="xs:anyURI"/>
       <xs:attribute name="style" type="hv:styleList" use="required"/>
-      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="id" type="hv:ID"/>
       <xs:attribute name="hide" type="xs:boolean"/>
       <xs:attributeGroup ref="hv:behaviorAttributes"/>
     </xs:complexType>
@@ -685,7 +737,7 @@
       </xs:sequence>
       <xs:attribute name="numberOfLines" type="xs:positiveInteger"/>
       <xs:attribute name="style" type="hv:styleList"/>
-      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="id" type="hv:ID"/>
       <xs:attribute name="hide" type="xs:boolean"/>
       <xs:attribute name="selectable" type="xs:boolean"/>
       <xs:attributeGroup ref="hv:behaviorAttributes"/>
@@ -712,8 +764,10 @@
       </xs:sequence>
       <xs:attribute name="itemHeight" type="xs:positiveInteger"/>
       <xs:attribute name="style" type="hv:styleList"/>
-      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="id" type="hv:ID"/>
       <xs:attribute name="hide" type="xs:boolean"/>
+      <xs:attribute name="shows-scroll-indicator" type="xs:boolean"/>
+      <xs:attributeGroup ref="hv:scrollAttributes"/>
       <xs:attributeGroup ref="hv:behaviorAttributes"/>
     </xs:complexType>
   </xs:element>
@@ -727,7 +781,7 @@
         </xs:choice>
       </xs:sequence>
       <xs:attribute name="style" type="hv:styleList"/>
-      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="id" type="hv:ID"/>
       <xs:attribute name="hide" type="xs:boolean"/>
       <xs:attributeGroup ref="hv:behaviorAttributes"/>
     </xs:complexType>
@@ -748,7 +802,7 @@
     <xs:complexType>
       <xs:group ref="hv:nonListViewChildren"/>
       <xs:attribute name="style" type="hv:styleList"/>
-      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="id" type="hv:ID"/>
       <xs:attribute name="hide" type="xs:boolean"/>
       <xs:attributeGroup ref="hv:behaviorAttributes"/>
     </xs:complexType>
@@ -767,7 +821,7 @@
       <xs:group ref="hv:nonListViewChildren"/>
       <xs:attribute name="key" use="required" />
       <xs:attribute name="style" type="hv:styleList"/>
-      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="id" type="hv:ID"/>
       <xs:attribute name="hide" type="xs:boolean"/>
       <xs:attributeGroup ref="hv:behaviorAttributes"/>
     </xs:complexType>
@@ -776,7 +830,7 @@
   <xs:element name="spinner">
     <xs:complexType>
       <xs:attribute name="color" type="hv:color" />
-      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="id" type="hv:ID"/>
       <xs:attribute name="hide" type="xs:boolean"/>
     </xs:complexType>
   </xs:element>
@@ -785,7 +839,7 @@
     <xs:complexType>
       <xs:group ref="hv:viewChildren"/>
       <xs:attribute name="style" type="hv:styleList"/>
-      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="id" type="hv:ID"/>
       <xs:attribute name="hide" type="xs:boolean"/>
       <xs:attributeGroup ref="hv:scrollAttributes"/>
     </xs:complexType>
@@ -813,7 +867,7 @@
       <xs:attribute name="field-text-style" type="hv:styleList"/>
       <xs:attribute name="modal-style" type="hv:styleList"/>
       <xs:attribute name="modal-text-style" type="hv:styleList"/>
-      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="id" type="hv:ID"/>
       <xs:attribute name="hide" type="xs:boolean"/>
     </xs:complexType>
   </xs:element>
@@ -833,7 +887,7 @@
       <xs:attribute name="field-text-style" type="hv:styleList"/>
       <xs:attribute name="modal-style" type="hv:styleList"/>
       <xs:attribute name="modal-text-style" type="hv:styleList"/>
-      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="id" type="hv:ID"/>
       <xs:attribute name="hide" type="xs:boolean"/>
     </xs:complexType>
   </xs:element>
@@ -856,7 +910,7 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>
-      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="id" type="hv:ID"/>
       <xs:attribute name="hide" type="xs:boolean"/>
       <xs:attribute name="style" type="hv:styleList"/>
     </xs:complexType>
@@ -880,10 +934,23 @@
         </xs:simpleType>
       </xs:attribute>
       <xs:attribute name="mask" type="xs:string"/>
-      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="id" type="hv:ID"/>
       <xs:attribute name="hide" type="xs:boolean"/>
       <xs:attribute name="style" type="hv:styleList"/>
       <xs:attribute name="auto-focus" type="xs:boolean"/>
+      <xs:attribute name="underlineColorAndroid" type="hv:color"/>
+      <xs:attribute name="clearButtonMode">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="never"/>
+            <xs:enumeration value="while-editing"/>
+            <xs:enumeration value="unless-editing"/>
+            <xs:enumeration value="always"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <!-- Needed to support address-input. Eventually, we should allow attributes from other namespaces. -->
+      <xs:attribute name="type" type="xs:string"/>
     </xs:complexType>
   </xs:element>
 
@@ -893,8 +960,9 @@
       <xs:attribute name="value" type="xs:string"/>
       <xs:attribute name="placeholder" type="xs:string"/>
       <xs:attribute name="placeholderTextColor" type="hv:color"/>
-      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="id" type="hv:ID"/>
       <xs:attribute name="hide" type="xs:boolean"/>
+      <xs:attribute name="underlineColorAndroid" type="hv:color"/>
       <xs:attribute name="style"/>
     </xs:complexType>
   </xs:element>
@@ -903,7 +971,7 @@
     <xs:complexType>
       <xs:group ref="hv:viewChildren"/>
       <xs:attribute name="name" use="required" type="xs:string"/>
-      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="id" type="hv:ID"/>
       <xs:attribute name="hide" type="xs:boolean"/>
       <xs:attribute name="style" type="hv:styleList"/>
     </xs:complexType>
@@ -913,7 +981,7 @@
     <xs:complexType>
       <xs:group ref="hv:viewChildren"/>
       <xs:attribute name="name" use="required" type="xs:string"/>
-      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="id" type="hv:ID"/>
       <xs:attribute name="hide" type="xs:boolean"/>
       <xs:attribute name="style" type="hv:styleList"/>
     </xs:complexType>
@@ -924,7 +992,7 @@
       <xs:group ref="hv:baseChildren"/>
       <xs:attributeGroup ref="hv:behaviorAttributes"/>
       <xs:attribute name="value" type="xs:string"/>
-      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="id" type="hv:ID"/>
       <xs:attribute name="hide" type="xs:boolean"/>
       <xs:attribute name="style" type="hv:styleList"/>
       <xs:attribute name="selected" type="xs:boolean"/>
@@ -937,7 +1005,7 @@
       <xs:attribute name="html" type="xs:string"/>
       <xs:attribute name="activity-indicator-color" type="hv:color"/>
       <xs:attribute name="injected-java-script" type="xs:string"/>
-      <xs:attribute name="id" type="xs:ID"/>
+      <xs:attribute name="id" type="hv:ID"/>
     </xs:complexType>
   </xs:element>
 
