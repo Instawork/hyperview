@@ -38,11 +38,19 @@
         <text action="back"
               href="#"
               style="Header__Back">Back</text>
-        <text style="Header__Title">WebView with URL</text>
+        <text style="Header__Title">WebView - event dispatch</text>
       </header>
       <view style="Main">
         <view style="Flex">
-          <web-view url="https://www.instawork.com" activity-indicator-color="red" />
+          <web-view html="&lt;button style=&quot;font-size: 80px&quot; onClick=&quot;window.ReactNativeWebView.postMessage(&apos;hyperview:helloworld&apos;)&quot;&gt;Post message&lt;/button&gt;" />
+          <view
+            action="append"
+            event-name="helloworld"
+            href="/ui_elements/web_views/dispatch_event_append.xml"
+            scroll="true"
+            style="Main"
+            trigger="on-event"
+          />
         </view>
       </view>
     </body>

@@ -8,6 +8,7 @@
  *
  */
 
+import * as Events from 'hyperview/src/services/events';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import { ActivityIndicator, StyleSheet } from 'react-native';
 import React, { PureComponent } from 'react';
@@ -16,13 +17,22 @@ import { LOCAL_NAME } from 'hyperview/src/types';
 import WebView from 'react-native-webview';
 import { createProps } from 'hyperview/src/services';
 
-const NOOP = () => {};
-
 export default class HvWebView extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.WEB_VIEW;
   static localNameAliases = [];
   props: HvComponentProps;
+
+  onMessage = (event: ?{ nativeEvent: { data: string } }) => {
+    if (!event) {
+      return;
+    }
+    const matches = event.nativeEvent.data.match(/^hyperview:(.*)$/);
+    if (matches) {
+      Events.dispatch(matches[1]);
+    }
+  };
+
   render() {
     const props: any = createProps(
       this.props.element,
@@ -35,7 +45,7 @@ export default class HvWebView extends PureComponent<HvComponentProps> {
     return (
       <WebView
         injectedJavaScript={injectedJavaScript}
-        onMessage={NOOP} // https://github.com/react-native-community/react-native-webview/issues/1311
+        onMessage={this.onMessage}
         renderLoading={() => (
           <ActivityIndicator
             color={color}
