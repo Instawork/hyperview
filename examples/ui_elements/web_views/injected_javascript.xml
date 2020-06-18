@@ -26,11 +26,6 @@
       <style id="Body"
              backgroundColor="white"
              flex="1" />
-      <style id="Description"
-             fontSize="16"
-             fontWeight="normal"
-             margin="24"
-             marginBottom="0" />
       <style id="Flex"
              flex="1"
              flexDirection="row"
@@ -43,10 +38,9 @@
         <text action="back"
               href="#"
               style="Header__Back">Back</text>
-        <text style="Header__Title">View</text>
+        <text style="Header__Title">WebView - injected JavaScript</text>
       </header>
       <view style="Main">
-        <text style="Description">WebView with injected JavaScript</text>
         <view style="Flex">
           <web-view url="https://www.instawork.com" activity-indicator-color="red" injected-java-script="alert('Hello world!')" />
         </view>

@@ -77,6 +77,13 @@
           <text style="Item__Label">With Injected JavaScript</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
+        <item href="/ui_elements/web_views/dispatch_event.xml"
+              key="js"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Dispatching event</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
       </list>
     </body>
   </screen>
