@@ -71,3 +71,26 @@ A string of Javascript that gets injected into the loaded web view. Can be used 
 | string | No       |
 
 A global attribute uniquely identifying the element in the whole document.
+
+## Dispatching events from web views
+
+[Hyperview events](/docs/example_event_dispatch) can be dispatched from the javascript context of a web view using `window.ReactNativeWebView.postMessage` API. The message must be prefixed with the string `hyperview:`.
+
+Example:
+
+Web page JS code:
+
+```js
+window.ReactNativeWebView.postMessage('hyperview:open-modal');
+```
+
+XML markup:
+
+```xml
+<behavior
+  action="new"
+  event-name="open-modal"
+  trigger="on-event"
+  href="/modal.xml"
+/>
+```
