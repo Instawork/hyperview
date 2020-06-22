@@ -14,13 +14,13 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as UrlService from 'hyperview/src/services/url';
+import * as Xml from 'hyperview/src/services/xml';
 import { Linking } from 'react-native';
 import { XMLSerializer } from 'xmldom-instawork';
 import LoadError from 'hyperview/src/core/components/load-error';
 import Loading from 'hyperview/src/core/components/loading';
 import HyperRef from 'hyperview/src/core/hyper-ref';
 import Navigation, { ANCHOR_ID_SEPARATOR } from 'hyperview/src/services/navigation';
-import { splitAttributeList } from 'hyperview/src/services/xml';
 import React from 'react';
 import { createProps, later, shallowCloneToRoot, getFormData, getElementByTimeoutId, removeTimeoutId, setTimeoutId } from 'hyperview/src/services';
 import { ACTIONS, NAV_ACTIONS, UPDATE_ACTIONS } from 'hyperview/src/types';
@@ -392,8 +392,8 @@ export default class HyperScreen extends React.Component {
       verb, targetId, showIndicatorIds, hideIndicatorIds, delay, once, onEnd, behaviorElement,
     } = options;
 
-    const showIndicatorIdList = showIndicatorIds ? splitAttributeList(showIndicatorIds) : [];
-    const hideIndicatorIdList = hideIndicatorIds ? splitAttributeList(hideIndicatorIds) : [];
+    const showIndicatorIdList = showIndicatorIds ? Xml.splitAttributeList(showIndicatorIds) : [];
+    const hideIndicatorIdList = hideIndicatorIds ? Xml.splitAttributeList(hideIndicatorIds) : [];
 
     const formData = getFormData(currentElement);
 
