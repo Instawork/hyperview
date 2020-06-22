@@ -20,6 +20,7 @@ import LoadError from 'hyperview/src/core/components/load-error';
 import Loading from 'hyperview/src/core/components/loading';
 import HyperRef from 'hyperview/src/core/hyper-ref';
 import Navigation, { ANCHOR_ID_SEPARATOR } from 'hyperview/src/services/navigation';
+import { splitAttributeList } from 'hyperview/src/services/xml';
 import React from 'react';
 import { createProps, later, shallowCloneToRoot, getFormData, getElementByTimeoutId, removeTimeoutId, setTimeoutId } from 'hyperview/src/services';
 import { ACTIONS, NAV_ACTIONS, UPDATE_ACTIONS } from 'hyperview/src/types';
@@ -391,8 +392,8 @@ export default class HyperScreen extends React.Component {
       verb, targetId, showIndicatorIds, hideIndicatorIds, delay, once, onEnd, behaviorElement,
     } = options;
 
-    const showIndicatorIdList = showIndicatorIds ? showIndicatorIds.split(' ') : [];
-    const hideIndicatorIdList = hideIndicatorIds ? hideIndicatorIds.split(' ') : [];
+    const showIndicatorIdList = showIndicatorIds ? splitAttributeList(showIndicatorIds) : [];
+    const hideIndicatorIdList = hideIndicatorIds ? splitAttributeList(hideIndicatorIds) : [];
 
     const formData = getFormData(currentElement);
 

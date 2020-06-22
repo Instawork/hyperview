@@ -10,11 +10,8 @@
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
-import {
-  DEFAULT_PRESS_OPACITY,
-  HV_TIMEOUT_ID_ATTR,
-  STYLE_ATTRIBUTE_SEPARATOR,
-} from './types';
+import { DEFAULT_PRESS_OPACITY, HV_TIMEOUT_ID_ATTR } from './types';
+import { splitAttributeList } from 'hyperview/src/services/xml';
 import type {
   Document,
   Element,
@@ -69,7 +66,7 @@ export const createStyleProp = (
   }
 
   const styleValue: string = element.getAttribute(styleAttr) || '';
-  const styleIds: Array<string> = styleValue.split(STYLE_ATTRIBUTE_SEPARATOR);
+  const styleIds: Array<string> = splitAttributeList(styleValue);
   let styleRules: Array<StyleSheet<*>> = styleIds.map(
     styleId => stylesheets.regular[styleId],
   );

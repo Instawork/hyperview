@@ -10,8 +10,7 @@ import type {
   HvUpdateRoot,
 } from 'hyperview/src/types';
 import { later, shallowCloneToRoot } from 'hyperview/src/services';
-
-const ID_SEPARATOR = ' ';
+import { splitAttributeList } from 'hyperview/src/services/xml';
 
 export default {
   action: 'set-value',
@@ -33,12 +32,12 @@ export default {
     const parsedDelay: number = parseInt(delayAttr, 10);
     const delay: number = isNaN(parsedDelay) ? 0 : parsedDelay;
 
-    const showIndicatorIds: Array<string> = (
-      element.getAttribute('show-during-load') || ''
-    ).split(ID_SEPARATOR);
-    const hideIndicatorIds: Array<string> = (
-      element.getAttribute('hide-during-load') || ''
-    ).split(ID_SEPARATOR);
+    const showIndicatorIds: Array<string> = splitAttributeList(
+      element.getAttribute('show-during-load') || '',
+    );
+    const hideIndicatorIds: Array<string> = splitAttributeList(
+      element.getAttribute('hide-during-load') || '',
+    );
 
     const setValue = () => {
       const doc: Document = getRoot();
