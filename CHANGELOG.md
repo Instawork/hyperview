@@ -1,5 +1,9 @@
 # Hyperview changelog
 
+**Version 0.30.2**
+
+- fix!: `style`, `show-during-load`, and `hide-during-load` attributes are now split on any whitespace, not just spaces.
+
 **Version 0.25.0**
 
 - fix!: Remove ambiguity with "value" attribute in "set-value" behavior
