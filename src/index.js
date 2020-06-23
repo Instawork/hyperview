@@ -14,6 +14,7 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as UrlService from 'hyperview/src/services/url';
+import * as Xml from 'hyperview/src/services/xml';
 import { Linking } from 'react-native';
 import { XMLSerializer } from 'xmldom-instawork';
 import LoadError from 'hyperview/src/core/components/load-error';
@@ -391,8 +392,8 @@ export default class HyperScreen extends React.Component {
       verb, targetId, showIndicatorIds, hideIndicatorIds, delay, once, onEnd, behaviorElement,
     } = options;
 
-    const showIndicatorIdList = showIndicatorIds ? showIndicatorIds.split(' ') : [];
-    const hideIndicatorIdList = hideIndicatorIds ? hideIndicatorIds.split(' ') : [];
+    const showIndicatorIdList = showIndicatorIds ? Xml.splitAttributeList(showIndicatorIds) : [];
+    const hideIndicatorIdList = hideIndicatorIds ? Xml.splitAttributeList(hideIndicatorIds) : [];
 
     const formData = getFormData(currentElement);
 

@@ -1,6 +1,7 @@
 // @flow
 
 import * as Behaviors from 'hyperview/src/services/behaviors';
+import * as Xml from 'hyperview/src/services/xml';
 import type {
   DOMString,
   Document,
@@ -10,8 +11,6 @@ import type {
   HvUpdateRoot,
 } from 'hyperview/src/types';
 import { later, shallowCloneToRoot } from 'hyperview/src/services';
-
-const ID_SEPARATOR = ' ';
 
 export default {
   action: 'set-value',
@@ -33,12 +32,12 @@ export default {
     const parsedDelay: number = parseInt(delayAttr, 10);
     const delay: number = isNaN(parsedDelay) ? 0 : parsedDelay;
 
-    const showIndicatorIds: Array<string> = (
-      element.getAttribute('show-during-load') || ''
-    ).split(ID_SEPARATOR);
-    const hideIndicatorIds: Array<string> = (
-      element.getAttribute('hide-during-load') || ''
-    ).split(ID_SEPARATOR);
+    const showIndicatorIds: Array<string> = Xml.splitAttributeList(
+      element.getAttribute('show-during-load') || '',
+    );
+    const hideIndicatorIds: Array<string> = Xml.splitAttributeList(
+      element.getAttribute('hide-during-load') || '',
+    );
 
     const setValue = () => {
       const doc: Document = getRoot();

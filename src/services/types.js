@@ -8,6 +8,5 @@
  *
  */
 
-export const STYLE_ATTRIBUTE_SEPARATOR: string = ' ';
 export const DEFAULT_PRESS_OPACITY: number = 0.7;
 export const HV_TIMEOUT_ID_ATTR: string = '_hv-timeout-id';
