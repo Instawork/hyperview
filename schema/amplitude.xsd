@@ -6,5 +6,6 @@
   <xs:attributeGroup name="amplitudeAttributes">
     <xs:attribute name="event" type="xs:string" />
     <xs:attribute name="event-props" type="xs:string" />
+    <xs:attribute name="user-properties" type="xs:string" />
   </xs:attributeGroup>
 </xs:schema>
