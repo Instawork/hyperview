@@ -6750,10 +6750,10 @@ humanize-ms@^1.2.1:
   dependencies:
     ms "^2.0.0"
 
-hyperview@0.27.0:
-  version "0.27.0"
-  resolved "https://registry.yarnpkg.com/hyperview/-/hyperview-0.27.0.tgz#8d7f46e5b7429c979902ca9af83c2b80c9591007"
-  integrity sha512-gxXOe1DJuvN9YCD48oDlhz2775iLvnuL8f3Q5mCmj09Ayzj3C5TxUtP56VbcMp1NxCPbfml2AqU582fFwINqMQ==
+hyperview@0.30.2:
+  version "0.30.2"
+  resolved "https://registry.yarnpkg.com/hyperview/-/hyperview-0.30.2.tgz#713da3c3bb877369da71543d4b49e5dc6bccbd68"
+  integrity sha512-4IF8qxWVqnDmJAHdz+2MRW4hgo9466aPmW5M5/LEkT+4RvT9q/JSxIk86n5ILkgMlhvlgcFHYcPPQsphLrOWqA==
   dependencies:
     react-native-webview "9.4.0"
     tiny-emitter "2.1.0"
