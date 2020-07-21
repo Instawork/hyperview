@@ -22,7 +22,7 @@ import Loading from 'hyperview/src/core/components/loading';
 import HyperRef from 'hyperview/src/core/hyper-ref';
 import Navigation, { ANCHOR_ID_SEPARATOR } from 'hyperview/src/services/navigation';
 import React from 'react';
-import { createProps, later, shallowCloneToRoot, getFormData, getElementByTimeoutId, removeTimeoutId, setTimeoutId } from 'hyperview/src/services';
+import { createProps, createStyleProp, later, shallowCloneToRoot, getFormData, getElementByTimeoutId, removeTimeoutId, setTimeoutId } from 'hyperview/src/services';
 import { ACTIONS, NAV_ACTIONS, UPDATE_ACTIONS } from 'hyperview/src/types';
 
 
@@ -38,6 +38,7 @@ export const DateFormatContext = React.createContext();
  */
 export default class HyperScreen extends React.Component {
   static createProps = createProps;
+  static createStyleProp = createStyleProp;
   static renderChildren = Render.renderChildren;
 
   constructor(props) {
