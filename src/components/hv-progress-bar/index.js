@@ -79,7 +79,7 @@ export default class HvImage extends PureComponent<HvComponentProps> {
     const element = this.props.element;
     const percent = this.getPercent(element);
     const maxDuration: number = this.getMaxDuration(element);
-    const duration: numer =
+    const duration: number =
       (Math.abs(prevPercent - percent) / 100) * maxDuration;
 
     if (prevPercent !== percent) {
