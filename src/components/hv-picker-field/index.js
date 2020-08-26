@@ -26,7 +26,11 @@ import {
   View,
 } from 'react-native';
 import React, { PureComponent } from 'react';
-import { createProps, createStyleProp } from 'hyperview/src/services';
+import {
+  createProps,
+  createStyleProp,
+  createTestProps,
+} from 'hyperview/src/services';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { Node as ReactNode } from 'react';
 import type { State } from './types';
@@ -275,8 +279,12 @@ export default class HvPickerField extends PureComponent<
       ...options,
       styleAttr: 'field-text-style',
     });
+    const viewProps = {
+      style: fieldStyle,
+      ...createTestProps(element),
+    };
     const pickerComponent = this.renderPicker(textStyle);
-    return <View style={fieldStyle}>{pickerComponent}</View>;
+    return <View {...viewProps}>{pickerComponent}</View>;
   };
 
   /**

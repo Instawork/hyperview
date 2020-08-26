@@ -13,6 +13,7 @@ import * as Render from 'hyperview/src/services/render';
 import * as Xml from 'hyperview/src/services/xml';
 import { DEFAULT_PRESS_OPACITY, HV_TIMEOUT_ID_ATTR } from './types';
 import type {
+  DOMString,
   Document,
   Element,
   HvComponentOnUpdate,
@@ -105,6 +106,22 @@ export const createStyleProp = (
   return styleRules;
 };
 
+/**
+ * Sets the element's id attribute as a test id and accessibility label
+ * (for testing automation purposes).
+ */
+export const createTestProps = (element: Element): {} => {
+  const testProps = {};
+  const id: ?DOMString = element.getAttribute('id');
+  if (!id) {
+    return testProps;
+  }
+  return {
+    testID: id,
+    accessibilityLabel: id,
+  };
+};
+
 export const createProps = (
   element: Element,
   stylesheets: StyleSheets,
@@ -127,19 +144,13 @@ export const createProps = (
         props[attr.name] = attr.value === 'true';
       } else {
         props[attr.name] = attr.value;
-
-        // Add the id attribute as a test id and accessibility label
-        // (for testing automation purposes).
-        if (attr.name === 'id') {
-          props.testID = attr.value;
-          props.accessibilityLabel = attr.value;
-        }
       }
     }
   }
 
   props.style = createStyleProp(element, stylesheets, options);
-  return props;
+  const testProps = createTestProps(element);
+  return { ...props, ...testProps };
 };
 
 export const later = (delayMs: number): Promise<void> =>
