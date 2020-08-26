@@ -15,6 +15,7 @@ import HvImage from 'hyperview/src/components/hv-image';
 import HvList from 'hyperview/src/components/hv-list';
 import HvOption from 'hyperview/src/components/hv-option';
 import HvPickerField from 'hyperview/src/components/hv-picker-field';
+import HvProgressBar from 'hyperview/src/components/hv-progress-bar';
 import HvSectionList from 'hyperview/src/components/hv-section-list';
 import HvSelectMultiple from 'hyperview/src/components/hv-select-multiple';
 import HvSelectSingle from 'hyperview/src/components/hv-select-single';
@@ -31,6 +32,7 @@ const HYPERVIEW_COMPONENTS = [
   HvList,
   HvOption,
   HvPickerField,
+  HvProgressBar,
   HvSectionList,
   HvSelectMultiple,
   HvSelectSingle,

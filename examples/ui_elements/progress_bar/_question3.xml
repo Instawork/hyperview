@@ -1,0 +1,7 @@
+<view style="Footer" id="footer" xmlns="https://hyperview.org/hyperview">
+  <progress-bar style="ProgressBar2" bar-style="ProgressBar2__Inner" percent="75" max-duration="2000" />
+  <view style="Footer__Content">
+    <text>3/4 Questions</text>
+    <text style="Header__Back" href="/ui_elements/progress_bar/_question4.xml" target="footer" action="replace">Next</text>
+  </view>
+</view>

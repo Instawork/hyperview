@@ -28,6 +28,7 @@ export const LOCAL_NAME = {
   OPTION: 'option',
   PICKER_FIELD: 'picker-field',
   PICKER_ITEM: 'picker-item',
+  PROGRESS_BAR: 'progress-bar',
   SCREEN: 'screen',
   SECTION_LIST: 'section-list',
   SECTION_TITLE: 'section-title',

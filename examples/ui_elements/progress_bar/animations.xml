@@ -1,0 +1,89 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style id="Header"
+             alignItems="center"
+             backgroundColor="white"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flexDirection="row"
+             height="72"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="24" />
+      <style id="Header__Back"
+             color="blue"
+             fontSize="16"
+             fontWeight="600"
+             paddingRight="16" />
+      <style id="Header__Title"
+             color="black"
+             fontSize="24"
+             fontWeight="600" />
+      <style id="Body"
+             backgroundColor="white"
+             flex="1" />
+      <style id="Description"
+             fontSize="16"
+             fontWeight="normal"
+             margin="24"
+             marginBottom="0" />
+      <style id="Item"
+             alignItems="center"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flex="1"
+             flexDirection="row"
+             height="48"
+             justifyContent="space-between"
+             paddingLeft="24"
+             paddingRight="24" />
+      <style id="Item__Label"
+             fontSize="18"
+             fontWeight="normal" />
+      <style id="Item__Chevron"
+             fontSize="18"
+             fontWeight="bold" />
+
+      <style id="ProgressBar"
+             marginVertical="16"
+             marginHorizontal="24"
+             height="8"
+             backgroundColor="#E1E3E3"
+             borderRadius="4"
+      />
+      <style id="ProgressBar__Inner"
+             height="8"
+             borderRadius="4"
+             backgroundColor="#63CB76"
+      />
+
+      <style id="Main"
+             flex="1" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text action="back"
+              href="#"
+              style="Header__Back">Back</text>
+        <text style="Header__Title">Progress Bar Animations</text>
+      </header>
+      <view scroll="true"
+            style="Main">
+      <behavior trigger="refresh" action="reload" href="/ui_elements/progress_bar/animations.xml" />
+        <text style="Description">Animation going up</text>
+        <progress-bar style="ProgressBar" bar-style="ProgressBar__Inner" start-percent="10" percent="70" />
+
+        <text style="Description">Animation going down</text>
+        <progress-bar style="ProgressBar" bar-style="ProgressBar__Inner" start-percent="70" percent="10" />
+
+        <text style="Description">Animation fast</text>
+        <progress-bar style="ProgressBar" bar-style="ProgressBar__Inner" start-percent="10" percent="70" max-duration="400" />
+
+        <text style="Description">Animation slow</text>
+        <progress-bar style="ProgressBar" bar-style="ProgressBar__Inner" start-percent="10" percent="70" max-duration="15000" />
+
+      </view>
+    </body>
+  </screen>
+</doc>
