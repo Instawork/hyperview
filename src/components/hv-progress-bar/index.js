@@ -15,7 +15,7 @@ import type { HvComponentProps } from 'hyperview/src/types';
 import { Animated, View } from 'react-native';
 import { LOCAL_NAME } from 'hyperview/src/types';
 
-export default class HvImage extends PureComponent<HvComponentProps> {
+export default class HvProgressBar extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.PROGRESS_BAR;
   static localNameAliases = [];
