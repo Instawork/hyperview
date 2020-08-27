@@ -110,7 +110,7 @@ export const createStyleProp = (
  * Sets the element's id attribute as a test id and accessibility label
  * (for testing automation purposes).
  */
-export const createTestProps = (element: Element): {} => {
+export const createTestProps = (element: Element): {testID?: string, accessibilityLabel?: string} => {
   const testProps = {};
   const id: ?DOMString = element.getAttribute('id');
   if (!id) {
