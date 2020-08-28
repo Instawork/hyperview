@@ -19,6 +19,7 @@ import type {
 import { ACTIONS } from 'hyperview/src/types';
 import HvAlert from 'hyperview/src/behaviors/hv-alert';
 import HvHide from 'hyperview/src/behaviors/hv-hide';
+import HvOpenSettings from 'hyperview/src/behaviors/hv-open-settings';
 import HvSetValue from 'hyperview/src/behaviors/hv-set-value';
 import HvShare from 'hyperview/src/behaviors/hv-share';
 import HvShow from 'hyperview/src/behaviors/hv-show';
@@ -28,6 +29,7 @@ import { shallowCloneToRoot } from 'hyperview/src/services';
 const HYPERVIEW_BEHAVIORS = [
   HvAlert,
   HvHide,
+  HvOpenSettings,
   HvSetValue,
   HvShare,
   HvShow,
