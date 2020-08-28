@@ -296,9 +296,9 @@ The `verb` attribute defines the HTTP method used to request the content specifi
 
 ## action
 
-| Type                                                                                                                                                      | Required |
-| --------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| **push** (default), new, back, close, navigate, deep-link, replace, replace-inner, append, prepend, reload, dispatch-event, show, hide, toggle, set-value | No       |
+| Type                                                                                                                                                                     | Required |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
+| **push** (default), new, back, close, navigate, deep-link, open-settings, replace, replace-inner, append, prepend, reload, dispatch-event, show, hide, toggle, set-value | No       |
 
 The `action` attribute defines what to do with the Hyperview XML resource described by the `href` attribute. The possible actions are divided into **navigation actions**, which load or navigate to a screen, and **update actions**, which update the elements on the current screen.
 
@@ -311,6 +311,7 @@ The navigation actions include:
 - [`navigate`](#navigate)
 - [`reload`](#reload)
 - [`deep-link`](#deep-link)
+- [`open-settings`](#open-settings)
 
 The update actions include:
 
@@ -431,6 +432,10 @@ If the reload behavior contains an `href`, the given `href` will be used to requ
 ### `deep-link`
 
 The `deep-link` navigation action delegates the navigation to the operating system, in order to decide which app should open the given URL.
+
+### `open-settings`
+
+The `open-settings` navigation action opens the app settings in the OS Settings app.
 
 ### `replace`
 
