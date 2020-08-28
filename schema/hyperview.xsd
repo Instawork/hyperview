@@ -30,6 +30,7 @@
       <xs:enumeration value="navigate"/>
       <xs:enumeration value="reload"/>
       <xs:enumeration value="deep-link"/>
+      <xs:enumeration value="open-settings"/>
       <xs:enumeration value="dispatch-event"/>
       <xs:enumeration value="replace"/>
       <xs:enumeration value="replace-inner"/>
