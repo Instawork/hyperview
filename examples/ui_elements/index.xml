@@ -8,6 +8,7 @@
              borderBottomWidth="1"
              flexDirection="row"
              height="72"
+             zIndex="100"
              paddingLeft="24"
              paddingRight="24"
              paddingTop="24" />
@@ -47,13 +48,32 @@
       <style id="Item__Chevron"
              fontSize="18"
              fontWeight="bold" />
+
+      <style id="tooltip" overflow="visible" position="absolute" backgroundColor="#C56BFF" boderRadius="8" padding="8" width="200" top="8" />
+      <style id="tooltip__text" color="white" />
+
     </styles>
     <body style="Body">
       <header style="Header">
-        <text action="back"
-              href="#"
-              style="Header__Back">Back</text>
+
+        <view style="tooltip-wrapper">
+          <text action="back"
+                href="#"
+            style="Header__Back">
+            Back
+          </text>
+
+          <behavior trigger="load" action="hide" delay="5000" target="backTooltip" />
+          <view id="backTooltip" style="tooltip">
+            <behavior href="/ui_elements/text.xml" />
+            <text style="tooltip__text">Earn $50 for each friend who joins.
+              Tap to learn more.
+            </text>
+          </view>
+        </view>
+
         <text style="Header__Title">UI Elements</text>
+
       </header>
       <list>
         <item href="/ui_elements/view.xml"
