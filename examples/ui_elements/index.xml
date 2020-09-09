@@ -56,15 +56,18 @@
     <body style="Body">
       <header style="Header">
 
-        <view style="tooltip-wrapper">
+        <!-- wrapper around the button and the tooltip -->
+        <view>
           <text action="back"
                 href="#"
             style="Header__Back">
             Back
           </text>
 
+          <!-- behavior to hide the tooltip should be outside of the tooltip to avoid RN error -->
           <behavior trigger="load" action="hide" delay="5000" target="backTooltip" />
           <view id="backTooltip" style="tooltip">
+            <!-- tooltip can open a screen on press -->
             <behavior href="/ui_elements/text.xml" />
             <text style="tooltip__text">Earn $50 for each friend who joins.
               Tap to learn more.
@@ -73,7 +76,6 @@
         </view>
 
         <text style="Header__Title">UI Elements</text>
-
       </header>
       <list>
         <item href="/ui_elements/view.xml"

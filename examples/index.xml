@@ -54,7 +54,6 @@
     <body style="Body">
       <header style="Header">
         <text style="Header__Title">Hyperview Examples</text>
-
       </header>
       <list>
         <item href="/ui_elements/index.xml"
