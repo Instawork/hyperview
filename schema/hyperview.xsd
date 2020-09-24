@@ -6,6 +6,7 @@
   xmlns:hv="https://hyperview.org/hyperview"
   xmlns:alert="https://hyperview.org/hyperview-alert"
   xmlns:amp="https://instawork.com/hyperview-amplitude"
+  xmlns:branch="https://instawork.com/hyperview-branch"
   xmlns:intercom="https://instawork.com/hyperview-intercom"
   xmlns:phone="https://instawork.com/hyperview-phone"
   xmlns:redux="https://instawork.com/hyperview-redux"
@@ -15,6 +16,7 @@
 
   <xs:import namespace="https://hyperview.org/hyperview-alert" schemaLocation="alert.xsd"/>
   <xs:import namespace="https://instawork.com/hyperview-amplitude" schemaLocation="amplitude.xsd"/>
+  <xs:import namespace="https://instawork.com/hyperview-branch" schemaLocation="branch.xsd"/>
   <xs:import namespace="https://instawork.com/hyperview-intercom" schemaLocation="intercom.xsd"/>
   <xs:import namespace="https://instawork.com/hyperview-phone" schemaLocation="phone.xsd"/>
   <xs:import namespace="https://instawork.com/hyperview-redux" schemaLocation="redux.xsd"/>
@@ -392,6 +394,7 @@
 
     <xs:attributeGroup ref="alert:alertAttributes" />
     <xs:attributeGroup ref="amp:amplitudeAttributes" />
+    <xs:attributeGroup ref="branch:branchAttributes" />
     <xs:attributeGroup ref="intercom:intercomAttributes" />
     <xs:attributeGroup ref="phone:phoneAttributes" />
     <xs:attributeGroup ref="redux:reduxAttributes" />
