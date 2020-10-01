@@ -17,7 +17,7 @@
 
   <xs:import namespace="https://hyperview.org/hyperview-alert" schemaLocation="alert.xsd"/>
   <xs:import namespace="https://instawork.com/hyperview-amplitude" schemaLocation="amplitude.xsd"/>
-  <xs:import namespace="https://instawork.com/hyperview-behaviors" schemaLocation="email.xsd"/>
+  <xs:import namespace="https://instawork.com/hyperview-behaviors" schemaLocation="behaviors.xsd"/>
   <xs:import namespace="https://instawork.com/hyperview-branch" schemaLocation="branch.xsd"/>
   <xs:import namespace="https://instawork.com/hyperview-intercom" schemaLocation="intercom.xsd"/>
   <xs:import namespace="https://instawork.com/hyperview-phone" schemaLocation="phone.xsd"/>
