@@ -1,0 +1,11 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  attributeFormDefault="qualified"
+  elementFormDefault="qualified"
+  targetNamespace="https://instawork.com/hyperview-behaviors"
+>
+  <xs:attributeGroup name="emailAttributes">
+    <xs:attribute name="email-address" type="xs:string" />
+    <xs:attribute name="subject" type="xs:string" />
+    <xs:attribute name="body" type="xs:string" />
+  </xs:attributeGroup>
+</xs:schema>
