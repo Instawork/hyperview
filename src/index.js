@@ -125,7 +125,7 @@ export default class HyperScreen extends React.Component {
    * If the navigation params have a different URL than the screen's URL, Update the
    * preload screen and URL to load.
    */
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const oldNavigationState = this.getNavigationState(this.props);
     const newNavigationState = this.getNavigationState(nextProps);
 

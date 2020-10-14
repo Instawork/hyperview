@@ -7,7 +7,8 @@
  */
 
 import React from 'react';
-import { createStackNavigator } from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 import HyperviewScreen from '../screens/HyperviewScreen';
 
 const MainStackNavigator = createStackNavigator(
@@ -31,7 +32,7 @@ const ModalStackNavigator = createStackNavigator(
   },
 );
 
-export default createStackNavigator({
+const appNavigator = createStackNavigator({
   Main: MainStackNavigator,
   Modal: ModalStackNavigator,
 }, {
@@ -42,3 +43,5 @@ export default createStackNavigator({
     url: 'http://0.0.0.0:8085/index.xml',
   }
 });
+
+export default createAppContainer(appNavigator);
