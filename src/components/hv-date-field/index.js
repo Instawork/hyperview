@@ -172,9 +172,12 @@ export default class HvDateField extends PureComponent<
 
   /**
    * Renders the date picker component, with the given min and max dates.
-   * This is used on iOS only.
+   * Used for both iOS and Android. However, on iOS this component is rendered inline,
+   * and on Android it's rendered as a modal. Thus, the on-change callback needs to be
+   * handled differently in each Platform, and on iOS we need to wrap this component
+   * in our own modal for consistency.
    */
-  renderPicker = (onChange: (evt: Event, date: Date) => void): ReactNode => {
+  renderPicker = (onChange: (evt: Event, date?: Date) => void): ReactNode => {
     const minValue: ?DOMString = this.props.element.getAttribute('min');
     const maxValue: ?DOMString = this.props.element.getAttribute('max');
     const minDate: ?Date = HvDateField.createDateFromString(minValue);
@@ -203,7 +206,7 @@ export default class HvDateField extends PureComponent<
     if (!this.state.focused) {
       return null;
     }
-    const onChange = (evt: Event, date: Date) => {
+    const onChange = (evt: Event, date?: Date) => {
       if (date === undefined) {
         // Modal was dismissed (cancel button)
         this.onModalCancel();
@@ -256,7 +259,7 @@ export default class HvDateField extends PureComponent<
 
     // On iOS, store the changed value in the temp state until the modal
     // is saved.
-    const onChange = (evt: Event, date: Date) => {
+    const onChange = (evt: Event, date?: Date) => {
       this.setState({ pickerValue: date });
     };
 
