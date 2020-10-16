@@ -68,6 +68,13 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
+"@react-native-community/datetimepicker@^3.0.3":
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-3.0.3.tgz#711b4cb7fd195ab7ae867b8feab176ce46e765c8"
+  integrity sha512-znltGqSyELRpS/JchT/6MraTRqC83INekEyAkH+0gBrDzv0SwFKwVWacv1tF5D1y5VrHcSrcFB3T/tBsksUgwA==
+  dependencies:
+    invariant "^2.2.4"
+
 "@storybook/addon-actions@3.3.15":
   version "3.3.15"
   resolved "http://registry.npmjs.org/@storybook/addon-actions/-/addon-actions-3.3.15.tgz#2831e52947dc258208dd17804b479f7acc62d859"
