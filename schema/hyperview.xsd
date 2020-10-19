@@ -49,6 +49,7 @@
       <xs:enumeration value="alert"/>
       <xs:enumeration value="amplitude"/>
       <xs:enumeration value="branch-share"/>
+      <xs:enumeration value="copy-to-clipboard"/>
       <xs:enumeration value="email"/>
       <xs:enumeration value="intercom"/>
       <xs:enumeration value="phone"/>
