@@ -9,11 +9,12 @@
  */
 
 import { Clipboard } from 'react-native';
+import type { Element } from 'hyperview/src/types';
 
 export default {
   action: 'copy-to-clipboard',
   callback: (element: Element) => {
-    const value: ?String = element.getAttribute('value');
+    const value: ?string = element.getAttribute('value');
     if (!value) {
       console.warn('[behaviors/copy-to-clipboard]: missing "value" attribute');
       return;
