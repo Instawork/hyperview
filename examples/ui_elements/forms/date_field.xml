@@ -51,6 +51,7 @@
         </modifier>
       </style>
       <style id="Input__Text"
+             color="black"
              fontSize="16"
              fontWeight="normal"></style>
       <style id="Input--Error"

@@ -182,7 +182,9 @@ export default class HvDateField extends PureComponent<
     const maxValue: ?DOMString = this.props.element.getAttribute('max');
     const minDate: ?Date = HvDateField.createDateFromString(minValue);
     const maxDate: ?Date = HvDateField.createDateFromString(maxValue);
+    const displayMode: ?DOMString = this.props.element.getAttribute('mode');
     const props: Object = {
+      display: displayMode,
       value: this.state.pickerValue,
       mode: 'date',
       onChange,
