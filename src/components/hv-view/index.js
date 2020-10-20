@@ -11,7 +11,7 @@
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import React, { PureComponent } from 'react';
-import { ScrollView, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 import { addHref, createProps } from 'hyperview/src/services';
 import type { HvComponentProps } from 'hyperview/src/types';
 import type { InternalProps } from './types';
@@ -36,7 +36,18 @@ export default class HvView extends PureComponent<HvComponentProps> {
     const { skipHref } = viewOptions || {};
     const props: InternalProps = createProps(element, stylesheets, viewOptions);
     const scrollable = !!element.getAttribute('scroll');
+    const keyboardAvoiding = !!element.getAttribute('keyboard-avoid');
     let c = View;
+
+    /**
+     * Useful when you want keyboard avoiding behavior in non-scrollable views.
+     * Note: Android has built-in support for avoiding keyboard.
+     */
+    if (keyboardAvoiding && Platform.OS === 'ios') {
+      c = KeyboardAvoidingView;
+      props.behavior = 'position';
+    }
+
     const inputRefs = [];
     if (scrollable) {
       const textFields = element.getElementsByTagNameNS(
