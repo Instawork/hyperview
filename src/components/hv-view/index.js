@@ -10,8 +10,8 @@
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
-import React, { PureComponent } from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
+import React, { PureComponent } from 'react';
 import { addHref, createProps } from 'hyperview/src/services';
 import type { HvComponentProps } from 'hyperview/src/types';
 import type { InternalProps } from './types';
