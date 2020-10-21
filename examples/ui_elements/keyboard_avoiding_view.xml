@@ -28,20 +28,6 @@
              fontWeight="normal"
              margin="24"
              marginBottom="0" />
-      <style id="Item__Label"
-             fontSize="18"
-             fontWeight="normal" />
-      <style id="Item__Chevron"
-             fontSize="18"
-             fontWeight="bold" />
-      <style id="Border"
-             borderColor="#e1e1e1"
-             borderWidth="1"
-             flex="1"
-             margin="24"
-             padding="8" />
-      <style id="Main"
-             flex="1" />
       <style id="ScrollContainer"
              borderColor="#e1e1e1"
              borderRadius="16"
@@ -54,32 +40,32 @@
              marginLeft="24"
              marginRight="24"
              marginTop="48" />
-      <style id="label"
-						borderColor="#4E4D4D"
-						fontSize="16"
-						fontWeight="bold"
-						lineHeight="24"
-						marginBottom="8" />
-      <style id="input"
-            borderBottomColor="#E1E1E1"
-            borderBottomWidth="1"
-            borderColor="#4E4D4D"
-            flex="1"
-            fontSize="16"
-            fontWeight="normal"
-            paddingBottom="8"
-            paddingTop="8"
-						marginBottom="24">
+      <style id="Label"
+						 borderColor="#4E4D4D"
+						 fontSize="16"
+						 fontWeight="bold"
+						 lineHeight="24"
+						 marginBottom="8" />
+      <style id="Input"
+             borderBottomColor="#E1E1E1"
+             borderBottomWidth="1"
+             borderColor="#4E4D4D"
+             flex="1"
+             fontSize="16"
+             fontWeight="normal"
+             paddingBottom="8"
+             paddingTop="8"
+						 marginBottom="24" />
 			<style id="Footer"
-				backgroundColor="#63CB76"
-				width="100%"
-				padding="24"
-				marginTop="48" />
+						 backgroundColor="#63CB76"
+						 width="100%"
+						 padding="24"
+						 marginTop="48" />
 			<style id="Footer__Description"
-						color="white"
-						fontSize="24"
-						fontWeight="bold"
-						textAlign="center" />
+						 color="white"
+						 fontSize="24"
+						 fontWeight="bold"
+						 textAlign="center" />
     </styles>
     <body style="Body">
       <header style="Header">
@@ -92,14 +78,14 @@
         <text style="Description">Scrollable view with text inputs that open the keyboard</text>
         <view scroll="true" style="ScrollContainer ScrollContainer--Vertical">
 					<view style="FormGroup">
-						<text style="label">Input field 1</text>
-						<text-field placeholder="First name" placeholderTextColor="#8D9494" name="text" style="input" />
+						<text style="Label">Input field 1</text>
+						<text-field placeholder="First name" placeholderTextColor="#8D9494" name="text" style="Input" />
 
-						<text style="label">Input field 2</text>
-						<text-field placeholder="Last name" placeholderTextColor="#8D9494" name="text" style="input" />
+						<text style="Label">Input field 2</text>
+						<text-field placeholder="Last name" placeholderTextColor="#8D9494" name="text" style="Input" />
 
-						<text style="label">Input field 3</text>
-						<text-field placeholder="Address" placeholderTextColor="#8D9494" name="text" style="input" />
+						<text style="Label">Input field 3</text>
+						<text-field placeholder="Address" placeholderTextColor="#8D9494" name="text" style="Input" />
 					</view>
 				</view>
 
