@@ -49,6 +49,7 @@
       <xs:enumeration value="alert"/>
       <xs:enumeration value="amplitude"/>
       <xs:enumeration value="branch-share"/>
+      <xs:enumeration value="copy-to-clipboard"/>
       <xs:enumeration value="email"/>
       <xs:enumeration value="intercom"/>
       <xs:enumeration value="phone"/>
@@ -394,6 +395,7 @@
     </xs:attribute>
     <xs:attribute name="event-name" type="hv:eventName"/>
     <xs:attribute name="new-value" type="xs:string"/>
+    <xs:attribute name="value" type="xs:string"/>
 
     <xs:attributeGroup ref="alert:alertAttributes" />
     <xs:attributeGroup ref="amp:amplitudeAttributes" />
@@ -1000,7 +1002,6 @@
     <xs:complexType>
       <xs:group ref="hv:baseChildren"/>
       <xs:attributeGroup ref="hv:behaviorAttributes"/>
-      <xs:attribute name="value" type="xs:string"/>
       <xs:attribute name="id" type="hv:ID"/>
       <xs:attribute name="hide" type="xs:boolean"/>
       <xs:attribute name="style" type="hv:styleList"/>

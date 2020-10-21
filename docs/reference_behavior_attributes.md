@@ -296,9 +296,9 @@ The `verb` attribute defines the HTTP method used to request the content specifi
 
 ## action
 
-| Type                                                                                                                                                                     | Required |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
-| **push** (default), new, back, close, navigate, deep-link, open-settings, replace, replace-inner, append, prepend, reload, dispatch-event, show, hide, toggle, set-value | No       |
+| Type                                                                                                                                                                                        | Required |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| **push** (default), new, back, close, navigate, deep-link, open-settings, replace, replace-inner, append, prepend, reload, dispatch-event, show, hide, toggle, set-value, copy-to-clipboard | No       |
 
 The `action` attribute defines what to do with the Hyperview XML resource described by the `href` attribute. The possible actions are divided into **navigation actions**, which load or navigate to a screen, and **update actions**, which update the elements on the current screen.
 
@@ -324,6 +324,7 @@ The update actions include:
 - [`hide`](#hide)
 - [`toggle`](#toggle)
 - [`set-value`](#set-value)
+- [`copy-to-clipboard`](#copy-to-clipboard)
 
 ### `push`
 
@@ -533,6 +534,20 @@ Notable, `<select-multiple>` is not currently supported. Also note that using `s
 
 In this example, pressing "Set" will fill in the text field with "Test". Pressing "Clear value" will fill in the text field with "".
 See [the repo](https://github.com/Instawork/hyperview/blob/master/examples/advanced_behaviors/set_value/index.xml) for more examples.
+
+### `copy-to-clipboard`
+
+The `copy-to-clipboard` action allows copying a value to the clipboard. The behavior attributes must include a [`value`] attribute specifying the value to be copied.
+
+```xml
+<view>
+  <behavior trigger="press" action="copy-to-clipboard" value="Hello World!" />
+  <text style="link">Copy to clipboard</text>
+</view>
+```
+
+In this example, pressing "Copy to clipboard" will copy the value "Hello World!" to the clipboard.
+See [the repo](https://github.com/Instawork/hyperview/blob/master/examples/advanced_behaviors/copy_to_clipboard/index.xml) for examples.
 
 ## target
 

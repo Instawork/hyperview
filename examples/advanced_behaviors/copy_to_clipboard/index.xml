@@ -1,0 +1,65 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style id="Header"
+             alignItems="center"
+             backgroundColor="white"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flexDirection="row"
+             height="72"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="24" />
+      <style id="Header__Back"
+             color="blue"
+             fontSize="16"
+             fontWeight="600"
+             paddingRight="16" />
+      <style id="Header__Title"
+             color="black"
+             fontSize="24"
+             fontWeight="600" />
+      <style id="Body"
+             backgroundColor="white"
+             flex="1" />
+      <style id="Description"
+             fontSize="16"
+             fontWeight="normal"
+             margin="24"
+             marginBottom="0" />
+      <style id="Button"
+             alignItems="center"
+             backgroundColor="#63CB76"
+             borderRadius="16"
+             flex="1"
+             flexDirection="column"
+             margin="24"
+             padding="24" />
+      <style id="Button__Label"
+             color="white"
+             fontSize="24"
+             fontWeight="bold" />
+      <style id="Main"
+             flex="1" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text action="back"
+              href="#"
+              style="Header__Back">Back</text>
+        <text style="Header__Title">Hide</text>
+      </header>
+      <view scroll="true"
+            style="Main">
+        <text style="Description">Tapping the button below will copy the value "Hello World" to the clipboard.</text>
+        <view action="copy-to-clipboard"
+              trigger="press"
+              value="Hello World"
+              style="Button">
+          <text style="Button__Label">Copy to clipboard</text>
+        </view>
+      </view>
+    </body>
+  </screen>
+</doc>
