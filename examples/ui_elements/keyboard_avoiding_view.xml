@@ -1,0 +1,111 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style id="Header"
+             alignItems="center"
+             backgroundColor="white"
+             borderBottomColor="#eee"
+             borderBottomWidth="1"
+             flexDirection="row"
+             height="72"
+             paddingLeft="24"
+             paddingRight="24"
+             paddingTop="24" />
+      <style id="Header__Back"
+             color="blue"
+             fontSize="16"
+             fontWeight="600"
+             paddingRight="16" />
+      <style id="Header__Title"
+             color="black"
+             fontSize="24"
+             fontWeight="600" />
+      <style id="Body"
+             backgroundColor="white"
+             flex="1" />
+      <style id="Description"
+             fontSize="16"
+             fontWeight="normal"
+             margin="24"
+             marginBottom="0" />
+      <style id="Item__Label"
+             fontSize="18"
+             fontWeight="normal" />
+      <style id="Item__Chevron"
+             fontSize="18"
+             fontWeight="bold" />
+      <style id="Border"
+             borderColor="#e1e1e1"
+             borderWidth="1"
+             flex="1"
+             margin="24"
+             padding="8" />
+      <style id="Main"
+             flex="1" />
+      <style id="ScrollContainer"
+             borderColor="#e1e1e1"
+             borderRadius="16"
+             borderWidth="1"
+             margin="24" />
+      <style id="ScrollContainer--Vertical"
+             flexDirection="column" />
+      <style id="FormGroup"
+             flex="1"
+             marginLeft="24"
+             marginRight="24"
+             marginTop="48" />
+      <style id="label"
+						borderColor="#4E4D4D"
+						fontSize="16"
+						fontWeight="bold"
+						lineHeight="24"
+						marginBottom="8" />
+      <style id="input"
+            borderBottomColor="#E1E1E1"
+            borderBottomWidth="1"
+            borderColor="#4E4D4D"
+            flex="1"
+            fontSize="16"
+            fontWeight="normal"
+            paddingBottom="8"
+            paddingTop="8"
+						marginBottom="24">
+			<style id="Footer"
+				backgroundColor="#63CB76"
+				width="100%"
+				padding="24"
+				marginTop="48" />
+			<style id="Footer__Description"
+						color="white"
+						fontSize="24"
+						fontWeight="bold"
+						textAlign="center" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text action="back"
+              href="#"
+              style="Header__Back">Back</text>
+        <text style="Header__Title">Keyboard Avoiding View</text>
+      </header>
+      
+        <text style="Description">Scrollable view with text inputs that open the keyboard</text>
+        <view scroll="true" style="ScrollContainer ScrollContainer--Vertical">
+					<view style="FormGroup">
+						<text style="label">Input field 1</text>
+						<text-field placeholder="First name" placeholderTextColor="#8D9494" name="text" style="input" />
+
+						<text style="label">Input field 2</text>
+						<text-field placeholder="Last name" placeholderTextColor="#8D9494" name="text" style="input" />
+
+						<text style="label">Input field 3</text>
+						<text-field placeholder="Address" placeholderTextColor="#8D9494" name="text" style="input" />
+					</view>
+				</view>
+
+        <view avoid-keyboard="true" style="Footer">
+          <text style="Footer__Description">Keyboard Avoiding View</text>
+        </view>
+    </body>
+  </screen>
+</doc>

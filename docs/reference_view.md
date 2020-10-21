@@ -52,6 +52,7 @@ A `<view>` element can only appear anywhere within a `<screen>` element.
 - [`scroll-to-input-offset`](#scroll-to-input-offset)
 - [`id`](#id)
 - [`hide`](#hide)
+- [`avoid-keyboard`](#avoid-keyboard)
 
 #### Behavior attributes
 
@@ -104,3 +105,12 @@ A global attribute uniquely identifying the element in the whole document.
 | **false** (default), true | No       |
 
 If `hide="true"`, the element will not be rendered on screen. If the element or any of the element's children have a behavior that triggers on "load" or "visible", those behaviors will not trigger while the element is hidden.
+
+#### `avoid-keyboard`
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| true, **false** (default) | No       |
+
+An attribute to solve the common problem of views that need to move out of the way of the virtual keyboard. It can automatically adjust its position based on the keyboard height. This is useful when you want keyboard avoiding behavior in non-scrollable views. It is applied only in iOS since
+Android has built-in support for avoiding keyboard.

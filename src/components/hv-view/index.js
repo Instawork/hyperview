@@ -36,7 +36,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
     const { skipHref } = viewOptions || {};
     const props: InternalProps = createProps(element, stylesheets, viewOptions);
     const scrollable = !!element.getAttribute('scroll');
-    const keyboardAvoiding = !!element.getAttribute('keyboard-avoid');
+    const keyboardAvoiding = !!element.getAttribute('avoid-keyboard');
     let c = View;
 
     /**
