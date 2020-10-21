@@ -112,5 +112,5 @@ If `hide="true"`, the element will not be rendered on screen. If the element or 
 | ------------------------- | -------- |
 | true, **false** (default) | No       |
 
-An attribute to solve the common problem of views that need to move out of the way of the virtual keyboard. It can automatically adjust its position based on the keyboard height. This is useful when you want keyboard avoiding behavior in non-scrollable views. It is applied only in iOS since
+An attribute to solve the common problem of views that need to move out of the way of the virtual keyboard. It can automatically adjust the position of its children based on the keyboard height. This is useful when you want keyboard avoiding behavior in non-scrollable views. It is applied only in iOS since
 Android has built-in support for avoiding keyboard.

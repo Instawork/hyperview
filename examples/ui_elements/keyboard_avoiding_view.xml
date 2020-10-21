@@ -28,18 +28,9 @@
              fontWeight="normal"
              margin="24"
              marginBottom="0" />
-      <style id="ScrollContainer"
-             borderColor="#e1e1e1"
-             borderRadius="16"
-             borderWidth="1"
-             margin="24" />
-      <style id="ScrollContainer--Vertical"
-             flexDirection="column" />
       <style id="FormGroup"
              flex="1"
-             marginLeft="24"
-             marginRight="24"
-             marginTop="48" />
+             margin="24" />
       <style id="Label"
 						 borderColor="#4E4D4D"
 						 fontSize="16"
@@ -50,7 +41,6 @@
              borderBottomColor="#E1E1E1"
              borderBottomWidth="1"
              borderColor="#4E4D4D"
-             flex="1"
              fontSize="16"
              fontWeight="normal"
              paddingBottom="8"
@@ -59,8 +49,7 @@
 			<style id="Footer"
 						 backgroundColor="#63CB76"
 						 width="100%"
-						 padding="24"
-						 marginTop="48" />
+						 padding="24" />
 			<style id="Footer__Description"
 						 color="white"
 						 fontSize="24"
@@ -74,24 +63,24 @@
               style="Header__Back">Back</text>
         <text style="Header__Title">Keyboard Avoiding View</text>
       </header>
-      
-        <text style="Description">Scrollable view with text inputs that open the keyboard</text>
-        <view scroll="true" style="ScrollContainer ScrollContainer--Vertical">
-					<view style="FormGroup">
-						<text style="Label">Input field 1</text>
-						<text-field placeholder="First name" placeholderTextColor="#8D9494" name="text" style="Input" />
 
-						<text style="Label">Input field 2</text>
-						<text-field placeholder="Last name" placeholderTextColor="#8D9494" name="text" style="Input" />
+			<text style="Description">View with text inputs that open the keyboard</text>
+			<view style="FormGroup">
+				<text style="Label">Input field 1</text>
+				<text-field placeholder="First name" placeholderTextColor="#8D9494" name="text" style="Input" />
 
-						<text style="Label">Input field 3</text>
-						<text-field placeholder="Address" placeholderTextColor="#8D9494" name="text" style="Input" />
-					</view>
-				</view>
+				<text style="Label">Input field 2</text>
+				<text-field placeholder="Last name" placeholderTextColor="#8D9494" name="text" style="Input" />
 
-        <view avoid-keyboard="true" style="Footer">
+				<text style="Label">Input field 3</text>
+				<text-field placeholder="Address" placeholderTextColor="#8D9494" name="text" style="Input" />
+			</view>
+
+			<view avoid-keyboard="true">
+        <view style="Footer">
           <text style="Footer__Description">Keyboard Avoiding View</text>
         </view>
+			</view>
     </body>
   </screen>
 </doc>
