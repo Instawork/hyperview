@@ -1002,7 +1002,6 @@
     <xs:complexType>
       <xs:group ref="hv:baseChildren"/>
       <xs:attributeGroup ref="hv:behaviorAttributes"/>
-      <xs:attribute name="value" type="xs:string"/>
       <xs:attribute name="id" type="hv:ID"/>
       <xs:attribute name="hide" type="xs:boolean"/>
       <xs:attribute name="style" type="hv:styleList"/>
