@@ -722,6 +722,7 @@
       <xs:attribute name="style" type="hv:styleList"/>
       <xs:attribute name="id" type="hv:ID"/>
       <xs:attribute name="hide" type="xs:boolean"/>
+      <xs:attribute name="avoid-keyboard" type="xs:boolean"/>
       <xs:attributeGroup ref="hv:behaviorAttributes"/>
       <xs:attributeGroup ref="hv:scrollAttributes"/>
     </xs:complexType>

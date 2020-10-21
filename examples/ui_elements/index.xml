@@ -70,6 +70,13 @@
           <text style="Item__Label">Scroll Views</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
+        <item href="/ui_elements/keyboard_avoiding_view.xml"
+              key="scroll-view"
+              show-during-load="loadingScreen"
+              style="Item">
+          <text style="Item__Label">Keyboard Avoiding View</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
         <item href="/ui_elements/text.xml"
               key="text"
               show-during-load="loadingScreen"
