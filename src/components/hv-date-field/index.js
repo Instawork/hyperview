@@ -17,8 +17,6 @@ import type {
   StyleSheets,
 } from 'hyperview/src/types';
 import {
-  DatePickerAndroid,
-  DatePickerIOS,
   Modal,
   Platform,
   Text,
@@ -28,6 +26,7 @@ import {
 import React, { PureComponent } from 'react';
 import { createProps, createStyleProp } from 'hyperview/src/services';
 import { DateFormatContext } from 'hyperview/src';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { Node as ReactNode } from 'react';
 import type { State } from './types';
@@ -122,15 +121,6 @@ export default class HvDateField extends PureComponent<
     return prevState;
   }
 
-  componentDidUpdate = (prevProps: HvComponentProps, prevState: State) => {
-    // TODO: move to React hooks once we adopt them across the codebase.
-    if (Platform.OS === 'android') {
-      if (!prevState.fieldPressed && this.state.fieldPressed) {
-        this.showPickerAndroid();
-      }
-    }
-  };
-
   toggleFieldPress = () => {
     this.setState(prevState => ({ fieldPressed: !prevState.fieldPressed }));
   };
@@ -181,54 +171,23 @@ export default class HvDateField extends PureComponent<
   };
 
   /**
-   * Date picker on Android is implemented as an async function.
-   * This gets triggered when field pressed state changes from false to true.
-   * This is used on Android only.
-   */
-  showPickerAndroid = async () => {
-    const maxValue: ?DOMString = this.props.element.getAttribute('max');
-    const minValue: ?DOMString = this.props.element.getAttribute('min');
-    const mode: ?string = this.props.element.getAttribute('mode');
-    const minDate: ?Date = HvDateField.createDateFromString(minValue);
-    const maxDate: ?Date = HvDateField.createDateFromString(maxValue);
-    const options: Object = {
-      date: this.state.pickerValue,
-    };
-    if (minDate) {
-      options.minDate = minDate;
-    }
-    if (maxDate) {
-      options.maxDate = maxDate;
-    }
-    options.mode = mode || 'default';
-    const openAction = await DatePickerAndroid.open(options);
-    const { action, year, month, day } = openAction;
-    if (action === DatePickerAndroid.dateSetAction) {
-      // Selected year, month (0-11), day
-      this.setState({ pickerValue: new Date(year, month, day) });
-      this.onModalDone();
-    } else {
-      this.onModalCancel();
-    }
-  };
-
-  /**
    * Renders the date picker component, with the given min and max dates.
-   * This is used on iOS only.
+   * Used for both iOS and Android. However, on iOS this component is rendered inline,
+   * and on Android it's rendered as a modal. Thus, the on-change callback needs to be
+   * handled differently in each Platform, and on iOS we need to wrap this component
+   * in our own modal for consistency.
    */
-  renderPickeriOS = (): ReactNode => {
+  renderPicker = (onChange: (evt: Event, date?: Date) => void): ReactNode => {
     const minValue: ?DOMString = this.props.element.getAttribute('min');
     const maxValue: ?DOMString = this.props.element.getAttribute('max');
     const minDate: ?Date = HvDateField.createDateFromString(minValue);
     const maxDate: ?Date = HvDateField.createDateFromString(maxValue);
-    const onDateChange = (value: Date) => {
-      this.setState({ pickerValue: value });
-    };
-
+    const displayMode: ?DOMString = this.props.element.getAttribute('mode');
     const props: Object = {
-      date: this.state.pickerValue,
+      display: displayMode,
+      value: this.state.pickerValue,
       mode: 'date',
-      onDateChange,
+      onChange,
     };
     if (minDate) {
       props.minimumDate = minDate;
@@ -237,7 +196,28 @@ export default class HvDateField extends PureComponent<
       props.maximumDate = maxDate;
     }
 
-    return <DatePickerIOS {...props} />;
+    return <DateTimePicker {...props} />;
+  };
+
+  /**
+   * Unlike iOS, the Android picker natively uses a modal. So we don't need
+   * to wrap it in an extra component, just render it when we want the modal
+   * to appear.
+   */
+  renderPickerModalAndroid = (): ?ReactNode => {
+    if (!this.state.focused) {
+      return null;
+    }
+    const onChange = (evt: Event, date?: Date) => {
+      if (date === undefined) {
+        // Modal was dismissed (cancel button)
+        this.onModalCancel();
+      } else {
+        this.setState({ pickerValue: date });
+        this.onModalDone();
+      }
+    };
+    return this.renderPicker(onChange);
   };
 
   /**
@@ -246,10 +226,6 @@ export default class HvDateField extends PureComponent<
    * This is used on iOS only.
    */
   renderPickerModaliOS = (): ReactNode => {
-    if (Platform.OS === 'android') {
-      return null;
-    }
-
     const element: Element = this.props.element;
     const stylesheets: StyleSheets = this.props.stylesheets;
     const options: HvComponentOptions = this.props.options;
@@ -283,6 +259,12 @@ export default class HvDateField extends PureComponent<
       element.getAttribute('cancel-label') || 'Cancel';
     const doneLabel: string = element.getAttribute('done-label') || 'Done';
 
+    // On iOS, store the changed value in the temp state until the modal
+    // is saved.
+    const onChange = (evt: Event, date?: Date) => {
+      this.setState({ pickerValue: date });
+    };
+
     return (
       <Modal
         animationType="slide"
@@ -312,7 +294,7 @@ export default class HvDateField extends PureComponent<
                 </View>
               </TouchableWithoutFeedback>
             </View>
-            {this.renderPickeriOS()}
+            {this.renderPicker(onChange)}
           </View>
         </View>
       </Modal>
@@ -375,8 +357,10 @@ export default class HvDateField extends PureComponent<
       styleAttr: 'field-style',
     });
 
-    const iosPicker =
-      Platform.OS === 'ios' ? this.renderPickerModaliOS() : null;
+    const picker =
+      Platform.OS === 'ios'
+        ? this.renderPickerModaliOS()
+        : this.renderPickerModalAndroid();
 
     return (
       <TouchableWithoutFeedback
@@ -388,7 +372,7 @@ export default class HvDateField extends PureComponent<
           <DateFormatContext.Consumer>
             {formatter => this.renderLabel(formatter)}
           </DateFormatContext.Consumer>
-          {iosPicker}
+          {picker}
         </View>
       </TouchableWithoutFeedback>
     );

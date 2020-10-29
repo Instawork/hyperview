@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-native-community/datetimepicker": "3.0.0",
     "expo": "^39.0.0",
     "hyperview": "0.32.0",
     "react": "16.13.1",
