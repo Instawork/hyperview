@@ -19,13 +19,17 @@ export default class HvTextArea extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.TEXT_AREA;
   static localNameAliases = [];
+  constructor(props: HvComponentProps) {
+    super(props);
+    this.setFocus = this.setFocus.bind(this);
+  }
 
-  setFocus(focused: boolean) {
+  setFocus = (focused: boolean) => {
     const { element, onUpdate } = this.props;
     const newElement = element.cloneNode(true);
     newElement.setAttribute('focused', focused.toString());
     onUpdate(null, 'swap', element, { newElement });
-  }
+  };
 
   render() {
     const { element, stylesheets, options } = this.props;
