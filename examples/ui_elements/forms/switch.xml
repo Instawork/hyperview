@@ -82,6 +82,14 @@
           <style backgroundColor="#4778FF" />
         </modifier>
       </style>
+      <style id="switch-styled"
+        color="#ffaaaa"
+        backgroundColor="red"
+      >
+        <modifier selected="true">
+          <style backgroundColor="#550000" />
+        </modifier>
+      </style>
       <style id="Button"
              backgroundColor="#63CB76"
              borderRadius="16"
@@ -113,6 +121,10 @@
           <view style="FormGroup">
             <text style="label">Switch off</text>
             <switch style="switch" name="switch2" value="off" />
+          </view>
+          <view style="FormGroup">
+            <text style="label">Styled</text>
+            <switch style="switch-styled" name="switch3" value="off" />
           </view>
 
           <view style="FormGroup">
