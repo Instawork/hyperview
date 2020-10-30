@@ -37,6 +37,7 @@ A `<text-field>` element can appear anywhere within a `<form>` element.
 - [`id`](#id)
 - [`hide`](#hide)
 - [`auto-focus`](#auto-focus)
+- [`secure-text`](#secure-text)
 
 #### `name`
 
@@ -130,3 +131,11 @@ If `hide="true"`, the element will not be rendered on screen. If the element or 
 | **false** (default), true | No       |
 
 If `auto-focus="true"`, the element will steal focus the moment it's rendered.
+
+#### `secure-text`
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| **false** (default), true | No       |
+
+If `secure-text="true"`, the input in the text field will be obscured. Appropriate to use for passwords or other sensitive information.

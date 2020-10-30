@@ -950,6 +950,7 @@
       <xs:attribute name="hide" type="xs:boolean"/>
       <xs:attribute name="style" type="hv:styleList"/>
       <xs:attribute name="auto-focus" type="xs:boolean"/>
+      <xs:attribute name="secure-text" type="xs:boolean"/>
       <xs:attribute name="underlineColorAndroid" type="hv:color"/>
       <xs:attribute name="clearButtonMode">
         <xs:simpleType>
