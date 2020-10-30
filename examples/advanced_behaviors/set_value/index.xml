@@ -79,16 +79,17 @@
              fontSize="16"
              fontWeight="normal"
              paddingBottom="8"
-             paddingTop="8"/>
-      <style id="input__text"
-             fontSize="16"
-             fontWeight="normal">
+             paddingTop="8">
         <modifier pressed="true">
           <style borderBottomColor="green" />
         </modifier>
         <modifier focused="true">
           <style borderBottomColor="#4778FF" />
         </modifier>
+      </style>
+      <style id="input__text"
+             fontSize="16"
+             fontWeight="normal">
       </style>
       <style id="section" marginLeft="24" fontSize="18" fontWeight="bold" marginTop="8" />
       <style id="PickerModal"
