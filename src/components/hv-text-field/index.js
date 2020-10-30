@@ -12,26 +12,14 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import type { Element, HvComponentProps } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import type { State } from './types';
 import { TextInput } from 'react-native';
 import TinyMask from 'hyperview/src/mask.js';
 import { createProps } from 'hyperview/src/services';
 
-export default class HvTextField extends PureComponent<
-  HvComponentProps,
-  State,
-> {
+export default class HvTextField extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.TEXT_FIELD;
   static localNameAliases = [];
-  constructor(props: HvComponentProps) {
-    const { element } = props;
-    super(props);
-    this.state = {
-      focused: false,
-      value: element.getAttribute('value') || '',
-    };
-  }
 
   /**
    * Formats the user's input based on element attributes.
@@ -49,18 +37,11 @@ export default class HvTextField extends PureComponent<
     return mask.mask(value) || '';
   };
 
-  static getDerivedStateFromProps(
-    nextProps: HvComponentProps,
-    prevState: State,
-  ) {
-    const { element } = nextProps;
-    const newValue = HvTextField.getFormattedValue(
-      element,
-      element.getAttribute('value') || '',
-    );
-    return newValue !== prevState.value
-      ? { focused: prevState.focused, value: newValue }
-      : prevState;
+  setFocus(focused: boolean) {
+    const { element, onUpdate } = this.props;
+    const newElement = element.cloneNode(true);
+    newElement.setAttribute('focused', focused.toString());
+    onUpdate(null, 'swap', element, { newElement });
   }
 
   render() {
@@ -70,7 +51,7 @@ export default class HvTextField extends PureComponent<
       return null;
     }
 
-    const { focused } = this.state;
+    const focused = element.getAttribute('focused') === 'true';
     const keyboardType = element.getAttribute('keyboard-type') || undefined;
     const props = {
       ...createProps(element, stylesheets, { ...options, focused }),
@@ -78,16 +59,15 @@ export default class HvTextField extends PureComponent<
       secureTextEntry: element.getAttribute('secure-text') === 'true',
       ref: options.registerInputHandler,
       multiline: false,
-      value: this.state.value,
+      value: element.getAttribute('value'),
       keyboardType,
-      onFocus: () => this.setState({ focused: true }),
-      onBlur: () => this.setState({ focused: false }),
+      onFocus: () => this.setFocus(true),
+      onBlur: () => this.setFocus(false),
       onChangeText: value => {
-        // Render the formatted value and store the formatted value
-        // in state (on the XML element).
         const formattedValue = HvTextField.getFormattedValue(element, value);
-        this.setState({ value: formattedValue });
-        element.setAttribute('value', formattedValue);
+        const newElement = element.cloneNode(true);
+        newElement.setAttribute('value', formattedValue);
+        this.props.onUpdate(null, 'swap', element, { newElement });
       },
     };
 

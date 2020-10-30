@@ -12,29 +12,19 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import React, { PureComponent } from 'react';
 import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import type { State } from './types';
 import { TextInput } from 'react-native';
 import { createProps } from 'hyperview/src/services';
 
-export default class HvTextArea extends PureComponent<HvComponentProps, State> {
+export default class HvTextArea extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.TEXT_AREA;
   static localNameAliases = [];
-  constructor(props: HvComponentProps) {
-    const { element } = props;
-    super(props);
-    this.state = {
-      focused: false,
-      value: element.getAttribute('value') || '',
-    };
-  }
 
-  static getDerivedStateFromProps(
-    nextProps: HvComponentProps,
-    prevState: State,
-  ) {
-    const value = nextProps.element.getAttribute('value') || '';
-    return value !== prevState.value ? { value } : {};
+  setFocus(focused: boolean) {
+    const { element, onUpdate } = this.props;
+    const newElement = element.cloneNode(true);
+    newElement.setAttribute('focused', focused.toString());
+    onUpdate(null, 'swap', element, { newElement });
   }
 
   render() {
@@ -44,19 +34,20 @@ export default class HvTextArea extends PureComponent<HvComponentProps, State> {
       return null;
     }
 
-    const { focused } = this.state;
+    const focused = element.getAttribute('focused') === 'true';
     const keyboardType = element.getAttribute('keyboard-type') || undefined;
     const props = {
       ...createProps(element, stylesheets, { ...options, focused }),
       ref: options.registerInputHandler,
       multiline: true,
-      value: this.state.value,
+      value: element.getAttribute('value'),
       keyboardType,
-      onFocus: () => this.setState({ focused: true }),
-      onBlur: () => this.setState({ focused: false }),
+      onFocus: () => this.setFocus(true),
+      onBlur: () => this.setFocus(false),
       onChangeText: value => {
-        this.setState({ value });
-        element.setAttribute('value', value);
+        const newElement = element.cloneNode(true);
+        newElement.setAttribute('value', value);
+        this.props.onUpdate(null, 'swap', element, { newElement });
       },
     };
 
