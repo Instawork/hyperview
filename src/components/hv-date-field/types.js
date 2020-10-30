@@ -9,9 +9,6 @@
  */
 
 export type State = {|
-  value: ?Date,
-  pickerValue: Date,
-  focused: boolean,
   fieldPressed: boolean,
   donePressed: boolean,
   cancelPressed: boolean,

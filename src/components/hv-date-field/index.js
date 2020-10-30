@@ -51,16 +51,7 @@ export default class HvDateField extends PureComponent<
 
   constructor(props: HvComponentProps) {
     super(props);
-    const element: Element = props.element;
-    const stringValue: ?DOMString = element.getAttribute('value');
-    const value: ?Date = HvDateField.createDateFromString(stringValue);
-    const pickerValue: Date = value || new Date();
     this.state = {
-      // Date that's selected in the field. Can be null.
-      value,
-      // Date shown when the picker opens, must be set to a default to display.
-      pickerValue,
-      focused: false,
       fieldPressed: false,
       donePressed: false,
       cancelPressed: false,
@@ -93,34 +84,6 @@ export default class HvDateField extends PureComponent<
     return new Date(year, month - 1, day);
   };
 
-  static getDerivedStateFromProps(
-    nextProps: HvComponentProps,
-    prevState: State,
-  ): State {
-    const { element } = nextProps;
-    if (element.hasAttribute('value')) {
-      const newValue = element.getAttribute('value') || '';
-      const newDate = HvDateField.createDateFromString(newValue);
-
-      // NOTE(adam): We convert from date to strings for the comparison to normalize the representation.
-      if (
-        HvDateField.createStringFromDate(newDate) !==
-        HvDateField.createStringFromDate(prevState.value)
-      ) {
-        const { focused, fieldPressed, donePressed, cancelPressed } = prevState;
-        return {
-          cancelPressed,
-          donePressed,
-          fieldPressed,
-          focused,
-          pickerValue: newDate || new Date(),
-          value: newDate,
-        };
-      }
-    }
-    return prevState;
-  }
-
   toggleFieldPress = () => {
     this.setState(prevState => ({ fieldPressed: !prevState.fieldPressed }));
   };
@@ -137,18 +100,23 @@ export default class HvDateField extends PureComponent<
    * Shows the picker, defaulting to the field's value.
    */
   onFieldPress = () => {
-    this.setState({
-      focused: true,
-    });
+    const { element, onUpdate } = this.props;
+    const newElement = element.cloneNode(true);
+    const value = element.getAttribute('value');
+    newElement.setAttribute('focused', 'true');
+    newElement.setAttribute('picker-value', value);
+    onUpdate(null, 'swap', element, { newElement });
   };
 
   /**
    * Hides the picker without applying the chosen value.
    */
   onModalCancel = () => {
-    this.setState({
-      focused: false,
-    });
+    const { element, onUpdate } = this.props;
+    const newElement = element.cloneNode(true);
+    newElement.removeAttribute('picker-value');
+    newElement.setAttribute('focused', 'false');
+    onUpdate(null, 'swap', element, { newElement });
   };
 
   /**
@@ -156,18 +124,36 @@ export default class HvDateField extends PureComponent<
    */
   onModalDone = () => {
     const element: Element = this.props.element;
-    // In addition to updating the state, we update the XML element to ensure the
-    // selected value gets serialized in the parent form.
-    // The value in the component state will be derived from the element prop
-    element.setAttribute(
-      'value',
-      HvDateField.createStringFromDate(this.state.pickerValue),
-    );
+    const pickerValue = element.getAttribute('picker-value');
+    const newElement = element.cloneNode(true);
+    newElement.setAttribute('value', pickerValue);
+    newElement.removeAttribute('picker-value');
+    newElement.setAttribute('focused', false);
+    this.props.onUpdate(null, 'swap', element, { newElement });
+  };
 
-    // Hide the modal
-    this.setState({
-      focused: false,
-    });
+  setPickerValue = (value: ?Date) => {
+    const { element, onUpdate } = this.props;
+    const formattedValue: string = HvDateField.createStringFromDate(value);
+    const newElement = element.cloneNode(true);
+    newElement.setAttribute('picker-value', formattedValue);
+    onUpdate(null, 'swap', element, { newElement });
+  };
+
+  isFocused = (): boolean => {
+    return this.props.element.getAttribute('focused') === 'true';
+  };
+
+  getPickerValue = (): ?Date => {
+    return HvDateField.createDateFromString(
+      this.props.element.getAttribute('picker-value'),
+    );
+  };
+
+  getValue = (): ?Date => {
+    return HvDateField.createDateFromString(
+      this.props.element.getAttribute('value'),
+    );
   };
 
   /**
@@ -185,7 +171,7 @@ export default class HvDateField extends PureComponent<
     const displayMode: ?DOMString = this.props.element.getAttribute('mode');
     const props: Object = {
       display: displayMode,
-      value: this.state.pickerValue,
+      value: this.getPickerValue() || new Date(),
       mode: 'date',
       onChange,
     };
@@ -205,7 +191,7 @@ export default class HvDateField extends PureComponent<
    * to appear.
    */
   renderPickerModalAndroid = (): ?ReactNode => {
-    if (!this.state.focused) {
+    if (!this.isFocused()) {
       return null;
     }
     const onChange = (evt: Event, date?: Date) => {
@@ -213,7 +199,7 @@ export default class HvDateField extends PureComponent<
         // Modal was dismissed (cancel button)
         this.onModalCancel();
       } else {
-        this.setState({ pickerValue: date });
+        this.setPickerValue(date);
         this.onModalDone();
       }
     };
@@ -259,17 +245,15 @@ export default class HvDateField extends PureComponent<
       element.getAttribute('cancel-label') || 'Cancel';
     const doneLabel: string = element.getAttribute('done-label') || 'Done';
 
-    // On iOS, store the changed value in the temp state until the modal
-    // is saved.
     const onChange = (evt: Event, date?: Date) => {
-      this.setState({ pickerValue: date });
+      this.setPickerValue(date);
     };
 
     return (
       <Modal
         animationType="slide"
         transparent
-        visible={this.state.focused}
+        visible={this.isFocused()}
         onRequestClose={this.onModalCancel}
       >
         <View style={styles.modalWrapper}>
@@ -308,13 +292,13 @@ export default class HvDateField extends PureComponent<
    */
   renderLabel = (formatter: Function): ReactNode => {
     const element: Element = this.props.element;
-    const value: ?Date = this.state.value;
+    const value: ?Date = this.getValue();
     const stylesheets: StyleSheets = this.props.stylesheets;
     const options: HvComponentOptions = this.props.options;
     const placeholderTextColor: ?DOMString = element.getAttribute(
       'placeholderTextColor',
     );
-    const focused: boolean = this.state.focused;
+    const focused: boolean = this.isFocused();
     const pressed: boolean = this.state.fieldPressed;
     const fieldTextStyle = createStyleProp(element, stylesheets, {
       ...options,
@@ -348,7 +332,7 @@ export default class HvDateField extends PureComponent<
       return null;
     }
 
-    const focused: boolean = this.state.focused;
+    const focused: boolean = this.isFocused();
     const pressed: boolean = this.state.fieldPressed;
     const props = createProps(element, stylesheets, {
       ...options,
