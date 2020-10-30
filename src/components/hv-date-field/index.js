@@ -97,12 +97,16 @@ export default class HvDateField extends PureComponent<
   };
 
   /**
-   * Shows the picker, defaulting to the field's value.
+   * Shows the picker, defaulting to the field's value. If the field is not set, use today's date in the picker.
    */
   onFieldPress = () => {
     const { element, onUpdate } = this.props;
     const newElement = element.cloneNode(true);
-    const value = element.getAttribute('value');
+    const value: string =
+      element.getAttribute('value') ||
+      HvDateField.createStringFromDate(new Date());
+
+    // Focus the field and populate the picker with the field's value.
     newElement.setAttribute('focused', 'true');
     newElement.setAttribute('picker-value', value);
     onUpdate(null, 'swap', element, { newElement });
@@ -114,24 +118,27 @@ export default class HvDateField extends PureComponent<
   onModalCancel = () => {
     const { element, onUpdate } = this.props;
     const newElement = element.cloneNode(true);
-    newElement.removeAttribute('picker-value');
     newElement.setAttribute('focused', 'false');
+    newElement.removeAttribute('picker-value');
     onUpdate(null, 'swap', element, { newElement });
   };
 
   /**
    * Hides the picker and applies the chosen value to the field.
    */
-  onModalDone = () => {
-    const element: Element = this.props.element;
-    const pickerValue = element.getAttribute('picker-value');
+  onModalDone = (newValue: ?Date) => {
+    const { element, onUpdate } = this.props;
+    const value = HvDateField.createStringFromDate(newValue);
     const newElement = element.cloneNode(true);
-    newElement.setAttribute('value', pickerValue);
+    newElement.setAttribute('value', value);
     newElement.removeAttribute('picker-value');
-    newElement.setAttribute('focused', false);
-    this.props.onUpdate(null, 'swap', element, { newElement });
+    newElement.setAttribute('focused', 'false');
+    onUpdate(null, 'swap', element, { newElement });
   };
 
+  /**
+   * Updates the picker value while keeping the picker open.
+   */
   setPickerValue = (value: ?Date) => {
     const { element, onUpdate } = this.props;
     const formattedValue: string = HvDateField.createStringFromDate(value);
@@ -140,21 +147,25 @@ export default class HvDateField extends PureComponent<
     onUpdate(null, 'swap', element, { newElement });
   };
 
-  isFocused = (): boolean => {
-    return this.props.element.getAttribute('focused') === 'true';
-  };
+  /**
+   * Returns true if the field is focused (and picker is showing).
+   */
+  isFocused = (): boolean =>
+    this.props.element.getAttribute('focused') === 'true';
 
-  getPickerValue = (): ?Date => {
-    return HvDateField.createDateFromString(
+  /**
+   * Returns a Date object representing the value in the picker.
+   */
+  getPickerValue = (): ?Date =>
+    HvDateField.createDateFromString(
       this.props.element.getAttribute('picker-value'),
     );
-  };
 
-  getValue = (): ?Date => {
-    return HvDateField.createDateFromString(
-      this.props.element.getAttribute('value'),
-    );
-  };
+  /**
+   * Returns a Date object representing the value in the field.
+   */
+  getValue = (): ?Date =>
+    HvDateField.createDateFromString(this.props.element.getAttribute('value'));
 
   /**
    * Renders the date picker component, with the given min and max dates.
@@ -171,7 +182,7 @@ export default class HvDateField extends PureComponent<
     const displayMode: ?DOMString = this.props.element.getAttribute('mode');
     const props: Object = {
       display: displayMode,
-      value: this.getPickerValue() || new Date(),
+      value: this.getPickerValue(),
       mode: 'date',
       onChange,
     };
@@ -199,8 +210,7 @@ export default class HvDateField extends PureComponent<
         // Modal was dismissed (cancel button)
         this.onModalCancel();
       } else {
-        this.setPickerValue(date);
-        this.onModalDone();
+        this.onModalDone(date);
       }
     };
     return this.renderPicker(onChange);
@@ -271,7 +281,7 @@ export default class HvDateField extends PureComponent<
               <TouchableWithoutFeedback
                 onPressIn={this.toggleSavePress}
                 onPressOut={this.toggleSavePress}
-                onPress={this.onModalDone}
+                onPress={() => this.onModalDone(this.getPickerValue())}
               >
                 <View>
                   <Text style={doneTextStyle}>{doneLabel}</Text>
