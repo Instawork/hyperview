@@ -13,34 +13,17 @@ import React, { PureComponent } from 'react';
 import { StyleSheet, Switch } from 'react-native';
 import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import type { State } from './types';
 import { createStyleProp } from 'hyperview/src/services';
 
-export default class HvSwitch extends PureComponent<HvComponentProps, State> {
+export default class HvSwitch extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.SWITCH;
   static localNameAliases = [];
   props: HvComponentProps;
-  state: State;
-
-  constructor(props: HvComponentProps) {
-    super(props);
-    const initialValue = props.element.getAttribute('value') === 'on';
-    this.state = {
-      value: initialValue,
-    };
-  }
-
-  static getDerivedStateFromProps(
-    nextProps: HvComponentProps,
-    prevState: State,
-  ) {
-    const value = nextProps.element.getAttribute('value') === 'on';
-    return value !== prevState.value ? { value } : {};
-  }
 
   render() {
-    if (this.props.element.getAttribute('hide') === 'true') {
+    const { element, onUpdate } = this.props;
+    if (element.getAttribute('hide') === 'true') {
       return null;
     }
 
@@ -59,16 +42,16 @@ export default class HvSwitch extends PureComponent<HvComponentProps, State> {
       ios_backgroundColor: unselectedStyle
         ? unselectedStyle.backgroundColor
         : null,
+      thumbColor: unselectedStyle ? unselectedStyle.color : null,
       trackColor: {
         true: selectedStyle ? selectedStyle.backgroundColor : null,
         false: unselectedStyle ? unselectedStyle.backgroundColor : null,
       },
-      value: this.state.value,
+      value: element.getAttribute('value') === 'on',
       onValueChange: value => {
-        // Render the formatted value and store the formatted value
-        // in state (on the XML element).
-        this.setState({ value });
-        this.props.element.setAttribute('value', value ? 'on' : 'off');
+        const newElement = element.cloneNode(true);
+        newElement.setAttribute('value', value ? 'on' : 'off');
+        onUpdate(null, 'swap', element, { newElement });
       },
     };
 
