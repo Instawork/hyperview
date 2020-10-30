@@ -195,6 +195,29 @@
                       style="input"
                       value="" />
         </view>
+
+        <view style="FormGroup">
+          <text style="label">Secure Text</text>
+          <text-field placeholder="Password"
+                      placeholderTextColor="#8D9494"
+                      name="text"
+                      style="input"
+                      secure-text="true"
+                      value="" />
+        </view>
+
+        <view style="FormGroup">
+          <text style="label">Secure Text + Mask</text>
+          <text-field keyboard-type="number-pad"
+                      placeholder="SSN"
+                      placeholderTextColor="#8D9494"
+                      mask="999 99 9999"
+                      name="text"
+                      style="input"
+                      secure-text="true"
+                      value="" />
+        </view>
+
       </view>
     </body>
   </screen>

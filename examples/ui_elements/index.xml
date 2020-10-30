@@ -71,7 +71,7 @@
           <text style="Item__Chevron">&gt;</text>
         </item>
         <item href="/ui_elements/keyboard_avoiding_view.xml"
-              key="scroll-view"
+              key="keyboard-avoiding-view"
               show-during-load="loadingScreen"
               style="Item">
           <text style="Item__Label">Keyboard Avoiding View</text>

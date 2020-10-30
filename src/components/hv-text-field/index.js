@@ -75,6 +75,7 @@ export default class HvTextField extends PureComponent<
     const props = {
       ...createProps(element, stylesheets, { ...options, focused }),
       autoFocus: element.getAttribute('auto-focus') === 'true',
+      secureTextEntry: element.getAttribute('secure-text') === 'true',
       ref: options.registerInputHandler,
       multiline: false,
       value: this.state.value,
