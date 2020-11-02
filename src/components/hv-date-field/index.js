@@ -25,6 +25,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+// $FlowFixMe: update Flow to support typings for React Hooks
 import React, { PureComponent, useState } from 'react';
 import { createProps, createStyleProp } from 'hyperview/src/services';
 import { DateFormatContext } from 'hyperview/src';
@@ -58,16 +59,16 @@ const ModalButton = (props: ModalButtonProps) => {
  * or show the placeholder, including applying the right styles.
  */
 const FieldLabel = (props: FieldLabelProps) => {
-  const styles: Array<StyleSheetType<*>> = [props.style];
+  const labelStyles: Array<StyleSheetType<*>> = [props.style];
   if (!props.value && props.placeholderTextColor) {
-    styles.push({ color: props.placeholderTextColor });
+    labelStyles.push({ color: props.placeholderTextColor });
   }
 
   const label: string = props.value
     ? props.formatter(props.value, props.labelFormat)
     : props.placeholder || '';
 
-  return <Text style={styles}>{label}</Text>;
+  return <Text style={labelStyles}>{label}</Text>;
 };
 
 /**
@@ -90,7 +91,7 @@ const Field = (props: FieldProps) => {
     createStyleProp(props.element, props.stylesheets, {
       ...props.options,
       focused: props.focused,
-      pressed: pressed,
+      pressed,
       styleAttr: 'field-text-style',
     }),
   );
