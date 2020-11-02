@@ -16,22 +16,113 @@ import type {
   HvComponentProps,
   StyleSheets,
 } from 'hyperview/src/types';
+import type { FieldLabelProps, FieldProps, ModalButtonProps } from './types';
 import {
   Modal,
   Platform,
+  StyleSheet,
   Text,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import React, { PureComponent } from 'react';
+import React, { PureComponent, useState } from 'react';
 import { createProps, createStyleProp } from 'hyperview/src/services';
 import { DateFormatContext } from 'hyperview/src';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { Node as ReactNode } from 'react';
-import type { State } from './types';
 import type { StyleSheet as StyleSheetType } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 import styles from './styles';
+
+/**
+ * Component used to render the Cancel/Done buttons in the picker modal.
+ */
+const ModalButton = (props: ModalButtonProps) => {
+  const [pressed, setPressed] = useState(false);
+
+  return (
+    <TouchableWithoutFeedback
+      onPressIn={() => setPressed(true)}
+      onPressOut={() => setPressed(false)}
+      onPress={props.onPress}
+    >
+      <View>
+        <Text style={props.getStyle(pressed)}>{props.label}</Text>
+      </View>
+    </TouchableWithoutFeedback>
+  );
+};
+
+/**
+ * This text label of the field. Contains logic to decide how to format the value
+ * or show the placeholder, including applying the right styles.
+ */
+const FieldLabel = (props: FieldLabelProps) => {
+  const styles: Array<StyleSheetType<*>> = [props.style];
+  if (!props.value && props.placeholderTextColor) {
+    styles.push({ color: props.placeholderTextColor });
+  }
+
+  const label: string = props.value
+    ? props.formatter(props.value, props.labelFormat)
+    : props.placeholder || '';
+
+  return <Text style={styles}>{label}</Text>;
+};
+
+/**
+ * The input field component. This is a box with text in it.
+ * Tapping the box focuses the field and brings up the date picker.
+ */
+const Field = (props: FieldProps) => {
+  // Styles selected based on pressed state of the field.
+  const [pressed, setPressed] = useState(false);
+
+  // Create the props (including styles) for the box of the input field.
+  const viewProps = createProps(props.element, props.stylesheets, {
+    ...props.options,
+    pressed,
+    focused: props.focused,
+    styleAttr: 'field-style',
+  });
+
+  const labelStyle: StyleSheetType<*> = StyleSheet.flatten(
+    createStyleProp(props.element, props.stylesheets, {
+      ...props.options,
+      focused: props.focused,
+      pressed: pressed,
+      styleAttr: 'field-text-style',
+    }),
+  );
+
+  return (
+    <TouchableWithoutFeedback
+      onPressIn={() => setPressed(true)}
+      onPressOut={() => setPressed(false)}
+      onPress={props.onPress}
+    >
+      <View {...viewProps}>
+        <DateFormatContext.Consumer>
+          {formatter => (
+            <FieldLabel
+              focused={props.focused}
+              formatter={formatter}
+              labelFormat={props.element.getAttribute('label-format')}
+              placeholder={props.element.getAttribute('placeholder')}
+              placeholderTextColor={props.element.getAttribute(
+                'placeholderTextColor',
+              )}
+              pressed={pressed}
+              style={labelStyle}
+              value={props.value}
+            />
+          )}
+        </DateFormatContext.Consumer>
+        {props.children}
+      </View>
+    </TouchableWithoutFeedback>
+  );
+};
 
 /**
  * A date field renders a form field with ISO date fields (YYYY-MM-DD).
@@ -39,24 +130,11 @@ import styles from './styles';
  * - On iOS, pressing the field brings up a custom bottom sheet with a picker and action buttons.
  * - On Android, pressing the field brings up the system date picker modal.
  */
-export default class HvDateField extends PureComponent<
-  HvComponentProps,
-  State,
-> {
+export default class HvDateField extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
   static localName = LOCAL_NAME.DATE_FIELD;
   static localNameAliases = [];
   props: HvComponentProps;
-  state: State;
-
-  constructor(props: HvComponentProps) {
-    super(props);
-    this.state = {
-      fieldPressed: false,
-      donePressed: false,
-      cancelPressed: false,
-    };
-  }
 
   /**
    * Given a Date object, returns an ISO date string (YYYY-MM-DD). If the Date
@@ -82,18 +160,6 @@ export default class HvDateField extends PureComponent<
     }
     const [year, month, day] = value.split('-').map(p => parseInt(p, 10));
     return new Date(year, month - 1, day);
-  };
-
-  toggleFieldPress = () => {
-    this.setState(prevState => ({ fieldPressed: !prevState.fieldPressed }));
-  };
-
-  toggleCancelPress = () => {
-    this.setState(prevState => ({ cancelPressed: !prevState.cancelPressed }));
-  };
-
-  toggleSavePress = () => {
-    this.setState(prevState => ({ donePressed: !prevState.donePressed }));
   };
 
   /**
@@ -233,27 +299,17 @@ export default class HvDateField extends PureComponent<
         styleAttr: 'modal-style',
       },
     );
-    const cancelTextStyle: Array<StyleSheetType<*>> = createStyleProp(
-      element,
-      stylesheets,
-      {
-        ...options,
-        pressed: this.state.cancelPressed,
-        styleAttr: 'modal-text-style',
-      },
-    );
-    const doneTextStyle: Array<StyleSheetType<*>> = createStyleProp(
-      element,
-      stylesheets,
-      {
-        ...options,
-        pressed: this.state.donePressed,
-        styleAttr: 'modal-text-style',
-      },
-    );
+
     const cancelLabel: string =
       element.getAttribute('cancel-label') || 'Cancel';
     const doneLabel: string = element.getAttribute('done-label') || 'Done';
+
+    const getTextStyle = (pressed: boolean): Array<StyleSheetType<*>> =>
+      createStyleProp(element, stylesheets, {
+        ...options,
+        pressed,
+        styleAttr: 'modal-text-style',
+      });
 
     const onChange = (evt: Event, date?: Date) => {
       this.setPickerValue(date);
@@ -269,24 +325,16 @@ export default class HvDateField extends PureComponent<
         <View style={styles.modalWrapper}>
           <View style={modalStyle}>
             <View style={styles.modalActions}>
-              <TouchableWithoutFeedback
-                onPressIn={this.toggleCancelPress}
-                onPressOut={this.toggleCancelPress}
+              <ModalButton
+                getStyle={getTextStyle}
                 onPress={this.onModalCancel}
-              >
-                <View>
-                  <Text style={cancelTextStyle}>{cancelLabel}</Text>
-                </View>
-              </TouchableWithoutFeedback>
-              <TouchableWithoutFeedback
-                onPressIn={this.toggleSavePress}
-                onPressOut={this.toggleSavePress}
+                label={cancelLabel}
+              />
+              <ModalButton
+                getStyle={getTextStyle}
                 onPress={() => this.onModalDone(this.getPickerValue())}
-              >
-                <View>
-                  <Text style={doneTextStyle}>{doneLabel}</Text>
-                </View>
-              </TouchableWithoutFeedback>
+                label={doneLabel}
+              />
             </View>
             {this.renderPicker(onChange)}
           </View>
@@ -296,79 +344,33 @@ export default class HvDateField extends PureComponent<
   };
 
   /**
-   * Renders the text part of the field. If the field has a selected value,
-   * use the provided format to display the value. Otherwise, uses the
-   * placeholder value and style.
-   */
-  renderLabel = (formatter: Function): ReactNode => {
-    const element: Element = this.props.element;
-    const value: ?Date = this.getValue();
-    const stylesheets: StyleSheets = this.props.stylesheets;
-    const options: HvComponentOptions = this.props.options;
-    const placeholderTextColor: ?DOMString = element.getAttribute(
-      'placeholderTextColor',
-    );
-    const focused: boolean = this.isFocused();
-    const pressed: boolean = this.state.fieldPressed;
-    const fieldTextStyle = createStyleProp(element, stylesheets, {
-      ...options,
-      focused,
-      pressed,
-      styleAttr: 'field-text-style',
-    });
-    if (!value && placeholderTextColor) {
-      fieldTextStyle.push({ color: placeholderTextColor });
-    }
-
-    const labelFormat = element.getAttribute('label-format');
-    const label: string = value
-      ? formatter(value, labelFormat)
-      : element.getAttribute('placeholder') || '';
-
-    return <Text style={fieldTextStyle}>{label}</Text>;
-  };
-
-  /**
    * Renders the field (view and text label).
    * Pressing the field will focus it and:
    * - on iOS, bring up a bottom sheet with date picker
    * - on Android, show the system date picker
    */
   render = (): ReactNode => {
-    const element: Element = this.props.element;
-    const stylesheets: StyleSheets = this.props.stylesheets;
-    const options: HvComponentOptions = this.props.options;
-    if (element.getAttribute('hide') === 'true') {
+    if (this.props.element.getAttribute('hide') === 'true') {
       return null;
     }
 
     const focused: boolean = this.isFocused();
-    const pressed: boolean = this.state.fieldPressed;
-    const props = createProps(element, stylesheets, {
-      ...options,
-      focused,
-      pressed,
-      styleAttr: 'field-style',
-    });
-
     const picker =
       Platform.OS === 'ios'
         ? this.renderPickerModaliOS()
         : this.renderPickerModalAndroid();
 
     return (
-      <TouchableWithoutFeedback
-        onPressIn={this.toggleFieldPress}
-        onPressOut={this.toggleFieldPress}
+      <Field
+        element={this.props.element}
+        focused={focused}
         onPress={this.onFieldPress}
+        options={this.props.options}
+        stylesheets={this.props.stylesheets}
+        value={this.getValue()}
       >
-        <View {...props}>
-          <DateFormatContext.Consumer>
-            {formatter => this.renderLabel(formatter)}
-          </DateFormatContext.Consumer>
-          {picker}
-        </View>
-      </TouchableWithoutFeedback>
+        {picker}
+      </Field>
     );
   };
 }
