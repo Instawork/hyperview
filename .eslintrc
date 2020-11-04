@@ -4,8 +4,6 @@
   "rules": {
     "prettier/prettier": "error",
     "instawork/props-no-function": "error",
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
     "no-underscore-dangle": ["error"],
     "import/no-extraneous-dependencies": [
       "warn",
