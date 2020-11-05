@@ -1,6 +1,6 @@
 {
   "extends": ["plugin:instawork/recommended", "prettier"],
-  "plugins": ["instawork", "prettier", "react-hooks"],
+  "plugins": ["instawork", "prettier"],
   "rules": {
     "prettier/prettier": "error",
     "instawork/props-no-function": "error",
