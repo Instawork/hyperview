@@ -303,8 +303,6 @@
         <view style="FormGroup">
           <text style="label">Customized</text>
           <date-field field-style="InputCustom"
-                      cancel-label="Cancel!"
-                      done-label="Apply!"
                       field-text-style="InputCustom__Text"
                       label-format="MMMM D, YYYY"
                       modal-style="PickerModalCustom"
