@@ -40,6 +40,8 @@ export default class HyperScreen extends React.Component {
   static createProps = createProps;
   static createStyleProp = createStyleProp;
   static renderChildren = Render.renderChildren;
+  static renderElement = Render.renderElement;
+  static Events = Events;
 
   constructor(props) {
     super(props);
