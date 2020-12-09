@@ -20,7 +20,7 @@ The `<select-multiple>` element represents a user input widget that allows multi
     <option value="3">
       <text>3rd grade</text>
     </option>
-  <select-multiple/>
+  </select-multiple>
 </form>
 ```
 
