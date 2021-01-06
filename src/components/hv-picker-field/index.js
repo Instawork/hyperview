@@ -279,6 +279,15 @@ export default class HvPickerField extends PureComponent<
       ...options,
       styleAttr: 'field-text-style',
     });
+
+    const value: ?DOMString = element.getAttribute('value');
+    const placeholderTextColor: ?DOMString = element.getAttribute(
+      'placeholderTextColor',
+    );
+    if (!value && placeholderTextColor) {
+      textStyle.push({ color: placeholderTextColor });
+    }
+
     const viewProps = {
       style: fieldStyle,
       ...createTestProps(element),
