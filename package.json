@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@react-native-community/datetimepicker": "3.0.3",
-    "react-native-webview": "9.4.0",
+    "react-native-webview": "11.0.0",
     "tiny-emitter": "2.1.0",
     "url-parse": "1.4.3",
     "xmldom-instawork": "0.0.1"
