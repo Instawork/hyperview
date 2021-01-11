@@ -9,7 +9,6 @@
  */
 
 import type { ElementRef } from 'react';
-import type { StyleSheet } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 
 export type DOMString = string;
 export type NamespaceURI = string;
@@ -74,6 +73,8 @@ export const NODE_TYPE = {
 export type NodeType = $Values<typeof NODE_TYPE>;
 
 export type Node = {
+  tagName: DOMString,
+  localName: LocalName,
   +attributes: ?NamedNodeMap,
   +childNodes: ?NodeList<Node>,
   +firstChild: ?Node,
@@ -162,8 +163,6 @@ export type Document = Node & {
 
 export type Element = Node & {
   cloneNode: (deep: boolean) => Element,
-  tagName: DOMString,
-  localName: LocalName,
   getAttribute: (name: DOMString) => ?DOMString,
   getAttributeNode: (name: DOMString) => ?Attribute,
   getAttributeNodeNS: (
@@ -250,12 +249,14 @@ export type NamedNodeMap = {
   setNamedItemNS: (attribute: Attribute) => ?Attribute,
 };
 
+export type StyleSheet = any;
+
 export type StyleSheets = {
-  regular: StyleSheet<*>,
-  selected: StyleSheet<*>,
-  pressed: StyleSheet<*>,
-  focused: StyleSheet<*>,
-  pressedSelected: StyleSheet<*>,
+  regular: StyleSheet,
+  selected: StyleSheet,
+  pressed: StyleSheet,
+  focused: StyleSheet,
+  pressedSelected: StyleSheet,
 };
 
 export type ComponentRegistry = {
@@ -375,6 +376,7 @@ export const NAV_ACTIONS = {
   NAVIGATE: ACTIONS.NAVIGATE,
   NEW: ACTIONS.NEW,
   PUSH: ACTIONS.PUSH,
+  REPLACE: ACTIONS.REPLACE,
 };
 
 export type NavAction = $Values<typeof NAV_ACTIONS>;

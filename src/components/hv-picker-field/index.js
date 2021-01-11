@@ -15,6 +15,7 @@ import type {
   HvComponentOptions,
   HvComponentProps,
   NodeList,
+  StyleSheet as StyleSheetType,
   StyleSheets,
 } from 'hyperview/src/types';
 import {
@@ -34,7 +35,6 @@ import {
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { Node as ReactNode } from 'react';
 import type { State } from './types';
-import type { StyleSheet as StyleSheetType } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 import styles from './styles';
 
 /**
@@ -152,10 +152,10 @@ export default class HvPickerField extends PureComponent<
    * Renders the picker component. Picker items come from the
    * <picker-item> elements in the <picker-field> element.
    */
-  renderPicker = (style: StyleSheetType<*>): ReactNode => {
+  renderPicker = (style: StyleSheetType): ReactNode => {
     const element: Element = this.props.element;
     const props = {
-      onValueChange: value => {
+      onValueChange: (value: any) => {
         this.setState({ pickerValue: value });
         element.setAttribute('value', value || '');
       },
@@ -192,7 +192,7 @@ export default class HvPickerField extends PureComponent<
     const element: Element = this.props.element;
     const stylesheets: StyleSheets = this.props.stylesheets;
     const options: HvComponentOptions = this.props.options;
-    const modalStyle: Array<StyleSheetType<*>> = createStyleProp(
+    const modalStyle: Array<StyleSheetType> = createStyleProp(
       element,
       stylesheets,
       {
@@ -200,7 +200,7 @@ export default class HvPickerField extends PureComponent<
         styleAttr: 'modal-style',
       },
     );
-    const cancelTextStyle: Array<StyleSheetType<*>> = createStyleProp(
+    const cancelTextStyle: Array<StyleSheetType> = createStyleProp(
       element,
       stylesheets,
       {
@@ -209,7 +209,7 @@ export default class HvPickerField extends PureComponent<
         styleAttr: 'modal-text-style',
       },
     );
-    const doneTextStyle: Array<StyleSheetType<*>> = createStyleProp(
+    const doneTextStyle: Array<StyleSheetType> = createStyleProp(
       element,
       stylesheets,
       {
@@ -267,24 +267,25 @@ export default class HvPickerField extends PureComponent<
     const element: Element = this.props.element;
     const stylesheets: StyleSheets = this.props.stylesheets;
     const options: HvComponentOptions = this.props.options;
-    const fieldStyle: StyleSheetType<*> = createStyleProp(
-      element,
-      stylesheets,
-      {
-        ...options,
-        styleAttr: 'field-style',
-      },
-    );
-    const textStyle: StyleSheetType<*> = createStyleProp(element, stylesheets, {
+    const fieldStyle: StyleSheetType = createStyleProp(element, stylesheets, {
+      ...options,
+      styleAttr: 'field-style',
+    });
+    const textStyle: StyleSheetType = createStyleProp(element, stylesheets, {
       ...options,
       styleAttr: 'field-text-style',
     });
-    const viewProps = {
-      style: fieldStyle,
-      ...createTestProps(element),
-    };
+    const { testID, accessibilityLabel } = createTestProps(element);
     const pickerComponent = this.renderPicker(textStyle);
-    return <View {...viewProps}>{pickerComponent}</View>;
+    return (
+      <View
+        accessibilityLabel={accessibilityLabel}
+        style={fieldStyle}
+        testID={testID}
+      >
+        {pickerComponent}
+      </View>
+    );
   };
 
   /**

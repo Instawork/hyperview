@@ -90,6 +90,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
       }
     }
 
+    // $FlowFixMe
     const component = React.createElement(
       c,
       props,

@@ -106,10 +106,11 @@ export const renderChildren = (
   options: HvComponentOptions,
 ) => {
   const children = [];
-  // $FlowFixMe
-  if (element.childNodes !== null) {
-    for (let i = 0; i < element.childNodes.length; i += 1) {
+  if (element.childNodes) {
+    const { childNodes } = element;
+    for (let i = 0; i < childNodes.length; i += 1) {
       const e = renderElement(
+        // $FlowFixMe
         element.childNodes.item(i),
         stylesheets,
         onUpdate,

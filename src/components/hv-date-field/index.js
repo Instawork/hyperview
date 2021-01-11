@@ -14,6 +14,7 @@ import type {
   Element,
   HvComponentOptions,
   HvComponentProps,
+  StyleSheet as StyleSheetType,
   StyleSheets,
 } from 'hyperview/src/types';
 import type { FieldLabelProps, FieldProps, ModalButtonProps } from './types';
@@ -32,7 +33,6 @@ import { DateFormatContext } from 'hyperview/src';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { Node as ReactNode } from 'react';
-import type { StyleSheet as StyleSheetType } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 import styles from './styles';
 
 /**
@@ -59,7 +59,7 @@ const ModalButton = (props: ModalButtonProps) => {
  * or show the placeholder, including applying the right styles.
  */
 const FieldLabel = (props: FieldLabelProps) => {
-  const labelStyles: Array<StyleSheetType<*>> = [props.style];
+  const labelStyles: Array<StyleSheetType> = [props.style];
   if (!props.value && props.placeholderTextColor) {
     labelStyles.push({ color: props.placeholderTextColor });
   }
@@ -87,7 +87,7 @@ const Field = (props: FieldProps) => {
     styleAttr: 'field-style',
   });
 
-  const labelStyle: StyleSheetType<*> = StyleSheet.flatten(
+  const labelStyle: StyleSheetType = StyleSheet.flatten(
     createStyleProp(props.element, props.stylesheets, {
       ...props.options,
       focused: props.focused,
@@ -292,7 +292,7 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
     const element: Element = this.props.element;
     const stylesheets: StyleSheets = this.props.stylesheets;
     const options: HvComponentOptions = this.props.options;
-    const modalStyle: Array<StyleSheetType<*>> = createStyleProp(
+    const modalStyle: Array<StyleSheetType> = createStyleProp(
       element,
       stylesheets,
       {
@@ -305,7 +305,7 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
       element.getAttribute('cancel-label') || 'Cancel';
     const doneLabel: string = element.getAttribute('done-label') || 'Done';
 
-    const getTextStyle = (pressed: boolean): Array<StyleSheetType<*>> =>
+    const getTextStyle = (pressed: boolean): Array<StyleSheetType> =>
       createStyleProp(element, stylesheets, {
         ...options,
         pressed,

@@ -8,9 +8,9 @@
  *
  */
 
+import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import { createProps, createTestProps, encodeXml } from '.';
 import { DOMParser } from 'xmldom-instawork';
-import { createStylesheets } from 'hyperview/src/services/stylesheets';
 
 const parser = new DOMParser();
 const createElement = (id: ?string) => {
@@ -59,7 +59,9 @@ describe('createTestProps', () => {
 });
 
 describe('createProps', () => {
-  const styleSheets = createStylesheets(parser.parseFromString('<doc></doc>'));
+  const styleSheets = Stylesheets.createStylesheets(
+    parser.parseFromString('<doc></doc>'),
+  );
 
   it('sets id from id attribute', () => {
     expect(createProps(createElement('myID'), styleSheets, {})).toHaveProperty(

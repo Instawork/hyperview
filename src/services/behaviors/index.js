@@ -40,7 +40,7 @@ const HYPERVIEW_BEHAVIORS = [
 
 export const getRegistry = (behaviors: HvBehavior[] = []): BehaviorRegistry =>
   [...HYPERVIEW_BEHAVIORS, ...behaviors].reduce(
-    (registry, behavior) => ({
+    (registry: BehaviorRegistry, behavior: HvBehavior) => ({
       ...registry,
       [behavior.action]: behavior,
     }),

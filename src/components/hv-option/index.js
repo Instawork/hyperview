@@ -141,6 +141,7 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
       outerProps.style = { flex: props.style.flex };
     }
 
+    // $FlowFixMe
     return React.createElement(
       TouchableWithoutFeedback,
       outerProps,

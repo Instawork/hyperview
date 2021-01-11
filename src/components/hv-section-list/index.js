@@ -93,12 +93,9 @@ export default class HvSectionList extends PureComponent<
       style,
       sections,
       keyExtractor: item => item.getAttribute('key'),
-      // $FlowFixMe: return value should be of ?React.Element<any>
       renderItem: ({ item }) =>
         Render.renderElement(item, stylesheets, onUpdate, options),
-      // $FlowFixMe: return value should be of ?React.Element<any>
       renderSectionHeader: ({ section: { title } }) =>
-        // $FlowFixMe
         Render.renderElement(title, stylesheets, onUpdate, options),
     };
 
@@ -110,9 +107,11 @@ export default class HvSectionList extends PureComponent<
       };
     }
 
-    return React.createElement(SectionList, {
+    const props: any = {
       ...listProps,
       ...refreshProps,
-    });
+    };
+
+    return React.createElement(SectionList, props);
   }
 }

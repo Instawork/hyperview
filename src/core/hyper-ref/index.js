@@ -196,6 +196,7 @@ export default class HyperRef extends PureComponent<Props, State> {
       ? styleAttr.split(' ').map(s => stylesheets.regular[s])
       : null;
 
+    // $FlowFixMe
     const pressHandlers: PressHandlers = {};
 
     // Render pressable element
@@ -304,6 +305,6 @@ export default class HyperRef extends PureComponent<Props, State> {
       );
     }
 
-    return renderedComponent;
+    return renderedComponent || null;
   }
 }

@@ -23,12 +23,13 @@ jest.mock('xmldom-instawork', () => {
 });
 
 // Mock other dependencies
-const fetchMock: () => Promise<Response> = jest.fn();
-const responseTextMock: () => void = jest.fn();
+const fetchMock = jest.fn();
+const responseTextMock = jest.fn();
+// $FlowFixMe
 fetchMock.mockResolvedValue({ text: responseTextMock });
-const beforeParseMock: () => void = jest.fn();
-const afterParseMock: () => void = jest.fn();
-const urlServiceAddFormDataToUrlMock: () => void = jest.spyOn(
+const beforeParseMock = jest.fn();
+const afterParseMock = jest.fn();
+const urlServiceAddFormDataToUrlMock = jest.spyOn(
   UrlService,
   'addFormDataToUrl',
 );

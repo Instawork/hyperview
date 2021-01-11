@@ -4,7 +4,6 @@ import * as Components from 'hyperview/src/services/components';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import { DOMParser } from 'xmldom-instawork';
 import type { HvComponent } from 'hyperview/src/types';
-import type { Node } from 'react';
 import { getFirstTag } from 'hyperview/src/services';
 import humps from 'humps';
 import { storiesOf } from '@storybook/react-native';
@@ -17,7 +16,7 @@ const getComponentPath = (componentName: string) => {
 
 export const stories = (
   Component: HvComponent,
-): ((template: string, render: any) => Node) => {
+): ((template: string, render: any) => void) => {
   const componentPath = getComponentPath(Component.name);
   const s = storiesOf(Component.name, module);
   return (templateName: string, render: any) => {

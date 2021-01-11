@@ -9,9 +9,12 @@
  */
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import type { Document, StyleSheets } from 'hyperview/src/types';
+import type {
+  Document,
+  StyleSheet as StyleSheetType,
+  StyleSheets,
+} from 'hyperview/src/types';
 import { StyleSheet } from 'react-native';
-import type { StyleSheet as StyleSheetType } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 import { getFirstTag } from 'hyperview/src/services';
 
 const NUMBER_REGEX = /^\d+$/;
@@ -138,10 +141,7 @@ const STYLE_ATTRIBUTE_CONVERTERS = {
   resizeMode: string,
 };
 
-function createStylesheet(
-  document: Document,
-  modifiers = {},
-): StyleSheetType<*> {
+function createStylesheet(document: Document, modifiers = {}): StyleSheetType {
   const styles = getFirstTag(document, 'styles');
   const stylesheet = {};
   if (styles) {
