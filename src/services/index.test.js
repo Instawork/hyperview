@@ -9,7 +9,11 @@
  */
 
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
-import { createProps, createTestProps, encodeXml } from '.';
+import {
+  createProps,
+  createTestProps,
+  encodeXml,
+} from 'hyperview/src/services';
 import { DOMParser } from 'xmldom-instawork';
 
 const parser = new DOMParser();

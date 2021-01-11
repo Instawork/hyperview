@@ -8,7 +8,7 @@
  *
  */
 
-import * as Url from '.';
+import * as Url from 'hyperview/src/services/url';
 
 describe('getUrlFromHref', () => {
   it('returns href when href is a fully qualified url', () => {
