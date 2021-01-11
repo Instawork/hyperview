@@ -43,7 +43,9 @@ const parser = new DOMParser({
 
 export class Parser {
   fetch: Fetch;
+
   onBeforeParse: ?BeforeAfterParseHandler;
+
   onAfterParse: ?BeforeAfterParseHandler;
 
   constructor(

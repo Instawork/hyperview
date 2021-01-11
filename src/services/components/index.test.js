@@ -62,19 +62,25 @@ describe('Components', () => {
       it('returns correct registy', () => {
         class Foo extends PureComponent<*> {
           static namespaceURI = 'http://foo';
+
           static localName = 'foo';
+
           static localNameAliases = [];
         }
         // eslint-disable-next-line react/no-multi-comp
         class Bar extends PureComponent<*> {
           static namespaceURI = 'http://bar';
+
           static localName = 'bar';
+
           static localNameAliases = [];
         }
         // eslint-disable-next-line react/no-multi-comp
         class Baz extends PureComponent<*> {
           static namespaceURI = 'https://hyperview.org/hyperview';
+
           static localName = 'baz';
+
           static localNameAliases = ['baz-1', 'baz-2'];
         }
         expect(Components.getRegistry([Foo, Bar, Baz])).toEqual({

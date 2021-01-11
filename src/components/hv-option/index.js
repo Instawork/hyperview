@@ -23,9 +23,13 @@ import type { State } from './types';
  */
 export default class HvOption extends PureComponent<HvComponentProps, State> {
   static namespaceURI = Namespaces.HYPERVIEW;
+
   static localName = LOCAL_NAME.OPTION;
+
   static localNameAliases = [];
+
   props: HvComponentProps;
+
   state: State = {
     pressed: false,
   };

@@ -20,9 +20,13 @@ const getHrefKey = (href: string): string => href.split(QUERY_SEPARATOR)[0];
 
 export default class Navigation {
   url: string;
+
   document: ?Document = null;
+
   navigation: NavigationProps;
+
   preloadScreens: { [number]: Element } = {};
+
   routeKeys: { [string]: string } = {};
 
   constructor(url: string, navigation: NavigationProps) {

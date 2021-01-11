@@ -214,7 +214,7 @@ export const shallowCloneToRoot = (element: Element): Document => {
   }
 
   // Need to check parentNode to satisfy Flow
-  const parentNode: ?Node = element.parentNode;
+  const { parentNode } = element;
   if (!parentNode) {
     return (elementClone: any);
   }
@@ -288,7 +288,7 @@ export const getAncestorByTagName = (
   element: Element,
   tagName: string,
 ): ?Element => {
-  let parentNode: ?Node = element.parentNode;
+  let { parentNode } = element;
   if (!parentNode) {
     return null;
   }

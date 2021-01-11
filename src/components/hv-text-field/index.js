@@ -18,8 +18,11 @@ import { createProps } from 'hyperview/src/services';
 
 export default class HvTextField extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
+
   static localName = LOCAL_NAME.TEXT_FIELD;
+
   static localNameAliases = [];
+
   constructor(props: HvComponentProps) {
     super(props);
     this.setFocus = this.setFocus.bind(this);

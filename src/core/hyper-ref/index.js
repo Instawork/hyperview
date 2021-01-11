@@ -37,6 +37,7 @@ import { getBehaviorElements } from 'hyperview/src/services';
  */
 export default class HyperRef extends PureComponent<Props, State> {
   props: Props;
+
   state: State = {
     refreshing: false,
     pressed: false,
@@ -111,7 +112,8 @@ export default class HyperRef extends PureComponent<Props, State> {
         const href = behaviorElement.getAttribute(ATTRIBUTES.HREF);
         onUpdate(href, action, element, {});
       };
-    } else if (Object.values(NAV_ACTIONS).indexOf(action) >= 0) {
+    }
+    if (Object.values(NAV_ACTIONS).indexOf(action) >= 0) {
       return () => {
         const href = behaviorElement.getAttribute(ATTRIBUTES.HREF);
         const showIndicatorId = behaviorElement.getAttribute(
@@ -120,7 +122,8 @@ export default class HyperRef extends PureComponent<Props, State> {
         const delay = behaviorElement.getAttribute(ATTRIBUTES.DELAY);
         onUpdate(href, action, element, { showIndicatorId, delay });
       };
-    } else if (Object.values(UPDATE_ACTIONS).indexOf(action) >= 0) {
+    }
+    if (Object.values(UPDATE_ACTIONS).indexOf(action) >= 0) {
       return () => {
         const href = behaviorElement.getAttribute(ATTRIBUTES.HREF);
         const verb = behaviorElement.getAttribute(ATTRIBUTES.VERB);

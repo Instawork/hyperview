@@ -18,8 +18,11 @@ import urlParse from 'url-parse';
 
 export default class HvImage extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
+
   static localName = LOCAL_NAME.IMAGE;
+
   static localNameAliases = [];
+
   props: HvComponentProps;
 
   render() {

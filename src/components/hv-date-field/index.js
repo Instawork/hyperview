@@ -43,9 +43,9 @@ const ModalButton = (props: ModalButtonProps) => {
 
   return (
     <TouchableWithoutFeedback
+      onPress={props.onPress}
       onPressIn={() => setPressed(true)}
       onPressOut={() => setPressed(false)}
-      onPress={props.onPress}
     >
       <View>
         <Text style={props.getStyle(pressed)}>{props.label}</Text>
@@ -98,9 +98,9 @@ const Field = (props: FieldProps) => {
 
   return (
     <TouchableWithoutFeedback
+      onPress={props.onPress}
       onPressIn={() => setPressed(true)}
       onPressOut={() => setPressed(false)}
-      onPress={props.onPress}
     >
       <View {...viewProps}>
         <DateFormatContext.Consumer>
@@ -133,8 +133,11 @@ const Field = (props: FieldProps) => {
  */
 export default class HvDateField extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
+
   static localName = LOCAL_NAME.DATE_FIELD;
+
   static localNameAliases = [];
+
   props: HvComponentProps;
 
   /**
@@ -289,9 +292,9 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
    * This is used on iOS only.
    */
   renderPickerModaliOS = (): ReactNode => {
-    const element: Element = this.props.element;
-    const stylesheets: StyleSheets = this.props.stylesheets;
-    const options: HvComponentOptions = this.props.options;
+    const { element } = this.props;
+    const { stylesheets } = this.props;
+    const { options } = this.props;
     const modalStyle: Array<StyleSheetType> = createStyleProp(
       element,
       stylesheets,
@@ -319,22 +322,22 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
     return (
       <Modal
         animationType="slide"
+        onRequestClose={this.onModalCancel}
         transparent
         visible={this.isFocused()}
-        onRequestClose={this.onModalCancel}
       >
         <View style={styles.modalWrapper}>
           <View style={modalStyle}>
             <View style={styles.modalActions}>
               <ModalButton
                 getStyle={getTextStyle}
-                onPress={this.onModalCancel}
                 label={cancelLabel}
+                onPress={this.onModalCancel}
               />
               <ModalButton
                 getStyle={getTextStyle}
-                onPress={() => this.onModalDone(this.getPickerValue())}
                 label={doneLabel}
+                onPress={() => this.onModalDone(this.getPickerValue())}
               />
             </View>
             {this.renderPicker(onChange)}

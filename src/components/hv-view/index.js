@@ -20,7 +20,9 @@ import { LOCAL_NAME } from 'hyperview/src/types';
 
 export default class HvView extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
+
   static localName = LOCAL_NAME.VIEW;
+
   static localNameAliases = [
     LOCAL_NAME.BODY,
     LOCAL_NAME.FORM,
@@ -28,6 +30,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
     LOCAL_NAME.ITEM,
     LOCAL_NAME.SECTION_TITLE,
   ];
+
   props: HvComponentProps;
 
   render() {

@@ -18,8 +18,11 @@ import { createProps } from 'hyperview/src/services';
 
 export default class HvSelectSingle extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
+
   static localName = LOCAL_NAME.SELECT_SINGLE;
+
   static localNameAliases = [];
+
   constructor(props: HvComponentProps) {
     super(props);
     this.onSelect = this.onSelect.bind(this);

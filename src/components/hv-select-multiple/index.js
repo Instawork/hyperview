@@ -18,8 +18,11 @@ import { createProps } from 'hyperview/src/services';
 
 export default class HvSelectMultiple extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
+
   static localName = LOCAL_NAME.SELECT_MULTIPLE;
+
   static localNameAliases = [];
+
   constructor(props: HvComponentProps) {
     super(props);
     this.onToggle = this.onToggle.bind(this);

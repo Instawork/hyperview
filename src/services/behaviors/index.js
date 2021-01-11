@@ -106,7 +106,7 @@ export const performUpdate = (
   newElement: Element,
 ): Document => {
   if (action === ACTIONS.REPLACE) {
-    const parentNode: ?Node = targetElement.parentNode;
+    const { parentNode } = targetElement;
     if (parentNode) {
       parentNode.replaceChild(newElement, targetElement);
       return shallowCloneToRoot((parentNode: any));
@@ -131,7 +131,7 @@ export const performUpdate = (
   }
 
   if (action === ACTIONS.PREPEND) {
-    const firstChild = targetElement.firstChild;
+    const { firstChild } = targetElement;
     if (firstChild) {
       targetElement.insertBefore(newElement, firstChild);
     } else {

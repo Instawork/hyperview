@@ -16,13 +16,17 @@ describe('ComponentsInternal', () => {
     it('returns correct registy', () => {
       class Foo extends PureComponent<*> {
         static namespaceURI = 'http://foo';
+
         static localName = 'foo';
+
         static localNameAliases = [];
       }
       // eslint-disable-next-line react/no-multi-comp
       class Bar extends PureComponent<*> {
         static namespaceURI = 'http://bar';
+
         static localName = 'bar';
+
         static localNameAliases = ['bar-1', 'bar-2'];
       }
       expect(ComponentsInternal.registerComponent(Foo)).toEqual({

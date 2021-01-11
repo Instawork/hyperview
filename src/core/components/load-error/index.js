@@ -19,7 +19,7 @@ export default class LoadError extends PureComponent<Props> {
   props: Props;
 
   getHTML = (): ?string => {
-    const error = this.props.error;
+    const { error } = this.props;
     if (!__DEV__ || !error || !(error instanceof Dom.ServerError)) {
       return null;
     }
@@ -34,7 +34,7 @@ export default class LoadError extends PureComponent<Props> {
   };
 
   getTitle = () => {
-    const error = this.props.error;
+    const { error } = this.props;
     if (!__DEV__ || !error) {
       return 'An error occured';
     }

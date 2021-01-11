@@ -70,9 +70,9 @@ export const renderElement = (
       return (
         <Component
           element={element}
-          stylesheets={stylesheets}
           onUpdate={onUpdate}
           options={options}
+          stylesheets={stylesheets}
         />
       );
     }

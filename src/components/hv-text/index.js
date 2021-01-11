@@ -18,8 +18,11 @@ import { Text } from 'react-native';
 
 export default class HvText extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
+
   static localName = LOCAL_NAME.TEXT;
+
   static localNameAliases = [];
+
   props: HvComponentProps;
 
   render() {

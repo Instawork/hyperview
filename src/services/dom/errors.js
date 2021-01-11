@@ -34,6 +34,7 @@ export class XMLParserFatalError extends Error {
  */
 export class XMLRequiredElementNotFound extends Error {
   name = 'XMLRequiredElementNotFound';
+
   constructor(tag: LocalName, url: string) {
     super(`Required <${tag}> tag not found in the response from ${url}`);
   }
@@ -41,6 +42,7 @@ export class XMLRequiredElementNotFound extends Error {
 
 export class XMLRestrictedElementFound extends Error {
   name = 'XMLRestrictedElementFound';
+
   constructor(tag: LocalName, url: string) {
     super(`Restricted <${tag}> tag found in the response from ${url}`);
   }
@@ -51,8 +53,11 @@ export class XMLRestrictedElementFound extends Error {
  */
 export class ServerError extends Error {
   name = 'ServerError';
+
   responseHeaders: Headers;
+
   responseText: string;
+
   status: number;
 
   constructor(

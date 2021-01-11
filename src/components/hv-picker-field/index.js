@@ -48,14 +48,18 @@ export default class HvPickerField extends PureComponent<
   State,
 > {
   static namespaceURI = Namespaces.HYPERVIEW;
+
   static localName = LOCAL_NAME.PICKER_FIELD;
+
   static localNameAliases = [];
+
   props: HvComponentProps;
+
   state: State;
 
   constructor(props: HvComponentProps) {
     super(props);
-    const element: Element = props.element;
+    const { element } = props;
     const value: ?DOMString = element.getAttribute('value');
     this.state = {
       // on iOS, value is used to display the selected choice when
@@ -97,7 +101,7 @@ export default class HvPickerField extends PureComponent<
    * If the value doesn't have a picker item, returns null.
    */
   getLabelForValue = (value: DOMString): ?string => {
-    const element: Element = this.props.element;
+    const { element } = this.props;
     const pickerItemElements: NodeList<Element> = element.getElementsByTagNameNS(
       Namespaces.HYPERVIEW,
       LOCAL_NAME.PICKER_ITEM,
@@ -140,7 +144,7 @@ export default class HvPickerField extends PureComponent<
    * Hides the picker and applies the chosen value to the field.
    */
   onModalDone = () => {
-    const element: Element = this.props.element;
+    const { element } = this.props;
     this.setState({
       focused: false,
       value: this.state.pickerValue,
@@ -153,7 +157,7 @@ export default class HvPickerField extends PureComponent<
    * <picker-item> elements in the <picker-field> element.
    */
   renderPicker = (style: StyleSheetType): ReactNode => {
-    const element: Element = this.props.element;
+    const { element } = this.props;
     const props = {
       onValueChange: (value: any) => {
         this.setState({ pickerValue: value });
@@ -189,9 +193,9 @@ export default class HvPickerField extends PureComponent<
    * Uses styles defined on the <picker-field> element for the modal and buttons.
    */
   renderPickerModal = (): ReactNode => {
-    const element: Element = this.props.element;
-    const stylesheets: StyleSheets = this.props.stylesheets;
-    const options: HvComponentOptions = this.props.options;
+    const { element } = this.props;
+    const { stylesheets } = this.props;
+    const { options } = this.props;
     const modalStyle: Array<StyleSheetType> = createStyleProp(
       element,
       stylesheets,
@@ -225,26 +229,26 @@ export default class HvPickerField extends PureComponent<
     return (
       <Modal
         animationType="slide"
+        onRequestClose={this.onModalCancel}
         transparent
         visible={this.state.focused}
-        onRequestClose={this.onModalCancel}
       >
         <View style={styles.modalWrapper}>
           <View style={modalStyle}>
             <View style={styles.modalActions}>
               <TouchableWithoutFeedback
+                onPress={this.onModalCancel}
                 onPressIn={this.toggleCancelPress}
                 onPressOut={this.toggleCancelPress}
-                onPress={this.onModalCancel}
               >
                 <View>
                   <Text style={cancelTextStyle}>{cancelLabel}</Text>
                 </View>
               </TouchableWithoutFeedback>
               <TouchableWithoutFeedback
+                onPress={this.onModalDone}
                 onPressIn={this.toggleSavePress}
                 onPressOut={this.toggleSavePress}
-                onPress={this.onModalDone}
               >
                 <View>
                   <Text style={doneTextStyle}>{doneLabel}</Text>
@@ -264,9 +268,9 @@ export default class HvPickerField extends PureComponent<
    * can cancel by hitting the back button or tapping outside of the modal.
    */
   renderAndroid = (): ReactNode => {
-    const element: Element = this.props.element;
-    const stylesheets: StyleSheets = this.props.stylesheets;
-    const options: HvComponentOptions = this.props.options;
+    const { element } = this.props;
+    const { stylesheets } = this.props;
+    const { options } = this.props;
     const fieldStyle: StyleSheetType = createStyleProp(element, stylesheets, {
       ...options,
       styleAttr: 'field-style',
@@ -294,14 +298,14 @@ export default class HvPickerField extends PureComponent<
    * To cancel, the user must press the cancel button.
    */
   renderiOS = (): ReactNode => {
-    const element: Element = this.props.element;
-    const stylesheets: StyleSheets = this.props.stylesheets;
-    const options: HvComponentOptions = this.props.options;
+    const { element } = this.props;
+    const { stylesheets } = this.props;
+    const { options } = this.props;
     if (element.getAttribute('hide') === 'true') {
       return null;
     }
 
-    const focused: boolean = this.state.focused;
+    const { focused } = this.state;
     const pressed: boolean = this.state.fieldPressed;
     const props = createProps(element, stylesheets, {
       ...options,
@@ -329,9 +333,9 @@ export default class HvPickerField extends PureComponent<
 
     return (
       <TouchableWithoutFeedback
+        onPress={this.onFieldPress}
         onPressIn={this.toggleFieldPress}
         onPressOut={this.toggleFieldPress}
-        onPress={this.onFieldPress}
       >
         <View {...props}>
           <Text style={fieldTextStyle}>{label}</Text>

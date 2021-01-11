@@ -22,10 +22,15 @@ export default class HvSectionList extends PureComponent<
   State,
 > {
   static namespaceURI = Namespaces.HYPERVIEW;
+
   static localName = LOCAL_NAME.SECTION_LIST;
+
   static localNameAliases = [];
+
   parser: DOMParser = new DOMParser();
+
   props: HvComponentProps;
+
   state: State = {
     refreshing: false,
   };

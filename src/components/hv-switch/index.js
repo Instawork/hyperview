@@ -17,8 +17,11 @@ import { createStyleProp } from 'hyperview/src/services';
 
 export default class HvSwitch extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
+
   static localName = LOCAL_NAME.SWITCH;
+
   static localNameAliases = [];
+
   props: HvComponentProps;
 
   render() {
