@@ -1,10 +1,7 @@
 {
-  "extends": ["plugin:instawork/recommended", "prettier"],
-  "plugins": ["instawork", "prettier"],
+  "extends": ["plugin:instawork/recommended"],
+  "plugins": ["instawork"],
   "rules": {
-    "prettier/prettier": "error",
-    "instawork/props-no-function": "error",
-    "no-underscore-dangle": ["error"],
     "import/no-extraneous-dependencies": [
       "warn",
       {
@@ -27,7 +24,7 @@
       "warn", {
         "allow": [
           "hyperview/**",
-          "react-native/Libraries/StyleSheet/StyleSheetTypes"
+          "react-native/Libraries/StyleSheet/StyleSheet"
         ]
       }
     ]
