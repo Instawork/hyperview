@@ -12,6 +12,7 @@ jobs:
       - run: yarn test:lint
       - run: yarn test:render
       - run: yarn test:unit
+      - run: sudo apt-get update && sudo apt-get install libxml2-utils
       - run: yarn test:validate-xml
 
 workflows:
