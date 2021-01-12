@@ -8,10 +8,11 @@
  *
  */
 
+import * as Dom from 'hyperview/src/services/dom';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type { Element, HvComponentOnUpdate } from 'hyperview/src/types';
-import { getBehaviorElements, later } from 'hyperview/src/services';
 import { Alert } from 'react-native';
+import { later } from 'hyperview/src/services';
 
 export default {
   action: 'alert',
@@ -39,7 +40,7 @@ export default {
         optionElement &&
         optionElement.getAttributeNS(Namespaces.HYPERVIEW_ALERT, 'label'),
       onPress: () => {
-        getBehaviorElements(optionElement)
+        Dom.getBehaviorElements(optionElement)
           .filter(
             // Only behaviors with "press" trigger will get executed.
             // "press" is also the default trigger, so if no trigger is specified,

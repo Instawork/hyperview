@@ -6,8 +6,9 @@
  *
  */
 
-import * as Behaviors from 'hyperview/src/services/behaviors';
+import * as Behaviors from 'hyperview/src/behaviors';
 import * as Components from 'hyperview/src/services/components';
+import * as Contexts from 'hyperview/src/contexts';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Events from 'hyperview/src/services/events';
 import * as Namespaces from 'hyperview/src/services/namespaces';
@@ -19,7 +20,6 @@ import { Linking } from 'react-native';
 import { XMLSerializer } from 'xmldom-instawork';
 import LoadError from 'hyperview/src/core/components/load-error';
 import Loading from 'hyperview/src/core/components/loading';
-import HyperRef from 'hyperview/src/core/hyper-ref';
 import Navigation, { ANCHOR_ID_SEPARATOR } from 'hyperview/src/services/navigation';
 import React from 'react';
 import { createProps, createStyleProp, later, shallowCloneToRoot, getFormData, getElementByTimeoutId, removeTimeoutId, setTimeoutId } from 'hyperview/src/services';
@@ -28,10 +28,6 @@ import { ACTIONS, NAV_ACTIONS, UPDATE_ACTIONS } from 'hyperview/src/types';
 
 // Shared instance, used in dev mode only
 const devXMLSerializer: ?XMLSerializer = __DEV__ ? new XMLSerializer() : null;
-
-// Provides the date format function to use in date fields
-// in the screen.
-export const DateFormatContext = React.createContext();
 
 /**
  *
@@ -254,9 +250,9 @@ export default class HyperScreen extends React.Component {
     );
 
     return (
-      <DateFormatContext.Provider value={this.props.formatDate}>
+      <Contexts.DateFormatContext.Provider value={this.props.formatDate}>
         {screenElement}
-      </DateFormatContext.Provider>
+      </Contexts.DateFormatContext.Provider>
     );
   }
 

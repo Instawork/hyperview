@@ -8,6 +8,7 @@
  *
  */
 
+import * as Dom from 'hyperview/src/services/dom';
 import * as Events from 'hyperview/src/services/events';
 import * as Render from 'hyperview/src/services/render';
 import {
@@ -29,7 +30,6 @@ import React, { PureComponent } from 'react';
 import { RefreshControl, ScrollView, TouchableOpacity } from 'react-native';
 import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
 import { XMLSerializer } from 'xmldom-instawork';
-import { getBehaviorElements } from 'hyperview/src/services';
 
 /**
  * Component that handles dispatching behaviors based on the appropriate
@@ -63,7 +63,7 @@ export default class HyperRef extends PureComponent<Props, State> {
   }
 
   onEventDispatch = (eventName: string) => {
-    const behaviorElements = getBehaviorElements(this.props.element);
+    const behaviorElements = Dom.getBehaviorElements(this.props.element);
     const onEventBehaviors = behaviorElements.filter(e => {
       if (e.getAttribute(ATTRIBUTES.TRIGGER) === TRIGGERS.ON_EVENT) {
         const currentAttributeEventName: ?string = e.getAttribute('event-name');
@@ -153,7 +153,7 @@ export default class HyperRef extends PureComponent<Props, State> {
   };
 
   triggerLoadBehaviors = () => {
-    const behaviorElements = getBehaviorElements(this.props.element);
+    const behaviorElements = Dom.getBehaviorElements(this.props.element);
     const loadBehaviors = behaviorElements.filter(
       e => e.getAttribute(ATTRIBUTES.TRIGGER) === TRIGGERS.LOAD,
     );
@@ -171,7 +171,7 @@ export default class HyperRef extends PureComponent<Props, State> {
   render() {
     const { refreshing, pressed } = this.state;
     const { element, stylesheets, onUpdate, options } = this.props;
-    const behaviorElements = getBehaviorElements(element);
+    const behaviorElements = Dom.getBehaviorElements(element);
     const pressBehaviors = behaviorElements.filter(
       e =>
         PRESS_TRIGGERS.indexOf(

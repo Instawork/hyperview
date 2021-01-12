@@ -8,6 +8,7 @@
  *
  */
 
+import * as Contexts from 'hyperview/src/contexts';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type {
   DOMString,
@@ -26,7 +27,6 @@ import {
 // $FlowFixMe: update Flow to support typings for React Hooks
 import React, { PureComponent, useState } from 'react';
 import { createProps, createStyleProp } from 'hyperview/src/services';
-import { DateFormatContext } from 'hyperview/src';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { Node as ReactNode } from 'react';
@@ -100,7 +100,7 @@ const Field = (props: FieldProps) => {
       onPressOut={() => setPressed(false)}
     >
       <View {...viewProps}>
-        <DateFormatContext.Consumer>
+        <Contexts.DateFormatContext.Consumer>
           {formatter => (
             <FieldLabel
               focused={props.focused}
@@ -115,7 +115,7 @@ const Field = (props: FieldProps) => {
               value={props.value}
             />
           )}
-        </DateFormatContext.Consumer>
+        </Contexts.DateFormatContext.Consumer>
         {props.children}
       </View>
     </TouchableWithoutFeedback>

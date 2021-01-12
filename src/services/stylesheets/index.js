@@ -8,6 +8,7 @@
  *
  */
 
+import * as Dom from 'hyperview/src/services/dom';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type {
   Document,
@@ -15,7 +16,6 @@ import type {
   StyleSheets,
 } from 'hyperview/src/types';
 import { StyleSheet } from 'react-native';
-import { getFirstTag } from 'hyperview/src/services';
 
 const NUMBER_REGEX = /^\d+$/;
 
@@ -142,7 +142,7 @@ const STYLE_ATTRIBUTE_CONVERTERS = {
 };
 
 function createStylesheet(document: Document, modifiers = {}): StyleSheetType {
-  const styles = getFirstTag(document, 'styles');
+  const styles = Dom.getFirstTag(document, 'styles');
   const stylesheet = {};
   if (styles) {
     const styleElements = styles.getElementsByTagNameNS(

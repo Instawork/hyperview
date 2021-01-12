@@ -8,6 +8,7 @@
  *
  */
 
+import * as Dom from 'hyperview/src/services/dom';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import React, { PureComponent } from 'react';
@@ -16,7 +17,6 @@ import { FlatList } from 'react-native';
 import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { State } from './types';
-import { getBehaviorElements } from 'hyperview/src/services';
 
 export default class HvList extends PureComponent<HvComponentProps, State> {
   static namespaceURI = Namespaces.HYPERVIEW;
@@ -37,7 +37,7 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
     const { element, onUpdate } = this.props;
     this.setState({ refreshing: true });
 
-    getBehaviorElements(element)
+    Dom.getBehaviorElements(element)
       .filter(e => e.getAttribute('trigger') === 'refresh')
       .forEach((e, i) => {
         const path = e.getAttribute('href');

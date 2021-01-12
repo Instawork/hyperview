@@ -8,14 +8,15 @@
  *
  */
 
+import * as Dom from 'hyperview/src/services/dom';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import React, { PureComponent } from 'react';
 import { TouchableWithoutFeedback, View } from 'react-native';
-import { createProps, getBehaviorElements } from 'hyperview/src/services';
 import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { State } from './types';
+import { createProps } from 'hyperview/src/services';
 
 /**
  * A component representing an option in a single-select or multiple-select list.
@@ -50,7 +51,7 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
 
   triggerSelectBehaviors = () => {
     const { element, onUpdate } = this.props;
-    const behaviorElements = getBehaviorElements(element);
+    const behaviorElements = Dom.getBehaviorElements(element);
     const selectBehaviors = behaviorElements.filter(
       e => e.getAttribute('trigger') === 'select',
     );
@@ -77,7 +78,7 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
 
   triggerDeselectBehaviors = () => {
     const { element, onUpdate } = this.props;
-    const behaviorElements = getBehaviorElements(element);
+    const behaviorElements = Dom.getBehaviorElements(element);
     const deselectBehaviors = behaviorElements.filter(
       e => e.getAttribute('trigger') === 'deselect',
     );

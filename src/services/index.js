@@ -33,30 +33,6 @@ import React from 'react';
  * various Hyperview components.
  */
 
-export const getBehaviorElements = (element: any) => {
-  // $FlowFixMe
-  const behaviorElements = Array.from(element.childNodes).filter(
-    n => n.tagName === 'behavior',
-  );
-
-  if (element.getAttribute('href') || element.getAttribute('action')) {
-    behaviorElements.unshift(element);
-  }
-
-  return behaviorElements;
-};
-
-export const getFirstTag = (document: Document, localName: LocalName) => {
-  const elements = document.getElementsByTagNameNS(
-    Namespaces.HYPERVIEW,
-    localName,
-  );
-  if (elements && elements[0]) {
-    return elements[0];
-  }
-  return null;
-};
-
 export const createStyleProp = (
   element: Element,
   stylesheets: StyleSheets,

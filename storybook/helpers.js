@@ -1,10 +1,10 @@
 // @flow
 
 import * as Components from 'hyperview/src/services/components';
+import * as Dom from 'hyperview/src/services/dom';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import { DOMParser } from 'xmldom-instawork';
 import type { HvComponent } from 'hyperview/src/types';
-import { getFirstTag } from 'hyperview/src/services';
 import humps from 'humps';
 import { storiesOf } from '@storybook/react-native';
 import templates from 'hyperview/storybook/templates.gen';
@@ -24,7 +24,7 @@ export const stories = (
     const storyName = humps.pascalize(templateName);
     const parser = new DOMParser();
     const document = parser.parseFromString(templates[templatePath]);
-    const element = getFirstTag(document, Component.localName);
+    const element = Dom.getFirstTag(document, Component.localName);
     const stylesheets = Stylesheets.createStylesheets(document);
     s.add(storyName, () => render({ element, stylesheets }));
   };
