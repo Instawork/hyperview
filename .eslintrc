@@ -28,7 +28,18 @@
         ]
       }
     ],
-    "instawork/error-object": "off"
+    "instawork/error-object": "off",
+    "instawork/deprecate-components": "error",
+    "instawork/deprecate-stateless": "error",
+    "instawork/import-modules": "error",
+    "instawork/import-services": "error",
+    "instawork/pure-components": "error",
+    "instawork/stories-components": "error",
+    "instawork/stories-navbars": "error",
+    "instawork/stories-screens": "error",
+    "react/destructuring-assignment": "error",
+    "react/jsx-sort-props": "error",
+    "sort-keys": "error"
   },
   "overrides": [
     {
