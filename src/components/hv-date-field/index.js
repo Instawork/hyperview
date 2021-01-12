@@ -11,11 +11,8 @@
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type {
   DOMString,
-  Element,
-  HvComponentOptions,
   HvComponentProps,
   StyleSheet as StyleSheetType,
-  StyleSheets,
 } from 'hyperview/src/types';
 import type { FieldLabelProps, FieldProps, ModalButtonProps } from './types';
 import {

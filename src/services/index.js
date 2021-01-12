@@ -294,7 +294,7 @@ export const getAncestorByTagName = (
   }
 
   while (parentNode.tagName !== tagName) {
-    parentNode = parentNode.parentNode;
+    ({ parentNode } = parentNode);
     if (!parentNode) {
       return null;
     }

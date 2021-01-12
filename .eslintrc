@@ -27,7 +27,8 @@
           "react-native/Libraries/StyleSheet/StyleSheet"
         ]
       }
-    ]
+    ],
+    "instawork/error-object": "off"
   },
   "overrides": [
     {

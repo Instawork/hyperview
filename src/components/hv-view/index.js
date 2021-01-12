@@ -70,7 +70,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
         const defaultScrollToInputAdditionalOffset = 120;
         if (scrollToInputAdditionalOffset) {
           const parsedOffset = parseInt(scrollToInputAdditionalOffset, 10);
-          props.scrollToInputAdditionalOffset = isNaN(parsedOffset)
+          props.scrollToInputAdditionalOffset = Number.isNaN(parsedOffset)
             ? 0
             : defaultScrollToInputAdditionalOffset;
         } else {
