@@ -280,6 +280,7 @@ export default class HvPickerField extends PureComponent<
         styleAttr: 'field-style',
       },
     );
+
     const textStyle: StyleSheetType = createStyleProp(
       this.props.element,
       this.props.stylesheets,
@@ -289,6 +290,14 @@ export default class HvPickerField extends PureComponent<
       },
     );
     const { testID, accessibilityLabel } = createTestProps(this.props.element);
+    const value: ?DOMString = this.props.element.getAttribute('value');
+    const placeholderTextColor: ?DOMString = this.props.element.getAttribute(
+      'placeholderTextColor',
+    );
+    if (!value && placeholderTextColor) {
+      textStyle.push({ color: placeholderTextColor });
+    }
+
     const pickerComponent = this.renderPicker(textStyle);
     return (
       <View
