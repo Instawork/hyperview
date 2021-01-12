@@ -83,15 +83,24 @@ export default class HvPickerField extends PureComponent<
   }
 
   toggleFieldPress = () => {
-    this.setState({ fieldPressed: !this.state.fieldPressed });
+    this.setState(state => ({
+      ...state,
+      fieldPressed: !state.fieldPressed,
+    }));
   };
 
   toggleCancelPress = () => {
-    this.setState({ cancelPressed: !this.state.cancelPressed });
+    this.setState(state => ({
+      ...state,
+      cancelPressed: !state.cancelPressed,
+    }));
   };
 
   toggleSavePress = () => {
-    this.setState({ donePressed: !this.state.donePressed });
+    this.setState(state => ({
+      ...state,
+      donePressed: !state.donePressed,
+    }));
   };
 
   /**
@@ -123,10 +132,11 @@ export default class HvPickerField extends PureComponent<
    * Shows the picker, defaulting to the field's value.
    */
   onFieldPress = () => {
-    this.setState({
-      pickerValue: this.state.value,
+    this.setState(state => ({
+      ...state,
       focused: true,
-    });
+      pickerValue: state.value,
+    }));
   };
 
   /**
@@ -143,10 +153,11 @@ export default class HvPickerField extends PureComponent<
    */
   onModalDone = () => {
     const { element } = this.props;
-    this.setState({
+    this.setState(state => ({
+      ...state,
       focused: false,
-      value: this.state.pickerValue,
-    });
+      value: state.pickerValue,
+    }));
     element.setAttribute('value', this.state.pickerValue || '');
   };
 
