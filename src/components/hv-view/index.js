@@ -34,12 +34,17 @@ export default class HvView extends PureComponent<HvComponentProps> {
   props: HvComponentProps;
 
   render() {
-    const { element, stylesheets, onUpdate, options } = this.props;
-    let viewOptions = options;
+    let viewOptions = this.props.options;
     const { skipHref } = viewOptions || {};
-    const props: InternalProps = createProps(element, stylesheets, viewOptions);
-    const scrollable = !!element.getAttribute('scroll');
-    const keyboardAvoiding = !!element.getAttribute('avoid-keyboard');
+    const props: InternalProps = createProps(
+      this.props.element,
+      this.props.stylesheets,
+      viewOptions,
+    );
+    const scrollable = !!this.props.element.getAttribute('scroll');
+    const keyboardAvoiding = !!this.props.element.getAttribute(
+      'avoid-keyboard',
+    );
     let c = View;
 
     /**
@@ -53,18 +58,18 @@ export default class HvView extends PureComponent<HvComponentProps> {
 
     const inputRefs = [];
     if (scrollable) {
-      const textFields = element.getElementsByTagNameNS(
+      const textFields = this.props.element.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
         'text-field',
       );
-      const textAreas = element.getElementsByTagNameNS(
+      const textAreas = this.props.element.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
         'text-area',
       );
       const hasFields = textFields.length > 0 || textAreas.length > 0;
       c = hasFields ? KeyboardAwareScrollView : ScrollView;
       if (hasFields) {
-        const scrollToInputAdditionalOffset = element.getAttribute(
+        const scrollToInputAdditionalOffset = this.props.element.getAttribute(
           'scroll-to-input-offset',
         );
         const defaultScrollToInputAdditionalOffset = 120;
@@ -87,7 +92,9 @@ export default class HvView extends PureComponent<HvComponentProps> {
         viewOptions = { ...viewOptions, registerInputHandler };
       }
 
-      const scrollDirection = element.getAttribute('scroll-orientation');
+      const scrollDirection = this.props.element.getAttribute(
+        'scroll-orientation',
+      );
       if (scrollDirection === 'horizontal') {
         props.horizontal = true;
       }
@@ -97,10 +104,21 @@ export default class HvView extends PureComponent<HvComponentProps> {
     const component = React.createElement(
       c,
       props,
-      ...Render.renderChildren(element, stylesheets, onUpdate, viewOptions),
+      ...Render.renderChildren(
+        this.props.element,
+        this.props.stylesheets,
+        this.props.onUpdate,
+        viewOptions,
+      ),
     );
     return skipHref
       ? component
-      : addHref(component, element, stylesheets, onUpdate, viewOptions);
+      : addHref(
+          component,
+          this.props.element,
+          this.props.stylesheets,
+          this.props.onUpdate,
+          viewOptions,
+        );
   }
 }

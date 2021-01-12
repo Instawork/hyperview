@@ -29,12 +29,11 @@ export default class HvSelectSingle extends PureComponent<HvComponentProps> {
   }
 
   componentDidUpdate() {
-    const { element } = this.props;
-    if (element.hasAttribute('value')) {
+    if (this.props.element.hasAttribute('value')) {
       // NOTE(adam): we need to remove the attribute before
       // selection, since selection will update the component.
-      const newValue = element.getAttribute('value');
-      element.removeAttribute('value');
+      const newValue = this.props.element.getAttribute('value');
+      this.props.element.removeAttribute('value');
       this.onSelect(newValue);
     }
   }
@@ -45,8 +44,7 @@ export default class HvSelectSingle extends PureComponent<HvComponentProps> {
    * selected=true attribute.
    */
   onSelect = (selectedValue: ?DOMString) => {
-    const { element, onUpdate } = this.props;
-    const newElement = element.cloneNode(true);
+    const newElement = this.props.element.cloneNode(true);
     const options = newElement.getElementsByTagNameNS(
       Namespaces.HYPERVIEW,
       'option',
@@ -61,22 +59,28 @@ export default class HvSelectSingle extends PureComponent<HvComponentProps> {
         );
       }
     }
-    onUpdate('#', 'swap', element, { newElement });
+    this.props.onUpdate('#', 'swap', this.props.element, { newElement });
   };
 
   render() {
-    const { element, stylesheets, onUpdate, options } = this.props;
-    if (element.getAttribute('hide') === 'true') {
+    if (this.props.element.getAttribute('hide') === 'true') {
       return null;
     }
-    const props = createProps(element, stylesheets, { ...options });
+    const props = createProps(this.props.element, this.props.stylesheets, {
+      ...this.props.options,
+    });
     return React.createElement(
       View,
       props,
-      ...Render.renderChildren(element, stylesheets, onUpdate, {
-        ...options,
-        onSelect: this.onSelect,
-      }),
+      ...Render.renderChildren(
+        this.props.element,
+        this.props.stylesheets,
+        this.props.onUpdate,
+        {
+          ...this.props.options,
+          onSelect: this.onSelect,
+        },
+      ),
     );
   }
 }

@@ -34,10 +34,9 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
   };
 
   refresh = () => {
-    const { element, onUpdate } = this.props;
     this.setState({ refreshing: true });
 
-    Dom.getBehaviorElements(element)
+    Dom.getBehaviorElements(this.props.element)
       .filter(e => e.getAttribute('trigger') === 'refresh')
       .forEach((e, i) => {
         const path = e.getAttribute('href');
@@ -49,49 +48,55 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
         const once = e.getAttribute('once');
         const onEnd =
           i === 0 ? () => this.setState({ refreshing: false }) : null;
-        onUpdate(path, action, element, {
-          targetId,
-          showIndicatorIds,
-          hideIndicatorIds,
+        this.props.onUpdate(path, action, this.props.element, {
+          behaviorElement: e,
           delay,
+          hideIndicatorIds,
           once,
           onEnd,
-          behaviorElement: e,
+          showIndicatorIds,
+          targetId,
         });
       });
   };
 
   render() {
-    const { refreshing } = this.state;
-    const { element, stylesheets, onUpdate, options } = this.props;
-    const styleAttr = element.getAttribute('style');
+    const styleAttr = this.props.element.getAttribute('style');
     const style = styleAttr
-      ? styleAttr.split(' ').map(s => stylesheets.regular[s])
+      ? styleAttr.split(' ').map(s => this.props.stylesheets.regular[s])
       : null;
 
     const horizontal =
-      element.getAttribute('scroll-orientation') === 'horizontal';
+      this.props.element.getAttribute('scroll-orientation') === 'horizontal';
     const showScrollIndicator =
-      element.getAttribute('shows-scroll-indicator') !== 'false';
+      this.props.element.getAttribute('shows-scroll-indicator') !== 'false';
 
     const listProps = {
-      style,
-      data: element.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'item'),
+      data: this.props.element.getElementsByTagNameNS(
+        Namespaces.HYPERVIEW,
+        'item',
+      ),
       horizontal,
       keyExtractor: item => item.getAttribute('key'),
       renderItem: ({ item }) =>
-        Render.renderElement(item, stylesheets, onUpdate, options),
+        Render.renderElement(
+          item,
+          this.props.stylesheets,
+          this.props.onUpdate,
+          this.props.options,
+        ),
       showsHorizontalScrollIndicator: horizontal && showScrollIndicator,
       showsVerticalScrollIndicator: !horizontal && showScrollIndicator,
+      style,
     };
 
     let refreshProps = {};
-    if (element.getAttribute('trigger') === 'refresh') {
+    if (this.props.element.getAttribute('trigger') === 'refresh') {
       refreshProps = {
         onRefresh: () => {
           this.refresh();
         },
-        refreshing,
+        refreshing: this.state.refreshing,
       };
     }
 

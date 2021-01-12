@@ -11,12 +11,12 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-  modalWrapper: {
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
   modalActions: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  modalWrapper: {
+    flex: 1,
+    justifyContent: 'flex-end',
   },
 });

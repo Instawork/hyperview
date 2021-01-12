@@ -96,8 +96,8 @@ export const createTestProps = (
     return testProps;
   }
   return {
-    testID: id,
     accessibilityLabel: id,
+    testID: id,
   };
 };
 
@@ -156,7 +156,7 @@ export const addHref = (
 
   return React.createElement(
     HyperRef,
-    { element, stylesheets, onUpdate, options },
+    { element, onUpdate, options, stylesheets },
     ...Render.renderChildren(element, stylesheets, onUpdate, options),
   );
 };

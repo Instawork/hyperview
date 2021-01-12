@@ -33,8 +33,7 @@ export default class HvSelectMultiple extends PureComponent<HvComponentProps> {
    * Will update the XML DOM to toggle the option with the given value.
    */
   onToggle = (selectedValue: ?DOMString) => {
-    const { element, onUpdate } = this.props;
-    const newElement = element.cloneNode(true);
+    const newElement = this.props.element.cloneNode(true);
     const options = newElement.getElementsByTagNameNS(
       Namespaces.HYPERVIEW,
       'option',
@@ -49,22 +48,28 @@ export default class HvSelectMultiple extends PureComponent<HvComponentProps> {
         }
       }
     }
-    onUpdate('#', 'swap', element, { newElement });
+    this.props.onUpdate('#', 'swap', this.props.element, { newElement });
   };
 
   render() {
-    const { element, stylesheets, onUpdate, options } = this.props;
-    if (element.getAttribute('hide') === 'true') {
+    if (this.props.element.getAttribute('hide') === 'true') {
       return null;
     }
-    const props = createProps(element, stylesheets, { ...options });
+    const props = createProps(this.props.element, this.props.stylesheets, {
+      ...this.props.options,
+    });
     return React.createElement(
       View,
       props,
-      ...Render.renderChildren(element, stylesheets, onUpdate, {
-        ...options,
-        onToggle: this.onToggle,
-      }),
+      ...Render.renderChildren(
+        this.props.element,
+        this.props.stylesheets,
+        this.props.onUpdate,
+        {
+          ...this.props.options,
+          onToggle: this.onToggle,
+        },
+      ),
     );
   }
 }

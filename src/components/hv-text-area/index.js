@@ -28,34 +28,35 @@ export default class HvTextArea extends PureComponent<HvComponentProps> {
   }
 
   setFocus = (focused: boolean) => {
-    const { element, onUpdate } = this.props;
-    const newElement = element.cloneNode(true);
+    const newElement = this.props.element.cloneNode(true);
     newElement.setAttribute('focused', focused.toString());
-    onUpdate(null, 'swap', element, { newElement });
+    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
   };
 
   render() {
-    const { element, stylesheets, options } = this.props;
-
-    if (element.getAttribute('hide') === 'true') {
+    if (this.props.element.getAttribute('hide') === 'true') {
       return null;
     }
 
-    const focused = element.getAttribute('focused') === 'true';
-    const keyboardType = element.getAttribute('keyboard-type') || undefined;
+    const focused = this.props.element.getAttribute('focused') === 'true';
+    const keyboardType =
+      this.props.element.getAttribute('keyboard-type') || undefined;
     const props = {
-      ...createProps(element, stylesheets, { ...options, focused }),
-      ref: options.registerInputHandler,
-      multiline: true,
-      value: element.getAttribute('value'),
+      ...createProps(this.props.element, this.props.stylesheets, {
+        ...this.props.options,
+        focused,
+      }),
       keyboardType,
-      onFocus: () => this.setFocus(true),
+      multiline: true,
       onBlur: () => this.setFocus(false),
       onChangeText: value => {
-        const newElement = element.cloneNode(true);
+        const newElement = this.props.element.cloneNode(true);
         newElement.setAttribute('value', value);
-        this.props.onUpdate(null, 'swap', element, { newElement });
+        this.props.onUpdate(null, 'swap', this.props.element, { newElement });
       },
+      onFocus: () => this.setFocus(true),
+      ref: this.props.options.registerInputHandler,
+      value: this.props.element.getAttribute('value'),
     };
 
     return React.createElement(TextInput, props);

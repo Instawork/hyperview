@@ -36,9 +36,6 @@ export default {
     // Create the options for the alert.
     // NOTE: Android supports at most 3 options.
     const options = optionElements.map(optionElement => ({
-      text:
-        optionElement &&
-        optionElement.getAttributeNS(Namespaces.HYPERVIEW_ALERT, 'label'),
       onPress: () => {
         Dom.getBehaviorElements(optionElement)
           .filter(
@@ -69,17 +66,20 @@ export default {
               () =>
                 optionElement &&
                 onUpdate(href, action, optionElement, {
-                  verb,
-                  targetId,
-                  showIndicatorIds,
-                  hideIndicatorIds,
-                  delay,
-                  once,
                   behaviorElement,
+                  delay,
+                  hideIndicatorIds,
+                  once,
+                  showIndicatorIds,
+                  targetId,
+                  verb,
                 }),
             );
           });
       },
+      text:
+        optionElement &&
+        optionElement.getAttributeNS(Namespaces.HYPERVIEW_ALERT, 'label'),
     }));
     // Show alert
     Alert.alert(title, message, options);

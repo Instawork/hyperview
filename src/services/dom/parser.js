@@ -27,7 +27,6 @@ const headers = {
 };
 
 const parser = new DOMParser({
-  locator: {},
   errorHandler: {
     error: (error: string) => {
       throw new Errors.XMLParserError(error);
@@ -39,6 +38,7 @@ const parser = new DOMParser({
       throw new Errors.XMLParserWarning(error);
     },
   },
+  locator: {},
 });
 
 export class Parser {

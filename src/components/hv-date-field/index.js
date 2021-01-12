@@ -79,8 +79,8 @@ const Field = (props: FieldProps) => {
   // Create the props (including styles) for the box of the input field.
   const viewProps = createProps(props.element, props.stylesheets, {
     ...props.options,
-    pressed,
     focused: props.focused,
+    pressed,
     styleAttr: 'field-style',
   });
 
@@ -167,51 +167,47 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
    * Shows the picker, defaulting to the field's value. If the field is not set, use today's date in the picker.
    */
   onFieldPress = () => {
-    const { element, onUpdate } = this.props;
-    const newElement = element.cloneNode(true);
+    const newElement = this.props.element.cloneNode(true);
     const value: string =
-      element.getAttribute('value') ||
+      this.props.element.getAttribute('value') ||
       HvDateField.createStringFromDate(new Date());
 
     // Focus the field and populate the picker with the field's value.
     newElement.setAttribute('focused', 'true');
     newElement.setAttribute('picker-value', value);
-    onUpdate(null, 'swap', element, { newElement });
+    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
   };
 
   /**
    * Hides the picker without applying the chosen value.
    */
   onModalCancel = () => {
-    const { element, onUpdate } = this.props;
-    const newElement = element.cloneNode(true);
+    const newElement = this.props.element.cloneNode(true);
     newElement.setAttribute('focused', 'false');
     newElement.removeAttribute('picker-value');
-    onUpdate(null, 'swap', element, { newElement });
+    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
   };
 
   /**
    * Hides the picker and applies the chosen value to the field.
    */
   onModalDone = (newValue: ?Date) => {
-    const { element, onUpdate } = this.props;
     const value = HvDateField.createStringFromDate(newValue);
-    const newElement = element.cloneNode(true);
+    const newElement = this.props.element.cloneNode(true);
     newElement.setAttribute('value', value);
     newElement.removeAttribute('picker-value');
     newElement.setAttribute('focused', 'false');
-    onUpdate(null, 'swap', element, { newElement });
+    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
   };
 
   /**
    * Updates the picker value while keeping the picker open.
    */
   setPickerValue = (value: ?Date) => {
-    const { element, onUpdate } = this.props;
     const formattedValue: string = HvDateField.createStringFromDate(value);
-    const newElement = element.cloneNode(true);
+    const newElement = this.props.element.cloneNode(true);
     newElement.setAttribute('picker-value', formattedValue);
-    onUpdate(null, 'swap', element, { newElement });
+    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
   };
 
   /**
@@ -249,9 +245,9 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
     const displayMode: ?DOMString = this.props.element.getAttribute('mode');
     const props: Object = {
       display: displayMode,
-      value: this.getPickerValue(),
       mode: 'date',
       onChange,
+      value: this.getPickerValue(),
     };
     if (minDate) {
       props.minimumDate = minDate;
@@ -289,25 +285,23 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
    * This is used on iOS only.
    */
   renderPickerModaliOS = (): ReactNode => {
-    const { element } = this.props;
-    const { stylesheets } = this.props;
-    const { options } = this.props;
     const modalStyle: Array<StyleSheetType> = createStyleProp(
-      element,
-      stylesheets,
+      this.props.element,
+      this.props.stylesheets,
       {
-        ...options,
+        ...this.props.options,
         styleAttr: 'modal-style',
       },
     );
 
     const cancelLabel: string =
-      element.getAttribute('cancel-label') || 'Cancel';
-    const doneLabel: string = element.getAttribute('done-label') || 'Done';
+      this.props.element.getAttribute('cancel-label') || 'Cancel';
+    const doneLabel: string =
+      this.props.element.getAttribute('done-label') || 'Done';
 
     const getTextStyle = (pressed: boolean): Array<StyleSheetType> =>
-      createStyleProp(element, stylesheets, {
-        ...options,
+      createStyleProp(this.props.element, this.props.stylesheets, {
+        ...this.props.options,
         pressed,
         styleAttr: 'modal-text-style',
       });

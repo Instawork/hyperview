@@ -36,10 +36,8 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
   };
 
   componentDidUpdate(prevProps: HvComponentProps) {
-    const { element } = this.props;
-    const prevElement = prevProps.element;
-    const selected = element.getAttribute('selected') === 'true';
-    const prevSelected = prevElement.getAttribute('selected') === 'true';
+    const selected = this.props.element.getAttribute('selected') === 'true';
+    const prevSelected = prevProps.element.getAttribute('selected') === 'true';
     if (selected && !prevSelected) {
       this.triggerSelectBehaviors();
     }
@@ -50,8 +48,7 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
   }
 
   triggerSelectBehaviors = () => {
-    const { element, onUpdate } = this.props;
-    const behaviorElements = Dom.getBehaviorElements(element);
+    const behaviorElements = Dom.getBehaviorElements(this.props.element);
     const selectBehaviors = behaviorElements.filter(
       e => e.getAttribute('trigger') === 'select',
     );
@@ -64,21 +61,20 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
       const hideIndicatorIds = behaviorElement.getAttribute('hide-during-load');
       const delay = behaviorElement.getAttribute('delay');
       const once = behaviorElement.getAttribute('once');
-      onUpdate(href, action, element, {
-        verb,
-        targetId,
-        showIndicatorIds,
-        hideIndicatorIds,
-        delay,
-        once,
+      this.props.onUpdate(href, action, this.props.element, {
         behaviorElement,
+        delay,
+        hideIndicatorIds,
+        once,
+        showIndicatorIds,
+        targetId,
+        verb,
       });
     });
   };
 
   triggerDeselectBehaviors = () => {
-    const { element, onUpdate } = this.props;
-    const behaviorElements = Dom.getBehaviorElements(element);
+    const behaviorElements = Dom.getBehaviorElements(this.props.element);
     const deselectBehaviors = behaviorElements.filter(
       e => e.getAttribute('trigger') === 'deselect',
     );
@@ -91,41 +87,41 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
       const hideIndicatorIds = behaviorElement.getAttribute('hide-during-load');
       const delay = behaviorElement.getAttribute('delay');
       const once = behaviorElement.getAttribute('once');
-      onUpdate(href, action, element, {
-        verb,
-        targetId,
-        showIndicatorIds,
-        hideIndicatorIds,
-        delay,
-        once,
+      this.props.onUpdate(href, action, this.props.element, {
         behaviorElement,
+        delay,
+        hideIndicatorIds,
+        once,
+        showIndicatorIds,
+        targetId,
+        verb,
       });
     });
   };
 
   render() {
-    const { element, stylesheets, onUpdate, options } = this.props;
-    const { pressed } = this.state;
-    const { onSelect, onToggle } = options;
+    const { onSelect, onToggle } = this.props.options;
 
-    const value = element.getAttribute('value');
-    const selected = element.getAttribute('selected') === 'true';
+    const value = this.props.element.getAttribute('value');
+    const selected = this.props.element.getAttribute('selected') === 'true';
 
     // Updates options with pressed/selected state, so that child element can render
     // using the appropriate modifier styles.
     const newOptions = {
-      ...options,
+      ...this.props.options,
+      pressed: this.state.pressed,
+      pressedSelected: this.state.pressed && selected,
       selected,
-      pressed,
-      pressedSelected: pressed && selected,
     };
-    const props = createProps(element, stylesheets, newOptions);
+    const props = createProps(
+      this.props.element,
+      this.props.stylesheets,
+      newOptions,
+    );
 
     // Option renders as an outer TouchableWithoutFeedback view and inner view.
     // The outer view handles presses, the inner view handles styling.
     const outerProps = {
-      onPressIn: () => this.setState({ pressed: true }),
-      onPressOut: () => this.setState({ pressed: false }),
       onPress: () => {
         if (!selected && onSelect) {
           // Updates the DOM state, causing this element to re-render as selected.
@@ -138,6 +134,8 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
           onToggle(value);
         }
       },
+      onPressIn: () => this.setState({ pressed: true }),
+      onPressOut: () => this.setState({ pressed: false }),
       style: undefined,
     };
     if (props.style && props.style.flex) {
@@ -153,7 +151,12 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
       React.createElement(
         View,
         props,
-        ...Render.renderChildren(element, stylesheets, onUpdate, newOptions),
+        ...Render.renderChildren(
+          this.props.element,
+          this.props.stylesheets,
+          this.props.onUpdate,
+          newOptions,
+        ),
       ),
     );
   }

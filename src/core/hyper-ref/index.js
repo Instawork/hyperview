@@ -39,8 +39,8 @@ export default class HyperRef extends PureComponent<Props, State> {
   props: Props;
 
   state: State = {
-    refreshing: false,
     pressed: false,
+    refreshing: false,
   };
 
   componentDidMount() {
@@ -120,7 +120,7 @@ export default class HyperRef extends PureComponent<Props, State> {
           ATTRIBUTES.SHOW_DURING_LOAD,
         );
         const delay = behaviorElement.getAttribute(ATTRIBUTES.DELAY);
-        onUpdate(href, action, element, { showIndicatorId, delay });
+        onUpdate(href, action, element, { delay, showIndicatorId });
       };
     }
     if (Object.values(UPDATE_ACTIONS).indexOf(action) >= 0) {
@@ -137,19 +137,18 @@ export default class HyperRef extends PureComponent<Props, State> {
         const delay = behaviorElement.getAttribute(ATTRIBUTES.DELAY);
         const once = behaviorElement.getAttribute(ATTRIBUTES.ONCE);
         onUpdate(href, action, element, {
-          verb,
-          targetId,
-          showIndicatorIds,
-          hideIndicatorIds,
           delay,
+          hideIndicatorIds,
           once,
+          showIndicatorIds,
+          targetId,
+          verb,
         });
       };
     }
-    //
     // Custom behavior
     return () =>
-      onUpdate(null, action, element, { custom: true, behaviorElement });
+      onUpdate(null, action, element, { behaviorElement, custom: true });
   };
 
   triggerLoadBehaviors = () => {
@@ -169,9 +168,7 @@ export default class HyperRef extends PureComponent<Props, State> {
   };
 
   render() {
-    const { refreshing, pressed } = this.state;
-    const { element, stylesheets, onUpdate, options } = this.props;
-    const behaviorElements = Dom.getBehaviorElements(element);
+    const behaviorElements = Dom.getBehaviorElements(this.props.element);
     const pressBehaviors = behaviorElements.filter(
       e =>
         PRESS_TRIGGERS.indexOf(
@@ -188,15 +185,15 @@ export default class HyperRef extends PureComponent<Props, State> {
     // Render the component based on the XML element. Depending on the applied behaviors,
     // this component will be wrapped with others to provide the necessary interaction.
     let renderedComponent = Render.renderElement(
-      element,
-      stylesheets,
-      onUpdate,
-      { ...options, pressed, skipHref: true },
+      this.props.element,
+      this.props.stylesheets,
+      this.props.onUpdate,
+      { ...this.props.options, pressed: this.state.pressed, skipHref: true },
     );
 
-    const styleAttr = element.getAttribute(ATTRIBUTES.HREF_STYLE);
+    const styleAttr = this.props.element.getAttribute(ATTRIBUTES.HREF_STYLE);
     const hrefStyle = styleAttr
-      ? styleAttr.split(' ').map(s => stylesheets.regular[s])
+      ? styleAttr.split(' ').map(s => this.props.stylesheets.regular[s])
       : null;
 
     // $FlowFixMe
@@ -220,9 +217,9 @@ export default class HyperRef extends PureComponent<Props, State> {
           behaviorElement.getAttribute(ATTRIBUTES.TRIGGER) || TRIGGERS.PRESS;
         const triggerPropName = PRESS_TRIGGERS_PROP_NAMES[trigger];
         const handler = this.createActionHandler(
-          element,
+          this.props.element,
           behaviorElement,
-          onUpdate,
+          this.props.onUpdate,
         );
         if (pressHandlers[triggerPropName]) {
           const oldHandler = pressHandlers[triggerPropName];
@@ -279,13 +276,17 @@ export default class HyperRef extends PureComponent<Props, State> {
     // the refresh behaviors.
     if (refreshBehaviors.length > 0) {
       const refreshHandlers = refreshBehaviors.map(behaviorElement =>
-        this.createActionHandler(element, behaviorElement, onUpdate),
+        this.createActionHandler(
+          this.props.element,
+          behaviorElement,
+          this.props.onUpdate,
+        ),
       );
       const onRefresh = () => refreshHandlers.forEach(h => h());
 
       const refreshControl = React.createElement(RefreshControl, {
-        refreshing,
         onRefresh,
+        refreshing: this.state.refreshing,
       });
       renderedComponent = React.createElement(
         ScrollView,
@@ -297,7 +298,11 @@ export default class HyperRef extends PureComponent<Props, State> {
     // Wrap component in a VisibilityDetectingView to trigger visibility behaviors.
     if (visibleBehaviors.length > 0) {
       const visibleHandlers = visibleBehaviors.map(behaviorElement =>
-        this.createActionHandler(element, behaviorElement, onUpdate),
+        this.createActionHandler(
+          this.props.element,
+          behaviorElement,
+          this.props.onUpdate,
+        ),
       );
       const onVisible = () => visibleHandlers.forEach(h => h());
 

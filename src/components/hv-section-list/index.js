@@ -36,37 +36,36 @@ export default class HvSectionList extends PureComponent<
   };
 
   refresh = () => {
-    const { element, onUpdate } = this.props;
     this.setState({ refreshing: true });
-    const path = element.getAttribute('href');
-    const action = element.getAttribute('action') || 'append';
-    const targetId = element.getAttribute('target') || null;
-    const showIndicatorIds = element.getAttribute('show-during-load') || null;
-    const hideIndicatorIds = element.getAttribute('hide-during-load') || null;
-    const delay = element.getAttribute('delay');
-    const once = element.getAttribute('once') || null;
+    const path = this.props.element.getAttribute('href');
+    const action = this.props.element.getAttribute('action') || 'append';
+    const targetId = this.props.element.getAttribute('target') || null;
+    const showIndicatorIds =
+      this.props.element.getAttribute('show-during-load') || null;
+    const hideIndicatorIds =
+      this.props.element.getAttribute('hide-during-load') || null;
+    const delay = this.props.element.getAttribute('delay');
+    const once = this.props.element.getAttribute('once') || null;
 
-    onUpdate(path, action, element, {
-      targetId,
-      showIndicatorIds,
-      hideIndicatorIds,
+    this.props.onUpdate(path, action, this.props.element, {
       delay,
+      hideIndicatorIds,
       once,
       onEnd: () => {
         this.setState({ refreshing: false });
       },
+      showIndicatorIds,
+      targetId,
     });
   };
 
   render() {
-    const { refreshing } = this.state;
-    const { element, stylesheets, onUpdate, options } = this.props;
-    const styleAttr = element.getAttribute('style');
+    const styleAttr = this.props.element.getAttribute('style');
     const style = styleAttr
-      ? styleAttr.split(' ').map(s => stylesheets.regular[s])
+      ? styleAttr.split(' ').map(s => this.props.stylesheets.regular[s])
       : null;
 
-    const sectionElements = element.getElementsByTagNameNS(
+    const sectionElements = this.props.element.getElementsByTagNameNS(
       Namespaces.HYPERVIEW,
       'section',
     );
@@ -88,27 +87,37 @@ export default class HvSectionList extends PureComponent<
           .getElementsByTagNameNS(Namespaces.HYPERVIEW, 'section-title')
           .item(0);
         sections.push({
-          title: titleElement,
           data: items,
+          title: titleElement,
         });
       }
     }
 
     const listProps = {
-      style,
-      sections,
       keyExtractor: item => item.getAttribute('key'),
       renderItem: ({ item }) =>
-        Render.renderElement(item, stylesheets, onUpdate, options),
+        Render.renderElement(
+          item,
+          this.props.stylesheets,
+          this.props.onUpdate,
+          this.props.options,
+        ),
       renderSectionHeader: ({ section: { title } }) =>
-        Render.renderElement(title, stylesheets, onUpdate, options),
+        Render.renderElement(
+          title,
+          this.props.stylesheets,
+          this.props.onUpdate,
+          this.props.options,
+        ),
+      sections,
+      style,
     };
 
     let refreshProps = {};
-    if (element.getAttribute('trigger') === 'refresh') {
+    if (this.props.element.getAttribute('trigger') === 'refresh') {
       refreshProps = {
         onRefresh: () => this.refresh(),
-        refreshing,
+        refreshing: this.state.refreshing,
       };
     }
 
