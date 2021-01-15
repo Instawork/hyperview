@@ -25,9 +25,6 @@ node_modules/warning/.*
 [untyped]
 .*/node_modules/@react-native-community/cli/.*/.*
 
-[include]
-node_modules/core-mobile
-
 [libs]
 node_modules/react-native/interface.js
 node_modules/react-native/flow/Position.js
