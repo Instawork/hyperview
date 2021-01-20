@@ -50,7 +50,7 @@
       <style id="Main"
              flex="1" />
     </styles>
-    <body style="Body">
+    <body style="Body" safe-area="true">
       <header style="Header">
         <text action="back"
               href="#"
@@ -121,7 +121,7 @@
              backgroundColor="white"
              flex="1" />
     </styles>
-    <body style="Body">
+    <body style="Body" safe-area="true">
       <header style="Header">
         <text action="back"
               href="#"

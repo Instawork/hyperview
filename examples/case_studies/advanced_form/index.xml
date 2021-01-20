@@ -112,7 +112,7 @@
       </style>
     </styles>
     <body scroll="true"
-          style="Body">
+          style="Body" safe-area="true">
       <select-single name="choice"
                      style="Select">
         <view style="Select__Separator" />

@@ -61,7 +61,7 @@
              fontSize="18"
              fontWeight="bold" />
     </styles>
-    <body style="Body">
+    <body style="Body" safe-area="true">
       <header style="Header">
         <text action="back"
               href="#"

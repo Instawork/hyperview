@@ -33,7 +33,7 @@
              textAlign="center" />
     </styles>
     <body scroll="true"
-          style="Body">
+          style="Body" safe-area="true">
       <view style="Section1">
         <text style="Label">Section 1</text>
         <text style="Content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</text>

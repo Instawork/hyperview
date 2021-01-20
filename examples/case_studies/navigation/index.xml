@@ -17,7 +17,7 @@
         </modifier>
       </style>
     </styles>
-    <body style="Body">
+    <body style="Body" safe-area="true">
       <text style="Label">This is screen 1.</text>
       <text delay="800"
             href="/case_studies/navigation/screen2.xml"
@@ -39,7 +39,7 @@
       <style id="Spinner"
              paddingBottom="24" />
     </styles>
-    <body style="Body">
+    <body style="Body" safe-area="true">
       <view style="Spinner">
         <spinner />
       </view>

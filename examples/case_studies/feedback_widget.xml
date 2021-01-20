@@ -79,7 +79,7 @@
            justifyContent="center"
            padding="24" />
   </styles>
-  <body style="Body">
+  <body style="Body" safe-area="true">
     <header style="Header">
       <image action="back"
              href="/case_studies/index.xml"

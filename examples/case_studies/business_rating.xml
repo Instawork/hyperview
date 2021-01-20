@@ -83,7 +83,7 @@
     <style id="Rating__Star--Filled"
            backgroundColor="#FBB90E" />
   </styles>
-  <body style="Body">
+  <body style="Body" safe-area="true">
     <header style="Header">
       <image action="back"
              href="/case_studies/index.xml"
@@ -228,7 +228,7 @@
            flex="1"
            justifyContent="center" />
   </styles>
-  <body style="Body">
+  <body style="Body" safe-area="true">
     <header style="Header">
       <image action="close"
              href="/index.xml"

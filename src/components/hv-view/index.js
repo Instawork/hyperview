@@ -10,7 +10,13 @@
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
-import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  View,
+} from 'react-native';
 import React, { PureComponent } from 'react';
 import { addHref, createProps } from 'hyperview/src/services';
 import type { HvComponentProps } from 'hyperview/src/types';
@@ -37,6 +43,8 @@ export default class HvView extends PureComponent<HvComponentProps> {
     const props: InternalProps = createProps(element, stylesheets, viewOptions);
     const scrollable = !!element.getAttribute('scroll');
     const keyboardAvoiding = !!element.getAttribute('avoid-keyboard');
+    const safeArea = element.getAttribute('safe-area') === 'true';
+    let safeAreaIncompatible = false;
     let c = View;
 
     /**
@@ -44,12 +52,14 @@ export default class HvView extends PureComponent<HvComponentProps> {
      * Note: Android has built-in support for avoiding keyboard.
      */
     if (keyboardAvoiding && Platform.OS === 'ios') {
+      safeAreaIncompatible = true;
       c = KeyboardAvoidingView;
       props.behavior = 'position';
     }
 
     const inputRefs = [];
     if (scrollable) {
+      safeAreaIncompatible = true;
       const textFields = element.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
         'text-field',
@@ -88,6 +98,13 @@ export default class HvView extends PureComponent<HvComponentProps> {
       if (scrollDirection === 'horizontal') {
         props.horizontal = true;
       }
+    }
+
+    if (safeArea) {
+      if (safeAreaIncompatible) {
+        console.warn('safe-area is incompatible with scroll or avoid-keyboard');
+      }
+      c = SafeAreaView;
     }
 
     const component = React.createElement(

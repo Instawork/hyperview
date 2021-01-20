@@ -58,7 +58,7 @@
              fontWeight="bold" />
     </styles>
     <body scroll="true"
-          style="Body">
+          style="Body" safe-area="true">
       <header style="Header">
         <text action="back"
               href="#"
@@ -102,7 +102,7 @@
              flex="1"
              justifyContent="center" />
     </styles>
-    <body style="Body">
+    <body style="Body" safe-area="true">
       <header style="Header">
         <text action="back"
               href="#"
