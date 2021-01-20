@@ -103,8 +103,9 @@ export default class HvView extends PureComponent<HvComponentProps> {
     if (safeArea) {
       if (safeAreaIncompatible) {
         console.warn('safe-area is incompatible with scroll or avoid-keyboard');
+      } else {
+        c = SafeAreaView;
       }
-      c = SafeAreaView;
     }
 
     const component = React.createElement(
