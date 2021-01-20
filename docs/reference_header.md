@@ -30,6 +30,7 @@ A `<header>` element can only appear as a direct child of a `<screen>` element.
 ## Attributes
 
 - [Behavior attributes](#behavior-attributes)
+- [`safe-area`](#safe-area)
 - [`style`](#style)
 - [`id`](#id)
 - [`hide`](#hide)
@@ -37,6 +38,14 @@ A `<header>` element can only appear as a direct child of a `<screen>` element.
 #### Behavior attributes
 
 A `<header>` element accepts the standard [behavior attributes](/docs/reference_behavior_attributes), except for the "refresh" trigger.
+
+#### `safe-area`
+
+| Type                         | Required |
+| ---------------------------- | -------- |
+| boolean, **false** (default) | No       |
+
+If true, the body will be rendered in the safe area of the mobile device (avoiding notches at the top or bottom). Note that `safe-area` will only have an effect if `scroll` is false.
 
 #### `style`
 
