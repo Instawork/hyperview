@@ -4,7 +4,7 @@
       <style id="Body"
              backgroundColor="white"
              flex="1"
-             paddingTop="48" />
+              />
       <style id="Section1"
              backgroundColor="#4778FF"
              flex="1"
@@ -33,7 +33,7 @@
              textAlign="center" />
     </styles>
     <body scroll="true"
-          style="Body" safe-area="true">
+          style="Body">
       <view style="Section1">
         <text style="Label">Section 1</text>
         <text style="Content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</text>

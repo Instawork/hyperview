@@ -56,7 +56,7 @@
              marginTop="16" />
     </styles>
     <body scroll="true"
-          style="Body" safe-area="true">
+          style="Body" >
       <form id="myForm">
         <view style="FormGroup">
           <text style="Label">Label line</text>

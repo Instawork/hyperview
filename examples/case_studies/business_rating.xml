@@ -6,10 +6,9 @@
            alignItems="center"
            backgroundColor="white"
            flexDirection="row"
-           height="72"
            paddingLeft="24"
            paddingRight="24"
-           paddingTop="24" />
+           paddingBottom="16" />
     <style id="Header__Back"
            height="19"
            marginRight="16"
