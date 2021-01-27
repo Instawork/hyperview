@@ -622,6 +622,7 @@
       <xs:attribute name="maxWidth" type="hv:pointsOrPercent"/>
       <xs:attribute name="minHeight" type="hv:pointsOrPercent"/>
       <xs:attribute name="minWidth" type="hv:pointsOrPercent"/>
+      <xs:attribute name="numberOfLines" type="xs:integer"/>
 
       <xs:attribute name="opacity">
         <xs:simpleType>
