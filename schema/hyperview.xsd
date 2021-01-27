@@ -531,6 +531,16 @@
       <xs:attribute name="bottom" type="xs:integer"/>
 
       <xs:attribute name="color" type="hv:color"/>
+
+      <xs:attribute name="display">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="none"/>
+            <xs:enumeration value="flex"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+
       <xs:attribute name="elevation" type="xs:nonNegativeInteger"/>
 
       <xs:attribute name="flex">
