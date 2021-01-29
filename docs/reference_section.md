@@ -32,7 +32,7 @@ The `<section>` element represents a group of items in a `<section-list>`. A sec
 
 ## Structure
 
-A `<section>` element will only render `<section-title>` and `<item>` children elements. Other elements will be ignored during rendering.
+A `<section>` element will only render `<section-title>`, `<item>` and `<items>` children elements. Other elements will be ignored during rendering.
 
 A `<section>` element can only appear as a direct child of a `<section-list>` element. It will not render on the screen in other contexts.
 
