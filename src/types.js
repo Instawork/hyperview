@@ -376,7 +376,6 @@ export const NAV_ACTIONS = {
   NAVIGATE: ACTIONS.NAVIGATE,
   NEW: ACTIONS.NEW,
   PUSH: ACTIONS.PUSH,
-  REPLACE: ACTIONS.REPLACE,
 };
 
 export type NavAction = $Values<typeof NAV_ACTIONS>;
@@ -409,7 +408,6 @@ export type NavigationProps = {|
   navigate: (routeParams: NavigationRouteParams, key: ?string) => void,
   openModal: (routeParams: ?NavigationRouteParams) => void,
   push: (routeParams: NavigationRouteParams) => void,
-  replace: (routeParams: NavigationRouteParams) => void,
 |};
 
 export const ON_EVENT_DISPATCH = 'hyperview:on-event';
