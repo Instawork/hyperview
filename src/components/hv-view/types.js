@@ -11,7 +11,7 @@
 import type { StyleSheet } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 
 export type InternalProps = {|
-  accessibilityLabel?: ?string,
+  accessibilityLabel?: any,
   behavior?: 'position',
   extraScrollHeight?: ?number,
   keyboardOpeningTime?: ?number,
@@ -21,5 +21,6 @@ export type InternalProps = {|
   getTextInputRefs?: ?() => [],
   horizontal?: ?boolean,
   style?: ?Array<StyleSheet<*>>,
-  testID?: ?string,
+  testID?: string,
+  children?: ?any,
 |};
