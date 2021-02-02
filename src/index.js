@@ -263,7 +263,6 @@ export default class HyperScreen extends React.Component {
   getNavigation = () => ({
     back: this.props.back,
     push: this.props.push,
-    replace: this.props.replace,
     navigate: this.props.navigate,
     openModal: this.props.openModal,
     closeModal: this.props.closeModal,

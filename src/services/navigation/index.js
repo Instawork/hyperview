@@ -92,9 +92,6 @@ export default class Navigation {
       case NAV_ACTIONS.PUSH:
         this.navigation.push(routeParams);
         break;
-      case NAV_ACTIONS.REPLACE:
-        this.navigation.replace(routeParams);
-        break;
       case NAV_ACTIONS.NAVIGATE: {
         this.navigation.navigate(routeParams, this.getRouteKey(url));
         break;
