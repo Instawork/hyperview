@@ -170,7 +170,7 @@
       <style id="help--error"
              color="#FF4847" />
     </styles>
-    <body style="Body">
+    <body style="Body" safe-area="true">
       <header style="Header">
         <image action="close"
                href="/index.xml"

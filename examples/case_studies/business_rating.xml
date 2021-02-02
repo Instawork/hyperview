@@ -6,10 +6,9 @@
            alignItems="center"
            backgroundColor="white"
            flexDirection="row"
-           height="72"
            paddingLeft="24"
            paddingRight="24"
-           paddingTop="24" />
+           paddingBottom="16" />
     <style id="Header__Back"
            height="19"
            marginRight="16"
@@ -83,7 +82,7 @@
     <style id="Rating__Star--Filled"
            backgroundColor="#FBB90E" />
   </styles>
-  <body style="Body">
+  <body style="Body" safe-area="true">
     <header style="Header">
       <image action="back"
              href="/case_studies/index.xml"
@@ -228,7 +227,7 @@
            flex="1"
            justifyContent="center" />
   </styles>
-  <body style="Body">
+  <body style="Body" safe-area="true">
     <header style="Header">
       <image action="close"
              href="/index.xml"
