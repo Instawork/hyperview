@@ -11,7 +11,7 @@
 import type { StyleSheet } from 'hyperview/src/types';
 
 export type InternalProps = {|
-  accessibilityLabel?: ?string,
+  accessibilityLabel?: any,
   behavior?: 'position',
   extraScrollHeight?: ?number,
   keyboardOpeningTime?: ?number,
@@ -22,4 +22,5 @@ export type InternalProps = {|
   horizontal?: ?boolean,
   style?: ?Array<StyleSheet>,
   testID?: ?string,
+  children?: ?any,
 |};

@@ -4,7 +4,7 @@
       <style id="Body"
              backgroundColor="white"
              flex="1"
-             paddingTop="48" />
+              />
       <style id="Section1"
              backgroundColor="#4778FF"
              flex="1"

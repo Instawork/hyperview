@@ -11,7 +11,7 @@
              marginBottom="40" />
     </styles>
     <body scroll="true"
-          style="Body">
+          style="Body" safe-area="true">
       <text>Next page</text>
     </body>
   </screen>
