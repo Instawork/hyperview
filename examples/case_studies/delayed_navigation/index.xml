@@ -12,7 +12,7 @@
              color="blue"
              fontSize="18" />
     </styles>
-    <body style="Body">
+    <body style="Body" safe-area="true">
       <text style="Label">This is screen 1.</text>
       <text action="replace-inner"
             delay="800"

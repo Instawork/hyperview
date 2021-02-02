@@ -46,6 +46,7 @@ A `<view>` element can only appear anywhere within a `<screen>` element.
 ## Attributes
 
 - [Behavior attributes](#behavior-attributes)
+- [`safe-area`](#safe-area)
 - [`style`](#style)
 - [`scroll`](#scroll)
 - [`scroll-orientation`](#scroll-orientation)
@@ -57,6 +58,14 @@ A `<view>` element can only appear anywhere within a `<screen>` element.
 #### Behavior attributes
 
 A `<view>` element accepts the standard [behavior attributes](/docs/reference_behavior_attributes), including all triggers (press, refresh, visible, etc).
+
+#### `safe-area`
+
+| Type                         | Required |
+| ---------------------------- | -------- |
+| boolean, **false** (default) | No       |
+
+If true, the body will be rendered in the safe area of the mobile device (avoiding notches at the top or bottom). Note that `safe-area` will only have an effect if `scroll` is false.
 
 #### `style`
 

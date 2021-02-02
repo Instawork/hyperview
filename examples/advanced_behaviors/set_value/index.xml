@@ -7,10 +7,9 @@
              borderBottomColor="#eee"
              borderBottomWidth="1"
              flexDirection="row"
-             height="72"
              paddingLeft="24"
              paddingRight="24"
-             paddingTop="24" />
+             paddingBottom="16" />
       <style id="Header__Back"
              color="blue"
              fontSize="16"
@@ -145,7 +144,7 @@
       <style id="link" color="#4778FF" fontWeight="bold" marginTop="8" marginRight="16" />
 
     </styles>
-    <body style="Body">
+    <body style="Body" safe-area="true">
       <header style="Header">
         <text action="back"
               href="#"

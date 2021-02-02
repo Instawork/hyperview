@@ -23,7 +23,7 @@
              height="48"
              justifyContent="center" />
     </styles>
-    <body style="Body">
+    <body style="Body" safe-area="true">
       <list>
         <item key="1"
               style="Item">

@@ -7,10 +7,9 @@
              borderBottomColor="#eee"
              borderBottomWidth="1"
              flexDirection="row"
-             height="72"
              paddingLeft="24"
              paddingRight="24"
-             paddingTop="24" />
+             paddingBottom="16" />
       <style id="Header__Back"
              color="blue"
              fontSize="16"
@@ -48,7 +47,7 @@
              fontSize="18"
              fontWeight="bold" />
     </styles>
-    <body style="Body">
+    <body style="Body" safe-area="true">
       <header style="Header">
         <text action="back"
               href="#"
@@ -136,10 +135,9 @@
              borderBottomColor="#eee"
              borderBottomWidth="1"
              flexDirection="row"
-             height="72"
              paddingLeft="24"
              paddingRight="24"
-             paddingTop="24" />
+             paddingBottom="16" />
       <style id="Header__Back"
              color="blue"
              fontSize="16"
@@ -153,7 +151,7 @@
              backgroundColor="white"
              flex="1" />
     </styles>
-    <body style="Body">
+    <body style="Body" safe-area="true">
       <header style="Header">
         <text action="back"
               href="#"
