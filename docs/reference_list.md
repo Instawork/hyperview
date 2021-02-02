@@ -24,7 +24,7 @@ The `<list>` element represents a list of items. Unlike child elements of a `<vi
 
 ## Structure
 
-A `<list>` element will only render `<item>` children elements. Other elements will be ignored during rendering.
+A `<list>` element will only render `<item>` and `<items>` children elements. Other elements will be ignored during rendering.
 
 ## Attributes
 

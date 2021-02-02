@@ -531,6 +531,16 @@
       <xs:attribute name="bottom" type="xs:integer"/>
 
       <xs:attribute name="color" type="hv:color"/>
+
+      <xs:attribute name="display">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="none"/>
+            <xs:enumeration value="flex"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+
       <xs:attribute name="elevation" type="xs:nonNegativeInteger"/>
 
       <xs:attribute name="flex">
@@ -624,6 +634,7 @@
       <xs:attribute name="maxWidth" type="hv:pointsOrPercent"/>
       <xs:attribute name="minHeight" type="hv:pointsOrPercent"/>
       <xs:attribute name="minWidth" type="hv:pointsOrPercent"/>
+      <xs:attribute name="numberOfLines" type="xs:integer"/>
 
       <xs:attribute name="opacity">
         <xs:simpleType>
@@ -803,7 +814,11 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="1" maxOccurs="1" ref="hv:section-title"/>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="hv:item"/>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="hv:item"/>
+          <xs:element ref="hv:items"/>
+          <xs:element ref="hv:behavior"/>
+        </xs:choice>
       </xs:sequence>
       <xs:attribute name="id" type="xs:NCName"/>
       <xs:attribute name="hide" type="xs:boolean"/>
