@@ -101,6 +101,7 @@ const STYLE_ATTRIBUTE_CONVERTERS = {
   right: numberOrPercent,
   top: numberOrPercent,
   width: numberOrPercent,
+  zIndex: number,
 
   // view attributes
   borderRightColor: string,

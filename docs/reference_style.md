@@ -75,6 +75,7 @@ A `<style>` element should only appear as a direct child of a `<styles>` element
   - [`right`](#right)
   - [`top`](#top)
   - [`width`](#width)
+  - [`zIndex`](#zIndex)
 
 - [View & image rules](#view-image-rules)
 
@@ -502,6 +503,16 @@ It works similarly to `width` in CSS, but in Hyperview you must use points or pe
 | Type           | Required |
 | -------------- | -------- |
 | number, string | No       |
+
+#### `zIndex`
+
+`zIndex` sets the stack order of a positioned element and its descendents or flex items.
+
+It works similarly to `zIndex` in CSS, but in Hyperview you must use only integers. See https://developer.mozilla.org/en-US/docs/Web/CSS/z-index for more details.
+
+| Type   | Required |
+| ------ | -------- |
+| number | No       |
 
 ### View & image rules
 
