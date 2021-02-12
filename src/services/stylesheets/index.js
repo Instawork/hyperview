@@ -104,6 +104,7 @@ const STYLE_ATTRIBUTE_CONVERTERS = {
   right: numberOrPercent,
   top: numberOrPercent,
   width: numberOrPercent,
+  zIndex: number,
 
   // view attributes
   // eslint-disable-next-line sort-keys
