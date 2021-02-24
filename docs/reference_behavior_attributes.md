@@ -21,6 +21,8 @@ The set of **behavior attributes** described in this document give control over 
 - [`action`](#action): What should the client do with the content?
 - [`target`](#target): Where in the app should the client perform the action?
 
+Note: When an `href` attribute is found on an element, Hyperview wraps the element with a "tappable" view. It is possible to customize the styles applied to that wrapping view by specifying the `href-style` property. See [Styles](/docs/reference_style).
+
 The rest of the document describes in-depth how these attributes work together.
 
 ## trigger
