@@ -380,6 +380,7 @@
     <xs:attribute name="action" type="hv:action" />
     <xs:attribute name="target" type="hv:IDREF"/>
     <xs:attribute name="href" type="xs:string"/>
+    <xs:attribute name="href-style" type="hv:styleList"/>
     <xs:attribute name="once" type="xs:boolean"/>
     <xs:attribute name="trigger" type="hv:trigger"/>
     <xs:attribute name="show-during-load" type="hv:IDREFS"/>
