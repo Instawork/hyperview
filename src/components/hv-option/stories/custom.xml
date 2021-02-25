@@ -1,11 +1,9 @@
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
-      <style id="Body"
-        backgroundColor="white"
-        flex="1"
-      />
-      <style id="SelectCustom"
+      <style id="Body" backgroundColor="white" flex="1" />
+      <style
+        id="SelectCustom"
         flex="1"
         flexDirection="row"
         marginLeft="24"
@@ -13,7 +11,8 @@
         marginBottom="40"
         marginTop="24"
       />
-      <style id="SelectCustom__Option"
+      <style
+        id="SelectCustom__Option"
         flex="1"
         justifyContent="flex-start"
         alignItems="center"
@@ -27,7 +26,8 @@
           <style borderColor="#4778FF" />
         </modifier>
       </style>
-      <style id="SelectCustom__Label"
+      <style
+        id="SelectCustom__Label"
         fontFamily="HKGrotesk-Regular"
         color="#4e4d4d"
         fontSize="16"
@@ -39,12 +39,14 @@
         </modifier>
       </style>
 
-      <style id="SelectCustom__ImageWrapper"
+      <style
+        id="SelectCustom__ImageWrapper"
         marginBottom="8"
         width="32"
         height="32"
       />
-      <style id="SelectCustom__Image"
+      <style
+        id="SelectCustom__Image"
         width="32"
         height="32"
         position="absolute"
@@ -67,8 +69,14 @@
     <body style="Body">
       <option style="SelectCustom__Option" value="free_parking" selected="true">
         <view style="SelectCustom__ImageWrapper">
-          <image style="SelectCustom__Image SelectCustom__Image--Unselected" source="/ui_elements/forms/unselected.png" />
-          <image style="SelectCustom__Image SelectCustom__Image--Selected" source="/ui_elements/forms/selected.png" />
+          <image
+            style="SelectCustom__Image SelectCustom__Image--Unselected"
+            source="/ui_elements/forms/unselected.png"
+          />
+          <image
+            style="SelectCustom__Image SelectCustom__Image--Selected"
+            source="/ui_elements/forms/selected.png"
+          />
         </view>
         <text style="SelectCustom__Label">Free parking</text>
       </option>

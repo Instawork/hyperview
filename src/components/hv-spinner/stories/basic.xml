@@ -1,10 +1,7 @@
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
-      <style id="Body"
-        backgroundColor="white"
-        flex="1"
-      />
+      <style id="Body" backgroundColor="white" flex="1" />
     </styles>
     <body style="Body">
       <spinner />

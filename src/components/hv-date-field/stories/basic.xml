@@ -1,11 +1,7 @@
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
-      <style
-        id="Body"
-        backgroundColor="white"
-        flex="1"
-      />
+      <style id="Body" backgroundColor="white" flex="1" />
       <style
         id="Input"
         borderBottomColor="#E1E1E1"
@@ -22,11 +18,7 @@
           <style borderBottomColor="#4778FF" />
         </modifier>
       </style>
-      <style
-        id="Input__Text"
-        fontSize="16"
-        fontWeight="normal"
-      />
+      <style id="Input__Text" fontSize="16" fontWeight="normal" />
       <style
         id="PickerModal"
         backgroundColor="white"
