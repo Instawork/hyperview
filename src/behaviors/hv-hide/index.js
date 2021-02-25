@@ -73,9 +73,7 @@ export default {
       // Update the DOM to reflect the new state of the indicators.
       updateRoot(newRoot);
       // Wait for the delay then hide the target.
-      later(delay)
-        .then(hideElement)
-        .catch(hideElement);
+      later(delay).then(hideElement).catch(hideElement);
     }
   },
 };

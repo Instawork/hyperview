@@ -76,9 +76,7 @@ export default {
       // Update the DOM to reflect the new state of the indicators.
       updateRoot(newRoot);
       // Wait for the delay then show the target.
-      later(delay)
-        .then(setValue)
-        .catch(setValue);
+      later(delay).then(setValue).catch(setValue);
     }
   },
 };

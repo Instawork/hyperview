@@ -76,9 +76,7 @@ export default {
       // Update the DOM to reflect the new state of the indicators.
       updateRoot(newRoot);
       // Wait for the delay then toggle the target.
-      later(delay)
-        .then(toggleElement)
-        .catch(toggleElement);
+      later(delay).then(toggleElement).catch(toggleElement);
     }
   },
 };

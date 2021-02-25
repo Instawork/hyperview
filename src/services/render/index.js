@@ -80,9 +80,7 @@ export const renderElement = (
     // No component registered for the namespace/local name.
     // Warn in case this was an unintended mistake.
     console.warn(
-      `No component registered for tag <${element.localName}> (namespace: ${
-        element.namespaceURI
-      })`,
+      `No component registered for tag <${element.localName}> (namespace: ${element.namespaceURI})`,
     );
   }
 
