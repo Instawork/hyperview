@@ -1,73 +1,72 @@
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
-      <style id="Header"
-             alignItems="center"
-             backgroundColor="white"
-             borderBottomColor="#eee"
-             borderBottomWidth="1"
-             flexDirection="row"
-             paddingLeft="24"
-             paddingRight="24"
-             paddingBottom="16" />
-      <style id="Header__Back"
-             color="blue"
-             fontSize="16"
-             fontWeight="600"
-             paddingRight="16" />
-      <style id="Header__Title"
-             color="black"
-             fontSize="24"
-             fontWeight="600" />
-      <style id="Body"
-             backgroundColor="white"
-             flex="1" />
-      <style id="Description"
-             fontSize="16"
-             fontWeight="normal"
-             margin="24"
-             marginBottom="0" />
-      <style id="Item"
-             alignItems="center"
-             borderBottomColor="#eee"
-             borderBottomWidth="1"
-             flex="1"
-             flexDirection="row"
-             height="48"
-             justifyContent="space-between"
-             paddingLeft="24"
-             paddingRight="24" />
-      <style id="Item__Label"
-             fontSize="18"
-             fontWeight="normal" />
-      <style id="Item__Chevron"
-             fontSize="18"
-             fontWeight="bold" />
-      <style id="Button"
-             backgroundColor="#63CB76"
-             borderRadius="16"
-             flex="1"
-             flexDirection="row"
-             justifyContent="center"
-             margin="24"
-             padding="24" />
-      <style id="Button__Label"
-             color="white"
-             fontSize="24"
-             fontWeight="bold" />
-      <style id="Main"
-             flex="1" />
-      <style id="input"
-             borderBottomColor="#E1E1E1"
-             borderBottomWidth="1"
-             borderColor="#4E4D4D"
-             flex="1"
-             fontSize="16"
-             fontWeight="normal"
-             marginLeft="24"
-             marginRight="24"
-             paddingBottom="8"
-             paddingTop="8">
+      <style
+        id="Header"
+        alignItems="center"
+        backgroundColor="white"
+        borderBottomColor="#eee"
+        borderBottomWidth="1"
+        flexDirection="row"
+        paddingLeft="24"
+        paddingRight="24"
+        paddingBottom="16"
+      />
+      <style
+        id="Header__Back"
+        color="blue"
+        fontSize="16"
+        fontWeight="600"
+        paddingRight="16"
+      />
+      <style id="Header__Title" color="black" fontSize="24" fontWeight="600" />
+      <style id="Body" backgroundColor="white" flex="1" />
+      <style
+        id="Description"
+        fontSize="16"
+        fontWeight="normal"
+        margin="24"
+        marginBottom="0"
+      />
+      <style
+        id="Item"
+        alignItems="center"
+        borderBottomColor="#eee"
+        borderBottomWidth="1"
+        flex="1"
+        flexDirection="row"
+        height="48"
+        justifyContent="space-between"
+        paddingLeft="24"
+        paddingRight="24"
+      />
+      <style id="Item__Label" fontSize="18" fontWeight="normal" />
+      <style id="Item__Chevron" fontSize="18" fontWeight="bold" />
+      <style
+        id="Button"
+        backgroundColor="#63CB76"
+        borderRadius="16"
+        flex="1"
+        flexDirection="row"
+        justifyContent="center"
+        margin="24"
+        padding="24"
+      />
+      <style id="Button__Label" color="white" fontSize="24" fontWeight="bold" />
+      <style id="Main" flex="1" />
+      <style
+        id="input"
+        borderBottomColor="#E1E1E1"
+        borderBottomWidth="1"
+        borderColor="#4E4D4D"
+        flex="1"
+        fontSize="16"
+        fontWeight="normal"
+        marginLeft="24"
+        marginRight="24"
+        paddingBottom="8"
+        paddingTop="8"
+      >
         <modifier pressed="true">
           <style borderBottomColor="green" />
         </modifier>
@@ -78,32 +77,34 @@
     </styles>
     <body style="Body" safe-area="true">
       <header style="Header">
-        <text action="back"
-              href="#"
-              style="Header__Back">Back</text>
+        <text action="back" href="#" style="Header__Back">Back</text>
         <text style="Header__Title">New</text>
       </header>
-      <view scroll="true"
-            style="Main">
-        <text style="Description">Tapping the button below will request an XML screen and show it in a new modal.</text>
-        <view action="new"
-              href="/navigation/modal.xml"
-              style="Button">
+      <view scroll="true" style="Main">
+        <text style="Description">
+          Tapping the button below will request an XML screen and show it in a
+          new modal.
+        </text>
+        <view action="new" href="/navigation/modal.xml" style="Button">
           <text style="Button__Label">New</text>
         </view>
-        <view action="new"
-              delay="1000"
-              href="/navigation/modal.xml"
-              show-during-load="loadingScreen"
-              style="Button">
+        <view
+          action="new"
+          delay="1000"
+          href="/navigation/modal.xml"
+          show-during-load="loadingScreen"
+          style="Button"
+        >
           <text style="Button__Label">New with indicator</text>
         </view>
         <form>
-          <view action="new"
-                delay="1000"
-                href="/navigation/modal.xml"
-                show-during-load="loadingScreen"
-                style="Button">
+          <view
+            action="new"
+            delay="1000"
+            href="/navigation/modal.xml"
+            show-during-load="loadingScreen"
+            style="Button"
+          >
             <text style="Button__Label">New with params</text>
           </view>
           <text-field style="input" name="param1" value="value1" />
@@ -113,42 +114,43 @@
   </screen>
   <screen id="loadingScreen">
     <styles>
-      <style id="Header"
-             alignItems="center"
-             backgroundColor="white"
-             borderBottomColor="#eee"
-             borderBottomWidth="1"
-             flexDirection="row"
-             paddingLeft="24"
-             paddingRight="24"
-             paddingBottom="16" />
-      <style id="Header__Back"
-             color="blue"
-             fontSize="16"
-             fontWeight="600"
-             paddingRight="16" />
-      <style id="Header__Title"
-             color="black"
-             fontSize="24"
-             fontWeight="600" />
-      <style id="Body"
-             backgroundColor="white"
-             flex="1" />
-      <style id="Description"
-             fontSize="16"
-             fontWeight="normal"
-             margin="24"
-             marginBottom="0" />
-      <style id="Loading"
-             alignItems="center"
-             flex="1"
-             justifyContent="center" />
+      <style
+        id="Header"
+        alignItems="center"
+        backgroundColor="white"
+        borderBottomColor="#eee"
+        borderBottomWidth="1"
+        flexDirection="row"
+        paddingLeft="24"
+        paddingRight="24"
+        paddingBottom="16"
+      />
+      <style
+        id="Header__Back"
+        color="blue"
+        fontSize="16"
+        fontWeight="600"
+        paddingRight="16"
+      />
+      <style id="Header__Title" color="black" fontSize="24" fontWeight="600" />
+      <style id="Body" backgroundColor="white" flex="1" />
+      <style
+        id="Description"
+        fontSize="16"
+        fontWeight="normal"
+        margin="24"
+        marginBottom="0"
+      />
+      <style
+        id="Loading"
+        alignItems="center"
+        flex="1"
+        justifyContent="center"
+      />
     </styles>
     <body style="Body" safe-area="true">
       <header style="Header">
-        <text action="back"
-              href="#"
-              style="Header__Back">Back</text>
+        <text action="back" href="#" style="Header__Back">Back</text>
         <text style="Header__Title">Loading...</text>
       </header>
       <view style="Loading">

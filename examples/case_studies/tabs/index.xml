@@ -1,69 +1,66 @@
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
-      <style id="Main"
-             backgroundColor="white"
-             flex="1"
-             paddingTop="48" />
-      <style id="TabContent"
-             alignItems="center"
-             flex="1"
-             justifyContent="flex-start"
-             paddingTop="24" />
-      <style id="Tabs"
-             flexDirection="row"
-             height="40" />
-      <style id="Tab"
-             alignItems="center"
-             backgroundColor="white"
-             flex="1"
-             flexDirection="row"
-             justifyContent="center">
+      <style id="Main" backgroundColor="white" flex="1" paddingTop="48" />
+      <style
+        id="TabContent"
+        alignItems="center"
+        flex="1"
+        justifyContent="flex-start"
+        paddingTop="24"
+      />
+      <style id="Tabs" flexDirection="row" height="40" />
+      <style
+        id="Tab"
+        alignItems="center"
+        backgroundColor="white"
+        flex="1"
+        flexDirection="row"
+        justifyContent="center"
+      >
         <modifier selected="true">
           <style backgroundColor="#ddd" />
         </modifier>
       </style>
-      <style id="Tab__Label"
-             fontSize="18"
-             fontWeight="normal">
+      <style id="Tab__Label" fontSize="18" fontWeight="normal">
         <modifier selected="true">
           <style fontWeight="bold" />
         </modifier>
       </style>
     </styles>
     <body style="Main">
-      <select-single name="tab"
-                     style="Tabs">
-        <option action="replace-inner"
-                delay="300"
-                hide-during-load="tabContent"
-                href="/case_studies/tabs/users.xml"
-                show-during-load="spinner"
-                style="Tab"
-                target="tabContent"
-                trigger="select"
-                value="users">
+      <select-single name="tab" style="Tabs">
+        <option
+          action="replace-inner"
+          delay="300"
+          hide-during-load="tabContent"
+          href="/case_studies/tabs/users.xml"
+          show-during-load="spinner"
+          style="Tab"
+          target="tabContent"
+          trigger="select"
+          value="users"
+        >
           <text style="Tab__Label">Users</text>
         </option>
-        <option action="replace-inner"
-                delay="300"
-                hide-during-load="tabContent"
-                href="/case_studies/tabs/groups.xml"
-                show-during-load="spinner"
-                style="Tab"
-                target="tabContent"
-                trigger="select"
-                value="groups">
+        <option
+          action="replace-inner"
+          delay="300"
+          hide-during-load="tabContent"
+          href="/case_studies/tabs/groups.xml"
+          show-during-load="spinner"
+          style="Tab"
+          target="tabContent"
+          trigger="select"
+          value="groups"
+        >
           <text style="Tab__Label">Groups</text>
         </option>
       </select-single>
-      <view id="spinner"
-            hide="true"
-            style="TabContent">
+      <view id="spinner" hide="true" style="TabContent">
         <spinner />
       </view>
-      <view id="tabContent"
-            style="TabContent"></view>
+      <view id="tabContent" style="TabContent" />
     </body>
   </screen>
 </doc>
