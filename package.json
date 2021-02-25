@@ -1,6 +1,6 @@
 {
   "name": "hyperview",
-  "version": "0.35.1",
+  "version": "0.36.0",
   "main": "lib/index.js",
   "description": "React Native client for Hyperview XML",
   "homepage": "https://hyperview.org",
@@ -28,7 +28,7 @@
     "sync": "babel-node ./scripts/sync",
     "generate": "babel-node ./scripts/generate",
     "preversion": "yarn test && yarn build",
-    "prettify": "pretty-quick",
+    "prettify": "pretty-quick && prettier --write '**/*.xsd' '**/*.xml'",
     "postversion": "yarn publish --new-version $npm_package_version && git push --follow-tags",
     "format-xml": "./scripts/format-xml.sh",
     "release:patch": "yarn version --patch",

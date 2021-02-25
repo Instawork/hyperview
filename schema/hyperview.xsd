@@ -9,6 +9,7 @@
   xmlns:branch="https://instawork.com/hyperview-branch"
   xmlns:email="https://instawork.com/hyperview-behaviors"
   xmlns:intercom="https://instawork.com/hyperview-intercom"
+  xmlns:nfc="https://instawork.com/hyperview-nfc"
   xmlns:phone="https://instawork.com/hyperview-phone"
   xmlns:redux="https://instawork.com/hyperview-redux"
   xmlns:share="https://instawork.com/hyperview-share"
@@ -34,6 +35,10 @@
   <xs:import
     namespace="https://instawork.com/hyperview-intercom"
     schemaLocation="intercom.xsd"
+  />
+  <xs:import
+    namespace="https://instawork.com/hyperview-nfc"
+    schemaLocation="nfc.xsd"
   />
   <xs:import
     namespace="https://instawork.com/hyperview-phone"
@@ -79,6 +84,7 @@
       <xs:enumeration value="copy-to-clipboard" />
       <xs:enumeration value="email" />
       <xs:enumeration value="intercom" />
+      <xs:enumeration value="nfc" />
       <xs:enumeration value="phone" />
       <xs:enumeration value="redux" />
       <xs:enumeration value="share" />
@@ -438,6 +444,7 @@
     <xs:attributeGroup ref="branch:branchAttributes" />
     <xs:attributeGroup ref="email:emailAttributes" />
     <xs:attributeGroup ref="intercom:intercomAttributes" />
+    <xs:attributeGroup ref="nfc:nfcAttributes" />
     <xs:attributeGroup ref="phone:phoneAttributes" />
     <xs:attributeGroup ref="redux:reduxAttributes" />
     <xs:attributeGroup ref="share:shareAttributes" />

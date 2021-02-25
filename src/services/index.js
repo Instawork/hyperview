@@ -26,6 +26,7 @@ import type {
 } from 'hyperview/src/types';
 import { FORM_NAMES, LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
 import HyperRef from 'hyperview/src/core/hyper-ref';
+import { Platform } from 'react-native';
 import React from 'react';
 
 /**
@@ -95,10 +96,10 @@ export const createTestProps = (
   if (!id) {
     return testProps;
   }
-  return {
-    accessibilityLabel: id,
-    testID: id,
-  };
+  if (Platform.OS === 'ios') {
+    return { testID: id };
+  }
+  return { accessibilityLabel: id };
 };
 
 export const createProps = (

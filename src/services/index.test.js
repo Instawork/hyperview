@@ -38,19 +38,41 @@ describe('encodeXml', () => {
   });
 });
 
-describe('createTestProps', () => {
-  it('sets testID from id attribute', () => {
-    expect(createTestProps(createElement('myID'))).toHaveProperty(
-      'testID',
-      'myID',
-    );
-  });
+const mockPlatform = OS => {
+  jest.resetModules();
+  jest.doMock('react-native/Libraries/Utilities/Platform', () => ({
+    OS,
+    select: objs => objs[OS],
+  }));
+};
 
-  it('sets accessibilityLabel from id attribute', () => {
-    expect(createTestProps(createElement('myID'))).toHaveProperty(
-      'accessibilityLabel',
-      'myID',
-    );
+describe('createTestProps', () => {
+  describe('valid cases', () => {
+    let testProps;
+    beforeEach(() => {
+      testProps = createTestProps(createElement('myID'));
+    });
+    describe('Android', () => {
+      beforeAll(() => mockPlatform('android'));
+      it('does not set testID', () => {
+        expect(testProps).not.toHaveProperty('testID');
+      });
+
+      it('sets accessibilityLabel from id attribute', () => {
+        expect(testProps).toHaveProperty('accessibilityLabel', 'myID');
+      });
+    });
+
+    describe('iOS', () => {
+      beforeAll(() => mockPlatform('ios'));
+      it('sets testID from id attribute', () => {
+        expect(testProps).toHaveProperty('testID', 'myID');
+      });
+
+      it('does not set accessibilityLabel', () => {
+        expect(testProps).not.toHaveProperty('accessibilityLabel');
+      });
+    });
   });
 
   it('returns empty object if no id attribute present', () => {
@@ -66,25 +88,33 @@ describe('createProps', () => {
   const styleSheets = Stylesheets.createStylesheets(
     parser.parseFromString('<doc></doc>'),
   );
+  let props;
+  beforeEach(() => {
+    props = createProps(createElement('myID'), styleSheets, {});
+  });
 
   it('sets id from id attribute', () => {
-    expect(createProps(createElement('myID'), styleSheets, {})).toHaveProperty(
-      'id',
-      'myID',
-    );
+    expect(props).toHaveProperty('id', 'myID');
+  });
+  describe('Android', () => {
+    beforeAll(() => mockPlatform('android'));
+    it('does not set testID', () => {
+      expect(props).not.toHaveProperty('testID');
+    });
+
+    it('sets accessibilityLabel from id attribute', () => {
+      expect(props).toHaveProperty('accessibilityLabel', 'myID');
+    });
   });
 
-  it('sets testID from id attribute', () => {
-    expect(createProps(createElement('myID'), styleSheets, {})).toHaveProperty(
-      'testID',
-      'myID',
-    );
-  });
+  describe('iOS', () => {
+    beforeAll(() => mockPlatform('ios'));
+    it('sets testID from id attribute', () => {
+      expect(props).toHaveProperty('testID', 'myID');
+    });
 
-  it('sets accessibilityLabel from id attribute', () => {
-    expect(createProps(createElement('myID'), styleSheets, {})).toHaveProperty(
-      'accessibilityLabel',
-      'myID',
-    );
+    it('does not set accessibilityLabel', () => {
+      expect(props).not.toHaveProperty('accessibilityLabel');
+    });
   });
 });
