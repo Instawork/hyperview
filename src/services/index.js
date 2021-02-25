@@ -25,9 +25,9 @@ import type {
 } from 'hyperview/src/types';
 import { FORM_NAMES, LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
 import HyperRef from 'hyperview/src/core/hyper-ref';
+import { Platform } from 'react-native';
 import React from 'react';
 import type { StyleSheet } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
-import { Platform } from 'react-native';
 
 /**
  * This file is currently a dumping place for every functions used accross
