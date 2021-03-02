@@ -1,6 +1,6 @@
 {
   "name": "hyperview",
-  "version": "0.36.0",
+  "version": "0.37.0",
   "main": "lib/index.js",
   "description": "React Native client for Hyperview XML",
   "homepage": "https://hyperview.org",
@@ -88,8 +88,8 @@
     "react-dom": "16.8.0",
     "react-native": "0.63.3",
     "react-native-keyboard-aware-scrollview": "2.1.0",
-    "react-navigation": "1.0.0-beta.11",
     "react-native-webview": "10.10.2",
+    "react-navigation": "1.0.0-beta.11",
     "react-test-renderer": "16.13.1"
   },
   "jest": {
