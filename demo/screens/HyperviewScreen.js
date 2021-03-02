@@ -79,7 +79,6 @@ export default class HyperviewScreen extends React.PureComponent {
         navigation={navigation}
         openModal={this.openModal}
         push={this.push}
-        replace={navigation.replace}
         formatDate={this.formatDate}
       />
     );

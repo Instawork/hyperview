@@ -70,9 +70,9 @@ export const renderElement = (
       return (
         <Component
           element={element}
-          stylesheets={stylesheets}
           onUpdate={onUpdate}
           options={options}
+          stylesheets={stylesheets}
         />
       );
     }
@@ -80,9 +80,7 @@ export const renderElement = (
     // No component registered for the namespace/local name.
     // Warn in case this was an unintended mistake.
     console.warn(
-      `No component registered for tag <${element.localName}> (namespace: ${
-        element.namespaceURI
-      })`,
+      `No component registered for tag <${element.localName}> (namespace: ${element.namespaceURI})`,
     );
   }
 
@@ -106,10 +104,11 @@ export const renderChildren = (
   options: HvComponentOptions,
 ) => {
   const children = [];
-  // $FlowFixMe
-  if (element.childNodes !== null) {
-    for (let i = 0; i < element.childNodes.length; i += 1) {
+  if (element.childNodes) {
+    const { childNodes } = element;
+    for (let i = 0; i < childNodes.length; i += 1) {
       const e = renderElement(
+        // $FlowFixMe
         element.childNodes.item(i),
         stylesheets,
         onUpdate,

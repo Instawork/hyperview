@@ -8,7 +8,7 @@
  *
  */
 
-import type { StyleSheet } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
+import type { StyleSheet } from 'hyperview/src/types';
 
 export type InternalProps = {|
   accessibilityLabel?: any,
@@ -20,7 +20,7 @@ export type InternalProps = {|
   scrollToInputAdditionalOffset?: ?number,
   getTextInputRefs?: ?() => [],
   horizontal?: ?boolean,
-  style?: ?Array<StyleSheet<*>>,
-  testID?: string,
+  style?: ?Array<StyleSheet>,
+  testID?: ?string,
   children?: ?any,
 |};

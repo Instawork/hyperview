@@ -19,11 +19,14 @@ export default class LoadError extends PureComponent<Props> {
   props: Props;
 
   getHTML = (): ?string => {
-    const error = this.props.error;
-    if (!__DEV__ || !error || !(error instanceof Dom.ServerError)) {
+    if (
+      !__DEV__ ||
+      !this.props.error ||
+      !(this.props.error instanceof Dom.ServerError)
+    ) {
       return null;
     }
-    const { responseText, responseHeaders } = error;
+    const { responseText, responseHeaders } = this.props.error;
     switch (responseHeaders.get(Dom.HTTP_HEADERS.CONTENT_TYPE)) {
       // Only support HTML server error responses for the time being
       case Dom.CONTENT_TYPE.TEXT_HTML:
@@ -34,11 +37,10 @@ export default class LoadError extends PureComponent<Props> {
   };
 
   getTitle = () => {
-    const error = this.props.error;
-    if (!__DEV__ || !error) {
+    if (!__DEV__ || !this.props.error) {
       return 'An error occured';
     }
-    return `${error.name}: ${error.message}`;
+    return `${this.props.error.name}: ${this.props.error.message}`;
   };
 
   Header = () => {

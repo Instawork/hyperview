@@ -21,9 +21,11 @@ const getContent = (
   if (message) {
     if (title && url) {
       return { message, title, url };
-    } else if (title) {
+    }
+    if (title) {
       return { message, title };
-    } else if (url) {
+    }
+    if (url) {
       return { message, url };
     }
     return { message };

@@ -8,9 +8,13 @@
  *
  */
 
-import { createProps, createTestProps, encodeXml } from '.';
+import * as Stylesheets from 'hyperview/src/services/stylesheets';
+import {
+  createProps,
+  createTestProps,
+  encodeXml,
+} from 'hyperview/src/services';
 import { DOMParser } from 'xmldom-instawork';
-import { createStylesheets } from 'hyperview/src/services/stylesheets';
 
 const parser = new DOMParser();
 const createElement = (id: ?string) => {
@@ -36,7 +40,10 @@ describe('encodeXml', () => {
 
 const mockPlatform = OS => {
   jest.resetModules();
-  jest.doMock('Platform', () => ({ OS, select: objs => objs[OS] }));
+  jest.doMock('react-native/Libraries/Utilities/Platform', () => ({
+    OS,
+    select: objs => objs[OS],
+  }));
 };
 
 describe('createTestProps', () => {
@@ -78,7 +85,9 @@ describe('createTestProps', () => {
 });
 
 describe('createProps', () => {
-  const styleSheets = createStylesheets(parser.parseFromString('<doc></doc>'));
+  const styleSheets = Stylesheets.createStylesheets(
+    parser.parseFromString('<doc></doc>'),
+  );
   let props;
   beforeEach(() => {
     props = createProps(createElement('myID'), styleSheets, {});

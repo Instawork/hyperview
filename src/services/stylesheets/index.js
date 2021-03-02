@@ -8,11 +8,14 @@
  *
  */
 
+import * as Dom from 'hyperview/src/services/dom';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import type { Document, StyleSheets } from 'hyperview/src/types';
+import type {
+  Document,
+  StyleSheet as StyleSheetType,
+  StyleSheets,
+} from 'hyperview/src/types';
 import { StyleSheet } from 'react-native';
-import type { StyleSheet as StyleSheetType } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
-import { getFirstTag } from 'hyperview/src/services';
 
 const NUMBER_REGEX = /^\d+$/;
 
@@ -104,14 +107,15 @@ const STYLE_ATTRIBUTE_CONVERTERS = {
   zIndex: number,
 
   // view attributes
-  borderRightColor: string,
+  // eslint-disable-next-line sort-keys
+  backgroundColor: string,
   borderBottomColor: string,
   borderBottomLeftRadius: number,
   borderBottomRightRadius: number,
   borderColor: string,
   borderLeftColor: string,
   borderRadius: number,
-  backgroundColor: string,
+  borderRightColor: string,
   borderStyle: string,
   borderTopColor: string,
   borderTopLeftRadius: number,
@@ -124,7 +128,9 @@ const STYLE_ATTRIBUTE_CONVERTERS = {
   shadowRadius: number,
 
   // text attributes
+  // eslint-disable-next-line sort-keys
   color: string,
+  fontFamily: string,
   fontSize: number,
   fontStyle: string,
   fontWeight: string,
@@ -132,18 +138,15 @@ const STYLE_ATTRIBUTE_CONVERTERS = {
   textAlign: string,
   textDecorationLine: string,
   textShadowColor: string,
-  fontFamily: string,
   textShadowRadius: number,
 
   // image attributes
+  // eslint-disable-next-line sort-keys
   resizeMode: string,
 };
 
-function createStylesheet(
-  document: Document,
-  modifiers = {},
-): StyleSheetType<*> {
-  const styles = getFirstTag(document, 'styles');
+function createStylesheet(document: Document, modifiers = {}): StyleSheetType {
+  const styles = Dom.getFirstTag(document, 'styles');
   const stylesheet = {};
   if (styles) {
     const styleElements = styles.getElementsByTagNameNS(
@@ -205,8 +208,8 @@ function createStylesheet(
         rules.shadowOffsetY !== undefined
       ) {
         rules.shadowOffset = {
-          width: rules.shadowOffsetX,
           height: rules.shadowOffsetY,
+          width: rules.shadowOffsetX,
         };
         delete rules.shadowOffsetX;
         delete rules.shadowOffsetY;
@@ -221,30 +224,30 @@ function createStylesheet(
 
 export function createStylesheets(document: Document): StyleSheets {
   const styles = {
-    regular: createStylesheet(document, {
+    focused: createStylesheet(document, {
+      focused: true,
+      pressed: false,
       selected: false,
-      pressed: false,
-      focused: false,
-    }),
-    selected: createStylesheet(document, {
-      selected: true,
-      pressed: false,
-      focused: false,
     }),
     pressed: createStylesheet(document, {
-      selected: false,
-      pressed: true,
       focused: false,
-    }),
-    focused: createStylesheet(document, {
+      pressed: true,
       selected: false,
-      pressed: false,
-      focused: true,
     }),
     pressedSelected: createStylesheet(document, {
-      selected: true,
-      pressed: true,
       focused: false,
+      pressed: true,
+      selected: true,
+    }),
+    regular: createStylesheet(document, {
+      focused: false,
+      pressed: false,
+      selected: false,
+    }),
+    selected: createStylesheet(document, {
+      focused: false,
+      pressed: false,
+      selected: true,
     }),
   };
   return styles;

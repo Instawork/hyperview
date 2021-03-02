@@ -8,19 +8,19 @@
  *
  */
 
-import { splitAttributeList } from 'hyperview/src/services/xml';
+import * as Xml from 'hyperview/src/services/xml';
 
 describe('splitAttributeList', () => {
   it('works with empty string', () => {
-    expect(splitAttributeList('')).toEqual([]);
+    expect(Xml.splitAttributeList('')).toEqual([]);
   });
 
   it('works with only whitespace', () => {
-    expect(splitAttributeList('  \n  \t    \n\n')).toEqual([]);
+    expect(Xml.splitAttributeList('  \n  \t    \n\n')).toEqual([]);
   });
 
   it('works with tokens', () => {
-    expect(splitAttributeList('a bc def ghij')).toEqual([
+    expect(Xml.splitAttributeList('a bc def ghij')).toEqual([
       'a',
       'bc',
       'def',
@@ -29,17 +29,14 @@ describe('splitAttributeList', () => {
   });
 
   it('works with tokens and extra whitespace', () => {
-    expect(splitAttributeList('a  \n   bc\t\t\n   def   \t    ghij')).toEqual([
-      'a',
-      'bc',
-      'def',
-      'ghij',
-    ]);
+    expect(
+      Xml.splitAttributeList('a  \n   bc\t\t\n   def   \t    ghij'),
+    ).toEqual(['a', 'bc', 'def', 'ghij']);
   });
 
   it('works with tokens and leading whitespace', () => {
     expect(
-      splitAttributeList('\n   \n\n\t    a bc def ghij\n\n\t\t    '),
+      Xml.splitAttributeList('\n   \n\n\t    a bc def ghij\n\n\t\t    '),
     ).toEqual(['a', 'bc', 'def', 'ghij']);
   });
 });

@@ -1,56 +1,62 @@
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
-      <style alignItems="center"
-             backgroundColor="white"
-             borderBottomColor="#eee"
-             borderBottomWidth="1"
-             flexDirection="row"
-             height="72"
-             id="Header"
-             paddingLeft="24"
-             paddingRight="24"
-             paddingTop="24" />
-      <style color="blue"
-             fontFamily="HKGrotesk-SemiBold"
-             fontSize="16"
-             id="Header__Back"
-             paddingRight="16" />
-      <style color="black"
-             fontFamily="HKGrotesk-SemiBold"
-             fontSize="24"
-             id="Header__Title" />
-      <style backgroundColor="white"
-             flex="1"
-             id="Body" />
-      <style borderColor="red"
-             borderRadius="4"
-             borderWidth="2"
-             fontFamily="HKGrotesk-SemiBold"
-             fontSize="16"
-             id="Description"
-             margin="24"
-             padding="16" />
-      <style flex="1"
-             id="FormGroup"
-             marginLeft="24"
-             marginRight="24"
-             marginTop="48" />
-      <style flex="1"
-             flexDirection="row"
-             id="horizontalFormGroup" />
-      <style flex="1"
-             id="outerInput" />
-      <style borderBottomColor="#E1E1E1"
-             borderBottomWidth="1"
-             borderColor="#4E4D4D"
-             flex="1"
-             fontFamily="HKGrotesk-Regular"
-             fontSize="16"
-             id="input"
-             paddingBottom="8"
-             paddingTop="8" />
-
+      <style
+        alignItems="center"
+        backgroundColor="white"
+        borderBottomColor="#eee"
+        borderBottomWidth="1"
+        flexDirection="row"
+        height="72"
+        id="Header"
+        paddingLeft="24"
+        paddingRight="24"
+        paddingTop="24"
+      />
+      <style
+        color="blue"
+        fontFamily="HKGrotesk-SemiBold"
+        fontSize="16"
+        id="Header__Back"
+        paddingRight="16"
+      />
+      <style
+        color="black"
+        fontFamily="HKGrotesk-SemiBold"
+        fontSize="24"
+        id="Header__Title"
+      />
+      <style backgroundColor="white" flex="1" id="Body" />
+      <style
+        borderColor="red"
+        borderRadius="4"
+        borderWidth="2"
+        fontFamily="HKGrotesk-SemiBold"
+        fontSize="16"
+        id="Description"
+        margin="24"
+        padding="16"
+      />
+      <style
+        flex="1"
+        id="FormGroup"
+        marginLeft="24"
+        marginRight="24"
+        marginTop="48"
+      />
+      <style flex="1" flexDirection="row" id="horizontalFormGroup" />
+      <style flex="1" id="outerInput" />
+      <style
+        borderBottomColor="#E1E1E1"
+        borderBottomWidth="1"
+        borderColor="#4E4D4D"
+        flex="1"
+        fontFamily="HKGrotesk-Regular"
+        fontSize="16"
+        id="input"
+        paddingBottom="8"
+        paddingTop="8"
+      >
         <modifier pressed="true">
           <style borderBottomColor="green" />
         </modifier>
@@ -58,147 +64,158 @@
           <style borderBottomColor="#4778FF" />
         </modifier>
       </style>
-      <style borderBottomColor="#FF4847"
-             color="#FF4847"
-             id="input--error"
-      > 
+      <style borderBottomColor="#FF4847" color="#FF4847" id="input--error">
         <modifier focused="true">
           <style borderBottomColor="#FF4847" />
         </modifier>
       </style>
-      <style borderColor="#4E4D4D"
-             fontFamily="HKGrotesk-Bold"
-             fontSize="16"
-             id="label"
-             lineHeight="24"
-             marginBottom="8" />
-      <style borderColor="#FF4847"
-             fontFamily="HKGrotesk-Regular"
-             fontSize="16"
-             id="help"
-             lineHeight="24"
-             marginTop="16" />
-      <style color="#FF4847"
-             id="help--error" />
-      <style flex="1"
-             id="Main"
-             marginBottom="40" />
+      <style
+        borderColor="#4E4D4D"
+        fontFamily="HKGrotesk-Bold"
+        fontSize="16"
+        id="label"
+        lineHeight="24"
+        marginBottom="8"
+      />
+      <style
+        borderColor="#FF4847"
+        fontFamily="HKGrotesk-Regular"
+        fontSize="16"
+        id="help"
+        lineHeight="24"
+        marginTop="16"
+      />
+      <style color="#FF4847" id="help--error" />
+      <style flex="1" id="Main" marginBottom="40" />
     </styles>
     <body style="Body">
       <header style="Header">
-        <text action="back"
-              href="#"
-              style="Header__Back">Back</text>
+        <text action="back" href="#" style="Header__Back">Back</text>
         <text style="Header__Title">Text Input</text>
       </header>
-      <view scroll="true"
-            style="Main">
-
+      <view scroll="true" style="Main">
         <view style="FormGroup">
-            <text style="label">Default input field</text>
-            <text-field
-                 placeholder="First name"
-                 placeholderTextColor="#8D9494"
-                 style="input"
-            />
-            <text style="help">Please enter your full name</text>
+          <text style="label">Default input field</text>
+          <text-field
+            placeholder="First name"
+            placeholderTextColor="#8D9494"
+            style="input"
+          />
+          <text style="help">Please enter your full name</text>
         </view>
         <view style="FormGroup">
-            <text style="label">Filled input field</text>
-            <text-field style="input" value="Milhouse" placeholder="First name" placeholderTextColor="#8D9494" />
-            <text style="help">Please enter your full name</text>
+          <text style="label">Filled input field</text>
+          <text-field
+            style="input"
+            value="Milhouse"
+            placeholder="First name"
+            placeholderTextColor="#8D9494"
+          />
+          <text style="help">Please enter your full name</text>
         </view>
         <view style="FormGroup">
           <text style="label">Validation error</text>
-          <text-field style="input input--error" placeholder="First name" placeholderTextColor="#8D9494" />
+          <text-field
+            style="input input--error"
+            placeholder="First name"
+            placeholderTextColor="#8D9494"
+          />
           <text style="help help--error">Please enter your full name</text>
         </view>
         <view style="FormGroup">
-            <text style="label">Filled validation error</text>
-            <text-field 
-                 placeholder="First name"
-                 placeholderTextColor="#8D9494"
-                 style="input input--error"
-                 value="Milhouse" />
-            <text style="help help--error">Name already taken</text>
+          <text style="label">Filled validation error</text>
+          <text-field
+            placeholder="First name"
+            placeholderTextColor="#8D9494"
+            style="input input--error"
+            value="Milhouse"
+          />
+          <text style="help help--error">Name already taken</text>
         </view>
         <view style="FormGroup">
           <text style="label">Horizontal Layout</text>
           <view style="horizontalFormGroup">
             <text-field
-                   placeholder="First"
-                   placeholderTextColor="#8D9494"
-                   style="input" />
+              placeholder="First"
+              placeholderTextColor="#8D9494"
+              style="input"
+            />
             <text-field
-                   placeholder="Last"
-                   placeholderTextColor="#8D9494"
-                   style="input" />
+              placeholder="Last"
+              placeholderTextColor="#8D9494"
+              style="input"
+            />
           </view>
         </view>
 
         <view style="FormGroup">
-            <text style="label">Phone pad keyboard</text>
-            <text-field 
-                 keyboard-type="phone-pad"
-                 placeholder="Phone number"
-                 placeholderTextColor="#8D9494"
-                 style="input"
-                 value="(281) 555-2048" />
+          <text style="label">Phone pad keyboard</text>
+          <text-field
+            keyboard-type="phone-pad"
+            placeholder="Phone number"
+            placeholderTextColor="#8D9494"
+            style="input"
+            value="(281) 555-2048"
+          />
         </view>
 
         <view style="FormGroup">
-            <text style="label">Number pad keyboard</text>
-            <text-field 
-                 keyboard-type="number-pad"
-                 placeholder="SSN"
-                 placeholderTextColor="#8D9494"
-                 style="input"
-                 value="600 80 5555" />
+          <text style="label">Number pad keyboard</text>
+          <text-field
+            keyboard-type="number-pad"
+            placeholder="SSN"
+            placeholderTextColor="#8D9494"
+            style="input"
+            value="600 80 5555"
+          />
         </view>
 
         <view style="FormGroup">
-            <text style="label">Email keyboard</text>
-            <text-field 
-                 keyboard-type="email-address"
-                 placeholder="Email"
-                 placeholderTextColor="#8D9494"
-                 style="input"
-                 value="gigsy@instawork.com" />
+          <text style="label">Email keyboard</text>
+          <text-field
+            keyboard-type="email-address"
+            placeholder="Email"
+            placeholderTextColor="#8D9494"
+            style="input"
+            value="gigsy@instawork.com"
+          />
         </view>
 
         <view style="FormGroup">
-            <text style="label">Phone number mask</text>
-            <text-field 
-                 keyboard-type="phone-pad"
-                 mask="(999) 999-9999"
-                 placeholder="Phone number"
-                 placeholderTextColor="#8D9494"
-                 style="input"
-                 value="" />
+          <text style="label">Phone number mask</text>
+          <text-field
+            keyboard-type="phone-pad"
+            mask="(999) 999-9999"
+            placeholder="Phone number"
+            placeholderTextColor="#8D9494"
+            style="input"
+            value=""
+          />
         </view>
 
         <view style="FormGroup">
-            <text style="label">4 digit code mask</text>
-            <text-field 
-                 keyboard-type="number-pad"
-                 mask="9999"
-                 placeholder="4-digit code"
-                 placeholderTextColor="#8D9494"
-                 style="input"
-                 value="" />
+          <text style="label">4 digit code mask</text>
+          <text-field
+            keyboard-type="number-pad"
+            mask="9999"
+            placeholder="4-digit code"
+            placeholderTextColor="#8D9494"
+            style="input"
+            value=""
+          />
         </view>
 
         <view style="FormGroup">
-            <text style="label">SSN mask</text>
-            <text-field 
-                 keyboard-type="number-pad"
-                 mask="999 99 9999"
-                 placeholder="SSN or Tax ID"
-                 placeholderTextColor="#8D9494"
-                 style="input"
-                 value="" />
+          <text style="label">SSN mask</text>
+          <text-field
+            keyboard-type="number-pad"
+            mask="999 99 9999"
+            placeholder="SSN or Tax ID"
+            placeholderTextColor="#8D9494"
+            style="input"
+            value=""
+          />
         </view>
-
       </view>
     </body>
   </screen>

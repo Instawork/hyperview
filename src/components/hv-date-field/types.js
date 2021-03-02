@@ -12,9 +12,9 @@ import * as React from 'react';
 import type {
   Element,
   HvComponentOptions,
+  StyleSheet as StyleSheetType,
   StyleSheets,
 } from 'hyperview/src/types';
-import type { StyleSheet as StyleSheetType } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 
 export type FieldProps = {|
   children?: React.Node,
@@ -33,12 +33,12 @@ export type FieldLabelProps = {|
   placeholder: ?string,
   placeholderTextColor: ?string,
   pressed: boolean,
-  style: StyleSheetType<*>,
+  style: StyleSheetType,
   value: ?Date,
 |};
 
 export type ModalButtonProps = {|
-  getStyle: (pressed: boolean) => Array<StyleSheetType<*>>,
+  getStyle: (pressed: boolean) => Array<StyleSheetType>,
   label: string,
   onPress: () => void,
 |};

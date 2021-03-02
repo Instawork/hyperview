@@ -11,8 +11,8 @@
 export const HTTP_HEADERS = {
   ACCEPT: 'Accept',
   CONTENT_TYPE: 'Content-Type',
-  X_HYPERVIEW_VERSION: 'X-Hyperview-Version',
   X_HYPERVIEW_DIMENSIONS: 'X-Hyperview-Dimensions',
+  X_HYPERVIEW_VERSION: 'X-Hyperview-Version',
 };
 
 export const HTTP_METHODS = {

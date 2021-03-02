@@ -44,18 +44,18 @@ export const ATTRIBUTES = {
 
 export type Attribute = $Values<typeof ATTRIBUTES>;
 
-export type PressHandlers = {
+export type PressHandlers = {|
   onLongPress?: () => void,
   onPressIn?: () => void,
   onPressOut?: () => void,
   onPress?: () => void,
-};
+|};
 
 export const PRESS_PROP_NAMES = {
   ON_LONG_PRESS: 'onLongPress',
+  ON_PRESS: 'onPress',
   ON_PRESS_IN: 'onPressIn',
   ON_PRESS_OUT: 'onPressOut',
-  ON_PRESS: 'onPress',
 };
 
 export type PressPropName = $Values<typeof PRESS_PROP_NAMES>;

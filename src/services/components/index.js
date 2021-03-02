@@ -48,7 +48,7 @@ export const getRegistry = (
   components: HvComponent[] = [],
 ): ComponentRegistry =>
   [...HYPERVIEW_COMPONENTS, ...components].reduce(
-    (registry, component) => ({
+    (registry: ComponentRegistry, component: HvComponent) => ({
       ...registry,
       [component.namespaceURI]: {
         ...registry[component.namespaceURI],

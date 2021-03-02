@@ -18,22 +18,39 @@ import { Text } from 'react-native';
 
 export default class HvText extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
+
   static localName = LOCAL_NAME.TEXT;
+
   static localNameAliases = [];
+
   props: HvComponentProps;
 
   render() {
-    const { element, stylesheets, onUpdate, options } = this.props;
-    const { skipHref } = options || {};
-    const props = createProps(element, stylesheets, options);
+    const { skipHref } = this.props.options || {};
+    const props = createProps(
+      this.props.element,
+      this.props.stylesheets,
+      this.props.options,
+    );
     const component = React.createElement(
       Text,
       props,
-      ...Render.renderChildren(element, stylesheets, onUpdate, options),
+      ...Render.renderChildren(
+        this.props.element,
+        this.props.stylesheets,
+        this.props.onUpdate,
+        this.props.options,
+      ),
     );
 
     return skipHref
       ? component
-      : addHref(component, element, stylesheets, onUpdate, options);
+      : addHref(
+          component,
+          this.props.element,
+          this.props.stylesheets,
+          this.props.onUpdate,
+          this.props.options,
+        );
   }
 }

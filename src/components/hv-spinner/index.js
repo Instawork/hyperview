@@ -16,13 +16,15 @@ import { LOCAL_NAME } from 'hyperview/src/types';
 
 export default class HvSpinner extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
+
   static localName = LOCAL_NAME.SPINNER;
+
   static localNameAliases = [];
+
   props: HvComponentProps;
 
   render() {
-    const { element } = this.props;
-    const color = element.getAttribute('color') || undefined;
+    const color = this.props.element.getAttribute('color') || undefined;
     return <ActivityIndicator color={color} />;
   }
 }

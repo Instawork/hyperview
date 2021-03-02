@@ -27,26 +27,26 @@ import HvWebView from 'hyperview/src/components/hv-web-view';
 import { PureComponent } from 'react';
 
 const defaultRegistryContent = {
-  'date-field': HvDateField,
-  'picker-field': HvPickerField,
-  'section-list': HvSectionList,
-  'section-title': HvView,
-  'select-multiple': HvSelectMultiple,
-  'select-single': HvSelectSingle,
-  'text-area': HvTextArea,
-  'text-field': HvTextField,
-  'web-view': HvWebView,
   body: HvView,
+  'date-field': HvDateField,
   form: HvView,
   header: HvView,
   image: HvImage,
   item: HvView,
   list: HvList,
   option: HvOption,
+  'picker-field': HvPickerField,
+  'section-list': HvSectionList,
+  'section-title': HvView,
+  'select-multiple': HvSelectMultiple,
+  'select-single': HvSelectSingle,
   spinner: HvSpinner,
   switch: HvSwitch,
   text: HvText,
+  'text-area': HvTextArea,
+  'text-field': HvTextField,
   view: HvView,
+  'web-view': HvWebView,
 };
 
 describe('Components', () => {
@@ -62,19 +62,25 @@ describe('Components', () => {
       it('returns correct registy', () => {
         class Foo extends PureComponent<*> {
           static namespaceURI = 'http://foo';
+
           static localName = 'foo';
+
           static localNameAliases = [];
         }
         // eslint-disable-next-line react/no-multi-comp
         class Bar extends PureComponent<*> {
           static namespaceURI = 'http://bar';
+
           static localName = 'bar';
+
           static localNameAliases = [];
         }
         // eslint-disable-next-line react/no-multi-comp
         class Baz extends PureComponent<*> {
           static namespaceURI = 'https://hyperview.org/hyperview';
+
           static localName = 'baz';
+
           static localNameAliases = ['baz-1', 'baz-2'];
         }
         expect(Components.getRegistry([Foo, Bar, Baz])).toEqual({

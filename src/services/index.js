@@ -21,47 +21,24 @@ import type {
   LocalName,
   Node,
   NodeList,
+  StyleSheet,
   StyleSheets,
 } from 'hyperview/src/types';
 import { FORM_NAMES, LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
 import HyperRef from 'hyperview/src/core/hyper-ref';
 import { Platform } from 'react-native';
 import React from 'react';
-import type { StyleSheet } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 
 /**
  * This file is currently a dumping place for every functions used accross
  * various Hyperview components.
  */
 
-export const getBehaviorElements = (element: any) => {
-  const behaviorElements = Array.from(element.childNodes).filter(
-    n => n.tagName === 'behavior',
-  );
-
-  if (element.getAttribute('href') || element.getAttribute('action')) {
-    behaviorElements.unshift(element);
-  }
-
-  return behaviorElements;
-};
-
-export const getFirstTag = (document: Document, localName: LocalName) => {
-  const elements = document.getElementsByTagNameNS(
-    Namespaces.HYPERVIEW,
-    localName,
-  );
-  if (elements && elements[0]) {
-    return elements[0];
-  }
-  return null;
-};
-
 export const createStyleProp = (
   element: Element,
   stylesheets: StyleSheets,
   options: HvComponentOptions,
-): Array<StyleSheet<*>> => {
+): Array<StyleSheet> => {
   const styleAttr: string = options.styleAttr || 'style';
   if (!element.getAttribute(styleAttr)) {
     return [];
@@ -69,7 +46,7 @@ export const createStyleProp = (
 
   const styleValue: string = element.getAttribute(styleAttr) || '';
   const styleIds: Array<string> = Xml.splitAttributeList(styleValue);
-  let styleRules: Array<StyleSheet<*>> = styleIds.map(
+  let styleRules: Array<StyleSheet> = styleIds.map(
     styleId => stylesheets.regular[styleId],
   );
 
@@ -153,6 +130,7 @@ export const createProps = (
 
   props.style = createStyleProp(element, stylesheets, options);
   const testProps = createTestProps(element);
+  // $FlowFixMe
   return { ...props, ...testProps };
 };
 
@@ -179,7 +157,7 @@ export const addHref = (
 
   return React.createElement(
     HyperRef,
-    { element, stylesheets, onUpdate, options },
+    { element, onUpdate, options, stylesheets },
     ...Render.renderChildren(element, stylesheets, onUpdate, options),
   );
 };
@@ -213,7 +191,7 @@ export const shallowCloneToRoot = (element: Element): Document => {
   }
 
   // Need to check parentNode to satisfy Flow
-  const parentNode: ?Node = element.parentNode;
+  const { parentNode } = element;
   if (!parentNode) {
     return (elementClone: any);
   }
@@ -287,13 +265,13 @@ export const getAncestorByTagName = (
   element: Element,
   tagName: string,
 ): ?Element => {
-  let parentNode: ?Node = element.parentNode;
+  let { parentNode } = element;
   if (!parentNode) {
     return null;
   }
 
   while (parentNode.tagName !== tagName) {
-    parentNode = parentNode.parentNode;
+    ({ parentNode } = parentNode);
     if (!parentNode) {
       return null;
     }

@@ -30,7 +30,7 @@ export default {
 
     const delayAttr: string = element.getAttribute('delay') || '0';
     const parsedDelay: number = parseInt(delayAttr, 10);
-    const delay: number = isNaN(parsedDelay) ? 0 : parsedDelay;
+    const delay: number = Number.isNaN(parsedDelay) ? 0 : parsedDelay;
 
     const showIndicatorIds: Array<string> = Xml.splitAttributeList(
       element.getAttribute('show-during-load') || '',
@@ -76,9 +76,7 @@ export default {
       // Update the DOM to reflect the new state of the indicators.
       updateRoot(newRoot);
       // Wait for the delay then show the target.
-      later(delay)
-        .then(setValue)
-        .catch(setValue);
+      later(delay).then(setValue).catch(setValue);
     }
   },
 };

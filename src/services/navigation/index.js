@@ -20,9 +20,13 @@ const getHrefKey = (href: string): string => href.split(QUERY_SEPARATOR)[0];
 
 export default class Navigation {
   url: string;
+
   document: ?Document = null;
+
   navigation: NavigationProps;
+
   preloadScreens: { [number]: Element } = {};
+
   routeKeys: { [string]: string } = {};
 
   constructor(url: string, navigation: NavigationProps) {
@@ -82,14 +86,11 @@ export default class Navigation {
       }
     }
 
-    const routeParams = { url, preloadScreen, delay };
+    const routeParams = { delay, preloadScreen, url };
 
     switch (action) {
       case NAV_ACTIONS.PUSH:
         this.navigation.push(routeParams);
-        break;
-      case NAV_ACTIONS.REPLACE:
-        this.navigation.replace(routeParams);
         break;
       case NAV_ACTIONS.NAVIGATE: {
         this.navigation.navigate(routeParams, this.getRouteKey(url));

@@ -9,43 +9,13 @@
  */
 
 import type {
-  BehaviorRegistry,
   Document,
   Element,
-  HvBehavior,
   Node,
   UpdateAction,
 } from 'hyperview/src/types';
 import { ACTIONS } from 'hyperview/src/types';
-import HvAlert from 'hyperview/src/behaviors/hv-alert';
-import HvCopyToClipboard from 'hyperview/src/behaviors/hv-copy-to-clipboard';
-import HvHide from 'hyperview/src/behaviors/hv-hide';
-import HvOpenSettings from 'hyperview/src/behaviors/hv-open-settings';
-import HvSetValue from 'hyperview/src/behaviors/hv-set-value';
-import HvShare from 'hyperview/src/behaviors/hv-share';
-import HvShow from 'hyperview/src/behaviors/hv-show';
-import HvToggle from 'hyperview/src/behaviors/hv-toggle';
 import { shallowCloneToRoot } from 'hyperview/src/services';
-
-const HYPERVIEW_BEHAVIORS = [
-  HvAlert,
-  HvCopyToClipboard,
-  HvHide,
-  HvOpenSettings,
-  HvSetValue,
-  HvShare,
-  HvShow,
-  HvToggle,
-];
-
-export const getRegistry = (behaviors: HvBehavior[] = []): BehaviorRegistry =>
-  [...HYPERVIEW_BEHAVIORS, ...behaviors].reduce(
-    (registry, behavior) => ({
-      ...registry,
-      [behavior.action]: behavior,
-    }),
-    {},
-  );
 
 /**
  * The elements in the Document with the given ids will be set to
@@ -106,7 +76,7 @@ export const performUpdate = (
   newElement: Element,
 ): Document => {
   if (action === ACTIONS.REPLACE) {
-    const parentNode: ?Node = targetElement.parentNode;
+    const { parentNode } = targetElement;
     if (parentNode) {
       parentNode.replaceChild(newElement, targetElement);
       return shallowCloneToRoot((parentNode: any));
@@ -131,7 +101,7 @@ export const performUpdate = (
   }
 
   if (action === ACTIONS.PREPEND) {
-    const firstChild = targetElement.firstChild;
+    const { firstChild } = targetElement;
     if (firstChild) {
       targetElement.insertBefore(newElement, firstChild);
     } else {

@@ -9,7 +9,6 @@
  */
 
 import type { ElementRef } from 'react';
-import type { StyleSheet } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 
 export type DOMString = string;
 export type NamespaceURI = string;
@@ -57,23 +56,25 @@ export const FORM_NAMES = [
 export type LocalName = $Values<typeof LOCAL_NAME>;
 
 export const NODE_TYPE = {
-  ELEMENT_NODE: 1,
   ATTRIBUTE_NODE: 2,
-  TEXT_NODE: 3,
   CDATA_SECTION_NODE: 4,
-  ENTITY_REFERENCE_NODE: 5,
-  ENTITY_NODE: 6,
-  PROCESSING_INSTRUCTION_NODE: 7,
   COMMENT_NODE: 8,
+  DOCUMENT_FRAGMENT_NODE: 11,
   DOCUMENT_NODE: 9,
   DOCUMENT_TYPE_NODE: 10,
-  DOCUMENT_FRAGMENT_NODE: 11,
+  ELEMENT_NODE: 1,
+  ENTITY_NODE: 6,
+  ENTITY_REFERENCE_NODE: 5,
   NOTATION_NODE: 12,
+  PROCESSING_INSTRUCTION_NODE: 7,
+  TEXT_NODE: 3,
 };
 
 export type NodeType = $Values<typeof NODE_TYPE>;
 
 export type Node = {
+  tagName: DOMString,
+  localName: LocalName,
   +attributes: ?NamedNodeMap,
   +childNodes: ?NodeList<Node>,
   +firstChild: ?Node,
@@ -162,8 +163,6 @@ export type Document = Node & {
 
 export type Element = Node & {
   cloneNode: (deep: boolean) => Element,
-  tagName: DOMString,
-  localName: LocalName,
   getAttribute: (name: DOMString) => ?DOMString,
   getAttributeNode: (name: DOMString) => ?Attribute,
   getAttributeNodeNS: (
@@ -250,12 +249,14 @@ export type NamedNodeMap = {
   setNamedItemNS: (attribute: Attribute) => ?Attribute,
 };
 
+export type StyleSheet = any;
+
 export type StyleSheets = {
-  regular: StyleSheet<*>,
-  selected: StyleSheet<*>,
-  pressed: StyleSheet<*>,
-  focused: StyleSheet<*>,
-  pressedSelected: StyleSheet<*>,
+  regular: StyleSheet,
+  selected: StyleSheet,
+  pressed: StyleSheet,
+  focused: StyleSheet,
+  pressedSelected: StyleSheet,
 };
 
 export type ComponentRegistry = {
@@ -332,9 +333,9 @@ export const TRIGGERS = Object.freeze({
   LOAD: 'load',
   LONG_PRESS: 'longPress',
   ON_EVENT: 'on-event',
+  PRESS: 'press',
   PRESS_IN: 'pressIn',
   PRESS_OUT: 'pressOut',
-  PRESS: 'press',
   REFRESH: 'refresh',
   SELECT: 'select',
   VISIBLE: 'visible',
@@ -363,8 +364,8 @@ export const ACTIONS = {
   PREPEND: 'prepend',
   PUSH: 'push',
   RELOAD: 'reload',
-  REPLACE_INNER: 'replace-inner',
   REPLACE: 'replace',
+  REPLACE_INNER: 'replace-inner',
   SWAP: 'swap',
 };
 
@@ -380,10 +381,10 @@ export const NAV_ACTIONS = {
 export type NavAction = $Values<typeof NAV_ACTIONS>;
 
 export const UPDATE_ACTIONS = {
-  REPLACE: ACTIONS.REPLACE,
-  REPLACE_INNER: ACTIONS.REPLACE_INNER,
   APPEND: ACTIONS.APPEND,
   PREPEND: ACTIONS.PREPEND,
+  REPLACE: ACTIONS.REPLACE,
+  REPLACE_INNER: ACTIONS.REPLACE_INNER,
 };
 
 export type UpdateAction = $Values<typeof UPDATE_ACTIONS>;
@@ -407,7 +408,6 @@ export type NavigationProps = {|
   navigate: (routeParams: NavigationRouteParams, key: ?string) => void,
   openModal: (routeParams: ?NavigationRouteParams) => void,
   push: (routeParams: NavigationRouteParams) => void,
-  replace: (routeParams: NavigationRouteParams) => void,
 |};
 
 export const ON_EVENT_DISPATCH = 'hyperview:on-event';

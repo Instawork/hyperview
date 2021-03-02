@@ -8,13 +8,12 @@
  *
  */
 
+import * as Contexts from 'hyperview/src/contexts';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type {
   DOMString,
-  Element,
-  HvComponentOptions,
   HvComponentProps,
-  StyleSheets,
+  StyleSheet as StyleSheetType,
 } from 'hyperview/src/types';
 import type { FieldLabelProps, FieldProps, ModalButtonProps } from './types';
 import {
@@ -28,11 +27,9 @@ import {
 // $FlowFixMe: update Flow to support typings for React Hooks
 import React, { PureComponent, useState } from 'react';
 import { createProps, createStyleProp } from 'hyperview/src/services';
-import { DateFormatContext } from 'hyperview/src';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { Node as ReactNode } from 'react';
-import type { StyleSheet as StyleSheetType } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 import styles from './styles';
 
 /**
@@ -43,9 +40,9 @@ const ModalButton = (props: ModalButtonProps) => {
 
   return (
     <TouchableWithoutFeedback
+      onPress={props.onPress}
       onPressIn={() => setPressed(true)}
       onPressOut={() => setPressed(false)}
-      onPress={props.onPress}
     >
       <View>
         <Text style={props.getStyle(pressed)}>{props.label}</Text>
@@ -59,7 +56,7 @@ const ModalButton = (props: ModalButtonProps) => {
  * or show the placeholder, including applying the right styles.
  */
 const FieldLabel = (props: FieldLabelProps) => {
-  const labelStyles: Array<StyleSheetType<*>> = [props.style];
+  const labelStyles: Array<StyleSheetType> = [props.style];
   if (!props.value && props.placeholderTextColor) {
     labelStyles.push({ color: props.placeholderTextColor });
   }
@@ -82,12 +79,12 @@ const Field = (props: FieldProps) => {
   // Create the props (including styles) for the box of the input field.
   const viewProps = createProps(props.element, props.stylesheets, {
     ...props.options,
-    pressed,
     focused: props.focused,
+    pressed,
     styleAttr: 'field-style',
   });
 
-  const labelStyle: StyleSheetType<*> = StyleSheet.flatten(
+  const labelStyle: StyleSheetType = StyleSheet.flatten(
     createStyleProp(props.element, props.stylesheets, {
       ...props.options,
       focused: props.focused,
@@ -98,12 +95,12 @@ const Field = (props: FieldProps) => {
 
   return (
     <TouchableWithoutFeedback
+      onPress={props.onPress}
       onPressIn={() => setPressed(true)}
       onPressOut={() => setPressed(false)}
-      onPress={props.onPress}
     >
       <View {...viewProps}>
-        <DateFormatContext.Consumer>
+        <Contexts.DateFormatContext.Consumer>
           {formatter => (
             <FieldLabel
               focused={props.focused}
@@ -118,7 +115,7 @@ const Field = (props: FieldProps) => {
               value={props.value}
             />
           )}
-        </DateFormatContext.Consumer>
+        </Contexts.DateFormatContext.Consumer>
         {props.children}
       </View>
     </TouchableWithoutFeedback>
@@ -133,8 +130,11 @@ const Field = (props: FieldProps) => {
  */
 export default class HvDateField extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
+
   static localName = LOCAL_NAME.DATE_FIELD;
+
   static localNameAliases = [];
+
   props: HvComponentProps;
 
   /**
@@ -167,51 +167,47 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
    * Shows the picker, defaulting to the field's value. If the field is not set, use today's date in the picker.
    */
   onFieldPress = () => {
-    const { element, onUpdate } = this.props;
-    const newElement = element.cloneNode(true);
+    const newElement = this.props.element.cloneNode(true);
     const value: string =
-      element.getAttribute('value') ||
+      this.props.element.getAttribute('value') ||
       HvDateField.createStringFromDate(new Date());
 
     // Focus the field and populate the picker with the field's value.
     newElement.setAttribute('focused', 'true');
     newElement.setAttribute('picker-value', value);
-    onUpdate(null, 'swap', element, { newElement });
+    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
   };
 
   /**
    * Hides the picker without applying the chosen value.
    */
   onModalCancel = () => {
-    const { element, onUpdate } = this.props;
-    const newElement = element.cloneNode(true);
+    const newElement = this.props.element.cloneNode(true);
     newElement.setAttribute('focused', 'false');
     newElement.removeAttribute('picker-value');
-    onUpdate(null, 'swap', element, { newElement });
+    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
   };
 
   /**
    * Hides the picker and applies the chosen value to the field.
    */
   onModalDone = (newValue: ?Date) => {
-    const { element, onUpdate } = this.props;
     const value = HvDateField.createStringFromDate(newValue);
-    const newElement = element.cloneNode(true);
+    const newElement = this.props.element.cloneNode(true);
     newElement.setAttribute('value', value);
     newElement.removeAttribute('picker-value');
     newElement.setAttribute('focused', 'false');
-    onUpdate(null, 'swap', element, { newElement });
+    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
   };
 
   /**
    * Updates the picker value while keeping the picker open.
    */
   setPickerValue = (value: ?Date) => {
-    const { element, onUpdate } = this.props;
     const formattedValue: string = HvDateField.createStringFromDate(value);
-    const newElement = element.cloneNode(true);
+    const newElement = this.props.element.cloneNode(true);
     newElement.setAttribute('picker-value', formattedValue);
-    onUpdate(null, 'swap', element, { newElement });
+    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
   };
 
   /**
@@ -249,9 +245,9 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
     const displayMode: ?DOMString = this.props.element.getAttribute('mode');
     const props: Object = {
       display: displayMode,
-      value: this.getPickerValue(),
       mode: 'date',
       onChange,
+      value: this.getPickerValue(),
     };
     if (minDate) {
       props.minimumDate = minDate;
@@ -289,25 +285,23 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
    * This is used on iOS only.
    */
   renderPickerModaliOS = (): ReactNode => {
-    const element: Element = this.props.element;
-    const stylesheets: StyleSheets = this.props.stylesheets;
-    const options: HvComponentOptions = this.props.options;
-    const modalStyle: Array<StyleSheetType<*>> = createStyleProp(
-      element,
-      stylesheets,
+    const modalStyle: Array<StyleSheetType> = createStyleProp(
+      this.props.element,
+      this.props.stylesheets,
       {
-        ...options,
+        ...this.props.options,
         styleAttr: 'modal-style',
       },
     );
 
     const cancelLabel: string =
-      element.getAttribute('cancel-label') || 'Cancel';
-    const doneLabel: string = element.getAttribute('done-label') || 'Done';
+      this.props.element.getAttribute('cancel-label') || 'Cancel';
+    const doneLabel: string =
+      this.props.element.getAttribute('done-label') || 'Done';
 
-    const getTextStyle = (pressed: boolean): Array<StyleSheetType<*>> =>
-      createStyleProp(element, stylesheets, {
-        ...options,
+    const getTextStyle = (pressed: boolean): Array<StyleSheetType> =>
+      createStyleProp(this.props.element, this.props.stylesheets, {
+        ...this.props.options,
         pressed,
         styleAttr: 'modal-text-style',
       });
@@ -319,22 +313,22 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
     return (
       <Modal
         animationType="slide"
+        onRequestClose={this.onModalCancel}
         transparent
         visible={this.isFocused()}
-        onRequestClose={this.onModalCancel}
       >
         <View style={styles.modalWrapper}>
           <View style={modalStyle}>
             <View style={styles.modalActions}>
               <ModalButton
                 getStyle={getTextStyle}
-                onPress={this.onModalCancel}
                 label={cancelLabel}
+                onPress={this.onModalCancel}
               />
               <ModalButton
                 getStyle={getTextStyle}
-                onPress={() => this.onModalDone(this.getPickerValue())}
                 label={doneLabel}
+                onPress={() => this.onModalDone(this.getPickerValue())}
               />
             </View>
             {this.renderPicker(onChange)}

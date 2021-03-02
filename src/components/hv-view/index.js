@@ -26,7 +26,9 @@ import { LOCAL_NAME } from 'hyperview/src/types';
 
 export default class HvView extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
+
   static localName = LOCAL_NAME.VIEW;
+
   static localNameAliases = [
     LOCAL_NAME.BODY,
     LOCAL_NAME.FORM,
@@ -34,16 +36,22 @@ export default class HvView extends PureComponent<HvComponentProps> {
     LOCAL_NAME.ITEM,
     LOCAL_NAME.SECTION_TITLE,
   ];
+
   props: HvComponentProps;
 
   render() {
-    const { element, stylesheets, onUpdate, options } = this.props;
-    let viewOptions = options;
+    let viewOptions = this.props.options;
     const { skipHref } = viewOptions || {};
-    const props: InternalProps = createProps(element, stylesheets, viewOptions);
-    const scrollable = !!element.getAttribute('scroll');
-    const keyboardAvoiding = !!element.getAttribute('avoid-keyboard');
-    const safeArea = element.getAttribute('safe-area') === 'true';
+    const props: InternalProps = createProps(
+      this.props.element,
+      this.props.stylesheets,
+      viewOptions,
+    );
+    const scrollable = !!this.props.element.getAttribute('scroll');
+    const keyboardAvoiding = !!this.props.element.getAttribute(
+      'avoid-keyboard',
+    );
+    const safeArea = this.props.element.getAttribute('safe-area') === 'true';
     let safeAreaIncompatible = false;
     let c = View;
 
@@ -60,24 +68,24 @@ export default class HvView extends PureComponent<HvComponentProps> {
     const inputRefs = [];
     if (scrollable) {
       safeAreaIncompatible = true;
-      const textFields = element.getElementsByTagNameNS(
+      const textFields = this.props.element.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
         'text-field',
       );
-      const textAreas = element.getElementsByTagNameNS(
+      const textAreas = this.props.element.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
         'text-area',
       );
       const hasFields = textFields.length > 0 || textAreas.length > 0;
       c = hasFields ? KeyboardAwareScrollView : ScrollView;
       if (hasFields) {
-        const scrollToInputAdditionalOffset = element.getAttribute(
+        const scrollToInputAdditionalOffset = this.props.element.getAttribute(
           'scroll-to-input-offset',
         );
         const defaultScrollToInputAdditionalOffset = 120;
         if (scrollToInputAdditionalOffset) {
           const parsedOffset = parseInt(scrollToInputAdditionalOffset, 10);
-          props.scrollToInputAdditionalOffset = isNaN(parsedOffset)
+          props.scrollToInputAdditionalOffset = Number.isNaN(parsedOffset)
             ? 0
             : defaultScrollToInputAdditionalOffset;
         } else {
@@ -94,7 +102,9 @@ export default class HvView extends PureComponent<HvComponentProps> {
         viewOptions = { ...viewOptions, registerInputHandler };
       }
 
-      const scrollDirection = element.getAttribute('scroll-orientation');
+      const scrollDirection = this.props.element.getAttribute(
+        'scroll-orientation',
+      );
       if (scrollDirection === 'horizontal') {
         props.horizontal = true;
       }
@@ -108,13 +118,25 @@ export default class HvView extends PureComponent<HvComponentProps> {
       }
     }
 
+    // $FlowFixMe
     const component = React.createElement(
       c,
       props,
-      ...Render.renderChildren(element, stylesheets, onUpdate, viewOptions),
+      ...Render.renderChildren(
+        this.props.element,
+        this.props.stylesheets,
+        this.props.onUpdate,
+        viewOptions,
+      ),
     );
     return skipHref
       ? component
-      : addHref(component, element, stylesheets, onUpdate, viewOptions);
+      : addHref(
+          component,
+          this.props.element,
+          this.props.stylesheets,
+          this.props.onUpdate,
+          viewOptions,
+        );
   }
 }
