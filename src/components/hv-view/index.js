@@ -97,7 +97,9 @@ export default class HvView extends PureComponent<HvComponentProps> {
         props.scrollEventThrottle = 16;
         props.getTextInputRefs = () => inputRefs;
         const registerInputHandler = ref => {
-          inputRefs.push(ref);
+          if (ref !== null) {
+            inputRefs.push(ref);
+          }
         };
         viewOptions = { ...viewOptions, registerInputHandler };
       }
