@@ -11,7 +11,7 @@
 import * as Dom from 'hyperview/src/services/dom';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import React, { PureComponent } from 'react';
-import type { HvComponentProps } from 'hyperview/src/types';
+import type { Element, HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { TextInput } from 'react-native';
 import { createProps } from 'hyperview/src/services';
@@ -81,7 +81,7 @@ export default class HvTextArea extends PureComponent<HvComponentProps> {
   };
 
   setFocus = (focused: boolean) => {
-    let newElement = this.props.element.cloneNode(true);
+    const newElement = this.props.element.cloneNode(true);
     newElement.setAttribute('focused', focused.toString());
     this.props.onUpdate(null, 'swap', this.props.element, { newElement });
 

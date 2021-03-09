@@ -98,7 +98,7 @@ export default class HvTextField extends PureComponent<HvComponentProps> {
   };
 
   setFocus = (focused: boolean) => {
-    let newElement = this.props.element.cloneNode(true);
+    const newElement = this.props.element.cloneNode(true);
     newElement.setAttribute('focused', focused.toString());
     this.props.onUpdate(null, 'swap', this.props.element, { newElement });
 
