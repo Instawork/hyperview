@@ -81,7 +81,7 @@ export default class HvTextArea extends PureComponent<HvComponentProps> {
   };
 
   setFocus = (focused: boolean) => {
-    const newElement = this.props.element.cloneNode(true);
+    let newElement = this.props.element.cloneNode(true);
     newElement.setAttribute('focused', focused.toString());
     this.props.onUpdate(null, 'swap', this.props.element, { newElement });
 
