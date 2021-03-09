@@ -8,6 +8,7 @@
  *
  */
 
+import * as Dom from 'hyperview/src/services/dom';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import React, { PureComponent } from 'react';
 import type { HvComponentProps } from 'hyperview/src/types';
@@ -27,10 +28,68 @@ export default class HvTextArea extends PureComponent<HvComponentProps> {
     this.setFocus = this.setFocus.bind(this);
   }
 
+  triggerFocusBehaviors = (newElement: Element) => {
+    const behaviorElements = Dom.getBehaviorElements(this.props.element);
+    const focusBehaviors = behaviorElements.filter(
+      e => e.getAttribute('trigger') === 'focus',
+    );
+    focusBehaviors.forEach(behaviorElement => {
+      const href = behaviorElement.getAttribute('href');
+      const action = behaviorElement.getAttribute('action');
+      const verb = behaviorElement.getAttribute('verb');
+      const targetId = behaviorElement.getAttribute('target');
+      const showIndicatorIds = behaviorElement.getAttribute('show-during-load');
+      const hideIndicatorIds = behaviorElement.getAttribute('hide-during-load');
+      const delay = behaviorElement.getAttribute('delay');
+      const once = behaviorElement.getAttribute('once');
+      this.props.onUpdate(href, action, newElement, {
+        behaviorElement,
+        delay,
+        hideIndicatorIds,
+        once,
+        showIndicatorIds,
+        targetId,
+        verb,
+      });
+    });
+  };
+
+  triggerBlurBehaviors = (newElement: Element) => {
+    const behaviorElements = Dom.getBehaviorElements(this.props.element);
+    const blurBehaviors = behaviorElements.filter(
+      e => e.getAttribute('trigger') === 'blur',
+    );
+    blurBehaviors.forEach(behaviorElement => {
+      const href = behaviorElement.getAttribute('href');
+      const action = behaviorElement.getAttribute('action');
+      const verb = behaviorElement.getAttribute('verb');
+      const targetId = behaviorElement.getAttribute('target');
+      const showIndicatorIds = behaviorElement.getAttribute('show-during-load');
+      const hideIndicatorIds = behaviorElement.getAttribute('hide-during-load');
+      const delay = behaviorElement.getAttribute('delay');
+      const once = behaviorElement.getAttribute('once');
+      this.props.onUpdate(href, action, newElement, {
+        behaviorElement,
+        delay,
+        hideIndicatorIds,
+        once,
+        showIndicatorIds,
+        targetId,
+        verb,
+      });
+    });
+  };
+
   setFocus = (focused: boolean) => {
     const newElement = this.props.element.cloneNode(true);
     newElement.setAttribute('focused', focused.toString());
     this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+
+    if (focused) {
+      this.triggerFocusBehaviors(newElement);
+    } else {
+      this.triggerBlurBehaviors(newElement);
+    }
   };
 
   render() {
