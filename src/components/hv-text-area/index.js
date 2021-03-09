@@ -10,8 +10,8 @@
 
 import * as Dom from 'hyperview/src/services/dom';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import React, { PureComponent } from 'react';
 import type { Element, HvComponentProps } from 'hyperview/src/types';
+import React, { PureComponent } from 'react';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { TextInput } from 'react-native';
 import { createProps } from 'hyperview/src/services';
