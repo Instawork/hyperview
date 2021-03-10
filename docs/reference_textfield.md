@@ -28,16 +28,26 @@ A `<text-field>` element can appear anywhere within a `<form>` element.
 
 ## Attributes
 
-- [`name`](#name)
-- [`value`](#value)
-- [`placeholder`](#placeholder)
-- [`keyboard-type`](#keyboard-type)
-- [`mask`](#mask)
-- [`style`](#style)
-- [`id`](#id)
-- [`hide`](#hide)
-- [`auto-focus`](#auto-focus)
-- [`secure-text`](#secure-text)
+- [Structure](#structure)
+- [Attributes](#attributes)
+    - [Behavior attributes](#behavior-attributes)
+    - [`name`](#name)
+    - [`value`](#value)
+    - [`placeholder`](#placeholder)
+    - [`keyboard-type`](#keyboard-type)
+    - [`mask`](#mask)
+    - [`style`](#style)
+    - [`id`](#id)
+    - [`hide`](#hide)
+    - [`auto-focus`](#auto-focus)
+    - [`secure-text`](#secure-text)
+
+#### Behavior attributes
+
+A `<text-field>` element accepts the standard [behavior attributes](/docs/reference_behavior_attributes), including the following triggers:
+
+- [focus](#focus)
+- [blur](#blur)
 
 #### `name`
 

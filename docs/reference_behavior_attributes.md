@@ -27,9 +27,9 @@ The rest of the document describes in-depth how these attributes work together.
 
 ## trigger
 
-| Type                                                                                                  | Required |
-| ----------------------------------------------------------------------------------------------------- | -------- |
-| **press** (default), longPress, pressIn, pressOut, visible, refresh, load, select, deselect, on-event | No       |
+| Type                                                                                                              | Required |
+| ----------------------------------------------------------------------------------------------------------------- | -------- |
+| **press** (default), longPress, pressIn, pressOut, visible, refresh, load, select, deselect, focus, blur, on-event | No       |
 
 ### `press`
 
@@ -121,6 +121,24 @@ These elements support the `deselect` trigger:
 
 - [`<option>`](/docs/reference_option)
 
+### `focus`
+
+Triggers when the element is focused. Only works on focusable elements.
+
+These elements support the `focus` trigger:
+
+- [`<text-field>`](/docs/reference_textfield)
+- [`<text-area>`](/docs/reference_textarea)
+
+### `blur`
+
+Triggers when the element loses focus. Only works on focusable elements.
+
+These elements support the `blur` trigger:
+
+- [`<text-field>`](/docs/reference_textfield)
+- [`<text-area>`](/docs/reference_textarea)
+
 ### `on-event`
 
 Triggers when the element captures an event with the specified `event-name`. This trigger requires an `event-name` attribute to be present and may be triggered from any hyperview screen.
@@ -194,6 +212,20 @@ Not all elements support behavior attributes or `<behavior>` elements. Those tha
 
 - [select](#select)
 - [deselect](#deselect)
+
+#### `<text-field>`
+
+[`<text-field>`](/docs/reference_textfield): supports behavior attributes (or `<behavior>` elements as direct children) with the following triggers:
+
+- [focus](#focus)
+- [blur](#blur)
+
+#### `<text-area>`
+
+[`<text-area>`](/docs/reference_textarea): supports behavior attributes (or `<behavior>` elements as direct children) with the following triggers:
+
+- [focus](#focus)
+- [blur](#blur)
 
 ## href
 
