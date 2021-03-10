@@ -70,11 +70,7 @@
           <style borderBottomColor="#4778FF" />
         </modifier>
       </style>
-      <style
-        id="Tip"
-        color="#FF4847"
-        fontSize="16"
-      />
+      <style id="Tip" color="#FF4847" fontSize="16" />
     </styles>
     <body style="Body" safe-area="true">
       <header style="Header">
