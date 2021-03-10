@@ -439,7 +439,6 @@
     </xs:attribute>
     <xs:attribute name="event-name" type="hv:eventName" />
     <xs:attribute name="new-value" type="xs:string" />
-    <xs:attribute name="value" type="xs:string" />
 
     <xs:attributeGroup ref="alert:alertAttributes" />
     <xs:attributeGroup ref="amp:amplitudeAttributes" />
@@ -791,6 +790,7 @@
       <xs:attribute name="hide" type="xs:boolean" />
       <xs:attribute name="avoid-keyboard" type="xs:boolean" />
       <xs:attribute name="safe-area" type="xs:boolean" />
+      <xs:attribute name="value" type="xs:string" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
       <xs:attributeGroup ref="hv:scrollAttributes" />
     </xs:complexType>
@@ -805,6 +805,7 @@
       <xs:attribute name="style" type="hv:styleList" use="required" />
       <xs:attribute name="id" type="hv:ID" />
       <xs:attribute name="hide" type="xs:boolean" />
+      <xs:attribute name="value" type="xs:string" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
     </xs:complexType>
   </xs:element>
@@ -820,6 +821,7 @@
       <xs:attribute name="id" type="hv:ID" />
       <xs:attribute name="hide" type="xs:boolean" />
       <xs:attribute name="selectable" type="xs:boolean" />
+      <xs:attribute name="value" type="xs:string" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
     </xs:complexType>
   </xs:element>
@@ -847,6 +849,7 @@
       <xs:attribute name="id" type="hv:ID" />
       <xs:attribute name="hide" type="xs:boolean" />
       <xs:attribute name="shows-scroll-indicator" type="xs:boolean" />
+      <xs:attribute name="value" type="xs:string" />
       <xs:attributeGroup ref="hv:scrollAttributes" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
     </xs:complexType>
@@ -863,6 +866,7 @@
       <xs:attribute name="style" type="hv:styleList" />
       <xs:attribute name="id" type="hv:ID" />
       <xs:attribute name="hide" type="xs:boolean" />
+      <xs:attribute name="value" type="xs:string" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
     </xs:complexType>
   </xs:element>
@@ -888,6 +892,7 @@
       <xs:attribute name="style" type="hv:styleList" />
       <xs:attribute name="id" type="hv:ID" />
       <xs:attribute name="hide" type="xs:boolean" />
+      <xs:attribute name="value" type="xs:string" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
     </xs:complexType>
   </xs:element>
@@ -907,6 +912,7 @@
       <xs:attribute name="style" type="hv:styleList" />
       <xs:attribute name="id" type="hv:ID" />
       <xs:attribute name="hide" type="xs:boolean" />
+      <xs:attribute name="value" type="xs:string" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
     </xs:complexType>
   </xs:element>
@@ -1036,6 +1042,7 @@
       </xs:attribute>
       <!-- Needed to support address-input. Eventually, we should allow attributes from other namespaces. -->
       <xs:attribute name="type" type="xs:string" />
+      <xs:attributeGroup ref="hv:behaviorAttributes" />
     </xs:complexType>
   </xs:element>
 
@@ -1049,6 +1056,7 @@
       <xs:attribute name="hide" type="xs:boolean" />
       <xs:attribute name="underlineColorAndroid" type="hv:color" />
       <xs:attribute name="style" />
+      <xs:attributeGroup ref="hv:behaviorAttributes" />
     </xs:complexType>
   </xs:element>
 
@@ -1080,6 +1088,7 @@
       <xs:attribute name="hide" type="xs:boolean" />
       <xs:attribute name="style" type="hv:styleList" />
       <xs:attribute name="selected" type="xs:boolean" />
+      <xs:attribute name="value" type="xs:string" />
     </xs:complexType>
   </xs:element>
 
