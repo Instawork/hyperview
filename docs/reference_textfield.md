@@ -39,6 +39,13 @@ A `<text-field>` element can appear anywhere within a `<form>` element.
 - [`auto-focus`](#auto-focus)
 - [`secure-text`](#secure-text)
 
+#### Behavior attributes
+
+A `<text-field>` element accepts the standard [behavior attributes](/docs/reference_behavior_attributes), including the following triggers:
+
+- [focus](#focus)
+- [blur](#blur)
+
 #### `name`
 
 | Type   | Required |
