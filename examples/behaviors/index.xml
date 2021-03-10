@@ -225,6 +225,24 @@
             <text style="Item__Label">Deselect</text>
             <text style="Item__Chevron">&gt;</text>
           </item>
+          <item
+            href="/behaviors/focus.xml"
+            key="focus"
+            show-during-load="loadingScreen"
+            style="Item"
+          >
+            <text style="Item__Label">Focus</text>
+            <text style="Item__Chevron">&gt;</text>
+          </item>
+          <item
+            href="/behaviors/blur.xml"
+            key="blur"
+            show-during-load="loadingScreen"
+            style="Item"
+          >
+            <text style="Item__Label">Blur</text>
+            <text style="Item__Chevron">&gt;</text>
+          </item>
         </section>
         <section>
           <section-title style="List__Header">
