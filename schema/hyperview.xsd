@@ -103,6 +103,8 @@
       <xs:enumeration value="load" />
       <xs:enumeration value="select" />
       <xs:enumeration value="deselect" />
+      <xs:enumeration value="focus" />
+      <xs:enumeration value="blur" />
       <xs:enumeration value="on-event" />
     </xs:restriction>
   </xs:simpleType>
