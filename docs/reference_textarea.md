@@ -29,16 +29,12 @@ A `<text-area>` element can appear anywhere within a `<form>` element.
 
 ## Attributes
 
-- [Appearance](#appearance)
-- [Structure](#structure)
-- [Attributes](#attributes)
-    - [Behavior attributes](#behavior-attributes)
-    - [`name`](#name)
-    - [`value`](#value)
-    - [`placeholder`](#placeholder)
-    - [`style`](#style)
-    - [`id`](#id)
-    - [`hide`](#hide)
+ - [`name`](#name)
+ - [`value`](#value)
+ - [`placeholder`](#placeholder)
+ - [`style`](#style)
+ - [`id`](#id)
+ - [`hide`](#hide)
 
 #### Behavior attributes
 
