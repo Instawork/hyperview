@@ -17,7 +17,6 @@ import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as UrlService from 'hyperview/src/services/url';
 import * as Xml from 'hyperview/src/services/xml';
 import { Linking } from 'react-native';
-import { XMLSerializer } from 'xmldom-instawork';
 import LoadError from 'hyperview/src/core/components/load-error';
 import Loading from 'hyperview/src/core/components/loading';
 import Navigation, { ANCHOR_ID_SEPARATOR } from 'hyperview/src/services/navigation';
@@ -25,13 +24,6 @@ import React from 'react';
 import { createProps, createStyleProp, later, shallowCloneToRoot, getFormData, getElementByTimeoutId, removeTimeoutId, setTimeoutId } from 'hyperview/src/services';
 import { ACTIONS, NAV_ACTIONS, UPDATE_ACTIONS } from 'hyperview/src/types';
 
-
-// Shared instance, used in dev mode only
-const devXMLSerializer: ?XMLSerializer = __DEV__ ? new XMLSerializer() : null;
-
-/**
- *
- */
 export default class HyperScreen extends React.Component {
   static createProps = createProps;
   static createStyleProp = createStyleProp;
@@ -340,14 +332,6 @@ export default class HyperScreen extends React.Component {
       }
 
       const dispatch = () => {
-        // Log the dispatched action before emitting to ensure it appears first in logs
-        if (devXMLSerializer) {
-          const emitterElement: Element = behaviorElement.cloneNode(false);
-          console.log(
-            `[dispatch-event] action [${eventName}] emitted by:`,
-            devXMLSerializer.serializeToString(emitterElement),
-          );
-        }
         Events.dispatch(eventName);
       }
 
@@ -429,11 +413,6 @@ export default class HyperScreen extends React.Component {
         this.setState({
           doc: newRoot,
         });
-
-        // in dev mode log the updated xml for debugging purposes
-        if (devXMLSerializer) {
-          console.log('Updated XML:', devXMLSerializer.serializeToString(newRoot.documentElement));
-        }
 
         onEnd && onEnd();
       });
