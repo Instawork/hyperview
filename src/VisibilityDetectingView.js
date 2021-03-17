@@ -1,19 +1,33 @@
+// @flow
+
 import { Dimensions, UIManager, View } from 'react-native';
 import React, { PureComponent } from 'react';
+import type { ElementRef } from 'react';
+import type { ViewStyleProp } from 'react-native/Libraries/StyleSheet/StyleSheet';
 
 const TICK_INTERVAL = 100;
+
+type Props = {|
+  children: any,
+  onInvisible: ?() => void,
+  onVisible: ?() => void,
+  style: ?ViewStyleProp,
+|};
 
 /** A view that lets you know when its contents become visible/invisible in the screen.
  *  Useful for progressively loading content in a scroll view.
  *  Uses a timer internally to periodically check whether or not it is visible/invisible
 */
-export default class VisibilityDetectingView extends PureComponent {
+export default class VisibilityDetectingView extends PureComponent<Props> {
   previouslyVisible = false;
-  tickInterval: ?number;
-  unmounted = false;
-  view: ?View;
 
-  onRef = (view: View) => {
+  tickInterval: ?IntervalID;
+
+  unmounted = false;
+
+  view: ?ElementRef<typeof View>;
+
+  onRef = (view: ?ElementRef<typeof View>) => {
     this.view = view;
   }
 
@@ -72,9 +86,9 @@ export default class VisibilityDetectingView extends PureComponent {
   render() {
     return (
       <View
+        ref={this.onRef}
         // collapsable has to be false for view.measure to work on Android
         collapsable={false}
-        ref={this.onRef}
         style={this.props.style}
       >
         {this.props.children}

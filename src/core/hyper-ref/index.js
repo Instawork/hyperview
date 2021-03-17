@@ -308,7 +308,7 @@ export default class HyperRef extends PureComponent<Props, State> {
 
       renderedComponent = React.createElement(
         VisibilityDetectingView,
-        { onVisible, style: hrefStyle },
+        { onInvisible: null, onVisible, style: hrefStyle },
         renderedComponent,
       );
     }
