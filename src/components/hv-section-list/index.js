@@ -109,7 +109,7 @@ export default class HvSectionList extends PureComponent<
           this.props.onUpdate,
           this.props.options,
         ),
-      sections,
+      sections: sections.filter(s => s.data.length > 0),
       style,
     };
 
