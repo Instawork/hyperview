@@ -36,7 +36,7 @@ import React from 'react';
 
 export const createStyleProp = (
   element: Element,
-  stylesheets: StyleSheets,
+  stylesheets: ?StyleSheets,
   options: HvComponentOptions,
 ): Array<StyleSheet> => {
   const styleAttr: string = options.styleAttr || 'style';
@@ -47,12 +47,12 @@ export const createStyleProp = (
   const styleValue: string = element.getAttribute(styleAttr) || '';
   const styleIds: Array<string> = Xml.splitAttributeList(styleValue);
   let styleRules: Array<StyleSheet> = styleIds.map(
-    styleId => stylesheets.regular[styleId],
+    styleId => (stylesheets || {}).regular[styleId],
   );
 
   if (options.pressed) {
     let pressedRules = styleIds
-      .map(styleId => stylesheets.pressed[styleId])
+      .map(styleId => (stylesheets || {}).pressed[styleId])
       .filter(Boolean);
     if (pressedRules.length === 0) {
       pressedRules = [{ opacity: DEFAULT_PRESS_OPACITY }];
@@ -62,21 +62,21 @@ export const createStyleProp = (
 
   if (options.focused) {
     const focusedRules = styleIds
-      .map(s => stylesheets.focused[s])
+      .map(s => (stylesheets || {}).focused[s])
       .filter(Boolean);
     styleRules = styleRules.concat(focusedRules);
   }
 
   if (options.selected) {
     const selectedRules = styleIds
-      .map(s => stylesheets.selected[s])
+      .map(s => (stylesheets || {}).selected[s])
       .filter(Boolean);
     styleRules = styleRules.concat(selectedRules);
   }
 
   if (options.pressedSelected) {
     const pressedSelectedRules = styleIds
-      .map(s => stylesheets.pressedSelected[s])
+      .map(s => (stylesheets || {}).pressedSelected[s])
       .filter(Boolean);
     styleRules = styleRules.concat(pressedSelectedRules);
   }
@@ -104,7 +104,7 @@ export const createTestProps = (
 
 export const createProps = (
   element: Element,
-  stylesheets: StyleSheets,
+  stylesheets: ?StyleSheets,
   options: HvComponentOptions,
 ) => {
   const numericRules = ['numberOfLines'];
@@ -140,7 +140,7 @@ export const later = (delayMs: number): Promise<void> =>
 export const addHref = (
   component: any,
   element: Element,
-  stylesheets: StyleSheets,
+  stylesheets: ?StyleSheets,
   onUpdate: HvComponentOnUpdate,
   options: HvComponentOptions,
 ) => {

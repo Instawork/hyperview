@@ -20,7 +20,7 @@ import React from 'react';
 
 export const renderElement = (
   element: Element,
-  stylesheets: StyleSheets,
+  stylesheets: ?StyleSheets,
   onUpdate: HvComponentOnUpdate,
   options: HvComponentOptions,
 ) => {
@@ -99,7 +99,7 @@ export const renderElement = (
 
 export const renderChildren = (
   element: Element,
-  stylesheets: StyleSheets,
+  stylesheets: ?StyleSheets,
   onUpdate: HvComponentOnUpdate,
   options: HvComponentOptions,
 ) => {

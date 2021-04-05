@@ -44,7 +44,8 @@ export default class HvSectionList extends PureComponent<
       this.props.element.getAttribute('show-during-load') || null;
     const hideIndicatorIds =
       this.props.element.getAttribute('hide-during-load') || null;
-    const delay = this.props.element.getAttribute('delay');
+    const delayString = this.props.element.getAttribute('delay');
+    const delay = delayString ? parseInt(delayString, 10) : null;
     const once = this.props.element.getAttribute('once') || null;
 
     this.props.onUpdate(path, action, this.props.element, {
@@ -62,7 +63,7 @@ export default class HvSectionList extends PureComponent<
   render() {
     const styleAttr = this.props.element.getAttribute('style');
     const style = styleAttr
-      ? styleAttr.split(' ').map(s => this.props.stylesheets.regular[s])
+      ? styleAttr.split(' ').map(s => (this.props.stylesheets || {}).regular[s])
       : null;
 
     const sectionElements = this.props.element.getElementsByTagNameNS(

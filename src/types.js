@@ -86,7 +86,6 @@ export type Node = {
   +nodeType: NodeType,
   nodeValue: ?string,
   +ownerDocument: ?Document,
-  +parentNode: ?Node,
   +previousSibling: ?Node,
   appendChild: (newChild: Node) => Node,
   hasAttributes: () => boolean,
@@ -162,6 +161,7 @@ export type Document = Node & {
 };
 
 export type Element = Node & {
+  +parentNode: ?Element,
   cloneNode: (deep: boolean) => Element,
   getAttribute: (name: DOMString) => ?DOMString,
   getAttributeNode: (name: DOMString) => ?Attribute,
@@ -265,12 +265,20 @@ export type ComponentRegistry = {
   },
 };
 
+export const HTTP_VERBS = {
+  GET: 'get',
+  POST: 'post',
+};
+
+export type HttpVerb = $Values<typeof HTTP_VERBS>;
+
 export type HvComponentOptions = {
   behaviorElement?: ?Element,
   componentRegistry?: ComponentRegistry,
-  delay?: ?DOMString,
+  delay?: ?number,
   focused?: ?boolean,
   hideIndicatorIds?: ?DOMString,
+  newElement?: ?Element,
   once?: ?DOMString,
   onEnd?: ?() => void,
   onSelect?: ?(value: ?DOMString) => void,
@@ -284,11 +292,12 @@ export type HvComponentOptions = {
   showIndicatorIds?: ?DOMString,
   styleAttr?: ?DOMString,
   targetId?: ?DOMString,
+  verb?: ?HttpVerb,
 };
 
 export type HvComponentOnUpdate = (
   path: ?DOMString,
-  action: ?DOMString,
+  action: Action,
   element: Element,
   options: HvComponentOptions,
 ) => void;
@@ -301,7 +310,7 @@ export type HvComponentProps = {|
   element: Element,
   onUpdate: HvComponentOnUpdate,
   options: HvComponentOptions,
-  stylesheets: StyleSheets,
+  stylesheets: ?StyleSheets,
 |};
 
 export type HvComponentStatics = {
@@ -369,6 +378,8 @@ export const ACTIONS = {
   SWAP: 'swap',
 };
 
+export type Action = $Values<typeof ACTIONS>;
+
 export const NAV_ACTIONS = {
   BACK: ACTIONS.BACK,
   CLOSE: ACTIONS.CLOSE,
@@ -389,12 +400,12 @@ export const UPDATE_ACTIONS = {
 
 export type UpdateAction = $Values<typeof UPDATE_ACTIONS>;
 
-export type BehaviorOptions = {|
-  newElement: Element,
-  behaviorElement: Element,
-  showIndicatorId?: string,
-  delay?: number,
-|};
+export type BehaviorOptions = {
+  newElement?: ?Element,
+  behaviorElement?: ?Element,
+  showIndicatorIds?: ?DOMString,
+  delay?: ?number,
+};
 
 export type NavigationRouteParams = {|
   delay: ?number,
@@ -411,3 +422,44 @@ export type NavigationProps = {|
 |};
 
 export const ON_EVENT_DISPATCH = 'hyperview:on-event';
+
+// See all options available at
+// https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch
+export type FetchInitOptions = {
+  headers: { [string]: any },
+};
+
+export type Fetch = (input: any, init: FetchInitOptions) => Promise<Response>;
+
+// eslint-disable-next-line instawork/exact-object-types
+export type NavigationState = {
+  key: string,
+  params: { [string]: any },
+};
+
+export type Navigation = {
+  state: NavigationState,
+};
+
+export type Props = {|
+  back: (params: ?NavigationRouteParams) => void,
+  behaviors: HvBehavior[],
+  closeModal: (routeParams?: ?NavigationRouteParams) => void,
+  components: HvComponent[],
+  entrypointUrl: string,
+  fetch: Fetch,
+  formatDate: (date: ?Date, format: ?string) => string,
+  navigate: (routeParams: ?NavigationRouteParams) => void,
+  navigation: Navigation,
+  onParseAfter?: (url: string) => void,
+  onParseBefore?: (url: string) => void,
+  openModal: (params: ?NavigationRouteParams) => void,
+  push: (routeParams: ?NavigationRouteParams) => void,
+|};
+
+export type State = {|
+  doc: ?Document,
+  error: ?Error,
+  styles: ?StyleSheets,
+  url: string,
+|};
