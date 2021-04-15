@@ -149,8 +149,7 @@ export default class HyperRef extends PureComponent<Props, State> {
       };
     }
     // Custom behavior
-    return () =>
-      onUpdate(null, action, element, { behaviorElement, custom: true });
+    return () => onUpdate(null, action, element, { behaviorElement });
   };
 
   triggerLoadBehaviors = () => {
