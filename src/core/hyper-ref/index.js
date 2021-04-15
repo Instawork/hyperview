@@ -193,7 +193,7 @@ export default class HyperRef extends PureComponent<Props, State> {
 
     const styleAttr = this.props.element.getAttribute(ATTRIBUTES.HREF_STYLE);
     const hrefStyle = styleAttr
-      ? styleAttr.split(' ').map(s => this.props.stylesheets.regular[s])
+      ? styleAttr.split(' ').map(s => (this.props.stylesheets || {}).regular[s])
       : null;
 
     // $FlowFixMe

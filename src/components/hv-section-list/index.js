@@ -62,7 +62,7 @@ export default class HvSectionList extends PureComponent<
   render() {
     const styleAttr = this.props.element.getAttribute('style');
     const style = styleAttr
-      ? styleAttr.split(' ').map(s => this.props.stylesheets.regular[s])
+      ? styleAttr.split(' ').map(s => (this.props.stylesheets || {}).regular[s])
       : null;
 
     const sectionElements = this.props.element.getElementsByTagNameNS(
