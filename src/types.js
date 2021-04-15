@@ -265,6 +265,13 @@ export type ComponentRegistry = {
   },
 };
 
+export const HTTP_VERBS = {
+  GET: 'get',
+  POST: 'post',
+};
+
+export type HttpVerb = $Values<typeof HTTP_VERBS>;
+
 export type HvComponentOptions = {
   behaviorElement?: ?Element,
   componentRegistry?: ComponentRegistry,
@@ -284,6 +291,7 @@ export type HvComponentOptions = {
   showIndicatorIds?: ?DOMString,
   styleAttr?: ?DOMString,
   targetId?: ?DOMString,
+  verb?: ?HttpVerb,
 };
 
 export type HvComponentOnUpdate = (
