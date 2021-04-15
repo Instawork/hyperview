@@ -268,7 +268,7 @@ export type ComponentRegistry = {
 export type HvComponentOptions = {
   behaviorElement?: ?Element,
   componentRegistry?: ComponentRegistry,
-  delay?: ?DOMString,
+  delay?: ?number,
   focused?: ?boolean,
   hideIndicatorIds?: ?DOMString,
   once?: ?DOMString,
@@ -393,7 +393,7 @@ export type BehaviorOptions = {|
   newElement: Element,
   behaviorElement: Element,
   showIndicatorId?: string,
-  delay?: number,
+  delay?: ?number,
 |};
 
 export type NavigationRouteParams = {|
