@@ -25,7 +25,7 @@ export default class Navigation {
 
   navigation: NavigationProps;
 
-  preloadScreens: { [number]: Element } = {};
+  preloadScreens: { [number]: Document } = {};
 
   routeKeys: { [string]: string } = {};
 
@@ -38,14 +38,14 @@ export default class Navigation {
     this.url = url;
   };
 
-  setDocument = (document: Document) => {
+  setDocument = (document: ?Document) => {
     this.document = document;
   };
 
-  getPreloadScreen = (id: number): ?Element => this.preloadScreens[id];
+  getPreloadScreen = (id: number): ?Document => this.preloadScreens[id];
 
-  setPreloadScreen = (id: number, element: Element): void => {
-    this.preloadScreens[id] = element;
+  setPreloadScreen = (id: number, document: Document): void => {
+    this.preloadScreens[id] = document;
   };
 
   removePreloadScreen = (id: number): void => {
