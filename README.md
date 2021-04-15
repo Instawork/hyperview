@@ -1,4 +1,4 @@
-[![logo](./demo/assets/images/icon_small.png)](https://hyperview.org)
+[![logo](./demo/assets/icon_small.png)](https://hyperview.org)
 
 # Native mobile apps, as easy as creating a website.
 
@@ -130,7 +130,7 @@ yarn sync ../projects/my-cool-app
 
 Whether you're using a physical device or simulator, you should now see a Hyperview screen rendered from the example server:
 
-![example](./demo/assets/images/example.gif)
+![example](./demo/assets/example.gif)
 
 The example server simply serves files from the [./examples](/examples) directory. You can modify or add files in [./examples](/examples) and the server will update without restarting.
 
