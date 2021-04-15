@@ -392,7 +392,7 @@ export type UpdateAction = $Values<typeof UPDATE_ACTIONS>;
 export type BehaviorOptions = {|
   newElement: Element,
   behaviorElement: Element,
-  showIndicatorId?: string,
+  showIndicatorIds?: ?DOMString,
   delay?: ?number,
 |};
 

@@ -116,12 +116,12 @@ export default class HyperRef extends PureComponent<Props, State> {
     if (Object.values(NAV_ACTIONS).indexOf(action) >= 0) {
       return () => {
         const href = behaviorElement.getAttribute(ATTRIBUTES.HREF);
-        const showIndicatorId = behaviorElement.getAttribute(
+        const showIndicatorIds = behaviorElement.getAttribute(
           ATTRIBUTES.SHOW_DURING_LOAD,
         );
         const delayString = behaviorElement.getAttribute(ATTRIBUTES.DELAY);
         const delay = delayString ? parseInt(delayString, 10) : null;
-        onUpdate(href, action, element, { delay, showIndicatorId });
+        onUpdate(href, action, element, { delay, showIndicatorIds });
       };
     }
     if (Object.values(UPDATE_ACTIONS).indexOf(action) >= 0) {
