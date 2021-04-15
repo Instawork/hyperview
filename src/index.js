@@ -1,3 +1,5 @@
+// @flow
+
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -6,7 +8,6 @@
  *
  */
 
-/* eslint instawork/flow-annotate: 0 */
 import * as Behaviors from 'hyperview/src/behaviors';
 import * as Components from 'hyperview/src/services/components';
 import * as Contexts from 'hyperview/src/contexts';
@@ -18,6 +19,7 @@ import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as UrlService from 'hyperview/src/services/url';
 import * as Xml from 'hyperview/src/services/xml';
 import { ACTIONS, NAV_ACTIONS, UPDATE_ACTIONS } from 'hyperview/src/types';
+import type { Action, BehaviorRegistry, ComponentRegistry, Document, Element, HttpVerb, HvComponentOptions, NavigationProps, NavigationState, Props, State, StyleSheets } from 'hyperview/src/types';
 // eslint-disable-next-line instawork/import-services
 import Navigation, { ANCHOR_ID_SEPARATOR } from 'hyperview/src/services/navigation';
 import { createProps, createStyleProp, getElementByTimeoutId, getFormData, later, removeTimeoutId, setTimeoutId, shallowCloneToRoot } from 'hyperview/src/services';
@@ -27,7 +29,7 @@ import Loading from 'hyperview/src/core/components/loading';
 import React from 'react';
 
 // eslint-disable-next-line instawork/pure-components
-export default class HyperScreen extends React.Component {
+export default class HyperScreen extends React.Component<Props, State> {
   static createProps = createProps;
 
   static createStyleProp = createStyleProp;
@@ -36,7 +38,21 @@ export default class HyperScreen extends React.Component {
 
   static renderElement = Render.renderElement;
 
-  constructor(props) {
+  behaviorRegistry: BehaviorRegistry;
+
+  componentRegistry: ComponentRegistry;
+
+  doc: ?Document;
+
+  navigation: Navigation;
+
+  needsLoad: boolean;
+
+  oldSetState: ?() => void;
+
+  parser: Dom.Parser;
+
+  constructor(props: Props) {
     super(props);
 
     this.parser = new Dom.Parser(
@@ -76,7 +92,7 @@ export default class HyperScreen extends React.Component {
     this.navigation = new Navigation(props.entrypointUrl, this.getNavigation());
   }
 
-  getNavigationState = (props) => {
+  getNavigationState = (props: Props): NavigationState => {
     if (props.navigation) {
       return props.navigation.state;
     }
@@ -93,7 +109,7 @@ export default class HyperScreen extends React.Component {
     const preloadScreen = params.preloadScreen
       ? this.navigation.getPreloadScreen(params.preloadScreen)
       : null;
-    const preloadStyles = preloadScreen ? Stylesheets.createStylesheets(preloadScreen) : {};
+    const preloadStyles: ?StyleSheets = preloadScreen ? Stylesheets.createStylesheets(preloadScreen) : {};
 
     this.needsLoad = true;
     if (preloadScreen) {
@@ -117,7 +133,7 @@ export default class HyperScreen extends React.Component {
    * preload screen and URL to load.
    */
   // eslint-disable-next-line camelcase
-  UNSAFE_componentWillReceiveProps = (nextProps) => {
+  UNSAFE_componentWillReceiveProps = (nextProps: Props) => {
     const oldNavigationState = this.getNavigationState(this.props);
     const newNavigationState = this.getNavigationState(nextProps);
 
@@ -204,7 +220,7 @@ export default class HyperScreen extends React.Component {
    * @param opt_href: Optional string href to use when reloading the screen. If not provided,
    * the screen's current URL will be used.
    */
-  reload = (optHref) => {
+  reload = (optHref: ?string) => {
     const url = (optHref === undefined || optHref === '#')
       ? this.state.url // eslint-disable-line react/no-access-state-in-setstate
       : UrlService.getUrlFromHref(optHref, this.state.url); // eslint-disable-line react/no-access-state-in-setstate
@@ -255,7 +271,7 @@ export default class HyperScreen extends React.Component {
    * Returns a navigation object similar to the one provided by React Navigation,
    * but connected to props injected by the parent app.
    */
-  getNavigation = () => ({
+  getNavigation = (): NavigationProps => ({
     back: this.props.back,
     closeModal: this.props.closeModal,
     navigate: this.props.navigate,
@@ -272,7 +288,7 @@ export default class HyperScreen extends React.Component {
    *   used to render the screen.
    * Returns a promise that resolves to a DOM element.
    */
-  fetchElement = async (href, method, root, formData) => {
+  fetchElement = async (href: ?string, method: ?HttpVerb, root: ?Document, formData: ?FormData): Promise<Element> => {
     if (href[0] === '#') {
       const element = root.getElementById(href.slice(1));
       if (element) {
@@ -298,7 +314,7 @@ export default class HyperScreen extends React.Component {
   /**
    *
    */
-  onUpdate = (href, action, currentElement, opts) => {
+  onUpdate = (href: ?string, action: Action, currentElement: Element, opts: HvComponentOptions) => {
     if (action === ACTIONS.RELOAD) {
       this.reload(href);
     } else if (action === ACTIONS.DEEP_LINK) {
@@ -369,7 +385,7 @@ export default class HyperScreen extends React.Component {
    *  - behaviorElement: The behavior element triggering the behavior. Can be different from
    *    the currentElement.
    */
-  onUpdateFragment = (href, action, currentElement, opts) => {
+  onUpdateFragment = (href: ?string, action: Action, currentElement: Element, opts: HvComponentOptions) => {
     const options = opts || {};
     const {
       verb, targetId, showIndicatorIds, hideIndicatorIds, delay, once, onEnd,
@@ -463,7 +479,7 @@ export default class HyperScreen extends React.Component {
   /**
    * Used internally to update the state of things like select forms.
    */
-  onSwap = (currentElement, newElement) => {
+  onSwap = (currentElement: Element, newElement: Element) => {
     const parentElement = currentElement.parentNode;
     parentElement.replaceChild(newElement, currentElement);
     const newRoot = shallowCloneToRoot(parentElement);
@@ -475,7 +491,7 @@ export default class HyperScreen extends React.Component {
   /**
    * Extensions for custom behaviors.
    */
-  onCustomUpdate = (behaviorElement) => {
+  onCustomUpdate = (behaviorElement: Element) => {
     const action = behaviorElement.getAttribute('action');
     const behavior = this.behaviorRegistry[action];
     if (behavior) {

@@ -86,7 +86,6 @@ export type Node = {
   +nodeType: NodeType,
   nodeValue: ?string,
   +ownerDocument: ?Document,
-  +parentNode: ?Node,
   +previousSibling: ?Node,
   appendChild: (newChild: Node) => Node,
   hasAttributes: () => boolean,
@@ -162,6 +161,7 @@ export type Document = Node & {
 };
 
 export type Element = Node & {
+  +parentNode: ?Element,
   cloneNode: (deep: boolean) => Element,
   getAttribute: (name: DOMString) => ?DOMString,
   getAttributeNode: (name: DOMString) => ?Attribute,
@@ -278,6 +278,7 @@ export type HvComponentOptions = {
   delay?: ?number,
   focused?: ?boolean,
   hideIndicatorIds?: ?DOMString,
+  newElement?: ?Element,
   once?: ?DOMString,
   onEnd?: ?() => void,
   onSelect?: ?(value: ?DOMString) => void,
@@ -296,7 +297,7 @@ export type HvComponentOptions = {
 
 export type HvComponentOnUpdate = (
   path: ?DOMString,
-  action: ?DOMString,
+  action: Action,
   element: Element,
   options: HvComponentOptions,
 ) => void;
@@ -377,6 +378,8 @@ export const ACTIONS = {
   SWAP: 'swap',
 };
 
+export type Action = $Values<typeof ACTIONS>;
+
 export const NAV_ACTIONS = {
   BACK: ACTIONS.BACK,
   CLOSE: ACTIONS.CLOSE,
@@ -397,12 +400,12 @@ export const UPDATE_ACTIONS = {
 
 export type UpdateAction = $Values<typeof UPDATE_ACTIONS>;
 
-export type BehaviorOptions = {|
-  newElement: Element,
-  behaviorElement: Element,
+export type BehaviorOptions = {
+  newElement?: ?Element,
+  behaviorElement?: ?Element,
   showIndicatorIds?: ?DOMString,
   delay?: ?number,
-|};
+};
 
 export type NavigationRouteParams = {|
   delay: ?number,
