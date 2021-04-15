@@ -419,3 +419,44 @@ export type NavigationProps = {|
 |};
 
 export const ON_EVENT_DISPATCH = 'hyperview:on-event';
+
+// See all options available at
+// https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch
+export type FetchInitOptions = {
+  headers: { [string]: any },
+};
+
+export type Fetch = (input: any, init: FetchInitOptions) => Promise<Response>;
+
+// eslint-disable-next-line instawork/exact-object-types
+export type NavigationState = {
+  key: string,
+  params: { [string]: any },
+};
+
+export type Navigation = {
+  state: NavigationState,
+};
+
+export type Props = {|
+  back: (params: ?NavigationRouteParams) => void,
+  behaviors: HvBehavior[],
+  closeModal: (routeParams?: ?NavigationRouteParams) => void,
+  components: HvComponent[],
+  entrypointUrl: string,
+  fetch: Fetch,
+  formatDate: (date: ?Date, format: ?string) => string,
+  navigate: (routeParams: ?NavigationRouteParams) => void,
+  navigation: Navigation,
+  onParseAfter?: (url: string) => void,
+  onParseBefore?: (url: string) => void,
+  openModal: (params: ?NavigationRouteParams) => void,
+  push: (routeParams: ?NavigationRouteParams) => void,
+|};
+
+export type State = {|
+  doc: ?Document,
+  error: ?Error,
+  styles: ?StyleSheets,
+  url: string,
+|};
