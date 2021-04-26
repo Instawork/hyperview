@@ -38,7 +38,7 @@ export default class Navigation {
     this.url = url;
   };
 
-  setDocument = (document: Document) => {
+  setDocument = (document: ?Document) => {
     this.document = document;
   };
 
@@ -64,7 +64,7 @@ export default class Navigation {
     element: Element,
     opts: BehaviorOptions,
   ): void => {
-    const { showIndicatorId, delay } = opts;
+    const { showIndicatorIds, delay } = opts;
     const formData: ?FormData = getFormData(element);
 
     // Serialize form data as query params, if present.
@@ -72,13 +72,13 @@ export default class Navigation {
     const url = UrlService.addFormDataToUrl(baseUrl, formData);
 
     let preloadScreen = null;
-    if (showIndicatorId && this.document) {
+    if (showIndicatorIds && this.document) {
       const screens: NodeList<Element> = this.document.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
         'screen',
       );
       const loadingScreen: ?Element = Array.from(screens).find(
-        s => s && s.getAttribute('id') === showIndicatorId,
+        s => s && s.getAttribute('id') === showIndicatorIds,
       );
       if (loadingScreen) {
         preloadScreen = Date.now(); // Not trully unique but sufficient for our use-case

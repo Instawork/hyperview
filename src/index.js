@@ -1,3 +1,5 @@
+// @flow
+
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -6,7 +8,6 @@
  *
  */
 
-/* eslint instawork/flow-annotate: 0 */
 import * as Behaviors from 'hyperview/src/behaviors';
 import * as Components from 'hyperview/src/services/components';
 import * as Contexts from 'hyperview/src/contexts';
@@ -18,6 +19,7 @@ import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as UrlService from 'hyperview/src/services/url';
 import * as Xml from 'hyperview/src/services/xml';
 import { ACTIONS, NAV_ACTIONS, UPDATE_ACTIONS } from 'hyperview/src/types';
+import type { Action, BehaviorRegistry, ComponentRegistry, Document, Element, HttpVerb, HvComponentOptions, NavigationProps, NavigationState, Props, State, StyleSheets } from 'hyperview/src/types';
 // eslint-disable-next-line instawork/import-services
 import Navigation, { ANCHOR_ID_SEPARATOR } from 'hyperview/src/services/navigation';
 import { createProps, createStyleProp, getElementByTimeoutId, getFormData, later, removeTimeoutId, setTimeoutId, shallowCloneToRoot } from 'hyperview/src/services';
@@ -27,7 +29,7 @@ import Loading from 'hyperview/src/core/components/loading';
 import React from 'react';
 
 // eslint-disable-next-line instawork/pure-components
-export default class HyperScreen extends React.Component {
+export default class HyperScreen extends React.Component<Props, State> {
   static createProps = createProps;
 
   static createStyleProp = createStyleProp;
@@ -36,13 +38,23 @@ export default class HyperScreen extends React.Component {
 
   static renderElement = Render.renderElement;
 
-  constructor(props) {
+  behaviorRegistry: BehaviorRegistry;
+
+  componentRegistry: ComponentRegistry;
+
+  doc: ?Document;
+
+  navigation: Navigation;
+
+  needsLoad: boolean;
+
+  oldSetState: ?() => void;
+
+  parser: Dom.Parser;
+
+  constructor(props: Props) {
     super(props);
 
-    this.onUpdate = this.onUpdate.bind(this);
-    this.reload = this.reload.bind(this);
-
-    this.updateActions = ['replace', 'replace-inner', 'append', 'prepend'];
     this.parser = new Dom.Parser(
       this.props.fetch,
       this.props.onParseBefore,
@@ -52,9 +64,9 @@ export default class HyperScreen extends React.Component {
     this.needsLoad = false;
     this.state = {
       doc: null,
-      error: false,
+      error: null,
       styles: null,
-      url: null,
+      url: props.entrypointUrl,
     };
 
     // <HACK>
@@ -67,10 +79,12 @@ export default class HyperScreen extends React.Component {
     // `this.doc`. When rendering, we should use `this.state.doc`.
     this.doc = null;
     this.oldSetState = this.setState;
+    // $FlowFixMe: this.setState is not writeable
     this.setState = (...args) => {
       if (args[0].doc !== undefined) {
         this.doc = args[0].doc;
       }
+      // $FlowFixMe: this.oldSetState is defined
       this.oldSetState(...args);
     }
     // </HACK>
@@ -80,11 +94,11 @@ export default class HyperScreen extends React.Component {
     this.navigation = new Navigation(props.entrypointUrl, this.getNavigation());
   }
 
-  getNavigationState = (props) => {
+  getNavigationState = (props: Props): NavigationState => {
     if (props.navigation) {
       return props.navigation.state;
     }
-    return { params: {} };
+    return { key: '', params: {} };
   }
 
   componentDidMount() {
@@ -97,12 +111,15 @@ export default class HyperScreen extends React.Component {
     const preloadScreen = params.preloadScreen
       ? this.navigation.getPreloadScreen(params.preloadScreen)
       : null;
-    const preloadStyles = preloadScreen ? Stylesheets.createStylesheets(preloadScreen) : {};
+    // $FlowFixMe: we currently have a type mismatch, where state.doc is a Document type, but preload screens are Element types
+    const preloadStyles: ?StyleSheets = preloadScreen ? Stylesheets.createStylesheets(preloadScreen) : {};
 
     this.needsLoad = true;
     if (preloadScreen) {
+      // $FlowFixMe: we currently have a type mismatch, where state.doc is a Document type, but preload screens are Element types
+      const doc: Document = preloadScreen;
       this.setState({
-        doc: preloadScreen,
+        doc,
         error: null,
         styles: preloadStyles,
         url,
@@ -121,7 +138,7 @@ export default class HyperScreen extends React.Component {
    * preload screen and URL to load.
    */
   // eslint-disable-next-line camelcase
-  UNSAFE_componentWillReceiveProps = (nextProps) => {
+  UNSAFE_componentWillReceiveProps = (nextProps: Props) => {
     const oldNavigationState = this.getNavigationState(this.props);
     const newNavigationState = this.getNavigationState(nextProps);
 
@@ -144,9 +161,11 @@ export default class HyperScreen extends React.Component {
         ? this.navigation.getPreloadScreen(newPreloadScreen)
         : null;
 
-      const doc = preloadScreen || this.doc;
-      // eslint-disable-next-line react/no-access-state-in-setstate
-      const styles = preloadScreen ? Stylesheets.createStylesheets(preloadScreen) : this.state.styles;
+      // $FlowFixMe: we currently have a type mismatch, where state.doc is a Document type, but preload screens are Element types
+      const doc: Document = preloadScreen || this.doc;
+
+      // $FlowFixMe: we currently have a type mismatch, where state.doc is a Document type, but preload screens are Element types
+      const styles = preloadScreen ? Stylesheets.createStylesheets(preloadScreen) : this.state.styles; // eslint-disable-line react/no-access-state-in-setstate
 
       this.setState({ doc, styles, url: newUrl });
     }
@@ -159,7 +178,7 @@ export default class HyperScreen extends React.Component {
     const { params } = this.getNavigationState(this.props);
     const { preloadScreen } = params;
     if (preloadScreen && this.navigation.getPreloadScreen(preloadScreen)) {
-      this.navigation.remove(preloadScreen);
+      this.navigation.removePreloadScreen(preloadScreen);
     }
   }
 
@@ -168,7 +187,7 @@ export default class HyperScreen extends React.Component {
    */
   componentDidUpdate() {
     if (this.needsLoad) {
-      this.load(this.state.url);
+      this.load();
       this.needsLoad = false;
     }
   }
@@ -208,8 +227,11 @@ export default class HyperScreen extends React.Component {
    * @param opt_href: Optional string href to use when reloading the screen. If not provided,
    * the screen's current URL will be used.
    */
-  reload = (optHref) => {
-    const url = (optHref === undefined || optHref === '#')
+  reload = (optHref: ?string) => {
+    if (!optHref) {
+      return;
+    }
+    const url = optHref === '#'
       ? this.state.url // eslint-disable-line react/no-access-state-in-setstate
       : UrlService.getUrlFromHref(optHref, this.state.url); // eslint-disable-line react/no-access-state-in-setstate
     this.needsLoad = true;
@@ -228,7 +250,7 @@ export default class HyperScreen extends React.Component {
         <LoadError
           error={this.state.error}
           onPressReload={() => this.reload()}
-          onPressViewDetails={(uri) => this.props.openModal({url: uri})}
+          onPressViewDetails={(uri) => this.props.openModal({ delay: null, preloadScreen: null, url: uri})}
         />
       );
     }
@@ -237,16 +259,17 @@ export default class HyperScreen extends React.Component {
         <Loading />
       );
     }
-    const [body] = this.state.doc.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'body');
-    const screenElement = Render.renderElement(
-      body,
-      this.state.styles,
-      this.onUpdate,
-      {
-        componentRegistry: this.componentRegistry,
-        screenUrl: this.state.url,
-      },
-    );
+    const body = this.state.doc.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'body').item(0);
+    const screenElement = body
+      ? Render.renderElement(
+          body,
+          this.state.styles,
+          this.onUpdate,
+          {
+            componentRegistry: this.componentRegistry,
+            screenUrl: this.state.url,
+          },
+      ): null;
 
     return (
       <Contexts.DateFormatContext.Provider value={this.props.formatDate}>
@@ -259,7 +282,7 @@ export default class HyperScreen extends React.Component {
    * Returns a navigation object similar to the one provided by React Navigation,
    * but connected to props injected by the parent app.
    */
-  getNavigation = () => ({
+  getNavigation = (): NavigationProps => ({
     back: this.props.back,
     closeModal: this.props.closeModal,
     navigate: this.props.navigate,
@@ -276,7 +299,11 @@ export default class HyperScreen extends React.Component {
    *   used to render the screen.
    * Returns a promise that resolves to a DOM element.
    */
-  fetchElement = async (href, method, root, formData) => {
+  fetchElement = async (href: ?string, method: ?HttpVerb, root: ?Document, formData: ?FormData): Promise<Element> => {
+    if (!href || !root) {
+      // TODO: make href and root non-optional, and refactor callers to ensure they exist.
+      throw new Error('Cannot fetch an element without an href');
+    }
     if (href[0] === '#') {
       const element = root.getElementById(href.slice(1));
       if (element) {
@@ -286,7 +313,7 @@ export default class HyperScreen extends React.Component {
     }
 
     try {
-      const url = UrlService.getUrlFromHref(href, this.state.url, method);
+      const url = UrlService.getUrlFromHref(href, this.state.url);
       const doc = await this.parser.loadElement(url, formData, method);
       return doc.documentElement;
     } catch (err) {
@@ -295,18 +322,21 @@ export default class HyperScreen extends React.Component {
         error: err,
         styles: null,
       });
+      // Rethrow error after updating state
+      throw err;
     }
-    return null;
   }
 
   /**
    *
    */
-  onUpdate = (href, action, currentElement, opts) => {
+  onUpdate = (href: ?string, action: Action, currentElement: Element, opts: HvComponentOptions) => {
     if (action === ACTIONS.RELOAD) {
       this.reload(href);
     } else if (action === ACTIONS.DEEP_LINK) {
-      Linking.openURL(href);
+      if (href) {
+        Linking.openURL(href);
+      }
     } else if (Object.values(NAV_ACTIONS).includes(action)) {
       this.navigation.setUrl(this.state.url);
       this.navigation.setDocument(this.doc);
@@ -314,39 +344,43 @@ export default class HyperScreen extends React.Component {
     } else if (Object.values(UPDATE_ACTIONS).includes(action)) {
       this.onUpdateFragment(href, action, currentElement, opts);
     } else if (action === ACTIONS.SWAP) {
-      this.onSwap(currentElement, opts.newElement);
+      if (opts.newElement) {
+        this.onSwap(currentElement, opts.newElement);
+      }
     } else if (action === ACTIONS.DISPATCH_EVENT) {
-      const { behaviorElement } = opts;
-      const eventName = behaviorElement.getAttribute('event-name');
-      const trigger = behaviorElement.getAttribute('trigger');
-      const ranOnce = behaviorElement.getAttribute('ran-once');
-      const once = behaviorElement.getAttribute('once');
-      const delay = behaviorElement.getAttribute('delay');
+      if (opts.behaviorElement) {
+        const { behaviorElement } = opts;
+        const eventName = behaviorElement.getAttribute('event-name');
+        const trigger = behaviorElement.getAttribute('trigger');
+        const ranOnce = behaviorElement.getAttribute('ran-once');
+        const once = behaviorElement.getAttribute('once');
+        const delay = behaviorElement.getAttribute('delay');
 
-      if (once === 'true' && ranOnce === 'true') {
-        return;
-      } if (once === 'true') {
-        behaviorElement.setAttribute('ran-once', 'true');
-      }
+        if (once === 'true' && ranOnce === 'true') {
+          return;
+        } if (once === 'true') {
+          behaviorElement.setAttribute('ran-once', 'true');
+        }
 
-      // Check for event loop formation
-      if (trigger === 'on-event') {
-        throw new Error('trigger="on-event" and action="dispatch-event" cannot be used on the same element');
-      }
-      if (!eventName) {
-        throw new Error('dispatch-event requires an event-name attribute to be present');
-      }
+        // Check for event loop formation
+        if (trigger === 'on-event') {
+          throw new Error('trigger="on-event" and action="dispatch-event" cannot be used on the same element');
+        }
+        if (!eventName) {
+          throw new Error('dispatch-event requires an event-name attribute to be present');
+        }
 
-      const dispatch = () => {
-        Events.dispatch(eventName);
-      }
+        const dispatch = () => {
+          Events.dispatch(eventName);
+        }
 
-      if (delay) {
-        setTimeout(dispatch, parseInt(delay, 10));
-      } else {
-        dispatch();
+        if (delay) {
+          setTimeout(dispatch, parseInt(delay, 10));
+        } else {
+          dispatch();
+        }
       }
-    } else {
+    } else if (opts.behaviorElement) {
       const { behaviorElement } = opts;
       this.onCustomUpdate(behaviorElement);
     }
@@ -373,7 +407,7 @@ export default class HyperScreen extends React.Component {
    *  - behaviorElement: The behavior element triggering the behavior. Can be different from
    *    the currentElement.
    */
-  onUpdateFragment = (href, action, currentElement, opts) => {
+  onUpdateFragment = (href: ?string, action: Action, currentElement: Element, opts: HvComponentOptions) => {
     const options = opts || {};
     const {
       verb, targetId, showIndicatorIds, hideIndicatorIds, delay, once, onEnd,
@@ -399,7 +433,9 @@ export default class HyperScreen extends React.Component {
     }
 
     let newRoot = this.doc;
-    newRoot = Behaviors.setIndicatorsBeforeLoad(showIndicatorIdList, hideIndicatorIdList, newRoot);
+    if (newRoot) {
+      newRoot = Behaviors.setIndicatorsBeforeLoad(showIndicatorIdList, hideIndicatorIdList, newRoot);
+    }
     // Re-render the modifications
     this.setState({
       doc: newRoot,
@@ -410,7 +446,7 @@ export default class HyperScreen extends React.Component {
       .then((newElement) => {
         // If a target is specified and exists, use it. Otherwise, the action target defaults
         // to the element triggering the action.
-        let targetElement = targetId ? this.doc.getElementById(targetId) : currentElement;
+        let targetElement = targetId && this.doc ? this.doc.getElementById(targetId) : currentElement;
         if (!targetElement) {
           targetElement = currentElement;
         }
@@ -440,24 +476,26 @@ export default class HyperScreen extends React.Component {
       let timeoutId = null;
       timeoutId = setTimeout(() => {
         // Check the current doc for an element with the same timeout ID
-        const timeoutElement = getElementByTimeoutId(this.doc, timeoutId.toString());
+        const timeoutElement = this.doc ? getElementByTimeoutId(this.doc, String(timeoutId)) : null;
         if (timeoutElement) {
           // Element with the same ID exists, we can execute the behavior
           removeTimeoutId(timeoutElement);
           fetchAndUpdate();
         } else {
           // Element with the same ID does not exist, we don't execute the behavior and undo the indicators.
-          newRoot = Behaviors.setIndicatorsAfterLoad(showIndicatorIdList, hideIndicatorIdList, this.doc);
-          this.setState({
-            doc: newRoot,
-          });
+          if (this.doc) {
+            newRoot = Behaviors.setIndicatorsAfterLoad(showIndicatorIdList, hideIndicatorIdList, this.doc);
+            this.setState({
+              doc: newRoot,
+            });
+          }
           if (typeof onEnd === 'function') {
             onEnd();
           }
         }
       }, delayMs);
       // Store the timeout ID
-      setTimeoutId(currentElement, timeoutId.toString());
+      setTimeoutId(currentElement, String(timeoutId));
     } else {
       // If there's no delay, fetch immediately and update the doc when done.
       fetchAndUpdate();
@@ -467,19 +505,22 @@ export default class HyperScreen extends React.Component {
   /**
    * Used internally to update the state of things like select forms.
    */
-  onSwap = (currentElement, newElement) => {
-    const parentElement = currentElement.parentNode;
-    parentElement.replaceChild(newElement, currentElement);
-    const newRoot = shallowCloneToRoot(parentElement);
-    this.setState({
-      doc: newRoot,
-    });
+  onSwap = (currentElement: Element, newElement: Element) => {
+    const parentElement: ?Element = currentElement.parentNode;
+    if (parentElement) {
+      parentElement.replaceChild(newElement, currentElement);
+      const newRoot = shallowCloneToRoot(parentElement);
+      this.setState({
+        doc: newRoot,
+      });
+    }
   }
 
   /**
    * Extensions for custom behaviors.
    */
-  onCustomUpdate = (behaviorElement) => {
+  onCustomUpdate = (behaviorElement: Element) => {
+    // $FlowFixMe: Somehow, even with explicit typing, flow sees `behaviorElement` as a `Node`
     const action = behaviorElement.getAttribute('action');
     const behavior = this.behaviorRegistry[action];
     if (behavior) {
