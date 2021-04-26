@@ -54,19 +54,21 @@
       />
       <style id="Button__Label" color="white" fontSize="24" fontWeight="bold" />
     </styles>
-    <body scroll="true" style="Body" safe-area="true">
-      <header style="Header">
-        <text action="close" href="/navigation/new.xml" style="Header__Back">
-          Close
-        </text>
-        <text style="Header__Title">Opened</text>
-      </header>
-      <text style="Description">Opened a new modal screen!</text>
-      <view action="new" href="/navigation/modal.xml" style="Button">
-        <text style="Button__Label">Open another modal</text>
-      </view>
-      <view action="push" href="/navigation/modal.xml" style="Button">
-        <text style="Button__Label">Push on the stack</text>
+    <body style="Body" safe-area="true">
+      <view scroll="true">
+        <header style="Header">
+          <text action="close" href="/navigation/new.xml" style="Header__Back">
+            Close
+          </text>
+          <text style="Header__Title">Opened</text>
+        </header>
+        <text style="Description">Opened a new modal screen!</text>
+        <view action="new" href="/navigation/modal.xml" style="Button">
+          <text style="Button__Label">Open another modal</text>
+        </view>
+        <view action="push" href="/navigation/modal.xml" style="Button">
+          <text style="Button__Label">Push on the stack</text>
+        </view>
       </view>
     </body>
   </screen>
