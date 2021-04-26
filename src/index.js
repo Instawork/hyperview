@@ -79,13 +79,13 @@ export default class HyperScreen extends React.Component<Props, State> {
     // `this.doc`. When rendering, we should use `this.state.doc`.
     this.doc = null;
     this.oldSetState = this.setState;
-    const { oldSetState } = this;
     // $FlowFixMe: this.setState is not writeable
     this.setState = (...args) => {
       if (args[0].doc !== undefined) {
         this.doc = args[0].doc;
       }
-      oldSetState(...args);
+      // $FlowFixMe: this.oldSetState is defined
+      this.oldSetState(...args);
     }
     // </HACK>
 
@@ -254,16 +254,17 @@ export default class HyperScreen extends React.Component<Props, State> {
         <Loading />
       );
     }
-    const [body] = this.state.doc.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'body');
-    const screenElement = Render.renderElement(
-      body,
-      this.state.styles,
-      this.onUpdate,
-      {
-        componentRegistry: this.componentRegistry,
-        screenUrl: this.state.url,
-      },
-    );
+    const body = this.state.doc.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'body').item(0);
+    const screenElement = body
+      ? Render.renderElement(
+          body,
+          this.state.styles,
+          this.onUpdate,
+          {
+            componentRegistry: this.componentRegistry,
+            screenUrl: this.state.url,
+          },
+      ): null;
 
     return (
       <Contexts.DateFormatContext.Provider value={this.props.formatDate}>
