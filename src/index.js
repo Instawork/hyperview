@@ -111,12 +111,15 @@ export default class HyperScreen extends React.Component<Props, State> {
     const preloadScreen = params.preloadScreen
       ? this.navigation.getPreloadScreen(params.preloadScreen)
       : null;
+    // $FlowFixMe: we currently have a type mismatch, where state.doc is a Document type, but preload screens are Element types
     const preloadStyles: ?StyleSheets = preloadScreen ? Stylesheets.createStylesheets(preloadScreen) : {};
 
     this.needsLoad = true;
     if (preloadScreen) {
+      // $FlowFixMe: we currently have a type mismatch, where state.doc is a Document type, but preload screens are Element types
+      const doc: Document = preloadScreen;
       this.setState({
-        doc: preloadScreen,
+        doc,
         error: null,
         styles: preloadStyles,
         url,
@@ -158,9 +161,11 @@ export default class HyperScreen extends React.Component<Props, State> {
         ? this.navigation.getPreloadScreen(newPreloadScreen)
         : null;
 
-      const doc = preloadScreen || this.doc;
-      // eslint-disable-next-line react/no-access-state-in-setstate
-      const styles = preloadScreen ? Stylesheets.createStylesheets(preloadScreen) : this.state.styles;
+      // $FlowFixMe: we currently have a type mismatch, where state.doc is a Document type, but preload screens are Element types
+      const doc: Document = preloadScreen || this.doc;
+
+      // $FlowFixMe: we currently have a type mismatch, where state.doc is a Document type, but preload screens are Element types
+      const styles = preloadScreen ? Stylesheets.createStylesheets(preloadScreen) : this.state.styles; // eslint-disable-line react/no-access-state-in-setstate
 
       this.setState({ doc, styles, url: newUrl });
     }

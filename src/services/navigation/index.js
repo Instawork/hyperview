@@ -25,7 +25,7 @@ export default class Navigation {
 
   navigation: NavigationProps;
 
-  preloadScreens: { [number]: Document } = {};
+  preloadScreens: { [number]: Element } = {};
 
   routeKeys: { [string]: string } = {};
 
@@ -42,10 +42,10 @@ export default class Navigation {
     this.document = document;
   };
 
-  getPreloadScreen = (id: number): ?Document => this.preloadScreens[id];
+  getPreloadScreen = (id: number): ?Element => this.preloadScreens[id];
 
-  setPreloadScreen = (id: number, document: Document): void => {
-    this.preloadScreens[id] = document;
+  setPreloadScreen = (id: number, element: Element): void => {
+    this.preloadScreens[id] = element;
   };
 
   removePreloadScreen = (id: number): void => {
@@ -77,7 +77,7 @@ export default class Navigation {
         Namespaces.HYPERVIEW,
         'screen',
       );
-      const loadingScreen: ?Document = Array.from(screens).find(
+      const loadingScreen: ?Element = Array.from(screens).find(
         s => s && s.getAttribute('id') === showIndicatorIds,
       );
       if (loadingScreen) {
