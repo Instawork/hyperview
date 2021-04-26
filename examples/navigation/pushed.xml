@@ -54,12 +54,14 @@
       />
       <style id="Button__Label" color="white" fontSize="24" fontWeight="bold" />
     </styles>
-    <body scroll="true" style="Body" safe-area="true">
-      <header style="Header">
-        <text action="back" href="#" style="Header__Back">Back</text>
-        <text style="Header__Title">Pushed</text>
-      </header>
-      <text style="Description">Pushed a new screen!</text>
+    <body style="Body" safe-area="true">
+      <view scroll="true">
+        <header style="Header">
+          <text action="back" href="#" style="Header__Back">Back</text>
+          <text style="Header__Title">Pushed</text>
+        </header>
+        <text style="Description">Pushed a new screen!</text>
+      </view>
     </body>
   </screen>
 </doc>
