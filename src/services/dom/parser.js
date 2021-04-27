@@ -10,12 +10,12 @@
 
 import * as Errors from './errors';
 import * as UrlService from 'hyperview/src/services/url';
-import type { BeforeAfterParseHandler, Fetch } from './types';
-import { CONTENT_TYPE, HTTP_HEADERS } from './types';
-import type { Document, HttpVerb } from 'hyperview/src/types';
-import { HTTP_VERBS, LOCAL_NAME } from 'hyperview/src/types';
+import type { BeforeAfterParseHandler, Fetch, HttpMethod } from './types';
+import { CONTENT_TYPE, HTTP_HEADERS, HTTP_METHODS } from './types';
 import { DOMParser } from 'xmldom-instawork';
 import { Dimensions } from 'react-native';
+import type { Document } from 'hyperview/src/types';
+import { LOCAL_NAME } from 'hyperview/src/types';
 import { getFirstTag } from './helpers';
 import { version } from 'hyperview/package.json';
 
@@ -61,20 +61,20 @@ export class Parser {
   load = async (
     baseUrl: string,
     data: ?FormData,
-    verb: ?HttpVerb = HTTP_VERBS.GET,
+    method: ?HttpMethod = HTTP_METHODS.GET,
   ): Promise<Document> => {
     // For GET requests, we can't include a body so we encode the form data as a query
     // string in the URL.
     const url =
-      verb === HTTP_VERBS.GET && data
+      method === HTTP_METHODS.GET && data
         ? UrlService.addFormDataToUrl(baseUrl, data)
         : baseUrl;
 
     const options = {
       // For non-GET requests, include the formdata as the body of the request.
-      body: verb === HTTP_VERBS.GET ? undefined : data,
+      body: method === HTTP_METHODS.GET ? undefined : data,
       headers,
-      method: verb,
+      method,
     };
 
     const response: Response = await this.fetch(url, options);
@@ -121,9 +121,9 @@ export class Parser {
   loadElement = async (
     baseUrl: string,
     data: ?FormData,
-    verb: ?HttpVerb = HTTP_VERBS.GET,
+    method: ?HttpMethod = HTTP_METHODS.GET,
   ): Promise<Document> => {
-    const doc = await this.load(baseUrl, data, verb);
+    const doc = await this.load(baseUrl, data, method);
     const docElement = getFirstTag(doc, LOCAL_NAME.DOC);
     if (docElement) {
       throw new Errors.XMLRestrictedElementFound(LOCAL_NAME.DOC, baseUrl);

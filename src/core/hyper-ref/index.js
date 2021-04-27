@@ -116,12 +116,11 @@ export default class HyperRef extends PureComponent<Props, State> {
     if (Object.values(NAV_ACTIONS).indexOf(action) >= 0) {
       return () => {
         const href = behaviorElement.getAttribute(ATTRIBUTES.HREF);
-        const showIndicatorIds = behaviorElement.getAttribute(
+        const showIndicatorId = behaviorElement.getAttribute(
           ATTRIBUTES.SHOW_DURING_LOAD,
         );
-        const delayString = behaviorElement.getAttribute(ATTRIBUTES.DELAY);
-        const delay = delayString ? parseInt(delayString, 10) : null;
-        onUpdate(href, action, element, { delay, showIndicatorIds });
+        const delay = behaviorElement.getAttribute(ATTRIBUTES.DELAY);
+        onUpdate(href, action, element, { delay, showIndicatorId });
       };
     }
     if (Object.values(UPDATE_ACTIONS).indexOf(action) >= 0) {
@@ -135,8 +134,7 @@ export default class HyperRef extends PureComponent<Props, State> {
         const hideIndicatorIds = behaviorElement.getAttribute(
           ATTRIBUTES.HIDE_DURING_LOAD,
         );
-        const delayString = behaviorElement.getAttribute(ATTRIBUTES.DELAY);
-        const delay = delayString ? parseInt(delayString, 10) : null;
+        const delay = behaviorElement.getAttribute(ATTRIBUTES.DELAY);
         const once = behaviorElement.getAttribute(ATTRIBUTES.ONCE);
         onUpdate(href, action, element, {
           delay,
@@ -149,7 +147,8 @@ export default class HyperRef extends PureComponent<Props, State> {
       };
     }
     // Custom behavior
-    return () => onUpdate(null, action, element, { behaviorElement });
+    return () =>
+      onUpdate(null, action, element, { behaviorElement, custom: true });
   };
 
   triggerLoadBehaviors = () => {
@@ -194,7 +193,7 @@ export default class HyperRef extends PureComponent<Props, State> {
 
     const styleAttr = this.props.element.getAttribute(ATTRIBUTES.HREF_STYLE);
     const hrefStyle = styleAttr
-      ? styleAttr.split(' ').map(s => (this.props.stylesheets || {}).regular[s])
+      ? styleAttr.split(' ').map(s => this.props.stylesheets.regular[s])
       : null;
 
     // $FlowFixMe
