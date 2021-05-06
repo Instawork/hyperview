@@ -161,6 +161,7 @@ export default class HyperScreen extends React.Component {
     if (preloadScreen && this.navigation.getPreloadScreen(preloadScreen)) {
       this.navigation.remove(preloadScreen);
     }
+    this.navigation.removeRouteKey(this.state.url)
   }
 
   /**
@@ -172,7 +173,7 @@ export default class HyperScreen extends React.Component {
       this.needsLoad = false;
     }
   }
-
+  
   /**
    * Performs a full load of the screen.
    */
