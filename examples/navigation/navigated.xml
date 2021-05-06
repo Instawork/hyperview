@@ -58,27 +58,15 @@
     <body style="Body" safe-area="true">
       <header style="Header">
         <text action="back" href="#" style="Header__Back">Back</text>
-        <text style="Header__Title">Navigate</text>
+        <text style="Header__Title">Page D</text>
       </header>
       <view scroll="true" style="Main">
         <text style="Description">
           Tapping the button below will request an XML screen and push it onto
           the stack.
         </text>
-        <view action="navigate" href="/index.xml" style="Button">
-          <text style="Button__Label">Navigate to home</text>
-        </view>
-        <view
-          action="navigate"
-          delay="1000"
-          href="/navigation/pushed.xml"
-          show-during-load="loadingScreen"
-          style="Button"
-        >
-          <text style="Button__Label">Navigate with indicator</text>
-        </view>
-        <view action="push" href="/navigation/navigatea.xml" style="Button">
-          <text style="Button__Label">Push to Page A</text>
+        <view action="navigate" href="/navigation/navigatea.xml" style="Button">
+          <text style="Button__Label">Navigate to page A</text>
         </view>
       </view>
     </body>

@@ -56,7 +56,6 @@ export default class Navigation {
 
   setRouteKey = (href: string, key: string): void => {
     routeKeys[getHrefKey(href)] = key;
-    console.log(routeKeys);
   };
 
   removeRouteKey = (href: string): void => {
