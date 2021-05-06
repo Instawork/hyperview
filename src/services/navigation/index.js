@@ -60,8 +60,8 @@ export default class Navigation {
 
   removeRouteKey = (href: string): void => {
     delete routeKeys[getHrefKey(href)];
-  } 
-  
+  };
+
   navigate = (
     href: string,
     action: NavAction,
@@ -91,13 +91,13 @@ export default class Navigation {
     }
 
     const routeParams = { delay, preloadScreen, url };
-    
+
     switch (action) {
       case NAV_ACTIONS.PUSH:
         this.navigation.push(routeParams);
         break;
       case NAV_ACTIONS.NAVIGATE: {
-        const key = this.getRouteKey(url)
+        const key = this.getRouteKey(url);
         if (key) {
           this.navigation.navigate(routeParams, this.getRouteKey(url));
         } else {
