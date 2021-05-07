@@ -173,6 +173,7 @@ export default class HyperScreen extends React.Component {
       this.needsLoad = false;
     }
   }
+
   /**
    * Performs a full load of the screen.
    */
