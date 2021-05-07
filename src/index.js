@@ -238,7 +238,7 @@ export default class HyperScreen extends React.Component {
         <Loading />
       );
     }
-    const [body] = this.state.doc.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'body');
+    const [body] = Array.from(this.state.doc.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'body'));
     const screenElement = Render.renderElement(
       body,
       this.state.styles,
