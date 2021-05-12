@@ -359,6 +359,8 @@ export const ACTIONS = {
   CLOSE: 'close',
   DEEP_LINK: 'deep-link',
   DISPATCH_EVENT: 'dispatch-event',
+  INCLUDE: 'include',
+  INCLUDE_INNER: 'include-inner',
   NAVIGATE: 'navigate',
   NEW: 'new',
   PREPEND: 'prepend',
@@ -382,6 +384,8 @@ export type NavAction = $Values<typeof NAV_ACTIONS>;
 
 export const UPDATE_ACTIONS = {
   APPEND: ACTIONS.APPEND,
+  INCLUDE: ACTIONS.INCLUDE,
+  INCLUDE_INNER: ACTIONS.INCLUDE_INNER,
   PREPEND: ACTIONS.PREPEND,
   REPLACE: ACTIONS.REPLACE,
   REPLACE_INNER: ACTIONS.REPLACE_INNER,

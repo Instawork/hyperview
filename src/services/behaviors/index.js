@@ -95,6 +95,39 @@ export const performUpdate = (
     return shallowCloneToRoot(targetElement);
   }
 
+  if (action === ACTIONS.INCLUDE) {
+    const { parentNode } = targetElement;
+    if (parentNode) {
+      let child: ?Node = newElement.firstChild;
+      // Insert the newElement's children
+      while (child !== null && child !== undefined) {
+        const nextChild: ?Node = child.nextSibling;
+        parentNode.insertBefore(child, targetElement);
+        child = nextChild;
+      }
+      parentNode.removeChild(targetElement);
+      return shallowCloneToRoot((parentNode: any));
+    }
+  }
+
+  if (action === ACTIONS.INCLUDE_INNER) {
+    let child: ?Node = targetElement.firstChild;
+    // Remove the target's children
+    while (child !== null && child !== undefined) {
+      const nextChild: ?Node = child.nextSibling;
+      targetElement.removeChild(child);
+      child = nextChild;
+    }
+    child = newElement.firstChild;
+    // Append the newElement's children
+    while (child !== null && child !== undefined) {
+      const nextChild: ?Node = child.nextSibling;
+      targetElement.appendChild(child);
+      child = nextChild;
+    }
+    return shallowCloneToRoot(targetElement);
+  }
+
   if (action === ACTIONS.APPEND) {
     targetElement.appendChild(newElement);
     return shallowCloneToRoot(targetElement);
