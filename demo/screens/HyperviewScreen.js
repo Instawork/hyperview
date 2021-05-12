@@ -9,6 +9,7 @@
 import React, { PureComponent } from 'react';
 import Hyperview from 'hyperview';
 import moment from 'moment';
+import HandleBack from '../components/HandleBack';
 
 export default class HyperviewScreen extends React.PureComponent {
   goBack = (params, key) => {
@@ -70,17 +71,19 @@ export default class HyperviewScreen extends React.PureComponent {
     const entrypointUrl = navigation.state.params.url;
 
     return (
-      <Hyperview
-        back={this.goBack}
-        closeModal={this.closeModal}
-        entrypointUrl={entrypointUrl}
-        fetch={this.fetchWrapper}
-        navigate={this.navigate}
-        navigation={navigation}
-        openModal={this.openModal}
-        push={this.push}
-        formatDate={this.formatDate}
-      />
+      <HandleBack>
+        <Hyperview
+          back={this.goBack}
+          closeModal={this.closeModal}
+          entrypointUrl={entrypointUrl}
+          fetch={this.fetchWrapper}
+          navigate={this.navigate}
+          navigation={navigation}
+          openModal={this.openModal}
+          push={this.push}
+          formatDate={this.formatDate}
+        />
+      </HandleBack>
     );
   }
 }
