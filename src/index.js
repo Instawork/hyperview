@@ -42,7 +42,7 @@ export default class HyperScreen extends React.Component {
     this.onUpdate = this.onUpdate.bind(this);
     this.reload = this.reload.bind(this);
 
-    this.updateActions = ['replace', 'replace-inner', 'append', 'prepend'];
+    this.updateActions = ['replace', 'replace-inner', 'append', 'prepend', 'include', 'include-inner'];
     this.parser = new Dom.Parser(
       this.props.fetch,
       this.props.onParseBefore,
