@@ -70,6 +70,8 @@
       <xs:enumeration value="dispatch-event" />
       <xs:enumeration value="replace" />
       <xs:enumeration value="replace-inner" />
+      <xs:enumeration value="include" />
+      <xs:enumeration value="include-inner" />
       <xs:enumeration value="append" />
       <xs:enumeration value="prepend" />
       <xs:enumeration value="show" />
