@@ -228,7 +228,7 @@ export default class HyperScreen extends React.Component {
       const errorScreen = this.props.errorScreen || LoadError;
       return React.createElement(errorScreen, {
         error: this.state.error,
-        onPressReload: () => this.reload(),
+        onPressReload: this.reload,
         onPressViewDetails: (uri) => this.props.openModal({url: uri}),
       });
     }
