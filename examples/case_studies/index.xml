@@ -151,6 +151,15 @@
           <text style="Item__Label">Photo sharing app</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
+        <item
+          href="/case_studies/custom_android_back.xml"
+          key="custom-android-back"
+          show-during-load="loadingScreen"
+          style="Item"
+        >
+          <text style="Item__Label">Custom Android Back</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
       </list>
     </body>
   </screen>
