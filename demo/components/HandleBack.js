@@ -18,8 +18,11 @@ class HandleBack extends Component {
 
   onBack = () => {
     if(this.props.navigation && this.props.navigation.goBack && !this.props.navigation.isFirstRouteInParent()){
-      this.props.navigation.popToTop(null);
-      return true;
+      const { url } = this.props.navigation.state.params;
+      if (url.includes("custom_android_back")) {
+        this.props.navigation.popToTop(null);
+        return true;
+      }
     }
     return false;
   };
