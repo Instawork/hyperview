@@ -27,7 +27,6 @@
         id="Description"
         fontSize="16"
         fontWeight="normal"
-        marginBottom="0"
         marginBottom="16"
       />
       <style
