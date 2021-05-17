@@ -19,7 +19,7 @@ export default class Loading extends PureComponent<Props> {
   render() {
     return (
       <View style={styles.container}>
-        <ActivityIndicator />
+        <ActivityIndicator color="#8d9494" />
       </View>
     );
   }
