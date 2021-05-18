@@ -1,0 +1,268 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style id="Body"
+             flex="1" />
+      <style id="Item"
+             marginHorizontal="28"
+             marginTop="20" />
+      <style id="Title"
+             fontSize="18"
+             fontWeight="700"
+             color="#283542" />
+      <style id="Input"
+             borderBottomColor="#E8E9EB"
+             borderBottomWidth="1"
+             color="#2B3447"
+             fontSize="14"
+             fontWeight="500"
+             lineHeight="17"
+             paddingBottom="8"
+             paddingTop="12" />
+      <style id="Arrow"
+             color="#8F9EB2"
+             position="absolute"
+             right="2"
+             top="10" />
+      <style id="ClickJackingOutter"
+             bottom="0"
+             left="0"
+             position="absolute"
+             right="0"
+             top="0" />
+      <style id="ClickJackingInner"
+             height="100%" />
+      <style id="Container"
+             backgroundColor="rgba(0,0,0,0.3)"
+             bottom="0"
+             justifyContent="flex-end"
+             left="0"
+             position="absolute"
+             right="0"
+             top="0" />
+      <style id="Mask"
+             height="100%" />
+      <style id="OccupationContent"
+             backgroundColor="#fff"
+             borderTopLeftRadius="12"
+             borderTopRightRadius="12"
+             height="505"
+             paddingTop="16" />
+      <style id="occupation-mainlist"
+             backgroundColor="#F3F3F5"
+             height="452"
+             width="138" />
+      <style id="occupation-sublit"
+             borderTopLeftRadius="20"
+             borderTopRightRadius="20"
+             elevation="6"
+             flex="1"
+             height="452"
+             minWidth="215"
+             shadowColor="rgba(0, 0, 0, 0.12);"
+             shadowOffsetX="0"
+             shadowOffsetY="4"
+             shadowOpacity="1"
+             shadowRadius="24" />
+      <style id="FlexBetween"
+             justifyContent="space-between" />
+      <style id="FlexRow"
+             flexDirection="row" />
+      <style id="OccupationTitle"
+             marginHorizontal="20" />
+      <style id="Option"
+             height="56"
+             justifyContent="center"
+             paddingHorizontal="16" />
+      <style id="Label"
+             color="#596980"
+             lineHeight="12"
+             fontSize="12"
+             fontWeight="500">
+        <modifier selected="true">
+            <style color="#F02234"
+                   fontWeight="500" />
+        </modifier>
+      </style>
+      <style id="flex-start"
+             justifyContent="flex-start" />
+      <style id="grey-top"
+             borderColor="#E8E9EB"
+             borderTopWidth="1"
+             marginTop="16" />
+      <style id="mainlist-items"
+             height="56"
+             justifyContent="center"
+             paddingLeft="20"
+             paddingRight="4">
+        <modifier selected="true">
+          <style backgroundColor="#FFFFFF" />
+        </modifier>
+      </style>
+      <style id="mainlist-label"
+             color="#596980"
+             fontSize="12"
+             fontWeight="500"
+             lineHeight="16">
+        <modifier selected="true">
+          <style color="#F02234"
+                 fontWeight="500"
+                 lineHeight="14" />
+        </modifier>
+      </style>
+    </styles>
+    <body style="Body">
+      <view trigger="load" action="set-value" target="idOccupation" new-value="Top Executive"/>
+      <view style="Item">
+        <text style="Title">Occupation</text>
+        <view>
+          <text-field style="Input" name="occupation" id="idOccupation" placeholderTextColor="#BCC2CC"/>
+          <text style="Arrow"> > </text>
+          <view style="ClickJackingOutter">
+            <view style="ClickJackingInner">
+              <behavior action="show" target="OccupationContainer"/>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view id="OccupationContainer" style="Container" hide="true">
+        <view style="Mask">
+          <behavior trigger="press" target="OccupationContainer" action="hide"/>
+        </view>
+        <view style="OccupationContent">
+          <view style="FlexBetween FlexRow">
+            <text style="18-bold OccupationTitle">Occupation</text>
+          </view>
+          <!--sublist stage zone-->
+          <!--MUST place on top-->
+          <!--used to keep the latest states of all sublist-->
+          <!--the only difference with 'reset zone' is that: all options in 'reset zone' has no attribute 'selected'. but has in 'stage zone'  -->
+          <view hide="true" id="Occupation_Stage_Zone">
+            <select-single id="Management" key="Management">
+              <option style="Option" value="Manager" key="Manager" selected="false">
+                <behavior trigger="select" action="hide" target="OccupationContainer"/>
+                <behavior trigger="select" action="set-value" new-value="Manager" target="idOccupation"/>
+                <behavior trigger="select" action="include-inner" target="Occupation_Stage_Zone" href="#Occupation_Reset_Zone" />
+                <behavior trigger="select" action="include" target="Management" href="#occupationSublist" />
+                <text style="Label">Manager</text>
+              </option>
+              <option style="Option" value="Top Executive" key="Top Executive" selected="true">
+                <behavior trigger="select" action="hide" target="OccupationContainer"/>
+                <behavior trigger="select" action="set-value" new-value="Top Executive" target="idOccupation"/>
+                <behavior trigger="select" action="include-inner" target="Occupation_Stage_Zone" href="#Occupation_Reset_Zone" />
+                <behavior trigger="select" action="include" target="Management" href="#occupationSublist" />
+                <text style="Label">Top Executive</text>
+              </option>
+            </select-single>
+            <select-single id="Business and Finance" key="Business and Finance">
+              <option style="Option" value="Accountant or Auditor" key="Accountant or Auditor" selected="false">
+                <behavior trigger="select" action="hide" target="OccupationContainer"/>
+                <behavior trigger="select" action="set-value" new-value="Accountant or Auditor" target="idOccupation"/>
+                <behavior trigger="select" action="include-inner" target="Occupation_Stage_Zone" href="#Occupation_Reset_Zone" />
+                <behavior trigger="select" action="include" target="Business and Finance" href="#occupationSublist" />
+                <text style="Label">Accountant or Auditor</text>
+              </option>
+              <option style="Option" value="Banking and Insurance Specialist" key="Banking and Insurance Specialist" selected="false">
+                <behavior trigger="select" action="hide" target="OccupationContainer"/>
+                <behavior trigger="select" action="set-value" new-value="Banking and Insurance Specialist" target="idOccupation"/>
+                <behavior trigger="select" action="include-inner" target="Occupation_Stage_Zone" href="#Occupation_Reset_Zone" />
+                <behavior trigger="select" action="include" target="Business and Finance" href="#occupationSublist" />
+                <text style="Label">Banking and Insurance Specialist</text>
+              </option>
+            </select-single>
+            <select-single id="IT, Data and Science" key="IT, Data and Science">
+              <option style="Option" value="Data Specialist" key="Data Specialist" selected="false">
+                <behavior trigger="select" action="hide" target="OccupationContainer"/>
+                <behavior trigger="select" action="set-value" new-value="Data Specialist" target="idOccupation"/>
+                <behavior trigger="select" action="include-inner" target="Occupation_Stage_Zone" href="#Occupation_Reset_Zone" />
+                <behavior trigger="select" action="include" target="IT, Data and Science" href="#occupationSublist" />
+                <text style="Label">Data Specialist</text>
+              </option>
+              <option style="Option" value="Digital and IT Professional" key="Digital and IT Professional" selected="false">
+                <behavior trigger="select" action="hide" target="OccupationContainer"/>
+                <behavior trigger="select" action="set-value" new-value="Digital and IT Professional" target="idOccupation"/>
+                <behavior trigger="select" action="include-inner" target="Occupation_Stage_Zone" href="#Occupation_Reset_Zone" />
+                <behavior trigger="select" action="include" target="IT, Data and Science" href="#occupationSublist" />
+                <text style="Label">Digital and IT Professional</text>
+              </option>
+            </select-single>
+          </view>
+          <!--sublist reset zone-->
+          <!--used to keep the reset states of all sublist-->
+          <!--the only difference with 'stage zone' is that: all options in 'reset zone' has no attribute 'selected'. but has in 'stage zone'  -->
+          <view hide="true" id="Occupation_Reset_Zone">
+            <select-single id="Management" key="Management">
+              <option style="Option" value="Manager" key="Manager" >
+                <behavior trigger="select" action="hide" target="OccupationContainer"/>
+                <behavior trigger="select" action="set-value" new-value="Manager" target="idOccupation"/>
+                <behavior trigger="select" action="include-inner" target="Occupation_Stage_Zone" href="#Occupation_Reset_Zone" />
+                <behavior trigger="select" action="include" target="Management" href="#occupationSublist" />
+                <text style="Label">Manager</text>
+              </option>
+              <option style="Option" value="Top Executive" key="Top Executive" >
+                <behavior trigger="select" action="hide" target="OccupationContainer"/>
+                <behavior trigger="select" action="set-value" new-value="Top Executive" target="idOccupation"/>
+                <behavior trigger="select" action="include-inner" target="Occupation_Stage_Zone" href="#Occupation_Reset_Zone" />
+                <behavior trigger="select" action="include" target="Management" href="#occupationSublist" />
+                <text style="Label">Top Executive</text>
+              </option>
+            </select-single>
+            <select-single id="Business and Finance" key="Business and Finance">
+              <option style="Option" value="Accountant or Auditor" key="Accountant or Auditor" >
+                <behavior trigger="select" action="hide" target="OccupationContainer"/>
+                <behavior trigger="select" action="set-value" new-value="Accountant or Auditor" target="idOccupation"/>
+                <behavior trigger="select" action="include-inner" target="Occupation_Stage_Zone" href="#Occupation_Reset_Zone" />
+                <behavior trigger="select" action="include" target="Business and Finance" href="#occupationSublist" />
+                <text style="Label">Accountant or Auditor</text>
+              </option>
+              <option style="Option" value="Banking and Insurance Specialist" key="Banking and Insurance Specialist" >
+                <behavior trigger="select" action="hide" target="OccupationContainer"/>
+                <behavior trigger="select" action="set-value" new-value="Banking and Insurance Specialist" target="idOccupation"/>
+                <behavior trigger="select" action="include-inner" target="Occupation_Stage_Zone" href="#Occupation_Reset_Zone" />
+                <behavior trigger="select" action="include" target="Business and Finance" href="#occupationSublist" />
+                <text style="Label">Banking and Insurance Specialist</text>
+              </option>
+            </select-single>
+            <select-single id="IT, Data and Science" key="IT, Data and Science">
+              <option style="Option" value="Data Specialist" key="Data Specialist" >
+                <behavior trigger="select" action="hide" target="OccupationContainer"/>
+                <behavior trigger="select" action="set-value" new-value="Data Specialist" target="idOccupation"/>
+                <behavior trigger="select" action="include-inner" target="Occupation_Stage_Zone" href="#Occupation_Reset_Zone" />
+                <behavior trigger="select" action="include" target="IT, Data and Science" href="#occupationSublist" />
+                <text style="Label">Data Specialist</text>
+              </option>
+              <option style="Option" value="Digital and IT Professional" key="Digital and IT Professional" >
+                <behavior trigger="select" action="hide" target="OccupationContainer"/>
+                <behavior trigger="select" action="set-value" new-value="Digital and IT Professional" target="idOccupation"/>
+                <behavior trigger="select" action="include-inner" target="Occupation_Stage_Zone" href="#Occupation_Reset_Zone" />
+                <behavior trigger="select" action="include" target="IT, Data and Science" href="#occupationSublist" />
+                <text style="Label">Digital and IT Professional</text>
+              </option>
+            </select-single>
+          </view>
+          <view style="FlexRow flex-start grey-top">
+            <view style="occupation-mainlist" scroll="true">
+              <select-single value="Management">
+                <option style="mainlist-items" value="Management" key="Management" >
+                  <behavior trigger="select" action="replace-inner" target="occupationSublist" href="#Management"/>
+                  <text style="mainlist-label">Management</text>
+                </option>
+                <option style="mainlist-items" value="Business and Finance" key="Business and Finance" >
+                  <behavior trigger="select" action="replace-inner" target="occupationSublist" href="#Business and Finance"/>
+                  <text style="mainlist-label">Business and Finance</text>
+                </option>
+                <option style="mainlist-items" value="IT, Data and Science" key="IT, Data and Science" >
+                  <behavior trigger="select" action="replace-inner" target="occupationSublist" href="#IT, Data and Science"/>
+                  <text style="mainlist-label">IT, Data and Science</text>
+                </option>
+              </select-single>
+            </view>
+            <view style="occupation-sublit" id="occupationSublist" scroll="true">
+              <behavior trigger="visible" action="replace-inner" target="occupationSublist" href="#Management"></behavior>
+            </view>
+          </view>
+        </view>
+      </view>
+    </body>
+  </screen>
+</doc>
