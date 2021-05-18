@@ -151,6 +151,15 @@
           <text style="Item__Label">Photo sharing app</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
+        <item
+          href="/case_studies/cascader/index.xml"
+          key="cascader"
+          show-during-load="loadingScreen"
+          style="Item"
+        >
+          <text style="Item__Label">Cascader</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
       </list>
     </body>
   </screen>
