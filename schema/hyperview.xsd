@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<xs:schema
-  xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  elementFormDefault="qualified"
-  targetNamespace="https://hyperview.org/hyperview"
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="https://hyperview.org/hyperview"
   xmlns:hv="https://hyperview.org/hyperview"
   xmlns:alert="https://hyperview.org/hyperview-alert"
   xmlns:amp="https://instawork.com/hyperview-amplitude"
@@ -13,49 +10,18 @@
   xmlns:phone="https://instawork.com/hyperview-phone"
   xmlns:redux="https://instawork.com/hyperview-redux"
   xmlns:share="https://instawork.com/hyperview-share"
-  xmlns:sms="https://instawork.com/hyperview-sms"
->
+  xmlns:sms="https://instawork.com/hyperview-sms">
 
-  <xs:import
-    namespace="https://hyperview.org/hyperview-alert"
-    schemaLocation="alert.xsd"
-  />
-  <xs:import
-    namespace="https://instawork.com/hyperview-amplitude"
-    schemaLocation="amplitude.xsd"
-  />
-  <xs:import
-    namespace="https://instawork.com/hyperview-behaviors"
-    schemaLocation="behaviors.xsd"
-  />
-  <xs:import
-    namespace="https://instawork.com/hyperview-branch"
-    schemaLocation="branch.xsd"
-  />
-  <xs:import
-    namespace="https://instawork.com/hyperview-intercom"
-    schemaLocation="intercom.xsd"
-  />
-  <xs:import
-    namespace="https://instawork.com/hyperview-nfc"
-    schemaLocation="nfc.xsd"
-  />
-  <xs:import
-    namespace="https://instawork.com/hyperview-phone"
-    schemaLocation="phone.xsd"
-  />
-  <xs:import
-    namespace="https://instawork.com/hyperview-redux"
-    schemaLocation="redux.xsd"
-  />
-  <xs:import
-    namespace="https://instawork.com/hyperview-share"
-    schemaLocation="share.xsd"
-  />
-  <xs:import
-    namespace="https://instawork.com/hyperview-sms"
-    schemaLocation="sms.xsd"
-  />
+  <xs:import namespace="https://hyperview.org/hyperview-alert" schemaLocation="alert.xsd" />
+  <xs:import namespace="https://instawork.com/hyperview-amplitude" schemaLocation="amplitude.xsd" />
+  <xs:import namespace="https://instawork.com/hyperview-behaviors" schemaLocation="behaviors.xsd" />
+  <xs:import namespace="https://instawork.com/hyperview-branch" schemaLocation="branch.xsd" />
+  <xs:import namespace="https://instawork.com/hyperview-intercom" schemaLocation="intercom.xsd" />
+  <xs:import namespace="https://instawork.com/hyperview-nfc" schemaLocation="nfc.xsd" />
+  <xs:import namespace="https://instawork.com/hyperview-phone" schemaLocation="phone.xsd" />
+  <xs:import namespace="https://instawork.com/hyperview-redux" schemaLocation="redux.xsd" />
+  <xs:import namespace="https://instawork.com/hyperview-share" schemaLocation="share.xsd" />
+  <xs:import namespace="https://instawork.com/hyperview-sms" schemaLocation="sms.xsd" />
 
   <xs:simpleType name="action">
     <xs:restriction base="xs:string">
@@ -135,25 +101,19 @@
 
   <xs:simpleType name="rgba">
     <xs:restriction base="xs:token">
-      <xs:pattern
-        value="rgba\(\d{1,3},\s*\d{1,3},\s*\d{1,3},\s*(0?\.\d+|1|1.0+)\)"
-      />
+      <xs:pattern value="rgba\(\d{1,3},\s*\d{1,3},\s*\d{1,3},\s*(0?\.\d+|1|1.0+)\)" />
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="hsl">
     <xs:restriction base="xs:token">
-      <xs:pattern
-        value="hsl\((\d{1,2}|1\d{2}|2\d{2}|3[0-5][0-9]|360),\s*(\d{1,2}|100)%,\s*(\d{1,2}|100)%\)"
-      />
+      <xs:pattern value="hsl\((\d{1,2}|1\d{2}|2\d{2}|3[0-5][0-9]|360),\s*(\d{1,2}|100)%,\s*(\d{1,2}|100)%\)" />
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="hsla">
     <xs:restriction base="xs:token">
-      <xs:pattern
-        value="hsla\((\d{1,2}|1\d{2}|2\d{2}|3[0-5][0-9]|360),\s*(\d{1,2}|100)%,\s*(\d{1,2}|100)%,\s*(0?\.\d+|1|1.0+)\)"
-      />
+      <xs:pattern value="hsla\((\d{1,2}|1\d{2}|2\d{2}|3[0-5][0-9]|360),\s*(\d{1,2}|100)%,\s*(\d{1,2}|100)%,\s*(0?\.\d+|1|1.0+)\)" />
     </xs:restriction>
   </xs:simpleType>
 
@@ -309,9 +269,7 @@
   </xs:simpleType>
 
   <xs:simpleType name="color">
-    <xs:union
-      memberTypes="hv:hex3 hv:hex6 hv:hex8 hv:rgb hv:rgba hv:hsl hv:hsla hv:named-color"
-    />
+    <xs:union memberTypes="hv:hex3 hv:hex6 hv:hex8 hv:rgb hv:rgba hv:hsl hv:hsla hv:named-color" />
   </xs:simpleType>
 
   <xs:simpleType name="date">
@@ -546,18 +504,9 @@
 
       <xs:attribute name="borderRadius" type="xs:nonNegativeInteger" />
       <xs:attribute name="borderBottomEndRadius" type="xs:nonNegativeInteger" />
-      <xs:attribute
-        name="borderBottomLeftRadius"
-        type="xs:nonNegativeInteger"
-      />
-      <xs:attribute
-        name="borderBottomRightRadius"
-        type="xs:nonNegativeInteger"
-      />
-      <xs:attribute
-        name="borderBottomStartRadius"
-        type="xs:nonNegativeInteger"
-      />
+      <xs:attribute name="borderBottomLeftRadius" type="xs:nonNegativeInteger" />
+      <xs:attribute name="borderBottomRightRadius" type="xs:nonNegativeInteger" />
+      <xs:attribute name="borderBottomStartRadius" type="xs:nonNegativeInteger" />
       <xs:attribute name="borderTopEndRadius" type="xs:nonNegativeInteger" />
       <xs:attribute name="borderTopLeftRadius" type="xs:nonNegativeInteger" />
       <xs:attribute name="borderTopRightRadius" type="xs:nonNegativeInteger" />
@@ -829,7 +778,7 @@
   <xs:element name="behavior">
     <xs:complexType>
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
-          <xs:element ref="alert:option" />
+        <xs:element ref="alert:option" />
       </xs:sequence>
       <xs:attributeGroup ref="hv:behaviorAttributes" />
     </xs:complexType>
@@ -1040,6 +989,7 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>
+      <xs:attribute name="editable" type="xs:boolean" />
       <!-- Needed to support address-input. Eventually, we should allow attributes from other namespaces. -->
       <xs:attribute name="type" type="xs:string" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
@@ -1056,6 +1006,7 @@
       <xs:attribute name="hide" type="xs:boolean" />
       <xs:attribute name="underlineColorAndroid" type="hv:color" />
       <xs:attribute name="style" />
+      <xs:attribute name="editable" type="xs:boolean" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
     </xs:complexType>
   </xs:element>

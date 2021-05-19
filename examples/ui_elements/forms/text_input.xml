@@ -80,6 +80,7 @@
         marginTop="16"
       />
       <style id="help--error" color="#FF4847" />
+      <style id="input--noneditable" color="#8D9494" />
       <style id="Main" flex="1" marginBottom="40" />
     </styles>
     <body style="Body" safe-area="true">
@@ -240,6 +241,31 @@
             style="input"
             secure-text="true"
             value=""
+          />
+        </view>
+        
+        <view style="FormGroup">
+          <text style="label">Noneditable Text</text>
+          <text-field
+            placeholderTextColor="#8D9494"
+            mask="999 99 9999"
+            name="text"
+            style="input input--noneditable"
+            value="9999"
+            editable="false"
+          />
+        </view>
+
+        <view style="FormGroup">
+          <text style="label">Editable Text</text>
+          <text-field
+            placeholder="Edit your text"
+            placeholderTextColor="#8D9494"        
+            mask="999 99 9999"
+            name="text"
+            style="input"
+            value="9999"
+            editable="true"
           />
         </view>
       </view>
