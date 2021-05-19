@@ -260,7 +260,7 @@
           <text style="label">Editable Text</text>
           <text-field
             placeholder="Edit your text"
-            placeholderTextColor="#8D9494"        
+            placeholderTextColor="#8D9494"
             mask="999 99 9999"
             name="text"
             style="input"

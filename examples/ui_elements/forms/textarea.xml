@@ -146,7 +146,7 @@
           <text style="label">Editable Text Area</text>
           <text-area
             placeholder="Edit your text"
-            placeholderTextColor="#8D9494"        
+            placeholderTextColor="#8D9494"
             name="textarea"
             style="input"
             value="One two three four"
