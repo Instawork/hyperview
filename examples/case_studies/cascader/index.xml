@@ -3,7 +3,17 @@
     <styles>
       <style id="Body"
              flex="1" />
-      <style id="Item"
+      <style id="Desc"
+             margin="24"
+             marginBottom="0" />
+      <style id="Basic" 
+             fontSize="18" 
+             marginVertical="8" />
+      <style id="Item" 
+             paddingLeft="12" />
+      <style id="Item__Label" 
+             fontSize="18" />
+      <style id="Content"
              marginHorizontal="28"
              marginTop="20" />
       <style id="Title"
@@ -80,7 +90,7 @@
              fontSize="12"
              fontWeight="500">
         <modifier selected="true">
-            <style color="#F02234"
+          <style color="#F02234"
                    fontWeight="500" />
         </modifier>
       </style>
@@ -112,8 +122,24 @@
       </style>
     </styles>
     <body style="Body">
+      <view style="Desc">
+        <text style="Basic">
+            Cascader example implemented using action:
+        </text>
+        <list>
+          <item key="1" style="Item">
+            <text style="Item__Label">replace-inner</text>
+          </item>
+          <item key="2" style="Item">
+            <text style="Item__Label">include</text>
+          </item>
+          <item key="3" style="Item">
+            <text style="Item__Label">include-inner</text>
+          </item>
+        </list>
+      </view>
       <view trigger="load" action="set-value" target="idOccupation" new-value="Top Executive"/>
-      <view style="Item">
+      <view style="Content">
         <text style="Title">Occupation</text>
         <view>
           <text-field style="Input" name="occupation" id="idOccupation" placeholderTextColor="#BCC2CC"/>
