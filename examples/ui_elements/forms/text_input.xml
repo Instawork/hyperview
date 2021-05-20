@@ -248,7 +248,6 @@
           <text style="label">Noneditable Text</text>
           <text-field
             placeholderTextColor="#8D9494"
-            mask="999 99 9999"
             name="text"
             style="input input--noneditable"
             value="9999"
@@ -261,7 +260,6 @@
           <text-field
             placeholder="Edit your text"
             placeholderTextColor="#8D9494"
-            mask="999 99 9999"
             name="text"
             style="input"
             value="9999"
