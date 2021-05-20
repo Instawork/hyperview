@@ -142,7 +142,9 @@
               <option style="Option" value="Manager" key="Manager" selected="false">
                 <behavior trigger="select" action="hide" target="OccupationContainer"/>
                 <behavior trigger="select" action="set-value" new-value="Manager" target="idOccupation"/>
+                <!-- reset state of all sublists to un-selected -->
                 <behavior trigger="select" action="include-inner" target="Occupation_Stage_Zone" href="#Occupation_Reset_Zone" />
+                <!-- keep state of current active sublist -->
                 <behavior trigger="select" action="include" target="Management" href="#occupationSublist" />
                 <text style="Label">Manager</text>
               </option>
