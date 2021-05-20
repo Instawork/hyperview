@@ -77,6 +77,7 @@
         marginTop="16"
       />
       <style id="help--error" color="#FF4847" />
+      <style id="input--noneditable" color="#8D9494" />
       <style id="Main" flex="1" />
     </styles>
     <body style="Body" safe-area="true">
@@ -129,6 +130,28 @@
           <text style="help help--error">
             Please enter your gig instructions
           </text>
+        </view>
+        <view style="FormGroup">
+          <text style="label">Noneditable Text Area</text>
+          <text-area
+            placeholderTextColor="#8D9494"
+            name="textarea"
+            style="input input--noneditable"
+            value="One two three four"
+            editable="false"
+          />
+        </view>
+
+        <view style="FormGroup">
+          <text style="label">Editable Text Area</text>
+          <text-area
+            placeholder="Edit your text"
+            placeholderTextColor="#8D9494"
+            name="textarea"
+            style="input"
+            value="One two three four"
+            editable="true"
+          />
         </view>
       </view>
     </body>

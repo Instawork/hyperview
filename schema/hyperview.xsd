@@ -829,7 +829,7 @@
   <xs:element name="behavior">
     <xs:complexType>
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
-          <xs:element ref="alert:option" />
+        <xs:element ref="alert:option" />
       </xs:sequence>
       <xs:attributeGroup ref="hv:behaviorAttributes" />
     </xs:complexType>
@@ -1040,6 +1040,7 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>
+      <xs:attribute name="editable" type="xs:boolean" />
       <!-- Needed to support address-input. Eventually, we should allow attributes from other namespaces. -->
       <xs:attribute name="type" type="xs:string" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
@@ -1056,6 +1057,7 @@
       <xs:attribute name="hide" type="xs:boolean" />
       <xs:attribute name="underlineColorAndroid" type="hv:color" />
       <xs:attribute name="style" />
+      <xs:attribute name="editable" type="xs:boolean" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
     </xs:complexType>
   </xs:element>
