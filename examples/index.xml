@@ -114,6 +114,17 @@
           </view>
           <text style="Item__Chevron">&gt;</text>
         </item>
+        <item
+          href="/frontend_form_validate/index.xml"
+          key="frontend_form_validate"
+          show-during-load="loadingScreen"
+          style="Item"
+        >
+          <view style="Item__Left">
+            <text style="Item__Label">Front-end form validation</text>
+          </view>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
       </list>
     </body>
   </screen>

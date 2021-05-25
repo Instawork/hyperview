@@ -1,0 +1,161 @@
+<doc lang="en"
+  xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style id="Header" borderBottomWidth="1" borderColor="#eee" flexDirection="row" paddingLeft="21" paddingRight="20" paddingBottom="10" paddingTop="10" />
+      <style id="Header__Back" color="black" fontSize="18" fontWeight="600" />
+      <style id="Input" borderBottomColor="#E1E1E1" borderBottomWidth="1" borderColor="#4E4D4D" fontSize="16" fontWeight="normal" paddingBottom="8" paddingTop="8" />
+      <style id="Button-Big-Default" fontSize="16" backgroundColor="#fff" height="48" />
+      <style id="Button-Big-Primary" fontSize="16" height="48" />
+      <style id="Button" borderColor="#F52B39" backgroundColor="#F52B39" borderWidth="1" borderRadius="20" justifyContent="center" paddingLeft="26" paddingRight="26" height="40" />
+      <style id="Button-Disabled" backgroundColor="lightgrey" />
+      <style id="Button-Label" color="#fff" fontSize="16" />
+      <style id="Text-Center" textAlign="center" justifyContent='center' alignItems='center' />
+      <style id="Shadow" elevation="6" shadowColor="#ccc" shadowOffsetX="0" shadowOffsetY="0" shadowOpacity="1" shadowRadius="6" />
+      <style id="Section-Wrap" display="flex" paddingLeft="20" paddingRight="20" justifyContent="center" />
+      <style id="Section-1" backgroundColor="#fff" display="flex" borderRadius="12" padding="16" marginBottom="10" />
+      <style id="Tips" fontSize="14" marginBottom="10" />
+      <style id="Text1" fontSize="14" color="#5A6170" />
+      <style id="Main-Red" color="#ED1B2E" />
+      <style id="M-20" margin="20" />
+      <style id="M-T-10" marginTop="10" />
+      <style id="Color-Warning" color="#F52B39" />
+      <style id="Padding-Zone" paddingBottom="100" />
+    </styles>
+    <body>
+      <!-- load form verify code -->
+      <behavior trigger="load" once="true" action="replace" href="/frontend_form_validate/verify.js" target="ID_VerifyCode" />
+      <!-- header start -->
+      <header style="Header" id="ID_Header">
+        <text action="back" href="#" style="Header__Back">
+          &lt; Back
+        </text>
+      </header>
+      <!-- header of interception, when user click back button after fill some fields, the interception alert will show. -->
+      <header style="Header" id="ID_Header_Interception" hide="true">
+        <text style="Header__Back">
+          &lt; Back Interception
+          <behavior xmlns:alert="https://hyperview.org/hyperview-alert" trigger="press" action="alert" alert:title="Tip" alert:message="Are you sure to leave this page, and drop the things you have entered?">
+            <alert:option alert:label="OK" href="#" action="back" />
+            <alert:option alert:label="Cancel" />
+          </behavior>
+        </text>
+      </header>
+      <!-- header end -->
+      <form id="getSavingPlansForm" scroll="true">
+        <view>
+          <text style="Tips M-20">
+            Front-end form validation.
+            All validations are finished on the front-end, there is no any http request.
+          </text>
+          <view style="Section-Wrap">
+            <!-- Name  -->
+            <text style="Tips">
+            1. Name is required, otherwise will report error when blur.
+            </text>
+            <view style="Section-1 Shadow">
+              <text style="Text1 M-T-10">
+                Goal name
+                <text style="Main-Red">*</text>
+              </text>
+              <text-field id="ID_GoalName" name="GoalName" placeholder="please input name" placeholderTextColor="#8D9494" style="Input">
+                <behavior trigger="blur" action="verify" />
+              </text-field>
+              <!-- text-field element MUST be followed by a view(contains error message) element. -->
+              <view hide="true">
+                <text style="Color-Warning">please input correct name</text>
+              </view>
+            </view>
+            <!-- Age  -->
+            <text style="Tips">
+              2. Retirement age should be &gt;=50, otherwise will report error when blur.
+            </text>
+            <view style="Section-1 Shadow">
+              <text style="Text1 M-T-10">
+                Retire Age (&gt;=50)
+                <text style="Main-Red">*</text>
+              </text>
+              <text-field id="ID_UserAge" name="UserAge" placeholder="please input age" placeholderTextColor="#8D9494" style="Input">
+                <behavior trigger="blur" action="verify" />
+              </text-field>
+              <!-- text-field element MUST be followed by a view(contains error message) element. -->
+              <view hide="true">
+                <text style="Color-Warning">please input correct age</text>
+              </view>
+            </view>
+            <text style="Tips">
+                3.1 The following fields have linkage effects. when one is modified, the others will automatically change accordingly.
+            </text>
+            <text style="Tips">
+                3.2 In addition, when there are changes, the interception pop-up window will show when the back button in the upper left corner of the page is clicked.
+            </text>
+            <view style="Section-1 Shadow">
+              <!-- Amount1  -->
+              <text style="Text1 M-T-10">
+                Amount1
+                <text style="Main-Red">*</text>
+              </text>
+              <text-field id="ID_Amount1Name" name="Amount1Name" data-oldvalue="0" placeholder="please input amount1" placeholderTextColor="#8D9494" style="Input">
+                <behavior trigger="blur" action="verify" />
+              </text-field>
+              <!--· text-field element MUST be followed by a view(contains error message) element. -->
+              <view hide="true">
+                <text style="Color-Warning">please input correct amount1</text>
+              </view>
+              <!-- Amount2  -->
+              <text style="Text1 M-T-10">
+                Amount2
+                <text style="Main-Red">*</text>
+              </text>
+              <text-field id="ID_Amount2Name" name="Amount2Name" data-oldvalue="0" placeholder="please input amount2" placeholderTextColor="#8D9494" style="Input">
+                <behavior trigger="blur" action="verify" />
+              </text-field>
+              <!--· text-field element MUST be followed by a view(contains error message) element. -->
+              <view hide="true">
+                <text style="Color-Warning">please input correct amount2</text>
+              </view>
+              <!-- Amount3  -->
+              <text style="Text1 M-T-10">
+                Amount3
+                <text style="Main-Red">*</text>
+              </text>
+              <text-field id="ID_Amount3Name" name="Amount3Name" data-oldvalue="0" placeholder="please input amount3" placeholderTextColor="#8D9494" style="Input">
+                <behavior trigger="blur" action="verify" />
+              </text-field>
+              <!--· text-field element MUST be followed by a view(contains error message) element. -->
+              <view hide="true">
+                <text style="Color-Warning">please input correct amount3</text>
+              </view>
+              <!-- Sum  -->
+              <text style="Text1 M-T-10">
+                Sum
+                <text style="Main-Red">*</text>
+              </text>
+              <text-field id="ID_SumName" name="SumName" data-oldvalue="0" placeholder="please input sum" placeholderTextColor="#8D9494" style="Input">
+                <behavior trigger="blur" action="verify" />
+              </text-field>
+              <!--· text-field element MUST be followed by a view(contains error message) element. -->
+              <view hide="true">
+                <text style="Color-Warning">please input correct Sum</text>
+              </view>
+            </view>
+          </view>
+          <view style="M-20">
+            <text style="Tips">
+              4. The submit button will activate when all above fileds validate success. and will deactivate when one or more validate fail.
+            </text>
+            <view id="ID_SubmitBtn_Active" hide="true" style="Button Button-Big-Primary">
+              <behavior href="/ui_elements/image.xml" action="push" target="getSavingPlansForm" verb="get" />
+              <text style="Button-Label Text-Center">Submit</text>
+            </view>
+            <view id="ID_SubmitBtn_NonActive" style="Button Button-Big-Primary Button-Disabled">
+              <text style="Button-Label Text-Center">Submit</text>
+            </view>
+          </view>
+          <view style="Padding-Zone" />
+        </view>
+      </form>
+      <text id="ID_VerifyCode" hide="true"></text>
+    </body>
+  </screen>
+</doc>

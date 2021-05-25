@@ -10,6 +10,7 @@ import React, { PureComponent } from 'react';
 import Hyperview from 'hyperview';
 import moment from 'moment';
 import HandleBack from '../components/HandleBack';
+import verifyBehavior from '../behaviors/verify'
 
 export default class HyperviewScreen extends React.PureComponent {
   goBack = (params, key) => {
@@ -82,6 +83,7 @@ export default class HyperviewScreen extends React.PureComponent {
           openModal={this.openModal}
           push={this.push}
           formatDate={this.formatDate}
+          behaviors={[verifyBehavior]}
         />
       </HandleBack>
     );
