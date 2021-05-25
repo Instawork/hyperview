@@ -11,10 +11,11 @@
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import React, { PureComponent } from 'react';
-import { addHref, createProps } from 'hyperview/src/services';
 import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { Text } from 'react-native';
+import { addHref } from 'hyperview/src/core/hyper-ref';
+import { createProps } from 'hyperview/src/services';
 
 export default class HvText extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;

@@ -22,7 +22,9 @@ import { ATTRIBUTES, PRESS_TRIGGERS_PROP_NAMES } from './types';
 import type {
   Element,
   HvComponentOnUpdate,
+  HvComponentOptions,
   PressTrigger,
+  StyleSheets,
 } from 'hyperview/src/types';
 import type { PressHandlers, Props, State } from './types';
 import React, { PureComponent } from 'react';
@@ -201,11 +203,11 @@ export default class HyperRef extends PureComponent<Props, State> {
 
     // Render pressable element
     if (pressBehaviors.length > 0) {
+      // $FlowFixMe: cannot spread Test props because return type is inexact
       const props = {
         // Component will use touchable opacity to trigger href.
         activeOpacity: 1,
         style: hrefStyle,
-        // Apply test props to wrapping TouchableOpacity
         ...createTestProps(this.props.element),
       };
 
@@ -318,3 +320,28 @@ export default class HyperRef extends PureComponent<Props, State> {
     return renderedComponent || null;
   }
 }
+
+export const addHref = (
+  component: any,
+  element: Element,
+  stylesheets: StyleSheets,
+  onUpdate: HvComponentOnUpdate,
+  options: HvComponentOptions,
+) => {
+  const href = element.getAttribute('href');
+  const action = element.getAttribute('action');
+  const childNodes = element.childNodes ? Array.from(element.childNodes) : [];
+  const behaviorElements = childNodes.filter(
+    n => n && n.nodeType === 1 && n.tagName === 'behavior',
+  );
+  const hasBehaviors = href || action || behaviorElements.length > 0;
+  if (!hasBehaviors) {
+    return component;
+  }
+
+  return React.createElement(
+    HyperRef,
+    { element, onUpdate, options, stylesheets },
+    ...Render.renderChildren(element, stylesheets, onUpdate, options),
+  );
+};
