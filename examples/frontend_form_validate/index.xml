@@ -1,5 +1,4 @@
-<doc lang="en"
-  xmlns="https://hyperview.org/hyperview">
+<doc lang="en" xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
       <style id="Header" borderBottomWidth="1" borderColor="#eee" flexDirection="row" paddingLeft="21" paddingRight="20" paddingBottom="10" paddingTop="10" />
@@ -155,7 +154,7 @@
           <view style="Padding-Zone" />
         </view>
       </form>
-      <text id="ID_VerifyCode" hide="true"></text>
+      <text id="ID_VerifyCode" hide="true" />
     </body>
   </screen>
 </doc>

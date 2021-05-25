@@ -10,6 +10,7 @@ import React, { PureComponent } from 'react';
 import Hyperview from 'hyperview';
 import moment from 'moment';
 import HandleBack from '../components/HandleBack';
+import { SafeAreaView } from "react-navigation";
 import verifyBehavior from '../behaviors/verify'
 
 export default class HyperviewScreen extends React.PureComponent {
@@ -72,20 +73,22 @@ export default class HyperviewScreen extends React.PureComponent {
     const entrypointUrl = navigation.state.params.url;
 
     return (
-      <HandleBack>
-        <Hyperview
-          back={this.goBack}
-          closeModal={this.closeModal}
-          entrypointUrl={entrypointUrl}
-          fetch={this.fetchWrapper}
-          navigate={this.navigate}
-          navigation={navigation}
-          openModal={this.openModal}
-          push={this.push}
-          formatDate={this.formatDate}
-          behaviors={[verifyBehavior]}
-        />
-      </HandleBack>
+      <SafeAreaView style={{ flex: 1 }}>
+        <HandleBack>
+          <Hyperview
+            back={this.goBack}
+            closeModal={this.closeModal}
+            entrypointUrl={entrypointUrl}
+            fetch={this.fetchWrapper}
+            navigate={this.navigate}
+            navigation={navigation}
+            openModal={this.openModal}
+            push={this.push}
+            formatDate={this.formatDate}
+            behaviors={[verifyBehavior]}
+          />
+        </HandleBack>
+      </SafeAreaView>
     );
   }
 }
