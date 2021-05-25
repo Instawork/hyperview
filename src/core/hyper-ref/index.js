@@ -24,12 +24,12 @@ import type {
   HvComponentOnUpdate,
   PressTrigger,
 } from 'hyperview/src/types';
-
 import type { PressHandlers, Props, State } from './types';
 import React, { PureComponent } from 'react';
 import { RefreshControl, ScrollView, TouchableOpacity } from 'react-native';
 import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
 import { XMLSerializer } from 'xmldom-instawork';
+import { createTestProps } from 'hyperview/src/services';
 
 /**
  * Component that handles dispatching behaviors based on the appropriate
@@ -205,6 +205,8 @@ export default class HyperRef extends PureComponent<Props, State> {
         // Component will use touchable opacity to trigger href.
         activeOpacity: 1,
         style: hrefStyle,
+        // Apply test props to wrapping TouchableOpacity
+        ...createTestProps(this.props.element),
       };
 
       // With multiple behaviors for the same trigger, we need to stagger
