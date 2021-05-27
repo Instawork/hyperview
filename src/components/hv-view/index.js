@@ -95,6 +95,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
 
         props.keyboardOpeningTime = 0;
         props.keyboardShouldPersistTaps = 'handled';
+        props.automaticallyAdjustContentInsets = false;
         props.scrollEventThrottle = 16;
         props.getTextInputRefs = () => inputRefs;
         const registerInputHandler = ref => {
