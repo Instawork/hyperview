@@ -5,67 +5,24 @@
       <style id="Main" flex="1" marginBottom="40" />
       <style id="Content" marginHorizontal="28" marginTop="20" />
       <style id="Title" fontSize="18" fontWeight="700" color="#283542" />
-      <style
-        id="Input"
-        borderBottomColor="#E8E9EB"
-        borderBottomWidth="1"
-        color="#2B3447"
-        fontSize="14"
-        fontWeight="500"
-        lineHeight="17"
-        paddingBottom="8"
-        paddingTop="12"
-      />
-      <style
-        id="Arrow"
-        color="#8F9EB2"
-        position="absolute"
-        right="2"
-        top="10"
-      />
-      <style
-        id="ClickJackingOutter"
-        bottom="0"
-        left="0"
-        position="absolute"
-        right="0"
-        top="0"
-      />
+      <style id="Input" borderBottomColor="#E1E1E1" borderBottomWidth="1" borderColor="#4E4D4D" flex="1" fontSize="16" fontWeight="normal" paddingBottom="8" paddingTop="8">
+        <modifier focused="true">
+          <style borderBottomColor="#4778FF" />
+        </modifier>
+      </style>
+      <style id="Input--Error" borderBottomColor="#FF4847" color="#FF4847">
+        <modifier focused="true">
+          <style borderBottomColor="#FF4847" />
+        </modifier>
+      </style>
+      <style id="Arrow" color="#8F9EB2" position="absolute" right="2" top="10" />
+      <style id="ClickJackingOutter" bottom="0" left="0" position="absolute" right="0" top="0" />
       <style id="ClickJackingInner" height="100%" />
-      <style
-        id="FormGroup"
-        flex="1"
-        marginLeft="24"
-        marginRight="24"
-        marginTop="24"
-      />
+      <style id="FormGroup" flex="1" marginLeft="24" marginRight="24" marginTop="24" />
       <style id="Select" marginTop="24" />
-      <style
-        id="Select__Separator"
-        borderTopColor="#e1e3e3"
-        borderTopWidth="1"
-        marginLeft="24"
-        marginRight="24"
-      />
-      <style
-        id="Select__Option"
-        alignItems="center"
-        flex="1"
-        flexDirection="row"
-        justifyContent="space-between"
-        paddingBottom="16"
-        paddingLeft="24"
-        paddingRight="24"
-        paddingTop="16"
-      />
-      <style
-        id="Select__RadioOuter"
-        borderColor="#bdc4c4"
-        borderRadius="10"
-        borderWidth="1"
-        height="20"
-        width="20"
-      >
+      <style id="Select__Separator" borderTopColor="#e1e3e3" borderTopWidth="1" marginLeft="24" marginRight="24" />
+      <style id="Select__Option" alignItems="center" flex="1" flexDirection="row" justifyContent="space-between" paddingBottom="16" paddingLeft="24" paddingRight="24" paddingTop="16" />
+      <style id="Select__RadioOuter" borderColor="#bdc4c4" borderRadius="10" borderWidth="1" height="20" width="20">
         <modifier pressed="true">
           <style borderColor="#8d9494" borderWidth="1" />
         </modifier>
@@ -73,26 +30,12 @@
           <style borderColor="#4778ff" borderWidth="2" />
         </modifier>
       </style>
-      <style
-        id="Select__RadioInner"
-        borderRadius="5"
-        height="10"
-        marginLeft="3"
-        marginTop="3"
-        opacity="0"
-        width="10"
-      >
+      <style id="Select__RadioInner" borderRadius="5" height="10" marginLeft="3" marginTop="3" opacity="0" width="10">
         <modifier selected="true">
           <style backgroundColor="#4778ff" opacity="1" />
         </modifier>
       </style>
-      <style
-        id="Select__Label"
-        color="black"
-        fontSize="16"
-        fontWeight="normal"
-        lineHeight="18"
-      >
+      <style id="Select__Label" color="black" fontSize="16" fontWeight="normal" lineHeight="18">
         <modifier selected="true">
           <style color="#312f2f" />
         </modifier>
@@ -102,23 +45,11 @@
       </style>
     </styles>
     <body style="Body" safe-area="true">
-      <view
-        scroll="true"
-        style="Main"
-        trigger="refresh"
-        action="reload"
-        href="#"
-      >
+      <view scroll="true" style="Main" trigger="refresh" action="reload" href="#">
         <view style="Content">
           <text style="Title">Option:</text>
           <view>
-            <text-field
-              style="Input"
-              name="option"
-              id="Option"
-              value="2:2"
-              placeholderTextColor="#BCC2CC"
-            />
+            <text-field style="Input" name="option" id="Option" value="2:2" placeholderTextColor="#BCC2CC" />
             <text style="Arrow"> > </text>
             <view style="ClickJackingOutter">
               <view style="ClickJackingInner">
@@ -136,7 +67,7 @@
               <text style="Select__Label">Option 1</text>
               <view style="Select__RadioOuter">
                 <view style="Select__RadioInner" />
-            </view>
+              </view>
             </option>
             <view style="Select__Separator" />
             <option style="Select__Option" value="2">
@@ -145,7 +76,7 @@
               <text style="Select__Label">Option 2</text>
               <view style="Select__RadioOuter">
                 <view style="Select__RadioInner" />
-            </view>
+              </view>
             </option>
             <view style="Select__Separator" />
             <option style="Select__Option" value="3">
@@ -154,7 +85,7 @@
               <text style="Select__Label">Option 3</text>
               <view style="Select__RadioOuter">
                 <view style="Select__RadioInner" />
-            </view>
+              </view>
             </option>
             <view style="Select__Separator" />
           </select-single>
@@ -165,13 +96,8 @@
                 <text style="Select__Label">1: 1</text>
                 <view style="Select__RadioOuter">
                   <view style="Select__RadioInner" />
-              </view>
-                <behavior
-                  trigger="select"
-                  action="set-value"
-                  new-value="1:1"
-                  target="Option"
-                />
+                </view>
+                <behavior trigger="select" action="set-value" new-value="1:1" target="Option" />
                 <!-- <behavior trigger="select" action="hide" target="Cascader" /> -->
               </option>
               <view style="Select__Separator" />
@@ -179,13 +105,8 @@
                 <text style="Select__Label">1: 2</text>
                 <view style="Select__RadioOuter">
                   <view style="Select__RadioInner" />
-              </view>
-                <behavior
-                  trigger="select"
-                  action="set-value"
-                  new-value="1:2"
-                  target="Option"
-                />
+                </view>
+                <behavior trigger="select" action="set-value" new-value="1:2" target="Option" />
                 <!-- <behavior trigger="select" action="hide" target="Cascader" /> -->
               </option>
               <view style="Select__Separator" />
@@ -193,30 +114,20 @@
                 <text style="Select__Label">1: 3</text>
                 <view style="Select__RadioOuter">
                   <view style="Select__RadioInner" />
-              </view>
-                <behavior
-                  trigger="select"
-                  action="set-value"
-                  new-value="1:3"
-                  target="Option"
-                />
+                </view>
+                <behavior trigger="select" action="set-value" new-value="1:3" target="Option" />
                 <!-- <behavior trigger="select" action="hide" target="Cascader" /> -->
               </option>
               <view style="Select__Separator" />
-          </view>
+            </view>
             <view id="section2" hide="true">
               <view style="Select__Separator" />
               <option style="Select__Option" value="2:1">
                 <text style="Select__Label">2: 1</text>
                 <view style="Select__RadioOuter">
                   <view style="Select__RadioInner" />
-              </view>
-                <behavior
-                  trigger="select"
-                  action="set-value"
-                  new-value="2:1"
-                  target="Option"
-                />
+                </view>
+                <behavior trigger="select" action="set-value" new-value="2:1" target="Option" />
                 <!-- <behavior trigger="select" action="hide" target="Cascader" /> -->
               </option>
               <view style="Select__Separator" />
@@ -224,34 +135,24 @@
                 <text style="Select__Label">2: 2</text>
                 <view style="Select__RadioOuter">
                   <view style="Select__RadioInner" />
-              </view>
-                <behavior
-                  trigger="select"
-                  action="set-value"
-                  new-value="2:2"
-                  target="Option"
-                />
+                </view>
+                <behavior trigger="select" action="set-value" new-value="2:2" target="Option" />
                 <!-- <behavior trigger="select" action="hide" target="Cascader" /> -->
               </option>
               <view style="Select__Separator" />
-          </view>
+            </view>
             <view id="section3" hide="true">
               <view style="Select__Separator" />
               <option style="Select__Option" value="3:1">
                 <text style="Select__Label">3: 1</text>
                 <view style="Select__RadioOuter">
                   <view style="Select__RadioInner" />
-              </view>
-                <behavior
-                  trigger="select"
-                  action="set-value"
-                  new-value="3:1"
-                  target="Option"
-                />
+                </view>
+                <behavior trigger="select" action="set-value" new-value="3:1" target="Option" />
                 <!-- <behavior trigger="select" action="hide" target="Cascader" /> -->
               </option>
               <view style="Select__Separator" />
-          </view>
+            </view>
           </select-single>
         </view>
       </view>
