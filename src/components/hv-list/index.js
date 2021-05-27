@@ -17,6 +17,7 @@ import { FlatList } from 'react-native';
 import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { State } from './types';
+import { getAncestorByTagName } from 'hyperview/src/services';
 
 export default class HvList extends PureComponent<HvComponentProps, State> {
   static namespaceURI = Namespaces.HYPERVIEW;
@@ -71,11 +72,20 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
     const showScrollIndicator =
       this.props.element.getAttribute('shows-scroll-indicator') !== 'false';
 
-    const listProps = {
-      data: this.props.element.getElementsByTagNameNS(
+    const data = Array.from(
+      // $FlowFixMe: this.props.element is an `Element`, not a `Node`
+      this.props.element.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
-        'item',
+        LOCAL_NAME.ITEM,
       ),
+      // Prevent items from nested lists to be included during render
+    ).filter(
+      item =>
+        getAncestorByTagName(item, LOCAL_NAME.LIST) === this.props.element,
+    );
+
+    const listProps = {
+      data,
       horizontal,
       keyExtractor: item => item.getAttribute('key'),
       renderItem: ({ item }) =>
