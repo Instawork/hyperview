@@ -3,6 +3,35 @@
     <styles>
       <style id="Body" backgroundColor="white" flex="1" paddingTop="24" />
       <style id="Main" flex="1" marginBottom="40" />
+      <style id="Content" marginHorizontal="28" marginTop="20" />
+      <style id="Title" fontSize="18" fontWeight="700" color="#283542" />
+      <style
+        id="Input"
+        borderBottomColor="#E8E9EB"
+        borderBottomWidth="1"
+        color="#2B3447"
+        fontSize="14"
+        fontWeight="500"
+        lineHeight="17"
+        paddingBottom="8"
+        paddingTop="12"
+      />
+      <style
+        id="Arrow"
+        color="#8F9EB2"
+        position="absolute"
+        right="2"
+        top="10"
+      />
+      <style
+        id="ClickJackingOutter"
+        bottom="0"
+        left="0"
+        position="absolute"
+        right="0"
+        top="0"
+      />
+      <style id="ClickJackingInner" height="100%" />
       <style
         id="FormGroup"
         flex="1"
@@ -10,54 +39,6 @@
         marginRight="24"
         marginTop="24"
       />
-      <style
-        id="Input"
-        borderBottomColor="#E1E1E1"
-        borderBottomWidth="1"
-        borderColor="#4E4D4D"
-        flex="1"
-        fontSize="16"
-        fontWeight="normal"
-        paddingBottom="8"
-        paddingTop="8"
-      >
-        <modifier focused="true">
-          <style borderBottomColor="#4778FF" />
-        </modifier>
-      </style>
-      <style id="Input--Error" borderBottomColor="#FF4847" color="#FF4847">
-        <modifier focused="true">
-          <style borderBottomColor="#FF4847" />
-        </modifier>
-      </style>
-      <style
-        id="Label"
-        borderColor="#4E4D4D"
-        fontSize="16"
-        fontWeight="bold"
-        lineHeight="24"
-        marginBottom="8"
-      />
-      <style
-        id="Help"
-        borderColor="#FF4847"
-        fontSize="16"
-        fontWeight="normal"
-        lineHeight="24"
-        marginTop="16"
-      />
-      <style id="Help--Error" color="#FF4847" />
-      <style
-        id="Submit"
-        color="#4778FF"
-        fontSize="16"
-        fontWeight="bold"
-        lineHeight="24"
-        marginLeft="24"
-        marginTop="16"
-      />
-
-
       <style id="Select" marginTop="24" />
       <style
         id="Select__Separator"
@@ -119,110 +100,124 @@
           <style color="#312f2f" />
         </modifier>
       </style>
-
-
     </styles>
     <body style="Body" safe-area="true">
-
       <view scroll="true" style="Main" trigger="refresh" action="reload" href="#">
-
-        <select-single name="level1" style="Select">
-
-          <view style="Select__Separator" />
-          <option style="Select__Option" value="1">
-            <behavior trigger="select" action="show" target="section1" />
-            <behavior trigger="deselect" action="hide" target="section1" />
-
-            <text style="Select__Label">Option 1</text>
-            <view style="Select__RadioOuter">
-              <view style="Select__RadioInner" />
+        <view style="Content">
+          <text style="Title">Option:</text>
+          <view>
+            <text-field
+              style="Input"
+              name="option"
+              id="Option"
+              value="2:2"
+              placeholderTextColor="#BCC2CC"
+            />
+            <text style="Arrow"> > </text>
+            <view style="ClickJackingOutter">
+              <view style="ClickJackingInner">
+                <behavior action="show" target="Cascader" />
+              </view>
             </view>
-          </option>
-
-          <view style="Select__Separator" />
-
-          <option style="Select__Option" value="2">
-            <behavior trigger="select" action="show" target="section2" />
-            <behavior trigger="deselect" action="hide" target="section2" />
-            <text style="Select__Label">Option 2</text>
-            <view style="Select__RadioOuter">
-              <view style="Select__RadioInner" />
+          </view>
+        </view>
+        <view id="Cascader" hide="true">
+          <select-single name="level1" style="Select" value="2">
+            <view style="Select__Separator" />
+            <option style="Select__Option" value="1">
+              <behavior trigger="select" action="show" target="section1" />
+              <behavior trigger="deselect" action="hide" target="section1" />
+              <text style="Select__Label">Option 1</text>
+              <view style="Select__RadioOuter">
+                <view style="Select__RadioInner" />
             </view>
-          </option>
-
-          <view style="Select__Separator" />
-
-          <option style="Select__Option" value="3">
-            <behavior trigger="select" action="show" target="section3" />
-            <behavior trigger="deselect" action="hide" target="section3" />
-            <text style="Select__Label">Option 3</text>
-            <view style="Select__RadioOuter">
-              <view style="Select__RadioInner" />
+            </option>
+            <view style="Select__Separator" />
+            <option style="Select__Option" value="2">
+              <behavior trigger="select" action="show" target="section2" />
+              <behavior trigger="deselect" action="hide" target="section2" />
+              <text style="Select__Label">Option 2</text>
+              <view style="Select__RadioOuter">
+                <view style="Select__RadioInner" />
             </view>
-          </option>
-          <view style="Select__Separator" />
-
-        </select-single>
-
-
-        <select-single name="level2" style="Select">
-
-          <view id="section1" hide="true">
-            <view style="Select__Separator" />
-            <option style="Select__Option" value="1:1">
-              <text style="Select__Label">1: 1</text>
-              <view style="Select__RadioOuter">
-                <view style="Select__RadioInner" />
-              </view>
             </option>
             <view style="Select__Separator" />
-            <option style="Select__Option" value="1:2">
-              <text style="Select__Label">1: 2</text>
+            <option style="Select__Option" value="3">
+              <behavior trigger="select" action="show" target="section3" />
+              <behavior trigger="deselect" action="hide" target="section3" />
+              <text style="Select__Label">Option 3</text>
               <view style="Select__RadioOuter">
                 <view style="Select__RadioInner" />
-              </view>
+            </view>
             </option>
             <view style="Select__Separator" />
-            <option style="Select__Option" value="1:3">
-              <text style="Select__Label">1: 3</text>
-              <view style="Select__RadioOuter">
-                <view style="Select__RadioInner" />
+          </select-single>
+          <select-single name="level2" style="Select">
+            <view id="section1" hide="true">
+              <view style="Select__Separator" />
+              <option style="Select__Option" value="1:1">
+                <text style="Select__Label">1: 1</text>
+                <view style="Select__RadioOuter">
+                  <view style="Select__RadioInner" />
               </view>
-            </option>
-            <view style="Select__Separator" />
+                <behavior trigger="select" action="set-value" new-value="1:1" target="Option" />
+                <!-- <behavior trigger="select" action="hide" target="Cascader" /> -->
+              </option>
+              <view style="Select__Separator" />
+              <option style="Select__Option" value="1:2">
+                <text style="Select__Label">1: 2</text>
+                <view style="Select__RadioOuter">
+                  <view style="Select__RadioInner" />
+              </view>
+                <behavior trigger="select" action="set-value" new-value="1:2" target="Option" />
+                <!-- <behavior trigger="select" action="hide" target="Cascader" /> -->
+              </option>
+              <view style="Select__Separator" />
+              <option style="Select__Option" value="1:3">
+                <text style="Select__Label">1: 3</text>
+                <view style="Select__RadioOuter">
+                  <view style="Select__RadioInner" />
+              </view>
+                <behavior trigger="select" action="set-value" new-value="1:3" target="Option" />
+                <!-- <behavior trigger="select" action="hide" target="Cascader" /> -->
+              </option>
+              <view style="Select__Separator" />
           </view>
-
-          <view id="section2" hide="true">
-            <view style="Select__Separator" />
-            <option style="Select__Option" value="2:1">
-              <text style="Select__Label">2: 1</text>
-              <view style="Select__RadioOuter">
-                <view style="Select__RadioInner" />
+            <view id="section2" hide="true">
+              <view style="Select__Separator" />
+              <option style="Select__Option" value="2:1">
+                <text style="Select__Label">2: 1</text>
+                <view style="Select__RadioOuter">
+                  <view style="Select__RadioInner" />
               </view>
-            </option>
-            <view style="Select__Separator" />
-            <option style="Select__Option" value="2:2">
-              <text style="Select__Label">2: 2</text>
-              <view style="Select__RadioOuter">
-                <view style="Select__RadioInner" />
+                <behavior trigger="select" action="set-value" new-value="2:1" target="Option" />
+                <!-- <behavior trigger="select" action="hide" target="Cascader" /> -->
+              </option>
+              <view style="Select__Separator" />
+              <option style="Select__Option" value="2:2" selected="true">
+                <text style="Select__Label">2: 2</text>
+                <view style="Select__RadioOuter">
+                  <view style="Select__RadioInner" />
               </view>
-            </option>
-            <view style="Select__Separator" />
+                <behavior trigger="select" action="set-value" new-value="2:2" target="Option" />
+                <!-- <behavior trigger="select" action="hide" target="Cascader" /> -->
+              </option>
+              <view style="Select__Separator" />
           </view>
-
-          <view id="section3" hide="true">
-            <view style="Select__Separator" />
-            <option style="Select__Option" value="3:3">
-              <text style="Select__Label">3: 1</text>
-              <view style="Select__RadioOuter">
-                <view style="Select__RadioInner" />
+            <view id="section3" hide="true">
+              <view style="Select__Separator" />
+              <option style="Select__Option" value="3:1">
+                <text style="Select__Label">3: 1</text>
+                <view style="Select__RadioOuter">
+                  <view style="Select__RadioInner" />
               </view>
-            </option>
-            <view style="Select__Separator" />
+                <behavior trigger="select" action="set-value" new-value="3:1" target="Option" />
+                <!-- <behavior trigger="select" action="hide" target="Cascader" /> -->
+              </option>
+              <view style="Select__Separator" />
           </view>
-
-        </select-single>
-
+          </select-single>
+        </view>
       </view>
     </body>
   </screen>
