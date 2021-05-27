@@ -102,7 +102,13 @@
       </style>
     </styles>
     <body style="Body" safe-area="true">
-      <view scroll="true" style="Main" trigger="refresh" action="reload" href="#">
+      <view
+        scroll="true"
+        style="Main"
+        trigger="refresh"
+        action="reload"
+        href="#"
+      >
         <view style="Content">
           <text style="Title">Option:</text>
           <view>
@@ -160,7 +166,12 @@
                 <view style="Select__RadioOuter">
                   <view style="Select__RadioInner" />
               </view>
-                <behavior trigger="select" action="set-value" new-value="1:1" target="Option" />
+                <behavior
+                  trigger="select"
+                  action="set-value"
+                  new-value="1:1"
+                  target="Option"
+                />
                 <!-- <behavior trigger="select" action="hide" target="Cascader" /> -->
               </option>
               <view style="Select__Separator" />
@@ -169,7 +180,12 @@
                 <view style="Select__RadioOuter">
                   <view style="Select__RadioInner" />
               </view>
-                <behavior trigger="select" action="set-value" new-value="1:2" target="Option" />
+                <behavior
+                  trigger="select"
+                  action="set-value"
+                  new-value="1:2"
+                  target="Option"
+                />
                 <!-- <behavior trigger="select" action="hide" target="Cascader" /> -->
               </option>
               <view style="Select__Separator" />
@@ -178,7 +194,12 @@
                 <view style="Select__RadioOuter">
                   <view style="Select__RadioInner" />
               </view>
-                <behavior trigger="select" action="set-value" new-value="1:3" target="Option" />
+                <behavior
+                  trigger="select"
+                  action="set-value"
+                  new-value="1:3"
+                  target="Option"
+                />
                 <!-- <behavior trigger="select" action="hide" target="Cascader" /> -->
               </option>
               <view style="Select__Separator" />
@@ -190,7 +211,12 @@
                 <view style="Select__RadioOuter">
                   <view style="Select__RadioInner" />
               </view>
-                <behavior trigger="select" action="set-value" new-value="2:1" target="Option" />
+                <behavior
+                  trigger="select"
+                  action="set-value"
+                  new-value="2:1"
+                  target="Option"
+                />
                 <!-- <behavior trigger="select" action="hide" target="Cascader" /> -->
               </option>
               <view style="Select__Separator" />
@@ -199,7 +225,12 @@
                 <view style="Select__RadioOuter">
                   <view style="Select__RadioInner" />
               </view>
-                <behavior trigger="select" action="set-value" new-value="2:2" target="Option" />
+                <behavior
+                  trigger="select"
+                  action="set-value"
+                  new-value="2:2"
+                  target="Option"
+                />
                 <!-- <behavior trigger="select" action="hide" target="Cascader" /> -->
               </option>
               <view style="Select__Separator" />
@@ -211,7 +242,12 @@
                 <view style="Select__RadioOuter">
                   <view style="Select__RadioInner" />
               </view>
-                <behavior trigger="select" action="set-value" new-value="3:1" target="Option" />
+                <behavior
+                  trigger="select"
+                  action="set-value"
+                  new-value="3:1"
+                  target="Option"
+                />
                 <!-- <behavior trigger="select" action="hide" target="Cascader" /> -->
               </option>
               <view style="Select__Separator" />
