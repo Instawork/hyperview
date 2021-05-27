@@ -12,6 +12,7 @@ import type { StyleSheet } from 'hyperview/src/types';
 
 export type InternalProps = {|
   accessibilityLabel?: any,
+  automaticallyAdjustContentInsets?: ?boolean,
   behavior?: 'position',
   extraScrollHeight?: ?number,
   keyboardOpeningTime?: ?number,
