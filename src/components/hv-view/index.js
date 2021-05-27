@@ -18,11 +18,12 @@ import {
   View,
 } from 'react-native';
 import React, { PureComponent } from 'react';
-import { addHref, createProps } from 'hyperview/src/services';
 import type { HvComponentProps } from 'hyperview/src/types';
 import type { InternalProps } from './types';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { LOCAL_NAME } from 'hyperview/src/types';
+import { addHref } from 'hyperview/src/core/hyper-ref';
+import { createProps } from 'hyperview/src/services';
 
 export default class HvView extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
