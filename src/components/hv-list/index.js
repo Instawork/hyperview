@@ -71,21 +71,17 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
     const showScrollIndicator =
       this.props.element.getAttribute('shows-scroll-indicator') !== 'false';
 
-    const itemsContainer =
-      this.props.element.firstChild &&
-      this.props.element.firstChild.tagName === LOCAL_NAME.ITEMS &&
-      this.props.element.firstChild.namespaceURI === Namespaces.HYPERVIEW
-        ? this.props.element.firstChild
-        : this.props.element;
-
-    const data = itemsContainer.childNodes
-      ? Array.from(itemsContainer.childNodes).filter(
-          item =>
-            item &&
-            item.tagName === LOCAL_NAME.ITEM &&
-            item.namespaceURI === Namespaces.HYPERVIEW,
-        )
-      : [];
+    const data = Array.from(
+      this.props.element
+        // $FlowFixMe: this.props.element is an Element, not a Node
+        .getElementsByTagNameNS(Namespaces.HYPERVIEW, LOCAL_NAME.ITEM),
+    ).filter(
+      item =>
+        item.parentNode === this.props.element ||
+        (item.parentNode.tagName === LOCAL_NAME.ITEMS &&
+          item.parentNode.namespaceURI === Namespaces.HYPERVIEW &&
+          item.parentNode.parentNode === this.props.element),
+    );
 
     const listProps = {
       data,
