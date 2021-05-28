@@ -64,9 +64,11 @@
       </header>
 
       <text style="Description">
-        View with text inputs that open the keyboard
+        View with text inputs that open the keyboard.
+        Keyboard awareness is applied on both the scrollable 'Form' view and the non-scrollable 'Footer' view
       </text>
-      <view style="FormGroup">
+
+      <view id="Form" style="FormGroup" scroll="true">
         <text style="Label">Input field 1</text>
         <text-field
           placeholder="First name"
@@ -92,7 +94,7 @@
         />
       </view>
 
-      <view avoid-keyboard="true">
+      <view id="Footer" avoid-keyboard="true">
         <view style="Footer">
           <text style="Footer__Description">Keyboard Avoiding View</text>
         </view>
