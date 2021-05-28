@@ -60,6 +60,20 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
       });
   };
 
+  getItems = () => {
+    return Array.from(
+      this.props.element
+        // $FlowFixMe: this.props.element is an Element, not a Node
+        .getElementsByTagNameNS(Namespaces.HYPERVIEW, LOCAL_NAME.ITEM),
+    ).filter(
+      item =>
+        item.parentNode === this.props.element ||
+        (item.parentNode.tagName === LOCAL_NAME.ITEMS &&
+          item.parentNode.namespaceURI === Namespaces.HYPERVIEW &&
+          item.parentNode.parentNode === this.props.element),
+    );
+  };
+
   render() {
     const styleAttr = this.props.element.getAttribute('style');
     const style = styleAttr
@@ -71,20 +85,8 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
     const showScrollIndicator =
       this.props.element.getAttribute('shows-scroll-indicator') !== 'false';
 
-    const data = Array.from(
-      this.props.element
-        // $FlowFixMe: this.props.element is an Element, not a Node
-        .getElementsByTagNameNS(Namespaces.HYPERVIEW, LOCAL_NAME.ITEM),
-    ).filter(
-      item =>
-        item.parentNode === this.props.element ||
-        (item.parentNode.tagName === LOCAL_NAME.ITEMS &&
-          item.parentNode.namespaceURI === Namespaces.HYPERVIEW &&
-          item.parentNode.parentNode === this.props.element),
-    );
-
     const listProps = {
-      data,
+      data: this.getItems(),
       horizontal,
       keyExtractor: item => item && item.getAttribute('key'),
       renderItem: ({ item }) =>
