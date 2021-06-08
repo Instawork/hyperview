@@ -409,3 +409,19 @@ export type NavigationProps = {|
 |};
 
 export const ON_EVENT_DISPATCH = 'hyperview:on-event';
+
+
+export type Validation = {|
+  valid: boolean,
+  message: ?string,
+|};
+
+export type Validator = {
+  namespace: string,
+  name: string,
+  check: (value: ?string, element: Element) => Promise<Validation>,
+};
+
+export type ValidatorRegistry = {
+  [string]: {[string]: Validator}
+};
