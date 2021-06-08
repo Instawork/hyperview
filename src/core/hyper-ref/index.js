@@ -139,6 +139,7 @@ export default class HyperRef extends PureComponent<Props, State> {
         const delay = behaviorElement.getAttribute(ATTRIBUTES.DELAY);
         const once = behaviorElement.getAttribute(ATTRIBUTES.ONCE);
         onUpdate(href, action, element, {
+          behaviorElement,
           delay,
           hideIndicatorIds,
           once,

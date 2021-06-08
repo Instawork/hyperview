@@ -378,7 +378,7 @@ export default class HyperScreen extends React.Component {
   onUpdateFragment = (href, action, currentElement, opts) => {
     const options = opts || {};
     const {
-      verb, targetId, showIndicatorIds, hideIndicatorIds, delay, once, onEnd,
+      behaviorElement, verb, targetId, showIndicatorIds, hideIndicatorIds, delay, once, onEnd,
     } = options;
 
     const showIndicatorIdList = showIndicatorIds ? Xml.splitAttributeList(showIndicatorIds) : [];
@@ -386,9 +386,8 @@ export default class HyperScreen extends React.Component {
 
     const formData = getFormData(currentElement);
 
-    // TODO: Check ran-once on the behavior element, not current element.
     if (once) {
-      if (currentElement.getAttribute('ran-once')) {
+      if (behaviorElement.getAttribute('ran-once')) {
         // This action is only supposed to run once, and it already ran,
         // so there's nothing more to do.
         if (typeof onEnd === 'function') {
@@ -396,7 +395,7 @@ export default class HyperScreen extends React.Component {
         }
         return;
       }
-        currentElement.setAttribute('ran-once', 'true');
+        behaviorElement.setAttribute('ran-once', 'true');
 
     }
 
