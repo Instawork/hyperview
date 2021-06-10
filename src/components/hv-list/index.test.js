@@ -123,11 +123,11 @@ describe('HvList', () => {
                     <item id="1-foo"/>
                     <item id="1-bar"/>
                     <item id="1-baz"/>
-                  </items>
-                  <items>
-                    <item id="2-foo"/>
-                    <item id="2-bar"/>
-                    <item id="2-baz"/>
+                    <items>
+                      <item id="2-foo"/>
+                      <item id="2-bar"/>
+                      <item id="2-baz"/>
+                    </items>
                   </items>
                   <item id="baz"/>
                 </list>
