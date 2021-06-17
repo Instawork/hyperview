@@ -747,6 +747,7 @@
       <xs:attribute name="textDecorationLine" type="xs:NCName" />
       <xs:attribute name="top" type="hv:pointsOrPercent" />
       <xs:attribute name="width" type="hv:pointsOrPercent" />
+      <xs:attribute name="zIndex" type="xs:positiveInteger" />
 
     </xs:complexType>
   </xs:element>
