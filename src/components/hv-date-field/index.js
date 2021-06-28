@@ -240,11 +240,13 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
   renderPicker = (onChange: (evt: Event, date?: Date) => void): ReactNode => {
     const minValue: ?DOMString = this.props.element.getAttribute('min');
     const maxValue: ?DOMString = this.props.element.getAttribute('max');
+    const locale: ?DOMString = this.props.element.getAttribute('locale');
     const minDate: ?Date = HvDateField.createDateFromString(minValue);
     const maxDate: ?Date = HvDateField.createDateFromString(maxValue);
     const displayMode: ?DOMString = this.props.element.getAttribute('mode');
     const props: Object = {
       display: displayMode,
+      locale,
       mode: 'date',
       onChange,
       value: this.getPickerValue(),
