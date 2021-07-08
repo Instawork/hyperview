@@ -253,7 +253,7 @@ export default class HyperScreen extends React.Component<Props, State> {
       return React.createElement(errorScreen, {
         error: this.state.error,
         onPressReload: () => this.reload(),  // Make sure reload() is called without any args
-        onPressViewDetails: (uri) => this.props.openModal({url: uri}),
+        onPressViewDetails: (url) => this.props.openModal({ delay: 0, preloadScreen: null, url }),
       });
     }
     if (!this.state.doc) {
@@ -420,7 +420,7 @@ export default class HyperScreen extends React.Component<Props, State> {
 
     const formData = getFormData(currentElement);
 
-    if (once) {
+    if (once && behaviorElement) {
       if (behaviorElement.getAttribute('ran-once')) {
         // This action is only supposed to run once, and it already ran,
         // so there's nothing more to do.

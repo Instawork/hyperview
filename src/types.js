@@ -8,7 +8,7 @@
  *
  */
 
-import type { ElementRef } from 'react';
+import type { ComponentType, ElementRef } from 'react';
 
 export type DOMString = string;
 export type NamespaceURI = string;
@@ -448,6 +448,7 @@ export type Props = {|
   closeModal: (routeParams?: ?NavigationRouteParams) => void,
   components: HvComponent[],
   entrypointUrl: string,
+  errorScreen?: ComponentType<*>,
   fetch: Fetch,
   formatDate: (date: ?Date, format: ?string) => string,
   navigate: (routeParams: ?NavigationRouteParams) => void,
