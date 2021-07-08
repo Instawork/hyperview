@@ -22,6 +22,7 @@ export const LOCAL_NAME = {
   HEADER: 'header',
   IMAGE: 'image',
   ITEM: 'item',
+  ITEMS: 'items',
   LIST: 'list',
   MODIFIER: 'modifier',
   OPTION: 'option',

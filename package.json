@@ -1,6 +1,6 @@
 {
   "name": "hyperview",
-  "version": "0.38.0",
+  "version": "0.39.2",
   "main": "lib/index.js",
   "description": "React Native client for Hyperview XML",
   "homepage": "https://hyperview.org",
@@ -40,7 +40,7 @@
     "test:lint": "eslint src && prettier --check '**/*.xsd' '**/*.xml'",
     "test:render": "npx patch-package && jest test/render.test.js --forceExit",
     "test:unit": "jest --testPathPattern src",
-    "test:xmlserver": "http-server -c-1 -p 8085 ./examples",
+    "test:xmlserver": "http-server --cors='*' -c-1 -p 8085 ./examples",
     "test:validate-xml": "find examples/ -name '*.xml' | xargs xmllint --schema schema/hyperview.xsd --noout",
     "test": "yarn generate test && yarn test:flow && yarn test:lint && yarn test:render && yarn test:unit && yarn test:validate-xml"
   },

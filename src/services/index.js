@@ -9,14 +9,12 @@
  */
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import * as Render from 'hyperview/src/services/render';
 import * as Xml from 'hyperview/src/services/xml';
 import { DEFAULT_PRESS_OPACITY, HV_TIMEOUT_ID_ATTR } from './types';
 import type {
   DOMString,
   Document,
   Element,
-  HvComponentOnUpdate,
   HvComponentOptions,
   LocalName,
   Node,
@@ -25,9 +23,7 @@ import type {
   StyleSheets,
 } from 'hyperview/src/types';
 import { FORM_NAMES, LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
-import HyperRef from 'hyperview/src/core/hyper-ref';
 import { Platform } from 'react-native';
-import React from 'react';
 
 /**
  * This file is currently a dumping place for every functions used accross
@@ -136,31 +132,6 @@ export const createProps = (
 
 export const later = (delayMs: number): Promise<void> =>
   new Promise(resolve => setTimeout(resolve, delayMs));
-
-export const addHref = (
-  component: any,
-  element: Element,
-  stylesheets: ?StyleSheets,
-  onUpdate: HvComponentOnUpdate,
-  options: HvComponentOptions,
-) => {
-  const href = element.getAttribute('href');
-  const action = element.getAttribute('action');
-  const childNodes = element.childNodes ? Array.from(element.childNodes) : [];
-  const behaviorElements = childNodes.filter(
-    n => n && n.nodeType === 1 && n.tagName === 'behavior',
-  );
-  const hasBehaviors = href || action || behaviorElements.length > 0;
-  if (!hasBehaviors) {
-    return component;
-  }
-
-  return React.createElement(
-    HyperRef,
-    { element, onUpdate, options, stylesheets },
-    ...Render.renderChildren(element, stylesheets, onUpdate, options),
-  );
-};
 
 /**
  * Clones the element and moves all children from the original element

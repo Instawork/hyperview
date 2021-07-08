@@ -18,6 +18,8 @@ const QUERY_SEPARATOR = '?';
 
 const getHrefKey = (href: string): string => href.split(QUERY_SEPARATOR)[0];
 
+const routeKeys: { [string]: string } = {};
+
 export default class Navigation {
   url: string;
 
@@ -26,8 +28,6 @@ export default class Navigation {
   navigation: NavigationProps;
 
   preloadScreens: { [number]: Element } = {};
-
-  routeKeys: { [string]: string } = {};
 
   constructor(url: string, navigation: NavigationProps) {
     this.url = url;
@@ -52,10 +52,14 @@ export default class Navigation {
     delete this.preloadScreens[id];
   };
 
-  getRouteKey = (href: string): ?string => this.routeKeys[getHrefKey(href)];
+  getRouteKey = (href: string): ?string => routeKeys[getHrefKey(href)];
 
   setRouteKey = (href: string, key: string): void => {
-    this.routeKeys[getHrefKey(href)] = key;
+    routeKeys[getHrefKey(href)] = key;
+  };
+
+  removeRouteKey = (href: string): void => {
+    delete routeKeys[getHrefKey(href)];
   };
 
   navigate = (
@@ -93,7 +97,12 @@ export default class Navigation {
         this.navigation.push(routeParams);
         break;
       case NAV_ACTIONS.NAVIGATE: {
-        this.navigation.navigate(routeParams, this.getRouteKey(url));
+        const key = this.getRouteKey(url);
+        if (key) {
+          this.navigation.navigate(routeParams, this.getRouteKey(url));
+        } else {
+          this.navigation.push(routeParams);
+        }
         break;
       }
       case NAV_ACTIONS.NEW:

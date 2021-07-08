@@ -62,7 +62,7 @@
       </header>
       <view scroll="true" style="Main">
         <text style="Description">
-          Long-presing the button will replace the content.
+          Long-pressing the button will replace the content.
         </text>
         <view
           action="replace"

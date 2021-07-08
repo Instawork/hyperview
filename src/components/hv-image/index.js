@@ -10,10 +10,11 @@
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import React, { PureComponent } from 'react';
-import { addHref, createProps } from 'hyperview/src/services';
 import type { HvComponentProps } from 'hyperview/src/types';
 import { Image } from 'react-native';
 import { LOCAL_NAME } from 'hyperview/src/types';
+import { addHref } from 'hyperview/src/core/hyper-ref';
+import { createProps } from 'hyperview/src/services';
 import urlParse from 'url-parse';
 
 export default class HvImage extends PureComponent<HvComponentProps> {

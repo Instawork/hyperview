@@ -98,6 +98,7 @@ export default class HvTextArea extends PureComponent<HvComponentProps> {
     }
 
     const focused = this.props.element.getAttribute('focused') === 'true';
+    const editable = this.props.element.getAttribute('editable') !== 'false';
     const keyboardType =
       this.props.element.getAttribute('keyboard-type') || undefined;
     const props = {
@@ -105,6 +106,7 @@ export default class HvTextArea extends PureComponent<HvComponentProps> {
         ...this.props.options,
         focused,
       }),
+      editable,
       keyboardType,
       multiline: true,
       onBlur: () => this.setFocus(false),

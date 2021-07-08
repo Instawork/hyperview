@@ -22,14 +22,16 @@ import { ATTRIBUTES, PRESS_TRIGGERS_PROP_NAMES } from './types';
 import type {
   Element,
   HvComponentOnUpdate,
+  HvComponentOptions,
   PressTrigger,
+  StyleSheets,
 } from 'hyperview/src/types';
-
 import type { PressHandlers, Props, State } from './types';
 import React, { PureComponent } from 'react';
 import { RefreshControl, ScrollView, TouchableOpacity } from 'react-native';
 import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
 import { XMLSerializer } from 'xmldom-instawork';
+import { createTestProps } from 'hyperview/src/services';
 
 /**
  * Component that handles dispatching behaviors based on the appropriate
@@ -139,6 +141,7 @@ export default class HyperRef extends PureComponent<Props, State> {
         const delay = delayString ? parseInt(delayString, 10) : null;
         const once = behaviorElement.getAttribute(ATTRIBUTES.ONCE);
         onUpdate(href, action, element, {
+          behaviorElement,
           delay,
           hideIndicatorIds,
           once,
@@ -202,10 +205,12 @@ export default class HyperRef extends PureComponent<Props, State> {
 
     // Render pressable element
     if (pressBehaviors.length > 0) {
+      // $FlowFixMe: cannot spread Test props because return type is inexact
       const props = {
         // Component will use touchable opacity to trigger href.
         activeOpacity: 1,
         style: hrefStyle,
+        ...createTestProps(this.props.element),
       };
 
       // With multiple behaviors for the same trigger, we need to stagger
@@ -317,3 +322,28 @@ export default class HyperRef extends PureComponent<Props, State> {
     return renderedComponent || null;
   }
 }
+
+export const addHref = (
+  component: any,
+  element: Element,
+  stylesheets: ?StyleSheets,
+  onUpdate: HvComponentOnUpdate,
+  options: HvComponentOptions,
+) => {
+  const href = element.getAttribute('href');
+  const action = element.getAttribute('action');
+  const childNodes = element.childNodes ? Array.from(element.childNodes) : [];
+  const behaviorElements = childNodes.filter(
+    n => n && n.nodeType === 1 && n.tagName === 'behavior',
+  );
+  const hasBehaviors = href || action || behaviorElements.length > 0;
+  if (!hasBehaviors) {
+    return component;
+  }
+
+  return React.createElement(
+    HyperRef,
+    { element, onUpdate, options, stylesheets },
+    ...Render.renderChildren(element, stylesheets, onUpdate, options),
+  );
+};

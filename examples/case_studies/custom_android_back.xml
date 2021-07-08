@@ -1,0 +1,78 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style
+        id="Header"
+        alignItems="center"
+        backgroundColor="white"
+        borderBottomColor="#eee"
+        borderBottomWidth="1"
+        flexDirection="row"
+        paddingLeft="24"
+        paddingRight="24"
+        paddingBottom="16"
+      />
+      <style
+        id="Header__Back"
+        color="blue"
+        fontSize="16"
+        fontWeight="600"
+        paddingRight="16"
+      />
+      <style id="Header__Title" color="black" fontSize="24" fontWeight="600" />
+      <style id="Body" backgroundColor="white" flex="1" />
+      <style id="Basic" fontSize="16" fontWeight="700" marginVertical="8" />
+      <style id="Container" backgroundColor="white" flex="1" margin="24" />
+      <style
+        id="Description"
+        fontSize="16"
+        fontWeight="normal"
+        marginBottom="16"
+      />
+      <style
+        id="Header"
+        alignItems="center"
+        flexDirection="row"
+        borderBottomColor="#E1E1E1"
+        borderBottomWidth="1"
+        borderColor="#4E4D4D"
+        fontSize="16"
+        fontWeight="normal"
+        padding="24"
+        paddingBottom="8"
+      />
+      <style id="Link" color="blue" fontSize="16" fontWeight="normal" />
+    </styles>
+    <body style="Body" safe-area="true">
+      <header style="Header">
+        <text action="back" href="#" style="Header__Back">Back</text>
+        <text style="Header__Title">Custom Android Back</text>
+      </header>
+
+      <view style="Container">
+        <text style="Basic">
+          Custom handling for Android back button press.
+        </text>
+        <text style="Description">
+          Goes back to the home page when the hardware back button is pressed on this page on Android.
+        </text>
+        <text style="Description">
+          This can be achieved by using the BackHandler provided by react-native at the App level.
+        </text>
+
+        <view>
+          <text style="Basic">References:</text>
+          <text style="Link" href="https://reactnative.dev/docs/backhandler">
+            BackHandler
+          </text>
+          <text
+            style="Link"
+            href="https://github.com/Instawork/hyperview/pull/272"
+          >
+            Demo implementation PR
+          </text>
+        </view>
+      </view>
+    </body>
+  </screen>
+</doc>

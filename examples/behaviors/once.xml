@@ -8,9 +8,9 @@
         borderBottomColor="#eee"
         borderBottomWidth="1"
         flexDirection="row"
+        paddingBottom="16"
         paddingLeft="24"
         paddingRight="24"
-        paddingBottom="16"
       />
       <style
         id="Header__Back"
@@ -53,14 +53,46 @@
         padding="24"
       />
       <style id="Button__Label" color="white" fontSize="24" fontWeight="bold" />
+      <style
+        id="Container"
+        borderColor="#e1e1e1"
+        borderRadius="16"
+        borderWidth="2"
+        margin="24"
+        padding="24"
+      />
+      <style
+        id="Container__Label"
+        color="black"
+        fontSize="16"
+        fontWeight="normal"
+      />
+      <style id="Main" flex="1" />
     </styles>
-    <body style="Body" safe-area="true">
-      <view scroll="true">
-        <header style="Header">
-          <text action="back" href="#" style="Header__Back">Back</text>
-          <text style="Header__Title">Pushed</text>
-        </header>
-        <text style="Description">Pushed a new screen!</text>
+    <body safe-area="true" style="Body">
+      <header style="Header">
+        <text action="back" href="#" style="Header__Back">Back</text>
+        <text style="Header__Title">Once</text>
+      </header>
+      <view scroll="1" style="Main">
+        <text
+          style="Description"
+        >Tapping the button below will request two XML fragments and append them to the container below. One fragment will be added each time, the other will be added only once.</text>
+        <view style="Button">
+          <behavior
+            action="append"
+            href="/behaviors/_once_1.xml"
+            target="container"
+          />
+          <behavior
+            action="append"
+            href="/behaviors/_once_2.xml"
+            once="true"
+            target="container"
+          />
+          <text style="Button__Label">Press me</text>
+        </view>
+        <view id="container" style="Container" />
       </view>
     </body>
   </screen>

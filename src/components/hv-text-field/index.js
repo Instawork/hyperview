@@ -115,6 +115,7 @@ export default class HvTextField extends PureComponent<HvComponentProps> {
     }
 
     const focused = this.props.element.getAttribute('focused') === 'true';
+    const editable = this.props.element.getAttribute('editable') !== 'false';
     const keyboardType =
       this.props.element.getAttribute('keyboard-type') || undefined;
     const props = {
@@ -123,6 +124,7 @@ export default class HvTextField extends PureComponent<HvComponentProps> {
         focused,
       }),
       autoFocus: this.props.element.getAttribute('auto-focus') === 'true',
+      editable,
       keyboardType,
       multiline: false,
       onBlur: () => this.setFocus(false),

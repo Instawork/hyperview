@@ -385,6 +385,21 @@
             <text style="Item__Chevron">&gt;</text>
           </item>
         </section>
+
+        <section>
+          <section-title style="List__Header">
+            <text style="List__HeaderText">Once</text>
+          </section-title>
+          <item
+            href="/behaviors/once.xml"
+            key="once"
+            show-during-load="loadingScreen"
+            style="Item"
+          >
+            <text style="Item__Label">Once</text>
+            <text style="Item__Chevron">&gt;</text>
+          </item>
+        </section>
       </section-list>
     </body>
   </screen>

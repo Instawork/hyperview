@@ -18,11 +18,12 @@ import {
   View,
 } from 'react-native';
 import React, { PureComponent } from 'react';
-import { addHref, createProps } from 'hyperview/src/services';
 import type { HvComponentProps } from 'hyperview/src/types';
 import type { InternalProps } from './types';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { LOCAL_NAME } from 'hyperview/src/types';
+import { addHref } from 'hyperview/src/core/hyper-ref';
+import { createProps } from 'hyperview/src/services';
 
 export default class HvView extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
@@ -94,6 +95,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
 
         props.keyboardOpeningTime = 0;
         props.keyboardShouldPersistTaps = 'handled';
+        props.automaticallyAdjustContentInsets = false;
         props.scrollEventThrottle = 16;
         props.getTextInputRefs = () => inputRefs;
         const registerInputHandler = ref => {

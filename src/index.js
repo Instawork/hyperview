@@ -180,6 +180,9 @@ export default class HyperScreen extends React.Component<Props, State> {
     if (preloadScreen && this.navigation.getPreloadScreen(preloadScreen)) {
       this.navigation.removePreloadScreen(preloadScreen);
     }
+    if (this.state.url) {
+      this.navigation.removeRouteKey(this.state.url)
+    }
   }
 
   /**
@@ -246,13 +249,12 @@ export default class HyperScreen extends React.Component<Props, State> {
    */
   render() {
     if (this.state.error) {
-      return (
-        <LoadError
-          error={this.state.error}
-          onPressReload={() => this.reload()}
-          onPressViewDetails={(uri) => this.props.openModal({ delay: null, preloadScreen: null, url: uri})}
-        />
-      );
+      const errorScreen = this.props.errorScreen || LoadError;
+      return React.createElement(errorScreen, {
+        error: this.state.error,
+        onPressReload: () => this.reload(),  // Make sure reload() is called without any args
+        onPressViewDetails: (uri) => this.props.openModal({url: uri}),
+      });
     }
     if (!this.state.doc) {
       return (
@@ -410,7 +412,7 @@ export default class HyperScreen extends React.Component<Props, State> {
   onUpdateFragment = (href: ?string, action: Action, currentElement: Element, opts: HvComponentOptions) => {
     const options = opts || {};
     const {
-      verb, targetId, showIndicatorIds, hideIndicatorIds, delay, once, onEnd,
+      behaviorElement, verb, targetId, showIndicatorIds, hideIndicatorIds, delay, once, onEnd,
     } = options;
 
     const showIndicatorIdList = showIndicatorIds ? Xml.splitAttributeList(showIndicatorIds) : [];
@@ -418,9 +420,8 @@ export default class HyperScreen extends React.Component<Props, State> {
 
     const formData = getFormData(currentElement);
 
-    // TODO: Check ran-once on the behavior element, not current element.
     if (once) {
-      if (currentElement.getAttribute('ran-once')) {
+      if (behaviorElement.getAttribute('ran-once')) {
         // This action is only supposed to run once, and it already ran,
         // so there's nothing more to do.
         if (typeof onEnd === 'function') {
@@ -428,7 +429,7 @@ export default class HyperScreen extends React.Component<Props, State> {
         }
         return;
       }
-        currentElement.setAttribute('ran-once', 'true');
+        behaviorElement.setAttribute('ran-once', 'true');
 
     }
 
