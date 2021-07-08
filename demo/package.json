@@ -27,7 +27,10 @@
   "devDependencies": {
     "@babel/core": "7.13.8",
     "babel-preset-expo": "8.3.0",
-    "expo-cli": "4.2.1"
+    "detox": "18.18.1",
+    "detox-cli": "18.14.1",
+    "expo-cli": "4.2.1",
+    "turtle-cli": "0.22.2"
   },
   "private": true
 }
