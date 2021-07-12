@@ -42,7 +42,7 @@ export default class HvWebView extends PureComponent<HvComponentProps> {
       this.props.stylesheets,
       this.props.options,
     );
-    const color = props['activity-indicator-color'];
+    const color = props['activity-indicator-color'] || "#8d9494";
     const injectedJavaScript = props['injected-java-script'];
     const source = { html: props.html, uri: props.url };
     return (
