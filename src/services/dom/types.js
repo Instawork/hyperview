@@ -15,13 +15,6 @@ export const HTTP_HEADERS = {
   X_HYPERVIEW_VERSION: 'X-Hyperview-Version',
 };
 
-export const HTTP_METHODS = {
-  GET: 'get',
-  POST: 'post',
-};
-
-export type HttpMethod = $Values<typeof HTTP_METHODS>;
-
 export const CONTENT_TYPE = {
   APPLICATION_XML: 'application/xml',
   TEXT_HTML: 'text/html',

@@ -21,7 +21,7 @@ export type Props = {|
   element: Element,
   onUpdate: HvComponentOnUpdate,
   options: HvComponentOptions,
-  stylesheets: StyleSheets,
+  stylesheets: ?StyleSheets,
 |};
 
 export type State = {|

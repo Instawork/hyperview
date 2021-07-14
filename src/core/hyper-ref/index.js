@@ -118,11 +118,12 @@ export default class HyperRef extends PureComponent<Props, State> {
     if (Object.values(NAV_ACTIONS).indexOf(action) >= 0) {
       return () => {
         const href = behaviorElement.getAttribute(ATTRIBUTES.HREF);
-        const showIndicatorId = behaviorElement.getAttribute(
+        const showIndicatorIds = behaviorElement.getAttribute(
           ATTRIBUTES.SHOW_DURING_LOAD,
         );
-        const delay = behaviorElement.getAttribute(ATTRIBUTES.DELAY);
-        onUpdate(href, action, element, { delay, showIndicatorId });
+        const delayString = behaviorElement.getAttribute(ATTRIBUTES.DELAY);
+        const delay = delayString ? parseInt(delayString, 10) : null;
+        onUpdate(href, action, element, { delay, showIndicatorIds });
       };
     }
     if (Object.values(UPDATE_ACTIONS).indexOf(action) >= 0) {
@@ -136,7 +137,8 @@ export default class HyperRef extends PureComponent<Props, State> {
         const hideIndicatorIds = behaviorElement.getAttribute(
           ATTRIBUTES.HIDE_DURING_LOAD,
         );
-        const delay = behaviorElement.getAttribute(ATTRIBUTES.DELAY);
+        const delayString = behaviorElement.getAttribute(ATTRIBUTES.DELAY);
+        const delay = delayString ? parseInt(delayString, 10) : null;
         const once = behaviorElement.getAttribute(ATTRIBUTES.ONCE);
         onUpdate(href, action, element, {
           behaviorElement,
@@ -150,8 +152,7 @@ export default class HyperRef extends PureComponent<Props, State> {
       };
     }
     // Custom behavior
-    return () =>
-      onUpdate(null, action, element, { behaviorElement, custom: true });
+    return () => onUpdate(null, action, element, { behaviorElement });
   };
 
   triggerLoadBehaviors = () => {
@@ -196,7 +197,7 @@ export default class HyperRef extends PureComponent<Props, State> {
 
     const styleAttr = this.props.element.getAttribute(ATTRIBUTES.HREF_STYLE);
     const hrefStyle = styleAttr
-      ? styleAttr.split(' ').map(s => this.props.stylesheets.regular[s])
+      ? styleAttr.split(' ').map(s => (this.props.stylesheets || {}).regular[s])
       : null;
 
     // $FlowFixMe
@@ -325,7 +326,7 @@ export default class HyperRef extends PureComponent<Props, State> {
 export const addHref = (
   component: any,
   element: Element,
-  stylesheets: StyleSheets,
+  stylesheets: ?StyleSheets,
   onUpdate: HvComponentOnUpdate,
   options: HvComponentOptions,
 ) => {

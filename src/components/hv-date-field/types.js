@@ -22,7 +22,7 @@ export type FieldProps = {|
   focused: boolean,
   onPress: () => void,
   options: HvComponentOptions,
-  stylesheets: StyleSheets,
+  stylesheets: ?StyleSheets,
   value: ?Date,
 |};
 
