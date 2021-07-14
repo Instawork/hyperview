@@ -10,7 +10,6 @@
   xmlns:email="https://instawork.com/hyperview-behaviors"
   xmlns:intercom="https://instawork.com/hyperview-intercom"
   xmlns:nfc="https://instawork.com/hyperview-nfc"
-  xmlns:map="https://instawork.com/hyperview-map"
   xmlns:phone="https://instawork.com/hyperview-phone"
   xmlns:redux="https://instawork.com/hyperview-redux"
   xmlns:share="https://instawork.com/hyperview-share"
@@ -36,10 +35,6 @@
   <xs:import
     namespace="https://instawork.com/hyperview-intercom"
     schemaLocation="intercom.xsd"
-  />
-  <xs:import
-    namespace="https://instawork.com/hyperview-map"
-    schemaLocation="map.xsd"
   />
   <xs:import
     namespace="https://instawork.com/hyperview-nfc"
