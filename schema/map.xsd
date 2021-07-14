@@ -38,6 +38,7 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>
+      <xs:attribute name="style" type="hv:styleList" />
     </xs:complexType>
   </xs:element>
 </xs:schema>
