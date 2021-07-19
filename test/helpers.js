@@ -8,9 +8,14 @@
  *
  */
 
+import * as Components from 'hyperview/src/services/components';
+import * as Dom from 'hyperview/src/services/dom';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import type { Element, LocalName } from 'hyperview/src/types';
+import * as Stylesheets from 'hyperview/src/services/stylesheets';
+import type { Element, HvComponent, LocalName } from 'hyperview/src/types';
 import { DOMParser } from 'xmldom-instawork';
+import React from 'react';
+import { action } from '@storybook/addon-actions';
 
 const parser = new DOMParser();
 
@@ -34,3 +39,33 @@ export const getDummyHvProps = () => ({
     selected: [],
   },
 });
+
+export const render = (
+  Component: HvComponent,
+  template: string,
+  ComponentsRegistry: ?(HvComponent[]) = null,
+): ?HvComponent => {
+  const document = parser.parseFromString(template);
+  const element = Dom.getFirstTag(
+    document,
+    Component.localName,
+    Component.namespaceURI,
+  );
+  const stylesheets = Stylesheets.createStylesheets(document);
+  if (!element) {
+    return null;
+  }
+  return (
+    // $FlowFixMe: HvComponentStatics type mixin causes type inference issues
+    <Component
+      element={element}
+      onUpdate={action('action')}
+      options={{
+        componentRegistry: Components.getRegistry(
+          ComponentsRegistry || [Component],
+        ),
+      }}
+      stylesheets={stylesheets}
+    />
+  );
+};

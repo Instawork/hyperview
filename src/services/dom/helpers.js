@@ -9,7 +9,7 @@
  */
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import type { Document, LocalName } from 'hyperview/src/types';
+import type { Document, LocalName, NamespaceURI } from 'hyperview/src/types';
 
 export const getBehaviorElements = (element: any) => {
   // $FlowFixMe
@@ -24,11 +24,12 @@ export const getBehaviorElements = (element: any) => {
   return behaviorElements;
 };
 
-export const getFirstTag = (document: Document, localName: LocalName) => {
-  const elements = document.getElementsByTagNameNS(
-    Namespaces.HYPERVIEW,
-    localName,
-  );
+export const getFirstTag = (
+  document: Document,
+  localName: LocalName,
+  namespace: NamespaceURI = Namespaces.HYPERVIEW,
+) => {
+  const elements = document.getElementsByTagNameNS(namespace, localName);
   if (elements && elements[0]) {
     return elements[0];
   }
