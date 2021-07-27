@@ -36,6 +36,10 @@ export default class HyperScreen extends React.Component {
 
   static renderElement = Render.renderElement;
 
+  static LoadErrorComponent = LoadError;
+
+  static LoadingComponent = Loading;
+
   constructor(props) {
     super(props);
 
@@ -227,16 +231,20 @@ export default class HyperScreen extends React.Component {
    */
   render() {
     if (this.state.error) {
-      const errorScreen = this.props.errorScreen || LoadError;
-      return React.createElement(errorScreen, {
-        error: this.state.error,
-        onPressReload: () => this.reload(),  // Make sure reload() is called without any args
-        onPressViewDetails: (uri) => this.props.openModal({url: uri}),
-      });
+      // Backward support for deprectated prop `errorScreen`
+      const LoadErrorComponent = this.props.errorScreen || this.constructor.LoadErrorComponent;
+      return (
+        <LoadErrorComponent
+          error={this.state.error}
+          onPressReload={() => this.reload()}  // Make sure reload() is called without any args
+          onPressViewDetails={(uri) => this.props.openModal({url: uri})}
+        />
+      );
     }
     if (!this.state.doc) {
+      const { LoadingComponent } = this.constructor;
       return (
-        <Loading />
+        <LoadingComponent />
       );
     }
     const [body] = Array.from(this.state.doc.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'body'));

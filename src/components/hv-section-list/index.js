@@ -11,10 +11,10 @@
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import React, { PureComponent } from 'react';
+import { RefreshControl, SectionList } from 'react-native';
 import { DOMParser } from 'xmldom-instawork';
 import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import { SectionList } from 'react-native';
 import type { State } from './types';
 
 export default class HvSectionList extends PureComponent<
@@ -26,6 +26,8 @@ export default class HvSectionList extends PureComponent<
   static localName = LOCAL_NAME.SECTION_LIST;
 
   static localNameAliases = [];
+
+  static RefreshComponent = RefreshControl;
 
   parser: DOMParser = new DOMParser();
 
@@ -115,9 +117,14 @@ export default class HvSectionList extends PureComponent<
 
     let refreshProps = {};
     if (this.props.element.getAttribute('trigger') === 'refresh') {
+      const { RefreshComponent } = this.constructor;
       refreshProps = {
-        onRefresh: () => this.refresh(),
-        refreshing: this.state.refreshing,
+        refreshControl: (
+          <RefreshComponent
+            onRefresh={this.refresh}
+            refreshing={this.state.refreshing}
+          />
+        ),
       };
     }
 
