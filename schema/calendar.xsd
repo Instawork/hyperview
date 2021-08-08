@@ -5,19 +5,12 @@
   targetNamespace="https://instawork.com/hyperview-calendar"
   xmlns:calendar="https://instawork.com/hyperview-calendar"
 >
-  <xs:simpleType name="action">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="calendar-add" />
-      <xs:enumeration value="calendar-check" />
-    </xs:restriction>
-  </xs:simpleType>
   <xs:simpleType name="date">
     <xs:restriction base="xs:token">
       <xs:pattern value="\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])" />
     </xs:restriction>
   </xs:simpleType>
   <xs:attributeGroup name="calendarAttributes">
-    <xs:attribute name="action" type="calendar:action" />
     <xs:attribute name="id" type="xs:string" />
     <xs:attribute name="starts-at" type="calendar:date" />
     <xs:attribute name="ends-at" type="calendar:date" />
