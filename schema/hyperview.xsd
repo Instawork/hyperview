@@ -7,6 +7,7 @@
   xmlns:alert="https://hyperview.org/hyperview-alert"
   xmlns:amp="https://instawork.com/hyperview-amplitude"
   xmlns:branch="https://instawork.com/hyperview-branch"
+  xmlns:calendar="https://instawork.com/hyperview-calendar"
   xmlns:email="https://instawork.com/hyperview-behaviors"
   xmlns:intercom="https://instawork.com/hyperview-intercom"
   xmlns:nfc="https://instawork.com/hyperview-nfc"
@@ -31,6 +32,10 @@
   <xs:import
     namespace="https://instawork.com/hyperview-branch"
     schemaLocation="branch.xsd"
+  />
+  <xs:import
+    namespace="https://instawork.com/hyperview-calendar"
+    schemaLocation="calendar.xsd"
   />
   <xs:import
     namespace="https://instawork.com/hyperview-intercom"
