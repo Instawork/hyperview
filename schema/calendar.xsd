@@ -7,7 +7,9 @@
 >
   <xs:simpleType name="date">
     <xs:restriction base="xs:token">
-      <xs:pattern value="\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])" />
+      <xs:pattern
+        value="(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))"
+      />
     </xs:restriction>
   </xs:simpleType>
   <xs:attributeGroup name="calendarAttributes">

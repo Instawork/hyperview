@@ -450,6 +450,7 @@
     <xs:attributeGroup ref="alert:alertAttributes" />
     <xs:attributeGroup ref="amp:amplitudeAttributes" />
     <xs:attributeGroup ref="branch:branchAttributes" />
+    <xs:attributeGroup ref="calendar:calendarAttributes" />
     <xs:attributeGroup ref="email:emailAttributes" />
     <xs:attributeGroup ref="intercom:intercomAttributes" />
     <xs:attributeGroup ref="nfc:nfcAttributes" />
