@@ -379,6 +379,16 @@
     <xs:list itemType="xs:NCName" />
   </xs:simpleType>
 
+  <xs:simpleType name="resizeMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="cover" />
+      <xs:enumeration value="contain" />
+      <xs:enumeration value="stretch" />
+      <xs:enumeration value="repeat" />
+      <xs:enumeration value="center" />
+    </xs:restriction>
+  </xs:simpleType>
+
   <xs:group name="baseChildren">
     <xs:sequence>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
@@ -757,6 +767,8 @@
       <xs:attribute name="width" type="hv:pointsOrPercent" />
       <xs:attribute name="zIndex" type="xs:positiveInteger" />
 
+      <xs:attribute name="resizeMode" type="hv:resizeMode" />
+
     </xs:complexType>
   </xs:element>
 
@@ -814,6 +826,7 @@
       <xs:attribute name="style" type="hv:styleList" use="required" />
       <xs:attribute name="id" type="hv:ID" />
       <xs:attribute name="hide" type="xs:boolean" />
+      <xs:attribute name="resizeMode" type="hv:resizeMode" />
       <xs:attribute name="value" type="xs:string" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
     </xs:complexType>

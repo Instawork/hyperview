@@ -1,5 +1,9 @@
 # Hyperview changelog
 
+**Version 0.41.0**
+- feat(schema): add `resizeMode` enumeration type
+- feat(schema): add `resizeMode` attribute to `<image>` and `<style>` elements
+
 **Version 0.30.2**
 
 - fix!: `style`, `show-during-load`, and `hide-during-load` attributes are now split on any whitespace, not just spaces.
