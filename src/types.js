@@ -413,13 +413,13 @@ export const ON_EVENT_DISPATCH = 'hyperview:on-event';
 
 export type Validation = {|
   valid: boolean,
-  message: ?string,
+  message?: string,
 |};
 
 export type Validator = {
   namespace: string,
   name: string,
-  check: (value: ?string, element: Element) => Promise<Validation>,
+  check: (value: ?string, element: Element) => Validation,
 };
 
 export type ValidatorRegistry = {
