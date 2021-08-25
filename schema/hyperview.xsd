@@ -95,6 +95,7 @@
       <xs:enumeration value="phone" />
       <xs:enumeration value="redux" />
       <xs:enumeration value="share" />
+      <xs:enumeration value="session-recording" />
       <xs:enumeration value="sms" />
     </xs:restriction>
   </xs:simpleType>
