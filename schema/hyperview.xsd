@@ -62,6 +62,10 @@
     namespace="https://instawork.com/hyperview-sms"
     schemaLocation="sms.xsd"
   />
+  <xs:import
+    namespace="https://instawork.com/hyperview-session-recording"
+    schemaLocation="session-recording.xsd"
+  />
 
   <xs:simpleType name="action">
     <xs:restriction base="xs:string">
