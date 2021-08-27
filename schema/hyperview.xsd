@@ -15,6 +15,7 @@
   xmlns:redux="https://instawork.com/hyperview-redux"
   xmlns:share="https://instawork.com/hyperview-share"
   xmlns:sms="https://instawork.com/hyperview-sms"
+  xmlns:recording="https://instawork.com/hyperview-session-recording"
 >
 
   <xs:import
@@ -469,6 +470,7 @@
     <xs:attributeGroup ref="redux:reduxAttributes" />
     <xs:attributeGroup ref="share:shareAttributes" />
     <xs:attributeGroup ref="sms:smsAttributes" />
+    <xs:attributeGroup ref="recording:sessionRecordingAttributes" />
   </xs:attributeGroup>
 
   <xs:attributeGroup name="scrollAttributes">
