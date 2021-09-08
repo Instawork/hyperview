@@ -40,12 +40,14 @@ export const getDummyHvProps = () => ({
   },
 });
 
+export const parse = (template: string) => parser.parseFromString(template);
+
 export const render = (
   Component: HvComponent,
   template: string,
   ComponentsRegistry: ?(HvComponent[]) = null,
 ): ?HvComponent => {
-  const document = parser.parseFromString(template);
+  const document = parse(template);
   const element = Dom.getFirstTag(
     document,
     Component.localName,
