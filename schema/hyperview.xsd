@@ -109,6 +109,8 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="press" />
       <xs:enumeration value="longPress" />
+      <xs:enumeration value="enter-geofence" />
+      <xs:enumeration value="leave-geofence" />
       <xs:enumeration value="pressIn" />
       <xs:enumeration value="pressOut" />
       <xs:enumeration value="visible" />
