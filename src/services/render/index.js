@@ -67,12 +67,23 @@ export const renderElement = (
     ) {
       const Component =
         options.componentRegistry[element.namespaceURI][element.localName];
+
+      // Use object spreading instead of explicitly setting the key (to potentially undefined values)
+      // Explicitly setting the key causes collision when several components render with `undefined` value for `key`
+      // Object spreading will define the prop only when its value is truthy
+      const extraProps = {
+        key: element.getAttribute('key'),
+      };
+      if (!extraProps.key) {
+        delete extraProps.key;
+      }
       return (
         <Component
           element={element}
           onUpdate={onUpdate}
           options={options}
           stylesheets={stylesheets}
+          {...extraProps} // eslint-disable-line react/jsx-props-no-spreading
         />
       );
     }
