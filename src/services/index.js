@@ -22,7 +22,12 @@ import type {
   StyleSheet,
   StyleSheets,
 } from 'hyperview/src/types';
-import { FORM_NAMES, LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
+import {
+  FORM_NAMES,
+  LOCAL_NAME,
+  NamespaceRegistry,
+  NODE_TYPE,
+} from 'hyperview/src/types';
 import { Platform } from 'react-native';
 
 /**
@@ -256,7 +261,10 @@ export const getAncestorByTagName = (
  * form ancestor, or if there is no form data to send.
  * If the given element is a form element, its form data will be returned.
  */
-export const getFormData = (element: Element): ?FormData => {
+export const getFormData = (
+  element: Element,
+  namespaces: NamespaceRegistry,
+): ?FormData => {
   const formElement: ?Element =
     element.tagName === 'form'
       ? element
@@ -272,16 +280,18 @@ export const getFormData = (element: Element): ?FormData => {
   FORM_NAMES
     // Get all inputs in the form
     .reduce((acc: Array<Element>, tag: LocalName) => {
-      const inputElements: NodeList<Element> = formElement.getElementsByTagNameNS(
-        Namespaces.HYPERVIEW,
-        tag,
-      );
-      for (let i = 0; i < inputElements.length; i += 1) {
-        const inputElement = inputElements.item(i);
-        if (inputElement) {
-          acc.push(inputElement);
+      namespaces.forEach(np => {
+        const inputElements: NodeList<Element> = formElement.getElementsByTagNameNS(
+          np,
+          tag,
+        );
+        for (let i = 0; i < inputElements.length; i += 1) {
+          const inputElement = inputElements.item(i);
+          if (inputElement) {
+            acc.push(inputElement);
+          }
         }
-      }
+      });
       return acc;
     }, [])
     // Append the form data for each input

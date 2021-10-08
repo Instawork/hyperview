@@ -77,7 +77,8 @@ export default class HyperScreen extends React.Component {
 
     this.behaviorRegistry = Behaviors.getRegistry(this.props.behaviors);
     this.componentRegistry = Components.getRegistry(this.props.components);
-    this.navigation = new Navigation(props.entrypointUrl, this.getNavigation());
+    this.namespaceRegistry = Namespaces.getRegistry(this.props.namespaces);
+    this.navigation = new Navigation(props.entrypointUrl, this.getNavigation(), this.namespaceRegistry);
   }
 
   getNavigationState = (props) => {
@@ -231,7 +232,7 @@ export default class HyperScreen extends React.Component {
       return React.createElement(errorScreen, {
         error: this.state.error,
         onPressReload: () => this.reload(),  // Make sure reload() is called without any args
-        onPressViewDetails: (uri) => this.props.openModal({url: uri}),
+        onPressViewDetails: (uri) => this.props.openModal({ url: uri }),
       });
     }
     if (!this.state.doc) {
@@ -384,7 +385,7 @@ export default class HyperScreen extends React.Component {
     const showIndicatorIdList = showIndicatorIds ? Xml.splitAttributeList(showIndicatorIds) : [];
     const hideIndicatorIdList = hideIndicatorIds ? Xml.splitAttributeList(hideIndicatorIds) : [];
 
-    const formData = getFormData(currentElement);
+    const formData = getFormData(currentElement, this.namespaceRegistry);
 
     if (once) {
       if (behaviorElement.getAttribute('ran-once')) {
@@ -395,7 +396,7 @@ export default class HyperScreen extends React.Component {
         }
         return;
       }
-        behaviorElement.setAttribute('ran-once', 'true');
+      behaviorElement.setAttribute('ran-once', 'true');
 
     }
 

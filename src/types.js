@@ -328,6 +328,10 @@ export type BehaviorRegistry = {
   [string]: HvBehavior,
 };
 
+export type HvNamespace = string;
+
+export type NamespaceRegistry = HvNamespace[];
+
 // https://hyperview.org/docs/reference_behavior_attributes#trigger
 export const TRIGGERS = Object.freeze({
   DESELECT: 'deselect',
