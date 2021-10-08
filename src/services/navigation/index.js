@@ -6,11 +6,12 @@ import type {
   BehaviorOptions,
   Document,
   Element,
+  NamespaceRegistry,
   NavAction,
   NavigationProps,
   NodeList,
 } from 'hyperview/src/types';
-import { NAV_ACTIONS, NamespaceRegistry } from 'hyperview/src/types';
+import { NAV_ACTIONS } from 'hyperview/src/types';
 import { getFormData } from 'hyperview/src/services';
 
 export const ANCHOR_ID_SEPARATOR = '#';
@@ -24,6 +25,8 @@ export default class Navigation {
   url: string;
 
   document: ?Document = null;
+
+  namespaces: NamespaceRegistry;
 
   navigation: NavigationProps;
 

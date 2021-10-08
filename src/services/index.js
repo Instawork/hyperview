@@ -17,6 +17,7 @@ import type {
   Element,
   HvComponentOptions,
   LocalName,
+  NamespaceRegistry,
   Node,
   NodeList,
   StyleSheet,
@@ -25,7 +26,6 @@ import type {
 import {
   FORM_NAMES,
   LOCAL_NAME,
-  NamespaceRegistry,
   NODE_TYPE,
 } from 'hyperview/src/types';
 import { Platform } from 'react-native';
@@ -263,7 +263,7 @@ export const getAncestorByTagName = (
  */
 export const getFormData = (
   element: Element,
-  namespaces: NamespaceRegistry,
+  namespaces?: NamespaceRegistry = Namespaces.HYPERVIEW_NAMESPACES,
 ): ?FormData => {
   const formElement: ?Element =
     element.tagName === 'form'
