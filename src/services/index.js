@@ -23,11 +23,7 @@ import type {
   StyleSheet,
   StyleSheets,
 } from 'hyperview/src/types';
-import {
-  FORM_NAMES,
-  LOCAL_NAME,
-  NODE_TYPE,
-} from 'hyperview/src/types';
+import { FORM_NAMES, LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
 import { Platform } from 'react-native';
 
 /**
@@ -280,9 +276,9 @@ export const getFormData = (
   FORM_NAMES
     // Get all inputs in the form
     .reduce((acc: Array<Element>, tag: LocalName) => {
-      namespaces.forEach(np => {
+      namespaces.forEach(ns => {
         const inputElements: NodeList<Element> = formElement.getElementsByTagNameNS(
-          np,
+          ns,
           tag,
         );
         for (let i = 0; i < inputElements.length; i += 1) {
