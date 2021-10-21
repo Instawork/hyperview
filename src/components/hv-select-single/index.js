@@ -23,6 +23,24 @@ export default class HvSelectSingle extends PureComponent<HvComponentProps> {
 
   static localNameAliases = [];
 
+  static getFormInputValue = (element: Element): ?string => {
+    // Add each selected option to the form data
+    const optionElements: NodeList<Element> = element.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      LOCAL_NAME.OPTION,
+    );
+    for (let i = 0; i < optionElements.length; i += 1) {
+      const optionElement = optionElements.item(i);
+      if (
+        optionElement &&
+        optionElement.getAttribute('selected') === 'true'
+      ) {
+        return [optionElement.getAttribute('value') || ''];
+      }
+    }
+    return [];
+  }
+
   constructor(props: HvComponentProps) {
     super(props);
     this.onSelect = this.onSelect.bind(this);

@@ -135,6 +135,10 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
 
   static localNameAliases = [];
 
+  static getFormInputValues = (element: Element): Array<string> => {
+    return [element.getAttribute('value') || ''];
+  }
+
   props: HvComponentProps;
 
   /**

@@ -23,6 +23,25 @@ export default class HvSelectMultiple extends PureComponent<HvComponentProps> {
 
   static localNameAliases = [];
 
+  static getFormInputValues = (element: Element): Array<string> => {
+    const values: Array<string> = [];
+    // Add each selected option to the form data
+    const optionElements: NodeList<Element> = element.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      LOCAL_NAME.OPTION,
+    );
+    for (let i = 0; i < optionElements.length; i += 1) {
+      const optionElement = optionElements.item(i);
+      if (
+        optionElement &&
+        optionElement.getAttribute('selected') === 'true'
+      ) {
+        values.push(optionElement.getAttribute('value') || '');
+      }
+    }
+    return values;
+  }
+
   constructor(props: HvComponentProps) {
     super(props);
     this.onToggle = this.onToggle.bind(this);

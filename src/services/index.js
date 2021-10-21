@@ -268,7 +268,7 @@ export const getFormData = (element: Element): ?FormData => {
   const formData: FormData = new FormData();
   let formHasData = false;
 
-  // TODO: It would be more flexible to grab any element with a name and value.
+  // TODO: It would be more flexible to grab any element with getFormInputValues defined on the RN component.
   FORM_NAMES
     // Get all inputs in the form
     .reduce((acc: Array<Element>, tag: LocalName) => {
@@ -290,29 +290,12 @@ export const getFormData = (element: Element): ?FormData => {
       if (!name) {
         return;
       }
-      if (
-        input.tagName === LOCAL_NAME.SELECT_SINGLE ||
-        input.tagName === LOCAL_NAME.SELECT_MULTIPLE
-      ) {
-        // Add each selected option to the form data
-        const optionElements: NodeList<Element> = input.getElementsByTagNameNS(
-          Namespaces.HYPERVIEW,
-          LOCAL_NAME.OPTION,
-        );
-        for (let i = 0; i < optionElements.length; i += 1) {
-          const optionElement = optionElements.item(i);
-          if (
-            optionElement &&
-            optionElement.getAttribute('selected') === 'true'
-          ) {
-            formData.append(name, optionElement.getAttribute('value') || '');
-            formHasData = true;
-          }
-        }
-      } else {
-        // Add the text input to the form data
-        formData.append(name, input.getAttribute('value') || '');
-        formHasData = true;
+
+      if (input.getFormInputValues) {
+        input.getFormInputValues(input).forEach((value: string) => {
+          formData.append(name, value);
+          formHasData = true;
+        });
       }
     });
 

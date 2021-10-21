@@ -24,6 +24,10 @@ export default class HvTextField extends PureComponent<HvComponentProps> {
 
   static localNameAliases = [];
 
+  static getFormInputValues = (element: Element): Array<string> => {
+    return [element.getAttribute('value') || ''];
+  }
+
   constructor(props: HvComponentProps) {
     super(props);
     this.setFocus = this.setFocus.bind(this);
