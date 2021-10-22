@@ -24,7 +24,7 @@ export default class HvSwitch extends PureComponent<HvComponentProps> {
 
   static getFormInputValues = (element: Element): Array<string> => {
     return [element.getAttribute('value') || ''];
-  }
+  };
 
   props: HvComponentProps;
 

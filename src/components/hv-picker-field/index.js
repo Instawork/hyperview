@@ -53,7 +53,7 @@ export default class HvPickerField extends PureComponent<
 
   static getFormInputValues = (element: Element): Array<string> => {
     return [element.getAttribute('value') || ''];
-  }
+  };
 
   props: HvComponentProps;
 

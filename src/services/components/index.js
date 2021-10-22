@@ -44,16 +44,44 @@ const HYPERVIEW_COMPONENTS = [
   HvWebView,
 ];
 
+const HYPERVIEW_FORM_COMPONENTS = [
+  HvTextArea,
+  HvTextField,
+  HvSelectSingle,
+  HvSelectMultiple,
+  HvPickerField,
+  HvDateField,
+  HvSwitch,
+];
+
+const reducer = (registry: ComponentRegistry, component: HvComponent) => ({
+  ...registry,
+  [component.namespaceURI]: {
+    ...registry[component.namespaceURI],
+    ...ComponentsInternal.registerComponent(component),
+  },
+});
+
 export const getRegistry = (
   components: HvComponent[] = [],
 ): ComponentRegistry =>
-  [...HYPERVIEW_COMPONENTS, ...components].reduce(
-    (registry: ComponentRegistry, component: HvComponent) => ({
-      ...registry,
-      [component.namespaceURI]: {
-        ...registry[component.namespaceURI],
-        ...ComponentsInternal.registerComponent(component),
-      },
-    }),
-    {},
-  );
+  [...HYPERVIEW_COMPONENTS, ...components].reduce(reducer, {});
+
+export const getFormRegistry = (
+  components: HvComponent[] = [],
+): ComponentRegistry =>
+  [...HYPERVIEW_COMPONENTS, ...components]
+    .filter(c => c.hasOwnProperty('getFormInputValues'))
+    .reduce(reducer, {});
+
+export const flattenRegistry = (
+  registry: ComponentRegistry,
+): [[string, string, HVComponent]] => {
+  const entries = [];
+  for (const [ns, tags] of Object.entries(registry)) {
+    for (const [tag, element] of Objects.entries(tags)) {
+      entries.push([ns, tag, element]);
+    }
+  }
+  return entries;
+};

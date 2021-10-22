@@ -12,6 +12,7 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Xml from 'hyperview/src/services/xml';
 import { DEFAULT_PRESS_OPACITY, HV_TIMEOUT_ID_ATTR } from './types';
 import type {
+  ComponentRegistry,
   DOMString,
   Document,
   Element,
@@ -22,7 +23,7 @@ import type {
   StyleSheet,
   StyleSheets,
 } from 'hyperview/src/types';
-import { FORM_NAMES, LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
+import { LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
 import { Platform } from 'react-native';
 
 /**
@@ -256,7 +257,7 @@ export const getAncestorByTagName = (
  * form ancestor, or if there is no form data to send.
  * If the given element is a form element, its form data will be returned.
  */
-export const getFormData = (element: Element): ?FormData => {
+export const getFormData = (element: Element, formComponents: ComponentRegistry): ?FormData => {
   const formElement: ?Element =
     element.tagName === 'form'
       ? element
@@ -268,36 +269,34 @@ export const getFormData = (element: Element): ?FormData => {
   const formData: FormData = new FormData();
   let formHasData = false;
 
-  // TODO: It would be more flexible to grab any element with getFormInputValues defined on the RN component.
-  FORM_NAMES
+  flattenRegistry(formComponents)
     // Get all inputs in the form
-    .reduce((acc: Array<Element>, tag: LocalName) => {
-      const inputElements: NodeList<Element> = formElement.getElementsByTagNameNS(
-        Namespaces.HYPERVIEW,
-        tag,
-      );
+    .forEach(data: [string, string, HVComponent]) => {
+      const [ns, tag, component] = data;
+      const inputElements: NodeList<Element> = formElement.getElementsByTagNameNS(ns, tag);
       for (let i = 0; i < inputElements.length; i += 1) {
         const inputElement = inputElements.item(i);
-        if (inputElement) {
-          acc.push(inputElement);
+        if (!inputElement) {
+          continue;
         }
-      }
-      return acc;
-    }, [])
-    // Append the form data for each input
-    .forEach((input: Element) => {
-      const name: ?string = input.getAttribute('name');
-      if (!name) {
-        return;
-      }
 
-      if (input.getFormInputValues) {
-        input.getFormInputValues(input).forEach((value: string) => {
+        const name: ?string = inputElement.getAttribute('name');
+        if (!name) {
+          continue;
+        }
+
+        if (!component.getFormInputValues) {
+          continue;
+        }
+
+        component.getFormInputValues(inputElement).forEach((value: string) => {
           formData.append(name, value);
           formHasData = true;
         });
-      }
-    });
+
+          acc.push(inputElement);
+        }
+      });
 
   // Ensure that we only return form data with content in it. Otherwise, it will crash on Android
   return formHasData ? formData : null;

@@ -31,15 +31,12 @@ export default class HvSelectSingle extends PureComponent<HvComponentProps> {
     );
     for (let i = 0; i < optionElements.length; i += 1) {
       const optionElement = optionElements.item(i);
-      if (
-        optionElement &&
-        optionElement.getAttribute('selected') === 'true'
-      ) {
+      if (optionElement && optionElement.getAttribute('selected') === 'true') {
         return [optionElement.getAttribute('value') || ''];
       }
     }
     return [];
-  }
+  };
 
   constructor(props: HvComponentProps) {
     super(props);

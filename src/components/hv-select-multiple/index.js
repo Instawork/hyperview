@@ -32,15 +32,12 @@ export default class HvSelectMultiple extends PureComponent<HvComponentProps> {
     );
     for (let i = 0; i < optionElements.length; i += 1) {
       const optionElement = optionElements.item(i);
-      if (
-        optionElement &&
-        optionElement.getAttribute('selected') === 'true'
-      ) {
+      if (optionElement && optionElement.getAttribute('selected') === 'true') {
         values.push(optionElement.getAttribute('value') || '');
       }
     }
     return values;
-  }
+  };
 
   constructor(props: HvComponentProps) {
     super(props);

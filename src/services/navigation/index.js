@@ -10,7 +10,7 @@ import type {
   NavigationProps,
   NodeList,
 } from 'hyperview/src/types';
-import { NAV_ACTIONS } from 'hyperview/src/types';
+import { NAV_ACTIONS, ComponentRegistry } from 'hyperview/src/types';
 import { getFormData } from 'hyperview/src/services';
 
 export const ANCHOR_ID_SEPARATOR = '#';
@@ -66,10 +66,11 @@ export default class Navigation {
     href: string,
     action: NavAction,
     element: Element,
+    formComponents: ComponentRegistry,
     opts: BehaviorOptions,
   ): void => {
     const { showIndicatorId, delay } = opts;
-    const formData: ?FormData = getFormData(element);
+    const formData: ?FormData = getFormData(element, formComponents);
 
     // Serialize form data as query params, if present.
     const baseUrl = UrlService.getUrlFromHref(href, this.url);

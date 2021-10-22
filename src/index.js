@@ -77,6 +77,7 @@ export default class HyperScreen extends React.Component {
 
     this.behaviorRegistry = Behaviors.getRegistry(this.props.behaviors);
     this.componentRegistry = Components.getRegistry(this.props.components);
+    this.formComponentRegistry = Components.getFormRegistry(this.props.components);
     this.navigation = new Navigation(props.entrypointUrl, this.getNavigation());
   }
 
@@ -384,7 +385,7 @@ export default class HyperScreen extends React.Component {
     const showIndicatorIdList = showIndicatorIds ? Xml.splitAttributeList(showIndicatorIds) : [];
     const hideIndicatorIdList = hideIndicatorIds ? Xml.splitAttributeList(hideIndicatorIds) : [];
 
-    const formData = getFormData(currentElement);
+    const formData = getFormData(currentElement, this.formComponentRegistry);
 
     if (once) {
       if (behaviorElement.getAttribute('ran-once')) {

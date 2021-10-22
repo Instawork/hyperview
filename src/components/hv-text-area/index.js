@@ -25,7 +25,7 @@ export default class HvTextArea extends PureComponent<HvComponentProps> {
 
   static getFormInputValues = (element: Element): Array<string> => {
     return [element.getAttribute('value') || ''];
-  }
+  };
 
   constructor(props: HvComponentProps) {
     super(props);
