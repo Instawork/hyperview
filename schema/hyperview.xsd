@@ -1096,6 +1096,7 @@
   <xs:element name="select-single">
     <xs:complexType>
       <xs:group ref="hv:viewChildren" />
+      <xs:attribute name="allow-deselect" type="xs:boolean" />
       <xs:attribute name="name" use="required" type="xs:string" />
       <xs:attribute name="id" type="hv:ID" />
       <xs:attribute name="hide" type="xs:boolean" />

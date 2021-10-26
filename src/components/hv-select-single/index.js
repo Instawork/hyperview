@@ -45,6 +45,7 @@ export default class HvSelectSingle extends PureComponent<HvComponentProps> {
    */
   onSelect = (selectedValue: ?DOMString) => {
     const newElement = this.props.element.cloneNode(true);
+    const allowDeselect = this.props.element.getAttribute('allow-deselect');
     const options = newElement.getElementsByTagNameNS(
       Namespaces.HYPERVIEW,
       'option',
@@ -53,10 +54,15 @@ export default class HvSelectSingle extends PureComponent<HvComponentProps> {
       const opt = options.item(i);
       if (opt) {
         const value = opt.getAttribute('value');
-        opt.setAttribute(
-          'selected',
-          value === selectedValue ? 'true' : 'false',
-        );
+        const current = value === selectedValue;
+        if (current && allowDeselect) {
+          const selected = opt.getAttribute('selected') === 'true';
+          opt.setAttribute('selected', selected ? 'false' : 'true');
+        } else if (current) {
+          opt.setAttribute('selected', 'true');
+        } else {
+          opt.setAttribute('selected', 'false');
+        }
       }
     }
     this.props.onUpdate('#', 'swap', this.props.element, { newElement });
