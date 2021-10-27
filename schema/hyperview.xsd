@@ -1075,6 +1075,7 @@
       <!-- Needed to support address-input. Eventually, we should allow attributes from other namespaces. -->
       <xs:attribute name="type" type="xs:string" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
+      <xs:attribute name="text-content-type" type="hv:text-content-type"/>
     </xs:complexType>
   </xs:element>
 
@@ -1090,6 +1091,7 @@
       <xs:attribute name="style" />
       <xs:attribute name="editable" type="xs:boolean" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
+      <xs:attribute name="text-content-type" type="hv:text-content-type"/>
     </xs:complexType>
   </xs:element>
 
@@ -1134,5 +1136,35 @@
       <xs:attribute name="id" type="hv:ID" />
     </xs:complexType>
   </xs:element>
+
+  <xs:simpleType name="text-content-type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="none" />
+      <xs:enumeration value="URL" />
+      <xs:enumeration value="addressCity" />
+      <xs:enumeration value="addressCityAndState" />
+      <xs:enumeration value="addressState" />
+      <xs:enumeration value="countryName" />
+      <xs:enumeration value="creditCardNumber" />
+      <xs:enumeration value="emailAddress" />
+      <xs:enumeration value="familyName" />
+      <xs:enumeration value="fullStreetAddress" />
+      <xs:enumeration value="givenName" />
+      <xs:enumeration value="jobTitle" />
+      <xs:enumeration value="location" />
+      <xs:enumeration value="middleName" />
+      <xs:enumeration value="namePrefix" />
+      <xs:enumeration value="nameSuffix" />
+      <xs:enumeration value="nickname" />
+      <xs:enumeration value="organizationName" />
+      <xs:enumeration value="postalCode" />
+      <xs:enumeration value="streetAddressLine1" />
+      <xs:enumeration value="streetAddressLine2" />
+      <xs:enumeration value="sublocality" />
+      <xs:enumeration value="telephoneNumber" />
+      <xs:enumeration value="username" />
+      <xs:enumeration value="username" />
+    </xs:restriction>
+  </xs:simpleType>
 
 </xs:schema>

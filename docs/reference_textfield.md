@@ -146,3 +146,11 @@ If `auto-focus="true"`, the element will steal focus the moment it's rendered.
 | **false** (default), true | No       |
 
 If `secure-text="true"`, the input in the text field will be obscured. Appropriate to use for passwords or other sensitive information.
+
+## `text-content-type` (iOS)
+
+| Type                                                                                                                                                                                                                                                                                                                                                                 | Required |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| **none** (default), none, URL, addressCity, addressCityAndState, addressState, countryName, creditCardNumber, emailAddress, familyName, fullStreetAddress, givenName, jobTitle, location, middleName, name, namePrefix, nameSuffix, nickname, organizationName, postalCode, streetAddressLine1, streetAddressLine2, sublocality, telephoneNumber, username, password | No       |
+
+The `text-content-type` autofills available fields (for example, for iOS 12+ `oneTimeCode` can be used to indicate that a field can be autofilled by a code arriving in an SMS).
