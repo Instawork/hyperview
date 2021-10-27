@@ -8,7 +8,11 @@ The `<text-field>` element represents a single-line input field. When pressed, t
 
 ```xml
 <form>
-  <text-field name="name" placeholder="Your name" value="Bart" />
+  <text-field
+    name="name"
+    placeholder="Your name"
+    value="Bart"
+  />
   <text-field
     name="phone"
     placeholder="Your phone number"
