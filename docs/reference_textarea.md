@@ -8,7 +8,10 @@ The `<text-area>` element represents multi-line input fields. When pressed, the 
 
 ```xml
 <screen>
-  <text-area name="feedback" placeholder="Please leave your feedback" />
+  <text-area
+    name="feedback"
+    placeholder="Please leave your feedback"
+  />
 </screen>
 ```
 
