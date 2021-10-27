@@ -1163,7 +1163,9 @@
       <xs:enumeration value="sublocality" />
       <xs:enumeration value="telephoneNumber" />
       <xs:enumeration value="username" />
-      <xs:enumeration value="username" />
+      <xs:enumeration value="password" />
+      <xs:enumeration value="newPassword" />
+      <xs:enumeration value="oneTimeCode" />
     </xs:restriction>
   </xs:simpleType>
 
