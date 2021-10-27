@@ -116,6 +116,9 @@ export default class HvTextField extends PureComponent<HvComponentProps> {
 
     const focused = this.props.element.getAttribute('focused') === 'true';
     const editable = this.props.element.getAttribute('editable') !== 'false';
+    const textContentType = this.props.element.getAttribute(
+      'text-content-type',
+    );
     const keyboardType =
       this.props.element.getAttribute('keyboard-type') || undefined;
     const props = {
@@ -141,6 +144,7 @@ export default class HvTextField extends PureComponent<HvComponentProps> {
       ref: this.props.options.registerInputHandler,
       secureTextEntry:
         this.props.element.getAttribute('secure-text') === 'true',
+      textContentType: textContentType || 'none',
       value: this.props.element.getAttribute('value'),
     };
 

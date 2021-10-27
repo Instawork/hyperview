@@ -29,12 +29,12 @@ A `<text-area>` element can appear anywhere within a `<form>` element.
 
 ## Attributes
 
- - [`name`](#name)
- - [`value`](#value)
- - [`placeholder`](#placeholder)
- - [`style`](#style)
- - [`id`](#id)
- - [`hide`](#hide)
+- [`name`](#name)
+- [`value`](#value)
+- [`placeholder`](#placeholder)
+- [`style`](#style)
+- [`id`](#id)
+- [`hide`](#hide)
 
 #### Behavior attributes
 
@@ -92,3 +92,11 @@ A global attribute uniquely identifying the element in the whole document.
 | **false** (default), true | No       |
 
 If `hide="true"`, the element will not be rendered on screen. If the element or any of the element's children have a behavior that triggers on "load" or "visible", those behaviors will not trigger while the element is hidden.
+
+## `text-content-type` (iOS)
+
+| Type                                                                                                                                                                                                                                                                                                                                                                                            | Required |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| **none** (default), none, URL, addressCity, addressCityAndState, addressState, countryName, creditCardNumber, emailAddress, familyName, fullStreetAddress, givenName, jobTitle, location, middleName, name, namePrefix, nameSuffix, nickname, organizationName, postalCode, streetAddressLine1, streetAddressLine2, sublocality, telephoneNumber, username, password, newPassword, oneTimeCode  | No       |
+
+The `text-content-type` autofills available fields (for example, for iOS 12+ `oneTimeCode` can be used to indicate that a field can be autofilled by a code arriving in an SMS).

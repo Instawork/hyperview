@@ -99,6 +99,9 @@ export default class HvTextArea extends PureComponent<HvComponentProps> {
 
     const focused = this.props.element.getAttribute('focused') === 'true';
     const editable = this.props.element.getAttribute('editable') !== 'false';
+    const textContentType = this.props.element.getAttribute(
+      'text-content-type',
+    );
     const keyboardType =
       this.props.element.getAttribute('keyboard-type') || undefined;
     const props = {
@@ -117,6 +120,7 @@ export default class HvTextArea extends PureComponent<HvComponentProps> {
       },
       onFocus: () => this.setFocus(true),
       ref: this.props.options.registerInputHandler,
+      textContentType: textContentType || 'none',
       value: this.props.element.getAttribute('value'),
     };
 
