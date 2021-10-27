@@ -1075,7 +1075,7 @@
       <!-- Needed to support address-input. Eventually, we should allow attributes from other namespaces. -->
       <xs:attribute name="type" type="xs:string" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
-      <xs:attribute name="text-content-type" type="hv:text-content-type"/>
+      <xs:attribute name="text-content-type" type="hv:text-content-type" />
     </xs:complexType>
   </xs:element>
 
@@ -1091,7 +1091,7 @@
       <xs:attribute name="style" />
       <xs:attribute name="editable" type="xs:boolean" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
-      <xs:attribute name="text-content-type" type="hv:text-content-type"/>
+      <xs:attribute name="text-content-type" type="hv:text-content-type" />
     </xs:complexType>
   </xs:element>
 
