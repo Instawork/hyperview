@@ -182,6 +182,31 @@
           </option>
           <view style="Select__Separator" />
         </select-single>
+        <text style="Description">Optional Select</text>
+        <select-single name="choice" style="Select" allow-deselect="true">
+          <view style="Select__Separator" />
+          <option style="Select__Option" value="paid_parking">
+            <text style="Select__Label">Paid parking</text>
+            <view style="Select__RadioOuter">
+              <view style="Select__RadioInner" />
+            </view>
+          </option>
+          <view style="Select__Separator" />
+          <option style="Select__Option" value="free_parking">
+            <text style="Select__Label">Free parking</text>
+            <view style="Select__RadioOuter">
+              <view style="Select__RadioInner" />
+            </view>
+          </option>
+          <view style="Select__Separator" />
+          <option style="Select__Option" value="unknown_parking">
+            <text style="Select__Label">Unknown</text>
+            <view style="Select__RadioOuter">
+              <view style="Select__RadioInner" />
+            </view>
+          </option>
+          <view style="Select__Separator" />
+        </select-single>
         <text style="Description">Pre-selected</text>
         <select-single name="choice" style="Select">
           <view style="Select__Separator" />

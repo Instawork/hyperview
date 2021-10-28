@@ -123,7 +123,7 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
     // The outer view handles presses, the inner view handles styling.
     const outerProps = {
       onPress: () => {
-        if (!selected && onSelect) {
+        if (onSelect) {
           // Updates the DOM state, causing this element to re-render as selected.
           // Used in select-single context.
           onSelect(value);

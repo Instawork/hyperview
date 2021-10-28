@@ -36,6 +36,7 @@ A `<select-single>` element most often appears within a `<form>` element. Howeve
 - [`style`](#style)
 - [`id`](#id)
 - [`hide`](#hide)
+- [`allow-deselect`](#allow-deselect)
 
 #### `name`
 
@@ -68,3 +69,11 @@ A global attribute uniquely identifying the element in the whole document.
 | **false** (default), true | No       |
 
 If `hide="true"`, the element will not be rendered on screen. If the element or any of the element's children have a behavior that triggers on "load" or "visible", those behaviors will not trigger while the element is hidden.
+
+#### `allow-deselect`
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| **false** (default), true | No       |
+
+If `allow-deselect="true"`, the `<option>` element can be deselected.
