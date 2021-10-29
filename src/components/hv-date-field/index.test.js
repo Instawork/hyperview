@@ -8,9 +8,9 @@
  *
  */
 
-import { getElements } from 'hyperview/test/helpers';
 import HvDateField from 'hyperview/src/components/hv-date-field';
 import { LOCAL_NAME } from 'hyperview/src/types';
+import { getElements } from 'hyperview/test/helpers';
 
 describe('HvDateField', () => {
   describe('getFormInputValues', () => {

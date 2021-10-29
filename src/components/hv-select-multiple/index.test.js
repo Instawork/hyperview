@@ -8,9 +8,9 @@
  *
  */
 
-import { getElements } from 'hyperview/test/helpers';
 import HvSelectMultiple from 'hyperview/src/components/hv-select-multiple';
 import { LOCAL_NAME } from 'hyperview/src/types';
+import { getElements } from 'hyperview/test/helpers';
 
 describe('HvSelectMultiple', () => {
   describe('getFormInputValues', () => {

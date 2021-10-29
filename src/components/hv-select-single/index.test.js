@@ -8,9 +8,9 @@
  *
  */
 
-import { getElements } from 'hyperview/test/helpers';
 import HvSelectSingle from 'hyperview/src/components/hv-select-single';
 import { LOCAL_NAME } from 'hyperview/src/types';
+import { getElements } from 'hyperview/test/helpers';
 
 describe('HvSelectSingle', () => {
   describe('getFormInputValues', () => {

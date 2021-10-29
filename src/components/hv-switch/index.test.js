@@ -8,9 +8,9 @@
  *
  */
 
-import { getElements } from 'hyperview/test/helpers';
 import HvSwitch from 'hyperview/src/components/hv-switch';
 import { LOCAL_NAME } from 'hyperview/src/types';
+import { getElements } from 'hyperview/test/helpers';
 
 describe('HvSwitch', () => {
   describe('getFormInputValues', () => {

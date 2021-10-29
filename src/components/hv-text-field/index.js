@@ -12,13 +12,13 @@ import * as Dom from 'hyperview/src/services/dom';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type { Element, HvComponentProps } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
-import { LOCAL_NAME } from 'hyperview/src/types';
-import { TextInput } from 'react-native';
-import TinyMask from 'hyperview/src/mask.js';
 import {
   createProps,
   getNameValueFormInputValues,
 } from 'hyperview/src/services';
+import { LOCAL_NAME } from 'hyperview/src/types';
+import { TextInput } from 'react-native';
+import TinyMask from 'hyperview/src/mask.js';
 
 export default class HvTextField extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;

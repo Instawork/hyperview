@@ -8,9 +8,9 @@
  *
  */
 
-import { getElements } from 'hyperview/test/helpers';
 import HvPickerField from 'hyperview/src/components/hv-picker-field';
 import { LOCAL_NAME } from 'hyperview/src/types';
+import { getElements } from 'hyperview/test/helpers';
 
 describe('HvPickerField', () => {
   describe('getFormInputValues', () => {

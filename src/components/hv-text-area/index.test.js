@@ -8,9 +8,9 @@
  *
  */
 
-import { getElements } from 'hyperview/test/helpers';
 import HvTextArea from 'hyperview/src/components/hv-text-area';
 import { LOCAL_NAME } from 'hyperview/src/types';
+import { getElements } from 'hyperview/test/helpers';
 
 describe('HvTextArea', () => {
   describe('getFormInputValues', () => {
