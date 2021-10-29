@@ -14,7 +14,10 @@ import type { Element, HvComponentProps } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { TextInput } from 'react-native';
-import { createProps } from 'hyperview/src/services';
+import {
+  createProps,
+  getNameValueFormInputValues,
+} from 'hyperview/src/services';
 
 export default class HvTextArea extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
@@ -23,8 +26,8 @@ export default class HvTextArea extends PureComponent<HvComponentProps> {
 
   static localNameAliases = [];
 
-  static getFormInputValues = (element: Element): Array<string> => {
-    return [element.getAttribute('value') || ''];
+  static getFormInputValues = (element: Element): Array<[string, string]> => {
+    return getNameValueFormInputValues(element);
   };
 
   constructor(props: HvComponentProps) {

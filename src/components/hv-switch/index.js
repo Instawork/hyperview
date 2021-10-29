@@ -13,7 +13,10 @@ import React, { PureComponent } from 'react';
 import { StyleSheet, Switch } from 'react-native';
 import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import { createStyleProp } from 'hyperview/src/services';
+import {
+  createStyleProp,
+  getNameValueFormInputValues,
+} from 'hyperview/src/services';
 
 export default class HvSwitch extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
@@ -22,8 +25,8 @@ export default class HvSwitch extends PureComponent<HvComponentProps> {
 
   static localNameAliases = [];
 
-  static getFormInputValues = (element: Element): Array<string> => {
-    return [element.getAttribute('value') || ''];
+  static getFormInputValues = (element: Element): Array<[string, string]> => {
+    return getNameValueFormInputValues(element);
   };
 
   props: HvComponentProps;

@@ -12,7 +12,6 @@ import { getElements } from 'hyperview/test/helpers';
 import HvSelectSingle from 'hyperview/src/components/hv-select-single';
 import { LOCAL_NAME } from 'hyperview/src/types';
 
-
 describe('HvSelectSingle', () => {
   describe('getFormInputValues', () => {
     let elements;
@@ -42,6 +41,11 @@ describe('HvSelectSingle', () => {
                   <option value="2" selected="true" />
                   <option value="3" selected="true" />
                 </select-single>
+                <select-single>
+                  <option value="1" />
+                  <option value="2" selected="true" />
+                  <option value="3" selected="true" />
+                </select-single>
               </body>
             </screen>
           </doc>
@@ -50,18 +54,25 @@ describe('HvSelectSingle', () => {
       );
     });
     it('returns selected option value attr', async () => {
-      expect(HvSelectSingle.getFormInputValues(elements[0])).toEqual(['3']);
+      expect(HvSelectSingle.getFormInputValues(elements[0])).toEqual([
+        ['input1', '3'],
+      ]);
     });
     it('returns empty array if no selected option', async () => {
       expect(HvSelectSingle.getFormInputValues(elements[1])).toEqual([]);
     });
     it('returns empty string if selection option has no value attr', async () => {
-      expect(HvSelectSingle.getFormInputValues(elements[2])).toEqual(['']);
+      expect(HvSelectSingle.getFormInputValues(elements[2])).toEqual([
+        ['input3', ''],
+      ]);
     });
     it('returns first option with selected attr', async () => {
-      expect(HvSelectSingle.getFormInputValues(elements[3])).toEqual(['2']);
+      expect(HvSelectSingle.getFormInputValues(elements[3])).toEqual([
+        ['input4', '2'],
+      ]);
+    });
+    it('returns empty array if no name', async () => {
+      expect(HvSelectSingle.getFormInputValues(elements[4])).toEqual([]);
     });
   });
 });
-
-

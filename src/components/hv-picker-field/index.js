@@ -29,6 +29,7 @@ import {
   createProps,
   createStyleProp,
   createTestProps,
+  getNameValueFormInputValues,
 } from 'hyperview/src/services';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { Node as ReactNode } from 'react';
@@ -51,8 +52,8 @@ export default class HvPickerField extends PureComponent<
 
   static localNameAliases = [];
 
-  static getFormInputValues = (element: Element): Array<string> => {
-    return [element.getAttribute('value') || ''];
+  static getFormInputValues = (element: Element): Array<[string, string]> => {
+    return getNameValueFormInputValues(element);
   };
 
   props: HvComponentProps;

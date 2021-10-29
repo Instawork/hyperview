@@ -12,7 +12,6 @@ import { getElements } from 'hyperview/test/helpers';
 import HvPickerField from 'hyperview/src/components/hv-picker-field';
 import { LOCAL_NAME } from 'hyperview/src/types';
 
-
 describe('HvPickerField', () => {
   describe('getFormInputValues', () => {
     let elements;
@@ -30,6 +29,10 @@ describe('HvPickerField', () => {
                   <picker-item label="Choice 2" value="2" />
                   <picker-item label="Choice 3" value="3" />
                 </picker-field>
+                <picker-field>
+                  <picker-item label="Choice 2" value="2" />
+                  <picker-item label="Choice 3" value="3" />
+                </picker-field>
               </body>
             </screen>
           </doc>
@@ -38,10 +41,17 @@ describe('HvPickerField', () => {
       );
     });
     it('returns value attr', async () => {
-      expect(HvPickerField.getFormInputValues(elements[0])).toEqual(['0']);
+      expect(HvPickerField.getFormInputValues(elements[0])).toEqual([
+        ['input1', '0'],
+      ]);
     });
     it('returns empty string if no value attr', async () => {
-      expect(HvPickerField.getFormInputValues(elements[1])).toEqual(['']);
+      expect(HvPickerField.getFormInputValues(elements[1])).toEqual([
+        ['input2', ''],
+      ]);
+    });
+    it('returns empty array if no name attr', async () => {
+      expect(HvPickerField.getFormInputValues(elements[2])).toEqual([]);
     });
   });
 });

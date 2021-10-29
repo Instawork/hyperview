@@ -12,7 +12,6 @@ import { getElements } from 'hyperview/test/helpers';
 import HvTextField from 'hyperview/src/components/hv-text-field';
 import { LOCAL_NAME } from 'hyperview/src/types';
 
-
 describe('HvTextField', () => {
   describe('getFormInputValues', () => {
     let elements;
@@ -22,8 +21,9 @@ describe('HvTextField', () => {
           <doc xmlns="https://hyperview.org/hyperview">
             <screen>
               <body>
-                <text-field name="input" value="hello world" />
-                <text-field name="input" />
+                <text-field name="input1" value="hello world" />
+                <text-field name="input2" />
+                <text-field value="hello world" />
               </body>
             </screen>
           </doc>
@@ -32,11 +32,17 @@ describe('HvTextField', () => {
       );
     });
     it('returns value attr', async () => {
-      expect(HvTextField.getFormInputValues(elements[0])).toEqual(['hello world']);
+      expect(HvTextField.getFormInputValues(elements[0])).toEqual([
+        ['input1', 'hello world'],
+      ]);
     });
     it('returns empty string if no value attr', async () => {
-      expect(HvTextField.getFormInputValues(elements[1])).toEqual(['']);
+      expect(HvTextField.getFormInputValues(elements[1])).toEqual([
+        ['input2', ''],
+      ]);
+    });
+    it('returns empty array', async () => {
+      expect(HvTextField.getFormInputValues(elements[2])).toEqual([]);
     });
   });
 });
-

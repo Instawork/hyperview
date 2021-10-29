@@ -12,7 +12,6 @@ import { getElements } from 'hyperview/test/helpers';
 import HvSwitch from 'hyperview/src/components/hv-switch';
 import { LOCAL_NAME } from 'hyperview/src/types';
 
-
 describe('HvSwitch', () => {
   describe('getFormInputValues', () => {
     let elements;
@@ -22,8 +21,9 @@ describe('HvSwitch', () => {
           <doc xmlns="https://hyperview.org/hyperview">
             <screen>
               <body>
-                <switch name="input" value="on" />
-                <switch name="input" />
+                <switch name="input1" value="on" />
+                <switch name="input2" />
+                <switch value="on" />
               </body>
             </screen>
           </doc>
@@ -32,10 +32,18 @@ describe('HvSwitch', () => {
       );
     });
     it('returns value attr of on', async () => {
-      expect(HvSwitch.getFormInputValues(elements[0])).toEqual(['on']);
+      expect(HvSwitch.getFormInputValues(elements[0])).toEqual([
+        ['input1', 'on'],
+      ]);
     });
     it('returns empty string if no value attr', async () => {
-      expect(HvSwitch.getFormInputValues(elements[1])).toEqual(['']);
+      expect(HvSwitch.getFormInputValues(elements[1])).toEqual([
+        ['input2', ''],
+      ]);
+    });
+
+    it('returns empty array if no name attr', async () => {
+      expect(HvSwitch.getFormInputValues(elements[2])).toEqual([]);
     });
   });
 });

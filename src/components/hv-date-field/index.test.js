@@ -12,8 +12,7 @@ import { getElements } from 'hyperview/test/helpers';
 import HvDateField from 'hyperview/src/components/hv-date-field';
 import { LOCAL_NAME } from 'hyperview/src/types';
 
-
-describe('HvList', () => {
+describe('HvDateField', () => {
   describe('getFormInputValues', () => {
     let elements;
     beforeEach(() => {
@@ -22,8 +21,9 @@ describe('HvList', () => {
           <doc xmlns="https://hyperview.org/hyperview">
             <screen>
               <body>
-                <date-field name="input" value="2018-10-12" />
-                <date-field name="input" />
+                <date-field name="input1" value="2018-10-12" />
+                <date-field name="input2" />
+                <date-field value="2018-10-12" />
               </body>
             </screen>
           </doc>
@@ -32,10 +32,17 @@ describe('HvList', () => {
       );
     });
     it('returns value attr', async () => {
-      expect(HvDateField.getFormInputValues(elements[0])).toEqual(['2018-10-12']);
+      expect(HvDateField.getFormInputValues(elements[0])).toEqual([
+        ['input1', '2018-10-12'],
+      ]);
     });
     it('returns empty string if no value attr', async () => {
-      expect(HvDateField.getFormInputValues(elements[1])).toEqual(['']);
+      expect(HvDateField.getFormInputValues(elements[1])).toEqual([
+        ['input2', ''],
+      ]);
+    });
+    it('returns empty array if no name attr', async () => {
+      expect(HvDateField.getFormInputValues(elements[2])).toEqual([]);
     });
   });
 });

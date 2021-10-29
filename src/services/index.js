@@ -293,23 +293,31 @@ export const getFormData = (
       );
       for (let i = 0; i < inputElements.length; i += 1) {
         const inputElement = inputElements.item(i);
-        if (inputElement) {
-          const name: ?string = inputElement.getAttribute('name');
-          if (name && component.getFormInputValues) {
-            component
-              .getFormInputValues(inputElement)
-              // eslint-disable-next-line no-loop-func
-              .forEach((value: string) => {
-                formData.append(name, value);
-                formHasData = true;
-              });
-          }
+        if (inputElement && component.getFormInputValues) {
+          console.log(component.getFormInputValues(inputElement));
+          component
+            .getFormInputValues(inputElement)
+            // eslint-disable-next-line no-loop-func
+            .forEach(([name: string, value: string]: string) => {
+              formData.append(name, value);
+              formHasData = true;
+            });
         }
       }
     });
 
   // Ensure that we only return form data with content in it. Otherwise, it will crash on Android
   return formHasData ? formData : null;
+};
+
+export const getNameValueFormInputValues = (
+  element: Element,
+): Array<[string, string]> => {
+  const name = element.getAttribute('name');
+  if (name) {
+    return [[name, element.getAttribute('value') || '']];
+  }
+  return [];
 };
 
 export const encodeXml = (xml: string): string =>
