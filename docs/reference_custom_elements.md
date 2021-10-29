@@ -16,6 +16,7 @@ Custom Hyperview elements are backed by a React Native component. Any React Nati
 | ------------ | ------ | -------- | ------------------------------------------------------------- |
 | namespaceURI | string | Yes      | The XML namespace for the element                             |
 | localName    | string | Yes      | The local tag name (within the XML namespace) for the element |
+| getFormInputValues    | function | No      | A function with the signature `(element): Array<[string, string]>`. Add this if your custom element contains data that should be serialized into a parent form. The array return value allows for the custom element to serialize multiple name/value pairs. Most commonly, your element would return one name/value pair, like `[["first_name", "Alice"]]`. You can also return multiple values for one name, like `[["choice", "1"], ["choice", "2"]]`. Or multiple values with multiple names, like `[["state", "CA"], ["country", "USA"]]`|
 
 When rendering the component, Hyperview will pass screen context to `render()` as props. The component is free to use these props if it wants to render sub-children:
 
