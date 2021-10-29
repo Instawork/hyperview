@@ -294,7 +294,6 @@ export const getFormData = (
       for (let i = 0; i < inputElements.length; i += 1) {
         const inputElement = inputElements.item(i);
         if (inputElement && component.getFormInputValues) {
-          console.log(component.getFormInputValues(inputElement));
           component
             .getFormInputValues(inputElement)
             // eslint-disable-next-line no-loop-func
