@@ -49,6 +49,16 @@ const defaultRegistryContent = {
   'web-view': HvWebView,
 };
 
+const defaultFormRegistryContent = {
+  'date-field': HvDateField,
+  'picker-field': HvPickerField,
+  'select-multiple': HvSelectMultiple,
+  'select-single': HvSelectSingle,
+  switch: HvSwitch,
+  'text-area': HvTextArea,
+  'text-field': HvTextField,
+};
+
 describe('Components', () => {
   describe('getRegistry', () => {
     describe('without arguments', () => {
@@ -92,6 +102,62 @@ describe('Components', () => {
           },
           'https://hyperview.org/hyperview': {
             ...defaultRegistryContent,
+            baz: Baz,
+            'baz-1': Baz,
+            'baz-2': Baz,
+          },
+        });
+      });
+    });
+  });
+
+  describe('getFormRegistry', () => {
+    describe('without arguments', () => {
+      it('returns correct registy', () => {
+        expect(Components.getFormRegistry()).toEqual({
+          'https://hyperview.org/hyperview': defaultFormRegistryContent,
+        });
+      });
+    });
+    describe('with arguments', () => {
+      it('returns correct registy', () => {
+        class Foo extends PureComponent<*> {
+          static namespaceURI = 'http://foo';
+
+          static localName = 'foo';
+
+          static localNameAliases = [];
+
+          static getFormInputValues() {
+            return [];
+          }
+        }
+        // eslint-disable-next-line react/no-multi-comp
+        class Bar extends PureComponent<*> {
+          static namespaceURI = 'http://bar';
+
+          static localName = 'bar';
+
+          static localNameAliases = [];
+        }
+        // eslint-disable-next-line react/no-multi-comp
+        class Baz extends PureComponent<*> {
+          static namespaceURI = 'https://hyperview.org/hyperview';
+
+          static localName = 'baz';
+
+          static localNameAliases = ['baz-1', 'baz-2'];
+
+          static getFormInputValues() {
+            return [];
+          }
+        }
+        expect(Components.getFormRegistry([Foo, Bar, Baz])).toEqual({
+          'http://foo': {
+            foo: Foo,
+          },
+          'https://hyperview.org/hyperview': {
+            ...defaultFormRegistryContent,
             baz: Baz,
             'baz-1': Baz,
             'baz-2': Baz,

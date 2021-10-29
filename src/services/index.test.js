@@ -8,6 +8,7 @@
  *
  */
 
+import * as Components from 'hyperview/src/services/components';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import {
   createProps,
@@ -15,6 +16,13 @@ import {
   encodeXml,
 } from 'hyperview/src/services';
 import { DOMParser } from 'xmldom-instawork';
+import HvDateField from 'hyperview/src/components/hv-date-field';
+import HvPickerField from 'hyperview/src/components/hv-picker-field';
+import HvSelectMultiple from 'hyperview/src/components/hv-select-multiple';
+import HvSelectSingle from 'hyperview/src/components/hv-select-single';
+import HvSwitch from 'hyperview/src/components/hv-switch';
+import HvTextArea from 'hyperview/src/components/hv-text-area';
+import HvTextField from 'hyperview/src/components/hv-text-field';
 
 const parser = new DOMParser();
 const createElement = (id: ?string) => {
@@ -116,5 +124,20 @@ describe('createProps', () => {
     it('does not set accessibilityLabel', () => {
       expect(props).not.toHaveProperty('accessibilityLabel');
     });
+  });
+});
+
+describe('flattenRegistry', () => {
+  const registry = Components.getFormRegistry();
+  it('returns flattened registy', () => {
+    expect(Components.flattenRegistry(registry)).toEqual([
+      ['https://hyperview.org/hyperview', 'date-field', HvDateField],
+      ['https://hyperview.org/hyperview', 'picker-field', HvPickerField],
+      ['https://hyperview.org/hyperview', 'select-multiple', HvSelectMultiple],
+      ['https://hyperview.org/hyperview', 'select-single', HvSelectSingle],
+      ['https://hyperview.org/hyperview', 'switch', HvSwitch],
+      ['https://hyperview.org/hyperview', 'text-area', HvTextArea],
+      ['https://hyperview.org/hyperview', 'text-field', HvTextField],
+    ]);
   });
 });

@@ -144,6 +144,17 @@
           <style color="yellow" />
         </modifier>
       </style>
+      <style
+        id="Button"
+        backgroundColor="#63CB76"
+        borderRadius="16"
+        flex="1"
+        flexDirection="row"
+        justifyContent="center"
+        margin="24"
+        padding="24"
+      />
+      <style id="Button__Label" color="white" fontSize="24" fontWeight="bold" />
     </styles>
     <body style="Body" safe-area="true">
       <header style="Header">
@@ -151,6 +162,7 @@
         <text style="Header__Title">Picker</text>
       </header>
       <view scroll="true" style="Main">
+        <form>
         <text style="Description">
           Picker fields open a system-appropriate modal to choose a single value
           from a list of options. On iOS, styles can be applied to the modal and
@@ -159,14 +171,14 @@
         <view style="FormGroup">
           <text style="label">Default picker field</text>
           <picker-field
-            field-style="Input"
-            field-text-style="Input__Text"
-            modal-style="PickerModal"
-            modal-text-style="PickerModal__text"
-            name="picker"
-            placeholder="Select choice"
-            placeholderTextColor="#8D9494"
-          >
+              field-style="Input"
+              field-text-style="Input__Text"
+              modal-style="PickerModal"
+              modal-text-style="PickerModal__text"
+              name="picker1"
+              placeholder="Select choice"
+              placeholderTextColor="#8D9494"
+            >
             <picker-item label="Choice 0" value="0" />
             <picker-item label="Choice 1" value="1" />
             <picker-item label="Choice 2" value="2" />
@@ -179,15 +191,15 @@
         <view style="FormGroup">
           <text style="label">Filled picker field</text>
           <picker-field
-            field-style="Input"
-            field-text-style="Input__Text"
-            modal-style="PickerModal"
-            modal-text-style="PickerModal__text"
-            name="picker"
-            placeholder="Select choice"
-            placeholderTextColor="#8D9494"
-            value="3"
-          >
+              field-style="Input"
+              field-text-style="Input__Text"
+              modal-style="PickerModal"
+              modal-text-style="PickerModal__text"
+              name="picker2"
+              placeholder="Select choice"
+              placeholderTextColor="#8D9494"
+              value="3"
+            >
             <picker-item label="Choice 0" value="0" />
             <picker-item label="Choice 1" value="1" />
             <picker-item label="Choice 2" value="2" />
@@ -200,15 +212,15 @@
         <view style="FormGroup">
           <text style="label">De-selectable picker field</text>
           <picker-field
-            field-style="Input"
-            field-text-style="Input__Text"
-            modal-style="PickerModal"
-            modal-text-style="PickerModal__text"
-            name="picker"
-            placeholder="Select choice"
-            placeholderTextColor="#8D9494"
-            value="3"
-          >
+              field-style="Input"
+              field-text-style="Input__Text"
+              modal-style="PickerModal"
+              modal-text-style="PickerModal__text"
+              name="picker3"
+              placeholder="Select choice"
+              placeholderTextColor="#8D9494"
+              value="3"
+            >
             <picker-item label="No choice" value="" />
             <picker-item label="Choice 0" value="0" />
             <picker-item label="Choice 1" value="1" />
@@ -222,14 +234,14 @@
         <view style="FormGroup">
           <text style="label">Validation error</text>
           <picker-field
-            field-style="Input Input--Error"
-            field-text-style="Input__Text Input__Text--Error"
-            modal-style="PickerModal"
-            modal-text-style="PickerModal__text"
-            name="picker"
-            placeholder="Select choice"
-            placeholderTextColor="#8D9494"
-          >
+              field-style="Input Input--Error"
+              field-text-style="Input__Text Input__Text--Error"
+              modal-style="PickerModal"
+              modal-text-style="PickerModal__text"
+              name="picker4"
+              placeholder="Select choice"
+              placeholderTextColor="#8D9494"
+            >
             <picker-item label="Choice 0" value="0" />
             <picker-item label="Choice 1" value="1" />
             <picker-item label="Choice 2" value="2" />
@@ -243,15 +255,15 @@
         <view style="FormGroup">
           <text style="label">Filled validation error</text>
           <picker-field
-            field-style="Input Input--Error"
-            field-text-style="Input__Text Input__Text--Error"
-            modal-style="PickerModal"
-            modal-text-style="PickerModal__text"
-            name="picker"
-            placeholder="Select choice"
-            placeholderTextColor="#8D9494"
-            value="3"
-          >
+              field-style="Input Input--Error"
+              field-text-style="Input__Text Input__Text--Error"
+              modal-style="PickerModal"
+              modal-text-style="PickerModal__text"
+              name="picker5"
+              placeholder="Select choice"
+              placeholderTextColor="#8D9494"
+              value="3"
+            >
             <picker-item label="Choice 0" value="0" />
             <picker-item label="Choice 1" value="1" />
             <picker-item label="Choice 2" value="2" />
@@ -265,16 +277,16 @@
         <view style="FormGroup">
           <text style="label">Customized</text>
           <picker-field
-            cancel-label="Nevermind"
-            done-label="Set choice"
-            field-style="InputCustom"
-            field-text-style="InputCustom__Text"
-            modal-style="PickerModalCustom"
-            modal-text-style="PickerModalCustom__text"
-            name="picker"
-            placeholder="Select choice"
-            placeholderTextColor="#8D9494"
-          >
+              cancel-label="Nevermind"
+              done-label="Set choice"
+              field-style="InputCustom"
+              field-text-style="InputCustom__Text"
+              modal-style="PickerModalCustom"
+              modal-text-style="PickerModalCustom__text"
+              name="picker6"
+              placeholder="Select choice"
+              placeholderTextColor="#8D9494"
+            >
             <picker-item label="Choice 0" value="0" />
             <picker-item label="Choice 1" value="1" />
             <picker-item label="Choice 2" value="2" />
@@ -283,7 +295,12 @@
             <picker-item label="Choice 5" value="5" />
             <picker-item label="Choice 6" value="6" />
           </picker-field>
+
+          <view style="Button" href="/ui_elements/forms/picker.xml">
+            <text style="Button__Label">Serialize</text>
+          </view>
         </view>
+        </form>
       </view>
     </body>
   </screen>

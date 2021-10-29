@@ -10,7 +10,7 @@ import type {
   NavigationProps,
   NodeList,
 } from 'hyperview/src/types';
-import { NAV_ACTIONS, ComponentRegistry } from 'hyperview/src/types';
+import { ComponentRegistry, NAV_ACTIONS } from 'hyperview/src/types';
 import { getFormData } from 'hyperview/src/services';
 
 export const ANCHOR_ID_SEPARATOR = '#';

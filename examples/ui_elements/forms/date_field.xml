@@ -144,6 +144,17 @@
           <style color="yellow" />
         </modifier>
       </style>
+      <style
+        id="Button"
+        backgroundColor="#63CB76"
+        borderRadius="16"
+        flex="1"
+        flexDirection="row"
+        justifyContent="center"
+        margin="24"
+        padding="24"
+      />
+      <style id="Button__Label" color="white" fontSize="24" fontWeight="bold" />
     </styles>
     <body style="Body" safe-area="true">
       <header style="Header">
@@ -159,206 +170,213 @@
           Label formatting is determined by the client. In these examples,
           wer're using moment.js for the formatting.
         </text>
+        <form>
         <view style="FormGroup">
           <text style="label">Default date field</text>
           <date-field
-            field-style="Input"
-            field-text-style="Input__Text"
-            label-format="MMMM D, YYYY"
-            modal-style="PickerModal"
-            modal-text-style="PickerModal__text"
-            name="date"
-            placeholder="Select date"
-            placeholderTextColor="#8D9494"
-          />
+              field-style="Input"
+              field-text-style="Input__Text"
+              label-format="MMMM D, YYYY"
+              modal-style="PickerModal"
+              modal-text-style="PickerModal__text"
+              name="date"
+              placeholder="Select date"
+              placeholderTextColor="#8D9494"
+            />
         </view>
         <view style="FormGroup">
           <text style="label">Date field in spinner mode</text>
           <date-field
-            field-style="Input"
-            field-text-style="Input__Text"
-            label-format="MMMM D, YYYY"
-            modal-style="PickerModal"
-            modal-text-style="PickerModal__text"
-            mode="spinner"
-            name="date"
-            placeholder="Select date"
-            placeholderTextColor="#8D9494"
-          />
+              field-style="Input"
+              field-text-style="Input__Text"
+              label-format="MMMM D, YYYY"
+              modal-style="PickerModal"
+              modal-text-style="PickerModal__text"
+              mode="spinner"
+              name="date"
+              placeholder="Select date"
+              placeholderTextColor="#8D9494"
+            />
         </view>
         <view style="FormGroup">
           <text style="label">Filled date field</text>
           <date-field
-            field-style="Input"
-            field-text-style="Input__Text"
-            label-format="MMMM D, YYYY"
-            modal-style="PickerModal"
-            modal-text-style="PickerModal__text"
-            name="date"
-            placeholder="Select date"
-            placeholderTextColor="#8D9494"
-            value="2018-03-07"
-          />
+              field-style="Input"
+              field-text-style="Input__Text"
+              label-format="MMMM D, YYYY"
+              modal-style="PickerModal"
+              modal-text-style="PickerModal__text"
+              name="date"
+              placeholder="Select date"
+              placeholderTextColor="#8D9494"
+              value="2018-03-07"
+            />
         </view>
         <view style="FormGroup">
           <text style="label">Label format examples (using moment.js)</text>
           <date-field
-            field-style="Input"
-            field-text-style="Input__Text"
-            label-format="MMMM D, YYYY"
-            modal-style="PickerModal"
-            modal-text-style="PickerModal__text"
-            name="date"
-            placeholder="Select date"
-            placeholderTextColor="#8D9494"
-            value="2018-03-07"
-          />
+              field-style="Input"
+              field-text-style="Input__Text"
+              label-format="MMMM D, YYYY"
+              modal-style="PickerModal"
+              modal-text-style="PickerModal__text"
+              name="date"
+              placeholder="Select date"
+              placeholderTextColor="#8D9494"
+              value="2018-03-07"
+            />
           <date-field
-            field-style="Input"
-            field-text-style="Input__Text"
-            label-format="L"
-            modal-style="PickerModal"
-            modal-text-style="PickerModal__text"
-            name="date"
-            placeholder="Select date"
-            placeholderTextColor="#8D9494"
-            value="2018-03-07"
-          />
+              field-style="Input"
+              field-text-style="Input__Text"
+              label-format="L"
+              modal-style="PickerModal"
+              modal-text-style="PickerModal__text"
+              name="date"
+              placeholder="Select date"
+              placeholderTextColor="#8D9494"
+              value="2018-03-07"
+            />
           <date-field
-            field-style="Input"
-            field-text-style="Input__Text"
-            label-format="MMMM [the] Do, [`]YY"
-            modal-style="PickerModal"
-            modal-text-style="PickerModal__text"
-            name="date"
-            placeholder="Select date"
-            placeholderTextColor="#8D9494"
-            value="2018-03-07"
-          />
+              field-style="Input"
+              field-text-style="Input__Text"
+              label-format="MMMM [the] Do, [`]YY"
+              modal-style="PickerModal"
+              modal-text-style="PickerModal__text"
+              name="date"
+              placeholder="Select date"
+              placeholderTextColor="#8D9494"
+              value="2018-03-07"
+            />
         </view>
         <view style="FormGroup">
           <text style="label">Min date (May 5, 2018)</text>
           <date-field
-            field-style="Input"
-            field-text-style="Input__Text"
-            label-format="MMMM D, YYYY"
-            min="2018-05-05"
-            modal-style="PickerModal"
-            modal-text-style="PickerModal__text"
-            name="date"
-            placeholder="Select date"
-            placeholderTextColor="#8D9494"
-          />
+              field-style="Input"
+              field-text-style="Input__Text"
+              label-format="MMMM D, YYYY"
+              min="2018-05-05"
+              modal-style="PickerModal"
+              modal-text-style="PickerModal__text"
+              name="date"
+              placeholder="Select date"
+              placeholderTextColor="#8D9494"
+            />
           <date-field
-            field-style="Input"
-            field-text-style="Input__Text"
-            label-format="MMMM D, YYYY"
-            min="2018-05-05"
-            modal-style="PickerModal"
-            modal-text-style="PickerModal__text"
-            mode="spinner"
-            name="date"
-            placeholder="Select date (spinner)"
-            placeholderTextColor="#8D9494"
-          />
+              field-style="Input"
+              field-text-style="Input__Text"
+              label-format="MMMM D, YYYY"
+              min="2018-05-05"
+              modal-style="PickerModal"
+              modal-text-style="PickerModal__text"
+              mode="spinner"
+              name="date"
+              placeholder="Select date (spinner)"
+              placeholderTextColor="#8D9494"
+            />
         </view>
         <view style="FormGroup">
           <text style="label">Max date (May 5, 2024)</text>
           <date-field
-            field-style="Input"
-            field-text-style="Input__Text"
-            label-format="MMMM D, YYYY"
-            max="2024-05-05"
-            modal-style="PickerModal"
-            modal-text-style="PickerModal__text"
-            name="date"
-            placeholder="Select date"
-            placeholderTextColor="#8D9494"
-          />
+              field-style="Input"
+              field-text-style="Input__Text"
+              label-format="MMMM D, YYYY"
+              max="2024-05-05"
+              modal-style="PickerModal"
+              modal-text-style="PickerModal__text"
+              name="date"
+              placeholder="Select date"
+              placeholderTextColor="#8D9494"
+            />
           <date-field
-            field-style="Input"
-            field-text-style="Input__Text"
-            label-format="MMMM D, YYYY"
-            max="2024-05-05"
-            modal-style="PickerModal"
-            modal-text-style="PickerModal__text"
-            mode="spinner"
-            name="date"
-            placeholder="Select date (spinner)"
-            placeholderTextColor="#8D9494"
-          />
+              field-style="Input"
+              field-text-style="Input__Text"
+              label-format="MMMM D, YYYY"
+              max="2024-05-05"
+              modal-style="PickerModal"
+              modal-text-style="PickerModal__text"
+              mode="spinner"
+              name="date"
+              placeholder="Select date (spinner)"
+              placeholderTextColor="#8D9494"
+            />
         </view>
         <view style="FormGroup">
           <text style="label">Min/Max date (May 5, 2018 - 2024)</text>
           <date-field
-            field-style="Input"
-            field-text-style="Input__Text"
-            label-format="MMMM D, YYYY"
-            max="2024-05-05"
-            min="2018-05-05"
-            modal-style="PickerModal"
-            modal-text-style="PickerModal__text"
-            name="date"
-            placeholder="Select date"
-            placeholderTextColor="#8D9494"
-          />
+              field-style="Input"
+              field-text-style="Input__Text"
+              label-format="MMMM D, YYYY"
+              max="2024-05-05"
+              min="2018-05-05"
+              modal-style="PickerModal"
+              modal-text-style="PickerModal__text"
+              name="date"
+              placeholder="Select date"
+              placeholderTextColor="#8D9494"
+            />
           <date-field
-            field-style="Input"
-            field-text-style="Input__Text"
-            label-format="MMMM D, YYYY"
-            max="2024-05-05"
-            min="2018-05-05"
-            modal-style="PickerModal"
-            modal-text-style="PickerModal__text"
-            mode="spinner"
-            name="date"
-            placeholder="Select date (spinner)"
-            placeholderTextColor="#8D9494"
-          />
+              field-style="Input"
+              field-text-style="Input__Text"
+              label-format="MMMM D, YYYY"
+              max="2024-05-05"
+              min="2018-05-05"
+              modal-style="PickerModal"
+              modal-text-style="PickerModal__text"
+              mode="spinner"
+              name="date"
+              placeholder="Select date (spinner)"
+              placeholderTextColor="#8D9494"
+            />
         </view>
         <view style="FormGroup">
           <text style="label">Validation error</text>
           <date-field
-            field-style="Input Input--Error"
-            field-text-style="Input__Text Input__Text--Error"
-            label-format="MMMM D, YYYY"
-            modal-style="PickerModal"
-            modal-text-style="PickerModal__text"
-            name="date"
-            placeholder="Select date"
-            placeholderTextColor="#8D9494"
-          />
+              field-style="Input Input--Error"
+              field-text-style="Input__Text Input__Text--Error"
+              label-format="MMMM D, YYYY"
+              modal-style="PickerModal"
+              modal-text-style="PickerModal__text"
+              name="date"
+              placeholder="Select date"
+              placeholderTextColor="#8D9494"
+            />
           <text style="help help--error">Please select a date</text>
         </view>
         <view style="FormGroup">
           <text style="label">Filled validation error</text>
           <date-field
-            field-style="Input Input--Error"
-            field-text-style="Input__Text Input__Text--Error"
-            label-format="MMMM D, YYYY"
-            modal-style="PickerModal"
-            modal-text-style="PickerModal__text"
-            name="date"
-            placeholder="Select date"
-            placeholderTextColor="#8D9494"
-            value="2018-03-07"
-          />
+              field-style="Input Input--Error"
+              field-text-style="Input__Text Input__Text--Error"
+              label-format="MMMM D, YYYY"
+              modal-style="PickerModal"
+              modal-text-style="PickerModal__text"
+              name="date"
+              placeholder="Select date"
+              placeholderTextColor="#8D9494"
+              value="2018-03-07"
+            />
           <text style="help help--error">Please select a different date</text>
         </view>
         <view style="FormGroup">
           <text style="label">Customized</text>
           <date-field
-            field-style="InputCustom"
-            field-text-style="InputCustom__Text"
-            label-format="MMMM D, YYYY"
-            modal-style="PickerModalCustom"
-            modal-text-style="PickerModalCustom__text"
-            name="date"
-            placeholder="Select date"
-            placeholderTextColor="#8D9494"
-            value="2018-03-07"
-          />
+              field-style="InputCustom"
+              field-text-style="InputCustom__Text"
+              label-format="MMMM D, YYYY"
+              modal-style="PickerModalCustom"
+              modal-text-style="PickerModalCustom__text"
+              name="date"
+              placeholder="Select date"
+              placeholderTextColor="#8D9494"
+              value="2018-03-07"
+            />
         </view>
+
+        <view style="Button" href="/ui_elements/forms/date_field.xml">
+          <text style="Button__Label">Serialize</text>
+        </view>
+
+        </form>
       </view>
     </body>
   </screen>

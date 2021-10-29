@@ -23,7 +23,7 @@ export default class HvSelectSingle extends PureComponent<HvComponentProps> {
 
   static localNameAliases = [];
 
-  static getFormInputValue = (element: Element): ?string => {
+  static getFormInputValues = (element: Element): Array<string> => {
     // Add each selected option to the form data
     const optionElements: NodeList<Element> = element.getElementsByTagNameNS(
       Namespaces.HYPERVIEW,

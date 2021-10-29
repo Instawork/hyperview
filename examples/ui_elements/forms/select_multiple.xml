@@ -150,6 +150,17 @@
           <style height="32" width="32" />
         </modifier>
       </style>
+      <style
+        id="Button"
+        backgroundColor="#63CB76"
+        borderRadius="16"
+        flex="1"
+        flexDirection="row"
+        justifyContent="center"
+        margin="24"
+        padding="24"
+      />
+      <style id="Button__Label" color="white" fontSize="24" fontWeight="bold" />
     </styles>
     <body style="Body" safe-area="true">
       <header style="Header">
@@ -157,8 +168,10 @@
         <text style="Header__Title">Select Multiple</text>
       </header>
       <view scroll="true" style="Main">
+
+        <form>
         <text style="Description">Simple Select</text>
-        <select-multiple name="choice" style="Select">
+        <select-multiple name="choice1" style="Select">
           <view style="Select__Separator" />
           <option style="Select__Option" value="paid_parking">
             <text style="Select__Label">Paid parking</text>
@@ -183,7 +196,7 @@
           <view style="Select__Separator" />
         </select-multiple>
         <text style="Description">Pre-selected</text>
-        <select-multiple name="choice" style="Select">
+        <select-multiple name="choice2" style="Select">
           <view style="Select__Separator" />
           <option style="Select__Option" value="paid_parking">
             <text style="Select__Label">Paid parking</text>
@@ -200,10 +213,10 @@
           </option>
           <view style="Select__Separator" />
           <option
-            selected="true"
-            style="Select__Option"
-            value="unknown_parking"
-          >
+              selected="true"
+              style="Select__Option"
+              value="unknown_parking"
+            >
             <text style="Select__Label">Unknown</text>
             <view style="Select__RadioOuter">
               <view style="Select__RadioInner" />
@@ -212,51 +225,57 @@
           <view style="Select__Separator" />
         </select-multiple>
         <text style="Description">Custom</text>
-        <select-multiple name="choice" style="SelectCustom">
+        <select-multiple name="choice3" style="SelectCustom">
           <option style="SelectCustom__Option" value="paid_parking">
             <view style="SelectCustom__ImageWrapper">
               <image
-                source="/ui_elements/forms/unselected.png"
-                style="SelectCustom__Image SelectCustom__Image--Unselected"
-              />
+                  source="/ui_elements/forms/unselected.png"
+                  style="SelectCustom__Image SelectCustom__Image--Unselected"
+                />
               <image
-                source="/ui_elements/forms/selected.png"
-                style="SelectCustom__Image SelectCustom__Image--Selected"
-              />
+                  source="/ui_elements/forms/selected.png"
+                  style="SelectCustom__Image SelectCustom__Image--Selected"
+                />
             </view>
             <text style="SelectCustom__Label">Paid parking</text>
           </option>
           <option
-            selected="true"
-            style="SelectCustom__Option"
-            value="free_parking"
-          >
+              selected="true"
+              style="SelectCustom__Option"
+              value="free_parking"
+            >
             <view style="SelectCustom__ImageWrapper">
               <image
-                source="/ui_elements/forms/unselected.png"
-                style="SelectCustom__Image SelectCustom__Image--Unselected"
-              />
+                  source="/ui_elements/forms/unselected.png"
+                  style="SelectCustom__Image SelectCustom__Image--Unselected"
+                />
               <image
-                source="/ui_elements/forms/selected.png"
-                style="SelectCustom__Image SelectCustom__Image--Selected"
-              />
+                  source="/ui_elements/forms/selected.png"
+                  style="SelectCustom__Image SelectCustom__Image--Selected"
+                />
             </view>
             <text style="SelectCustom__Label">Free parking</text>
           </option>
           <option style="SelectCustom__Option" value="unknown_parking">
             <view style="SelectCustom__ImageWrapper">
               <image
-                source="/ui_elements/forms/unselected.png"
-                style="SelectCustom__Image SelectCustom__Image--Unselected"
-              />
+                  source="/ui_elements/forms/unselected.png"
+                  style="SelectCustom__Image SelectCustom__Image--Unselected"
+                />
               <image
-                source="/ui_elements/forms/selected.png"
-                style="SelectCustom__Image SelectCustom__Image--Selected"
-              />
+                  source="/ui_elements/forms/selected.png"
+                  style="SelectCustom__Image SelectCustom__Image--Selected"
+                />
             </view>
             <text style="SelectCustom__Label">Unknown</text>
           </option>
         </select-multiple>
+
+          <view style="Button" href="/ui_elements/forms/select_multiple.xml">
+            <text style="Button__Label">Serialize</text>
+          </view>
+        </form>
+
       </view>
     </body>
   </screen>
