@@ -14,6 +14,7 @@ import {
   createProps,
   createTestProps,
   encodeXml,
+  flattenRegistry,
 } from 'hyperview/src/services';
 import { DOMParser } from 'xmldom-instawork';
 import HvDateField from 'hyperview/src/components/hv-date-field';
@@ -130,7 +131,7 @@ describe('createProps', () => {
 describe('flattenRegistry', () => {
   const registry = Components.getFormRegistry();
   it('returns flattened registy', () => {
-    expect(Components.flattenRegistry(registry)).toEqual([
+    expect(flattenRegistry(registry)).toEqual([
       ['https://hyperview.org/hyperview', 'date-field', HvDateField],
       ['https://hyperview.org/hyperview', 'picker-field', HvPickerField],
       ['https://hyperview.org/hyperview', 'select-multiple', HvSelectMultiple],

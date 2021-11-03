@@ -4,13 +4,14 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as UrlService from 'hyperview/src/services/url';
 import type {
   BehaviorOptions,
+  ComponentRegistry,
   Document,
   Element,
   NavAction,
   NavigationProps,
   NodeList,
 } from 'hyperview/src/types';
-import { ComponentRegistry, NAV_ACTIONS } from 'hyperview/src/types';
+import { NAV_ACTIONS } from 'hyperview/src/types';
 import { getFormData } from 'hyperview/src/services';
 
 export const ANCHOR_ID_SEPARATOR = '#';

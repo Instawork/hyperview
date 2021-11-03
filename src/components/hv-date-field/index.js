@@ -12,6 +12,7 @@ import * as Contexts from 'hyperview/src/contexts';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type {
   DOMString,
+  Element,
   HvComponentProps,
   StyleSheet as StyleSheetType,
 } from 'hyperview/src/types';

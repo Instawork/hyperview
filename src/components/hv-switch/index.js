@@ -9,13 +9,13 @@
  */
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
+import type { Element, HvComponentProps } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
 import { StyleSheet, Switch } from 'react-native';
 import {
   createStyleProp,
   getNameValueFormInputValues,
 } from 'hyperview/src/services';
-import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 
 export default class HvSwitch extends PureComponent<HvComponentProps> {

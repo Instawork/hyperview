@@ -14,6 +14,7 @@ import type {
   DOMString,
   Document,
   Element,
+  HvComponent,
   HvComponentOptions,
   Node,
   NodeList,
@@ -251,14 +252,18 @@ export const getAncestorByTagName = (
 
 export const flattenRegistry = (
   registry: ComponentRegistry,
-): [[string, string, HVComponent]] => {
-  const entries = [];
+): Array<[string, string, HvComponent]> => {
+  const entries: Array<[string, string, HvComponent]> = [];
 
-  Object.entries(registry).forEach(([ns, names]) => {
-    Object.entries(names).forEach(([name, element]) => {
-      entries.push([ns, name, element]);
-    });
-  });
+  Object.entries(registry).forEach(
+    ([ns: string, names: { [string]: HvComponent }]) => {
+      Object.entries(names).forEach(
+        ([name: string, component: HvComponent]) => {
+          entries.push([ns, name, component]);
+        },
+      );
+    },
+  );
   return entries;
 };
 
@@ -285,8 +290,8 @@ export const getFormData = (
   let formHasData = false;
   flattenRegistry(formComponents)
     // Get all inputs in the form
-    .forEach((data: [string, string, HVComponent]) => {
-      const [ns: string, tag: string, component: HVComponent] = data;
+    .forEach((data: [string, string, HvComponent]) => {
+      const [ns: string, tag: string, component: HvComponent] = data;
       const inputElements: NodeList<Element> = formElement.getElementsByTagNameNS(
         ns,
         tag,

@@ -295,11 +295,13 @@ export type HvComponentProps = {|
   stylesheets: StyleSheets,
 |};
 
+type FormInputValues = (element: Element) => Array<string>;
+
 export type HvComponentStatics = {
   localName: LocalName | string,
   localNameAliases: Array<LocalName | string>,
   namespaceURI: NamespaceURI,
-  getFormInputValues?: (element: Element) => Array<string>,
+  getFormInputValues?: FormInputValues,
 };
 
 export type HvComponent = Class<React$Component<HvComponentProps, any>> &
