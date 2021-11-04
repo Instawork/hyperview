@@ -16,6 +16,7 @@ import type {
   Element,
   HvComponent,
   HvComponentOptions,
+  HvFormValues,
   Node,
   NodeList,
   StyleSheet,
@@ -255,15 +256,13 @@ export const flattenRegistry = (
 ): Array<[string, string, HvComponent]> => {
   const entries: Array<[string, string, HvComponent]> = [];
 
-  Object.entries(registry).forEach(
-    ([ns: string, names: { [string]: HvComponent }]) => {
-      Object.entries(names).forEach(
-        ([name: string, component: HvComponent]) => {
-          entries.push([ns, name, component]);
-        },
-      );
-    },
-  );
+  Object.keys(registry).forEach((ns: string) => {
+    const nameRegistry: { [string]: HvComponent } = registry[ns];
+    Object.keys(nameRegistry).forEach((name: string) => {
+      const component: HvComponent = nameRegistry[name];
+      entries.push([ns, name, component]);
+    });
+  });
   return entries;
 };
 
@@ -298,11 +297,13 @@ export const getFormData = (
       );
       for (let i = 0; i < inputElements.length; i += 1) {
         const inputElement = inputElements.item(i);
-        if (inputElement && component.getFormInputValues) {
-          component
+        if (inputElement) {
+          // Casting necessary due to limitations of our Flow version (no optional properties)
+          const formComponent: HvFormValues = (component: any);
+          formComponent
             .getFormInputValues(inputElement)
             // eslint-disable-next-line no-loop-func
-            .forEach(([name: string, value: string]: string) => {
+            .forEach(([name: string, value: string]) => {
               formData.append(name, value);
               formHasData = true;
             });

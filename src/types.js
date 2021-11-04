@@ -295,13 +295,17 @@ export type HvComponentProps = {|
   stylesheets: StyleSheets,
 |};
 
-type FormInputValues = (element: Element) => Array<string>;
+// This type exists for casting since our current version of Flow
+// does not support optional static properties. Otherwise this would
+// be added as an optional property in HvComponentStatics
+export type HvFormValues = {
+  getFormInputValues: (element: Element) => Array<[string, string]>,
+};
 
 export type HvComponentStatics = {
   localName: LocalName | string,
   localNameAliases: Array<LocalName | string>,
   namespaceURI: NamespaceURI,
-  getFormInputValues?: FormInputValues,
 };
 
 export type HvComponent = Class<React$Component<HvComponentProps, any>> &
