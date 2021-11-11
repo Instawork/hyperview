@@ -77,6 +77,7 @@ export default class HyperScreen extends React.Component {
 
     this.behaviorRegistry = Behaviors.getRegistry(this.props.behaviors);
     this.componentRegistry = Components.getRegistry(this.props.components);
+    this.formComponentRegistry = Components.getFormRegistry(this.props.components);
     this.navigation = new Navigation(props.entrypointUrl, this.getNavigation());
   }
 
@@ -312,7 +313,7 @@ export default class HyperScreen extends React.Component {
     } else if (Object.values(NAV_ACTIONS).includes(action)) {
       this.navigation.setUrl(this.state.url);
       this.navigation.setDocument(this.doc);
-      this.navigation.navigate(href || ANCHOR_ID_SEPARATOR, action, currentElement, opts);
+      this.navigation.navigate(href || ANCHOR_ID_SEPARATOR, action, currentElement, this.formComponentRegistry, opts);
     } else if (Object.values(UPDATE_ACTIONS).includes(action)) {
       this.onUpdateFragment(href, action, currentElement, opts);
     } else if (action === ACTIONS.SWAP) {
@@ -384,7 +385,7 @@ export default class HyperScreen extends React.Component {
     const showIndicatorIdList = showIndicatorIds ? Xml.splitAttributeList(showIndicatorIds) : [];
     const hideIndicatorIdList = hideIndicatorIds ? Xml.splitAttributeList(hideIndicatorIds) : [];
 
-    const formData = getFormData(currentElement);
+    const formData = getFormData(currentElement, this.formComponentRegistry);
 
     if (once) {
       if (behaviorElement.getAttribute('ran-once')) {

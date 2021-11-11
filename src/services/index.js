@@ -8,21 +8,22 @@
  *
  */
 
-import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Xml from 'hyperview/src/services/xml';
-import { DEFAULT_PRESS_OPACITY, HV_TIMEOUT_ID_ATTR } from './types';
 import type {
+  ComponentRegistry,
   DOMString,
   Document,
   Element,
+  HvComponent,
   HvComponentOptions,
-  LocalName,
+  HvFormValues,
   Node,
   NodeList,
   StyleSheet,
   StyleSheets,
 } from 'hyperview/src/types';
-import { FORM_NAMES, LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
+import { DEFAULT_PRESS_OPACITY, HV_TIMEOUT_ID_ATTR } from './types';
+import { NODE_TYPE } from 'hyperview/src/types';
 import { Platform } from 'react-native';
 
 /**
@@ -250,13 +251,31 @@ export const getAncestorByTagName = (
   return ((parentNode: any): Element);
 };
 
+export const flattenRegistry = (
+  registry: ComponentRegistry,
+): Array<[string, string, HvComponent]> => {
+  const entries: Array<[string, string, HvComponent]> = [];
+
+  Object.keys(registry).forEach((ns: string) => {
+    const nameRegistry: { [string]: HvComponent } = registry[ns];
+    Object.keys(nameRegistry).forEach((name: string) => {
+      const component: HvComponent = nameRegistry[name];
+      entries.push([ns, name, component]);
+    });
+  });
+  return entries;
+};
+
 /**
  * Creates a FormData object for the given element. Finds the closest form element ancestor
  * and adds data for all inputs contained in the form. Returns null if the element has no
  * form ancestor, or if there is no form data to send.
  * If the given element is a form element, its form data will be returned.
  */
-export const getFormData = (element: Element): ?FormData => {
+export const getFormData = (
+  element: Element,
+  formComponents: ComponentRegistry,
+): ?FormData => {
   const formElement: ?Element =
     element.tagName === 'form'
       ? element
@@ -266,58 +285,44 @@ export const getFormData = (element: Element): ?FormData => {
   }
 
   const formData: FormData = new FormData();
-  let formHasData = false;
 
-  // TODO: It would be more flexible to grab any element with a name and value.
-  FORM_NAMES
+  let formHasData = false;
+  flattenRegistry(formComponents)
     // Get all inputs in the form
-    .reduce((acc: Array<Element>, tag: LocalName) => {
+    .forEach((data: [string, string, HvComponent]) => {
+      const [ns: string, tag: string, component: HvComponent] = data;
       const inputElements: NodeList<Element> = formElement.getElementsByTagNameNS(
-        Namespaces.HYPERVIEW,
+        ns,
         tag,
       );
       for (let i = 0; i < inputElements.length; i += 1) {
         const inputElement = inputElements.item(i);
         if (inputElement) {
-          acc.push(inputElement);
+          // Casting necessary due to limitations of our Flow version (no optional properties)
+          const formComponent: HvFormValues = (component: any);
+          formComponent
+            .getFormInputValues(inputElement)
+            // eslint-disable-next-line no-loop-func
+            .forEach(([name: string, value: string]) => {
+              formData.append(name, value);
+              formHasData = true;
+            });
         }
-      }
-      return acc;
-    }, [])
-    // Append the form data for each input
-    .forEach((input: Element) => {
-      const name: ?string = input.getAttribute('name');
-      if (!name) {
-        return;
-      }
-      if (
-        input.tagName === LOCAL_NAME.SELECT_SINGLE ||
-        input.tagName === LOCAL_NAME.SELECT_MULTIPLE
-      ) {
-        // Add each selected option to the form data
-        const optionElements: NodeList<Element> = input.getElementsByTagNameNS(
-          Namespaces.HYPERVIEW,
-          LOCAL_NAME.OPTION,
-        );
-        for (let i = 0; i < optionElements.length; i += 1) {
-          const optionElement = optionElements.item(i);
-          if (
-            optionElement &&
-            optionElement.getAttribute('selected') === 'true'
-          ) {
-            formData.append(name, optionElement.getAttribute('value') || '');
-            formHasData = true;
-          }
-        }
-      } else {
-        // Add the text input to the form data
-        formData.append(name, input.getAttribute('value') || '');
-        formHasData = true;
       }
     });
 
   // Ensure that we only return form data with content in it. Otherwise, it will crash on Android
   return formHasData ? formData : null;
+};
+
+export const getNameValueFormInputValues = (
+  element: Element,
+): Array<[string, string]> => {
+  const name = element.getAttribute('name');
+  if (name) {
+    return [[name, element.getAttribute('value') || '']];
+  }
+  return [];
 };
 
 export const encodeXml = (xml: string): string =>

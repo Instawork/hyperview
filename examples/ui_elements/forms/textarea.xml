@@ -79,6 +79,17 @@
       <style id="help--error" color="#FF4847" />
       <style id="input--noneditable" color="#8D9494" />
       <style id="Main" flex="1" />
+      <style
+        id="Button"
+        backgroundColor="#63CB76"
+        borderRadius="16"
+        flex="1"
+        flexDirection="row"
+        justifyContent="center"
+        margin="24"
+        padding="24"
+      />
+      <style id="Button__Label" color="white" fontSize="24" fontWeight="bold" />
     </styles>
     <body style="Body" safe-area="true">
       <header style="Header">
@@ -86,34 +97,35 @@
         <text style="Header__Title">Textarea</text>
       </header>
       <view scroll="true" style="Main">
+        <form>
         <view style="FormGroup">
           <text style="label">Multi-line text-area</text>
           <text-area
-            placeholder="Instructions"
-            name="textarea"
-            placeholderTextColor="#8D9494"
-            style="input"
-          />
+              placeholder="Instructions"
+              name="textarea"
+              placeholderTextColor="#8D9494"
+              style="input"
+            />
           <text style="help">Please enter your gig instructions</text>
         </view>
         <view style="FormGroup">
           <text style="label">Multi-line filled</text>
           <text-area
-            placeholder="Instructions"
-            name="textarea"
-            placeholderTextColor="#8D9494"
-            style="input"
-            value="One two three four"
-          />
+              placeholder="Instructions"
+              name="textarea"
+              placeholderTextColor="#8D9494"
+              style="input"
+              value="One two three four"
+            />
         </view>
         <view style="FormGroup">
           <text style="label">Multi-line validation error</text>
           <text-area
-            placeholder="Instructions"
-            name="textarea"
-            placeholderTextColor="#8D9494"
-            style="input input--error"
-          />
+              placeholder="Instructions"
+              name="textarea"
+              placeholderTextColor="#8D9494"
+              style="input input--error"
+            />
           <text style="help help--error">
             Please enter your gig instructions
           </text>
@@ -121,12 +133,12 @@
         <view style="FormGroup">
           <text style="label">Multi-line filled with validation error</text>
           <text-area
-            placeholder="Instructions"
-            name="textarea"
-            placeholderTextColor="#8D9494"
-            style="input input--error"
-            value="One two three four"
-          />
+              placeholder="Instructions"
+              name="textarea"
+              placeholderTextColor="#8D9494"
+              style="input input--error"
+              value="One two three four"
+            />
           <text style="help help--error">
             Please enter your gig instructions
           </text>
@@ -134,25 +146,31 @@
         <view style="FormGroup">
           <text style="label">Noneditable Text Area</text>
           <text-area
-            placeholderTextColor="#8D9494"
-            name="textarea"
-            style="input input--noneditable"
-            value="One two three four"
-            editable="false"
-          />
+              placeholderTextColor="#8D9494"
+              name="textarea"
+              style="input input--noneditable"
+              value="One two three four"
+              editable="false"
+            />
         </view>
 
         <view style="FormGroup">
           <text style="label">Editable Text Area</text>
           <text-area
-            placeholder="Edit your text"
-            placeholderTextColor="#8D9494"
-            name="textarea"
-            style="input"
-            value="One two three four"
-            editable="true"
-          />
+              placeholder="Edit your text"
+              placeholderTextColor="#8D9494"
+              name="textarea"
+              style="input"
+              value="One two three four"
+              editable="true"
+            />
         </view>
+
+        <view style="Button" href="/ui_elements/forms/textarea.xml">
+          <text style="Button__Label">Serialize</text>
+        </view>
+
+        </form>
       </view>
     </body>
   </screen>

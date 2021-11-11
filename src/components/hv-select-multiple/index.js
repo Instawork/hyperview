@@ -10,7 +10,12 @@
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
-import type { DOMString, HvComponentProps } from 'hyperview/src/types';
+import type {
+  DOMString,
+  Element,
+  HvComponentProps,
+  NodeList,
+} from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { View } from 'react-native';
@@ -22,6 +27,26 @@ export default class HvSelectMultiple extends PureComponent<HvComponentProps> {
   static localName = LOCAL_NAME.SELECT_MULTIPLE;
 
   static localNameAliases = [];
+
+  static getFormInputValues = (element: Element): Array<[string, string]> => {
+    const values: Array<[string, string]> = [];
+    const name = element.getAttribute('name');
+    if (!name) {
+      return values;
+    }
+    // Add each selected option to the form data
+    const optionElements: NodeList<Element> = element.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      LOCAL_NAME.OPTION,
+    );
+    for (let i = 0; i < optionElements.length; i += 1) {
+      const optionElement = optionElements.item(i);
+      if (optionElement && optionElement.getAttribute('selected') === 'true') {
+        values.push([name, optionElement.getAttribute('value') || '']);
+      }
+    }
+    return values;
+  };
 
   constructor(props: HvComponentProps) {
     super(props);

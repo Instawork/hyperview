@@ -44,16 +44,6 @@ export const LOCAL_NAME = {
   WEB_VIEW: 'web-view',
 };
 
-export const FORM_NAMES = [
-  LOCAL_NAME.TEXT_AREA,
-  LOCAL_NAME.TEXT_FIELD,
-  LOCAL_NAME.SELECT_SINGLE,
-  LOCAL_NAME.SELECT_MULTIPLE,
-  LOCAL_NAME.PICKER_FIELD,
-  LOCAL_NAME.DATE_FIELD,
-  LOCAL_NAME.SWITCH,
-];
-
 export type LocalName = $Values<typeof LOCAL_NAME>;
 
 export const NODE_TYPE = {
@@ -304,6 +294,13 @@ export type HvComponentProps = {|
   options: HvComponentOptions,
   stylesheets: StyleSheets,
 |};
+
+// This type exists for casting since our current version of Flow
+// does not support optional static properties. Otherwise this would
+// be added as an optional property in HvComponentStatics
+export type HvFormValues = {
+  getFormInputValues: (element: Element) => Array<[string, string]>,
+};
 
 export type HvComponentStatics = {
   localName: LocalName | string,

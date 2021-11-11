@@ -44,16 +44,22 @@ const HYPERVIEW_COMPONENTS = [
   HvWebView,
 ];
 
+const reducer = (registry: ComponentRegistry, component: HvComponent) => ({
+  ...registry,
+  [component.namespaceURI]: {
+    ...registry[component.namespaceURI],
+    ...ComponentsInternal.registerComponent(component),
+  },
+});
+
 export const getRegistry = (
   components: HvComponent[] = [],
 ): ComponentRegistry =>
-  [...HYPERVIEW_COMPONENTS, ...components].reduce(
-    (registry: ComponentRegistry, component: HvComponent) => ({
-      ...registry,
-      [component.namespaceURI]: {
-        ...registry[component.namespaceURI],
-        ...ComponentsInternal.registerComponent(component),
-      },
-    }),
-    {},
-  );
+  [...HYPERVIEW_COMPONENTS, ...components].reduce(reducer, {});
+
+export const getFormRegistry = (
+  components: HvComponent[] = [],
+): ComponentRegistry =>
+  [...HYPERVIEW_COMPONENTS, ...components]
+    .filter(c => Object.prototype.hasOwnProperty.call(c, 'getFormInputValues'))
+    .reduce(reducer, {});

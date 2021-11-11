@@ -82,6 +82,17 @@
       <style id="help--error" color="#FF4847" />
       <style id="input--noneditable" color="#8D9494" />
       <style id="Main" flex="1" marginBottom="40" />
+      <style
+        id="Button"
+        backgroundColor="#63CB76"
+        borderRadius="16"
+        flex="1"
+        flexDirection="row"
+        justifyContent="center"
+        margin="24"
+        padding="24"
+      />
+      <style id="Button__Label" color="white" fontSize="24" fontWeight="bold" />
     </styles>
     <body style="Body" safe-area="true">
       <header style="Header">
@@ -89,183 +100,188 @@
         <text style="Header__Title">Text Input</text>
       </header>
       <view scroll="true" style="Main">
+        <form>
         <view style="FormGroup">
           <text style="label">Default input field</text>
           <text-field
-            placeholder="First name"
-            placeholderTextColor="#8D9494"
-            name="text"
-            style="input"
-          />
+              placeholder="First name"
+              placeholderTextColor="#8D9494"
+              name="text"
+              style="input"
+            />
           <text style="help">Please enter your full name</text>
         </view>
         <view style="FormGroup">
           <text style="label">Filled input field</text>
           <text-field
-            placeholder="First name"
-            placeholderTextColor="#8D9494"
-            name="text"
-            style="input"
-            value="Milhouse"
-          />
+              placeholder="First name"
+              placeholderTextColor="#8D9494"
+              name="text"
+              style="input"
+              value="Milhouse"
+            />
           <text style="help">Please enter your full name</text>
         </view>
         <view style="FormGroup">
           <text style="label">Validation error</text>
           <text-field
-            placeholder="First name"
-            placeholderTextColor="#8D9494"
-            name="text"
-            style="input input--error"
-          />
+              placeholder="First name"
+              placeholderTextColor="#8D9494"
+              name="text"
+              style="input input--error"
+            />
           <text style="help help--error">Please enter your full name</text>
         </view>
         <view style="FormGroup">
           <text style="label">Filled validation error</text>
           <text-field
-            placeholder="First name"
-            placeholderTextColor="#8D9494"
-            name="text"
-            style="input input--error"
-            value="Milhouse"
-          />
+              placeholder="First name"
+              placeholderTextColor="#8D9494"
+              name="text"
+              style="input input--error"
+              value="Milhouse"
+            />
           <text style="help help--error">Name already taken</text>
         </view>
         <view style="FormGroup">
           <text style="label">Horizontal Layout</text>
           <view style="horizontalFormGroup">
             <text-field
-              placeholder="First"
-              placeholderTextColor="#8D9494"
-              name="text"
-              style="input"
-            />
+                placeholder="First"
+                placeholderTextColor="#8D9494"
+                name="text"
+                style="input"
+              />
             <text-field
-              placeholder="Last"
-              placeholderTextColor="#8D9494"
-              name="text"
-              style="input"
-            />
+                placeholder="Last"
+                placeholderTextColor="#8D9494"
+                name="text"
+                style="input"
+              />
           </view>
         </view>
         <view style="FormGroup">
           <text style="label">Phone pad keyboard</text>
           <text-field
-            keyboard-type="phone-pad"
-            placeholder="Phone number"
-            placeholderTextColor="#8D9494"
-            name="text"
-            style="input"
-            value="(281) 555-2048"
-          />
+              keyboard-type="phone-pad"
+              placeholder="Phone number"
+              placeholderTextColor="#8D9494"
+              name="text"
+              style="input"
+              value="(281) 555-2048"
+            />
         </view>
         <view style="FormGroup">
           <text style="label">Number pad keyboard</text>
           <text-field
-            keyboard-type="number-pad"
-            placeholder="SSN"
-            placeholderTextColor="#8D9494"
-            name="text"
-            style="input"
-            value="600 80 5555"
-          />
+              keyboard-type="number-pad"
+              placeholder="SSN"
+              placeholderTextColor="#8D9494"
+              name="text"
+              style="input"
+              value="600 80 5555"
+            />
         </view>
         <view style="FormGroup">
           <text style="label">Email keyboard</text>
           <text-field
-            keyboard-type="email-address"
-            placeholder="Email"
-            placeholderTextColor="#8D9494"
-            name="text"
-            style="input"
-            value="gigsy@instawork.com"
-          />
+              keyboard-type="email-address"
+              placeholder="Email"
+              placeholderTextColor="#8D9494"
+              name="text"
+              style="input"
+              value="gigsy@instawork.com"
+            />
         </view>
         <view style="FormGroup">
           <text style="label">Phone number mask</text>
           <text-field
-            keyboard-type="phone-pad"
-            mask="(999) 999-9999"
-            placeholder="Phone number"
-            placeholderTextColor="#8D9494"
-            name="text"
-            style="input"
-            value=""
-          />
+              keyboard-type="phone-pad"
+              mask="(999) 999-9999"
+              placeholder="Phone number"
+              placeholderTextColor="#8D9494"
+              name="text"
+              style="input"
+              value=""
+            />
         </view>
         <view style="FormGroup">
           <text style="label">4 digit code mask</text>
           <text-field
-            keyboard-type="number-pad"
-            mask="9999"
-            placeholder="4-digit code"
-            placeholderTextColor="#8D9494"
-            name="text"
-            style="input"
-            value=""
-          />
+              keyboard-type="number-pad"
+              mask="9999"
+              placeholder="4-digit code"
+              placeholderTextColor="#8D9494"
+              name="text"
+              style="input"
+              value=""
+            />
         </view>
         <view style="FormGroup">
           <text style="label">SSN mask</text>
           <text-field
-            keyboard-type="number-pad"
-            mask="999 99 9999"
-            placeholder="SSN or Tax ID"
-            placeholderTextColor="#8D9494"
-            name="text"
-            style="input"
-            value=""
-          />
+              keyboard-type="number-pad"
+              mask="999 99 9999"
+              placeholder="SSN or Tax ID"
+              placeholderTextColor="#8D9494"
+              name="text"
+              style="input"
+              value=""
+            />
         </view>
 
         <view style="FormGroup">
           <text style="label">Secure Text</text>
           <text-field
-            placeholder="Password"
-            placeholderTextColor="#8D9494"
-            name="text"
-            style="input"
-            secure-text="true"
-            value=""
-          />
+              placeholder="Password"
+              placeholderTextColor="#8D9494"
+              name="text"
+              style="input"
+              secure-text="true"
+              value=""
+            />
         </view>
 
         <view style="FormGroup">
           <text style="label">Secure Text + Mask</text>
           <text-field
-            keyboard-type="number-pad"
-            placeholder="SSN"
-            placeholderTextColor="#8D9494"
-            mask="999 99 9999"
-            name="text"
-            style="input"
-            secure-text="true"
-            value=""
-          />
+              keyboard-type="number-pad"
+              placeholder="SSN"
+              placeholderTextColor="#8D9494"
+              mask="999 99 9999"
+              name="text"
+              style="input"
+              secure-text="true"
+              value=""
+            />
         </view>
         
         <view style="FormGroup">
           <text style="label">Noneditable Text</text>
           <text-field
-            placeholderTextColor="#8D9494"
-            name="text"
-            style="input input--noneditable"
-            value="9999"
-            editable="false"
-          />
+              placeholderTextColor="#8D9494"
+              name="text"
+              style="input input--noneditable"
+              value="9999"
+              editable="false"
+            />
         </view>
 
         <view style="FormGroup">
           <text style="label">Editable Text</text>
           <text-field
-            placeholder="Edit your text"
-            placeholderTextColor="#8D9494"
-            name="text"
-            style="input"
-            value="9999"
-            editable="true"
-          />
+              placeholder="Edit your text"
+              placeholderTextColor="#8D9494"
+              name="text"
+              style="input"
+              value="9999"
+              editable="true"
+            />
         </view>
+          <view style="Button" href="/ui_elements/forms/text_input.xml">
+            <text style="Button__Label">Serialize</text>
+          </view>
+        </form>
       </view>
     </body>
   </screen>

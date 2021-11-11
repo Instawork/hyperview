@@ -4,6 +4,7 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as UrlService from 'hyperview/src/services/url';
 import type {
   BehaviorOptions,
+  ComponentRegistry,
   Document,
   Element,
   NavAction,
@@ -66,10 +67,11 @@ export default class Navigation {
     href: string,
     action: NavAction,
     element: Element,
+    formComponents: ComponentRegistry,
     opts: BehaviorOptions,
   ): void => {
     const { showIndicatorId, delay } = opts;
-    const formData: ?FormData = getFormData(element);
+    const formData: ?FormData = getFormData(element, formComponents);
 
     // Serialize form data as query params, if present.
     const baseUrl = UrlService.getUrlFromHref(href, this.url);

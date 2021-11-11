@@ -12,6 +12,7 @@ import * as Contexts from 'hyperview/src/contexts';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type {
   DOMString,
+  Element,
   HvComponentProps,
   StyleSheet as StyleSheetType,
 } from 'hyperview/src/types';
@@ -26,7 +27,11 @@ import {
 } from 'react-native';
 // $FlowFixMe: update Flow to support typings for React Hooks
 import React, { PureComponent, useState } from 'react';
-import { createProps, createStyleProp } from 'hyperview/src/services';
+import {
+  createProps,
+  createStyleProp,
+  getNameValueFormInputValues,
+} from 'hyperview/src/services';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { Node as ReactNode } from 'react';
@@ -134,6 +139,10 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
   static localName = LOCAL_NAME.DATE_FIELD;
 
   static localNameAliases = [];
+
+  static getFormInputValues = (element: Element): Array<[string, string]> => {
+    return getNameValueFormInputValues(element);
+  };
 
   props: HvComponentProps;
 
