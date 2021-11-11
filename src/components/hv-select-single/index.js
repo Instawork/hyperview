@@ -10,7 +10,12 @@
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
-import type { DOMString, Element, HvComponentProps } from 'hyperview/src/types';
+import type {
+  DOMString,
+  Element,
+  HvComponentProps,
+  NodeList,
+} from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { View } from 'react-native';
