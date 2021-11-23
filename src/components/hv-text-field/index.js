@@ -37,37 +37,23 @@ export default class HvTextField extends PureComponent<HvComponentProps> {
   }
 
   triggerFocusBehaviors = (newElement: Element) => {
-    const behaviorElements = Dom.getBehaviorElements(this.props.element);
-    const focusBehaviors = behaviorElements.filter(
-      e => e.getAttribute('trigger') === 'focus',
-    );
-    focusBehaviors.forEach(behaviorElement => {
-      const href = behaviorElement.getAttribute('href');
-      const action = behaviorElement.getAttribute('action');
-      const verb = behaviorElement.getAttribute('verb');
-      const targetId = behaviorElement.getAttribute('target');
-      const showIndicatorIds = behaviorElement.getAttribute('show-during-load');
-      const hideIndicatorIds = behaviorElement.getAttribute('hide-during-load');
-      const delay = behaviorElement.getAttribute('delay');
-      const once = behaviorElement.getAttribute('once');
-      this.props.onUpdate(href, action, newElement, {
-        behaviorElement,
-        delay,
-        hideIndicatorIds,
-        once,
-        showIndicatorIds,
-        targetId,
-        verb,
-      });
-    });
+    this.triggerBehaviors(newElement, 'focus');
   };
 
   triggerBlurBehaviors = (newElement: Element) => {
+    this.triggerBehaviors(newElement, 'blur');
+  };
+
+  triggerChangeBehaviors = (newElement: Element) => {
+    this.triggerBehaviors(newElement, 'change');
+  };
+
+  triggerBehaviors = (newElement: Element, triggerName: string) => {
     const behaviorElements = Dom.getBehaviorElements(this.props.element);
-    const blurBehaviors = behaviorElements.filter(
-      e => e.getAttribute('trigger') === 'blur',
+    const matchingBehaviors = behaviorElements.filter(
+      e => e.getAttribute('trigger') === triggerName,
     );
-    blurBehaviors.forEach(behaviorElement => {
+    matchingBehaviors.forEach(behaviorElement => {
       const href = behaviorElement.getAttribute('href');
       const action = behaviorElement.getAttribute('action');
       const verb = behaviorElement.getAttribute('verb');
@@ -146,6 +132,7 @@ export default class HvTextField extends PureComponent<HvComponentProps> {
         const newElement = this.props.element.cloneNode(true);
         newElement.setAttribute('value', formattedValue);
         this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+        this.triggerChangeBehaviors(newElement);
       },
       onFocus: () => this.setFocus(true),
       ref: this.props.options.registerInputHandler,
