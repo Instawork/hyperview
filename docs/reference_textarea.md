@@ -40,8 +40,9 @@ A `<text-area>` element can appear anywhere within a `<form>` element.
 
 A `<text-area>` element accepts the standard [behavior attributes](/docs/reference_behavior_attributes), including the following triggers:
 
-- [focus](#focus)
-- [blur](#blur)
+- [blur](/docs/reference_behavior_attributes#blur)
+- [change](/docs/reference_behavior_attributes#change)
+- [focus](/docs/reference_behavior_attributes#focus)
 
 #### `name`
 
