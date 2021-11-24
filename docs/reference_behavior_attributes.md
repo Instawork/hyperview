@@ -143,6 +143,8 @@ These elements support the `blur` trigger:
 
 Triggers when the element value changes. Only works on editable elements.
 
+> **NOTE**: Elements with a `mask` do trigger the behavior for not allowed characters as well.
+
 These elements support the `change` trigger:
 
 - [`<text-field>`](/docs/reference_textfield)
