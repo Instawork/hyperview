@@ -80,7 +80,7 @@
       <view scroll="true" style="Main">
         <text style="Description">
           When a text field loses focus, the content in the container
-          will re replaced.
+          will be replaced.
         </text>
         <view id="container1" style="Container" />
         <view style="FormGroup">
@@ -111,7 +111,7 @@
         </view>
         <text style="Description">
           When a text area loses focus, the content in the container
-          will re replaced.
+          will be replaced.
         </text>
         <view style="FormGroup">
           <text style="Label">Input area 1</text>
