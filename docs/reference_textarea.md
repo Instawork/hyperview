@@ -8,10 +8,7 @@ The `<text-area>` element represents multi-line input fields. When pressed, the 
 
 ```xml
 <screen>
-  <text-area
-    name="feedback"
-    placeholder="Please leave your feedback"
-  />
+  <text-area name="feedback" placeholder="Please leave your feedback" />
 </screen>
 ```
 
@@ -40,8 +37,9 @@ A `<text-area>` element can appear anywhere within a `<form>` element.
 
 A `<text-area>` element accepts the standard [behavior attributes](/docs/reference_behavior_attributes), including the following triggers:
 
-- [focus](#focus)
-- [blur](#blur)
+- [blur](/docs/reference_behavior_attributes#blur)
+- [change](/docs/reference_behavior_attributes#change)
+- [focus](/docs/reference_behavior_attributes#focus)
 
 #### `name`
 
@@ -95,8 +93,8 @@ If `hide="true"`, the element will not be rendered on screen. If the element or 
 
 ## `text-content-type` (iOS)
 
-| Type                                                                                                                                                                                                                                                                                                                                                                                            | Required |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| **none** (default), none, URL, addressCity, addressCityAndState, addressState, countryName, creditCardNumber, emailAddress, familyName, fullStreetAddress, givenName, jobTitle, location, middleName, name, namePrefix, nameSuffix, nickname, organizationName, postalCode, streetAddressLine1, streetAddressLine2, sublocality, telephoneNumber, username, password, newPassword, oneTimeCode  | No       |
+| Type                                                                                                                                                                                                                                                                                                                                                                                           | Required |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| **none** (default), none, URL, addressCity, addressCityAndState, addressState, countryName, creditCardNumber, emailAddress, familyName, fullStreetAddress, givenName, jobTitle, location, middleName, name, namePrefix, nameSuffix, nickname, organizationName, postalCode, streetAddressLine1, streetAddressLine2, sublocality, telephoneNumber, username, password, newPassword, oneTimeCode | No       |
 
 The `text-content-type` autofills available fields (for example, for iOS 12+ `oneTimeCode` can be used to indicate that a field can be autofilled by a code arriving in an SMS).

@@ -121,6 +121,7 @@
       <xs:enumeration value="focus" />
       <xs:enumeration value="blur" />
       <xs:enumeration value="on-event" />
+      <xs:enumeration value="change" />
     </xs:restriction>
   </xs:simpleType>
 

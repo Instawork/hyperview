@@ -27,9 +27,9 @@ The rest of the document describes in-depth how these attributes work together.
 
 ## trigger
 
-| Type                                                                                                              | Required |
-| ----------------------------------------------------------------------------------------------------------------- | -------- |
-| **press** (default), longPress, pressIn, pressOut, visible, refresh, load, select, deselect, focus, blur, on-event | No       |
+| Type                                                                                                                       | Required |
+| -------------------------------------------------------------------------------------------------------------------------- | -------- |
+| **press** (default), longPress, pressIn, pressOut, visible, refresh, load, select, deselect, focus, blur, change, on-event | No       |
 
 ### `press`
 
@@ -135,6 +135,18 @@ These elements support the `focus` trigger:
 Triggers when the element loses focus. Only works on focusable elements.
 
 These elements support the `blur` trigger:
+
+- [`<text-field>`](/docs/reference_textfield)
+- [`<text-area>`](/docs/reference_textarea)
+
+### `change`
+
+Triggers when the element value changes. Only works on editable elements.
+
+> **NOTE**: when using the `change` trigger on a `<text-field>` that include the `mask` attribute, the behavior will be triggered even if the mask prevents the pressed key from being set.
+
+
+These elements support the `change` trigger:
 
 - [`<text-field>`](/docs/reference_textfield)
 - [`<text-area>`](/docs/reference_textarea)

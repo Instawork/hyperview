@@ -8,11 +8,7 @@ The `<text-field>` element represents a single-line input field. When pressed, t
 
 ```xml
 <form>
-  <text-field
-    name="name"
-    placeholder="Your name"
-    value="Bart"
-  />
+  <text-field name="name" placeholder="Your name" value="Bart" />
   <text-field
     name="phone"
     placeholder="Your phone number"
@@ -43,8 +39,9 @@ A `<text-field>` element can appear anywhere within a `<form>` element.
 
 A `<text-field>` element accepts the standard [behavior attributes](/docs/reference_behavior_attributes), including the following triggers:
 
-- [focus](#focus)
-- [blur](#blur)
+- [blur](/docs/reference_behavior_attributes#blur)
+- [change](/docs/reference_behavior_attributes#change)
+- [focus](/docs/reference_behavior_attributes#focus)
 
 #### `name`
 
@@ -149,8 +146,8 @@ If `secure-text="true"`, the input in the text field will be obscured. Appropria
 
 ## `text-content-type` (iOS)
 
-| Type                                                                                                                                                                                                                                                                                                                                                                                            | Required |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| **none** (default), none, URL, addressCity, addressCityAndState, addressState, countryName, creditCardNumber, emailAddress, familyName, fullStreetAddress, givenName, jobTitle, location, middleName, name, namePrefix, nameSuffix, nickname, organizationName, postalCode, streetAddressLine1, streetAddressLine2, sublocality, telephoneNumber, username, password, newPassword, oneTimeCode  | No       |
+| Type                                                                                                                                                                                                                                                                                                                                                                                           | Required |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| **none** (default), none, URL, addressCity, addressCityAndState, addressState, countryName, creditCardNumber, emailAddress, familyName, fullStreetAddress, givenName, jobTitle, location, middleName, name, namePrefix, nameSuffix, nickname, organizationName, postalCode, streetAddressLine1, streetAddressLine2, sublocality, telephoneNumber, username, password, newPassword, oneTimeCode | No       |
 
 The `text-content-type` autofills available fields (for example, for iOS 12+ `oneTimeCode` can be used to indicate that a field can be autofilled by a code arriving in an SMS).

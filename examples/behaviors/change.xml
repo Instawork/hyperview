@@ -75,11 +75,11 @@
     <body style="Body" safe-area="true">
       <header style="Header">
         <text action="back" href="#" style="Header__Back">Back</text>
-        <text style="Header__Title">Blur</text>
+        <text style="Header__Title">Change</text>
       </header>
       <view scroll="true" style="Main">
         <text style="Description">
-          When a text field loses focus, the content in the container
+          When a text field changes its value, the content in the container
           will be replaced.
         </text>
         <view id="container1" style="Container" />
@@ -87,26 +87,68 @@
           <text style="Label">Input field 1</text>
           <text-field
             action="replace-inner"
-            href="#field1Blured"
+            href="#field1Changed"
             name="text"
             placeholder="First name"
             placeholderTextColor="#8D9494"
             style="Input"
             target="container1"
-            trigger="blur"
+            trigger="change"
           />
         </view>
         <view style="FormGroup">
           <text style="Label">Input field 2</text>
           <text-field
             action="replace-inner"
-            href="#field2Blured"
+            href="#field2Changed"
             name="text"
             placeholder="Last name"
             placeholderTextColor="#8D9494"
             style="Input"
             target="container1"
-            trigger="blur"
+            trigger="change"
+          />
+        </view>
+        <view style="FormGroup">
+          <text style="Label">Input field with auto-focus</text>
+          <text-field
+            action="replace-inner"
+            href="#fieldAutoFocusChanged"
+            name="text"
+            placeholder="Auto focused"
+            placeholderTextColor="#8D9494"
+            style="Input"
+            target="container1"
+            trigger="change"
+            auto-focus="true"
+          />
+        </view>
+        <view style="FormGroup">
+          <text style="Label">Input field with mask</text>
+          <text-field
+            action="replace-inner"
+            href="#fieldMaskChanged"
+            name="text"
+            placeholder="Phone number"
+            placeholderTextColor="#8D9494"
+            style="Input"
+            target="container1"
+            trigger="change"
+            mask="(999) 999-9999"
+          />
+        </view>
+        <view style="FormGroup">
+          <text style="Label">Input field with secure-text</text>
+          <text-field
+            action="replace-inner"
+            href="#fieldSecureTextChanged"
+            name="text"
+            placeholder="Password"
+            placeholderTextColor="#8D9494"
+            style="Input"
+            target="container1"
+            trigger="change"
+            secure-text="true"
           />
         </view>
         <text style="Description">
@@ -117,34 +159,43 @@
           <text style="Label">Input area 1</text>
           <text-area
             action="replace-inner"
-            href="#area1Blured"
+            href="#area1Changed"
             name="feedback"
             placeholder="Please leave your feedback"
             placeholderTextColor="#8D9494"
             style="Input"
             target="container1"
-            trigger="blur"
+            trigger="change"
           />
         </view>
         <view style="FormGroup">
           <text style="Label">Input area 2</text>
           <text-area
             action="replace-inner"
-            href="#area2Blured"
+            href="#area2Changed"
             name="feedback"
             placeholder="Please leave your feedback"
             placeholderTextColor="#8D9494"
             style="Input"
             target="container1"
-            trigger="blur"
+            trigger="change"
           />
         </view>
       </view>
       <view hide="true">
-        <text id="field1Blured" style="Tip">Field 1 blured</text>
-        <text id="field2Blured" style="Tip">Field 2 blured</text>
-        <text id="area1Blured" style="Tip">Area 1 blured</text>
-        <text id="area2Blured" style="Tip">Area 2 blured</text>
+        <text id="field1Changed" style="Tip">Field 1 changed</text>
+        <text id="field2Changed" style="Tip">Field 2 changed</text>
+        <text
+          id="fieldAutoFocusChanged"
+          style="Tip"
+        >Field with auto-focus changed</text>
+        <text id="fieldMaskChanged" style="Tip">Field with mask changed</text>
+        <text
+          id="fieldSecureTextChanged"
+          style="Tip"
+        >Field with secure-text changed</text>
+        <text id="area1Changed" style="Tip">Area 1 changed</text>
+        <text id="area2Changed" style="Tip">Area 2 changed</text>
       </view>
     </body>
   </screen>
