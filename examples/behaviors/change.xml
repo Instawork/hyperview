@@ -185,9 +185,15 @@
       <view hide="true">
         <text id="field1Changed" style="Tip">Field 1 changed</text>
         <text id="field2Changed" style="Tip">Field 2 changed</text>
-        <text id="fieldAutoFocusChanged" style="Tip">Field with auto-focus changed</text>
+        <text
+          id="fieldAutoFocusChanged"
+          style="Tip"
+        >Field with auto-focus changed</text>
         <text id="fieldMaskChanged" style="Tip">Field with mask changed</text>
-        <text id="fieldSecureTextChanged" style="Tip">Field with secure-text changed</text>
+        <text
+          id="fieldSecureTextChanged"
+          style="Tip"
+        >Field with secure-text changed</text>
         <text id="area1Changed" style="Tip">Area 1 changed</text>
         <text id="area2Changed" style="Tip">Area 2 changed</text>
       </view>
