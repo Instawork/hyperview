@@ -143,7 +143,8 @@ These elements support the `blur` trigger:
 
 Triggers when the element value changes. Only works on editable elements.
 
-> **NOTE**: Elements with a `mask` do trigger the behavior for not allowed characters as well.
+> **NOTE**: when using the `change` trigger on a `<text-field>` that include the `mask` attribute, the behavior will be triggered even if the mask prevents the pressed key from being set.
+
 
 These elements support the `change` trigger:
 
