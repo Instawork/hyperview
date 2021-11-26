@@ -107,4 +107,4 @@ A boolean that allows users to select the content of `<text>` element.
 | ------- | -------- | 
 | boolean | No       | 
 
-If `adjustsFontSize="true"`, fonts will be scaled down automatically to fit given style constraints.
+If `adjustsFontSizeToFit="true"`, fonts will be scaled down automatically to fit given style constraints.
