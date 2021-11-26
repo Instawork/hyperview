@@ -75,7 +75,10 @@
 <![CDATA[Escaped with <![CDATA[]>: <hello><world>]]>
         </text>
         <text style="Basic" selectable="true">Select me!</text>
-        <text style="Basic" adjustsFontSizeToFit="true">Adjustable Font Size</text>
+        <text
+          style="Basic"
+          adjustsFontSizeToFit="true"
+        >Adjustable Font Size</text>
       </view>
     </body>
   </screen>
