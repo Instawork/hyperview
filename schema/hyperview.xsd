@@ -854,6 +854,7 @@
       <xs:attribute name="hide" type="xs:boolean" />
       <xs:attribute name="selectable" type="xs:boolean" />
       <xs:attribute name="value" type="xs:string" />
+      <xs:attribute name="adjustsFontSizeToFit" type="xs:boolean" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
     </xs:complexType>
   </xs:element>

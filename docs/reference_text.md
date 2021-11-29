@@ -101,3 +101,10 @@ If `hide="true"`, the element will not be rendered on screen. If the element or 
 | boolean | No       |
 
 A boolean that allows users to select the content of `<text>` element.
+
+#### `adjustsFontSizeToFit`
+| Type    | Required | 
+| ------- | -------- | 
+| boolean | No       | 
+
+If `adjustsFontSizeToFit="true"`, fonts will be scaled down automatically to fit given style constraints.
