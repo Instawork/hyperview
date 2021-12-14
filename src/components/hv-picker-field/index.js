@@ -172,7 +172,10 @@ export default class HvPickerField extends PureComponent<
     const props = {
       onValueChange: (value: any) => {
         this.setState({ pickerValue: value });
-        this.props.element.setAttribute('value', value || '');
+        if (Platform.OS === 'android') {
+          // On Android, the value should be propagated immediately.
+          this.props.element.setAttribute('value', value || '');
+        }
       },
       selectedValue: this.state.pickerValue,
       style,
