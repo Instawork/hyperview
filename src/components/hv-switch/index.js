@@ -52,6 +52,10 @@ export default class HvSwitch extends PureComponent<HvComponentProps> {
       ios_backgroundColor: unselectedStyle
         ? unselectedStyle.backgroundColor
         : null,
+      onChange: () => {
+        const newElement = this.props.element.cloneNode(true);
+        Dom.triggerBehaviors(newElement, 'change', this.props.onUpdate);
+      },
       onValueChange: value => {
         const newElement = this.props.element.cloneNode(true);
         newElement.setAttribute('value', value ? 'on' : 'off');
@@ -63,10 +67,6 @@ export default class HvSwitch extends PureComponent<HvComponentProps> {
         true: selectedStyle ? selectedStyle.backgroundColor : null,
       },
       value: this.props.element.getAttribute('value') === 'on',
-      onChange: () => {
-        const newElement = this.props.element.cloneNode(true);
-        Dom.triggerBehaviors(newElement, 'change', this.props.onUpdate);
-      },
     };
 
     return React.createElement(Switch, props);
