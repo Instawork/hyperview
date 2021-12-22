@@ -11,10 +11,10 @@
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type {
   Document,
-  LocalName,
-  NamespaceURI,
   Element,
   HvComponentOnUpdate,
+  LocalName,
+  NamespaceURI,
 } from 'hyperview/src/types';
 
 export const getBehaviorElements = (element: any) => {
