@@ -8,6 +8,7 @@
  *
  */
 
+import * as Dom from 'hyperview/src/services/dom';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type { Element, HvComponentProps } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
@@ -62,6 +63,10 @@ export default class HvSwitch extends PureComponent<HvComponentProps> {
         true: selectedStyle ? selectedStyle.backgroundColor : null,
       },
       value: this.props.element.getAttribute('value') === 'on',
+      onChange: () => {
+        const newElement = this.props.element.cloneNode(true);
+        Dom.triggerBehaviors(newElement, 'change', this.props.onUpdate);
+      },
     };
 
     return React.createElement(Switch, props);
