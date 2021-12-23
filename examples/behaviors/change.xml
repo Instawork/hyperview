@@ -84,6 +84,16 @@
         </text>
         <view id="container1" style="Container" />
         <view style="FormGroup">
+          <text style="Label">Switch</text>
+          <switch
+            action="replace-inner"
+            href="#switchedToggled"
+            name="text"
+            target="container1"
+            trigger="change"
+          />
+        </view>
+        <view style="FormGroup">
           <text style="Label">Input field 1</text>
           <text-field
             action="replace-inner"
@@ -183,6 +193,7 @@
         </view>
       </view>
       <view hide="true">
+        <text id="switchedToggled" style="Tip">Switch toggled</text>
         <text id="field1Changed" style="Tip">Field 1 changed</text>
         <text id="field2Changed" style="Tip">Field 2 changed</text>
         <text

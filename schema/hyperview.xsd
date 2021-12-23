@@ -1036,6 +1036,7 @@
       <xs:attribute name="id" type="hv:ID" />
       <xs:attribute name="hide" type="xs:boolean" />
       <xs:attribute name="style" type="hv:styleList" />
+      <xs:attributeGroup ref="hv:behaviorAttributes" />
     </xs:complexType>
   </xs:element>
 

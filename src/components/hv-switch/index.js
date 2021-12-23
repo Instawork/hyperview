@@ -8,6 +8,7 @@
  *
  */
 
+import * as Dom from 'hyperview/src/services/dom';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type { Element, HvComponentProps } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
@@ -51,6 +52,10 @@ export default class HvSwitch extends PureComponent<HvComponentProps> {
       ios_backgroundColor: unselectedStyle
         ? unselectedStyle.backgroundColor
         : null,
+      onChange: () => {
+        const newElement = this.props.element.cloneNode(true);
+        Dom.triggerBehaviors(newElement, 'change', this.props.onUpdate);
+      },
       onValueChange: value => {
         const newElement = this.props.element.cloneNode(true);
         newElement.setAttribute('value', value ? 'on' : 'off');

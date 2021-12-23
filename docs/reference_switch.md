@@ -10,10 +10,7 @@ The `<switch>` element represents a boolean input field. When pressed, the switc
 
 ```xml
 <form>
-  <switch
-    name="notifications"
-    value="on"
-  />
+  <switch name="notifications" value="on" />
 </form>
 ```
 
@@ -23,11 +20,18 @@ A `<switch>` element can appear anywhere within a `<form>` element.
 
 ## Attributes
 
-- [`name`](#name)
-- [`value`](#value)
-- [`style`](#style)
-- [`id`](#id)
-- [`hide`](#hide)
+- [Structure](#structure)
+- [Attributes](#attributes)
+  - [Behavior attributes](#behavior-attributes)
+  - [`name`](#name)
+  - [`value`](#value)
+  - [`style`](#style)
+  - [`id`](#id)
+  - [`hide`](#hide)
+
+#### Behavior attributes
+
+A `<switch>` element accepts the standard [behavior attributes](/docs/reference_behavior_attributes), with [change](/docs/reference_behavior_attributes#change) trigger.
 
 #### `name`
 
