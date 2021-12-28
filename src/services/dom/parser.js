@@ -79,8 +79,11 @@ export class Parser {
 
     const response: Response = await this.fetch(url, options);
     const responseText: string = await response.text();
-
-    if (response.status >= 500) {
+    const contentType: string = response.headers.get(HTTP_HEADERS.CONTENT_TYPE);
+    if (
+      response.status >= 500 &&
+      contentType !== CONTENT_TYPE.APPLICATION_XML
+    ) {
       throw new Errors.ServerError(
         url,
         responseText,
