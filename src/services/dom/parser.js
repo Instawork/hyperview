@@ -79,7 +79,9 @@ export class Parser {
 
     const response: Response = await this.fetch(url, options);
     const responseText: string = await response.text();
-    const contentType: string = response.headers.get(HTTP_HEADERS.CONTENT_TYPE);
+    const contentType: string = response.headers?.get(
+      HTTP_HEADERS.CONTENT_TYPE,
+    );
     if (
       response.status >= 500 &&
       contentType !== CONTENT_TYPE.APPLICATION_XML
