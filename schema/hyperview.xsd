@@ -790,6 +790,7 @@
       <xs:attribute name="focused" type="xs:boolean" />
       <xs:attribute name="pressed" type="xs:boolean" />
       <xs:attribute name="selected" type="xs:boolean" />
+      <xs:attribute name="platform" type="xs:string" />
     </xs:complexType>
   </xs:element>
 
