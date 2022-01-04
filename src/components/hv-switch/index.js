@@ -61,13 +61,19 @@ export default class HvSwitch extends PureComponent<HvComponentProps> {
         newElement.setAttribute('value', value ? 'on' : 'off');
         this.props.onUpdate(null, 'swap', this.props.element, { newElement });
       },
-      thumbColor: unselectedStyle ? unselectedStyle.color : null,
+      thumbColor: unselectedStyle?.color || selectedStyle?.color,
       trackColor: {
         false: unselectedStyle ? unselectedStyle.backgroundColor : null,
         true: selectedStyle ? selectedStyle.backgroundColor : null,
       },
       value: this.props.element.getAttribute('value') === 'on',
     };
+
+    if (props.value && selectedStyle?.color) {
+      props.thumbColor = selectedStyle.color;
+    } else if (!props.value && unselectedStyle?.color) {
+      props.thumbColor = unselectedStyle.color;
+    }
 
     return React.createElement(Switch, props);
   }
