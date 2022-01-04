@@ -15,7 +15,7 @@ import type {
   StyleSheet as StyleSheetType,
   StyleSheets,
 } from 'hyperview/src/types';
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 
 const NUMBER_REGEX = /^\d+$/;
 
@@ -148,6 +148,13 @@ const STYLE_ATTRIBUTE_CONVERTERS = {
 function createStylesheet(document: Document, modifiers = {}): StyleSheetType {
   const styles = Dom.getFirstTag(document, 'styles');
   const stylesheet = {};
+
+  // eslint-disable-next-line
+  modifiers = {
+    ...modifiers,
+    platform: Platform.OS,
+  };
+
   if (styles) {
     const styleElements = styles.getElementsByTagNameNS(
       Namespaces.HYPERVIEW,
@@ -176,12 +183,15 @@ function createStylesheet(document: Document, modifiers = {}): StyleSheetType {
 
       let matchesModifiers = true;
       for (let j = 0; j < modifierEntries.length; j += 1) {
+        // state of the selected modifier entry
         const [modifier, state] = modifierEntries[j];
 
-        const elementModifierState =
-          styleElement.parentNode.getAttribute(modifier) === 'true';
+        // state of the <modifier> tag
+        const elementModifierState = styleElement.parentNode.getAttribute(
+          modifier,
+        );
 
-        if (elementModifierState !== state) {
+        if (elementModifierState && elementModifierState !== String(state)) {
           matchesModifiers = false;
           // TODO: https://eslint.org/docs/rules/no-continue
           continue; // eslint-disable-line
