@@ -77,7 +77,6 @@ A `<modifier>` element should only appear as a direct child of a `<style>` eleme
 - [focused](#focused)
 - [pressed](#pressed)
 - [selected](#selected)
-- [platform](#platform)
 
 #### `focused`
 
@@ -147,21 +146,3 @@ Or when a selected element is not pressed:
 The "pressed" modifier applies to any elements that can be triggered by a `select`:
 
 - [`<option>`](/docs/reference_option)
-
-#### `platform`
-
-| Type   | Required |
-| ------ | -------- |
-| String | No       |
-
-Setting this attribute to "iOS" or "android" means the modifier rules will only be applied to the selected platform. This attribute can be combined with all of the above. For example, we can define a modifier to apply when a selected element is displayed on iOS:
-
-```xml
-<modifier selected="true" platform="iOS" />
-```
-
-Or when the same element is displayed on android:
-
-```xml
-<modifier selected="true" platform="android" />
-```
