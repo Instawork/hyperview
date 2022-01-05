@@ -83,9 +83,9 @@
           <style backgroundColor="#4778FF" />
         </modifier>
       </style>
-      <style id="switch-styled" color="#ffaaaa" backgroundColor="red">
+      <style id="switch-styled" color="#E1E1E1" backgroundColor="red">
         <modifier selected="true">
-          <style backgroundColor="#550000" />
+          <style backgroundColor="#550000" color="#ffaaaa" />
         </modifier>
       </style>
       <style

@@ -55,9 +55,9 @@ The value of the field. A value of "on" corresponds to a switch that is on.
 | ------ | -------- |
 | string | No       |
 
-A space-separated list of styles to apply to the element. See [Styles](/docs/reference_style). Note that the only style that will be applied to the switch is `color` and `backgroundColor`. The color will be applied to the thumb of the switch (the part that moves between on/off). The background color will be applied to the track of the switch when the switch is off.
+A space-separated list of styles to apply to the element. See [Styles](/docs/reference_style). Note that the only style that will be applied to the switch is `color` and `backgroundColor`. The color will be applied to the thumb of the switch (the part that moves between on/off). The background color will be applied to the track of the switch.
 
-`<switch>` supports the `selected` style modifier. See [Modifiers](/docs/reference_modifier) for more details. The `backgroundColor` in the `selected` modifier will be applied when the switch is on.
+`<switch>` supports the `selected` style modifier. See [Modifiers](/docs/reference_modifier) for more details. The `backgroundColor` and `color` in the `selected` modifier will be applied when the switch is on.
 
 #### `id`
 
