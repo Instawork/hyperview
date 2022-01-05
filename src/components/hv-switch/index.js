@@ -19,14 +19,17 @@ import {
 } from 'hyperview/src/services';
 import type { ColorValue } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 import { LOCAL_NAME } from 'hyperview/src/types';
+import normalizeColor from 'react-native/Libraries/StyleSheet/normalizeColor';
 
 /* eslint no-bitwise: ["error", { "allow": [">>", "&"] }] */
 function darkenColor(color: ColorValue, percent: number): ColorValue {
-  const h = parseInt(String(color).slice(1), 16);
-  const R = h >> 16;
-  const G = (h >> 8) & 0x00ff;
-  const B = h & 0x0000ff;
-  const hex = (
+  const normalized = Number(normalizeColor(color)).toString(16);
+  const A = String(normalized).slice(6);
+  const RGB = parseInt(String(normalized).slice(0, 6), 16);
+  const R = RGB >> 16;
+  const G = (RGB >> 8) & 0x00ff;
+  const B = RGB & 0x0000ff;
+  const newRgb = (
     0x1000000 +
     (Math.round((0 - R) * percent) + R) * 0x10000 +
     (Math.round((0 - G) * percent) + G) * 0x100 +
@@ -34,7 +37,8 @@ function darkenColor(color: ColorValue, percent: number): ColorValue {
   )
     .toString(16)
     .slice(1);
-  return `#${hex}`;
+
+  return `#${newRgb}${A}`;
 }
 
 export default class HvSwitch extends PureComponent<HvComponentProps> {

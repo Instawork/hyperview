@@ -26,7 +26,8 @@
         "allow": [
           "hyperview/**",
           "react-native/Libraries/StyleSheet/StyleSheet",
-          "react-native/Libraries/StyleSheet/StyleSheetTypes"
+          "react-native/Libraries/StyleSheet/StyleSheetTypes",
+          "react-native/Libraries/StyleSheet/normalizeColor"
         ]
       }
     ],
