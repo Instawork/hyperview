@@ -61,6 +61,7 @@ export default class HvSwitch extends PureComponent<HvComponentProps> {
         newElement.setAttribute('value', value ? 'on' : 'off');
         this.props.onUpdate(null, 'swap', this.props.element, { newElement });
       },
+      // iOS thumbColor default
       thumbColor: unselectedStyle?.color || selectedStyle?.color,
       trackColor: {
         false: unselectedStyle ? unselectedStyle.backgroundColor : null,
@@ -69,10 +70,12 @@ export default class HvSwitch extends PureComponent<HvComponentProps> {
       value: this.props.element.getAttribute('value') === 'on',
     };
 
+    // android thumbColor default
     if (Platform.OS === 'android' && !props.thumbColor) {
-      props.thumbColor = props.value ? props.trackColor.true : '#FFFFFF';
+      props.thumbColor = props.value ? '#406be4' : '#FFFFFF';
     }
 
+    // if thumbColors are explicitly specified, override defaults
     if (props.value && selectedStyle?.color) {
       props.thumbColor = selectedStyle.color;
     } else if (!props.value && unselectedStyle?.color) {
