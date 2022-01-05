@@ -17,7 +17,25 @@ import {
   createStyleProp,
   getNameValueFormInputValues,
 } from 'hyperview/src/services';
+import type { ColorValue } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 import { LOCAL_NAME } from 'hyperview/src/types';
+
+/* eslint no-bitwise: ["error", { "allow": [">>", "&"] }] */
+function darkenColor(color: ColorValue, percent: number): ColorValue {
+  const h = parseInt(String(color).slice(1), 16);
+  const R = h >> 16;
+  const G = (h >> 8) & 0x00ff;
+  const B = h & 0x0000ff;
+  const hex = (
+    0x1000000 +
+    (Math.round((0 - R) * percent) + R) * 0x10000 +
+    (Math.round((0 - G) * percent) + G) * 0x100 +
+    (Math.round((0 - B) * percent) + B)
+  )
+    .toString(16)
+    .slice(1);
+  return `#${hex}`;
+}
 
 export default class HvSwitch extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
@@ -71,8 +89,14 @@ export default class HvSwitch extends PureComponent<HvComponentProps> {
     };
 
     // android thumbColor default
-    if (Platform.OS === 'android' && !props.thumbColor) {
-      props.thumbColor = props.value ? '#406be4' : '#FFFFFF';
+    if (
+      Platform.OS === 'android' &&
+      !props.thumbColor &&
+      props.trackColor.true
+    ) {
+      props.thumbColor = props.value
+        ? darkenColor(props.trackColor.true, 0.3)
+        : '#FFFFFF';
     }
 
     // if thumbColors are explicitly specified, override defaults
