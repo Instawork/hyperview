@@ -11,8 +11,8 @@
 import * as Dom from 'hyperview/src/services/dom';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type { Element, HvComponentProps } from 'hyperview/src/types';
+import { Platform, StyleSheet, Switch } from 'react-native';
 import React, { PureComponent } from 'react';
-import { StyleSheet, Switch } from 'react-native';
 import {
   createStyleProp,
   getNameValueFormInputValues,
@@ -68,6 +68,10 @@ export default class HvSwitch extends PureComponent<HvComponentProps> {
       },
       value: this.props.element.getAttribute('value') === 'on',
     };
+
+    if (Platform.OS === 'android' && !props.thumbColor) {
+      props.thumbColor = props.value ? props.trackColor.true : '#FFFFFF';
+    }
 
     if (props.value && selectedStyle?.color) {
       props.thumbColor = selectedStyle.color;

@@ -78,9 +78,9 @@
         marginTop="16"
       />
       <style id="help--error" color="#FF4847" />
-      <style id="switch" backgroundColor="#E1E1E1" color="#E1E1E1">
+      <style id="switch" backgroundColor="#E1E1E1">
         <modifier selected="true">
-          <style backgroundColor="#4778FF" color="#4778FF" />
+          <style backgroundColor="#4778FF" />
         </modifier>
       </style>
       <style id="switch-styled" color="#E1E1E1" backgroundColor="red">
