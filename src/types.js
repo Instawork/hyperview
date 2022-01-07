@@ -317,6 +317,13 @@ export type HvComponentStatics = {
 export type HvComponent = Class<React$Component<HvComponentProps, any>> &
   HvComponentStatics;
 
+export type HvBehaviorOptions = {
+  onUpdate: HvComponentOnUpdate,
+  getRoot: HvGetRoot,
+  updateRoot: HvUpdateRoot,
+  componentRegistry: ComponentRegistry,
+};
+
 export type HvBehavior = {
   action: string,
   callback: (
@@ -324,6 +331,12 @@ export type HvBehavior = {
     onUpdate: HvComponentOnUpdate,
     getRoot: HvGetRoot,
     updateRoot: HvUpdateRoot,
+  ) => void,
+} | {
+  action: string,
+  callbackWithOptions: (
+    element: Element,
+    options: HvBehaviorOptions,
   ) => void,
 };
 
