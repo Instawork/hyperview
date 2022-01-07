@@ -44,7 +44,7 @@ const LengthValidator: Validator = {
     const minLength = parseInt(element.getAttribute('min-length'), 10);
     const maxLength = parseInt(element.getAttribute('max-length'), 10);
 
-    if(value !== null) {
+    if (value !== null) {
       if (value.length < minLength || value.length > maxLength) {
         return {
           valid: false,
@@ -70,30 +70,44 @@ VALIDATORS.forEach((v) => {
   REGISTRY[v.namespace] = namespaceDict;
 });
 
+const getValidators = (element: Element): Array<Validator> => {
+  return Array.from(element.childNodes)
+    .filter((n) => n.nodeType == NODE_TYPE.ELEMENT_NODE)
+    .map((e) => {
+      const namespace = REGISTRY[e.namespaceURI] || {};
+      const validator = namespace[e.localName];
+      if (validator) {
+        return validator;
+      }
+      return null;
+    })
+    .filter((v) => !!v);
+};
+
 export default {
   action: 'validate',
-  callback: (
+  callbackWithOptions: (
     element: Element,
-    onUpdate: HvComponentOnUpdate,
-    getRoot: HvGetRoot,
-    updateRoot: HvUpdateRoot,
+    options: HVBehaviorOptions,
   ) => {
+    const { getRoot, componentRegistry } = options;
 
     const inputId: ?string = element.getAttribute("target");
     const inputElement: Element = inputId ? getRoot().getElementById(inputId) : element;
+    const component = componentRegistry[inputElement.namespaceURI] && componentRegistry[inputElement.namespaceURI][inputElement.localName];
 
-    const value: ?string = inputElement.getAttribute('value');
+    if (component && Object.prototype.hasOwnProperty.call(component, 'getFormInputValues')) {
+      // The target of the behavior is not a form input element, nothing to do.
+      return;
+    }
+
+    // Get form input values from the element.
+    const formComponent: HvFormValue = (component: any);
+    const values: Array<string> = formComponent
+      .getFormInputValues(inputElement)
+      .map(([name: string, value: string]) => value);
 
     // Find validators for the element
-    const validators: Array<Validator> = Array.from(targetElement.childNodes)
-      .filter((n) => n.nodeType == NODE_TYPE.ELEMENT_NODE)
-      .map((e) => {
-        const namespace = REGISTRY[e.namespaceURI] || {};
-        const validator = namespace[e.localName];
-        if (validator) {
-          const result = validator.check(value, e);
-          console.log(result);
-        }
-      });
+    const validators: Array<Validator> = getValidators(inputElement);
   }
 };
