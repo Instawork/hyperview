@@ -23,6 +23,9 @@ export const HTTP_METHODS = {
 export type HttpMethod = $Values<typeof HTTP_METHODS>;
 
 export const CONTENT_TYPE = {
+  APPLICATION_VND_HYPERVIEW_FRAGMENT_XML:
+    'application/vnd.hyperview_fragment+xml',
+  APPLICATION_VND_HYPERVIEW_XML: 'application/vnd.hyperview+xml',
   APPLICATION_XML: 'application/xml',
   TEXT_HTML: 'text/html',
 };
