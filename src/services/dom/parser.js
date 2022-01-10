@@ -20,11 +20,6 @@ import { getFirstTag } from './helpers';
 import { version } from 'hyperview/package.json';
 
 const { width, height } = Dimensions.get('window');
-const headers = {
-  [HTTP_HEADERS.ACCEPT]: CONTENT_TYPE.APPLICATION_XML,
-  [HTTP_HEADERS.X_HYPERVIEW_VERSION]: version,
-  [HTTP_HEADERS.X_HYPERVIEW_DIMENSIONS]: `${width}w ${height}h`,
-};
 
 const parser = new DOMParser({
   errorHandler: {
@@ -62,6 +57,7 @@ export class Parser {
     baseUrl: string,
     data: ?FormData,
     method: ?HttpMethod = HTTP_METHODS.GET,
+    acceptContentType: string = CONTENT_TYPE.APPLICATION_VND_HYPERVIEW_XML,
   ): Promise<Document> => {
     // For GET requests, we can't include a body so we encode the form data as a query
     // string in the URL.
@@ -73,7 +69,11 @@ export class Parser {
     const options = {
       // For non-GET requests, include the formdata as the body of the request.
       body: method === HTTP_METHODS.GET ? undefined : data,
-      headers,
+      headers: {
+        [HTTP_HEADERS.ACCEPT]: `${CONTENT_TYPE.APPLICATION_XML}, ${acceptContentType}`,
+        [HTTP_HEADERS.X_HYPERVIEW_VERSION]: version,
+        [HTTP_HEADERS.X_HYPERVIEW_DIMENSIONS]: `${width}w ${height}h`,
+      },
       method,
     };
 
@@ -128,7 +128,12 @@ export class Parser {
     data: ?FormData,
     method: ?HttpMethod = HTTP_METHODS.GET,
   ): Promise<Document> => {
-    const doc = await this.load(baseUrl, data, method);
+    const doc = await this.load(
+      baseUrl,
+      data,
+      method,
+      CONTENT_TYPE.APPLICATION_VND_HYPERVIEW_FRAGMENT_XML,
+    );
     const docElement = getFirstTag(doc, LOCAL_NAME.DOC);
     if (docElement) {
       throw new Errors.XMLRestrictedElementFound(LOCAL_NAME.DOC, baseUrl);

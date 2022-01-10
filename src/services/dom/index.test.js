@@ -52,7 +52,7 @@ describe('Parser', () => {
         const expectedOptions = {
           body: undefined,
           headers: {
-            Accept: 'application/xml',
+            Accept: 'application/xml, application/vnd.hyperview+xml',
             'X-Hyperview-Dimensions': '750w 1334h',
             'X-Hyperview-Version': version,
           },
@@ -92,7 +92,7 @@ describe('Parser', () => {
         expect(fetchMock).toHaveBeenCalledWith(expectedUrl, {
           body: undefined,
           headers: {
-            Accept: 'application/xml',
+            Accept: 'application/xml, application/vnd.hyperview+xml',
             'X-Hyperview-Dimensions': '750w 1334h',
             'X-Hyperview-Version': version,
           },
@@ -120,7 +120,7 @@ describe('Parser', () => {
         expect(fetchMock).toHaveBeenCalledWith(url, {
           body: data,
           headers: {
-            Accept: 'application/xml',
+            Accept: 'application/xml, application/vnd.hyperview+xml',
             'X-Hyperview-Dimensions': '750w 1334h',
             'X-Hyperview-Version': version,
           },
