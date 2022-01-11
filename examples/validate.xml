@@ -144,7 +144,7 @@
           </view>
 
           <view style="FormGroup">
-            <text style="label">Validate on blur</text>
+            <text style="label">Validate on focus & blur</text>
             <text-field
                 placeholder="First name"
                 placeholderTextColor="#8D9494"
@@ -153,12 +153,12 @@
                 id="input-3"
             >
               <behavior trigger="blur" action="validate" target="input-3" />
+              <behavior trigger="focus" action="validate" target="input-3" />
               <v:required message="First name required" />
               <v:length min-length="2" max-length="5" message="Length must be between 2 and 5" />
             </text-field>
             <text style="help help--error" v:role="message" v:source="input-3" />
           </view>
-
         </form>
       </view>
     </body>

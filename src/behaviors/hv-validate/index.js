@@ -19,21 +19,6 @@ import { NODE_TYPE } from 'hyperview/src/types';
 import { later, shallowCloneToRoot } from 'hyperview/src/services';
 import { V_NS, getValidators } from 'hyperview/src/services/validation';
 
-const setValidationMessages = (sourceId: string, message: ?string, onUpdate: HvComponentOnUpdate, root: Document) => {
-    Array.from(
-       root.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'text')
-    )
-      .filter((e: Element) => {
-        const role: ?string = e.getAttributeNS(V_NS, 'role');
-        const source: ?string = e.getAttributeNS(V_NS, 'source');
-        return role == "message" && source == sourceId;
-      }).forEach((e: Element) => {
-        const newElement: Element = e.cloneNode(false);
-        newElement.appendChild(root.createTextNode(message || ''));
-        onUpdate(null, 'swap', e, { newElement });
-      });
-}
-
 export default {
   action: 'validate',
   callbackWithOptions: (
@@ -42,8 +27,9 @@ export default {
   ) => {
     const { onUpdate, getRoot, componentRegistry } = options;
 
+    const root: Document = getRoot();
     const inputId: ?string = element.getAttribute("target");
-    const inputElement: Element = inputId ? getRoot().getElementById(inputId) : element;
+    const inputElement: Element = inputId ? root.getElementById(inputId) : element;
     const component = componentRegistry[inputElement.namespaceURI] && componentRegistry[inputElement.namespaceURI][inputElement.localName];
 
     if (component && !Object.prototype.hasOwnProperty.call(component, 'getFormInputValues')) {
@@ -86,6 +72,5 @@ export default {
 
     inputElement.setAttributeNS(V_NS, "state", invalid ? "invalid" : "valid");
     onUpdate(null, 'swap', inputElement, { newElement: inputElement.cloneNode(true) });
-    console.log(inputElement.toString());
   },
 };
