@@ -534,7 +534,16 @@ export default class HyperScreen extends React.Component {
         ? this.setState({ doc: newRoot, styles: Stylesheets.createStylesheets(newRoot) })
         : this.setState({ doc: newRoot });
       const getRoot = () => this.doc;
-      behavior.callback(behaviorElement, this.onUpdate, getRoot, updateRoot);
+      if (behavior.callbackWithOptions) {
+        behavior.callbackWithOptions(behaviorElement, {
+          onUpdate: this.onUpdate,
+          getRoot: getRoot,
+          updateRoot: updateRoot,
+          componentRegistry: this.formComponentRegistry,
+        });
+      } else {
+        behavior.callback(behaviorElement, this.onUpdate, getRoot, updateRoot);
+      }
     } else {
       // No behavior detected.
       console.warn(`No behavior registered for action "${action}"`);

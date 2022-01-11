@@ -1,0 +1,161 @@
+<doc xmlns="https://hyperview.org/hyperview" xmlns:v="https://hyperview.org/hyperview-validation">
+  <screen>
+    <styles>
+      <style
+        id="Header"
+        alignItems="center"
+        backgroundColor="white"
+        borderBottomColor="#eee"
+        borderBottomWidth="1"
+        flexDirection="row"
+        paddingLeft="24"
+        paddingRight="24"
+        paddingBottom="16"
+      />
+      <style
+        id="Header__Back"
+        color="blue"
+        fontSize="16"
+        fontWeight="600"
+        paddingRight="16"
+      />
+      <style id="Header__Title" color="black" fontSize="24" fontWeight="600" />
+      <style id="Body" backgroundColor="white" flex="1" />
+      <style
+        id="Description"
+        borderColor="red"
+        borderRadius="4"
+        borderWidth="2"
+        fontSize="16"
+        fontWeight="600"
+        margin="24"
+        padding="16"
+      />
+      <style
+        id="FormGroup"
+        flex="1"
+        marginLeft="24"
+        marginRight="24"
+        marginTop="48"
+      />
+      <style id="horizontalFormGroup" flex="1" flexDirection="row" />
+      <style id="outerInput" flex="1" />
+      <style
+        id="input"
+        borderBottomColor="#E1E1E1"
+        borderBottomWidth="1"
+        borderColor="#4E4D4D"
+        flex="1"
+        fontSize="16"
+        fontWeight="normal"
+        paddingBottom="8"
+        paddingTop="8"
+      >
+        <modifier pressed="true">
+          <style borderBottomColor="green" />
+        </modifier>
+        <modifier focused="true">
+          <style borderBottomColor="#4778FF" />
+        </modifier>
+      </style>
+      <style id="input--error" borderBottomColor="#FF4847" color="#FF4847">
+        <modifier focused="true">
+          <style borderBottomColor="#FF4847" />
+        </modifier>
+      </style>
+      <style
+        id="label"
+        borderColor="#4E4D4D"
+        fontSize="16"
+        fontWeight="bold"
+        lineHeight="24"
+        marginBottom="8"
+      />
+      <style
+        id="help"
+        borderColor="#FF4847"
+        fontSize="16"
+        fontWeight="normal"
+        lineHeight="24"
+        marginTop="16"
+      />
+      <style id="help--error" color="#FF4847" />
+      <style id="input--noneditable" color="#8D9494" />
+      <style id="Main" flex="1" marginBottom="40" />
+      <style
+        id="Button"
+        backgroundColor="#63CB76"
+        borderRadius="16"
+        flex="1"
+        flexDirection="row"
+        justifyContent="center"
+        margin="24"
+        padding="24"
+      />
+      <style id="Button__Label" color="white" fontSize="24" fontWeight="bold" />
+    </styles>
+    <body style="Body" safe-area="true">
+      <header style="Header">
+        <text action="back" href="#" style="Header__Back">Back</text>
+        <text style="Header__Title">Text Input</text>
+      </header>
+      <view scroll="true" style="Main">
+        <behavior trigger="refresh" action="reload" href="#" />
+        <form>
+          <view style="FormGroup">
+            <text style="label">Validate with button press</text>
+            <text-field
+                placeholder="First name"
+                placeholderTextColor="#8D9494"
+                name="text"
+                style="input"
+                id="input-1"
+            >
+              <v:required message="First name required" />
+              <v:length min-length="2" max-length="5" message="Length must be between 2 and 5" />
+            </text-field>
+            <text style="help help--error" v:role="message" v:source="input-1" />
+
+            <view style="Button">
+              <behavior trigger="press" action="validate" target="input-1" />
+              <text style="Button__Label">Validate</text>
+            </view>
+          </view>
+
+          <view style="FormGroup">
+            <text style="label">Validate on change</text>
+            <text-field
+                placeholder="First name"
+                placeholderTextColor="#8D9494"
+                name="text"
+                style="input"
+                id="input-2"
+            >
+              <behavior trigger="change" action="validate" target="input-2" />
+              <v:required message="First name required" />
+              <v:length min-length="2" max-length="5" message="Length must be between 2 and 5" />
+            </text-field>
+            <text style="help help--error" v:role="message" v:source="input-2" />
+          </view>
+
+          <view style="FormGroup">
+            <text style="label">Validate on focus & blur</text>
+            <text-field
+                placeholder="First name"
+                placeholderTextColor="#8D9494"
+                name="text"
+                style="input"
+                id="input-3"
+            >
+              <behavior trigger="blur" action="validate" target="input-3" />
+              <behavior trigger="focus" action="validate" target="input-3" />
+              <v:required message="First name required" />
+              <v:length min-length="2" max-length="5" message="Length must be between 2 and 5" />
+            </text-field>
+            <text style="help help--error" v:role="message" v:source="input-3" />
+          </view>
+        </form>
+      </view>
+    </body>
+  </screen>
+</doc>
