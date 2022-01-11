@@ -2,6 +2,7 @@
 
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Xml from 'hyperview/src/services/xml';
+import * as Namespaces from 'hyperview/src/services/namespaces';
 import type {
   DOMString,
   Document,
@@ -70,14 +71,14 @@ VALIDATORS.forEach((v) => {
   REGISTRY[v.namespace] = namespaceDict;
 });
 
-const getValidators = (element: Element): Array<Validator> => {
+const getValidators = (element: Element): Array<[Validator, Element]> => {
   return Array.from(element.childNodes)
     .filter((n) => n.nodeType == NODE_TYPE.ELEMENT_NODE)
     .map((e) => {
       const namespace = REGISTRY[e.namespaceURI] || {};
       const validator = namespace[e.localName];
       if (validator) {
-        return validator;
+        return [validator, e];
       }
       return null;
     })
@@ -88,15 +89,16 @@ export default {
   action: 'validate',
   callbackWithOptions: (
     element: Element,
-    options: HVBehaviorOptions,
+    options: HvBehaviorOptions,
   ) => {
-    const { getRoot, componentRegistry } = options;
+    const { onUpdate, getRoot, componentRegistry } = options;
 
+    const root: Document = getRoot();
     const inputId: ?string = element.getAttribute("target");
-    const inputElement: Element = inputId ? getRoot().getElementById(inputId) : element;
+    const inputElement: Element = inputId ? root.getElementById(inputId) : element;
     const component = componentRegistry[inputElement.namespaceURI] && componentRegistry[inputElement.namespaceURI][inputElement.localName];
 
-    if (component && Object.prototype.hasOwnProperty.call(component, 'getFormInputValues')) {
+    if (component && !Object.prototype.hasOwnProperty.call(component, 'getFormInputValues')) {
       // The target of the behavior is not a form input element, nothing to do.
       return;
     }
@@ -108,6 +110,30 @@ export default {
       .map(([name: string, value: string]) => value);
 
     // Find validators for the element
-    const validators: Array<Validator> = getValidators(inputElement);
-  }
+    const validators: Array<[Validator, Element]> = getValidators(inputElement);
+    const validationResults: Array<Validation> = validators.reduce((results, [v, e]) => {
+      const newResults = values.map((value: string) => v.check(value, e));
+      return [...results, ...newResults];
+    }, []);
+    
+    const invalid: ?Validation = validationResults.find((v) => !v.valid)
+    const message: ?string = invalid ? invalid.message : null;
+
+    const inputElementId: ?string = inputElement.getAttribute('id');
+    if (!inputElementId) {
+      return;
+    }
+    Array.from(
+       root.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'text')
+    )
+      .filter((e: Element) => {
+        const role: ?string = e.getAttributeNS(V_NS, 'role');
+        const source: ?string = e.getAttributeNS(V_NS, 'source');
+        return role == "message" && source == inputElementId;
+      }).forEach((e: Element) => {
+        const newElement: Element = e.cloneNode(false);
+        newElement.appendChild(root.createTextNode(message || ''));
+        onUpdate(null, 'swap', e, { newElement });
+      });
+  },
 };
