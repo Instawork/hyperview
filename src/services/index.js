@@ -57,6 +57,19 @@ export const createStyleProp = (
     styleRules = styleRules.concat(pressedRules);
   }
 
+  const validState: ?string = element.getAttributeNS("https://hyperview.org/hyperview-validation", "state");
+  if (validState === "invalid") {
+    const invalidRules = styleIds
+      .map(s => stylesheets.invalid[s])
+      .filter(Boolean);
+    styleRules = styleRules.concat(invalidRules);
+  } else if (validState === "valid") {
+    const validRules = styleIds
+      .map(s => stylesheets.valid[s])
+      .filter(Boolean);
+    styleRules = styleRules.concat(validRules);
+  }
+
   if (options.focused) {
     const focusedRules = styleIds
       .map(s => stylesheets.focused[s])

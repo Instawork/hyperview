@@ -248,6 +248,9 @@ export type StyleSheets = {
   pressed: StyleSheet,
   focused: StyleSheet,
   pressedSelected: StyleSheet,
+
+  valid: StyleSheet,
+  invalid: StyleSheet,
 };
 
 export type ComponentRegistry = {

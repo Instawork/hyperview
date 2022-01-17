@@ -17,73 +17,22 @@ import type {
 } from 'hyperview/src/types';
 import { NODE_TYPE } from 'hyperview/src/types';
 import { later, shallowCloneToRoot } from 'hyperview/src/services';
+import { V_NS, getValidators } from 'hyperview/src/services/validation';
 
-const V_NS = "https://hyperview.org/hyperview-validation";
-
-const RequiredValidator: Validator = {
-  namespace: V_NS,
-  name: "required",
-  check: (value: ?string, element: Element): Validation => {
-    if (!!value) {
-      return {
-        valid: true,
-      };
-    }
-    return {
-      valid: false,
-      message: element.getAttribute('message') || 'This field is required',
-    };
-  },
-};
-
-
-const LengthValidator: Validator = {
-  namespace: V_NS,
-  name: "length",
-  check: (value: ?string, element: Element): Validation => {
-
-    const minLength = parseInt(element.getAttribute('min-length'), 10);
-    const maxLength = parseInt(element.getAttribute('max-length'), 10);
-
-    if (value !== null) {
-      if (value.length < minLength || value.length > maxLength) {
-        return {
-          valid: false,
-          message: element.getAttribute('message') || 'This field has bad length',
-        }
-      }
-    }
-
-    return { valid: true };
-  },
-};
-
-const VALIDATORS = [
-  RequiredValidator,
-  LengthValidator,
-];
-
-const REGISTRY: ValidatorRegistry = {};
-
-VALIDATORS.forEach((v) => {
-  const namespaceDict = REGISTRY[v.namespace] || {};
-  namespaceDict[v.name] = v;
-  REGISTRY[v.namespace] = namespaceDict;
-});
-
-const getValidators = (element: Element): Array<[Validator, Element]> => {
-  return Array.from(element.childNodes)
-    .filter((n) => n.nodeType == NODE_TYPE.ELEMENT_NODE)
-    .map((e) => {
-      const namespace = REGISTRY[e.namespaceURI] || {};
-      const validator = namespace[e.localName];
-      if (validator) {
-        return [validator, e];
-      }
-      return null;
-    })
-    .filter((v) => !!v);
-};
+const setValidationMessages = (sourceId: string, message: ?string, onUpdate: HvComponentOnUpdate, root: Document) => {
+    Array.from(
+       root.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'text')
+    )
+      .filter((e: Element) => {
+        const role: ?string = e.getAttributeNS(V_NS, 'role');
+        const source: ?string = e.getAttributeNS(V_NS, 'source');
+        return role == "message" && source == sourceId;
+      }).forEach((e: Element) => {
+        const newElement: Element = e.cloneNode(false);
+        newElement.appendChild(root.createTextNode(message || ''));
+        onUpdate(null, 'swap', e, { newElement });
+      });
+}
 
 export default {
   action: 'validate',
@@ -93,9 +42,8 @@ export default {
   ) => {
     const { onUpdate, getRoot, componentRegistry } = options;
 
-    const root: Document = getRoot();
     const inputId: ?string = element.getAttribute("target");
-    const inputElement: Element = inputId ? root.getElementById(inputId) : element;
+    const inputElement: Element = inputId ? getRoot().getElementById(inputId) : element;
     const component = componentRegistry[inputElement.namespaceURI] && componentRegistry[inputElement.namespaceURI][inputElement.localName];
 
     if (component && !Object.prototype.hasOwnProperty.call(component, 'getFormInputValues')) {
@@ -111,29 +59,33 @@ export default {
 
     // Find validators for the element
     const validators: Array<[Validator, Element]> = getValidators(inputElement);
-    const validationResults: Array<Validation> = validators.reduce((results, [v, e]) => {
-      const newResults = values.map((value: string) => v.check(value, e));
+    const validationResults: Array<Validation> = validators.reduce((results: Array<Validation>, [v:Validator, e: Element]) => {
+
+      const newResults = values.reduce((results: Array<Validation>, value: string) => {
+        const result = v.check(value, e);
+        e.setAttributeNS(V_NS, "state", result.valid ? "valid" : "invalid");
+        return [...results, result];
+      }, []);
+
+      //onUpdate(null, 'swap', e, { newElement: e });
+
       return [...results, ...newResults];
     }, []);
-    
-    const invalid: ?Validation = validationResults.find((v) => !v.valid)
-    const message: ?string = invalid ? invalid.message : null;
 
     const inputElementId: ?string = inputElement.getAttribute('id');
     if (!inputElementId) {
+      // If the input being validated does not have an ID, then there's no reference from text elements
+      // displaying the validation message. So we can short-circuit and return early.
       return;
     }
-    Array.from(
-       root.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'text')
-    )
-      .filter((e: Element) => {
-        const role: ?string = e.getAttributeNS(V_NS, 'role');
-        const source: ?string = e.getAttributeNS(V_NS, 'source');
-        return role == "message" && source == inputElementId;
-      }).forEach((e: Element) => {
-        const newElement: Element = e.cloneNode(false);
-        newElement.appendChild(root.createTextNode(message || ''));
-        onUpdate(null, 'swap', e, { newElement });
-      });
+    
+    // Find first invalid result.
+    const invalid: ?Validation = validationResults.find((v) => !v.valid);
+    const message: ?string = invalid ? invalid.message : null;
+    setValidationMessages(inputElementId, message, onUpdate, getRoot());
+
+    inputElement.setAttributeNS(V_NS, "state", invalid ? "invalid" : "valid");
+    onUpdate(null, 'swap', inputElement, { newElement: inputElement.cloneNode(true) });
+    console.log(inputElement.toString());
   },
 };
