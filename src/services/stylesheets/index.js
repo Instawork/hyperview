@@ -256,16 +256,30 @@ export function createStylesheets(document: Document): StyleSheets {
       focused: false,
       pressed: true,
       selected: true,
+      valid: false,
+      invalid: false,
     }),
     regular: createStylesheet(document, {
       focused: false,
       pressed: false,
       selected: false,
+      valid: false,
+      invalid: false,
     }),
     selected: createStylesheet(document, {
       focused: false,
       pressed: false,
       selected: true,
+      valid: false,
+      invalid: false,
+    }),
+
+    valid: createStylesheet(document, {
+      valid: true,
+    }),
+
+    invalid: createStylesheet(document, {
+      invalid: true,
     }),
   };
   return styles;
