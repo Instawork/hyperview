@@ -119,7 +119,7 @@
               <v:required message="First name required" />
               <v:length min-length="2" max-length="5" message="Length must be between 2 and 5" />
             </text-field>
-            <text style="help help--error" v:role="message" v:source="input-1" />
+            <v:message style="help help--error" source="input-1" />
 
             <view style="Button">
               <behavior trigger="press" action="validate" target="input-1" />
@@ -140,7 +140,7 @@
               <v:required message="First name required" />
               <v:length min-length="2" max-length="5" message="Length must be between 2 and 5" />
             </text-field>
-            <text style="help help--error" v:role="message" v:source="input-2" />
+            <v:message style="help help--error" source="input-2" />
           </view>
 
           <view style="FormGroup">
@@ -157,7 +157,25 @@
               <v:required message="First name required" />
               <v:length min-length="2" max-length="5" message="Length must be between 2 and 5" />
             </text-field>
-            <text style="help help--error" v:role="message" v:source="input-3" />
+            <v:message style="help help--error" source="input-3" />
+          </view>
+
+          <view style="FormGroup">
+            <text style="label">Error from server</text>
+            <text-field
+                placeholder="First name"
+                placeholderTextColor="#8D9494"
+                name="text"
+                style="input"
+                id="input-4"
+                value="T"
+                v:state="invalid"
+            >
+              <behavior trigger="change" action="validate" target="input-4" />
+              <v:required message="First name required" v:state="valid" />
+              <v:length min-length="2" max-length="5" message="Length must be between 2 and 5" v:state="invalid" />
+            </text-field>
+            <v:message style="help help--error" source="input-4" />
           </view>
         </form>
       </view>

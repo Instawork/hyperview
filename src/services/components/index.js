@@ -26,6 +26,8 @@ import HvTextField from 'hyperview/src/components/hv-text-field';
 import HvView from 'hyperview/src/components/hv-view';
 import HvWebView from 'hyperview/src/components/hv-web-view';
 
+import HvValidateMessage from 'hyperview/src/components/hv-validate-message';
+
 const HYPERVIEW_COMPONENTS = [
   HvDateField,
   HvList,
@@ -42,6 +44,7 @@ const HYPERVIEW_COMPONENTS = [
   HvImage,
   HvView,
   HvWebView,
+  HvValidateMessage,
 ];
 
 const reducer = (registry: ComponentRegistry, component: HvComponent) => ({
