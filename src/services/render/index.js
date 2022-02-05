@@ -96,9 +96,20 @@ export const renderElement = (
   }
 
   if (element.nodeType === NODE_TYPE.TEXT_NODE) {
-    // Render non-empty text nodes
-    if (element.nodeValue && element.nodeValue.trim().length > 0) {
-      return element.nodeValue.trim().replace(/\s+/g, ' ');
+    // Render non-empty text nodes, when wrapped inside a <text> element
+    if (element.nodeValue) {
+      const trimmedValue = element.nodeValue.trim();
+      if (trimmedValue.length > 0) {
+        if (
+          element.parentNode &&
+          element.parentNode.localName === LOCAL_NAME.TEXT
+        ) {
+          return trimmedValue.replace(/\s+/g, ' ');
+        }
+        console.warn(
+          `Text string "${trimmedValue}" must be rendered within a <text> element`,
+        );
+      }
     }
   }
 
