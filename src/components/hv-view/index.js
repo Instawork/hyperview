@@ -35,6 +35,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
     LOCAL_NAME.FORM,
     LOCAL_NAME.HEADER,
     LOCAL_NAME.ITEM,
+    LOCAL_NAME.ITEMS,
     LOCAL_NAME.SECTION_TITLE,
   ];
 

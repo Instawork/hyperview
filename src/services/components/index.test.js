@@ -33,6 +33,7 @@ const defaultRegistryContent = {
   header: HvView,
   image: HvImage,
   item: HvView,
+  items: HvView,
   list: HvList,
   option: HvOption,
   'picker-field': HvPickerField,
