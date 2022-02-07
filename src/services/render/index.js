@@ -101,8 +101,9 @@ export const renderElement = (
       const trimmedValue = element.nodeValue.trim();
       if (trimmedValue.length > 0) {
         if (
-          element.parentNode &&
-          element.parentNode.localName === LOCAL_NAME.TEXT
+          (element.parentNode?.namespaceURI === Namespaces.HYPERVIEW &&
+            element.parentNode?.localName === LOCAL_NAME.TEXT) ||
+          element.parentNode?.namespaceURI !== Namespaces.HYPERVIEW
         ) {
           return trimmedValue.replace(/\s+/g, ' ');
         }
