@@ -18,10 +18,10 @@ import {
   ScrollView,
   View,
 } from 'react-native';
-import { LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
 import type { InternalProps } from './types';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import { LOCAL_NAME } from 'hyperview/src/types';
 import { addHref } from 'hyperview/src/core/hyper-ref';
 import { createProps } from 'hyperview/src/services';
 
@@ -50,20 +50,15 @@ export default class HvView extends PureComponent<HvComponentProps> {
   };
 
   canRenderElement = (element: Element): boolean => {
-    const nonRenderingElements = [
-      LOCAL_NAME.BEHAVIOR,
-      LOCAL_NAME.MODIFIER,
-      LOCAL_NAME.STYLES,
-      LOCAL_NAME.STYLE,
-    ];
-
-    // ignore non rendering elements and comment node
+    // ignore non rendering and hidden elements
     return (
-      !!element.localName &&
-      !nonRenderingElements.includes(element.localName) &&
-      !!element.namespaceURI &&
-      element.nodeType &&
-      element.nodeType !== NODE_TYPE.COMMENT_NODE
+      this.props.options.componentRegistry &&
+      this.props.options.componentRegistry[element.namespaceURI] &&
+      this.props.options.componentRegistry[element.namespaceURI][
+        element.localName
+      ] &&
+      // $FlowFixMe
+      !this.isHiddenElement(Array.from(element.attributes ?? []))
     );
   };
 
@@ -73,20 +68,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
     const childNodes: Element[] = Array.from(
       this.props.element.childNodes ?? [],
     );
-    return childNodes.reduce((acc, element) => {
-      if (this.canRenderElement(element)) {
-        // do not include hidden elements
-        if (
-          !element.attributes ||
-          (element.attributes &&
-            // $FlowFixMe
-            !this.isHiddenElement(Array.from(element.attributes)))
-        ) {
-          acc.push(element);
-        }
-      }
-      return acc;
-    }, []);
+    return childNodes.filter(element => this.canRenderElement(element));
   };
 
   getStickyElementIndices = (): number[] => {
