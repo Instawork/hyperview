@@ -25,7 +25,7 @@ export default class HvTextField extends PureComponent<HvComponentProps> {
 
   static localName = LOCAL_NAME.TEXT_FIELD;
 
-  static localNameAliases = [];
+  static localNameAliases = [LOCAL_NAME.TEXT_AREA];
 
   static getFormInputValues = (element: Element): Array<[string, string]> => {
     return getNameValueFormInputValues(element);
@@ -122,7 +122,9 @@ export default class HvTextField extends PureComponent<HvComponentProps> {
       autoFocus: this.props.element.getAttribute('auto-focus') === 'true',
       editable,
       keyboardType,
-      multiline: false,
+      multiline:
+        this.props.element.localName === LOCAL_NAME.TEXT_AREA ||
+        this.props.element.getAttribute('multiline') === 'true',
       onBlur: () => this.setFocus(false),
       onChangeText: value => {
         const formattedValue = HvTextField.getFormattedValue(

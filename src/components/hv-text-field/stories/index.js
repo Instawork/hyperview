@@ -22,3 +22,11 @@ createStory('basic', ({ element, stylesheets }) => (
     stylesheets={stylesheets}
   />
 ));
+createStory('text-area', ({ element, stylesheets }) => (
+  <HvTextField
+    element={element}
+    onUpdate={action('onUpdate')}
+    options={Helpers.getOptions()}
+    stylesheets={stylesheets}
+  />
+));

@@ -22,7 +22,6 @@ import HvPickerField from 'hyperview/src/components/hv-picker-field';
 import HvSelectMultiple from 'hyperview/src/components/hv-select-multiple';
 import HvSelectSingle from 'hyperview/src/components/hv-select-single';
 import HvSwitch from 'hyperview/src/components/hv-switch';
-import HvTextArea from 'hyperview/src/components/hv-text-area';
 import HvTextField from 'hyperview/src/components/hv-text-field';
 
 const parser = new DOMParser();
@@ -137,7 +136,7 @@ describe('flattenRegistry', () => {
       ['https://hyperview.org/hyperview', 'select-multiple', HvSelectMultiple],
       ['https://hyperview.org/hyperview', 'select-single', HvSelectSingle],
       ['https://hyperview.org/hyperview', 'switch', HvSwitch],
-      ['https://hyperview.org/hyperview', 'text-area', HvTextArea],
+      ['https://hyperview.org/hyperview', 'text-area', HvTextField],
       ['https://hyperview.org/hyperview', 'text-field', HvTextField],
     ]);
   });
