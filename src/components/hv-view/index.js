@@ -18,7 +18,7 @@ import {
   View,
 } from 'react-native';
 import React, { PureComponent } from 'react';
-import type { HvComponentProps } from 'hyperview/src/types';
+import type { HvComponentProps, NODE_TYPE } from 'hyperview/src/types';
 import type { InternalProps } from './types';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { LOCAL_NAME } from 'hyperview/src/types';
@@ -39,6 +39,61 @@ export default class HvView extends PureComponent<HvComponentProps> {
   ];
 
   props: HvComponentProps;
+
+  isHiddenElement = attributes => {
+    for (let j = 0; j < attributes.length; j++) {
+      if (attributes[j].name === 'hide' && attributes[j].value === 'true') {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  canRenderElement = element => {
+    const nonRenderingElements = [
+      LOCAL_NAME.BEHAVIOR,
+      LOCAL_NAME.MODIFIER,
+      LOCAL_NAME.STYLES,
+      LOCAL_NAME.STYLE,
+    ];
+
+    // ignore non rendering elements and comment node
+    return (
+      element.localName &&
+      !nonRenderingElements.includes(element.localName) &&
+      element.namespaceURI &&
+      element.nodeType &&
+      element.nodeType !== NODE_TYPE.COMMENT_NODE
+    );
+  };
+
+  getElementsToRender = () => {
+    // do not include non rendering elements while calculating index
+    const childNodes = Array.from(this.props.element.childNodes);
+    return childNodes.reduce((acc, element) => {
+      if (this.canRenderElement(element)) {
+        const attributes = element.attributes;
+        // do not include hidden elements
+        if (!attributes || (attributes && !this.isHiddenElement(attributes))) {
+          acc.push(element);
+        }
+      }
+      return acc;
+    }, []);
+  };
+
+  getStickyElementIndices = () => {
+    const elements = this.getElementsToRender();
+    return elements.reduce((acc, element, index) => {
+      const attributes = Array.from(element.attributes ?? []);
+      attributes.forEach(attribute => {
+        if (attribute.name === 'sticky' && attribute.value === 'true') {
+          acc.push(index);
+        }
+      });
+      return acc;
+    }, []);
+  };
 
   render() {
     let viewOptions = this.props.options;
@@ -111,6 +166,11 @@ export default class HvView extends PureComponent<HvComponentProps> {
       );
       if (scrollDirection === 'horizontal') {
         props.horizontal = true;
+      }
+
+      const stickyHeaderIndices = this.getStickyElementIndices();
+      if (stickyHeaderIndices.length) {
+        props.stickyHeaderIndices = stickyHeaderIndices;
       }
     }
 

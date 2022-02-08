@@ -20,7 +20,11 @@ Some examples of views:
     <text>With Vertical Layout</text>
   </view>
 
-  <view style="Short FlexHorizontal" scroll="true" scroll-orientation="horizontal">
+  <view
+    style="Short FlexHorizontal"
+    scroll="true"
+    scroll-orientation="horizontal"
+  >
     <text>This</text>
     <text>view</text>
     <text>will</text>
@@ -122,3 +126,11 @@ If `hide="true"`, the element will not be rendered on screen. If the element or 
 | true, **false** (default) | No       |
 
 An attribute to solve the common problem of views that need to move out of the way of the virtual keyboard. It can automatically adjust the position of its children based on the keyboard height. This is useful when you want keyboard avoiding behavior in non-scrollable views. It is applied only in iOS since Android has built-in support for avoiding keyboard.
+
+#### `sticky`
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| **false** (default), true | No       |
+
+If `sticky="true"`, the element will remain fixed at the top of the screen when scrolling. This should be used in conjunction with an immediate parent view with `scroll="true"`and `scroll-orientation="vertical"`.
