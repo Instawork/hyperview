@@ -18,7 +18,8 @@ import {
   View,
 } from 'react-native';
 import React, { PureComponent } from 'react';
-import type { HvComponentProps, NODE_TYPE } from 'hyperview/src/types';
+import type { HvComponentProps } from 'hyperview/src/types';
+import { NODE_TYPE } from 'hyperview/src/types';
 import type { InternalProps } from './types';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { LOCAL_NAME } from 'hyperview/src/types';
