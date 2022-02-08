@@ -18,7 +18,7 @@ import {
   View,
 } from 'react-native';
 import React, { PureComponent } from 'react';
-import type { HvComponentProps } from 'hyperview/src/types';
+import type { Attribute, Element, HvComponentProps } from 'hyperview/src/types';
 import { NODE_TYPE } from 'hyperview/src/types';
 import type { InternalProps } from './types';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
@@ -41,7 +41,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
 
   props: HvComponentProps;
 
-  isHiddenElement = attributes => {
+  isHiddenElement = (attributes: Attribute[]): boolean => {
     for (let j = 0; j < attributes.length; j++) {
       if (attributes[j].name === 'hide' && attributes[j].value === 'true') {
         return true;
@@ -50,7 +50,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
     return false;
   };
 
-  canRenderElement = element => {
+  canRenderElement = (element: Element): boolean => {
     const nonRenderingElements = [
       LOCAL_NAME.BEHAVIOR,
       LOCAL_NAME.MODIFIER,
@@ -60,22 +60,29 @@ export default class HvView extends PureComponent<HvComponentProps> {
 
     // ignore non rendering elements and comment node
     return (
-      element.localName &&
+      !!element.localName &&
       !nonRenderingElements.includes(element.localName) &&
-      element.namespaceURI &&
+      !!element.namespaceURI &&
       element.nodeType &&
       element.nodeType !== NODE_TYPE.COMMENT_NODE
     );
   };
 
-  getElementsToRender = () => {
+  getElementsToRender = (): Element[] => {
     // do not include non rendering elements while calculating index
-    const childNodes = Array.from(this.props.element.childNodes);
+    // $FlowFixMe
+    const childNodes: Element[] = Array.from(
+      this.props.element.childNodes ?? [],
+    );
     return childNodes.reduce((acc, element) => {
       if (this.canRenderElement(element)) {
         const attributes = element.attributes;
         // do not include hidden elements
-        if (!attributes || (attributes && !this.isHiddenElement(attributes))) {
+        if (
+          !attributes ||
+          // $FlowFixMe
+          (attributes && !this.isHiddenElement(Array.from(attributes)))
+        ) {
           acc.push(element);
         }
       }
@@ -83,10 +90,11 @@ export default class HvView extends PureComponent<HvComponentProps> {
     }, []);
   };
 
-  getStickyElementIndices = () => {
+  getStickyElementIndices = (): number[] => {
     const elements = this.getElementsToRender();
     return elements.reduce((acc, element, index) => {
-      const attributes = Array.from(element.attributes ?? []);
+      // $FlowFixMe
+      const attributes: Attribute[] = Array.from(element.attributes ?? []);
       attributes.forEach(attribute => {
         if (attribute.name === 'sticky' && attribute.value === 'true') {
           acc.push(index);
@@ -169,9 +177,11 @@ export default class HvView extends PureComponent<HvComponentProps> {
         props.horizontal = true;
       }
 
-      const stickyHeaderIndices = this.getStickyElementIndices();
-      if (stickyHeaderIndices.length) {
-        props.stickyHeaderIndices = stickyHeaderIndices;
+      if (scrollDirection !== 'horizontal') {
+        const stickyHeaderIndices = this.getStickyElementIndices();
+        if (stickyHeaderIndices.length) {
+          props.stickyHeaderIndices = stickyHeaderIndices;
+        }
       }
     }
 

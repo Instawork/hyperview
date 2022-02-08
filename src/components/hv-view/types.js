@@ -24,4 +24,5 @@ export type InternalProps = {|
   style?: ?Array<StyleSheet>,
   testID?: ?string,
   children?: ?any,
+  stickyHeaderIndices?: ?(number[]),
 |};
