@@ -10,6 +10,7 @@
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
+import type { Attribute, Element, HvComponentProps } from 'hyperview/src/types';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -17,12 +18,10 @@ import {
   ScrollView,
   View,
 } from 'react-native';
+import { LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
-import type { Attribute, Element, HvComponentProps } from 'hyperview/src/types';
-import { NODE_TYPE } from 'hyperview/src/types';
 import type { InternalProps } from './types';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
-import { LOCAL_NAME } from 'hyperview/src/types';
 import { addHref } from 'hyperview/src/core/hyper-ref';
 import { createProps } from 'hyperview/src/services';
 
@@ -42,7 +41,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
   props: HvComponentProps;
 
   isHiddenElement = (attributes: Attribute[]): boolean => {
-    for (let j = 0; j < attributes.length; j++) {
+    for (let j = 0; j < attributes.length; j += 1) {
       if (attributes[j].name === 'hide' && attributes[j].value === 'true') {
         return true;
       }
@@ -76,7 +75,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
     );
     return childNodes.reduce((acc, element) => {
       if (this.canRenderElement(element)) {
-        const attributes = element.attributes;
+        const { attributes } = element;
         // do not include hidden elements
         if (
           !attributes ||
