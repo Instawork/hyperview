@@ -75,12 +75,12 @@ export default class HvView extends PureComponent<HvComponentProps> {
     );
     return childNodes.reduce((acc, element) => {
       if (this.canRenderElement(element)) {
-        const { attributes } = element;
         // do not include hidden elements
         if (
-          !attributes ||
+          !element.attributes ||
           // $FlowFixMe
-          (attributes && !this.isHiddenElement(Array.from(attributes)))
+          (element.attributes &&
+            !this.isHiddenElement(Array.from(element.attributes)))
         ) {
           acc.push(element);
         }
