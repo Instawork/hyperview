@@ -52,9 +52,11 @@ export default class HvView extends PureComponent<HvComponentProps> {
   canRenderElement = (element: Element): boolean => {
     // ignore non rendering and hidden elements
     return (
-      this.props.options.componentRegistry &&
-      this.props.options.componentRegistry[element.namespaceURI] &&
-      this.props.options.componentRegistry[element.namespaceURI][
+      !!this.props.options.componentRegistry &&
+      !!element.namespaceURI &&
+      !!element.localName &&
+      !!this.props.options.componentRegistry[element.namespaceURI] &&
+      !!this.props.options.componentRegistry[element.namespaceURI][
         element.localName
       ] &&
       // $FlowFixMe
