@@ -78,8 +78,8 @@ export default class HvView extends PureComponent<HvComponentProps> {
         // do not include hidden elements
         if (
           !element.attributes ||
-          // $FlowFixMe
           (element.attributes &&
+            // $FlowFixMe
             !this.isHiddenElement(Array.from(element.attributes)))
         ) {
           acc.push(element);
