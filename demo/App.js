@@ -6,13 +6,10 @@
  *
  */
 
+import 'react-native-gesture-handler';
 import React from 'react';
-import AppNavigator from './navigation/AppNavigator';
+import Navigator from './src/Navigator';
 
-export default class App extends React.Component {
-  render() {
-    return (
-        <AppNavigator />
-    );
-  }
+export default function App() {
+  return <Navigator />;
 }

@@ -45,12 +45,12 @@
     "test": "yarn generate test && yarn test:flow && yarn test:lint && yarn test:render && yarn test:unit && yarn test:validate-xml"
   },
   "dependencies": {
-    "@react-native-community/datetimepicker": "3.0.3",
     "tiny-emitter": "2.1.0",
     "url-parse": "1.4.3",
     "xmldom-instawork": "0.0.1"
   },
   "peerDependencies": {
+    "@react-native-community/datetimepicker": ">= 3.0.3",
     "react": ">= 16.13.1",
     "react-native": ">= 0.63.3",
     "react-native-keyboard-aware-scrollview": ">= 2.1.0",
@@ -63,6 +63,7 @@
     "@babel/node": "7.13.0",
     "@babel/runtime": "7.13.7",
     "@prettier/plugin-xml": "0.13.0",
+    "@react-native-community/datetimepicker": "3.0.3",
     "@storybook/addon-actions": "4.1.18",
     "@storybook/addon-storyshots": "4.1.18",
     "@storybook/react-native": "4.1.18",

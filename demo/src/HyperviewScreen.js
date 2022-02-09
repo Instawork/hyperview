@@ -7,29 +7,27 @@
  */
 
 import React, { PureComponent } from 'react';
+import HandleBack from './HandleBack';
 import Hyperview from 'hyperview';
 import moment from 'moment';
-import HandleBack from '../components/HandleBack';
+import { MAIN_STACK_NAME, MODAL_STACK_NAME } from './constants';
 
-export default class HyperviewScreen extends React.PureComponent {
-  goBack = (params, key) => {
-    const navigation = this.props.navigation;
-    navigation.pop();
+export default class HyperviewScreen extends PureComponent {
+  goBack = () => {
+    this.props.navigation.pop();
   }
 
-  closeModal = (params, key) => {
-    const navigation = this.props.navigation;
-    navigation.pop();
+  closeModal = () => {
+    this.props.navigation.pop();
   }
 
-  push = (params, key) => {
+  push = (params) => {
     // If we're in a modal stack, push the next screen on the modal stack.
     // If we're in the main stack, push the next screen in the main stack.
     // Modal stacks will have modal param set.
-    const navigation = this.props.navigation;
-    const modal = navigation.getParam('modal', false);
-    navigation.push(
-      modal ? 'ModalStack' : 'MainStack',
+    const modal = this.props.route.params?.modal ?? false;
+    this.props.navigation.push(
+      modal ? MODAL_STACK_NAME : MAIN_STACK_NAME,
       {
         modal,
         ...params,
@@ -38,18 +36,16 @@ export default class HyperviewScreen extends React.PureComponent {
   }
 
   navigate = (params, key) => {
-    const navigation = this.props.navigation;
-    navigation.navigate({ routeName: 'MainStack', params, key });
+    this.props.navigation.navigate({ key, params, routeName: MAIN_STACK_NAME });
   }
 
-  openModal = (params, key) => {
-    const navigation = this.props.navigation;
-    navigation.push('Modal', params);
+  openModal = (params) => {
+    this.props.navigation.push(MODAL_STACK_NAME, params);
   }
 
   formatDate = (date, format) => moment(date).format(format);
 
-  /**
+  /** 
    * fetch function used by Hyperview screens. By default, it adds
    * header to prevent caching requests.
    */
@@ -59,16 +55,26 @@ export default class HyperviewScreen extends React.PureComponent {
       headers: {
         // Don't cache requests for the demo
         'Cache-Control': 'no-cache, no-store, must-revalidate',
-        Pragma: 'no-cache',
         Expires: 0,
+        Pragma: 'no-cache',
         ...init.headers,
       }
     });
   }
 
   render() {
-    const navigation = this.props.navigation;
-    const entrypointUrl = navigation.state.params.url;
+    // HACK:
+    // React Navigation > 5.x no longer exposes navigation state
+    // Internally, Hyperview relies on this object to find params
+    // which are now accessible through the route prop.
+    // TODO: Refactor Hyperview core to accept a new params prop
+    const navigation = {
+      ...this.props.navigation,
+      state: {
+        params: this.props.route.params || {},
+      },
+    }
+    const entrypointUrl = this.props.route.params?.url;
 
     return (
       <HandleBack>
@@ -77,11 +83,11 @@ export default class HyperviewScreen extends React.PureComponent {
           closeModal={this.closeModal}
           entrypointUrl={entrypointUrl}
           fetch={this.fetchWrapper}
+          formatDate={this.formatDate}
           navigate={this.navigate}
           navigation={navigation}
           openModal={this.openModal}
           push={this.push}
-          formatDate={this.formatDate}
         />
       </HandleBack>
     );

@@ -1,4 +1,6 @@
 {
+  "name": "demo",
+  "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
@@ -8,26 +10,25 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "@react-native-community/datetimepicker": "3.0.9",
-    "expo": "40.0.1",
-    "hyperview": "^0.37.0",
-    "moment": "2.29.1",
-    "react": "16.14.0",
-    "react-dom": "16.14.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
-    "react-native-gesture-handler": "1.10.3",
+    "@react-native-community/datetimepicker": "4.0.0",
+    "@react-navigation/native": "^6.0.8",
+    "@react-navigation/stack": "^6.1.1",
+    "expo": "~44.0.0",
+    "expo-status-bar": "~1.2.0",
+    "hyperview": "^0.48.0",
+    "moment": "^2.29.1",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "react-native": "0.64.3",
+    "react-native-gesture-handler": "~2.1.0",
     "react-native-keyboard-aware-scrollview": "2.1.0",
-    "react-native-reanimated": "1.13.2",
-    "react-native-screens": "2.18.1",
-    "react-native-web": "0.15.0",
-    "react-native-webview": "11.2.3",
-    "react-navigation": "4.4.4",
-    "react-navigation-stack": "1.10.3"
+    "react-native-safe-area-context": "3.3.2",
+    "react-native-screens": "~3.10.1",
+    "react-native-web": "0.17.1",
+    "react-native-webview": "11.15.0"
   },
   "devDependencies": {
-    "@babel/core": "7.13.8",
-    "babel-preset-expo": "8.3.0",
-    "expo-cli": "4.2.1"
+    "@babel/core": "^7.12.9"
   },
   "private": true
 }
