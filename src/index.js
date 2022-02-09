@@ -81,7 +81,13 @@ export default class HyperScreen extends React.Component {
     this.navigation = new Navigation(props.entrypointUrl, this.getNavigation());
   }
 
-  getNavigationState = (props) => {
+  getRoute = (props) => {
+    // The prop route is available in React Navigation v5 and above
+    if (props.route) {
+      return props.route
+    }
+
+    // Fallback for older versions of React Navigation
     if (props.navigation) {
       return props.navigation.state;
     }
@@ -89,7 +95,7 @@ export default class HyperScreen extends React.Component {
   }
 
   componentDidMount() {
-    const { params } = this.getNavigationState(this.props);
+    const { params } = this.getRoute(this.props);
     // The screen may be rendering via a navigation from another HyperScreen.
     // In this case, the url to load in the screen will be passed via navigation props.
     // Otherwise, use the entrypoint URL provided as a prop to the first HyperScreen.
@@ -123,8 +129,8 @@ export default class HyperScreen extends React.Component {
    */
   // eslint-disable-next-line camelcase
   UNSAFE_componentWillReceiveProps = (nextProps) => {
-    const oldNavigationState = this.getNavigationState(this.props);
-    const newNavigationState = this.getNavigationState(nextProps);
+    const oldNavigationState = this.getRoute(this.props);
+    const newNavigationState = this.getRoute(nextProps);
 
     const newUrl = newNavigationState.params.url;
     const oldUrl = oldNavigationState.params.url;
@@ -157,7 +163,7 @@ export default class HyperScreen extends React.Component {
    * Clear out the preload screen associated with this screen.
    */
   componentWillUnmount() {
-    const { params } = this.getNavigationState(this.props);
+    const { params } = this.getRoute(this.props);
     const { preloadScreen } = params;
     if (preloadScreen && this.navigation.getPreloadScreen(preloadScreen)) {
       this.navigation.remove(preloadScreen);
@@ -181,7 +187,7 @@ export default class HyperScreen extends React.Component {
    * Performs a full load of the screen.
    */
   load = async () => {
-    const { params, key: routeKey } = this.getNavigationState(this.props);
+    const { params, key: routeKey } = this.getRoute(this.props);
 
     try {
       if (params.delay) {
