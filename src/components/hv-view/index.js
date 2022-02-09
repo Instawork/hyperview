@@ -142,7 +142,6 @@ export default class HvView extends PureComponent<HvComponentProps> {
       // add sticky indicies
       const elements = children.map(child => child.props.element);
       const stickyIndicies = this.getStickyElementIndices(elements);
-      console.log('stickyIndicies', stickyIndicies);
       if (stickyIndicies.length) {
         props.stickyHeaderIndices = stickyIndicies;
       }
