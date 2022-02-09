@@ -10,7 +10,7 @@
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
-import type { Attribute, Element, HvComponentProps } from 'hyperview/src/types';
+import type { Element, HvComponentProps } from 'hyperview/src/types';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -40,13 +40,8 @@ export default class HvView extends PureComponent<HvComponentProps> {
 
   props: HvComponentProps;
 
-  isHiddenElement = (attributes: Attribute[]): boolean => {
-    for (let j = 0; j < attributes.length; j += 1) {
-      if (attributes[j].name === 'hide' && attributes[j].value === 'true') {
-        return true;
-      }
-    }
-    return false;
+  isHiddenElement = (element: Element): boolean => {
+    return element.getAttribute('hide') === 'true';
   };
 
   canRenderElement = (element: Element): boolean => {
@@ -59,8 +54,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
       !!this.props.options.componentRegistry[element.namespaceURI][
         element.localName
       ] &&
-      // $FlowFixMe
-      !this.isHiddenElement(Array.from(element.attributes ?? []))
+      !this.isHiddenElement(element)
     );
   };
 
@@ -76,13 +70,9 @@ export default class HvView extends PureComponent<HvComponentProps> {
   getStickyElementIndices = (): number[] => {
     const elements = this.getElementsToRender();
     return elements.reduce((acc, element, index) => {
-      // $FlowFixMe
-      const attributes: Attribute[] = Array.from(element.attributes ?? []);
-      attributes.forEach(attribute => {
-        if (attribute.name === 'sticky' && attribute.value === 'true') {
-          acc.push(index);
-        }
-      });
+      if (element.getAttribute('sticky') === 'true') {
+        acc.push(index);
+      }
       return acc;
     }, []);
   };
