@@ -42,7 +42,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
 
   getStickyElementIndices = (elements: Element[]): number[] => {
     return elements.reduce((acc, element, index) => {
-      if (element.getAttribute('sticky') === 'true') {
+      if (element?.getAttribute('sticky') === 'true') {
         acc.push(index);
       }
       return acc;
@@ -140,6 +140,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
 
     if (scrollable && scrollDirection !== 'horizontal') {
       // add sticky indicies
+      // $FlowFixMe
       const elements = children.map(child => child.props.element);
       const stickyIndicies = this.getStickyElementIndices(elements);
       if (stickyIndicies.length) {

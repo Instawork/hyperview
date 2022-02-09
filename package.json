@@ -36,6 +36,7 @@
     "release:major": "yarn version --major",
     "storybook": "storybook start -p 7007",
     "test:flow": "flow",
+    "test:floww": "flow check-contents ./src/components/hv-view/index.js < ./src/components/hv-view/index.js",
     "test:generators": "yarn generate test && git diff --quiet HEAD",
     "test:lint": "eslint src && prettier --check '**/*.xsd' '**/*.xml'",
     "test:render": "npx patch-package && jest test/render.test.js --forceExit",
