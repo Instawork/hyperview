@@ -133,4 +133,4 @@ An attribute to solve the common problem of views that need to move out of the w
 | ------------------------- | -------- |
 | **false** (default), true | No       |
 
-If `sticky="true"`, the element will remain fixed at the top of the screen when scrolling. This should be used in conjunction with an immediate parent view with `scroll="true"`and `scroll-orientation="vertical"`.
+If `sticky="true"`, the element will remain fixed at the top of the screen when scrolling. This should be used in conjunction with an immediate parent view with `scroll="true"` and `scroll-orientation="vertical"`.
