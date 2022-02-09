@@ -40,35 +40,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
 
   props: HvComponentProps;
 
-  isHiddenElement = (element: Element): boolean => {
-    return element.getAttribute('hide') === 'true';
-  };
-
-  canRenderElement = (element: Element): boolean => {
-    // ignore non rendering and hidden elements
-    return (
-      !!this.props.options.componentRegistry &&
-      !!element.namespaceURI &&
-      !!element.localName &&
-      !!this.props.options.componentRegistry[element.namespaceURI] &&
-      !!this.props.options.componentRegistry[element.namespaceURI][
-        element.localName
-      ] &&
-      !this.isHiddenElement(element)
-    );
-  };
-
-  getElementsToRender = (): Element[] => {
-    // do not include non rendering elements while calculating index
-    // $FlowFixMe
-    const childNodes: Element[] = Array.from(
-      this.props.element.childNodes ?? [],
-    );
-    return childNodes.filter(element => this.canRenderElement(element));
-  };
-
-  getStickyElementIndices = (): number[] => {
-    const elements = this.getElementsToRender();
+  getStickyElementIndices = (elements: Element[]): number[] => {
     return elements.reduce((acc, element, index) => {
       if (element.getAttribute('sticky') === 'true') {
         acc.push(index);
@@ -86,6 +58,9 @@ export default class HvView extends PureComponent<HvComponentProps> {
       viewOptions,
     );
     const scrollable = !!this.props.element.getAttribute('scroll');
+    const scrollDirection = this.props.element.getAttribute(
+      'scroll-orientation',
+    );
     const keyboardAvoiding = !!this.props.element.getAttribute(
       'avoid-keyboard',
     );
@@ -143,18 +118,8 @@ export default class HvView extends PureComponent<HvComponentProps> {
         viewOptions = { ...viewOptions, registerInputHandler };
       }
 
-      const scrollDirection = this.props.element.getAttribute(
-        'scroll-orientation',
-      );
       if (scrollDirection === 'horizontal') {
         props.horizontal = true;
-      }
-
-      if (scrollDirection !== 'horizontal') {
-        const stickyHeaderIndices = this.getStickyElementIndices();
-        if (stickyHeaderIndices.length) {
-          props.stickyHeaderIndices = stickyHeaderIndices;
-        }
       }
     }
 
@@ -166,17 +131,25 @@ export default class HvView extends PureComponent<HvComponentProps> {
       }
     }
 
-    // $FlowFixMe
-    const component = React.createElement(
-      c,
-      props,
-      ...Render.renderChildren(
-        this.props.element,
-        this.props.stylesheets,
-        this.props.onUpdate,
-        viewOptions,
-      ),
+    const children = Render.renderChildren(
+      this.props.element,
+      this.props.stylesheets,
+      this.props.onUpdate,
+      viewOptions,
     );
+
+    if (scrollable && scrollDirection !== 'horizontal') {
+      // add sticky indicies
+      const elements = children.map(child => child.props.element);
+      const stickyIndicies = this.getStickyElementIndices(elements);
+      console.log('stickyIndicies', stickyIndicies);
+      if (stickyIndicies.length) {
+        props.stickyHeaderIndices = stickyIndicies;
+      }
+    }
+
+    // $FlowFixMe
+    const component = React.createElement(c, props, ...children);
     return skipHref
       ? component
       : addHref(
