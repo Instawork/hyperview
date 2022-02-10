@@ -63,17 +63,6 @@ export default class HyperviewScreen extends PureComponent {
   }
 
   render() {
-    // HACK:
-    // React Navigation > 5.x no longer exposes navigation state
-    // Internally, Hyperview relies on this object to find params
-    // which are now accessible through the route prop.
-    // TODO: Refactor Hyperview core to accept a new params prop
-    const navigation = {
-      ...this.props.navigation,
-      state: {
-        params: this.props.route.params || {},
-      },
-    }
     const entrypointUrl = this.props.route.params?.url;
 
     return (
@@ -85,9 +74,10 @@ export default class HyperviewScreen extends PureComponent {
           fetch={this.fetchWrapper}
           formatDate={this.formatDate}
           navigate={this.navigate}
-          navigation={navigation}
+          navigation={this.props.navigation}
           openModal={this.openModal}
           push={this.push}
+          route={this.props.route}
         />
       </HandleBack>
     );
