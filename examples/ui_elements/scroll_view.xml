@@ -67,9 +67,18 @@
         borderRadius="16"
         height="40"
         margin="8"
+        alignItems="center"
+        justifyContent="center"
       />
       <style id="ScrollChild--Vertical" height="40" />
       <style id="ScrollChild--Horizontal" width="40" />
+      <style
+        id="Text"
+        color="#ffffff"
+        alignSelf="center"
+        textAlign="center"
+        fontSize="24"
+      />
     </styles>
     <body style="Body" safe-area="true">
       <header style="Header">
@@ -77,7 +86,7 @@
         <text style="Header__Title">Scroll Views</text>
       </header>
       <view>
-        <text style="Description">Vertical Scroll</text>
+      <text style="Description">Vertical Scroll</text>
         <view scroll="true" style="ScrollContainer ScrollContainer--Vertical">
           <view style="ScrollChild ScrollChild--Vertical" />
           <view style="ScrollChild ScrollChild--Vertical" />
@@ -85,6 +94,31 @@
           <view style="ScrollChild ScrollChild--Vertical" />
           <view style="ScrollChild ScrollChild--Vertical" />
           <view style="ScrollChild ScrollChild--Vertical" />
+        </view>
+        <text style="Description">Vertical Scroll with sticky header</text>
+        <view scroll="true" style="ScrollContainer ScrollContainer--Vertical">
+          <view id="view-0" style="ScrollChild ScrollChild--Vertical">
+            <text style="Text">Non Sticky</text>
+          </view>
+          <view
+            id="view-1"
+            sticky="true"
+            style="ScrollChild ScrollChild--Vertical"
+          >
+            <text style="Text">Sticky</text>
+          </view>
+          <view id="view-2" style="ScrollChild ScrollChild--Vertical">
+            <text style="Text">Non Sticky</text>
+          </view>
+          <view id="view-3" style="ScrollChild ScrollChild--Vertical">
+            <text style="Text">Non Sticky</text>
+          </view>
+          <view id="view-4" style="ScrollChild ScrollChild--Vertical">
+            <text style="Text">Non Sticky</text>
+          </view>
+          <view id="view-5" style="ScrollChild ScrollChild--Vertical">
+            <text style="Text">Non Sticky</text>
+          </view>
         </view>
         <text style="Description">Horizontal Scroll</text>
         <view
