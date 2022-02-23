@@ -98,6 +98,7 @@ Open [/demo/navigation/AppNavigator.js](/demo/navigation/AppNavigator.js) in a t
 From the `demo/` directory on your development machine:
 
 ```sh
+cd demo
 yarn start
 ```
 
