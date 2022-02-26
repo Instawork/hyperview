@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "tiny-emitter": "2.1.0",
-    "url-parse": "1.4.3",
+    "url-parse": "1.5.8",
     "xmldom-instawork": "0.0.1"
   },
   "peerDependencies": {
