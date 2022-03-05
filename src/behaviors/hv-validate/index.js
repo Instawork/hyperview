@@ -46,29 +46,17 @@ export default {
     // Find validators for the element
     const validators: Array<[Validator, Element]> = getValidators(inputElement);
     const validationResults: Array<Validation> = validators.reduce((results: Array<Validation>, [v:Validator, e: Element]) => {
-
       const newResults = values.reduce((results: Array<Validation>, value: string) => {
         const result = v.check(value, e);
         e.setAttributeNS(V_NS, "state", result.valid ? "valid" : "invalid");
         return [...results, result];
       }, []);
-
-      //onUpdate(null, 'swap', e, { newElement: e });
-
       return [...results, ...newResults];
     }, []);
 
-    const inputElementId: ?string = inputElement.getAttribute('id');
-    if (!inputElementId) {
-      // If the input being validated does not have an ID, then there's no reference from text elements
-      // displaying the validation message. So we can short-circuit and return early.
-      return;
-    }
-    
     // Find first invalid result.
     const invalid: ?Validation = validationResults.find((v) => !v.valid);
     const message: ?string = invalid ? invalid.message : null;
-    setValidationMessages(inputElementId, message, onUpdate, getRoot());
 
     inputElement.setAttributeNS(V_NS, "state", invalid ? "invalid" : "valid");
     onUpdate(null, 'swap', inputElement, { newElement: inputElement.cloneNode(true) });

@@ -169,11 +169,14 @@
                 style="input"
                 id="input-4"
                 value="T"
-                v:state="invalid"
             >
-              <behavior trigger="change" action="validate" target="input-4" />
               <v:required message="First name required" v:state="valid" />
               <v:length min-length="2" max-length="5" message="Length must be between 2 and 5" v:state="invalid" />
+
+              <behavior trigger="change" action="validate" target="input-4" />
+              <behavior trigger="valid" action="show" target="input-4-valid" />
+              <behavior trigger="invalid" action="hide" target="input-4-valid" />
+
             </text-field>
             <v:message style="help help--error" source="input-4" />
           </view>

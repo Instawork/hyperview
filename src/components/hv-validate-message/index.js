@@ -38,7 +38,6 @@ export default class HvValidateMessage extends PureComponent<HvComponentProps> {
 
     const doc: ?Document = this.getDocument();
     const sourceElement: ?Element = doc ? doc.getElementById(source) : null;
-    //const sourceElement: ?Element = source && element.ownerDocument ? element.ownerDocument.getElementById(source) : null;
     const message: ?string = sourceElement ? getFirstInvalidMessage(sourceElement) : null;
 
     const props = createProps(
