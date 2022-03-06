@@ -30,6 +30,16 @@ export const getBehaviorElements = (element: any) => {
   return behaviorElements;
 };
 
+export const getBehaviorSource = (element) => {
+  if (element.tagName === 'behavior') {
+    if (!element.parentNode) {
+      console.log('no parent!');
+    }
+    return element.parentNode;
+  }
+  return element;
+};
+
 export const getFirstTag = (
   document: Document,
   localName: LocalName,

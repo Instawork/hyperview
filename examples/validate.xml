@@ -136,7 +136,7 @@
                 style="input"
                 id="input-2"
             >
-              <behavior trigger="change" action="validate" target="input-2" />
+              <behavior trigger="change" action="validate" />
               <v:required message="First name required" />
               <v:length min-length="2" max-length="5" message="Length must be between 2 and 5" />
             </text-field>
@@ -152,8 +152,8 @@
                 style="input"
                 id="input-3"
             >
-              <behavior trigger="blur" action="validate" target="input-3" />
-              <behavior trigger="focus" action="validate" target="input-3" />
+              <behavior trigger="blur" action="validate" />
+              <behavior trigger="focus" action="validate" />
               <v:required message="First name required" />
               <v:length min-length="2" max-length="5" message="Length must be between 2 and 5" />
             </text-field>
@@ -171,14 +171,14 @@
                 value="T"
             >
               <v:required message="First name required" v:state="valid" />
-              <v:length min-length="2" max-length="5" message="Length must be between 2 and 5" v:state="invalid" />
+              <v:length min-length="2" max-length="5" message="Length must be between 2 and 5" v:state="invalid" v:state-message="Length must be between 2 and 5" />
 
-              <behavior trigger="change" action="validate" target="input-4" />
-              <behavior trigger="valid" action="show" target="input-4-valid" />
-              <behavior trigger="invalid" action="hide" target="input-4-valid" />
-
+              <behavior trigger="change" action="validate" />
+              <behavior trigger="on-valid" action="show" target="input-4-valid" />
+              <behavior trigger="on-invalid" action="hide" target="input-4-valid" />
             </text-field>
             <v:message style="help help--error" source="input-4" />
+            <text style="label" id="input-4-valid" hide="true">Hello! I am valid</text>
           </view>
         </form>
       </view>

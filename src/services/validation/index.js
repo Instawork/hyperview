@@ -4,9 +4,25 @@ import type {
   Validation,
   ValidatorRegistry,
 } from 'hyperview/src/types';
-import { NODE_TYPE } from 'hyperview/src/types';
+import { ON_VALIDATE_DISPATCH, NODE_TYPE } from 'hyperview/src/types';
+
+import TinyEmitter from 'tiny-emitter';
+const tinyEmitter = new TinyEmitter();
 
 export const V_NS = "https://hyperview.org/hyperview-validation";
+
+export const dispatchValidation = (targetId: string, validation: Validation) => {
+  if (__DEV__) {
+    console.log(`[dispatch-validation] [${targetId}: ${validation.valid}] emmitted.`);
+  }
+  tinyEmitter.emit(ON_VALIDATE_DISPATCH, targetId, validation);
+};
+
+export const subscribe = (callback: (targetId: string, validation: Validation) => void) =>
+  tinyEmitter.on(ON_VALIDATE_DISPATCH, callback);
+
+export const unsubscribe = (callback: (targetId: string, validation: Validation) => void) =>
+  tinyEmitter.off(ON_VALIDATE_DISPATCH, callback);
 
 const RequiredValidator: Validator = {
   namespace: V_NS,
@@ -82,8 +98,27 @@ export const getValidatorElementsWithInvalidState = (element: Element): Array<El
     });
 };
 
+
+export const getValidationState = (element: Element): string => {
+  let numValid = 0, numInvalid = 0, numIndeterminate = 0;
+  getValidators(element)
+    .map(([v: Validator, e: Element]) => {
+      const state = e.getAttributeNS(V_NS, "state");
+      if (state == "valid") {
+        numValid++;
+      } else if (state == "invalid") {
+        numInvalid++;
+      } else {
+        numIndeterminate++;
+      }
+    });
+
+  return numInvalid > 0 ? "invalid" : numIndeterminate > 0 ? "indeterminate" : "valid";
+};
+
+
 export const getFirstInvalidMessage = (element: Element): ?string => {
   const x = getValidatorElementsWithInvalidState(element);
-  const invalidElement: ?Element = x.find((e) => e.getAttribute("message"));
-  return invalidElement ? invalidElement.getAttribute("message") : null;
+  const invalidElement: ?Element = x.find((e) => e.getAttributeNS(V_NS, "state-message"));
+  return invalidElement ? invalidElement.getAttributeNS(V_NS, "state-message") : null;
 };

@@ -9,6 +9,7 @@
  */
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
+import { WithValidation } from 'hyperview/src/core/hyper-ref';
 import type {
   Element,
   HvComponentOnUpdate,
@@ -77,7 +78,7 @@ export const renderElement = (
       if (!extraProps.key) {
         delete extraProps.key;
       }
-      return (
+      const component = (
         <Component
           element={element}
           onUpdate={onUpdate}
@@ -86,6 +87,16 @@ export const renderElement = (
           {...extraProps} // eslint-disable-line react/jsx-props-no-spreading
         />
       );
+
+      if (Object.prototype.hasOwnProperty.call(Component, 'getFormInputValues')) {
+        return (
+          <WithValidation element={element} onUpdate={onUpdate}>
+            {component}
+          </WithValidation>
+        );
+      }
+
+      return component;
     }
 
     // No component registered for the namespace/local name.

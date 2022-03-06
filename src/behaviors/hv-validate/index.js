@@ -1,6 +1,7 @@
 // @flow
 
 import * as Behaviors from 'hyperview/src/services/behaviors';
+import * as Dom from 'hyperview/src/services/dom';
 import * as Xml from 'hyperview/src/services/xml';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type {
@@ -17,7 +18,7 @@ import type {
 } from 'hyperview/src/types';
 import { NODE_TYPE } from 'hyperview/src/types';
 import { later, shallowCloneToRoot } from 'hyperview/src/services';
-import { V_NS, getValidators } from 'hyperview/src/services/validation';
+import { V_NS, dispatchValidation, getValidators } from 'hyperview/src/services/validation';
 
 export default {
   action: 'validate',
@@ -25,11 +26,11 @@ export default {
     element: Element,
     options: HvBehaviorOptions,
   ) => {
-    const { onUpdate, getRoot, componentRegistry } = options;
+    const { currentElement, onUpdate, getRoot, componentRegistry } = options;
 
     const root: Document = getRoot();
     const inputId: ?string = element.getAttribute("target");
-    const inputElement: Element = inputId ? root.getElementById(inputId) : element;
+    const inputElement: Element = inputId ? root.getElementById(inputId) : currentElement;
     const component = componentRegistry[inputElement.namespaceURI] && componentRegistry[inputElement.namespaceURI][inputElement.localName];
 
     if (component && !Object.prototype.hasOwnProperty.call(component, 'getFormInputValues')) {
@@ -49,6 +50,7 @@ export default {
       const newResults = values.reduce((results: Array<Validation>, value: string) => {
         const result = v.check(value, e);
         e.setAttributeNS(V_NS, "state", result.valid ? "valid" : "invalid");
+        e.setAttributeNS(V_NS, "state-message", result.message);
         return [...results, result];
       }, []);
       return [...results, ...newResults];
@@ -58,7 +60,13 @@ export default {
     const invalid: ?Validation = validationResults.find((v) => !v.valid);
     const message: ?string = invalid ? invalid.message : null;
 
-    inputElement.setAttributeNS(V_NS, "state", invalid ? "invalid" : "valid");
+    //inputElement.setAttributeNS(V_NS, "state", invalid ? "invalid" : "valid");
     onUpdate(null, 'swap', inputElement, { newElement: inputElement.cloneNode(true) });
+
+    const inputElementId = inputElement.getAttribute("id");
+    if (inputElementId) {
+      const inputValidation: Validation = invalid ? invalid : {valid: true};
+      dispatchValidation(inputElementId, inputValidation);
+    }
   },
 };

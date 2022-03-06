@@ -315,6 +315,7 @@ export type HvComponent = Class<React$Component<HvComponentProps, any>> &
   HvComponentStatics;
 
 export type HvBehaviorOptions = {
+  currentElement: Element,
   onUpdate: HvComponentOnUpdate,
   getRoot: HvGetRoot,
   updateRoot: HvUpdateRoot,
@@ -347,6 +348,8 @@ export const TRIGGERS = Object.freeze({
   LOAD: 'load',
   LONG_PRESS: 'longPress',
   ON_EVENT: 'on-event',
+  ON_INVALID: 'on-invalid',
+  ON_VALID: 'on-valid',
   PRESS: 'press',
   PRESS_IN: 'pressIn',
   PRESS_OUT: 'pressOut',
@@ -425,6 +428,7 @@ export type NavigationProps = {|
 |};
 
 export const ON_EVENT_DISPATCH = 'hyperview:on-event';
+export const ON_VALIDATE_DISPATCH = 'hyperview:on-validate';
 
 
 export type Validation = {|

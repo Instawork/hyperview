@@ -25,6 +25,7 @@ import type {
 import { DEFAULT_PRESS_OPACITY, HV_TIMEOUT_ID_ATTR } from './types';
 import { NODE_TYPE } from 'hyperview/src/types';
 import { Platform } from 'react-native';
+import { getValidationState } from 'hyperview/src/services/validation';
 
 /**
  * This file is currently a dumping place for every functions used accross
@@ -57,7 +58,7 @@ export const createStyleProp = (
     styleRules = styleRules.concat(pressedRules);
   }
 
-  const validState: ?string = element.getAttributeNS("https://hyperview.org/hyperview-validation", "state");
+  const validState: ?string = getValidationState(element);
   if (validState === "invalid") {
     const invalidRules = styleIds
       .map(s => stylesheets.invalid[s])

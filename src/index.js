@@ -357,7 +357,7 @@ export default class HyperScreen extends React.Component {
       }
     } else {
       const { behaviorElement } = opts;
-      this.onCustomUpdate(behaviorElement);
+      this.onCustomUpdate(currentElement, behaviorElement);
     }
   }
 
@@ -487,7 +487,7 @@ export default class HyperScreen extends React.Component {
   /**
    * Extensions for custom behaviors.
    */
-  onCustomUpdate = (behaviorElement) => {
+  onCustomUpdate = (currentElement, behaviorElement) => {
     const action = behaviorElement.getAttribute('action');
     const behavior = this.behaviorRegistry[action];
     if (behavior) {
@@ -495,6 +495,7 @@ export default class HyperScreen extends React.Component {
       const getRoot = () => this.doc;
       if (behavior.callbackWithOptions) {
         behavior.callbackWithOptions(behaviorElement, {
+          currentElement: currentElement,
           onUpdate: this.onUpdate,
           getRoot: getRoot,
           updateRoot: updateRoot,

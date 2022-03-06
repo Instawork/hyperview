@@ -11,6 +11,7 @@
 import * as Dom from 'hyperview/src/services/dom';
 import * as Events from 'hyperview/src/services/events';
 import * as Render from 'hyperview/src/services/render';
+import * as ValidationService from 'hyperview/src/services/validation';
 import {
   ACTIONS,
   NAV_ACTIONS,
@@ -25,6 +26,7 @@ import type {
   HvComponentOptions,
   PressTrigger,
   StyleSheets,
+  Validation,
 } from 'hyperview/src/types';
 import type { PressHandlers, Props, State } from './types';
 import React, { PureComponent } from 'react';
@@ -346,3 +348,26 @@ export const addHref = (
     ...Render.renderChildren(element, stylesheets, onUpdate, options),
   );
 };
+
+
+export class WithValidation extends PureComponent {
+  componentDidMount() {
+    ValidationService.subscribe(this.onValidationDispatch);
+  }
+
+  componentWillUnmount() {
+    ValidationService.unsubscribe(this.onValidationDispatch);
+  }
+
+  onValidationDispatch = (targetId: string, validation: Validation) => {
+    const elementId: ?string = this.props.element.getAttribute('id');
+    if (elementId !== targetId) {
+      return;
+    }
+    Dom.triggerBehaviors(this.props.element, validation.valid ? TRIGGERS.ON_VALID : TRIGGERS.ON_INVALID, this.props.onUpdate);
+  };
+
+  render() {
+    return this.props.children;
+  };
+}
