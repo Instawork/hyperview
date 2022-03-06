@@ -60,9 +60,14 @@ export const getRegistry = (
 ): ComponentRegistry =>
   [...HYPERVIEW_COMPONENTS, ...components].reduce(reducer, {});
 
+export const isInputComponent = (component: HvComponent): boolean => {
+  return Object.prototype.hasOwnProperty.call(component, 'getFormInputValues');
+};
+
 export const getFormRegistry = (
   components: HvComponent[] = [],
 ): ComponentRegistry =>
   [...HYPERVIEW_COMPONENTS, ...components]
-    .filter(c => Object.prototype.hasOwnProperty.call(c, 'getFormInputValues'))
+    .filter(isInputComponent)
     .reduce(reducer, {});
+

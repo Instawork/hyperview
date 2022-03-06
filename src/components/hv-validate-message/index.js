@@ -12,10 +12,11 @@ import React, { PureComponent } from 'react';
 import type { Element, HvComponentProps } from 'hyperview/src/types';
 import { Text } from 'react-native';
 import { createProps } from 'hyperview/src/services';
-import { V_NS, getFirstInvalidMessage } from 'hyperview/src/services/validation';
+import { getFirstInvalidMessage } from 'hyperview/src/services/validation';
+import { HYPERVIEW_VALIDATION } from 'hyperview/src/services/namespaces';
 
 export default class HvValidateMessage extends PureComponent<HvComponentProps> {
-  static namespaceURI = V_NS;
+  static namespaceURI = HYPERVIEW_VALIDATION;
 
   static localName = "message";
 

@@ -5,11 +5,13 @@ import type {
   ValidatorRegistry,
 } from 'hyperview/src/types';
 import { ON_VALIDATE_DISPATCH, NODE_TYPE } from 'hyperview/src/types';
+import { HYPERVIEW_VALIDATION } from 'hyperview/src/services/namespaces';
+
+import LengthValidator from 'hyperview/src/validators/length';
+import RequiredValidator from 'hyperview/src/validators/required';
 
 import TinyEmitter from 'tiny-emitter';
 const tinyEmitter = new TinyEmitter();
-
-export const V_NS = "https://hyperview.org/hyperview-validation";
 
 export const dispatchValidation = (targetId: string, validation: Validation) => {
   if (__DEV__) {
@@ -24,43 +26,6 @@ export const subscribe = (callback: (targetId: string, validation: Validation) =
 export const unsubscribe = (callback: (targetId: string, validation: Validation) => void) =>
   tinyEmitter.off(ON_VALIDATE_DISPATCH, callback);
 
-const RequiredValidator: Validator = {
-  namespace: V_NS,
-  name: "required",
-  check: (value: ?string, element: Element): Validation => {
-    if (!!value) {
-      return {
-        valid: true,
-      };
-    }
-    return {
-      valid: false,
-      message: element.getAttribute('message') || 'This field is required',
-    };
-  },
-};
-
-
-const LengthValidator: Validator = {
-  namespace: V_NS,
-  name: "length",
-  check: (value: ?string, element: Element): Validation => {
-
-    const minLength = parseInt(element.getAttribute('min-length'), 10);
-    const maxLength = parseInt(element.getAttribute('max-length'), 10);
-
-    if (value !== null) {
-      if (value.length < minLength || value.length > maxLength) {
-        return {
-          valid: false,
-          message: element.getAttribute('message') || 'This field has bad length',
-        }
-      }
-    }
-
-    return { valid: true };
-  },
-};
 
 const VALIDATORS = [
   RequiredValidator,
@@ -94,16 +59,15 @@ export const getValidatorElementsWithInvalidState = (element: Element): Array<El
   return getValidators(element)
     .map(([v: Validator, e: Element]) => e)
     .filter((e: Element) => {
-      return e.getAttributeNS(V_NS, "state") === "invalid";
+      return e.getAttributeNS(HYPERVIEW_VALIDATION, "state") === "invalid";
     });
 };
-
 
 export const getValidationState = (element: Element): string => {
   let numValid = 0, numInvalid = 0, numIndeterminate = 0;
   getValidators(element)
     .map(([v: Validator, e: Element]) => {
-      const state = e.getAttributeNS(V_NS, "state");
+      const state = e.getAttributeNS(HYPERVIEW_VALIDATION, "state");
       if (state == "valid") {
         numValid++;
       } else if (state == "invalid") {
@@ -119,6 +83,6 @@ export const getValidationState = (element: Element): string => {
 
 export const getFirstInvalidMessage = (element: Element): ?string => {
   const x = getValidatorElementsWithInvalidState(element);
-  const invalidElement: ?Element = x.find((e) => e.getAttributeNS(V_NS, "state-message"));
-  return invalidElement ? invalidElement.getAttributeNS(V_NS, "state-message") : null;
+  const invalidElement: ?Element = x.find((e) => e.getAttributeNS(HYPERVIEW_VALIDATION, "state-message"));
+  return invalidElement ? invalidElement.getAttributeNS(HYPERVIEW_VALIDATION, "state-message") : null;
 };

@@ -8,6 +8,7 @@
  *
  */
 
+import * as Components from 'hyperview/src/services/components';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import { WithValidation } from 'hyperview/src/core/hyper-ref';
 import type {
@@ -88,7 +89,7 @@ export const renderElement = (
         />
       );
 
-      if (Object.prototype.hasOwnProperty.call(Component, 'getFormInputValues')) {
+      if (Components.isInputComponent(Component)) {
         return (
           <WithValidation element={element} onUpdate={onUpdate}>
             {component}
