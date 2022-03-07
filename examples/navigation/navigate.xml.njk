@@ -1,3 +1,8 @@
+---
+title: "Navigate"
+permalink: "/navigation/navigate.xml"
+tags: navigation
+---
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
@@ -23,13 +28,10 @@
       <style id="Body" backgroundColor="white" flex="1" />
       <style
         id="Description"
-        borderColor="red"
-        borderRadius="4"
-        borderWidth="2"
         fontSize="16"
-        fontWeight="600"
+        fontWeight="normal"
         margin="24"
-        padding="16"
+        marginBottom="0"
       />
       <style
         id="Item"
@@ -45,60 +47,42 @@
       />
       <style id="Item__Label" fontSize="18" fontWeight="normal" />
       <style id="Item__Chevron" fontSize="18" fontWeight="bold" />
+      <style
+        id="Button"
+        backgroundColor="#63CB76"
+        borderRadius="16"
+        flex="1"
+        flexDirection="row"
+        justifyContent="center"
+        margin="24"
+        padding="24"
+      />
+      <style id="Button__Label" color="white" fontSize="24" fontWeight="bold" />
       <style id="Main" flex="1" />
     </styles>
     <body style="Body" safe-area="true">
       <header style="Header">
         <text action="back" href="#" style="Header__Back">Back</text>
-        <text style="Header__Title">Styling</text>
+        <text style="Header__Title">Navigate</text>
       </header>
-      <list>
-        <item
-          href="/styling/flex.xml"
-          key="flex"
+      <view scroll="true" style="Main">
+        <text style="Description">
+          Tapping the button below will request an XML screen and push it onto
+          the stack.
+        </text>
+        <view action="navigate" href="/index.xml" style="Button">
+          <text style="Button__Label">Navigate to home</text>
+        </view>
+        <view
+          action="navigate"
+          delay="1000"
+          href="/navigation/pushed.xml"
           show-during-load="loadingScreen"
-          style="Item"
+          style="Button"
         >
-          <text style="Item__Label">Flex Styling</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item
-          href="/styling/text.xml"
-          key="text"
-          show-during-load="loadingScreen"
-          style="Item"
-        >
-          <text style="Item__Label">Text Styling</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item
-          href="/styling/button.xml"
-          key="button"
-          show-during-load="loadingScreen"
-          style="Item"
-        >
-          <text style="Item__Label">Button Styling</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item
-          href="/styling/shadows.xml"
-          key="shadow"
-          show-during-load="loadingScreen"
-          style="Item"
-        >
-          <text style="Item__Label">Shadow Styling (iOS only)</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item
-          href="/styling/elevation.xml"
-          key="elevation"
-          show-during-load="loadingScreen"
-          style="Item"
-        >
-          <text style="Item__Label">Elevation Styling (Android only)</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-      </list>
+          <text style="Button__Label">Navigate with indicator</text>
+        </view>
+      </view>
     </body>
   </screen>
   <screen id="loadingScreen">
@@ -123,11 +107,29 @@
       />
       <style id="Header__Title" color="black" fontSize="24" fontWeight="600" />
       <style id="Body" backgroundColor="white" flex="1" />
+      <style
+        id="Description"
+        fontSize="16"
+        fontWeight="normal"
+        margin="24"
+        marginBottom="0"
+      />
+      <style
+        id="Loading"
+        alignItems="center"
+        flex="1"
+        justifyContent="center"
+      />
     </styles>
     <body style="Body" safe-area="true">
       <header style="Header">
         <text action="back" href="#" style="Header__Back">Back</text>
+        <text style="Header__Title">Loading...</text>
       </header>
+      <view style="Loading">
+        <text style="Description">Custom loading screen...</text>
+        <spinner />
+      </view>
     </body>
   </screen>
 </doc>

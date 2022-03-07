@@ -1,3 +1,8 @@
+---
+title: "Styling"
+permalink: "/styling/index.xml"
+tags: root
+---
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
@@ -23,10 +28,13 @@
       <style id="Body" backgroundColor="white" flex="1" />
       <style
         id="Description"
+        borderColor="red"
+        borderRadius="4"
+        borderWidth="2"
         fontSize="16"
-        fontWeight="normal"
+        fontWeight="600"
         margin="24"
-        marginBottom="0"
+        padding="16"
       />
       <style
         id="Item"
@@ -42,42 +50,60 @@
       />
       <style id="Item__Label" fontSize="18" fontWeight="normal" />
       <style id="Item__Chevron" fontSize="18" fontWeight="bold" />
-      <style
-        id="Button"
-        backgroundColor="#63CB76"
-        borderRadius="16"
-        flex="1"
-        flexDirection="row"
-        justifyContent="center"
-        margin="24"
-        padding="24"
-      />
-      <style id="Button__Label" color="white" fontSize="24" fontWeight="bold" />
       <style id="Main" flex="1" />
     </styles>
     <body style="Body" safe-area="true">
       <header style="Header">
         <text action="back" href="#" style="Header__Back">Back</text>
-        <text style="Header__Title">Deep Links</text>
+        <text style="Header__Title">Styling</text>
       </header>
-      <view scroll="true" style="Main">
-        <text style="Description">
-          Tapping the buttons below will open their urls in default apps
-        </text>
-        <view action="deep-link" href="applenews://" style="Button">
-          <text style="Button__Label">applenews://</text>
-        </view>
-        <view action="deep-link" href="calshow://" style="Button">
-          <text style="Button__Label">calshow://</text>
-        </view>
-        <view
-          action="deep-link"
-          href="https://www.hyperview.org"
-          style="Button"
+      <list>
+        <item
+          href="/styling/flex.xml"
+          key="flex"
+          show-during-load="loadingScreen"
+          style="Item"
         >
-          <text style="Button__Label">https://www.hyperview.org</text>
-        </view>
-      </view>
+          <text style="Item__Label">Flex Styling</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item
+          href="/styling/text.xml"
+          key="text"
+          show-during-load="loadingScreen"
+          style="Item"
+        >
+          <text style="Item__Label">Text Styling</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item
+          href="/styling/button.xml"
+          key="button"
+          show-during-load="loadingScreen"
+          style="Item"
+        >
+          <text style="Item__Label">Button Styling</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item
+          href="/styling/shadows.xml"
+          key="shadow"
+          show-during-load="loadingScreen"
+          style="Item"
+        >
+          <text style="Item__Label">Shadow Styling (iOS only)</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item
+          href="/styling/elevation.xml"
+          key="elevation"
+          show-during-load="loadingScreen"
+          style="Item"
+        >
+          <text style="Item__Label">Elevation Styling (Android only)</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+      </list>
     </body>
   </screen>
   <screen id="loadingScreen">
@@ -102,29 +128,11 @@
       />
       <style id="Header__Title" color="black" fontSize="24" fontWeight="600" />
       <style id="Body" backgroundColor="white" flex="1" />
-      <style
-        id="Description"
-        fontSize="16"
-        fontWeight="normal"
-        margin="24"
-        marginBottom="0"
-      />
-      <style
-        id="Loading"
-        alignItems="center"
-        flex="1"
-        justifyContent="center"
-      />
     </styles>
     <body style="Body" safe-area="true">
       <header style="Header">
         <text action="back" href="#" style="Header__Back">Back</text>
-        <text style="Header__Title">Loading...</text>
       </header>
-      <view style="Loading">
-        <text style="Description">Custom loading screen...</text>
-        <spinner />
-      </view>
     </body>
   </screen>
 </doc>

@@ -1,0 +1,23 @@
+{% extends 'base.xml' %}
+
+{% block styles %}
+
+{% endblock %}
+
+{% block content %}
+  <list>
+  {% for screen in collections[list_tag] %}
+    <item
+      href="{{ screen.data.permalink }}"
+      key="{{ screen.data.title | slug }}"
+      show-during-load="loadingScreen"
+      style="Item"
+    >
+      <view style="Item__Left">
+        <text style="Item__Label">{{ screen.data.title }}</text>
+      </view>
+      <text style="Item__Chevron">&gt;</text>
+    </item>
+  {% endfor %}
+  </list>
+{% endblock %}

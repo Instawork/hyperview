@@ -1,3 +1,8 @@
+---
+title: "Back"
+permalink: "/navigation/back.xml"
+tags: navigation
+---
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
@@ -53,62 +58,43 @@
         padding="24"
       />
       <style id="Button__Label" color="white" fontSize="24" fontWeight="bold" />
-      <style id="Main" flex="1" />
-      <style
-        id="input"
-        borderBottomColor="#E1E1E1"
-        borderBottomWidth="1"
-        borderColor="#4E4D4D"
-        flex="1"
-        fontSize="16"
-        fontWeight="normal"
-        marginLeft="24"
-        marginRight="24"
-        paddingBottom="8"
-        paddingTop="8"
-      >
-        <modifier pressed="true">
-          <style borderBottomColor="green" />
-        </modifier>
-        <modifier focused="true">
-          <style borderBottomColor="#4778FF" />
-        </modifier>
-      </style>
     </styles>
     <body style="Body" safe-area="true">
-      <header style="Header">
-        <text action="back" href="#" style="Header__Back">Back</text>
-        <text style="Header__Title">New</text>
-      </header>
-      <view scroll="true" style="Main">
+      <view scroll="true">
+        <header style="Header">
+          <text action="back" href="#" style="Header__Back">Back</text>
+          <text style="Header__Title">Back</text>
+        </header>
         <text style="Description">
-          Tapping the button below will request an XML screen and show it in a
-          new modal.
+          Tapping the button below will navigate back to the previous screen..
         </text>
-        <view action="new" href="/navigation/modal.xml" style="Button">
-          <text style="Button__Label">New</text>
+        <view action="back" href="/navigation/index.xml" style="Button">
+          <text style="Button__Label">Back</text>
         </view>
+        <text style="Description">
+          Tapping the button below will navigate back to a different screen
+        </text>
         <view
-          action="new"
-          delay="1000"
-          href="/navigation/modal.xml"
+          action="back"
+          delay="200"
+          href="/navigation/changed.xml"
+          style="Button"
+        >
+          <text style="Button__Label">Back to other</text>
+        </view>
+        <text style="Description">
+          Tapping the button below will navigate back to a different screen, with
+          preload state
+        </text>
+        <view
+          action="back"
+          delay="500"
+          href="/navigation/changed.xml"
           show-during-load="loadingScreen"
           style="Button"
         >
-          <text style="Button__Label">New with indicator</text>
+          <text style="Button__Label">Back with loading</text>
         </view>
-        <form>
-          <view
-            action="new"
-            delay="1000"
-            href="/navigation/modal.xml"
-            show-during-load="loadingScreen"
-            style="Button"
-          >
-            <text style="Button__Label">New with params</text>
-          </view>
-          <text-field style="input" name="param1" value="value1" />
-        </form>
       </view>
     </body>
   </screen>

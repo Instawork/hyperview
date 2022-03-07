@@ -1,3 +1,8 @@
+---
+title: "Reload"
+permalink: "/navigation/reload.xml"
+tags: navigation
+---
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
@@ -53,13 +58,39 @@
         padding="24"
       />
       <style id="Button__Label" color="white" fontSize="24" fontWeight="bold" />
+      <style id="Main" flex="1" />
     </styles>
-    <body scroll="true" style="Body" safe-area="true">
+    <body style="Body" safe-area="true">
       <header style="Header">
         <text action="back" href="#" style="Header__Back">Back</text>
-        <text style="Header__Title">Changed</text>
+        <text style="Header__Title">Reload</text>
       </header>
-      <text style="Description">This wasn't here before...</text>
+      <view scroll="true" style="Main">
+        <text style="Description">
+          Tapping the button below will reload this entire screen. Modifications
+          to the file will appear without navigation.
+        </text>
+        <view
+          action="reload"
+          href="#"
+          show-during-load="loadingScreen"
+          style="Button"
+        >
+          <text style="Button__Label">Reload!</text>
+        </view>
+
+        <text style="Description">
+          Tapping the button below will reload this screen with a new URL
+        </text>
+        <view
+          action="reload"
+          href="/navigation/index.xml"
+          show-during-load="loadingScreen"
+          style="Button"
+        >
+          <text style="Button__Label">Reload different screen</text>
+        </view>
+      </view>
     </body>
   </screen>
   <screen id="loadingScreen">

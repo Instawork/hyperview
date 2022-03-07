@@ -1,3 +1,8 @@
+---
+title: "Close"
+permalink: "/navigation/close.xml"
+tags: navigation
+---
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
@@ -53,37 +58,57 @@
         padding="24"
       />
       <style id="Button__Label" color="white" fontSize="24" fontWeight="bold" />
-      <style id="Main" flex="1" />
     </styles>
     <body style="Body" safe-area="true">
-      <header style="Header">
-        <text action="back" href="#" style="Header__Back">Back</text>
-        <text style="Header__Title">Reload</text>
-      </header>
-      <view scroll="true" style="Main">
+      <view scroll="true">
+        <header style="Header">
+          <text action="close" href="#" style="Header__Back">Close</text>
+          <text style="Header__Title">Close</text>
+        </header>
         <text style="Description">
-          Tapping the button below will reload this entire screen. Modifications
-          to the file will appear without navigation.
+          Tapping the button below will navigate back to the previous screen.
         </text>
-        <view
-          action="reload"
-          href="#"
-          show-during-load="loadingScreen"
-          style="Button"
-        >
-          <text style="Button__Label">Reload!</text>
+        <view action="close" href="#" style="Button">
+          <text style="Button__Label">Close</text>
         </view>
-
         <text style="Description">
-          Tapping the button below will reload this screen with a new URL
+          Tapping the button below will navigate back to the previous screen, but
+          with query params from the form.
+        </text>
+        <form>
+          <text-field name="param1" value="value1" />
+          <text-field name="param2" value="value2" />
+          <view
+            action="close"
+            href="/navigation/index.xml?test=1"
+            style="Button"
+          >
+            <text style="Button__Label">Close</text>
+          </view>
+        </form>
+        <text style="Description">
+          Tapping the button below will navigate back to a different screen
         </text>
         <view
-          action="reload"
-          href="/navigation/index.xml"
+          action="close"
+          delay="200"
+          href="/navigation/changed.xml"
+          style="Button"
+        >
+          <text style="Button__Label">Close to other</text>
+        </view>
+        <text style="Description">
+          Tapping the button below will navigate back to a different screen, with
+          preload state
+        </text>
+        <view
+          action="close"
+          delay="500"
+          href="/navigation/changed.xml"
           show-during-load="loadingScreen"
           style="Button"
         >
-          <text style="Button__Label">Reload different screen</text>
+          <text style="Button__Label">Close with loading</text>
         </view>
       </view>
     </body>
