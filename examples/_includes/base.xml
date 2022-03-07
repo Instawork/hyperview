@@ -1,3 +1,4 @@
+{# Base template that should be used for all screens #}
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
@@ -6,7 +7,9 @@
     </styles>
     <body style="Body" safe-area="true">
       <header style="Header">
-        <text action="back" href="#" style="Header__Back">Back</text>
+        {% if not hide_back_button %}
+          <text action="back" href="#" style="Header__Back">Back</text>
+        {% endif %}
         <text style="Header__Title">{{ title }}</text>
       </header>
       <view scroll="true" style="Main">
@@ -14,33 +17,5 @@
       </view>
     </body>
   </screen>
-  <screen id="loadingScreen">
-    <styles>
-      <style
-        id="Header"
-        alignItems="center"
-        backgroundColor="white"
-        borderBottomColor="#eee"
-        borderBottomWidth="1"
-        flexDirection="row"
-        paddingLeft="24"
-        paddingRight="24"
-        paddingBottom="16"
-      />
-      <style
-        id="Header__Back"
-        color="blue"
-        fontSize="16"
-        fontWeight="600"
-        paddingRight="16"
-      />
-      <style id="Header__Title" color="black" fontSize="24" fontWeight="600" />
-      <style id="Body" backgroundColor="white" flex="1" />
-    </styles>
-    <body style="Body" safe-area="true">
-      <header style="Header">
-        <text action="back" href="#" style="Header__Back">Back</text>
-      </header>
-    </body>
-  </screen>
+  {% include 'loading_screen.xml' %}
 </doc>
