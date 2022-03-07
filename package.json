@@ -40,7 +40,7 @@
     "test:lint": "eslint src && prettier --check '**/*.xsd' '**/*.xml'",
     "test:render": "npx patch-package && jest test/render.test.js --forceExit",
     "test:unit": "jest --testPathPattern src",
-    "test:xmlserver": "http-server --cors='*' -c-1 -p 8085 ./examples",
+    "test:xmlserver": "eleventy --serve --port=8085",
     "test:validate-xml": "find examples/ -name '*.xml' | xargs xmllint --schema schema/hyperview.xsd --noout",
     "test": "yarn generate test && yarn test:flow && yarn test:lint && yarn test:render && yarn test:unit && yarn test:validate-xml"
   },
@@ -57,6 +57,7 @@
     "react-native-webview": ">= 10.10.2"
   },
   "devDependencies": {
+    "@11ty/eleventy": "^1.0.0",
     "@babel/cli": "7.13.0",
     "@babel/core": "7.13.1",
     "@babel/eslint-parser": "7.13.4",
@@ -76,7 +77,6 @@
     "eslint-plugin-instawork": "0.10.2",
     "flow-bin": "0.122.0",
     "glob": "7.1.6",
-    "http-server": "0.12.3",
     "humps": "2.0.1",
     "husky": "5.1.1",
     "jest": "26.6.3",

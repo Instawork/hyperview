@@ -43,3 +43,15 @@
 <style id="Item__Left" flex="1" flexDirection="row" />
 <style id="Item__Label" fontSize="18" fontWeight="normal" />
 <style id="Item__Chevron" fontSize="18" fontWeight="bold" />
+
+<style
+  id="Button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"
+/>
+<style id="Button__Label" color="white" fontSize="24" fontWeight="bold" />

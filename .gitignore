@@ -10,6 +10,8 @@ lib/
 
 storybook/app-key.gen.js
 
+_examples_site/
+
 website/translated_docs
 website/build/
 website/yarn.lock

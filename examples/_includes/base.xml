@@ -9,7 +9,9 @@
         <text action="back" href="#" style="Header__Back">Back</text>
         <text style="Header__Title">{{ title }}</text>
       </header>
-      {% block content %}{% endblock %}
+      <view scroll="true" style="Main">
+        {% block content %}{% endblock %}
+      </view>
     </body>
   </screen>
   <screen id="loadingScreen">

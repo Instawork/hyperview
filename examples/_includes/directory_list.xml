@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block content %}
+  <behavior trigger="refresh" action="reload" href="#" />
   <list>
   {% for screen in collections[list_tag] %}
     <item
