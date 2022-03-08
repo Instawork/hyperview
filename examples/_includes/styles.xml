@@ -55,3 +55,19 @@
   padding="24"
 />
 <style id="Button__Label" color="white" fontSize="24" fontWeight="bold" />
+<style id="Button--Disabled" opacity="0.5" />
+<style
+  id="Button--Shadow"
+  elevation="4"
+  shadowColor="black"
+  shadowOffsetX="0"
+  shadowOffsetY="4"
+  shadowOpacity="0.5"
+  shadowRadius="4"
+>
+  <modifier pressed="true">
+    <style elevation="1" shadowOffsetY="1" shadowRadius="1" />
+  </modifier>
+</style>
+<style id="Button--Elevation3" elevation="3" />
+<style id="Button--Elevation10" elevation="10" />
