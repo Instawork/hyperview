@@ -16,15 +16,15 @@ const getComponentPath = (componentName: string) => {
 
 export const stories = (
   Component: HvComponent,
-): ((template: string, render: any) => void) => {
+): ((template: string, render: any, tagName?: string) => void) => {
   const componentPath = getComponentPath(Component.name);
   const s = storiesOf(Component.name, module);
-  return (templateName: string, render: any) => {
+  return (templateName: string, render: any, tagName?: string) => {
     const templatePath = `${componentPath}/stories/${templateName}.xml`;
     const storyName = humps.pascalize(templateName);
     const parser = new DOMParser();
     const document = parser.parseFromString(templates[templatePath]);
-    const element = Dom.getFirstTag(document, Component.localName);
+    const element = Dom.getFirstTag(document, tagName || Component.localName);
     const stylesheets = Stylesheets.createStylesheets(document);
     s.add(storyName, () => render({ element, stylesheets }));
   };

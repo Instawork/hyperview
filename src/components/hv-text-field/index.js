@@ -34,6 +34,11 @@ export default class HvTextField extends PureComponent<HvComponentProps> {
   constructor(props: HvComponentProps) {
     super(props);
     this.setFocus = this.setFocus.bind(this);
+    if (this.props.element.localName === LOCAL_NAME.TEXT_AREA) {
+      console.warn(
+        'Deprecation notice: <text-area> tag is deprecated and will be removed in a future version. See https://hyperview.org/docs/reference_textarea for details.',
+      );
+    }
   }
 
   triggerFocusBehaviors = (newElement: Element) => {

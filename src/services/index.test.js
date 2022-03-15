@@ -136,8 +136,8 @@ describe('flattenRegistry', () => {
       ['https://hyperview.org/hyperview', 'select-multiple', HvSelectMultiple],
       ['https://hyperview.org/hyperview', 'select-single', HvSelectSingle],
       ['https://hyperview.org/hyperview', 'switch', HvSwitch],
-      ['https://hyperview.org/hyperview', 'text-area', HvTextField],
       ['https://hyperview.org/hyperview', 'text-field', HvTextField],
+      ['https://hyperview.org/hyperview', 'text-area', HvTextField],
     ]);
   });
 });

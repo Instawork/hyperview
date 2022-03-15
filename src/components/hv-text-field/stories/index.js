@@ -10,6 +10,7 @@
 
 import * as Helpers from 'hyperview/storybook/helpers';
 import HvTextField from 'hyperview/src/components/hv-text-field';
+import { LOCAL_NAME } from 'hyperview/src/types';
 import React from 'react';
 import { action } from '@storybook/addon-actions';
 
@@ -22,11 +23,15 @@ createStory('basic', ({ element, stylesheets }) => (
     stylesheets={stylesheets}
   />
 ));
-createStory('text-area', ({ element, stylesheets }) => (
-  <HvTextField
-    element={element}
-    onUpdate={action('onUpdate')}
-    options={Helpers.getOptions()}
-    stylesheets={stylesheets}
-  />
-));
+createStory(
+  'text-area',
+  ({ element, stylesheets }) => (
+    <HvTextField
+      element={element}
+      onUpdate={action('onUpdate')}
+      options={Helpers.getOptions()}
+      stylesheets={stylesheets}
+    />
+  ),
+  LOCAL_NAME.TEXT_AREA,
+);
