@@ -1076,6 +1076,7 @@
         </xs:simpleType>
       </xs:attribute>
       <xs:attribute name="editable" type="xs:boolean" />
+      <xs:attribute name="multiline" type="xs:boolean" />
       <!-- Needed to support address-input. Eventually, we should allow attributes from other namespaces. -->
       <xs:attribute name="type" type="xs:string" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
