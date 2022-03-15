@@ -1407,13 +1407,6 @@
     sudo-prompt "^9.0.0"
     wcwidth "^1.0.1"
 
-"@react-native-community/datetimepicker@3.0.3":
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-3.0.3.tgz#711b4cb7fd195ab7ae867b8feab176ce46e765c8"
-  integrity sha512-znltGqSyELRpS/JchT/6MraTRqC83INekEyAkH+0gBrDzv0SwFKwVWacv1tF5D1y5VrHcSrcFB3T/tBsksUgwA==
-  dependencies:
-    invariant "^2.2.4"
-
 "@react-native-community/datetimepicker@4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-4.0.0.tgz#4629ac3d8d54b4024385f2b2a30bbe13640c6ed3"
@@ -3098,12 +3091,11 @@ http-errors@1.8.1:
     statuses ">= 1.5.0 < 2"
     toidentifier "1.0.1"
 
-hyperview@^0.48.0:
-  version "0.48.0"
-  resolved "https://registry.yarnpkg.com/hyperview/-/hyperview-0.48.0.tgz#b1c1206d75331e99fa16c5d6b31d2f9772de1ad4"
-  integrity sha512-FbvE8fZSab+5b5N8My0PITqgCoxgX8x1JFjObJ41N+TjVkNUHqdk9bQq4PV4/OQRD5OPQdscApoiZWiTrDoTMg==
+hyperview@^0.49.0:
+  version "0.49.0"
+  resolved "https://registry.yarnpkg.com/hyperview/-/hyperview-0.49.0.tgz#696f7529b901909aca0a27967cb54a36713b3797"
+  integrity sha512-oFHdJJ0gFLM9O3YVYoNqMykO6k+EE0OoyP64lV+HYnkhM2wQF1GbWtvvofHJEf80+HHYNdxLQxPQ+oQROETXiw==
   dependencies:
-    "@react-native-community/datetimepicker" "3.0.3"
     tiny-emitter "2.1.0"
     url-parse "1.4.3"
     xmldom-instawork "0.0.1"
