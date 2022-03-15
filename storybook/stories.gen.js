@@ -9,7 +9,6 @@ import '../src/components/hv-select-multiple/stories/index.js';
 import '../src/components/hv-select-single/stories/index.js';
 import '../src/components/hv-spinner/stories/index.js';
 import '../src/components/hv-switch/stories/index.js';
-import '../src/components/hv-text-area/stories/index.js';
 import '../src/components/hv-text-field/stories/index.js';
 import '../src/components/hv-text/stories/index.js';
 import '../src/components/hv-view/stories/index.js';

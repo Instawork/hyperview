@@ -1788,157 +1788,6 @@ export default {
   </screen>
 </doc>
 `,
-  'hyperview/src/components/hv-text-area/stories/basic.xml':
-  `<doc xmlns="https://hyperview.org/hyperview">
-  <screen>
-    <styles>
-      <style
-        alignItems="center"
-        backgroundColor="white"
-        borderBottomColor="#eee"
-        borderBottomWidth="1"
-        flexDirection="row"
-        height="72"
-        id="Header"
-        paddingLeft="24"
-        paddingRight="24"
-        paddingTop="24"
-      />
-      <style
-        color="blue"
-        fontFamily="HKGrotesk-SemiBold"
-        fontSize="16"
-        id="Header__Back"
-        paddingRight="16"
-      />
-      <style
-        color="black"
-        fontFamily="HKGrotesk-SemiBold"
-        fontSize="24"
-        id="Header__Title"
-      />
-      <style backgroundColor="white" flex="1" id="Body" />
-      <style
-        borderColor="red"
-        borderRadius="4"
-        borderWidth="2"
-        fontFamily="HKGrotesk-SemiBold"
-        fontSize="16"
-        id="Description"
-        margin="24"
-        padding="16"
-      />
-      <style
-        flex="1"
-        id="FormGroup"
-        marginLeft="24"
-        marginRight="24"
-        marginTop="48"
-      />
-      <style flex="1" flexDirection="row" id="horizontalFormGroup" />
-      <style flex="1" id="outerInput" />
-      <style
-        borderBottomColor="#E1E1E1"
-        borderBottomWidth="1"
-        borderColor="#4E4D4D"
-        flex="1"
-        fontFamily="HKGrotesk-Regular"
-        fontSize="16"
-        id="input"
-        paddingBottom="8"
-        paddingTop="8"
-      >
-
-        <modifier focused="true">
-          <style borderBottomColor="#4778FF" />
-        </modifier>
-      </style>
-      <style borderBottomColor="#FF4847" color="#FF4847" id="input--error"> 
-        <modifier focused="true">
-          <style borderBottomColor="#FF4847" />
-        </modifier>
-      </style>
-      <style
-        borderColor="#4E4D4D"
-        fontFamily="HKGrotesk-Bold"
-        fontSize="16"
-        id="label"
-        lineHeight="24"
-        marginBottom="8"
-      />
-      <style
-        borderColor="#FF4847"
-        fontFamily="HKGrotesk-Regular"
-        fontSize="16"
-        id="help"
-        lineHeight="24"
-        marginTop="16"
-      />
-      <style color="#FF4847" id="help--error" />
-      <style flex="1" id="Main" />
-    </styles>
-    <body style="Body">
-      <header style="Header">
-        <text action="back" href="#" style="Header__Back">Back</text>
-        <text style="Header__Title">Textarea</text>
-      </header>
-      <view scroll="true" style="Main">
-        <view style="FormGroup">
-          <text style="label">Multi-line text-area</text>
-          <text-area
-            placeholder="Instructions"
-            placeholderTextColor="#8D9494"
-            style="input"
-          >
-          <text style="help">Please enter your gig instructions</text>
-          </text-area>
-        </view>
-        <view style="FormGroup">
-          <text style="label">Multi-line filled</text>
-          <text-area
-            placeholder="Instructions"
-            placeholderTextColor="#8D9494"
-            style="input"
-            value="One
-two
-three
-four"
-          >
-          </text-area>
-        </view>
-        <view style="FormGroup">
-          <text style="label">Multi-line validation error</text>
-          <text-area
-            placeholder="Instructions"
-            placeholderTextColor="#8D9494"
-            style="input input--error"
-          >
-          </text-area>
-          <text
-            style="help help--error"
-          >Please enter your gig instructions</text>
-        </view>
-        <view style="FormGroup">
-          <text style="label">Multi-line filled with validation error</text>
-          <text-area
-            placeholder="Instructions"
-            placeholderTextColor="#8D9494"
-            style="input input--error"
-            value="One
-two
-three
-four"
-          >
-          </text-area>
-          <text
-            style="help help--error"
-          >Please enter your gig instructions</text>
-        </view>
-      </view>
-    </body>
-  </screen>
-</doc>
-`,
   'hyperview/src/components/hv-text-field/stories/basic.xml':
   `<doc xmlns="https://hyperview.org/hyperview">
   <screen>
@@ -2157,6 +2006,157 @@ four"
             style="input"
             value=""
           />
+        </view>
+      </view>
+    </body>
+  </screen>
+</doc>
+`,
+  'hyperview/src/components/hv-text-field/stories/text-area.xml':
+  `<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style
+        alignItems="center"
+        backgroundColor="white"
+        borderBottomColor="#eee"
+        borderBottomWidth="1"
+        flexDirection="row"
+        height="72"
+        id="Header"
+        paddingLeft="24"
+        paddingRight="24"
+        paddingTop="24"
+      />
+      <style
+        color="blue"
+        fontFamily="HKGrotesk-SemiBold"
+        fontSize="16"
+        id="Header__Back"
+        paddingRight="16"
+      />
+      <style
+        color="black"
+        fontFamily="HKGrotesk-SemiBold"
+        fontSize="24"
+        id="Header__Title"
+      />
+      <style backgroundColor="white" flex="1" id="Body" />
+      <style
+        borderColor="red"
+        borderRadius="4"
+        borderWidth="2"
+        fontFamily="HKGrotesk-SemiBold"
+        fontSize="16"
+        id="Description"
+        margin="24"
+        padding="16"
+      />
+      <style
+        flex="1"
+        id="FormGroup"
+        marginLeft="24"
+        marginRight="24"
+        marginTop="48"
+      />
+      <style flex="1" flexDirection="row" id="horizontalFormGroup" />
+      <style flex="1" id="outerInput" />
+      <style
+        borderBottomColor="#E1E1E1"
+        borderBottomWidth="1"
+        borderColor="#4E4D4D"
+        flex="1"
+        fontFamily="HKGrotesk-Regular"
+        fontSize="16"
+        id="input"
+        paddingBottom="8"
+        paddingTop="8"
+      >
+
+        <modifier focused="true">
+          <style borderBottomColor="#4778FF" />
+        </modifier>
+      </style>
+      <style borderBottomColor="#FF4847" color="#FF4847" id="input--error"> 
+        <modifier focused="true">
+          <style borderBottomColor="#FF4847" />
+        </modifier>
+      </style>
+      <style
+        borderColor="#4E4D4D"
+        fontFamily="HKGrotesk-Bold"
+        fontSize="16"
+        id="label"
+        lineHeight="24"
+        marginBottom="8"
+      />
+      <style
+        borderColor="#FF4847"
+        fontFamily="HKGrotesk-Regular"
+        fontSize="16"
+        id="help"
+        lineHeight="24"
+        marginTop="16"
+      />
+      <style color="#FF4847" id="help--error" />
+      <style flex="1" id="Main" />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text action="back" href="#" style="Header__Back">Back</text>
+        <text style="Header__Title">Textarea</text>
+      </header>
+      <view scroll="true" style="Main">
+        <view style="FormGroup">
+          <text style="label">Multi-line text-area</text>
+          <text-area
+            placeholder="Instructions"
+            placeholderTextColor="#8D9494"
+            style="input"
+          >
+          <text style="help">Please enter your gig instructions</text>
+          </text-area>
+        </view>
+        <view style="FormGroup">
+          <text style="label">Multi-line filled</text>
+          <text-area
+            placeholder="Instructions"
+            placeholderTextColor="#8D9494"
+            style="input"
+            value="One
+two
+three
+four"
+          >
+          </text-area>
+        </view>
+        <view style="FormGroup">
+          <text style="label">Multi-line validation error</text>
+          <text-area
+            placeholder="Instructions"
+            placeholderTextColor="#8D9494"
+            style="input input--error"
+          >
+          </text-area>
+          <text
+            style="help help--error"
+          >Please enter your gig instructions</text>
+        </view>
+        <view style="FormGroup">
+          <text style="label">Multi-line filled with validation error</text>
+          <text-area
+            placeholder="Instructions"
+            placeholderTextColor="#8D9494"
+            style="input input--error"
+            value="One
+two
+three
+four"
+          >
+          </text-area>
+          <text
+            style="help help--error"
+          >Please enter your gig instructions</text>
         </view>
       </view>
     </body>
