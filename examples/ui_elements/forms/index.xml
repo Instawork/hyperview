@@ -76,17 +76,6 @@
           <text style="Item__Chevron">&gt;</text>
         </item>
         <item
-          href="/ui_elements/forms/textarea.xml"
-          key="text_area"
-          show-during-load="loadingScreen"
-          style="Item"
-        >
-          <view style="Item__Left">
-            <text style="Item__Label">Text Area</text>
-          </view>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item
           href="/ui_elements/forms/select_single.xml"
           key="select_single"
           show-during-load="loadingScreen"

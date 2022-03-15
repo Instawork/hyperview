@@ -278,6 +278,84 @@
               editable="true"
             />
         </view>
+
+        <view style="FormGroup">
+          <text style="label">Multi-line</text>
+          <text-field
+              placeholder="Instructions"
+              multiline="true"
+              name="text"
+              placeholderTextColor="#8D9494"
+              style="input"
+            />
+          <text style="help">Please enter your instructions</text>
+        </view>
+
+        <view style="FormGroup">
+          <text style="label">Multi-line filled</text>
+          <text-field
+              placeholder="Instructions"
+              multiline="true"
+              name="text"
+              placeholderTextColor="#8D9494"
+              style="input"
+              value="One two three four"
+            />
+        </view>
+
+        <view style="FormGroup">
+          <text style="label">Multi-line validation error</text>
+          <text-field
+              placeholder="Instructions"
+              multiline="true"
+              name="text"
+              placeholderTextColor="#8D9494"
+              style="input input--error"
+            />
+          <text style="help help--error">
+            Please enter your gig instructions
+          </text>
+        </view>
+
+        <view style="FormGroup">
+          <text style="label">Multi-line filled with validation error</text>
+          <text-field
+              placeholder="Instructions"
+              multiline="true"
+              name="text"
+              placeholderTextColor="#8D9494"
+              style="input input--error"
+              value="One two three four"
+            />
+          <text style="help help--error">
+            Please enter your gig instructions
+          </text>
+        </view>
+
+        <view style="FormGroup">
+          <text style="label">Multi-line, noneditable</text>
+          <text-field
+              placeholderTextColor="#8D9494"
+              multiline="true"
+              name="text"
+              style="input input--noneditable"
+              value="One two three four"
+              editable="false"
+            />
+        </view>
+
+        <view style="FormGroup">
+          <text style="label">Multi-line, editable</text>
+          <text-field
+              placeholder="Edit your text"
+              multiline="true"
+              placeholderTextColor="#8D9494"
+              name="text"
+              style="input"
+              value="One two three four"
+              editable="true"
+            />
+        </view>
           <view style="Button" href="/ui_elements/forms/text_input.xml">
             <text style="Button__Label">Serialize</text>
           </view>
