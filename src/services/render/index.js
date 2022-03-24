@@ -105,7 +105,9 @@ export const renderElement = (
             element.parentNode?.localName === LOCAL_NAME.TEXT) ||
           element.parentNode?.namespaceURI !== Namespaces.HYPERVIEW
         ) {
-          return trimmedValue.replace(/\s+/g, ' ');
+          return options.preformatted
+            ? trimmedValue
+            : trimmedValue.replace(/\s+/g, ' ');
         }
         console.warn(
           `Text string "${trimmedValue}" must be rendered within a <text> element`,

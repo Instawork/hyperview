@@ -57,6 +57,8 @@ A `<view>` element can only appear anywhere within a `<screen>` element.
 - [`id`](#id)
 - [`hide`](#hide)
 - [`selectable`](#selectable)
+- [`adjustsFontSizeToFit`](#adjustsFontSizeToFit)
+- [`preformatted`](#preformatted)
 
 #### Behavior attributes
 
@@ -103,8 +105,17 @@ If `hide="true"`, the element will not be rendered on screen. If the element or 
 A boolean that allows users to select the content of `<text>` element.
 
 #### `adjustsFontSizeToFit`
-| Type    | Required | 
-| ------- | -------- | 
-| boolean | No       | 
+
+| Type    | Required |
+| ------- | -------- |
+| boolean | No       |
 
 If `adjustsFontSizeToFit="true"`, fonts will be scaled down automatically to fit given style constraints.
+
+#### `preformatted`
+
+| Type    | Required |
+| ------- | -------- |
+| boolean | No       |
+
+By default, `<text>` element stips out extraneous whitespaces and line breaks. This attribute prevents this behavior, so that all spaces and line-breaks are rendered.
