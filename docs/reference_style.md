@@ -10,10 +10,7 @@ The `<style>` element defines specific style rules that can be used by elements 
 <doc xmlns="https://hyperview.org/hyperview">
   <screen id="main">
     <styles>
-      <style id="Main"
-        flex="1"
-        backgroundColor="red"
-      />
+      <style id="Main" flex="1" backgroundColor="red" />
     </styles>
     <body>
       <view style="Main" />

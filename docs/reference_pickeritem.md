@@ -7,13 +7,13 @@ sidebar_label: <picker-item>
 The `<picker-item>` element represents a value choice in a [`<picker-field>`](/docs/reference_pickerfield) element.
 
 ```xml
-<picker-field field-style="Input"
-              field-text-style="Input__Text"
-              placeholder="Select choice">
-  <picker-item label="Choice 0"
-               value="0" />
-  <picker-item label="Choice 1"
-               value="1" />
+<picker-field
+  field-style="Input"
+  field-text-style="Input__Text"
+  placeholder="Select choice"
+>
+  <picker-item label="Choice 0" value="0" />
+  <picker-item label="Choice 1" value="1" />
 </picker-field>
 ```
 

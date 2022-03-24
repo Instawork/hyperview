@@ -18,36 +18,27 @@ Let's start with the markup for the tabs. Since only one tab can be selected at 
   <screen>
     <body style="Main">
       <select-single name="tab" style="Tabs">
-        <option
-          value="users"
-          style="Tab"
-        >
+        <option value="users" style="Tab">
           <text style="Tab__Label">Users</text>
         </option>
-        <option
-          value="groups"
-          style="Tab"
-        >
+        <option value="groups" style="Tab">
           <text style="Tab__Label">Groups</text>
         </option>
       </select-single>
-      <view id="tabContent"></view>
+      <view id="tabContent" />
     </body>
   </screen>
 </doc>
 ```
+
 The result:
 ![example_tabs1](/img/example_tabs1.gif)
 
 Using `<style>` rules with a `<modifier>` element for the selected state, we can visualize which tab is currently selected:
+
 ```xml
 <styles>
-  <style
-    id="Main"
-    flex="1"
-    paddingTop="48"
-    backgroundColor="white"
-  />
+  <style id="Main" flex="1" paddingTop="48" backgroundColor="white" />
   <style
     id="TabContent"
     flex="1"
@@ -55,12 +46,9 @@ Using `<style>` rules with a `<modifier>` element for the selected state, we can
     alignItems="center"
     paddingTop="24"
   />
+  <style id="Tabs" flexDirection="row" height="40" />
   <style
-    id="Tabs"
-    flexDirection="row"
-    height="40"
-  />
-  <style id="Tab"
+    id="Tab"
     backgroundColor="white"
     flex="1"
     flexDirection="row"
@@ -68,19 +56,12 @@ Using `<style>` rules with a `<modifier>` element for the selected state, we can
     alignItems="center"
   >
     <modifier selected="true">
-      <style
-        backgroundColor="#ddd"
-      />
+      <style backgroundColor="#ddd" />
     </modifier>
   </style>
-  <style id="Tab__Label"
-    fontSize="18"
-    fontWeight="normal"
-  >
+  <style id="Tab__Label" fontSize="18" fontWeight="normal">
     <modifier selected="true">
-      <style
-        fontWeight="bold"
-      />
+      <style fontWeight="bold" />
     </modifier>
   </style>
 </styles>
@@ -92,6 +73,7 @@ We now have some basic tabs that toggle when pressed:
 ![example_tabs1](/img/example_tabs2.gif)
 
 All that remains is to add behaviors to the `<option>` elements that will replace the container content:
+
 ```xml
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
@@ -118,14 +100,16 @@ All that remains is to add behaviors to the `<option>` elements that will replac
         <text style="Tab__Label">Groups</text>
       </option>
     </select-single>
-    <view id="tabContent" style="TabContent"></view>
+    <view id="tabContent" style="TabContent" />
   </screen>
 </doc>
 ```
+
 When a tab triggers a "select" (aka when the user selects the tab by pressing it), we request the tab's content and replace the elements in `tabContent` with the response:
 ![example_tabs1](/img/example_tabs3.gif)
 
 Due to the delay of a remote request, notice that the appearance of a tab's content lags behind when the tab is selected. To address this, we can add a tab loading state.
+
 ```xml
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
@@ -156,13 +140,14 @@ Due to the delay of a remote request, notice that the appearance of a tab's cont
         <text style="Tab__Label">Groups</text>
       </option>
     </select-single>
-    <view id="tabContent" style="TabContent"></view>
+    <view id="tabContent" style="TabContent" />
     <view id="spinner" hide="true" style="TabContent">
       <spinner />
     </view>
   </screen>
 </doc>
 ```
+
 Below the `<view>` for the tab content, we add another view that includes a spinner. This view is hidden by default. When the user selects a tab, we use `hide-during-load` and `show-during-load` attributes to show the spinner and hide the existing tab content:
 ![example_tabs1](/img/example_tabs4.gif)
 

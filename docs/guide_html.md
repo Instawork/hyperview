@@ -119,8 +119,14 @@ In HXML, elements with an [`href`](/docs/reference_behavior_attributes#href) can
     <body id="Body">
       <text href="/page2">Push a new screen</text>
       <text href="/page2" action="new">Open a new screen as a modal</text>
-      <text href="/fragment" action="replace">Replace this element with the response content</text>
-      <text href="/fragment" action="append">Append the response content to this screen</text>
+      <text
+        href="/fragment"
+        action="replace"
+      >Replace this element with the response content</text>
+      <text
+        href="/fragment"
+        action="append"
+      >Append the response content to this screen</text>
     </body>
   </screen>
 </doc>
@@ -155,7 +161,10 @@ In HXML, elements with an `href` attribute can have all kinds of triggers, inclu
     <body id="Body">
       <text href="/page2">Trigger on press</text>
       <text href="/page2" trigger="longPress">Trigger on long press</text>
-      <text href="/page2" trigger="visible">Trigger when element is visible on screen</text>
+      <text
+        href="/page2"
+        trigger="visible"
+      >Trigger when element is visible on screen</text>
       <text href="/page2" trigger="load">Trigger when the screen loads</text>
     </body>
   </screen>
@@ -201,10 +210,7 @@ In HXML, an element can specify multiple behaviors using the [`<behavior>`](/doc
 
 ```xml
 <styles>
-  <style id="Header"
-    fontSize="16"
-    color="red"
-  />
+  <style id="Header" fontSize="16" color="red" />
 </styles>
 ```
 

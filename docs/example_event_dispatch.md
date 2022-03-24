@@ -76,9 +76,11 @@ Using `dispatch-event` behavior action, we emit an event _(internal to hyperview
         <text style="Name">Jeeves</text>
         <text style="Phone">Ph: (555) 555 5555</text>
         <view style="Button">
-          <behavior action="dispatch-event"
-                    event-name="added-item1"
-                    trigger="press" />
+          <behavior
+            action="dispatch-event"
+            event-name="added-item1"
+            trigger="press"
+          />
           <text style="Button__Label">Add to network</text>
         </view>
       </view>
@@ -107,31 +109,34 @@ Also create an XML fragment with the updated status, which will replace the defa
       <list>
         <item key="1" style="Item" href="/item1">
             <text style="Item__Label">Jeeves</text>
-            <text action="replace"
-                  event-name="added-item1"
-                  trigger="on-event"
-                  href="/_added.xml"
-            >
+            <text
+            action="replace"
+            event-name="added-item1"
+            trigger="on-event"
+            href="/_added.xml"
+          >
             <text style="Item__Add">Add</text>
             </text>
         </item>
         <item key="2" style="Item" href="/item2">
             <text style="Item__Label">Wooster</text>
-            <view action="replace"
-                  event-name="added-item2"
-                  trigger="on-event"
-                  href="/_added.xml"
-            >
+            <view
+            action="replace"
+            event-name="added-item2"
+            trigger="on-event"
+            href="/_added.xml"
+          >
             <text style="Item__Add">Add</text>
             </view>
         </item>
         <item key="3" style="Item" href="/item3">
             <text style="Item__Label">Emsworth</text>
-            <view action="replace"
-                  event-name="added-item3"
-                  trigger="on-event"
-                  href="/_added.xml"
-            >
+            <view
+            action="replace"
+            event-name="added-item3"
+            trigger="on-event"
+            href="/_added.xml"
+          >
             <text style="Item__Add">Add</text>
             </view>
         </item>
@@ -161,8 +166,16 @@ We do this by dispatching another event `go-back` when the add button is pressed
         <text style="Name">Jeeves</text>
         <text style="Phone">Ph: (555) 555 5555</text>
         <view style="Button">
-          <behavior action="dispatch-event" event-name="added-item1" trigger="press" />
-          <behavior action="dispatch-event" event-name="go-back" trigger="press" />
+          <behavior
+            action="dispatch-event"
+            event-name="added-item1"
+            trigger="press"
+          />
+          <behavior
+            action="dispatch-event"
+            event-name="go-back"
+            trigger="press"
+          />
           <text style="Button__Label">Add to network</text>
         </view>
       </view>

@@ -9,13 +9,13 @@ The `<screen>` element represents the UI that gets rendered on a single screen o
 ```xml
 <doc xmlns="https://hyperview.org/hyperview">
   <screen id="main">
-    <styles></styles>
-    <body></body>
+    <styles />
+    <body />
   </screen>
 
   <screen id="preloadScreen">
-    <styles></styles>
-    <body></body>
+    <styles />
+    <body />
   </screen>
 </doc>
 ```
