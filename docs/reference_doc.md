@@ -9,13 +9,13 @@ The `<doc>` element represents the root of a Hyperview payload.
 ```xml
 <doc xmlns="https://hyperview.org/hyperview">
   <screen id="main">
-    <styles></styles>
-    <body></body>
+    <styles />
+    <body />
   </screen>
 
   <screen id="preloadScreen">
-    <styles></styles>
-    <body></body>
+    <styles />
+    <body />
   </screen>
 </doc>
 ```

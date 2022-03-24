@@ -38,7 +38,10 @@ In Hyperview, we can achieve this effect by building the main UI around a [`<sec
           href="/case_studies/photos/index.xml"
         />
         <view style="ImageHeader__LeftLabels">
-          <text style="ImageHeader__Username" href="/case_studies/photos/user.xml">riker007</text>
+          <text
+            style="ImageHeader__Username"
+            href="/case_studies/photos/user.xml"
+          >riker007</text>
           <text style="ImageHeader__Location">Las Vegas, CA</text>
         </view>
       </view>
@@ -57,14 +60,46 @@ The [`<section-title>`](reference_sectiontitle) element can be styled like a `<v
 
 ```xml
 <styles>
-  <style id="ImageHeader" flex="1" flexDirection="row" paddingLeft="16" paddingRight="16" alignItems="center" backgroundColor="white" paddingTop="16" paddingBottom="16" justifyContent="space-between" />
-  <style id="ImageHeader__Avatar" height="40" width="40" borderRadius="24" backgroundColor="#F4F4F4" />
+  <style
+    id="ImageHeader"
+    flex="1"
+    flexDirection="row"
+    paddingLeft="16"
+    paddingRight="16"
+    alignItems="center"
+    backgroundColor="white"
+    paddingTop="16"
+    paddingBottom="16"
+    justifyContent="space-between"
+  />
+  <style
+    id="ImageHeader__Avatar"
+    height="40"
+    width="40"
+    borderRadius="24"
+    backgroundColor="#F4F4F4"
+  />
   <style id="ImageHeader__Left" flexDirection="row" />
   <style id="ImageHeader__LeftLabels" marginLeft="8" justifyContent="center" />
-  <style id="ImageHeader__Username" fontWeight="bold" fontSize="14" color="#4E4D4D" />
-  <style id="ImageHeader__Location" fontWeight="normal" fontSize="14" color="#BDC4C4" />
+  <style
+    id="ImageHeader__Username"
+    fontWeight="bold"
+    fontSize="14"
+    color="#4E4D4D"
+  />
+  <style
+    id="ImageHeader__Location"
+    fontWeight="normal"
+    fontSize="14"
+    color="#BDC4C4"
+  />
   <style id="ImageHeader__Right" flexDirection="row" />
-  <style id="ImageHeader__more" fontWeight="bold" fontSize="14" color="#BDC4C4" />
+  <style
+    id="ImageHeader__more"
+    fontWeight="bold"
+    fontSize="14"
+    color="#BDC4C4"
+  />
 </styles>
 ```
 
@@ -76,23 +111,38 @@ Note that the stories section above the first image is also part of the section 
   <item key="stories">
     <view style="Stories" scroll="true" scroll-orientation="horizontal">
       <view style="Story" href="/case_studies/photos/geordi.xml">
-        <image source="/case_studies/photos/avatars/geordi.jpg" style="Story__Avatar" />
+        <image
+          source="/case_studies/photos/avatars/geordi.jpg"
+          style="Story__Avatar"
+        />
         <text style="Story__Username" numberOfLines="1">geordi</text>
       </view>
       <view style="Story" href="/case_studies/photos/data.xml">
-        <image source="/case_studies/photos/avatars/data.jpg" style="Story__Avatar" />
+        <image
+          source="/case_studies/photos/avatars/data.jpg"
+          style="Story__Avatar"
+        />
         <text style="Story__Username" numberOfLines="1">data</text>
       </view>
       <view style="Story" href="/case_studies/photos/deanna.xml">
-        <image source="/case_studies/photos/avatars/deanna.png" style="Story__Avatar" />
+        <image
+          source="/case_studies/photos/avatars/deanna.png"
+          style="Story__Avatar"
+        />
         <text style="Story__Username" numberOfLines="1">deanna.troi</text>
       </view>
       <view style="Story" href="/case_studies/photos/picard.xml">
-        <image source="/case_studies/photos/avatars/picard.jpg" style="Story__Avatar" />
+        <image
+          source="/case_studies/photos/avatars/picard.jpg"
+          style="Story__Avatar"
+        />
         <text style="Story__Username" numberOfLines="1">jean.luc.p</text>
       </view>
       <view style="Story" href="/case_studies/photos/worf.xml">
-        <image source="/case_studies/photos/avatars/worf.jpg" style="Story__Avatar" />
+        <image
+          source="/case_studies/photos/avatars/worf.jpg"
+          style="Story__Avatar"
+        />
         <text style="Story__Username" numberOfLines="1">og_worf</text>
       </view>
     </view>
@@ -102,14 +152,34 @@ Note that the stories section above the first image is also part of the section 
 
 ```xml
 <styles>
-  <style id="Stories" flex="1" flexDirection="row" backgroundColor="#F4F4F4" paddingLeft="8" />
-  <style id="Story" flex="1" alignItems="center" marginLeft="8" marginRight="8" marginBottom="8" marginTop="8" />
-  <style id="Story__Avatar" height="64" width="64" borderRadius="32" backgroundColor="#F4F4F4" />
+  <style
+    id="Stories"
+    flex="1"
+    flexDirection="row"
+    backgroundColor="#F4F4F4"
+    paddingLeft="8"
+  />
+  <style
+    id="Story"
+    flex="1"
+    alignItems="center"
+    marginLeft="8"
+    marginRight="8"
+    marginBottom="8"
+    marginTop="8"
+  />
+  <style
+    id="Story__Avatar"
+    height="64"
+    width="64"
+    borderRadius="32"
+    backgroundColor="#F4F4F4"
+  />
   <style id="Story__Username" fontWeight="bold" fontSize="14" marginTop="4" />
 </styles>
 ```
 
-### Liking an image 
+### Liking an image
 
 A heart icon below each image can be toggled to like or unlike the image. Pressing the heart icon immediately updates the state of the icon, and also reflects the new like count below.
 
@@ -120,8 +190,14 @@ The heart icon is actually implemented as a [`<select-multiple>`](reference_sele
 ```xml
 <select-multiple name="image1-like">
   <option value="like" style="ActionBar__Icon ActionBar__Icon--First">
-    <image source="/case_studies/photos/icons/heart.png" style="ActionBar__IconImage" />
-    <image source="/case_studies/photos/icons/heart_liked.png" style="ActionBar__IconImage--Selected" />
+    <image
+      source="/case_studies/photos/icons/heart.png"
+      style="ActionBar__IconImage"
+    />
+    <image
+      source="/case_studies/photos/icons/heart_liked.png"
+      style="ActionBar__IconImage--Selected"
+    />
   </option>
 </select-multiple>
 ```
@@ -150,15 +226,32 @@ Pressing the icon makes a request to the backend in order to save the state to t
 ```xml
 <select-multiple name="image1-like">
   <option value="like" style="ActionBar__Icon ActionBar__Icon--First">
-    <behavior trigger="select" href="/case_studies/photos/num_likes_increase.xml" action="replace" target="image1-num-likes" />
-    <behavior trigger="deselect" href="/case_studies/photos/num_likes_decrease.xml" action="replace" target="image1-num-likes" />
-    <image source="/case_studies/photos/icons/heart.png" style="ActionBar__IconImage" />
-    <image source="/case_studies/photos/icons/heart_liked.png" style="ActionBar__IconImage--Selected" />
+    <behavior
+      trigger="select"
+      href="/case_studies/photos/num_likes_increase.xml"
+      action="replace"
+      target="image1-num-likes"
+    />
+    <behavior
+      trigger="deselect"
+      href="/case_studies/photos/num_likes_decrease.xml"
+      action="replace"
+      target="image1-num-likes"
+    />
+    <image
+      source="/case_studies/photos/icons/heart.png"
+      style="ActionBar__IconImage"
+    />
+    <image
+      source="/case_studies/photos/icons/heart_liked.png"
+      style="ActionBar__IconImage--Selected"
+    />
   </option>
 </select-multiple>
 ```
 
 The server response simply indicates the new count:
+
 ```xml
 <text
   xmlns="https://hyperview.org/hyperview"
@@ -168,7 +261,6 @@ The server response simply indicates the new count:
   8 likes
 </text>
 ```
-
 
 ### Loading comments
 
@@ -191,7 +283,10 @@ The interaction uses [behavior attributes](reference_behavior_attributes) to imp
   </text>
   <view id="comments-image1">
     <view style="Comment">
-      <text style="Comment__Author" href="/case_studies/photos/user.xml">og_worf</text>
+      <text
+        style="Comment__Author"
+        href="/case_studies/photos/user.xml"
+      >og_worf</text>
       <text style="Comment__Content">hello!</text>
     </view>
   </view>
@@ -199,18 +294,28 @@ The interaction uses [behavior attributes](reference_behavior_attributes) to imp
 ```
 
 The server response consists of a wrapper element containing the new comments.
+
 ```xml
 <view xmlns="https://hyperview.org/hyperview">
  <view style="Comment">
-    <text style="Comment__Author" href="/case_studies/photos/user.xml">data</text>
+    <text
+      style="Comment__Author"
+      href="/case_studies/photos/user.xml"
+    >data</text>
     <text style="Comment__Content">love it!</text>
   </view>
   <view style="Comment">
-    <text style="Comment__Author" href="/case_studies/photos/user.xml">geordi</text>
+    <text
+      style="Comment__Author"
+      href="/case_studies/photos/user.xml"
+    >geordi</text>
     <text style="Comment__Content">Ahhhh wish I was there...</text>
   </view>
   <view style="Comment">
-    <text style="Comment__Author" href="/case_studies/photos/user.xml">jean.luc.p</text>
+    <text
+      style="Comment__Author"
+      href="/case_studies/photos/user.xml"
+    >jean.luc.p</text>
     <text style="Comment__Content">Engage!</text>
   </view>
 </view>

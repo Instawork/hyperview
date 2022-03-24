@@ -21,18 +21,16 @@ After selecting a value and pressing "Done", the field has the value selected.
 Like other input elements, the selected value of the picker gets serialized by the parent form when making requests to the server.
 
 ```xml
-<picker-field field-style="Input"
-              field-text-style="Input__Text"
-              name="user_choice"
-              placeholder="Select choice">
-  <picker-item label="Choice 0"
-               value="0" />
-  <picker-item label="Choice 1"
-               value="1" />
-  <picker-item label="Choice 2"
-               value="2" />
-  <picker-item label="Choice 3"
-               value="3" />
+<picker-field
+  field-style="Input"
+  field-text-style="Input__Text"
+  name="user_choice"
+  placeholder="Select choice"
+>
+  <picker-item label="Choice 0" value="0" />
+  <picker-item label="Choice 1" value="1" />
+  <picker-item label="Choice 2" value="2" />
+  <picker-item label="Choice 3" value="3" />
 </picker-field>
 ```
 

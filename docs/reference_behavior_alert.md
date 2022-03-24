@@ -22,14 +22,8 @@ Here's an example of an alert behavior used to confirm a navigation. It has two 
   alert:title="Continue to next screen?"
   alert:message="Are you sure you want to navigate to the next screen?"
 >
-  <alert:option
-    alert:label="Navigate"
-    href="/next"
-    action="push"
-  />
-  <alert:option
-    alert:label="Cancel"
-  />
+  <alert:option alert:label="Navigate" href="/next" action="push" />
+  <alert:option alert:label="Cancel" />
 </behavior>
 ```
 
@@ -85,16 +79,8 @@ Here's an example of an alert with two options.
   alert:title="This is the title"
   alert:message="This is the message"
 >
-  <alert:option
-    alert:label="Screen 1"
-    href="/screen1"
-    action="push"
-  />
-  <alert:option
-    alert:label="Screen 2"
-    href="/screen2"
-    action="new"
-  />
+  <alert:option alert:label="Screen 1" href="/screen1" action="push" />
+  <alert:option alert:label="Screen 2" href="/screen2" action="new" />
 </behavior>
 ```
 

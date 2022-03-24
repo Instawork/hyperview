@@ -11,26 +11,24 @@ Some examples of styles applied to text (including nested text):
 ```xml
 <screen>
   <styles>
-    <style fontFamily="HKGrotesk-Regular"
-           fontSize="16"
-           id="Description"
-           margin="24"
-           marginBottom="0" />
-    <style fontFamily="HKGrotesk-Medium"
-           fontSize="24"
-           id="Basic"
-           margin="24" />
-    <style fontFamily="HKGrotesk-Bold"
-           fontSize="16"
-           id="Bold"
-           margin="24" />
-    <style backgroundColor="#63CB76"
-           color="white"
-           fontFamily="HKGrotesk-Bold"
-           fontSize="32"
-           id="Color"
-           margin="24"
-           padding="16" />
+    <style
+      fontFamily="HKGrotesk-Regular"
+      fontSize="16"
+      id="Description"
+      margin="24"
+      marginBottom="0"
+    />
+    <style fontFamily="HKGrotesk-Medium" fontSize="24" id="Basic" margin="24" />
+    <style fontFamily="HKGrotesk-Bold" fontSize="16" id="Bold" margin="24" />
+    <style
+      backgroundColor="#63CB76"
+      color="white"
+      fontFamily="HKGrotesk-Bold"
+      fontSize="32"
+      id="Color"
+      margin="24"
+      padding="16"
+    />
   </styles>
   <body scroll="true">
     <text style="Basic">Hello, world!</text>
@@ -42,7 +40,6 @@ Some examples of styles applied to text (including nested text):
     </text>
   </body>
 </screen>
-
 ```
 
 ## Structure

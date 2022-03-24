@@ -84,11 +84,7 @@ To use this custom behavior, add a `<behavior>` element with `action="amplitude"
 
 ```xml
 <view xmlns:amp="https://instawork.com/hyperview-amplitude">
-  <behavior
-    trigger="load"
-    action="amplitude"
-    amp:event="main-screen/view"
-  />
+  <behavior trigger="load" action="amplitude" amp:event="main-screen/view" />
 
   <text>
     <behavior
@@ -141,11 +137,7 @@ To use this custom behavior, add a `<behavior>` element with `action="phone"`. T
 ```xml
 <view xmlns:phone="https://instawork.com/hyperview-phone">
   <text>
-    <behavior
-      trigger="press"
-      action="phone"
-      phone:number="5554443214"
-    />
+    <behavior trigger="press" action="phone" phone:number="5554443214" />
     Call (555) 444-3214
   </text>
 </view>

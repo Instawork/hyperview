@@ -1,6 +1,7 @@
 # Hyperview changelog
 
 **Version 0.41.0**
+
 - feat(schema): add `resizeMode` enumeration type
 - feat(schema): add `resizeMode` attribute to `<image>` and `<style>` elements
 
