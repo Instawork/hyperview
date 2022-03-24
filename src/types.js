@@ -266,6 +266,7 @@ export type HvComponentOptions = {
   onEnd?: ?() => void,
   onSelect?: ?(value: ?DOMString) => void,
   onToggle?: ?(value: ?DOMString) => void,
+  preformatted?: ?boolean,
   pressed?: ?boolean,
   pressedSelected?: ?boolean,
   registerInputHandler?: (ref: ?ElementRef<*>) => void,
