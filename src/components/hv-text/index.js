@@ -42,7 +42,8 @@ export default class HvText extends PureComponent<HvComponentProps> {
         this.props.onUpdate,
         {
           ...this.props.options,
-          preformatted: this.props.element.getAttribute('hide') === 'true',
+          preformatted:
+            this.props.element.getAttribute('preformatted') === 'true',
         },
       ),
     );
