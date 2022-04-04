@@ -51,6 +51,7 @@
   },
   "peerDependencies": {
     "@react-native-community/datetimepicker": ">= 3.0.3",
+    "@react-native-picker/picker": ">= 2.2.1",
     "react": ">= 16.13.1",
     "react-native": ">= 0.63.3",
     "react-native-keyboard-aware-scrollview": ">= 2.1.0",
@@ -64,6 +65,7 @@
     "@babel/runtime": "7.13.7",
     "@prettier/plugin-xml": "0.13.0",
     "@react-native-community/datetimepicker": "3.0.3",
+    "@react-native-picker/picker": "2.2.1",
     "@storybook/addon-actions": "4.1.18",
     "@storybook/addon-storyshots": "4.1.18",
     "@storybook/react-native": "4.1.18",
