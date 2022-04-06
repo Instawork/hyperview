@@ -16,7 +16,7 @@
     "@react-navigation/stack": "^6.1.1",
     "expo": "~44.0.0",
     "expo-status-bar": "~1.2.0",
-    "hyperview": "^0.49.0",
+    "hyperview": "0.50.0",
     "moment": "^2.29.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
