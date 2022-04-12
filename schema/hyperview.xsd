@@ -490,6 +490,7 @@
         </xs:restriction>
       </xs:simpleType>
     </xs:attribute>
+    <xs:attribute name="shows-scroll-indicator" type="xs:boolean" />
   </xs:attributeGroup>
 
   <xs:element name="doc">
@@ -883,7 +884,6 @@
       <xs:attribute name="style" type="hv:styleList" />
       <xs:attribute name="id" type="hv:ID" />
       <xs:attribute name="hide" type="xs:boolean" />
-      <xs:attribute name="shows-scroll-indicator" type="xs:boolean" />
       <xs:attribute name="value" type="xs:string" />
       <xs:attributeGroup ref="hv:scrollAttributes" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />

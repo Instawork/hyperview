@@ -62,6 +62,24 @@
           <text style="Item__Chevron">&gt;</text>
         </item>
         <item
+          href="/ui_elements/list/horizontal.xml"
+          key="basic"
+          show-during-load="loadingScreen"
+          style="Item"
+        >
+          <text style="Item__Label">Horizontal List</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item
+          href="/ui_elements/list/hidden_scroll_bar.xml"
+          key="hidden-scroll-bar"
+          show-during-load="loadingScreen"
+          style="Item"
+        >
+          <text style="Item__Label">List With Hidden Scroll Bar</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item
           href="/ui_elements/list/refresh.xml"
           key="refresh"
           show-during-load="loadingScreen"
