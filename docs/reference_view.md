@@ -55,6 +55,7 @@ A `<view>` element can only appear anywhere within a `<screen>` element.
 - [`scroll`](#scroll)
 - [`scroll-orientation`](#scroll-orientation)
 - [`scroll-to-input-offset`](#scroll-to-input-offset)
+- [`shows-scroll-indicator`](#shows-scroll-indicator)
 - [`id`](#id)
 - [`hide`](#hide)
 - [`avoid-keyboard`](#avoid-keyboard)
@@ -102,6 +103,14 @@ An attribute indicating the direction in which the view will scroll.
 | number | No (defauls to **120**) |
 
 An attribute defining an additional scroll offset to be applied to the view, when a `<text-field>` or `<text-area>` is focused. Only valid in combination with attribute `scroll` set to `"true"`.
+
+#### `shows-scroll-indicator`
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| **true** (default), false | No       |
+
+An attribute indicating whether the scroll bar should be shown. Attribute `scroll` should be set in for this to have any effect.
 
 #### `id`
 

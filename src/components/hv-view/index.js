@@ -50,9 +50,10 @@ export default class HvView extends PureComponent<HvComponentProps> {
       viewOptions,
     );
     const scrollable = !!this.props.element.getAttribute('scroll');
-    const scrollDirection = this.props.element.getAttribute(
-      'scroll-orientation',
-    );
+    const horizontal =
+      this.props.element.getAttribute('scroll-orientation') === 'horizontal';
+    const showScrollIndicator =
+      this.props.element.getAttribute('shows-scroll-indicator') !== 'false';
     const keyboardAvoiding = !!this.props.element.getAttribute(
       'avoid-keyboard',
     );
@@ -110,7 +111,10 @@ export default class HvView extends PureComponent<HvComponentProps> {
         viewOptions = { ...viewOptions, registerInputHandler };
       }
 
-      if (scrollDirection === 'horizontal') {
+      props.showsHorizontalScrollIndicator = horizontal && showScrollIndicator;
+      props.showsVerticalScrollIndicator = !horizontal && showScrollIndicator;
+
+      if (horizontal) {
         props.horizontal = true;
       }
     }
@@ -130,7 +134,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
       viewOptions,
     );
 
-    if (scrollable && scrollDirection !== 'horizontal') {
+    if (scrollable && !horizontal) {
       // add sticky indicies
       const stickyIndices = children.reduce(
         (acc, element, index) =>
