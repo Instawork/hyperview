@@ -8,13 +8,17 @@
  *
  */
 
+import * as Contexts from 'hyperview/src/contexts';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
+import {
+  RefreshControl as DefaultRefreshControl,
+  SectionList,
+} from 'react-native';
 import React, { PureComponent } from 'react';
 import { DOMParser } from 'xmldom-instawork';
 import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import { SectionList } from 'react-native';
 import type { State } from './types';
 
 export default class HvSectionList extends PureComponent<
@@ -26,6 +30,8 @@ export default class HvSectionList extends PureComponent<
   static localName = LOCAL_NAME.SECTION_LIST;
 
   static localNameAliases = [];
+
+  static contextType = Contexts.RefreshControlComponentContext;
 
   parser: DOMParser = new DOMParser();
 
@@ -57,6 +63,16 @@ export default class HvSectionList extends PureComponent<
       showIndicatorIds,
       targetId,
     });
+  };
+
+  RefreshControl = () => {
+    const RefreshControl = this.context || DefaultRefreshControl;
+    return (
+      <RefreshControl
+        onRefresh={this.refresh}
+        refreshing={this.state.refreshing}
+      />
+    );
   };
 
   render() {
@@ -114,10 +130,10 @@ export default class HvSectionList extends PureComponent<
     };
 
     let refreshProps = {};
+    const { RefreshControl } = this;
     if (this.props.element.getAttribute('trigger') === 'refresh') {
       refreshProps = {
-        onRefresh: () => this.refresh(),
-        refreshing: this.state.refreshing,
+        refreshControl: <RefreshControl />,
       };
     }
 
