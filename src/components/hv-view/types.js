@@ -14,6 +14,7 @@ export type InternalProps = {|
   accessibilityLabel?: any,
   automaticallyAdjustContentInsets?: ?boolean,
   behavior?: 'position',
+  contentContainerStyle?: Array<StyleSheet>,
   extraScrollHeight?: ?number,
   keyboardOpeningTime?: ?number,
   keyboardShouldPersistTaps?: ?string,

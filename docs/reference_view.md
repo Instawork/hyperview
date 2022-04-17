@@ -80,6 +80,14 @@ If true, the body will be rendered in the safe area of the mobile device (avoidi
 
 A space-separated list of styles to apply to the element. See [Styles](/docs/reference_style). Note that text style rules cannot be applied to a `<view>`.
 
+#### `content-container-style`
+
+| Type   | Required |
+| ------ | -------- |
+| string | No       |
+
+A space-separated list of styles to apply to the content container element of a scroll view. See [Styles](/docs/reference_style). Note that text style rules cannot be applied to a `<view>`, and this attribute only has an effect when `scroll` is true.
+
 #### `scroll`
 
 | Type                      | Required |

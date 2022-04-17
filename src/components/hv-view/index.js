@@ -18,12 +18,12 @@ import {
   View,
 } from 'react-native';
 import React, { PureComponent } from 'react';
+import { createProps, createStyleProp } from 'hyperview/src/services';
 import type { HvComponentProps } from 'hyperview/src/types';
 import type { InternalProps } from './types';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { addHref } from 'hyperview/src/core/hyper-ref';
-import { createProps } from 'hyperview/src/services';
 
 export default class HvView extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
@@ -113,6 +113,18 @@ export default class HvView extends PureComponent<HvComponentProps> {
 
       props.showsHorizontalScrollIndicator = horizontal && showScrollIndicator;
       props.showsVerticalScrollIndicator = !horizontal && showScrollIndicator;
+
+      const contentContainerStyleAttr = 'content-container-style';
+      if (this.props.element.getAttribute('scroll-orientation')) {
+        props.contentContainerStyle = createStyleProp(
+          this.props.element,
+          this.props.stylesheets,
+          {
+            ...viewOptions,
+            styleAttr: contentContainerStyleAttr,
+          },
+        );
+      }
 
       if (horizontal) {
         props.horizontal = true;
