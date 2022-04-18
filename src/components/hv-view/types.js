@@ -27,5 +27,11 @@ export type InternalProps = {|
   style?: ?Array<StyleSheet>,
   testID?: ?string,
   children?: ?any,
+  scrollIndicatorInsets?: {
+    bottom?: number,
+    left?: number,
+    right?: number,
+    top?: number,
+  },
   stickyHeaderIndices?: ?(number[]),
 |};
