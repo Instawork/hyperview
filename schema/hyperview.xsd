@@ -491,6 +491,7 @@
       </xs:simpleType>
     </xs:attribute>
     <xs:attribute name="shows-scroll-indicator" type="xs:boolean" />
+    <xs:attribute name="content-container-style" type="hv:styleList" />
   </xs:attributeGroup>
 
   <xs:element name="doc">
