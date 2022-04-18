@@ -3096,10 +3096,10 @@ http-errors@1.8.1:
     statuses ">= 1.5.0 < 2"
     toidentifier "1.0.1"
 
-hyperview@0.50.0:
-  version "0.50.0"
-  resolved "https://registry.yarnpkg.com/hyperview/-/hyperview-0.50.0.tgz#9525ae9e47270aa32d9eb4d801dae58e19012ebe"
-  integrity sha512-toMUjWVn10dt6dfoIpXhNn0QDLMzdNnfdzluFZPCT8AohXxQiRtPlWITNuldzysc//zyfXBWgiYoXutD5FxZGg==
+hyperview@0.51.0:
+  version "0.51.0"
+  resolved "https://registry.yarnpkg.com/hyperview/-/hyperview-0.51.0.tgz#58e37aca9c2298b0e04720aa64d9beddddab596d"
+  integrity sha512-Gjbmmzb+n/o3UStOgbWMrw6SA56ac2oJLI6WWzqkhcjFOBthf+BXulNJ0Y8cHqOTawFppPfbGu9oOLqjdyBhrA==
   dependencies:
     tiny-emitter "2.1.0"
     url-parse "1.4.3"
