@@ -65,16 +65,6 @@ export default class HvSectionList extends PureComponent<
     });
   };
 
-  RefreshControl = () => {
-    const RefreshControl = this.context || DefaultRefreshControl;
-    return (
-      <RefreshControl
-        onRefresh={this.refresh}
-        refreshing={this.state.refreshing}
-      />
-    );
-  };
-
   render() {
     const styleAttr = this.props.element.getAttribute('style');
     const style = styleAttr
@@ -130,10 +120,15 @@ export default class HvSectionList extends PureComponent<
     };
 
     let refreshProps = {};
-    const { RefreshControl } = this;
     if (this.props.element.getAttribute('trigger') === 'refresh') {
+      const RefreshControl = this.context || DefaultRefreshControl;
       refreshProps = {
-        refreshControl: <RefreshControl />,
+        refreshControl: (
+          <RefreshControl
+            onRefresh={this.refresh}
+            refreshing={this.state.refreshing}
+          />
+        ),
       };
     }
 
