@@ -20,7 +20,7 @@ The `<option>` element represents an input choice within a `<select-single>` or 
     <option value="3">
       <text>3rd grade</text>
     </option>
-  <select-single/>
+  </select-single>
 </form>
 ```
 
