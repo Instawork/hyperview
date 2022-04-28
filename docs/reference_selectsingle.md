@@ -20,7 +20,7 @@ The `<select-single>` element represents a user input widget that allows one opt
     <option value="3">
       <text>3rd grade</text>
     </option>
-  <select-single/>
+  </select-single>
 </form>
 ```
 
