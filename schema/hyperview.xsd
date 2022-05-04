@@ -5,66 +5,11 @@
   targetNamespace="https://hyperview.org/hyperview"
   xmlns:hv="https://hyperview.org/hyperview"
   xmlns:alert="https://hyperview.org/hyperview-alert"
-  xmlns:amp="https://instawork.com/hyperview-amplitude"
-  xmlns:branch="https://instawork.com/hyperview-branch"
-  xmlns:calendar="https://instawork.com/hyperview-calendar"
-  xmlns:email="https://instawork.com/hyperview-behaviors"
-  xmlns:intercom="https://instawork.com/hyperview-intercom"
-  xmlns:nfc="https://instawork.com/hyperview-nfc"
-  xmlns:phone="https://instawork.com/hyperview-phone"
-  xmlns:redux="https://instawork.com/hyperview-redux"
-  xmlns:share="https://instawork.com/hyperview-share"
-  xmlns:sms="https://instawork.com/hyperview-sms"
-  xmlns:recording="https://instawork.com/hyperview-session-recording"
 >
 
   <xs:import
     namespace="https://hyperview.org/hyperview-alert"
     schemaLocation="alert.xsd"
-  />
-  <xs:import
-    namespace="https://instawork.com/hyperview-amplitude"
-    schemaLocation="amplitude.xsd"
-  />
-  <xs:import
-    namespace="https://instawork.com/hyperview-behaviors"
-    schemaLocation="behaviors.xsd"
-  />
-  <xs:import
-    namespace="https://instawork.com/hyperview-branch"
-    schemaLocation="branch.xsd"
-  />
-  <xs:import
-    namespace="https://instawork.com/hyperview-calendar"
-    schemaLocation="calendar.xsd"
-  />
-  <xs:import
-    namespace="https://instawork.com/hyperview-intercom"
-    schemaLocation="intercom.xsd"
-  />
-  <xs:import
-    namespace="https://instawork.com/hyperview-nfc"
-    schemaLocation="nfc.xsd"
-  />
-  <xs:import
-    namespace="https://instawork.com/hyperview-phone"
-    schemaLocation="phone.xsd"
-  />
-  <xs:import
-    namespace="https://instawork.com/hyperview-redux"
-    schemaLocation="redux.xsd"
-  />
-  <xs:import
-    namespace="https://instawork.com/hyperview-share"
-    schemaLocation="share.xsd"
-  />
-  <xs:import
-    namespace="https://instawork.com/hyperview-sms"
-    schemaLocation="sms.xsd"
-  />
-  <xs:import
-    namespace="https://instawork.com/hyperview-session-recording"
-    schemaLocation="session-recording.xsd"
   />
 
   <xs:simpleType name="action">
