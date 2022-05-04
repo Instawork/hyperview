@@ -13,41 +13,7 @@
   />
 
   <xs:simpleType name="action">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="push" />
-      <xs:enumeration value="new" />
-      <xs:enumeration value="back" />
-      <xs:enumeration value="close" />
-      <xs:enumeration value="navigate" />
-      <xs:enumeration value="reload" />
-      <xs:enumeration value="deep-link" />
-      <xs:enumeration value="open-settings" />
-      <xs:enumeration value="dispatch-event" />
-      <xs:enumeration value="replace" />
-      <xs:enumeration value="replace-inner" />
-      <xs:enumeration value="append" />
-      <xs:enumeration value="prepend" />
-      <xs:enumeration value="show" />
-      <xs:enumeration value="hide" />
-      <xs:enumeration value="toggle" />
-      <xs:enumeration value="set-value" />
-      <xs:enumeration value="ask-rating" />
-
-      <xs:enumeration value="alert" />
-      <xs:enumeration value="amplitude" />
-      <xs:enumeration value="branch-share" />
-      <xs:enumeration value="calendar-add" />
-      <xs:enumeration value="calendar-check" />
-      <xs:enumeration value="copy-to-clipboard" />
-      <xs:enumeration value="email" />
-      <xs:enumeration value="intercom" />
-      <xs:enumeration value="nfc" />
-      <xs:enumeration value="phone" />
-      <xs:enumeration value="redux" />
-      <xs:enumeration value="share" />
-      <xs:enumeration value="session-recording" />
-      <xs:enumeration value="sms" />
-    </xs:restriction>
+    <xs:restriction base="xs:NMTOKEN" />
   </xs:simpleType>
 
   <xs:simpleType name="trigger">
@@ -410,19 +376,7 @@
     </xs:attribute>
     <xs:attribute name="event-name" type="hv:eventName" />
     <xs:attribute name="new-value" type="xs:string" />
-
     <xs:attributeGroup ref="alert:alertAttributes" />
-    <xs:attributeGroup ref="amp:amplitudeAttributes" />
-    <xs:attributeGroup ref="branch:branchAttributes" />
-    <xs:attributeGroup ref="calendar:calendarAttributes" />
-    <xs:attributeGroup ref="email:emailAttributes" />
-    <xs:attributeGroup ref="intercom:intercomAttributes" />
-    <xs:attributeGroup ref="nfc:nfcAttributes" />
-    <xs:attributeGroup ref="phone:phoneAttributes" />
-    <xs:attributeGroup ref="redux:reduxAttributes" />
-    <xs:attributeGroup ref="share:shareAttributes" />
-    <xs:attributeGroup ref="sms:smsAttributes" />
-    <xs:attributeGroup ref="recording:sessionRecordingAttributes" />
   </xs:attributeGroup>
 
   <xs:attributeGroup name="scrollAttributes">
