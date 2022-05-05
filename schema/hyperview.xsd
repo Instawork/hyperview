@@ -32,5 +32,4 @@
       </xs:restriction>
     </xs:simpleType>
   </xs:redefine>
-
 </xs:schema>

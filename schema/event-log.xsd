@@ -1,0 +1,12 @@
+<xs:schema
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  attributeFormDefault="qualified"
+  elementFormDefault="qualified"
+  targetNamespace="https://instawork.com/hyperview-event-log"
+>
+  <xs:attributeGroup name="eventLogAttributes">
+    <xs:attribute name="name" type="xs:string" />
+    <xs:attribute name="props" type="xs:string" />
+    <xs:attribute name="user-properties" type="xs:string" />
+  </xs:attributeGroup>
+</xs:schema>
