@@ -1,0 +1,14 @@
+<xs:schema
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  attributeFormDefault="qualified"
+  elementFormDefault="qualified"
+  targetNamespace="https://instawork.com/hyperview-branch"
+>
+  <xs:attributeGroup name="branchAttributes">
+    <xs:attribute name="deep-link" type="xs:string" />
+    <xs:attribute name="fallback-url" type="xs:string" />
+    <xs:attribute name="message" type="xs:string" />
+    <xs:attribute name="user-id" type="xs:string" />
+    <xs:attribute name="referral-code" type="xs:string" />
+  </xs:attributeGroup>
+</xs:schema>
