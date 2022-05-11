@@ -4,3 +4,6 @@ mkdir build/Hyperview/schema
 cp ../schema/*.xsd build/Hyperview/schema
 # Replace local schema location references with production references.
 sed -i 's/schemaLocation=\"/schemaLocation=\"https:\/\/hyperview.org\/schema\//g' build/Hyperview/schema/*.xsd
+
+mkdir build/Hyperview/schema/new
+cp ../schema/new/*.xsd build/Hyperview/schema/new
