@@ -25,7 +25,6 @@
         <xs:enumeration value="hide" />
         <xs:enumeration value="toggle" />
         <xs:enumeration value="set-value" />
-        <xs:enumeration value="ask-rating" />
         <xs:enumeration value="alert" />
         <xs:enumeration value="copy-to-clipboard" />
       </xs:restriction>
