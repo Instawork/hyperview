@@ -40,10 +40,11 @@ A `<section-list>` element will only render `<section>` children elements. Other
 - [`style`](#style)
 - [`id`](#id)
 - [`hide`](#hide)
+- [`sticky-section-titles`](#sticky-section-titles)
 
 #### Behavior attributes
 
-A sectino list will accept the standard [behavior attributes](/docs/reference_behavior_attributes). However, a section list will only trigger the `refresh` behavior (through the pull-to-refresh gesture). Other behaviors, such as presses, should be handled by the `<item>` elements in the section list.
+A section list will accept the standard [behavior attributes](/docs/reference_behavior_attributes). However, a section list will only trigger the `refresh` behavior (through the pull-to-refresh gesture). Other behaviors, such as presses, should be handled by the `<item>` elements in the section list.
 
 #### `style`
 
@@ -68,3 +69,11 @@ A global attribute uniquely identifying the element in the whole document.
 | **false** (default), true | No       |
 
 If `hide="true"`, the element will not be rendered on screen. If the element or any of the element's children have a behavior that triggers on "load" or "visible", those behaviors will not trigger while the element is hidden.
+
+### `sticky-section-titles`
+
+| Type        | Required |
+| ----------- | -------- |
+| true, false | No       |
+
+When set to `"true"`, the section titles will remain sticky at the top of their section items, as the list is being scrolled. When set to `"false"`, the section titles will scroll along with the items of the list. When not explicitly set, the section titles will adopt the platform behaviors: sticky on iOS, not sticky on Android.
