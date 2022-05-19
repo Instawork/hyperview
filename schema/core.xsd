@@ -802,6 +802,7 @@
       <xs:attribute name="id" type="hv:ID" />
       <xs:attribute name="hide" type="xs:boolean" />
       <xs:attribute name="value" type="xs:string" />
+      <xs:attribute name="sticky-section-titles" type="xs:boolean" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
     </xs:complexType>
   </xs:element>

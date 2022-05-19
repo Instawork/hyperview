@@ -41,6 +41,19 @@ export default class HvSectionList extends PureComponent<
     refreshing: false,
   };
 
+  getStickySectionHeadersEnabled = (): ?boolean => {
+    const stickySectionTitles = this.props.element.getAttribute(
+      'sticky-section-titles',
+    );
+    if (stickySectionTitles === 'true') {
+      return true;
+    }
+    if (stickySectionTitles === 'false') {
+      return false;
+    }
+    return undefined;
+  };
+
   refresh = () => {
     this.setState({ refreshing: true });
     const path = this.props.element.getAttribute('href');
@@ -116,6 +129,7 @@ export default class HvSectionList extends PureComponent<
           this.props.options,
         ),
       sections,
+      stickySectionHeadersEnabled: this.getStickySectionHeadersEnabled(),
       style,
     };
 
