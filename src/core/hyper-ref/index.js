@@ -272,7 +272,7 @@ export default class HyperRef extends PureComponent<Props, State> {
 
       renderedComponent = React.createElement(
         TouchableOpacity,
-        { ...props, ...pressHandlers },
+        { ...props, ...pressHandlers, accessible: false },
         renderedComponent,
       );
     }
