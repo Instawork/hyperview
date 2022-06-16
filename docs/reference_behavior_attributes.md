@@ -568,9 +568,10 @@ Note that the target element must only be one of the following elements:
 - [`<picker-field>`](/docs/reference_pickerfield)
 - [`<date-field>`](/docs/reference_datefield)
 - [`<select-single>`](/docs/reference_selectsingle)
+- [`<select-multiple>`](/docs/reference_selectmultiple)
 - [`<switch>`](/docs/reference_switch)
 
-Notable, `<select-multiple>` is not currently supported. Also note that using `set-value` will ignore any validation or restrictions set by the input element, like masks or other requirements.
+Note that using `set-value` will ignore any validation or restrictions set by the input element, like masks or other requirements.
 
 ```xml
 <text-field id="id_tf" />
