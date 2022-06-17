@@ -17,6 +17,7 @@ import HvSetValue from 'hyperview/src/behaviors/hv-set-value';
 import HvShare from 'hyperview/src/behaviors/hv-share';
 import HvShow from 'hyperview/src/behaviors/hv-show';
 import HvToggle from 'hyperview/src/behaviors/hv-toggle';
+import HvUnsetValue from 'hyperview/src/behaviors/hv-unset-value';
 
 const HYPERVIEW_BEHAVIORS = [
   HvAlert,
@@ -27,6 +28,7 @@ const HYPERVIEW_BEHAVIORS = [
   HvShare,
   HvShow,
   HvToggle,
+  HvUnsetValue,
 ];
 
 export const getRegistry = (behaviors: HvBehavior[] = []): BehaviorRegistry =>

@@ -366,6 +366,7 @@ export const ACTIONS = {
   REPLACE: 'replace',
   REPLACE_INNER: 'replace-inner',
   SWAP: 'swap',
+  UNSET_VALUE: 'unset-value',
 };
 
 export const NAV_ACTIONS = {

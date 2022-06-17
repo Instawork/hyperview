@@ -53,6 +53,16 @@ export default class HvSelectMultiple extends PureComponent<HvComponentProps> {
     this.onToggle = this.onToggle.bind(this);
   }
 
+  componentDidUpdate() {
+    if (this.props.element.hasAttribute('value')) {
+      // NOTE: we need to remove the attribute before
+      // selection, since selection will update the component.
+      const newValue = this.props.element.getAttribute('value');
+      this.props.element.removeAttribute('value');
+      this.onToggle(newValue);
+    }
+  }
+
   /**
    * Callback passed to children. Option components invoke this callback when toggles.
    * Will update the XML DOM to toggle the option with the given value.
@@ -67,7 +77,9 @@ export default class HvSelectMultiple extends PureComponent<HvComponentProps> {
       const option = options.item(i);
       if (option) {
         const value = option.getAttribute('value');
-        if (value === selectedValue) {
+        if (!selectedValue) {
+          option.setAttribute('selected', 'false');
+        } else if (value === selectedValue) {
           const selected = option.getAttribute('selected') === 'true';
           option.setAttribute('selected', selected ? 'false' : 'true');
         }
