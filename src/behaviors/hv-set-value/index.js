@@ -1,7 +1,6 @@
 // @flow
 
 import * as Behaviors from 'hyperview/src/services/behaviors';
-import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Xml from 'hyperview/src/services/xml';
 import type {
   DOMString,
@@ -12,7 +11,6 @@ import type {
   HvUpdateRoot,
 } from 'hyperview/src/types';
 import { later, shallowCloneToRoot } from 'hyperview/src/services';
-import { LOCAL_NAME } from 'hyperview/src/types';
 
 export default {
   action: 'set-value',
@@ -50,18 +48,6 @@ export default {
 
       // Show the target
       targetElement.setAttribute('value', newValue);
-      // select the <option> matching the "newValue" and unselect the others
-      const options: NodeList<Element> = targetElement.getElementsByTagNameNS(
-        Namespaces.HYPERVIEW,
-        LOCAL_NAME.OPTION,
-      );
-      for (let i = 0; i < options.length; i += 1) {
-        const option = options.item(i);
-        option.setAttribute(
-          'selected',
-          option.getAttribute('value') === newValue,
-        );
-      }
       let newRoot: Document = shallowCloneToRoot(targetElement);
 
       // If using delay, we need to undo the indicators shown earlier.
