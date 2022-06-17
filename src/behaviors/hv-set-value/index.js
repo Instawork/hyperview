@@ -51,7 +51,7 @@ export default {
       // Show the target
       targetElement.setAttribute('value', newValue);
       // select the <option> matching the "newValue" and unselect the others
-      const options = targetElement.getElementsByTagNameNS(
+      const options: NodeList<Element> = targetElement.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
         LOCAL_NAME.OPTION,
       );
