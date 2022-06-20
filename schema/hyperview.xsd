@@ -27,6 +27,8 @@
         <xs:enumeration value="set-value" />
         <xs:enumeration value="alert" />
         <xs:enumeration value="copy-to-clipboard" />
+        <xs:enumeration value="select-all" />
+        <xs:enumeration value="unselect-all" />
       </xs:restriction>
     </xs:simpleType>
   </xs:redefine>
