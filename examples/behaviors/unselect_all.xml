@@ -1,0 +1,284 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style
+        id="Header"
+        alignItems="center"
+        backgroundColor="white"
+        borderBottomColor="#eee"
+        borderBottomWidth="1"
+        flexDirection="row"
+        paddingLeft="24"
+        paddingRight="24"
+        paddingBottom="16"
+      />
+      <style
+        id="Header__Back"
+        color="blue"
+        fontSize="16"
+        fontWeight="600"
+        paddingRight="16"
+      />
+      <style id="Header__Title" color="black" fontSize="24" fontWeight="600" />
+      <style id="Body" backgroundColor="white" flex="1" />
+      <style
+        id="Description"
+        fontSize="16"
+        fontWeight="normal"
+        margin="24"
+        marginBottom="0"
+      />
+      <style
+        id="Item"
+        alignItems="center"
+        borderBottomColor="#eee"
+        borderBottomWidth="1"
+        flex="1"
+        flexDirection="row"
+        height="48"
+        justifyContent="space-between"
+        paddingLeft="24"
+        paddingRight="24"
+      />
+      <style id="Item__Label" fontSize="18" fontWeight="normal" />
+      <style id="Item__Chevron" fontSize="18" fontWeight="bold" />
+      <style
+        id="Button"
+        alignItems="center"
+        backgroundColor="#63CB76"
+        borderRadius="16"
+        flex="1"
+        flexDirection="column"
+        justifyContent="center"
+        margin="24"
+        padding="24"
+      />
+      <style id="Button__Label" color="white" fontSize="24" fontWeight="bold" />
+      <style
+        id="Container"
+        borderColor="#e1e1e1"
+        borderRadius="16"
+        borderWidth="2"
+        margin="24"
+        padding="24"
+      />
+      <style
+        id="Container__Label"
+        color="black"
+        fontSize="16"
+        fontWeight="normal"
+      />
+      <style id="Main" flex="1" />
+      <style id="Select" marginTop="24" />
+      <style
+        id="Select__Separator"
+        borderTopColor="#e1e3e3"
+        borderTopWidth="1"
+        marginLeft="24"
+        marginRight="24"
+      />
+      <style
+        id="Select__Option"
+        alignItems="center"
+        flex="1"
+        flexDirection="row"
+        justifyContent="space-between"
+        paddingBottom="16"
+        paddingLeft="24"
+        paddingRight="24"
+        paddingTop="16"
+      />
+      <style
+        id="Select__RadioOuter"
+        borderColor="#bdc4c4"
+        borderRadius="10"
+        borderWidth="1"
+        height="20"
+        width="20"
+      >
+        <modifier pressed="true">
+          <style borderColor="#8d9494" borderWidth="1" />
+        </modifier>
+        <modifier selected="true">
+          <style borderColor="#4778ff" borderWidth="2" />
+        </modifier>
+      </style>
+      <style
+        id="Select__RadioInner"
+        borderRadius="5"
+        height="10"
+        marginLeft="3"
+        marginTop="3"
+        opacity="0"
+        width="10"
+      >
+        <modifier selected="true">
+          <style backgroundColor="#4778ff" opacity="1" />
+        </modifier>
+      </style>
+      <style
+        id="Select__Label"
+        color="#4e4d4d"
+        fontSize="16"
+        fontWeight="normal"
+        lineHeight="18"
+      >
+        <modifier selected="true">
+          <style color="#312f2f" />
+        </modifier>
+        <modifier pressed="true">
+          <style color="#312f2f" />
+        </modifier>
+      </style>
+    </styles>
+    <body style="Body" safe-area="true">
+      <header style="Header">
+        <text action="back" href="#" style="Header__Back">Back</text>
+        <text style="Header__Title">Unselect All</text>
+      </header>
+      <view scroll="1" style="Main">
+        <text style="Description">
+          Tapping the button below will unselect all the options of a Multiple Select element.
+        </text>
+        <select-multiple id="id_sm" name="sm" style="Select">
+          <view style="Select__Separator" />
+          <option style="Select__Option" value="option1" selected="true">
+            <text style="Select__Label">Option 1</text>
+            <view style="Select__RadioOuter">
+              <view style="Select__RadioInner" />
+            </view>
+          </option>
+          <view style="Select__Separator" />
+          <option style="Select__Option" value="option2" selected="true">
+            <text style="Select__Label">Option 2</text>
+            <view style="Select__RadioOuter">
+              <view style="Select__RadioInner" />
+            </view>
+          </option>
+          <view style="Select__Separator" />
+          <option style="Select__Option" value="option3">
+            <text style="Select__Label">Option 3</text>
+            <view style="Select__RadioOuter">
+              <view style="Select__RadioInner" />
+            </view>
+          </option>
+          <view style="Select__Separator" />
+        </select-multiple>
+        <view style="Button" target="id_sm" action="unselect-all">
+          <text style="Button__Label">Unselect All</text>
+        </view>
+        <text style="Description">
+          Unselect All can work with the delay attribute. In this example, the un-selection
+          will be delayed 1 second.
+        </text>
+        <select-multiple id="id_sm_delay" name="sm" style="Select">
+          <view style="Select__Separator" />
+          <option style="Select__Option" value="option1" selected="true">
+            <text style="Select__Label">Option 1</text>
+            <view style="Select__RadioOuter">
+              <view style="Select__RadioInner" />
+            </view>
+          </option>
+          <view style="Select__Separator" />
+          <option style="Select__Option" value="option2" selected="true">
+            <text style="Select__Label">Option 2</text>
+            <view style="Select__RadioOuter">
+              <view style="Select__RadioInner" />
+            </view>
+          </option>
+          <view style="Select__Separator" />
+          <option style="Select__Option" value="option3">
+            <text style="Select__Label">Option 3</text>
+            <view style="Select__RadioOuter">
+              <view style="Select__RadioInner" />
+            </view>
+          </option>
+          <view style="Select__Separator" />
+        </select-multiple>
+        <view
+          action="unselect-all"
+          style="Button"
+          target="id_sm_delay"
+          delay="1000"
+        >
+          <text style="Button__Label">Unselect All with Delay</text>
+        </view>
+        <text style="Description">
+          When unselecting with delay, you can use indicators.
+        </text>
+        <select-multiple id="id_sm_indicator" name="sm" style="Select">
+          <view style="Select__Separator" />
+          <option style="Select__Option" value="option1" selected="true">
+            <text style="Select__Label">Option 1</text>
+            <view style="Select__RadioOuter">
+              <view style="Select__RadioInner" />
+            </view>
+          </option>
+          <view style="Select__Separator" />
+          <option style="Select__Option" value="option2" selected="true">
+            <text style="Select__Label">Option 2</text>
+            <view style="Select__RadioOuter">
+              <view style="Select__RadioInner" />
+            </view>
+          </option>
+          <view style="Select__Separator" />
+          <option style="Select__Option" value="option3">
+            <text style="Select__Label">Option 3</text>
+            <view style="Select__RadioOuter">
+              <view style="Select__RadioInner" />
+            </view>
+          </option>
+          <view style="Select__Separator" />
+        </select-multiple>
+        <view
+          action="unselect-all"
+          delay="1000"
+          show-during-load="show3-spinner"
+          style="Button"
+          target="id_sm_indicator"
+        >
+          <text style="Button__Label">Unselect All with Spinner</text>
+          <view id="show3-spinner" hide="true">
+            <spinner color="white" />
+          </view>
+        </view>
+        <text style="Description">
+          Tapping the button below will unselect all the options of a Select Single element.
+        </text>
+        <select-single id="id_ss" name="ss" style="Select">
+          <view style="Select__Separator" />
+          <option style="Select__Option" value="option1" selected="true">
+            <text style="Select__Label">Option 1</text>
+            <view style="Select__RadioOuter">
+              <view style="Select__RadioInner" />
+            </view>
+          </option>
+          <view style="Select__Separator" />
+          <option style="Select__Option" value="option2">
+            <text style="Select__Label">Option 2</text>
+            <view style="Select__RadioOuter">
+              <view style="Select__RadioInner" />
+            </view>
+          </option>
+          <view style="Select__Separator" />
+          <option style="Select__Option" value="option3">
+            <text style="Select__Label">Option 3</text>
+            <view style="Select__RadioOuter">
+              <view style="Select__RadioInner" />
+            </view>
+          </option>
+          <option style="Select__Option" value="">
+            <text style="Select__Label">Option 4</text>
+            <view style="Select__RadioOuter">
+              <view style="Select__RadioInner" />
+            </view>
+          </option>
+          <view style="Select__Separator" />
+        </select-single>
+        <view style="Button" target="id_ss" action="unselect-all">
+          <text style="Button__Label">Unselect All</text>
+        </view>
+      </view>
+    </body>
+  </screen>
+</doc>

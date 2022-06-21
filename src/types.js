@@ -365,7 +365,9 @@ export const ACTIONS = {
   RELOAD: 'reload',
   REPLACE: 'replace',
   REPLACE_INNER: 'replace-inner',
+  SELECT_ALL: 'select-all',
   SWAP: 'swap',
+  UNSELECT_ALL: 'unselect-all',
 };
 
 export const NAV_ACTIONS = {

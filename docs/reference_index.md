@@ -41,7 +41,7 @@ Input elements in HXML allow users to set local state on a Hyperview screen. Thi
 - [`<text-field>`](/docs/reference_textfield): An element used to accept single-line text input.
 - [`<text-area>`](/docs/reference_textarea): An element used to accept multi-line text input.
 - [`<select-single>`](/docs/reference_selectsingle): An element that groups many `<option>` elements, and allows only one of the options to be selected at a time.
-- [`<select-single>`](/docs/reference_selectmultiple): An element that groups many `<option>` elements, and allows any number of options to be selected/deselected.
+- [`<select-multiple>`](/docs/reference_selectmultiple): An element that groups many `<option>` elements, and allows any number of options to be selected/deselected.
 - [`<option>`](/docs/reference_option): An element that groups many `<option>` elements, and allows any number of options to be selected/deselected.
 
 #### Style Elements
