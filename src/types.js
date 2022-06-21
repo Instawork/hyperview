@@ -287,7 +287,7 @@ export type HvComponentOnUpdate = (
 
 export type HvGetRoot = () => Document;
 
-export type HvUpdateRoot = (root: Document) => void;
+export type HvUpdateRoot = (root: Document, updateStylesheet?: boolean) => void;
 
 export type HvComponentProps = {|
   element: Element,

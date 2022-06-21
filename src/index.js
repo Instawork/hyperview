@@ -492,7 +492,9 @@ export default class HyperScreen extends React.Component {
     const action = behaviorElement.getAttribute('action');
     const behavior = this.behaviorRegistry[action];
     if (behavior) {
-      const updateRoot = (newRoot) => this.setState({ doc: newRoot });
+      const updateRoot = (newRoot, updateStylesheet = false) => updateStylesheet
+        ? this.setState({ doc: newRoot, styles: Stylesheets.createStylesheets(newRoot) })
+        : this.setState({ doc: newRoot });
       const getRoot = () => this.doc;
       behavior.callback(behaviorElement, this.onUpdate, getRoot, updateRoot);
     } else {
