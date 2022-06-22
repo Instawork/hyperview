@@ -837,6 +837,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="hv:item" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="hv:section" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
