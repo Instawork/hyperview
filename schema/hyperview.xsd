@@ -33,5 +33,4 @@
     </xs:simpleType>
   </xs:redefine>
 
-  <xs:element name="behavior" type="hv:behavior" />
 </xs:schema>
