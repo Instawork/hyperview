@@ -762,14 +762,13 @@
     </xs:complexType>
   </xs:element>
 
-  <xs:element name="behavior">
-    <xs:complexType>
-      <xs:sequence minOccurs="0" maxOccurs="unbounded">
-        <xs:element ref="alert:option" />
-      </xs:sequence>
-      <xs:attributeGroup ref="hv:behaviorAttributes" />
-    </xs:complexType>
-  </xs:element>
+  <xs:complexType name="behavior">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="alert:option" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="hv:styles" />
+    </xs:sequence>
+    <xs:attributeGroup ref="hv:behaviorAttributes" />
+  </xs:complexType>
 
   <xs:element name="list">
     <xs:complexType>
