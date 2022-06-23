@@ -5,6 +5,7 @@
   targetNamespace="https://hyperview.org/hyperview"
   xmlns:hv="https://hyperview.org/hyperview"
   xmlns:alert="https://hyperview.org/hyperview-alert"
+  xmlns:event="https://instawork.com/hyperview-event-log"
 >
 
   <xs:import
