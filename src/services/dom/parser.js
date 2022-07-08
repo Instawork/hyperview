@@ -71,10 +71,10 @@ export class Parser {
       body: method === HTTP_METHODS.GET ? undefined : data,
       headers: {
         [HTTP_HEADERS.ACCEPT]: `${CONTENT_TYPE.APPLICATION_XML}, ${acceptContentType}`,
-        [HTTP_HEADERS.X_HYPERVIEW_VERSION]: version,
-        [HTTP_HEADERS.X_HYPERVIEW_DIMENSIONS]: `${width}w ${height}h`,
+        // [HTTP_HEADERS.X_HYPERVIEW_VERSION]: version,
+        // [HTTP_HEADERS.X_HYPERVIEW_DIMENSIONS]: `${width}w ${height}h`,
       },
-      method,
+      method: 'get',
     };
 
     const response: Response = await this.fetch(url, options);

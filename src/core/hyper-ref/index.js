@@ -228,7 +228,11 @@ export default class HyperRef extends PureComponent<Props, State> {
         );
         if (pressHandlers[triggerPropName]) {
           const oldHandler = pressHandlers[triggerPropName];
-          pressHandlers[triggerPropName] = () => {
+          pressHandlers[triggerPropName] = event => {
+            if (event) {
+              event.stopPropagation();
+              event.preventDefault();
+            }
             oldHandler();
             setTimeout(handler, time);
             time += 1;
@@ -240,24 +244,40 @@ export default class HyperRef extends PureComponent<Props, State> {
 
       if (pressHandlers.onPressIn) {
         const oldHandler = pressHandlers.onPressIn;
-        pressHandlers.onPressIn = () => {
+        pressHandlers.onPressIn = event => {
+          if (event) {
+            event.stopPropagation();
+            event.preventDefault();
+          }
           this.setState({ pressed: true });
           oldHandler();
         };
       } else {
-        pressHandlers.onPressIn = () => {
+        pressHandlers.onPressIn = event => {
+          if (event) {
+            event.stopPropagation();
+            event.preventDefault();
+          }
           this.setState({ pressed: true });
         };
       }
 
       if (pressHandlers.onPressOut) {
         const oldHandler = pressHandlers.onPressOut;
-        pressHandlers.onPressOut = () => {
+        pressHandlers.onPressOut = event => {
+          if (event) {
+            event.stopPropagation();
+            event.preventDefault();
+          }
           this.setState({ pressed: false });
           oldHandler();
         };
       } else {
-        pressHandlers.onPressOut = () => {
+        pressHandlers.onPressOut = event => {
+          if (event) {
+            event.stopPropagation();
+            event.preventDefault();
+          }
           this.setState({ pressed: false });
         };
       }
@@ -265,7 +285,11 @@ export default class HyperRef extends PureComponent<Props, State> {
       // Fix a conflict between onPressOut and onPress triggering at the same time.
       if (pressHandlers.onPressOut && pressHandlers.onPress) {
         const onPressHandler = pressHandlers.onPress;
-        pressHandlers.onPress = () => {
+        pressHandlers.onPress = event => {
+          if (event) {
+            event.stopPropagation();
+            event.preventDefault();
+          }
           setTimeout(onPressHandler, time);
         };
       }

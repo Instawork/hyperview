@@ -98,19 +98,19 @@ export const renderElement = (
   if (element.nodeType === NODE_TYPE.TEXT_NODE) {
     // Render non-empty text nodes, when wrapped inside a <text> element
     if (element.nodeValue) {
-      const trimmedValue = element.nodeValue.trim();
-      if (trimmedValue.length > 0) {
+      const value = options.preformatted
+        ? element.nodeValue
+        : element.nodeValue.trim();
+      if (value.length > 0) {
         if (
           (element.parentNode?.namespaceURI === Namespaces.HYPERVIEW &&
             element.parentNode?.localName === LOCAL_NAME.TEXT) ||
           element.parentNode?.namespaceURI !== Namespaces.HYPERVIEW
         ) {
-          return options.preformatted
-            ? trimmedValue
-            : trimmedValue.replace(/\s+/g, ' ');
+          return options.preformatted ? value : value.replace(/\s+/g, ' ');
         }
         console.warn(
-          `Text string "${trimmedValue}" must be rendered within a <text> element`,
+          `Text string "${value}" must be rendered within a <text> element`,
         );
       }
     }

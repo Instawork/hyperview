@@ -5,7 +5,7 @@ const chokidar = require('chokidar');
 const path = require('path');
 
 const PROJECT_DIR = path.join(__dirname, '../..');
-const SRC_DIRNAME = 'src';
+const SRC_DIRNAME = 'lib';
 const SRC_DIR = path.join(PROJECT_DIR, SRC_DIRNAME);
 const DEST_PROJECT_REL_PATH = process.argv[2] || './demo';
 const HYPERVIEW_DIR = path.join(
@@ -31,5 +31,5 @@ const syncFiles = (event, originPath) => {
   childProcess.execSync(cmd);
 };
 
-updatePackageJson();
+// updatePackageJson();
 chokidar.watch(SRC_DIR).on('all', syncFiles);

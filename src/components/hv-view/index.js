@@ -21,7 +21,7 @@ import React, { PureComponent } from 'react';
 import { createProps, createStyleProp } from 'hyperview/src/services';
 import type { HvComponentProps } from 'hyperview/src/types';
 import type { InternalProps } from './types';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import KeyboardAwareScrollView from './keyboard-aware-scroll-view';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { addHref } from 'hyperview/src/core/hyper-ref';
 

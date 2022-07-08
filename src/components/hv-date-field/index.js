@@ -32,7 +32,7 @@ import {
   createStyleProp,
   getNameValueFormInputValues,
 } from 'hyperview/src/services';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePicker from './date-time-picker';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { Node as ReactNode } from 'react';
 import styles from './styles';
