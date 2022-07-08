@@ -27,6 +27,7 @@
         fontWeight="normal"
         margin="24"
         marginBottom="0"
+        color="gray"
       />
       <style
         id="Item"
@@ -42,7 +43,7 @@
       />
       <style id="Item__Label" fontSize="18" fontWeight="normal" />
       <style id="Item__Chevron" fontSize="18" fontWeight="bold" />
-      <style id="Basic" fontSize="24" fontWeight="500" margin="24" />
+      <style id="Basic" fontSize="24" fontWeight="500" marginHorizontal="24" />
       <style id="Bold" fontSize="16" fontWeight="bold" margin="24" />
       <style
         id="Color"
@@ -54,6 +55,14 @@
         padding="16"
       />
       <style id="Main" flex="1" />
+      <style
+        id="AdjustableFontContainer"
+        width="250"
+        height="40"
+        borderWidth="2"
+        borderColor="black"
+        marginLeft="24"
+      />
     </styles>
     <body style="Body" safe-area="true">
       <header style="Header">
@@ -61,9 +70,9 @@
         <text style="Header__Title">Text</text>
       </header>
       <view scroll="true" style="Main">
-        <text style="Description">Text</text>
+        <text style="Description">Basic</text>
         <text style="Basic">Hello, world!</text>
-        <text style="Description">Nested Text</text>
+        <text style="Description">Nested</text>
         <text style="Basic">
           Hello,
           <text style="Bold">
@@ -71,21 +80,26 @@
             <text style="Color">HyperView!</text>
           </text>
         </text>
+        <text style="Description">Escaped</text>
         <text style="Basic">
 <![CDATA[Escaped with <![CDATA[]>: <hello><world>]]>
         </text>
+        <text style="Description">Selectable</text>
         <text style="Basic" selectable="true">Select me!</text>
+        <text style="Description">Adjustable font size</text>
         <text
           style="Basic"
           adjustsFontSizeToFit="true"
-        >Adjustable Font Size</text>
-        <text style="Basic" preformatted="true">
-          <![CDATA[
-          Preformatted
-          <hello>
-              <world />
-          </hello>
-          ]]>
+          numberOfLines="2"
+        >The font of this text will be adjusted to fit specified the specified number of lines</text>
+        <text style="Description">Preformatted</text>
+        <text
+          style="Basic"
+          preformatted="true"
+        ><![CDATA[<hello>
+    <world />
+</hello>
+]]>
         </text>
       </view>
     </body>
