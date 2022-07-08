@@ -8,7 +8,6 @@
  *
  */
 
-import * as Dom from 'hyperview/src/services/dom';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type {
   Element,
@@ -96,33 +95,25 @@ export const renderElement = (
     );
   }
 
-  // Render non-empty text nodes, when wrapped inside a <text> element
-  if (element.nodeType === NODE_TYPE.TEXT_NODE && element.nodeValue) {
-    const { nodeValue } = element;
-
-    // String is not wrapped by a <text> node, throw a warning but don't crash
-    if (!Dom.isWrappedByTextNode(element)) {
-      console.warn(
-        `Text string "${nodeValue}" must be rendered within a <text> element`,
-      );
-      return null;
+  if (element.nodeType === NODE_TYPE.TEXT_NODE) {
+    // Render non-empty text nodes, when wrapped inside a <text> element
+    if (element.nodeValue) {
+      const trimmedValue = element.nodeValue.trim();
+      if (trimmedValue.length > 0) {
+        if (
+          (element.parentNode?.namespaceURI === Namespaces.HYPERVIEW &&
+            element.parentNode?.localName === LOCAL_NAME.TEXT) ||
+          element.parentNode?.namespaceURI !== Namespaces.HYPERVIEW
+        ) {
+          return options.preformatted
+            ? trimmedValue
+            : trimmedValue.replace(/\s+/g, ' ');
+        }
+        console.warn(
+          `Text string "${trimmedValue}" must be rendered within a <text> element`,
+        );
+      }
     }
-
-    // Text node is preformatted, don't process any further
-    if (options.preformatted) {
-      return nodeValue;
-    }
-
-    // Collapse consecutive spaces
-    const value = nodeValue.replace(/\s+/g, ' ');
-
-    // Text node is wrapped under another text node, don't process any further
-    if (element.parentNode && Dom.isWrappedByTextNode(element.parentNode)) {
-      return value;
-    }
-
-    // Text node is not wrapped under another text node, trim leading/trailing spaces
-    return value.trim();
   }
 
   if (element.nodeType === NODE_TYPE.CDATA_SECTION_NODE) {
