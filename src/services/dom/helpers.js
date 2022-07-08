@@ -15,7 +15,9 @@ import type {
   HvComponentOnUpdate,
   LocalName,
   NamespaceURI,
+  Node,
 } from 'hyperview/src/types';
+import { LOCAL_NAME } from 'hyperview/src/types';
 
 export const getBehaviorElements = (element: any) => {
   // $FlowFixMe
@@ -76,3 +78,7 @@ export const triggerBehaviors = (
     });
   });
 };
+
+export const isWrappedByTextNode = (node: Node): boolean =>
+  node.parentNode?.namespaceURI === Namespaces.HYPERVIEW &&
+  node.parentNode?.localName === LOCAL_NAME.TEXT;
