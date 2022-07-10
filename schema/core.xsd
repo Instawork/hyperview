@@ -765,7 +765,6 @@
   <xs:complexType name="behavior">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" ref="alert:option" />
-      <xs:element minOccurs="0" maxOccurs="unbounded" ref="hv:styles" />
     </xs:sequence>
     <xs:attributeGroup ref="hv:behaviorAttributes" />
   </xs:complexType>
