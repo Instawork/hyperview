@@ -276,6 +276,7 @@ export type HvComponentOptions = {
   showIndicatorIds?: ?DOMString,
   styleAttr?: ?DOMString,
   targetId?: ?DOMString,
+  inlineFormattingContext?: ?[Node[], string[]],
 };
 
 export type HvComponentOnUpdate = (

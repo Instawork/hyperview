@@ -15,6 +15,8 @@ import type {
   HvComponentOnUpdate,
   LocalName,
   NamespaceURI,
+  Node,
+  NodeType,
 } from 'hyperview/src/types';
 
 export const getBehaviorElements = (element: any) => {
@@ -75,4 +77,24 @@ export const triggerBehaviors = (
       verb,
     });
   });
+};
+
+/**
+ * N-ary Tree Preorder Traversal
+ */
+export const preorder = (
+  root: Node,
+  type: NodeType,
+  acc: Node[] = [],
+): Node[] => {
+  if (root.childNodes) {
+    Array.from(root.childNodes).forEach((node: ?Node) => {
+      if (node) {
+        preorder(node, type, acc);
+      }
+    });
+  } else if (root.nodeType === type) {
+    acc.push(root);
+  }
+  return acc;
 };
