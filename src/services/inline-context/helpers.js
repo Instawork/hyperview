@@ -12,12 +12,25 @@ export const LINE_BREAK = '\n';
 export const EMPTY = '';
 export const SPACE = ' ';
 
+/**
+ * Removes any space that follows a line break
+ */
 export const ignoreSpacesAfterLineBreak = (input: string): string =>
   input.replace(/\n\s+/g, LINE_BREAK);
 
+/**
+ * Replaces any line break by a space
+ */
 export const convertLineBreaksIntoSpaces = (input: string): string =>
   input.replace(/\n/g, SPACE);
 
+/**
+ * Provided a list of strings as input, removes any spaces
+ * that immediately follows another space, across consecutive entries in the list
+ * i.e.
+ * input = [" ", " Hello ", " world ", " ", " "]
+ * output = [" ", "Hello ", "world ", "", ""]
+ */
 export const ignoreSpacesFollowingSpace = (input: string[]): string[] => {
   let lastValueEndedWithSpace = false;
   return input.map((value: string): string => {
@@ -38,6 +51,12 @@ export const ignoreSpacesFollowingSpace = (input: string[]): string[] => {
   });
 };
 
+/**
+ * Provided a list of strings as input, removes any leading and trailing spaces
+ * i.e.
+ * input = [" ", " Hello ", "world ", " ", " "]
+ * output = ["", "Hello ", "world", "", ""]
+ */
 export const trim = (input: string[]): string[] => {
   // Trim the start of the string
   let trimStartDone = false;
