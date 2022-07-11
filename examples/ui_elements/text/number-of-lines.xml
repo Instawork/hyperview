@@ -1,0 +1,40 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style
+        id="Header"
+        alignItems="center"
+        backgroundColor="white"
+        borderBottomColor="#eee"
+        borderBottomWidth="1"
+        flexDirection="row"
+        paddingLeft="24"
+        paddingRight="24"
+        paddingBottom="16"
+      />
+      <style
+        id="Header__Back"
+        color="blue"
+        fontSize="16"
+        fontWeight="600"
+        paddingRight="16"
+      />
+      <style id="Header__Title" color="black" fontSize="24" fontWeight="600" />
+      <style id="Body" backgroundColor="white" flex="1" />
+      <style id="Text" fontSize="24" margin="24" />
+      <style id="Main" flex="1" />
+    </styles>
+    <body style="Body" safe-area="true">
+      <header style="Header">
+        <text action="back" href="#" style="Header__Back">Back</text>
+        <text style="Header__Title">Text: Number of lines</text>
+      </header>
+      <view scroll="true" style="Main">
+        <text
+          style="Text"
+          numberOfLines="2"
+        >Velit voluptas et alias atque provident sapiente consequuntur deserunt. Dolorem et non error dolorem voluptate amet accusantium. Corporis rerum sed labore quae sed qui quis quasi. Illo pariatur sint qui. Quasi quaerat id molestias. Necessitatibus et ipsa quia asperiores laborum neque. Quisquam dolorem consequatur illum. Ut magni iusto explicabo blanditiis quasi laborum incidunt earum. Eius ut in rerum ipsam. Officiis dolores suscipit consequatur placeat commodi eum. Vel possimus placeat aut eos tempore saepe. Esse assumenda eum illo sed aut earum quia voluptatibus. Recusandae qui iusto corporis sed atque. Veniam et possimus praesentium. Cum molestiae non velit minus voluptatibus quos illo sed. Et omnis ut soluta qui inventore molestias. Dolores voluptatem perspiciatis exercitationem consectetur minus illum. Quos quaerat omnis aut eius eos dolores velit. Et quia vel ea unde eum repudiandae. Repellat et ab sed. Show LessLipsum</text>
+      </view>
+    </body>
+  </screen>
+</doc>
