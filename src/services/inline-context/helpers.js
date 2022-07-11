@@ -19,15 +19,22 @@ export const convertLineBreaksIntoSpaces = (input: string): string =>
   input.replace(/\n/g, SPACE);
 
 export const ignoreSpacesFollowingSpace = (input: string[]): string[] => {
-  return input.map((value: string, index: number, values: string[]): string => {
-    if (index > 0) {
-      const previousEntry = values[index - 1];
-      const lastChar = previousEntry[previousEntry.length - 1];
-      if (lastChar === SPACE || previousEntry === EMPTY) {
-        return value.replace(/\s+/g, SPACE).trimStart();
-      }
+  let lastValueEndedWithSpace = false;
+  return input.map((value: string): string => {
+    // Replace every consecutive spaces with a single space
+    let trimmed = value.replace(/\s+/g, SPACE);
+
+    // If last string ended with a space, remove leading spaces
+    if (lastValueEndedWithSpace) {
+      trimmed = trimmed.trimStart();
     }
-    return value.replace(/\s+/g, SPACE);
+
+    // Set flag for next iteration, only when the current string is not empty
+    if (trimmed.length > 0) {
+      lastValueEndedWithSpace = trimmed[trimmed.length - 1] === SPACE;
+    }
+
+    return trimmed;
   });
 };
 

@@ -76,6 +76,11 @@ describe('ignoreSpacesFollowingSpace', () => {
       ]),
     ).toEqual([' ', '', '', '', 'foo ', '', '', '', 'bar baz ', '', '', '']);
   });
+  test('5', () => {
+    expect(
+      ignoreSpacesFollowingSpace(['', '', ' ', ' foo  ', ' ', ' bar ', ' ']),
+    ).toEqual(['', '', ' ', 'foo ', '', 'bar ', '']);
+  });
 });
 
 describe('trim', () => {
