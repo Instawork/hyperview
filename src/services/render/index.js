@@ -8,6 +8,7 @@
  *
  */
 
+import * as InlineContext from 'hyperview/src/services/inline-context';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type {
   Element,
@@ -23,7 +24,7 @@ export const renderElement = (
   stylesheets: StyleSheets,
   onUpdate: HvComponentOnUpdate,
   options: HvComponentOptions,
-) => {
+): ?React$Element<any> | ?string => {
   if (element.nodeType === NODE_TYPE.ELEMENT_NODE) {
     // Hidden elements don't get rendered
     if (element.getAttribute('hide') === 'true') {
@@ -49,6 +50,22 @@ export const renderElement = (
         break;
     }
   }
+
+  // Initialize inline formatting context for <text> elements when not already defined
+  let { inlineFormattingContext } = options;
+  if (
+    !options.preformatted &&
+    !inlineFormattingContext &&
+    element.nodeType === NODE_TYPE.ELEMENT_NODE &&
+    element.localName === LOCAL_NAME.TEXT
+  ) {
+    inlineFormattingContext = InlineContext.formatter(element);
+  }
+
+  const componentOptions = {
+    ...options,
+    inlineFormattingContext,
+  };
 
   if (element.nodeType === NODE_TYPE.ELEMENT_NODE) {
     if (!element.namespaceURI) {
@@ -81,7 +98,7 @@ export const renderElement = (
         <Component
           element={element}
           onUpdate={onUpdate}
-          options={options}
+          options={componentOptions}
           stylesheets={stylesheets}
           {...extraProps} // eslint-disable-line react/jsx-props-no-spreading
         />
@@ -98,20 +115,28 @@ export const renderElement = (
   if (element.nodeType === NODE_TYPE.TEXT_NODE) {
     // Render non-empty text nodes, when wrapped inside a <text> element
     if (element.nodeValue) {
-      const trimmedValue = element.nodeValue.trim();
-      if (trimmedValue.length > 0) {
-        if (
-          (element.parentNode?.namespaceURI === Namespaces.HYPERVIEW &&
-            element.parentNode?.localName === LOCAL_NAME.TEXT) ||
-          element.parentNode?.namespaceURI !== Namespaces.HYPERVIEW
-        ) {
-          return options.preformatted
-            ? trimmedValue
-            : trimmedValue.replace(/\s+/g, ' ');
+      if (
+        (element.parentNode?.namespaceURI === Namespaces.HYPERVIEW &&
+          element.parentNode?.localName === LOCAL_NAME.TEXT) ||
+        element.parentNode?.namespaceURI !== Namespaces.HYPERVIEW
+      ) {
+        if (options.preformatted) {
+          return element.nodeValue;
         }
-        console.warn(
-          `Text string "${trimmedValue}" must be rendered within a <text> element`,
-        );
+        // When inline formatting context exists, lookup formatted value using node's index.
+        if (inlineFormattingContext) {
+          const index = inlineFormattingContext[0].indexOf(element);
+          return inlineFormattingContext[1][index];
+        }
+
+        // Other strings might be whitespaces in non text elements, which we ignore
+        // However we raise a warning when the string isn't just composed of whitespaces.
+        const trimmedValue = element.nodeValue.trim();
+        if (trimmedValue.length > 0) {
+          console.warn(
+            `Text string "${trimmedValue}" must be rendered within a <text> element`,
+          );
+        }
       }
     }
   }
