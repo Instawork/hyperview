@@ -14,7 +14,7 @@ import { ActivityIndicator, StyleSheet } from 'react-native';
 import React, { PureComponent } from 'react';
 import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import WebView from 'react-native-webview';
+import WebView from 'hyperview/src/core/components/web-view';
 import { createProps } from 'hyperview/src/services';
 
 export default class HvWebView extends PureComponent<HvComponentProps> {
