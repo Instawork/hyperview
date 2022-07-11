@@ -16,6 +16,7 @@ import { TouchableWithoutFeedback, View } from 'react-native';
 import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { State } from './types';
+import { createEventHandler } from 'hyperview/src/core/hyper-ref';
 import { createProps } from 'hyperview/src/services';
 
 /**
@@ -122,7 +123,7 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
     // Option renders as an outer TouchableWithoutFeedback view and inner view.
     // The outer view handles presses, the inner view handles styling.
     const outerProps = {
-      onPress: () => {
+      onPress: createEventHandler(() => {
         if (onSelect) {
           // Updates the DOM state, causing this element to re-render as selected.
           // Used in select-single context.
@@ -133,9 +134,9 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
           // Used in select-multiple context.
           onToggle(value);
         }
-      },
-      onPressIn: () => this.setState({ pressed: true }),
-      onPressOut: () => this.setState({ pressed: false }),
+      }),
+      onPressIn: createEventHandler(() => this.setState({ pressed: true })),
+      onPressOut: createEventHandler(() => this.setState({ pressed: false })),
       style: undefined,
     };
     if (props.style && props.style.flex) {
