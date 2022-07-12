@@ -17,9 +17,9 @@ import {
   createStyleProp,
   getNameValueFormInputValues,
 } from 'hyperview/src/services';
-import type { ColorValue } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
+import type { ColorValue } from './style-sheet';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import normalizeColor from 'react-native/Libraries/StyleSheet/normalizeColor';
+import normalizeColor from './style-sheet';
 
 /* eslint no-bitwise: ["error", { "allow": [">>", "&"] }] */
 function darkenColor(color: ColorValue, percent: number): ColorValue {
