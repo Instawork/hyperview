@@ -8,6 +8,7 @@
 
 import React, { PureComponent } from 'react';
 import HandleBack from './HandleBack';
+import Toast from './toast';
 import Hyperview from 'hyperview';
 import moment from 'moment';
 import { MAIN_STACK_NAME, MODAL_STACK_NAME } from './constants';
@@ -62,6 +63,10 @@ export default class HyperviewScreen extends PureComponent {
     });
   }
 
+  behaviors = [
+    Toast,
+  ];
+
   render() {
     const entrypointUrl = this.props.route.params?.url;
 
@@ -69,6 +74,7 @@ export default class HyperviewScreen extends PureComponent {
       <HandleBack>
         <Hyperview
           back={this.goBack}
+          behaviors={this.behaviors}
           closeModal={this.closeModal}
           entrypointUrl={entrypointUrl}
           fetch={this.fetchWrapper}
