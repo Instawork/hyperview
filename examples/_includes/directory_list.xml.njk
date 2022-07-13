@@ -1,0 +1,25 @@
+{# Standard template for showing a list of links to other screens. List is generated from a collection of screens with the given "list_tag" #}
+{% extends 'base.xml.njk' %}
+
+{% block styles %}
+
+{% endblock %}
+
+{% block content %}
+  <behavior trigger="refresh" action="reload" href="#" />
+  <list>
+  {% for screen in collections[list_tag] %}
+    <item
+      href="{{ screen.data.permalink }}"
+      key="{{ screen.data.title | slug }}"
+      show-during-load="loadingScreen"
+      style="Item"
+    >
+      <view style="Item__Left">
+        <text style="Item__Label">{{ screen.data.title }}</text>
+      </view>
+      <text style="Item__Chevron">&gt;</text>
+    </item>
+  {% endfor %}
+  </list>
+{% endblock %}

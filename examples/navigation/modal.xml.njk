@@ -1,3 +1,8 @@
+---
+title: "Modal"
+permalink: "/navigation/modal.xml"
+tags: navigation
+---
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
@@ -24,7 +29,7 @@
       <style
         id="Description"
         fontSize="16"
-        fontWeight="600"
+        fontWeight="normal"
         margin="24"
         marginBottom="0"
       />
@@ -42,7 +47,6 @@
       />
       <style id="Item__Label" fontSize="18" fontWeight="normal" />
       <style id="Item__Chevron" fontSize="18" fontWeight="bold" />
-      <style id="Main" flex="1" />
       <style
         id="Button"
         backgroundColor="#63CB76"
@@ -54,43 +58,21 @@
         padding="24"
       />
       <style id="Button__Label" color="white" fontSize="24" fontWeight="bold" />
-      <style id="Button--Disabled" opacity="0.5" />
-      <style
-        id="Button--Shadow"
-        shadowColor="black"
-        shadowOffsetX="0"
-        shadowOffsetY="4"
-        shadowOpacity="0.5"
-        shadowRadius="4"
-      />
-      <style id="Button--BlueShadow" shadowColor="blue" />
-      <style id="Button--BigRadius" shadowRadius="10" />
-      <style id="Button--Offset" shadowOffsetX="5" shadowOffsetY="-5" />
     </styles>
     <body style="Body" safe-area="true">
-      <header style="Header">
-        <text action="back" href="#" style="Header__Back">Back</text>
-        <text style="Header__Title">Shadow Styling</text>
-      </header>
-      <view scroll="1" style="Main">
-        <text style="Description">
-          Shadow styling only works on iOS. For Android, use the elevation prop.
-        </text>
-        <text style="Description">Regular</text>
-        <view style="Button Button--Shadow">
-          <text style="Button__Label">Hello</text>
+      <view scroll="true">
+        <header style="Header">
+          <text action="close" href="/navigation/new.xml" style="Header__Back">
+            Close
+          </text>
+          <text style="Header__Title">Opened</text>
+        </header>
+        <text style="Description">Opened a new modal screen!</text>
+        <view action="new" href="/navigation/modal.xml" style="Button">
+          <text style="Button__Label">Open another modal</text>
         </view>
-        <text style="Description">Shadow color</text>
-        <view style="Button Button--Shadow Button--BlueShadow">
-          <text style="Button__Label">Hello</text>
-        </view>
-        <text style="Description">Radius</text>
-        <view style="Button Button--Shadow Button--BigRadius">
-          <text style="Button__Label">Hello</text>
-        </view>
-        <text style="Description">Offset</text>
-        <view style="Button Button--Shadow Button--Offset">
-          <text style="Button__Label">Hello</text>
+        <view action="push" href="/navigation/modal.xml" style="Button">
+          <text style="Button__Label">Push on the stack</text>
         </view>
       </view>
     </body>

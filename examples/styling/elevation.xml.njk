@@ -1,0 +1,20 @@
+---
+title: "Elevation"
+permalink: "/styling/elevation.xml"
+tags: styling
+---
+{% extends 'base.xml.njk' %}
+
+{% block content %}
+<text style="Description">
+  Elevation styling only works on Android. For iOS, use shadow styles.
+</text>
+<text style="Description">Elevation: 3</text>
+<view style="Button Button--Elevation3">
+  <text style="Button__Label">Hello</text>
+</view>
+<text style="Description">Elevation: 10</text>
+<view style="Button Button--Elevation10">
+  <text style="Button__Label">Hello</text>
+</view>
+{% endblock %}

@@ -11,6 +11,7 @@
 ; Ignore these libraries
 .*/node_modules/react-navigation/.*
 .*/node_modules/@expo/.*
+.*/node_modules/pug-filters/.*
 
 ; Ignore polyfills
 node_modules/react-native/Libraries/polyfills/.*

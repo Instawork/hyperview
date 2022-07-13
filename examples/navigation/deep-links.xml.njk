@@ -1,3 +1,8 @@
+---
+title: "Deep Links"
+permalink: "/navigation/deep-links.xml"
+tags: navigation
+---
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
@@ -58,24 +63,24 @@
     <body style="Body" safe-area="true">
       <header style="Header">
         <text action="back" href="#" style="Header__Back">Back</text>
-        <text style="Header__Title">Navigate</text>
+        <text style="Header__Title">Deep Links</text>
       </header>
       <view scroll="true" style="Main">
         <text style="Description">
-          Tapping the button below will request an XML screen and push it onto
-          the stack.
+          Tapping the buttons below will open their urls in default apps
         </text>
-        <view action="navigate" href="/index.xml" style="Button">
-          <text style="Button__Label">Navigate to home</text>
+        <view action="deep-link" href="applenews://" style="Button">
+          <text style="Button__Label">applenews://</text>
+        </view>
+        <view action="deep-link" href="calshow://" style="Button">
+          <text style="Button__Label">calshow://</text>
         </view>
         <view
-          action="navigate"
-          delay="1000"
-          href="/navigation/pushed.xml"
-          show-during-load="loadingScreen"
+          action="deep-link"
+          href="https://www.hyperview.org"
           style="Button"
         >
-          <text style="Button__Label">Navigate with indicator</text>
+          <text style="Button__Label">https://www.hyperview.org</text>
         </view>
       </view>
     </body>

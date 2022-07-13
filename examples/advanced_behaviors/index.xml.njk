@@ -1,3 +1,8 @@
+---
+title: "Advanced Behaviors"
+permalink: "/advanced_behaviors/index.xml"
+tags: root
+---
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
@@ -45,57 +50,85 @@
       />
       <style id="Item__Label" fontSize="18" fontWeight="normal" />
       <style id="Item__Chevron" fontSize="18" fontWeight="bold" />
-      <style id="Main" flex="1" />
     </styles>
     <body style="Body" safe-area="true">
       <header style="Header">
         <text action="back" href="#" style="Header__Back">Back</text>
-        <text style="Header__Title">Styling</text>
+        <text style="Header__Title">Advanced Behaviors</text>
       </header>
       <list>
         <item
-          href="/styling/flex.xml"
-          key="flex"
+          href="/advanced_behaviors/multiple.xml"
+          key="multiple"
           show-during-load="loadingScreen"
           style="Item"
         >
-          <text style="Item__Label">Flex Styling</text>
+          <text style="Item__Label">Multiple Different Behaviors</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
         <item
-          href="/styling/text.xml"
-          key="text"
+          href="/advanced_behaviors/multiple_same.xml"
+          key="multiple_same"
           show-during-load="loadingScreen"
           style="Item"
         >
-          <text style="Item__Label">Text Styling</text>
+          <text style="Item__Label">Multiple Same Behaviors</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
         <item
-          href="/styling/button.xml"
-          key="button"
+          href="/advanced_behaviors/alert/index.xml"
+          key="alert"
           show-during-load="loadingScreen"
           style="Item"
         >
-          <text style="Item__Label">Button Styling</text>
+          <view style="Item__Left">
+            <text style="Item__Label">Alert</text>
+          </view>
           <text style="Item__Chevron">&gt;</text>
         </item>
         <item
-          href="/styling/shadows.xml"
-          key="shadow"
+          href="/advanced_behaviors/custom_share.xml"
+          key="custom_share"
           show-during-load="loadingScreen"
           style="Item"
         >
-          <text style="Item__Label">Shadow Styling (iOS only)</text>
+          <text style="Item__Label">Custom: Share</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
         <item
-          href="/styling/elevation.xml"
-          key="elevation"
+          href="/advanced_behaviors/dispatch_event/dispatch_event.xml"
+          key="dispatch_event"
           show-during-load="loadingScreen"
           style="Item"
         >
-          <text style="Item__Label">Elevation Styling (Android only)</text>
+          <text style="Item__Label">Dispatch Event</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item
+          href="/advanced_behaviors/dispatch_events_multiple/contacts_list.xml"
+          key="dispatch_events_multiple"
+          show-during-load="loadingScreen"
+          style="Item"
+        >
+          <text style="Item__Label">Dispatch Events Multiple</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item
+          href="/advanced_behaviors/set_value/index.xml"
+          key="set_value"
+          show-during-load="loadingScreen"
+          style="Item"
+        >
+          <text style="Item__Label">Set Value</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item
+          href="/advanced_behaviors/copy_to_clipboard/index.xml"
+          key="copy_to_clipboard"
+          show-during-load="loadingScreen"
+          style="Item"
+        >
+          <text style="Item__Label">Copy To Clipboard</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
       </list>
