@@ -1,7 +1,5 @@
 // @flow
 
-import React from 'react';
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -10,8 +8,15 @@ import React from 'react';
  *
  */
 
+import type { ComponentType } from 'react';
+import React from 'react';
+
 // Provides the date format function to use in date fields
 // in the screen. Default to ISO string format.
 export const DateFormatContext = React.createContext<
   (date: ?Date, format: ?string) => string,
 >(date => (date ? date.toISOString() : ''));
+
+export const RefreshControlComponentContext = React.createContext<
+  ComponentType<*>,
+>(component => component);

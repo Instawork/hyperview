@@ -27,6 +27,7 @@ A `<text-field>` element can appear anywhere within a `<form>` element.
 - [`name`](#name)
 - [`value`](#value)
 - [`placeholder`](#placeholder)
+- [`multiline`](#multiline)
 - [`keyboard-type`](#keyboard-type)
 - [`mask`](#mask)
 - [`style`](#style)
@@ -66,6 +67,14 @@ The value of the field. This string gets rendered into the string and can be edi
 | string | No       |
 
 A label that appears within the text field. The placeholder only appears when the field is empty.
+
+#### `multiline`
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| **false** (default), true | No       |
+
+When `true`, allows the text input to have multiple lines.
 
 #### `keyboard-type`
 

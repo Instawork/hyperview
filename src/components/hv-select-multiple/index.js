@@ -53,6 +53,19 @@ export default class HvSelectMultiple extends PureComponent<HvComponentProps> {
     this.onToggle = this.onToggle.bind(this);
   }
 
+  componentDidUpdate() {
+    // NOTE: we need to remove the attribute before
+    // (un)selecting all, since (un)selecting all will update the component.
+    if (this.props.element.hasAttribute('select-all')) {
+      this.props.element.removeAttribute('select-all');
+      this.applyToAllOptions(true);
+    }
+    if (this.props.element.hasAttribute('unselect-all')) {
+      this.props.element.removeAttribute('unselect-all');
+      this.applyToAllOptions(false);
+    }
+  }
+
   /**
    * Callback passed to children. Option components invoke this callback when toggles.
    * Will update the XML DOM to toggle the option with the given value.
@@ -71,6 +84,21 @@ export default class HvSelectMultiple extends PureComponent<HvComponentProps> {
           const selected = option.getAttribute('selected') === 'true';
           option.setAttribute('selected', selected ? 'false' : 'true');
         }
+      }
+    }
+    this.props.onUpdate('#', 'swap', this.props.element, { newElement });
+  };
+
+  applyToAllOptions = (selected: boolean) => {
+    const newElement = this.props.element.cloneNode(true);
+    const options = newElement.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      'option',
+    );
+    for (let i = 0; i < options.length; i += 1) {
+      const option = options.item(i);
+      if (option) {
+        option.setAttribute('selected', selected ? 'true' : 'false');
       }
     }
     this.props.onUpdate('#', 'swap', this.props.element, { newElement });

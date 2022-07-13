@@ -18,7 +18,6 @@ import type {
 } from 'hyperview/src/types';
 import {
   Modal,
-  Picker,
   Platform,
   Text,
   TouchableWithoutFeedback,
@@ -32,6 +31,7 @@ import {
   getNameValueFormInputValues,
 } from 'hyperview/src/services';
 import { LOCAL_NAME } from 'hyperview/src/types';
+import Picker from 'hyperview/src/core/components/picker';
 import type { Node as ReactNode } from 'react';
 import type { State } from './types';
 import styles from './styles';

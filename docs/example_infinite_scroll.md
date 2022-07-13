@@ -17,9 +17,26 @@ You can create an infinite-scroll experience by using [`<list>`](reference_list)
   <screen>
     <styles>
       <style id="Body" backgroundColor="white" flex="1" paddingTop="48" />
-      <style id="Item" alignItems="center" borderBottomColor="#eee" borderBottomWidth="1" flex="1" flexDirection="row" height="48" justifyContent="space-between" paddingLeft="24" paddingRight="24" />
+      <style
+        id="Item"
+        alignItems="center"
+        borderBottomColor="#eee"
+        borderBottomWidth="1"
+        flex="1"
+        flexDirection="row"
+        height="48"
+        justifyContent="space-between"
+        paddingLeft="24"
+        paddingRight="24"
+      />
       <style id="Item__Label" fontSize="18" />
-      <style id="Spinner" flex="1" height="48" justifyContent="center" alignItems="center" />
+      <style
+        id="Spinner"
+        flex="1"
+        height="48"
+        justifyContent="center"
+        alignItems="center"
+      />
     </styles>
     <body style="Body">
       <list>

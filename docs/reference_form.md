@@ -60,6 +60,9 @@ A `<form>` element can appear anywhere within a `<screen>` element. It can conta
 - [`style`](#style)
 - [`id`](#id)
 - [`hide`](#hide)
+- [`scroll`](#scroll)
+- [`scroll-orientation`](#scroll-orientation)
+- [`shows-scroll-indicator`](#shows-scroll-indicator)
 
 #### `style`
 
@@ -84,3 +87,27 @@ A global attribute uniquely identifying the element in the whole document.
 | **false** (default), true | No       |
 
 If `hide="true"`, the element will not be rendered on screen. If the element or any of the element's children have a behavior that triggers on "load" or "visible", those behaviors will not trigger while the element is hidden.
+
+#### `scroll`
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| true, **false** (default) | No       |
+
+An attribute indicating whether the content in the can be scrollable. The style rules of the body will determine the viewport size.
+
+#### `scroll-orientation`
+
+| Type                               | Required |
+| ---------------------------------- | -------- |
+| **vertical** (default), horizontal | No       |
+
+An attribute indicating the direction in which the body will scroll.
+
+#### `shows-scroll-indicator`
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| **true** (default), false | No       |
+
+An attribute indicating whether the scroll bar should be shown. Attribute `scroll` should be set in for this to have any effect.

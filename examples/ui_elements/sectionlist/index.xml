@@ -79,6 +79,15 @@
           <text style="Item__Label">Section List With Infinite Scroll</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
+        <item
+          href="/ui_elements/sectionlist/non_sticky_titles.xml"
+          key="basic"
+          show-during-load="loadingScreen"
+          style="Item"
+        >
+          <text style="Item__Label">Section List With Non-Sticky Titles</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
       </list>
     </body>
   </screen>

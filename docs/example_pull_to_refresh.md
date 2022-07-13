@@ -16,8 +16,22 @@ Hyperview has built-in support for the pull-to-refresh gesture on [`<list>`](ref
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
-      <style id="Main" flex="1" paddingTop="48" paddingLeft="24" paddingRight="24" backgroundColor="white" />
-      <style id="Item" flex="1" justifyContent="center" height="48" borderBottomWidth="1" borderBottomColor="#eee" />
+      <style
+        id="Main"
+        flex="1"
+        paddingTop="48"
+        paddingLeft="24"
+        paddingRight="24"
+        backgroundColor="white"
+      />
+      <style
+        id="Item"
+        flex="1"
+        justifyContent="center"
+        height="48"
+        borderBottomWidth="1"
+        borderBottomColor="#eee"
+      />
     </styles>
     <body style="Main">
       <list
@@ -64,4 +78,5 @@ To enable pull-to-refresh on a `<list>` element, add `trigger="refresh"` and `ac
 When refreshed, "New Item!" will be added as the first element of the list. "Item 3" will be removed. Note that the replacement list itself needs to include the attributes for pull-to-refresh since it replaces the existing `<list>` element. If we didn't include the attributes in the replacement list, the user would only be able to do a pull-to-refresh gesture once!
 
 ### Infinite scroll + Pull to refresh
+
 It's common for a list screen to support both infinite scroll and pull-to-refresh. It's possible to combine the spinner `<item>` from the [infinite scroll](/docs/example_infinite_scroll) example with list attributes described above to easily achieve both behaviors in one view!

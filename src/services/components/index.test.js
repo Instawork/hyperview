@@ -20,7 +20,6 @@ import HvSelectSingle from 'hyperview/src/components/hv-select-single';
 import HvSpinner from 'hyperview/src/components/hv-spinner';
 import HvSwitch from 'hyperview/src/components/hv-switch';
 import HvText from 'hyperview/src/components/hv-text';
-import HvTextArea from 'hyperview/src/components/hv-text-area';
 import HvTextField from 'hyperview/src/components/hv-text-field';
 import HvView from 'hyperview/src/components/hv-view';
 import HvWebView from 'hyperview/src/components/hv-web-view';
@@ -44,7 +43,7 @@ const defaultRegistryContent = {
   spinner: HvSpinner,
   switch: HvSwitch,
   text: HvText,
-  'text-area': HvTextArea,
+  'text-area': HvTextField,
   'text-field': HvTextField,
   view: HvView,
   'web-view': HvWebView,
@@ -56,7 +55,7 @@ const defaultFormRegistryContent = {
   'select-multiple': HvSelectMultiple,
   'select-single': HvSelectSingle,
   switch: HvSwitch,
-  'text-area': HvTextArea,
+  'text-area': HvTextField,
   'text-field': HvTextField,
 };
 

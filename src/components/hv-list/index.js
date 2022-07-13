@@ -8,12 +8,16 @@
  *
  */
 
+import * as Contexts from 'hyperview/src/contexts';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
+import {
+  RefreshControl as DefaultRefreshControl,
+  FlatList,
+} from 'react-native';
 import React, { PureComponent } from 'react';
 import { DOMParser } from 'xmldom-instawork';
-import { FlatList } from 'react-native';
 import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { State } from './types';
@@ -24,6 +28,8 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
   static localName = LOCAL_NAME.LIST;
 
   static localNameAliases = [];
+
+  static contextType = Contexts.RefreshControlComponentContext;
 
   parser: DOMParser = new DOMParser();
 
@@ -119,11 +125,14 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
 
     let refreshProps = {};
     if (this.props.element.getAttribute('trigger') === 'refresh') {
+      const RefreshControl = this.context || DefaultRefreshControl;
       refreshProps = {
-        onRefresh: () => {
-          this.refresh();
-        },
-        refreshing: this.state.refreshing,
+        refreshControl: (
+          <RefreshControl
+            onRefresh={this.refresh}
+            refreshing={this.state.refreshing}
+          />
+        ),
       };
     }
 

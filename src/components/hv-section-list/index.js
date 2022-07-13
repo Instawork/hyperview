@@ -8,13 +8,17 @@
  *
  */
 
+import * as Contexts from 'hyperview/src/contexts';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
+import {
+  RefreshControl as DefaultRefreshControl,
+  SectionList,
+} from 'react-native';
 import React, { PureComponent } from 'react';
 import { DOMParser } from 'xmldom-instawork';
 import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import { SectionList } from 'react-native';
 import type { State } from './types';
 
 export default class HvSectionList extends PureComponent<
@@ -27,12 +31,27 @@ export default class HvSectionList extends PureComponent<
 
   static localNameAliases = [];
 
+  static contextType = Contexts.RefreshControlComponentContext;
+
   parser: DOMParser = new DOMParser();
 
   props: HvComponentProps;
 
   state: State = {
     refreshing: false,
+  };
+
+  getStickySectionHeadersEnabled = (): ?boolean => {
+    const stickySectionTitles = this.props.element.getAttribute(
+      'sticky-section-titles',
+    );
+    if (stickySectionTitles === 'true') {
+      return true;
+    }
+    if (stickySectionTitles === 'false') {
+      return false;
+    }
+    return undefined;
   };
 
   refresh = () => {
@@ -110,14 +129,20 @@ export default class HvSectionList extends PureComponent<
           this.props.options,
         ),
       sections,
+      stickySectionHeadersEnabled: this.getStickySectionHeadersEnabled(),
       style,
     };
 
     let refreshProps = {};
     if (this.props.element.getAttribute('trigger') === 'refresh') {
+      const RefreshControl = this.context || DefaultRefreshControl;
       refreshProps = {
-        onRefresh: () => this.refresh(),
-        refreshing: this.state.refreshing,
+        refreshControl: (
+          <RefreshControl
+            onRefresh={this.refresh}
+            refreshing={this.state.refreshing}
+          />
+        ),
       };
     }
 

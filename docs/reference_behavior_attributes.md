@@ -342,9 +342,9 @@ The `verb` attribute defines the HTTP method used to request the content specifi
 
 ## action
 
-| Type                                                                                                                                                                                        | Required |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| **push** (default), new, back, close, navigate, deep-link, open-settings, replace, replace-inner, append, prepend, reload, dispatch-event, show, hide, toggle, set-value, copy-to-clipboard | No       |
+| Type                                                                                                                                                                                                                  | Required |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| **push** (default), new, back, close, navigate, deep-link, open-settings, replace, replace-inner, append, prepend, reload, dispatch-event, show, hide, toggle, set-value, copy-to-clipboard, select-all, unselect-all | No       |
 
 The `action` attribute defines what to do with the Hyperview XML resource described by the `href` attribute. The possible actions are divided into **navigation actions**, which load or navigate to a screen, and **update actions**, which update the elements on the current screen.
 
@@ -371,6 +371,8 @@ The update actions include:
 - [`toggle`](#toggle)
 - [`set-value`](#set-value)
 - [`copy-to-clipboard`](#copy-to-clipboard)
+- [`select-all`](#select-all)
+- [`unselect-all`](#unselect-all)
 
 ### `push`
 
@@ -594,6 +596,57 @@ The `copy-to-clipboard` action allows copying a value to the clipboard. The beha
 
 In this example, pressing "Copy to clipboard" will copy the value "Hello World!" to the clipboard.
 See [the repo](https://github.com/Instawork/hyperview/blob/master/examples/advanced_behaviors/copy_to_clipboard/index.xml) for examples.
+
+### `select-all`
+
+The `select-all` action allows selecting all the options of the target element.
+
+Note that the target element must be a [`<select-multiple>`](/docs/reference_selectmultiple) element.
+
+```xml
+<select-multiple id="id_sm">
+    <option value="1">
+      <text>1st option</text>
+    </option>
+    <option value="2">
+      <text>2nd option</text>
+    </option>
+    <option value="3" selected="true">
+      <text>3rd option</text>
+    </option>
+</select-multiple>
+<text style="link" action="select-all" target="id_sm">Select all</text>
+```
+
+In this example, pressing "Select all" will select "1st option" and "2nd option", in addition to the already selected "3rd option".
+See [the repo](https://github.com/Instawork/hyperview/blob/master/examples/behaviors/select_all/index.xml) for more examples.
+
+### `unselect-all`
+
+The `unselect-all` action allows unselecting all the options of the target element.
+
+Note that the target element must only be one of the following elements:
+
+- [`<select-single>`](/docs/reference_selectsingle)
+- [`<select-multiple>`](/docs/reference_selectmultiple)
+
+```xml
+<select-multiple id="id_sm">
+    <option value="1" selected="true">
+      <text>1st option</text>
+    </option>
+    <option value="2" selected="true">
+      <text>2nd option</text>
+    </option>
+    <option value="3">
+      <text>3rd option</text>
+    </option>
+</select-multiple>
+<text style="link" action="unselect-all" target="id_sm">Unselect all</text>
+```
+
+In this example, pressing "Unselect all" will unselect "1st option" and "2nd option", that were initially selected.
+See [the repo](https://github.com/Instawork/hyperview/blob/master/examples/behaviors/unselect_all/index.xml) for more examples.
 
 ## target
 

@@ -18,12 +18,12 @@ import {
   View,
 } from 'react-native';
 import React, { PureComponent } from 'react';
+import { createProps, createStyleProp } from 'hyperview/src/services';
 import type { HvComponentProps } from 'hyperview/src/types';
 import type { InternalProps } from './types';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import KeyboardAwareScrollView from 'hyperview/src/core/components/keyboard-aware-scroll-view';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { addHref } from 'hyperview/src/core/hyper-ref';
-import { createProps } from 'hyperview/src/services';
 
 export default class HvView extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
@@ -50,9 +50,10 @@ export default class HvView extends PureComponent<HvComponentProps> {
       viewOptions,
     );
     const scrollable = !!this.props.element.getAttribute('scroll');
-    const scrollDirection = this.props.element.getAttribute(
-      'scroll-orientation',
-    );
+    const horizontal =
+      this.props.element.getAttribute('scroll-orientation') === 'horizontal';
+    const showScrollIndicator =
+      this.props.element.getAttribute('shows-scroll-indicator') !== 'false';
     const keyboardAvoiding = !!this.props.element.getAttribute(
       'avoid-keyboard',
     );
@@ -110,7 +111,28 @@ export default class HvView extends PureComponent<HvComponentProps> {
         viewOptions = { ...viewOptions, registerInputHandler };
       }
 
-      if (scrollDirection === 'horizontal') {
+      props.showsHorizontalScrollIndicator = horizontal && showScrollIndicator;
+      props.showsVerticalScrollIndicator = !horizontal && showScrollIndicator;
+
+      const contentContainerStyleAttr = 'content-container-style';
+      if (this.props.element.getAttribute('scroll-orientation')) {
+        props.contentContainerStyle = createStyleProp(
+          this.props.element,
+          this.props.stylesheets,
+          {
+            ...viewOptions,
+            styleAttr: contentContainerStyleAttr,
+          },
+        );
+      }
+
+      // Fix scrollbar rendering issue in iOS 13+
+      // https://github.com/facebook/react-native/issues/26610#issuecomment-539843444
+      if (Platform.OS === 'ios' && parseInt(Platform.Version, 10) >= 13) {
+        props.scrollIndicatorInsets = { right: 1 };
+      }
+
+      if (horizontal) {
         props.horizontal = true;
       }
     }
@@ -130,7 +152,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
       viewOptions,
     );
 
-    if (scrollable && scrollDirection !== 'horizontal') {
+    if (scrollable && !horizontal) {
       // add sticky indicies
       const stickyIndices = children.reduce(
         (acc, element, index) =>

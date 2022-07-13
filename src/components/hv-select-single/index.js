@@ -53,12 +53,16 @@ export default class HvSelectSingle extends PureComponent<HvComponentProps> {
   }
 
   componentDidUpdate() {
+    // NOTE(adam): we need to remove the attribute before
+    // selection, since selection will update the component.
     if (this.props.element.hasAttribute('value')) {
-      // NOTE(adam): we need to remove the attribute before
-      // selection, since selection will update the component.
       const newValue = this.props.element.getAttribute('value');
       this.props.element.removeAttribute('value');
       this.onSelect(newValue);
+    }
+    if (this.props.element.hasAttribute('unselect-all')) {
+      this.props.element.removeAttribute('unselect-all');
+      this.onSelect(null);
     }
   }
 

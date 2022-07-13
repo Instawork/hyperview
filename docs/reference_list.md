@@ -33,6 +33,8 @@ A `<list>` element will only render `<item>` and `<items>` children elements. Ot
 - [`itemHeight`](#itemheight)
 - [`id`](#id)
 - [`hide`](#hide)
+- [`scroll-orientation`](#scroll-orientation)
+- [`shows-scroll-indicator`](#shows-scroll-indicator)
 
 #### Behavior attributes
 
@@ -69,3 +71,19 @@ A global attribute uniquely identifying the element in the whole document.
 | **false** (default), true | No       |
 
 If `hide="true"`, the element will not be rendered on screen. If the element or any of the element's children have a behavior that triggers on "load" or "visible", those behaviors will not trigger while the element is hidden.
+
+#### `scroll-orientation`
+
+| Type                               | Required |
+| ---------------------------------- | -------- |
+| **vertical** (default), horizontal | No       |
+
+An attribute indicating the direction in which the body will scroll.
+
+#### `shows-scroll-indicator`
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| **true** (default), false | No       |
+
+An attribute indicating whether the scroll bar should be shown.

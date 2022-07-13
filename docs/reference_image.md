@@ -9,13 +9,9 @@ The `<image>` element displays an image on the screen. Image data can be provide
 ```xml
 <screen>
   <styles>
-    <style id="Image"
-      flex="1"
-      height="128"
-      margin="24"
-      width="128"
-    />
-    <style id="Image__Styled"
+    <style id="Image" flex="1" height="128" margin="24" width="128" />
+    <style
+      id="Image__Styled"
       borderColor="#e1e1e1"
       borderRadius="64"
       borderWidth="4"

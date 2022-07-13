@@ -36,6 +36,7 @@ A `<body>` element can only appear as a direct child of a `<screen>` element. Th
 - [`style`](#style)
 - [`scroll`](#scroll)
 - [`scroll-orientation`](#scroll-orientation)
+- [`shows-scroll-indicator`](#shows-scroll-indicator)
 - [`id`](#id)
 
 #### Behavior attributes
@@ -73,6 +74,14 @@ An attribute indicating whether the content in the can be scrollable. The style 
 | **vertical** (default), horizontal | No       |
 
 An attribute indicating the direction in which the body will scroll.
+
+#### `shows-scroll-indicator`
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| **true** (default), false | No       |
+
+An attribute indicating whether the scroll bar should be shown. Attribute `scroll` should be set in for this to have any effect.
 
 #### `id`
 

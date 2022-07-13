@@ -40,7 +40,11 @@ export default class HvText extends PureComponent<HvComponentProps> {
         this.props.element,
         this.props.stylesheets,
         this.props.onUpdate,
-        this.props.options,
+        {
+          ...this.props.options,
+          preformatted:
+            this.props.element.getAttribute('preformatted') === 'true',
+        },
       ),
     );
 

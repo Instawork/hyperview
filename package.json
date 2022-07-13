@@ -1,6 +1,6 @@
 {
   "name": "hyperview",
-  "version": "0.49.0",
+  "version": "0.55.0",
   "main": "lib/index.js",
   "description": "React Native client for Hyperview XML",
   "homepage": "https://hyperview.org",
@@ -28,8 +28,8 @@
     "sync": "babel-node ./scripts/sync",
     "generate": "babel-node ./scripts/generate",
     "preversion": "yarn test && yarn build",
-    "prettify": "pretty-quick && prettier --write '**/*.xsd' '**/*.xml'",
-    "postversion": "yarn publish --new-version $npm_package_version && git push --follow-tags",
+    "prettify": "pretty-quick && prettier --write '**/*.xsd' '**/*.xml' '**/*.md'",
+    "postversion": "yarn publish --new-version $npm_package_version && cd demo && yarn add hyperview@$npm_package_version && git add package.json yarn.lock && git commit -m\"chore(demo): update Hyperview to v$npm_package_version\" && cd .. && git push --follow-tags",
     "format-xml": "./scripts/format-xml.sh",
     "release:patch": "yarn version --patch",
     "release:minor": "yarn version --minor",
@@ -37,11 +37,11 @@
     "storybook": "storybook start -p 7007",
     "test:flow": "flow",
     "test:generators": "yarn generate test && git diff --quiet HEAD",
-    "test:lint": "eslint src && prettier --check '**/*.xsd' '**/*.xml'",
+    "test:lint": "eslint src && prettier --check '**/*.xsd' '**/*.xml' '**/*.md'",
     "test:render": "npx patch-package && jest test/render.test.js --forceExit",
     "test:unit": "jest --testPathPattern src",
     "test:xmlserver": "eleventy --serve --port=8085",
-    "test:validate-xml": "find examples/ -name '*.xml' | xargs xmllint --schema schema/hyperview.xsd --noout",
+    "test:validate-xml": "find examples/ -name '*.xml' -not -path '*/advanced_behaviors/instawork.xml' -not -path '*/advanced_behaviors/custom_share.xml' -not -path '*/advanced_behaviors/alert/behavior.xml' -not -path '*/case_studies/business_rating.xml' -not -path '*/case_studies/_rating_save.xml' | xargs xmllint --schema schema/hyperview.xsd --noout",
     "test": "yarn generate test && yarn test:flow && yarn test:lint && yarn test:render && yarn test:unit && yarn test:validate-xml"
   },
   "dependencies": {
@@ -51,6 +51,7 @@
   },
   "peerDependencies": {
     "@react-native-community/datetimepicker": ">= 3.0.3",
+    "@react-native-picker/picker": ">= 2.2.1",
     "react": ">= 16.13.1",
     "react-native": ">= 0.63.3",
     "react-native-keyboard-aware-scrollview": ">= 2.1.0",
@@ -65,6 +66,7 @@
     "@babel/runtime": "7.13.7",
     "@prettier/plugin-xml": "0.13.0",
     "@react-native-community/datetimepicker": "3.0.3",
+    "@react-native-picker/picker": "2.2.1",
     "@storybook/addon-actions": "4.1.18",
     "@storybook/addon-storyshots": "4.1.18",
     "@storybook/react-native": "4.1.18",

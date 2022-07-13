@@ -1,0 +1,150 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style
+        id="Header"
+        alignItems="center"
+        backgroundColor="white"
+        borderBottomColor="#eee"
+        borderBottomWidth="1"
+        flexDirection="row"
+        paddingLeft="24"
+        paddingRight="24"
+        paddingBottom="16"
+      />
+      <style
+        id="Header__Back"
+        color="blue"
+        fontSize="16"
+        fontWeight="600"
+        paddingRight="16"
+      />
+      <style id="Header__Title" color="black" fontSize="24" fontWeight="600" />
+      <style id="Body" backgroundColor="white" flex="1" />
+      <style
+        id="Description"
+        borderColor="red"
+        borderRadius="4"
+        borderWidth="2"
+        fontSize="16"
+        fontWeight="600"
+        margin="24"
+        padding="16"
+      />
+      <style
+        id="Item"
+        alignItems="center"
+        borderBottomColor="#eee"
+        borderBottomWidth="1"
+        flex="1"
+        flexDirection="row"
+        height="48"
+        justifyContent="space-between"
+        paddingLeft="24"
+        paddingRight="24"
+      />
+      <style id="Item__Label" fontSize="18" fontWeight="normal" />
+      <style id="Item__Chevron" fontSize="18" fontWeight="bold" />
+    </styles>
+    <body style="Body" safe-area="true">
+      <header style="Header">
+        <text action="back" href="#" style="Header__Back">Back</text>
+        <text style="Header__Title">Text</text>
+      </header>
+      <list>
+        <item
+          href="/ui_elements/text/basic.xml"
+          key="view"
+          show-during-load="loadingScreen"
+          style="Item"
+        >
+          <text style="Item__Label">Basic</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item
+          href="/ui_elements/text/number-of-lines.xml"
+          key="view"
+          show-during-load="loadingScreen"
+          style="Item"
+        >
+          <text style="Item__Label">Number of lines</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item
+          href="/ui_elements/text/nested.xml"
+          key="scroll-view"
+          show-during-load="loadingScreen"
+          style="Item"
+        >
+          <text style="Item__Label">Nested</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item
+          href="/ui_elements/text/escaped.xml"
+          key="keyboard-avoiding-view"
+          show-during-load="loadingScreen"
+          style="Item"
+        >
+          <text style="Item__Label">Escaped</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item
+          href="/ui_elements/text/selectable.xml"
+          key="text"
+          show-during-load="loadingScreen"
+          style="Item"
+        >
+          <text style="Item__Label">Selectable</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item
+          href="/ui_elements/text/adjustable-font-size.xml"
+          key="image"
+          show-during-load="loadingScreen"
+          style="Item"
+        >
+          <text style="Item__Label">Adjustable font size</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+        <item
+          href="/ui_elements/text/preformatted.xml"
+          key="list"
+          show-during-load="loadingScreen"
+          style="Item"
+        >
+          <text style="Item__Label">Preformatted</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
+      </list>
+    </body>
+  </screen>
+  <screen id="loadingScreen">
+    <styles>
+      <style
+        id="Header"
+        alignItems="center"
+        backgroundColor="white"
+        borderBottomColor="#eee"
+        borderBottomWidth="1"
+        flexDirection="row"
+        paddingLeft="24"
+        paddingRight="24"
+        paddingBottom="16"
+      />
+      <style
+        id="Header__Back"
+        color="blue"
+        fontSize="16"
+        fontWeight="600"
+        paddingRight="16"
+      />
+      <style id="Header__Title" color="black" fontSize="24" fontWeight="600" />
+      <style id="Body" backgroundColor="white" flex="1" />
+    </styles>
+    <body style="Body" safe-area="true">
+      <header style="Header">
+        <text action="back" href="#" style="Header__Back">Back</text>
+      </header>
+    </body>
+  </screen>
+</doc>

@@ -1,8 +1,11 @@
 ---
 id: reference_textarea
-title: <text-area>
+title: <text-area> (deprecated)
 sidebar_label: <text-area>
 ---
+
+_Deprecation notice:_
+Use instead [`<text-field multiline="true">`](/docs/reference_textfield#multiline). `<text-area>` will be removed in a future version of Hyperview.
 
 The `<text-area>` element represents multi-line input fields. When pressed, the text area focuses and a keyboard appears to accept user input. The value entered into the `<text-area>` gets serialized as form data when a `<form>` gets submitted.
 

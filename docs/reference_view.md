@@ -55,6 +55,7 @@ A `<view>` element can only appear anywhere within a `<screen>` element.
 - [`scroll`](#scroll)
 - [`scroll-orientation`](#scroll-orientation)
 - [`scroll-to-input-offset`](#scroll-to-input-offset)
+- [`shows-scroll-indicator`](#shows-scroll-indicator)
 - [`id`](#id)
 - [`hide`](#hide)
 - [`avoid-keyboard`](#avoid-keyboard)
@@ -79,6 +80,14 @@ If true, the body will be rendered in the safe area of the mobile device (avoidi
 
 A space-separated list of styles to apply to the element. See [Styles](/docs/reference_style). Note that text style rules cannot be applied to a `<view>`.
 
+#### `content-container-style`
+
+| Type   | Required |
+| ------ | -------- |
+| string | No       |
+
+A space-separated list of styles to apply to the content container element of a scroll view. See [Styles](/docs/reference_style). Note that text style rules cannot be applied to a `<view>`, and this attribute only has an effect when `scroll` is true.
+
 #### `scroll`
 
 | Type                      | Required |
@@ -102,6 +111,14 @@ An attribute indicating the direction in which the view will scroll.
 | number | No (defauls to **120**) |
 
 An attribute defining an additional scroll offset to be applied to the view, when a `<text-field>` or `<text-area>` is focused. Only valid in combination with attribute `scroll` set to `"true"`.
+
+#### `shows-scroll-indicator`
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| **true** (default), false | No       |
+
+An attribute indicating whether the scroll bar should be shown. Attribute `scroll` should be set in for this to have any effect.
 
 #### `id`
 

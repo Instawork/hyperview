@@ -266,6 +266,7 @@ export type HvComponentOptions = {
   onEnd?: ?() => void,
   onSelect?: ?(value: ?DOMString) => void,
   onToggle?: ?(value: ?DOMString) => void,
+  preformatted?: ?boolean,
   pressed?: ?boolean,
   pressedSelected?: ?boolean,
   registerInputHandler?: (ref: ?ElementRef<*>) => void,
@@ -275,6 +276,7 @@ export type HvComponentOptions = {
   showIndicatorIds?: ?DOMString,
   styleAttr?: ?DOMString,
   targetId?: ?DOMString,
+  inlineFormattingContext?: ?[Node[], string[]],
 };
 
 export type HvComponentOnUpdate = (
@@ -286,7 +288,7 @@ export type HvComponentOnUpdate = (
 
 export type HvGetRoot = () => Document;
 
-export type HvUpdateRoot = (root: Document) => void;
+export type HvUpdateRoot = (root: Document, updateStylesheet?: boolean) => void;
 
 export type HvComponentProps = {|
   element: Element,
@@ -364,7 +366,9 @@ export const ACTIONS = {
   RELOAD: 'reload',
   REPLACE: 'replace',
   REPLACE_INNER: 'replace-inner',
+  SELECT_ALL: 'select-all',
   SWAP: 'swap',
+  UNSELECT_ALL: 'unselect-all',
 };
 
 export const NAV_ACTIONS = {

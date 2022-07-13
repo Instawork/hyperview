@@ -1,0 +1,149 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style
+        id="Header"
+        alignItems="center"
+        backgroundColor="white"
+        borderBottomColor="#eee"
+        borderBottomWidth="1"
+        flexDirection="row"
+        paddingLeft="24"
+        paddingRight="24"
+        paddingBottom="16"
+      />
+      <style
+        id="Header__Back"
+        color="blue"
+        fontSize="16"
+        fontWeight="600"
+        paddingRight="16"
+      />
+      <style id="Header__Title" color="black" fontSize="24" fontWeight="600" />
+      <style id="Body" backgroundColor="white" flex="1" />
+      <style
+        id="Description"
+        borderColor="red"
+        borderRadius="4"
+        borderWidth="2"
+        fontSize="16"
+        fontWeight="600"
+        margin="24"
+        padding="16"
+      />
+      <style
+        id="List__Header"
+        alignItems="center"
+        backgroundColor="#eee"
+        flex="1"
+        flexDirection="row"
+        height="48"
+        paddingLeft="24"
+        paddingRight="24"
+      />
+      <style id="List__HeaderText" fontSize="18" fontWeight="bold" />
+      <style
+        id="Item"
+        alignItems="center"
+        borderBottomColor="#eee"
+        borderBottomWidth="1"
+        flex="1"
+        flexDirection="row"
+        height="48"
+        justifyContent="space-between"
+        paddingLeft="24"
+        paddingRight="24"
+      />
+      <style id="Item__Label" fontSize="18" fontWeight="normal" />
+      <style id="Item__Chevron" fontSize="18" fontWeight="bold" />
+    </styles>
+    <body style="Body" safe-area="true">
+      <header style="Header">
+        <text action="back" href="#" style="Header__Back">Back</text>
+        <text style="Header__Title">Non-Sticky Titles</text>
+      </header>
+      <section-list sticky-section-titles="false">
+        <section>
+          <section-title style="List__Header">
+            <text style="List__HeaderText">Section 1</text>
+          </section-title>
+          <item key="1" style="Item">
+            <text style="Item__Label">List 1</text>
+          </item>
+          <item key="2" style="Item">
+            <text style="Item__Label">List 2</text>
+          </item>
+          <item key="3" style="Item">
+            <text style="Item__Label">List 3</text>
+          </item>
+          <item key="4" style="Item">
+            <text style="Item__Label">List 4</text>
+          </item>
+          <item key="5" style="Item">
+            <text style="Item__Label">List 5</text>
+          </item>
+        </section>
+        <section>
+          <section-title style="List__Header">
+            <text style="List__HeaderText">Section 2</text>
+          </section-title>
+          <item key="6" style="Item">
+            <text style="Item__Label">List 6</text>
+          </item>
+          <item key="7" style="Item">
+            <text style="Item__Label">List 7</text>
+          </item>
+          <item key="8" style="Item">
+            <text style="Item__Label">List 8</text>
+          </item>
+          <item key="9" style="Item">
+            <text style="Item__Label">List 9</text>
+          </item>
+          <item key="10" style="Item">
+            <text style="Item__Label">List 10</text>
+          </item>
+        </section>
+        <section>
+          <section-title style="List__Header">
+            <text style="List__HeaderText">Section 3</text>
+          </section-title>
+          <item key="11" style="Item">
+            <text style="Item__Label">List 11</text>
+          </item>
+          <item key="12" style="Item">
+            <text style="Item__Label">List 12</text>
+          </item>
+          <item key="13" style="Item">
+            <text style="Item__Label">List 13</text>
+          </item>
+          <item key="14" style="Item">
+            <text style="Item__Label">List 14</text>
+          </item>
+          <item key="15" style="Item">
+            <text style="Item__Label">List 15</text>
+          </item>
+        </section>
+        <section>
+          <section-title style="List__Header">
+            <text style="List__HeaderText">Section 4</text>
+          </section-title>
+          <item key="16" style="Item">
+            <text style="Item__Label">List 16</text>
+          </item>
+          <item key="17" style="Item">
+            <text style="Item__Label">List 17</text>
+          </item>
+          <item key="18" style="Item">
+            <text style="Item__Label">List 18</text>
+          </item>
+          <item key="19" style="Item">
+            <text style="Item__Label">List 19</text>
+          </item>
+          <item key="20" style="Item">
+            <text style="Item__Label">List 20</text>
+          </item>
+        </section>
+      </section-list>
+    </body>
+  </screen>
+</doc>

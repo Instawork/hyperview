@@ -242,9 +242,8 @@ export default class HyperScreen extends React.Component {
       });
     }
     if (!this.state.doc) {
-      return (
-        <Loading />
-      );
+      const loadingScreen = this.props.loadingScreen || Loading;
+      return React.createElement(loadingScreen);
     }
     const [body] = Array.from(this.state.doc.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'body'));
     const screenElement = Render.renderElement(
@@ -259,7 +258,9 @@ export default class HyperScreen extends React.Component {
 
     return (
       <Contexts.DateFormatContext.Provider value={this.props.formatDate}>
-        {screenElement}
+        <Contexts.RefreshControlComponentContext.Provider value={this.props.refreshControl}>
+          {screenElement}
+        </Contexts.RefreshControlComponentContext.Provider>
       </Contexts.DateFormatContext.Provider>
     );
   }
@@ -491,7 +492,9 @@ export default class HyperScreen extends React.Component {
     const action = behaviorElement.getAttribute('action');
     const behavior = this.behaviorRegistry[action];
     if (behavior) {
-      const updateRoot = (newRoot) => this.setState({ doc: newRoot });
+      const updateRoot = (newRoot, updateStylesheet = false) => updateStylesheet
+        ? this.setState({ doc: newRoot, styles: Stylesheets.createStylesheets(newRoot) })
+        : this.setState({ doc: newRoot });
       const getRoot = () => this.doc;
       behavior.callback(behaviorElement, this.onUpdate, getRoot, updateRoot);
     } else {
