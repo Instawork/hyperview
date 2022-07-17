@@ -4,4 +4,8 @@ permalink: "/styling/index.xml"
 tags: root
 list_tag: "styling"
 ---
-{% extends 'directory_list.xml.njk' %}
+{% extends 'base.xml.njk' %}
+
+{% block container %}
+  {% include "./list.xml.njk" %}
+{% endblock %}

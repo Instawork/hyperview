@@ -12,9 +12,7 @@
         {% endif %}
         <text style="Header__Title">{{ title }}</text>
       </header>
-      <view scroll="true" style="Main">
-        {% block content %}{% endblock %}
-      </view>
+      {% block container %}{% endblock %}
     </body>
   </screen>
   {% include 'loading_screen.xml.njk' %}
