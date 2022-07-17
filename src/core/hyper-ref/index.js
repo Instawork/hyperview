@@ -33,6 +33,12 @@ import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
 import { XMLSerializer } from 'xmldom-instawork';
 import { createTestProps } from 'hyperview/src/services';
 
+/**
+ * Wrapper to handle UI events
+ * Stop propagation and prevent default client behavior
+ * This prevents clicks on various elements to trigger browser navigation
+ * when using Hyperview for web.
+ */
 export const createEventHandler = (
   handler: () => void,
 ): ((event: any) => void) => event => {
