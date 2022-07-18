@@ -34,6 +34,22 @@ import { XMLSerializer } from 'xmldom-instawork';
 import { createTestProps } from 'hyperview/src/services';
 
 /**
+ * Wrapper to handle UI events
+ * Stop propagation and prevent default client behavior
+ * This prevents clicks on various elements to trigger browser navigation
+ * when using Hyperview for web.
+ */
+export const createEventHandler = (
+  handler: () => void,
+): ((event: any) => void) => event => {
+  if (event) {
+    event.stopPropagation();
+    event.preventDefault();
+  }
+  handler();
+};
+
+/**
  * Component that handles dispatching behaviors based on the appropriate
  * triggers.
  */
@@ -228,46 +244,46 @@ export default class HyperRef extends PureComponent<Props, State> {
         );
         if (pressHandlers[triggerPropName]) {
           const oldHandler = pressHandlers[triggerPropName];
-          pressHandlers[triggerPropName] = () => {
+          pressHandlers[triggerPropName] = createEventHandler(() => {
             oldHandler();
             setTimeout(handler, time);
             time += 1;
-          };
+          });
         } else {
-          pressHandlers[triggerPropName] = handler;
+          pressHandlers[triggerPropName] = createEventHandler(handler);
         }
       });
 
       if (pressHandlers.onPressIn) {
         const oldHandler = pressHandlers.onPressIn;
-        pressHandlers.onPressIn = () => {
+        pressHandlers.onPressIn = createEventHandler(() => {
           this.setState({ pressed: true });
           oldHandler();
-        };
+        });
       } else {
-        pressHandlers.onPressIn = () => {
+        pressHandlers.onPressIn = createEventHandler(() => {
           this.setState({ pressed: true });
-        };
+        });
       }
 
       if (pressHandlers.onPressOut) {
         const oldHandler = pressHandlers.onPressOut;
-        pressHandlers.onPressOut = () => {
+        pressHandlers.onPressOut = createEventHandler(() => {
           this.setState({ pressed: false });
           oldHandler();
-        };
+        });
       } else {
-        pressHandlers.onPressOut = () => {
+        pressHandlers.onPressOut = createEventHandler(() => {
           this.setState({ pressed: false });
-        };
+        });
       }
 
       // Fix a conflict between onPressOut and onPress triggering at the same time.
       if (pressHandlers.onPressOut && pressHandlers.onPress) {
         const onPressHandler = pressHandlers.onPress;
-        pressHandlers.onPress = () => {
+        pressHandlers.onPress = createEventHandler(() => {
           setTimeout(onPressHandler, time);
-        };
+        });
       }
 
       renderedComponent = React.createElement(
