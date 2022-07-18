@@ -56,9 +56,14 @@ export class Parser {
   load = async (
     baseUrl: string,
     data: ?FormData,
-    method: ?HttpMethod = HTTP_METHODS.GET,
+    httpMethod: ?HttpMethod,
     acceptContentType: string = CONTENT_TYPE.APPLICATION_VND_HYPERVIEW_XML,
   ): Promise<Document> => {
+    // HTTP method can either be POST when explicitly set
+    // Any other value and we'll default to GET
+    const method =
+      httpMethod === HTTP_METHODS.POST ? HTTP_METHODS.POST : HTTP_METHODS.GET;
+
     // For GET requests, we can't include a body so we encode the form data as a query
     // string in the URL.
     const url =
