@@ -1,13 +1,13 @@
 {# Standard template for showing a list of links to other screens. List is generated from a collection of screens with the given "list_tag" #}
-{% extends 'base.xml.njk' %}
 
-{% block styles %}
-
-{% endblock %}
-
-{% block content %}
-  <behavior trigger="refresh" action="reload" href="#" />
-  <list>
+<list
+  xmlns="https://hyperview.org/hyperview"
+  trigger="refresh"
+  action="replace"
+  target="directory-list"
+  id="directory-list"
+  href="{% if list_href %}{{ list_href }}{% else %}{{ permalink }}{% endif %}"
+>
   {% for screen in collections[list_tag] %}
     <item
       href="{{ screen.data.permalink }}"
@@ -21,5 +21,4 @@
       <text style="Item__Chevron">&gt;</text>
     </item>
   {% endfor %}
-  </list>
-{% endblock %}
+</list>
