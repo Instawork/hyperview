@@ -52,6 +52,7 @@ export default class HyperviewScreen extends PureComponent {
   fetchWrapper = (input, init = { headers: {} }) => {
     return fetch(input, {
       ...init,
+      mode: "cors",
       headers: {
         // Don't cache requests for the demo
         'Cache-Control': 'no-cache, no-store, must-revalidate',

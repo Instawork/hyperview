@@ -5,7 +5,7 @@ const chokidar = require('chokidar');
 const path = require('path');
 
 const PROJECT_DIR = path.join(__dirname, '../..');
-const SRC_DIRNAME = 'src';
+const SRC_DIRNAME = process.argv[3] || 'src';
 const SRC_DIR = path.join(PROJECT_DIR, SRC_DIRNAME);
 const DEST_PROJECT_REL_PATH = process.argv[2] || './demo';
 const HYPERVIEW_DIR = path.join(
@@ -17,7 +17,7 @@ const HYPERVIEW_SRC_DIR = path.join(HYPERVIEW_DIR, SRC_DIRNAME);
 
 const updatePackageJson = () => {
   console.log('Updating package.json…');
-  const cmd = `sed -i.bak 's/lib\\/index.js/src\\/index.js/g' ${HYPERVIEW_DIR}/package.json`;
+  const cmd = `sed -i.bak 's/lib\\/index.js/${SRC_DIRNAME}\\/index.js/g' ${HYPERVIEW_DIR}/package.json`;
   childProcess.execSync(cmd);
 };
 
