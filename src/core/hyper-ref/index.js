@@ -197,10 +197,19 @@ export default class HyperRef extends PureComponent<Props, State> {
   };
 
   wrapInTouchableView = (
-    behaviors: Element[],
     component: ?React$Element<*> | string,
     style: StyleSheet,
-  ): React$Element<*> => {
+  ): ?React$Element<*> | string => {
+    const behaviors = this.behaviorElements.filter(
+      e =>
+        PRESS_TRIGGERS.indexOf(
+          e.getAttribute(ATTRIBUTES.TRIGGER) || TRIGGERS.PRESS,
+        ) >= 0,
+    );
+    if (!behaviors.length) {
+      return component;
+    }
+
     // $FlowFixMe: cannot spread Test props because return type is inexact
     const props = {
       // Component will use touchable opacity to trigger href.
@@ -279,10 +288,13 @@ export default class HyperRef extends PureComponent<Props, State> {
   };
 
   wrapInScrollableView = (
-    behaviors: Element[],
     component: ?React$Element<*> | string,
     style: StyleSheet,
-  ): React$Element<*> => {
+  ): ?React$Element<*> | string => {
+    const behaviors = this.getBehaviorElements(TRIGGERS.REFRESH);
+    if (!behaviors.length) {
+      return component;
+    }
     const refreshHandlers = behaviors.map(behaviorElement =>
       this.createActionHandler(
         this.props.element,
@@ -304,10 +316,13 @@ export default class HyperRef extends PureComponent<Props, State> {
   };
 
   wrapInVisibilityDetectingView = (
-    behaviors: Element[],
     component: ?React$Element<*> | string,
     style: StyleSheet,
-  ): React$Element<*> => {
+  ): ?React$Element<*> | string => {
+    const behaviors = this.getBehaviorElements(TRIGGERS.VISIBLE);
+    if (!behaviors.length) {
+      return component;
+    }
     const visibleHandlers = behaviors.map(behaviorElement =>
       this.createActionHandler(
         this.props.element,
@@ -340,39 +355,16 @@ export default class HyperRef extends PureComponent<Props, State> {
       : null;
 
     // Wrap component in a pressable element
-    const pressBehaviors = this.behaviorElements.filter(
-      e =>
-        PRESS_TRIGGERS.indexOf(
-          e.getAttribute(ATTRIBUTES.TRIGGER) || TRIGGERS.PRESS,
-        ) >= 0,
-    );
-    if (pressBehaviors.length > 0) {
-      renderedComponent = this.wrapInTouchableView(
-        pressBehaviors,
-        renderedComponent,
-        hrefStyle,
-      );
-    }
+    renderedComponent = this.wrapInTouchableView(renderedComponent, hrefStyle);
 
     // Wrap component in a scrollview with a refresh control to trigger refresh behaviors.
-    const refreshBehaviors = this.getBehaviorElements(TRIGGERS.REFRESH);
-    if (refreshBehaviors.length > 0) {
-      renderedComponent = this.wrapInScrollableView(
-        refreshBehaviors,
-        renderedComponent,
-        hrefStyle,
-      );
-    }
+    renderedComponent = this.wrapInScrollableView(renderedComponent, hrefStyle);
 
     // Wrap component in a VisibilityDetectingView to trigger visibility behaviors.
-    const visibleBehaviors = this.getBehaviorElements(TRIGGERS.VISIBLE);
-    if (visibleBehaviors.length > 0) {
-      renderedComponent = this.wrapInVisibilityDetectingView(
-        visibleBehaviors,
-        renderedComponent,
-        hrefStyle,
-      );
-    }
+    renderedComponent = this.wrapInVisibilityDetectingView(
+      renderedComponent,
+      hrefStyle,
+    );
 
     return renderedComponent || null;
   }
