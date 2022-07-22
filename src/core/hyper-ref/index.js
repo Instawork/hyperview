@@ -26,6 +26,7 @@ import type {
   PressTrigger,
   StyleSheet,
   StyleSheets,
+  Trigger,
 } from 'hyperview/src/types';
 import type { PressHandlers, Props, State } from './types';
 import React, { PureComponent } from 'react';
@@ -177,11 +178,14 @@ export default class HyperRef extends PureComponent<Props, State> {
       onUpdate(null, action, element, { behaviorElement, custom: true });
   };
 
-  triggerLoadBehaviors = () => {
-    const loadBehaviors = this.behaviorElements.filter(
-      e => e.getAttribute(ATTRIBUTES.TRIGGER) === TRIGGERS.LOAD,
+  getBehaviorElements = (trigger: Trigger): Element[] => {
+    return this.behaviorElements.filter(
+      e => e.getAttribute(ATTRIBUTES.TRIGGER) === trigger,
     );
+  };
 
+  triggerLoadBehaviors = () => {
+    const loadBehaviors = this.getBehaviorElements(TRIGGERS.LOAD);
     loadBehaviors.forEach(behaviorElement => {
       const handler = this.createActionHandler(
         this.props.element,
@@ -321,19 +325,6 @@ export default class HyperRef extends PureComponent<Props, State> {
   };
 
   render() {
-    const pressBehaviors = this.behaviorElements.filter(
-      e =>
-        PRESS_TRIGGERS.indexOf(
-          e.getAttribute(ATTRIBUTES.TRIGGER) || TRIGGERS.PRESS,
-        ) >= 0,
-    );
-    const visibleBehaviors = this.behaviorElements.filter(
-      e => e.getAttribute(ATTRIBUTES.TRIGGER) === TRIGGERS.VISIBLE,
-    );
-    const refreshBehaviors = this.behaviorElements.filter(
-      e => e.getAttribute(ATTRIBUTES.TRIGGER) === TRIGGERS.REFRESH,
-    );
-
     // Render the component based on the XML element. Depending on the applied behaviors,
     // this component will be wrapped with others to provide the necessary interaction.
     let renderedComponent = Render.renderElement(
@@ -349,6 +340,12 @@ export default class HyperRef extends PureComponent<Props, State> {
       : null;
 
     // Wrap component in a pressable element
+    const pressBehaviors = this.behaviorElements.filter(
+      e =>
+        PRESS_TRIGGERS.indexOf(
+          e.getAttribute(ATTRIBUTES.TRIGGER) || TRIGGERS.PRESS,
+        ) >= 0,
+    );
     if (pressBehaviors.length > 0) {
       renderedComponent = this.wrapInTouchableView(
         pressBehaviors,
@@ -358,6 +355,7 @@ export default class HyperRef extends PureComponent<Props, State> {
     }
 
     // Wrap component in a scrollview with a refresh control to trigger refresh behaviors.
+    const refreshBehaviors = this.getBehaviorElements(TRIGGERS.REFRESH);
     if (refreshBehaviors.length > 0) {
       renderedComponent = this.wrapInScrollableView(
         refreshBehaviors,
@@ -367,6 +365,7 @@ export default class HyperRef extends PureComponent<Props, State> {
     }
 
     // Wrap component in a VisibilityDetectingView to trigger visibility behaviors.
+    const visibleBehaviors = this.getBehaviorElements(TRIGGERS.VISIBLE);
     if (visibleBehaviors.length > 0) {
       renderedComponent = this.wrapInVisibilityDetectingView(
         visibleBehaviors,
