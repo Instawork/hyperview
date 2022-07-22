@@ -27,7 +27,11 @@
       <style id="Color" backgroundColor="#63CB76" color="white" />
       <style id="Big" fontSize="32" />
       <style id="Small" fontSize="16" />
-      <style id="Link" color="blue" textDecorationLine="underline" />
+      <style id="Link" color="blue">
+        <modifier pressed="true">
+          <style color="red" />
+        </modifier>
+      </style>
       <style id="Main" flex="1" />
     </styles>
     <body style="Body" safe-area="true">
@@ -60,6 +64,34 @@
         </text>
         <text style="Text Small">
           Tap <text style="Link" action="back">here</text> to go back
+        </text>
+        <text style="Text Small">
+           Velit voluptas et alias atque provident sapiente consequuntur deserunt.
+           <text style="Link" action="back">
+             Dolorem et non error dolorem voluptate amet accusantium.
+           </text>
+           Corporis rerum sed labore quae sed qui quis quasi.
+        </text>
+        <text style="Text Small">
+          Here's a <text
+            style="Link"
+            trigger="longPress"
+            action="back"
+          >link</text> that will navigate back when you long press
+        </text>
+        <text style="Text Small">
+          Here's a <text
+            style="Link"
+            trigger="pressIn"
+            action="back"
+          >link</text> that will navigate back when you press in
+        </text>
+        <text style="Text Small">
+          Here's a <text
+            style="Link"
+            trigger="pressOut"
+            action="back"
+          >link</text> that will navigate back when you press out
         </text>
       </view>
     </body>
