@@ -72,27 +72,6 @@
            </text>
            Corporis rerum sed labore quae sed qui quis quasi.
         </text>
-        <text style="Text Small">
-          Here's a <text
-            style="Link"
-            trigger="longPress"
-            action="back"
-          >link</text> that will navigate back when you long press
-        </text>
-        <text style="Text Small">
-          Here's a <text
-            style="Link"
-            trigger="pressIn"
-            action="back"
-          >link</text> that will navigate back when you press in
-        </text>
-        <text style="Text Small">
-          Here's a <text
-            style="Link"
-            trigger="pressOut"
-            action="back"
-          >link</text> that will navigate back when you press out
-        </text>
       </view>
     </body>
   </screen>
