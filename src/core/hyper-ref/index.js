@@ -62,6 +62,8 @@ export default class HyperRef extends PureComponent<Props, State> {
     refreshing: false,
   };
 
+  behaviorElements: Element[];
+
   componentDidMount() {
     this.triggerLoadBehaviors();
 
@@ -73,6 +75,10 @@ export default class HyperRef extends PureComponent<Props, State> {
     if (prevProps.element === this.props.element) {
       return;
     }
+    // Retrieve and cache behavior elements when element is updated
+    this.behaviorElements = Dom.getBehaviorElements(this.props.element);
+
+    // Then trigger load behaviors
     this.triggerLoadBehaviors();
   }
 
@@ -172,8 +178,7 @@ export default class HyperRef extends PureComponent<Props, State> {
   };
 
   triggerLoadBehaviors = () => {
-    const behaviorElements = Dom.getBehaviorElements(this.props.element);
-    const loadBehaviors = behaviorElements.filter(
+    const loadBehaviors = this.behaviorElements.filter(
       e => e.getAttribute(ATTRIBUTES.TRIGGER) === TRIGGERS.LOAD,
     );
 
@@ -316,17 +321,16 @@ export default class HyperRef extends PureComponent<Props, State> {
   };
 
   render() {
-    const behaviorElements = Dom.getBehaviorElements(this.props.element);
-    const pressBehaviors = behaviorElements.filter(
+    const pressBehaviors = this.behaviorElements.filter(
       e =>
         PRESS_TRIGGERS.indexOf(
           e.getAttribute(ATTRIBUTES.TRIGGER) || TRIGGERS.PRESS,
         ) >= 0,
     );
-    const visibleBehaviors = behaviorElements.filter(
+    const visibleBehaviors = this.behaviorElements.filter(
       e => e.getAttribute(ATTRIBUTES.TRIGGER) === TRIGGERS.VISIBLE,
     );
-    const refreshBehaviors = behaviorElements.filter(
+    const refreshBehaviors = this.behaviorElements.filter(
       e => e.getAttribute(ATTRIBUTES.TRIGGER) === TRIGGERS.REFRESH,
     );
 
