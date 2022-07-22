@@ -20,6 +20,7 @@ const QUERY_SEPARATOR = '?';
 const getHrefKey = (href: string): string => href.split(QUERY_SEPARATOR)[0];
 
 const routeKeys: { [string]: string } = {};
+const preloadScreens: { [number]: Element } = {};
 
 export default class Navigation {
   url: string;
@@ -27,8 +28,6 @@ export default class Navigation {
   document: ?Document = null;
 
   navigation: NavigationProps;
-
-  preloadScreens: { [number]: Element } = {};
 
   constructor(url: string, navigation: NavigationProps) {
     this.url = url;
@@ -43,14 +42,14 @@ export default class Navigation {
     this.document = document;
   };
 
-  getPreloadScreen = (id: number): ?Element => this.preloadScreens[id];
+  getPreloadScreen = (id: number): ?Element => preloadScreens[id];
 
   setPreloadScreen = (id: number, element: Element): void => {
-    this.preloadScreens[id] = element;
+    preloadScreens[id] = element;
   };
 
   removePreloadScreen = (id: number): void => {
-    delete this.preloadScreens[id];
+    delete preloadScreens[id];
   };
 
   getRouteKey = (href: string): ?string => routeKeys[getHrefKey(href)];

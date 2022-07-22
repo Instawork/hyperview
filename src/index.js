@@ -166,7 +166,7 @@ export default class HyperScreen extends React.Component {
     const { params } = this.getRoute(this.props);
     const { preloadScreen } = params;
     if (preloadScreen && this.navigation.getPreloadScreen(preloadScreen)) {
-      this.navigation.remove(preloadScreen);
+      this.navigation.removePreloadScreen(preloadScreen);
     }
     if (this.state.url) {
       this.navigation.removeRouteKey(this.state.url)
