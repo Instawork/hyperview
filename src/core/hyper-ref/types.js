@@ -33,6 +33,7 @@ export const ATTRIBUTES = {
   ACTION: 'action',
   DELAY: 'delay',
   HIDE_DURING_LOAD: 'hide-during-load',
+  HIT_SLOP: 'hit-slop',
   HREF: 'href',
   HREF_STYLE: 'href-style',
   ONCE: 'once',

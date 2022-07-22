@@ -335,11 +335,26 @@ export default class HyperRef extends PureComponent<Props, State> {
       );
     }
 
+    const hitSlopAttribute = this.props.element.getAttribute(
+      ATTRIBUTES.HIT_SLOP,
+    );
+    const hitSlop = hitSlopAttribute
+      ? (() => {
+          try {
+            const [top, right, bottom, left] = JSON.parse(hitSlopAttribute);
+            return { bottom, left, right, top };
+          } catch (e) {
+            return undefined;
+          }
+        })()
+      : undefined;
+
     return (
       <TouchableOpacity
         accessibilityLabel={accessibilityLabel}
         accessible={false}
         activeOpacity={1}
+        hitSlop={hitSlop}
         onLongPress={onLongPress}
         onPress={onPress}
         onPressIn={onPressIn}

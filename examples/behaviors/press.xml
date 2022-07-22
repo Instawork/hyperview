@@ -55,6 +55,7 @@
       <style id="Button__Label" color="white" fontSize="24" fontWeight="bold" />
       <style id="Link" color="blue" />
       <style id="Main" flex="1" />
+      <style id="Foo" backgroundColor="red" padding="44" />
     </styles>
     <body style="Body" safe-area="true">
       <header style="Header">
@@ -65,13 +66,17 @@
         <text style="Description">
           Press on the button will replace the content.
         </text>
-        <view
-          action="replace"
-          href="/behaviors/_replace_fragment.xml"
-          style="Button"
-          trigger="press"
-        >
-          <text style="Button__Label">Press me</text>
+        <view style="Foo">
+          <view
+              action="replace"
+              href="/behaviors/_replace_fragment.xml"
+              style="Button"
+              trigger="press"
+              hit-slop="[100,100,100,100]"
+            >
+            <text style="Button__Label">Press me</text>
+          </view>
+        </view>
         </view>
         <text style="Description" id="link-to-replace">
           Press on <text
