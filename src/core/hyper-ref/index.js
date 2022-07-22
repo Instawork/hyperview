@@ -68,6 +68,12 @@ export default class HyperRef extends PureComponent<Props, State> {
 
   style: ?StyleSheet;
 
+  constructor(props: Props, state: State) {
+    super(props, state);
+    this.updateBehaviorElements();
+    this.updateStyle();
+  }
+
   componentDidMount() {
     this.triggerLoadBehaviors();
 
@@ -79,16 +85,9 @@ export default class HyperRef extends PureComponent<Props, State> {
     if (prevProps.element === this.props.element) {
       return;
     }
-    // Retrieve and cache behavior elements when element is updated
-    this.behaviorElements = Dom.getBehaviorElements(this.props.element);
 
-    // Retrieve and cache style
-    const styleAttr = this.props.element.getAttribute(ATTRIBUTES.HREF_STYLE);
-    this.style = styleAttr
-      ? styleAttr.split(' ').map(s => this.props.stylesheets.regular[s])
-      : null;
-
-    // Then trigger load behaviors
+    this.updateBehaviorElements();
+    this.updateStyle();
     this.triggerLoadBehaviors();
   }
 
@@ -96,6 +95,19 @@ export default class HyperRef extends PureComponent<Props, State> {
     // Remove event listener for on-event triggers to avoid memory leaks
     Events.unsubscribe(this.onEventDispatch);
   }
+
+  updateBehaviorElements = () => {
+    // Retrieve and cache behavior elements when element is updated
+    this.behaviorElements = Dom.getBehaviorElements(this.props.element);
+  };
+
+  updateStyle = () => {
+    // Retrieve and cache style
+    const styleAttr = this.props.element.getAttribute(ATTRIBUTES.HREF_STYLE);
+    this.style = styleAttr
+      ? styleAttr.split(' ').map(s => this.props.stylesheets.regular[s])
+      : null;
+  };
 
   onEventDispatch = (eventName: string) => {
     const behaviorElements = Dom.getBehaviorElements(this.props.element);
