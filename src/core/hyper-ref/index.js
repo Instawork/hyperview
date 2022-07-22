@@ -31,6 +31,7 @@ import type {
 import type { PressHandlers, Props, State } from './types';
 import React, { PureComponent } from 'react';
 import { RefreshControl, ScrollView, TouchableOpacity } from 'react-native';
+import type { Node } from 'react';
 import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
 import { XMLSerializer } from 'xmldom-instawork';
 import { createTestProps } from 'hyperview/src/services';
@@ -211,9 +212,7 @@ export default class HyperRef extends PureComponent<Props, State> {
     });
   };
 
-  wrapInTouchableView = (
-    component: ?React$Element<*> | string,
-  ): ?React$Element<*> | string => {
+  TouchableView = ({ children }: { children: Node }): Node => {
     const behaviors = this.behaviorElements.filter(
       e =>
         PRESS_TRIGGERS.indexOf(
@@ -221,7 +220,7 @@ export default class HyperRef extends PureComponent<Props, State> {
         ) >= 0,
     );
     if (!behaviors.length) {
-      return component;
+      return children;
     }
 
     // $FlowFixMe: cannot spread Test props because return type is inexact
@@ -297,16 +296,14 @@ export default class HyperRef extends PureComponent<Props, State> {
     return React.createElement(
       TouchableOpacity,
       { ...props, ...pressHandlers, accessible: false },
-      component,
+      children,
     );
   };
 
-  wrapInScrollableView = (
-    component: ?React$Element<*> | string,
-  ): ?React$Element<*> | string => {
+  ScrollableView = ({ children }: { children: Node }): Node => {
     const behaviors = this.getBehaviorElements(TRIGGERS.REFRESH);
     if (!behaviors.length) {
-      return component;
+      return children;
     }
     const refreshHandlers = behaviors.map(behaviorElement =>
       this.createActionHandler(
@@ -324,16 +321,14 @@ export default class HyperRef extends PureComponent<Props, State> {
     return React.createElement(
       ScrollView,
       { refreshControl, style: this.getStyle() },
-      component,
+      children,
     );
   };
 
-  wrapInVisibilityDetectingView = (
-    component: ?React$Element<*> | string,
-  ): ?React$Element<*> | string => {
+  VisibilityView = ({ children }: { children: Node }): Node => {
     const behaviors = this.getBehaviorElements(TRIGGERS.VISIBLE);
     if (!behaviors.length) {
-      return component;
+      return children;
     }
     const visibleHandlers = behaviors.map(behaviorElement =>
       this.createActionHandler(
@@ -347,30 +342,29 @@ export default class HyperRef extends PureComponent<Props, State> {
     return React.createElement(
       VisibilityDetectingView,
       { onInvisible: null, onVisible, style: this.getStyle() },
-      component,
+      children,
     );
   };
 
   render() {
     // Render the component based on the XML element. Depending on the applied behaviors,
     // this component will be wrapped with others to provide the necessary interaction.
-    let renderedComponent = Render.renderElement(
+    const children = Render.renderElement(
       this.props.element,
       this.props.stylesheets,
       this.props.onUpdate,
       { ...this.props.options, pressed: this.state.pressed, skipHref: true },
     );
 
-    // Wrap component in a pressable element
-    renderedComponent = this.wrapInTouchableView(renderedComponent);
+    const { ScrollableView, TouchableView, VisibilityView } = this;
 
-    // Wrap component in a scrollview with a refresh control to trigger refresh behaviors.
-    renderedComponent = this.wrapInScrollableView(renderedComponent);
-
-    // Wrap component in a VisibilityDetectingView to trigger visibility behaviors.
-    renderedComponent = this.wrapInVisibilityDetectingView(renderedComponent);
-
-    return renderedComponent || null;
+    return (
+      <VisibilityView>
+        <ScrollableView>
+          <TouchableView>{children || null}</TouchableView>
+        </ScrollableView>
+      </VisibilityView>
+    );
   }
 }
 
