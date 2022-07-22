@@ -65,6 +65,8 @@ export default class HyperRef extends PureComponent<Props, State> {
 
   behaviorElements: Element[];
 
+  style: ?StyleSheet;
+
   componentDidMount() {
     this.triggerLoadBehaviors();
 
@@ -78,6 +80,12 @@ export default class HyperRef extends PureComponent<Props, State> {
     }
     // Retrieve and cache behavior elements when element is updated
     this.behaviorElements = Dom.getBehaviorElements(this.props.element);
+
+    // Retrieve and cache style
+    const styleAttr = this.props.element.getAttribute(ATTRIBUTES.HREF_STYLE);
+    this.style = styleAttr
+      ? styleAttr.split(' ').map(s => this.props.stylesheets.regular[s])
+      : null;
 
     // Then trigger load behaviors
     this.triggerLoadBehaviors();
@@ -184,6 +192,13 @@ export default class HyperRef extends PureComponent<Props, State> {
     );
   };
 
+  getStyle = (): ?StyleSheet => {
+    const styleAttr = this.props.element.getAttribute(ATTRIBUTES.HREF_STYLE);
+    return styleAttr
+      ? styleAttr.split(' ').map(s => this.props.stylesheets.regular[s])
+      : null;
+  };
+
   triggerLoadBehaviors = () => {
     const loadBehaviors = this.getBehaviorElements(TRIGGERS.LOAD);
     loadBehaviors.forEach(behaviorElement => {
@@ -198,7 +213,6 @@ export default class HyperRef extends PureComponent<Props, State> {
 
   wrapInTouchableView = (
     component: ?React$Element<*> | string,
-    style: StyleSheet,
   ): ?React$Element<*> | string => {
     const behaviors = this.behaviorElements.filter(
       e =>
@@ -214,7 +228,7 @@ export default class HyperRef extends PureComponent<Props, State> {
     const props = {
       // Component will use touchable opacity to trigger href.
       activeOpacity: 1,
-      style,
+      style: this.getStyle(),
       ...createTestProps(this.props.element),
     };
 
@@ -289,7 +303,6 @@ export default class HyperRef extends PureComponent<Props, State> {
 
   wrapInScrollableView = (
     component: ?React$Element<*> | string,
-    style: StyleSheet,
   ): ?React$Element<*> | string => {
     const behaviors = this.getBehaviorElements(TRIGGERS.REFRESH);
     if (!behaviors.length) {
@@ -310,14 +323,13 @@ export default class HyperRef extends PureComponent<Props, State> {
     });
     return React.createElement(
       ScrollView,
-      { refreshControl, style },
+      { refreshControl, style: this.getStyle() },
       component,
     );
   };
 
   wrapInVisibilityDetectingView = (
     component: ?React$Element<*> | string,
-    style: StyleSheet,
   ): ?React$Element<*> | string => {
     const behaviors = this.getBehaviorElements(TRIGGERS.VISIBLE);
     if (!behaviors.length) {
@@ -334,7 +346,7 @@ export default class HyperRef extends PureComponent<Props, State> {
 
     return React.createElement(
       VisibilityDetectingView,
-      { onInvisible: null, onVisible, style },
+      { onInvisible: null, onVisible, style: this.getStyle() },
       component,
     );
   };
@@ -349,22 +361,14 @@ export default class HyperRef extends PureComponent<Props, State> {
       { ...this.props.options, pressed: this.state.pressed, skipHref: true },
     );
 
-    const styleAttr = this.props.element.getAttribute(ATTRIBUTES.HREF_STYLE);
-    const hrefStyle = styleAttr
-      ? styleAttr.split(' ').map(s => this.props.stylesheets.regular[s])
-      : null;
-
     // Wrap component in a pressable element
-    renderedComponent = this.wrapInTouchableView(renderedComponent, hrefStyle);
+    renderedComponent = this.wrapInTouchableView(renderedComponent);
 
     // Wrap component in a scrollview with a refresh control to trigger refresh behaviors.
-    renderedComponent = this.wrapInScrollableView(renderedComponent, hrefStyle);
+    renderedComponent = this.wrapInScrollableView(renderedComponent);
 
     // Wrap component in a VisibilityDetectingView to trigger visibility behaviors.
-    renderedComponent = this.wrapInVisibilityDetectingView(
-      renderedComponent,
-      hrefStyle,
-    );
+    renderedComponent = this.wrapInVisibilityDetectingView(renderedComponent);
 
     return renderedComponent || null;
   }
