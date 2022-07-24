@@ -1,0 +1,16 @@
+---
+title: "Adjustable font size"
+permalink: "/ui_elements/text/adjustable_font_size.xml"
+tags: ui_elements_text
+---
+{% extends 'scrollview.xml.njk' %}
+
+{% block styles %}
+  <style id="Text" fontSize="24" margin="24" />
+{% endblock %}
+
+{% block content %}
+  <text style="Text" adjustsFontSizeToFit="true" numberOfLines="1">
+    The font of this text will be adjusted to fit the specified number of lines
+  </text>
+{% endblock %}

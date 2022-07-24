@@ -1,0 +1,14 @@
+---
+title: "Selectable"
+permalink: "/ui_elements/text/selectable.xml"
+tags: ui_elements_text
+---
+{% extends 'scrollview.xml.njk' %}
+
+{% block styles %}
+  <style id="Text" fontSize="24" margin="24" />
+{% endblock %}
+
+{% block content %}
+  <text style="Text" selectable="true">Select me!</text>
+{% endblock %}
