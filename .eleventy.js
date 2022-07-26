@@ -22,6 +22,14 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("examples/**/*.jpg");
   eleventyConfig.addPassthroughCopy("examples/**/*.jpeg");
   eleventyConfig.addPassthroughCopy("examples/**/*.png");
+  // Filter that sorts collections of files in alphabetical order
+  eleventyConfig.addNunjucksFilter('sort', function (collection) {
+    if (collection) {
+      return collection.sort(function (a, b) {
+        return a.template.inputPath > b.template.inputPath;
+      });
+    }
+  });
   return {
     dir: {
       input: "examples",

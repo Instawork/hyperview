@@ -8,7 +8,7 @@
   id="directory-list"
   href="{% if list_href %}{{ list_href }}{% else %}{{ permalink }}{% endif %}"
 >
-  {% for screen in collections[list_tag] %}
+  {% for screen in collections[list_tag]|sort %}
     <item
       href="{{ screen.data.permalink }}"
       key="{{ screen.data.title | slug }}"
