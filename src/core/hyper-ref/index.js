@@ -24,11 +24,14 @@ import type {
   HvComponentOnUpdate,
   HvComponentOptions,
   PressTrigger,
+  StyleSheet,
   StyleSheets,
+  Trigger,
 } from 'hyperview/src/types';
 import type { PressHandlers, Props, State } from './types';
 import React, { PureComponent } from 'react';
 import { RefreshControl, ScrollView, TouchableOpacity } from 'react-native';
+import type { Node } from 'react';
 import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
 import { XMLSerializer } from 'xmldom-instawork';
 import { createTestProps } from 'hyperview/src/services';
@@ -61,6 +64,16 @@ export default class HyperRef extends PureComponent<Props, State> {
     refreshing: false,
   };
 
+  behaviorElements: Element[];
+
+  style: ?StyleSheet;
+
+  constructor(props: Props, state: State) {
+    super(props, state);
+    this.updateBehaviorElements();
+    this.updateStyle();
+  }
+
   componentDidMount() {
     this.triggerLoadBehaviors();
 
@@ -72,6 +85,9 @@ export default class HyperRef extends PureComponent<Props, State> {
     if (prevProps.element === this.props.element) {
       return;
     }
+
+    this.updateBehaviorElements();
+    this.updateStyle();
     this.triggerLoadBehaviors();
   }
 
@@ -79,6 +95,19 @@ export default class HyperRef extends PureComponent<Props, State> {
     // Remove event listener for on-event triggers to avoid memory leaks
     Events.unsubscribe(this.onEventDispatch);
   }
+
+  updateBehaviorElements = () => {
+    // Retrieve and cache behavior elements when element is updated
+    this.behaviorElements = Dom.getBehaviorElements(this.props.element);
+  };
+
+  updateStyle = () => {
+    // Retrieve and cache style
+    const styleAttr = this.props.element.getAttribute(ATTRIBUTES.HREF_STYLE);
+    this.style = styleAttr
+      ? styleAttr.split(' ').map(s => this.props.stylesheets.regular[s])
+      : null;
+  };
 
   onEventDispatch = (eventName: string) => {
     const behaviorElements = Dom.getBehaviorElements(this.props.element);
@@ -170,12 +199,21 @@ export default class HyperRef extends PureComponent<Props, State> {
       onUpdate(null, action, element, { behaviorElement, custom: true });
   };
 
-  triggerLoadBehaviors = () => {
-    const behaviorElements = Dom.getBehaviorElements(this.props.element);
-    const loadBehaviors = behaviorElements.filter(
-      e => e.getAttribute(ATTRIBUTES.TRIGGER) === TRIGGERS.LOAD,
+  getBehaviorElements = (trigger: Trigger): Element[] => {
+    return this.behaviorElements.filter(
+      e => e.getAttribute(ATTRIBUTES.TRIGGER) === trigger,
     );
+  };
 
+  getStyle = (): ?StyleSheet => {
+    const styleAttr = this.props.element.getAttribute(ATTRIBUTES.HREF_STYLE);
+    return styleAttr
+      ? styleAttr.split(' ').map(s => this.props.stylesheets.regular[s])
+      : null;
+  };
+
+  triggerLoadBehaviors = () => {
+    const loadBehaviors = this.getBehaviorElements(TRIGGERS.LOAD);
     loadBehaviors.forEach(behaviorElement => {
       const handler = this.createActionHandler(
         this.props.element,
@@ -186,155 +224,159 @@ export default class HyperRef extends PureComponent<Props, State> {
     });
   };
 
-  render() {
-    const behaviorElements = Dom.getBehaviorElements(this.props.element);
-    const pressBehaviors = behaviorElements.filter(
+  TouchableView = ({ children }: { children: Node }): Node => {
+    const behaviors = this.behaviorElements.filter(
       e =>
         PRESS_TRIGGERS.indexOf(
           e.getAttribute(ATTRIBUTES.TRIGGER) || TRIGGERS.PRESS,
         ) >= 0,
     );
-    const visibleBehaviors = behaviorElements.filter(
-      e => e.getAttribute(ATTRIBUTES.TRIGGER) === TRIGGERS.VISIBLE,
-    );
-    const refreshBehaviors = behaviorElements.filter(
-      e => e.getAttribute(ATTRIBUTES.TRIGGER) === TRIGGERS.REFRESH,
-    );
+    if (!behaviors.length) {
+      return children;
+    }
 
+    // $FlowFixMe: cannot spread Test props because return type is inexact
+    const props = {
+      // Component will use touchable opacity to trigger href.
+      activeOpacity: 1,
+      style: this.getStyle(),
+      ...createTestProps(this.props.element),
+    };
+
+    // With multiple behaviors for the same trigger, we need to stagger
+    // the updates a bit so that each update operates on the latest DOM.
+    // Ideally, we could apply multiple DOM updates at a time.
+    let time = 0;
+
+    // $FlowFixMe
+    const pressHandlers: PressHandlers = {};
+
+    behaviors.forEach(behaviorElement => {
+      const trigger: PressTrigger =
+        // $FlowFixMe: casting DOMString to PressTrigger should probably be enforced by code
+        behaviorElement.getAttribute(ATTRIBUTES.TRIGGER) || TRIGGERS.PRESS;
+      const triggerPropName = PRESS_TRIGGERS_PROP_NAMES[trigger];
+      const handler = this.createActionHandler(
+        this.props.element,
+        behaviorElement,
+        this.props.onUpdate,
+      );
+      if (pressHandlers[triggerPropName]) {
+        const oldHandler = pressHandlers[triggerPropName];
+        pressHandlers[triggerPropName] = createEventHandler(() => {
+          oldHandler();
+          setTimeout(handler, time);
+          time += 1;
+        });
+      } else {
+        pressHandlers[triggerPropName] = createEventHandler(handler);
+      }
+    });
+
+    if (pressHandlers.onPressIn) {
+      const oldHandler = pressHandlers.onPressIn;
+      pressHandlers.onPressIn = createEventHandler(() => {
+        this.setState({ pressed: true });
+        oldHandler();
+      });
+    } else {
+      pressHandlers.onPressIn = createEventHandler(() => {
+        this.setState({ pressed: true });
+      });
+    }
+
+    if (pressHandlers.onPressOut) {
+      const oldHandler = pressHandlers.onPressOut;
+      pressHandlers.onPressOut = createEventHandler(() => {
+        this.setState({ pressed: false });
+        oldHandler();
+      });
+    } else {
+      pressHandlers.onPressOut = createEventHandler(() => {
+        this.setState({ pressed: false });
+      });
+    }
+
+    // Fix a conflict between onPressOut and onPress triggering at the same time.
+    if (pressHandlers.onPressOut && pressHandlers.onPress) {
+      const onPressHandler = pressHandlers.onPress;
+      pressHandlers.onPress = createEventHandler(() => {
+        setTimeout(onPressHandler, time);
+      });
+    }
+
+    return React.createElement(
+      TouchableOpacity,
+      { ...props, ...pressHandlers, accessible: false },
+      children,
+    );
+  };
+
+  ScrollableView = ({ children }: { children: Node }): Node => {
+    const behaviors = this.getBehaviorElements(TRIGGERS.REFRESH);
+    if (!behaviors.length) {
+      return children;
+    }
+    const refreshHandlers = behaviors.map(behaviorElement =>
+      this.createActionHandler(
+        this.props.element,
+        behaviorElement,
+        this.props.onUpdate,
+      ),
+    );
+    const onRefresh = () => refreshHandlers.forEach(h => h());
+
+    const refreshControl = React.createElement(RefreshControl, {
+      onRefresh,
+      refreshing: this.state.refreshing,
+    });
+    return React.createElement(
+      ScrollView,
+      { refreshControl, style: this.getStyle() },
+      children,
+    );
+  };
+
+  VisibilityView = ({ children }: { children: Node }): Node => {
+    const behaviors = this.getBehaviorElements(TRIGGERS.VISIBLE);
+    if (!behaviors.length) {
+      return children;
+    }
+    const visibleHandlers = behaviors.map(behaviorElement =>
+      this.createActionHandler(
+        this.props.element,
+        behaviorElement,
+        this.props.onUpdate,
+      ),
+    );
+    const onVisible = () => visibleHandlers.forEach(h => h());
+
+    return React.createElement(
+      VisibilityDetectingView,
+      { onInvisible: null, onVisible, style: this.getStyle() },
+      children,
+    );
+  };
+
+  render() {
     // Render the component based on the XML element. Depending on the applied behaviors,
     // this component will be wrapped with others to provide the necessary interaction.
-    let renderedComponent = Render.renderElement(
+    const children = Render.renderElement(
       this.props.element,
       this.props.stylesheets,
       this.props.onUpdate,
       { ...this.props.options, pressed: this.state.pressed, skipHref: true },
     );
 
-    const styleAttr = this.props.element.getAttribute(ATTRIBUTES.HREF_STYLE);
-    const hrefStyle = styleAttr
-      ? styleAttr.split(' ').map(s => this.props.stylesheets.regular[s])
-      : null;
+    const { ScrollableView, TouchableView, VisibilityView } = this;
 
-    // $FlowFixMe
-    const pressHandlers: PressHandlers = {};
-
-    // Render pressable element
-    if (pressBehaviors.length > 0) {
-      // $FlowFixMe: cannot spread Test props because return type is inexact
-      const props = {
-        // Component will use touchable opacity to trigger href.
-        activeOpacity: 1,
-        style: hrefStyle,
-        ...createTestProps(this.props.element),
-      };
-
-      // With multiple behaviors for the same trigger, we need to stagger
-      // the updates a bit so that each update operates on the latest DOM.
-      // Ideally, we could apply multiple DOM updates at a time.
-      let time = 0;
-
-      pressBehaviors.forEach(behaviorElement => {
-        const trigger: PressTrigger =
-          behaviorElement.getAttribute(ATTRIBUTES.TRIGGER) || TRIGGERS.PRESS;
-        const triggerPropName = PRESS_TRIGGERS_PROP_NAMES[trigger];
-        const handler = this.createActionHandler(
-          this.props.element,
-          behaviorElement,
-          this.props.onUpdate,
-        );
-        if (pressHandlers[triggerPropName]) {
-          const oldHandler = pressHandlers[triggerPropName];
-          pressHandlers[triggerPropName] = createEventHandler(() => {
-            oldHandler();
-            setTimeout(handler, time);
-            time += 1;
-          });
-        } else {
-          pressHandlers[triggerPropName] = createEventHandler(handler);
-        }
-      });
-
-      if (pressHandlers.onPressIn) {
-        const oldHandler = pressHandlers.onPressIn;
-        pressHandlers.onPressIn = createEventHandler(() => {
-          this.setState({ pressed: true });
-          oldHandler();
-        });
-      } else {
-        pressHandlers.onPressIn = createEventHandler(() => {
-          this.setState({ pressed: true });
-        });
-      }
-
-      if (pressHandlers.onPressOut) {
-        const oldHandler = pressHandlers.onPressOut;
-        pressHandlers.onPressOut = createEventHandler(() => {
-          this.setState({ pressed: false });
-          oldHandler();
-        });
-      } else {
-        pressHandlers.onPressOut = createEventHandler(() => {
-          this.setState({ pressed: false });
-        });
-      }
-
-      // Fix a conflict between onPressOut and onPress triggering at the same time.
-      if (pressHandlers.onPressOut && pressHandlers.onPress) {
-        const onPressHandler = pressHandlers.onPress;
-        pressHandlers.onPress = createEventHandler(() => {
-          setTimeout(onPressHandler, time);
-        });
-      }
-
-      renderedComponent = React.createElement(
-        TouchableOpacity,
-        { ...props, ...pressHandlers, accessible: false },
-        renderedComponent,
-      );
-    }
-
-    // Wrap component in a scrollview with a refresh control to trigger
-    // the refresh behaviors.
-    if (refreshBehaviors.length > 0) {
-      const refreshHandlers = refreshBehaviors.map(behaviorElement =>
-        this.createActionHandler(
-          this.props.element,
-          behaviorElement,
-          this.props.onUpdate,
-        ),
-      );
-      const onRefresh = () => refreshHandlers.forEach(h => h());
-
-      const refreshControl = React.createElement(RefreshControl, {
-        onRefresh,
-        refreshing: this.state.refreshing,
-      });
-      renderedComponent = React.createElement(
-        ScrollView,
-        { refreshControl, style: hrefStyle },
-        renderedComponent,
-      );
-    }
-
-    // Wrap component in a VisibilityDetectingView to trigger visibility behaviors.
-    if (visibleBehaviors.length > 0) {
-      const visibleHandlers = visibleBehaviors.map(behaviorElement =>
-        this.createActionHandler(
-          this.props.element,
-          behaviorElement,
-          this.props.onUpdate,
-        ),
-      );
-      const onVisible = () => visibleHandlers.forEach(h => h());
-
-      renderedComponent = React.createElement(
-        VisibilityDetectingView,
-        { onInvisible: null, onVisible, style: hrefStyle },
-        renderedComponent,
-      );
-    }
-
-    return renderedComponent || null;
+    return (
+      <VisibilityView>
+        <ScrollableView>
+          <TouchableView>{children || null}</TouchableView>
+        </ScrollableView>
+      </VisibilityView>
+    );
   }
 }
 
