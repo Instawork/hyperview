@@ -10,9 +10,11 @@
 
 import * as Dom from 'hyperview/src/services/dom';
 import * as Events from 'hyperview/src/services/events';
+import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import {
   ACTIONS,
+  LOCAL_NAME,
   NAV_ACTIONS,
   PRESS_TRIGGERS,
   TRIGGERS,
@@ -30,7 +32,12 @@ import type {
 } from 'hyperview/src/types';
 import type { PressHandlers, Props, State } from './types';
 import React, { PureComponent } from 'react';
-import { RefreshControl, ScrollView, TouchableOpacity } from 'react-native';
+import {
+  RefreshControl,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import type { Node } from 'react';
 import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
 import { XMLSerializer } from 'xmldom-instawork';
@@ -235,14 +242,6 @@ export default class HyperRef extends PureComponent<Props, State> {
       return children;
     }
 
-    // $FlowFixMe: cannot spread Test props because return type is inexact
-    const props = {
-      // Component will use touchable opacity to trigger href.
-      activeOpacity: 1,
-      style: this.getStyle(),
-      ...createTestProps(this.props.element),
-    };
-
     // With multiple behaviors for the same trigger, we need to stagger
     // the updates a bit so that each update operates on the latest DOM.
     // Ideally, we could apply multiple DOM updates at a time.
@@ -305,10 +304,51 @@ export default class HyperRef extends PureComponent<Props, State> {
       });
     }
 
-    return React.createElement(
-      TouchableOpacity,
-      { ...props, ...pressHandlers, accessible: false },
-      children,
+    const style = this.getStyle();
+    const { accessibilityLabel, testID } = createTestProps(this.props.element);
+    const { onLongPress, onPress, onPressIn, onPressOut } = pressHandlers;
+
+    // If element is a <text> nested under another <text>, simply add press events
+    const isNestedUnderText =
+      this.props.element.parentNode?.namespaceURI === Namespaces.HYPERVIEW &&
+      this.props.element.parentNode?.localName === LOCAL_NAME.TEXT;
+
+    if (isNestedUnderText) {
+      const noop = () => {};
+      return (
+        <Text
+          accessibilityLabel={accessibilityLabel}
+          accessible={false}
+          onLongPress={onLongPress}
+          // when no press handler set, we still need an empty handler for pressIn or pressOut handlers to work
+          onPress={onPress || (onPressIn || onPressOut ? noop : undefined)}
+          onResponderGrant={onPressIn}
+          // Both release and terminate responder are needed to properly pressOut
+          onResponderRelease={onPressOut}
+          onResponderTerminate={onPressOut}
+          style={style}
+          suppressHighlighting
+          testID={testID}
+        >
+          {children}
+        </Text>
+      );
+    }
+
+    return (
+      <TouchableOpacity
+        accessibilityLabel={accessibilityLabel}
+        accessible={false}
+        activeOpacity={1}
+        onLongPress={onLongPress}
+        onPress={onPress}
+        onPressIn={onPressIn}
+        onPressOut={onPressOut}
+        style={style}
+        testID={testID}
+      >
+        {children}
+      </TouchableOpacity>
     );
   };
 

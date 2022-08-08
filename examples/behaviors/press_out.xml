@@ -53,6 +53,7 @@
         padding="24"
       />
       <style id="Button__Label" color="white" fontSize="24" fontWeight="bold" />
+      <style id="Link" color="blue" />
       <style id="Main" flex="1" />
     </styles>
     <body style="Body" safe-area="true">
@@ -72,6 +73,15 @@
         >
           <text style="Button__Label">Press me</text>
         </view>
+        <text style="Description" id="link-to-replace">
+          Press-out <text
+            action="replace"
+            href="/behaviors/_replace_link_fragment.xml"
+            trigger="pressOut"
+            style="Link"
+            target="link-to-replace"
+          >this link</text> will replace the content.
+        </text>
       </view>
     </body>
   </screen>
