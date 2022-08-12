@@ -585,11 +585,15 @@ See [the repo](https://github.com/Instawork/hyperview/blob/master/examples/advan
 
 ### `copy-to-clipboard`
 
-The `copy-to-clipboard` action allows copying a value to the clipboard. The behavior attributes must include a [`value`] attribute specifying the value to be copied.
+The `copy-to-clipboard` action allows copying a value to the clipboard. The behavior attributes must include a [`copy-to-clipboard-value`] attribute specifying the value to be copied.
 
 ```xml
 <view>
-  <behavior trigger="press" action="copy-to-clipboard" value="Hello World!" />
+  <behavior
+    trigger="press"
+    action="copy-to-clipboard"
+    copy-to-clipboard-value="Hello World!"
+  />
   <text style="link">Copy to clipboard</text>
 </view>
 ```
