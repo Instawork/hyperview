@@ -14,9 +14,12 @@ import type { Element } from 'hyperview/src/types';
 export default {
   action: 'copy-to-clipboard',
   callback: (element: Element) => {
-    const value: ?string = element.getAttribute('value');
+    const attributeName = 'copy-to-clipboard-value';
+    const value: ?string = element.getAttribute(attributeName);
     if (!value) {
-      console.warn('[behaviors/copy-to-clipboard]: missing "value" attribute');
+      console.warn(
+        `[behaviors/copy-to-clipboard]: missing "${attributeName}" attribute`,
+      );
       return;
     }
     Clipboard.setString(value);
