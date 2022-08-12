@@ -3745,10 +3745,10 @@ http-errors@2.0.0:
     statuses "2.0.1"
     toidentifier "1.0.1"
 
-hyperview@0.56.0:
-  version "0.56.0"
-  resolved "https://registry.yarnpkg.com/hyperview/-/hyperview-0.56.0.tgz#d7f6e595b065de76209813dd3cc6790c40706693"
-  integrity sha512-uOJ09X4TCy+FLYiK7L0NUIK4mWWH8JVj8uQz/79oFdNpFzpS5iLvYvNhTCV1Xg6/R5TKVqQiktGYVouKjwvPqA==
+hyperview@0.57.0:
+  version "0.57.0"
+  resolved "https://registry.yarnpkg.com/hyperview/-/hyperview-0.57.0.tgz#f1b653ad76ac2d8c4d53a6ccc82d37c15fac73c3"
+  integrity sha512-2rcsho187w7h3m5/OdTboQpcwaC5fUVs3X9ITSZfzxw4W62zv0ApG5nUZB/gbdNrvk4v58BSwiOssPLvshQM1A==
   dependencies:
     tiny-emitter "2.1.0"
     url-parse "1.4.3"
