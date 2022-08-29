@@ -72,7 +72,7 @@ On your physical mobile device, install the Expo client
 
 Make sure your mobile device and development machine are connected to the same network.
 
-Open [/demo/navigation/AppNavigator.js](https://github.com/Instawork/hyperview/blob/master/demo/navigation/AppNavigator.js#L42) in a text editor. In `initialRouteParams`, replace the host in the url (`http://0.0.0.0:8085/index.xml`) with the IP of your machine. This is needed in order for your physical device to be able to request the example XML files from your development machine.
+Open [/demo/src/constants.js](/demo/src/constants.js) in a text editor. In `ENTRY_POINT_URL`, replace the host in the url (`http://0.0.0.0:8085/index.xml`) with the IP of your machine. This is needed in order for your physical device to be able to request the example XML files from your development machine.
 
 From the `demo/` directory on your development machine:
 
