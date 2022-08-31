@@ -756,10 +756,10 @@
 
   <xs:element name="text">
     <xs:complexType mixed="true">
-      <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="hv:text" />
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="hv:behavior" />
-      </xs:sequence>
+      </xs:choice>
       <xs:attribute name="numberOfLines" type="xs:positiveInteger" />
       <xs:attribute name="style" type="hv:styleList" />
       <xs:attribute name="id" type="hv:ID" />
