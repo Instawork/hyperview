@@ -9,7 +9,12 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import Navigator from './src/Navigator';
+import { RootSiblingParent } from 'react-native-root-siblings';
 
 export default function App() {
-  return <Navigator />;
+  return (
+    <RootSiblingParent>
+      <Navigator />
+    </RootSiblingParent>
+  );
 }
