@@ -21,6 +21,7 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
+    "react-native-communications": "^2.2.1",
     "react-native-gesture-handler": "~2.1.0",
     "react-native-keyboard-aware-scrollview": "2.1.0",
     "react-native-root-toast": "^3.4.0",
