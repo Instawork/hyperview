@@ -86,14 +86,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
       this.props.stylesheets,
       this.props.options,
     );
-    const scrollable = this.attributes[ATTRIBUTES.SCROLL] === 'true';
-    const horizontal =
-      this.attributes[ATTRIBUTES.SCROLL_ORIENTATION] === 'horizontal';
-    const showScrollIndicator =
-      this.attributes[ATTRIBUTES.SHOWS_SCROLL_INDICATOR] !== 'false';
-    const keyboardAvoiding =
-      this.attributes[ATTRIBUTES.AVOID_KEYBOARD] === 'true';
-    const safeArea = this.attributes[ATTRIBUTES.SAFE_AREA] === 'true';
+
     let safeAreaIncompatible = false;
     let c = View;
 
@@ -101,6 +94,8 @@ export default class HvView extends PureComponent<HvComponentProps> {
      * Useful when you want keyboard avoiding behavior in non-scrollable views.
      * Note: Android has built-in support for avoiding keyboard.
      */
+    const keyboardAvoiding =
+      this.attributes[ATTRIBUTES.AVOID_KEYBOARD] === 'true';
     if (keyboardAvoiding && Platform.OS === 'ios') {
       safeAreaIncompatible = true;
       c = KeyboardAvoidingView;
@@ -109,6 +104,9 @@ export default class HvView extends PureComponent<HvComponentProps> {
 
     const hasInputFields = this.hasInputFields();
     const inputFieldRefs = [];
+    const scrollable = this.attributes[ATTRIBUTES.SCROLL] === 'true';
+    const horizontal =
+      this.attributes[ATTRIBUTES.SCROLL_ORIENTATION] === 'horizontal';
     if (scrollable) {
       c = ScrollView;
       safeAreaIncompatible = true;
@@ -134,6 +132,8 @@ export default class HvView extends PureComponent<HvComponentProps> {
         props.getTextInputRefs = () => inputFieldRefs;
       }
 
+      const showScrollIndicator =
+        this.attributes[ATTRIBUTES.SHOWS_SCROLL_INDICATOR] !== 'false';
       props.showsHorizontalScrollIndicator = horizontal && showScrollIndicator;
       props.showsVerticalScrollIndicator = !horizontal && showScrollIndicator;
 
@@ -159,6 +159,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
       }
     }
 
+    const safeArea = this.attributes[ATTRIBUTES.SAFE_AREA] === 'true';
     if (safeArea) {
       if (safeAreaIncompatible) {
         console.warn('safe-area is incompatible with scroll or avoid-keyboard');
