@@ -68,6 +68,18 @@ export default class HvView extends PureComponent<HvComponentProps> {
     );
   };
 
+  hasInputFields = (): boolean => {
+    const textFields = this.props.element.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      'text-field',
+    );
+    const textAreas = this.props.element.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      'text-area',
+    );
+    return textFields.length > 0 || textAreas.length > 0;
+  };
+
   render() {
     let viewOptions = this.props.options;
     const { skipHref } = viewOptions || {};
@@ -97,20 +109,13 @@ export default class HvView extends PureComponent<HvComponentProps> {
       props.behavior = 'position';
     }
 
-    const inputRefs = [];
+    const hasInputFields = this.hasInputFields();
+    const inputFieldRefs = [];
     if (scrollable) {
+      c = ScrollView;
       safeAreaIncompatible = true;
-      const textFields = this.props.element.getElementsByTagNameNS(
-        Namespaces.HYPERVIEW,
-        'text-field',
-      );
-      const textAreas = this.props.element.getElementsByTagNameNS(
-        Namespaces.HYPERVIEW,
-        'text-area',
-      );
-      const hasFields = textFields.length > 0 || textAreas.length > 0;
-      c = hasFields ? KeyboardAwareScrollView : ScrollView;
-      if (hasFields) {
+      if (hasInputFields) {
+        c = KeyboardAwareScrollView;
         const scrollToInputAdditionalOffset = this.attributes[
           ATTRIBUTES.SCROLL_TO_INPUT_OFFSET
         ];
@@ -128,13 +133,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
         props.keyboardShouldPersistTaps = 'handled';
         props.automaticallyAdjustContentInsets = false;
         props.scrollEventThrottle = 16;
-        props.getTextInputRefs = () => inputRefs;
-        const registerInputHandler = ref => {
-          if (ref !== null) {
-            inputRefs.push(ref);
-          }
-        };
-        viewOptions = { ...viewOptions, registerInputHandler };
+        props.getTextInputRefs = () => inputFieldRefs;
       }
 
       props.showsHorizontalScrollIndicator = horizontal && showScrollIndicator;
@@ -174,7 +173,18 @@ export default class HvView extends PureComponent<HvComponentProps> {
       this.props.element,
       this.props.stylesheets,
       this.props.onUpdate,
-      viewOptions,
+      {
+        ...viewOptions,
+        ...(scrollable && hasInputFields
+          ? {
+              registerInputHandler: ref => {
+                if (ref !== null) {
+                  inputFieldRefs.push(ref);
+                }
+              },
+            }
+          : {}),
+      },
     );
 
     if (scrollable && !horizontal) {
