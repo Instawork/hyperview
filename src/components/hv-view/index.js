@@ -87,7 +87,6 @@ export default class HvView extends PureComponent<HvComponentProps> {
       this.props.options,
     );
 
-    let safeAreaIncompatible = false;
     let c = View;
 
     /**
@@ -95,9 +94,9 @@ export default class HvView extends PureComponent<HvComponentProps> {
      * Note: Android has built-in support for avoiding keyboard.
      */
     const keyboardAvoiding =
-      this.attributes[ATTRIBUTES.AVOID_KEYBOARD] === 'true';
-    if (keyboardAvoiding && Platform.OS === 'ios') {
-      safeAreaIncompatible = true;
+      this.attributes[ATTRIBUTES.AVOID_KEYBOARD] === 'true' &&
+      Platform.OS === 'ios';
+    if (keyboardAvoiding) {
       c = KeyboardAvoidingView;
       props.behavior = 'position';
     }
@@ -109,7 +108,6 @@ export default class HvView extends PureComponent<HvComponentProps> {
       this.attributes[ATTRIBUTES.SCROLL_ORIENTATION] === 'horizontal';
     if (scrollable) {
       c = ScrollView;
-      safeAreaIncompatible = true;
       if (hasInputFields) {
         c = KeyboardAwareScrollView;
         const scrollToInputAdditionalOffset = this.attributes[
@@ -161,7 +159,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
 
     const safeArea = this.attributes[ATTRIBUTES.SAFE_AREA] === 'true';
     if (safeArea) {
-      if (safeAreaIncompatible) {
+      if (keyboardAvoiding || scrollable) {
         console.warn('safe-area is incompatible with scroll or avoid-keyboard');
       } else {
         c = SafeAreaView;
