@@ -52,6 +52,7 @@ A `<view>` element can only appear anywhere within a `<screen>` element.
 - [Behavior attributes](#behavior-attributes)
 - [`safe-area`](#safe-area)
 - [`style`](#style)
+- [`content-container-style`](#content-container-style)
 - [`scroll`](#scroll)
 - [`scroll-orientation`](#scroll-orientation)
 - [`scroll-to-input-offset`](#scroll-to-input-offset)
@@ -59,6 +60,7 @@ A `<view>` element can only appear anywhere within a `<screen>` element.
 - [`id`](#id)
 - [`hide`](#hide)
 - [`avoid-keyboard`](#avoid-keyboard)
+- [`sticky`](#sticky)
 
 #### Behavior attributes
 
