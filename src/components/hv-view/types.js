@@ -8,7 +8,7 @@
  *
  */
 
-import type { StyleSheet } from 'hyperview/src/types';
+import type { DOMString, StyleSheet } from 'hyperview/src/types';
 
 export type InternalProps = {|
   accessibilityLabel?: any,
@@ -35,3 +35,26 @@ export type InternalProps = {|
   },
   stickyHeaderIndices?: ?(number[]),
 |};
+
+export const ATTRIBUTES = {
+  AVOID_KEYBOARD: 'avoid-keyboard',
+  CONTENT_CONTAINER_STYLE: 'content-container-style',
+  SAFE_AREA: 'safe-area',
+  SCROLL: 'scroll',
+  SCROLL_ORIENTATION: 'scroll-orientation',
+  SCROLL_TO_INPUT_OFFSET: 'scroll-to-input-offset',
+  SHOWS_SCROLL_INDICATOR: 'shows-scroll-indicator',
+};
+
+export type Attribute = $Values<typeof ATTRIBUTES>;
+
+// eslint-disable-next-line instawork/exact-object-types
+export type Attributes = {
+  'avoid-keyboard'?: ?DOMString,
+  'content-container-style'?: ?DOMString,
+  'safe-area'?: ?DOMString,
+  scroll?: ?DOMString,
+  'scroll-orientation'?: ?DOMString,
+  'scroll-to-input-offset'?: ?DOMString,
+  'shows-scroll-indicator'?: ?DOMString,
+};

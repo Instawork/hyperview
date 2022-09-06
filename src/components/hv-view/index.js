@@ -10,6 +10,7 @@
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
+import type { Attributes, InternalProps } from './types';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -19,8 +20,8 @@ import {
 } from 'react-native';
 import React, { PureComponent } from 'react';
 import { createProps, createStyleProp } from 'hyperview/src/services';
+import { ATTRIBUTES } from './types';
 import type { HvComponentProps } from 'hyperview/src/types';
-import type { InternalProps } from './types';
 import KeyboardAwareScrollView from 'hyperview/src/core/components/keyboard-aware-scroll-view';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { addHref } from 'hyperview/src/core/hyper-ref';
@@ -41,6 +42,32 @@ export default class HvView extends PureComponent<HvComponentProps> {
 
   props: HvComponentProps;
 
+  attributes: Attributes;
+
+  constructor(props: HvComponentProps) {
+    super(props);
+    this.updateAttributes();
+  }
+
+  componentDidUpdate(prevProps: HvComponentProps) {
+    if (prevProps.element === this.props.element) {
+      return;
+    }
+
+    this.updateAttributes();
+  }
+
+  updateAttributes = () => {
+    // $FlowFixMe: reduce returns a mixed type, not Attributes
+    this.attributes = Object.values(ATTRIBUTES).reduce(
+      (attributes, name: string) => ({
+        ...attributes,
+        [name]: this.props.element.getAttribute(name),
+      }),
+      {},
+    );
+  };
+
   render() {
     let viewOptions = this.props.options;
     const { skipHref } = viewOptions || {};
@@ -49,15 +76,14 @@ export default class HvView extends PureComponent<HvComponentProps> {
       this.props.stylesheets,
       viewOptions,
     );
-    const scrollable = !!this.props.element.getAttribute('scroll');
+    const scrollable = this.attributes[ATTRIBUTES.SCROLL] === 'true';
     const horizontal =
-      this.props.element.getAttribute('scroll-orientation') === 'horizontal';
+      this.attributes[ATTRIBUTES.SCROLL_ORIENTATION] === 'horizontal';
     const showScrollIndicator =
-      this.props.element.getAttribute('shows-scroll-indicator') !== 'false';
-    const keyboardAvoiding = !!this.props.element.getAttribute(
-      'avoid-keyboard',
-    );
-    const safeArea = this.props.element.getAttribute('safe-area') === 'true';
+      this.attributes[ATTRIBUTES.SHOWS_SCROLL_INDICATOR] !== 'false';
+    const keyboardAvoiding =
+      this.attributes[ATTRIBUTES.AVOID_KEYBOARD] === 'true';
+    const safeArea = this.attributes[ATTRIBUTES.SAFE_AREA] === 'true';
     let safeAreaIncompatible = false;
     let c = View;
 
@@ -85,9 +111,9 @@ export default class HvView extends PureComponent<HvComponentProps> {
       const hasFields = textFields.length > 0 || textAreas.length > 0;
       c = hasFields ? KeyboardAwareScrollView : ScrollView;
       if (hasFields) {
-        const scrollToInputAdditionalOffset = this.props.element.getAttribute(
-          'scroll-to-input-offset',
-        );
+        const scrollToInputAdditionalOffset = this.attributes[
+          ATTRIBUTES.SCROLL_TO_INPUT_OFFSET
+        ];
         const defaultScrollToInputAdditionalOffset = 120;
         if (scrollToInputAdditionalOffset) {
           const parsedOffset = parseInt(scrollToInputAdditionalOffset, 10);
@@ -114,14 +140,13 @@ export default class HvView extends PureComponent<HvComponentProps> {
       props.showsHorizontalScrollIndicator = horizontal && showScrollIndicator;
       props.showsVerticalScrollIndicator = !horizontal && showScrollIndicator;
 
-      const contentContainerStyleAttr = 'content-container-style';
-      if (contentContainerStyleAttr) {
+      if (this.attributes[ATTRIBUTES.CONTENT_CONTAINER_STYLE]) {
         props.contentContainerStyle = createStyleProp(
           this.props.element,
           this.props.stylesheets,
           {
             ...viewOptions,
-            styleAttr: contentContainerStyleAttr,
+            styleAttr: ATTRIBUTES.CONTENT_CONTAINER_STYLE,
           },
         );
       }
