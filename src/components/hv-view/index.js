@@ -81,12 +81,10 @@ export default class HvView extends PureComponent<HvComponentProps> {
   };
 
   render() {
-    let viewOptions = this.props.options;
-    const { skipHref } = viewOptions || {};
     const props: InternalProps = createProps(
       this.props.element,
       this.props.stylesheets,
-      viewOptions,
+      this.props.options,
     );
     const scrollable = this.attributes[ATTRIBUTES.SCROLL] === 'true';
     const horizontal =
@@ -144,7 +142,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
           this.props.element,
           this.props.stylesheets,
           {
-            ...viewOptions,
+            ...this.props.options,
             styleAttr: ATTRIBUTES.CONTENT_CONTAINER_STYLE,
           },
         );
@@ -174,7 +172,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
       this.props.stylesheets,
       this.props.onUpdate,
       {
-        ...viewOptions,
+        ...this.props.options,
         ...(scrollable && hasInputFields
           ? {
               registerInputHandler: ref => {
@@ -204,14 +202,14 @@ export default class HvView extends PureComponent<HvComponentProps> {
 
     // $FlowFixMe
     const component = React.createElement(c, props, ...children);
-    return skipHref
+    return this.props.options?.skipHref
       ? component
       : addHref(
           component,
           this.props.element,
           this.props.stylesheets,
           this.props.onUpdate,
-          viewOptions,
+          this.props.options,
         );
   }
 }
