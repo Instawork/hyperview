@@ -32,3 +32,21 @@ export type Attributes = {
   'scroll-to-input-offset'?: ?DOMString,
   'shows-scroll-indicator'?: ?DOMString,
 };
+
+export type ScrollViewProps = {|
+  accessibilityLabel?: ?string,
+  testID?: ?string,
+  children?: ?any,
+  style?: ?Array<StyleSheet>,
+  contentContainerStyle?: Array<StyleSheet>,
+  horizontal?: ?boolean,
+  scrollIndicatorInsets?: {
+    bottom?: number,
+    left?: number,
+    right?: number,
+    top?: number,
+  },
+  showsHorizontalScrollIndicator?: ?boolean,
+  showsVerticalScrollIndicator?: ?boolean,
+  stickyHeaderIndices?: ?(number[]),
+|};

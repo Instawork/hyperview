@@ -10,6 +10,7 @@
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
+import type { Attributes, ScrollViewProps } from './types';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -20,7 +21,6 @@ import {
 import React, { PureComponent } from 'react';
 import { createStyleProp, createTestProps } from 'hyperview/src/services';
 import { ATTRIBUTES } from './types';
-import type { Attributes } from './types';
 import type { HvComponentProps } from 'hyperview/src/types';
 import KeyboardAwareScrollView from 'hyperview/src/core/components/keyboard-aware-scroll-view';
 import { LOCAL_NAME } from 'hyperview/src/types';
@@ -80,8 +80,50 @@ export default class HvView extends PureComponent<HvComponentProps> {
     return textFields.length > 0 || textAreas.length > 0;
   };
 
+  getScrollViewProps = (children: Array<any>): ScrollViewProps => {
+    const horizontal =
+      this.attributes[ATTRIBUTES.SCROLL_ORIENTATION] === 'horizontal';
+    const showScrollIndicator =
+      this.attributes[ATTRIBUTES.SHOWS_SCROLL_INDICATOR] !== 'false';
+
+    const contentContainerStyle = this.attributes[
+      ATTRIBUTES.CONTENT_CONTAINER_STYLE
+    ]
+      ? createStyleProp(this.props.element, this.props.stylesheets, {
+          ...this.props.options,
+          styleAttr: ATTRIBUTES.CONTENT_CONTAINER_STYLE,
+        })
+      : undefined;
+
+    // Fix scrollbar rendering issue in iOS 13+
+    // https://github.com/facebook/react-native/issues/26610#issuecomment-539843444
+    const scrollIndicatorInsets =
+      Platform.OS === 'ios' && parseInt(Platform.Version, 10) >= 13
+        ? { right: 1 }
+        : undefined;
+
+    // add sticky indicies
+    const stickyHeaderIndices = children.reduce(
+      (acc, element, index) =>
+        typeof element !== 'string' &&
+        element.props?.element?.getAttribute('sticky') === 'true'
+          ? [...acc, index]
+          : acc,
+      [],
+    );
+
+    return {
+      contentContainerStyle,
+      horizontal,
+      scrollIndicatorInsets,
+      showsHorizontalScrollIndicator: horizontal && showScrollIndicator,
+      showsVerticalScrollIndicator: !horizontal && showScrollIndicator,
+      stickyHeaderIndices,
+    };
+  };
+
   render() {
-    const props: any = {
+    let props: any = {
       ...createTestProps(this.props.element),
       style: createStyleProp(
         this.props.element,
@@ -135,10 +177,12 @@ export default class HvView extends PureComponent<HvComponentProps> {
       },
     );
 
-    const horizontal =
-      this.attributes[ATTRIBUTES.SCROLL_ORIENTATION] === 'horizontal';
     if (scrollable) {
       c = ScrollView;
+      props = {
+        ...props,
+        ...this.getScrollViewProps(children),
+      };
       if (hasInputFields) {
         c = KeyboardAwareScrollView;
         const scrollToInputAdditionalOffset = this.attributes[
@@ -158,45 +202,6 @@ export default class HvView extends PureComponent<HvComponentProps> {
         props.automaticallyAdjustContentInsets = false;
         props.scrollEventThrottle = 16;
         props.getTextInputRefs = () => inputFieldRefs;
-      }
-
-      const showScrollIndicator =
-        this.attributes[ATTRIBUTES.SHOWS_SCROLL_INDICATOR] !== 'false';
-      props.showsHorizontalScrollIndicator = horizontal && showScrollIndicator;
-      props.showsVerticalScrollIndicator = !horizontal && showScrollIndicator;
-
-      if (this.attributes[ATTRIBUTES.CONTENT_CONTAINER_STYLE]) {
-        props.contentContainerStyle = createStyleProp(
-          this.props.element,
-          this.props.stylesheets,
-          {
-            ...this.props.options,
-            styleAttr: ATTRIBUTES.CONTENT_CONTAINER_STYLE,
-          },
-        );
-      }
-
-      // Fix scrollbar rendering issue in iOS 13+
-      // https://github.com/facebook/react-native/issues/26610#issuecomment-539843444
-      if (Platform.OS === 'ios' && parseInt(Platform.Version, 10) >= 13) {
-        props.scrollIndicatorInsets = { right: 1 };
-      }
-
-      if (horizontal) {
-        props.horizontal = true;
-      } else {
-        // add sticky indicies
-        const stickyIndices = children.reduce(
-          (acc, element, index) =>
-            typeof element !== 'string' &&
-            element.props?.element?.getAttribute('sticky') === 'true'
-              ? [...acc, index]
-              : acc,
-          [],
-        );
-        if (stickyIndices.length) {
-          props.stickyHeaderIndices = stickyIndices;
-        }
       }
     }
 
