@@ -148,7 +148,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
     scrollToInputAdditionalOffset: this.getScrollToInputAdditionalOffsetProp(),
   });
 
-  render() {
+  Content = () => {
     let props: any = {
       ...createTestProps(this.props.element),
       style: createStyleProp(
@@ -217,17 +217,22 @@ export default class HvView extends PureComponent<HvComponentProps> {
         };
       }
     }
-
     // $FlowFixMe
-    const component = React.createElement(c, props, ...children);
-    return this.props.options?.skipHref
-      ? component
-      : addHref(
-          component,
-          this.props.element,
-          this.props.stylesheets,
-          this.props.onUpdate,
-          this.props.options,
-        );
+    return React.createElement(c, props, ...children);
+  };
+
+  render() {
+    const { Content } = this;
+    return this.props.options?.skipHref ? (
+      <Content />
+    ) : (
+      addHref(
+        <Content />,
+        this.props.element,
+        this.props.stylesheets,
+        this.props.onUpdate,
+        this.props.options,
+      )
+    );
   }
 }
