@@ -104,6 +104,16 @@ export default class HvView extends PureComponent<HvComponentProps> {
     const hasInputFields = this.hasInputFields();
     const inputFieldRefs = [];
     const scrollable = this.attributes[ATTRIBUTES.SCROLL] === 'true';
+
+    const safeArea = this.attributes[ATTRIBUTES.SAFE_AREA] === 'true';
+    if (safeArea) {
+      if (keyboardAvoiding || scrollable) {
+        console.warn('safe-area is incompatible with scroll or avoid-keyboard');
+      } else {
+        c = SafeAreaView;
+      }
+    }
+
     const children = Render.renderChildren(
       this.props.element,
       this.props.stylesheets,
@@ -171,15 +181,6 @@ export default class HvView extends PureComponent<HvComponentProps> {
 
       if (horizontal) {
         props.horizontal = true;
-      }
-    }
-
-    const safeArea = this.attributes[ATTRIBUTES.SAFE_AREA] === 'true';
-    if (safeArea) {
-      if (keyboardAvoiding || scrollable) {
-        console.warn('safe-area is incompatible with scroll or avoid-keyboard');
-      } else {
-        c = SafeAreaView;
       }
     }
 
