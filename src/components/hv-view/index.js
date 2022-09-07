@@ -104,6 +104,24 @@ export default class HvView extends PureComponent<HvComponentProps> {
     const hasInputFields = this.hasInputFields();
     const inputFieldRefs = [];
     const scrollable = this.attributes[ATTRIBUTES.SCROLL] === 'true';
+    const children = Render.renderChildren(
+      this.props.element,
+      this.props.stylesheets,
+      this.props.onUpdate,
+      {
+        ...this.props.options,
+        ...(scrollable && hasInputFields
+          ? {
+              registerInputHandler: ref => {
+                if (ref !== null) {
+                  inputFieldRefs.push(ref);
+                }
+              },
+            }
+          : {}),
+      },
+    );
+
     const horizontal =
       this.attributes[ATTRIBUTES.SCROLL_ORIENTATION] === 'horizontal';
     if (scrollable) {
@@ -164,24 +182,6 @@ export default class HvView extends PureComponent<HvComponentProps> {
         c = SafeAreaView;
       }
     }
-
-    const children = Render.renderChildren(
-      this.props.element,
-      this.props.stylesheets,
-      this.props.onUpdate,
-      {
-        ...this.props.options,
-        ...(scrollable && hasInputFields
-          ? {
-              registerInputHandler: ref => {
-                if (ref !== null) {
-                  inputFieldRefs.push(ref);
-                }
-              },
-            }
-          : {}),
-      },
-    );
 
     if (scrollable && !horizontal) {
       // add sticky indicies
