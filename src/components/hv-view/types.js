@@ -8,33 +8,7 @@
  *
  */
 
-import type { DOMString, StyleSheet } from 'hyperview/src/types';
-
-export type InternalProps = {|
-  accessibilityLabel?: any,
-  automaticallyAdjustContentInsets?: ?boolean,
-  behavior?: 'position',
-  contentContainerStyle?: Array<StyleSheet>,
-  extraScrollHeight?: ?number,
-  keyboardOpeningTime?: ?number,
-  keyboardShouldPersistTaps?: ?string,
-  scrollEventThrottle?: ?number,
-  scrollToInputAdditionalOffset?: ?number,
-  showsHorizontalScrollIndicator?: ?boolean,
-  showsVerticalScrollIndicator?: ?boolean,
-  getTextInputRefs?: ?() => [],
-  horizontal?: ?boolean,
-  style?: ?Array<StyleSheet>,
-  testID?: ?string,
-  children?: ?any,
-  scrollIndicatorInsets?: {
-    bottom?: number,
-    left?: number,
-    right?: number,
-    top?: number,
-  },
-  stickyHeaderIndices?: ?(number[]),
-|};
+import type { DOMString } from 'hyperview/src/types';
 
 export const ATTRIBUTES = {
   AVOID_KEYBOARD: 'avoid-keyboard',

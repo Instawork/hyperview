@@ -10,7 +10,6 @@
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
-import type { Attributes, InternalProps } from './types';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -19,8 +18,9 @@ import {
   View,
 } from 'react-native';
 import React, { PureComponent } from 'react';
-import { createProps, createStyleProp } from 'hyperview/src/services';
+import { createStyleProp, createTestProps } from 'hyperview/src/services';
 import { ATTRIBUTES } from './types';
+import type { Attributes } from './types';
 import type { HvComponentProps } from 'hyperview/src/types';
 import KeyboardAwareScrollView from 'hyperview/src/core/components/keyboard-aware-scroll-view';
 import { LOCAL_NAME } from 'hyperview/src/types';
@@ -81,11 +81,14 @@ export default class HvView extends PureComponent<HvComponentProps> {
   };
 
   render() {
-    const props: InternalProps = createProps(
-      this.props.element,
-      this.props.stylesheets,
-      this.props.options,
-    );
+    const props: any = {
+      ...createTestProps(this.props.element),
+      style: createStyleProp(
+        this.props.element,
+        this.props.stylesheets,
+        this.props.options,
+      ),
+    };
 
     let c = View;
 
