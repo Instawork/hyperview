@@ -181,21 +181,19 @@ export default class HvView extends PureComponent<HvComponentProps> {
 
       if (horizontal) {
         props.horizontal = true;
-      }
-    }
-
-    if (scrollable && !horizontal) {
-      // add sticky indicies
-      const stickyIndices = children.reduce(
-        (acc, element, index) =>
-          typeof element !== 'string' &&
-          element.props?.element?.getAttribute('sticky') === 'true'
-            ? [...acc, index]
-            : acc,
-        [],
-      );
-      if (stickyIndices.length) {
-        props.stickyHeaderIndices = stickyIndices;
+      } else {
+        // add sticky indicies
+        const stickyIndices = children.reduce(
+          (acc, element, index) =>
+            typeof element !== 'string' &&
+            element.props?.element?.getAttribute('sticky') === 'true'
+              ? [...acc, index]
+              : acc,
+          [],
+        );
+        if (stickyIndices.length) {
+          props.stickyHeaderIndices = stickyIndices;
+        }
       }
     }
 
