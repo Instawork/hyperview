@@ -50,3 +50,15 @@ export type ScrollViewProps = {|
   showsVerticalScrollIndicator?: ?boolean,
   stickyHeaderIndices?: ?(number[]),
 |};
+
+export type KeyboardAwareScrollViewProps = {|
+  accessibilityLabel?: ?string,
+  testID?: ?string,
+  children?: ?any,
+  style?: ?Array<StyleSheet>,
+  automaticallyAdjustContentInsets?: ?boolean,
+  getTextInputRefs?: ?() => Array<any>,
+  keyboardShouldPersistTaps?: ?string,
+  scrollEventThrottle?: ?number,
+  scrollToInputAdditionalOffset?: ?number,
+|};

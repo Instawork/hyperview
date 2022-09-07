@@ -10,7 +10,11 @@
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
-import type { Attributes, ScrollViewProps } from './types';
+import type {
+  Attributes,
+  KeyboardAwareScrollViewProps,
+  ScrollViewProps,
+} from './types';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -122,6 +126,28 @@ export default class HvView extends PureComponent<HvComponentProps> {
     };
   };
 
+  getScrollToInputAdditionalOffsetProp = (): number => {
+    const defaultOffset = 120;
+    if (this.attributes[ATTRIBUTES.SCROLL_TO_INPUT_OFFSET]) {
+      const offset = parseInt(
+        this.attributes[ATTRIBUTES.SCROLL_TO_INPUT_OFFSET],
+        10,
+      );
+      return Number.isNaN(offset) ? 0 : defaultOffset;
+    }
+    return defaultOffset;
+  };
+
+  getKeyboardAwareScrollViewProps = (
+    inputFieldRefs: Array<any>,
+  ): KeyboardAwareScrollViewProps => ({
+    automaticallyAdjustContentInsets: false,
+    getTextInputRefs: () => inputFieldRefs,
+    keyboardShouldPersistTaps: 'handled',
+    scrollEventThrottle: 16,
+    scrollToInputAdditionalOffset: this.getScrollToInputAdditionalOffsetProp(),
+  });
+
   render() {
     let props: any = {
       ...createTestProps(this.props.element),
@@ -185,23 +211,10 @@ export default class HvView extends PureComponent<HvComponentProps> {
       };
       if (hasInputFields) {
         c = KeyboardAwareScrollView;
-        const scrollToInputAdditionalOffset = this.attributes[
-          ATTRIBUTES.SCROLL_TO_INPUT_OFFSET
-        ];
-        const defaultScrollToInputAdditionalOffset = 120;
-        if (scrollToInputAdditionalOffset) {
-          const parsedOffset = parseInt(scrollToInputAdditionalOffset, 10);
-          props.scrollToInputAdditionalOffset = Number.isNaN(parsedOffset)
-            ? 0
-            : defaultScrollToInputAdditionalOffset;
-        } else {
-          props.scrollToInputAdditionalOffset = defaultScrollToInputAdditionalOffset;
-        }
-
-        props.keyboardShouldPersistTaps = 'handled';
-        props.automaticallyAdjustContentInsets = false;
-        props.scrollEventThrottle = 16;
-        props.getTextInputRefs = () => inputFieldRefs;
+        props = {
+          ...props,
+          ...this.getKeyboardAwareScrollViewProps(inputFieldRefs),
+        };
       }
     }
 
