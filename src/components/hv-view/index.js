@@ -158,8 +158,6 @@ export default class HvView extends PureComponent<HvComponentProps> {
       ),
     };
 
-    let c = View;
-
     /**
      * Useful when you want keyboard avoiding behavior in non-scrollable views.
      * Note: Android has built-in support for avoiding keyboard.
@@ -167,21 +165,14 @@ export default class HvView extends PureComponent<HvComponentProps> {
     const keyboardAvoiding =
       this.attributes[ATTRIBUTES.AVOID_KEYBOARD] === 'true' &&
       Platform.OS === 'ios';
-    if (keyboardAvoiding) {
-      c = KeyboardAvoidingView;
-      props.behavior = 'position';
-    }
 
     const hasInputFields = this.hasInputFields();
     const inputFieldRefs = [];
     const scrollable = this.attributes[ATTRIBUTES.SCROLL] === 'true';
-
     const safeArea = this.attributes[ATTRIBUTES.SAFE_AREA] === 'true';
     if (safeArea) {
       if (keyboardAvoiding || scrollable) {
         console.warn('safe-area is incompatible with scroll or avoid-keyboard');
-      } else {
-        c = SafeAreaView;
       }
     }
 
@@ -204,21 +195,35 @@ export default class HvView extends PureComponent<HvComponentProps> {
     );
 
     if (scrollable) {
-      c = ScrollView;
       props = {
         ...props,
         ...this.getScrollViewProps(children),
       };
       if (hasInputFields) {
-        c = KeyboardAwareScrollView;
-        props = {
-          ...props,
-          ...this.getKeyboardAwareScrollViewProps(inputFieldRefs),
-        };
+        return (
+          <KeyboardAwareScrollView
+            {...{
+              ...props,
+              ...this.getKeyboardAwareScrollViewProps(inputFieldRefs),
+            }}
+          >
+            {children}
+          </KeyboardAwareScrollView>
+        );
       }
+      return <ScrollView {...props}>{children}</ScrollView>;
     }
-    // $FlowFixMe
-    return React.createElement(c, props, ...children);
+    if (!keyboardAvoiding && safeArea) {
+      return <SafeAreaView {...props}>{children}</SafeAreaView>;
+    }
+    if (keyboardAvoiding) {
+      return (
+        <KeyboardAvoidingView {...props} behavior="position">
+          {children}
+        </KeyboardAvoidingView>
+      );
+    }
+    return <View {...props}>{children}</View>;
   };
 
   render() {
