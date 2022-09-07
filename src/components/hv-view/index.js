@@ -115,7 +115,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
       props.showsVerticalScrollIndicator = !horizontal && showScrollIndicator;
 
       const contentContainerStyleAttr = 'content-container-style';
-      if (this.props.element.getAttribute('scroll-orientation')) {
+      if (contentContainerStyleAttr) {
         props.contentContainerStyle = createStyleProp(
           this.props.element,
           this.props.stylesheets,
