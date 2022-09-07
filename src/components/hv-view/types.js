@@ -9,6 +9,7 @@
  */
 
 import type { DOMString } from 'hyperview/src/types';
+import type { ViewStyleProp } from 'react-native/Libraries/StyleSheet/StyleSheet';
 
 export const ATTRIBUTES = {
   AVOID_KEYBOARD: 'avoid-keyboard',
@@ -37,22 +38,22 @@ export type CommonProps = {|
   accessibilityLabel?: ?string,
   testID?: ?string,
   children?: ?any,
-  style?: ?Array<StyleSheet>,
+  style?: ?ViewStyleProp,
 |};
 
 export type ScrollViewProps = {|
   accessibilityLabel?: ?string,
   testID?: ?string,
   children?: ?any,
-  style?: ?Array<StyleSheet>,
-  contentContainerStyle?: Array<StyleSheet>,
+  style?: ?ViewStyleProp,
+  contentContainerStyle?: ?ViewStyleProp,
   horizontal?: ?boolean,
-  scrollIndicatorInsets?: {
-    bottom?: number,
-    left?: number,
-    right?: number,
-    top?: number,
-  },
+  scrollIndicatorInsets?: $ReadOnly<{|
+    bottom?: ?number,
+    left?: ?number,
+    right?: ?number,
+    top?: ?number,
+  |}>,
   showsHorizontalScrollIndicator?: ?boolean,
   showsVerticalScrollIndicator?: ?boolean,
   stickyHeaderIndices?: ?(number[]),
@@ -62,7 +63,7 @@ export type KeyboardAwareScrollViewProps = {|
   accessibilityLabel?: ?string,
   testID?: ?string,
   children?: ?any,
-  style?: ?Array<StyleSheet>,
+  style?: ?ViewStyleProp,
   automaticallyAdjustContentInsets?: ?boolean,
   getTextInputRefs?: ?() => Array<any>,
   keyboardShouldPersistTaps?: ?string,
