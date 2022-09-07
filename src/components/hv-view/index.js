@@ -12,6 +12,7 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import type {
   Attributes,
+  CommonProps,
   KeyboardAwareScrollViewProps,
   ScrollViewProps,
 } from './types';
@@ -23,12 +24,12 @@ import {
   View,
 } from 'react-native';
 import React, { PureComponent } from 'react';
-import { createStyleProp, createTestProps } from 'hyperview/src/services';
 import { ATTRIBUTES } from './types';
 import type { HvComponentProps } from 'hyperview/src/types';
 import KeyboardAwareScrollView from 'hyperview/src/core/components/keyboard-aware-scroll-view';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { addHref } from 'hyperview/src/core/hyper-ref';
+import { createStyleProp } from 'hyperview/src/services';
 
 export default class HvView extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
@@ -82,6 +83,22 @@ export default class HvView extends PureComponent<HvComponentProps> {
       'text-area',
     );
     return textFields.length > 0 || textAreas.length > 0;
+  };
+
+  getCommonProps = (): CommonProps => {
+    const style = createStyleProp(
+      this.props.element,
+      this.props.stylesheets,
+      this.props.options,
+    );
+    const id = this.props.element.getAttribute('id');
+    if (!id) {
+      return { style };
+    }
+    if (Platform.OS === 'ios') {
+      return { style, testID: id };
+    }
+    return { accessibilityLabel: id, style };
   };
 
   getScrollViewProps = (children: Array<any>): ScrollViewProps => {
@@ -149,15 +166,6 @@ export default class HvView extends PureComponent<HvComponentProps> {
   });
 
   Content = () => {
-    let props: any = {
-      ...createTestProps(this.props.element),
-      style: createStyleProp(
-        this.props.element,
-        this.props.stylesheets,
-        this.props.options,
-      ),
-    };
-
     /**
      * Useful when you want keyboard avoiding behavior in non-scrollable views.
      * Note: Android has built-in support for avoiding keyboard.
@@ -194,16 +202,14 @@ export default class HvView extends PureComponent<HvComponentProps> {
       },
     );
 
+    /* eslint-disable react/jsx-props-no-spreading */
     if (scrollable) {
-      props = {
-        ...props,
-        ...this.getScrollViewProps(children),
-      };
       if (hasInputFields) {
         return (
           <KeyboardAwareScrollView
             {...{
-              ...props,
+              ...this.getCommonProps(),
+              ...this.getScrollViewProps(children),
               ...this.getKeyboardAwareScrollViewProps(inputFieldRefs),
             }}
           >
@@ -211,19 +217,29 @@ export default class HvView extends PureComponent<HvComponentProps> {
           </KeyboardAwareScrollView>
         );
       }
-      return <ScrollView {...props}>{children}</ScrollView>;
+      return (
+        <ScrollView
+          {...{
+            ...this.getCommonProps(),
+            ...this.getScrollViewProps(children),
+          }}
+        >
+          {children}
+        </ScrollView>
+      );
     }
     if (!keyboardAvoiding && safeArea) {
-      return <SafeAreaView {...props}>{children}</SafeAreaView>;
+      return <SafeAreaView {...this.getCommonProps()}>{children}</SafeAreaView>;
     }
     if (keyboardAvoiding) {
       return (
-        <KeyboardAvoidingView {...props} behavior="position">
+        <KeyboardAvoidingView {...this.getCommonProps()} behavior="position">
           {children}
         </KeyboardAvoidingView>
       );
     }
-    return <View {...props}>{children}</View>;
+    return <View {...this.getCommonProps()}>{children}</View>;
+    /* eslint-enable react/jsx-props-no-spreading */
   };
 
   render() {

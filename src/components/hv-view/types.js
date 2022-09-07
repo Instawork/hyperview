@@ -33,6 +33,13 @@ export type Attributes = {
   'shows-scroll-indicator'?: ?DOMString,
 };
 
+export type CommonProps = {|
+  accessibilityLabel?: ?string,
+  testID?: ?string,
+  children?: ?any,
+  style?: ?Array<StyleSheet>,
+|};
+
 export type ScrollViewProps = {|
   accessibilityLabel?: ?string,
   testID?: ?string,
