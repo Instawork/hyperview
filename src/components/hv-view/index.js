@@ -10,6 +10,12 @@
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
+import type {
+  Attributes,
+  CommonProps,
+  KeyboardAwareScrollViewProps,
+  ScrollViewProps,
+} from './types';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -18,12 +24,12 @@ import {
   View,
 } from 'react-native';
 import React, { PureComponent } from 'react';
-import { createProps, createStyleProp } from 'hyperview/src/services';
+import { ATTRIBUTES } from './types';
 import type { HvComponentProps } from 'hyperview/src/types';
-import type { InternalProps } from './types';
 import KeyboardAwareScrollView from 'hyperview/src/core/components/keyboard-aware-scroll-view';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { addHref } from 'hyperview/src/core/hyper-ref';
+import { createStyleProp } from 'hyperview/src/services';
 
 export default class HvView extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
@@ -41,107 +47,140 @@ export default class HvView extends PureComponent<HvComponentProps> {
 
   props: HvComponentProps;
 
-  render() {
-    let viewOptions = this.props.options;
-    const { skipHref } = viewOptions || {};
-    const props: InternalProps = createProps(
+  attributes: Attributes;
+
+  constructor(props: HvComponentProps) {
+    super(props);
+    this.updateAttributes();
+  }
+
+  componentDidUpdate(prevProps: HvComponentProps) {
+    if (prevProps.element === this.props.element) {
+      return;
+    }
+
+    this.updateAttributes();
+  }
+
+  updateAttributes = () => {
+    // $FlowFixMe: reduce returns a mixed type, not Attributes
+    this.attributes = Object.values(ATTRIBUTES).reduce(
+      (attributes, name: string) => ({
+        ...attributes,
+        [name]: this.props.element.getAttribute(name),
+      }),
+      {},
+    );
+  };
+
+  hasInputFields = (): boolean => {
+    const textFields = this.props.element.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      'text-field',
+    );
+    const textAreas = this.props.element.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      'text-area',
+    );
+    return textFields.length > 0 || textAreas.length > 0;
+  };
+
+  getCommonProps = (): CommonProps => {
+    const style = createStyleProp(
       this.props.element,
       this.props.stylesheets,
-      viewOptions,
+      this.props.options,
     );
-    const scrollable = !!this.props.element.getAttribute('scroll');
-    const horizontal =
-      this.props.element.getAttribute('scroll-orientation') === 'horizontal';
-    const showScrollIndicator =
-      this.props.element.getAttribute('shows-scroll-indicator') !== 'false';
-    const keyboardAvoiding = !!this.props.element.getAttribute(
-      'avoid-keyboard',
-    );
-    const safeArea = this.props.element.getAttribute('safe-area') === 'true';
-    let safeAreaIncompatible = false;
-    let c = View;
+    const id = this.props.element.getAttribute('id');
+    if (!id) {
+      return { style };
+    }
+    if (Platform.OS === 'ios') {
+      return { style, testID: id };
+    }
+    return { accessibilityLabel: id, style };
+  };
 
+  getScrollViewProps = (children: Array<any>): ScrollViewProps => {
+    const horizontal =
+      this.attributes[ATTRIBUTES.SCROLL_ORIENTATION] === 'horizontal';
+    const showScrollIndicator =
+      this.attributes[ATTRIBUTES.SHOWS_SCROLL_INDICATOR] !== 'false';
+
+    const contentContainerStyle = this.attributes[
+      ATTRIBUTES.CONTENT_CONTAINER_STYLE
+    ]
+      ? createStyleProp(this.props.element, this.props.stylesheets, {
+          ...this.props.options,
+          styleAttr: ATTRIBUTES.CONTENT_CONTAINER_STYLE,
+        })
+      : undefined;
+
+    // Fix scrollbar rendering issue in iOS 13+
+    // https://github.com/facebook/react-native/issues/26610#issuecomment-539843444
+    const scrollIndicatorInsets =
+      Platform.OS === 'ios' && parseInt(Platform.Version, 10) >= 13
+        ? { right: 1 }
+        : undefined;
+
+    // add sticky indicies
+    const stickyHeaderIndices = children.reduce(
+      (acc, element, index) =>
+        typeof element !== 'string' &&
+        element.props?.element?.getAttribute('sticky') === 'true'
+          ? [...acc, index]
+          : acc,
+      [],
+    );
+
+    return {
+      contentContainerStyle,
+      horizontal,
+      scrollIndicatorInsets,
+      showsHorizontalScrollIndicator: horizontal && showScrollIndicator,
+      showsVerticalScrollIndicator: !horizontal && showScrollIndicator,
+      stickyHeaderIndices,
+    };
+  };
+
+  getScrollToInputAdditionalOffsetProp = (): number => {
+    const defaultOffset = 120;
+    if (this.attributes[ATTRIBUTES.SCROLL_TO_INPUT_OFFSET]) {
+      const offset = parseInt(
+        this.attributes[ATTRIBUTES.SCROLL_TO_INPUT_OFFSET],
+        10,
+      );
+      return Number.isNaN(offset) ? 0 : defaultOffset;
+    }
+    return defaultOffset;
+  };
+
+  getKeyboardAwareScrollViewProps = (
+    inputFieldRefs: Array<any>,
+  ): KeyboardAwareScrollViewProps => ({
+    automaticallyAdjustContentInsets: false,
+    getTextInputRefs: () => inputFieldRefs,
+    keyboardShouldPersistTaps: 'handled',
+    scrollEventThrottle: 16,
+    scrollToInputAdditionalOffset: this.getScrollToInputAdditionalOffsetProp(),
+  });
+
+  Content = () => {
     /**
      * Useful when you want keyboard avoiding behavior in non-scrollable views.
      * Note: Android has built-in support for avoiding keyboard.
      */
-    if (keyboardAvoiding && Platform.OS === 'ios') {
-      safeAreaIncompatible = true;
-      c = KeyboardAvoidingView;
-      props.behavior = 'position';
-    }
+    const keyboardAvoiding =
+      this.attributes[ATTRIBUTES.AVOID_KEYBOARD] === 'true' &&
+      Platform.OS === 'ios';
 
-    const inputRefs = [];
-    if (scrollable) {
-      safeAreaIncompatible = true;
-      const textFields = this.props.element.getElementsByTagNameNS(
-        Namespaces.HYPERVIEW,
-        'text-field',
-      );
-      const textAreas = this.props.element.getElementsByTagNameNS(
-        Namespaces.HYPERVIEW,
-        'text-area',
-      );
-      const hasFields = textFields.length > 0 || textAreas.length > 0;
-      c = hasFields ? KeyboardAwareScrollView : ScrollView;
-      if (hasFields) {
-        const scrollToInputAdditionalOffset = this.props.element.getAttribute(
-          'scroll-to-input-offset',
-        );
-        const defaultScrollToInputAdditionalOffset = 120;
-        if (scrollToInputAdditionalOffset) {
-          const parsedOffset = parseInt(scrollToInputAdditionalOffset, 10);
-          props.scrollToInputAdditionalOffset = Number.isNaN(parsedOffset)
-            ? 0
-            : defaultScrollToInputAdditionalOffset;
-        } else {
-          props.scrollToInputAdditionalOffset = defaultScrollToInputAdditionalOffset;
-        }
-
-        props.keyboardOpeningTime = 0;
-        props.keyboardShouldPersistTaps = 'handled';
-        props.automaticallyAdjustContentInsets = false;
-        props.scrollEventThrottle = 16;
-        props.getTextInputRefs = () => inputRefs;
-        const registerInputHandler = ref => {
-          if (ref !== null) {
-            inputRefs.push(ref);
-          }
-        };
-        viewOptions = { ...viewOptions, registerInputHandler };
-      }
-
-      props.showsHorizontalScrollIndicator = horizontal && showScrollIndicator;
-      props.showsVerticalScrollIndicator = !horizontal && showScrollIndicator;
-
-      const contentContainerStyleAttr = 'content-container-style';
-      if (this.props.element.getAttribute('scroll-orientation')) {
-        props.contentContainerStyle = createStyleProp(
-          this.props.element,
-          this.props.stylesheets,
-          {
-            ...viewOptions,
-            styleAttr: contentContainerStyleAttr,
-          },
-        );
-      }
-
-      // Fix scrollbar rendering issue in iOS 13+
-      // https://github.com/facebook/react-native/issues/26610#issuecomment-539843444
-      if (Platform.OS === 'ios' && parseInt(Platform.Version, 10) >= 13) {
-        props.scrollIndicatorInsets = { right: 1 };
-      }
-
-      if (horizontal) {
-        props.horizontal = true;
-      }
-    }
-
+    const hasInputFields = this.hasInputFields();
+    const inputFieldRefs = [];
+    const scrollable = this.attributes[ATTRIBUTES.SCROLL] === 'true';
+    const safeArea = this.attributes[ATTRIBUTES.SAFE_AREA] === 'true';
     if (safeArea) {
-      if (safeAreaIncompatible) {
+      if (keyboardAvoiding || scrollable) {
         console.warn('safe-area is incompatible with scroll or avoid-keyboard');
-      } else {
-        c = SafeAreaView;
       }
     }
 
@@ -149,34 +188,72 @@ export default class HvView extends PureComponent<HvComponentProps> {
       this.props.element,
       this.props.stylesheets,
       this.props.onUpdate,
-      viewOptions,
+      {
+        ...this.props.options,
+        ...(scrollable && hasInputFields
+          ? {
+              registerInputHandler: ref => {
+                if (ref !== null) {
+                  inputFieldRefs.push(ref);
+                }
+              },
+            }
+          : {}),
+      },
     );
 
-    if (scrollable && !horizontal) {
-      // add sticky indicies
-      const stickyIndices = children.reduce(
-        (acc, element, index) =>
-          typeof element !== 'string' &&
-          element.props?.element?.getAttribute('sticky') === 'true'
-            ? [...acc, index]
-            : acc,
-        [],
-      );
-      if (stickyIndices.length) {
-        props.stickyHeaderIndices = stickyIndices;
-      }
-    }
-
-    // $FlowFixMe
-    const component = React.createElement(c, props, ...children);
-    return skipHref
-      ? component
-      : addHref(
-          component,
-          this.props.element,
-          this.props.stylesheets,
-          this.props.onUpdate,
-          viewOptions,
+    /* eslint-disable react/jsx-props-no-spreading */
+    if (scrollable) {
+      if (hasInputFields) {
+        return (
+          <KeyboardAwareScrollView
+            {...{
+              ...this.getCommonProps(),
+              ...this.getScrollViewProps(children),
+              ...this.getKeyboardAwareScrollViewProps(inputFieldRefs),
+            }}
+          >
+            {children}
+          </KeyboardAwareScrollView>
         );
+      }
+      return (
+        <ScrollView
+          {...{
+            ...this.getCommonProps(),
+            ...this.getScrollViewProps(children),
+          }}
+        >
+          {children}
+        </ScrollView>
+      );
+    }
+    if (!keyboardAvoiding && safeArea) {
+      return <SafeAreaView {...this.getCommonProps()}>{children}</SafeAreaView>;
+    }
+    if (keyboardAvoiding) {
+      return (
+        <KeyboardAvoidingView {...this.getCommonProps()} behavior="position">
+          {children}
+        </KeyboardAvoidingView>
+      );
+    }
+    return <View {...this.getCommonProps()}>{children}</View>;
+    /* eslint-enable react/jsx-props-no-spreading */
+  };
+
+  render() {
+    const { Content } = this;
+    return this.props.options?.skipHref ? (
+      <Content />
+    ) : (
+      addHref(
+        <Content />,
+        this.props.element,
+        this.props.stylesheets,
+        this.props.onUpdate,
+        this.props.options,
+      )
+    );
   }
 }
