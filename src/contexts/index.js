@@ -20,3 +20,5 @@ export const DateFormatContext = React.createContext<
 export const RefreshControlComponentContext = React.createContext<
   ComponentType<*>,
 >(component => component);
+
+export const AnimatedContext = React.createContext<any>(input => input);

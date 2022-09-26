@@ -79,6 +79,7 @@ export default class HyperScreen extends React.Component {
     this.componentRegistry = Components.getRegistry(this.props.components);
     this.formComponentRegistry = Components.getFormRegistry(this.props.components);
     this.navigation = new Navigation(props.entrypointUrl, this.getNavigation());
+    this.animation = null;
   }
 
   getRoute = (props) => {
@@ -259,7 +260,11 @@ export default class HyperScreen extends React.Component {
     return (
       <Contexts.DateFormatContext.Provider value={this.props.formatDate}>
         <Contexts.RefreshControlComponentContext.Provider value={this.props.refreshControl}>
-          {screenElement}
+          <Contexts.AnimatedContext.Provider value={animation => {
+            this.animation = animation
+          }}>
+            {screenElement}
+          </Contexts.AnimatedContext.Provider>
         </Contexts.RefreshControlComponentContext.Provider>
       </Contexts.DateFormatContext.Provider>
     );

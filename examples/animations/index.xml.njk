@@ -1,0 +1,86 @@
+---
+title: "Animations"
+permalink: "/animations/index.xml"
+tags: root
+---
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style
+        id="Header"
+        alignItems="center"
+        backgroundColor="white"
+        borderBottomColor="#eee"
+        borderBottomWidth="1"
+        flexDirection="row"
+        paddingLeft="24"
+        paddingRight="24"
+        paddingBottom="16"
+      />
+      <style
+        id="Header__Back"
+        color="blue"
+        fontSize="16"
+        fontWeight="600"
+        paddingRight="16"
+      />
+      <style id="Header__Title" color="black" fontSize="24" fontWeight="600" />
+      <style id="Body" backgroundColor="white" flex="1" />
+      <style id="Title" fontSize="28" lineHeight="40" marginHorizontal="24" />
+      <style id="Step" fontSize="16" lineHeight="24" marginHorizontal="24" />
+    </styles>
+    <body style="Body" safe-area="true">
+      <header style="Header">
+        <text action="back" href="#" style="Header__Back">Back</text>
+        <text style="Header__Title">Advanced Behaviors</text>
+      </header>
+      <animated>
+        <value id="titleOpacity" from="0" property="opacity" />
+        <value id="step1" from="-100" property="left" />
+        <value id="step2" from="-100" property="left" />
+        <animation type="sequence" id="intro">
+          <animation value="titleOpacity" to="1" duration="1000" />
+          <animation type="delay" duration="100" />
+          <animation type="parallel">
+            <animation value="step1" to="0" duration="1200" />
+            <animation value="step2" to="0" duration="1200" delay="100" />
+          </animation>
+        </animation>
+      </animated>
+      <view>
+        <text style="Title" animatedValues="titleOpacity">Well, well, well!</text>
+        <text style="Step" animatedValues="step1">Step 1</text>
+        <text style="Step" animatedValues="step2">Step 2</text>
+      </view>
+    </body>
+  </screen>
+  <screen id="loadingScreen">
+    <styles>
+      <style
+        id="Header"
+        alignItems="center"
+        backgroundColor="white"
+        borderBottomColor="#eee"
+        borderBottomWidth="1"
+        flexDirection="row"
+        paddingLeft="24"
+        paddingRight="24"
+        paddingBottom="16"
+      />
+      <style
+        id="Header__Back"
+        color="blue"
+        fontSize="16"
+        fontWeight="600"
+        paddingRight="16"
+      />
+      <style id="Header__Title" color="black" fontSize="24" fontWeight="600" />
+      <style id="Body" backgroundColor="white" flex="1" />
+    </styles>
+    <body style="Body" safe-area="true">
+      <header style="Header">
+        <text action="back" href="#" style="Header__Back">Back</text>
+      </header>
+    </body>
+  </screen>
+</doc>

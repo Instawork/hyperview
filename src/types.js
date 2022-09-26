@@ -14,6 +14,8 @@ export type DOMString = string;
 export type NamespaceURI = string;
 
 export const LOCAL_NAME = {
+  ANIMATED: 'animated',
+  ANIMATION: 'animation',
   BEHAVIOR: 'behavior',
   BODY: 'body',
   DATE_FIELD: 'date-field',
@@ -40,6 +42,7 @@ export const LOCAL_NAME = {
   TEXT: 'text',
   TEXT_AREA: 'text-area',
   TEXT_FIELD: 'text-field',
+  VALUE: 'value',
   VIEW: 'view',
   WEB_VIEW: 'web-view',
 };
