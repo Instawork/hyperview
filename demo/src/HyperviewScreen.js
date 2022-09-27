@@ -12,7 +12,7 @@ import Hyperview, { Cache } from 'hyperview';
 import moment from 'moment';
 import { MAIN_STACK_NAME, MODAL_STACK_NAME } from './constants';
 
-const hyperviewCache = Cache.createCache(); 
+const hyperviewCache = Cache.createCache();
 
 export default class HyperviewScreen extends PureComponent {
   goBack = () => {
@@ -57,9 +57,9 @@ export default class HyperviewScreen extends PureComponent {
       mode: "cors",
       headers: {
         // Don't cache requests for the demo
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
-        Expires: 0,
-        Pragma: 'no-cache',
+        'cache-control': 'private, max-age=300, max-stale=300',
+        // Expires: 0,
+        // Pragma: 'no-cache',
         ...init.headers,
       }
     });

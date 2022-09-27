@@ -5,7 +5,7 @@ module.exports = function (eleventyConfig) {
       res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
       res.setHeader(
         'Access-Control-Allow-Headers',
-        'x-hyperview-dimensions,x-hyperview-version,pragma,expires,cache-control',
+        'x-hyperview-dimensions,x-hyperview-version,pragma,expires',
       );
       res.setHeader('Cache-control', 'private, max-age=300')
       if (req.method === 'OPTIONS') {
