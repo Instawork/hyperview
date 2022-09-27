@@ -83,6 +83,7 @@ export class Parser {
     };
 
     const response: Response = await this.fetch(url, options);
+    console.log('headers test3....', response.headers)
     const responseText: string = await response.text();
     const contentType: string = response.headers?.get(
       HTTP_HEADERS.CONTENT_TYPE,

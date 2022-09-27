@@ -7,6 +7,7 @@ module.exports = function (eleventyConfig) {
         'Access-Control-Allow-Headers',
         'x-hyperview-dimensions,x-hyperview-version,pragma,expires,cache-control',
       );
+      res.setHeader('Cache-control', 'private, max-age=300')
       if (req.method === 'OPTIONS') {
         res.writeHead(200, {});
         res.end();

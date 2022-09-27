@@ -17,6 +17,7 @@ import * as Render from 'hyperview/src/services/render';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as UrlService from 'hyperview/src/services/url';
 import * as Xml from 'hyperview/src/services/xml';
+import * as Cache from 'hyperview/src/services/cache';
 import { ACTIONS, NAV_ACTIONS, UPDATE_ACTIONS } from 'hyperview/src/types';
 // eslint-disable-next-line instawork/import-services
 import Navigation, { ANCHOR_ID_SEPARATOR } from 'hyperview/src/services/navigation';
@@ -37,6 +38,7 @@ export default class HyperScreen extends React.Component {
   static renderElement = Render.renderElement;
 
   constructor(props) {
+    console.log('from hyperview constructor')
     super(props);
 
     this.onUpdate = this.onUpdate.bind(this);
@@ -100,6 +102,7 @@ export default class HyperScreen extends React.Component {
     // In this case, the url to load in the screen will be passed via navigation props.
     // Otherwise, use the entrypoint URL provided as a prop to the first HyperScreen.
     const url = params.url || this.props.entrypointUrl || null;
+    console.log('from hyperview didmount ')
 
     const preloadScreen = params.preloadScreen
       ? this.navigation.getPreloadScreen(params.preloadScreen)
@@ -238,7 +241,7 @@ export default class HyperScreen extends React.Component {
       return React.createElement(errorScreen, {
         error: this.state.error,
         onPressReload: () => this.reload(),  // Make sure reload() is called without any args
-        onPressViewDetails: (uri) => this.props.openModal({url: uri}),
+        onPressViewDetails: (uri) => this.props.openModal({ url: uri }),
       });
     }
     if (!this.state.doc) {
@@ -403,7 +406,7 @@ export default class HyperScreen extends React.Component {
         }
         return;
       }
-        behaviorElement.setAttribute('ran-once', 'true');
+      behaviorElement.setAttribute('ran-once', 'true');
 
     }
 
@@ -505,4 +508,4 @@ export default class HyperScreen extends React.Component {
 }
 
 export * from 'hyperview/src/types';
-export { Events, Namespaces };
+export { Events, Namespaces, Cache };

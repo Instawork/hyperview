@@ -8,9 +8,11 @@
 
 import React, { PureComponent } from 'react';
 import HandleBack from './HandleBack';
-import Hyperview from 'hyperview';
+import Hyperview, { Cache } from 'hyperview';
 import moment from 'moment';
 import { MAIN_STACK_NAME, MODAL_STACK_NAME } from './constants';
+
+const hyperviewCache = Cache.createCache(); 
 
 export default class HyperviewScreen extends PureComponent {
   goBack = () => {
@@ -50,7 +52,7 @@ export default class HyperviewScreen extends PureComponent {
    * header to prevent caching requests.
    */
   fetchWrapper = (input, init = { headers: {} }) => {
-    return fetch(input, {
+    return Cache.wrapFetch(hyperviewCache, fetch)(input, {
       ...init,
       mode: "cors",
       headers: {
