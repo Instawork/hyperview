@@ -19,6 +19,10 @@ import {
   PRESS_TRIGGERS,
   TRIGGERS,
   UPDATE_ACTIONS,
+  ON_RESPONSE_REVALIDATED,
+  ON_RESPONSE_STALE_NETWORK_ERROR,
+  ON_RESPONSE_STALE_REVALIDATING,
+  ON_RESPONSE_STALE_SERVER_ERROR,
 } from 'hyperview/src/types';
 import { ATTRIBUTES, PRESS_TRIGGERS_PROP_NAMES } from './types';
 import type {
@@ -82,7 +86,30 @@ export default class HyperRef extends PureComponent<Props, State> {
   }
 
   componentDidMount() {
+    const { options } = this.props;
     this.triggerLoadBehaviors();
+    console.log('In Hyperref did mount')
+
+    if (options.screenEventEmitter) {
+      console.log('Listening....');
+      const { screenEventEmitter } = options;
+      screenEventEmitter.on(
+        ON_RESPONSE_STALE_REVALIDATING,
+        this.onResponseStaleRevalidating,
+      );
+      screenEventEmitter.on(
+        ON_RESPONSE_REVALIDATED,
+        this.onResponseRevalidated,
+      );
+      screenEventEmitter.on(
+        ON_RESPONSE_STALE_SERVER_ERROR,
+        this.onResponseStaleServerError,
+      );
+      screenEventEmitter.on(
+        ON_RESPONSE_STALE_NETWORK_ERROR,
+        this.onResponseStaleNetworkError,
+      );
+    }
 
     // Register event listener for on-event triggers
     Events.subscribe(this.onEventDispatch);
@@ -99,8 +126,30 @@ export default class HyperRef extends PureComponent<Props, State> {
   }
 
   componentWillUnmount() {
+    const { options } = this.props;
     // Remove event listener for on-event triggers to avoid memory leaks
     Events.unsubscribe(this.onEventDispatch);
+
+    // Remove event listeners for screen-only events
+    // if (options.screenEventEmitter) {
+    //   const { screenEventEmitter } = options;
+    //   screenEventEmitter.off(
+    //     ON_RESPONSE_STALE_REVALIDATING,
+    //     this.onResponseStaleRevalidating,
+    //   );
+    //   screenEventEmitter.off(
+    //     ON_RESPONSE_REVALIDATED,
+    //     this.onResponseRevalidated,
+    //   );
+    //   screenEventEmitter.off(
+    //     ON_RESPONSE_STALE_SERVER_ERROR,
+    //     this.onResponseStaleServerError,
+    //   );
+    //   screenEventEmitter.off(
+    //     ON_RESPONSE_STALE_NETWORK_ERROR,
+    //     this.onResponseStaleNetworkError,
+    //   );
+    // }
   }
 
   updateBehaviorElements = () => {
@@ -152,6 +201,46 @@ export default class HyperRef extends PureComponent<Props, State> {
       }
     });
   };
+
+  createScreenEventHandler = (triggerName: string) => () => {
+    console.log('createScreenEventHandler Trigger name - ', triggerName, this.props.element.tagName);
+    return Dom.getBehaviorElements(this.props.element)
+      .filter(e => {
+        console.log('element', e.getAttribute(ATTRIBUTES.TRIGGER))
+        return e.getAttribute(ATTRIBUTES.TRIGGER) === triggerName
+      })
+      .forEach(triggeredElement => {
+        console.log('in for each')
+        const handler = this.createActionHandler(
+          this.props.element,
+          triggeredElement,
+          this.props.onUpdate,
+        );
+        handler();
+        if (__DEV__) {
+          const serializer = new XMLSerializer();
+          console.log(
+            `[${triggerName}] triggered on element:`,
+            serializer.serializeToString(triggeredElement.cloneNode(false)),
+          );
+        }
+      });
+  }
+
+  onResponseStaleRevalidating = this.createScreenEventHandler(
+    'response-stale-revalidating',
+  );
+
+  onResponseRevalidated = this.createScreenEventHandler('response-revalidated');
+
+  onResponseStaleServerError = this.createScreenEventHandler(
+    'response-stale-server-error',
+  );
+
+  onResponseStaleNetworkError = this.createScreenEventHandler(
+    'response-stale-network-error',
+  );
+
 
   createActionHandler = (
     element: Element,
@@ -314,7 +403,7 @@ export default class HyperRef extends PureComponent<Props, State> {
       this.props.element.parentNode?.localName === LOCAL_NAME.TEXT;
 
     if (isNestedUnderText) {
-      const noop = () => {};
+      const noop = () => { };
       return (
         <Text
           accessibilityLabel={accessibilityLabel}

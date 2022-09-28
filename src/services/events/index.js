@@ -8,10 +8,20 @@
  *
  */
 
-import { ON_EVENT_DISPATCH } from 'hyperview/src/types';
+import {
+  ON_EVENT_DISPATCH,
+  ACTIONS,
+  NAV_ACTIONS,
+  UPDATE_ACTIONS,
+  ON_RESPONSE_REVALIDATED,
+  ON_RESPONSE_STALE_NETWORK_ERROR,
+  ON_RESPONSE_STALE_REVALIDATING,
+  ON_RESPONSE_STALE_SERVER_ERROR,
+} from 'hyperview/src/types';
+
 import TinyEmitter from 'tiny-emitter';
 
-const tinyEmitter = new TinyEmitter();
+export const tinyEmitter = new TinyEmitter();
 
 export const dispatch = (eventName: string) => {
   if (__DEV__) {
@@ -25,3 +35,8 @@ export const subscribe = (callback: (eventName: string) => void) =>
 
 export const unsubscribe = (callback: (eventName: string) => void) =>
   tinyEmitter.off(ON_EVENT_DISPATCH, callback);
+
+export const dispatchCustomEvent = (eventName: string, url: string) => {
+  console.log('EMITTING TRIGGER', eventName);
+  tinyEmitter.emit(eventName, url);
+};

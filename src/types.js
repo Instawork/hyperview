@@ -67,26 +67,26 @@ export type Node = {
   tagName: DOMString,
   localName: LocalName,
   +attributes: ?NamedNodeMap,
-  +childNodes: ?NodeList<Node>,
-  +firstChild: ?Node,
-  +lastChild: ?Node,
-  +localName: ?LocalName,
-  +namespaceURI: ?NamespaceURI,
-  +nextSibling: ?Node,
-  +nodeName: DOMString,
-  +nodeType: NodeType,
-  nodeValue: ?string,
-  +ownerDocument: ?Document,
-  +parentNode: ?Node,
-  +previousSibling: ?Node,
-  appendChild: (newChild: Node) => Node,
-  hasAttributes: () => boolean,
-  hasChildNodes: () => boolean,
-  insertBefore: (newChild: Node, refChild: Node) => Node,
-  isSupported: (feature: DOMString, version: DOMString) => boolean,
-  normalize: () => void,
-  removeChild: (oldChild: Node) => Node,
-  replaceChild: (newChild: Node, oldChild: Node) => Node,
+  +childNodes: ?NodeList < Node >,
+    +firstChild: ?Node,
+      +lastChild: ?Node,
+        +localName: ?LocalName,
+          +namespaceURI: ?NamespaceURI,
+            +nextSibling: ?Node,
+              +nodeName: DOMString,
+                +nodeType: NodeType,
+                  nodeValue: ?string,
+                    +ownerDocument: ?Document,
+                      +parentNode: ?Node,
+                        +previousSibling: ?Node,
+                          appendChild: (newChild: Node) => Node,
+                            hasAttributes: () => boolean,
+                              hasChildNodes: () => boolean,
+                                insertBefore: (newChild: Node, refChild: Node) => Node,
+                                  isSupported: (feature: DOMString, version: DOMString) => boolean,
+                                    normalize: () => void,
+                                      removeChild: (oldChild: Node) => Node,
+                                        replaceChild: (newChild: Node, oldChild: Node) => Node,
 };
 
 export type Attribute = Node & {
@@ -94,7 +94,7 @@ export type Attribute = Node & {
   nodeType: typeof NODE_TYPE.ATTRIBUTE_NODE,
   +name: DOMString,
   +specified: true,
-  ownerElement: Element,
+    ownerElement: Element,
 };
 
 export type DocumentType = {
@@ -270,6 +270,7 @@ export type HvComponentOptions = {
   pressed?: ?boolean,
   pressedSelected?: ?boolean,
   registerInputHandler?: (ref: ?ElementRef<*>) => void,
+  screenEventEmitter?: EventEmitter,
   screenUrl?: ?string,
   selected?: ?boolean,
   skipHref?: ?boolean,
@@ -292,9 +293,9 @@ export type HvUpdateRoot = (root: Document, updateStylesheet?: boolean) => void;
 
 export type HvComponentProps = {|
   element: Element,
-  onUpdate: HvComponentOnUpdate,
-  options: HvComponentOptions,
-  stylesheets: StyleSheets,
+    onUpdate: HvComponentOnUpdate,
+      options: HvComponentOptions,
+        stylesheets: StyleSheets,
 |};
 
 // This type exists for casting since our current version of Flow
@@ -393,23 +394,41 @@ export type UpdateAction = $Values<typeof UPDATE_ACTIONS>;
 
 export type BehaviorOptions = {|
   newElement: Element,
-  behaviorElement: Element,
-  showIndicatorId?: string,
-  delay?: number,
+    behaviorElement: Element,
+      showIndicatorId ?: string,
+      delay ?: number,
 |};
 
 export type NavigationRouteParams = {|
   delay: ?number,
-  preloadScreen: ?number,
-  url: string,
+    preloadScreen: ?number,
+      url: string,
 |};
 
 export type NavigationProps = {|
   back: (routeParams: ?NavigationRouteParams) => void,
-  closeModal: (routeParams: ?NavigationRouteParams) => void,
-  navigate: (routeParams: NavigationRouteParams, key: ?string) => void,
-  openModal: (routeParams: ?NavigationRouteParams) => void,
-  push: (routeParams: NavigationRouteParams) => void,
+    closeModal: (routeParams: ?NavigationRouteParams) => void,
+      navigate: (routeParams: NavigationRouteParams, key: ?string) => void,
+        openModal: (routeParams: ?NavigationRouteParams) => void,
+          push: (routeParams: NavigationRouteParams) => void,
 |};
 
+export type EventEmitter = {
+  on: (event: string, callback: () => void, ctx?: any) => any,
+  once: (event: string, callback: () => void, ctx?: any) => any,
+  emit: (event: string, ...args: Array<any>) => any,
+  off: (event: string, callback: () => void, ctx?: any) => any,
+};
+
 export const ON_EVENT_DISPATCH = 'hyperview:on-event';
+
+export const ON_RESPONSE_STALE_REVALIDATING =
+  'response-stale-revalidating';
+
+export const ON_RESPONSE_REVALIDATED = 'response-revalidated';
+
+export const ON_RESPONSE_STALE_SERVER_ERROR =
+  'response-stale-server-error';
+
+export const ON_RESPONSE_STALE_NETWORK_ERROR =
+  'response-stale-network-error';

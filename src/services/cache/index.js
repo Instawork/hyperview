@@ -18,6 +18,7 @@
 import { Cache } from 'react-native-cache';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CachePolicy from 'http-cache-semantics';
+import * as Events from 'hyperview/src/services/events';
 
 const cachePolicyOptions = {
   shared: false,
@@ -126,9 +127,9 @@ const revalidateCacheHit = (
     const modified: boolean = revalidation.modified;
 
     console.log(modified ? 'modified' : 'not modified');
-    const newResponse = modified ? revalidationResponse : new Response(text, { headers: headers })
+    const newResponse = modified ? revalidationResponse : new Response(text, { headers: headers });
 
-    newResponse.blob().then(async blob => {
+    newResponse.blob().then(async blob => { 
       const newCacheValue: HttpCacheValue = {
         text: text,
         size: blob.size,
@@ -138,6 +139,8 @@ const revalidateCacheHit = (
       const expiry = revalidatedPolicy.timeToLive();
       console.log(`caching ${url} for ${expiry}ms`);
       await cache.set(url, newCacheValue, expiry);
+      console.log('DISPATCHING response-revalidated')
+      Events.dispatchCustomEvent("response-revalidated", url);
     });
 
     return newResponse.clone();
@@ -155,7 +158,7 @@ const handleCacheHit = (
   const policy = CachePolicy.fromObject(cacheValue.policy);
 
   console.log(`cache hit for ${url}`);
-  if (policy.satisfiesWithoutRevalidation(options)) {
+  if (false && policy.satisfiesWithoutRevalidation(options)) {
     console.log(`cached response can be used without revalidation`);
     const headers = policy.responseHeaders();
     const response = new Response(text, { headers: headers });
@@ -172,10 +175,12 @@ const cachedFetch = async (
   cache: HttpCache,
   baseFetch: Fetch,
 ): Promise<ResponseType> => {
+  // await cache.clearAll();
   const cacheValue: HttpCacheValue = await cache.get(url);
   // HTTP method needs to be uppercase for 
   const optionsNew = { ...options, method: options.method?.toUpperCase() };
   console.log('optionsNew', optionsNew)
+  console.log('CACHE', cacheValue)
   if (cacheValue !== undefined) {
     return handleCacheHit(url, cacheValue, optionsNew, cache, baseFetch);
   }

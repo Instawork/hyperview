@@ -11,6 +11,7 @@ import * as Behaviors from 'hyperview/src/behaviors';
 import * as Components from 'hyperview/src/services/components';
 import * as Contexts from 'hyperview/src/contexts';
 import * as Dom from 'hyperview/src/services/dom';
+import * as HyperRef from 'hyperview/src/core/hyper-ref';
 import * as Events from 'hyperview/src/services/events';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
@@ -18,7 +19,17 @@ import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as UrlService from 'hyperview/src/services/url';
 import * as Xml from 'hyperview/src/services/xml';
 import * as Cache from 'hyperview/src/services/cache';
-import { ACTIONS, NAV_ACTIONS, UPDATE_ACTIONS } from 'hyperview/src/types';
+// import { ACTIONS, NAV_ACTIONS, UPDATE_ACTIONS } from 'hyperview/src/types';
+import {
+  ON_EVENT_DISPATCH,
+  ACTIONS,
+  NAV_ACTIONS,
+  UPDATE_ACTIONS,
+  ON_RESPONSE_REVALIDATED,
+  ON_RESPONSE_STALE_NETWORK_ERROR,
+  ON_RESPONSE_STALE_REVALIDATING,
+  ON_RESPONSE_STALE_SERVER_ERROR,
+} from 'hyperview/src/types';
 // eslint-disable-next-line instawork/import-services
 import Navigation, { ANCHOR_ID_SEPARATOR } from 'hyperview/src/services/navigation';
 import { createProps, createStyleProp, getElementByTimeoutId, getFormData, later, removeTimeoutId, setTimeoutId, shallowCloneToRoot } from 'hyperview/src/services';
@@ -26,6 +37,9 @@ import { Linking } from 'react-native';
 import LoadError from 'hyperview/src/core/components/load-error';
 import Loading from 'hyperview/src/core/components/loading';
 import React from 'react';
+
+
+const screenEventEmitter = Events.tinyEmitter;
 
 // eslint-disable-next-line instawork/pure-components
 export default class HyperScreen extends React.Component {
@@ -123,6 +137,23 @@ export default class HyperScreen extends React.Component {
         url,
       });
     }
+    console.log('Listening....');
+    // screenEventEmitter.on(
+    //   ON_RESPONSE_STALE_REVALIDATING,
+    //   this.onResponseStaleRevalidating,
+    // );
+    // screenEventEmitter.on(
+    //   ON_RESPONSE_REVALIDATED,
+    //   this.onResponseRevalidated,
+    // );
+    // screenEventEmitter.on(
+    //   ON_RESPONSE_STALE_SERVER_ERROR,
+    //   this.onResponseStaleServerError,
+    // );
+    // screenEventEmitter.on(
+    //   ON_RESPONSE_STALE_NETWORK_ERROR,
+    //   this.onResponseStaleNetworkError,
+    // );
   }
 
   /**
@@ -174,6 +205,23 @@ export default class HyperScreen extends React.Component {
     if (this.state.url) {
       this.navigation.removeRouteKey(this.state.url)
     }
+
+    // screenEventEmitter.off(
+    //   ON_RESPONSE_STALE_REVALIDATING,
+    //   this.onResponseStaleRevalidating,
+    // );
+    // screenEventEmitter.off(
+    //   ON_RESPONSE_REVALIDATED,
+    //   this.onResponseRevalidated,
+    // );
+    // screenEventEmitter.off(
+    //   ON_RESPONSE_STALE_SERVER_ERROR,
+    //   this.onResponseStaleServerError,
+    // );
+    // screenEventEmitter.off(
+    //   ON_RESPONSE_STALE_NETWORK_ERROR,
+    //   this.onResponseStaleNetworkError,
+    // );
   }
 
   /**
@@ -185,6 +233,48 @@ export default class HyperScreen extends React.Component {
       this.needsLoad = false;
     }
   }
+
+  createScreenEventHandler = (triggerName: string) => () => {
+    console.log('createScreenEventHandler Trigger name - ', triggerName, this.state.doc);
+    Events.dispatch('response-revalidated-hyperref')
+    // return Dom.getBehaviorElements(this.props.element)
+    //   .filter(e => {
+    //     console.log('element', e.getAttribute(ATTRIBUTES.TRIGGER))
+    //     return e.getAttribute(ATTRIBUTES.TRIGGER) === triggerName
+    //   })
+    //   .forEach(triggeredElement => {
+    //     console.log('in for each')
+    //     const handler = HyperRef.createActionHandler(
+    //       this,
+    //       triggeredElement,
+    //       this.props.onUpdate,
+    //     );
+    //     handler();
+    //     if (__DEV__) {
+    //       const serializer = new XMLSerializer();
+    //       console.log(
+    //         `[${triggerName}] triggered on element:`,
+    //         serializer.serializeToString(triggeredElement.cloneNode(false)),
+    //       );
+    //     }
+    //   });
+  }
+
+  onResponseStaleRevalidating = this.createScreenEventHandler(
+    'response-stale-revalidating',
+  );
+
+  onResponseRevalidated = (url) => this.createScreenEventHandler('response-revalidated');
+
+  onResponseStaleServerError = this.createScreenEventHandler(
+    'response-stale-server-error',
+  );
+
+  onResponseStaleNetworkError = this.createScreenEventHandler(
+    'response-stale-network-error',
+  );
+
+
 
   /**
    * Performs a full load of the screen.
@@ -249,6 +339,7 @@ export default class HyperScreen extends React.Component {
       return React.createElement(loadingScreen);
     }
     const [body] = Array.from(this.state.doc.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'body'));
+    // console.log('body', body)
     const screenElement = Render.renderElement(
       body,
       this.state.styles,
@@ -256,6 +347,7 @@ export default class HyperScreen extends React.Component {
       {
         componentRegistry: this.componentRegistry,
         screenUrl: this.state.url,
+        screenEventEmitter: Events.tinyEmitter,
       },
     );
 
@@ -335,6 +427,7 @@ export default class HyperScreen extends React.Component {
       const ranOnce = behaviorElement.getAttribute('ran-once');
       const once = behaviorElement.getAttribute('once');
       const delay = behaviorElement.getAttribute('delay');
+      console.log('eventName', eventName)
 
       if (once === 'true' && ranOnce === 'true') {
         return;
@@ -351,6 +444,7 @@ export default class HyperScreen extends React.Component {
       }
 
       const dispatch = () => {
+        console.log('onUpdate Eventname', eventName);
         Events.dispatch(eventName);
       }
 
