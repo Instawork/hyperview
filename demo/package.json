@@ -29,7 +29,8 @@
     "react-native-webview": "11.18.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "@expo/webpack-config": "^0.17.2"
   },
   "private": true
 }
