@@ -82,6 +82,7 @@ const handleCacheMiss = async (
       console.log(`response for ${url} is not cacheable`);
       return response;
     }
+    console.log('BASE FETCH RESPONSE HEADERS', response.headers, options)
 
     const clonedResponse = response.clone();
     const text = await clonedResponse.clone().text();
@@ -117,8 +118,10 @@ const revalidateCacheHit = (
   const headers = policy.responseHeaders();
 
   console.log(`revalidating ${url}...`);
+  setTimeout(() => Events.dispatchCustomEvent("response-stale-revalidating", url), 10);
 
-  return baseFetch(url, revalidationOptions).then(revalidationResponse => {
+
+  baseFetch(url, revalidationOptions).then(revalidationResponse => {
     const revalidation = policy.revalidatedPolicy(
       options,
       revalidationResponse,
@@ -129,7 +132,8 @@ const revalidateCacheHit = (
     console.log(modified ? 'modified' : 'not modified');
     const newResponse = modified ? revalidationResponse : new Response(text, { headers: headers });
 
-    newResponse.blob().then(async blob => { 
+
+    setTimeout(() => newResponse.blob().then(async blob => {
       const newCacheValue: HttpCacheValue = {
         text: text,
         size: blob.size,
@@ -141,10 +145,14 @@ const revalidateCacheHit = (
       await cache.set(url, newCacheValue, expiry);
       console.log('DISPATCHING response-revalidated')
       Events.dispatchCustomEvent("response-revalidated", url);
-    });
+    }), 2000);
 
+    console.log('STALEEEEE NOT')
     return newResponse.clone();
   });
+
+  // console.log('STALEEEEE')
+  return new Response(text, { headers: headers });
 };
 
 const handleCacheHit = (
@@ -158,7 +166,7 @@ const handleCacheHit = (
   const policy = CachePolicy.fromObject(cacheValue.policy);
 
   console.log(`cache hit for ${url}`);
-  if (false && policy.satisfiesWithoutRevalidation(options)) {
+  if (policy.satisfiesWithoutRevalidation(options)) {
     console.log(`cached response can be used without revalidation`);
     const headers = policy.responseHeaders();
     const response = new Response(text, { headers: headers });
@@ -175,10 +183,16 @@ const cachedFetch = async (
   cache: HttpCache,
   baseFetch: Fetch,
 ): Promise<ResponseType> => {
-  // await cache.clearAll();
   const cacheValue: HttpCacheValue = await cache.get(url);
-  // HTTP method needs to be uppercase for 
-  const optionsNew = { ...options, method: options.method?.toUpperCase() };
+  // await cache.clearAll();
+
+  // HTTP method needs to be uppercase for
+  let optionsNew;
+  if (!url.includes('without_caching.xml')) {
+    optionsNew = { ...options, method: options.method?.toUpperCase() };
+  } else {
+    optionsNew = { ...options, method: options.method?.toUpperCase(), headers: { ...options.headers, 'cache-control': 'no-cache, no-store' } };
+  }
   console.log('optionsNew', optionsNew)
   console.log('CACHE', cacheValue)
   if (cacheValue !== undefined) {

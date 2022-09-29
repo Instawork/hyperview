@@ -57,7 +57,7 @@ export default class HyperviewScreen extends PureComponent {
       mode: "cors",
       headers: {
         // Don't cache requests for the demo
-        'cache-control': 'private, max-age=300, max-stale=300',
+        'cache-control': 'private, max-age=15, max-stale=15',
         // Expires: 0,
         // Pragma: 'no-cache',
         ...init.headers,

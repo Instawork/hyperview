@@ -1,20 +1,21 @@
 module.exports = function (eleventyConfig) {
   eleventyConfig.setBrowserSyncConfig({
     middleware: function (req, res, next) {
-      res.setHeader('Access-Control-Allow-Origin', '*');
-      res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
-      res.setHeader(
-        'Access-Control-Allow-Headers',
-        'x-hyperview-dimensions,x-hyperview-version,pragma,expires',
-      );
-      res.setHeader('Cache-control', 'private, max-age=300')
-      if (req.method === 'OPTIONS') {
-        res.writeHead(200, {});
-        res.end();
-      } else {
-        next();
-      }
-    },
+      setTimeout(() => {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+        res.setHeader(
+          'Access-Control-Allow-Headers',
+          'x-hyperview-dimensions,x-hyperview-version,pragma,expires',
+        );
+        if (req.method === 'OPTIONS') {
+          res.writeHead(200, {});
+          res.end();
+        } else {
+          next();
+        }
+      }, 1000)
+    }
   });
   // Pass through any XML files that haven't been ported yet.
   // Once everything is ported, we can remove this.

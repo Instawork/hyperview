@@ -260,19 +260,20 @@ export default class HyperScreen extends React.Component {
     //   });
   }
 
-  onResponseStaleRevalidating = this.createScreenEventHandler(
-    'response-stale-revalidating',
-  );
+  // onResponseStaleRevalidating = this.createScreenEventHandler(
+  //   'response-stale-revalidating',
+  // );
 
-  onResponseRevalidated = (url) => this.createScreenEventHandler('response-revalidated');
+  // onResponseStaleRevalidating = (url) => this.createScreenEventHandler('response-stale-revalidating');
+  // onResponseRevalidated = (url) => this.createScreenEventHandler('response-revalidated');
 
-  onResponseStaleServerError = this.createScreenEventHandler(
-    'response-stale-server-error',
-  );
+  // onResponseStaleServerError = this.createScreenEventHandler(
+  //   'response-stale-server-error',
+  // );
 
-  onResponseStaleNetworkError = this.createScreenEventHandler(
-    'response-stale-network-error',
-  );
+  // onResponseStaleNetworkError = this.createScreenEventHandler(
+  //   'response-stale-network-error',
+  // );
 
 
 

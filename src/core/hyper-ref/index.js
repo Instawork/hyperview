@@ -131,25 +131,25 @@ export default class HyperRef extends PureComponent<Props, State> {
     Events.unsubscribe(this.onEventDispatch);
 
     // Remove event listeners for screen-only events
-    // if (options.screenEventEmitter) {
-    //   const { screenEventEmitter } = options;
-    //   screenEventEmitter.off(
-    //     ON_RESPONSE_STALE_REVALIDATING,
-    //     this.onResponseStaleRevalidating,
-    //   );
-    //   screenEventEmitter.off(
-    //     ON_RESPONSE_REVALIDATED,
-    //     this.onResponseRevalidated,
-    //   );
-    //   screenEventEmitter.off(
-    //     ON_RESPONSE_STALE_SERVER_ERROR,
-    //     this.onResponseStaleServerError,
-    //   );
-    //   screenEventEmitter.off(
-    //     ON_RESPONSE_STALE_NETWORK_ERROR,
-    //     this.onResponseStaleNetworkError,
-    //   );
-    // }
+    if (options.screenEventEmitter) {
+      const { screenEventEmitter } = options;
+      screenEventEmitter.off(
+        ON_RESPONSE_STALE_REVALIDATING,
+        this.onResponseStaleRevalidating,
+      );
+      screenEventEmitter.off(
+        ON_RESPONSE_REVALIDATED,
+        this.onResponseRevalidated,
+      );
+      screenEventEmitter.off(
+        ON_RESPONSE_STALE_SERVER_ERROR,
+        this.onResponseStaleServerError,
+      );
+      screenEventEmitter.off(
+        ON_RESPONSE_STALE_NETWORK_ERROR,
+        this.onResponseStaleNetworkError,
+      );
+    }
   }
 
   updateBehaviorElements = () => {
@@ -203,14 +203,12 @@ export default class HyperRef extends PureComponent<Props, State> {
   };
 
   createScreenEventHandler = (triggerName: string) => () => {
-    console.log('createScreenEventHandler Trigger name - ', triggerName, this.props.element.tagName);
     return Dom.getBehaviorElements(this.props.element)
       .filter(e => {
         console.log('element', e.getAttribute(ATTRIBUTES.TRIGGER))
         return e.getAttribute(ATTRIBUTES.TRIGGER) === triggerName
       })
       .forEach(triggeredElement => {
-        console.log('in for each')
         const handler = this.createActionHandler(
           this.props.element,
           triggeredElement,
