@@ -686,6 +686,20 @@
 
       <xs:attribute name="resizeMode" type="hv:resizeMode" />
 
+      <xs:attribute name="outlineColor" type="hv:color" />
+      <xs:attribute name="outlineOffset" type="xs:integer" />
+      <xs:attribute name="outlineStyle">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="none" />
+            <xs:enumeration value="dotted" />
+            <xs:enumeration value="solid" />
+            <xs:enumeration value="groove" />
+            <xs:enumeration value="inset" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="outlineWidth" type="xs:integer" />
     </xs:complexType>
   </xs:element>
 

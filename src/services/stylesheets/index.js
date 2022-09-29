@@ -143,6 +143,14 @@ const STYLE_ATTRIBUTE_CONVERTERS = {
   // image attributes
   // eslint-disable-next-line sort-keys
   resizeMode: string,
+
+  // react-native-web specifics
+  // https://github.com/necolas/react-native-web/blob/d037506200548d51dc523637732a71a30cfd7cff/packages/react-native-web/src/exports/View/types.js#L78
+  // eslint-disable-next-line sort-keys
+  outlineColor: string,
+  outlineOffset: numberOrString,
+  outlineStyle: string,
+  outlineWidth: numberOrString,
 };
 
 function createStylesheet(document: Document, modifiers = {}): StyleSheetType {
