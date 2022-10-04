@@ -205,40 +205,40 @@ export default class HvView extends PureComponent<HvComponentProps> {
     /* eslint-disable react/jsx-props-no-spreading */
     if (scrollable) {
       if (hasInputFields) {
-        return (
-          <KeyboardAwareScrollView
-            {...{
-              ...this.getCommonProps(),
-              ...this.getScrollViewProps(children),
-              ...this.getKeyboardAwareScrollViewProps(inputFieldRefs),
-            }}
-          >
-            {children}
-          </KeyboardAwareScrollView>
-        );
-      }
-      return (
-        <ScrollView
-          {...{
+        return React.createElement(
+          KeyboardAwareScrollView,
+          {
             ...this.getCommonProps(),
             ...this.getScrollViewProps(children),
-          }}
-        >
-          {children}
-        </ScrollView>
+            ...this.getKeyboardAwareScrollViewProps(inputFieldRefs),
+          },
+          ...children,
+        );
+      }
+      return React.createElement(
+        ScrollView,
+        {
+          ...this.getCommonProps(),
+          ...this.getScrollViewProps(children),
+        },
+        ...children,
       );
     }
     if (!keyboardAvoiding && safeArea) {
-      return <SafeAreaView {...this.getCommonProps()}>{children}</SafeAreaView>;
-    }
-    if (keyboardAvoiding) {
-      return (
-        <KeyboardAvoidingView {...this.getCommonProps()} behavior="position">
-          {children}
-        </KeyboardAvoidingView>
+      return React.createElement(
+        SafeAreaView,
+        this.getCommonProps(),
+        ...children,
       );
     }
-    return <View {...this.getCommonProps()}>{children}</View>;
+    if (keyboardAvoiding) {
+      return React.createElement(
+        KeyboardAvoidingView,
+        { ...this.getCommonProps(), behavior: 'position' },
+        ...children,
+      );
+    }
+    return React.createElement(View, this.getCommonProps(), ...children);
     /* eslint-enable react/jsx-props-no-spreading */
   };
 
