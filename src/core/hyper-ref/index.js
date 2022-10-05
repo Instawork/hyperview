@@ -51,10 +51,10 @@ import { createTestProps } from 'hyperview/src/services';
  */
 export const createEventHandler = (
   handler: () => void,
+  preventDefault: boolean = false,
 ): ((event: any) => void) => event => {
-  if (event) {
-    event.stopPropagation();
-    event.preventDefault();
+  if (preventDefault) {
+    event?.preventDefault();
   }
   handler();
 };

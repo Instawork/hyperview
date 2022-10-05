@@ -134,7 +134,7 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
           // Used in select-multiple context.
           onToggle(value);
         }
-      }),
+      }, true),
       onPressIn: createEventHandler(() => this.setState({ pressed: true })),
       onPressOut: createEventHandler(() => this.setState({ pressed: false })),
       style: undefined,
