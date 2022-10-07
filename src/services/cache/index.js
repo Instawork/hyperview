@@ -223,3 +223,7 @@ export const wrapFetch = (cache: HttpCache, baseFetch: Fetch): Fetch => (
   url: string,
   options: RequestOptions,
 ): Promise<Response> => cachedFetch(url, options, cache, baseFetch);
+
+export const clearCache = async (cache: any) => {
+  await cache.clearCache();
+}
