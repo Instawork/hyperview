@@ -8,13 +8,13 @@
  *
  */
 
-// import type {
-//     Fetch,
-//     HttpCache,
-//     HttpCacheValue,
-//     RequestOptions,
-//     Response as ResponseType,
-// } from 'hyperview/src/services/cache/types';
+import type {
+    Fetch,
+    HttpCache,
+    HttpCacheValue,
+    RequestOptions,
+    Response as ResponseType,
+} from 'hyperview/src/services/cache/types';
 import { Cache } from 'react-native-cache';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CachePolicy from 'http-cache-semantics';
@@ -23,51 +23,6 @@ import * as Events from 'hyperview/src/services/events';
 const cachePolicyOptions = {
   shared: false,
 };
-
-// const cachedFetch = async (
-//   url: string,
-//   options: RequestOptions,
-//   cache: HttpCache,
-//   baseFetch: Fetch,
-// ): Promise<ResponseType> => {
-//   console.log(`HV cache size: ${cache.size}`);
-//   // await cache.clearAll();
-//   const cacheKey = url;
-//   const cached = await cache.get(cacheKey);
-//   if (cached !== undefined) {
-//     const text = cached.text;
-//     const headers = cached.headers
-//     console.log('HV found in cache!', headers);
-//     const response = new Response(text, { headers: headers });
-//     return Promise.resolve(response);
-//   }
-
-//   console.log('HV not in cache, fetching...', cached);
-//   return baseFetch(url, options).then(async response => {
-//     if (!response.ok) {
-//       return response;
-//     }
-
-//     const clonedResponse = response.clone();
-//     const text = await clonedResponse.clone().text();
-//     response.blob().then(async blob => {
-//       const cacheValue: HttpCacheValue = {
-//         text: text,
-//         headers: clonedResponse.headers,
-//         size: blob.size,
-//       };
-
-//       const expiry = 1 * 60 * 1000; // 5 min default
-//       console.log('caching...');
-//       await cache.set(cacheKey, cacheValue, expiry);
-//     });
-
-//     return clonedResponse;
-//   });
-// };
-
-
-// **************************** //
 
 const handleCacheMiss = async (
   url: string,
@@ -117,7 +72,6 @@ const revalidateCacheHit = (
   const revalidationOptions = { ...options, headers: revalidationHeaders };
   const headers = policy.responseHeaders();
 
-  console.log(`revalidating ${url}...`);
   setTimeout(() => Events.dispatchCustomEvent("response-stale-revalidating", url), 10);
 
 
@@ -143,11 +97,9 @@ const revalidateCacheHit = (
       const expiry = revalidatedPolicy.timeToLive();
       console.log(`caching ${url} for ${expiry}ms`);
       await cache.set(url, newCacheValue, expiry);
-      console.log('DISPATCHING response-revalidated')
       Events.dispatchCustomEvent("response-revalidated", url);
     }), 2000);
 
-    console.log('STALEEEEE NOT')
     return newResponse.clone();
   });
 

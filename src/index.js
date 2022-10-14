@@ -137,23 +137,6 @@ export default class HyperScreen extends React.Component {
         url,
       });
     }
-    console.log('Listening....');
-    // screenEventEmitter.on(
-    //   ON_RESPONSE_STALE_REVALIDATING,
-    //   this.onResponseStaleRevalidating,
-    // );
-    // screenEventEmitter.on(
-    //   ON_RESPONSE_REVALIDATED,
-    //   this.onResponseRevalidated,
-    // );
-    // screenEventEmitter.on(
-    //   ON_RESPONSE_STALE_SERVER_ERROR,
-    //   this.onResponseStaleServerError,
-    // );
-    // screenEventEmitter.on(
-    //   ON_RESPONSE_STALE_NETWORK_ERROR,
-    //   this.onResponseStaleNetworkError,
-    // );
   }
 
   /**
@@ -205,23 +188,6 @@ export default class HyperScreen extends React.Component {
     if (this.state.url) {
       this.navigation.removeRouteKey(this.state.url)
     }
-
-    // screenEventEmitter.off(
-    //   ON_RESPONSE_STALE_REVALIDATING,
-    //   this.onResponseStaleRevalidating,
-    // );
-    // screenEventEmitter.off(
-    //   ON_RESPONSE_REVALIDATED,
-    //   this.onResponseRevalidated,
-    // );
-    // screenEventEmitter.off(
-    //   ON_RESPONSE_STALE_SERVER_ERROR,
-    //   this.onResponseStaleServerError,
-    // );
-    // screenEventEmitter.off(
-    //   ON_RESPONSE_STALE_NETWORK_ERROR,
-    //   this.onResponseStaleNetworkError,
-    // );
   }
 
   /**
@@ -233,48 +199,6 @@ export default class HyperScreen extends React.Component {
       this.needsLoad = false;
     }
   }
-
-  createScreenEventHandler = (triggerName: string) => () => {
-    console.log('createScreenEventHandler Trigger name - ', triggerName, this.state.doc);
-    Events.dispatch('response-revalidated-hyperref')
-    // return Dom.getBehaviorElements(this.props.element)
-    //   .filter(e => {
-    //     console.log('element', e.getAttribute(ATTRIBUTES.TRIGGER))
-    //     return e.getAttribute(ATTRIBUTES.TRIGGER) === triggerName
-    //   })
-    //   .forEach(triggeredElement => {
-    //     console.log('in for each')
-    //     const handler = HyperRef.createActionHandler(
-    //       this,
-    //       triggeredElement,
-    //       this.props.onUpdate,
-    //     );
-    //     handler();
-    //     if (__DEV__) {
-    //       const serializer = new XMLSerializer();
-    //       console.log(
-    //         `[${triggerName}] triggered on element:`,
-    //         serializer.serializeToString(triggeredElement.cloneNode(false)),
-    //       );
-    //     }
-    //   });
-  }
-
-  // onResponseStaleRevalidating = this.createScreenEventHandler(
-  //   'response-stale-revalidating',
-  // );
-
-  // onResponseStaleRevalidating = (url) => this.createScreenEventHandler('response-stale-revalidating');
-  // onResponseRevalidated = (url) => this.createScreenEventHandler('response-revalidated');
-
-  // onResponseStaleServerError = this.createScreenEventHandler(
-  //   'response-stale-server-error',
-  // );
-
-  // onResponseStaleNetworkError = this.createScreenEventHandler(
-  //   'response-stale-network-error',
-  // );
-
 
 
   /**
