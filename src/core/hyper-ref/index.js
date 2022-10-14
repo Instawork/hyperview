@@ -88,10 +88,8 @@ export default class HyperRef extends PureComponent<Props, State> {
   componentDidMount() {
     const { options } = this.props;
     this.triggerLoadBehaviors();
-    console.log('In Hyperref did mount')
 
     if (options.screenEventEmitter) {
-      console.log('Listening....');
       const { screenEventEmitter } = options;
       screenEventEmitter.on(
         ON_RESPONSE_STALE_REVALIDATING,
@@ -205,7 +203,6 @@ export default class HyperRef extends PureComponent<Props, State> {
   createScreenEventHandler = (triggerName: string) => () => {
     return Dom.getBehaviorElements(this.props.element)
       .filter(e => {
-        console.log('element', e.getAttribute(ATTRIBUTES.TRIGGER))
         return e.getAttribute(ATTRIBUTES.TRIGGER) === triggerName
       })
       .forEach(triggeredElement => {

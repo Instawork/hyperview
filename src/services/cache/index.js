@@ -37,7 +37,6 @@ const handleCacheMiss = async (
       console.log(`response for ${url} is not cacheable`);
       return response;
     }
-    console.log('BASE FETCH RESPONSE HEADERS', response.headers, options)
 
     const clonedResponse = response.clone();
     const text = await clonedResponse.clone().text();
@@ -103,7 +102,6 @@ const revalidateCacheHit = (
     return newResponse.clone();
   });
 
-  // console.log('STALEEEEE')
   return new Response(text, { headers: headers });
 };
 
@@ -145,8 +143,6 @@ const cachedFetch = async (
   } else {
     optionsNew = { ...options, method: options.method?.toUpperCase(), headers: { ...options.headers, 'cache-control': 'no-cache, no-store' } };
   }
-  console.log('optionsNew', optionsNew)
-  console.log('CACHE', cacheValue)
   if (cacheValue !== undefined) {
     return handleCacheHit(url, cacheValue, optionsNew, cache, baseFetch);
   }
