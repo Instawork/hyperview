@@ -136,11 +136,10 @@ export default class HyperRef extends PureComponent<Props, State> {
     });
     onEventBehaviors.forEach(behaviorElement => {
       const handler = this.createActionHandler(
-        this.props.element,
         behaviorElement,
         this.props.onUpdate,
       );
-      handler();
+      handler(this.props.element);
       if (__DEV__) {
         const listenerElement: Element = behaviorElement.cloneNode(false);
         const caughtEvent: string = behaviorElement.getAttribute('event-name');
@@ -154,7 +153,6 @@ export default class HyperRef extends PureComponent<Props, State> {
   };
 
   createActionHandler = (
-    element: Element,
     behaviorElement: Element,
     onUpdate: HvComponentOnUpdate,
   ) => {
@@ -162,13 +160,13 @@ export default class HyperRef extends PureComponent<Props, State> {
       behaviorElement.getAttribute(ATTRIBUTES.ACTION) || NAV_ACTIONS.PUSH;
 
     if (action === ACTIONS.RELOAD) {
-      return () => {
+      return (element: Element) => {
         const href = behaviorElement.getAttribute(ATTRIBUTES.HREF);
         onUpdate(href, action, element, {});
       };
     }
     if (Object.values(NAV_ACTIONS).indexOf(action) >= 0) {
-      return () => {
+      return (element: Element) => {
         const href = behaviorElement.getAttribute(ATTRIBUTES.HREF);
         const showIndicatorId = behaviorElement.getAttribute(
           ATTRIBUTES.SHOW_DURING_LOAD,
@@ -178,7 +176,7 @@ export default class HyperRef extends PureComponent<Props, State> {
       };
     }
     if (Object.values(UPDATE_ACTIONS).indexOf(action) >= 0) {
-      return () => {
+      return (element: Element) => {
         const href = behaviorElement.getAttribute(ATTRIBUTES.HREF);
         const verb = behaviorElement.getAttribute(ATTRIBUTES.VERB);
         const targetId = behaviorElement.getAttribute(ATTRIBUTES.TARGET);
@@ -202,7 +200,7 @@ export default class HyperRef extends PureComponent<Props, State> {
       };
     }
     // Custom behavior
-    return () =>
+    return (element: Element) =>
       onUpdate(null, action, element, { behaviorElement, custom: true });
   };
 
@@ -223,11 +221,10 @@ export default class HyperRef extends PureComponent<Props, State> {
     const loadBehaviors = this.getBehaviorElements(TRIGGERS.LOAD);
     loadBehaviors.forEach(behaviorElement => {
       const handler = this.createActionHandler(
-        this.props.element,
         behaviorElement,
         this.props.onUpdate,
       );
-      setTimeout(handler, 0);
+      setTimeout(() => handler(this.props.element), 0);
     });
   };
 
@@ -256,7 +253,6 @@ export default class HyperRef extends PureComponent<Props, State> {
         behaviorElement.getAttribute(ATTRIBUTES.TRIGGER) || TRIGGERS.PRESS;
       const triggerPropName = PRESS_TRIGGERS_PROP_NAMES[trigger];
       const handler = this.createActionHandler(
-        this.props.element,
         behaviorElement,
         this.props.onUpdate,
       );
@@ -264,11 +260,13 @@ export default class HyperRef extends PureComponent<Props, State> {
         const oldHandler = pressHandlers[triggerPropName];
         pressHandlers[triggerPropName] = createEventHandler(() => {
           oldHandler();
-          setTimeout(handler, time);
+          setTimeout(() => handler(this.props.element), time);
           time += 1;
         });
       } else {
-        pressHandlers[triggerPropName] = createEventHandler(handler);
+        pressHandlers[triggerPropName] = createEventHandler(() =>
+          handler(this.props.element),
+        );
       }
     });
 
@@ -358,13 +356,9 @@ export default class HyperRef extends PureComponent<Props, State> {
       return children;
     }
     const refreshHandlers = behaviors.map(behaviorElement =>
-      this.createActionHandler(
-        this.props.element,
-        behaviorElement,
-        this.props.onUpdate,
-      ),
+      this.createActionHandler(behaviorElement, this.props.onUpdate),
     );
-    const onRefresh = () => refreshHandlers.forEach(h => h());
+    const onRefresh = () => refreshHandlers.forEach(h => h(this.props.element));
 
     const refreshControl = React.createElement(RefreshControl, {
       onRefresh,
@@ -383,13 +377,11 @@ export default class HyperRef extends PureComponent<Props, State> {
       return children;
     }
     const visibleHandlers = behaviors.map(behaviorElement =>
-      this.createActionHandler(
-        this.props.element,
-        behaviorElement,
-        this.props.onUpdate,
-      ),
+      this.createActionHandler(behaviorElement, this.props.onUpdate),
     );
-    const onVisible = () => visibleHandlers.forEach(h => h());
+    const onVisible = () => {
+      visibleHandlers.forEach(h => h(this.props.element));
+    };
 
     return React.createElement(
       VisibilityDetectingView,
