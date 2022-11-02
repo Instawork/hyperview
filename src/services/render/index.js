@@ -20,11 +20,14 @@ import { LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
 import React from 'react';
 
 export const renderElement = (
-  element: Element,
+  element: ?Element,
   stylesheets: StyleSheets,
   onUpdate: HvComponentOnUpdate,
   options: HvComponentOptions,
 ): ?React$Element<any> | ?string => {
+  if (!element) {
+    return null;
+  }
   if (element.nodeType === NODE_TYPE.ELEMENT_NODE) {
     // Hidden elements don't get rendered
     if (element.getAttribute('hide') === 'true') {
