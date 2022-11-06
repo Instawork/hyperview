@@ -218,7 +218,13 @@ export default class HyperRef extends PureComponent<Props, State> {
   };
 
   triggerLoadBehaviors = () => {
-    const loadBehaviors = this.getBehaviorElements(TRIGGERS.LOAD);
+    let loadBehaviors = this.getBehaviorElements(TRIGGERS.LOAD);
+    if (this.props.options?.isStale) {
+      const loadStaleBehaviors = this.getBehaviorElements(
+        TRIGGERS.LOAD_STALE_ERROR,
+      );
+      loadBehaviors = loadBehaviors.concat(loadStaleBehaviors);
+    }
     loadBehaviors.forEach(behaviorElement => {
       const handler = this.createActionHandler(
         behaviorElement,

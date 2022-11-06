@@ -58,7 +58,7 @@ export class Parser {
     data: ?FormData,
     httpMethod: ?HttpMethod,
     acceptContentType: string = CONTENT_TYPE.APPLICATION_VND_HYPERVIEW_XML,
-  ): Promise<Document> => {
+  ): Promise<{ doc: Document, isStale: boolean }> => {
     // HTTP method can either be POST when explicitly set
     // Any other value and we'll default to GET
     const method =
@@ -87,8 +87,12 @@ export class Parser {
     const contentType: string = response.headers?.get(
       HTTP_HEADERS.CONTENT_TYPE,
     );
+    const staleHeader: string = response.headers?.get(
+      HTTP_HEADERS.X_RESPONSE_STALE_REASON,
+    );
     if (
       response.status >= 500 &&
+      !staleHeader &&
       contentType !== CONTENT_TYPE.APPLICATION_XML
     ) {
       throw new Errors.ServerError(
@@ -102,15 +106,17 @@ export class Parser {
     if (this.onBeforeParse) {
       this.onBeforeParse(url);
     }
-    const document = parser.parseFromString(responseText);
+    const doc = parser.parseFromString(responseText);
     if (this.onAfterParse) {
       this.onAfterParse(url);
     }
-    return document;
+    return { doc, isStale: !!staleHeader };
   };
 
-  loadDocument = async (baseUrl: string): Promise<Document> => {
-    const doc = await this.load(baseUrl);
+  loadDocument = async (
+    baseUrl: string,
+  ): Promise<{ doc: Document, isStale: boolean }> => {
+    const { doc, isStale } = await this.load(baseUrl);
     const docElement = getFirstTag(doc, LOCAL_NAME.DOC);
     if (!docElement) {
       throw new Errors.XMLRequiredElementNotFound(LOCAL_NAME.DOC, baseUrl);
@@ -125,15 +131,15 @@ export class Parser {
     if (!bodyElement) {
       throw new Errors.XMLRequiredElementNotFound(LOCAL_NAME.BODY, baseUrl);
     }
-    return doc;
+    return { doc, isStale };
   };
 
   loadElement = async (
     baseUrl: string,
     data: ?FormData,
     method: ?HttpMethod = HTTP_METHODS.GET,
-  ): Promise<Document> => {
-    const doc = await this.load(
+  ): Promise<{ doc: Document, isStale: boolean }> => {
+    const { doc, isStale } = await this.load(
       baseUrl,
       data,
       method,
@@ -153,6 +159,6 @@ export class Parser {
     if (bodyElement) {
       throw new Errors.XMLRestrictedElementFound(LOCAL_NAME.BODY, baseUrl);
     }
-    return doc;
+    return { doc, isStale };
   };
 }

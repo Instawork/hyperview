@@ -262,6 +262,7 @@ export type HvComponentOptions = {
   delay?: ?DOMString,
   focused?: ?boolean,
   hideIndicatorIds?: ?DOMString,
+  isStale?: boolean,
   once?: ?DOMString,
   onEnd?: ?() => void,
   onSelect?: ?(value: ?DOMString) => void,
@@ -331,6 +332,7 @@ export type BehaviorRegistry = {
 export const TRIGGERS = Object.freeze({
   DESELECT: 'deselect',
   LOAD: 'load',
+  LOAD_STALE_ERROR: 'load-stale-error',
   LONG_PRESS: 'longPress',
   ON_EVENT: 'on-event',
   PRESS: 'press',
