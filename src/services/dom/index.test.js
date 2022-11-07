@@ -25,8 +25,10 @@ jest.mock('xmldom-instawork', () => {
 // Mock other dependencies
 const fetchMock = jest.fn();
 const responseTextMock = jest.fn();
+const headers = new Map();
+headers.set(Dom.HTTP_HEADERS.X_RESPONSE_STALE_REASON, 'stale-if-error');
 // $FlowFixMe
-fetchMock.mockResolvedValue({ text: responseTextMock });
+fetchMock.mockResolvedValue({ text: responseTextMock }).mockResolvedValueOnce({ text: responseTextMock, headers });
 const beforeParseMock = jest.fn();
 const afterParseMock = jest.fn();
 const urlServiceAddFormDataToUrlMock = jest.spyOn(
@@ -46,6 +48,33 @@ describe('Parser', () => {
   });
 
   describe('load', () => {
+    describe('offline GET', () => {
+      it('sets the right isStale value', async () => {
+        const url = 'http://foo/bar';
+        const expectedOptions = {
+          body: undefined,
+          headers: {
+            Accept: 'application/xml, application/vnd.hyperview+xml',
+            'X-Hyperview-Dimensions': '750w 1334h',
+            'X-Hyperview-Version': version,
+          },
+          method: 'get',
+        };
+        const responseText = 'foobarbaz';
+        responseTextMock.mockResolvedValue(responseText);
+
+        const { doc, isStale } = await parser.load(url);
+
+        expect(urlServiceAddFormDataToUrlMock).toHaveBeenCalledTimes(0);
+        expect(mockParseFromString).toHaveBeenCalledWith(responseText);
+        expect(beforeParseMock).toHaveBeenCalledWith(url);
+        expect(afterParseMock).toHaveBeenCalledWith(url);
+        expect(fetchMock).toHaveBeenCalledWith(url, expectedOptions);
+        expect(doc).toEqual(mockExpectedDocument);
+        expect(isStale).toEqual(true);
+      });
+    });
+
     describe('simple GET', () => {
       it('calls fetch with correct params', async () => {
         const url = 'http://foo/bar';
@@ -61,14 +90,15 @@ describe('Parser', () => {
         const responseText = 'foobarbaz';
         responseTextMock.mockResolvedValue(responseText);
 
-        const document = await parser.load(url);
+        const { doc, isStale } = await parser.load(url);
 
         expect(urlServiceAddFormDataToUrlMock).toHaveBeenCalledTimes(0);
         expect(mockParseFromString).toHaveBeenCalledWith(responseText);
         expect(beforeParseMock).toHaveBeenCalledWith(url);
         expect(afterParseMock).toHaveBeenCalledWith(url);
         expect(fetchMock).toHaveBeenCalledWith(url, expectedOptions);
-        expect(document).toEqual(mockExpectedDocument);
+        expect(doc).toEqual(mockExpectedDocument);
+        expect(isStale).toEqual(false);
       });
     });
 
@@ -83,7 +113,7 @@ describe('Parser', () => {
         const responseText = 'foobarbaz';
         responseTextMock.mockResolvedValue(responseText);
 
-        const document = await parser.load(url, data);
+        const { doc, isStale } = await parser.load(url, data);
 
         expect(urlServiceAddFormDataToUrlMock).toHaveBeenCalledWith(url, data);
         expect(mockParseFromString).toHaveBeenCalledWith(responseText);
@@ -98,7 +128,8 @@ describe('Parser', () => {
           },
           method: 'get',
         });
-        expect(document).toEqual(mockExpectedDocument);
+        expect(doc).toEqual(mockExpectedDocument);
+        expect(isStale).toEqual(false);
       });
     });
 
@@ -111,7 +142,7 @@ describe('Parser', () => {
         const responseText = 'foobarbaz';
         responseTextMock.mockResolvedValue(responseText);
 
-        const document = await parser.load(url, data, 'post');
+        const { doc, isStale } = await parser.load(url, data, 'post');
 
         expect(urlServiceAddFormDataToUrlMock).toHaveBeenCalledTimes(0);
         expect(mockParseFromString).toHaveBeenCalledWith(responseText);
@@ -126,7 +157,8 @@ describe('Parser', () => {
           },
           method: 'post',
         });
-        expect(document).toEqual(mockExpectedDocument);
+        expect(doc).toEqual(mockExpectedDocument);
+        expect(isStale).toEqual(false);
       });
     });
     // it.todo('parser warning', () => {});

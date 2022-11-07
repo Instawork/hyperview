@@ -53,9 +53,9 @@ export default class HyperScreen extends React.Component {
     this.state = {
       doc: null,
       error: false,
+      isStale: false,
       styles: null,
       url: null,
-      isStale: false,
     };
 
     // <HACK>
@@ -202,8 +202,8 @@ export default class HyperScreen extends React.Component {
       this.setState({
         doc,
         error: null,
+        isStale,
         styles: stylesheets,
-        isStale: isStale,
       });
 
     } catch (err) {
@@ -254,8 +254,8 @@ export default class HyperScreen extends React.Component {
       this.onUpdate,
       {
         componentRegistry: this.componentRegistry,
-        screenUrl: this.state.url,
         isStale: this.state.isStale,
+        screenUrl: this.state.url,
       },
     );
 
@@ -301,7 +301,7 @@ export default class HyperScreen extends React.Component {
     try {
       const url = UrlService.getUrlFromHref(href, this.state.url, method);
       const { doc, isStale } = await this.parser.loadElement(url, formData, method);
-      this.setState({ isStale: isStale });
+      this.setState({ isStale });
       return doc.documentElement;
     } catch (err) {
       this.setState({
