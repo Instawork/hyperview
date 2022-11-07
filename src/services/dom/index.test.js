@@ -28,7 +28,11 @@ const responseTextMock = jest.fn();
 const headers = new Map();
 headers.set(Dom.HTTP_HEADERS.X_RESPONSE_STALE_REASON, 'stale-if-error');
 // $FlowFixMe
-fetchMock.mockResolvedValue({ text: responseTextMock }).mockResolvedValueOnce({ text: responseTextMock, headers });
+fetchMock
+  .mockResolvedValue({
+    text: responseTextMock,
+  })
+  .mockResolvedValueOnce({ headers, text: responseTextMock });
 const beforeParseMock = jest.fn();
 const afterParseMock = jest.fn();
 const urlServiceAddFormDataToUrlMock = jest.spyOn(
