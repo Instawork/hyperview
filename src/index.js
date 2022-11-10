@@ -254,8 +254,8 @@ export default class HyperScreen extends React.Component {
       this.onUpdate,
       {
         componentRegistry: this.componentRegistry,
-        staleHeaderType: this.state.staleHeaderType,
         screenUrl: this.state.url,
+        staleHeaderType: this.state.staleHeaderType,
       },
     );
 

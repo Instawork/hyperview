@@ -41,8 +41,8 @@ import {
 import type { Node } from 'react';
 import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
 import { XMLSerializer } from 'xmldom-instawork';
+import { X_RESPONSE_STALE_REASON } from 'hyperview/src/services/dom/types';
 import { createTestProps } from 'hyperview/src/services';
-import { X_RESPONSE_STALE_REASON } from '../../services/dom/types';
 
 /**
  * Wrapper to handle UI events

@@ -10,8 +10,8 @@
 
 import * as Dom from 'hyperview/src/services/dom';
 import * as UrlService from 'hyperview/src/services/url';
-import { version } from 'hyperview/package.json';
 import { X_RESPONSE_STALE_REASON } from './types';
+import { version } from 'hyperview/package.json';
 
 // Mock instawork-xmldom module
 const mockExpectedDocument = { foo: 'bar' };
