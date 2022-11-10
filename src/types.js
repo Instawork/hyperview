@@ -10,6 +10,8 @@
 
 import type { ElementRef } from 'react';
 
+import type { XResponseStaleReason } from './services/dom/types';
+
 export type DOMString = string;
 export type NamespaceURI = string;
 
@@ -262,7 +264,7 @@ export type HvComponentOptions = {
   delay?: ?DOMString,
   focused?: ?boolean,
   hideIndicatorIds?: ?DOMString,
-  isStale?: boolean,
+  staleHeaderType?: XResponseStaleReason,
   once?: ?DOMString,
   onEnd?: ?() => void,
   onSelect?: ?(value: ?DOMString) => void,

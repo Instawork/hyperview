@@ -11,6 +11,7 @@
 import * as Dom from 'hyperview/src/services/dom';
 import * as UrlService from 'hyperview/src/services/url';
 import { version } from 'hyperview/package.json';
+import { X_RESPONSE_STALE_REASON } from './types';
 
 // Mock instawork-xmldom module
 const mockExpectedDocument = { foo: 'bar' };
@@ -25,12 +26,8 @@ jest.mock('xmldom-instawork', () => {
 // Mock other dependencies
 const fetchMock = jest.fn();
 const responseTextMock = jest.fn();
-const headers = new Map();
-headers.set(Dom.HTTP_HEADERS.X_RESPONSE_STALE_REASON, 'stale-if-error');
 // $FlowFixMe
 fetchMock.mockResolvedValue({ text: responseTextMock });
-// $FlowFixMe
-fetchMock.mockResolvedValueOnce({ headers, text: responseTextMock });
 const beforeParseMock = jest.fn();
 const afterParseMock = jest.fn();
 const urlServiceAddFormDataToUrlMock = jest.spyOn(
@@ -51,7 +48,7 @@ describe('Parser', () => {
 
   describe('load', () => {
     describe('offline GET', () => {
-      it('sets the right isStale value', async () => {
+      it('sets the right staleHeaderType', async () => {
         const url = 'http://foo/bar';
         const expectedOptions = {
           body: undefined,
@@ -64,8 +61,15 @@ describe('Parser', () => {
         };
         const responseText = 'foobarbaz';
         responseTextMock.mockResolvedValue(responseText);
+        const headers = new Map();
+        headers.set(
+          Dom.HTTP_HEADERS.X_RESPONSE_STALE_REASON,
+          X_RESPONSE_STALE_REASON.STALE_IF_ERROR,
+        );
+        // $FlowFixMe
+        fetchMock.mockResolvedValueOnce({ headers, text: responseTextMock });
 
-        const { doc, isStale } = await parser.load(url);
+        const { doc, staleHeaderType } = await parser.load(url);
 
         expect(urlServiceAddFormDataToUrlMock).toHaveBeenCalledTimes(0);
         expect(mockParseFromString).toHaveBeenCalledWith(responseText);
@@ -73,7 +77,7 @@ describe('Parser', () => {
         expect(afterParseMock).toHaveBeenCalledWith(url);
         expect(fetchMock).toHaveBeenCalledWith(url, expectedOptions);
         expect(doc).toEqual(mockExpectedDocument);
-        expect(isStale).toEqual(true);
+        expect(staleHeaderType).toEqual(X_RESPONSE_STALE_REASON.STALE_IF_ERROR);
       });
     });
 
@@ -92,7 +96,7 @@ describe('Parser', () => {
         const responseText = 'foobarbaz';
         responseTextMock.mockResolvedValue(responseText);
 
-        const { doc, isStale } = await parser.load(url);
+        const { doc, staleHeaderType } = await parser.load(url);
 
         expect(urlServiceAddFormDataToUrlMock).toHaveBeenCalledTimes(0);
         expect(mockParseFromString).toHaveBeenCalledWith(responseText);
@@ -100,7 +104,7 @@ describe('Parser', () => {
         expect(afterParseMock).toHaveBeenCalledWith(url);
         expect(fetchMock).toHaveBeenCalledWith(url, expectedOptions);
         expect(doc).toEqual(mockExpectedDocument);
-        expect(isStale).toEqual(false);
+        expect(staleHeaderType).toBeNull();
       });
     });
 
@@ -115,7 +119,7 @@ describe('Parser', () => {
         const responseText = 'foobarbaz';
         responseTextMock.mockResolvedValue(responseText);
 
-        const { doc, isStale } = await parser.load(url, data);
+        const { doc, staleHeaderType } = await parser.load(url, data);
 
         expect(urlServiceAddFormDataToUrlMock).toHaveBeenCalledWith(url, data);
         expect(mockParseFromString).toHaveBeenCalledWith(responseText);
@@ -131,7 +135,7 @@ describe('Parser', () => {
           method: 'get',
         });
         expect(doc).toEqual(mockExpectedDocument);
-        expect(isStale).toEqual(false);
+        expect(staleHeaderType).toBeNull();
       });
     });
 
@@ -143,8 +147,7 @@ describe('Parser', () => {
         data.append('bar', 'baz');
         const responseText = 'foobarbaz';
         responseTextMock.mockResolvedValue(responseText);
-
-        const { doc, isStale } = await parser.load(url, data, 'post');
+        const { doc, staleHeaderType } = await parser.load(url, data, 'post');
 
         expect(urlServiceAddFormDataToUrlMock).toHaveBeenCalledTimes(0);
         expect(mockParseFromString).toHaveBeenCalledWith(responseText);
@@ -160,7 +163,7 @@ describe('Parser', () => {
           method: 'post',
         });
         expect(doc).toEqual(mockExpectedDocument);
-        expect(isStale).toEqual(false);
+        expect(staleHeaderType).toBeNull();
       });
     });
     // it.todo('parser warning', () => {});

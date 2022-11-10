@@ -31,6 +31,12 @@ export const CONTENT_TYPE = {
   TEXT_HTML: 'text/html',
 };
 
+export const X_RESPONSE_STALE_REASON = {
+  STALE_IF_ERROR: 'stale-if-error',
+};
+
+export type XResponseStaleReason = $Values<typeof X_RESPONSE_STALE_REASON>;
+
 export type Fetch = (
   url: string,
   options: { headers: { [string]: any } },

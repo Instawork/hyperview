@@ -53,7 +53,7 @@ export default class HyperScreen extends React.Component {
     this.state = {
       doc: null,
       error: false,
-      isStale: false,
+      staleHeaderType: null,
       styles: null,
       url: null,
     };
@@ -196,13 +196,13 @@ export default class HyperScreen extends React.Component {
       }
 
       // eslint-disable-next-line react/no-access-state-in-setstate
-      const { doc, isStale } = await this.parser.loadDocument(this.state.url);
+      const { doc, staleHeaderType } = await this.parser.loadDocument(this.state.url);
       const stylesheets = Stylesheets.createStylesheets(doc);
       this.navigation.setRouteKey(this.state.url, routeKey);
       this.setState({
         doc,
         error: null,
-        isStale,
+        staleHeaderType,
         styles: stylesheets,
       });
 
@@ -254,7 +254,7 @@ export default class HyperScreen extends React.Component {
       this.onUpdate,
       {
         componentRegistry: this.componentRegistry,
-        isStale: this.state.isStale,
+        staleHeaderType: this.state.staleHeaderType,
         screenUrl: this.state.url,
       },
     );
@@ -300,8 +300,11 @@ export default class HyperScreen extends React.Component {
 
     try {
       const url = UrlService.getUrlFromHref(href, this.state.url, method);
-      const { doc, isStale } = await this.parser.loadElement(url, formData, method);
-      this.setState({ isStale });
+      const { doc, staleHeaderType } = await this.parser.loadElement(url, formData, method);
+      if (staleHeaderType) {
+        // We are doing this to ensure that we keep the screen stale until a `reload` happens
+        this.setState({ staleHeaderType });
+      }
       return doc.documentElement;
     } catch (err) {
       this.setState({

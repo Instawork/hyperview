@@ -10,8 +10,18 @@
 
 import * as Errors from './errors';
 import * as UrlService from 'hyperview/src/services/url';
-import type { BeforeAfterParseHandler, Fetch, HttpMethod } from './types';
-import { CONTENT_TYPE, HTTP_HEADERS, HTTP_METHODS } from './types';
+import type {
+  BeforeAfterParseHandler,
+  Fetch,
+  HttpMethod,
+  XResponseStaleReason,
+} from './types';
+import {
+  CONTENT_TYPE,
+  HTTP_HEADERS,
+  HTTP_METHODS,
+  X_RESPONSE_STALE_REASON,
+} from './types';
 import { DOMParser } from 'xmldom-instawork';
 import { Dimensions } from 'react-native';
 import type { Document } from 'hyperview/src/types';
@@ -58,7 +68,7 @@ export class Parser {
     data: ?FormData,
     httpMethod: ?HttpMethod,
     acceptContentType: string = CONTENT_TYPE.APPLICATION_VND_HYPERVIEW_XML,
-  ): Promise<{ doc: Document, isStale: boolean }> => {
+  ): Promise<{ doc: Document, staleHeaderType: ?XResponseStaleReason }> => {
     // HTTP method can either be POST when explicitly set
     // Any other value and we'll default to GET
     const method =
@@ -87,12 +97,12 @@ export class Parser {
     const contentType: string = response.headers?.get(
       HTTP_HEADERS.CONTENT_TYPE,
     );
-    const staleHeader: string = response.headers?.get(
+    const staleHeaderType: XResponseStaleReason = response.headers?.get(
       HTTP_HEADERS.X_RESPONSE_STALE_REASON,
     );
     if (
       response.status >= 500 &&
-      !staleHeader &&
+      staleHeaderType !== X_RESPONSE_STALE_REASON.STALE_IF_ERROR &&
       contentType !== CONTENT_TYPE.APPLICATION_XML
     ) {
       throw new Errors.ServerError(
@@ -110,13 +120,13 @@ export class Parser {
     if (this.onAfterParse) {
       this.onAfterParse(url);
     }
-    return { doc, isStale: !!staleHeader };
+    return { doc, staleHeaderType: staleHeaderType ?? null };
   };
 
   loadDocument = async (
     baseUrl: string,
-  ): Promise<{ doc: Document, isStale: boolean }> => {
-    const { doc, isStale } = await this.load(baseUrl);
+  ): Promise<{ doc: Document, staleHeaderType: ?XResponseStaleReason }> => {
+    const { doc, staleHeaderType } = await this.load(baseUrl);
     const docElement = getFirstTag(doc, LOCAL_NAME.DOC);
     if (!docElement) {
       throw new Errors.XMLRequiredElementNotFound(LOCAL_NAME.DOC, baseUrl);
@@ -131,15 +141,15 @@ export class Parser {
     if (!bodyElement) {
       throw new Errors.XMLRequiredElementNotFound(LOCAL_NAME.BODY, baseUrl);
     }
-    return { doc, isStale };
+    return { doc, staleHeaderType };
   };
 
   loadElement = async (
     baseUrl: string,
     data: ?FormData,
     method: ?HttpMethod = HTTP_METHODS.GET,
-  ): Promise<{ doc: Document, isStale: boolean }> => {
-    const { doc, isStale } = await this.load(
+  ): Promise<{ doc: Document, staleHeaderType: ?XResponseStaleReason }> => {
+    const { doc, staleHeaderType } = await this.load(
       baseUrl,
       data,
       method,
@@ -159,6 +169,6 @@ export class Parser {
     if (bodyElement) {
       throw new Errors.XMLRestrictedElementFound(LOCAL_NAME.BODY, baseUrl);
     }
-    return { doc, isStale };
+    return { doc, staleHeaderType };
   };
 }
