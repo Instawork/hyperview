@@ -120,7 +120,7 @@ export class Parser {
     if (this.onAfterParse) {
       this.onAfterParse(url);
     }
-    return { doc, staleHeaderType: staleHeaderType ?? null };
+    return { doc, staleHeaderType: staleHeaderType || null };
   };
 
   loadDocument = async (

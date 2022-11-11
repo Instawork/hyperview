@@ -47,40 +47,6 @@ describe('Parser', () => {
   });
 
   describe('load', () => {
-    describe('offline GET', () => {
-      it('sets the right staleHeaderType', async () => {
-        const url = 'http://foo/bar';
-        const expectedOptions = {
-          body: undefined,
-          headers: {
-            Accept: 'application/xml, application/vnd.hyperview+xml',
-            'X-Hyperview-Dimensions': '750w 1334h',
-            'X-Hyperview-Version': version,
-          },
-          method: 'get',
-        };
-        const responseText = 'foobarbaz';
-        responseTextMock.mockResolvedValue(responseText);
-        const headers = new Map();
-        headers.set(
-          Dom.HTTP_HEADERS.X_RESPONSE_STALE_REASON,
-          X_RESPONSE_STALE_REASON.STALE_IF_ERROR,
-        );
-        // $FlowFixMe
-        fetchMock.mockResolvedValueOnce({ headers, text: responseTextMock });
-
-        const { doc, staleHeaderType } = await parser.load(url);
-
-        expect(urlServiceAddFormDataToUrlMock).toHaveBeenCalledTimes(0);
-        expect(mockParseFromString).toHaveBeenCalledWith(responseText);
-        expect(beforeParseMock).toHaveBeenCalledWith(url);
-        expect(afterParseMock).toHaveBeenCalledWith(url);
-        expect(fetchMock).toHaveBeenCalledWith(url, expectedOptions);
-        expect(doc).toEqual(mockExpectedDocument);
-        expect(staleHeaderType).toEqual(X_RESPONSE_STALE_REASON.STALE_IF_ERROR);
-      });
-    });
-
     describe('simple GET', () => {
       it('calls fetch with correct params', async () => {
         const url = 'http://foo/bar';
@@ -136,6 +102,40 @@ describe('Parser', () => {
         });
         expect(doc).toEqual(mockExpectedDocument);
         expect(staleHeaderType).toBeNull();
+      });
+    });
+
+    describe('offline GET', () => {
+      it('sets the right staleHeaderType', async () => {
+        const url = 'http://foo/bar';
+        const expectedOptions = {
+          body: undefined,
+          headers: {
+            Accept: 'application/xml, application/vnd.hyperview+xml',
+            'X-Hyperview-Dimensions': '750w 1334h',
+            'X-Hyperview-Version': version,
+          },
+          method: 'get',
+        };
+        const responseText = 'foobarbaz';
+        responseTextMock.mockResolvedValue(responseText);
+        const headers = new Map();
+        headers.set(
+          Dom.HTTP_HEADERS.X_RESPONSE_STALE_REASON,
+          X_RESPONSE_STALE_REASON.STALE_IF_ERROR,
+        );
+        // $FlowFixMe
+        fetchMock.mockResolvedValueOnce({ headers, text: responseTextMock });
+
+        const { doc, staleHeaderType } = await parser.load(url);
+
+        expect(urlServiceAddFormDataToUrlMock).toHaveBeenCalledTimes(0);
+        expect(mockParseFromString).toHaveBeenCalledWith(responseText);
+        expect(beforeParseMock).toHaveBeenCalledWith(url);
+        expect(afterParseMock).toHaveBeenCalledWith(url);
+        expect(fetchMock).toHaveBeenCalledWith(url, expectedOptions);
+        expect(doc).toEqual(mockExpectedDocument);
+        expect(staleHeaderType).toEqual(X_RESPONSE_STALE_REASON.STALE_IF_ERROR);
       });
     });
 
