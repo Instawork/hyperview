@@ -53,6 +53,7 @@ export default class HyperScreen extends React.Component {
     this.state = {
       doc: null,
       error: false,
+      staleHeaderType: null,
       styles: null,
       url: null,
     };
@@ -195,12 +196,13 @@ export default class HyperScreen extends React.Component {
       }
 
       // eslint-disable-next-line react/no-access-state-in-setstate
-      const doc = await this.parser.loadDocument(this.state.url);
+      const { doc, staleHeaderType } = await this.parser.loadDocument(this.state.url);
       const stylesheets = Stylesheets.createStylesheets(doc);
       this.navigation.setRouteKey(this.state.url, routeKey);
       this.setState({
         doc,
         error: null,
+        staleHeaderType,
         styles: stylesheets,
       });
 
@@ -238,7 +240,7 @@ export default class HyperScreen extends React.Component {
       return React.createElement(errorScreen, {
         error: this.state.error,
         onPressReload: () => this.reload(),  // Make sure reload() is called without any args
-        onPressViewDetails: (uri) => this.props.openModal({url: uri}),
+        onPressViewDetails: (uri) => this.props.openModal({ url: uri }),
       });
     }
     if (!this.state.doc) {
@@ -253,6 +255,7 @@ export default class HyperScreen extends React.Component {
       {
         componentRegistry: this.componentRegistry,
         screenUrl: this.state.url,
+        staleHeaderType: this.state.staleHeaderType,
       },
     );
 
@@ -297,7 +300,11 @@ export default class HyperScreen extends React.Component {
 
     try {
       const url = UrlService.getUrlFromHref(href, this.state.url, method);
-      const doc = await this.parser.loadElement(url, formData, method);
+      const { doc, staleHeaderType } = await this.parser.loadElement(url, formData, method);
+      if (staleHeaderType) {
+        // We are doing this to ensure that we keep the screen stale until a `reload` happens
+        this.setState({ staleHeaderType });
+      }
       return doc.documentElement;
     } catch (err) {
       this.setState({
@@ -403,7 +410,7 @@ export default class HyperScreen extends React.Component {
         }
         return;
       }
-        behaviorElement.setAttribute('ran-once', 'true');
+      behaviorElement.setAttribute('ran-once', 'true');
 
     }
 

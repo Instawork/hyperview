@@ -41,6 +41,7 @@ import {
 import type { Node } from 'react';
 import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
 import { XMLSerializer } from 'xmldom-instawork';
+import { X_RESPONSE_STALE_REASON } from 'hyperview/src/services/dom/types';
 import { createTestProps } from 'hyperview/src/services';
 
 /**
@@ -218,7 +219,16 @@ export default class HyperRef extends PureComponent<Props, State> {
   };
 
   triggerLoadBehaviors = () => {
-    const loadBehaviors = this.getBehaviorElements(TRIGGERS.LOAD);
+    let loadBehaviors = this.getBehaviorElements(TRIGGERS.LOAD);
+    if (
+      this.props.options?.staleHeaderType ===
+      X_RESPONSE_STALE_REASON.STALE_IF_ERROR
+    ) {
+      const loadStaleBehaviors = this.getBehaviorElements(
+        TRIGGERS.LOAD_STALE_ERROR,
+      );
+      loadBehaviors = loadBehaviors.concat(loadStaleBehaviors);
+    }
     loadBehaviors.forEach(behaviorElement => {
       const handler = this.createActionHandler(
         behaviorElement,

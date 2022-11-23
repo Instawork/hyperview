@@ -10,6 +10,8 @@
 
 import type { ElementRef } from 'react';
 
+import type { XResponseStaleReason } from './services/dom/types';
+
 export type DOMString = string;
 export type NamespaceURI = string;
 
@@ -262,6 +264,7 @@ export type HvComponentOptions = {
   delay?: ?DOMString,
   focused?: ?boolean,
   hideIndicatorIds?: ?DOMString,
+  staleHeaderType?: XResponseStaleReason,
   once?: ?DOMString,
   onEnd?: ?() => void,
   onSelect?: ?(value: ?DOMString) => void,
@@ -331,6 +334,7 @@ export type BehaviorRegistry = {
 export const TRIGGERS = Object.freeze({
   DESELECT: 'deselect',
   LOAD: 'load',
+  LOAD_STALE_ERROR: 'load-stale-error',
   LONG_PRESS: 'longPress',
   ON_EVENT: 'on-event',
   PRESS: 'press',

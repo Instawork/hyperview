@@ -10,6 +10,7 @@
 
 import * as Dom from 'hyperview/src/services/dom';
 import * as UrlService from 'hyperview/src/services/url';
+import { X_RESPONSE_STALE_REASON } from './types';
 import { version } from 'hyperview/package.json';
 
 // Mock instawork-xmldom module
@@ -61,14 +62,15 @@ describe('Parser', () => {
         const responseText = 'foobarbaz';
         responseTextMock.mockResolvedValue(responseText);
 
-        const document = await parser.load(url);
+        const { doc, staleHeaderType } = await parser.load(url);
 
         expect(urlServiceAddFormDataToUrlMock).toHaveBeenCalledTimes(0);
         expect(mockParseFromString).toHaveBeenCalledWith(responseText);
         expect(beforeParseMock).toHaveBeenCalledWith(url);
         expect(afterParseMock).toHaveBeenCalledWith(url);
         expect(fetchMock).toHaveBeenCalledWith(url, expectedOptions);
-        expect(document).toEqual(mockExpectedDocument);
+        expect(doc).toEqual(mockExpectedDocument);
+        expect(staleHeaderType).toBeNull();
       });
     });
 
@@ -83,7 +85,7 @@ describe('Parser', () => {
         const responseText = 'foobarbaz';
         responseTextMock.mockResolvedValue(responseText);
 
-        const document = await parser.load(url, data);
+        const { doc, staleHeaderType } = await parser.load(url, data);
 
         expect(urlServiceAddFormDataToUrlMock).toHaveBeenCalledWith(url, data);
         expect(mockParseFromString).toHaveBeenCalledWith(responseText);
@@ -98,7 +100,42 @@ describe('Parser', () => {
           },
           method: 'get',
         });
-        expect(document).toEqual(mockExpectedDocument);
+        expect(doc).toEqual(mockExpectedDocument);
+        expect(staleHeaderType).toBeNull();
+      });
+    });
+
+    describe('offline GET', () => {
+      it('sets the right staleHeaderType', async () => {
+        const url = 'http://foo/bar';
+        const expectedOptions = {
+          body: undefined,
+          headers: {
+            Accept: 'application/xml, application/vnd.hyperview+xml',
+            'X-Hyperview-Dimensions': '750w 1334h',
+            'X-Hyperview-Version': version,
+          },
+          method: 'get',
+        };
+        const responseText = 'foobarbaz';
+        responseTextMock.mockResolvedValue(responseText);
+        const headers = new Map();
+        headers.set(
+          Dom.HTTP_HEADERS.X_RESPONSE_STALE_REASON,
+          X_RESPONSE_STALE_REASON.STALE_IF_ERROR,
+        );
+        // $FlowFixMe
+        fetchMock.mockResolvedValueOnce({ headers, text: responseTextMock });
+
+        const { doc, staleHeaderType } = await parser.load(url);
+
+        expect(urlServiceAddFormDataToUrlMock).toHaveBeenCalledTimes(0);
+        expect(mockParseFromString).toHaveBeenCalledWith(responseText);
+        expect(beforeParseMock).toHaveBeenCalledWith(url);
+        expect(afterParseMock).toHaveBeenCalledWith(url);
+        expect(fetchMock).toHaveBeenCalledWith(url, expectedOptions);
+        expect(doc).toEqual(mockExpectedDocument);
+        expect(staleHeaderType).toEqual(X_RESPONSE_STALE_REASON.STALE_IF_ERROR);
       });
     });
 
@@ -110,8 +147,7 @@ describe('Parser', () => {
         data.append('bar', 'baz');
         const responseText = 'foobarbaz';
         responseTextMock.mockResolvedValue(responseText);
-
-        const document = await parser.load(url, data, 'post');
+        const { doc, staleHeaderType } = await parser.load(url, data, 'post');
 
         expect(urlServiceAddFormDataToUrlMock).toHaveBeenCalledTimes(0);
         expect(mockParseFromString).toHaveBeenCalledWith(responseText);
@@ -126,7 +162,8 @@ describe('Parser', () => {
           },
           method: 'post',
         });
-        expect(document).toEqual(mockExpectedDocument);
+        expect(doc).toEqual(mockExpectedDocument);
+        expect(staleHeaderType).toBeNull();
       });
     });
     // it.todo('parser warning', () => {});

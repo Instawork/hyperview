@@ -13,6 +13,7 @@ export const HTTP_HEADERS = {
   CONTENT_TYPE: 'Content-Type',
   X_HYPERVIEW_DIMENSIONS: 'X-Hyperview-Dimensions',
   X_HYPERVIEW_VERSION: 'X-Hyperview-Version',
+  X_RESPONSE_STALE_REASON: 'X-Response-Stale-Reason',
 };
 
 export const HTTP_METHODS = {
@@ -29,6 +30,12 @@ export const CONTENT_TYPE = {
   APPLICATION_XML: 'application/xml',
   TEXT_HTML: 'text/html',
 };
+
+export const X_RESPONSE_STALE_REASON = {
+  STALE_IF_ERROR: 'stale-if-error',
+};
+
+export type XResponseStaleReason = $Values<typeof X_RESPONSE_STALE_REASON>;
 
 export type Fetch = (
   url: string,
