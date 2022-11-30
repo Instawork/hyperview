@@ -234,7 +234,7 @@ export default class HyperRef extends PureComponent<Props, State> {
         behaviorElement,
         this.props.onUpdate,
       );
-      setTimeout(() => handler(this.props.element), 0);
+      handler(this.props.element);
     });
   };
 
