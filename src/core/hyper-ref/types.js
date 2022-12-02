@@ -35,6 +35,7 @@ export const ATTRIBUTES = {
   HIDE_DURING_LOAD: 'hide-during-load',
   HREF: 'href',
   HREF_STYLE: 'href-style',
+  IMMEDIATE: 'immediate',
   ONCE: 'once',
   SHOW_DURING_LOAD: 'show-during-load',
   TARGET: 'target',
