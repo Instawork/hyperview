@@ -381,6 +381,7 @@
     <xs:attribute name="event-name" type="hv:eventName" />
     <xs:attribute name="new-value" type="xs:string" />
     <xs:attribute name="copy-to-clipboard-value" type="xs:string" />
+    <xs:attribute name="immediate" type="xs:boolean" />
     <xs:attributeGroup ref="alert:alertAttributes" />
   </xs:attributeGroup>
 
