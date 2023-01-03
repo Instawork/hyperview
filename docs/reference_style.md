@@ -289,7 +289,7 @@ See https://developer.mozilla.org/en-US/docs/Web/CSS/left for more details of ho
 
 #### `margin`
 
-Setting `margin` has the same effect as setting each of `marginTop`, `marginLeft`, `marginBottom`, and `marginRight`. See https://developer.mozilla.org/en-US/docs/Web/CSS/margin for more details.
+Setting `margin` has the same effect as setting each of `marginTop`, `marginLeft`, `marginBottom`, and `marginRight` to the same value.  You must use points or percentages. Ems and other units are not supported. See https://developer.mozilla.org/en-US/docs/Web/CSS/margin for more details. 
 
 | Type           | Required |
 | -------------- | -------- |
@@ -297,7 +297,7 @@ Setting `margin` has the same effect as setting each of `marginTop`, `marginLeft
 
 #### `marginBottom`
 
-`marginBottom` works like `margin-bottom` in CSS. See https://developer.mozilla.org/en-US/docs/Web/CSS/margin-bottom for more details.
+`marginBottom` works like `margin-bottom` in CSS.  You must use points or percentages. Ems and other units are not supported. See https://developer.mozilla.org/en-US/docs/Web/CSS/margin-bottom for more details.
 
 | Type           | Required |
 | -------------- | -------- |
@@ -305,7 +305,7 @@ Setting `margin` has the same effect as setting each of `marginTop`, `marginLeft
 
 #### `marginHorizontal`
 
-Setting `marginHorizontal` has the same effect as setting both `marginLeft` and `marginRight`.
+Setting `marginHorizontal` has the same effect as setting both `marginLeft` and `marginRight` to the same value. You must use points or percentages. Ems and other units are not supported.
 
 | Type           | Required |
 | -------------- | -------- |
@@ -313,7 +313,7 @@ Setting `marginHorizontal` has the same effect as setting both `marginLeft` and 
 
 #### `marginLeft`
 
-`marginLeft` works like `margin-left` in CSS. See https://developer.mozilla.org/en-US/docs/Web/CSS/margin-left for more details.
+`marginLeft` works like `margin-left` in CSS. You must use points or percentages. Ems and other units are not supported. See https://developer.mozilla.org/en-US/docs/Web/CSS/margin-left for more details.
 
 | Type           | Required |
 | -------------- | -------- |
@@ -321,7 +321,7 @@ Setting `marginHorizontal` has the same effect as setting both `marginLeft` and 
 
 #### `marginRight`
 
-`marginRight` works like `margin-right` in CSS. See https://developer.mozilla.org/en-US/docs/Web/CSS/margin-right for more details.
+`marginRight` works like `margin-right` in CSS. You must use points or percentages. Ems and other units are not supported. See https://developer.mozilla.org/en-US/docs/Web/CSS/margin-right for more details.
 
 | Type           | Required |
 | -------------- | -------- |
@@ -329,7 +329,7 @@ Setting `marginHorizontal` has the same effect as setting both `marginLeft` and 
 
 #### `marginTop`
 
-`marginTop` works like `margin-top` in CSS. See https://developer.mozilla.org/en-US/docs/Web/CSS/margin-top for more details.
+`marginTop` works like `margin-top` in CSS. You must use points or percentages. Ems and other units are not supported. See https://developer.mozilla.org/en-US/docs/Web/CSS/margin-top for more details.
 
 | Type           | Required |
 | -------------- | -------- |
@@ -337,7 +337,7 @@ Setting `marginHorizontal` has the same effect as setting both `marginLeft` and 
 
 #### `marginVertical`
 
-Setting `marginVertical` has the same effect as setting both `marginTop` and `marginBottom`.
+Setting `marginVertical` has the same effect as setting both `marginTop` and `marginBottom` to the same value. You must use points or percentages. Ems and other units are not supported.
 
 | Type           | Required |
 | -------------- | -------- |
@@ -401,7 +401,9 @@ See https://developer.mozilla.org/en-US/docs/Web/CSS/min-width for more details.
 
 #### `padding`
 
-Setting `padding` has the same effect as setting each of `paddingTop`, `paddingBottom`, `paddingLeft`, and `paddingRight`. See https://developer.mozilla.org/en-US/docs/Web/CSS/padding for more details.
+Setting `padding` has the same effect as setting each of `paddingTop`, `paddingBottom`, `paddingLeft`, and `paddingRight` to the same value. You must use points or percentages. Ems and other units are not supported.
+  
+See https://developer.mozilla.org/en-US/docs/Web/CSS/padding for more details.
 
 | Type           | Required |
 | -------------- | -------- |
@@ -409,7 +411,9 @@ Setting `padding` has the same effect as setting each of `paddingTop`, `paddingB
 
 #### `paddingBottom`
 
-`paddingBottom` works like `padding-bottom` in CSS. See https://developer.mozilla.org/en-US/docs/Web/CSS/padding-bottom for more details.
+`paddingBottom` works like `padding-bottom` in CSS. You must use points or percentages. Ems and other units are not supported.
+  
+See https://developer.mozilla.org/en-US/docs/Web/CSS/padding-bottom for more details.
 
 | Type           | Required |
 | -------------- | -------- |
@@ -417,7 +421,8 @@ Setting `padding` has the same effect as setting each of `paddingTop`, `paddingB
 
 #### `paddingHorizontal`
 
-Setting `paddingHorizontal` is like setting both of `paddingLeft` and `paddingRight`.
+Setting `paddingHorizontal` is like setting both of `paddingLeft` and `paddingRight` to the same value. You must use points or percentages. Ems and other units are not supported.
+
 
 | Type           | Required |
 | -------------- | -------- |
@@ -425,7 +430,9 @@ Setting `paddingHorizontal` is like setting both of `paddingLeft` and `paddingRi
 
 #### `paddingLeft`
 
-`paddingLeft` works like `padding-left` in CSS. See https://developer.mozilla.org/en-US/docs/Web/CSS/padding-left for more details.
+`paddingLeft` works like `padding-left` in CSS. You must use points or percentages. Ems and other units are not supported.
+
+See https://developer.mozilla.org/en-US/docs/Web/CSS/padding-left for more details.
 
 | Type           | Required |
 | -------------- | -------- |
@@ -433,7 +440,9 @@ Setting `paddingHorizontal` is like setting both of `paddingLeft` and `paddingRi
 
 #### `paddingRight`
 
-`paddingRight` works like `padding-right` in CSS. See https://developer.mozilla.org/en-US/docs/Web/CSS/padding-right for more details.
+`paddingRight` works like `padding-right` in CSS. You must use points or percentages. Ems and other units are not supported.
+
+See https://developer.mozilla.org/en-US/docs/Web/CSS/padding-right for more details.
 
 | Type           | Required |
 | -------------- | -------- |
@@ -441,7 +450,9 @@ Setting `paddingHorizontal` is like setting both of `paddingLeft` and `paddingRi
 
 #### `paddingTop`
 
-`paddingTop` works like `padding-top` in CSS. See https://developer.mozilla.org/en-US/docs/Web/CSS/padding-top for more details.
+`paddingTop` works like `padding-top` in CSS. You must use points or percentages. Ems and other units are not supported.
+
+See https://developer.mozilla.org/en-US/docs/Web/CSS/padding-top for more details.
 
 | Type           | Required |
 | -------------- | -------- |
@@ -449,7 +460,7 @@ Setting `paddingHorizontal` is like setting both of `paddingLeft` and `paddingRi
 
 #### `paddingVertical`
 
-Setting `paddingVertical` is like setting both of `paddingTop` and `paddingBottom`.
+Setting `paddingVertical` is like setting both of `paddingTop` and `paddingBottom` to the same value. You must use points or percentages. Ems and other units are not supported.
 
 | Type           | Required |
 | -------------- | -------- |
