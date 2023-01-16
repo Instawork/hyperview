@@ -1,0 +1,132 @@
+/**
+ * Copyright (c) Garuda Labs, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
+import * as Namespaces from 'hyperview/src/services/namespaces';
+import type {
+  Element,
+  HvComponentOnUpdate,
+  HvComponentOptions,
+  StyleSheets,
+} from 'hyperview/src/types';
+import { LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
+import React from 'react';
+
+export const renderElement = (
+  element: Element,
+  stylesheets: StyleSheets,
+  onUpdate: HvComponentOnUpdate,
+  options: HvComponentOptions,
+) => {
+  if (element.nodeType === NODE_TYPE.ELEMENT_NODE) {
+    // Hidden elements don't get rendered
+    if (element.getAttribute('hide') === 'true') {
+      return null;
+    }
+  }
+  if (element.nodeType === NODE_TYPE.COMMENT_NODE) {
+    // XML comments don't get rendered.
+    return null;
+  }
+  if (
+    element.nodeType === NODE_TYPE.ELEMENT_NODE &&
+    element.namespaceURI === Namespaces.HYPERVIEW
+  ) {
+    switch (element.localName) {
+      case LOCAL_NAME.BEHAVIOR:
+      case LOCAL_NAME.MODIFIER:
+      case LOCAL_NAME.STYLES:
+      case LOCAL_NAME.STYLE:
+        // Non-UI elements don't get rendered
+        return null;
+      default:
+        break;
+    }
+  }
+
+  if (element.nodeType === NODE_TYPE.ELEMENT_NODE) {
+    if (!element.namespaceURI) {
+      console.warn('`namespaceURI` missing for node:', element.toString());
+      return null;
+    }
+    if (!element.localName) {
+      console.warn('`localName` missing for node:', element.toString());
+      return null;
+    }
+
+    if (
+      options.componentRegistry &&
+      options.componentRegistry[element.namespaceURI] &&
+      options.componentRegistry[element.namespaceURI][element.localName]
+    ) {
+      const Component =
+        options.componentRegistry[element.namespaceURI][element.localName];
+
+      // Use object spreading instead of explicitly setting the key (to potentially undefined values)
+      // Explicitly setting the key causes collision when several components render with `undefined` value for `key`
+      // Object spreading will define the prop only when its value is truthy
+      const extraProps = {
+        key: element.getAttribute('key'),
+      } as const;
+      if (!extraProps.key) {
+        delete extraProps.key;
+      }
+      return (
+        <Component
+          element={element}
+          onUpdate={onUpdate}
+          options={options}
+          stylesheets={stylesheets}
+          {...extraProps} // eslint-disable-line react/jsx-props-no-spreading
+        />
+      );
+    }
+
+    // No component registered for the namespace/local name.
+    // Warn in case this was an unintended mistake.
+    console.warn(
+      `No component registered for tag <${element.localName}> (namespace: ${element.namespaceURI})`,
+    );
+  }
+
+  if (element.nodeType === NODE_TYPE.TEXT_NODE) {
+    // Render non-empty text nodes
+    if (element.nodeValue && element.nodeValue.trim().length > 0) {
+      return element.nodeValue.trim().replace(/\s+/g, ' ');
+    }
+  }
+
+  if (element.nodeType === NODE_TYPE.CDATA_SECTION_NODE) {
+    return element.nodeValue;
+  }
+  return null;
+};
+
+export const renderChildren = (
+  element: Element,
+  stylesheets: StyleSheets,
+  onUpdate: HvComponentOnUpdate,
+  options: HvComponentOptions,
+) => {
+  const children = [];
+  if (element.childNodes) {
+    const { childNodes } = element;
+    for (let i = 0; i < childNodes.length; i += 1) {
+      const e = renderElement(
+        // $FlowFixMe
+        element.childNodes.item(i),
+        stylesheets,
+        onUpdate,
+        { ...options, skipHref: false },
+      );
+      if (e) {
+        children.push(e);
+      }
+    }
+  }
+  return children;
+};
