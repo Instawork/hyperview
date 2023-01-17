@@ -30,6 +30,7 @@ A `<style>` element should only appear as a direct child of a `<styles>` element
 - [`id`](#id)
 - [Layout rules](#layout-rules)
 
+  - [`aspectRatio`](#aspectratio)
   - [`alignContent`](#aligncontent)
   - [`alignItems`](#alignitems)
   - [`alignSelf`](#alignself)
@@ -122,6 +123,20 @@ A global attribute uniquely identifying the element in the whole document. This 
 `<style>` attributes support the following [layout props](https://facebook.github.io/react-native/docs/layout-props) from React Native.
 
 > Layout rules can only be applied to most elements with a few exceptions (such as `<spinner>`).
+
+#### `aspectRatio`
+
+Aspect ratio controls the size of the undefined dimension of a node. See https://developer.mozilla.org/en-US/docs/Web/CSS/aspect-ratio for more details.
+
+- On a node with a set width/height, aspect ratio controls the size of the unset dimension
+- On a node with a set flex basis, aspect ratio controls the size of the node in the cross axis if unset
+- On a node with a measure function, aspect ratio works as though the measure function measures the flex basis
+- On a node with flex grow/shrink, aspect ratio controls the size of the node in the cross axis if unset
+- Aspect ratio takes min/max dimensions into account
+
+| Type           | Required |
+| -------------- | -------- |
+| number, string | No       |
 
 #### `alignContent`
 
@@ -289,7 +304,7 @@ See https://developer.mozilla.org/en-US/docs/Web/CSS/left for more details of ho
 
 #### `margin`
 
-Setting `margin` has the same effect as setting each of `marginTop`, `marginLeft`, `marginBottom`, and `marginRight` to the same value.  You must use points or percentages. Ems and other units are not supported. See https://developer.mozilla.org/en-US/docs/Web/CSS/margin for more details. 
+Setting `margin` has the same effect as setting each of `marginTop`, `marginLeft`, `marginBottom`, and `marginRight` to the same value. You must use points or percentages. Ems and other units are not supported. See https://developer.mozilla.org/en-US/docs/Web/CSS/margin for more details.
 
 | Type           | Required |
 | -------------- | -------- |
@@ -297,7 +312,7 @@ Setting `margin` has the same effect as setting each of `marginTop`, `marginLeft
 
 #### `marginBottom`
 
-`marginBottom` works like `margin-bottom` in CSS.  You must use points or percentages. Ems and other units are not supported. See https://developer.mozilla.org/en-US/docs/Web/CSS/margin-bottom for more details.
+`marginBottom` works like `margin-bottom` in CSS. You must use points or percentages. Ems and other units are not supported. See https://developer.mozilla.org/en-US/docs/Web/CSS/margin-bottom for more details.
 
 | Type           | Required |
 | -------------- | -------- |
@@ -402,7 +417,7 @@ See https://developer.mozilla.org/en-US/docs/Web/CSS/min-width for more details.
 #### `padding`
 
 Setting `padding` has the same effect as setting each of `paddingTop`, `paddingBottom`, `paddingLeft`, and `paddingRight` to the same value. You must use points or percentages. Ems and other units are not supported.
-  
+
 See https://developer.mozilla.org/en-US/docs/Web/CSS/padding for more details.
 
 | Type           | Required |
@@ -412,7 +427,7 @@ See https://developer.mozilla.org/en-US/docs/Web/CSS/padding for more details.
 #### `paddingBottom`
 
 `paddingBottom` works like `padding-bottom` in CSS. You must use points or percentages. Ems and other units are not supported.
-  
+
 See https://developer.mozilla.org/en-US/docs/Web/CSS/padding-bottom for more details.
 
 | Type           | Required |
@@ -422,7 +437,6 @@ See https://developer.mozilla.org/en-US/docs/Web/CSS/padding-bottom for more det
 #### `paddingHorizontal`
 
 Setting `paddingHorizontal` is like setting both of `paddingLeft` and `paddingRight` to the same value. You must use points or percentages. Ems and other units are not supported.
-
 
 | Type           | Required |
 | -------------- | -------- |

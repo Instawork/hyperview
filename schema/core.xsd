@@ -262,6 +262,21 @@
     </xs:union>
   </xs:simpleType>
 
+  <xs:simpleType name="floatOrRatio">
+    <xs:union memberTypes="xs:NMTOKEN">
+      <xs:simpleType>
+        <xs:restriction base="xs:float">
+        </xs:restriction>
+      </xs:simpleType>
+
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:pattern value="\d+ */ *\d+" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+
   <xs:simpleType name="margin">
     <xs:union>
       <xs:simpleType>
@@ -469,6 +484,8 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>
+
+      <xs:attribute name="aspectRatio" type="hv:floatOrRatio" />
 
       <xs:attribute name="backgroundColor" type="hv:color" />
 

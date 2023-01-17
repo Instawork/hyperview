@@ -56,6 +56,15 @@ function numberOrString(value: string): number | string {
   return NUMBER_REGEX.test(value) ? number(value) : value;
 }
 
+/**
+ * If the string value is a float number, convert it to one.
+ * Otherwise, return the original string value.
+ */
+function floatOrString(value: string): number | string {
+  const float = parseFloat(value);
+  return Number.isNaN(float) ? value : float;
+}
+
 // Maps certain style attributes to the converter to use. The converted values
 // should be accepted style types in React Native.
 // If a style attribute is not in this list, it will not be applied to the element.
@@ -108,6 +117,7 @@ const STYLE_ATTRIBUTE_CONVERTERS = {
 
   // view attributes
   // eslint-disable-next-line sort-keys
+  aspectRatio: floatOrString,
   backgroundColor: string,
   borderBottomColor: string,
   borderBottomLeftRadius: number,
