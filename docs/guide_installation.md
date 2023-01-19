@@ -93,7 +93,7 @@ Whether you're using a physical device or simulator, you should now see a Hyperv
 
 ![final](/img/guide_installation2.gif)
 
-The example server responds with files in the [./examples](/examples) directory. You can modify or add files in [./examples](/examples) and the server will update without restarting. to view your changes, simply navigate back to the changed page.
+The example server responds with files in the [./examples](/docs/example_index.md) directory. You can modify or add files in [./examples](/docs/example_index.md) and the server will update without restarting. to view your changes, simply navigate back to the changed page.
 
 ### Troubleshooting
 
