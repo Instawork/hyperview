@@ -15,10 +15,11 @@ import {
   RefreshControl as DefaultRefreshControl,
   SectionList,
 } from 'react-native';
-import type { HvComponentProps, Node, NodeList } from 'hyperview/src/types';
+
 import React, { PureComponent } from 'react';
 
 import { DOMParser } from 'xmldom-instawork';
+import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { State } from './types';
 
@@ -79,31 +80,34 @@ export default class HvSectionList extends PureComponent<
     });
   };
 
-  addNodes = (sectionElement: Node, flattened: NodeList<Node>) => {
-    for (let j = 0; j < sectionElement.childNodes.length; j += 1) {
-      const node = sectionElement.childNodes[j];
-      if (
-        node.nodeName === LOCAL_NAME.ITEMS ||
-        node.nodeName === LOCAL_NAME.SECTION
-      ) {
-        this.addNodes(node, flattened);
-      } else if (
-        node.nodeName === LOCAL_NAME.ITEM ||
-        node.nodeName === LOCAL_NAME.SECTION_TITLE
-      ) {
-        flattened.push(sectionElement.childNodes[j]);
-      }
-    }
-  };
-
   render() {
     const styleAttr = this.props.element.getAttribute('style');
     const style = styleAttr
       ? styleAttr.split(' ').map(s => this.props.stylesheets.regular[s])
       : null;
 
-    const flattened: NodeList<Node> = [];
-    this.addNodes(this.props.element, flattened);
+    const flattened = [];
+
+    const addNodes = sectionElement => {
+      if (sectionElement.childNodes) {
+        for (let j = 0; j < sectionElement.childNodes.length; j += 1) {
+          const node = sectionElement.childNodes[j];
+          if (
+            node.nodeName === LOCAL_NAME.ITEMS ||
+            node.nodeName === LOCAL_NAME.SECTION
+          ) {
+            addNodes(node);
+          } else if (
+            node.nodeName === LOCAL_NAME.ITEM ||
+            node.nodeName === LOCAL_NAME.SECTION_TITLE
+          ) {
+            flattened.push(sectionElement.childNodes[j]);
+          }
+        }
+      }
+    };
+
+    addNodes(this.props.element);
 
     let items = [];
     let titleElement = null;
