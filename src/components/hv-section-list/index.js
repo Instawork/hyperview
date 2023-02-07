@@ -78,38 +78,59 @@ export default class HvSectionList extends PureComponent<
     });
   };
 
+  addNodes = (sectionElement, flattened) => {
+    for (let j = 0; j < sectionElement.childNodes.length; j += 1) {
+      const node = sectionElement.childNodes[j];
+      if (
+        node.nodeName === LOCAL_NAME.ITEMS ||
+        node.nodeName === LOCAL_NAME.SECTION
+      ) {
+        this.addNodes(node, flattened);
+      } else if (
+        node.nodeName === LOCAL_NAME.ITEM ||
+        node.nodeName === LOCAL_NAME.SECTION_TITLE
+      ) {
+        flattened.push(sectionElement.childNodes[j]);
+      }
+    }
+  };
+
   render() {
     const styleAttr = this.props.element.getAttribute('style');
     const style = styleAttr
       ? styleAttr.split(' ').map(s => this.props.stylesheets.regular[s])
       : null;
 
-    const sectionElements = this.props.element.getElementsByTagNameNS(
-      Namespaces.HYPERVIEW,
-      'section',
-    );
+    const flattened = [];
+    this.addNodes(this.props.element, flattened);
+
+    let items = [];
+    let titleElement = null;
     const sections = [];
 
-    for (let i = 0; i < sectionElements.length; i += 1) {
-      const sectionElement = sectionElements.item(i);
+    for (let j = 0; j < flattened.length; j += 1) {
+      const sectionElement = flattened[j];
       if (sectionElement) {
-        const itemElements = sectionElement.getElementsByTagNameNS(
-          Namespaces.HYPERVIEW,
-          'item',
-        );
-        const items = [];
-        for (let j = 0; j < itemElements.length; j += 1) {
-          const itemElement = itemElements.item(j);
-          items.push(itemElement);
+        if (sectionElement.nodeName === LOCAL_NAME.ITEM) {
+          items.push(sectionElement);
+        } else if (sectionElement.nodeName === LOCAL_NAME.SECTION_TITLE) {
+          if (items.length > 0) {
+            sections.push({
+              data: items,
+              title: titleElement,
+            });
+            items = [];
+          }
+          titleElement = sectionElement;
         }
-        const titleElement = sectionElement
-          .getElementsByTagNameNS(Namespaces.HYPERVIEW, 'section-title')
-          .item(0);
-        sections.push({
-          data: items,
-          title: titleElement,
-        });
       }
+    }
+
+    if (items.length > 0) {
+      sections.push({
+        data: items,
+        title: titleElement,
+      });
     }
 
     const listProps = {
