@@ -8,31 +8,27 @@ The `<section-list>` element represents a sectioned list of items. Each section 
 
 ```xml
 <section-list style="List">
-  <section>
-    <section-title style="Header">
-      <text>Section 1</text>
-    </section-title>
+  <section-title style="Header">
+    <text>Section 1</text>
+  </section-title>
 
-    <item key="a" style="Item">
-      <text>Item 1</text>
-    </item>
-  </section>
+  <item key="a" style="Item">
+    <text>Item 1</text>
+  </item>
 
-  <section>
-    <section-title style="Header">
-      <text>Section 1</text>
-    </section-title>
+  <section-title style="Header">
+    <text>Section 1</text>
+  </section-title>
 
-    <item key="b" style="Item">
-      <text>Section 2</text>
-    </item>
-  </section>
+  <item key="b" style="Item">
+    <text>Section 2</text>
+  </item>
 </section-list>
 ```
 
 ## Structure
 
-A `<section-list>` element will only render `<section>` children elements. Other elements will be ignored during rendering.
+A `<section-list>` element will only render `<section-title>` and `<item>` children elements. Other elements will be ignored during rendering.
 
 ## Attributes
 

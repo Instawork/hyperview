@@ -4,6 +4,14 @@ title: <section>
 sidebar_label: <section>
 ---
 
+---
+
+**NOTE**
+[Deprecated]
+`<section>` is no longer required; `<section-title>` and `<item>` elements may now be direct children of `<section-list>`.
+
+---
+
 The `<section>` element represents a group of items in a `<section-list>`. A section contains a title and items. The section itself does not have any visible style, it just serves as a grouping within the section list.
 
 ```xml

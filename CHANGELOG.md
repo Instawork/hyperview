@@ -1,5 +1,9 @@
 # Hyperview changelog
 
+**Version 0.41.1**
+
+- Removed requirement for `<section>` when using `<section-list>` component
+
 **Version 0.41.0**
 
 - feat(schema): add `resizeMode` enumeration type
