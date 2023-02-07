@@ -72,20 +72,19 @@
         href="/ui_elements/sectionlist/_refresh_load.xml"
         trigger="refresh"
       >
-        <section>
-          <section-title style="List__Header">
-            <text style="List__HeaderText">Section 1</text>
-          </section-title>
-          <item key="1" style="Item">
-            <text style="Item__Label">List 1</text>
-          </item>
-          <item key="2" style="Item">
-            <text style="Item__Label">List 2</text>
-          </item>
-          <item key="3" style="Item">
-            <text style="Item__Label">List 3</text>
-          </item>
-        </section>
+        <!-- Section 1-->
+        <section-title style="List__Header">
+          <text style="List__HeaderText">Section 1</text>
+        </section-title>
+        <item key="1" style="Item">
+          <text style="Item__Label">List 1</text>
+        </item>
+        <item key="2" style="Item">
+          <text style="Item__Label">List 2</text>
+        </item>
+        <item key="3" style="Item">
+          <text style="Item__Label">List 3</text>
+        </item>
       </section-list>
     </body>
   </screen>

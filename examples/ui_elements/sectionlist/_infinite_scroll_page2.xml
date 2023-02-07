@@ -1,4 +1,4 @@
-<section xmlns="https://hyperview.org/hyperview">
+<items xmlns="https://hyperview.org/hyperview">
   <section-title style="List__Header">
     <text style="List__HeaderText">Added: Section 5</text>
   </section-title>
@@ -17,4 +17,4 @@
   <item key="25" style="Item">
     <text style="Item__Label">Added: List 25</text>
   </item>
-</section>
+</items>
