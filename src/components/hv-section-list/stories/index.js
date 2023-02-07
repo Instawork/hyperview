@@ -30,3 +30,11 @@ createStory('infinite_scroll', ({ element, stylesheets }) => (
     stylesheets={stylesheets}
   />
 ));
+createStory('infinite_scroll_append', ({ element, stylesheets }) => (
+  <HvSectionList
+    element={element}
+    onUpdate={action('onUpdate')}
+    options={Helpers.getOptions()}
+    stylesheets={stylesheets}
+  />
+));
