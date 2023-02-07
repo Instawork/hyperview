@@ -78,7 +78,7 @@ export default class HvSectionList extends PureComponent<
     });
   };
 
-  addNodes = (sectionElement: Element, flattened: NodeList<Node>) => {
+  addNodes = (sectionElement: Node, flattened: NodeList<Node>) => {
     for (let j = 0; j < sectionElement.childNodes.length; j += 1) {
       const node = sectionElement.childNodes[j];
       if (
