@@ -101,7 +101,7 @@ export default class HvSectionList extends PureComponent<
       ? styleAttr.split(' ').map(s => this.props.stylesheets.regular[s])
       : null;
 
-    const flattened = [];
+    const flattened: NodeList<Node> = [];
     this.addNodes(this.props.element, flattened);
 
     let items = [];
