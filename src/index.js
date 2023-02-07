@@ -235,7 +235,7 @@ export default class HyperScreen extends React.Component {
    * Renders the XML doc into React components. Shows blank screen until the XML doc is available.
    */
   render() {
-    if (this.state.error) {
+    if (this.state.error && !this.state.doc) {
       const errorScreen = this.props.errorScreen || LoadError;
       return React.createElement(errorScreen, {
         error: this.state.error,
@@ -307,11 +307,18 @@ export default class HyperScreen extends React.Component {
       }
       return doc.documentElement;
     } catch (err) {
-      this.setState({
-        doc: null,
-        error: err,
-        styles: null,
-      });
+      if (err.message === 'Network request failed') {
+        // Don't clear the doc and styles when offline
+        this.setState({
+          error: err,
+        });
+      } else {
+        this.setState({
+          doc: null,
+          error: err,
+          styles: null,
+        });
+      }
     }
     return null;
   }
@@ -431,7 +438,9 @@ export default class HyperScreen extends React.Component {
           targetElement = currentElement;
         }
 
-        newRoot = Behaviors.performUpdate(action, targetElement, newElement);
+        if (newElement) {
+          newRoot = Behaviors.performUpdate(action, targetElement, newElement);
+        }
         newRoot = Behaviors.setIndicatorsAfterLoad(showIndicatorIdList, hideIndicatorIdList, newRoot);
         // Re-render the modifications
         this.setState({
