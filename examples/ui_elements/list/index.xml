@@ -63,7 +63,7 @@
         </item>
         <item
           href="/ui_elements/list/horizontal.xml"
-          key="basic"
+          key="horizontal"
           show-during-load="loadingScreen"
           style="Item"
         >
