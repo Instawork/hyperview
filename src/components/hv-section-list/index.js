@@ -15,9 +15,10 @@ import {
   RefreshControl as DefaultRefreshControl,
   SectionList,
 } from 'react-native';
+import type { HvComponentProps, Node, NodeList } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
+
 import { DOMParser } from 'xmldom-instawork';
-import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { State } from './types';
 
