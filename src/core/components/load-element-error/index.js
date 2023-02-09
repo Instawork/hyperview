@@ -15,9 +15,6 @@ import styles from './styles';
 
 const LoadElementError = (props: Props) => {
   const getError = () => {
-    if (!props.error) {
-      return 'An error occured';
-    }
     if (__DEV__) {
       return `${props.error.name}: ${props.error.message}`;
     }

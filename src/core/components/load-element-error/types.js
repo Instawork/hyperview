@@ -9,5 +9,5 @@
  */
 
 export type Props = {
-  error: ?Error,
+  error: Error,
 };
