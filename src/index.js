@@ -254,7 +254,7 @@ export default class HyperScreen extends React.Component {
       const loadingScreen = this.props.loadingScreen || Loading;
       return React.createElement(loadingScreen);
     }
-    const elementErrorComponent = this.state.elementError ? this.props.elementErrorTip || LoadError : null;
+    const elementErrorComponent = this.state.elementError ? this.props.elementErrorComponent || LoadElementError : null;
     const [body] = Array.from(this.state.doc.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'body'));
     const screenElement = Render.renderElement(
       body,
@@ -271,7 +271,7 @@ export default class HyperScreen extends React.Component {
       <Contexts.DateFormatContext.Provider value={this.props.formatDate}>
         <Contexts.RefreshControlComponentContext.Provider value={this.props.refreshControl}>
           {screenElement}
-          {this.state.elementError ? (React.createElement(LoadElementError, { error: this.state.elementError })) : null}
+          {elementErrorComponent ? (React.createElement(elementErrorComponent, { error: this.state.elementError })) : null}
         </Contexts.RefreshControlComponentContext.Provider>
       </Contexts.DateFormatContext.Provider>
     );
