@@ -13,7 +13,6 @@ import { SafeAreaView, Text, View } from 'react-native';
 import type { Props } from './types';
 import styles from './styles';
 
-
 const LoadElementError = (props: Props) => {
   const getError = () => {
     if (!props.error) {
@@ -22,7 +21,10 @@ const LoadElementError = (props: Props) => {
     if (__DEV__) {
       return `${props.error.name}: ${props.error.message}`;
     }
-    if (props.error.name == 'TypeError' && props.error.message === 'Network request failed') {
+    if (
+      props.error.name == 'TypeError' &&
+      props.error.message === 'Network request failed'
+    ) {
       return 'You seem to be offline, check your connection';
     }
     return 'An error occured';
