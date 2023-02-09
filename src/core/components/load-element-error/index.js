@@ -8,9 +8,9 @@
  *
  */
 
-import React from 'react';
 import { SafeAreaView, Text, View } from 'react-native';
 import type { Props } from './types';
+import React from 'react';
 import styles from './styles';
 
 const LoadElementError = (props: Props) => {
@@ -19,7 +19,7 @@ const LoadElementError = (props: Props) => {
       return `${props.error.name}: ${props.error.message}`;
     }
     if (
-      props.error.name == 'TypeError' &&
+      props.error.name === 'TypeError' &&
       props.error.message === 'Network request failed'
     ) {
       return 'You seem to be offline, check your connection';

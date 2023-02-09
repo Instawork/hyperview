@@ -113,8 +113,8 @@ export default class HyperScreen extends React.Component {
     if (preloadScreen) {
       this.setState({
         doc: preloadScreen,
-        error: null,
         elementError: null,
+        error: null,
         styles: preloadStyles,
         url,
       });

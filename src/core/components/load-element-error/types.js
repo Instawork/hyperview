@@ -8,6 +8,6 @@
  *
  */
 
-export type Props = {
+export type Props = {|
   error: Error,
-};
+|};
