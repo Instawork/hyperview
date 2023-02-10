@@ -22,6 +22,7 @@ import { ACTIONS, NAV_ACTIONS, UPDATE_ACTIONS } from 'hyperview/src/types';
 import Navigation, { ANCHOR_ID_SEPARATOR } from 'hyperview/src/services/navigation';
 import { createProps, createStyleProp, getElementByTimeoutId, getFormData, later, removeTimeoutId, setTimeoutId, shallowCloneToRoot } from 'hyperview/src/services';
 import { Linking } from 'react-native';
+import LoadElementError from './core/components/load-element-error';
 import LoadError from 'hyperview/src/core/components/load-error';
 import Loading from 'hyperview/src/core/components/loading';
 import React from 'react';
@@ -52,7 +53,8 @@ export default class HyperScreen extends React.Component {
     this.needsLoad = false;
     this.state = {
       doc: null,
-      error: false,
+      elementError: null,
+      error: null,
       staleHeaderType: null,
       styles: null,
       url: null,
@@ -111,12 +113,14 @@ export default class HyperScreen extends React.Component {
     if (preloadScreen) {
       this.setState({
         doc: preloadScreen,
+        elementError: null,
         error: null,
         styles: preloadStyles,
         url,
       });
     } else {
       this.setState({
+        elementError: null,
         error: null,
         url,
       });
@@ -201,6 +205,7 @@ export default class HyperScreen extends React.Component {
       this.navigation.setRouteKey(this.state.url, routeKey);
       this.setState({
         doc,
+        elementError: null,
         error: null,
         staleHeaderType,
         styles: stylesheets,
@@ -209,6 +214,7 @@ export default class HyperScreen extends React.Component {
     } catch (err) {
       this.setState({
         doc: null,
+        elementError: null,
         error: err,
         styles: null,
       });
@@ -226,6 +232,7 @@ export default class HyperScreen extends React.Component {
       : UrlService.getUrlFromHref(optHref, this.state.url); // eslint-disable-line react/no-access-state-in-setstate
     this.needsLoad = true;
     this.setState({
+      elementError: null,
       error: null,
       url,
     });
@@ -247,6 +254,7 @@ export default class HyperScreen extends React.Component {
       const loadingScreen = this.props.loadingScreen || Loading;
       return React.createElement(loadingScreen);
     }
+    const elementErrorComponent = this.state.elementError ? this.props.elementErrorComponent || LoadElementError : null;
     const [body] = Array.from(this.state.doc.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'body'));
     const screenElement = Render.renderElement(
       body,
@@ -263,6 +271,7 @@ export default class HyperScreen extends React.Component {
       <Contexts.DateFormatContext.Provider value={this.props.formatDate}>
         <Contexts.RefreshControlComponentContext.Provider value={this.props.refreshControl}>
           {screenElement}
+          {elementErrorComponent ? (React.createElement(elementErrorComponent, { error: this.state.elementError })) : null}
         </Contexts.RefreshControlComponentContext.Provider>
       </Contexts.DateFormatContext.Provider>
     );
@@ -305,13 +314,12 @@ export default class HyperScreen extends React.Component {
         // We are doing this to ensure that we keep the screen stale until a `reload` happens
         this.setState({ staleHeaderType });
       }
+      if (this.state.elementError) {
+        this.setState({ elementError: null });
+      }
       return doc.documentElement;
     } catch (err) {
-      this.setState({
-        doc: null,
-        error: err,
-        styles: null,
-      });
+      this.setState({ elementError: err });
     }
     return null;
   }
@@ -431,7 +439,9 @@ export default class HyperScreen extends React.Component {
           targetElement = currentElement;
         }
 
-        newRoot = Behaviors.performUpdate(action, targetElement, newElement);
+        if (newElement) {
+          newRoot = Behaviors.performUpdate(action, targetElement, newElement);
+        }
         newRoot = Behaviors.setIndicatorsAfterLoad(showIndicatorIdList, hideIndicatorIdList, newRoot);
         // Re-render the modifications
         this.setState({
