@@ -4,6 +4,7 @@
 .editorconfig
 .eslintignore
 .eslintrc
+_examples_site/
 .flowconfig
 .gitignore
 .prettierignore
