@@ -9,6 +9,7 @@
 .prettierignore
 .prettierrc.js
 .vscode/
+_examples_site/
 **/stories/
 demo/
 docs/
