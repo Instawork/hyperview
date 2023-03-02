@@ -83,6 +83,7 @@
     "babel-preset-react-native": "4.0.1",
     "chokidar": "3.5.1",
     "eslint": "7.20.0",
+    "eslint-config-airbnb": "18.2.1",
     "eslint-plugin-instawork": "0.10.2",
     "flow-bin": "0.122.0",
     "glob": "7.1.6",

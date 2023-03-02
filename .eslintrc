@@ -1,6 +1,10 @@
 {
-  "extends": ["plugin:instawork/recommended"],
-  "plugins": ["instawork"],
+  "extends": [
+    "plugin:instawork/recommended"
+  ],
+  "plugins": [
+    "instawork"
+  ],
   "rules": {
     "import/no-extraneous-dependencies": [
       "warn",
@@ -46,10 +50,38 @@
   },
   "overrides": [
     {
-      "files": ["**/types.js"],
+      "files": [
+        "**/types.js"
+      ],
       "rules": {
         "no-use-before-define": "off",
         "max-len": "off"
+      }
+    },
+    {
+      "files": [
+        "**/*.ts",
+        "**/*.tsx"
+      ],
+      "parser": "@typescript-eslint/parser",
+      "plugins": [
+        "@typescript-eslint"
+      ],
+      "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "airbnb",
+        "airbnb/hooks",
+      ],
+      "rules": {
+        "instawork/flow-annotate": "off",
+        "@typescript-eslint/no-unused-vars": "error",
+        // to enforce using type for object type definitions, can be type or interface 
+        "@typescript-eslint/consistent-type-definitions": [
+          "error",
+          "type"
+        ]
       }
     }
   ]
