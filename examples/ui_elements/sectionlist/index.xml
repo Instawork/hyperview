@@ -81,7 +81,7 @@
         </item>
         <item
           href="/ui_elements/sectionlist/non_sticky_titles.xml"
-          key="basic"
+          key="non-sticky-titles"
           show-during-load="loadingScreen"
           style="Item"
         >
