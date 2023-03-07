@@ -73,7 +73,9 @@
     <body style="Body">
       <header style="Header">
         <text action="back" href="#" style="Header__Back">Back</text>
-        <text style="Header__Title">Section List Infinite Scroll</text>
+        <text
+          style="Header__Title"
+        >Section List Infinite Scroll With Appended Items</text>
       </header>
       <section-list id="myList">
         <!-- Section 1 -->
@@ -152,7 +154,7 @@
         <item
           action="append"
           delay="1000"
-          href="/ui_elements/sectionlist/_infinite_scroll_page2.xml"
+          href="/ui_elements/sectionlist/_infinite_scroll_append_page2.xml"
           key="20"
           once="true"
           show-during-load="myIndicator"

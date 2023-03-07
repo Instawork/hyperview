@@ -184,366 +184,129 @@
         </view>
       </view>
       <section-list>
-        <section>
-          <section-title />
-          <item key="stories">
-            <view scroll-orientation="horizontal" style="Stories">
-              <view href="/case_studies/photos/user.xml" style="Story">
-                <image
-                  source="/case_studies/photos/avatars/geordi.jpg"
-                  style="Story__Avatar"
-                />
-                <text numberOfLines="1" style="Story__Username">geordi</text>
-              </view>
-              <view href="/case_studies/photos/user.xml" style="Story">
-                <image
-                  source="/case_studies/photos/avatars/data.jpg"
-                  style="Story__Avatar"
-                />
-                <text numberOfLines="1" style="Story__Username">data</text>
-              </view>
-              <view href="/case_studies/photos/user.xml" style="Story">
-                <image
-                  source="/case_studies/photos/avatars/deanna.png"
-                  style="Story__Avatar"
-                />
-                <text numberOfLines="1" style="Story__Username">
-                  deanna.troi
-                </text>
-              </view>
-              <view href="/case_studies/photos/user.xml" style="Story">
-                <image
-                  source="/case_studies/photos/avatars/picard.jpg"
-                  style="Story__Avatar"
-                />
-                <text numberOfLines="1" style="Story__Username">
-                  jean.luc.p
-                </text>
-              </view>
-              <view href="/case_studies/photos/user.xml" style="Story">
-                <image
-                  source="/case_studies/photos/avatars/worf.jpg"
-                  style="Story__Avatar"
-                />
-                <text numberOfLines="1" style="Story__Username">og_worf</text>
-              </view>
-            </view>
-          </item>
-        </section>
-        <section>
-          <section-title style="ImageHeader">
-            <view style="ImageHeader__Left">
+        <!-- Section 1 -->
+        <section-title />
+        <item key="stories">
+          <view scroll-orientation="horizontal" style="Stories">
+            <view href="/case_studies/photos/user.xml" style="Story">
               <image
-                href="/case_studies/photos/index.xml"
-                source="/case_studies/photos/avatars/riker.jpg"
-                style="ImageHeader__Avatar"
+                source="/case_studies/photos/avatars/geordi.jpg"
+                style="Story__Avatar"
               />
-              <view style="ImageHeader__LeftLabels">
-                <text
-                  href="/case_studies/photos/user.xml"
-                  style="ImageHeader__Username"
-                >
-                  riker007
-                </text>
-                <text style="ImageHeader__Location">Las Vegas, CA</text>
-              </view>
+              <text numberOfLines="1" style="Story__Username">geordi</text>
             </view>
-            <view style="ImageHeader__Right">
-              <text style="ImageHeader__More">...</text>
-            </view>
-          </section-title>
-          <item key="image1">
-            <view style="ImageContainer">
+            <view href="/case_studies/photos/user.xml" style="Story">
               <image
-                source="/case_studies/photos/photos/concert.jpeg"
-                style="Image"
+                source="/case_studies/photos/avatars/data.jpg"
+                style="Story__Avatar"
               />
-              <view id="image1-overlay" style="ImageContainer__Overlay" />
+              <text numberOfLines="1" style="Story__Username">data</text>
             </view>
-            <view style="ActionBar">
-              <view style="ActionBar__Left">
-                <select-multiple name="image1-like">
-                  <option
-                    style="ActionBar__Icon ActionBar__Icon--First"
-                    value="like"
-                  >
-                    <behavior
-                      action="replace"
-                      href="/case_studies/photos/num_likes_increase.xml"
-                      target="image1-num-likes"
-                      trigger="select"
-                    />
-                    <behavior
-                      action="replace"
-                      href="/case_studies/photos/num_likes_decrease.xml"
-                      target="image1-num-likes"
-                      trigger="deselect"
-                    />
-                    <image
-                      source="/case_studies/photos/icons/heart2.png"
-                      style="ActionBar__IconImage"
-                    />
-                    <image
-                      source="/case_studies/photos/icons/heart_liked2.png"
-                      style="ActionBar__IconImage--Selected"
-                    />
-                  </option>
-                </select-multiple>
-                <image
-                  source="/case_studies/photos/icons/chat2.png"
-                  style="ActionBar__Icon"
-                />
-              </view>
-              <view style="ActionBar__Right" />
-            </view>
-            <text style="Caption">Best night of my life!</text>
-            <view style="Comments">
-              <text id="image1-num-likes" style="Comments__Likes">7 likes</text>
-              <text
-                action="prepend"
-                href="/case_studies/photos/more_comments.xml"
-                style="Comments__More"
-                target="comments-image1"
-              >
-                View all 140 comments
-              </text>
-              <view id="comments-image1">
-                <view style="Comment">
-                  <text
-                    href="/case_studies/photos/user.xml"
-                    style="Comment__Author"
-                  >
-                    og_worf
-                  </text>
-                  <text style="Comment__Content">hello!</text>
-                </view>
-                <view style="Comment">
-                  <text
-                    href="/case_studies/photos/user.xml"
-                    style="Comment__Author"
-                  >
-                    riker007
-                  </text>
-                  <text style="Comment__Content">hello!</text>
-                </view>
-                <view style="Comment">
-                  <text
-                    href="/case_studies/photos/user.xml"
-                    style="Comment__Author"
-                  >
-                    jean.luc.p
-                  </text>
-                  <text style="Comment__Content">hello!</text>
-                </view>
-              </view>
-            </view>
-          </item>
-        </section>
-        <section>
-          <section-title style="ImageHeader">
-            <view style="ImageHeader__Left">
-              <image
-                source="/case_studies/photos/avatars/picard.jpg"
-                style="ImageHeader__Avatar"
-              />
-              <view style="ImageHeader__LeftLabels">
-                <text
-                  href="/case_studies/photos/user.xml"
-                  style="ImageHeader__Username"
-                >
-                  jean.luc.p
-                </text>
-                <text style="ImageHeader__Location">San Francisco, CA</text>
-              </view>
-            </view>
-            <view style="ImageHeader__Right">
-              <text style="ImageHeader__More">...</text>
-            </view>
-          </section-title>
-          <item key="image2">
-            <image
-              source="/case_studies/photos/photos/dinner.jpeg"
-              style="Image"
-            />
-            <view style="ActionBar">
-              <view style="ActionBar__Left">
-                <select-multiple name="image2-like">
-                  <option
-                    selected="true"
-                    style="ActionBar__Icon ActionBar__Icon--First"
-                    value="like"
-                  >
-                    <image
-                      source="/case_studies/photos/icons/heart2.png"
-                      style="ActionBar__IconImage"
-                    />
-                    <image
-                      source="/case_studies/photos/icons/heart_liked2.png"
-                      style="ActionBar__IconImage--Selected"
-                    />
-                  </option>
-                </select-multiple>
-                <image
-                  source="/case_studies/photos/icons/chat2.png"
-                  style="ActionBar__Icon"
-                />
-              </view>
-              <view style="ActionBar__Right" />
-            </view>
-            <text style="Caption">Hottest rez in town, cheers!</text>
-            <view style="Comments">
-              <text style="Comments__Likes">8 likes</text>
-              <text style="Comments__More">View all 140 comments</text>
-              <view style="Comment">
-                <text
-                  href="/case_studies/photos/user.xml"
-                  style="Comment__Author"
-                >
-                  og_worf
-                </text>
-                <text style="Comment__Content">hello!</text>
-              </view>
-              <view style="Comment">
-                <text
-                  href="/case_studies/photos/user.xml"
-                  style="Comment__Author"
-                >
-                  riker007
-                </text>
-                <text style="Comment__Content">hello!</text>
-              </view>
-              <view style="Comment">
-                <text
-                  href="/case_studies/photos/user.xml"
-                  style="Comment__Author"
-                >
-                  jean.luc.p
-                </text>
-                <text style="Comment__Content">hello!</text>
-              </view>
-            </view>
-          </item>
-        </section>
-        <section>
-          <section-title style="ImageHeader">
-            <view style="ImageHeader__Left">
-              <image
-                source="/case_studies/photos/avatars/worf.jpg"
-                style="ImageHeader__Avatar"
-              />
-              <view style="ImageHeader__LeftLabels">
-                <text
-                  href="/case_studies/photos/user.xml"
-                  style="ImageHeader__Username"
-                >
-                  og_worf
-                </text>
-                <text style="ImageHeader__Location">Williamsburg, NY</text>
-              </view>
-            </view>
-            <view style="ImageHeader__Right">
-              <text style="ImageHeader__More">...</text>
-            </view>
-          </section-title>
-          <item key="image3">
-            <image
-              source="/case_studies/photos/photos/inspiration1.jpeg"
-              style="Image"
-            />
-            <view style="ActionBar">
-              <view style="ActionBar__Left">
-                <image
-                  source="/case_studies/photos/icons/heart2.png"
-                  style="ActionBar__Icon ActionBar__Icon--First"
-                />
-                <image
-                  source="/case_studies/photos/icons/chat2.png"
-                  style="ActionBar__Icon"
-                />
-              </view>
-              <view style="ActionBar__Right" />
-            </view>
-            <text style="Caption">
-              True words to live by... living every day to its fullest!!
-            </text>
-            <view style="Comments">
-              <text style="Comments__Likes">7 likes</text>
-              <text style="Comments__More">View all 140 comments</text>
-              <view style="Comment">
-                <text
-                  href="/case_studies/photos/user.xml"
-                  style="Comment__Author"
-                >
-                  og_worf
-                </text>
-                <text style="Comment__Content">hello!</text>
-              </view>
-              <view style="Comment">
-                <text
-                  href="/case_studies/photos/user.xml"
-                  style="Comment__Author"
-                >
-                  riker007
-                </text>
-                <text style="Comment__Content">hello!</text>
-              </view>
-              <view style="Comment">
-                <text
-                  href="/case_studies/photos/user.xml"
-                  style="Comment__Author"
-                >
-                  jean.luc.p
-                </text>
-                <text style="Comment__Content">hello!</text>
-              </view>
-            </view>
-          </item>
-        </section>
-        <section>
-          <section-title style="ImageHeader">
-            <view style="ImageHeader__Left">
+            <view href="/case_studies/photos/user.xml" style="Story">
               <image
                 source="/case_studies/photos/avatars/deanna.png"
-                style="ImageHeader__Avatar"
+                style="Story__Avatar"
               />
-              <view style="ImageHeader__LeftLabels">
-                <text
-                  href="/case_studies/photos/user.xml"
-                  style="ImageHeader__Username"
-                >
-                  deanna.troi
-                </text>
-                <text style="ImageHeader__Location">Portland, WA</text>
-              </view>
+              <text numberOfLines="1" style="Story__Username">
+                deanna.troi
+              </text>
             </view>
-            <view style="ImageHeader__Right">
-              <text style="ImageHeader__More">...</text>
+            <view href="/case_studies/photos/user.xml" style="Story">
+              <image
+                source="/case_studies/photos/avatars/picard.jpg"
+                style="Story__Avatar"
+              />
+              <text numberOfLines="1" style="Story__Username">
+                jean.luc.p
+              </text>
             </view>
-          </section-title>
-          <item key="image4">
+            <view href="/case_studies/photos/user.xml" style="Story">
+              <image
+                source="/case_studies/photos/avatars/worf.jpg"
+                style="Story__Avatar"
+              />
+              <text numberOfLines="1" style="Story__Username">og_worf</text>
+            </view>
+          </view>
+        </item>
+        <!-- Section 2 -->
+        <section-title style="ImageHeader">
+          <view style="ImageHeader__Left">
             <image
-              source="/case_studies/photos/photos/coffee.jpeg"
+              href="/case_studies/photos/index.xml"
+              source="/case_studies/photos/avatars/riker.jpg"
+              style="ImageHeader__Avatar"
+            />
+            <view style="ImageHeader__LeftLabels">
+              <text
+                href="/case_studies/photos/user.xml"
+                style="ImageHeader__Username"
+              >
+                riker007
+              </text>
+              <text style="ImageHeader__Location">Las Vegas, CA</text>
+            </view>
+          </view>
+          <view style="ImageHeader__Right">
+            <text style="ImageHeader__More">...</text>
+          </view>
+        </section-title>
+        <item key="image1">
+          <view style="ImageContainer">
+            <image
+              source="/case_studies/photos/photos/concert.jpeg"
               style="Image"
             />
-            <view style="ActionBar">
-              <view style="ActionBar__Left">
-                <image
-                  source="/case_studies/photos/icons/heart2.png"
+            <view id="image1-overlay" style="ImageContainer__Overlay" />
+          </view>
+          <view style="ActionBar">
+            <view style="ActionBar__Left">
+              <select-multiple name="image1-like">
+                <option
                   style="ActionBar__Icon ActionBar__Icon--First"
-                />
-                <image
-                  source="/case_studies/photos/icons/chat2.png"
-                  style="ActionBar__Icon"
-                />
-              </view>
-              <view style="ActionBar__Right" />
+                  value="like"
+                >
+                  <behavior
+                    action="replace"
+                    href="/case_studies/photos/num_likes_increase.xml"
+                    target="image1-num-likes"
+                    trigger="select"
+                  />
+                  <behavior
+                    action="replace"
+                    href="/case_studies/photos/num_likes_decrease.xml"
+                    target="image1-num-likes"
+                    trigger="deselect"
+                  />
+                  <image
+                    source="/case_studies/photos/icons/heart2.png"
+                    style="ActionBar__IconImage"
+                  />
+                  <image
+                    source="/case_studies/photos/icons/heart_liked2.png"
+                    style="ActionBar__IconImage--Selected"
+                  />
+                </option>
+              </select-multiple>
+              <image
+                source="/case_studies/photos/icons/chat2.png"
+                style="ActionBar__Icon"
+              />
             </view>
-            <text style="Caption">
-              Can't start the day without my 10 artisinal cups of coffee!
+            <view style="ActionBar__Right" />
+          </view>
+          <text style="Caption">Best night of my life!</text>
+          <view style="Comments">
+            <text id="image1-num-likes" style="Comments__Likes">7 likes</text>
+            <text
+              action="prepend"
+              href="/case_studies/photos/more_comments.xml"
+              style="Comments__More"
+              target="comments-image1"
+            >
+              View all 140 comments
             </text>
-            <view style="Comments">
-              <text style="Comments__Likes">7 likes</text>
-              <text style="Comments__More">View all 140 comments</text>
+            <view id="comments-image1">
               <view style="Comment">
                 <text
                   href="/case_studies/photos/user.xml"
@@ -551,7 +314,7 @@
                 >
                   og_worf
                 </text>
-                <text style="Comment__Content">love</text>
+                <text style="Comment__Content">hello!</text>
               </view>
               <view style="Comment">
                 <text
@@ -560,9 +323,7 @@
                 >
                   riker007
                 </text>
-                <text style="Comment__Content">
-                  feeling buzzed just looking at this lol!
-                </text>
+                <text style="Comment__Content">hello!</text>
               </view>
               <view style="Comment">
                 <text
@@ -571,11 +332,245 @@
                 >
                   jean.luc.p
                 </text>
-                <text style="Comment__Content">Engage!</text>
+                <text style="Comment__Content">hello!</text>
               </view>
             </view>
-          </item>
-        </section>
+          </view>
+        </item>
+        <!-- Section 3 -->
+        <section-title style="ImageHeader">
+          <view style="ImageHeader__Left">
+            <image
+              source="/case_studies/photos/avatars/picard.jpg"
+              style="ImageHeader__Avatar"
+            />
+            <view style="ImageHeader__LeftLabels">
+              <text
+                href="/case_studies/photos/user.xml"
+                style="ImageHeader__Username"
+              >
+                jean.luc.p
+              </text>
+              <text style="ImageHeader__Location">San Francisco, CA</text>
+            </view>
+          </view>
+          <view style="ImageHeader__Right">
+            <text style="ImageHeader__More">...</text>
+          </view>
+        </section-title>
+        <item key="image2">
+          <image
+            source="/case_studies/photos/photos/dinner.jpeg"
+            style="Image"
+          />
+          <view style="ActionBar">
+            <view style="ActionBar__Left">
+              <select-multiple name="image2-like">
+                <option
+                  selected="true"
+                  style="ActionBar__Icon ActionBar__Icon--First"
+                  value="like"
+                >
+                  <image
+                    source="/case_studies/photos/icons/heart2.png"
+                    style="ActionBar__IconImage"
+                  />
+                  <image
+                    source="/case_studies/photos/icons/heart_liked2.png"
+                    style="ActionBar__IconImage--Selected"
+                  />
+                </option>
+              </select-multiple>
+              <image
+                source="/case_studies/photos/icons/chat2.png"
+                style="ActionBar__Icon"
+              />
+            </view>
+            <view style="ActionBar__Right" />
+          </view>
+          <text style="Caption">Hottest rez in town, cheers!</text>
+          <view style="Comments">
+            <text style="Comments__Likes">8 likes</text>
+            <text style="Comments__More">View all 140 comments</text>
+            <view style="Comment">
+              <text
+                href="/case_studies/photos/user.xml"
+                style="Comment__Author"
+              >
+                og_worf
+              </text>
+              <text style="Comment__Content">hello!</text>
+            </view>
+            <view style="Comment">
+              <text
+                href="/case_studies/photos/user.xml"
+                style="Comment__Author"
+              >
+                riker007
+              </text>
+              <text style="Comment__Content">hello!</text>
+            </view>
+            <view style="Comment">
+              <text
+                href="/case_studies/photos/user.xml"
+                style="Comment__Author"
+              >
+                jean.luc.p
+              </text>
+              <text style="Comment__Content">hello!</text>
+            </view>
+          </view>
+        </item>
+        <!-- Section 4 -->
+        <section-title style="ImageHeader">
+          <view style="ImageHeader__Left">
+            <image
+              source="/case_studies/photos/avatars/worf.jpg"
+              style="ImageHeader__Avatar"
+            />
+            <view style="ImageHeader__LeftLabels">
+              <text
+                href="/case_studies/photos/user.xml"
+                style="ImageHeader__Username"
+              >
+                og_worf
+              </text>
+              <text style="ImageHeader__Location">Williamsburg, NY</text>
+            </view>
+          </view>
+          <view style="ImageHeader__Right">
+            <text style="ImageHeader__More">...</text>
+          </view>
+        </section-title>
+        <item key="image3">
+          <image
+            source="/case_studies/photos/photos/inspiration1.jpeg"
+            style="Image"
+          />
+          <view style="ActionBar">
+            <view style="ActionBar__Left">
+              <image
+                source="/case_studies/photos/icons/heart2.png"
+                style="ActionBar__Icon ActionBar__Icon--First"
+              />
+              <image
+                source="/case_studies/photos/icons/chat2.png"
+                style="ActionBar__Icon"
+              />
+            </view>
+            <view style="ActionBar__Right" />
+          </view>
+          <text style="Caption">
+            True words to live by... living every day to its fullest!!
+          </text>
+          <view style="Comments">
+            <text style="Comments__Likes">7 likes</text>
+            <text style="Comments__More">View all 140 comments</text>
+            <view style="Comment">
+              <text
+                href="/case_studies/photos/user.xml"
+                style="Comment__Author"
+              >
+                og_worf
+              </text>
+              <text style="Comment__Content">hello!</text>
+            </view>
+            <view style="Comment">
+              <text
+                href="/case_studies/photos/user.xml"
+                style="Comment__Author"
+              >
+                riker007
+              </text>
+              <text style="Comment__Content">hello!</text>
+            </view>
+            <view style="Comment">
+              <text
+                href="/case_studies/photos/user.xml"
+                style="Comment__Author"
+              >
+                jean.luc.p
+              </text>
+              <text style="Comment__Content">hello!</text>
+            </view>
+          </view>
+        </item>
+        <!-- Section 5 -->
+        <section-title style="ImageHeader">
+          <view style="ImageHeader__Left">
+            <image
+              source="/case_studies/photos/avatars/deanna.png"
+              style="ImageHeader__Avatar"
+            />
+            <view style="ImageHeader__LeftLabels">
+              <text
+                href="/case_studies/photos/user.xml"
+                style="ImageHeader__Username"
+              >
+                deanna.troi
+              </text>
+              <text style="ImageHeader__Location">Portland, WA</text>
+            </view>
+          </view>
+          <view style="ImageHeader__Right">
+            <text style="ImageHeader__More">...</text>
+          </view>
+        </section-title>
+        <item key="image4">
+          <image
+            source="/case_studies/photos/photos/coffee.jpeg"
+            style="Image"
+          />
+          <view style="ActionBar">
+            <view style="ActionBar__Left">
+              <image
+                source="/case_studies/photos/icons/heart2.png"
+                style="ActionBar__Icon ActionBar__Icon--First"
+              />
+              <image
+                source="/case_studies/photos/icons/chat2.png"
+                style="ActionBar__Icon"
+              />
+            </view>
+            <view style="ActionBar__Right" />
+          </view>
+          <text style="Caption">
+            Can't start the day without my 10 artisinal cups of coffee!
+          </text>
+          <view style="Comments">
+            <text style="Comments__Likes">7 likes</text>
+            <text style="Comments__More">View all 140 comments</text>
+            <view style="Comment">
+              <text
+                href="/case_studies/photos/user.xml"
+                style="Comment__Author"
+              >
+                og_worf
+              </text>
+              <text style="Comment__Content">love</text>
+            </view>
+            <view style="Comment">
+              <text
+                href="/case_studies/photos/user.xml"
+                style="Comment__Author"
+              >
+                riker007
+              </text>
+              <text style="Comment__Content">
+                feeling buzzed just looking at this lol!
+              </text>
+            </view>
+            <view style="Comment">
+              <text
+                href="/case_studies/photos/user.xml"
+                style="Comment__Author"
+              >
+                jean.luc.p
+              </text>
+              <text style="Comment__Content">Engage!</text>
+            </view>
+          </view>
+        </item>
       </section-list>
     </body>
   </screen>

@@ -28,9 +28,9 @@ Display elements in HXML can be combined to define the layout of a screen.
 - [`<image>`](/docs/reference_image): Any image content on a screen.
 - [`<list>`](/docs/reference_list): Efficient layout of repeated items on a screen. Supports list-specific interactions like pull-to-refresh.
 - [`<section-list>`](/docs/reference_sectionlist): Efficient layout of sectioned (grouped) repeated items on a screen. Supports list-specific interactions like pull-to-refresh.
-- [`<section>`](/docs/reference_sectionlist): Groups `<item>` elements in a `<section-list>`.
-- [`<section-title>`](/docs/reference_sectiontitle): The header of a `<section>` in a `<section-list>`.
-- [`<item>`](/docs/reference_sectiontitle): An individual item in a `<list>` or `<section-list>`.
+- [`<section>`](/docs/reference_sectionlist): [Deprecated] Groups `<item>` and `<section-title>` elements in a `<section-list>`.
+- [`<section-title>`](/docs/reference_sectiontitle): The header of a group of `<item>` in a `<section-list>`.
+- [`<item>`](/docs/reference_item): An individual item in a `<list>` or `<section-list>`.
 - [`<spinner>`](/docs/reference_spinner): Activity indicator element.
 
 #### Input Elements

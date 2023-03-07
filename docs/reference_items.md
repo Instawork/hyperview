@@ -26,9 +26,9 @@ The `<items>` element represents a group of items in a list. This group does not
 
 ## Structure
 
-An `<items>` element will only render `<item>` children elements. Other elements will be ignored during rendering.
+An `<items>` element will only render `<item>` and `<section-title>` children elements. Other elements will be ignored during rendering.
 
-An `<items>` element only appears as a direct child of a `<list>` and `<section>`.
+An `<items>` element only appears as a direct child of a `<list>` or as a collection of `<section-title>` and `<item>` elements.
 
 ## Attributes
 

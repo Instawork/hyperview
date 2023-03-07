@@ -4,7 +4,7 @@ title: <item>
 sidebar_label: <item>
 ---
 
-The `<item>` element represents an item in a `<list>` or `<section>`. The structure and attributes of an `<item>` match the `<view>` element.
+The `<item>` element represents an item in a `<list>` or `<section-list>`. The structure and attributes of an `<item>` match the `<view>` element.
 
 Here's a single item in a list:
 
@@ -26,21 +26,19 @@ Here's a single item in a section list:
 
 ```xml
 <section-list style="List">
-  <section>
-    <section-title style="Header">
-      <text>Section 1</text>
-    </section-title>
+  <section-title style="Header">
+    <text>Section 1</text>
+  </section-title>
 
-    <item key="a" style="Item">
-      <view style="Left">
-        <image source="avatar.png" style="Avatar">
-      </view>
-      <view style="Right">
-        <text>Line 1</text>
-        <text>Line 2</text>
-      </view>
-    </item>
-  </section>
+  <item key="a" style="Item">
+    <view style="Left">
+      <image source="avatar.png" style="Avatar">
+    </view>
+    <view style="Right">
+      <text>Line 1</text>
+      <text>Line 2</text>
+    </view>
+  </item>
 </section-list>
 ```
 
@@ -48,7 +46,7 @@ Note that the `key` attribute is required and must be unique among items in the 
 
 ## Structure
 
-An `<item>` element can only apear as a direct child of a `<list>` or `<section>` element. It can contain any non-list element as a child.
+An `<item>` element can only apear as a direct child of a `<list>` or `<section-list>` element. It can contain any non-list element as a child.
 
 ## Attributes
 

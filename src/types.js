@@ -31,6 +31,7 @@ export const LOCAL_NAME = {
   PICKER_FIELD: 'picker-field',
   PICKER_ITEM: 'picker-item',
   SCREEN: 'screen',
+  SECTION: 'section',
   SECTION_LIST: 'section-list',
   SECTION_TITLE: 'section-title',
   SELECT_MULTIPLE: 'select-multiple',
