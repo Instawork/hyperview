@@ -81,7 +81,7 @@
         </item>
         <item
           href="/ui_elements/web_views/dispatch_event.xml"
-          key="js"
+          key="dispatch"
           show-during-load="loadingScreen"
           style="Item"
         >
