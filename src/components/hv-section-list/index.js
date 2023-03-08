@@ -15,7 +15,9 @@ import {
   RefreshControl as DefaultRefreshControl,
   SectionList,
 } from 'react-native';
+
 import React, { PureComponent } from 'react';
+
 import { DOMParser } from 'xmldom-instawork';
 import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
@@ -84,32 +86,56 @@ export default class HvSectionList extends PureComponent<
       ? styleAttr.split(' ').map(s => this.props.stylesheets.regular[s])
       : null;
 
-    const sectionElements = this.props.element.getElementsByTagNameNS(
-      Namespaces.HYPERVIEW,
-      'section',
-    );
+    const flattened = [];
+
+    const addNodes = sectionElement => {
+      if (sectionElement.childNodes) {
+        for (let j = 0; j < sectionElement.childNodes.length; j += 1) {
+          const node = sectionElement.childNodes[j];
+          if (
+            node.nodeName === LOCAL_NAME.ITEMS ||
+            node.nodeName === LOCAL_NAME.SECTION
+          ) {
+            addNodes(node);
+          } else if (
+            node.nodeName === LOCAL_NAME.ITEM ||
+            node.nodeName === LOCAL_NAME.SECTION_TITLE
+          ) {
+            flattened.push(sectionElement.childNodes[j]);
+          }
+        }
+      }
+    };
+
+    addNodes(this.props.element);
+
+    let items = [];
+    let titleElement = null;
     const sections = [];
 
-    for (let i = 0; i < sectionElements.length; i += 1) {
-      const sectionElement = sectionElements.item(i);
+    for (let j = 0; j < flattened.length; j += 1) {
+      const sectionElement = flattened[j];
       if (sectionElement) {
-        const itemElements = sectionElement.getElementsByTagNameNS(
-          Namespaces.HYPERVIEW,
-          'item',
-        );
-        const items = [];
-        for (let j = 0; j < itemElements.length; j += 1) {
-          const itemElement = itemElements.item(j);
-          items.push(itemElement);
+        if (sectionElement.nodeName === LOCAL_NAME.ITEM) {
+          items.push(sectionElement);
+        } else if (sectionElement.nodeName === LOCAL_NAME.SECTION_TITLE) {
+          if (items.length > 0) {
+            sections.push({
+              data: items,
+              title: titleElement,
+            });
+            items = [];
+          }
+          titleElement = sectionElement;
         }
-        const titleElement = sectionElement
-          .getElementsByTagNameNS(Namespaces.HYPERVIEW, 'section-title')
-          .item(0);
-        sections.push({
-          data: items,
-          title: titleElement,
-        });
       }
+    }
+
+    if (items.length > 0) {
+      sections.push({
+        data: items,
+        title: titleElement,
+      });
     }
 
     const listProps = {

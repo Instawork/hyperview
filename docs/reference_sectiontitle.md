@@ -4,35 +4,33 @@ title: <section-title>
 sidebar_label: <section-title>
 ---
 
-The `<section-title>` element represents the title of a section group within a `<sectinon-list>`. It renders as a sticky element that stays at the top of the list while the user scrolls through items in that section.
+The `<section-title>` element represents the title of a group of `<item>` within a `<section-list>`. It renders as an optionally sticky element that stays at the top of the list while the user scrolls through items in that section.
 
 ```xml
 <section-list style="List">
-  <section>
-    <section-title style="Header">
-      <text>Section 1</text>
-    </section-title>
+  <!-- Section 1 -->
+  <section-title style="Header">
+    <text>Section 1</text>
+  </section-title>
 
-    <item key="a" style="Item">
-      <text>Item 1</text>
-    </item>
-  </section>
+  <item key="a" style="Item">
+    <text>Item 1</text>
+  </item>
 
-  <section>
-    <section-title style="Header">
-      <text>Section 1</text>
-    </section-title>
+  <!-- Section 2 -->
+  <section-title style="Header">
+    <text>Section 1</text>
+  </section-title>
 
-    <item key="b" style="Item">
-      <text>Section 2</text>
-    </item>
-  </section>
+  <item key="b" style="Item">
+    <text>Section 2</text>
+  </item>
 </section-list>
 ```
 
 ## Structure
 
-A `<section-title>` element can only appear as a direct child of a `<section>` element.
+A `<section-title>` element can only appear as a direct child of a `<section-list>` or `<items>` element.
 
 ## Attributes
 

@@ -88,6 +88,15 @@
           <text style="Item__Label">Section List With Non-Sticky Titles</text>
           <text style="Item__Chevron">&gt;</text>
         </item>
+        <item
+          href="/ui_elements/sectionlist/deprecated_sections.xml"
+          key="deprecated-sections"
+          show-during-load="loadingScreen"
+          style="Item"
+        >
+          <text style="Item__Label">Section List With Deprecated Sections</text>
+          <text style="Item__Chevron">&gt;</text>
+        </item>
       </list>
     </body>
   </screen>

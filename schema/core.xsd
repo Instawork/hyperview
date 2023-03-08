@@ -837,6 +837,8 @@
       <xs:sequence>
         <xs:choice minOccurs="0" maxOccurs="unbounded">
           <xs:element ref="hv:section" />
+          <xs:element ref="hv:section-title" />
+          <xs:element ref="hv:item" />
           <xs:element ref="hv:behavior" />
         </xs:choice>
       </xs:sequence>
@@ -853,11 +855,11 @@
   <xs:element name="section">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="1" maxOccurs="1" ref="hv:section-title" />
         <xs:choice minOccurs="0" maxOccurs="unbounded">
           <xs:element ref="hv:item" />
+          <xs:element ref="hv:item" />
           <xs:element ref="hv:items" />
-          <xs:element ref="hv:behavior" />
+          <xs:element ref="hv:section-title" />
         </xs:choice>
       </xs:sequence>
       <xs:attribute name="id" type="xs:NCName" />
@@ -880,8 +882,11 @@
   <xs:element name="items">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="hv:item" />
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="hv:section" />
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="hv:item" />
+          <xs:element ref="hv:section-title" />
+          <xs:element ref="hv:section" />
+        </xs:choice>
       </xs:sequence>
     </xs:complexType>
   </xs:element>

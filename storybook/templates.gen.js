@@ -931,86 +931,82 @@ export default {
         <text style="Header__Title">Basic Section List</text>
       </header>
       <section-list>
-        <section>
-          <section-title style="List__Header">
-            <text style="List__HeaderText">Section 1</text>
-          </section-title>
-          <item key="1" style="Item">
-            <text style="Item__Label">List 1</text>
-          </item>
-          <item key="2" style="Item">
-            <text style="Item__Label">List 2</text>
-          </item>
-          <item key="3" style="Item">
-            <text style="Item__Label">List 3</text>
-          </item>
-          <item key="4" style="Item">
-            <text style="Item__Label">List 4</text>
-          </item>
-          <item key="5" style="Item">
-            <text style="Item__Label">List 5</text>
-          </item>
-        </section>
-        <section>
-          <section-title style="List__Header">
-            <text style="List__HeaderText">Section 2</text>
-          </section-title>
-          <item key="6" style="Item">
-            <text style="Item__Label">List 6</text>
-          </item>
-          <item key="7" style="Item">
-            <text style="Item__Label">List 7</text>
-          </item>
-          <item key="8" style="Item">
-            <text style="Item__Label">List 8</text>
-          </item>
-          <item key="9" style="Item">
-            <text style="Item__Label">List 9</text>
-          </item>
-          <item key="10" style="Item">
-            <text style="Item__Label">List 10</text>
-          </item>
-        </section>
-        <section>
-          <section-title style="List__Header">
-            <text style="List__HeaderText">Section 3</text>
-          </section-title>
-          <item key="11" style="Item">
-            <text style="Item__Label">List 11</text>
-          </item>
-          <item key="12" style="Item">
-            <text style="Item__Label">List 12</text>
-          </item>
-          <item key="13" style="Item">
-            <text style="Item__Label">List 13</text>
-          </item>
-          <item key="14" style="Item">
-            <text style="Item__Label">List 14</text>
-          </item>
-          <item key="15" style="Item">
-            <text style="Item__Label">List 15</text>
-          </item>
-        </section>
-        <section>
-          <section-title style="List__Header">
-            <text style="List__HeaderText">Section 4</text>
-          </section-title>
-          <item key="16" style="Item">
-            <text style="Item__Label">List 16</text>
-          </item>
-          <item key="17" style="Item">
-            <text style="Item__Label">List 17</text>
-          </item>
-          <item key="18" style="Item">
-            <text style="Item__Label">List 18</text>
-          </item>
-          <item key="19" style="Item">
-            <text style="Item__Label">List 19</text>
-          </item>
-          <item key="20" style="Item">
-            <text style="Item__Label">List 20</text>
-          </item>
-        </section>
+        <!-- Section 1 -->
+        <section-title style="List__Header">
+          <text style="List__HeaderText">Section 1</text>
+        </section-title>
+        <item key="1" style="Item">
+          <text style="Item__Label">List 1</text>
+        </item>
+        <item key="2" style="Item">
+          <text style="Item__Label">List 2</text>
+        </item>
+        <item key="3" style="Item">
+          <text style="Item__Label">List 3</text>
+        </item>
+        <item key="4" style="Item">
+          <text style="Item__Label">List 4</text>
+        </item>
+        <item key="5" style="Item">
+          <text style="Item__Label">List 5</text>
+        </item>
+        <!-- Section 2 -->
+        <section-title style="List__Header">
+          <text style="List__HeaderText">Section 2</text>
+        </section-title>
+        <item key="6" style="Item">
+          <text style="Item__Label">List 6</text>
+        </item>
+        <item key="7" style="Item">
+          <text style="Item__Label">List 7</text>
+        </item>
+        <item key="8" style="Item">
+          <text style="Item__Label">List 8</text>
+        </item>
+        <item key="9" style="Item">
+          <text style="Item__Label">List 9</text>
+        </item>
+        <item key="10" style="Item">
+          <text style="Item__Label">List 10</text>
+        </item>
+        <!-- Section 3 -->
+        <section-title style="List__Header">
+          <text style="List__HeaderText">Section 3</text>
+        </section-title>
+        <item key="11" style="Item">
+          <text style="Item__Label">List 11</text>
+        </item>
+        <item key="12" style="Item">
+          <text style="Item__Label">List 12</text>
+        </item>
+        <item key="13" style="Item">
+          <text style="Item__Label">List 13</text>
+        </item>
+        <item key="14" style="Item">
+          <text style="Item__Label">List 14</text>
+        </item>
+        <item key="15" style="Item">
+          <text style="Item__Label">List 15</text>
+        </item>
+        <!-- Section 4 -->
+        <section-title style="List__Header">
+          <text style="List__HeaderText">Section 4</text>
+        </section-title>
+        <item key="16" style="Item">
+          <text style="Item__Label">List 16</text>
+        </item>
+        <item key="17" style="Item">
+          <text style="Item__Label">List 17</text>
+        </item>
+        <item key="18" style="Item">
+          <text style="Item__Label">List 18</text>
+        </item>
+        <item key="19" style="Item">
+          <text style="Item__Label">List 19</text>
+        </item>
+        <item key="20" style="Item">
+          <text style="Item__Label">List 20</text>
+        </item>
       </section-list>
     </body>
   </screen>
@@ -1095,96 +1091,267 @@ export default {
         <text style="Header__Title">Section List Infinite Scroll</text>
       </header>
       <section-list id="myList">
-        <section>
-          <section-title style="List__Header">
-            <text style="List__HeaderText">Section 1</text>
-          </section-title>
-          <item key="1" style="Item">
-            <text style="Item__Label">List 1</text>
-          </item>
-          <item key="2" style="Item">
-            <text style="Item__Label">List 2</text>
-          </item>
-          <item key="3" style="Item">
-            <text style="Item__Label">List 3</text>
-          </item>
-          <item key="4" style="Item">
-            <text style="Item__Label">List 4</text>
-          </item>
-          <item key="5" style="Item">
-            <text style="Item__Label">List 5</text>
-          </item>
-        </section>
-        <section>
-          <section-title style="List__Header">
-            <text style="List__HeaderText">Section 2</text>
-          </section-title>
-          <item key="6" style="Item">
-            <text style="Item__Label">List 6</text>
-          </item>
-          <item key="7" style="Item">
-            <text style="Item__Label">List 7</text>
-          </item>
-          <item key="8" style="Item">
-            <text style="Item__Label">List 8</text>
-          </item>
-          <item key="9" style="Item">
-            <text style="Item__Label">List 9</text>
-          </item>
-          <item key="10" style="Item">
-            <text style="Item__Label">List 10</text>
-          </item>
-        </section>
-        <section>
-          <section-title style="List__Header">
-            <text style="List__HeaderText">Section 3</text>
-          </section-title>
-          <item key="11" style="Item">
-            <text style="Item__Label">List 11</text>
-          </item>
-          <item key="12" style="Item">
-            <text style="Item__Label">List 12</text>
-          </item>
-          <item key="13" style="Item">
-            <text style="Item__Label">List 13</text>
-          </item>
-          <item key="14" style="Item">
-            <text style="Item__Label">List 14</text>
-          </item>
-          <item key="15" style="Item">
-            <text style="Item__Label">List 15</text>
-          </item>
-        </section>
-        <section>
-          <section-title style="List__Header">
-            <text style="List__HeaderText">Section 4</text>
-          </section-title>
-          <item key="16" style="Item">
-            <text style="Item__Label">List 16</text>
-          </item>
-          <item key="17" style="Item">
-            <text style="Item__Label">List 17</text>
-          </item>
-          <item key="18" style="Item">
-            <text style="Item__Label">List 18</text>
-          </item>
-          <item key="19" style="Item">
-            <text style="Item__Label">List 19</text>
-          </item>
-          <item
-            action="append"
-            delay="1000"
-            href="/ui_elements/sectionlist/_infinite_scroll_page2.xml"
-            key="20"
-            once="true"
-            show-during-load="myIndicator"
-            style="Item"
-            target="myList"
-            trigger="visible"
-          >
-            <text style="Item__Label">List 20</text>
-          </item>
-        </section>
+        <!-- Section 1 -->
+        <section-title style="List__Header">
+          <text style="List__HeaderText">Section 1</text>
+        </section-title>
+        <item key="1" style="Item">
+          <text style="Item__Label">List 1</text>
+        </item>
+        <item key="2" style="Item">
+          <text style="Item__Label">List 2</text>
+        </item>
+        <item key="3" style="Item">
+          <text style="Item__Label">List 3</text>
+        </item>
+        <item key="4" style="Item">
+          <text style="Item__Label">List 4</text>
+        </item>
+        <item key="5" style="Item">
+          <text style="Item__Label">List 5</text>
+        </item>
+        <!-- Section 2 -->
+        <section-title style="List__Header">
+          <text style="List__HeaderText">Section 2</text>
+        </section-title>
+        <item key="6" style="Item">
+          <text style="Item__Label">List 6</text>
+        </item>
+        <item key="7" style="Item">
+          <text style="Item__Label">List 7</text>
+        </item>
+        <item key="8" style="Item">
+          <text style="Item__Label">List 8</text>
+        </item>
+        <item key="9" style="Item">
+          <text style="Item__Label">List 9</text>
+        </item>
+        <item key="10" style="Item">
+          <text style="Item__Label">List 10</text>
+        </item>
+        <!-- Section 3 -->
+        <section-title style="List__Header">
+          <text style="List__HeaderText">Section 3</text>
+        </section-title>
+        <item key="11" style="Item">
+          <text style="Item__Label">List 11</text>
+        </item>
+        <item key="12" style="Item">
+          <text style="Item__Label">List 12</text>
+        </item>
+        <item key="13" style="Item">
+          <text style="Item__Label">List 13</text>
+        </item>
+        <item key="14" style="Item">
+          <text style="Item__Label">List 14</text>
+        </item>
+        <item key="15" style="Item">
+          <text style="Item__Label">List 15</text>
+        </item>
+        <!-- Section 4 -->
+        <section-title style="List__Header">
+          <text style="List__HeaderText">Section 4</text>
+        </section-title>
+        <item key="16" style="Item">
+          <text style="Item__Label">List 16</text>
+        </item>
+        <item key="17" style="Item">
+          <text style="Item__Label">List 17</text>
+        </item>
+        <item key="18" style="Item">
+          <text style="Item__Label">List 18</text>
+        </item>
+        <item key="19" style="Item">
+          <text style="Item__Label">List 19</text>
+        </item>
+        <item
+          action="append"
+          delay="1000"
+          href="/ui_elements/sectionlist/_infinite_scroll_page2.xml"
+          key="20"
+          once="true"
+          show-during-load="myIndicator"
+          style="Item"
+          target="myList"
+          trigger="visible"
+        >
+          <text style="Item__Label">List 20</text>
+        </item>
+      </section-list>
+      <view hide="true" id="myIndicator" style="Spinner">
+        <spinner />
+      </view>
+    </body>
+  </screen>
+</doc>
+`,
+  'hyperview/src/components/hv-section-list/stories/infinite_scroll_append.xml':
+  `<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style
+        alignItems="center"
+        backgroundColor="white"
+        borderBottomColor="#eee"
+        borderBottomWidth="1"
+        flexDirection="row"
+        height="72"
+        id="Header"
+        paddingLeft="24"
+        paddingRight="24"
+        paddingTop="24"
+      />
+      <style
+        color="blue"
+        fontFamily="HKGrotesk-SemiBold"
+        fontSize="16"
+        id="Header__Back"
+        paddingRight="16"
+      />
+      <style
+        color="black"
+        fontFamily="HKGrotesk-SemiBold"
+        fontSize="24"
+        id="Header__Title"
+      />
+      <style backgroundColor="white" flex="1" id="Body" />
+      <style
+        borderColor="red"
+        borderRadius="4"
+        borderWidth="2"
+        fontFamily="HKGrotesk-SemiBold"
+        fontSize="16"
+        id="Description"
+        margin="24"
+        padding="16"
+      />
+      <style
+        alignItems="center"
+        backgroundColor="#eee"
+        flex="1"
+        flexDirection="row"
+        height="48"
+        id="List__Header"
+        paddingLeft="24"
+        paddingRight="24"
+      />
+      <style fontFamily="HKGrotesk-Bold" fontSize="18" id="List__HeaderText" />
+      <style
+        alignItems="center"
+        borderBottomColor="#eee"
+        borderBottomWidth="1"
+        flex="1"
+        flexDirection="row"
+        height="48"
+        id="Item"
+        justifyContent="space-between"
+        paddingLeft="24"
+        paddingRight="24"
+      />
+      <style fontFamily="HKGrotesk-Regular" fontSize="18" id="Item__Label" />
+      <style fontFamily="HKGrotesk-Bold" fontSize="18" id="Item__Chevron" />
+      <style
+        flex="1"
+        flexDirection="row"
+        id="Spinner"
+        justifyContent="center"
+        padding="24"
+      />
+    </styles>
+    <body style="Body">
+      <header style="Header">
+        <text action="back" href="#" style="Header__Back">Back</text>
+        <text
+          style="Header__Title"
+        >Section List Infinite Scroll With Appended Items</text>
+      </header>
+      <section-list id="myList">
+        <!-- Section 1 -->
+        <section-title style="List__Header">
+          <text style="List__HeaderText">Section 1</text>
+        </section-title>
+        <item key="1" style="Item">
+          <text style="Item__Label">List 1</text>
+        </item>
+        <item key="2" style="Item">
+          <text style="Item__Label">List 2</text>
+        </item>
+        <item key="3" style="Item">
+          <text style="Item__Label">List 3</text>
+        </item>
+        <item key="4" style="Item">
+          <text style="Item__Label">List 4</text>
+        </item>
+        <item key="5" style="Item">
+          <text style="Item__Label">List 5</text>
+        </item>
+        <!-- Section 2 -->
+        <section-title style="List__Header">
+          <text style="List__HeaderText">Section 2</text>
+        </section-title>
+        <item key="6" style="Item">
+          <text style="Item__Label">List 6</text>
+        </item>
+        <item key="7" style="Item">
+          <text style="Item__Label">List 7</text>
+        </item>
+        <item key="8" style="Item">
+          <text style="Item__Label">List 8</text>
+        </item>
+        <item key="9" style="Item">
+          <text style="Item__Label">List 9</text>
+        </item>
+        <item key="10" style="Item">
+          <text style="Item__Label">List 10</text>
+        </item>
+        <!-- Section 3 -->
+        <section-title style="List__Header">
+          <text style="List__HeaderText">Section 3</text>
+        </section-title>
+        <item key="11" style="Item">
+          <text style="Item__Label">List 11</text>
+        </item>
+        <item key="12" style="Item">
+          <text style="Item__Label">List 12</text>
+        </item>
+        <item key="13" style="Item">
+          <text style="Item__Label">List 13</text>
+        </item>
+        <item key="14" style="Item">
+          <text style="Item__Label">List 14</text>
+        </item>
+        <item key="15" style="Item">
+          <text style="Item__Label">List 15</text>
+        </item>
+        <!-- Section 4 -->
+        <section-title style="List__Header">
+          <text style="List__HeaderText">Section 4</text>
+        </section-title>
+        <item key="16" style="Item">
+          <text style="Item__Label">List 16</text>
+        </item>
+        <item key="17" style="Item">
+          <text style="Item__Label">List 17</text>
+        </item>
+        <item key="18" style="Item">
+          <text style="Item__Label">List 18</text>
+        </item>
+        <item key="19" style="Item">
+          <text style="Item__Label">List 19</text>
+        </item>
+        <item
+          action="append"
+          delay="1000"
+          href="/ui_elements/sectionlist/_infinite_scroll_append_page2.xml"
+          key="20"
+          once="true"
+          show-during-load="myIndicator"
+          style="Item"
+          target="myList"
+          trigger="visible"
+        >
+          <text style="Item__Label">List 20</text>
+        </item>
       </section-list>
       <view hide="true" id="myIndicator" style="Spinner">
         <spinner />

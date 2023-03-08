@@ -1,10 +1,11 @@
-<items xmlns="https://hyperview.org/hyperview">
-  <item key="21" style="Item">
-    <text style="Item__Label">List 21 (appended)</text>
-  </item>
+<!-- 'section' can be replaced with 'items' -->
+<section xmlns="https://hyperview.org/hyperview">
   <section-title style="List__Header">
-    <text style="List__HeaderText">Added: Section 5</text>
+    <text style="List__HeaderText">Added: Section 2</text>
   </section-title>
+  <item key="21" style="Item">
+    <text style="Item__Label">Added: List 21</text>
+  </item>
   <item key="22" style="Item">
     <text style="Item__Label">Added: List 22</text>
   </item>
@@ -17,7 +18,4 @@
   <item key="25" style="Item">
     <text style="Item__Label">Added: List 25</text>
   </item>
-  <item key="26" style="Item">
-    <text style="Item__Label">Added: List 26</text>
-  </item>
-</items>
+</section>
