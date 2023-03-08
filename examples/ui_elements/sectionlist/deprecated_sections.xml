@@ -67,9 +67,7 @@
     <body style="Body" safe-area="true">
       <header style="Header">
         <text action="back" href="#" style="Header__Back">Back</text>
-        <text
-          style="Header__Title"
-        >Section List Infinite Scroll - Deprecated</text>
+        <text style="Header__Title">Deprecated sections</text>
       </header>
       <section-list id="myList">
         <!-- section element no longer required -->
