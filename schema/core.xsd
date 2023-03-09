@@ -858,6 +858,7 @@
         <xs:choice minOccurs="0" maxOccurs="unbounded">
           <xs:element ref="hv:item" />
           <xs:element ref="hv:items" />
+          <xs:element ref="hv:behavior" />
           <xs:element ref="hv:section-title" />
         </xs:choice>
       </xs:sequence>
