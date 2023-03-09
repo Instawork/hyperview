@@ -1,10 +1,6 @@
 {
-  "extends": [
-    "plugin:instawork/recommended"
-  ],
-  "plugins": [
-    "instawork"
-  ],
+  "extends": ["plugin:instawork/recommended"],
+  "plugins": ["instawork"],
   "rules": {
     "import/no-extraneous-dependencies": [
       "warn",
@@ -50,23 +46,16 @@
   },
   "overrides": [
     {
-      "files": [
-        "**/types.js"
-      ],
+      "files": ["**/types.js"],
       "rules": {
         "no-use-before-define": "off",
         "max-len": "off"
       }
     },
     {
-      "files": [
-        "**/*.ts",
-        "**/*.tsx"
-      ],
+      "files": ["**/*.ts", "**/*.tsx"],
       "parser": "@typescript-eslint/parser",
-      "plugins": [
-        "@typescript-eslint"
-      ],
+      "plugins": ["@typescript-eslint"],
       "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
