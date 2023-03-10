@@ -146,6 +146,8 @@ If `hide="true"`, the element will not be rendered on screen. If the element or 
 
 An attribute to solve the common problem of views that need to move out of the way of the virtual keyboard. It can automatically adjust the position of its children based on the keyboard height. This is useful when you want keyboard avoiding behavior in non-scrollable views. It is applied only in iOS since Android has built-in support for avoiding keyboard.
 
+> For the `avoid-keyboard` functionality to work correctly, the parent element directly containing the element with `avoid-keyboard` should have the same height as the screen.
+
 #### `sticky`
 
 | Type                      | Required |
