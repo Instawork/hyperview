@@ -889,6 +889,7 @@
           <xs:element ref="hv:section" />
         </xs:choice>
       </xs:sequence>
+      <xs:attribute name="id" type="hv:ID" />
     </xs:complexType>
   </xs:element>
 
