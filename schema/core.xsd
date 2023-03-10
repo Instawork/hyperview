@@ -840,6 +840,7 @@
           <xs:element ref="hv:section-title" />
           <xs:element ref="hv:item" />
           <xs:element ref="hv:behavior" />
+          <xs:element ref="hv:items" />
         </xs:choice>
       </xs:sequence>
       <xs:attribute name="style" type="hv:styleList" />
