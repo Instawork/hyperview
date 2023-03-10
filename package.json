@@ -81,7 +81,7 @@
     "babel-preset-react-native": "4.0.1",
     "chokidar": "3.5.1",
     "eslint": "7.20.0",
-    "eslint-plugin-instawork": "0.10.2",
+    "eslint-plugin-instawork": "https://github.com/Instawork/eslint-plugin-instawork#ashwinibm/feat-typescript-plugin",
     "flow-bin": "0.122.0",
     "glob": "7.1.6",
     "humps": "2.0.1",
