@@ -54,24 +54,7 @@
     },
     {
       "files": ["**/*.ts", "**/*.tsx"],
-      "parser": "@typescript-eslint/parser",
-      "plugins": ["@typescript-eslint"],
-      "extends": [
-        "eslint:recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:@typescript-eslint/eslint-recommended",
-        "airbnb",
-        "airbnb/hooks",
-      ],
-      "rules": {
-        "instawork/flow-annotate": "off",
-        "@typescript-eslint/no-unused-vars": "error",
-        // to enforce using type for object type definitions, can be type or interface 
-        "@typescript-eslint/consistent-type-definitions": [
-          "error",
-          "type"
-        ]
-      }
+      "extends": ["plugin:instawork/recommended-typescript"]
     }
   ]
 }
