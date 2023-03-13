@@ -8,7 +8,7 @@ import {Flow} from 'flow-to-typescript-codemod';
  *
  */
 
-import type {ElementRef} from 'react';
+import type {ElementRef, Component} from 'react';
 
 export type DOMString = string;
 export type NamespaceURI = string;
@@ -273,7 +273,7 @@ export type HvComponentStatics = {
   namespaceURI: NamespaceURI
 };
 
-export type HvComponent = Flow.Class<React.Component<HvComponentProps, any>> & HvComponentStatics;
+export type HvComponent = Flow.Class<Component<HvComponentProps, any>> & HvComponentStatics;
 
 export type HvBehavior = {
   action: string,

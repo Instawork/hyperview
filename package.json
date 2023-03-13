@@ -46,6 +46,7 @@
   },
   "dependencies": {
     "@react-native-community/datetimepicker": "3.0.3",
+    "flowgen": "^1.21.0",
     "tiny-emitter": "2.1.0",
     "url-parse": "1.4.3",
     "xmldom-instawork": "0.0.1"
@@ -90,7 +91,8 @@
     "react-native-keyboard-aware-scrollview": "2.1.0",
     "react-native-webview": "10.10.2",
     "react-navigation": "1.0.0-beta.11",
-    "react-test-renderer": "16.13.1"
+    "react-test-renderer": "16.13.1",
+    "typescript": "^4.9.5"
   },
   "jest": {
     "preset": "react-native",

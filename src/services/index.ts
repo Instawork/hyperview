@@ -125,7 +125,7 @@ export const createProps = (
   return { ...props, ...testProps };
 };
 
-export const later = (delayMs: number): Promise<void> => new Promise(resolve: (result?: Promise<never>) => void => setTimeout(resolve, delayMs));
+export const later = (delayMs: number): Promise<void> => new Promise((resolve: (result?: Promise<never>) => void )=> setTimeout(resolve, delayMs));
 
 /**
  * Clones the element and moves all children from the original element
