@@ -1007,6 +1007,11 @@
 
   <xs:element name="text-field">
     <xs:complexType>
+      <xs:sequence>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="hv:behavior" />
+        </xs:choice>
+      </xs:sequence>
       <xs:attribute name="name" use="required" type="xs:string" />
       <xs:attribute name="value" type="xs:string" />
       <xs:attribute name="placeholder" type="xs:string" />
