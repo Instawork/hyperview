@@ -172,8 +172,8 @@ export default class HvPickerField extends PureComponent<
     const props = {
       onValueChange: (value: any) => {
         this.setState({ pickerValue: value });
-        if (Platform.OS === 'android') {
-          // On Android, the value should be propagated immediately.
+        if (Platform.OS !== 'ios') {
+          // On non-iOS platforms, the value should be propagated immediately.
           this.props.element.setAttribute('value', value || '');
         }
       },
@@ -274,12 +274,16 @@ export default class HvPickerField extends PureComponent<
     );
   };
 
-  /**
-   * On Android, we render a view containing the system picker. Android's system picker opens a modal
-   * when pressed so the user can select an option. The selected option gets applied immediately. The user
-   * can cancel by hitting the back button or tapping outside of the modal.
-   */
-  renderAndroid = (): ReactNode => {
+  render(): ReactNode {
+    if (Platform.OS === 'ios') {
+      return this.renderiOS();
+    }
+
+    /**
+     * On non-iOS platforms, we render a view containing the system picker, which delegates to the correct UX
+     * Android's system picker opens a modal when pressed so the user can select an option. The selected option
+     * gets applied immediately. The user can cancel by hitting the back button or tapping outside of the modal.
+     */
     const fieldStyle: StyleSheetType = createStyleProp(
       this.props.element,
       this.props.stylesheets,
@@ -316,7 +320,7 @@ export default class HvPickerField extends PureComponent<
         {pickerComponent}
       </View>
     );
-  };
+  }
 
   /**
    * On iOS, we render a view containing a text label. Pressing the view opens a modal with a system picker and
@@ -370,8 +374,4 @@ export default class HvPickerField extends PureComponent<
       </TouchableWithoutFeedback>
     );
   };
-
-  render(): ReactNode {
-    return Platform.OS === 'ios' ? this.renderiOS() : this.renderAndroid();
-  }
 }
