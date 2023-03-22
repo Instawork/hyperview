@@ -33,6 +33,7 @@
       <xs:enumeration value="blur" />
       <xs:enumeration value="on-event" />
       <xs:enumeration value="change" />
+      <xs:enumeration value="load-stale-error" />
     </xs:restriction>
   </xs:simpleType>
 
