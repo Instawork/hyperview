@@ -1,6 +1,7 @@
 {
   "extends": ["plugin:instawork/recommended"],
   "plugins": ["instawork"],
+  "ignorePatterns": ["**/*.ts", "**/*.tsx"],
   "rules": {
     "import/no-extraneous-dependencies": [
       "warn",

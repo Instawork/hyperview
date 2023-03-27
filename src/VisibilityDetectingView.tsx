@@ -1,25 +1,24 @@
-import {Dimensions, UIManager, View} from 'react-native';
+import { Dimensions, UIManager, View } from 'react-native';
 import React, { PureComponent } from 'react';
 import type { ElementRef } from 'react';
-import type { ViewStyleProp } from 'react-native/Libraries/StyleSheet/StyleSheet';
-
+import type { ViewStyle } from 'react-native';
 const TICK_INTERVAL = 100;
 
 type Props = {
-  children: any,
-  onInvisible: () => void | null | undefined,
-  onVisible: () => void | null | undefined,
-  style: ViewStyleProp | null | undefined
+  children: any;
+  onInvisible: () => void | null | undefined;
+  onVisible: () => void | null | undefined;
+  style: ViewStyle | null | undefined;
 };
 
 /** A view that lets you know when its contents become visible/invisible in the screen.
  *  Useful for progressively loading content in a scroll view.
  *  Uses a timer internally to periodically check whether or not it is visible/invisible
-*/
+ */
 export default class VisibilityDetectingView extends PureComponent<Props> {
   previouslyVisible = false;
 
-  tickInterval: number | null | undefined;
+  tickInterval: ReturnType<typeof setInterval> | null | undefined;
 
   unmounted = false;
 
@@ -27,7 +26,7 @@ export default class VisibilityDetectingView extends PureComponent<Props> {
 
   onRef = (view?: ElementRef<typeof View> | null) => {
     this.view = view;
-  }
+  };
 
   onTick = () => {
     if (this.unmounted) {
@@ -36,39 +35,46 @@ export default class VisibilityDetectingView extends PureComponent<Props> {
 
     // UIManager.measure may not exist during render-testing, which might break the
     // `view.measure` call
-    if (this.view && UIManager.measure) {
+    if (this.view && UIManager.measure != null) {
       this.view.measure(this.onMeasure);
     }
-  }
+  };
 
-  onMeasure =
-    (x: number, y: number, width: number, height: number, pageX: number, pageY: number) => {
-      // Grab metrics
-      const windowDimensions = Dimensions.get('window');
-      const bottom = pageY + height;
-      const left = pageX;
-      const right = pageX + width;
-      const top = pageY;
-      const windowHeight = windowDimensions.height;
-      const windowWidth = windowDimensions.width;
+  onMeasure = (
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    pageX: number,
+    pageY: number,
+  ) => {
+    // Grab metrics
+    const windowDimensions = Dimensions.get('window');
+    const bottom = pageY + height;
+    const left = pageX;
+    const right = pageX + width;
+    const top = pageY;
+    const windowHeight = windowDimensions.height;
+    const windowWidth = windowDimensions.width;
 
-      // Calculate visibility
-      const visible = (right > 0) && (left < windowWidth) && (top < windowHeight) && bottom > 0;
+    // Calculate visibility
+    const visible =
+      right > 0 && left < windowWidth && top < windowHeight && bottom > 0;
 
-      // Either trigger onVisible or onInvisible
-      if (!this.previouslyVisible && visible) {
-        if (this.props.onVisible) {
-          this.props.onVisible();
-        }
-      } else if (this.previouslyVisible && !visible) {
-        if (this.props.onInvisible) {
-          this.props.onInvisible();
-        }
+    // Either trigger onVisible or onInvisible
+    if (!this.previouslyVisible && visible) {
+      if (this.props.onVisible) {
+        this.props.onVisible();
       }
-
-      // Remember visibility
-      this.previouslyVisible = visible;
+    } else if (this.previouslyVisible && !visible) {
+      if (this.props.onInvisible) {
+        this.props.onInvisible();
+      }
     }
+
+    // Remember visibility
+    this.previouslyVisible = visible;
+  };
 
   componentDidMount() {
     this.tickInterval = setInterval(this.onTick, TICK_INTERVAL);

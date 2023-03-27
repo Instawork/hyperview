@@ -28,7 +28,7 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
 
   static localNameAliases = [];
 
-  props: HvComponentProps;
+  declare props: HvComponentProps;
 
   state: State = {
     pressed: false,
@@ -135,13 +135,13 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
       }, true),
       onPressIn: createEventHandler(() => this.setState({ pressed: true })),
       onPressOut: createEventHandler(() => this.setState({ pressed: false })),
-      style: undefined,
-    } as const;
-    if (props.style && props.style.flex) {
       // Flex is a style that needs to be lifted from the inner component to the outer
       // component to ensure proper layout.
-      outerProps.style = { flex: props.style.flex };
-    }
+      style:
+        props.style && props.style.flex
+          ? { flex: props.style.flex }
+          : undefined,
+    };
 
     return React.createElement(
       TouchableWithoutFeedback,

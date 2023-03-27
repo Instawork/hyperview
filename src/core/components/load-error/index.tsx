@@ -14,8 +14,6 @@ import WebView from 'hyperview/src/core/components/web-view';
 import styles from './styles';
 
 export default class LoadError extends PureComponent<Props> {
-  props: Props;
-
   getHTML = (): string | null | undefined => {
     if (
       !__DEV__ ||

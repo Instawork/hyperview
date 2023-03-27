@@ -29,14 +29,13 @@ import type {
   Trigger,
 } from 'hyperview/src/types';
 import type { PressHandlers, Props, State } from './types';
-import React, { PureComponent } from 'react';
+import React, { PureComponent, ReactElement, ReactNode } from 'react';
 import {
   RefreshControl,
   ScrollView,
   Text,
   TouchableOpacity,
 } from 'react-native';
-import type { ReactNode } from 'react';
 import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
 import { XMLSerializer } from 'xmldom-instawork';
 import { X_RESPONSE_STALE_REASON } from 'hyperview/src/services/dom/types';
@@ -48,7 +47,10 @@ import { createTestProps } from 'hyperview/src/services';
  * This prevents clicks on various elements to trigger browser navigation
  * when using Hyperview for web.
  */
-export const createEventHandler = (handler: () => void, preventDefault: boolean = false): (event?: any) => void => event => {
+export const createEventHandler = (
+  handler: () => void,
+  preventDefault: boolean = false,
+): ((event?: any) => void) => event => {
   if (preventDefault) {
     event?.preventDefault();
   }
@@ -60,14 +62,12 @@ export const createEventHandler = (handler: () => void, preventDefault: boolean 
  * triggers.
  */
 export default class HyperRef extends PureComponent<Props, State> {
-  props: Props;
-
   state: State = {
     pressed: false,
     refreshing: false,
   };
 
-  behaviorElements: Element[];
+  behaviorElements!: Element[];
 
   style: StyleSheet | null | undefined;
 
@@ -116,8 +116,14 @@ export default class HyperRef extends PureComponent<Props, State> {
     const behaviorElements = Dom.getBehaviorElements(this.props.element);
     const onEventBehaviors = behaviorElements.filter(e => {
       if (e.getAttribute(ATTRIBUTES.TRIGGER) === TRIGGERS.ON_EVENT) {
-        const currentAttributeEventName: string | null | undefined = e.getAttribute('event-name');
-        const currentAttributeAction: string | null | undefined = e.getAttribute('action');
+        const currentAttributeEventName:
+          | string
+          | null
+          | undefined = e.getAttribute('event-name');
+        const currentAttributeAction:
+          | string
+          | null
+          | undefined = e.getAttribute('action');
         if (currentAttributeAction === 'dispatch-event') {
           throw new Error(
             'trigger="on-event" and action="dispatch-event" cannot be used on the same element',
@@ -138,7 +144,9 @@ export default class HyperRef extends PureComponent<Props, State> {
       handler(this.props.element);
       if (__DEV__) {
         const listenerElement: Element = behaviorElement.cloneNode(false);
-        const caughtEvent: string = behaviorElement.getAttribute('event-name');
+        const caughtEvent = behaviorElement.getAttribute(
+          'event-name',
+        ) as string;
         const serializer = new XMLSerializer();
         console.log(
           `[on-event] trigger [${caughtEvent}] caught by:`,
@@ -161,17 +169,17 @@ export default class HyperRef extends PureComponent<Props, State> {
         onUpdate(href, action, element, {});
       };
     }
-    if (Object.values(NAV_ACTIONS).indexOf(action) >= 0) {
+    if (Object.values(NAV_ACTIONS).some(a => a === action)) {
       return (element: Element) => {
         const href = behaviorElement.getAttribute(ATTRIBUTES.HREF);
-        const showIndicatorId = behaviorElement.getAttribute(
+        const showIndicatorIds = behaviorElement.getAttribute(
           ATTRIBUTES.SHOW_DURING_LOAD,
         );
         const delay = behaviorElement.getAttribute(ATTRIBUTES.DELAY);
-        onUpdate(href, action, element, { delay, showIndicatorId });
+        onUpdate(href, action, element, { delay, showIndicatorIds });
       };
     }
-    if (Object.values(UPDATE_ACTIONS).indexOf(action) >= 0) {
+    if (Object.values(UPDATE_ACTIONS).some(a => a === action)) {
       return (element: Element) => {
         const href = behaviorElement.getAttribute(ATTRIBUTES.HREF);
         const verb = behaviorElement.getAttribute(ATTRIBUTES.VERB);
@@ -237,21 +245,15 @@ export default class HyperRef extends PureComponent<Props, State> {
     });
   };
 
-  TouchableView = (
-    {
-      children,
-    }: {
-      children: Node
-    },
-  ): Node => {
-    const behaviors = this.behaviorElements.filter(
-      e =>
-        PRESS_TRIGGERS.indexOf(
-          e.getAttribute(ATTRIBUTES.TRIGGER) || TRIGGERS.PRESS,
-        ) >= 0,
+  TouchableView = ({ children }: { children: ReactNode }) => {
+    const behaviors = this.behaviorElements.filter(e =>
+      PRESS_TRIGGERS.some(
+        trigger =>
+          trigger === (e.getAttribute(ATTRIBUTES.TRIGGER) || TRIGGERS.PRESS),
+      ),
     );
     if (!behaviors.length) {
-      return children;
+      return <>children</>;
     }
 
     // With multiple behaviors for the same trigger, we need to stagger
@@ -262,10 +264,13 @@ export default class HyperRef extends PureComponent<Props, State> {
     const pressHandlers: PressHandlers = {};
 
     behaviors.forEach(behaviorElement => {
-      const trigger: PressTrigger =
-        // $FlowFixMe: casting DOMString to PressTrigger should probably be enforced by code
-        behaviorElement.getAttribute(ATTRIBUTES.TRIGGER) || TRIGGERS.PRESS;
+      const trigger = (behaviorElement.getAttribute(ATTRIBUTES.TRIGGER) || // TS-migration: casting DOMString to PressTrigger should probably be enforced by code
+        TRIGGERS.PRESS) as PressTrigger;
       const triggerPropName = PRESS_TRIGGERS_PROP_NAMES[trigger];
+
+      // TS-migration: added early return for undefined case
+      if (!triggerPropName) return;
+
       const handler = this.createActionHandler(
         behaviorElement,
         this.props.onUpdate,
@@ -273,7 +278,7 @@ export default class HyperRef extends PureComponent<Props, State> {
       if (pressHandlers[triggerPropName]) {
         const oldHandler = pressHandlers[triggerPropName];
         pressHandlers[triggerPropName] = createEventHandler(() => {
-          oldHandler();
+          oldHandler?.();
           setTimeout(() => handler(this.props.element), time);
           time += 1;
         });
@@ -309,7 +314,7 @@ export default class HyperRef extends PureComponent<Props, State> {
     }
 
     // Fix a conflict between onPressOut and onPress triggering at the same time.
-    if (pressHandlers.onPressOut && pressHandlers.onPress) {
+    if (pressHandlers.onPressOut != null && pressHandlers.onPress) {
       const onPressHandler = pressHandlers.onPress;
       pressHandlers.onPress = createEventHandler(() => {
         setTimeout(onPressHandler, time);
@@ -333,7 +338,12 @@ export default class HyperRef extends PureComponent<Props, State> {
           accessible={false}
           onLongPress={onLongPress}
           // when no press handler set, we still need an empty handler for pressIn or pressOut handlers to work
-          onPress={onPress || (onPressIn || onPressOut ? noop : undefined)}
+          onPress={
+            onPress ||
+            (onPressIn != null || onPressOut != null ? noop : undefined)
+          }
+          // TODO: fix when we upgrade react-native
+          // @ts-ignore
           onResponderGrant={onPressIn}
           // Both release and terminate responder are needed to properly pressOut
           onResponderRelease={onPressOut}
@@ -364,16 +374,10 @@ export default class HyperRef extends PureComponent<Props, State> {
     );
   };
 
-  ScrollableView = (
-    {
-      children,
-    }: {
-      children: Node
-    },
-  ): Node => {
+  ScrollableView = ({ children }: { children: ReactNode }) => {
     const behaviors = this.getBehaviorElements(TRIGGERS.REFRESH);
     if (!behaviors.length) {
-      return children;
+      return <>children</>;
     }
     const refreshHandlers = behaviors.map(behaviorElement =>
       this.createActionHandler(behaviorElement, this.props.onUpdate),
@@ -391,16 +395,10 @@ export default class HyperRef extends PureComponent<Props, State> {
     );
   };
 
-  VisibilityView = (
-    {
-      children,
-    }: {
-      children: Node
-    },
-  ): Node => {
+  VisibilityView = ({ children }: { children: ReactNode }) => {
     const behaviors = this.getBehaviorElements(TRIGGERS.VISIBLE);
     if (!behaviors.length) {
-      return children;
+      return <>children</>;
     }
     const visibleHandlers = behaviors.map(behaviorElement =>
       this.createActionHandler(behaviorElement, this.props.onUpdate),
@@ -411,6 +409,8 @@ export default class HyperRef extends PureComponent<Props, State> {
 
     return React.createElement(
       VisibilityDetectingView,
+      // TODO: fix this
+      // @ts-ignore
       { onInvisible: null, onVisible, style: this.getStyle() },
       children,
     );
@@ -447,7 +447,9 @@ export const addHref = (
 ) => {
   const href = element.getAttribute('href');
   const action = element.getAttribute('action');
-  const childNodes = element.childNodes ? Array.from(element.childNodes) : [];
+  const childNodes = element.childNodes
+    ? Array.from<Element>(element.childNodes)
+    : [];
   const behaviorElements = childNodes.filter(
     n => n && n.nodeType === 1 && n.tagName === 'behavior',
   );

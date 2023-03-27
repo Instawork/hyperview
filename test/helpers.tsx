@@ -44,11 +44,11 @@ export const render = (
   Component: HvComponent,
   template: string,
   ComponentsRegistry: HvComponent[] | null = null,
-): HvComponent | null | undefined => {
+) => {
   const document = parse(template);
   const element = Dom.getFirstTag(
     document,
-    Component.localName,
+    Component.localName as LocalName,
     Component.namespaceURI,
   );
   const stylesheets = Stylesheets.createStylesheets(document);
@@ -56,7 +56,6 @@ export const render = (
     return null;
   }
   return (
-    // $FlowFixMe: HvComponentStatics type mixin causes type inference issues
     <Component
       element={element}
       onUpdate={action('action')}

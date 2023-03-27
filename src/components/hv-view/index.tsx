@@ -20,6 +20,7 @@ import {
   SafeAreaView,
   ScrollView,
   View,
+  ViewStyle,
 } from 'react-native';
 import React, { PureComponent } from 'react';
 import { ATTRIBUTES } from './types';
@@ -43,9 +44,9 @@ export default class HvView extends PureComponent<HvComponentProps> {
     LOCAL_NAME.SECTION_TITLE,
   ];
 
-  props: HvComponentProps;
+  declare props: HvComponentProps;
 
-  attributes: Attributes;
+  attributes!: Attributes;
 
   constructor(props: HvComponentProps) {
     super(props);
@@ -61,10 +62,13 @@ export default class HvView extends PureComponent<HvComponentProps> {
   }
 
   updateAttributes = () => {
-    this.attributes = Object.values(ATTRIBUTES).reduce<Record<string, any>>((attributes, name: string) => ({
-      ...attributes,
-      [name]: this.props.element.getAttribute(name),
-    }), {});
+    this.attributes = Object.values(ATTRIBUTES).reduce<Record<string, any>>(
+      (attributes, name: string) => ({
+        ...attributes,
+        [name]: this.props.element.getAttribute(name),
+      }),
+      {},
+    );
   };
 
   hasInputFields = (): boolean => {
@@ -80,11 +84,12 @@ export default class HvView extends PureComponent<HvComponentProps> {
   };
 
   getCommonProps = (): CommonProps => {
-    const style = createStyleProp(
+    // TODO: fix type
+    const style = (createStyleProp(
       this.props.element,
       this.props.stylesheets,
       this.props.options,
-    );
+    ) as unknown) as ViewStyle;
     const id = this.props.element.getAttribute('id');
     if (!id) {
       return { style };
@@ -101,28 +106,31 @@ export default class HvView extends PureComponent<HvComponentProps> {
     const showScrollIndicator =
       this.attributes[ATTRIBUTES.SHOWS_SCROLL_INDICATOR] !== 'false';
 
-    const contentContainerStyle = this.attributes[
+    const contentContainerStyle = (this.attributes[
       ATTRIBUTES.CONTENT_CONTAINER_STYLE
     ]
       ? createStyleProp(this.props.element, this.props.stylesheets, {
           ...this.props.options,
           styleAttr: ATTRIBUTES.CONTENT_CONTAINER_STYLE,
         })
-      : undefined;
+      : undefined) as ViewStyle;
 
     // Fix scrollbar rendering issue in iOS 13+
     // https://github.com/facebook/react-native/issues/26610#issuecomment-539843444
     const scrollIndicatorInsets =
-      Platform.OS === 'ios' && parseInt(Platform.Version, 10) >= 13
+      Platform.OS === 'ios' && +Platform.Version >= 13
         ? { right: 1 }
         : undefined;
 
     // add sticky indicies
-    const stickyHeaderIndices = children.reduce<Array<any>>((acc, element, index) =>
-      typeof element !== 'string' &&
-      element.props?.element?.getAttribute('sticky') === 'true'
-        ? [...acc, index]
-        : acc, []);
+    const stickyHeaderIndices = children.reduce<Array<any>>(
+      (acc, element, index) =>
+        typeof element !== 'string' &&
+        element.props?.element?.getAttribute('sticky') === 'true'
+          ? [...acc, index]
+          : acc,
+      [],
+    );
 
     return {
       contentContainerStyle,
@@ -136,17 +144,17 @@ export default class HvView extends PureComponent<HvComponentProps> {
 
   getScrollToInputAdditionalOffsetProp = (): number => {
     const defaultOffset = 120;
-    if (this.attributes[ATTRIBUTES.SCROLL_TO_INPUT_OFFSET]) {
-      const offset = parseInt(
-        this.attributes[ATTRIBUTES.SCROLL_TO_INPUT_OFFSET],
-        10,
-      );
+    const offsetStr = this.attributes[ATTRIBUTES.SCROLL_TO_INPUT_OFFSET];
+    if (offsetStr) {
+      const offset = parseInt(offsetStr, 10);
       return Number.isNaN(offset) ? 0 : defaultOffset;
     }
     return defaultOffset;
   };
 
-  getKeyboardAwareScrollViewProps = (inputFieldRefs: Array<any>): KeyboardAwareScrollViewProps => ({
+  getKeyboardAwareScrollViewProps = (
+    inputFieldRefs: Array<any>,
+  ): KeyboardAwareScrollViewProps => ({
     automaticallyAdjustContentInsets: false,
     getTextInputRefs: () => inputFieldRefs,
     keyboardShouldPersistTaps: 'handled',

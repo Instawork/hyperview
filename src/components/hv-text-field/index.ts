@@ -15,7 +15,7 @@ import {
   getNameValueFormInputValues,
 } from 'hyperview/src/services';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import { TextInput } from 'react-native';
+import { KeyboardTypeOptions, TextInput } from 'react-native';
 import TinyMask from 'hyperview/src/mask.js';
 
 export default class HvTextField extends PureComponent<HvComponentProps> {
@@ -116,8 +116,11 @@ export default class HvTextField extends PureComponent<HvComponentProps> {
       'text-content-type',
     );
     const keyboardType =
-      this.props.element.getAttribute('keyboard-type') || undefined;
-    const props = {
+      (this.props.element.getAttribute(
+        'keyboard-type',
+      ) as KeyboardTypeOptions) || undefined;
+
+    return React.createElement(TextInput, {
       ...createProps(this.props.element, this.props.stylesheets, {
         ...this.props.options,
         focused,
@@ -129,7 +132,7 @@ export default class HvTextField extends PureComponent<HvComponentProps> {
         this.props.element.localName === LOCAL_NAME.TEXT_AREA ||
         this.props.element.getAttribute('multiline') === 'true',
       onBlur: () => this.setFocus(false),
-      onChangeText: value => {
+      onChangeText: (value: string) => {
         const formattedValue = HvTextField.getFormattedValue(
           this.props.element,
           value,
@@ -143,10 +146,9 @@ export default class HvTextField extends PureComponent<HvComponentProps> {
       ref: this.props.options.registerInputHandler,
       secureTextEntry:
         this.props.element.getAttribute('secure-text') === 'true',
-      textContentType: textContentType || 'none',
-      value: this.props.element.getAttribute('value'),
-    } as const;
-
-    return React.createElement(TextInput, props);
+      textContentType: (textContentType ||
+        'none') as TextInput['props']['textContentType'],
+      value: this.props.element.getAttribute('value') ?? undefined,
+    });
   }
 }

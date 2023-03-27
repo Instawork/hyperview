@@ -10,13 +10,23 @@ import * as Helpers from 'hyperview/storybook/helpers';
 import HvWebView from 'hyperview/src/components/hv-web-view';
 import React from 'react';
 import { action } from '@storybook/addon-actions';
+import { HvComponentProps } from 'hyperview/src';
 
 const createStory = Helpers.stories(HvWebView);
-createStory('basic', ({ element, stylesheets }) => (
-  <HvWebView
-    element={element}
-    onUpdate={action('onUpdate')}
-    options={Helpers.getOptions()}
-    stylesheets={stylesheets}
-  />
-));
+createStory(
+  'basic',
+  ({
+    element,
+    stylesheets,
+  }: {
+    element: HvComponentProps['element'];
+    stylesheets: HvComponentProps['stylesheets'];
+  }) => (
+    <HvWebView
+      element={element}
+      onUpdate={action('onUpdate')}
+      options={Helpers.getOptions()}
+      stylesheets={stylesheets}
+    />
+  ),
+);

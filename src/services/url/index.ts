@@ -6,7 +6,6 @@
  *
  */
 
-import type {FormData} from 'hyperview/src/services/url/types';
 import urlParse from 'url-parse';
 
 const QUERY_SEPARATOR = '?';
@@ -28,8 +27,8 @@ export const getUrlFromHref = (href: string, baseUrl: string): string => {
 export const addParamsToUrl = (
   url: string,
   params: Array<{
-    name: string,
-    value: string
+    name: string;
+    value: string;
   }>,
 ): string => {
   const [baseUrl, existingParams] = url.split(QUERY_SEPARATOR);
@@ -47,7 +46,18 @@ export const addParamsToUrl = (
 /**
  * Add FormData as query params to a url. Ignores files in the formdata.
  */
-export const addFormDataToUrl = (url: string, formData?: FormData | null): string => {
+export const addFormDataToUrl = (
+  url: string,
+  formData?:
+    | (FormData & {
+        entries?: () => Iterable<[string, string | Blob]>;
+        getParts?: () => Array<{
+          fieldName: string;
+          string: string;
+        }>;
+      })
+    | null,
+): string => {
   if (formData) {
     if (formData.getParts) {
       const params = formData.getParts();

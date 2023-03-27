@@ -1,7 +1,23 @@
 {
-    "extends": "@tsconfig/react-native/tsconfig.json",
-    "compilerOptions": {
-        "checkJs": false
+  "extends": "@tsconfig/react-native/tsconfig.json",
+  "compilerOptions": {
+    "checkJs": false,
+    "noEmit": false,
+    "baseUrl": ".",
+    "allowJs": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "jsx": "preserve",
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "paths": {
+      "hyperview/*": ["./*"],
+      "flow-to-typescript-codemod": ["src/flow.d.ts"]
     },
-    "exclude": ["**/*.js", "**/*.jsx"]
+    "downlevelIteration": true,
+    "types": ["node", "jest"],
+    "isolatedModules": false
+  },
+  "include": ["src/**/*"],
+  "typeRoots": ["src/global.d.ts", "node_modules/@types", "src/flow.d.ts"]
 }

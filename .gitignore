@@ -23,3 +23,6 @@ website/i18n/*
 demo/yalc.lock
 
 .idea/
+
+# temp
+dist/

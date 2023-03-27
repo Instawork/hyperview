@@ -12,6 +12,7 @@ import type {
   Document,
   StyleSheet as StyleSheetType,
   StyleSheets,
+  Element,
 } from 'hyperview/src/types';
 import { StyleSheet } from 'react-native';
 
@@ -171,15 +172,16 @@ function createStylesheet(document: Document, modifiers = {}): StyleSheetType {
     );
 
     for (let i = 0; i < styleElements.length; i += 1) {
-      const styleElement = styleElements.item(i);
-      const hasModifier =
-        styleElement.parentNode &&
-        styleElement.parentNode.tagName === 'modifier';
+      // assert type here because that's how it was used pre-migration
+      const styleElement = styleElements.item(i) as Element;
 
       let styleId = styleElement.getAttribute('id');
-      if (hasModifier) {
+      if (
+        styleElement.parentNode &&
+        styleElement.parentNode.tagName === 'modifier'
+      ) {
         // TODO(adam): Use less hacky way to get id of parent style element.
-        styleId = styleElement.parentNode.parentNode.getAttribute('id');
+        styleId = styleElement.parentNode.parentNode?.getAttribute('id');
       }
 
       // This must be a root style or a modifier style
@@ -195,7 +197,7 @@ function createStylesheet(document: Document, modifiers = {}): StyleSheetType {
         const [modifier, state] = modifierEntries[j];
 
         const elementModifierState =
-          styleElement.parentNode.getAttribute(modifier) === 'true';
+          styleElement.parentNode?.getAttribute(modifier) === 'true';
 
         if (elementModifierState !== state) {
           matchesModifiers = false;
@@ -209,13 +211,23 @@ function createStylesheet(document: Document, modifiers = {}): StyleSheetType {
       }
 
       const rules: Record<string, any> = {};
-      for (let j = 0; j < styleElement.attributes.length; j += 1) {
-        const attr = styleElement.attributes.item(j);
-        const converter = STYLE_ATTRIBUTE_CONVERTERS[attr.name];
-        if (converter) {
-          rules[attr.name] = converter(attr.value);
+
+      // if (styleElement.attributes) and attr not null check added as part of TS migration
+      // not necessarily correct logic
+      if (styleElement.attributes)
+        for (let j = 0; j < styleElement.attributes.length; j += 1) {
+          const attr = styleElement.attributes.item(j);
+          if (attr && attr.name in STYLE_ATTRIBUTE_CONVERTERS) {
+            // TODO: fix this type
+            const converter =
+              STYLE_ATTRIBUTE_CONVERTERS[
+                attr.name as keyof typeof STYLE_ATTRIBUTE_CONVERTERS
+              ];
+            if (converter) {
+              rules[attr.name] = converter(attr.value);
+            }
+          }
         }
-      }
 
       // Shadow offset numbers needs to be be converted into a single object
       // on the style sheet.

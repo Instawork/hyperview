@@ -18,10 +18,10 @@ const QUERY_SEPARATOR = '?';
 const getHrefKey = (href: string): string => href.split(QUERY_SEPARATOR)[0];
 
 const routeKeys: {
-  [key: string]: string
+  [key: string]: string;
 } = {};
 const preloadScreens: {
-  [key: number]: Element
+  [key: number]: Element;
 } = {};
 
 export default class Navigation {
@@ -44,7 +44,8 @@ export default class Navigation {
     this.document = document;
   };
 
-  getPreloadScreen = (id: number): Element | null | undefined => preloadScreens[id];
+  getPreloadScreen = (id: number): Element | null | undefined =>
+    preloadScreens[id];
 
   setPreloadScreen = (id: number, element: Element): void => {
     preloadScreens[id] = element;
@@ -54,7 +55,8 @@ export default class Navigation {
     delete preloadScreens[id];
   };
 
-  getRouteKey = (href: string): string | null | undefined => routeKeys[getHrefKey(href)];
+  getRouteKey = (href: string): string | null | undefined =>
+    routeKeys[getHrefKey(href)];
 
   setRouteKey = (href: string, key: string): void => {
     routeKeys[getHrefKey(href)] = key;
@@ -72,7 +74,10 @@ export default class Navigation {
     opts: BehaviorOptions,
   ): void => {
     const { showIndicatorId, delay } = opts;
-    const formData: FormData | null | undefined = getFormData(element, formComponents);
+    const formData: FormData | null | undefined = getFormData(
+      element,
+      formComponents,
+    );
 
     // Serialize form data as query params, if present.
     const baseUrl = UrlService.getUrlFromHref(href, this.url);
@@ -84,9 +89,9 @@ export default class Navigation {
         Namespaces.HYPERVIEW,
         'screen',
       );
-      const loadingScreen: Element | null | undefined = Array.from(screens).find(
-        s => s && s.getAttribute('id') === showIndicatorId,
-      );
+      const loadingScreen: Element | null | undefined = Array.from<Element>(
+        screens,
+      ).find(s => s && s.getAttribute('id') === showIndicatorId);
       if (loadingScreen) {
         preloadScreen = Date.now(); // Not trully unique but sufficient for our use-case
         this.setPreloadScreen(preloadScreen, loadingScreen);

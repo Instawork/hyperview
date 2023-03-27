@@ -17,11 +17,14 @@ import {
 import React, { PureComponent } from 'react';
 
 import { DOMParser } from 'xmldom-instawork';
-import type { HvComponentProps } from 'hyperview/src/types';
+import type { Element, HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { State } from './types';
 
-export default class HvSectionList extends PureComponent<HvComponentProps, State> {
+export default class HvSectionList extends PureComponent<
+  HvComponentProps,
+  State
+> {
   static namespaceURI = Namespaces.HYPERVIEW;
 
   static localName = LOCAL_NAME.SECTION_LIST;
@@ -30,9 +33,9 @@ export default class HvSectionList extends PureComponent<HvComponentProps, State
 
   static contextType = Contexts.RefreshControlComponentContext;
 
-  parser: DOMParser = new DOMParser();
+  parser: typeof DOMParser = new DOMParser();
 
-  props: HvComponentProps;
+  declare props: HvComponentProps;
 
   state: State = {
     refreshing: false,
@@ -83,7 +86,7 @@ export default class HvSectionList extends PureComponent<HvComponentProps, State
 
     const flattened: Array<any> = [];
 
-    const addNodes = sectionElement => {
+    const addNodes = (sectionElement: Element) => {
       if (sectionElement.childNodes) {
         for (let j = 0; j < sectionElement.childNodes.length; j += 1) {
           const node = sectionElement.childNodes[j];
@@ -106,10 +109,13 @@ export default class HvSectionList extends PureComponent<HvComponentProps, State
 
     let items: Array<any> = [];
     let titleElement = null;
-    const sections: Array<any | {
-      data: Array<any>,
-      title: any | null
-    }> = [];
+    const sections: Array<
+      | any
+      | {
+          data: Array<any>;
+          title: any | null;
+        }
+    > = [];
 
     for (let j = 0; j < flattened.length; j += 1) {
       const sectionElement = flattened[j];
@@ -137,15 +143,21 @@ export default class HvSectionList extends PureComponent<HvComponentProps, State
     }
 
     const listProps = {
-      keyExtractor: item => item.getAttribute('key'),
-      renderItem: ({ item }) =>
+      keyExtractor: (item: Element) => item.getAttribute('key'),
+      renderItem: ({ item }: { item: Element }) =>
         Render.renderElement(
           item,
           this.props.stylesheets,
           this.props.onUpdate,
           this.props.options,
         ),
-      renderSectionHeader: ({ section: { title } }) =>
+      renderSectionHeader: ({
+        section: { title },
+      }: {
+        section: {
+          title: Element;
+        };
+      }) =>
         Render.renderElement(
           title,
           this.props.stylesheets,

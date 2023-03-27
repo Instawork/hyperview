@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 import React, { PureComponent } from 'react';
 import { DOMParser } from 'xmldom-instawork';
-import type { HvComponentProps } from 'hyperview/src/types';
+import type { Element, HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { State } from './types';
 
@@ -29,9 +29,9 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
 
   static contextType = Contexts.RefreshControlComponentContext;
 
-  parser: DOMParser = new DOMParser();
+  parser: typeof DOMParser = new DOMParser();
 
-  props: HvComponentProps;
+  declare props: HvComponentProps;
 
   state: State = {
     refreshing: false,
@@ -51,7 +51,7 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
         const delay = e.getAttribute('delay');
         const once = e.getAttribute('once');
         const onEnd =
-          i === 0 ? () => this.setState({ refreshing: false }) : null;
+          i === 0 ? () => this.setState({ refreshing: false }) : undefined;
         this.props.onUpdate(path, action, this.props.element, {
           behaviorElement: e,
           delay,
@@ -65,28 +65,31 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
   };
 
   getItems = () => {
-    const isOwnedBySelf = item: undefined => {
-      if (item.parentNode === this.props.element) {
+    const isOwnedBySelf = (item: Element): boolean => {
+      const parentNode = item.parentNode;
+      // TS-migration: throwing is probably more appropriate than returning false here
+      if (!parentNode) return false;
+      if (parentNode === this.props.element) {
         return true;
       }
       if (
-        item.parentNode.tagName === LOCAL_NAME.ITEMS &&
-        item.parentNode.namespaceURI === Namespaces.HYPERVIEW &&
-        item.parentNode.parentNode === this.props.element
+        parentNode.tagName === LOCAL_NAME.ITEMS &&
+        parentNode.namespaceURI === Namespaces.HYPERVIEW &&
+        parentNode.parentNode === this.props.element
       ) {
         return true;
       }
       if (
-        item.parentNode.tagName === LOCAL_NAME.LIST &&
-        item.parentNode.namespaceURI === Namespaces.HYPERVIEW &&
-        item.parentNode.parentNode !== this.props.element
+        parentNode.tagName === LOCAL_NAME.LIST &&
+        parentNode.namespaceURI === Namespaces.HYPERVIEW &&
+        parentNode.parentNode !== this.props.element
       ) {
         return false;
       }
-      return isOwnedBySelf(item.parentNode);
+      return isOwnedBySelf(parentNode);
     };
 
-    return Array.from(
+    return Array.from<Element>(
       this.props.element
         // $FlowFixMe: this.props.element is an Element, not a Node
         .getElementsByTagNameNS(Namespaces.HYPERVIEW, LOCAL_NAME.ITEM),
@@ -104,23 +107,6 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
     const showScrollIndicator =
       this.props.element.getAttribute('shows-scroll-indicator') !== 'false';
 
-    const listProps = {
-      data: this.getItems(),
-      horizontal,
-      keyExtractor: item => item && item.getAttribute('key'),
-      renderItem: ({ item }) =>
-        item &&
-        Render.renderElement(
-          item,
-          this.props.stylesheets,
-          this.props.onUpdate,
-          this.props.options,
-        ),
-      showsHorizontalScrollIndicator: horizontal && showScrollIndicator,
-      showsVerticalScrollIndicator: !horizontal && showScrollIndicator,
-      style,
-    } as const;
-
     let refreshProps: Record<string, any> = {};
     if (this.props.element.getAttribute('trigger') === 'refresh') {
       const RefreshControl = this.context || DefaultRefreshControl;
@@ -135,7 +121,21 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
     }
 
     return React.createElement(FlatList, {
-      ...listProps,
+      data: this.getItems(),
+      horizontal,
+      keyExtractor: ((item: Element) =>
+        item && item.getAttribute('key')) as FlatList['props']['keyExtractor'],
+      renderItem: (({ item }: { item: Element }) =>
+        item &&
+        Render.renderElement(
+          item,
+          this.props.stylesheets,
+          this.props.onUpdate,
+          this.props.options,
+        )) as FlatList['props']['renderItem'],
+      showsHorizontalScrollIndicator: horizontal && showScrollIndicator,
+      showsVerticalScrollIndicator: !horizontal && showScrollIndicator,
+      style,
       ...refreshProps,
     });
   }

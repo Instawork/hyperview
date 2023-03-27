@@ -11,7 +11,7 @@ import { parse } from 'hyperview/test/helpers';
 
 describe('inlineFormatter', () => {
   test('1', () => {
-    const node: Document = parse(
+    const node = parse(
       `<text id="a">
           <text id="b">
             <text id="c">   </text>
@@ -24,7 +24,7 @@ describe('inlineFormatter', () => {
             </text>
           </text>
           <text id="g">
-            of HyperView! 
+            of HyperView!
           </text>
           <text id="h"> </text>
         </text>`,

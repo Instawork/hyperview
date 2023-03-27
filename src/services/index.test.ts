@@ -44,11 +44,11 @@ describe('encodeXml', () => {
   });
 });
 
-const mockPlatform = OS: any => {
+const mockPlatform = (OS: any) => {
   jest.resetModules();
   jest.doMock('react-native/Libraries/Utilities/Platform', () => ({
     OS,
-    select: objs: any => objs[OS],
+    select: (objs: any) => objs[OS],
   }));
 };
 

@@ -41,7 +41,10 @@ import styles from './styles';
  * - On Android, the system picker is rendered inline on the screen. Pressing the picker
  *   opens a system dialog.
  */
-export default class HvPickerField extends PureComponent<HvComponentProps, State> {
+export default class HvPickerField extends PureComponent<
+  HvComponentProps,
+  State
+> {
   static namespaceURI = Namespaces.HYPERVIEW;
 
   static localName = LOCAL_NAME.PICKER_FIELD;
@@ -52,7 +55,7 @@ export default class HvPickerField extends PureComponent<HvComponentProps, State
     return getNameValueFormInputValues(element);
   };
 
-  props: HvComponentProps;
+  declare props: HvComponentProps;
 
   state: State;
 
@@ -116,7 +119,10 @@ export default class HvPickerField extends PureComponent<HvComponentProps, State
 
     let item: Element | null | undefined = null;
     for (let i = 0; i < pickerItemElements.length; i += 1) {
-      const pickerItemElement: Element | null | undefined = pickerItemElements.item(i);
+      const pickerItemElement:
+        | Element
+        | null
+        | undefined = pickerItemElements.item(i);
       if (
         pickerItemElement &&
         pickerItemElement.getAttribute('value') === value
@@ -193,7 +199,7 @@ export default class HvPickerField extends PureComponent<HvComponentProps, State
    * Renders the picker component. Picker items come from the
    * <picker-item> elements in the <picker-field> element.
    */
-  renderPicker = (style: StyleSheetType): ReactNode => {
+  renderPicker = (style?: StyleSheetType): ReactNode => {
     const props = {
       onValueChange: (value: any) => {
         this.setState({ pickerValue: value });
@@ -328,10 +334,13 @@ export default class HvPickerField extends PureComponent<HvComponentProps, State
       },
     );
     const { testID, accessibilityLabel } = createTestProps(this.props.element);
-    const value: DOMString | null | undefined = this.props.element.getAttribute('value');
-    const placeholderTextColor: DOMString | null | undefined = this.props.element.getAttribute(
-      'placeholderTextColor',
+    const value: DOMString | null | undefined = this.props.element.getAttribute(
+      'value',
     );
+    const placeholderTextColor:
+      | DOMString
+      | null
+      | undefined = this.props.element.getAttribute('placeholderTextColor');
     if (!value && placeholderTextColor) {
       textStyle.push({ color: placeholderTextColor });
     }
@@ -375,10 +384,13 @@ export default class HvPickerField extends PureComponent<HvComponentProps, State
         styleAttr: 'field-text-style',
       },
     );
-    const value: DOMString | null | undefined = this.props.element.getAttribute('value');
-    const placeholderTextColor: DOMString | null | undefined = this.props.element.getAttribute(
-      'placeholderTextColor',
+    const value: DOMString | null | undefined = this.props.element.getAttribute(
+      'value',
     );
+    const placeholderTextColor:
+      | DOMString
+      | null
+      | undefined = this.props.element.getAttribute('placeholderTextColor');
     if (!value && placeholderTextColor) {
       fieldTextStyle.push({ color: placeholderTextColor });
     }

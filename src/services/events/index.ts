@@ -6,9 +6,11 @@
  *
  */
 
-import {ON_EVENT_DISPATCH} from 'hyperview/src/types';
+import { ON_EVENT_DISPATCH } from 'hyperview/src/types';
 import TinyEmitter from 'tiny-emitter';
 
+// TODO: fix this somehow (upgrade library?)
+// @ts-ignore
 const tinyEmitter = new TinyEmitter();
 
 export const dispatch = (eventName: string) => {

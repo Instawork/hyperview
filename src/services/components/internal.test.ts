@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -6,6 +7,7 @@
  *
  */
 
+import { LocalName } from 'hyperview/src/types';
 import * as ComponentsInternal from './internal';
 import { PureComponent } from 'react';
 
@@ -15,7 +17,7 @@ describe('ComponentsInternal', () => {
       class Foo extends PureComponent<any> {
         static namespaceURI = 'http://foo';
 
-        static localName = 'foo';
+        static localName: LocalName = 'item';
 
         static localNameAliases = [];
       }
@@ -23,7 +25,7 @@ describe('ComponentsInternal', () => {
       class Bar extends PureComponent<any> {
         static namespaceURI = 'http://bar';
 
-        static localName = 'bar';
+        static localName: LocalName = 'item';
 
         static localNameAliases = ['bar-1', 'bar-2'];
       }

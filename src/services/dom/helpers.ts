@@ -18,7 +18,7 @@ import type {
 } from 'hyperview/src/types';
 
 export const getBehaviorElements = (element: any) => {
-  const behaviorElements = Array.from(element.childNodes).filter(
+  const behaviorElements = Array.from<Element>(element.childNodes).filter(
     n => n.tagName === 'behavior',
   );
 
@@ -30,7 +30,7 @@ export const getBehaviorElements = (element: any) => {
 };
 
 export const getFirstTag = (
-  document: Document,
+  document: Document | Element,
   localName: LocalName,
   namespace: NamespaceURI = Namespaces.HYPERVIEW,
 ) => {
@@ -79,9 +79,13 @@ export const triggerBehaviors = (
 /**
  * N-ary Tree Preorder Traversal
  */
-export const preorder = (root: Node, type: NodeType, acc: Node[] = []): Node[] => {
+export const preorder = (
+  root: Node,
+  type: NodeType,
+  acc: Node[] = [],
+): Node[] => {
   if (root.childNodes) {
-    Array.from(root.childNodes).forEach((node?: Node | null) => {
+    Array.from<Node>(root.childNodes).forEach((node?: Node | null) => {
       if (node) {
         preorder(node, type, acc);
       }

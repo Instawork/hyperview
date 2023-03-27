@@ -22,15 +22,18 @@ export default class HvImage extends PureComponent<HvComponentProps> {
 
   static localNameAliases = [];
 
-  props: HvComponentProps;
+  declare props: HvComponentProps;
 
   render() {
     const { skipHref } = this.props.options || {};
-    const imageProps: Record<string, any> = {};
-    if (this.props.element.getAttribute('source')) {
-      let source = this.props.element.getAttribute('source');
-      source = urlParse(source, this.props.options.screenUrl, true).toString();
-      imageProps.source = { uri: source };
+    let source: Image['props']['source'] = {};
+    const srcAttr = this.props.element.getAttribute('src');
+    if (srcAttr) {
+      source.uri = urlParse(
+        srcAttr,
+        this.props.options.screenUrl,
+        true,
+      ).toString();
     }
     const props = {
       ...createProps(
@@ -38,7 +41,7 @@ export default class HvImage extends PureComponent<HvComponentProps> {
         this.props.stylesheets,
         this.props.options,
       ),
-      ...imageProps,
+      source,
     } as const;
     const component = React.createElement(Image, props);
     return skipHref

@@ -6,13 +6,13 @@
  *
  */
 
-import {NODE_TYPE} from 'hyperview/src/types';
+import { NODE_TYPE } from 'hyperview/src/types';
 import { parse } from 'hyperview/test/helpers';
 import { preorder } from './helpers';
 
 describe('preorder', () => {
   test('1', () => {
-    const node: Document = parse(
+    const node = parse(
       `<text id="a">
           <text id="b">
             <text id="c">   </text>
@@ -25,7 +25,7 @@ describe('preorder', () => {
             </text>
           </text>
           <text id="g">
-            of HyperView! 
+            of HyperView!
           </text>
           <text id="h"> </text>
         </text>`,

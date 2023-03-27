@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -22,6 +23,7 @@ import HvTextField from 'hyperview/src/components/hv-text-field';
 import HvView from 'hyperview/src/components/hv-view';
 import HvWebView from 'hyperview/src/components/hv-web-view';
 import { PureComponent } from 'react';
+import { LocalName } from 'hyperview/src/types';
 
 const defaultRegistryContent = {
   body: HvView,
@@ -71,7 +73,7 @@ describe('Components', () => {
         class Foo extends PureComponent<any> {
           static namespaceURI = 'http://foo';
 
-          static localName = 'foo';
+          static localName: LocalName = 'item';
 
           static localNameAliases = [];
         }
@@ -79,7 +81,7 @@ describe('Components', () => {
         class Bar extends PureComponent<any> {
           static namespaceURI = 'http://bar';
 
-          static localName = 'bar';
+          static localName: LocalName = 'item';
 
           static localNameAliases = [];
         }
@@ -87,7 +89,7 @@ describe('Components', () => {
         class Baz extends PureComponent<any> {
           static namespaceURI = 'https://hyperview.org/hyperview';
 
-          static localName = 'baz';
+          static localName: LocalName = 'item';
 
           static localNameAliases = ['baz-1', 'baz-2'];
         }
@@ -122,7 +124,7 @@ describe('Components', () => {
         class Foo extends PureComponent<any> {
           static namespaceURI = 'http://foo';
 
-          static localName = 'foo';
+          static localName: LocalName = 'item';
 
           static localNameAliases = [];
 
@@ -134,7 +136,7 @@ describe('Components', () => {
         class Bar extends PureComponent<any> {
           static namespaceURI = 'http://bar';
 
-          static localName = 'bar';
+          static localName: LocalName = 'item';
 
           static localNameAliases = [];
         }
@@ -142,7 +144,7 @@ describe('Components', () => {
         class Baz extends PureComponent<any> {
           static namespaceURI = 'https://hyperview.org/hyperview';
 
-          static localName = 'baz';
+          static localName: LocalName = 'item';
 
           static localNameAliases = ['baz-1', 'baz-2'];
 

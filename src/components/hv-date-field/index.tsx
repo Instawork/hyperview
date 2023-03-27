@@ -24,7 +24,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import React, {PureComponent, useState} from 'react';
+import React, { PureComponent, useState } from 'react';
 import {
   createProps,
   createStyleProp,
@@ -142,7 +142,7 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
     return getNameValueFormInputValues(element);
   };
 
-  props: HvComponentProps;
+  declare props: HvComponentProps;
 
   /**
    * Given a Date object, returns an ISO date string (YYYY-MM-DD). If the Date
@@ -162,7 +162,9 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
    * Given a ISO date string (YYYY-MM-DD), returns a Date object. If the string
    * cannot be parsed or is falsey, returns null.
    */
-  static createDateFromString = (value?: string | null): Date | null | undefined => {
+  static createDateFromString = (
+    value?: string | null,
+  ): Date | null | undefined => {
     if (!value) {
       return null;
     }
@@ -253,19 +255,22 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
   /**
    * Returns true if the field is focused (and picker is showing).
    */
-  isFocused = (): boolean => this.props.element.getAttribute('focused') === 'true';
+  isFocused = (): boolean =>
+    this.props.element.getAttribute('focused') === 'true';
 
   /**
    * Returns a Date object representing the value in the picker.
    */
-  getPickerValue = (): Date | null | undefined => HvDateField.createDateFromString(
-    this.props.element.getAttribute('picker-value'),
-  );
+  getPickerValue = (): Date | null | undefined =>
+    HvDateField.createDateFromString(
+      this.props.element.getAttribute('picker-value'),
+    );
 
   /**
    * Returns a Date object representing the value in the field.
    */
-  getValue = (): Date | null | undefined => HvDateField.createDateFromString(this.props.element.getAttribute('value'));
+  getValue = (): Date | null | undefined =>
+    HvDateField.createDateFromString(this.props.element.getAttribute('value'));
 
   /**
    * Renders the date picker component, with the given min and max dates.
@@ -275,12 +280,28 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
    * in our own modal for consistency.
    */
   renderPicker = (onChange: (evt: Event, date?: Date) => void): ReactNode => {
-    const minValue: DOMString | null | undefined = this.props.element.getAttribute('min');
-    const maxValue: DOMString | null | undefined = this.props.element.getAttribute('max');
-    const minDate: Date | null | undefined = HvDateField.createDateFromString(minValue);
-    const maxDate: Date | null | undefined = HvDateField.createDateFromString(maxValue);
-    const displayMode: DOMString | null | undefined = this.props.element.getAttribute('mode');
-    const locale: DOMString | null | undefined = this.props.element.getAttribute('locale');
+    const minValue:
+      | DOMString
+      | null
+      | undefined = this.props.element.getAttribute('min');
+    const maxValue:
+      | DOMString
+      | null
+      | undefined = this.props.element.getAttribute('max');
+    const minDate: Date | null | undefined = HvDateField.createDateFromString(
+      minValue,
+    );
+    const maxDate: Date | null | undefined = HvDateField.createDateFromString(
+      maxValue,
+    );
+    const displayMode:
+      | DOMString
+      | null
+      | undefined = this.props.element.getAttribute('mode');
+    const locale:
+      | DOMString
+      | null
+      | undefined = this.props.element.getAttribute('locale');
     const props: any = {
       display: displayMode,
       locale,
@@ -338,11 +359,12 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
     const doneLabel: string =
       this.props.element.getAttribute('done-label') || 'Done';
 
-    const getTextStyle = (pressed: boolean): Array<StyleSheetType> => createStyleProp(this.props.element, this.props.stylesheets, {
-      ...this.props.options,
-      pressed,
-      styleAttr: 'modal-text-style',
-    });
+    const getTextStyle = (pressed: boolean): Array<StyleSheetType> =>
+      createStyleProp(this.props.element, this.props.stylesheets, {
+        ...this.props.options,
+        pressed,
+        styleAttr: 'modal-text-style',
+      });
 
     const onChange = (evt: Event, date?: Date) => {
       this.setPickerValue(date);

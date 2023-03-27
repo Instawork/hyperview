@@ -15,12 +15,17 @@ import { later } from 'hyperview/src/services';
 export default {
   action: 'alert',
   callback: (element: Element, onUpdate: HvComponentOnUpdate) => {
-    const title = element.getAttributeNS(Namespaces.HYPERVIEW_ALERT, 'title');
+    const title = element.getAttributeNS(
+      Namespaces.HYPERVIEW_ALERT,
+      'title',
+    ) as string;
     const message = element.getAttributeNS(
       Namespaces.HYPERVIEW_ALERT,
       'message',
-    );
-    const childNodes = element.childNodes ? Array.from(element.childNodes) : [];
+    ) as string;
+    const childNodes = element.childNodes
+      ? Array.from<Element>(element.childNodes)
+      : [];
 
     // Get the immediate alert:option nodes. We don't use getElementsByTagname to
     // avoid getting options for nested alerts.
@@ -76,8 +81,9 @@ export default {
           });
       },
       text:
-        optionElement &&
-        optionElement.getAttributeNS(Namespaces.HYPERVIEW_ALERT, 'label'),
+        (optionElement &&
+          optionElement.getAttributeNS(Namespaces.HYPERVIEW_ALERT, 'label')) ??
+        undefined,
     }));
     // Show alert
     Alert.alert(title, message, options);

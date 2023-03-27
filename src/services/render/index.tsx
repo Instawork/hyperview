@@ -91,7 +91,7 @@ export const renderElement = (
       // Object spreading will define the prop only when its value is truthy
       const extraProps = {
         key: element.getAttribute('key'),
-      } as const;
+      };
       if (!extraProps.key) {
         delete extraProps.key;
       }
