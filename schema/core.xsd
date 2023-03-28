@@ -888,6 +888,7 @@
           <xs:element ref="hv:item" />
           <xs:element ref="hv:section-title" />
           <xs:element ref="hv:section" />
+          <xs:element ref="hv:items" />
         </xs:choice>
       </xs:sequence>
       <xs:attribute name="id" type="hv:ID" />
