@@ -45,9 +45,9 @@
     "test": "yarn generate test && yarn test:flow && yarn test:lint && yarn test:render && yarn test:unit && yarn test:validate-xml"
   },
   "dependencies": {
+    "@xmldom/xmldom": "^0.8.7",
     "tiny-emitter": "2.1.0",
-    "url-parse": "1.4.3",
-    "xmldom-instawork": "0.0.1"
+    "url-parse": "1.4.3"
   },
   "peerDependencies": {
     "@react-native-community/datetimepicker": ">= 3.0.3",
