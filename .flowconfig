@@ -12,6 +12,8 @@
 .*/node_modules/react-navigation/.*
 .*/node_modules/@expo/.*
 .*/node_modules/pug-filters/.*
+.*/node_modules/eslint-import-resolver-node/.*
+.*/node_modules/eslint-plugin-import/.*
 
 ; Ignore polyfills
 node_modules/react-native/Libraries/polyfills/.*
