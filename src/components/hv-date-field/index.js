@@ -9,6 +9,7 @@
  */
 
 import * as Contexts from 'hyperview/src/contexts';
+import * as Dom from 'hyperview/src/services/dom';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type {
   DOMString,
@@ -185,6 +186,7 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
     newElement.setAttribute('focused', 'true');
     newElement.setAttribute('picker-value', value);
     this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+    this.triggerBehaviors(newElement, 'focus');
   };
 
   /**
@@ -195,6 +197,7 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
     newElement.setAttribute('focused', 'false');
     newElement.removeAttribute('picker-value');
     this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+    this.triggerBehaviors(newElement, 'blur');
   };
 
   /**
@@ -202,11 +205,42 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
    */
   onModalDone = (newValue: ?Date) => {
     const value = HvDateField.createStringFromDate(newValue);
+    const hasChanged = this.props.element.getAttribute('value') !== value;
     const newElement = this.props.element.cloneNode(true);
     newElement.setAttribute('value', value);
     newElement.removeAttribute('picker-value');
     newElement.setAttribute('focused', 'false');
     this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+    if (hasChanged) {
+      this.triggerBehaviors(newElement, 'change');
+    }
+    this.triggerBehaviors(newElement, 'blur');
+  };
+
+  triggerBehaviors = (newElement: Element, triggerName: string) => {
+    const behaviorElements = Dom.getBehaviorElements(newElement);
+    const matchingBehaviors = behaviorElements.filter(
+      e => e.getAttribute('trigger') === triggerName,
+    );
+    matchingBehaviors.forEach(behaviorElement => {
+      const href = behaviorElement.getAttribute('href');
+      const action = behaviorElement.getAttribute('action');
+      const verb = behaviorElement.getAttribute('verb');
+      const targetId = behaviorElement.getAttribute('target');
+      const showIndicatorIds = behaviorElement.getAttribute('show-during-load');
+      const hideIndicatorIds = behaviorElement.getAttribute('hide-during-load');
+      const delay = behaviorElement.getAttribute('delay');
+      const once = behaviorElement.getAttribute('once');
+      this.props.onUpdate(href, action, newElement, {
+        behaviorElement,
+        delay,
+        hideIndicatorIds,
+        once,
+        showIndicatorIds,
+        targetId,
+        verb,
+      });
+    });
   };
 
   /**
