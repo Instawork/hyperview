@@ -8,6 +8,7 @@
  *
  */
 
+import * as Dom from 'hyperview/src/services/dom';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type {
   DOMString,
@@ -141,6 +142,7 @@ export default class HvPickerField extends PureComponent<
       focused: true,
       pickerValue: state.value,
     }));
+    this.triggerBehaviors('focus');
   };
 
   /**
@@ -150,6 +152,7 @@ export default class HvPickerField extends PureComponent<
     this.setState({
       focused: false,
     });
+    this.triggerBehaviors('blur');
   };
 
   /**
@@ -162,6 +165,33 @@ export default class HvPickerField extends PureComponent<
       value: state.pickerValue,
     }));
     this.props.element.setAttribute('value', this.state.pickerValue || '');
+    this.triggerBehaviors('blur');
+  };
+
+  triggerBehaviors = (triggerName: string) => {
+    const behaviorElements = Dom.getBehaviorElements(this.props.element);
+    const matchingBehaviors = behaviorElements.filter(
+      e => e.getAttribute('trigger') === triggerName,
+    );
+    matchingBehaviors.forEach(behaviorElement => {
+      const href = behaviorElement.getAttribute('href');
+      const action = behaviorElement.getAttribute('action');
+      const verb = behaviorElement.getAttribute('verb');
+      const targetId = behaviorElement.getAttribute('target');
+      const showIndicatorIds = behaviorElement.getAttribute('show-during-load');
+      const hideIndicatorIds = behaviorElement.getAttribute('hide-during-load');
+      const delay = behaviorElement.getAttribute('delay');
+      const once = behaviorElement.getAttribute('once');
+      this.props.onUpdate(href, action, this.props.element, {
+        behaviorElement,
+        delay,
+        hideIndicatorIds,
+        once,
+        showIndicatorIds,
+        targetId,
+        verb,
+      });
+    });
   };
 
   /**
@@ -176,6 +206,7 @@ export default class HvPickerField extends PureComponent<
           // On non-iOS platforms, the value should be propagated immediately.
           this.props.element.setAttribute('value', value || '');
         }
+        this.triggerBehaviors('change');
       },
       selectedValue: this.state.pickerValue,
       style,

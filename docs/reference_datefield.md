@@ -40,6 +40,14 @@ A `<date-field>` element can appear anywhere within a `<form>` element.
 - [`id`](#id)
 - [`hide`](#hide)
 
+#### Behavior attributes
+
+A `<date-field>` element accepts the standard [behavior attributes](/docs/reference_behavior_attributes), including the following triggers:
+
+- [blur](/docs/reference_behavior_attributes#blur)
+- [change](/docs/reference_behavior_attributes#change)
+- [focus](/docs/reference_behavior_attributes#focus)
+
 #### `name`
 
 | Type   | Required |

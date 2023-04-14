@@ -928,6 +928,11 @@
 
   <xs:element name="date-field">
     <xs:complexType>
+      <xs:sequence>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="hv:behavior" />
+        </xs:choice>
+      </xs:sequence>
       <xs:attribute name="name" use="required" type="xs:string" />
       <xs:attribute name="label-format" type="xs:string" />
       <xs:attribute name="mode">
@@ -951,12 +956,16 @@
       <xs:attribute name="id" type="hv:ID" />
       <xs:attribute name="key" type="hv:KEY" />
       <xs:attribute name="hide" type="xs:boolean" />
+      <xs:attributeGroup ref="hv:behaviorAttributes" />
     </xs:complexType>
   </xs:element>
 
   <xs:element name="picker-field">
     <xs:complexType>
       <xs:sequence>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="hv:behavior" />
+        </xs:choice>
         <xs:element minOccurs="1" maxOccurs="unbounded" ref="hv:picker-item" />
       </xs:sequence>
       <xs:attribute name="name" use="required" type="xs:string" />
@@ -972,6 +981,7 @@
       <xs:attribute name="id" type="hv:ID" />
       <xs:attribute name="key" type="hv:KEY" />
       <xs:attribute name="hide" type="xs:boolean" />
+      <xs:attributeGroup ref="hv:behaviorAttributes" />
     </xs:complexType>
   </xs:element>
 

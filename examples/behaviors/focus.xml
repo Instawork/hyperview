@@ -31,6 +31,7 @@
       />
       <style
         id="Container"
+        flexDirection="row"
         borderColor="#e1e1e1"
         borderRadius="16"
         borderWidth="2"
@@ -71,6 +72,29 @@
         </modifier>
       </style>
       <style id="Tip" color="#FF4847" fontSize="16" />
+      <style id="Input__Text" fontSize="16" fontWeight="normal" />
+      <style
+        id="PickerModal"
+        backgroundColor="white"
+        borderTopColor="#E1E1E1"
+        borderTopWidth="1"
+        shadowOffsetX="0"
+        shadowOffsetY="-5"
+        shadowOpacity="0.2"
+        shadowRadius="5"
+      />
+      <style
+        id="PickerModal__text"
+        color="blue"
+        fontSize="16"
+        fontWeight="600"
+        marginBottom="16"
+        padding="24"
+      >
+        <modifier pressed="true">
+          <style opacity="0.5" />
+        </modifier>
+      </style>
     </styles>
     <body style="Body" safe-area="true">
       <header style="Header">
@@ -139,12 +163,71 @@
             trigger="focus"
           />
         </view>
+        <view style="FormGroup">
+          <text style="Label">Picker field</text>
+          <picker-field
+            field-style="Input"
+            field-text-style="Input__Text"
+            modal-style="PickerModal"
+            modal-text-style="PickerModal__text"
+            name="picker1"
+            placeholder="Select choice"
+            placeholderTextColor="#8D9494"
+            trigger="focus"
+            action="replace-inner"
+            target="container1"
+            href="#pickerFocused"
+          >
+            <behavior
+              trigger="focus"
+              action="append"
+              target="container1"
+              href="#pickerFocused2"
+            />
+            <picker-item label="Choice 0" value="0" />
+            <picker-item label="Choice 1" value="1" />
+            <picker-item label="Choice 2" value="2" />
+            <picker-item label="Choice 3" value="3" />
+            <picker-item label="Choice 4" value="4" />
+            <picker-item label="Choice 5" value="5" />
+            <picker-item label="Choice 6" value="6" />
+          </picker-field>
+        </view>
+        <view style="FormGroup">
+          <text style="Label">Date field</text>
+          <date-field
+            field-style="Input"
+            field-text-style="Input__Text"
+            label-format="MMMM D, YYYY"
+            modal-style="PickerModal"
+            modal-text-style="PickerModal__text"
+            name="date1"
+            mode="spinner"
+            placeholder="Select date"
+            placeholderTextColor="#8D9494"
+            trigger="focus"
+            action="replace-inner"
+            target="container1"
+            href="#dateFieldFocused"
+          >
+            <behavior
+              trigger="focus"
+              action="append"
+              target="container1"
+              href="#dateFieldFocused2"
+            />
+          </date-field>
+        </view>
       </view>
       <view hide="true">
         <text id="field1Focused" style="Tip">Field 1 focused</text>
         <text id="field2Focused" style="Tip">Field 2 focused</text>
         <text id="area1Focused" style="Tip">Area 1 focused</text>
         <text id="area2Focused" style="Tip">Area 2 focused</text>
+        <text id="pickerFocused" style="Tip">Picker field focused</text>
+        <text id="pickerFocused2" style="Tip">!</text>
+        <text id="dateFieldFocused" style="Tip">Date field focused</text>
+        <text id="dateFieldFocused2" style="Tip">!</text>
       </view>
     </body>
   </screen>
