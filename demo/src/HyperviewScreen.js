@@ -9,6 +9,7 @@
 import React, { PureComponent } from 'react';
 import HandleBack from './HandleBack';
 import Hyperview from 'hyperview';
+import {View, Text} from 'react-native';
 import moment from 'moment';
 import { MAIN_STACK_NAME, MODAL_STACK_NAME } from './constants';
 
@@ -45,7 +46,7 @@ export default class HyperviewScreen extends PureComponent {
 
   formatDate = (date, format) => moment(date).format(format);
 
-  /** 
+  /**
    * fetch function used by Hyperview screens. By default, it adds
    * header to prevent caching requests.
    */
@@ -63,9 +64,19 @@ export default class HyperviewScreen extends PureComponent {
     });
   }
 
+  ErrorScreen = () => {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Text style={{fontSize: 24, fontWeight: 'bold', color: 'red'}}>Custom Error Screen</Text>
+        <Text style={{color: 'blue'}}>error name</Text>
+        <Text>Custom error message</Text>
+      </View>
+    )
+  };
+
   render() {
     const entrypointUrl = this.props.route.params?.url;
-
+    const {ErrorScreen} = this;
     return (
       <HandleBack>
         <Hyperview
@@ -79,6 +90,7 @@ export default class HyperviewScreen extends PureComponent {
           openModal={this.openModal}
           push={this.push}
           route={this.props.route}
+          errorScreen={ErrorScreen}
         />
       </HandleBack>
     );
