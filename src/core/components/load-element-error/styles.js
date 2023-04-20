@@ -11,16 +11,15 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-  button: {
-    alignSelf: 'center',
-    color: '#4778FF',
-  },
   btnWrapper: {
     paddingLeft: 8,
     paddingTop: 8,
   },
+  button: {
+    alignSelf: 'center',
+    color: '#4778FF',
+  },
   container: {
-    backgroundColor: '#fbb90e',
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
@@ -36,7 +35,6 @@ export default StyleSheet.create({
     paddingTop: 8,
   },
   title: {
-    color: '#ffffff',
     textAlign: 'center',
   },
 });
