@@ -36,7 +36,7 @@ export default StyleSheet.create({
     paddingTop: 8,
   },
   title: {
-    textAlign: 'center',
     color: '#ffffff',
+    textAlign: 'center',
   },
 });
