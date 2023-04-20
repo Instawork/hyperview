@@ -8,7 +8,7 @@
  *
  */
 
-import { SafeAreaView, Text, View } from 'react-native';
+import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import type { Props } from './types';
 import React from 'react';
 import styles from './styles';
@@ -28,9 +28,12 @@ const LoadElementError = (props: Props) => {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <Text style={styles.title}>{getError()}</Text>
+        <TouchableOpacity onPress={props.onPressReload}>
+          <Text style={styles.button}>Reload</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
