@@ -14,18 +14,26 @@ export default StyleSheet.create({
   button: {
     alignSelf: 'center',
     color: '#4778FF',
-    paddingHorizontal: 8,
+  },
+  btnWrapper: {
+    paddingLeft: 8,
+    paddingTop: 8,
   },
   container: {
     backgroundColor: '#fbb90e',
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
+    paddingBottom: 8,
+    paddingHorizontal: 8,
   },
   safeArea: {
     bottom: 0,
     position: 'absolute',
     width: '100%',
+  },
+  textWrapper: {
+    paddingTop: 8,
   },
   title: {
     color: '#ffffff',
