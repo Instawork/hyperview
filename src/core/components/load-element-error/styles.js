@@ -20,6 +20,7 @@ export default StyleSheet.create({
     color: '#4778FF',
   },
   container: {
+    backgroundColor: '#fbb90e',
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
@@ -36,5 +37,6 @@ export default StyleSheet.create({
   },
   title: {
     textAlign: 'center',
+    color: '#ffffff',
   },
 });
