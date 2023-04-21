@@ -4,7 +4,7 @@ title: Instawork for Business
 sidebar_label: Instawork for Business
 ---
 
-The [Instawork for Business](https://play.google.com/store/apps/details?id=com.instawork.business&hl=en_US) app allows restaurants, bars, catering, and hospitality businesses to find talented staff. One feature of the app, Instawork Gigs, allows booking on-demand workers with just a few simple taps. Users can see upcoming and past gigs or rate & leave feedback for past workers.
+The [Instawork for Business](https://apps.apple.com/us/app/instawork-be-your-own-boss/id1123819773) app allows restaurants, bars, catering, and hospitality businesses to find talented staff. One feature of the app, Instawork Gigs, allows booking on-demand workers with just a few simple taps. Users can see upcoming and past gigs or rate & leave feedback for past workers.
 
 The entire Gigs tab within the app is implemented using Hyperview.
 
