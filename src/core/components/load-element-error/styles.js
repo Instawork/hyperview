@@ -20,7 +20,7 @@ export default StyleSheet.create({
     color: '#4778FF',
   },
   container: {
-    backgroundColor: '#fbb90e',
+    backgroundColor: '#ffffff',
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
@@ -36,7 +36,6 @@ export default StyleSheet.create({
     paddingTop: 8,
   },
   title: {
-    color: '#ffffff',
     textAlign: 'center',
   },
 });
