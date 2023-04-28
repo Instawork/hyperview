@@ -286,7 +286,8 @@ export default class HyperScreen extends React.Component {
 
     if (once === 'true' && ranOnce === 'true') {
       return true;
-    } else if (once === 'true') {
+    } 
+    if (once === 'true') {
       behaviorElement.setAttribute('ran-once', 'true');
     }
 
