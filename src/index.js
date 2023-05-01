@@ -278,6 +278,22 @@ export default class HyperScreen extends React.Component {
   }
 
   /**
+   * Checks if `once` is previously applied.
+   */
+  isOncePreviouslyApplied = (behaviorElement) => {
+    const once = behaviorElement.getAttribute('once');
+    const ranOnce = behaviorElement.getAttribute('ran-once');
+    if (once === 'true' && ranOnce === 'true') {
+        return true;
+    }
+    return false;
+  }
+
+  setRanOnce = (behaviorElement) => {
+    behaviorElement.setAttribute('ran-once', 'true');
+  }
+
+  /**
    * Returns a navigation object similar to the one provided by React Navigation,
    * but connected to props injected by the parent app.
    */
@@ -344,15 +360,13 @@ export default class HyperScreen extends React.Component {
       const { behaviorElement } = opts;
       const eventName = behaviorElement.getAttribute('event-name');
       const trigger = behaviorElement.getAttribute('trigger');
-      const ranOnce = behaviorElement.getAttribute('ran-once');
-      const once = behaviorElement.getAttribute('once');
       const delay = behaviorElement.getAttribute('delay');
 
-      if (once === 'true' && ranOnce === 'true') {
+      if (this.isOncePreviouslyApplied(behaviorElement)) {
         return;
-      } if (once === 'true') {
-        behaviorElement.setAttribute('ran-once', 'true');
       }
+
+      this.setRanOnce(behaviorElement);
 
       // Check for event loop formation
       if (trigger === 'on-event') {
@@ -508,6 +522,13 @@ export default class HyperScreen extends React.Component {
   onCustomUpdate = (behaviorElement) => {
     const action = behaviorElement.getAttribute('action');
     const behavior = this.behaviorRegistry[action];
+
+    if (this.isOncePreviouslyApplied(behaviorElement)) {
+      return;
+    }
+
+    this.setRanOnce(behaviorElement);
+
     if (behavior) {
       const updateRoot = (newRoot, updateStylesheet = false) => updateStylesheet
         ? this.setState({ doc: newRoot, styles: Stylesheets.createStylesheets(newRoot) })
