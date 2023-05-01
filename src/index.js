@@ -278,20 +278,24 @@ export default class HyperScreen extends React.Component {
   }
 
   /**
-   * Checks if `once` is previously applied and sets `ran-once` if required.
+   * Checks if `once` is previously applied.
    */
   isOncePreviouslyApplied = (behaviorElement) => {
     const once = behaviorElement.getAttribute('once');
     const ranOnce = behaviorElement.getAttribute('ran-once');
-
     if (once === 'true' && ranOnce === 'true') {
-      return true;
-    } 
-    if (once === 'true') {
+        return true;
+    }
+    return false;
+  }
+
+  /**
+   * Sets `ran-once` if applicable.
+   */
+  setOnceIfApplicable = (behaviorElement) => {
+    if (!this.isOncePreviouslyApplied(behaviorElement)) {
       behaviorElement.setAttribute('ran-once', 'true');
     }
-
-    return false;
   }
 
   /**
@@ -366,6 +370,8 @@ export default class HyperScreen extends React.Component {
       if (this.isOncePreviouslyApplied(behaviorElement)) {
         return;
       }
+
+      this.setOnceIfApplicable(behaviorElement);
 
       // Check for event loop formation
       if (trigger === 'on-event') {
@@ -525,6 +531,8 @@ export default class HyperScreen extends React.Component {
     if (this.isOncePreviouslyApplied(behaviorElement)) {
       return;
     }
+
+    this.setOnceIfApplicable(behaviorElement);
 
     if (behavior) {
       const updateRoot = (newRoot, updateStylesheet = false) => updateStylesheet
