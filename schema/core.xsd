@@ -1062,6 +1062,7 @@
       <xs:attribute name="type" type="xs:string" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
       <xs:attribute name="text-content-type" type="hv:text-content-type" />
+      <xs:attribute name="change" type="xs:string" />
     </xs:complexType>
   </xs:element>
 
@@ -1115,6 +1116,8 @@
       <xs:attribute name="style" type="hv:styleList" />
       <xs:attribute name="selected" type="xs:boolean" />
       <xs:attribute name="value" type="xs:string" />
+      <xs:attribute name="select" type="xs:string" />
+      <xs:attribute name="deselect" type="xs:string" />
     </xs:complexType>
   </xs:element>
 
