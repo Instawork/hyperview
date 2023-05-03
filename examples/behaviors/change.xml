@@ -120,28 +120,28 @@
         <view style="FormGroup">
           <text style="Label">Input field 1</text>
           <text-field
-            action="replace-inner"
-            href="#field1Changed"
             name="text"
             placeholder="First name"
             placeholderTextColor="#8D9494"
             style="Input"
-            target="container1"
-            trigger="change"
-          />
+          >
+          <behavior trigger="change" action="dispatch-event" event-name="111" />
+          </text-field>
+        </view>
+        <view>
+          <behavior trigger="on-event" event-name="111" action="replace-inner" href="#field1Changed" target="container1" />
+          <behavior trigger="on-event" event-name="222" action="replace-inner" href="#field2Changed" target="container1" />
         </view>
         <view style="FormGroup">
           <text style="Label">Input field 2</text>
           <text-field
-            action="replace-inner"
-            href="#field2Changed"
             name="text"
             placeholder="Last name"
             placeholderTextColor="#8D9494"
             style="Input"
-            target="container1"
-            trigger="change"
-          />
+          >
+            <behavior trigger="change" action="dispatch-event" event-name="222" />
+          </text-field>
         </view>
         <view style="FormGroup">
           <text style="Label">Input field with auto-focus</text>
