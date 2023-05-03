@@ -1,0 +1,16 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen id="help">
+    <styles>
+      <style id="Body" backgroundColor="white" flex="1" paddingTop="24" />
+      <style id="Main" flex="1" marginBottom="40" />
+      <style id="Text" color="red" backgroundColor="blue" padding="16" borderRadius="8" />
+    </styles>
+    <body style="Body" safe-area="true">
+        <text
+          style="Text"
+        >
+          HELP SCREEN
+        </text>
+    </body>
+  </screen>
+</doc>
