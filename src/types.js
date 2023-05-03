@@ -27,6 +27,10 @@ export const LOCAL_NAME = {
   ITEMS: 'items',
   LIST: 'list',
   MODIFIER: 'modifier',
+  NAV_FOOTER: 'nav-footer',
+  NAV_HEADER: 'nav-header',
+  NAV_ROUTE: 'nav-route',
+  NAVIGATOR: 'navigator',
   OPTION: 'option',
   PICKER_FIELD: 'picker-field',
   PICKER_ITEM: 'picker-item',
@@ -418,3 +422,9 @@ export type NavigationProps = {|
 |};
 
 export const ON_EVENT_DISPATCH = 'hyperview:on-event';
+
+export const NAVIGATOR_TYPE = {
+  STACK: 'stack',
+  BOTTOM_TAB: 'bottom-tab',
+  TOP_TAB: 'top-tab',
+};
