@@ -11,7 +11,6 @@ import React, { PureComponent } from 'react';
 import HyperviewRoute from 'hyperview/src/hv-nav-route';
 import moment from 'moment';
 import { NavProvider } from 'hyperview/src/hv-nav-context';
-import { View } from 'react-native';
 
 export default class HyperviewNavScreen extends PureComponent {
   formatDate = (date, format) => moment(date).format(format);
@@ -21,7 +20,7 @@ export default class HyperviewNavScreen extends PureComponent {
    * header to prevent caching requests.
    */
   fetchWrapper = (input, init = { headers: {} }) => {
-    console.log('--->fetchWrapper', input);
+    // console.log('--->fetchWrapper', input);
     return fetch(input, {
       ...init,
       mode: "cors",
@@ -40,13 +39,24 @@ export default class HyperviewNavScreen extends PureComponent {
 
     return (
       // <HandleBack>
-      <View style={{ flex: 1, alignItems: "center" }}>
         <HyperviewRoute
-            url={entrypointUrl}
+            entrypointUrl={entrypointUrl}
             fetch={this.fetchWrapper}
             formatDate={this.formatDate}
+
+            //TODO
+          // back={this.goBack}
+          // closeModal={this.closeModal}
+          // //entrypointUrl={entrypointUrl}
+          // //fetch={this.fetchWrapper}
+          // //formatDate={this.formatDate}
+          // navigate={this.navigate}
+          // navigation={this.props.navigation}
+          // openModal={this.openModal}
+          // push={this.push}
+          // route={this.props.route}
+
           />
-        </View>
         // </HandleBack>
     );
   }

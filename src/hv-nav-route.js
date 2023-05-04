@@ -6,7 +6,7 @@ import { getProp, getRootNode } from 'hyperview/src/navigator-helpers';
 import { LOCAL_NAME } from 'hyperview/src/types';
 
 import React from 'react';
-import { View, Text } from 'react-native';
+import { ActivityIndicator, View, Text } from 'react-native';
 
 /**
  * HyperviewRoute provides logic to process a <screen> or <navigator> element as the first child of a <doc> element.
@@ -30,13 +30,25 @@ export default class HyperviewRoute extends React.Component {
 
   load = async () => {
     try {
-      const url = getProp(this.props, 'url');
+      const url =
+        getProp(this.props, 'entrypointUrl') || getProp(this.props, 'url');
       const fetch = getProp(this.props, 'fetch', this.context);
       const onParseBefore = getProp(this.props, 'onParseBefore', this.context);
       const onParseAfter = getProp(this.props, 'onParseAfter', this.context);
       const formatDate = getProp(this.props, 'formatDate', this.context);
 
-      // console.log('HyperviewRoute load', url, fetch);
+      // console.log('route', this.context?.parent?.state?.id);
+      // TODO
+      // back={this.goBack}
+      // closeModal={this.closeModal}
+      // entrypointUrl={entrypointUrl}
+      // fetch={this.fetchWrapper}
+      // formatDate={this.formatDate}
+      // navigate={this.navigate}
+      // navigation={this.props.navigation}
+      // openModal={this.openModal}
+      // push={this.push}
+      // route={this.props.route}
 
       this.parser = new Dom.Parser(fetch, onParseBefore, onParseAfter);
       const { doc, staleHeaderType } = await this.parser.loadDocument(url);
@@ -76,13 +88,14 @@ export default class HyperviewRoute extends React.Component {
   render() {
     if (!this.state || !this.state.doc) {
       return (
-        <View style={{ flex: 1 }}>
+        <View>
           <Text>RT WAITING</Text>
+          <ActivityIndicator />
         </View>
       );
     } else if (this.state?.error) {
       return (
-        <View style={{ flex: 1 }}>
+        <View>
           <Text>RT ERROR:{this.state?.error ?? this.state.url}</Text>
         </View>
       );
@@ -90,7 +103,7 @@ export default class HyperviewRoute extends React.Component {
 
     if (!this.state?.firstNode) {
       return (
-        <View style={{ flex: 1 }}>
+        <View>
           <Text>RT NO FIRST NODE</Text>
         </View>
       );
@@ -100,13 +113,11 @@ export default class HyperviewRoute extends React.Component {
     switch (firstNode.nodeName) {
       case LOCAL_NAME.NAVIGATOR:
         return (
-          <View>
-            <HyperNavigator
-              fetch={this.state.fetch}
-              formatDate={this.state.formatDate}
-              doc={firstNode}
-            />
-          </View>
+          <HyperNavigator
+            fetch={this.state.fetch}
+            formatDate={this.state.formatDate}
+            doc={firstNode}
+          />
         );
       case LOCAL_NAME.SCREEN:
         return (

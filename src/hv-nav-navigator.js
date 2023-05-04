@@ -14,7 +14,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import React from 'react';
-import { View, Text } from 'react-native';
+import { ActivityIndicator, View, Text } from 'react-native';
 
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -167,13 +167,14 @@ export default class HyperviewNavigator extends React.Component {
   render() {
     if (!this.state) {
       return (
-        <View style={{ flex: 1 }}>
+        <View>
           <Text>NAV WAITING</Text>
+          <ActivityIndicator />
         </View>
       );
     } else if (this.state?.error) {
       return (
-        <View style={{ flex: 1 }}>
+        <View>
           <Text>NAV ERROR:{this.state.error.message}</Text>
         </View>
       );
@@ -184,7 +185,7 @@ export default class HyperviewNavigator extends React.Component {
     });
     if (!navigator) {
       return (
-        <View style={{ flex: 1 }}>
+        <View>
           <Text>NAV ERROR: No Navigator</Text>
         </View>
       );
