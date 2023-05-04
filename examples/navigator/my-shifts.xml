@@ -3,13 +3,19 @@
     <styles>
       <style id="Body" backgroundColor="#d8e6ff" flex="1" paddingTop="24" />
       <style id="Text" color="white" backgroundColor="#a8c0ff" padding="16" borderRadius="8" />
+      <style id="Link" color="blue" backgroundColor="#a8c0ff" padding="16" />
     </styles>
     <body style="Body" safe-area="true">
-        <text
-          style="Text"
-        >
+      <text
+        style="Link"
+        action="new"
+        href="#messages">
+        HELP
+      </text>
+      <text
+        style="Text">
           MY SHIFTS SCREEN
-        </text>
+      </text>
     </body>
   </screen>
 </doc>
