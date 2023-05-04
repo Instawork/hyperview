@@ -7,6 +7,7 @@
  */
 
 import React, { PureComponent } from 'react';
+import * as Contexts from 'hyperview/src/contexts';
 // import HandleBack from './HandleBack';
 import HyperviewRoute from 'hyperview/src/hv-nav-route';
 import moment from 'moment';
@@ -39,24 +40,29 @@ export default class HyperviewNavScreen extends PureComponent {
 
     return (
       // <HandleBack>
-        <HyperviewRoute
-            entrypointUrl={entrypointUrl}
-            fetch={this.fetchWrapper}
-            formatDate={this.formatDate}
+      <Contexts.DateFormatContext.Provider value={this.formatDate}>
+        <Contexts.FetchContext.Provider value={{
+          fetch:this.fetchWrapper,
+          onParseBefore: null,
+          onParseAfter: null}}>
+          <HyperviewRoute
+              entrypointUrl={entrypointUrl}
 
-            //TODO
-          // back={this.goBack}
-          // closeModal={this.closeModal}
-          // //entrypointUrl={entrypointUrl}
-          // //fetch={this.fetchWrapper}
-          // //formatDate={this.formatDate}
-          // navigate={this.navigate}
-          // navigation={this.props.navigation}
-          // openModal={this.openModal}
-          // push={this.push}
-          // route={this.props.route}
+              //TODO
+            // back={this.goBack}
+            // closeModal={this.closeModal}
+            // //entrypointUrl={entrypointUrl}
+            // //fetch={this.fetchWrapper}
+            // //formatDate={this.formatDate}
+            // navigate={this.navigate}
+            // navigation={this.props.navigation}
+            // openModal={this.openModal}
+            // push={this.push}
+            // route={this.props.route}
 
-          />
+            />
+          </Contexts.FetchContext.Provider>
+          </Contexts.DateFormatContext.Provider>
         // </HandleBack>
     );
   }

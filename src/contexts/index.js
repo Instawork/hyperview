@@ -20,3 +20,13 @@ export const DateFormatContext = React.createContext<
 export const RefreshControlComponentContext = React.createContext<
   ComponentType<*>,
 >(component => component);
+
+export const FetchContext = React.createContext<{
+  fetch: (input: String, init: ?Object) => string,
+  onParseBefore: (url: String) => void,
+  onParseAfter: (url: String) => void,
+}>(
+  fetch => fetch,
+  onParseBefore => onParseBefore,
+  onParseAfter => onParseAfter,
+);

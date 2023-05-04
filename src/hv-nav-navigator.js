@@ -4,17 +4,16 @@ import {
   getProp,
 } from 'hyperview/src/navigator-helpers';
 import HyperviewRoute from 'hyperview/src/hv-nav-route';
-import HyperScreen from 'hyperview';
-import HyperNavigator from 'hyperview/src/hv-nav-navigator';
-import NavContext, { NavProvider } from './hv-nav-context';
-import { LOCAL_NAME, NAVIGATOR_TYPE } from 'hyperview/src/types';
+// import HyperScreen from 'hyperview';
+// // import NavContext, { NavProvider } from './hv-nav-context';
+import { LOCAL_NAME, NAVIGATOR_TYPE, Document } from 'hyperview/src/types';
 
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
-import React from 'react';
-import { ActivityIndicator, View, Text } from 'react-native';
+import { Component } from 'react';
+import { View, Text } from 'react-native';
 
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -23,64 +22,19 @@ const TopTab = createMaterialTopTabNavigator();
 /**
  * HyperviewNavigator provides logic to process a <navigator> element.
  * Props:
- * - fetch: the fetch function to use to load the document
- * - onParseBefore: a function to call before parsing the document
- * - onParseAfter: a function to call after parsing the document
- * - formatDate: a function to format dates
  * - parent: the parent component
  * - doc: the document to render
  * */
-export default class HyperviewNavigator extends React.Component {
+export default class HyperviewNavigator extends Component {
   constructor(props) {
     super(props);
   }
 
-  static contextType = NavContext;
+  // static contextType = NavContext;
 
-  componentDidMount() {
-    try {
-      const doc = getProp(this.props, 'doc');
-      const fetch = getProp(this.props, 'fetch', this.context);
-      const onParseBefore = getProp(this.props, 'onParseBefore', this.context);
-      const onParseAfter = getProp(this.props, 'onParseAfter', this.context);
-      const formatDate = getProp(this.props, 'formatDate', this.context);
-
-      const id = doc.getAttribute('id');
-      const type = doc.getAttribute('type');
-      const initialNode = getInitialNavRouteNode(doc);
-      const initialId = initialNode.getAttribute('id');
-
-      this.setState({
-        doc,
-        fetch,
-        onParseBefore,
-        onParseAfter,
-        formatDate,
-        id,
-        type,
-        initialNode,
-        initialId,
-        error: null,
-      });
-    } catch (err) {
-      this.setState({
-        doc: null,
-        fetch: null,
-        onParseBefore: null,
-        onParseAfter: null,
-        formatDate: null,
-        id: null,
-        type: null,
-        initialNode: null,
-        initialId: null,
-        error: err,
-      });
-    }
-  }
-
-  buildScreens = (navigator: Navigator) => {
+  buildScreens = (doc: Document, navigator: Navigator) => {
     const screens = [];
-    const elements = getChildElements(this.state.doc);
+    const elements = getChildElements(doc);
     for (let i = 0; i < elements.length; i++) {
       const node = elements[i];
       let name = '';
@@ -97,7 +51,7 @@ export default class HyperviewNavigator extends React.Component {
         case LOCAL_NAME.NAVIGATOR:
           component = HyperNavigator;
           initialParams = {
-            doc: this.state.doc,
+            doc: doc,
           };
           break;
         case LOCAL_NAME.NAV_ROUTE:
@@ -122,10 +76,16 @@ export default class HyperviewNavigator extends React.Component {
     return screens;
   };
 
-  buildNavigator = (id: String, initialRouteName: String, options: Object) => {
+  buildNavigator = (options: Object) => {
+    const doc = getProp(this.props, 'doc');
+    const id = doc.getAttribute('id');
+    const type = doc.getAttribute('type');
+    const initialNode = getInitialNavRouteNode(doc);
+    const initialId = initialNode.getAttribute('id');
+
     let screens;
     let navigator;
-    switch (this.state.type) {
+    switch (type) {
       case NAVIGATOR_TYPE.STACK:
         navigator = Stack;
         break;
@@ -138,58 +98,49 @@ export default class HyperviewNavigator extends React.Component {
       default:
         return null;
     }
-    screens = this.buildScreens(navigator);
+    screens = this.buildScreens(doc, navigator);
     // console.log('buildNavigator', screens.length, initialRouteName);
     if (screens.length === 0) {
       return null;
     }
 
-    const providerValue = {
-      fetch: this.state.fetch,
-      formatDate: this.state.formatDate,
-      parent: this,
-    };
-
     return (
-      <NavProvider value={providerValue}>
-        <navigator.Navigator
-          id={id}
-          initialRouteName={initialRouteName}
-          screenOptions={options}
-        >
-          {screens}
-        </navigator.Navigator>
-      </NavProvider>
+      // <NavProvider value={{ parent: this }}>
+      <navigator.Navigator
+        id={id}
+        initialRouteName={initialId}
+        screenOptions={options}
+      >
+        {screens}
+      </navigator.Navigator>
+      // </NavProvider>
     );
     return null;
   };
 
   render() {
-    if (!this.state) {
+    try {
+      const navigator = this.buildNavigator({
+        headerShown: true,
+      });
+      if (!navigator) {
+        return (
+          <View
+            style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+          >
+            <Text>NAV ERROR: No Navigator</Text>
+          </View>
+        );
+      }
+      return navigator;
+    } catch (err) {
       return (
-        <View>
-          <Text>NAV WAITING</Text>
-          <ActivityIndicator />
-        </View>
-      );
-    } else if (this.state?.error) {
-      return (
-        <View>
-          <Text>NAV ERROR:{this.state.error.message}</Text>
+        <View
+          style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+        >
+          <Text>NAV ERROR: {err.message}</Text>
         </View>
       );
     }
-
-    const navigator = this.buildNavigator(this.state.id, this.state.initialId, {
-      headerShown: true,
-    });
-    if (!navigator) {
-      return (
-        <View>
-          <Text>NAV ERROR: No Navigator</Text>
-        </View>
-      );
-    }
-    return navigator;
   }
 }
