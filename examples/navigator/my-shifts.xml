@@ -1,9 +1,8 @@
 <doc xmlns="https://hyperview.org/hyperview">
   <screen id="my-shifts">
     <styles>
-      <style id="Body" backgroundColor="#e9f0ff" flex="1" paddingTop="24" />
-      <style id="Main" flex="1" marginBottom="40" />
-      <style id="Text" color="white" backgroundColor="#8aa7fc" padding="16" borderRadius="8" />
+      <style id="Body" backgroundColor="#d8e6ff" flex="1" paddingTop="24" />
+      <style id="Text" color="white" backgroundColor="#a8c0ff" padding="16" borderRadius="8" />
     </styles>
     <body style="Body" safe-area="true">
         <text

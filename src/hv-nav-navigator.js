@@ -4,7 +4,6 @@ import {
   getProp,
 } from 'hyperview/src/navigator-helpers';
 import HyperviewRoute from 'hyperview/src/hv-nav-route';
-// import HyperScreen from 'hyperview';
 // // import NavContext, { NavProvider } from './hv-nav-context';
 import { LOCAL_NAME, NAVIGATOR_TYPE, Document } from 'hyperview/src/types';
 

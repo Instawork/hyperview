@@ -51,9 +51,6 @@ export default class HyperviewNavScreen extends PureComponent {
               //TODO
             // back={this.goBack}
             // closeModal={this.closeModal}
-            // //entrypointUrl={entrypointUrl}
-            // //fetch={this.fetchWrapper}
-            // //formatDate={this.formatDate}
             // navigate={this.navigate}
             // navigation={this.props.navigation}
             // openModal={this.openModal}
@@ -62,7 +59,7 @@ export default class HyperviewNavScreen extends PureComponent {
 
             />
           </Contexts.FetchContext.Provider>
-          </Contexts.DateFormatContext.Provider>
+        </Contexts.DateFormatContext.Provider>
         // </HandleBack>
     );
   }

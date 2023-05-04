@@ -1,6 +1,6 @@
 import * as Dom from 'hyperview/src/services/dom';
 import Hyperview from 'hyperview';
-import { FetchContext } from 'hyperview/src/contexts';
+import * as Contexts from 'hyperview/src/contexts';
 import HyperNavigator from 'hyperview/src/hv-nav-navigator';
 import { getProp, getRootNode } from 'hyperview/src/navigator-helpers';
 import { LOCAL_NAME } from 'hyperview/src/types';
@@ -18,7 +18,7 @@ export default class HyperviewRoute extends Component {
     super(props);
   }
 
-  static contextType = FetchContext;
+  static contextType = Contexts.FetchContext;
 
   componentDidMount() {
     this.load();
@@ -66,8 +66,8 @@ export default class HyperviewRoute extends Component {
         </View>
       );
     }
-    const firstNode = getRootNode(this.state.doc);
 
+    const firstNode = getRootNode(this.state.doc);
     if (!firstNode) {
       return (
         <View
@@ -83,22 +83,23 @@ export default class HyperviewRoute extends Component {
         return <HyperNavigator doc={firstNode} />;
       case LOCAL_NAME.SCREEN:
         return (
-          <View>
-            <Text>SCREEN</Text>
-            {/* TODO */}
-            {/* <Hyperview
-              back={this.goBack}
-              closeModal={this.closeModal}
-              entrypointUrl={entrypointUrl}
-              fetch={this.fetchWrapper}
-              formatDate={this.formatDate}
-              navigate={this.navigate}
-              navigation={this.props.navigation}
-              openModal={this.openModal}
-              push={this.push}
-              route={this.props.route}
-            /> */}
-          </View>
+          <Contexts.DateFormatContext.Consumer>
+            {formatter => (
+              <Hyperview
+                entrypointUrl={firstNode.getAttribute('href')}
+                fetch={this.context.fetch}
+                formatDate={formatter}
+                // back={actions.back}
+                // closeModal={actions.close}
+                // navigate={actions.navigate}
+                // openModal={actions.openModal}
+                // push={actions.push}
+                push={this.props.navigation?.push}
+                navigation={this.props.navigation}
+                route={this.props.route}
+              />
+            )}
+          </Contexts.DateFormatContext.Consumer>
         );
       default:
         return (
