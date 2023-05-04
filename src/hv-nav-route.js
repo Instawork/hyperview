@@ -1,23 +1,28 @@
-import * as Dom from 'hyperview/src/services/dom';
-import Hyperview from 'hyperview';
-import * as Contexts from 'hyperview/src/contexts';
-import HyperNavigator from 'hyperview/src/hv-nav-navigator';
-import { getProp, getRootNode } from 'hyperview/src/navigator-helpers';
-import { LOCAL_NAME } from 'hyperview/src/types';
+// @flow
 
-import { Component } from 'react';
-import { ActivityIndicator, View, Text } from 'react-native';
+/**
+ * Copyright (c) Garuda Labs, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
+import * as Contexts from 'hyperview/src/contexts';
+import * as Dom from 'hyperview/src/services/dom';
+import { ActivityIndicator, Text, View } from 'react-native';
+import React, { PureComponent } from 'react';
+import { getProp, getRootNode } from 'hyperview/src/navigator-helpers';
+import HyperNavigator from 'hyperview/src/hv-nav-navigator';
+import Hyperview from 'hyperview';
+import { LOCAL_NAME } from 'hyperview/src/types';
 
 /**
  * HyperviewRoute provides logic to process a <screen> or <navigator> element as the first child of a <doc> element.
  * Props:
  * - url or entrypointUrl: the url of the document to load
  */
-export default class HyperviewRoute extends Component {
-  constructor(props) {
-    super(props);
-  }
-
+export default class HyperviewRoute extends PureComponent {
   static contextType = Contexts.FetchContext;
 
   componentDidMount() {
@@ -34,7 +39,7 @@ export default class HyperviewRoute extends Component {
         this.context.onParseBefore,
         this.context.onParseAfter,
       );
-      const { doc, staleHeaderType } = await this.parser.loadDocument(url);
+      const { doc } = await this.parser.loadDocument(url);
       this.setState({
         doc,
         error: null,
@@ -51,16 +56,17 @@ export default class HyperviewRoute extends Component {
     if (!this.state || (!this.state.doc && !this.state.error)) {
       return (
         <View
-          style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+          style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}
         >
           <Text>ROUTE WAITING</Text>
           <ActivityIndicator />
         </View>
       );
-    } else if (this.state.error) {
+    }
+    if (this.state.error) {
       return (
         <View
-          style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+          style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}
         >
           <Text>ROUTE ERROR: {this.state.error.message ?? this.state.url}</Text>
         </View>
@@ -71,7 +77,7 @@ export default class HyperviewRoute extends Component {
     if (!firstNode) {
       return (
         <View
-          style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+          style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}
         >
           <Text>ROUTE ERROR: no first node</Text>
         </View>
@@ -94,8 +100,8 @@ export default class HyperviewRoute extends Component {
                 // navigate={actions.navigate}
                 // openModal={actions.openModal}
                 // push={actions.push}
-                push={this.props.navigation?.push}
                 navigation={this.props.navigation}
+                push={this.props.navigation?.push}
                 route={this.props.route}
               />
             )}
@@ -104,7 +110,7 @@ export default class HyperviewRoute extends Component {
       default:
         return (
           <View
-            style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+            style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}
           >
             <Text>ROUTE ERROR: UNKNOWN TYPE: {firstNode?.nodeName}</Text>
           </View>

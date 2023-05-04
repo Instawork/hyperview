@@ -1,18 +1,27 @@
+// @flow
+
+/**
+ * Copyright (c) Garuda Labs, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
+import { Document, LOCAL_NAME, NAVIGATOR_TYPE } from 'hyperview/src/types';
+import React, { PureComponent } from 'react';
+import { Text, View } from 'react-native';
 import {
-  getInitialNavRouteNode,
   getChildElements,
+  getInitialNavRouteNode,
   getProp,
 } from 'hyperview/src/navigator-helpers';
 import HyperviewRoute from 'hyperview/src/hv-nav-route';
-// // import NavContext, { NavProvider } from './hv-nav-context';
-import { LOCAL_NAME, NAVIGATOR_TYPE, Document } from 'hyperview/src/types';
-
-import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 
-import { Component } from 'react';
-import { View, Text } from 'react-native';
+// // import NavContext, { NavProvider } from './hv-nav-context';
 
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -24,17 +33,13 @@ const TopTab = createMaterialTopTabNavigator();
  * - parent: the parent component
  * - doc: the document to render
  * */
-export default class HyperviewNavigator extends Component {
-  constructor(props) {
-    super(props);
-  }
-
+export default class HyperviewNavigator extends PureComponent {
   // static contextType = NavContext;
 
   buildScreens = (doc: Document, navigator: Navigator) => {
     const screens = [];
     const elements = getChildElements(doc);
-    for (let i = 0; i < elements.length; i++) {
+    for (let i = 0; i < elements.length; i += 1) {
       const node = elements[i];
       let name = '';
       if (
@@ -48,9 +53,9 @@ export default class HyperviewNavigator extends Component {
       let initialParams = {};
       switch (node.nodeName) {
         case LOCAL_NAME.NAVIGATOR:
-          component = HyperNavigator;
+          component = HyperviewNavigator;
           initialParams = {
-            doc: doc,
+            doc,
           };
           break;
         case LOCAL_NAME.NAV_ROUTE:
@@ -65,10 +70,10 @@ export default class HyperviewNavigator extends Component {
 
       screens.push(
         <navigator.Screen
-          name={name}
           key={name}
-          initialParams={initialParams}
           component={component}
+          initialParams={initialParams}
+          name={name}
         />,
       );
     }
@@ -82,7 +87,6 @@ export default class HyperviewNavigator extends Component {
     const initialNode = getInitialNavRouteNode(doc);
     const initialId = initialNode.getAttribute('id');
 
-    let screens;
     let navigator;
     switch (type) {
       case NAVIGATOR_TYPE.STACK:
@@ -97,7 +101,7 @@ export default class HyperviewNavigator extends Component {
       default:
         return null;
     }
-    screens = this.buildScreens(doc, navigator);
+    const screens = this.buildScreens(doc, navigator);
     // console.log('buildNavigator', screens.length, initialRouteName);
     if (screens.length === 0) {
       return null;
@@ -114,7 +118,6 @@ export default class HyperviewNavigator extends Component {
       </navigator.Navigator>
       // </NavProvider>
     );
-    return null;
   };
 
   render() {
@@ -125,7 +128,7 @@ export default class HyperviewNavigator extends Component {
       if (!navigator) {
         return (
           <View
-            style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+            style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}
           >
             <Text>NAV ERROR: No Navigator</Text>
           </View>
@@ -135,7 +138,7 @@ export default class HyperviewNavigator extends Component {
     } catch (err) {
       return (
         <View
-          style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+          style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}
         >
           <Text>NAV ERROR: {err.message}</Text>
         </View>
