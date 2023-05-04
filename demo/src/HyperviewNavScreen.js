@@ -11,7 +11,6 @@ import * as Contexts from 'hyperview/src/contexts';
 // import HandleBack from './HandleBack';
 import HyperviewRoute from 'hyperview/src/hv-nav-route';
 import moment from 'moment';
-import { NavProvider } from 'hyperview/src/hv-nav-context';
 
 export default class HyperviewNavScreen extends PureComponent {
   formatDate = (date, format) => moment(date).format(format);

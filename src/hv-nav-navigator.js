@@ -21,8 +21,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 
-// // import NavContext, { NavProvider } from './hv-nav-context';
-
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
 const TopTab = createMaterialTopTabNavigator();
@@ -34,7 +32,6 @@ const TopTab = createMaterialTopTabNavigator();
  * - doc: the document to render
  * */
 export default class HyperviewNavigator extends PureComponent {
-  // static contextType = NavContext;
 
   buildScreens = (doc: Document, navigator: Navigator) => {
     const screens = [];
@@ -108,7 +105,6 @@ export default class HyperviewNavigator extends PureComponent {
     }
 
     return (
-      // <NavProvider value={{ parent: this }}>
       <navigator.Navigator
         id={id}
         initialRouteName={initialId}
@@ -116,7 +112,6 @@ export default class HyperviewNavigator extends PureComponent {
       >
         {screens}
       </navigator.Navigator>
-      // </NavProvider>
     );
   };
 
