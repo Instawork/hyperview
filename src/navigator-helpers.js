@@ -1,11 +1,30 @@
+// @flow
+
+/**
+ * Copyright (c) Garuda Labs, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
+import * as Errors from 'hyperview/src/services/dom/errors';
 import {
-  LOCAL_NAME,
-  LocalName,
   Document,
   Element,
+  LOCAL_NAME,
+  LocalName,
   Node,
 } from 'hyperview/src/types';
 import { getFirstTag } from 'hyperview/src/services/dom/helpers';
+
+export const getFirstchild = (node: Node): Node => {
+  let child: Node = node.firstChild;
+  while (child.nodeType !== 1) {
+    child = child.nextSibling;
+  }
+  return child;
+};
 
 export const getRootNode = (
   doc: Document,
@@ -18,19 +37,22 @@ export const getRootNode = (
   return getFirstchild(docElement);
 };
 
-export const getFirstchild = (node: Node): Node => {
-  var child: Node = node.firstChild;
-  while (child.nodeType != 1) {
-    child = child.nextSibling;
+export const getChildElements = (doc: Document): Element[] => {
+  const elements: Element[] = [];
+  for (let i: Number = 0; i < doc.childNodes.length; i += 1) {
+    const node: Node = doc.childNodes[i];
+    if (node.nodeType === 1) {
+      elements.push(node);
+    }
   }
-  return child;
+  return elements;
 };
 
 export const getInitialNavRouteNode = (doc: Document): Node => {
   let firstNavChild: Node = null;
   let initialChild: Node = null;
   const elements: Element[] = getChildElements(doc);
-  for (let i: Number = 0; i < elements.length; i++) {
+  for (let i: Number = 0; i < elements.length; i += 1) {
     const node: Node = elements[i];
     if (
       node.nodeName === LOCAL_NAME.NAVIGATOR ||
@@ -52,18 +74,6 @@ export const getInitialNavRouteNode = (doc: Document): Node => {
     }
   }
   return initialChild || firstNavChild;
-};
-
-export const getChildElements = (doc: Document): Element[] => {
-  const elements: Element[] = [];
-  for (let i: Number = 0; i < doc.childNodes.length; i++) {
-    const node: Node = doc.childNodes[i];
-    if (node.nodeType !== 1) {
-      continue;
-    }
-    elements.push(node);
-  }
-  return elements;
 };
 
 export const getProp = (
