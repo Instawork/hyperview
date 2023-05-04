@@ -53,6 +53,9 @@ export default class LoadError extends PureComponent<Props> {
         <TouchableOpacity onPress={this.props.onPressReload}>
           <Text style={styles.button}>Reload</Text>
         </TouchableOpacity>
+        <TouchableOpacity onPress={this.props.back}>
+          <Text style={styles.button}>Back</Text>
+        </TouchableOpacity>
       </View>
     );
   };
