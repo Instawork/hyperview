@@ -2,6 +2,6 @@
   <navigator id="shifts" type="top-tab">
     <nav-header/>
     <nav-route id="open-shifts" href="http://0.0.0.0:8085/navigator/open-shifts.xml" />
-    <nav-route id="my-shifts" href="http://0.0.0.0:8085/navigator/my-shifts.xml" intial="true"/>
+    <nav-route id="my-shifts" href="http://0.0.0.0:8085/navigator/my-shifts.xml" initial="true"/>
   </navigator>
 </doc>
