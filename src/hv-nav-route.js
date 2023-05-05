@@ -23,8 +23,6 @@ import { LOCAL_NAME } from 'hyperview/src/types';
  * - url or entrypointUrl: the url of the document to load
  */
 export default class HyperviewRoute extends PureComponent {
-  static contextType = Contexts.FetchContext;
-
   componentDidMount() {
     this.load();
   }
@@ -101,7 +99,7 @@ export default class HyperviewRoute extends PureComponent {
                 // openModal={actions.openModal}
                 // push={actions.push}
                 navigation={this.props.navigation}
-                push={this.props.navigation?.push}
+                // push={this.props.navigation?.push}
                 route={this.props.route}
               />
             )}
@@ -118,3 +116,5 @@ export default class HyperviewRoute extends PureComponent {
     }
   }
 }
+
+HyperviewRoute.contextType = Contexts.FetchContext;
