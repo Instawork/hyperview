@@ -19,6 +19,13 @@ const QUERY_SEPARATOR = '?';
 
 const getHrefKey = (href: string): string => href.split(QUERY_SEPARATOR)[0];
 
+const getHrefFragment = (href: string): string => {
+  if (!href.startsWith(ANCHOR_ID_SEPARATOR)) {
+    return href;
+  }
+  return href.slice(1);
+};
+
 const routeKeys: { [string]: string } = {};
 const preloadScreens: { [number]: Element } = {};
 
@@ -68,13 +75,19 @@ export default class Navigation {
     element: Element,
     formComponents: ComponentRegistry,
     opts: BehaviorOptions,
+    target: ?string,
   ): void => {
     const { showIndicatorId, delay } = opts;
     const formData: ?FormData = getFormData(element, formComponents);
 
     // Serialize form data as query params, if present.
-    const baseUrl = UrlService.getUrlFromHref(href, this.url);
-    const url = UrlService.addFormDataToUrl(baseUrl, formData);
+    let url;
+    if (href.startsWith(ANCHOR_ID_SEPARATOR)) {
+      url = getHrefFragment(href);
+    } else {
+      const baseUrl = UrlService.getUrlFromHref(href, this.url);
+      url = UrlService.addFormDataToUrl(baseUrl, formData);
+    }
 
     let preloadScreen = null;
     if (showIndicatorId && this.document) {
@@ -91,7 +104,7 @@ export default class Navigation {
       }
     }
 
-    const routeParams = { delay, preloadScreen, url };
+    const routeParams = { delay, preloadScreen, url, target };
 
     switch (action) {
       case NAV_ACTIONS.PUSH:

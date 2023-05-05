@@ -292,6 +292,7 @@ export type HvComponentOnUpdate = (
   action: ?DOMString,
   element: Element,
   options: HvComponentOptions,
+  target: ?DOMString,
 ) => void;
 
 export type HvGetRoot = () => Document;
