@@ -1,7 +1,7 @@
 <doc xmlns="https://hyperview.org/hyperview">
   <navigator id="root" type="stack" >
     <nav-header />
-    <nav-route id="help" href="http://0.0.0.0:8085/navigator/help.xml" />
+    <nav-route id="help" href="http://0.0.0.0:8085/navigator/help.xml" modal="true" />
     <nav-route id="home" href="http://0.0.0.0:8085/navigator/home.xml" initial="true" />
     <nav-footer />
   </navigator>

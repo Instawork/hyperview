@@ -32,7 +32,6 @@ const TopTab = createMaterialTopTabNavigator();
  * - doc: the document to render
  * */
 export default class HyperviewNavigator extends PureComponent {
-
   buildScreens = (doc: Document, navigator: Navigator) => {
     const screens = [];
     const elements = getChildElements(doc);
@@ -48,6 +47,8 @@ export default class HyperviewNavigator extends PureComponent {
       // console.log('buildScreens', node.nodeName, name);
       let component = null;
       let initialParams = {};
+      const modal = node.getAttribute('modal') === 'true';
+      const options = { presentation: modal ? 'modal' : 'card' };
       switch (node.nodeName) {
         case LOCAL_NAME.NAVIGATOR:
           component = HyperviewNavigator;
@@ -71,6 +72,7 @@ export default class HyperviewNavigator extends PureComponent {
           component={component}
           initialParams={initialParams}
           name={name}
+          options={options}
         />,
       );
     }
