@@ -1,5 +1,5 @@
 <doc xmlns="https://hyperview.org/hyperview">
-  <screen id="messages">
+  <screen id="messages-screen">
     <styles>
       <style id="Body" backgroundColor="#d8e6ff" flex="1" paddingTop="24" />
       <style id="Text" color="white" backgroundColor="#a8c0ff" padding="16" borderRadius="8" />
@@ -9,7 +9,7 @@
       <text
         style="Link"
         action="new"
-        href="#help">
+        href="#help-route">
         HELP
       </text>
       <text
@@ -19,16 +19,23 @@
       <text
         style="Link"
         action="navigate"
-        target="shifts"
-        href="#my-shifts">
+        target="shifts-route"
+        href="#my-shifts-route">
         MY SHIFTS
       </text>
       <text
         style="Link"
         action="navigate"
-        target="my-shifts"
-        href="#completed-shifts">
+        target="my-shifts-route"
+        href="#completed-shifts-route">
         COMPLETED SHIFTS
+      </text>
+      <text
+        style="Link"
+        action="navigate"
+        target="my-shifts-route"
+        href="/navigator/dynamic-1.xml">
+        DYNAMIC LOAD
       </text>
     </body>
   </screen>

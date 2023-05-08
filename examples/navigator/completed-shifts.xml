@@ -1,5 +1,5 @@
 <doc xmlns="https://hyperview.org/hyperview">
-  <screen id="completed-shifts">
+  <screen id="completed-shifts-screen">
     <styles>
       <style id="Body" backgroundColor="#d8e6ff" flex="1" paddingTop="24" />
       <style id="Text" color="white" backgroundColor="#a8c0ff" padding="16" borderRadius="8" />
@@ -9,7 +9,7 @@
       <text
         style="Link"
         action="new"
-        href="#help">
+        href="#help-route">
         HELP
       </text>
       <text
