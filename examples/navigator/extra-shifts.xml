@@ -1,5 +1,5 @@
 <doc xmlns="https://hyperview.org/hyperview">
-  <screen id="messages">
+  <screen id="extra-shifts">
     <styles>
       <style id="Body" backgroundColor="#d8e6ff" flex="1" paddingTop="24" />
       <style id="Text" color="white" backgroundColor="#a8c0ff" padding="16" borderRadius="8" />
@@ -10,27 +10,12 @@
         style="Link"
         action="new"
         target="root"
-        href="#help"
-        zhref="/navigator/help.xml">
+        href="#help">
         HELP
       </text>
       <text
         style="Text">
-          MESSAGES SCREEN
-      </text>
-      <text
-        style="Link"
-        action="navigate"
-        target="shifts"
-        href="#my-shifts">
-        MY SHIFTS
-      </text>
-      <text
-        style="Link"
-        action="navigate"
-        target="my-shifts"
-        href="#completed-shifts">
-        COMPLETED SHIFTS
+          EXTRA SCREEN
       </text>
     </body>
   </screen>

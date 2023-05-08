@@ -1,8 +1,8 @@
 <doc xmlns="https://hyperview.org/hyperview">
   <navigator id="home" type="bottom-tab" >
     <nav-header/>
-    <nav-route id="shifts" href="http://0.0.0.0:8085/navigator/shifts.xml" />
-    <nav-route id="messages" href="http://0.0.0.0:8085/navigator/messages.xml" initial="true"/>
+    <nav-route id="shifts" href="/navigator/shifts.xml" />
+    <nav-route id="messages" href="/navigator/messages.xml" initial="true"/>
     <nav-footer/>
   </navigator>
 </doc>

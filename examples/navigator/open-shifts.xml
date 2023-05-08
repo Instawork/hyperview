@@ -9,12 +9,13 @@
       <text
         style="Link"
         action="new"
-        href="#messages">
+        target="root"
+        href="#help">
         HELP
       </text>
       <text
         style="Text">
-          OPEN SCREEN
+          OPEN SHIFTS SCREEN
       </text>
     </body>
   </screen>
