@@ -89,19 +89,23 @@ export default class HyperviewRoute extends PureComponent {
         return (
           <Contexts.DateFormatContext.Consumer>
             {formatter => (
-              <Hyperview
-                entrypointUrl={rootNode.getAttribute('href')}
-                fetch={this.context.fetch}
-                formatDate={formatter}
-                // back={actions.back}
-                // closeModal={actions.close}
-                // navigate={actions.navigate}
-                // openModal={actions.openModal}
-                // push={actions.push}
-                navigation={this.props.navigation}
-                // push={this.props.navigation?.push}
-                route={this.props.route}
-              />
+              <Contexts.FetchContext.Consumer>
+                {fetchContext => (
+                  <Hyperview
+                    fetch={fetchContext.fetch}
+                    formatDate={formatter}
+                    navigation={this.props.navigation}
+                    // back={actions.back}
+                    // closeModal={actions.close}
+                    // navigate={actions.navigate}
+                    // openModal={actions.openModal}
+                    // push={actions.push}
+                    route={this.props.route}
+                    // push={this.props.navigation?.push}
+                    url={rootNode.getAttribute('href')}
+                  />
+                )}
+              </Contexts.FetchContext.Consumer>
             )}
           </Contexts.DateFormatContext.Consumer>
         );
