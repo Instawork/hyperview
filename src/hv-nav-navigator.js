@@ -102,15 +102,18 @@ export default class HyperviewNavigator extends PureComponent {
     const initialId = initialNode.getAttribute('id');
 
     let navigator;
+    let backBehavior;
     switch (type) {
       case NAVIGATOR_TYPE.STACK:
         navigator = Stack;
         break;
       case NAVIGATOR_TYPE.TOP_TAB:
         navigator = TopTab;
+        backBehavior = 'none';
         break;
       case NAVIGATOR_TYPE.BOTTOM_TAB:
         navigator = BottomTab;
+        backBehavior = 'none';
         break;
       default:
         return null;
@@ -122,6 +125,7 @@ export default class HyperviewNavigator extends PureComponent {
 
     return (
       <navigator.Navigator
+        backBehavior={backBehavior}
         id={id}
         initialRouteName={initialId}
         screenOptions={options}
