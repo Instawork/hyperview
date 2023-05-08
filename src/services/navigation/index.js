@@ -12,19 +12,13 @@ import type {
   NodeList,
 } from 'hyperview/src/types';
 import { NAV_ACTIONS } from 'hyperview/src/types';
+import { Navigation as RNavigation } from '@react-navigation/native';
 import { getFormData } from 'hyperview/src/services';
 
 export const ANCHOR_ID_SEPARATOR = '#';
 const QUERY_SEPARATOR = '?';
 
 const getHrefKey = (href: string): string => href.split(QUERY_SEPARATOR)[0];
-
-const getHrefFragment = (href: string): string => {
-  if (!href.startsWith(ANCHOR_ID_SEPARATOR)) {
-    return href;
-  }
-  return href.slice(1);
-};
 
 const routeKeys: { [string]: string } = {};
 const preloadScreens: { [number]: Element } = {};
@@ -36,7 +30,11 @@ export default class Navigation {
 
   navigation: NavigationProps;
 
-  constructor(url: string, navigation: NavigationProps) {
+  constructor(
+    url: string,
+    navigation: NavigationProps,
+    navSystem: RNavigation,
+  ) {
     this.url = url;
     this.navigation = navigation;
   }
@@ -81,10 +79,8 @@ export default class Navigation {
     const formData: ?FormData = getFormData(element, formComponents);
 
     // Serialize form data as query params, if present.
-    let url;
-    if (href.startsWith(ANCHOR_ID_SEPARATOR)) {
-      url = getHrefFragment(href);
-    } else {
+    let url = href;
+    if (!href.startsWith(ANCHOR_ID_SEPARATOR)) {
       const baseUrl = UrlService.getUrlFromHref(href, this.url);
       url = UrlService.addFormDataToUrl(baseUrl, formData);
     }
@@ -104,8 +100,7 @@ export default class Navigation {
       }
     }
 
-    const routeParams = { delay, preloadScreen, url, target };
-
+    const routeParams = { delay, preloadScreen, target, url };
     switch (action) {
       case NAV_ACTIONS.PUSH:
         this.navigation.push(routeParams);
