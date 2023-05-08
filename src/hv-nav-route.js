@@ -10,9 +10,14 @@
 
 import * as Contexts from 'hyperview/src/contexts';
 import * as Dom from 'hyperview/src/services/dom';
+import * as UrlService from 'hyperview/src/services/url';
 import { ActivityIndicator, Text, View } from 'react-native';
 import React, { PureComponent } from 'react';
-import { getProp, getRootNode } from 'hyperview/src/navigator-helpers';
+import {
+  getProp,
+  getRootNode,
+  withContext,
+} from 'hyperview/src/navigator-helpers';
 import HyperNavigator from 'hyperview/src/hv-nav-navigator';
 import Hyperview from 'hyperview';
 import { LOCAL_NAME } from 'hyperview/src/types';
@@ -27,11 +32,14 @@ export default class HyperviewRoute extends PureComponent {
     this.load();
   }
 
+  processUrl = (): string => {
+    const url = getProp(this.props, 'url') || this.context.initialUrl;
+    return UrlService.getUrlFromHref(url, this.context.initialUrl);
+  };
+
   load = async () => {
     try {
-      const url =
-        getProp(this.props, 'entrypointUrl') || getProp(this.props, 'url');
-
+      const url = this.processUrl();
       this.parser = new Dom.Parser(
         this.context.fetch,
         this.context.onParseBefore,
