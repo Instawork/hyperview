@@ -12,6 +12,7 @@ import type {
   NodeList,
 } from 'hyperview/src/types';
 import { NAV_ACTIONS } from 'hyperview/src/types';
+import NavLogic from 'hyperview/src/hv-nav-logic';
 import { Navigation as RNavigation } from '@react-navigation/native';
 import { getFormData } from 'hyperview/src/services';
 
@@ -30,6 +31,8 @@ export default class Navigation {
 
   navigation: NavigationProps;
 
+  navLogic: NavLogic;
+
   constructor(
     url: string,
     navigation: NavigationProps,
@@ -37,6 +40,7 @@ export default class Navigation {
   ) {
     this.url = url;
     this.navigation = navigation;
+    this.navLogic = new NavLogic(navSystem);
   }
 
   setUrl = (url: string) => {
@@ -103,27 +107,30 @@ export default class Navigation {
     const routeParams = { delay, preloadScreen, target, url };
     switch (action) {
       case NAV_ACTIONS.PUSH:
-        this.navigation.push(routeParams);
+        (this.navigation.push ?? this.navLogic.push)(routeParams);
         break;
       case NAV_ACTIONS.NAVIGATE: {
         const key = this.getRouteKey(url);
         if (key) {
-          this.navigation.navigate(routeParams, this.getRouteKey(url));
+          (this.navigation.navigate ?? this.navLogic.navigate)(
+            routeParams,
+            this.getRouteKey(url),
+          );
         } else {
-          this.navigation.push(routeParams);
+          (this.navigation.push ?? this.navLogic.push)(routeParams);
         }
         break;
       }
       case NAV_ACTIONS.NEW:
-        this.navigation.openModal(routeParams);
+        (this.navigation.openModal ?? this.navLogic.openModal)(routeParams);
         break;
       case NAV_ACTIONS.CLOSE:
-        this.navigation.closeModal(
+        (this.navigation.closeModal ?? this.navLogic.closeModal)(
           href === ANCHOR_ID_SEPARATOR ? undefined : routeParams,
         );
         break;
       case NAV_ACTIONS.BACK:
-        this.navigation.back(
+        (this.navigation.back ?? this.navLogic.back)(
           href === ANCHOR_ID_SEPARATOR ? undefined : routeParams,
         );
         break;
