@@ -12,7 +12,7 @@
       </text>
       <text
         style="Link"
-        action="push"
+        action="navigate"
         target="shifts-route"
         href="#my-shifts-route">
         MY SHIFTS

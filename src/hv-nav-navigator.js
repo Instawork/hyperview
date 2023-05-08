@@ -58,11 +58,13 @@ export default class HyperviewNavigator extends PureComponent {
           component = HyperviewNavigator;
           initialParams = {
             doc,
+            routeId: id,
           };
           break;
         case LOCAL_NAME.NAV_ROUTE:
           component = HyperviewRoute;
           initialParams = {
+            routeId: id,
             url: UrlService.getUrlFromHref(
               cleanHrefFragment(node.getAttribute('href')),
               this.context.initialUrl,
@@ -96,7 +98,7 @@ export default class HyperviewNavigator extends PureComponent {
     if (!doc) {
       return null;
     }
-    const id = doc.getAttribute('id');
+    const id = getProp(this.props, 'routeId');
     const type = doc.getAttribute('type');
     const initialNode = getInitialNavRouteNode(doc);
     const initialId = initialNode.getAttribute('id');

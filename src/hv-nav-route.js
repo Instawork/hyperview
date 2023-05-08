@@ -16,7 +16,7 @@ import React, { PureComponent } from 'react';
 import { getProp, getRootNode } from 'hyperview/src/navigator-helpers';
 import HyperNavigator from 'hyperview/src/hv-nav-navigator';
 import Hyperview from 'hyperview';
-import { LOCAL_NAME } from 'hyperview/src/types';
+import { Element, LOCAL_NAME } from 'hyperview/src/types';
 
 /**
  * HyperviewRoute loads an injected url and resolves the xml. If the resulting document is a <navigator> element, it will render a HyperviewNavigator,
@@ -82,7 +82,7 @@ export default class HyperviewRoute extends PureComponent {
       );
     }
 
-    const rootNode = getRootNode(this.state.doc);
+    const rootNode: Element = getRootNode(this.state.doc);
     if (!rootNode) {
       return (
         <View
@@ -95,7 +95,14 @@ export default class HyperviewRoute extends PureComponent {
 
     switch (rootNode.nodeName) {
       case LOCAL_NAME.NAVIGATOR:
-        return <HyperNavigator doc={rootNode} />;
+        return (
+          <HyperNavigator
+            doc={rootNode}
+            routeId={
+              getProp(this.props, 'routeId') || rootNode.getAttribute('id')
+            }
+          />
+        );
       case LOCAL_NAME.SCREEN:
         return (
           <Contexts.DateFormatContext.Consumer>

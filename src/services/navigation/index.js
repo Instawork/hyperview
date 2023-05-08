@@ -110,15 +110,15 @@ export default class Navigation {
         (this.navigation.push ?? this.navLogic.push)(routeParams);
         break;
       case NAV_ACTIONS.NAVIGATE: {
-        const key = this.getRouteKey(url);
-        if (key) {
-          (this.navigation.navigate ?? this.navLogic.navigate)(
-            routeParams,
-            this.getRouteKey(url),
-          );
-        } else {
-          (this.navigation.push ?? this.navLogic.push)(routeParams);
-        }
+        // const key = this.getRouteKey(url);
+        // if (key) {
+        (this.navigation.navigate ?? this.navLogic.navigate)(
+          routeParams,
+          this.getRouteKey(url),
+        );
+        // } else {
+        //   (this.navigation.push ?? this.navLogic.push)(routeParams);
+        // }
         break;
       }
       case NAV_ACTIONS.NEW:

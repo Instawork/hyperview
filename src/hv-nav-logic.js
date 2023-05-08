@@ -57,6 +57,11 @@ export default class NavLogic {
       return [navigation, null];
     }
     while (navigation) {
+      // The navigation id is assigned from the route which defined it. It is used here as a placeholder for the parent route id.
+      const id = navigation.getId();
+      if (id === targetRouteId) {
+        return [navigation, null];
+      }
       const path: string[] = [];
       this.findPath(navigation.getState(), targetRouteId, path);
       if (path.length) {
@@ -108,6 +113,7 @@ export default class NavLogic {
       params = cleanedParams;
     } else {
       params = this.buildParams(path, routeId, cleanedParams);
+      // The navigation id is assigned from the route which defined it. It is used here as a placeholder for the parent route id.
       routeId = navigation.getId();
     }
 
