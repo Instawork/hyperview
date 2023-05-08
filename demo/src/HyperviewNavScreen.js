@@ -20,7 +20,6 @@ export default class HyperviewNavScreen extends PureComponent {
    * header to prevent caching requests.
    */
   fetchWrapper = (input, init = { headers: {} }) => {
-    // console.log('--->fetchWrapper', input);
     return fetch(input, {
       ...init,
       mode: "cors",
@@ -43,9 +42,8 @@ export default class HyperviewNavScreen extends PureComponent {
         <Contexts.FetchContext.Provider value={{
           fetch:this.fetchWrapper,
           onParseBefore: null,
-          onParseAfter: null}}>
-          <HyperviewRoute
-              entrypointUrl={entrypointUrl}
+          onParseAfter: null,
+          initialUrl: entrypointUrl}}>
 
               //TODO
             // back={this.goBack}
@@ -56,7 +54,7 @@ export default class HyperviewNavScreen extends PureComponent {
             // push={this.push}
             // route={this.props.route}
 
-            />
+                />
           </Contexts.FetchContext.Provider>
         </Contexts.DateFormatContext.Provider>
         // </HandleBack>
