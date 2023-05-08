@@ -95,9 +95,13 @@ export const getProp = (
   return null;
 };
 
-export const cleanHrefFragment = (href: string): string => {
-  if (!href.startsWith(ANCHOR_ID_SEPARATOR)) {
-    return href;
+export const isUrlFragment = (url: string): boolean => {
+  return url?.startsWith(ANCHOR_ID_SEPARATOR);
+};
+
+export const cleanHrefFragment = (url: string): string => {
+  if (!isUrlFragment(url)) {
+    return url;
   }
-  return href.slice(1);
+  return url.slice(1);
 };

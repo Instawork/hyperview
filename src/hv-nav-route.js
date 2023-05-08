@@ -13,30 +13,33 @@ import * as Dom from 'hyperview/src/services/dom';
 import * as UrlService from 'hyperview/src/services/url';
 import { ActivityIndicator, Text, View } from 'react-native';
 import React, { PureComponent } from 'react';
-import {
-  getProp,
-  getRootNode,
-  withContext,
-} from 'hyperview/src/navigator-helpers';
+import { getProp, getRootNode } from 'hyperview/src/navigator-helpers';
 import HyperNavigator from 'hyperview/src/hv-nav-navigator';
 import Hyperview from 'hyperview';
 import { LOCAL_NAME } from 'hyperview/src/types';
 
 /**
- * HyperviewRoute provides logic to process a <screen> or <navigator> element as the first child of a <doc> element.
+ * HyperviewRoute loads an injected url and resolves the xml. If the resulting document is a <navigator> element, it will render a HyperviewNavigator,
+ * otherwise it will render a Hyperview.
  * Props:
- * - url or entrypointUrl: the url of the document to load
+ * - url: the url to load. If none provided, the initialUrl from the context will be used.
  */
 export default class HyperviewRoute extends PureComponent {
   componentDidMount() {
     this.load();
   }
 
+  /**
+   * Generate a full url from the provided url and the initialUrl from the context.
+   */
   processUrl = (): string => {
     const url = getProp(this.props, 'url') || this.context.initialUrl;
     return UrlService.getUrlFromHref(url, this.context.initialUrl);
   };
 
+  /**
+   * Load the url and resolve the xml.
+   */
   load = async () => {
     try {
       const url = this.processUrl();

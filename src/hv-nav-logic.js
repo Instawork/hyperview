@@ -9,7 +9,10 @@
  */
 
 import { Navigation } from '@react-navigation/native';
-import { cleanHrefFragment } from 'hyperview/src/navigator-helpers';
+import {
+  cleanHrefFragment,
+  isUrlFragment,
+} from 'hyperview/src/navigator-helpers';
 
 export default class NavLogic {
   navigation: Navigation;
@@ -82,6 +85,7 @@ export default class NavLogic {
       prms.params = this.buildParams(path, routeId, routeParams);
     } else {
       prms.screen = routeId;
+      // The last screen in the path should receive the route params
       prms.params = routeParams;
     }
     return prms;
@@ -96,9 +100,13 @@ export default class NavLogic {
   ): [Navigation, Object, string] => {
     const [navigation, path] = this.getNavigatorAndPath(routeParams.target);
     let routeId: string = cleanHrefFragment(routeParams.url);
+
+    // Clean up the params to remove the target and url if they are not needed
     const cleanedParams: Object = { ...routeParams };
     delete cleanedParams.target;
-    delete cleanedParams.url;
+    if (isUrlFragment(cleanedParams.url)) {
+      delete cleanedParams.url;
+    }
     let params: Object;
     if (!path || !path.length) {
       params = cleanedParams;
@@ -140,7 +148,7 @@ export default class NavLogic {
         navigation.navigate(routeId, params);
         break;
       case 'push':
-        navigation.navigate(routeId, params);
+        navigation.push(routeId, params);
         break;
       default:
     }

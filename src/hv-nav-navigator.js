@@ -31,10 +31,12 @@ const TopTab = createMaterialTopTabNavigator();
 /**
  * HyperviewNavigator provides logic to process a <navigator> element.
  * Props:
- * - parent: the parent component
  * - doc: the document to render
  * */
 export default class HyperviewNavigator extends PureComponent {
+  /**
+   * Build the screens for the navigator as defined in the received document.
+   */
   buildScreens = (doc: Document, navigator: Navigator) => {
     const screens = [];
     const elements = getChildElements(doc);
@@ -86,8 +88,14 @@ export default class HyperviewNavigator extends PureComponent {
     return screens;
   };
 
+  /**
+   * Build the navigator as defined in the received document.
+   */
   buildNavigator = (options: Object) => {
     const doc = getProp(this.props, 'doc');
+    if (!doc) {
+      return null;
+    }
     const id = doc.getAttribute('id');
     const type = doc.getAttribute('type');
     const initialNode = getInitialNavRouteNode(doc);
