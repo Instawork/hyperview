@@ -12,12 +12,11 @@ import * as Contexts from 'hyperview/src/contexts';
 import * as Dom from 'hyperview/src/services/dom';
 import * as UrlService from 'hyperview/src/services/url';
 import { ActivityIndicator, Text, View } from 'react-native';
+import { Element, LOCAL_NAME } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
 import { getProp, getRootNode } from 'hyperview/src/navigator-helpers';
 import HyperNavigator from 'hyperview/src/hv-nav-navigator';
 import Hyperview from 'hyperview';
-import { Element, LOCAL_NAME } from 'hyperview/src/types';
-
 /**
  * HyperviewRoute loads an injected url and resolves the xml. If the resulting document is a <navigator> element, it will render a HyperviewNavigator,
  * otherwise it will render a Hyperview.

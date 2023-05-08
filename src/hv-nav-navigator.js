@@ -124,7 +124,6 @@ export default class HyperviewNavigator extends PureComponent {
     if (screens.length === 0) {
       return null;
     }
-
     return (
       <navigator.Navigator
         backBehavior={backBehavior}
