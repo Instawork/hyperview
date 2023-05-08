@@ -37,12 +37,12 @@ export default class HyperviewNavigator extends PureComponent {
     const elements = getChildElements(doc);
     for (let i = 0; i < elements.length; i += 1) {
       const node = elements[i];
-      let name = '';
+      let id = '';
       if (
         node.nodeName === LOCAL_NAME.NAVIGATOR ||
         node.nodeName === LOCAL_NAME.NAV_ROUTE
       ) {
-        name = node.getAttribute('id');
+        id = node.getAttribute('id');
       }
       // console.log('buildScreens', node.nodeName, name);
       let component = null;
@@ -68,10 +68,12 @@ export default class HyperviewNavigator extends PureComponent {
 
       screens.push(
         <navigator.Screen
-          key={name}
+          key={id}
           component={component}
+          id={id}
           initialParams={initialParams}
-          name={name}
+          name={id}
+          navigationKey={id}
           options={options}
         />,
       );

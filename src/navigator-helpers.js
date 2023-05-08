@@ -30,9 +30,9 @@ export const getRootNode = (
   doc: Document,
   localName: LocalName = LOCAL_NAME.DOC,
 ): Node => {
-  const docElement: Element = getFirstTag(doc, LOCAL_NAME.DOC);
+  const docElement: Element = getFirstTag(doc, localName);
   if (!docElement) {
-    throw new Errors.XMLRequiredElementNotFound(LOCAL_NAME.DOC);
+    throw new Errors.XMLRequiredElementNotFound(localName);
   }
   return getFirstchild(docElement);
 };

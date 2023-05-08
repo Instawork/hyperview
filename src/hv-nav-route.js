@@ -71,8 +71,8 @@ export default class HyperviewRoute extends PureComponent {
       );
     }
 
-    const firstNode = getRootNode(this.state.doc);
-    if (!firstNode) {
+    const rootNode = getRootNode(this.state.doc);
+    if (!rootNode) {
       return (
         <View
           style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}
@@ -82,15 +82,15 @@ export default class HyperviewRoute extends PureComponent {
       );
     }
 
-    switch (firstNode.nodeName) {
+    switch (rootNode.nodeName) {
       case LOCAL_NAME.NAVIGATOR:
-        return <HyperNavigator doc={firstNode} />;
+        return <HyperNavigator doc={rootNode} />;
       case LOCAL_NAME.SCREEN:
         return (
           <Contexts.DateFormatContext.Consumer>
             {formatter => (
               <Hyperview
-                entrypointUrl={firstNode.getAttribute('href')}
+                entrypointUrl={rootNode.getAttribute('href')}
                 fetch={this.context.fetch}
                 formatDate={formatter}
                 // back={actions.back}
@@ -110,7 +110,7 @@ export default class HyperviewRoute extends PureComponent {
           <View
             style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}
           >
-            <Text>ROUTE ERROR: UNKNOWN TYPE: {firstNode?.nodeName}</Text>
+            <Text>ROUTE ERROR: UNKNOWN TYPE: {rootNode?.nodeName}</Text>
           </View>
         );
     }
