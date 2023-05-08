@@ -9,9 +9,7 @@
       <text
         style="Link"
         action="new"
-        target="root"
-        href="#help"
-        zhref="/navigator/help.xml">
+        href="#help">
         HELP
       </text>
       <text

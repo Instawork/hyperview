@@ -8,11 +8,11 @@
  *
  */
 
-import { Navigation } from '@react-navigation/native';
 import {
   cleanHrefFragment,
   isUrlFragment,
 } from 'hyperview/src/navigator-helpers';
+import { Navigation } from '@react-navigation/native';
 
 export default class NavLogic {
   navigation: Navigation;
@@ -27,15 +27,15 @@ export default class NavLogic {
   /**
    * Recursively search for the target in state and build a path to it
    */
-  findPath = (state: Object, target: string, path: string[]) => {
+  findPath = (state: Object, targetRouteId: string, path: string[]) => {
     const { routes } = state;
     if (routes) {
       for (let i = 0; i < routes.length; i += 1) {
         const route: Object = routes[i];
-        if (route.name === target) {
+        if (route.name === targetRouteId) {
           path.push(route.name);
         } else if (route.state) {
-          this.findPath(route.state, target, path);
+          this.findPath(route.state, targetRouteId, path);
           if (path.length) {
             path.push(route.name);
           }
@@ -51,18 +51,14 @@ export default class NavLogic {
    * Continue up the hierarchy until a navigation is found which contains the target
    * If the target is not found, no navigation is returned
    */
-  getNavigatorAndPath = (target: string): [Navigation, string[]] => {
+  getNavigatorAndPath = (targetRouteId: string): [Navigation, string[]] => {
     let { navigation }: Navigation = this;
-    if (!target) {
+    if (!targetRouteId) {
       return [navigation, null];
     }
     while (navigation) {
-      const id = navigation.getId();
-      if (id === target) {
-        return [navigation, null];
-      }
       const path: string[] = [];
-      this.findPath(navigation.getState(), target, path);
+      this.findPath(navigation.getState(), targetRouteId, path);
       if (path.length) {
         return [navigation, path];
       }
