@@ -16,6 +16,8 @@ import {
   LocalName,
   Node,
 } from 'hyperview/src/types';
+// eslint-disable-next-line instawork/import-services
+import { ANCHOR_ID_SEPARATOR } from 'hyperview/src/services/navigation';
 import { getFirstTag } from 'hyperview/src/services/dom/helpers';
 
 export const getFirstchild = (node: Node): Node => {
@@ -91,4 +93,11 @@ export const getProp = (
     return context[name];
   }
   return null;
+};
+
+export const cleanHrefFragment = (href: string): string => {
+  if (!href.startsWith(ANCHOR_ID_SEPARATOR)) {
+    return href;
+  }
+  return href.slice(1);
 };
