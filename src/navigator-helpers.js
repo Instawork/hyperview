@@ -9,19 +9,13 @@
  */
 
 import * as Errors from 'hyperview/src/services/dom/errors';
-import {
-  Document,
-  Element,
-  LOCAL_NAME,
-  LocalName,
-  Node,
-} from 'hyperview/src/types';
+import { Document, Element, LOCAL_NAME, LocalName } from 'hyperview/src/types';
 // eslint-disable-next-line instawork/import-services
 import { ANCHOR_ID_SEPARATOR } from 'hyperview/src/services/navigation';
 import { getFirstTag } from 'hyperview/src/services/dom/helpers';
 
-export const getFirstchild = (node: Node): Node => {
-  let child: Node = node.firstChild;
+export const getFirstchild = (node: Element): Element => {
+  let child: Element = node.firstChild;
   while (child.nodeType !== 1) {
     child = child.nextSibling;
   }
@@ -31,7 +25,7 @@ export const getFirstchild = (node: Node): Node => {
 export const getRootNode = (
   doc: Document,
   localName: LocalName = LOCAL_NAME.DOC,
-): Node => {
+): Element => {
   const docElement: Element = getFirstTag(doc, localName);
   if (!docElement) {
     throw new Errors.XMLRequiredElementNotFound(localName);
@@ -42,7 +36,7 @@ export const getRootNode = (
 export const getChildElements = (doc: Document): Element[] => {
   const elements: Element[] = [];
   for (let i: Number = 0; i < doc.childNodes.length; i += 1) {
-    const node: Node = doc.childNodes[i];
+    const node: Element = doc.childNodes[i];
     if (node.nodeType === 1) {
       elements.push(node);
     }
@@ -50,12 +44,12 @@ export const getChildElements = (doc: Document): Element[] => {
   return elements;
 };
 
-export const getInitialNavRouteNode = (doc: Document): Node => {
-  let firstNavChild: Node = null;
-  let initialChild: Node = null;
+export const getInitialNavRouteNode = (doc: Document): Element => {
+  let firstNavChild: Element = null;
+  let initialChild: Element = null;
   const elements: Element[] = getChildElements(doc);
   for (let i: Number = 0; i < elements.length; i += 1) {
-    const node: Node = elements[i];
+    const node: Element = elements[i];
     if (
       node.nodeName === LOCAL_NAME.NAVIGATOR ||
       node.nodeName === LOCAL_NAME.NAV_ROUTE
