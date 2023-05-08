@@ -44,6 +44,7 @@ export default class HyperviewNavScreen extends PureComponent {
           onParseBefore: null,
           onParseAfter: null,
           initialUrl: entrypointUrl}}>
+              <HyperviewRoute
 
               //TODO
             // back={this.goBack}
