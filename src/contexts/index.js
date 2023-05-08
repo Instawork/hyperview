@@ -22,11 +22,13 @@ export const RefreshControlComponentContext = React.createContext<
 >(component => component);
 
 export const FetchContext = React.createContext<{
-  fetch: (input: String, init: ?Object) => string,
-  onParseBefore: (url: String) => void,
-  onParseAfter: (url: String) => void,
+  fetch: (input: string, init: ?Object) => string,
+  onParseBefore: (url: string) => void,
+  onParseAfter: (url: string) => void,
+  initialUrl: string,
 }>(
   fetch => fetch,
   onParseBefore => onParseBefore,
   onParseAfter => onParseAfter,
+  initialUrl => initialUrl,
 );
