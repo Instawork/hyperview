@@ -8,10 +8,13 @@
  *
  */
 
+import * as Contexts from 'hyperview/src/contexts';
+import * as UrlService from 'hyperview/src/services/url';
 import { Document, LOCAL_NAME, NAVIGATOR_TYPE } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
 import { Text, View } from 'react-native';
 import {
+  cleanHrefFragment,
   getChildElements,
   getInitialNavRouteNode,
   getProp,
@@ -44,7 +47,6 @@ export default class HyperviewNavigator extends PureComponent {
       ) {
         id = node.getAttribute('id');
       }
-      // console.log('buildScreens', node.nodeName, name);
       let component = null;
       let initialParams = {};
       const modal = node.getAttribute('modal') === 'true';
@@ -59,7 +61,10 @@ export default class HyperviewNavigator extends PureComponent {
         case LOCAL_NAME.NAV_ROUTE:
           component = HyperviewRoute;
           initialParams = {
-            url: node.getAttribute('href'),
+            url: UrlService.getUrlFromHref(
+              cleanHrefFragment(node.getAttribute('href')),
+              this.context.initialUrl,
+            ),
           };
           break;
         default:
@@ -103,7 +108,6 @@ export default class HyperviewNavigator extends PureComponent {
         return null;
     }
     const screens = this.buildScreens(doc, navigator);
-    // console.log('buildNavigator', screens.length, initialRouteName);
     if (screens.length === 0) {
       return null;
     }
@@ -145,3 +149,5 @@ export default class HyperviewNavigator extends PureComponent {
     }
   }
 }
+
+HyperviewNavigator.contextType = Contexts.FetchContext;
