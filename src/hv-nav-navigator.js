@@ -44,44 +44,43 @@ export default class HyperviewNavigator extends PureComponent {
     const elements = getChildElements(doc);
     for (let i = 0; i < elements.length; i += 1) {
       const node = elements[i];
-      let id = '';
       if (
         node.nodeName === LOCAL_NAME.NAVIGATOR ||
         node.nodeName === LOCAL_NAME.NAV_ROUTE
       ) {
-        id = node.getAttribute('id');
+        const id: string = node.getAttribute('id');
+
+        let component = null;
+        let initialParams = {};
+        switch (node.nodeName) {
+          case LOCAL_NAME.NAVIGATOR:
+            component = HyperviewNavigator;
+            initialParams = {
+              doc,
+              routeId: id,
+            };
+            break;
+          case LOCAL_NAME.NAV_ROUTE:
+            component = HyperviewRoute;
+            initialParams = {
+              routeId: id,
+              url: UrlService.getUrlFromHref(
+                cleanHrefFragment(node.getAttribute('href')),
+                this.context.initialUrl,
+              ),
+            };
+            break;
+          default:
+        }
+        screens.push(
+          <navigator.Screen
+            key={id}
+            component={component}
+            initialParams={initialParams}
+            name={id}
+          />,
+        );
       }
-      let component = null;
-      let initialParams = {};
-      switch (node.nodeName) {
-        case LOCAL_NAME.NAVIGATOR:
-          component = HyperviewNavigator;
-          initialParams = {
-            doc,
-            routeId: id,
-          };
-          break;
-        case LOCAL_NAME.NAV_ROUTE:
-          component = HyperviewRoute;
-          initialParams = {
-            routeId: id,
-            url: UrlService.getUrlFromHref(
-              cleanHrefFragment(node.getAttribute('href')),
-              this.context.initialUrl,
-            ),
-          };
-          break;
-        default:
-          continue;
-      }
-      screens.push(
-        <navigator.Screen
-          key={id}
-          component={component}
-          initialParams={initialParams}
-          name={id}
-        />,
-      );
     }
 
     switch (type) {
