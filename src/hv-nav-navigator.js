@@ -12,13 +12,15 @@ import * as Contexts from 'hyperview/src/contexts';
 import * as UrlService from 'hyperview/src/services/url';
 import { Document, LOCAL_NAME, NAVIGATOR_TYPE } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
-import { Text, View } from 'react-native';
 import {
+  SCREEN_DYNAMIC,
+  SCREEN_MODAL,
   cleanHrefFragment,
   getChildElements,
   getInitialNavRouteNode,
   getProp,
 } from 'hyperview/src/navigator-helpers';
+import { Text, View } from 'react-native';
 import HyperviewRoute from 'hyperview/src/hv-nav-route';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -37,7 +39,7 @@ export default class HyperviewNavigator extends PureComponent {
   /**
    * Build the screens for the navigator as defined in the received document.
    */
-  buildScreens = (doc: Document, navigator: Navigator) => {
+  buildScreens = (doc: Document, navigator: Navigator, type: string) => {
     const screens = [];
     const elements = getChildElements(doc);
     for (let i = 0; i < elements.length; i += 1) {
@@ -51,8 +53,6 @@ export default class HyperviewNavigator extends PureComponent {
       }
       let component = null;
       let initialParams = {};
-      const modal = node.getAttribute('modal') === 'true';
-      const options = { presentation: modal ? 'modal' : 'card' };
       switch (node.nodeName) {
         case LOCAL_NAME.NAVIGATOR:
           component = HyperviewNavigator;
@@ -74,18 +74,43 @@ export default class HyperviewNavigator extends PureComponent {
         default:
           continue;
       }
-
       screens.push(
         <navigator.Screen
           key={id}
           component={component}
-          id={id}
           initialParams={initialParams}
           name={id}
-          navigationKey={id}
-          options={options}
         />,
       );
+    }
+
+    switch (type) {
+      case NAVIGATOR_TYPE.STACK:
+        screens.push(
+          <navigator.Screen
+            key={SCREEN_DYNAMIC}
+            component={HyperviewRoute}
+            name={SCREEN_DYNAMIC}
+            options={({ route }) => ({
+              title: route.params.url,
+            })}
+          />,
+        );
+
+        screens.push(
+          <navigator.Screen
+            key={SCREEN_MODAL}
+            component={HyperviewRoute}
+            // options={{ presentation: 'modal' }}
+            name={SCREEN_MODAL}
+            options={({ route }) => ({
+              presentation: 'modal',
+              title: route.params.url,
+            })}
+          />,
+        );
+        break;
+      default:
     }
     return screens;
   };
@@ -98,10 +123,10 @@ export default class HyperviewNavigator extends PureComponent {
     if (!doc) {
       return null;
     }
-    const id = getProp(this.props, 'routeId');
-    const type = doc.getAttribute('type');
+    const id: string = getProp(this.props, 'routeId');
+    const type: string = doc.getAttribute('type');
     const initialNode = getInitialNavRouteNode(doc);
-    const initialId = initialNode.getAttribute('id');
+    const initialId: string = initialNode.getAttribute('id');
 
     let navigator;
     let backBehavior;
@@ -120,7 +145,7 @@ export default class HyperviewNavigator extends PureComponent {
       default:
         return null;
     }
-    const screens = this.buildScreens(doc, navigator);
+    const screens = this.buildScreens(doc, navigator, type);
     if (screens.length === 0) {
       return null;
     }

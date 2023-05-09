@@ -7,13 +7,17 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-
+import { NAV_ACTIONS, NavAction } from 'hyperview/src/types';
 import {
   cleanHrefFragment,
+  getVirtualScreenId,
   isUrlFragment,
 } from 'hyperview/src/navigator-helpers';
 import { Navigation } from '@react-navigation/native';
 
+/**
+ * Perform logic for navigation actions based on the current navigation hierarchy
+ */
 export default class NavLogic {
   navigation: Navigation;
 
@@ -76,17 +80,18 @@ export default class NavLogic {
    * Generate a nested param hierarchy with instructions for each screen to step through to the target
    */
   buildParams = (
-    path: string[],
+    action: NavAction,
     routeId: string,
+    path: string[],
     routeParams: Object,
   ): Object => {
     const prms: Object = {};
     if (path.length) {
       prms.screen = path.pop();
-      prms.params = this.buildParams(path, routeId, routeParams);
+      prms.params = this.buildParams(action, routeId, path, routeParams);
     } else {
       prms.screen = routeId;
-      // The last screen in the path should receive the route params
+      // The last screen in the path receives the route params
       prms.params = routeParams;
     }
     return prms;
@@ -96,11 +101,10 @@ export default class NavLogic {
    * Build the request structure including finding the navigation, building params, and determining screen id
    */
   buildRequest = (
-    action: string,
+    action: NavAction,
     routeParams: Object,
   ): [Navigation, Object, string] => {
     const [navigation, path] = this.getNavigatorAndPath(routeParams.target);
-    let routeId: string = cleanHrefFragment(routeParams.url);
 
     // Clean up the params to remove the target and url if they are not needed
     const cleanedParams: Object = { ...routeParams };
@@ -108,11 +112,15 @@ export default class NavLogic {
     if (isUrlFragment(cleanedParams.url)) {
       delete cleanedParams.url;
     }
+
+    let routeId = cleanHrefFragment(
+      getVirtualScreenId(action, routeParams.url),
+    );
     let params: Object;
     if (!path || !path.length) {
       params = cleanedParams;
     } else {
-      params = this.buildParams(path, routeId, cleanedParams);
+      params = this.buildParams(action, routeId, path, cleanedParams);
       // The navigation id is assigned from the route which defined it. It is used here as a placeholder for the parent route id.
       routeId = navigation.getId();
     }
@@ -123,7 +131,7 @@ export default class NavLogic {
   /**
    * Prepare and send the request
    */
-  sendRequest = (action: string, routeParams: Object) => {
+  sendRequest = (action: NavAction, routeParams: Object) => {
     if (!routeParams) {
       return;
     }
@@ -137,19 +145,19 @@ export default class NavLogic {
     }
 
     switch (action) {
-      case 'back':
-        navigation.goBack(params);
+      case NAV_ACTIONS.BACK:
+        navigation.pop(params);
         break;
-      case 'closeModal':
-        navigation.goBack(params);
+      case NAV_ACTIONS.CLOSE:
+        navigation.pop(params);
         break;
-      case 'navigate':
+      case NAV_ACTIONS.NAVIGATE:
         navigation.navigate(routeId, params);
         break;
-      case 'openModal':
+      case NAV_ACTIONS.NEW:
         navigation.navigate(routeId, params);
         break;
-      case 'push':
+      case NAV_ACTIONS.PUSH:
         navigation.push(routeId, params);
         break;
       default:
@@ -157,22 +165,22 @@ export default class NavLogic {
   };
 
   back = routeParams => {
-    this.sendRequest('back', routeParams);
+    this.sendRequest(NAV_ACTIONS.BACK, routeParams);
   };
 
   closeModal = routeParams => {
-    this.sendRequest('closeModal', routeParams);
+    this.sendRequest(NAV_ACTIONS.CLOSE, routeParams);
   };
 
-  navigate = routeParams => {
-    this.sendRequest('navigate', routeParams);
+  navigate = (routeParams, key) => {
+    this.sendRequest(NAV_ACTIONS.NAVIGATE, routeParams);
   };
 
   openModal = routeParams => {
-    this.sendRequest('openModal', routeParams);
+    this.sendRequest(NAV_ACTIONS.NEW, routeParams);
   };
 
   push = routeParams => {
-    this.sendRequest('push', routeParams);
+    this.sendRequest(NAV_ACTIONS.PUSH, routeParams);
   };
 }

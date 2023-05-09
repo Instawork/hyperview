@@ -9,11 +9,23 @@
  */
 
 import * as Errors from 'hyperview/src/services/dom/errors';
-import { Document, Element, LOCAL_NAME, LocalName } from 'hyperview/src/types';
+import {
+  Document,
+  Element,
+  LOCAL_NAME,
+  LocalName,
+  NAV_ACTIONS,
+} from 'hyperview/src/types';
 // eslint-disable-next-line instawork/import-services
 import { ANCHOR_ID_SEPARATOR } from 'hyperview/src/services/navigation';
 import { getFirstTag } from 'hyperview/src/services/dom/helpers';
 
+export const SCREEN_DYNAMIC = 'dynamic';
+export const SCREEN_MODAL = 'modal';
+
+/**
+ * Find the first child element of a node by nodeType
+ */
 export const getFirstchild = (node: Element): Element => {
   let child: Element = node.firstChild;
   while (child.nodeType !== 1) {
@@ -22,6 +34,9 @@ export const getFirstchild = (node: Element): Element => {
   return child;
 };
 
+/**
+ * Find the root node of a document by localName
+ */
 export const getRootNode = (
   doc: Document,
   localName: LocalName = LOCAL_NAME.DOC,
@@ -33,6 +48,9 @@ export const getRootNode = (
   return getFirstchild(docElement);
 };
 
+/**
+ * Get an array of all child elements of a node
+ */
 export const getChildElements = (doc: Document): Element[] => {
   const elements: Element[] = [];
   for (let i: Number = 0; i < doc.childNodes.length; i += 1) {
@@ -44,6 +62,9 @@ export const getChildElements = (doc: Document): Element[] => {
   return elements;
 };
 
+/**
+ * Get the route designated as 'initial' or the first route if none is marked
+ */
 export const getInitialNavRouteNode = (doc: Document): Element => {
   let firstNavChild: Element = null;
   let initialChild: Element = null;
@@ -72,30 +93,56 @@ export const getInitialNavRouteNode = (doc: Document): Element => {
   return initialChild || firstNavChild;
 };
 
-export const getProp = (
-  props: Object,
-  name: String,
-  context: Object = null,
-): String => {
+/**
+ * Get a property from props or route.params
+ */
+export const getProp = (props: Object, name: String): String => {
   if (props[name]) {
     return props[name];
   }
   if (props.route && props.route.params && props.route.params[name]) {
     return props.route.params[name];
   }
-  if (context && context[name]) {
-    return context[name];
-  }
   return null;
 };
 
+/**
+ * Determine if a url is a fragment
+ */
 export const isUrlFragment = (url: string): boolean => {
   return url?.startsWith(ANCHOR_ID_SEPARATOR);
 };
 
+/**
+ * Remove the leading '#' from a url fragment
+ * Non-fragment urls are returned unchanged
+ */
 export const cleanHrefFragment = (url: string): string => {
   if (!isUrlFragment(url)) {
     return url;
   }
   return url.slice(1);
+};
+
+/**
+ * Create a virtual for urls which are not associated with a route
+ */
+export const getVirtualScreenId = (
+  action: NavAction,
+  routeId: string,
+): string => {
+  let id = routeId;
+  if (id && !isUrlFragment(id)) {
+    switch (action) {
+      case NAV_ACTIONS.NAVIGATE:
+      case NAV_ACTIONS.PUSH:
+        id = SCREEN_DYNAMIC;
+        break;
+      case NAV_ACTIONS.NEW:
+        id = SCREEN_MODAL;
+        break;
+      default:
+    }
+  }
+  return id;
 };
