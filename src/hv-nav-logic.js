@@ -61,11 +61,6 @@ export default class NavLogic {
       return [navigation, null];
     }
     while (navigation) {
-      // The navigation id is assigned from the route which defined it. It is used here as a placeholder for the parent route id.
-      const id = navigation.getId();
-      if (id === targetRouteId) {
-        return [navigation, null];
-      }
       const path: string[] = [];
       this.findPath(navigation.getState(), targetRouteId, path);
       if (path.length) {
@@ -80,7 +75,6 @@ export default class NavLogic {
    * Generate a nested param hierarchy with instructions for each screen to step through to the target
    */
   buildParams = (
-    action: NavAction,
     routeId: string,
     path: string[],
     routeParams: Object,
@@ -88,7 +82,7 @@ export default class NavLogic {
     const prms: Object = {};
     if (path.length) {
       prms.screen = path.pop();
-      prms.params = this.buildParams(action, routeId, path, routeParams);
+      prms.params = this.buildParams(routeId, path, routeParams);
     } else {
       prms.screen = routeId;
       // The last screen in the path receives the route params
@@ -120,9 +114,10 @@ export default class NavLogic {
     if (!path || !path.length) {
       params = cleanedParams;
     } else {
-      params = this.buildParams(action, routeId, path, cleanedParams);
-      // The navigation id is assigned from the route which defined it. It is used here as a placeholder for the parent route id.
-      routeId = navigation.getId();
+      // The last path id is the screen id, remove from the path to avoid adding it in params
+      const lastPathId = path.pop();
+      params = this.buildParams(routeId, path, cleanedParams);
+      routeId = lastPathId;
     }
 
     return [navigation, routeId, params];

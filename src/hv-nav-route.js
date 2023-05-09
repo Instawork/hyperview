@@ -96,14 +96,7 @@ export default class HyperviewRoute extends PureComponent {
 
     switch (rootNode.nodeName) {
       case LOCAL_NAME.NAVIGATOR:
-        return (
-          <HyperNavigator
-            doc={rootNode}
-            routeId={
-              getProp(this.props, 'routeId') || rootNode.getAttribute('id')
-            }
-          />
-        );
+        return <HyperNavigator doc={rootNode} />;
       case LOCAL_NAME.SCREEN:
         return (
           <Contexts.DateFormatContext.Consumer>

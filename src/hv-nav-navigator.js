@@ -123,7 +123,7 @@ export default class HyperviewNavigator extends PureComponent {
     if (!doc) {
       return null;
     }
-    const id: string = getProp(this.props, 'routeId');
+    const id: string = doc.getAttribute('id');
     const type: string = doc.getAttribute('type');
     const initialNode = getInitialNavRouteNode(doc);
     const initialId: string = initialNode.getAttribute('id');
