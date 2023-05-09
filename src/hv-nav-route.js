@@ -98,6 +98,11 @@ export default class HyperviewRoute extends PureComponent {
       case LOCAL_NAME.NAVIGATOR:
         return <HyperNavigator doc={rootNode} />;
       case LOCAL_NAME.SCREEN:
+        // // This is not the right place for this
+        // this.props.navigation.setOptions({
+        //   title: rootNode.getAttribute('id'),
+        // });
+        //
         return (
           <Contexts.DateFormatContext.Consumer>
             {formatter => (

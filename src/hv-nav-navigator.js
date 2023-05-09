@@ -42,6 +42,7 @@ export default class HyperviewNavigator extends PureComponent {
   buildScreens = (doc: Document, navigator: Navigator, type: string) => {
     const screens = [];
     const elements = getChildElements(doc);
+    let hasNavigator = false;
     for (let i = 0; i < elements.length; i += 1) {
       const node = elements[i];
       if (
@@ -54,6 +55,7 @@ export default class HyperviewNavigator extends PureComponent {
         let initialParams = {};
         switch (node.nodeName) {
           case LOCAL_NAME.NAVIGATOR:
+            hasNavigator = true;
             component = HyperviewNavigator;
             initialParams = {
               doc,
@@ -83,34 +85,37 @@ export default class HyperviewNavigator extends PureComponent {
       }
     }
 
-    switch (type) {
-      case NAVIGATOR_TYPE.STACK:
-        screens.push(
-          <navigator.Screen
-            key={SCREEN_DYNAMIC}
-            component={HyperviewRoute}
-            getId={({ params }) => params.url}
-            name={SCREEN_DYNAMIC}
-            options={({ route }) => ({
-              title: route.params.url,
-            })}
-          />,
-        );
+    if (!hasNavigator) {
+      // Don't add virtual screens if the navigator contains a navigator
+      switch (type) {
+        case NAVIGATOR_TYPE.STACK:
+          screens.push(
+            <navigator.Screen
+              key={SCREEN_DYNAMIC}
+              component={HyperviewRoute}
+              getId={({ params }) => params.url}
+              name={SCREEN_DYNAMIC}
+              options={({ route }) => ({
+                title: route.params.url,
+              })}
+            />,
+          );
 
-        screens.push(
-          <navigator.Screen
-            key={SCREEN_MODAL}
-            component={HyperviewRoute}
-            getId={({ params }) => params.url}
-            name={SCREEN_MODAL}
-            options={({ route }) => ({
-              presentation: 'modal',
-              title: route.params.url,
-            })}
-          />,
-        );
-        break;
-      default:
+          screens.push(
+            <navigator.Screen
+              key={SCREEN_MODAL}
+              component={HyperviewRoute}
+              getId={({ params }) => params.url}
+              name={SCREEN_MODAL}
+              options={({ route }) => ({
+                presentation: 'modal',
+                title: route.params.url,
+              })}
+            />,
+          );
+          break;
+        default:
+      }
     }
     return screens;
   };

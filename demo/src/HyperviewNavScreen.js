@@ -46,14 +46,14 @@ export default class HyperviewNavScreen extends PureComponent {
           initialUrl: entrypointUrl}}>
               <HyperviewRoute
 
-              //TODO
-            // back={this.goBack}
-            // closeModal={this.closeModal}
-            // navigate={this.navigate}
-            // navigation={this.props.navigation}
-            // openModal={this.openModal}
-            // push={this.push}
-            // route={this.props.route}
+                  //TODO
+                // back={this.goBack}
+                // closeModal={this.closeModal}
+                // navigate={this.navigate}
+                // navigation={this.props.navigation}
+                // openModal={this.openModal}
+                // push={this.push}
+                // route={this.props.route}
 
                 />
           </Contexts.FetchContext.Provider>
