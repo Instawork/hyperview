@@ -19,7 +19,6 @@
       <text
         style="Link"
         action="new"
-        target="root-nav"
         href="/navigator/dynamic-3.xml">
         DYNAMIC NEW
       </text>
