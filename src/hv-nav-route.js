@@ -20,6 +20,8 @@ import Hyperview from 'hyperview';
 /**
  * HyperviewRoute loads an injected url and resolves the xml. If the resulting document is a <navigator> element, it will render a HyperviewNavigator,
  * otherwise it will render a Hyperview.
+ * Contexts:
+ * - FetchContext: provides the fetch function to load the url.
  * Props:
  * - url: the url to load. If none provided, the initialUrl from the context will be used.
  */
@@ -118,7 +120,6 @@ export default class HyperviewRoute extends PureComponent {
                     // openModal={actions.openModal}
                     // push={actions.push}
                     route={this.props.route}
-                    // push={this.props.navigation?.push}
                     url={rootNode.getAttribute('href')}
                   />
                 )}

@@ -132,33 +132,38 @@ export default class NavLogic {
    * Prepare and send the request
    */
   sendRequest = (action: NavAction, routeParams: Object) => {
-    if (!routeParams) {
-      return;
+    let { navigation } = this;
+    let routeId: String = null;
+    let requestParams: Object = null;
+    if (routeParams) {
+      const [requestNavigation, requestRouteId, params] = this.buildRequest(
+        action,
+        routeParams || {},
+      );
+
+      navigation = requestNavigation;
+      routeId = requestRouteId;
+      requestParams = params;
     }
 
-    const [navigation, routeId, params] = this.buildRequest(
-      action,
-      routeParams,
-    );
     if (!navigation) {
       return;
     }
-
     switch (action) {
       case NAV_ACTIONS.BACK:
-        navigation.pop(params);
+        navigation.goBack(requestParams);
         break;
       case NAV_ACTIONS.CLOSE:
-        navigation.pop(params);
+        navigation.goBack(requestParams);
         break;
       case NAV_ACTIONS.NAVIGATE:
-        navigation.navigate(routeId, params);
+        navigation.navigate(routeId, requestParams);
         break;
       case NAV_ACTIONS.NEW:
-        navigation.navigate(routeId, params);
+        navigation.navigate(routeId, requestParams);
         break;
       case NAV_ACTIONS.PUSH:
-        navigation.push(routeId, params);
+        navigation.push(routeId, requestParams);
         break;
       default:
     }

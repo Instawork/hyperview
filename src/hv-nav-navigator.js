@@ -90,6 +90,7 @@ export default class HyperviewNavigator extends PureComponent {
           <navigator.Screen
             key={SCREEN_DYNAMIC}
             component={HyperviewRoute}
+            getId={({ params }) => params.url}
             name={SCREEN_DYNAMIC}
             options={({ route }) => ({
               title: route.params.url,
@@ -101,7 +102,7 @@ export default class HyperviewNavigator extends PureComponent {
           <navigator.Screen
             key={SCREEN_MODAL}
             component={HyperviewRoute}
-            // options={{ presentation: 'modal' }}
+            getId={({ params }) => params.url}
             name={SCREEN_MODAL}
             options={({ route }) => ({
               presentation: 'modal',
