@@ -14,14 +14,7 @@
       </text>
       <text
         style="Title">
-          EXTRA SCREEN
-      </text>
-      <text
-        style="Link"
-        action="new"
-        target="root-nav"
-        href="/navigator/dynamic-3.xml">
-        DYNAMIC NEW
+          INFO SCREEN
       </text>
     </body>
   </screen>

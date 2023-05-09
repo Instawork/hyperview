@@ -35,7 +35,7 @@
         action="navigate"
         ztarget="root-nav"
         href="/navigator/dynamic-1.xml">
-        DYNAMIC LOAD
+        DYNAMIC NAVIGATE
       </text>
       <text
         style="Link"
@@ -43,6 +43,13 @@
         target="root-nav"
         href="/navigator/dynamic-2.xml">
         DYNAMIC NEW
+      </text>
+      <text
+        style="Link"
+        action="new"
+        target="root-nav"
+        href="/navigator/dynamic-complex.xml">
+        DYNAMIC COMPLEX NEW
       </text>
     </body>
   </screen>

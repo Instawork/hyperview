@@ -1,7 +1,7 @@
 <doc xmlns="https://hyperview.org/hyperview">
-  <navigator id="my-shifts-nav" type="top-tab">
+  <navigator id="dynamic-2-nav" type="top-tab">
     <nav-route id="pending-shifts-route" href="/navigator/pending-shifts.xml" />
     <nav-route id="completed-shifts-route" href="/navigator/completed-shifts.xml" />
-    <nav-route id="extra-shifts-route" href="/navigator/extra-shifts.xml" initial="true" />
+    <nav-route id="extra-shifts-route" href="/navigator/extra-shifts.xml" />
   </navigator>
 </doc>
