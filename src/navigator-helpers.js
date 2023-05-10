@@ -18,6 +18,7 @@ import {
 } from 'hyperview/src/types';
 // eslint-disable-next-line instawork/import-services
 import { ANCHOR_ID_SEPARATOR } from 'hyperview/src/services/navigation';
+import { Navigation } from '@react-navigation/native';
 import { getFirstTag } from 'hyperview/src/services/dom/helpers';
 
 export const SCREEN_DYNAMIC = 'dynamic';
@@ -125,14 +126,35 @@ export const cleanHrefFragment = (url: string): string => {
 };
 
 /**
+ * Check if a navigation component contains a route by name
+ */
+export const navigationContainsRoute = (
+  navigation: Navigation,
+  routeId: string,
+): boolean => {
+  if (!navigation) {
+    return false;
+  }
+  const { routes } = navigation.getState();
+  for (let i = 0; i < routes.length; i += 1) {
+    const route: Object = routes[i];
+    if (route.name === routeId) {
+      return true;
+    }
+  }
+  return false;
+};
+
+/**
  * Create a virtual for urls which are not associated with a route
  */
 export const getVirtualScreenId = (
+  navigation: Navigation,
   action: NavAction,
   routeId: string,
 ): string => {
-  let id = routeId;
-  if (id && !isUrlFragment(id)) {
+  if (routeId && !isUrlFragment(routeId)) {
+    let id: string = null;
     switch (action) {
       case NAV_ACTIONS.NAVIGATE:
       case NAV_ACTIONS.PUSH:
@@ -143,6 +165,9 @@ export const getVirtualScreenId = (
         break;
       default:
     }
+    if (navigationContainsRoute(navigation, id)) {
+      return id;
+    }
   }
-  return id;
+  return routeId;
 };

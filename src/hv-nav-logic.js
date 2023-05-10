@@ -108,7 +108,7 @@ export default class NavLogic {
     }
 
     let routeId = cleanHrefFragment(
-      getVirtualScreenId(action, routeParams.url),
+      getVirtualScreenId(navigation, action, routeParams.url),
     );
     let params: Object;
     if (!path || !path.length) {
