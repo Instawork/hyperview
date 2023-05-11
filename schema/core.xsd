@@ -492,14 +492,8 @@
 
       <xs:attribute name="borderBottomColor" type="hv:color" />
 
-      <xs:attribute name="borderBottomWidth" type="xs:nonNegativeInteger" />
-
-      <xs:attribute name="borderColor" type="hv:color" />
-
-      <xs:attribute name="borderLeftWidth" type="xs:nonNegativeInteger" />
-
-      <xs:attribute name="borderRadius" type="xs:nonNegativeInteger" />
       <xs:attribute name="borderBottomEndRadius" type="xs:nonNegativeInteger" />
+
       <xs:attribute
         name="borderBottomLeftRadius"
         type="xs:nonNegativeInteger"
@@ -512,12 +506,24 @@
         name="borderBottomStartRadius"
         type="xs:nonNegativeInteger"
       />
-      <xs:attribute name="borderTopEndRadius" type="xs:nonNegativeInteger" />
-      <xs:attribute name="borderTopLeftRadius" type="xs:nonNegativeInteger" />
-      <xs:attribute name="borderTopRightRadius" type="xs:nonNegativeInteger" />
-      <xs:attribute name="borderTopStartRadius" type="xs:nonNegativeInteger" />
+
+      <xs:attribute name="borderBottomWidth" type="xs:nonNegativeInteger" />
+
+      <xs:attribute name="borderColor" type="hv:color" />
+
+      <xs:attribute name="borderEndColor" type="hv:color" />
+
+      <xs:attribute name="borderLeftColor" type="hv:color" />
+
+      <xs:attribute name="borderLeftWidth" type="xs:nonNegativeInteger" />
+
+      <xs:attribute name="borderRadius" type="xs:nonNegativeInteger" />
+
+      <xs:attribute name="borderRightColor" type="hv:color" />
 
       <xs:attribute name="borderRightWidth" type="xs:nonNegativeInteger" />
+
+      <xs:attribute name="borderStartColor" type="hv:color" />
 
       <xs:attribute name="borderStyle">
         <xs:simpleType>
@@ -530,6 +536,14 @@
       </xs:attribute>
 
       <xs:attribute name="borderTopColor" type="hv:color" />
+
+      <xs:attribute name="borderTopEndRadius" type="xs:nonNegativeInteger" />
+
+      <xs:attribute name="borderTopLeftRadius" type="xs:nonNegativeInteger" />
+
+      <xs:attribute name="borderTopRightRadius" type="xs:nonNegativeInteger" />
+
+      <xs:attribute name="borderTopStartRadius" type="xs:nonNegativeInteger" />
 
       <xs:attribute name="borderTopWidth" type="xs:nonNegativeInteger" />
 
