@@ -13,3 +13,4 @@ import '../src/components/hv-text-field/stories/index.js';
 import '../src/components/hv-text/stories/index.js';
 import '../src/components/hv-view/stories/index.js';
 import '../src/components/hv-web-view/stories/index.js';
+import '../src/components/hv-screen/stories/index.js';
