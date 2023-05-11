@@ -10,8 +10,10 @@
 
 import { Navigation, Route } from './services/navigation/imports';
 import type { ElementRef } from 'react';
+import { Props as ErrorProps } from 'hyperview/src/core/components/load-error/types';
+import { Props as LoadingProps } from 'hyperview/src/core/components/loading/types';
 
-import type { XResponseStaleReason } from './services/dom/types';
+import type { XResponseStaleReason } from 'hyperview/src/services/dom/types';
 
 export type DOMString = string;
 export type NamespaceURI = string;
@@ -424,9 +426,11 @@ export type ViewProps = {|
   back: () => void,
   closeModal: ?() => void,
   entrypointUrl: string,
+  errorScreen: ?React.Component<ErrorProps>,
   fetch: (input: string, init: ?Object) => string,
   formatDate: ?(date: string, format: string) => string,
   handleBack: () => void,
+  loadingScreen: ?React.Component<LoadingProps>,
   navigate: ?(params: Object, key: string) => void,
   navigation: ?Navigation,
   onParseAfter: ?(url: string) => void,

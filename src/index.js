@@ -8,6 +8,7 @@
  *
  */
 
+import * as Contexts from 'hyperview/src/contexts';
 import * as Events from 'hyperview/src/services/events';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import React, { PureComponent } from 'react';
@@ -27,10 +28,14 @@ export default class Hyperview extends PureComponent<ViewProps> {
           back={this.props.back}
           closeModal={this.props.closeModal}
           entrypointUrl={this.props.entrypointUrl}
+          errorScreen={this.props.errorScreen}
           fetch={this.props.fetch}
           formatDate={this.props.formatDate}
+          loadingScreen={this.props.loadingScreen}
           navigate={this.props.navigate}
           navigation={this.props.navigation}
+          onParseAfter={this.props.onParseAfter}
+          onParseBefore={this.props.onParseBefore}
           openModal={this.props.openModal}
           push={this.props.push}
           route={this.props.route}
@@ -40,13 +45,20 @@ export default class Hyperview extends PureComponent<ViewProps> {
 
     // Without an external navigation, all navigation is handled internally
     return (
-      <HvNavigator
-        entrypointUrl={this.props.entrypointUrl}
-        fetch={this.props.fetch}
-        formatDate={this.props.formatDate}
-        onParseAfter={this.props.onParseAfter}
-        onParseBefore={this.props.onParseBefore}
-      />
+      <Contexts.DateFormatContext.Provider value={this.formatDate}>
+        <Contexts.NavigationContext.Provider
+          value={{
+            entrypointUrl: this.props.entrypointUrl,
+            errorScreen: this.props.errorScreen,
+            fetch: this.props.fetch,
+            loadingScreen: this.props.loadingScreen,
+            onParseAfter: this.props.onParseAfter,
+            onParseBefore: this.props.onParseBefore,
+          }}
+        >
+          <HvNavigator />
+        </Contexts.NavigationContext.Provider>
+      </Contexts.DateFormatContext.Provider>
     );
   }
 }

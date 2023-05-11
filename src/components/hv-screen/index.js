@@ -17,7 +17,7 @@ import * as Render from 'hyperview/src/services/render';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as UrlService from 'hyperview/src/services/url';
 import * as Xml from 'hyperview/src/services/xml';
-import { ACTIONS, NAV_ACTIONS, UPDATE_ACTIONS } from 'hyperview/src/types';
+import { ACTIONS, NAV_ACTIONS, UPDATE_ACTIONS } from './types';
 // eslint-disable-next-line instawork/import-services
 import Navigation, { ANCHOR_ID_SEPARATOR } from 'hyperview/src/services/navigation';
 import { createProps, createStyleProp, getElementByTimeoutId, getFormData, later, removeTimeoutId, setTimeoutId, shallowCloneToRoot } from 'hyperview/src/services';
