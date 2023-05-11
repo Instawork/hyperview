@@ -8,6 +8,7 @@
  *
  */
 
+import { Navigation, Route } from './services/navigation/imports';
 import type { ElementRef } from 'react';
 
 import type { XResponseStaleReason } from './services/dom/types';
@@ -418,3 +419,19 @@ export type NavigationProps = {|
 |};
 
 export const ON_EVENT_DISPATCH = 'hyperview:on-event';
+
+export type ViewProps = {|
+  back: () => void,
+  closeModal: ?() => void,
+  entrypointUrl: string,
+  fetch: (input: string, init: ?Object) => string,
+  formatDate: ?(date: string, format: string) => string,
+  handleBack: () => void,
+  navigate: ?(params: Object, key: string) => void,
+  navigation: ?Navigation,
+  onParseAfter: ?(url: string) => void,
+  onParseBefore: ?(url: string) => void,
+  openModal: ?(params: Object) => void,
+  push: ?(params: Object) => void,
+  route: ?Route,
+|};
