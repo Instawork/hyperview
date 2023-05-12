@@ -12,8 +12,8 @@ import * as Contexts from 'hyperview/src/contexts';
 import * as Events from 'hyperview/src/services/events';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import React, { PureComponent } from 'react';
-import HvNavigator from 'hyperview/src/components/hv-navigator';
-import HvScreen from 'hyperview/src/components/hv-screen';
+import HvNavigator from 'hyperview/src/core/components/hv-navigator';
+import HvScreen from 'hyperview/src/core/components/hv-screen';
 import ViewProps from 'hyperview/src/core/components/hv-navigator/types';
 
 /**
