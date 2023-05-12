@@ -6,10 +6,8 @@
  *
  */
 
-import './src/gesture-handler';
-import React from 'react';
-import Navigator from './src/Navigator';
+import Root from './src/Root';
 
 export default function App() {
-  return <Navigator />;
+  return <Root />;
 }
