@@ -12,7 +12,7 @@ import Hyperview from 'hyperview';
 import moment from 'moment';
 import { MAIN_STACK_NAME, MODAL_STACK_NAME } from './constants';
 
-export default class HyperviewScreen extends PureComponent {
+export default class HyperviewScreenLegacy extends PureComponent {
   goBack = () => {
     this.props.navigation.pop();
   }

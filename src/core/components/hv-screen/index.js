@@ -28,7 +28,7 @@ import Loading from 'hyperview/src/core/components/loading';
 import React from 'react';
 
 // eslint-disable-next-line instawork/pure-components
-export default class HyperScreen extends React.Component {
+export default class HvScreen extends React.Component {
   static createProps = createProps;
 
   static createStyleProp = createStyleProp;
