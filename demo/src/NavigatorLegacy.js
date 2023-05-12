@@ -6,7 +6,7 @@
  *
  */
 
-import HyperviewScreen from './HyperviewScreen';
+import HyperviewScreenLegacy from './HyperviewScreenLegacy';
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -21,18 +21,18 @@ export default () => {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Group>
           <Stack.Screen
-            component={HyperviewScreen}
+            component={HyperviewScreenLegacy}
             initialParams={{ url: ENTRY_POINT_URL }}
             name={MAIN_STACK_NAME}
           />
         </Stack.Group>
         <Stack.Group screenOptions={{ presentation: 'modal' }}>
           <Stack.Screen
-            component={HyperviewScreen}
+            component={HyperviewScreenLegacy}
             name={MODAL_STACK_NAME}
           />
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
   );
-}
+};
