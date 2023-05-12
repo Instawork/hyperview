@@ -1,7 +1,7 @@
 flow-typed
 *.gen.js
 website/
-/src/index.js
+/src/components/hv-screen/index.js
 /src/VisibilityDetectingView.js
 /src/mask.js
 /demo/*

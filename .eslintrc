@@ -54,7 +54,17 @@
     },
     {
       "files": ["**/*.ts", "**/*.tsx"],
-      "extends": ["plugin:instawork/recommended-typescript"]
+      "extends": ["plugin:instawork/recommended-typescript"],
+      "rules": {
+        "instawork/flow-annotate": "off",
+        "object-curly-newline": "off",
+        "flowtype/no-types-missing-file-annotation": "off",
+        "no-shadow": "off",
+        "@typescript-eslint/no-shadow": "error",
+        "no-use-before-define": "off",
+        "@typescript-eslint/no-use-before-define": ["error"],
+        "@typescript-eslint/no-inferrable-types": "off"
+      }
     }
   ]
 }
