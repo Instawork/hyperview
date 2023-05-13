@@ -8,6 +8,7 @@
  *
  */
 
+import * as ValidationService from 'hyperview/src/services/validation';
 import * as Xml from 'hyperview/src/services/xml';
 import type {
   ComponentRegistry,
@@ -57,16 +58,21 @@ export const createStyleProp = (
     styleRules = styleRules.concat(pressedRules);
   }
 
-  const validState: ?string = element.getAttributeNS("https://hyperview.org/hyperview-validation", "state");
-  if (validState === "invalid") {
+  const hasStyleRole: boolean = ValidationService.hasValidationRole(
+    element,
+    'style',
+  );
+  const validationState: ?string = hasStyleRole
+    ? ValidationService.getValidationState(element)
+    : null;
+
+  if (validationState === 'invalid') {
     const invalidRules = styleIds
       .map(s => stylesheets.invalid[s])
       .filter(Boolean);
     styleRules = styleRules.concat(invalidRules);
-  } else if (validState === "valid") {
-    const validRules = styleIds
-      .map(s => stylesheets.valid[s])
-      .filter(Boolean);
+  } else if (validationState === 'valid') {
+    const validRules = styleIds.map(s => stylesheets.valid[s]).filter(Boolean);
     styleRules = styleRules.concat(validRules);
   }
 

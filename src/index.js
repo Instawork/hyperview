@@ -536,10 +536,10 @@ export default class HyperScreen extends React.Component {
       const getRoot = () => this.doc;
       if (behavior.callbackWithOptions) {
         behavior.callbackWithOptions(behaviorElement, {
-          onUpdate: this.onUpdate,
-          getRoot: getRoot,
-          updateRoot: updateRoot,
           componentRegistry: this.formComponentRegistry,
+          getRoot,
+          onUpdate: this.onUpdate,
+          updateRoot,
         });
       } else {
         behavior.callback(behaviorElement, this.onUpdate, getRoot, updateRoot);

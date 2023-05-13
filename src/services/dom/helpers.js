@@ -18,6 +18,7 @@ import type {
   Node,
   NodeType,
 } from 'hyperview/src/types';
+import { NODE_TYPE } from 'hyperview/src/types';
 
 export const getBehaviorElements = (element: any) => {
   // $FlowFixMe
@@ -30,6 +31,17 @@ export const getBehaviorElements = (element: any) => {
   }
 
   return behaviorElements;
+};
+
+export const getDocument = (node: ?Node): ?Document => {
+  if (node === null || node === undefined) {
+    return null;
+  }
+
+  if (node.nodeType === NODE_TYPE.DOCUMENT_NODE) {
+    return (node: any);
+  }
+  return getDocument(node.parentNode);
 };
 
 export const getFirstTag = (

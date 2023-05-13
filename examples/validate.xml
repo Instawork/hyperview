@@ -1,4 +1,7 @@
-<doc xmlns="https://hyperview.org/hyperview" xmlns:v="https://hyperview.org/hyperview-validation">
+<doc
+  xmlns="https://hyperview.org/hyperview"
+  xmlns:v="https://hyperview.org/hyperview-validation"
+>
   <screen>
     <styles>
       <style
@@ -75,7 +78,14 @@
         fontWeight="bold"
         lineHeight="24"
         marginBottom="8"
-      />
+      >
+        <modifier invalid="true">
+          <style color="#FF4847" />
+        </modifier>
+        <modifier valid="true">
+          <style color="#63CB76" />
+        </modifier>
+      </style>
       <style
         id="help"
         borderColor="#FF4847"
@@ -83,8 +93,11 @@
         fontWeight="normal"
         lineHeight="24"
         marginTop="16"
-      />
-      <style id="help--error" color="#FF4847" />
+      >
+        <modifier invalid="true">
+          <style color="#FF4847" />
+        </modifier>
+      </style>
       <style id="input--noneditable" color="#8D9494" />
       <style id="Main" flex="1" marginBottom="40" />
       <style
@@ -108,18 +121,26 @@
         <behavior trigger="refresh" action="reload" href="#" />
         <form>
           <view style="FormGroup">
-            <text style="label">Validate with button press</text>
+            <text
+              style="label"
+              v:role="style"
+              v:source="input-1"
+            >Validate with button press</text>
             <text-field
-                placeholder="First name"
-                placeholderTextColor="#8D9494"
-                name="text"
-                style="input"
-                id="input-1"
+              placeholder="First name"
+              placeholderTextColor="#8D9494"
+              name="text"
+              style="input"
+              id="input-1"
             >
               <v:required message="First name required" />
-              <v:length min-length="2" max-length="5" message="Length must be between 2 and 5" />
+              <v:length
+                min-length="2"
+                max-length="5"
+                message="Length must be between 2 and 5"
+              />
             </text-field>
-            <text style="help help--error" v:role="message" v:source="input-1" />
+            <text style="help" v:role="message style" v:source="input-1" />
 
             <view style="Button">
               <behavior trigger="press" action="validate" target="input-1" />
@@ -128,35 +149,79 @@
           </view>
 
           <view style="FormGroup">
-            <text style="label">Validate on change</text>
+            <text
+              style="label"
+              v:role="style"
+              v:source="input-2"
+            >Validate on change</text>
             <text-field
-                placeholder="First name"
-                placeholderTextColor="#8D9494"
-                name="text"
-                style="input"
-                id="input-2"
+              placeholder="First name"
+              placeholderTextColor="#8D9494"
+              name="text"
+              style="input"
+              id="input-2"
             >
               <behavior trigger="change" action="validate" target="input-2" />
               <v:required message="First name required" />
-              <v:length min-length="2" max-length="5" message="Length must be between 2 and 5" />
+              <v:length
+                min-length="2"
+                max-length="5"
+                message="Length must be between 2 and 5"
+              />
             </text-field>
-            <text style="help help--error" v:role="message" v:source="input-2" />
+            <text style="help" v:role="message style" v:source="input-2" />
           </view>
 
           <view style="FormGroup">
-            <text style="label">Validate on blur</text>
+            <text
+              style="label"
+              v:role="style"
+              v:source="input-3"
+            >Validate on blur</text>
             <text-field
-                placeholder="First name"
-                placeholderTextColor="#8D9494"
-                name="text"
-                style="input"
-                id="input-3"
+              placeholder="First name"
+              placeholderTextColor="#8D9494"
+              name="text"
+              style="input"
+              id="input-3"
             >
               <behavior trigger="blur" action="validate" target="input-3" />
               <v:required message="First name required" />
-              <v:length min-length="2" max-length="5" message="Length must be between 2 and 5" />
+              <v:length
+                min-length="2"
+                max-length="5"
+                message="Length must be between 2 and 5"
+              />
             </text-field>
-            <text style="help help--error" v:role="message" v:source="input-3" />
+            <text style="help" v:role="message style" v:source="input-3" />
+          </view>
+-
+          <view style="FormGroup">
+            <text
+              style="label"
+              v:role="style"
+              v:source="input-4"
+            >Error from server</text>
+            <text-field
+              placeholder="First name"
+              placeholderTextColor="#8D9494"
+              name="text"
+              style="input"
+              id="input-4"
+              v:state="invalid"
+              value="1234567"
+            >
+              <behavior trigger="blur" action="validate" target="input-4" />
+              <v:required message="First name required" />
+              <v:length
+                min-length="2"
+                max-length="5"
+                message="Length must be between 2 and 5"
+              />
+            </text-field>
+            <text style="help" v:role="message style" v:source="input-4">
+              Length must be between 2 and 5
+            </text>
           </view>
 
         </form>

@@ -327,21 +327,23 @@ export type HvBehaviorOptions = {
   componentRegistry: ComponentRegistry,
 };
 
-export type HvBehavior = {
-  action: string,
-  callback: (
-    element: Element,
-    onUpdate: HvComponentOnUpdate,
-    getRoot: HvGetRoot,
-    updateRoot: HvUpdateRoot,
-  ) => void,
-} | {
-  action: string,
-  callbackWithOptions: (
-    element: Element,
-    options: HvBehaviorOptions,
-  ) => void,
-};
+export type HvBehavior =
+  | {
+      action: string,
+      callback: (
+        element: Element,
+        onUpdate: HvComponentOnUpdate,
+        getRoot: HvGetRoot,
+        updateRoot: HvUpdateRoot,
+      ) => void,
+    }
+  | {
+      action: string,
+      callbackWithOptions: (
+        element: Element,
+        options: HvBehaviorOptions,
+      ) => void,
+    };
 
 export type BehaviorRegistry = {
   [string]: HvBehavior,
@@ -435,7 +437,6 @@ export type NavigationProps = {|
 
 export const ON_EVENT_DISPATCH = 'hyperview:on-event';
 
-
 export type Validation = {|
   valid: boolean,
   message?: string,
@@ -448,5 +449,5 @@ export type Validator = {
 };
 
 export type ValidatorRegistry = {
-  [string]: {[string]: Validator}
+  [string]: { [string]: Validator },
 };

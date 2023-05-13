@@ -1,89 +1,128 @@
+// @flow
+
+import * as DomService from 'hyperview/src/services/dom';
+import * as Xml from 'hyperview/src/services/xml';
 import type {
+  Document,
   Element,
-  Validator,
   Validation,
+  Validator,
   ValidatorRegistry,
 } from 'hyperview/src/types';
 import { NODE_TYPE } from 'hyperview/src/types';
 
-export const V_NS = "https://hyperview.org/hyperview-validation";
+export const V_NS = 'https://hyperview.org/hyperview-validation';
 
 const RequiredValidator: Validator = {
-  namespace: V_NS,
-  name: "required",
   check: (value: ?string, element: Element): Validation => {
-    if (!!value) {
+    if (value) {
       return {
         valid: true,
       };
     }
     return {
-      valid: false,
       message: element.getAttribute('message') || 'This field is required',
+      valid: false,
     };
   },
+  name: 'required',
+  namespace: V_NS,
 };
 
-
 const LengthValidator: Validator = {
-  namespace: V_NS,
-  name: "length",
   check: (value: ?string, element: Element): Validation => {
-
     const minLength = parseInt(element.getAttribute('min-length'), 10);
     const maxLength = parseInt(element.getAttribute('max-length'), 10);
 
     if (value !== null) {
-      if (value.length < minLength || value.length > maxLength) {
+      const valueLength: number = value ? value.length : 0;
+      if (valueLength < minLength || valueLength > maxLength) {
         return {
+          message:
+            element.getAttribute('message') || 'This field has bad length',
           valid: false,
-          message: element.getAttribute('message') || 'This field has bad length',
-        }
+        };
       }
     }
 
     return { valid: true };
   },
+  name: 'length',
+  namespace: V_NS,
 };
 
-const VALIDATORS = [
-  RequiredValidator,
-  LengthValidator,
-];
+const VALIDATORS = [RequiredValidator, LengthValidator];
 
 export const REGISTRY: ValidatorRegistry = {};
 
-VALIDATORS.forEach((v) => {
+VALIDATORS.forEach(v => {
   const namespaceDict = REGISTRY[v.namespace] || {};
   namespaceDict[v.name] = v;
   REGISTRY[v.namespace] = namespaceDict;
 });
 
+export const getValidators = (
+  element: Element,
+): Array<[Validator, Element]> => {
+  const children: Array<any> = Array.from(element.childNodes || []);
+  const elementChildren: Array<Element> = children.filter(
+    n => n.nodeType === NODE_TYPE.ELEMENT_NODE,
+  );
 
-export const getValidators = (element: Element): Array<[Validator, Element]> => {
-  return Array.from(element.childNodes)
-    .filter((n) => n.nodeType == NODE_TYPE.ELEMENT_NODE)
-    .map((e) => {
-      const namespace = REGISTRY[e.namespaceURI] || {};
-      const validator = namespace[e.localName];
+  return elementChildren.reduce(
+    (validators: Array<[Validator, Element]>, e: Element) => {
+      const namespace = e.namespaceURI ? REGISTRY[e.namespaceURI] || {} : {};
+      const validator: ?Validator = e.localName ? namespace[e.localName] : null;
       if (validator) {
-        return [validator, e];
+        const tuple = [validator, e];
+        return [...validators, tuple];
       }
-      return null;
-    })
-    .filter((v) => !!v);
+      return validators;
+    },
+    [],
+  );
 };
 
-export const getValidatorElementsWithInvalidState = (element: Element): Array<Element> => {
-  return getValidators(element)
-    .map(([v: Validator, e: Element]) => e)
-    .filter((e: Element) => {
-      return e.getAttributeNS(V_NS, "state") === "invalid";
-    });
+export const getValidatorElementsWithInvalidState = (
+  element: Element,
+): Array<Element> => {
+  return (
+    getValidators(element)
+      // eslint-disable-next-line no-unused-vars
+      .map(([v: Validator, e: Element]) => e)
+      .filter((e: Element) => {
+        return e.getAttributeNS(V_NS, 'state') === 'invalid';
+      })
+  );
 };
 
-export const getFirstInvalidMessage = (element: Element): ?string => {
-  const x = getValidatorElementsWithInvalidState(element);
-  const invalidElement: ?Element = x.find((e) => e.getAttribute("message"));
-  return invalidElement ? invalidElement.getAttribute("message") : null;
+export const getValidationSource = (element: Element): ?string => {
+  return element.getAttributeNS(V_NS, 'source');
+};
+
+export const getValidationState = (element: Element): ?string => {
+  const state: ?string = element.getAttributeNS(V_NS, 'state');
+  if (state) {
+    // Explicit state defined on the element
+    return state;
+  }
+
+  // If the element has a "source" attribute, use the validation state of the source element.
+  const sourceId: ?string = getValidationSource(element);
+  if (sourceId !== null && sourceId !== undefined) {
+    const doc: ?Document = DomService.getDocument(element);
+    const sourceElement: ?Element = doc ? doc.getElementById(sourceId) : null;
+    return sourceElement ? sourceElement.getAttributeNS(V_NS, 'state') : null;
+  }
+
+  return null;
+};
+
+export const getValidationRoles = (element: Element): Array<string> => {
+  const role: string = element.getAttributeNS(V_NS, 'role') || '';
+  return Xml.splitAttributeList(role);
+};
+
+export const hasValidationRole = (element: Element, role: string): boolean => {
+  return getValidationRoles(element).indexOf(role) >= 0;
 };
