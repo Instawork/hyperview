@@ -48,8 +48,7 @@
     {
       "files": ["**/types.js"],
       "rules": {
-        "no-use-before-define": "off",
-        "max-len": "off"
+        "no-use-before-define": "off"
       }
     },
     {
@@ -64,7 +63,22 @@
         "no-use-before-define": "off",
         "@typescript-eslint/no-use-before-define": ["error"],
         "@typescript-eslint/no-inferrable-types": "off",
-        "max-len": "off",
+        "prefer-destructuring": [
+          "error",
+          {
+            "AssignmentExpression": {
+              "array": true,
+              "object": true
+            },
+            "VariableDeclarator": {
+              "array": true,
+              "object": true
+            }
+          },
+          {
+            "enforceForRenamedProperties": false
+          }
+        ]
       }
     }
   ]
