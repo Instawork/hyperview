@@ -35,7 +35,7 @@ export type ActionProps = {
 };
 
 /**
- * Props used by hv-screen
+ * Props used just by hv-screen
  */
 export type HvScreenProps = {
   behaviors?: HvBehavior[];
@@ -45,3 +45,8 @@ export type HvScreenProps = {
   loadingScreen?: React.ComponentType<LoadingProps>;
   refreshControl?: React.ComponentType;
 };
+
+/**
+ * All of the props used by hv-screen
+ */
+export type Props = NavigationProps & DataProps & ActionProps & HvScreenProps;
