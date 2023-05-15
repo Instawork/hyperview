@@ -14,12 +14,12 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import React, { PureComponent } from 'react';
 import HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
-import ViewProps from 'hyperview/src/core/components/hv-navigator/types';
+import { Props } from 'hyperview/src/core/components/hv-navigator/types';
 
 /**
  * Provides routing to the correct path based on the state passed in
  */
-export default class Hyperview extends PureComponent<ViewProps> {
+export default class Hyperview extends PureComponent<Props> {
   render() {
     if (this.props.navigation) {
       // Externally provided navigation will use the external navigation and action callbacks
