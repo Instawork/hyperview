@@ -12,7 +12,7 @@ import React from 'react';
 /**
  * Props used by hv-navigator
  */
-export type HvNavigationProps = {
+export type ComponentProps = {
   handleBack: React.ComponentType;
 };
 

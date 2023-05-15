@@ -27,9 +27,9 @@ export const RefreshControlComponentContext = React.createContext<
  * Context used by to provide values to the navigation components
  */
 export const NavigationContext = React.createContext<
-  HvScreenProps.HvScreenProps &
+  HvScreenProps.ComponentProps &
     HvScreenProps.DataProps &
-    HvNavigatorProps.HvNavigatorProps,
+    HvNavigatorProps.ComponentProps,
 >(
   behaviors => behaviors,
   components => components,

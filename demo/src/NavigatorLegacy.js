@@ -10,8 +10,11 @@ import HyperviewScreenLegacy from './HyperviewScreenLegacy';
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { ENTRY_POINT_URL, MAIN_STACK_NAME, MODAL_STACK_NAME } from './constants';
-
+import {
+  ENTRY_POINT_URL,
+  MAIN_STACK_NAME,
+  MODAL_STACK_NAME,
+} from './constants';
 
 const Stack = createStackNavigator();
 

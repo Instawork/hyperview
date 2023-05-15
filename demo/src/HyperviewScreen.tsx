@@ -46,6 +46,21 @@ export default class HyperviewScreen extends PureComponent {
         fetch={this.fetchWrapper}
         formatDate={this.formatDate}
         handleBack={HandleBack}
+        back={null}
+        behaviors={null}
+        closeModal={null}
+        components={null}
+        elementErrorComponent={null}
+        errorScreen={null}
+        loadingScreen={null}
+        navigate={null}
+        navigation={null}
+        onParseAfter={null}
+        onParseBefore={null}
+        openModal={null}
+        push={null}
+        refreshControl={null}
+        route={null}
       />
     );
   }

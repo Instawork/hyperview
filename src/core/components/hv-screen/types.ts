@@ -1,3 +1,11 @@
+/**
+ * Copyright (c) Garuda Labs, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
 import type { HvBehavior, HvComponent } from 'hyperview/src/types';
 import { Navigation, Route } from '@react-navigation/native';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error/types';
@@ -37,7 +45,7 @@ export type ActionProps = {
 /**
  * Props used just by hv-screen
  */
-export type HvScreenProps = {
+export type ComponentProps = {
   behaviors?: HvBehavior[];
   components?: HvComponent[];
   elementErrorComponent?: React.ComponentType<ErrorProps>;
