@@ -1,7 +1,7 @@
 {
   "name": "hyperview",
   "version": "0.63.0",
-  "main": "lib/index.js",
+  "main": "src/index.tsx",
   "description": "React Native client for Hyperview XML",
   "homepage": "https://hyperview.org",
   "keywords": [
