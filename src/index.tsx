@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -9,8 +7,8 @@
  */
 
 import * as Contexts from 'hyperview/src/contexts';
-import * as Events from 'hyperview/src/services/events';
-import * as Namespaces from 'hyperview/src/services/namespaces';
+// import * as Events from 'hyperview/src/services/events';
+// import * as Namespaces from 'hyperview/src/services/namespaces';
 import React, { PureComponent } from 'react';
 import HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
@@ -75,5 +73,6 @@ export default class Hyperview extends PureComponent<Props> {
   }
 }
 
-export * from 'hyperview/src/types';
-export { Events, Namespaces };
+// TODO: export types
+// export * from 'hyperview/src/types';
+// export { Events, Namespaces };
