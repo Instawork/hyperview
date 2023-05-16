@@ -11,10 +11,13 @@ import HandleBack from './HandleBack';
 import Hyperview from 'hyperview';
 import moment from 'moment';
 
+type Props = { url: string };
+type State = {};
+
 /**
  * Provide external fetch and date format functions to Hyperview.
  */
-export default class HyperviewScreen extends PureComponent {
+export default class HyperviewScreen extends PureComponent<Props, State> {
   formatDate = (date, format) => moment(date).format(format);
 
   /**
