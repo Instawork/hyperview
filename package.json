@@ -1,7 +1,7 @@
 {
   "name": "hyperview",
   "version": "0.63.0",
-  "main": "lib/index.js",
+  "main": "src/index.tsx",
   "description": "React Native client for Hyperview XML",
   "homepage": "https://hyperview.org",
   "keywords": [
@@ -45,6 +45,7 @@
     "test": "yarn generate test && yarn test:flow && yarn test:lint && yarn test:render && yarn test:unit && yarn test:validate-xml"
   },
   "dependencies": {
+    "@react-navigation/native": "6.1.6",
     "tiny-emitter": "2.1.0",
     "url-parse": "1.4.3",
     "xmldom-instawork": "0.0.1"

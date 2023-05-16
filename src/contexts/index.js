@@ -8,6 +8,8 @@
  *
  */
 
+import * as HvNavigatorProps from 'hyperview/src/core/components/hv-navigator/types';
+import * as HvScreenProps from 'hyperview/src/core/components/hv-screen/types';
 import type { ComponentType } from 'react';
 import React from 'react';
 
@@ -20,3 +22,25 @@ export const DateFormatContext = React.createContext<
 export const RefreshControlComponentContext = React.createContext<
   ComponentType<*>,
 >(component => component);
+
+/**
+ * Context used by to provide values to the navigation components
+ */
+export const NavigationContext = React.createContext<
+  HvScreenProps.ComponentProps &
+    HvScreenProps.DataProps &
+    HvNavigatorProps.ComponentProps,
+>(
+  behaviors => behaviors,
+  components => components,
+  elementErrorComponent => elementErrorComponent,
+  errorScreen => errorScreen,
+  loadingScreen => loadingScreen,
+  refreshControl => refreshControl,
+  entrypointUrl => entrypointUrl,
+  fetch => fetch,
+  formatDate => formatDate,
+  onParseBefore => onParseBefore,
+  onParseAfter => onParseAfter,
+  handleBack => handleBack,
+);

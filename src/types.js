@@ -27,6 +27,8 @@ export const LOCAL_NAME = {
   ITEMS: 'items',
   LIST: 'list',
   MODIFIER: 'modifier',
+  NAV_ROUTE: 'nav-route',
+  NAVIGATOR: 'navigator',
   OPTION: 'option',
   PICKER_FIELD: 'picker-field',
   PICKER_ITEM: 'picker-item',
@@ -288,6 +290,7 @@ export type HvComponentOnUpdate = (
   action: ?DOMString,
   element: Element,
   options: HvComponentOptions,
+  target: ?DOMString,
 ) => void;
 
 export type HvGetRoot = () => Document;
