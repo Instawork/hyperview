@@ -8,7 +8,7 @@
 
 import React, { PureComponent } from 'react';
 import HandleBack from './HandleBack';
-import Hyperview from 'hyperview';
+import Hyperview from 'hyperview/src';
 import moment from 'moment';
 import { MAIN_STACK_NAME, MODAL_STACK_NAME } from './constants';
 
