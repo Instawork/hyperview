@@ -6,8 +6,8 @@
  *
  */
 
-import type { HvBehavior, HvComponent } from 'hyperview/src/types';
-import { Navigation, Route } from '@react-navigation/native';
+import type { Document, HvBehavior, HvComponent } from 'hyperview/src/types';
+import { Navigation, Route } from 'hyperview/src/services/navigator/imports';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error/types';
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading/types';
 import React from 'react';
@@ -25,10 +25,12 @@ export type NavigationProps = {
  */
 export type DataProps = {
   entrypointUrl: string;
+  url: string;
   fetch: (input: string, init: object) => string;
   formatDate?: (date: string, format: string) => string;
   onParseAfter?: (url: string) => void;
   onParseBefore?: (url: string) => void;
+  doc: Document;
 };
 
 /**
@@ -57,4 +59,4 @@ export type ComponentProps = {
 /**
  * All of the props used by hv-screen
  */
-export type Props = NavigationProps & DataProps & ActionProps & HvScreenProps;
+export type Props = NavigationProps & DataProps & ActionProps & ComponentProps;

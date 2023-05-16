@@ -14,6 +14,7 @@ import React from 'react';
  */
 export type ComponentProps = {
   handleBack: React.ComponentType;
+  element: Element;
 };
 
 /**
@@ -21,4 +22,24 @@ export type ComponentProps = {
  */
 export type Props = HvScreenProps.NavigationProps &
   HvScreenProps.DataProps &
-  HvScreenProps.HvScreenProps;
+  HvScreenProps.ComponentProps &
+  ComponentProps;
+
+/**
+ * Minimal local name type copy from 'hyperview/src/types.js'
+ */
+export const LOCAL_NAME = {
+  DOC: 'doc',
+  HEADER: 'header',
+  NAV_ROUTE: 'nav-route',
+  NAVIGATOR: 'navigator',
+  SCREEN: 'screen',
+  STYLE: 'style',
+  STYLES: 'styles',
+};
+
+export const NAVIGATOR_TYPE = {
+  BOTTOM_TAB: 'bottom-tab',
+  STACK: 'stack',
+  TOP_TAB: 'top-tab',
+};
