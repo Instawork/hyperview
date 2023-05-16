@@ -10,7 +10,7 @@ import * as Contexts from 'hyperview/src/contexts';
 // import * as Events from 'hyperview/src/services/events';
 // import * as Namespaces from 'hyperview/src/services/namespaces';
 import React, { PureComponent } from 'react';
-import HvNavigator from 'hyperview/src/core/components/hv-navigator';
+import HvRoute from 'hyperview/src/core/components/hv-route';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
 import { Props } from 'hyperview/src/core/components/hv-navigator/types';
 
@@ -65,10 +65,10 @@ export default class Hyperview extends PureComponent<Props> {
               onParseBefore: this.props.onParseBefore,
             }}
           >
-            <HvNavigator />
           </Contexts.NavigationContext.Provider>
         </Contexts.RefreshControlComponentContext.Provider>
       </Contexts.DateFormatContext.Provider>
+            <HvRoute />
     );
   }
 }
