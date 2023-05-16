@@ -7,17 +7,31 @@
  */
 
 import type { Document, HvBehavior, HvComponent } from 'hyperview/src/types';
-import { Navigation, Route } from 'hyperview/src/services/navigator/imports';
+import {
+  NavigationProp,
+  Route,
+} from 'hyperview/src/services/navigator/imports';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error/types';
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading/types';
 import React from 'react';
 
 /**
+ * Props required by other contexts
+ */
+export type ContextProps = {
+  formatDate: (
+    date: Date | null | undefined,
+    format: string | null | undefined,
+  ) => string;
+  refreshControl: React.ComponentType<unknown>;
+};
+
+/**
  * Props used by navigation components
  */
 export type NavigationProps = {
-  navigation?: Navigation;
-  route?: Route;
+  navigation?: NavigationProp<string>;
+  route?: Route<string>;
 };
 
 /**
@@ -25,12 +39,11 @@ export type NavigationProps = {
  */
 export type DataProps = {
   entrypointUrl: string;
-  url: string;
+  url?: string;
   fetch: (input: string, init: object) => string;
-  formatDate?: (date: string, format: string) => string;
   onParseAfter?: (url: string) => void;
   onParseBefore?: (url: string) => void;
-  doc: Document;
+  doc?: Document;
 };
 
 /**
@@ -53,10 +66,13 @@ export type ComponentProps = {
   elementErrorComponent?: React.ComponentType<ErrorProps>;
   errorScreen?: React.ComponentType<ErrorProps>;
   loadingScreen?: React.ComponentType<LoadingProps>;
-  refreshControl?: React.ComponentType;
 };
 
 /**
  * All of the props used by hv-screen
  */
-export type Props = NavigationProps & DataProps & ActionProps & ComponentProps;
+export type Props = ContextProps &
+  NavigationProps &
+  DataProps &
+  ActionProps &
+  ComponentProps;

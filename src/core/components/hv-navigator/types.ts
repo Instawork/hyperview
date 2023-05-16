@@ -14,7 +14,7 @@ import React from 'react';
  */
 export type ComponentProps = {
   handleBack: React.ComponentType;
-  element: Element;
+  element?: Element;
 };
 
 /**
