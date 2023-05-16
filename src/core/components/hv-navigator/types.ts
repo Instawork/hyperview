@@ -43,3 +43,8 @@ export const NAVIGATOR_TYPE = {
   STACK: 'stack',
   TOP_TAB: 'top-tab',
 };
+
+/**
+ * Minimal document type copy from 'hyperview/src/types.js'
+ */
+export type Document = new () => Document;

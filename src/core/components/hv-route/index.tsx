@@ -5,38 +5,25 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
+import React, { PureComponent } from 'react';
+import { Text, View } from 'react-native';
+import { Document } from 'hyperview/src/core/components/hv-navigator/types';
+import { NavigationContext } from 'hyperview/src/contexts/navigation';
 
-import React, { Context, PureComponent } from 'react';
-import { NavigationContext } from 'hyperview/src/contexts';
-import { Parser } from 'hyperview/src/services/dom';
-import { Props } from 'hyperview/src/core/components/hv-navigator/types';
+// eslint-disable-next-line @typescript-eslint/ban-types
+type Props = {};
+type State = { doc: Document; error: string; url: string };
 
-type State = {};
-
-export default class HvRoute extends PureComponent<
-  Props,
-  State,
-  NavigationContext
-> {
+export default class HvRoute extends PureComponent<Props, State> {
   static contextType = NavigationContext;
-  // declare context: React.ContextType<typeof NavigationContext>;
 
   static defaultProps = {};
 
-  parser: Parser;
-
-  constructor(props: Props) {
-    super(props);
-    this.parser = new Parser(
-      this.context.fetch,
-      this.context.onParseBefore,
-      this.context.onParseAfter,
+  render() {
+    return (
+      <View>
+        <Text>ROUTE</Text>
+      </View>
     );
   }
-
-  someThing = () => {
-    const { navigation } = this.context;
-  };
 }
-
-// HvRoute.contextType = NavigationContext;
