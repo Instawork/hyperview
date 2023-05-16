@@ -5,23 +5,31 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
+import type {
+  ActionProps,
+  ContextProps,
+} from 'hyperview/src/core/components/hv-screen/types';
 
 import {
   DateFormatContext,
   NavigationContext,
   RefreshControlComponentContext,
-} from 'hyperview/src/contexts';
-// import * as Events from 'hyperview/src/services/events';
-// import * as Namespaces from 'hyperview/src/services/namespaces';
+} from 'hyperview/src/contexts/navigation';
+
 import React, { PureComponent } from 'react';
+
 import HvRoute from 'hyperview/src/core/components/hv-route';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
-import type { Props } from 'hyperview/src/core/components/hv-navigator/types';
+// import * as Events from 'hyperview/src/services/events';
+// import * as Namespaces from 'hyperview/src/services/namespaces';
+import type { Props as NavigatorProps } from 'hyperview/src/core/components/hv-navigator/types';
+
+type ViewProps = NavigatorProps & ActionProps & ContextProps;
 
 /**
  * Provides routing to the correct path based on the state passed in
  */
-export default class Hyperview extends PureComponent<Props> {
+export default class Hyperview extends PureComponent<ViewProps> {
   render() {
     if (this.props.navigation) {
       // Externally provided navigation will use the provided navigation and action callbacks
@@ -59,6 +67,8 @@ export default class Hyperview extends PureComponent<Props> {
             value={{
               behaviors: this.props.behaviors,
               components: this.props.components,
+              doc: undefined,
+              element: undefined,
               elementErrorComponent: this.props.elementErrorComponent,
               entrypointUrl: this.props.entrypointUrl,
               errorScreen: this.props.errorScreen,
@@ -67,6 +77,7 @@ export default class Hyperview extends PureComponent<Props> {
               loadingScreen: this.props.loadingScreen,
               onParseAfter: this.props.onParseAfter,
               onParseBefore: this.props.onParseBefore,
+              url: undefined,
             }}
           >
             <HvRoute />
