@@ -18,7 +18,7 @@ type State = { useLegacy: boolean };
  * Branch the demo/example to use new navigation or old navigation
  */
 export default class Root extends PureComponent<Props, State> {
-  constructor(props) {
+  constructor(props: Props | Readonly<Props>) {
     super(props);
     this.state = {
       useLegacy: false,

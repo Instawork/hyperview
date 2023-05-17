@@ -10,21 +10,28 @@ import * as HvNavigatorProps from 'hyperview/src/core/components/hv-navigator/ty
 import * as HvScreenProps from 'hyperview/src/core/components/hv-screen/types';
 import type { ComponentType } from 'react';
 import React from 'react';
+import type { RefreshControlProps } from 'react-native';
 
 // Provides the date format function to use in date fields
 // in the screen. Default to ISO string format.
 export const DateFormatContext = React.createContext<
-  (date: Date | null | undefined, format: string | null | undefined) => string
+  (
+    date: Date | null | undefined,
+    format: string | undefined,
+  ) => string | undefined
 >(date => (date ? date.toISOString() : ''));
 
 export const RefreshControlComponentContext = React.createContext<
-  ComponentType<object>
->(component => component);
+  ComponentType<RefreshControlProps> | undefined
+>(undefined);
 
-type Props = HvScreenProps.ComponentProps &
-  HvScreenProps.DataProps &
+export type NavigationContextProps = HvScreenProps.DataProps &
+  HvScreenProps.ComponentProps &
   HvNavigatorProps.ComponentProps;
+
 /**
  * Context used by to provide values to the navigation components
  */
-export const NavigationContext = React.createContext<Props | null>(null);
+export const NavigationContext = React.createContext<NavigationContextProps | null>(
+  null,
+);

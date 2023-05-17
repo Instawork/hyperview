@@ -18,20 +18,21 @@ type State = {};
  * Provide external fetch and date format functions to Hyperview.
  */
 export default class HyperviewScreen extends PureComponent<Props, State> {
-  formatDate = (date, format) => moment(date).format(format);
+  formatDate = (date: Date | null | undefined, format: string | undefined) =>
+    moment(date).format(format);
 
   /**
    * fetch function used by Hyperview screens. By default, it adds
    * header to prevent caching requests.
    */
-  fetchWrapper = (input, init = { headers: {} }) => {
+  fetchWrapper = (input: string, init = { headers: {} }) => {
     return fetch(input, {
       ...init,
       mode: 'cors',
       headers: {
         // Don't cache requests for the demo
         'Cache-Control': 'no-cache, no-store, must-revalidate',
-        Expires: 0,
+        Expires: '0',
         Pragma: 'no-cache',
         ...init.headers,
       },
@@ -49,21 +50,6 @@ export default class HyperviewScreen extends PureComponent<Props, State> {
         fetch={this.fetchWrapper}
         formatDate={this.formatDate}
         handleBack={HandleBack}
-        back={null}
-        behaviors={null}
-        closeModal={null}
-        components={null}
-        elementErrorComponent={null}
-        errorScreen={null}
-        loadingScreen={null}
-        navigate={null}
-        navigation={null}
-        onParseAfter={null}
-        onParseBefore={null}
-        openModal={null}
-        push={null}
-        refreshControl={null}
-        route={null}
       />
     );
   }

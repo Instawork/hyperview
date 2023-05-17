@@ -6,7 +6,7 @@
  *
  */
 
-import type { Document, HvBehavior, HvComponent } from 'hyperview/src/types';
+import type { HvBehavior, HvComponent } from 'hyperview/src/types';
 import {
   NavigationProp,
   Route,
@@ -14,16 +14,17 @@ import {
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error/types';
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading/types';
 import React from 'react';
+import type { RefreshControlProps } from 'react-native';
 
 /**
- * Props required by other contexts
+ * Props required by contexts <see>hyperview/src/contexts/navigation.ts</see>
  */
 export type ContextProps = {
   formatDate: (
     date: Date | null | undefined,
-    format: string | null | undefined,
+    format: string | undefined,
   ) => string;
-  refreshControl: React.ComponentType<unknown>;
+  refreshControl?: React.ComponentType<RefreshControlProps>;
 };
 
 /**
@@ -39,11 +40,12 @@ export type NavigationProps = {
  */
 export type DataProps = {
   entrypointUrl: string;
-  url?: string;
-  fetch: (input: string, init: object) => string;
+  fetch: (
+    input: string,
+    init: { headers: { [key: string]: any } },
+  ) => Promise<Response>;
   onParseAfter?: (url: string) => void;
   onParseBefore?: (url: string) => void;
-  doc?: Document;
 };
 
 /**

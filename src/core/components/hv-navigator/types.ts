@@ -6,24 +6,14 @@
  *
  */
 
-import * as HvScreenProps from 'hyperview/src/core/components/hv-screen/types';
 import React from 'react';
 
 /**
  * Props used by hv-navigator
  */
 export type ComponentProps = {
-  handleBack: React.ComponentType;
-  element?: Element;
+  handleBack?: React.ComponentType<{ children: React.ReactNode }>;
 };
-
-/**
- * All of the props used by hv-navigator
- */
-export type Props = HvScreenProps.NavigationProps &
-  HvScreenProps.DataProps &
-  HvScreenProps.ComponentProps &
-  ComponentProps;
 
 /**
  * Minimal local name type copy from 'hyperview/src/types.js'
