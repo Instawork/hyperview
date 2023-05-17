@@ -78,7 +78,9 @@
           {
             "enforceForRenamedProperties": false
           }
-        ]
+        ],
+        "arrow-parens": ["as-needed"],
+        "no-confusing-arrow": "off"
       }
     }
   ]
