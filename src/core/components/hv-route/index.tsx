@@ -68,7 +68,7 @@ export default class HvRoute extends PureComponent<Props, State> {
       const { doc } = await this.parser.loadDocument(url);
       // console.log('--------> doc');
       this.setState({
-        doc: doc,
+        doc,
         error: null,
       });
     } catch (err: any) {
