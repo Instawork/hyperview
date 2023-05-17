@@ -54,17 +54,13 @@ export default class HvRoute extends PureComponent<Props, State> {
    * Load the url and resolve the xml.
    */
   load = async () => {
-    // if (this.state.doc || getProp<Element>(this.props, 'element', null)) {
-    //   return;
-    // }
-
     if (!this.context || !this.parser) {
       this.setState({ doc: null, error: new Error('No context or parser') });
       return;
     }
 
     try {
-      let url: string = this.props?.url || this.context.entrypointUrl;
+      let url: string = this.props.url || this.context.entrypointUrl;
 
       url = UrlService.getUrlFromHref(url, this.context.entrypointUrl);
       console.log('--------> url', url);
@@ -119,7 +115,9 @@ export default class HvRoute extends PureComponent<Props, State> {
   ContentView = (contextValue: NavigationContextProps | null) => {
     return (
       <View>
-        ROUTE:{this.state.doc?.toString()}:{contextValue?.entrypointUrl}
+        <Text>
+          ROUTE:{this.state.doc?.toString()}:{contextValue?.entrypointUrl}:
+        </Text>
       </View>
     );
   };
