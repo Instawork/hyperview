@@ -18,6 +18,7 @@ import { Document } from 'hyperview/src/services/navigator/types';
 // import LoadElementError from '../load-element-error';
 import LoadError from '../load-error';
 import Loading from '../loading';
+import Navigator from 'hyperview/src/services/navigator';
 import { Parser } from 'hyperview/src/services/dom';
 import { Props } from './types';
 
@@ -26,9 +27,11 @@ type State = { doc: Document | null; error: Error | null; url: string | null };
 export default class HvRoute extends PureComponent<Props, State> {
   static contextType = NavigationContext;
 
+  context: React.ContextType<typeof NavigationContext>;
+
   parser?: Parser;
 
-  context: React.ContextType<typeof NavigationContext>;
+  navigator: Navigator;
 
   constructor(props: Props, context: NavigationContextProps) {
     super(props);
@@ -39,6 +42,7 @@ export default class HvRoute extends PureComponent<Props, State> {
       url: null,
     };
     this.context = context;
+    this.navigator = new Navigator(this.props);
   }
 
   componentDidMount() {
@@ -129,7 +133,7 @@ export default class HvRoute extends PureComponent<Props, State> {
     navContext: NavigationContextProps | null,
   ): React.ReactElement => {
     try {
-      return Render.renderElement(url, doc, navContext);
+      return Render.renderElement(url, doc, navContext, this.navigator);
     } catch (err: any) {
       return this.ErrorView(err, navContext);
     }

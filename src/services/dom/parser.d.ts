@@ -13,6 +13,9 @@ import type {
 } from './types';
 import type { Document } from 'hyperview/src/services/navigator/types';
 
+/**
+ * TS definition of the Parser class to provide an alternate Document response
+ */
 export class Parser {
   constructor(
     fetch: Fetch,

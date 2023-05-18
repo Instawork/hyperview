@@ -6,7 +6,7 @@
  *
  */
 
-import * as HvScreenProps from '../hv-screen/types';
+import { NavigationProps } from '../hv-screen/types';
 
 /**
  * Props used for data fetching by hv-route
@@ -18,4 +18,4 @@ export type DataProps = {
 /**
  * All of the props used by hv-route
  */
-export type Props = DataProps & HvScreenProps.NavigationProps;
+export type Props = DataProps & NavigationProps;

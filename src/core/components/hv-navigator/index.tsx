@@ -6,9 +6,6 @@
  *
  */
 
-import * as HvNavigatorProps from './types';
-import * as HvRouteParams from '../hv-route/types';
-
 import {
   DOMString,
   Element,
@@ -21,6 +18,7 @@ import {
   NavigationContext,
   NavigationContextProps,
 } from 'hyperview/src/contexts/navigation';
+import { Options, Props } from './types';
 import React, { PureComponent } from 'react';
 import {
   createBottomTabNavigator,
@@ -32,6 +30,8 @@ import {
   getInitialNavRouteElement,
   getUrlFromHref,
 } from 'hyperview/src/services/navigator/helpers';
+import { ActionProps } from '../hv-screen/types';
+import { DataProps } from '../hv-route/types';
 import HvRoute from '../hv-route';
 
 // *** AHG TYPES
@@ -39,10 +39,12 @@ const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
 const TopTab = createMaterialTopTabNavigator();
 
-type Props = HvNavigatorProps.Props;
 type State = undefined;
 
-export default class HvNavigator extends PureComponent<Props, State> {
+export default class HvNavigator extends PureComponent<
+  Props | any,
+  State | any
+> {
   /**
    * Dynamically create the appropriate component based on the localName
    * @param localName
@@ -72,14 +74,15 @@ export default class HvNavigator extends PureComponent<Props, State> {
     initialParams: any,
     type: DOMString,
     localName: string,
-    options: HvNavigatorProps.Options = {},
-  ): JSX.Element => {
+    options: Options = {},
+  ): React.ReactElement => {
     switch (type) {
       case NAVIGATOR_TYPE.STACK:
         return (
           <Stack.Screen
             key={id}
             component={this.getComponent(localName)}
+            getId={({ params }) => params?.url}
             initialParams={initialParams}
             name={id}
             options={options}
@@ -121,7 +124,7 @@ export default class HvNavigator extends PureComponent<Props, State> {
     element: Element,
     type: DOMString,
   ): React.ReactNode => {
-    const screens: JSX.Element[] = [];
+    const screens: React.ReactElement[] = [];
     if (!navContext) {
       return screens;
     }
@@ -138,18 +141,21 @@ export default class HvNavigator extends PureComponent<Props, State> {
           throw new Error('No id found');
         }
         let initialParams: any = {};
+        let url: string;
+        let navParams: Props;
+        let routeParams: DataProps & ActionProps;
         switch (child.localName) {
           case LOCAL_NAME.NAVIGATOR:
-            const navParams: HvNavigatorProps.Props = { element: child };
+            navParams = { element: child };
             initialParams = navParams;
             break;
           case LOCAL_NAME.NAV_ROUTE:
-            const routeUrl: string = getUrlFromHref(
+            url = getUrlFromHref(
               child.getAttribute('href'),
               navContext?.entrypointUrl,
             );
-            const routeParams: HvRouteParams.DataProps = {
-              url: routeUrl,
+            routeParams = {
+              url,
             };
             initialParams = routeParams;
             break;
@@ -174,6 +180,7 @@ export default class HvNavigator extends PureComponent<Props, State> {
           }),
         );
         break;
+      default:
     }
     return screens;
   };
@@ -186,7 +193,7 @@ export default class HvNavigator extends PureComponent<Props, State> {
   buildNavigator = (
     navContext: NavigationContextProps | null,
     element: Element,
-    options: HvNavigatorProps.Options,
+    options: Options,
   ) => {
     const id: DOMString | null | undefined = element.getAttribute('id');
     if (!id) {
@@ -219,9 +226,9 @@ export default class HvNavigator extends PureComponent<Props, State> {
       case NAVIGATOR_TYPE.TOP_TAB:
         return (
           <TopTab.Navigator
+            backBehavior="none"
             id={id}
             initialRouteName={initialId}
-            backBehavior="none"
           >
             {this.buildScreens(navContext, element, type)}
           </TopTab.Navigator>
@@ -229,9 +236,9 @@ export default class HvNavigator extends PureComponent<Props, State> {
       case NAVIGATOR_TYPE.BOTTOM_TAB:
         return (
           <BottomTab.Navigator
+            backBehavior="none"
             id={id}
             initialRouteName={initialId}
-            backBehavior="none"
             screenOptions={options}
           >
             {this.buildScreens(navContext, element, type)}
@@ -239,6 +246,7 @@ export default class HvNavigator extends PureComponent<Props, State> {
         );
       default:
     }
+    throw new Error('No navigator type found');
   };
 
   render() {

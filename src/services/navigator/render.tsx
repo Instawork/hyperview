@@ -6,7 +6,6 @@
  *
  */
 
-import * as HvNavigatorProps from 'hyperview/src/core/components/hv-navigator/types';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import {
   DateFormatContext,
@@ -19,21 +18,30 @@ import {
 } from 'hyperview/src/services/navigator/types';
 import HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
+import Navigator from 'hyperview/src/services/navigator';
 import React from 'react';
 import { getFirstTag } from 'hyperview/src/services/navigator/helpers';
 
+/**
+ * Build the <HvScreen> component with injected props
+ * @param url
+ * @param doc
+ * @param navContext
+ * @returns
+ */
 const BuildHvScreen = (
   url: string | null,
   doc: Document,
   navContext: NavigationContextProps | null,
-) => {
+  navigator: Navigator,
+): React.ReactElement => {
   return (
     <DateFormatContext.Consumer>
       {formatter => (
         <HvScreen
-          // back={props.back}
+          back={navigator.back}
           behaviors={navContext?.behaviors}
-          // closeModal={props.closeModal}
+          closeModal={navigator.closeModal}
           components={navContext?.components}
           elementErrorComponent={navContext?.elementErrorComponent}
           entrypointUrl={url || navContext?.entrypointUrl}
@@ -41,12 +49,12 @@ const BuildHvScreen = (
           fetch={navContext?.fetch}
           formatDate={formatter}
           loadingScreen={navContext?.loadingScreen}
-          // navigate={props.navigate}
+          navigate={navigator.navigate}
           // navigation={props.navigation}
           onParseAfter={navContext?.onParseAfter}
           onParseBefore={navContext?.onParseBefore}
-          // openModal={props.openModal}
-          // push={props.push}
+          openModal={navigator.openModal}
+          push={navigator.push}
           // refreshControl={props.refreshControl}
           // route={props.route}
         />
@@ -59,6 +67,7 @@ export const renderElement = (
   url: string | null,
   doc: Document,
   navContext: NavigationContextProps | null,
+  navigator: Navigator,
 ): React.ReactElement => {
   // Get the <doc> element
   const root: Element | null = getFirstTag(doc, LOCAL_NAME.DOC);
@@ -83,17 +92,16 @@ export const renderElement = (
 
   switch (element.localName) {
     case LOCAL_NAME.SCREEN:
-      // if (navContext && navContext.handleBack) {
-      //   return (
-      //     <navContext.handleBack>
-      //       BuildHvScreen(navContext, screenProps)
-      //     </navContext.handleBack>
-      //   );
-      // }
-      return BuildHvScreen(url, doc, navContext);
+      if (navContext && navContext.handleBack) {
+        return (
+          <navContext.handleBack>
+            {BuildHvScreen(url, doc, navContext, navigator)}
+          </navContext.handleBack>
+        );
+      }
+      return BuildHvScreen(url, doc, navContext, navigator);
     case LOCAL_NAME.NAVIGATOR:
-      const navigatorProps: HvNavigatorProps.Props = { element: element };
-      return <HvNavigator {...navigatorProps} />;
+      return <HvNavigator element={element} />;
     default:
       throw new Error('Invalid element type');
   }
