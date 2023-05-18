@@ -6,11 +6,21 @@
  *
  */
 
+import type {
+  BeforeAfterParseHandler,
+  Fetch,
+  XResponseStaleReason,
+} from './types';
 import type { Document } from 'hyperview/src/services/navigator/types';
-import type { XResponseStaleReason } from './services/dom/types';
 
-export type Parser = {
+export class Parser {
+  constructor(
+    fetch: Fetch,
+    onBeforeParse: ?BeforeAfterParseHandler,
+    onAfterParse: ?BeforeAfterParseHandler,
+  );
+
   loadDocument: (
     url: string,
   ) => Promise<{ doc: Document; staleHeaderType: ?XResponseStaleReason }>;
-};
+}
