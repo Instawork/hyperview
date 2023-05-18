@@ -8,42 +8,39 @@
 
 import * as HvNavigatorProps from './types';
 import * as HvRouteParams from '../hv-route/types';
-import * as HvScreenParams from '../hv-screen/types';
-
-import React, { PureComponent, ReactNode } from 'react';
 
 import {
-  getChildElements,
-  getInitialNavRouteElement,
-  getUrlFromHref,
-} from 'hyperview/src/services/navigator/helpers';
+  DOMString,
+  Element,
+  ID_DYNAMIC,
+  ID_MODAL,
+  LOCAL_NAME,
+  NAVIGATOR_TYPE,
+} from 'hyperview/src/services/navigator/types';
 import {
   NavigationContext,
   NavigationContextProps,
 } from 'hyperview/src/contexts/navigation';
-import {
-  DOMString,
-  Element,
-  NAVIGATOR_TYPE,
-  LOCAL_NAME,
-  ID_DYNAMIC,
-  ID_MODAL,
-} from 'hyperview/src/services/navigator/types';
-
+import React, { PureComponent } from 'react';
 import {
   createBottomTabNavigator,
   createMaterialTopTabNavigator,
   createStackNavigator,
 } from 'hyperview/src/services/navigator/imports';
-
+import {
+  getChildElements,
+  getInitialNavRouteElement,
+  getUrlFromHref,
+} from 'hyperview/src/services/navigator/helpers';
 import HvRoute from '../hv-route';
-import HvTest from './temptest';
+
+// *** AHG TYPES
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
 const TopTab = createMaterialTopTabNavigator();
 
 type Props = HvNavigatorProps.Props;
-type State = {};
+type State = undefined;
 
 export default class HvNavigator extends PureComponent<Props, State> {
   /**
@@ -57,6 +54,7 @@ export default class HvNavigator extends PureComponent<Props, State> {
         return HvNavigator;
       case LOCAL_NAME.NAV_ROUTE:
         return HvRoute;
+      default:
     }
     throw new Error('No component found');
   };
@@ -106,6 +104,7 @@ export default class HvNavigator extends PureComponent<Props, State> {
             options={options}
           />
         );
+      default:
     }
     throw new Error('No navigator type found');
   };
@@ -129,24 +128,24 @@ export default class HvNavigator extends PureComponent<Props, State> {
     const elements: Element[] = getChildElements(element);
 
     for (let i = 0; i < elements.length; i += 1) {
-      const element: Element = elements[i];
+      const child: Element = elements[i];
       if (
-        element.localName === LOCAL_NAME.NAVIGATOR ||
-        element.localName === LOCAL_NAME.NAV_ROUTE
+        child.localName === LOCAL_NAME.NAVIGATOR ||
+        child.localName === LOCAL_NAME.NAV_ROUTE
       ) {
-        const id: DOMString | null | undefined = element.getAttribute('id');
+        const id: DOMString | null | undefined = child.getAttribute('id');
         if (!id) {
           throw new Error('No id found');
         }
         let initialParams: any = {};
-        switch (element.localName) {
+        switch (child.localName) {
           case LOCAL_NAME.NAVIGATOR:
-            const navParams: HvNavigatorProps.Props = { element: element };
+            const navParams: HvNavigatorProps.Props = { element: child };
             initialParams = navParams;
             break;
           case LOCAL_NAME.NAV_ROUTE:
             const routeUrl: string = getUrlFromHref(
-              element.getAttribute('href'),
+              child.getAttribute('href'),
               navContext?.entrypointUrl,
             );
             const routeParams: HvRouteParams.DataProps = {
@@ -154,9 +153,10 @@ export default class HvNavigator extends PureComponent<Props, State> {
             };
             initialParams = routeParams;
             break;
+          default:
         }
         screens.push(
-          this.buildScreen(id, initialParams, type, element.localName),
+          this.buildScreen(id, initialParams, type, child.localName),
         );
       }
     }

@@ -14,9 +14,8 @@ import {
   Document,
   Element,
   LOCAL_NAME,
-  Node,
-  NODE_TYPE,
   LocalName,
+  NODE_TYPE,
   NamespaceURI,
 } from 'hyperview/src/services/navigator/types';
 
@@ -65,23 +64,23 @@ export const getChildElements = (element: Element): Element[] => {
 export const getInitialNavRouteElement = (
   element: Element,
 ): Element | undefined => {
-  let firstNavChild: Element | undefined = undefined;
-  let initialChild: Element | undefined = undefined;
+  let firstNavChild: Element | undefined;
+  let initialChild: Element | undefined;
   const elements: Element[] = getChildElements(element);
   for (let i: number = 0; i < elements.length; i += 1) {
-    const element: Element = elements[i];
+    const child: Element = elements[i];
     if (
-      element.localName === LOCAL_NAME.NAVIGATOR ||
-      element.localName === LOCAL_NAME.NAV_ROUTE
+      child.localName === LOCAL_NAME.NAVIGATOR ||
+      child.localName === LOCAL_NAME.NAV_ROUTE
     ) {
       if (
         !initialChild &&
-        element.getAttribute('initial')?.toLowerCase() === 'true'
+        child.getAttribute('initial')?.toLowerCase() === 'true'
       ) {
-        initialChild = element;
+        initialChild = child;
       }
       if (!initialChild && !firstNavChild) {
-        firstNavChild = element;
+        firstNavChild = child;
       }
     }
 

@@ -6,7 +6,6 @@
  *
  */
 
-import * as HvNavigatorProps from 'hyperview/src/core/components/hv-navigator/types';
 import * as HvScreenProps from 'hyperview/src/core/components/hv-screen/types';
 import type { ComponentType } from 'react';
 import React from 'react';

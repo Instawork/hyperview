@@ -6,26 +6,27 @@
  *
  */
 
-import { Props } from './types';
 import * as Render from 'hyperview/src/services/navigator/render';
 import * as UrlService from 'hyperview/src/services/url';
-import React, { PureComponent } from 'react';
-import { Document, Node } from 'hyperview/src/services/navigator/types';
-// import LoadElementError from '../load-element-error';
-import LoadError from '../load-error';
-import Loading from '../loading';
 import {
-  DateFormatContext,
   NavigationContext,
   NavigationContextProps,
 } from 'hyperview/src/contexts/navigation';
+import React, { PureComponent } from 'react';
+import { Document } from 'hyperview/src/services/navigator/types';
+// *** AHG UPDATE LOAD
+// import LoadElementError from '../load-element-error';
+import LoadError from '../load-error';
+import Loading from '../loading';
 import { Parser } from 'hyperview/src/services/dom';
+import { Props } from './types';
 
-type State = { url: string | null; doc: Document | null; error: Error | null };
+type State = { doc: Document | null; error: Error | null; url: string | null };
 
 export default class HvRoute extends PureComponent<Props, State> {
-  // // static contextType = NavigationContext;
-  // declare context: React.ContextType<typeof NavigationContext>;
+  static contextType = NavigationContext;
+
+  declare context: React.ContextType<typeof NavigationContext>;
 
   parser?: Parser;
 
@@ -71,15 +72,15 @@ export default class HvRoute extends PureComponent<Props, State> {
 
       const { doc } = await this.parser.loadDocument(url);
       this.setState({
-        url,
         doc,
         error: null,
+        url,
       });
     } catch (err: any) {
       this.setState({
-        url: null,
         doc: null,
         error: err,
+        url: null,
       });
     }
   };
@@ -127,7 +128,7 @@ export default class HvRoute extends PureComponent<Props, State> {
     navContext: NavigationContextProps | null,
   ): React.ReactElement => {
     try {
-      return Render.renderElement(url, doc, navContext, this.props);
+      return Render.renderElement(url, doc, navContext);
     } catch (err: any) {
       return this.ErrorView(err, navContext);
     }

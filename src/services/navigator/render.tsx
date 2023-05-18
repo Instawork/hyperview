@@ -7,24 +7,20 @@
  */
 
 import * as HvNavigatorProps from 'hyperview/src/core/components/hv-navigator/types';
-import * as HvRouteProps from 'hyperview/src/core/components/hv-route/types';
-import * as HvScreenProps from 'hyperview/src/core/components/hv-screen/types';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import HvNavigator from 'hyperview/src/core/components/hv-navigator';
-import HvScreen from 'hyperview/src/core/components/hv-screen';
-import { getFirstTag } from 'hyperview/src/services/navigator/helpers';
+import {
+  DateFormatContext,
+  NavigationContextProps,
+} from 'hyperview/src/contexts/navigation';
 import {
   Document,
   Element,
   LOCAL_NAME,
 } from 'hyperview/src/services/navigator/types';
-
-import {
-  DateFormatContext,
-  NavigationContextProps,
-} from 'hyperview/src/contexts/navigation';
-
+import HvNavigator from 'hyperview/src/core/components/hv-navigator';
+import HvScreen from 'hyperview/src/core/components/hv-screen';
 import React from 'react';
+import { getFirstTag } from 'hyperview/src/services/navigator/helpers';
 
 const BuildHvScreen = (
   url: string | null,
@@ -63,7 +59,6 @@ export const renderElement = (
   url: string | null,
   doc: Document,
   navContext: NavigationContextProps | null,
-  props: HvRouteProps.Props,
 ): React.ReactElement => {
   // Get the <doc> element
   const root: Element | null = getFirstTag(doc, LOCAL_NAME.DOC);

@@ -7,9 +7,10 @@
  */
 
 import type { Document } from 'hyperview/src/services/navigator/types';
+import type { XResponseStaleReason } from './services/dom/types';
 
-export interface Parser {
+export type Parser = {
   loadDocument: (
     url: string,
   ) => Promise<{ doc: Document; staleHeaderType: ?XResponseStaleReason }>;
-}
+};
