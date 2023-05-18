@@ -26,18 +26,19 @@ type State = { doc: Document | null; error: Error | null; url: string | null };
 export default class HvRoute extends PureComponent<Props, State> {
   static contextType = NavigationContext;
 
-  declare context: React.ContextType<typeof NavigationContext>;
-
   parser?: Parser;
 
-  constructor(props: Props) {
+  context: React.ContextType<typeof NavigationContext>;
+
+  constructor(props: Props, context: NavigationContextProps) {
     super(props);
 
     this.state = {
-      url: null,
       doc: null,
       error: null,
+      url: null,
     };
+    this.context = context;
   }
 
   componentDidMount() {
