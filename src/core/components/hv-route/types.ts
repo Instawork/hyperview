@@ -7,7 +7,7 @@
  */
 
 /**
- * Props used for data fetching by hv-screen
+ * Props used for data fetching by hv-route
  */
 export type DataProps = {
   url?: string;

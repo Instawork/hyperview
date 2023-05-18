@@ -1,0 +1,21 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen id="pending-shifts-screen">
+    <styles>
+      <style id="Body" backgroundColor="#d8e6ff" flex="1" paddingTop="24" />
+      <style id="Title" color="white" backgroundColor="#a8c0ff" padding="16" borderRadius="8" fontSize="24" />
+      <style id="Link" color="blue" backgroundColor="#a8c0ff" padding="16" />
+    </styles>
+    <body style="Body" safe-area="true">
+      <text
+        style="Link"
+        action="new"
+        href="#help-route">
+        HELP
+      </text>
+      <text
+        style="Title">
+          PENDING SCREEN
+      </text>
+    </body>
+  </screen>
+</doc>
