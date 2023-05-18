@@ -23,7 +23,7 @@ export type ContextProps = {
   formatDate: (
     date: Date | null | undefined,
     format: string | undefined,
-  ) => string;
+  ) => string | undefined;
   refreshControl?: ComponentType<RefreshControlProps>;
 };
 
@@ -31,8 +31,8 @@ export type ContextProps = {
  * Props used by navigation components
  */
 export type NavigationProps = {
-  navigation?: NavigationProp<string>;
-  route?: Route<string>;
+  navigation?: NavigationProp<object>; // *** AHG TODO GET RIGHT TYPE
+  route?: Route<string>; // *** AHG TODO GET RIGHT TYPE
 };
 
 /**

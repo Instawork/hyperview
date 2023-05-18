@@ -19,7 +19,8 @@ export type ContentProps = {
  * Options used by the navigator
  */
 export type Options = {
-  headerShown: boolean;
+  headerShown?: boolean;
+  presentation?: 'modal' | 'card' | 'transparentModal' | undefined;
 };
 
 /**

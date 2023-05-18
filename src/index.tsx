@@ -7,7 +7,6 @@
  */
 
 import * as HvScreenProps from 'hyperview/src/core/components/hv-screen/types';
-import * as HvNavigatorProps from 'hyperview/src/core/components/hv-navigator/types';
 import {
   DateFormatContext,
   NavigationContext,
@@ -22,9 +21,7 @@ import HvScreen from 'hyperview/src/core/components/hv-screen';
 /**
  * Provides routing to the correct path based on the state passed in
  */
-export default class Hyperview extends PureComponent<
-  HvScreenProps.Props & HvNavigatorProps.ComponentProps
-> {
+export default class Hyperview extends PureComponent<HvScreenProps.Props> {
   render() {
     if (this.props.navigation) {
       // Externally provided navigation will use the provided navigation and action callbacks

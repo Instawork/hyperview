@@ -18,6 +18,4 @@ export type DataProps = {
 /**
  * All of the props used by hv-route
  */
-export type Props = DataProps &
-  HvScreenProps.DataProps &
-  HvScreenProps.NavigationProps;
+export type Props = DataProps & HvScreenProps.NavigationProps;

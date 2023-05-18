@@ -19,8 +19,19 @@ import * as UrlService from 'hyperview/src/services/url';
 import * as Xml from 'hyperview/src/services/xml';
 import { ACTIONS, NAV_ACTIONS, UPDATE_ACTIONS } from 'hyperview/src/types';
 // eslint-disable-next-line instawork/import-services
-import Navigation, { ANCHOR_ID_SEPARATOR } from 'hyperview/src/services/navigation';
-import { createProps, createStyleProp, getElementByTimeoutId, getFormData, later, removeTimeoutId, setTimeoutId, shallowCloneToRoot } from 'hyperview/src/services';
+import Navigation, {
+  ANCHOR_ID_SEPARATOR,
+} from 'hyperview/src/services/navigation';
+import {
+  createProps,
+  createStyleProp,
+  getElementByTimeoutId,
+  getFormData,
+  later,
+  removeTimeoutId,
+  setTimeoutId,
+  shallowCloneToRoot,
+} from 'hyperview/src/services';
 import { Linking } from 'react-native';
 import LoadElementError from '../load-element-error';
 import LoadError from 'hyperview/src/core/components/load-error';
@@ -47,7 +58,7 @@ export default class HvScreen extends React.Component {
     this.parser = new Dom.Parser(
       this.props.fetch,
       this.props.onParseBefore,
-      this.props.onParseAfter
+      this.props.onParseAfter,
     );
 
     this.needsLoad = false;

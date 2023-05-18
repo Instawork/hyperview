@@ -6,23 +6,22 @@
  *
  */
 
+import { Props } from './types';
 import * as Render from 'hyperview/src/services/navigator/render';
 import * as UrlService from 'hyperview/src/services/url';
 import React, { PureComponent } from 'react';
-import { DataProps } from 'hyperview/src/core/components/hv-route/types';
-import { DataProps as HvScreenDataProps } from 'hyperview/src/core/components/hv-screen/types';
 import { Document, Node } from 'hyperview/src/services/navigator/types';
-// import LoadElementError from 'hyperview/src/core/components/load-element-error';
-import LoadError from 'hyperview/src/core/components/load-error';
-import Loading from 'hyperview/src/core/components/loading';
+// import LoadElementError from '../load-element-error';
+import LoadError from '../load-error';
+import Loading from '../loading';
 import {
+  DateFormatContext,
   NavigationContext,
   NavigationContextProps,
 } from 'hyperview/src/contexts/navigation';
 import { Parser } from 'hyperview/src/services/dom';
 
-export type Props = DataProps & HvScreenDataProps;
-type State = { doc: Document | null; error: Error | null };
+type State = { url: string | null; doc: Document | null; error: Error | null };
 
 export default class HvRoute extends PureComponent<Props, State> {
   // // static contextType = NavigationContext;
@@ -32,21 +31,23 @@ export default class HvRoute extends PureComponent<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    if (this.context) {
-      this.parser = new Parser(
-        this.context.fetch,
-        this.context?.onParseBefore || null,
-        this.context?.onParseAfter || null,
-      );
-    }
 
     this.state = {
+      url: null,
       doc: null,
       error: null,
     };
   }
 
   componentDidMount() {
+    if (this.context) {
+      this.parser = new Parser(
+        this.context.fetch,
+        this.context.onParseBefore || null,
+        this.context.onParseAfter || null,
+      );
+    }
+
     this.load();
   }
 
@@ -60,18 +61,23 @@ export default class HvRoute extends PureComponent<Props, State> {
     }
 
     try {
-      let url: string = this.props.url || this.context.entrypointUrl;
 
+      let url: string =
+        this.props.url ||
+        this.props.route?.params?.url ||
+        this.context.entrypointUrl;
       url = UrlService.getUrlFromHref(url, this.context.entrypointUrl);
       console.log('--------> url', url);
 
       const { doc } = await this.parser.loadDocument(url);
       this.setState({
+        url,
         doc,
         error: null,
       });
     } catch (err: any) {
       this.setState({
+        url: null,
         doc: null,
         error: err,
       });
@@ -80,25 +86,25 @@ export default class HvRoute extends PureComponent<Props, State> {
 
   /**
    * View shown while loading
-   * @param contextValue
+   * @param navContext
    * @returns the element to render
    */
   LoadingView = (
-    contextValue: NavigationContextProps | null,
+    navContext: NavigationContextProps | null,
   ): React.ReactElement => {
-    const loadingScreen = contextValue?.loadingScreen || Loading;
+    const loadingScreen = navContext?.loadingScreen || Loading;
     return React.createElement(loadingScreen);
   };
 
   /**
    * View shown when there is an error
-   * @param contextValue
+   * @param navContext
    * @param error
    * @returns the element to render
    */
   ErrorView = (
-    contextValue: NavigationContextProps | null,
     error: Error,
+    navContext: NavigationContextProps | null,
   ): React.ReactElement => {
     const errorScreen = contextValue?.errorScreen || LoadError;
     /** DO WE RECREATE THE RELOAD  */
@@ -112,29 +118,30 @@ export default class HvRoute extends PureComponent<Props, State> {
 
   /**
    * View shown when the document is loaded
-   * @param contextValue
+   * @param navContext
    * @returns the element to render
    */
   ContentView = (
-    contextValue: NavigationContextProps | null,
+    url: string | null,
     doc: Document,
+    navContext: NavigationContextProps | null,
   ): React.ReactElement => {
     try {
-      return Render.renderElement(doc, contextValue, this.props);
+      return Render.renderElement(url, doc, navContext, this.props);
     } catch (err: any) {
-      return this.ErrorView(contextValue, err);
+      return this.ErrorView(err, navContext);
     }
   };
 
   render() {
     return (
       <NavigationContext.Consumer>
-        {contextValue =>
+        {navContext =>
           this.state.error
-            ? this.ErrorView(contextValue, this.state.error)
+            ? this.ErrorView(this.state.error, navContext)
             : this.state.doc
-            ? this.ContentView(contextValue, this.state.doc)
-            : this.LoadingView(contextValue)
+            ? this.ContentView(this.state.url, this.state.doc, navContext)
+            : this.LoadingView(navContext)
         }
       </NavigationContext.Consumer>
     );
