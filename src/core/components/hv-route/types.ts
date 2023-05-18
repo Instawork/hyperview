@@ -6,9 +6,18 @@
  *
  */
 
+import * as HvScreenProps from '../hv-screen/types';
+
 /**
  * Props used for data fetching by hv-route
  */
 export type DataProps = {
   url?: string;
 };
+
+/**
+ * All of the props used by hv-route
+ */
+export type Props = DataProps &
+  HvScreenProps.DataProps &
+  HvScreenProps.NavigationProps;

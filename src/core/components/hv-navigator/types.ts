@@ -6,11 +6,23 @@
  *
  */
 
-import React from 'react';
+import { Element } from 'hyperview/src/services/navigator/types';
 
 /**
  * Props used by hv-navigator
  */
-export type ComponentProps = {
-  handleBack?: React.ComponentType<{ children: React.ReactNode }>;
+export type ContentProps = {
+  element: Element;
 };
+
+/**
+ * Options used by the navigator
+ */
+export type Options = {
+  headerShown: boolean;
+};
+
+/**
+ * All of the props used by hv-route
+ */
+export type Props = ContentProps;

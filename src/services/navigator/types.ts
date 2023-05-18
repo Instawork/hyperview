@@ -6,6 +6,19 @@
  *
  */
 
+export const ANCHOR_ID_SEPARATOR = '#';
+export const ID_DYNAMIC = 'dynamic';
+export const ID_MODAL = 'modal';
+
+/**
+ * Definition of the available navigator types
+ */
+export const NAVIGATOR_TYPE = {
+  BOTTOM_TAB: 'bottom-tab',
+  STACK: 'stack',
+  TOP_TAB: 'top-tab',
+};
+
 /**
  * Minimal local name type copy from 'hyperview/src/types.js'
  */
@@ -15,6 +28,8 @@ export const LOCAL_NAME = {
   NAVIGATOR: 'navigator',
   SCREEN: 'screen',
 };
+
+export type LocalName = typeof LOCAL_NAME[keyof typeof LOCAL_NAME];
 
 export const NODE_TYPE = {
   ATTRIBUTE_NODE: 2,
@@ -31,39 +46,34 @@ export const NODE_TYPE = {
   TEXT_NODE: 3,
 };
 
-export const NAVIGATOR_TYPE = {
-  BOTTOM_TAB: 'bottom-tab',
-  STACK: 'stack',
-  TOP_TAB: 'top-tab',
-};
+export type NodeType = typeof NODE_TYPE[keyof typeof NODE_TYPE];
 
-export type DOMString = string | null | undefined;
-export type NamespaceURI = string | null | undefined;
+export type DOMString = string;
+export type NamespaceURI = string;
 
 /**
  * Minimal Node type copy from 'hyperview/src/types.js'
  */
 export type Node = {
   tagName: DOMString;
-  // ---> localName: typeof LOCAL_NAME;
-  localName: string;
+  localName: LocalName;
   // +attributes: ?NamedNodeMap,
-  // +childNodes: ?NodeList<Node>,
-  firstChild: Node | undefined;
+  readonly childNodes: NodeList<Node> | null | undefined;
+  readonly firstChild: Node | null | undefined;
   // +lastChild: ?Node,
   // +localName: ?LocalName,
-  namespaceURI: NamespaceURI;
-  nextSibling: Node | undefined;
+  readonly namespaceURI: NamespaceURI | null | undefined;
+  readonly nextSibling: Node | null | undefined;
   // +nodeName: DOMString,
   // ---> nodeType: typeof NODE_TYPE;
-  nodeType: number;
+  readonly nodeType: NodeType;
   // nodeValue: ?string,
   // +ownerDocument: ?Document,
   // +parentNode: ?Node,
   // +previousSibling: ?Node,
   // appendChild: (newChild: Node) => Node,
   // hasAttributes: () => boolean,
-  // hasChildNodes: () => boolean,
+  hasChildNodes: () => boolean;
   // insertBefore: (newChild: Node, refChild: Node) => Node,
   // isSupported: (feature: DOMString, version: DOMString) => boolean,
   // normalize: () => void,
@@ -99,10 +109,10 @@ export type Document = Node & {
   // createTextNode: (data: DOMString) => Node;
   // getElementById: (elementId: DOMString) => ?Element;
   // getElementsByTagName: (tagName: DOMString) => NodeList<Element>;
-  // getElementsByTagNameNS: (
-  //   namespaceURI: NamespaceURI,
-  //   localName: LocalName,
-  // ) => NodeList<Element>;
+  getElementsByTagNameNS: (
+    namespaceURI: NamespaceURI,
+    localName: LocalName,
+  ) => NodeList<Element>;
   // importNode: (importedNode: Node, deep: boolean) => Node;
 };
 
@@ -110,8 +120,9 @@ export type Document = Node & {
  * Minimal Element type copy from 'hyperview/src/types.js'
  */
 export type Element = Node & {
+  childNodes: NodeList<Element>;
   // cloneNode: (deep: boolean) => Element;
-  // getAttribute: (name: DOMString) => ?DOMString;
+  getAttribute: (name: DOMString) => DOMString | null | undefined;
   // getAttributeNode: (name: DOMString) => ?Attribute;
   // getAttributeNodeNS: (
   //   namespaceURI: NamespaceURI,
@@ -122,10 +133,10 @@ export type Element = Node & {
   //   localName: LocalName,
   // ) => ?DOMString;
   // getElementsByTagName: (name: DOMString) => NodeList<Element>;
-  // getElementsByTagNameNS: (
-  //   namespaceURI: NamespaceURI,
-  //   localName: LocalName,
-  // ) => NodeList<Element>;
+  getElementsByTagNameNS: (
+    namespaceURI: NamespaceURI,
+    localName: LocalName,
+  ) => NodeList<Element>;
   // hasAttribute: (name: DOMString) => boolean;
   // hasAttributeNS: (namespaceURI: NamespaceURI, localName: LocalName) => boolean;
   // removeAttribute: (name: DOMString) => void;
@@ -139,4 +150,11 @@ export type Element = Node & {
   //   qualifiedName: LocalName,
   //   value: DOMString,
   // ) => void;
+};
+
+export type NodeList<T> = {
+  length: number;
+  item: (index: number) => T | null | undefined;
+} & {
+  [index: number]: T;
 };

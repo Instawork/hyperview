@@ -11,9 +11,9 @@ import {
   NavigationProp,
   Route,
 } from 'hyperview/src/services/navigator/imports';
-import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error/types';
-import type { Props as LoadingProps } from 'hyperview/src/core/components/loading/types';
-import React from 'react';
+import type { Props as ErrorProps } from '../load-error/types';
+import type { Props as LoadingProps } from '../loading/types';
+import React, { ComponentType, ReactNode } from 'react';
 import type { RefreshControlProps } from 'react-native';
 
 /**
@@ -24,7 +24,7 @@ export type ContextProps = {
     date: Date | null | undefined,
     format: string | undefined,
   ) => string;
-  refreshControl?: React.ComponentType<RefreshControlProps>;
+  refreshControl?: ComponentType<RefreshControlProps>;
 };
 
 /**
@@ -65,9 +65,10 @@ export type ActionProps = {
 export type ComponentProps = {
   behaviors?: HvBehavior[];
   components?: HvComponent[];
-  elementErrorComponent?: React.ComponentType<ErrorProps>;
-  errorScreen?: React.ComponentType<ErrorProps>;
-  loadingScreen?: React.ComponentType<LoadingProps>;
+  elementErrorComponent?: ComponentType<ErrorProps>;
+  errorScreen?: ComponentType<ErrorProps>;
+  loadingScreen?: ComponentType<LoadingProps>;
+  handleBack?: ComponentType<{ children: ReactNode }>;
 };
 
 /**
