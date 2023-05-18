@@ -6,8 +6,10 @@
  *
  */
 
-import * as Render from 'hyperview/src/services/navigator/render';
+import * as Dom from 'hyperview/src/services/dom';
+import * as Navigator from 'hyperview/src/services/navigator';
 import * as UrlService from 'hyperview/src/services/url';
+
 import {
   NavigationContext,
   NavigationContextProps,
@@ -18,22 +20,24 @@ import { Document } from 'hyperview/src/services/navigator/types';
 // import LoadElementError from '../load-element-error';
 import LoadError from '../load-error';
 import Loading from '../loading';
-import Navigator from 'hyperview/src/services/navigator';
-import { Parser } from 'hyperview/src/services/dom';
+
 import { Props } from './types';
+import { renderElement } from 'hyperview/src/services/navigator/render';
 
 type State = { doc: Document | null; error: Error | null; url: string | null };
 
 export default class HvRoute extends PureComponent<Props, State> {
+  // Defines which context is accessed when using `this.context`
   static contextType = NavigationContext;
 
-  context: React.ContextType<typeof NavigationContext>;
+  // Defines the type of the context to allow strong typed context access
+  declare context: React.ContextType<typeof NavigationContext>;
 
-  parser?: Parser;
+  parser?: Dom.Parser;
 
-  navigator: Navigator;
+  navigator: Navigator.Logic;
 
-  constructor(props: Props, context: NavigationContextProps) {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -41,13 +45,12 @@ export default class HvRoute extends PureComponent<Props, State> {
       error: null,
       url: null,
     };
-    this.context = context;
-    this.navigator = new Navigator(this.props);
+    this.navigator = new Navigator.Logic(this.props);
   }
 
   componentDidMount() {
     if (this.context) {
-      this.parser = new Parser(
+      this.parser = new Dom.Parser(
         this.context.fetch,
         this.context.onParseBefore || null,
         this.context.onParseAfter || null,
@@ -133,7 +136,7 @@ export default class HvRoute extends PureComponent<Props, State> {
     navContext: NavigationContextProps | null,
   ): React.ReactElement => {
     try {
-      return Render.renderElement(url, doc, navContext, this.navigator);
+      return renderElement(url, doc, navContext, this.navigator);
     } catch (err: any) {
       return this.ErrorView(err, navContext);
     }

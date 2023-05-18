@@ -6,7 +6,10 @@
  *
  */
 
-import * as HvScreenProps from 'hyperview/src/core/components/hv-screen/types';
+import {
+  ComponentProps,
+  DataProps,
+} from 'hyperview/src/core/components/hv-screen/types';
 import type { ComponentType } from 'react';
 import React from 'react';
 import type { RefreshControlProps } from 'react-native';
@@ -24,8 +27,7 @@ export const RefreshControlComponentContext = React.createContext<
   ComponentType<RefreshControlProps> | undefined
 >(undefined);
 
-export type NavigationContextProps = HvScreenProps.DataProps &
-  HvScreenProps.ComponentProps;
+export type NavigationContextProps = DataProps & ComponentProps;
 
 /**
  * Context used by to provide values to the navigation components

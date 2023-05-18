@@ -11,7 +11,7 @@ import { Props } from 'hyperview/src/core/components/hv-route/types';
 /**
  * Provide navigation action implementations
  */
-export default class Navigator {
+export class Logic {
   props: Props;
 
   constructor(props: Props) {
