@@ -11,21 +11,24 @@ import * as Errors from 'hyperview/src/services/navigator/errors';
 import * as Navigator from 'hyperview/src/services/navigator';
 import * as UrlService from 'hyperview/src/services/url';
 
-import {
-  NavigationContext,
-  NavigationContextProps,
-} from 'hyperview/src/contexts/navigation';
 import React, { PureComponent } from 'react';
 import { Document } from 'hyperview/src/services/navigator/types';
 // *** AHG UPDATE LOAD
 // import LoadElementError from '../load-element-error';
 import LoadError from '../load-error';
 import Loading from '../loading';
-
+import { NavigationContext } from 'hyperview/src/contexts/navigation';
 import { Props } from './types';
 import { renderElement } from 'hyperview/src/services/navigator/render';
 
 type State = { doc: Document | null; error: Error | null; url: string | null };
+
+/**
+ * Properties used for displaying an error
+ */
+type ErrorProps = {
+  error: any;
+};
 
 export default class HvRoute extends PureComponent<Props, State> {
   // Defines which context is accessed when using `this.context`
@@ -79,7 +82,6 @@ export default class HvRoute extends PureComponent<Props, State> {
         this.props.route?.params?.url ||
         this.context.entrypointUrl;
       url = UrlService.getUrlFromHref(url, this.context.entrypointUrl);
-      console.log('--------> url', url);
       const { doc } = await this.parser.loadDocument(url);
       this.setState({
         doc,
@@ -100,10 +102,8 @@ export default class HvRoute extends PureComponent<Props, State> {
    * @param navContext
    * @returns the element to render
    */
-  LoadingView = (
-    navContext: NavigationContextProps | null,
-  ): React.ReactElement => {
-    const loadingScreen = navContext?.loadingScreen || Loading;
+  LoadingView = (): React.ReactElement => {
+    const loadingScreen = this.context?.loadingScreen || Loading;
     return React.createElement(loadingScreen);
   };
 
@@ -113,15 +113,12 @@ export default class HvRoute extends PureComponent<Props, State> {
    * @param error
    * @returns the element to render
    */
-  ErrorView = (
-    error: Error,
-    navContext: NavigationContextProps | null,
-  ): React.ReactElement => {
-    const errorScreen = contextValue?.errorScreen || LoadError;
-    /** DO WE RECREATE THE RELOAD  */
+  ErrorView = (props: ErrorProps): React.ReactElement => {
+    const errorScreen = this.context?.errorScreen || LoadError;
+    /** *** AHG DO WE RECREATE THE RELOAD  */
     return React.createElement(errorScreen, {
       // back: () => this.getNavigation().back(),
-      error,
+      error: props.error,
       // onPressReload: () => this.reload(), // Make sure reload() is called without any args
       // onPressViewDetails: uri => this.props.openModal({ url: uri }),
     });
@@ -132,29 +129,28 @@ export default class HvRoute extends PureComponent<Props, State> {
    * @param navContext
    * @returns the element to render
    */
-  ContentView = (
-    url: string | null,
-    doc: Document,
-    navContext: NavigationContextProps | null,
-  ): React.ReactElement => {
+  ContentView = (): React.ReactElement => {
+    const { ErrorView } = this;
     try {
-      return renderElement(url, doc, navContext, this.navigator);
-    } catch (err: any) {
-      return this.ErrorView(err, navContext);
+      return renderElement(
+        this.state.url,
+        this.state.doc,
+        this.context,
+        this.navigator,
+      );
+    } catch (err) {
+      return <ErrorView error={err} />;
     }
   };
 
   render() {
-    return (
-      <NavigationContext.Consumer>
-        {navContext =>
-          this.state.error
-            ? this.ErrorView(this.state.error, navContext)
-            : this.state.doc
-            ? this.ContentView(this.state.url, this.state.doc, navContext)
-            : this.LoadingView(navContext)
-        }
-      </NavigationContext.Consumer>
-    );
+    const { ErrorView, LoadingView, ContentView } = this;
+    if (this.state.error) {
+      return <ErrorView error={this.state.error} />;
+    }
+    if (this.state.doc) {
+      return <ContentView />;
+    }
+    return <LoadingView />;
   }
 }
