@@ -6,7 +6,10 @@
  *
  */
 
+import * as Errors from 'hyperview/src/services/navigator/errors';
 import * as Namespaces from 'hyperview/src/services/namespaces';
+import * as Navigator from 'hyperview/src/services/navigator';
+
 import {
   DateFormatContext,
   NavigationContextProps,
@@ -18,9 +21,19 @@ import {
 } from 'hyperview/src/services/navigator/types';
 import HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
-import Navigator from 'hyperview/src/services/navigator';
+import { Props } from 'hyperview/src/core/components/hv-route/types';
 import React from 'react';
 import { getFirstTag } from 'hyperview/src/services/navigator/helpers';
+
+/**
+ * Props used for the build screen
+ */
+type ScreenProps = {
+  url: string | null;
+  context: NavigationContextProps | null;
+  navigator: Navigator.Logic;
+  routeProps: Props;
+};
 
 /**
  * Build the <HvScreen> component with injected props
@@ -29,34 +42,29 @@ import { getFirstTag } from 'hyperview/src/services/navigator/helpers';
  * @param navContext
  * @returns
  */
-const BuildHvScreen = (
-  url: string | null,
-  doc: Document,
-  navContext: NavigationContextProps | null,
-  navigator: Navigator,
-): React.ReactElement => {
+const BuildHvScreen = (props: ScreenProps): React.ReactElement => {
   return (
     <DateFormatContext.Consumer>
       {formatter => (
         <HvScreen
-          back={navigator.back}
-          behaviors={navContext?.behaviors}
-          closeModal={navigator.closeModal}
-          components={navContext?.components}
-          elementErrorComponent={navContext?.elementErrorComponent}
-          entrypointUrl={url || navContext?.entrypointUrl}
-          errorScreen={navContext?.errorScreen}
-          fetch={navContext?.fetch}
+          back={props.navigator.back}
+          behaviors={props.context?.behaviors}
+          closeModal={props.navigator.closeModal}
+          components={props.context?.components}
+          elementErrorComponent={props.context?.elementErrorComponent}
+          entrypointUrl={props.url || props.context?.entrypointUrl}
+          errorScreen={props.context?.errorScreen}
+          fetch={props.context?.fetch}
           formatDate={formatter}
-          loadingScreen={navContext?.loadingScreen}
-          navigate={navigator.navigate}
-          // navigation={props.navigation}
-          onParseAfter={navContext?.onParseAfter}
-          onParseBefore={navContext?.onParseBefore}
-          openModal={navigator.openModal}
-          push={navigator.push}
+          loadingScreen={props.context?.loadingScreen}
+          navigate={props.navigator.navigate}
+          navigation={props.routeProps.navigation}
+          onParseAfter={props.context?.onParseAfter}
+          onParseBefore={props.context?.onParseBefore}
+          openModal={props.navigator.openModal}
+          push={props.navigator.push}
           // refreshControl={props.refreshControl}
-          // route={props.route}
+          route={props.routeProps.route}
         />
       )}
     </DateFormatContext.Consumer>
@@ -64,15 +72,16 @@ const BuildHvScreen = (
 };
 
 export const renderElement = (
-  url: string | null,
+  url: string,
   doc: Document,
-  navContext: NavigationContextProps | null,
-  navigator: Navigator,
+  navContext: NavigationContextProps,
+  navigator: Navigator.Logic,
+  props: Props,
 ): React.ReactElement => {
   // Get the <doc> element
   const root: Element | null = getFirstTag(doc, LOCAL_NAME.DOC);
   if (!root) {
-    throw new Error('No root element');
+    throw new Errors.HvRenderError('No root element found');
   }
 
   // Get the first child as <screen> or <navigator>
@@ -83,11 +92,11 @@ export const renderElement = (
   );
   const element: Element | null = screenElement ?? navigatorElement;
   if (!element) {
-    throw new Error('No element node');
+    throw new Errors.HvRenderError('No <screen> or <navigator> element found');
   }
 
   if (element.namespaceURI !== Namespaces.HYPERVIEW) {
-    throw new Error('Invalid namespace');
+    throw new Errors.HvRenderError('Invalid namespace');
   }
 
   switch (element.localName) {
@@ -95,14 +104,26 @@ export const renderElement = (
       if (navContext && navContext.handleBack) {
         return (
           <navContext.handleBack>
-            {BuildHvScreen(url, doc, navContext, navigator)}
+            <BuildHvScreen
+              context={navContext}
+              navigator={navigator}
+              routeProps={props}
+              url={url}
+            />
           </navContext.handleBack>
         );
       }
-      return BuildHvScreen(url, doc, navContext, navigator);
+      return (
+        <BuildHvScreen
+          context={navContext}
+          navigator={navigator}
+          routeProps={props}
+          url={url}
+        />
+      );
     case LOCAL_NAME.NAVIGATOR:
       return <HvNavigator element={element} />;
     default:
-      throw new Error('Invalid element type');
+      throw new Errors.HvRenderError('Invalid element type');
   }
 };

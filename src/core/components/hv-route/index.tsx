@@ -130,6 +130,16 @@ export default class HvRoute extends PureComponent<Props, State> {
    * @returns the element to render
    */
   ContentView = (): React.ReactElement => {
+    if (!this.state.url) {
+      throw new Errors.HvRouteError('No url received');
+    }
+    if (!this.state.doc) {
+      throw new Errors.HvRouteError('No document received');
+    }
+    if (!this.context) {
+      throw new Errors.HvRouteError('No context received');
+    }
+
     const { ErrorView } = this;
     try {
       return renderElement(
@@ -137,6 +147,7 @@ export default class HvRoute extends PureComponent<Props, State> {
         this.state.doc,
         this.context,
         this.navigator,
+        this.props,
       );
     } catch (err) {
       return <ErrorView error={err} />;
