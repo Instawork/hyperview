@@ -6,6 +6,8 @@
  *
  */
 
+import * as Errors from 'hyperview/src/services/navigator/errors';
+
 import {
   DOMString,
   Element,
@@ -58,7 +60,9 @@ export default class HvNavigator extends PureComponent<
         return HvRoute;
       default:
     }
-    throw new Error('No component found');
+    throw new Errors.HvNavigatorError(
+      `No component found for type '${localName}'`,
+    );
   };
 
   /**
@@ -109,7 +113,7 @@ export default class HvNavigator extends PureComponent<
         );
       default:
     }
-    throw new Error('No navigator type found');
+    throw new Errors.HvNavigatorError(`No navigator found for type '${type}'`);
   };
 
   /**
@@ -138,7 +142,9 @@ export default class HvNavigator extends PureComponent<
       ) {
         const id: DOMString | null | undefined = child.getAttribute('id');
         if (!id) {
-          throw new Error('No id found');
+          throw new Errors.HvNavigatorError(
+            `No id provided for ${child.localName}`,
+          );
         }
         let initialParams: any = {};
         let url: string;
@@ -197,15 +203,18 @@ export default class HvNavigator extends PureComponent<
   ) => {
     const id: DOMString | null | undefined = element.getAttribute('id');
     if (!id) {
-      throw new Error('No id found');
+      throw new Errors.HvNavigatorError('No id found for navigator');
     }
     if (!navContext) {
-      throw new Error('No context found');
+      throw new Errors.HvNavigatorError(
+        'No NavigationContext context provided',
+      );
     }
+
     const type: DOMString | null | undefined = element.getAttribute('type');
     const initial: Element | undefined = getInitialNavRouteElement(element);
     if (!initial) {
-      throw new Error('No initial route found');
+      throw new Errors.HvNavigatorError(`No initial route defined for '${id}'`);
     }
 
     const initialId: string | undefined = initial
@@ -246,7 +255,9 @@ export default class HvNavigator extends PureComponent<
         );
       default:
     }
-    throw new Error('No navigator type found');
+    throw new Errors.HvNavigatorError(
+      `No navigator type '${type}'found for '${id}'`,
+    );
   };
 
   render() {

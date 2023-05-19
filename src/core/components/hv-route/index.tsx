@@ -7,6 +7,7 @@
  */
 
 import * as Dom from 'hyperview/src/services/dom';
+import * as Errors from 'hyperview/src/services/navigator/errors';
 import * as Navigator from 'hyperview/src/services/navigator';
 import * as UrlService from 'hyperview/src/services/url';
 
@@ -65,19 +66,20 @@ export default class HvRoute extends PureComponent<Props, State> {
    */
   load = async (): Promise<void> => {
     if (!this.context || !this.parser) {
-      this.setState({ doc: null, error: new Error('No context or parser') });
+      this.setState({
+        doc: null,
+        error: new Errors.HvRouteError('No parser or context found'),
+      });
       return;
     }
 
     try {
-
       let url: string =
         this.props.url ||
         this.props.route?.params?.url ||
         this.context.entrypointUrl;
       url = UrlService.getUrlFromHref(url, this.context.entrypointUrl);
       console.log('--------> url', url);
-
       const { doc } = await this.parser.loadDocument(url);
       this.setState({
         doc,
