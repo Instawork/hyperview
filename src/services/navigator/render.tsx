@@ -39,7 +39,7 @@ type ScreenProps = {
  * Build the <HvScreen> component with injected props
  * @param url
  * @param doc
- * @param navContext
+ * @param context
  * @returns
  */
 const BuildHvScreen = (props: ScreenProps): React.ReactElement => {
@@ -74,7 +74,7 @@ const BuildHvScreen = (props: ScreenProps): React.ReactElement => {
 export const renderElement = (
   url: string,
   doc: Document,
-  navContext: NavigationContextProps,
+  context: NavigationContextProps,
   navigator: Navigator.Logic,
   props: Props,
 ): React.ReactElement => {
@@ -101,21 +101,21 @@ export const renderElement = (
 
   switch (element.localName) {
     case LOCAL_NAME.SCREEN:
-      if (navContext && navContext.handleBack) {
+      if (context && context.handleBack) {
         return (
-          <navContext.handleBack>
+          <context.handleBack>
             <BuildHvScreen
-              context={navContext}
+              context={context}
               navigator={navigator}
               routeProps={props}
               url={url}
             />
-          </navContext.handleBack>
+          </context.handleBack>
         );
       }
       return (
         <BuildHvScreen
-          context={navContext}
+          context={context}
           navigator={navigator}
           routeProps={props}
           url={url}

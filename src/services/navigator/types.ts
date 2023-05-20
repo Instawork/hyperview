@@ -51,6 +51,13 @@ export type NodeType = typeof NODE_TYPE[keyof typeof NODE_TYPE];
 export type DOMString = string;
 export type NamespaceURI = string;
 
+export type NodeList<T> = {
+  length: number;
+  item: (index: number) => T | null | undefined;
+} & {
+  [index: number]: T;
+};
+
 /**
  * Minimal Node type copy from 'hyperview/src/types.js'
  */
@@ -79,41 +86,6 @@ export type Node = {
   // normalize: () => void,
   // removeChild: (oldChild: Node) => Node,
   // replaceChild: (newChild: Node, oldChild: Node) => Node,
-};
-
-/**
- * Minimal Document type copy from 'hyperview/src/types.js'
- */
-export type Document = Node & {
-  // doctype: DocumentType;
-  // documentElement: Element;
-  // implementation: DOMImplementation;
-  // createAttribute: (name: DOMString) => Attribute;
-  // createAttributeNS: (
-  //   namespaceURI: NamespaceURI,
-  //   qualifiedName: DOMString,
-  // ) => Attribute;
-  // createCDATASection: (data: DOMString) => CDATASection;
-  // createComment: (data: DOMString) => Comment;
-  // createDocumentFragment: () => DocumentFragment;
-  // createElement: (tagName: DOMString) => Element;
-  // createElementNS: (
-  //   namespaceURI: NamespaceURI,
-  //   qualifiedName: DOMString,
-  // ) => Node;
-  // createEntityReference: (name: DOMString) => EntityReference;
-  // createProcessingInstruction: (
-  //   target: DOMString,
-  //   data: DOMString,
-  // ) => ProcessingInstruction;
-  // createTextNode: (data: DOMString) => Node;
-  // getElementById: (elementId: DOMString) => ?Element;
-  // getElementsByTagName: (tagName: DOMString) => NodeList<Element>;
-  getElementsByTagNameNS: (
-    namespaceURI: NamespaceURI,
-    localName: LocalName,
-  ) => NodeList<Element>;
-  // importNode: (importedNode: Node, deep: boolean) => Node;
 };
 
 /**
@@ -152,9 +124,37 @@ export type Element = Node & {
   // ) => void;
 };
 
-export type NodeList<T> = {
-  length: number;
-  item: (index: number) => T | null | undefined;
-} & {
-  [index: number]: T;
+/**
+ * Minimal Document type copy from 'hyperview/src/types.js'
+ */
+export type Document = Node & {
+  // doctype: DocumentType;
+  // documentElement: Element;
+  // implementation: DOMImplementation;
+  // createAttribute: (name: DOMString) => Attribute;
+  // createAttributeNS: (
+  //   namespaceURI: NamespaceURI,
+  //   qualifiedName: DOMString,
+  // ) => Attribute;
+  // createCDATASection: (data: DOMString) => CDATASection;
+  // createComment: (data: DOMString) => Comment;
+  // createDocumentFragment: () => DocumentFragment;
+  // createElement: (tagName: DOMString) => Element;
+  // createElementNS: (
+  //   namespaceURI: NamespaceURI,
+  //   qualifiedName: DOMString,
+  // ) => Node;
+  // createEntityReference: (name: DOMString) => EntityReference;
+  // createProcessingInstruction: (
+  //   target: DOMString,
+  //   data: DOMString,
+  // ) => ProcessingInstruction;
+  // createTextNode: (data: DOMString) => Node;
+  // getElementById: (elementId: DOMString) => ?Element;
+  // getElementsByTagName: (tagName: DOMString) => NodeList<Element>;
+  getElementsByTagNameNS: (
+    namespaceURI: NamespaceURI,
+    localName: LocalName,
+  ) => NodeList<Element>;
+  // importNode: (importedNode: Node, deep: boolean) => Node;
 };

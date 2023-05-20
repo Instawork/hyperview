@@ -99,8 +99,6 @@ export default class HvRoute extends PureComponent<Props, State> {
 
   /**
    * View shown while loading
-   * @param navContext
-   * @returns the element to render
    */
   LoadingView = (): React.ReactElement => {
     const loadingScreen = this.context?.loadingScreen || Loading;
@@ -109,9 +107,6 @@ export default class HvRoute extends PureComponent<Props, State> {
 
   /**
    * View shown when there is an error
-   * @param navContext
-   * @param error
-   * @returns the element to render
    */
   ErrorView = (props: ErrorProps): React.ReactElement => {
     const errorScreen = this.context?.errorScreen || LoadError;
@@ -126,8 +121,6 @@ export default class HvRoute extends PureComponent<Props, State> {
 
   /**
    * View shown when the document is loaded
-   * @param navContext
-   * @returns the element to render
    */
   ContentView = (): React.ReactElement => {
     if (!this.state.url) {

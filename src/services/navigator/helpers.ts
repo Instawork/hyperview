@@ -48,7 +48,7 @@ export const getFirstTag = (
 export const getChildElements = (element: Element): Element[] => {
   const elements: Element[] = [];
   if (element?.childNodes?.length) {
-    for (let i: number = 0; i < element?.childNodes?.length; i += 1) {
+    for (let i = 0; i < element?.childNodes?.length; i += 1) {
       const child: Element = element.childNodes[i];
       if (child.nodeType === NODE_TYPE.ELEMENT_NODE) {
         elements.push(child);
@@ -67,7 +67,7 @@ export const getInitialNavRouteElement = (
   let firstNavChild: Element | undefined;
   let initialChild: Element | undefined;
   const elements: Element[] = getChildElements(element);
-  for (let i: number = 0; i < elements.length; i += 1) {
+  for (let i = 0; i < elements.length; i += 1) {
     const child: Element = elements[i];
     if (
       child.localName === LOCAL_NAME.NAVIGATOR ||
