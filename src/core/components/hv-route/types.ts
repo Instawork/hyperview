@@ -6,13 +6,25 @@
  *
  */
 
-import { NavigationProps } from '../hv-screen/types';
+import {
+  NavigationProp,
+  Route,
+} from 'hyperview/src/services/navigator/imports';
 
 /**
  * Props used for data fetching by hv-route
  */
 export type DataProps = {
   url?: string;
+};
+
+/**
+ * Props used by navigation components
+ * Route contains the type of the params object
+ */
+export type NavigationProps = {
+  navigation?: NavigationProp<object>; // *** AHG TODO GET RIGHT TYPE
+  route?: Route<string, DataProps>;
 };
 
 /**
