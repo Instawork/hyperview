@@ -36,12 +36,20 @@ import { ActionProps } from '../hv-screen/types';
 import { DataProps } from '../hv-route/types';
 import HvRoute from '../hv-route';
 
-// *** AHG TYPES
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
 const TopTab = createMaterialTopTabNavigator();
 
 type State = undefined;
+
+/**
+ * Props used for constructing a navigator
+ */
+type NavigatorProps = {
+  context: NavigationContextProps | null;
+  element: Element;
+  options: Options;
+};
 
 export default class HvNavigator extends PureComponent<
   Props | any,
@@ -49,8 +57,6 @@ export default class HvNavigator extends PureComponent<
 > {
   /**
    * Dynamically create the appropriate component based on the localName
-   * @param localName
-   * @returns
    */
   getComponent = (localName: string): any => {
     switch (localName) {
@@ -67,11 +73,6 @@ export default class HvNavigator extends PureComponent<
 
   /**
    * Build an individual screen
-   * @param id
-   * @param initialParams
-   * @param type
-   * @param localName
-   * @returns
    */
   buildScreen = (
     id: string,
@@ -80,12 +81,13 @@ export default class HvNavigator extends PureComponent<
     localName: string,
     options: Options = {},
   ): React.ReactElement => {
+    const { getComponent } = this;
     switch (type) {
       case NAVIGATOR_TYPE.STACK:
         return (
           <Stack.Screen
             key={id}
-            component={this.getComponent(localName)}
+            component={getComponent(localName)}
             getId={({ params }) => params?.url}
             initialParams={initialParams}
             name={id}
@@ -96,7 +98,7 @@ export default class HvNavigator extends PureComponent<
         return (
           <TopTab.Screen
             key={id}
-            component={this.getComponent(localName)}
+            component={getComponent(localName)}
             initialParams={initialParams}
             name={id}
           />
@@ -105,7 +107,7 @@ export default class HvNavigator extends PureComponent<
         return (
           <BottomTab.Screen
             key={id}
-            component={this.getComponent(localName)}
+            component={getComponent(localName)}
             initialParams={initialParams}
             name={id}
             options={options}
@@ -118,10 +120,6 @@ export default class HvNavigator extends PureComponent<
 
   /**
    * Build all screens from received routes
-   * @param navContext
-   * @param element
-   * @param type
-   * @returns
    */
   buildScreens = (
     navContext: NavigationContextProps | null,
@@ -133,7 +131,7 @@ export default class HvNavigator extends PureComponent<
       return screens;
     }
     const elements: Element[] = getChildElements(element);
-
+    const { buildScreen } = this;
     for (let i = 0; i < elements.length; i += 1) {
       const child: Element = elements[i];
       if (
@@ -167,21 +165,17 @@ export default class HvNavigator extends PureComponent<
             break;
           default:
         }
-        screens.push(
-          this.buildScreen(id, initialParams, type, child.localName),
-        );
+        screens.push(buildScreen(id, initialParams, type, child.localName));
       }
     }
 
     // Add the dynamic screens
     switch (type) {
       case NAVIGATOR_TYPE.STACK:
-        screens.push(
-          this.buildScreen(ID_DYNAMIC, {}, type, LOCAL_NAME.NAV_ROUTE),
-        );
+        screens.push(buildScreen(ID_DYNAMIC, {}, type, LOCAL_NAME.NAV_ROUTE));
 
         screens.push(
-          this.buildScreen(ID_MODAL, {}, type, LOCAL_NAME.NAV_ROUTE, {
+          buildScreen(ID_MODAL, {}, type, LOCAL_NAME.NAV_ROUTE, {
             presentation: 'modal',
           }),
         );
@@ -192,27 +186,26 @@ export default class HvNavigator extends PureComponent<
   };
 
   /**
-   * Build the required navigator from the element
-   * @param options
-   * @returns
+   * Build the required navigator from the xml element
    */
-  buildNavigator = (
-    navContext: NavigationContextProps | null,
-    element: Element,
-    options: Options,
-  ) => {
-    const id: DOMString | null | undefined = element.getAttribute('id');
+  Navigator = (props: NavigatorProps): React.ReactElement => {
+    const id: DOMString | null | undefined = props.element.getAttribute('id');
+
     if (!id) {
       throw new Errors.HvNavigatorError('No id found for navigator');
     }
-    if (!navContext) {
+    if (!props.context) {
       throw new Errors.HvNavigatorError(
         'No NavigationContext context provided',
       );
     }
 
-    const type: DOMString | null | undefined = element.getAttribute('type');
-    const initial: Element | undefined = getInitialNavRouteElement(element);
+    const type: DOMString | null | undefined = props.element.getAttribute(
+      'type',
+    );
+    const initial: Element | undefined = getInitialNavRouteElement(
+      props.element,
+    );
     if (!initial) {
       throw new Errors.HvNavigatorError(`No initial route defined for '${id}'`);
     }
@@ -220,16 +213,16 @@ export default class HvNavigator extends PureComponent<
     const initialId: string | undefined = initial
       .getAttribute('id')
       ?.toString();
-
+    const { buildScreens } = this;
     switch (type) {
       case NAVIGATOR_TYPE.STACK:
         return (
           <Stack.Navigator
             id={id}
             initialRouteName={initialId}
-            screenOptions={options}
+            screenOptions={props.options}
           >
-            {this.buildScreens(navContext, element, type)}
+            {buildScreens(props.context, props.element, type)}
           </Stack.Navigator>
         );
       case NAVIGATOR_TYPE.TOP_TAB:
@@ -239,7 +232,7 @@ export default class HvNavigator extends PureComponent<
             id={id}
             initialRouteName={initialId}
           >
-            {this.buildScreens(navContext, element, type)}
+            {buildScreens(props.context, props.element, type)}
           </TopTab.Navigator>
         );
       case NAVIGATOR_TYPE.BOTTOM_TAB:
@@ -248,9 +241,9 @@ export default class HvNavigator extends PureComponent<
             backBehavior="none"
             id={id}
             initialRouteName={initialId}
-            screenOptions={options}
+            screenOptions={props.options}
           >
-            {this.buildScreens(navContext, element, type)}
+            {buildScreens(props.context, props.element, type)}
           </BottomTab.Navigator>
         );
       default:
@@ -261,13 +254,18 @@ export default class HvNavigator extends PureComponent<
   };
 
   render() {
+    const { Navigator } = this;
     return (
       <NavigationContext.Consumer>
-        {navContext =>
-          this.buildNavigator(navContext, this.props.element, {
-            headerShown: true,
-          })
-        }
+        {navContext => (
+          <Navigator
+            context={navContext}
+            element={this.props.element}
+            options={{
+              headerShown: true,
+            }}
+          />
+        )}
       </NavigationContext.Consumer>
     );
   }
