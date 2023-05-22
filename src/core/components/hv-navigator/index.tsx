@@ -21,7 +21,7 @@ import {
   NavigationContext,
   NavigationContextProps,
 } from 'hyperview/src/contexts/navigation';
-import React, { PureComponent } from 'react';
+import React, { PureComponent, useContext } from 'react';
 import {
   createBottomTabNavigator,
   createMaterialTopTabNavigator,
@@ -92,13 +92,12 @@ export default class HvNavigator extends PureComponent<Props> {
   /**
    * Build all screens from received routes
    */
-  buildScreens = (
-    navContext: NavigationContextProps | null,
-    element: Element,
-    type: DOMString,
-  ): React.ReactNode => {
+  buildScreens = (element: Element, type: DOMString): React.ReactNode => {
     const screens: React.ReactElement[] = [];
-    if (!navContext) {
+    const context: NavigationContextProps | null = useContext(
+      NavigationContext,
+    );
+    if (!context) {
       return screens;
     }
     const elements: Element[] = getChildElements(element);
@@ -118,7 +117,7 @@ export default class HvNavigator extends PureComponent<Props> {
             `No href provided for route '${id}'`,
           );
         }
-        const url = getUrlFromHref(href, navContext?.entrypointUrl);
+        const url = getUrlFromHref(href, context?.entrypointUrl);
 
         screens.push(buildScreen(id, { url }, type));
       }
@@ -144,17 +143,17 @@ export default class HvNavigator extends PureComponent<Props> {
   /**
    * Build the required navigator from the xml element
    */
-  Navigator = (props: {
-    context: NavigationContextProps | null;
-    element: Element;
-  }): React.ReactElement => {
+  Navigator = (props: { element: Element }): React.ReactElement => {
     const id: DOMString | null | undefined = props.element.getAttribute('id');
+    const context: NavigationContextProps | null = useContext(
+      NavigationContext,
+    );
 
     if (!id) {
       throw new Errors.HvNavigatorError('No id found for navigator');
     }
 
-    if (!props.context) {
+    if (!context) {
       throw new Errors.HvNavigatorError(
         'No NavigationContext context provided',
       );
@@ -186,7 +185,7 @@ export default class HvNavigator extends PureComponent<Props> {
               headerShown: ShowUI,
             }}
           >
-            {buildScreens(props.context, props.element, type)}
+            {buildScreens(props.element, type)}
           </Stack.Navigator>
         );
       case NAVIGATOR_TYPE.TOP_TAB:
@@ -199,7 +198,7 @@ export default class HvNavigator extends PureComponent<Props> {
               tabBarStyle: { display: ShowUI ? 'flex' : 'none' },
             }}
           >
-            {buildScreens(props.context, props.element, type)}
+            {buildScreens(props.element, type)}
           </TopTab.Navigator>
         );
       case NAVIGATOR_TYPE.BOTTOM_TAB:
@@ -214,7 +213,7 @@ export default class HvNavigator extends PureComponent<Props> {
             }}
             tabBar={undefined}
           >
-            {buildScreens(props.context, props.element, type)}
+            {buildScreens(props.element, type)}
           </BottomTab.Navigator>
         );
       default:
@@ -227,11 +226,7 @@ export default class HvNavigator extends PureComponent<Props> {
   render() {
     const { Navigator } = this;
     return (
-      <NavigationContext.Consumer>
-        {navContext => (
-          <Navigator context={navContext} element={this.props.element} />
-        )}
-      </NavigationContext.Consumer>
+      <Navigator element={this.props.element} />
     );
   }
 }
