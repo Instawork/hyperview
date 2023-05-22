@@ -112,10 +112,13 @@ export default class HvNavigator extends PureComponent<Props> {
             `No id provided for ${child.localName}`,
           );
         }
-        const url = getUrlFromHref(
-          child.getAttribute('href'),
-          navContext?.entrypointUrl,
-        );
+        const href: DOMString | null | undefined = child.getAttribute('href');
+        if (!href) {
+          throw new Errors.HvNavigatorError(
+            `No href provided for route '${id}'`,
+          );
+        }
+        const url = getUrlFromHref(href, navContext?.entrypointUrl);
 
         screens.push(buildScreen(id, { url }, type));
       }
