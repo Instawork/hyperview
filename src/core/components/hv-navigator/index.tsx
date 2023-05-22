@@ -16,11 +16,11 @@ import {
   LOCAL_NAME,
   NAVIGATOR_TYPE,
 } from 'hyperview/src/services/navigator/types';
+import { DataProps, Options, Props } from './types';
 import {
   NavigationContext,
   NavigationContextProps,
 } from 'hyperview/src/contexts/navigation';
-import { Options, Props } from './types';
 import React, { PureComponent } from 'react';
 import {
   createBottomTabNavigator,
@@ -32,8 +32,6 @@ import {
   getInitialNavRouteElement,
   getUrlFromHref,
 } from 'hyperview/src/services/navigator/helpers';
-import { ActionProps } from '../hv-screen/types';
-import { DataProps } from '../hv-route/types';
 import HvRoute from '../hv-route';
 
 /**
@@ -45,48 +43,22 @@ const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
 const TopTab = createMaterialTopTabNavigator();
 
-/**
- * Props used for constructing a navigator
- */
-type NavigatorProps = {
-  context: NavigationContextProps | null;
-  element: Element;
-};
-
 export default class HvNavigator extends PureComponent<Props> {
-  /**
-   * Dynamically create the appropriate component based on the localName
-   */
-  getComponent = (localName: string): any => {
-    switch (localName) {
-      case LOCAL_NAME.NAVIGATOR:
-        return HvNavigator;
-      case LOCAL_NAME.NAV_ROUTE:
-        return HvRoute;
-      default:
-    }
-    throw new Errors.HvNavigatorError(
-      `No component found for type '${localName}'`,
-    );
-  };
-
   /**
    * Build an individual screen
    */
   buildScreen = (
     id: string,
-    initialParams: any,
+    initialParams: DataProps,
     type: DOMString,
-    localName: string,
     options: Options = {},
   ): React.ReactElement => {
-    const { getComponent } = this;
     switch (type) {
       case NAVIGATOR_TYPE.STACK:
         return (
           <Stack.Screen
             key={id}
-            component={getComponent(localName)}
+            component={HvRoute}
             getId={({ params }) => params?.url}
             initialParams={initialParams}
             name={id}
@@ -97,7 +69,7 @@ export default class HvNavigator extends PureComponent<Props> {
         return (
           <TopTab.Screen
             key={id}
-            component={getComponent(localName)}
+            component={HvRoute}
             initialParams={initialParams}
             name={id}
           />
@@ -106,7 +78,7 @@ export default class HvNavigator extends PureComponent<Props> {
         return (
           <BottomTab.Screen
             key={id}
-            component={getComponent(localName)}
+            component={HvRoute}
             initialParams={initialParams}
             name={id}
             options={options}
@@ -133,51 +105,33 @@ export default class HvNavigator extends PureComponent<Props> {
     const { buildScreen } = this;
     for (let i = 0; i < elements.length; i += 1) {
       const child: Element = elements[i];
-      if (
-        child.localName === LOCAL_NAME.NAVIGATOR ||
-        child.localName === LOCAL_NAME.NAV_ROUTE
-      ) {
+      if (child.localName === LOCAL_NAME.NAV_ROUTE) {
         const id: DOMString | null | undefined = child.getAttribute('id');
         if (!id) {
           throw new Errors.HvNavigatorError(
             `No id provided for ${child.localName}`,
           );
         }
-        let initialParams: any = {};
-        let url: string;
-        let navParams: Props;
-        let routeParams: DataProps & ActionProps;
-        switch (child.localName) {
-          case LOCAL_NAME.NAVIGATOR:
-            navParams = { element: child };
-            initialParams = navParams;
-            break;
-          case LOCAL_NAME.NAV_ROUTE:
-            url = getUrlFromHref(
-              child.getAttribute('href'),
-              navContext?.entrypointUrl,
-            );
-            routeParams = {
-              url,
-            };
-            initialParams = routeParams;
-            break;
-          default:
-        }
-        screens.push(buildScreen(id, initialParams, type, child.localName));
+        const url = getUrlFromHref(
+          child.getAttribute('href'),
+          navContext?.entrypointUrl,
+        );
+
+        screens.push(buildScreen(id, { url }, type));
       }
     }
 
     // Add the dynamic screens
     switch (type) {
       case NAVIGATOR_TYPE.STACK:
-        screens.push(buildScreen(ID_DYNAMIC, {}, type, LOCAL_NAME.NAV_ROUTE));
+        screens.push(buildScreen(ID_DYNAMIC, {}, type));
 
         screens.push(
-          buildScreen(ID_MODAL, {}, type, LOCAL_NAME.NAV_ROUTE, {
+          buildScreen(ID_MODAL, {}, type, {
             presentation: 'modal',
           }),
         );
+
         break;
       default:
     }
@@ -187,12 +141,16 @@ export default class HvNavigator extends PureComponent<Props> {
   /**
    * Build the required navigator from the xml element
    */
-  Navigator = (props: NavigatorProps): React.ReactElement => {
+  Navigator = (props: {
+    context: NavigationContextProps | null;
+    element: Element;
+  }): React.ReactElement => {
     const id: DOMString | null | undefined = props.element.getAttribute('id');
 
     if (!id) {
       throw new Errors.HvNavigatorError('No id found for navigator');
     }
+
     if (!props.context) {
       throw new Errors.HvNavigatorError(
         'No NavigationContext context provided',

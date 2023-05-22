@@ -16,6 +16,13 @@ export type ContentProps = {
 };
 
 /**
+ * Props used for data fetching by hv-route
+ */
+export type DataProps = {
+  url?: string;
+};
+
+/**
  * Options used by the navigator screens
  */
 export type Options = {
