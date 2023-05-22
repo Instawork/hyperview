@@ -6,7 +6,7 @@
  *
  */
 
-import { HvBaseError } from './';
+import { HvBaseError } from '.';
 
 describe('HvBaseError', () => {
   describe('When instanciated directly', () => {

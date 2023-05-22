@@ -12,7 +12,7 @@ type ExtraContext = { [key: string]: unknown };
 export class HvBaseError extends Error {
   extraContext: ExtraContext = {};
 
-  name: string = 'HvBaseError';
+  name = 'HvBaseError';
 
   constructor(message: string) {
     super(message);
