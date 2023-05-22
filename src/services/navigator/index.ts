@@ -6,6 +6,7 @@
  *
  */
 
+import { NAV_ACTIONS, NavAction } from './types';
 import { Props } from 'hyperview/src/core/components/hv-route/types';
 
 /**
@@ -18,23 +19,31 @@ export class Logic {
     this.props = props;
   }
 
-  push = (params: object): void => {
-    console.log('push:', params);
+  /**
+   * Prepare and send the request
+   */
+  sendRequest = (action: NavAction, routeParams: object) => {
+    console.log('sendRequest', action, routeParams);
   };
 
-  openModal = (params: object): void => {
-    console.log('openModal', params);
+  back = (routeParams: object) => {
+    this.sendRequest(NAV_ACTIONS.BACK, routeParams);
   };
 
-  back = (): void => {
-    console.log('back');
+  closeModal = (routeParams: object) => {
+    this.sendRequest(NAV_ACTIONS.CLOSE, routeParams);
   };
 
-  closeModal = (): void => {
-    console.log('closeModal');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
+  navigate = (routeParams: object, _: string) => {
+    this.sendRequest(NAV_ACTIONS.NAVIGATE, routeParams);
   };
 
-  navigate = (params: object, key: string): void => {
-    console.log('navigate', key, params);
+  openModal = (routeParams: object) => {
+    this.sendRequest(NAV_ACTIONS.NEW, routeParams);
+  };
+
+  push = (routeParams: object) => {
+    this.sendRequest(NAV_ACTIONS.PUSH, routeParams);
   };
 }

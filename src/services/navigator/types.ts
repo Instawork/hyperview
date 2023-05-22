@@ -31,6 +31,9 @@ export const LOCAL_NAME = {
 
 export type LocalName = typeof LOCAL_NAME[keyof typeof LOCAL_NAME];
 
+/**
+ * Minimal local name type copy from 'hyperview/src/types.js'
+ */
 export const NODE_TYPE = {
   ATTRIBUTE_NODE: 2,
   CDATA_SECTION_NODE: 4,
@@ -47,6 +50,31 @@ export const NODE_TYPE = {
 };
 
 export type NodeType = typeof NODE_TYPE[keyof typeof NODE_TYPE];
+
+/**
+ * Minimal local name type copy from 'hyperview/src/types.js'
+ */
+// https://hyperview.org/docs/reference_behavior_attributes#action
+export const ACTIONS = {
+  BACK: 'back',
+  CLOSE: 'close',
+  NAVIGATE: 'navigate',
+  NEW: 'new',
+  PUSH: 'push',
+};
+
+/**
+ * Minimal local name type copy from 'hyperview/src/types.js'
+ */
+export const NAV_ACTIONS = {
+  BACK: ACTIONS.BACK,
+  CLOSE: ACTIONS.CLOSE,
+  NAVIGATE: ACTIONS.NAVIGATE,
+  NEW: ACTIONS.NEW,
+  PUSH: ACTIONS.PUSH,
+};
+
+export type NavAction = typeof NAV_ACTIONS[keyof typeof NAV_ACTIONS];
 
 export type DOMString = string;
 export type NamespaceURI = string;
