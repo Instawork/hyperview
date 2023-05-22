@@ -45,8 +45,6 @@ const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
 const TopTab = createMaterialTopTabNavigator();
 
-type State = undefined;
-
 /**
  * Props used for constructing a navigator
  */
@@ -55,10 +53,7 @@ type NavigatorProps = {
   element: Element;
 };
 
-export default class HvNavigator extends PureComponent<
-  Props | any,
-  State | any
-> {
+export default class HvNavigator extends PureComponent<Props> {
   /**
    * Dynamically create the appropriate component based on the localName
    */
@@ -224,7 +219,11 @@ export default class HvNavigator extends PureComponent<
           <Stack.Navigator
             id={id}
             initialRouteName={initialId}
-            screenOptions={{ headerShown: ShowUI }}
+            screenOptions={{
+              header: undefined,
+              headerMode: 'screen',
+              headerShown: ShowUI,
+            }}
           >
             {buildScreens(props.context, props.element, type)}
           </Stack.Navigator>
@@ -252,6 +251,7 @@ export default class HvNavigator extends PureComponent<
               headerShown: ShowUI,
               tabBarStyle: { display: ShowUI ? 'flex' : 'none' },
             }}
+            tabBar={undefined}
           >
             {buildScreens(props.context, props.element, type)}
           </BottomTab.Navigator>
