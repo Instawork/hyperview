@@ -16,7 +16,7 @@ export type ContentProps = {
 };
 
 /**
- * Options used by the navigator
+ * Options used by the navigator screens
  */
 export type Options = {
   headerShown?: boolean;
@@ -24,6 +24,6 @@ export type Options = {
 };
 
 /**
- * All of the props used by hv-route
+ * All of the props used by hv-navigator
  */
 export type Props = ContentProps;

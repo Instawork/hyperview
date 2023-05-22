@@ -36,6 +36,11 @@ import { ActionProps } from '../hv-screen/types';
 import { DataProps } from '../hv-route/types';
 import HvRoute from '../hv-route';
 
+/**
+ * Flag to show the navigator UIs
+ */
+const ShowUI = true;
+
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
 const TopTab = createMaterialTopTabNavigator();
@@ -48,7 +53,6 @@ type State = undefined;
 type NavigatorProps = {
   context: NavigationContextProps | null;
   element: Element;
-  options: Options;
 };
 
 export default class HvNavigator extends PureComponent<
@@ -220,7 +224,7 @@ export default class HvNavigator extends PureComponent<
           <Stack.Navigator
             id={id}
             initialRouteName={initialId}
-            screenOptions={props.options}
+            screenOptions={{ headerShown: ShowUI }}
           >
             {buildScreens(props.context, props.element, type)}
           </Stack.Navigator>
@@ -231,6 +235,9 @@ export default class HvNavigator extends PureComponent<
             backBehavior="none"
             id={id}
             initialRouteName={initialId}
+            screenOptions={{
+              tabBarStyle: { display: ShowUI ? 'flex' : 'none' },
+            }}
           >
             {buildScreens(props.context, props.element, type)}
           </TopTab.Navigator>
@@ -241,7 +248,10 @@ export default class HvNavigator extends PureComponent<
             backBehavior="none"
             id={id}
             initialRouteName={initialId}
-            screenOptions={props.options}
+            screenOptions={{
+              headerShown: ShowUI,
+              tabBarStyle: { display: ShowUI ? 'flex' : 'none' },
+            }}
           >
             {buildScreens(props.context, props.element, type)}
           </BottomTab.Navigator>
@@ -258,13 +268,7 @@ export default class HvNavigator extends PureComponent<
     return (
       <NavigationContext.Consumer>
         {navContext => (
-          <Navigator
-            context={navContext}
-            element={this.props.element}
-            options={{
-              headerShown: true,
-            }}
-          />
+          <Navigator context={navContext} element={this.props.element} />
         )}
       </NavigationContext.Consumer>
     );
