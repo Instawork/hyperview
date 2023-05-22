@@ -19,7 +19,7 @@ import LoadError from '../load-error';
 import Loading from '../loading';
 import { NavigationContext } from 'hyperview/src/contexts/navigation';
 import { Props } from './types';
-import { renderElement } from 'hyperview/src/services/navigator/render';
+import { RouteRender } from 'hyperview/src/services/navigator/render';
 
 type State = { doc: Document | null; error: Error | null; url: string | null };
 
@@ -135,12 +135,14 @@ export default class HvRoute extends PureComponent<Props, State> {
 
     const { ErrorView } = this;
     try {
-      return renderElement(
-        this.state.url,
-        this.state.doc,
-        this.context,
-        this.navigator,
-        this.props,
+      return (
+        <RouteRender
+          context={this.context}
+          doc={this.state.doc}
+          navigator={this.navigator}
+          props={this.props}
+          url={this.state.url}
+        />
       );
     } catch (err) {
       return <ErrorView error={err} />;

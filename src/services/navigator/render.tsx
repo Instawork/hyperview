@@ -26,23 +26,14 @@ import React from 'react';
 import { getFirstTag } from 'hyperview/src/services/navigator/helpers';
 
 /**
- * Props used for the build screen
+ * Build the <HvScreen> component with injected props
  */
-type ScreenProps = {
+const BuildHvScreen = (props: {
   url: string | null;
   context: NavigationContextProps | null;
   navigator: Navigator.Logic;
   routeProps: Props;
-};
-
-/**
- * Build the <HvScreen> component with injected props
- * @param url
- * @param doc
- * @param context
- * @returns
- */
-const BuildHvScreen = (props: ScreenProps): React.ReactElement => {
+}): React.ReactElement => {
   return (
     <DateFormatContext.Consumer>
       {formatter => (
@@ -71,13 +62,15 @@ const BuildHvScreen = (props: ScreenProps): React.ReactElement => {
   );
 };
 
-export const renderElement = (
-  url: string,
-  doc: Document,
-  context: NavigationContextProps,
-  navigator: Navigator.Logic,
-  props: Props,
-): React.ReactElement => {
+export const RouteRender = (props: {
+  context: NavigationContextProps;
+  navigator: Navigator.Logic;
+  props: Props;
+  doc: Document;
+  url: string;
+}): React.ReactElement => {
+  const { context, navigator, props: routeProps, doc, url } = props;
+
   // Get the <doc> element
   const root: Element | null = getFirstTag(doc, LOCAL_NAME.DOC);
   if (!root) {
@@ -107,7 +100,7 @@ export const renderElement = (
             <BuildHvScreen
               context={context}
               navigator={navigator}
-              routeProps={props}
+              routeProps={routeProps}
               url={url}
             />
           </context.handleBack>
@@ -117,7 +110,7 @@ export const renderElement = (
         <BuildHvScreen
           context={context}
           navigator={navigator}
-          routeProps={props}
+          routeProps={routeProps}
           url={url}
         />
       );
