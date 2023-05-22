@@ -65,7 +65,8 @@
         "indent": "off",
         "arrow-body-style": "off",
         "operator-linebreak": "off",
-        "no-use-before-define": "off"
+        "no-use-before-define": "off",
+        "object-curly-newline": "off"
       }
     }
   ]
