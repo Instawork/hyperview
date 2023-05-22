@@ -9,10 +9,10 @@
 import { HvBaseError } from '.';
 
 describe('HvBaseError', () => {
-  describe('When instanciated directly', () => {
+  describe('When instantiated directly', () => {
     it('Throws an error', () => {
       expect(() => new HvBaseError('custom message')).toThrow(
-        'Do not instanciate `HvBaseError` directly',
+        'Do not instantiate `HvBaseError` directly',
       );
     });
   });
