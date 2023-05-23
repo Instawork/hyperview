@@ -21,3 +21,7 @@ export class HvNavigatorError extends HvBaseError {
 export class HvRenderError extends HvBaseError {
   name = 'HvRenderError';
 }
+
+export class HvNavigatorMapError extends HvBaseError {
+  name = 'HvNavigatorMapError';
+}
