@@ -1,4 +1,3 @@
-/* eslint-disable instawork/error-object */
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
