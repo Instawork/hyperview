@@ -33,7 +33,11 @@ import Loading from '../loading';
 
 import { RouteRender } from 'hyperview/src/services/navigator/render';
 
-type State = { doc: Document | null; error: Error | null; url: string | null };
+type State = {
+  doc: Document | null;
+  error: Error | null;
+  url: string | null;
+};
 
 class HvRouteInner extends PureComponent<InnerRouteProps, State> {
   parser?: Dom.Parser;
@@ -85,10 +89,10 @@ class HvRouteInner extends PureComponent<InnerRouteProps, State> {
         error: null,
         url,
       });
-    } catch (err: any) {
+    } catch (err: unknown) {
       this.setState({
         doc: null,
-        error: err,
+        error: err as Error,
         url: null,
       });
     }
