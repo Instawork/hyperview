@@ -10,11 +10,14 @@ import {
   NavigationProp,
   Route,
 } from 'hyperview/src/services/navigator/imports';
+import { NavigationContextProps } from 'hyperview/src/contexts/navigation';
+import { NavigatorCache } from 'hyperview/src/contexts/navigator';
 
 /**
  * Props used for data fetching by hv-route
  */
 export type DataProps = {
+  id?: string;
   url?: string;
 };
 
@@ -26,6 +29,11 @@ export type NavigationProps = {
   navigation?: NavigationProp<object>; // *** AHG TODO GET RIGHT TYPE
   route?: Route<string, DataProps>;
 };
+
+/**
+ * Props used by hv-route inner components
+ */
+export type RouteProps = Props & NavigationContextProps & NavigatorCache;
 
 /**
  * All of the props used by hv-route

@@ -16,21 +16,6 @@ export type ContentProps = {
 };
 
 /**
- * Props used for data fetching by hv-route
- */
-export type DataProps = {
-  url?: string;
-};
-
-/**
- * Options used by the navigator screens
- */
-export type Options = {
-  headerShown?: boolean;
-  presentation?: 'modal' | 'card' | 'transparentModal' | undefined;
-};
-
-/**
  * All of the props used by hv-navigator
  */
 export type Props = ContentProps;

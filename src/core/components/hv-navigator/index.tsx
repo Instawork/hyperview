@@ -16,11 +16,15 @@ import {
   LOCAL_NAME,
   NAVIGATOR_TYPE,
 } from 'hyperview/src/services/navigator/types';
-import { DataProps, Options, Props } from './types';
 import {
   NavigationContext,
   NavigationContextProps,
 } from 'hyperview/src/contexts/navigation';
+import {
+  NavigatorMapProvider,
+  SetInitialRouteName,
+  SetRouteUrl,
+} from 'hyperview/src/contexts/navigator';
 import React, { PureComponent, useContext } from 'react';
 import {
   createBottomTabNavigator,
@@ -33,44 +37,35 @@ import {
   getUrlFromHref,
 } from 'hyperview/src/services/navigator/helpers';
 import HvRoute from '../hv-route';
+import { Props } from './types';
+import { Props as RouteProps } from '../hv-route/types';
+
+type ParamTypes = {
+  dynamic: RouteProps;
+  modal: RouteProps;
+};
 
 /**
  * Flag to show the navigator UIs
  */
 const ShowUI = true;
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<ParamTypes>();
 const BottomTab = createBottomTabNavigator();
 const TopTab = createMaterialTopTabNavigator();
 
 export default class HvNavigator extends PureComponent<Props> {
   /**
-   * Build an individual screen
+   * Build an individual tab screen
    */
-  buildScreen = (
-    id: string,
-    initialParams: DataProps,
-    type: DOMString,
-    options: Options = {},
-  ): React.ReactElement => {
+  buildTabScreen = (id: string, type: DOMString): React.ReactElement => {
     switch (type) {
-      case NAVIGATOR_TYPE.STACK:
-        return (
-          <Stack.Screen
-            key={id}
-            component={HvRoute}
-            getId={({ params }) => params?.url}
-            initialParams={initialParams}
-            name={id}
-            options={options}
-          />
-        );
       case NAVIGATOR_TYPE.TOP_TAB:
         return (
           <TopTab.Screen
             key={id}
             component={HvRoute}
-            initialParams={initialParams}
+            initialParams={{ id }}
             name={id}
           />
         );
@@ -79,9 +74,8 @@ export default class HvNavigator extends PureComponent<Props> {
           <BottomTab.Screen
             key={id}
             component={HvRoute}
-            initialParams={initialParams}
+            initialParams={{ id }}
             name={id}
-            options={options}
           />
         );
       default:
@@ -100,8 +94,9 @@ export default class HvNavigator extends PureComponent<Props> {
     if (!context) {
       return screens;
     }
+
     const elements: Element[] = getChildElements(element);
-    const { buildScreen } = this;
+    const { buildTabScreen } = this;
     for (let i = 0; i < elements.length; i += 1) {
       const child: Element = elements[i];
       if (child.localName === LOCAL_NAME.NAV_ROUTE) {
@@ -119,19 +114,38 @@ export default class HvNavigator extends PureComponent<Props> {
         }
         const url = getUrlFromHref(href, context?.entrypointUrl);
 
-        screens.push(buildScreen(id, { url }, type));
+        // Cache the url for the route
+        SetRouteUrl(id, url);
+
+        // Stack uses route urls, other types build out the screens
+        if (type !== NAVIGATOR_TYPE.STACK) {
+          screens.push(buildTabScreen(id, type));
+        }
       }
     }
 
     // Add the dynamic screens
     switch (type) {
       case NAVIGATOR_TYPE.STACK:
-        screens.push(buildScreen(ID_DYNAMIC, {}, type));
-
+        // Dynamic is used to display all routes in stack which are presented as cards
         screens.push(
-          buildScreen(ID_MODAL, {}, type, {
-            presentation: 'modal',
-          }),
+          <Stack.Screen
+            key={ID_DYNAMIC}
+            component={HvRoute}
+            getId={({ params }) => params?.url}
+            name={ID_DYNAMIC}
+          />,
+        );
+
+        // Modal is used to display all routes in stack which are presented as modals
+        screens.push(
+          <Stack.Screen
+            key={ID_MODAL}
+            component={HvRoute}
+            getId={({ params }) => params?.url}
+            name={ID_MODAL}
+            options={{ presentation: 'modal' }}
+          />,
         );
 
         break;
@@ -172,18 +186,22 @@ export default class HvNavigator extends PureComponent<Props> {
     const initialId: string | undefined = initial
       .getAttribute('id')
       ?.toString();
+    if (initialId) {
+      SetInitialRouteName(initialId);
+    }
     const { buildScreens } = this;
     switch (type) {
       case NAVIGATOR_TYPE.STACK:
         return (
           <Stack.Navigator
             id={id}
-            initialRouteName={initialId}
-            screenOptions={{
+            initialRouteName={ID_DYNAMIC}
+            screenOptions={({ route }) => ({
               header: undefined,
               headerMode: 'screen',
               headerShown: ShowUI,
-            }}
+              title: route.params?.url,
+            })}
           >
             {buildScreens(props.element, type)}
           </Stack.Navigator>
@@ -226,7 +244,9 @@ export default class HvNavigator extends PureComponent<Props> {
   render() {
     const { Navigator } = this;
     return (
-      <Navigator element={this.props.element} />
+      <NavigatorMapProvider>
+        <Navigator element={this.props.element} />
+      </NavigatorMapProvider>
     );
   }
 }

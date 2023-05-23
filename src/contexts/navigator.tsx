@@ -1,3 +1,11 @@
+/**
+ * Copyright (c) Garuda Labs, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
 import * as Errors from 'hyperview/src/services/navigator/errors';
 import React, { createContext, useContext } from 'react';
 import { Element } from 'hyperview/src/services/navigator/types';
@@ -29,6 +37,11 @@ function SetInitialRouteName(name: string) {
   }
 }
 
+function GetInitialRouteName(): string | undefined {
+  const context = useMapContext();
+  return context?.initialRouteName;
+}
+
 function SetRouteUrl(key: string, url: string) {
   const context = useMapContext();
   if (context) {
@@ -53,4 +66,10 @@ function NavigatorMapProvider({ children }: Props) {
   );
 }
 
-export { GetRouteUrl, NavigatorMapProvider, SetInitialRouteName, SetRouteUrl };
+export {
+  GetInitialRouteName,
+  GetRouteUrl,
+  NavigatorMapProvider,
+  SetInitialRouteName,
+  SetRouteUrl,
+};

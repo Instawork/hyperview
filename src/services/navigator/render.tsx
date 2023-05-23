@@ -9,20 +9,16 @@
 import * as Errors from 'hyperview/src/services/navigator/errors';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Navigator from 'hyperview/src/services/navigator';
-
-import {
-  DateFormatContext,
-  NavigationContextProps,
-} from 'hyperview/src/contexts/navigation';
 import {
   Document,
   Element,
   LOCAL_NAME,
 } from 'hyperview/src/services/navigator/types';
+import { DateFormatContext } from 'hyperview/src/contexts/navigation';
 import HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
-import { Props } from 'hyperview/src/core/components/hv-route/types';
 import React from 'react';
+import { RouteProps } from 'hyperview/src/core/components/hv-route/types';
 import { getFirstTag } from 'hyperview/src/services/navigator/helpers';
 
 /**
@@ -30,30 +26,31 @@ import { getFirstTag } from 'hyperview/src/services/navigator/helpers';
  */
 const BuildHvScreen = (props: {
   url: string | null;
-  context: NavigationContextProps | null;
-  navigator: Navigator.Logic;
-  routeProps: Props;
+  navLogic: Navigator.Logic;
+  routeProps: RouteProps;
 }): React.ReactElement => {
   return (
     <DateFormatContext.Consumer>
       {formatter => (
         <HvScreen
-          back={props.navigator.back}
-          behaviors={props.context?.behaviors}
-          closeModal={props.navigator.closeModal}
-          components={props.context?.components}
-          elementErrorComponent={props.context?.elementErrorComponent}
-          entrypointUrl={props.url || props.context?.entrypointUrl}
-          errorScreen={props.context?.errorScreen}
-          fetch={props.context?.fetch}
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          {...props.routeProps}
+          back={props.navLogic.back}
+          behaviors={props.routeProps.behaviors}
+          closeModal={props.navLogic.closeModal}
+          components={props.routeProps.components}
+          elementErrorComponent={props.routeProps.elementErrorComponent}
+          entrypointUrl={props.url || props.routeProps.entrypointUrl}
+          errorScreen={props.routeProps.errorScreen}
+          fetch={props.routeProps.fetch}
           formatDate={formatter}
-          loadingScreen={props.context?.loadingScreen}
-          navigate={props.navigator.navigate}
+          loadingScreen={props.routeProps.loadingScreen}
+          navigate={props.navLogic.navigate}
           navigation={props.routeProps.navigation}
-          onParseAfter={props.context?.onParseAfter}
-          onParseBefore={props.context?.onParseBefore}
-          openModal={props.navigator.openModal}
-          push={props.navigator.push}
+          onParseAfter={props.routeProps.onParseAfter}
+          onParseBefore={props.routeProps.onParseBefore}
+          openModal={props.navLogic.openModal}
+          push={props.navLogic.push}
           // refreshControl={props.refreshControl}
           route={props.routeProps.route}
         />
@@ -63,13 +60,12 @@ const BuildHvScreen = (props: {
 };
 
 export const RouteRender = (props: {
-  context: NavigationContextProps;
-  navigator: Navigator.Logic;
-  props: Props;
+  navLogic: Navigator.Logic;
+  props: RouteProps;
   doc: Document;
   url: string;
 }): React.ReactElement => {
-  const { context, navigator, props: routeProps, doc, url } = props;
+  const { navLogic, props: routeProps, doc, url } = props;
 
   // Get the <doc> element
   const root: Element | null = getFirstTag(doc, LOCAL_NAME.DOC);
@@ -94,25 +90,19 @@ export const RouteRender = (props: {
 
   switch (element.localName) {
     case LOCAL_NAME.SCREEN:
-      if (context && context.handleBack) {
+      if (routeProps.handleBack) {
         return (
-          <context.handleBack>
+          <routeProps.handleBack>
             <BuildHvScreen
-              context={context}
-              navigator={navigator}
+              navLogic={navLogic}
               routeProps={routeProps}
               url={url}
             />
-          </context.handleBack>
+          </routeProps.handleBack>
         );
       }
       return (
-        <BuildHvScreen
-          context={context}
-          navigator={navigator}
-          routeProps={routeProps}
-          url={url}
-        />
+        <BuildHvScreen navLogic={navLogic} routeProps={routeProps} url={url} />
       );
     case LOCAL_NAME.NAVIGATOR:
       return <HvNavigator element={element} />;
