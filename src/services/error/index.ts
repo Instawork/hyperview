@@ -16,7 +16,6 @@ export class HvBaseError extends Error {
 
   constructor(message: string) {
     super(message);
-    // $FlowFixMe[method-unbinding]: react-native upgrade 0.67.4
     if (this.constructor === HvBaseError) {
       throw new Error('Do not instantiate `HvBaseError` directly');
     }
