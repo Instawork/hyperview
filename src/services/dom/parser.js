@@ -146,7 +146,7 @@ export class Parser {
       if (!bodyElement) {
         throw new Errors.XMLRequiredElementNotFound(LOCAL_NAME.BODY, baseUrl);
       }
-    } else {
+    } else if (navigatorElement) {
       const routeElement = getFirstTag(navigatorElement, LOCAL_NAME.NAV_ROUTE);
       if (!routeElement) {
         throw new Errors.XMLRequiredElementNotFound(
@@ -154,6 +154,11 @@ export class Parser {
           baseUrl,
         );
       }
+    } else {
+      throw new Errors.XMLRequiredElementNotFound(
+        `${LOCAL_NAME.SCREEN}/${LOCAL_NAME.NAVIGATOR}`,
+        baseUrl,
+      );
     }
     return { doc, staleHeaderType };
   };
