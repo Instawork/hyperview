@@ -278,7 +278,7 @@
     </xs:union>
   </xs:simpleType>
 
-  <xs:simpleType name="margin">
+  <xs:simpleType name="sizing">
     <xs:union>
       <xs:simpleType>
         <xs:restriction base="xs:integer" />
@@ -573,6 +573,8 @@
         </xs:simpleType>
       </xs:attribute>
 
+      <xs:attribute name="flexBasis" type="hv:sizing" />
+
       <xs:attribute name="flexDirection">
         <xs:simpleType>
           <xs:restriction base="xs:string">
@@ -645,13 +647,13 @@
 
       <xs:attribute name="left" type="hv:pointsOrPercent" />
       <xs:attribute name="lineHeight" type="xs:integer" />
-      <xs:attribute name="margin" type="hv:margin" />
-      <xs:attribute name="marginBottom" type="hv:margin" />
-      <xs:attribute name="marginHorizontal" type="hv:margin" />
-      <xs:attribute name="marginLeft" type="hv:margin" />
-      <xs:attribute name="marginRight" type="hv:margin" />
-      <xs:attribute name="marginTop" type="hv:margin" />
-      <xs:attribute name="marginVertical" type="hv:margin" />
+      <xs:attribute name="margin" type="hv:sizing" />
+      <xs:attribute name="marginBottom" type="hv:sizing" />
+      <xs:attribute name="marginHorizontal" type="hv:sizing" />
+      <xs:attribute name="marginLeft" type="hv:sizing" />
+      <xs:attribute name="marginRight" type="hv:sizing" />
+      <xs:attribute name="marginTop" type="hv:sizing" />
+      <xs:attribute name="marginVertical" type="hv:sizing" />
       <xs:attribute name="maxHeight" type="hv:pointsOrPercent" />
       <xs:attribute name="maxWidth" type="hv:pointsOrPercent" />
       <xs:attribute name="minHeight" type="hv:pointsOrPercent" />
