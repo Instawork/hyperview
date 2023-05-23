@@ -2,18 +2,21 @@
   <screen id="completed-1-screen">
     <styles>
       <style id="Body" backgroundColor="#d8e6ff" flex="1" paddingTop="24" />
-      <style id="Title" color="white" backgroundColor="#a8c0ff" padding="16" borderRadius="8" fontSize="24" />
+      <style
+        id="Title"
+        color="white"
+        backgroundColor="#a8c0ff"
+        padding="16"
+        borderRadius="8"
+        fontSize="24"
+      />
       <style id="Link" color="blue" backgroundColor="#a8c0ff" padding="16" />
     </styles>
     <body style="Body" safe-area="true">
-      <text
-        style="Title">
+      <text style="Title">
           COMPLETED 1
       </text>
-      <text
-        style="Link"
-        action="navigate"
-        href="#completed-2-route">
+      <text style="Link" action="navigate" href="#completed-2-route">
         GO TO 2
       </text>
     </body>

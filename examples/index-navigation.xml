@@ -1,5 +1,5 @@
 <doc xmlns="https://hyperview.org/hyperview">
-  <navigator id="root-nav" type="stack" >
+  <navigator id="root-nav" type="stack">
     <nav-route id="help-route" href="/navigator/help.xml" />
     <nav-route id="home-route" href="/navigator/home.xml" initial="true" />
   </navigator>

@@ -7,6 +7,7 @@
       <navigator id="setting-nav" type="top-tab">
         <nav-route id="setting-1-route" href="/navigator/settings-1.xml" />
         <nav-route id="setting-2-route" href="/navigator/settings-2.xml" />
+        <nav-route id="setting-3-route" href="index.xml" />
       </navigator>
     </nav-route>
   </navigator>
