@@ -15,6 +15,7 @@
  * yarn add react-native-tab-view@3.5.1
  * yarn add react-native-pager-view@6.2.0
  * yarn add react-native-gesture-handler@2.9.0
+ * yarn add react-native-safe-area-context@4.2.4
  */
 export type { NavigationProp, Route } from '@react-navigation/native';
 export { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
