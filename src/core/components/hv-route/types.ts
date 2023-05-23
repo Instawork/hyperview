@@ -22,6 +22,11 @@ export type DataProps = {
 };
 
 /**
+ * Params passed to hv-route
+ */
+export type RouteParams = DataProps;
+
+/**
  * Props used by navigation components
  * Route contains the type of the params object
  */
@@ -31,10 +36,10 @@ export type NavigationProps = {
 };
 
 /**
- * Props used by hv-route inner components
+ * The props used by inner components of hv-route
  */
-export type RouteParams = NavigationProps &
-  DataProps &
+export type InnerRouteProps = DataProps &
+  NavigationProps &
   NavigationContextProps &
   NavigatorCache;
 

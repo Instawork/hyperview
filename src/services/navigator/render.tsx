@@ -17,8 +17,8 @@ import {
 import { DateFormatContext } from 'hyperview/src/contexts/navigation';
 import HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
+import { InnerRouteProps } from 'hyperview/src/core/components/hv-route/types';
 import React from 'react';
-import { RouteProps } from 'hyperview/src/core/components/hv-route/types';
 import { getFirstTag } from 'hyperview/src/services/navigator/helpers';
 
 /**
@@ -27,7 +27,7 @@ import { getFirstTag } from 'hyperview/src/services/navigator/helpers';
 const BuildHvScreen = (props: {
   url: string | null;
   navLogic: Navigator.Logic;
-  routeProps: RouteProps;
+  routeProps: InnerRouteProps;
 }): React.ReactElement => {
   return (
     <DateFormatContext.Consumer>
@@ -61,11 +61,11 @@ const BuildHvScreen = (props: {
 
 export const RouteRender = (props: {
   navLogic: Navigator.Logic;
-  props: RouteProps;
+  routeProps: InnerRouteProps;
   doc: Document;
   url: string;
 }): React.ReactElement => {
-  const { navLogic, props: routeProps, doc, url } = props;
+  const { navLogic, routeProps, doc, url } = props;
 
   // Get the <doc> element
   const root: Element | null = getFirstTag(doc, LOCAL_NAME.DOC);

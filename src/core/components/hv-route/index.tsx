@@ -17,11 +17,12 @@ import {
   NavigatorCache,
   NavigatorMapContext,
 } from 'hyperview/src/contexts/navigator';
+import { InnerRouteProps, Props } from './types';
 import {
   NavigationContext,
   NavigationContextProps,
 } from 'hyperview/src/contexts/navigation';
-import { Props, RouteParams } from './types';
+
 import React, { PureComponent, useContext } from 'react';
 import { Document } from 'hyperview/src/services/navigator/types';
 // *** AHG UPDATE LOAD
@@ -33,12 +34,12 @@ import { RouteRender } from 'hyperview/src/services/navigator/render';
 
 type State = { doc: Document | null; error: Error | null; url: string | null };
 
-class HvRouteInner extends PureComponent<RouteParams, State> {
+class HvRouteInner extends PureComponent<InnerRouteProps, State> {
   parser?: Dom.Parser;
 
   navLogic: Navigator.Logic;
 
-  constructor(props: RouteParams) {
+  constructor(props: InnerRouteProps) {
     super(props);
 
     this.state = {
@@ -131,7 +132,7 @@ class HvRouteInner extends PureComponent<RouteParams, State> {
         <RouteRender
           doc={this.state.doc}
           navLogic={this.navLogic}
-          props={this.props}
+          routeProps={this.props}
           url={this.state.url}
         />
       );
