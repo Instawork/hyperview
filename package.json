@@ -51,7 +51,7 @@
     "@react-navigation/stack": "6.3.16",
     "react-native-gesture-handler": "2.9.0",
     "tiny-emitter": "2.1.0",
-    "url-parse": "1.4.3",
+    "url-parse": "1.5.10",
     "xmldom-instawork": "0.0.1"
   },
   "peerDependencies": {

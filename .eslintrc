@@ -48,7 +48,8 @@
     {
       "files": ["**/types.js"],
       "rules": {
-        "no-use-before-define": "off"
+        "no-use-before-define": "off",
+        "max-len": "off"
       }
     },
     {
@@ -56,31 +57,17 @@
       "extends": ["plugin:instawork/recommended-typescript"],
       "rules": {
         "instawork/flow-annotate": "off",
-        "object-curly-newline": "off",
         "flowtype/no-types-missing-file-annotation": "off",
-        "no-shadow": "off",
-        "@typescript-eslint/no-shadow": "error",
+        "no-spaced-func": "off",
+        "func-call-spacing": "off",
+        "arrow-parens": "off",
+        "function-paren-newline": "off",
+        "indent": "off",
+        "arrow-body-style": "off",
+        "operator-linebreak": "off",
         "no-use-before-define": "off",
-        "@typescript-eslint/no-use-before-define": ["error"],
-        "@typescript-eslint/no-inferrable-types": "off",
-        "prefer-destructuring": [
-          "error",
-          {
-            "AssignmentExpression": {
-              "array": true,
-              "object": true
-            },
-            "VariableDeclarator": {
-              "array": true,
-              "object": true
-            }
-          },
-          {
-            "enforceForRenamedProperties": false
-          }
-        ],
-        "arrow-parens": ["as-needed"],
-        "no-confusing-arrow": "off"
+        "object-curly-newline": "off",
+        "instawork/error-object": "off"
       }
     }
   ]
