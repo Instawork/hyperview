@@ -409,6 +409,7 @@ export type BehaviorOptions = {|
 export type NavigationRouteParams = {|
   delay: ?number,
   preloadScreen: ?number,
+  target: ?string,
   url: string,
 |};
 
