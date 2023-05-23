@@ -82,7 +82,7 @@ const STYLE_ATTRIBUTE_CONVERTERS = {
   display: string,
   elevation: number,
   flex: number,
-  flexBasis: number,
+  flexBasis: numberOrString,
   flexDirection: string,
   flexGrow: number,
   flexShrink: number,
