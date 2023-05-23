@@ -51,7 +51,7 @@ type ParamTypes = {
 /**
  * Flag to show the navigator UIs
  */
-const ShowUI = true;
+const SHOW_NAVIGATION_UI = true;
 
 const Stack = createStackNavigator<ParamTypes>();
 const BottomTab = createBottomTabNavigator();
@@ -217,7 +217,7 @@ export default class HvNavigator extends PureComponent<Props> {
             screenOptions={({ route }) => ({
               header: undefined,
               headerMode: 'screen',
-              headerShown: ShowUI,
+              headerShown: SHOW_NAVIGATION_UI,
               title: route.params?.url,
             })}
           >
@@ -231,7 +231,7 @@ export default class HvNavigator extends PureComponent<Props> {
             id={id}
             initialRouteName={initialId}
             screenOptions={{
-              tabBarStyle: { display: ShowUI ? 'flex' : 'none' },
+              tabBarStyle: { display: SHOW_NAVIGATION_UI ? 'flex' : 'none' },
             }}
           >
             {buildScreens(props.element, type)}
@@ -244,8 +244,8 @@ export default class HvNavigator extends PureComponent<Props> {
             id={id}
             initialRouteName={initialId}
             screenOptions={{
-              headerShown: ShowUI,
-              tabBarStyle: { display: ShowUI ? 'flex' : 'none' },
+              headerShown: SHOW_NAVIGATION_UI,
+              tabBarStyle: { display: SHOW_NAVIGATION_UI ? 'flex' : 'none' },
             }}
             tabBar={undefined}
           >
