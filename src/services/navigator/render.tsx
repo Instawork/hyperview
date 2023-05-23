@@ -21,14 +21,24 @@ import { InnerRouteProps } from 'hyperview/src/core/components/hv-route/types';
 import React from 'react';
 import { getFirstTag } from 'hyperview/src/services/navigator/helpers';
 
-/**
- * Build the <HvScreen> component with injected props
- */
-const BuildHvScreen = (props: {
+type BuildScreenProps = {
   url: string | null;
   navLogic: Navigator.Logic;
   routeProps: InnerRouteProps;
-}): React.ReactElement => {
+};
+
+type RouteRenderProps = {
+  doc: Document;
+  element?: Element;
+  navLogic: Navigator.Logic;
+  routeProps: InnerRouteProps;
+  url: string;
+};
+
+/**
+ * Build the <HvScreen> component with injected props
+ */
+const BuildHvScreen = (props: BuildScreenProps): React.ReactElement => {
   return (
     <DateFormatContext.Consumer>
       {formatter => (
@@ -59,53 +69,63 @@ const BuildHvScreen = (props: {
   );
 };
 
-export const RouteRender = (props: {
-  navLogic: Navigator.Logic;
-  routeProps: InnerRouteProps;
-  doc: Document;
-  url: string;
-}): React.ReactElement => {
-  const { navLogic, routeProps, doc, url } = props;
+export const RouteRender = (props: RouteRenderProps): React.ReactElement => {
+  let renderElement: Element | null = null;
 
-  // Get the <doc> element
-  const root: Element | null = getFirstTag(doc, LOCAL_NAME.DOC);
-  if (!root) {
-    throw new Errors.HvRenderError('No root element found');
+  if (props.element) {
+    renderElement = props.element;
+  } else {
+    // Get the <doc> element
+    const root: Element | null = getFirstTag(props.doc, LOCAL_NAME.DOC);
+    if (!root) {
+      throw new Errors.HvRenderError('No root element found');
+    }
+
+    // Get the first child as <screen> or <navigator>
+    const screenElement: Element | null = getFirstTag(root, LOCAL_NAME.SCREEN);
+    const navigatorElement: Element | null = getFirstTag(
+      root,
+      LOCAL_NAME.NAVIGATOR,
+    );
+
+    if (!screenElement && !navigatorElement) {
+      throw new Errors.HvRenderError(
+        'No <screen> or <navigator> element found',
+      );
+    }
+    renderElement = screenElement || navigatorElement;
   }
 
-  // Get the first child as <screen> or <navigator>
-  const screenElement: Element | null = getFirstTag(root, LOCAL_NAME.SCREEN);
-  const navigatorElement: Element | null = getFirstTag(
-    root,
-    LOCAL_NAME.NAVIGATOR,
-  );
-  const element: Element | null = screenElement ?? navigatorElement;
-  if (!element) {
-    throw new Errors.HvRenderError('No <screen> or <navigator> element found');
+  if (!renderElement) {
+    throw new Errors.HvRenderError('No element found');
   }
 
-  if (element.namespaceURI !== Namespaces.HYPERVIEW) {
+  if (renderElement.namespaceURI !== Namespaces.HYPERVIEW) {
     throw new Errors.HvRenderError('Invalid namespace');
   }
 
-  switch (element.localName) {
+  switch (renderElement.localName) {
     case LOCAL_NAME.SCREEN:
-      if (routeProps.handleBack) {
+      if (props.routeProps.handleBack) {
         return (
-          <routeProps.handleBack>
+          <props.routeProps.handleBack>
             <BuildHvScreen
-              navLogic={navLogic}
-              routeProps={routeProps}
-              url={url}
+              navLogic={props.navLogic}
+              routeProps={props.routeProps}
+              url={props.url}
             />
-          </routeProps.handleBack>
+          </props.routeProps.handleBack>
         );
       }
       return (
-        <BuildHvScreen navLogic={navLogic} routeProps={routeProps} url={url} />
+        <BuildHvScreen
+          navLogic={props.navLogic}
+          routeProps={props.routeProps}
+          url={props.url}
+        />
       );
     case LOCAL_NAME.NAVIGATOR:
-      return <HvNavigator element={element} />;
+      return <HvNavigator element={renderElement} />;
     default:
       throw new Errors.HvRenderError('Invalid element type');
   }

@@ -51,8 +51,19 @@ function SetRouteUrl(key: string, url: string) {
 
 function GetRouteUrl(key: string): string | undefined {
   const context = useMapContext();
-
   return context?.routeMap?.get(key);
+}
+
+function SetRouteNavigator(key: string, element: Element) {
+  const context = useMapContext();
+  if (context) {
+    context.elementMap?.set(key, element);
+  }
+}
+
+function GetRouteNavigator(key: string): Element | undefined {
+  const context = useMapContext();
+  return context?.elementMap?.get(key);
 }
 
 // eslint-disable-next-line react/destructuring-assignment
@@ -68,8 +79,10 @@ function NavigatorMapProvider({ children }: Props) {
 
 export {
   GetInitialRouteName,
+  GetRouteNavigator,
   GetRouteUrl,
   NavigatorMapProvider,
   SetInitialRouteName,
+  SetRouteNavigator,
   SetRouteUrl,
 };

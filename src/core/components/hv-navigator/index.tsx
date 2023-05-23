@@ -23,6 +23,7 @@ import {
 import {
   NavigatorMapProvider,
   SetInitialRouteName,
+  SetRouteNavigator,
   SetRouteUrl,
 } from 'hyperview/src/contexts/navigator';
 import React, { PureComponent, useContext } from 'react';
@@ -33,9 +34,11 @@ import {
 } from 'hyperview/src/services/navigator/imports';
 import {
   getChildElements,
+  getFirstTag,
   getInitialNavRouteElement,
   getUrlFromHref,
 } from 'hyperview/src/services/navigator/helpers';
+
 import HvRoute from '../hv-route';
 import { Props } from './types';
 import { RouteParams } from '../hv-route/types';
@@ -106,16 +109,27 @@ export default class HvNavigator extends PureComponent<Props> {
             `No id provided for ${child.localName}`,
           );
         }
-        const href: DOMString | null | undefined = child.getAttribute('href');
-        if (!href) {
-          throw new Errors.HvNavigatorError(
-            `No href provided for route '${id}'`,
-          );
-        }
-        const url = getUrlFromHref(href, context?.entrypointUrl);
 
-        // Cache the url for the route
-        SetRouteUrl(id, url);
+        // Check for nested navigators
+        const nestedNavigator: Element | null = getFirstTag(
+          child,
+          LOCAL_NAME.NAVIGATOR,
+        );
+        if (nestedNavigator) {
+          // Cache the navigator for the route
+          SetRouteNavigator(id, nestedNavigator);
+        } else {
+          const href: DOMString | null | undefined = child.getAttribute('href');
+          if (!href) {
+            throw new Errors.HvNavigatorError(
+              `No href provided for route '${id}'`,
+            );
+          }
+          const url = getUrlFromHref(href, context?.entrypointUrl);
+
+          // Cache the url for the route
+          SetRouteUrl(id, url);
+        }
 
         // Stack uses route urls, other types build out the screens
         if (type !== NAVIGATOR_TYPE.STACK) {

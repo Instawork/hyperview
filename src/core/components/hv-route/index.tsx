@@ -11,8 +11,10 @@ import * as Errors from 'hyperview/src/services/navigator/errors';
 import * as Navigator from 'hyperview/src/services/navigator';
 import * as UrlService from 'hyperview/src/services/url';
 
+import { Document, Element } from 'hyperview/src/services/navigator/types';
 import {
   GetInitialRouteName,
+  GetRouteNavigator,
   GetRouteUrl,
   NavigatorCache,
   NavigatorMapContext,
@@ -22,9 +24,8 @@ import {
   NavigationContext,
   NavigationContextProps,
 } from 'hyperview/src/contexts/navigation';
-
 import React, { PureComponent, useContext } from 'react';
-import { Document } from 'hyperview/src/services/navigator/types';
+
 // *** AHG UPDATE LOAD
 // import LoadElementError from '../load-element-error';
 import LoadError from '../load-error';
@@ -131,6 +132,7 @@ class HvRouteInner extends PureComponent<InnerRouteProps, State> {
       return (
         <RouteRender
           doc={this.state.doc}
+          element={this.props.element}
           navLogic={this.navLogic}
           routeProps={this.props}
           url={this.state.url}
@@ -162,6 +164,12 @@ export default function HvRoute(props: Props) {
     throw new Errors.HvRouteError('No context found');
   }
 
+  // Get the navigator from the context
+  let element: Element | undefined;
+  if (props.route?.params.id) {
+    element = GetRouteNavigator(props.route?.params?.id);
+  }
+
   // Retrieve the url from props, params, or from the context
   let url: string | undefined = props.route?.params?.url;
   if (!url) {
@@ -182,6 +190,7 @@ export default function HvRoute(props: Props) {
     <HvRouteInner
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...{ ...props, ...contextProps, ...mapState }}
+      element={element}
       url={url}
     />
   );
