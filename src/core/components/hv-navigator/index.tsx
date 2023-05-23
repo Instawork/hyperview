@@ -38,11 +38,11 @@ import {
 } from 'hyperview/src/services/navigator/helpers';
 import HvRoute from '../hv-route';
 import { Props } from './types';
-import { Props as RouteProps } from '../hv-route/types';
+import { RouteParams } from '../hv-route/types';
 
 type ParamTypes = {
-  dynamic: RouteProps;
-  modal: RouteProps;
+  dynamic: RouteParams;
+  modal: RouteParams;
 };
 
 /**

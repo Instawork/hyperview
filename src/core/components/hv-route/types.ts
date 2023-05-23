@@ -33,9 +33,12 @@ export type NavigationProps = {
 /**
  * Props used by hv-route inner components
  */
-export type RouteProps = Props & NavigationContextProps & NavigatorCache;
+export type RouteParams = NavigationProps &
+  DataProps &
+  NavigationContextProps &
+  NavigatorCache;
 
 /**
  * All of the props used by hv-route
  */
-export type Props = DataProps & NavigationProps;
+export type Props = NavigationProps;

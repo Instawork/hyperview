@@ -21,7 +21,7 @@ import {
   NavigationContext,
   NavigationContextProps,
 } from 'hyperview/src/contexts/navigation';
-import { Props, RouteProps } from './types';
+import { Props, RouteParams } from './types';
 import React, { PureComponent, useContext } from 'react';
 import { Document } from 'hyperview/src/services/navigator/types';
 // *** AHG UPDATE LOAD
@@ -33,12 +33,12 @@ import { RouteRender } from 'hyperview/src/services/navigator/render';
 
 type State = { doc: Document | null; error: Error | null; url: string | null };
 
-class HvRouteInner extends PureComponent<RouteProps, State> {
+class HvRouteInner extends PureComponent<RouteParams, State> {
   parser?: Dom.Parser;
 
   navLogic: Navigator.Logic;
 
-  constructor(props: RouteProps) {
+  constructor(props: RouteParams) {
     super(props);
 
     this.state = {
@@ -162,7 +162,7 @@ export default function HvRoute(props: Props) {
   }
 
   // Retrieve the url from props, params, or from the context
-  let url: string | undefined = props.url || props.route?.params?.url;
+  let url: string | undefined = props.route?.params?.url;
   if (!url) {
     // Use the id if available to look up the url
     if (props.route?.params?.id) {
