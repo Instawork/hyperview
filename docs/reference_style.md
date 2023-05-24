@@ -240,9 +240,9 @@ flexGrow, flexShrink, and flexBasis work the same as in CSS.
 
 #### `flexBasis`
 
-| Type   | Required |
-| ------ | -------- |
-| number | No       |
+| Type           | Required |
+| -------------- | -------- |
+| number, string | No       |
 
 #### `flexDirection`
 
