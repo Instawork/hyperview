@@ -8,7 +8,6 @@
 import {
   ID_DYNAMIC,
   ID_MODAL,
-  NAVIGATOR_TYPE,
   NAV_ACTIONS,
   NavAction,
   NavigationRouteParams,
@@ -34,7 +33,7 @@ export class Logic {
   }
 
   /**
-   * Recursively search for the target in state and build a path to it
+   * Recursively search down the navigation path for the target in state and build a path to it
    */
   findPath = (
     state: NavigationState,
@@ -69,31 +68,19 @@ export class Logic {
    * If the target is not found, no navigation is returned
    */
   getNavigatorAndPath = (
-    action: NavAction,
     targetRouteId?: string,
   ): [RNTypedNavigationProps?, string[]?] => {
     let { navigation } = this.props;
+    if (!targetRouteId) {
+      return [navigation, undefined];
+    }
+
     while (navigation) {
       const path: string[] = [];
       const state = navigation.getState();
-      const { type } = state;
-      if (targetRouteId) {
-        // Find for the specific target
-        this.findPath(state, targetRouteId, path);
-        if (path.length) {
-          return [navigation, path];
-        }
-      } else {
-        // Find for the action
-        switch (action) {
-          case NAV_ACTIONS.NEW:
-          case NAV_ACTIONS.PUSH:
-            if (type === NAVIGATOR_TYPE.STACK) {
-              return [navigation, undefined];
-            }
-            break;
-          default:
-        }
+      this.findPath(state, targetRouteId, path);
+      if (path.length) {
+        return [navigation, path];
       }
       navigation = navigation.getParent();
     }
@@ -122,50 +109,32 @@ export class Logic {
   };
 
   /**
-   * Check if a navigation component contains a route by name
+   * Use the dynamic or modal route for dynamic actions
    */
-  navigationContainsRoute = (
-    navigation: RNTypedNavigationProps,
-    routeId: string,
-  ): boolean => {
-    if (!navigation) {
-      return false;
-    }
-    const { routes } = navigation.getState();
-    for (let i = 0; i < routes.length; i += 1) {
-      const route = routes[i];
-      if (route.name === routeId) {
-        return true;
-      }
-    }
-    return false;
-  };
-
-  /**
-   * Create a virtual for urls which are not associated with a route
-   */
-  getVirtualScreenId = (
-    navigation: RNTypedNavigationProps,
+  getRouteId = (
+    // navigation: RNTypedNavigationProps,
     action: NavAction,
-    routeId: string,
+    url: string | undefined,
+    isStatic: boolean,
   ): string => {
-    if (routeId && !isUrlFragment(routeId)) {
-      let id: string | undefined;
-      switch (action) {
-        case NAV_ACTIONS.NAVIGATE:
-        case NAV_ACTIONS.PUSH:
-          id = ID_DYNAMIC;
-          break;
-        case NAV_ACTIONS.NEW:
-          id = ID_MODAL;
-          break;
-        default:
-      }
-      if (id && this.navigationContainsRoute(navigation, id)) {
-        return id;
-      }
+    switch (action) {
+      case NAV_ACTIONS.PUSH:
+        return ID_DYNAMIC;
+      case NAV_ACTIONS.NEW:
+        return ID_MODAL;
+      default:
     }
-    return routeId;
+
+    if (url && isUrlFragment(url)) {
+      // Fragments get cleaned
+      const routeId = cleanHrefFragment(url);
+      if (isStatic) {
+        // If the route exists in a navigator, use it, otherwise use dynamic
+        return routeId;
+      }
+      return ID_DYNAMIC;
+    }
+    return ID_DYNAMIC;
   };
 
   /**
@@ -180,10 +149,7 @@ export class Logic {
     string,
     ParamListBase | undefined,
   ] => {
-    const [navigation, path] = this.getNavigatorAndPath(
-      action,
-      routeParams.target,
-    );
+    const [navigation, path] = this.getNavigatorAndPath(routeParams.target);
     if (!navigation) {
       return [undefined, '', undefined];
     }
@@ -191,15 +157,13 @@ export class Logic {
     // Clean up the params to remove the target and url if they are not needed
     const cleanedParams: NavigationRouteParams = { ...routeParams };
     delete cleanedParams.target;
-    if (cleanedParams.url && isUrlFragment(cleanedParams.url)) {
-      delete cleanedParams.url;
-    }
 
-    let routeId = cleanHrefFragment(
-      this.getVirtualScreenId(navigation, action, routeParams.url),
-    );
+    const hasPath: boolean = path !== undefined && path.length > 0;
+
+    let routeId = this.getRouteId(action, routeParams.url, hasPath);
+
     let params: ParamListBase;
-    if (!path || !path.length) {
+    if (!hasPath) {
       params = cleanedParams;
     } else {
       // The last path id is the screen id, remove from the path to avoid adding it in params
@@ -217,19 +181,22 @@ export class Logic {
    * Prepare and send the request
    */
   sendRequest = (action: NavAction, routeParams: NavigationRouteParams) => {
-    // this.props.navigation?.navigate(ID_MODAL, {
-    //   url: '#help-route',
-    // });
-
     let { navigation } = this.props;
     let routeId: string | undefined;
     let requestParams: ParamListBase | undefined;
-
-    // console.log('sendRequest', action, routeParams);
+    let navAction: NavAction = action;
 
     if (routeParams) {
+      // The push action is used for urls which are not associated with a route
+      // See use of `this.getRouteKey(url);` in `hyperview/src/services/navigation`
+      if (routeParams.url) {
+        if (navAction === NAV_ACTIONS.PUSH && isUrlFragment(routeParams.url)) {
+          navAction = NAV_ACTIONS.NAVIGATE;
+        }
+      }
+
       const [requestNavigation, requestRouteId, params] = this.buildRequest(
-        action,
+        navAction,
         routeParams || {},
       );
 
@@ -242,38 +209,25 @@ export class Logic {
       return;
     }
 
-    // navigation.navigate(ID_DYNAMIC, { url: '#help-route' });
-
-    // switch (action) {
-    //   case NAV_ACTIONS.BACK:
-    //     // USE NAVIGATION IF A PATH IS PRESENT // navigation.navigate(routeId, requestParams);
-    //     navigation.goBack();
-    //     break;
-    //   case NAV_ACTIONS.CLOSE:
-    //     navigation.goBack();
-    //     break;
-    //   case NAV_ACTIONS.NAVIGATE:
-    //     navigation.navigate(routeId, requestParams);
-    //     break;
-    //   case NAV_ACTIONS.NEW:
-    //     // navigation.navigate(routeId, requestParams);
-    //     navigation.navigate((screen = 'Modal'));
-    //     break;
-    //   case NAV_ACTIONS.PUSH:
-    //     navigation.push(routeId, requestParams);
-    //     break;
-    //   default:
-    // }
-    console.log(
-      'sendRequest',
-      action,
-      routeParams,
-      navigation,
-      routeId,
-      requestParams,
-    );
-
-    navigation.navigate(routeId, requestParams);
+    switch (navAction) {
+      case NAV_ACTIONS.BACK:
+        // TODO USE NAVIGATION IF A PATH IS PRESENT // navigation.navigate(routeId, requestParams);
+        navigation.goBack();
+        break;
+      case NAV_ACTIONS.CLOSE:
+        navigation.goBack();
+        break;
+      case NAV_ACTIONS.NAVIGATE:
+        navigation.navigate(routeId, requestParams);
+        break;
+      case NAV_ACTIONS.NEW:
+        navigation.navigate(routeId, requestParams);
+        break;
+      case NAV_ACTIONS.PUSH:
+        navigation.push(routeId, requestParams);
+        break;
+      default:
+    }
   };
 
   back = (routeParams: NavigationRouteParams) => {
