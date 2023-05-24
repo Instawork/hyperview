@@ -1,0 +1,62 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style
+        id="Header"
+        alignItems="center"
+        backgroundColor="white"
+        borderBottomColor="#eee"
+        borderBottomWidth="1"
+        flexDirection="row"
+        paddingLeft="24"
+        paddingRight="24"
+        paddingBottom="16"
+      />
+      <style
+        id="Header__Back"
+        color="blue"
+        fontSize="16"
+        fontWeight="600"
+        paddingRight="16"
+      />
+      <style id="Header__Title" color="black" fontSize="24" fontWeight="600" />
+      <style id="Body" backgroundColor="white" flex="1" />
+      <style
+        id="Description"
+        fontSize="16"
+        fontWeight="normal"
+        margin="24"
+        marginBottom="0"
+      />
+      <style id="Image" flex="1" height="128" margin="24" width="128" />
+      <style
+        id="Image__Styled"
+        borderColor="#e1e1e1"
+        borderRadius="64"
+        borderWidth="4"
+      />
+      <style id="Main" flex="1" />
+
+      <style id="code-field" flexDirection="row" justifyContent="space-around" borderWidth="1" borderColor="red" height="80" />
+      <style id="input-field" borderWidth="1" borderColor="blue" marginHorizontal="16" width="50" fontSize="24" textAlign="center">
+        <modifier focused="true">
+          <style borderColor="yellow" />
+        </modifier>
+      </style>
+
+    </styles>
+    <body style="Body" safe-area="true">
+      <header style="Header">
+        <text action="back" href="#" style="Header__Back">Back</text>
+        <text style="Header__Title">Code Input</text>
+      </header>
+      <view scroll="true" style="Main">
+        <behavior trigger="refresh" action="reload" href="#" />
+
+        <text>Hello</text>
+        <code-input style="code-field" input-style="input-field" length="4" keyboard-type="number-pad" auto-focus="true" secure-text="false" value="123" />
+
+      </view>
+    </body>
+  </screen>
+</doc>

@@ -102,7 +102,6 @@ export default class HvTextField extends PureComponent<HvComponentProps> {
 
     if (focused) {
       this.triggerFocusBehaviors(newElement);
-    } else {
       this.triggerBlurBehaviors(newElement);
     }
   };
