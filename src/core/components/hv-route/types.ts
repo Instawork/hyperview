@@ -28,11 +28,21 @@ export type DataProps = {
 export type RouteParams = DataProps;
 
 /**
+ * The navigation prop used by react-navigation
+ */
+// *** AHG TODO GET RIGHT TYPE
+export type RNTypedNavigationProps = NavigationProp<object>;
+// export type RNTypedNavigationProps = NavigationProp<{
+//   screen: string;
+//   params: object;
+// }>;
+
+/**
  * Props used by navigation components
  * Route contains the type of the params object
  */
 export type NavigationProps = {
-  navigation?: NavigationProp<object>; // *** AHG TODO GET RIGHT TYPE
+  navigation?: RNTypedNavigationProps;
   route?: Route<string, DataProps>;
 };
 

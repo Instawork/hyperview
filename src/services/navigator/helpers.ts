@@ -111,8 +111,6 @@ export const cleanHrefFragment = (url: string): string => {
 
 /**
  * Generate a complete url from the received fragment
- * @param href
- * @returns
  */
 export const getUrlFromHref = (
   href: string | null | undefined,

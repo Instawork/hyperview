@@ -218,7 +218,7 @@ export default class HvNavigator extends PureComponent<Props> {
               header: undefined,
               headerMode: 'screen',
               headerShown: SHOW_NAVIGATION_UI,
-              title: route.params?.url,
+              title: route.params?.url || id,
             })}
           >
             {buildScreens(props.element, type)}

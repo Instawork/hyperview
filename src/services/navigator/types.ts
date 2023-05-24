@@ -186,3 +186,13 @@ export type Document = Node & {
   ) => NodeList<Element>;
   // importNode: (importedNode: Node, deep: boolean) => Node;
 };
+
+/**
+ * Minimal Document type copy from 'hyperview/src/types.js'
+ */
+export type NavigationRouteParams = {
+  delay?: number;
+  preloadScreen?: number;
+  target?: string;
+  url?: string;
+};
