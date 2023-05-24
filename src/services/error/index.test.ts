@@ -6,18 +6,18 @@
  *
  */
 
-import { HvBaseError } from '.';
+import * as Error from 'hyperview/src/services/error';
 
 describe('HvBaseError', () => {
   describe('When instantiated directly', () => {
     it('Throws an error', () => {
-      expect(() => new HvBaseError('custom message')).toThrow(
+      expect(() => new Error.HvBaseError('custom message')).toThrow(
         'Do not instantiate `HvBaseError` directly',
       );
     });
   });
   describe('When extended', () => {
-    class HvCustomError extends HvBaseError {
+    class HvCustomError extends Error.HvBaseError {
       name = 'HvCustomError';
     }
     it('Does not throws', () => {
