@@ -39,30 +39,39 @@ type RouteRenderProps = {
  * Build the <HvScreen> component with injected props
  */
 const BuildHvScreen = (props: BuildScreenProps): React.ReactElement => {
+  // Inject the corrected url into the params
+  const routeProps = {
+    ...props.routeProps,
+    route: {
+      ...props.routeProps.route,
+      params: { ...props.routeProps.route?.params, url: props.url },
+    },
+  };
+
   return (
     <DateFormatContext.Consumer>
       {formatter => (
         <HvScreen
           // eslint-disable-next-line react/jsx-props-no-spreading
-          {...props.routeProps}
+          {...routeProps}
           back={props.navLogic.back}
-          behaviors={props.routeProps.behaviors}
+          behaviors={routeProps.behaviors}
           closeModal={props.navLogic.closeModal}
-          components={props.routeProps.components}
-          elementErrorComponent={props.routeProps.elementErrorComponent}
-          entrypointUrl={props.url || props.routeProps.entrypointUrl}
-          errorScreen={props.routeProps.errorScreen}
-          fetch={props.routeProps.fetch}
+          components={routeProps.components}
+          elementErrorComponent={routeProps.elementErrorComponent}
+          entrypointUrl={props.url || routeProps.entrypointUrl}
+          errorScreen={routeProps.errorScreen}
+          fetch={routeProps.fetch}
           formatDate={formatter}
-          loadingScreen={props.routeProps.loadingScreen}
+          loadingScreen={routeProps.loadingScreen}
           navigate={props.navLogic.navigate}
-          navigation={props.routeProps.navigation}
-          onParseAfter={props.routeProps.onParseAfter}
-          onParseBefore={props.routeProps.onParseBefore}
+          navigation={routeProps.navigation}
+          onParseAfter={routeProps.onParseAfter}
+          onParseBefore={routeProps.onParseBefore}
           openModal={props.navLogic.openModal}
           push={props.navLogic.push}
           // refreshControl={props.refreshControl}
-          route={props.routeProps.route}
+          route={routeProps.route}
         />
       )}
     </DateFormatContext.Consumer>

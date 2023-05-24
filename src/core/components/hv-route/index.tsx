@@ -25,12 +25,14 @@ import {
   NavigationContextProps,
 } from 'hyperview/src/contexts/navigation';
 import React, { PureComponent, useContext } from 'react';
-
+import {
+  cleanHrefFragment,
+  isUrlFragment,
+} from 'hyperview/src/services/navigator/helpers';
 // *** AHG UPDATE LOAD
 // import LoadElementError from '../load-element-error';
 import LoadError from '../load-error';
 import Loading from '../loading';
-
 import { RouteRender } from 'hyperview/src/services/navigator/render';
 
 type State = {
@@ -168,14 +170,14 @@ export default function HvRoute(props: Props) {
     throw new Errors.HvRouteError('No context found');
   }
 
-  // Get the navigator from the context
-  let element: Element | undefined;
-  if (props.route?.params.id) {
-    element = GetRouteNavigator(props.route?.params?.id);
-  }
-
   // Retrieve the url from props, params, or from the context
   let url: string | undefined = props.route?.params?.url;
+  if (url) {
+    if (isUrlFragment(url)) {
+      url = GetRouteUrl(cleanHrefFragment(url));
+    }
+  }
+
   if (!url) {
     // Use the id if available to look up the url
     if (props.route?.params?.id) {
@@ -189,6 +191,11 @@ export default function HvRoute(props: Props) {
     }
   }
   url = url || contextProps.entrypointUrl;
+  // Get the navigator element from the context
+  let element: Element | undefined;
+  if (props.route?.params.id) {
+    element = GetRouteNavigator(props.route?.params?.id);
+  }
 
   return (
     <HvRouteInner
