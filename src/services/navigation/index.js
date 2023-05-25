@@ -68,6 +68,7 @@ export default class Navigation {
     element: Element,
     formComponents: ComponentRegistry,
     opts: BehaviorOptions,
+    target: ?string,
   ): void => {
     const { showIndicatorId, delay } = opts;
     const formData: ?FormData = getFormData(element, formComponents);
@@ -91,7 +92,7 @@ export default class Navigation {
       }
     }
 
-    const routeParams = { delay, preloadScreen, url };
+    const routeParams = { delay, preloadScreen, target, url };
 
     switch (action) {
       case NAV_ACTIONS.PUSH:
