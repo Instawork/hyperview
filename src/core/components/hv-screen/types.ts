@@ -57,4 +57,4 @@ export type ComponentProps = {
 /**
  * All of the props used by hv-screen
  */
-export type Props = NavigationProps & DataProps & ActionProps & HvScreenProps;
+export type Props = NavigationProps & DataProps & ActionProps;

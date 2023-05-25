@@ -9,7 +9,6 @@
 import * as Dom from 'hyperview/src/services/dom';
 import React, { PureComponent } from 'react';
 import { Text, View } from 'react-native';
-import LoadElementError from 'hyperview/src/core/components/load-element-error';
 import LoadError from 'hyperview/src/core/components/load-error';
 import Loading from 'hyperview/src/core/components/loading';
 
@@ -39,9 +38,6 @@ export default class HvNavigator extends PureComponent {
       const loadingScreen = this.context.loadingScreen || Loading;
       return React.createElement(loadingScreen);
     }
-    const elementErrorComponent = this.state.elementError
-      ? this.context.elementErrorComponent || LoadElementError
-      : null;
 
     return (
       <View>
