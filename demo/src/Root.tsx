@@ -6,16 +6,19 @@
  *
  */
 
-import { PureComponent, useState } from 'react';
-import { Button, SafeAreaView, Text, View } from 'react-native';
+import { PureComponent } from 'react';
+import { Button, SafeAreaView, View } from 'react-native';
 import NavigatorLegacy from './NavigatorLegacy';
 import Navigator from './Navigator';
+
+type Props = {};
+type State = { useLegacy: boolean };
 
 /**
  * Branch the demo/example to use new navigation or old navigation
  */
-export default class Root extends PureComponent {
-  constructor(props) {
+export default class Root extends PureComponent<Props, State> {
+  constructor(props: Props | Readonly<Props>) {
     super(props);
     this.state = {
       useLegacy: false,
@@ -26,7 +29,7 @@ export default class Root extends PureComponent {
    * Provide the selection UI
    */
   BranchSelection = () => (
-    <View style={{ flexDirection: 'row', textAlign: 'justify' }}>
+    <View style={{ flexDirection: 'row' }}>
       <Button
         title="Updated"
         onPress={() => this.setState({ useLegacy: false })}
