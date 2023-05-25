@@ -404,12 +404,14 @@ export type BehaviorOptions = {|
   behaviorElement: Element,
   showIndicatorId?: string,
   delay?: number,
+  targetId?: string,
 |};
 
 export type NavigationRouteParams = {|
   delay: ?number,
   preloadScreen: ?number,
   url: string,
+  targetId?: string,
 |};
 
 export type NavigationProps = {|
