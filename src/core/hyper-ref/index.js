@@ -174,7 +174,7 @@ export default class HyperRef extends PureComponent<Props, State> {
           ATTRIBUTES.SHOW_DURING_LOAD,
         );
         const delay = behaviorElement.getAttribute(ATTRIBUTES.DELAY);
-        onUpdate(href, action, element, { delay, showIndicatorId }, targetId);
+        onUpdate(href, action, element, { delay, showIndicatorId, targetId });
       };
     }
     if (Object.values(UPDATE_ACTIONS).indexOf(action) >= 0) {
