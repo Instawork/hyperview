@@ -411,7 +411,7 @@ export type NavigationRouteParams = {|
   delay: ?number,
   preloadScreen: ?number,
   url: string,
-  targetId: ?string,
+  targetId?: string,
 |};
 
 export type NavigationProps = {|
