@@ -45,21 +45,21 @@
     "test": "yarn generate test && yarn test:flow && yarn test:lint && yarn test:render && yarn test:unit && yarn test:validate-xml"
   },
   "dependencies": {
-    "@react-navigation/bottom-tabs": "6.5.7",
-    "@react-navigation/core": "6.4.8",
-    "@react-navigation/material-top-tabs": "6.6.2",
     "@react-navigation/native": "6.1.6",
-    "@react-navigation/stack": "6.3.16",
-    "react-native-gesture-handler": "2.10.1",
-    "react-native-pager-view": "6.2.0",
-    "react-native-tab-view": "3.5.1",
     "tiny-emitter": "2.1.0",
     "url-parse": "1.5.10",
     "xmldom-instawork": "0.0.1"
   },
   "peerDependencies": {
     "@react-native-community/datetimepicker": ">= 3.0.3",
+    "react-native-gesture-handler": "2.10.1",
+    "react-native-pager-view": "6.2.0",
     "@react-native-picker/picker": ">= 2.2.1",
+    "react-native-tab-view": "3.5.1",
+    "@react-navigation/bottom-tabs": "6.5.7",
+    "@react-navigation/core": "6.4.8",
+    "@react-navigation/material-top-tabs": "6.6.2",
+    "@react-navigation/stack": "6.3.16",
     "react": ">= 16.13.1",
     "react-native": ">= 0.63.3",
     "react-native-keyboard-aware-scrollview": ">= 2.1.0",
