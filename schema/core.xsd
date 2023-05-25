@@ -1183,7 +1183,7 @@
       <xs:sequence>
         <xs:element minOccurs="1" maxOccurs="unbounded" ref="hv:nav-route" />
       </xs:sequence>
-      <xs:attribute name="id" use="required" type="ID" />
+      <xs:attribute name="id" use="required" type="hv:ID" />
       <xs:attribute name="type" use="required" type="hv:navigator-type" />
     </xs:complexType>
   </xs:element>
@@ -1193,7 +1193,7 @@
       <xs:sequence>
         <xs:element minOccurs="0" maxOccurs="1" ref="hv:navigator" />
       </xs:sequence>
-      <xs:attribute name="id" use="required" type="ID" />
+      <xs:attribute name="id" use="required" type="hv:ID" />
       <xs:attribute name="href" use="required" type="xs:string" />
       <xs:attribute name="initial" type="xs:boolean" />
     </xs:complexType>
