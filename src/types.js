@@ -404,7 +404,7 @@ export type BehaviorOptions = {|
   behaviorElement: Element,
   showIndicatorId?: string,
   delay?: number,
-  targetId: ?string,
+  targetId?: string,
 |};
 
 export type NavigationRouteParams = {|
