@@ -154,6 +154,11 @@ export class Parser {
           baseUrl,
         );
       }
+    } else {
+      throw new Errors.XMLRequiredElementNotFound(
+        `${LOCAL_NAME.SCREEN}/${LOCAL_NAME.NAVIGATOR}`,
+        baseUrl,
+      );
     }
     return { doc, staleHeaderType };
   };
