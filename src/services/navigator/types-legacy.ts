@@ -121,6 +121,7 @@ export type Document = Node & {
 /**
  * Minimal Document type copy from 'hyperview/src/types.js'
  */
+// ***** ADDED ***** (extends ParamListBase)
 export type NavigationRouteParams = ParamListBase & {
   delay?: number;
   preloadScreen?: number;
