@@ -1,4 +1,5 @@
 // DO NOT EDIT: Auto-generate this file by running `yarn generate`
+import '../src/components/hv-code-input/stories/index.js';
 import '../src/components/hv-date-field/stories/index.js';
 import '../src/components/hv-image/stories/index.js';
 import '../src/components/hv-list/stories/index.js';

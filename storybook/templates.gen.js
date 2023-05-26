@@ -1,5 +1,19 @@
 // DO NOT EDIT: Auto-generate this file by running `yarn generate`
 export default {
+  'hyperview/src/components/hv-code-input/stories/basic.xml':
+  `<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style id="Body" backgroundColor="white" flex="1" />
+      <style id="code-input-container" flexDirection="row" justifyContent="space-around" height="80" margin="24" />
+      <style id="code-input" borderColor="#E1E1E1" borderWidth="2" borderRadius="4" flex="1" marginHorizontal="4" fontSize="24" textAlign="center" paddingVertical="8" />
+    </styles>
+    <body style="Body">
+      <code-input style="code-input-container" input-style="code-input" length="4" />
+    </body>
+  </screen>
+</doc>
+`,
   'hyperview/src/components/hv-date-field/stories/basic.xml':
   `<doc xmlns="https://hyperview.org/hyperview">
   <screen>

@@ -37,12 +37,32 @@
       />
       <style id="Main" flex="1" />
 
-      <style id="code-field" flexDirection="row" justifyContent="space-around" borderWidth="1" borderColor="red" height="80" />
-      <style id="input-field" borderWidth="1" borderColor="blue" marginHorizontal="16" width="50" fontSize="24" textAlign="center">
+      <style
+        id="code-field"
+        flexDirection="row"
+        justifyContent="space-around"
+        height="80"
+        margin="24"
+      />
+
+      <style
+        id="code-input"
+        borderColor="#E1E1E1"
+        borderWidth="2"
+        borderRadius="4"
+        marginHorizontal="4"
+        flex="1"
+        fontSize="24"
+        textAlign="center"
+        fontWeight="normal"
+        paddingBottom="8"
+        paddingTop="8"
+      >
         <modifier focused="true">
-          <style borderColor="yellow" />
+          <style borderColor="#4778FF" />
         </modifier>
       </style>
+
 
     </styles>
     <body style="Body" safe-area="true">
@@ -53,8 +73,14 @@
       <view scroll="true" style="Main">
         <behavior trigger="refresh" action="reload" href="#" />
 
-        <text>Hello</text>
-        <code-input style="code-field" input-style="input-field" length="4" keyboard-type="number-pad" auto-focus="true" secure-text="false" value="123" />
+        <code-input
+          auto-focus="true"
+          input-style="code-input"
+          keyboard-type="number-pad"
+          length="4"
+          secure-text="false"
+          style="code-field"
+        />
 
       </view>
     </body>
