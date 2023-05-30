@@ -25,7 +25,7 @@ export type NavigatorCache = {
  */
 const NavigatorMapContext = createContext<NavigatorCache | null>(null);
 
-function useMapContext() {
+function UseMapContext() {
   const context = useContext(NavigatorMapContext);
   if (context === undefined) {
     throw new Errors.HvNavigatorMapError(
@@ -38,69 +38,68 @@ function useMapContext() {
 /**
  * Cache the initial route name for the <navigator>
  */
-function SetInitialRouteName(name: string) {
-  const context = useMapContext();
+function setInitialRouteName(name: string) {
+  const context = UseMapContext();
   if (context) {
     context.initialRouteName = name;
   }
 }
 
-function GetInitialRouteName(): string | undefined {
-  const context = useMapContext();
+function getInitialRouteName(): string | undefined {
+  const context = UseMapContext();
   return context?.initialRouteName;
 }
 
 /**
  * Cache the url for a <route> element
  */
-function SetRouteUrl(key: string, url: string) {
-  const context = useMapContext();
+function setRouteUrl(key: string, url: string) {
+  const context = UseMapContext();
   if (context) {
     context.routeMap?.set(key, url);
   }
 }
 
-function GetRouteUrl(key: string): string | undefined {
-  const context = useMapContext();
+function getRouteUrl(key: string): string | undefined {
+  const context = UseMapContext();
   return context?.routeMap?.get(key);
 }
 
 /**
  * Cache the navigator element for a <route> element when it contains a nested <navigator>
  */
-function SetRouteNavigator(key: string, element: Element) {
-  const context = useMapContext();
+function setRouteNavigator(key: string, element: Element) {
+  const context = UseMapContext();
   if (context) {
     context.elementMap?.set(key, element);
   }
 }
 
-function GetRouteNavigator(key: string): Element | undefined {
-  const context = useMapContext();
+function getRouteNavigator(key: string): Element | undefined {
+  const context = UseMapContext();
   return context?.elementMap?.get(key);
 }
 
 /**
  * Encapsulated context provider
  */
-// eslint-disable-next-line react/destructuring-assignment
-function NavigatorMapProvider({ children }: Props) {
+function NavigatorMapProvider(props: Props) {
   const routeMap: Map<string, string> = new Map();
   const elementMap: Map<string, Element> = new Map();
   return (
     <NavigatorMapContext.Provider value={{ elementMap, routeMap }}>
-      {children}
+      {props.children}
     </NavigatorMapContext.Provider>
   );
 }
 
 export {
-  GetInitialRouteName,
-  GetRouteNavigator,
-  GetRouteUrl,
+  getInitialRouteName,
+  getRouteNavigator,
+  getRouteUrl,
   NavigatorMapProvider,
-  SetInitialRouteName,
-  SetRouteNavigator,
-  SetRouteUrl,
-  useMapContext,
+  setInitialRouteName,
+  setRouteNavigator,
+  setRouteUrl,
+  UseMapContext,
 };
