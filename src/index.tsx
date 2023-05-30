@@ -6,21 +6,23 @@
  *
  */
 
-import * as Contexts from 'hyperview/src/contexts';
-// import * as Events from 'hyperview/src/services/events';
-// import * as Namespaces from 'hyperview/src/services/namespaces';
+import * as HvScreenProps from 'hyperview/src/core/components/hv-screen/types';
+import {
+  DateFormatContext,
+  RefreshControlComponentContext,
+} from 'hyperview/src/contexts/navigation-legacy';
 import React, { PureComponent } from 'react';
-import HvNavigator from 'hyperview/src/core/components/hv-navigator';
+import HvRoute from 'hyperview/src/core/components/hv-route';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
-import { Props } from 'hyperview/src/core/components/hv-navigator/types';
+import { NavigationContext } from 'hyperview/src/contexts/navigation';
 
 /**
  * Provides routing to the correct path based on the state passed in
  */
-export default class Hyperview extends PureComponent<Props> {
+export default class Hyperview extends PureComponent<HvScreenProps.Props> {
   render() {
     if (this.props.navigation) {
-      // Externally provided navigation will use the external navigation and action callbacks
+      // Externally provided navigation will use the provided navigation and action callbacks
       return (
         <HvScreen
           back={this.props.back}
@@ -47,11 +49,11 @@ export default class Hyperview extends PureComponent<Props> {
 
     // Without an external navigation, all navigation is handled internally
     return (
-      <Contexts.DateFormatContext.Provider value={this.formatDate}>
-        <Contexts.RefreshControlComponentContext.Provider
+      <DateFormatContext.Provider value={this.props.formatDate}>
+        <RefreshControlComponentContext.Provider
           value={this.props.refreshControl}
         >
-          <Contexts.NavigationContext.Provider
+          <NavigationContext.Provider
             value={{
               behaviors: this.props.behaviors,
               components: this.props.components,
@@ -65,14 +67,10 @@ export default class Hyperview extends PureComponent<Props> {
               onParseBefore: this.props.onParseBefore,
             }}
           >
-            <HvNavigator />
-          </Contexts.NavigationContext.Provider>
-        </Contexts.RefreshControlComponentContext.Provider>
-      </Contexts.DateFormatContext.Provider>
+            <HvRoute />
+          </NavigationContext.Provider>
+        </RefreshControlComponentContext.Provider>
+      </DateFormatContext.Provider>
     );
   }
 }
-
-// TODO: export types
-// export * from 'hyperview/src/types';
-// export { Events, Namespaces };
