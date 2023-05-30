@@ -6,15 +6,15 @@
  *
  */
 
-import * as HvScreenProps from 'hyperview/src/core/components/hv-screen/types';
+import * as HvScreenProps from './core/components/hv-screen/types';
 import {
   DateFormatContext,
   RefreshControlComponentContext,
-} from 'hyperview/src/contexts/navigation-legacy';
+} from './contexts/navigation-legacy';
 import React, { PureComponent } from 'react';
-import HvRoute from 'hyperview/src/core/components/hv-route';
-import HvScreen from 'hyperview/src/core/components/hv-screen';
-import { NavigationContext } from 'hyperview/src/contexts/navigation';
+import HvRoute from './core/components/hv-route';
+import HvScreen from './core/components/hv-screen';
+import { NavigationContext } from './contexts/navigation';
 
 /**
  * Provides routing to the correct path based on the state passed in

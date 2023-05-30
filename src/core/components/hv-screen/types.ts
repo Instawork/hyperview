@@ -7,11 +7,8 @@
  */
 
 import { ComponentType, ReactNode } from 'react';
-import type { HvBehavior, HvComponent } from 'hyperview/src/types';
-import {
-  NavigationProp,
-  Route,
-} from 'hyperview/src/services/navigator/imports';
+import type { HvBehavior, HvComponent } from '../../../types';
+import { NavigationProp, Route } from '../../../services/navigator/imports';
 import type { Props as ErrorProps } from '../load-error/types';
 import type { Props as LoadingProps } from '../loading/types';
 import type { RefreshControlProps } from 'react-native';
