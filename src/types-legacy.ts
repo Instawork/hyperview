@@ -10,7 +10,7 @@
 // THE COMPLETE TS MIGRATION OF THE TYPES FILE WILL REPLACE THIS
 // CHANGES MADE TO ANY IMPLEMENTATIONS ARE NOTEDED BELOW AND MARKED WITH ***** ADDED *****
 
-import { ParamListBase } from './imports';
+import { ParamListBase } from './services/navigator/imports';
 
 /**
  * Minimal local name type copy from 'hyperview/src/types.js'

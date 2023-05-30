@@ -8,7 +8,7 @@
 
 import * as Errors from 'hyperview/src/services/navigator/errors';
 import React, { createContext, useContext } from 'react';
-import { Element } from 'hyperview/src/services/navigator/types-legacy';
+import { Element } from '../types-legacy';
 
 type Props = { children: React.ReactNode };
 

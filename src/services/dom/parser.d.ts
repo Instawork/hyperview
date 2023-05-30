@@ -11,7 +11,7 @@ import type {
   Fetch,
   XResponseStaleReason,
 } from './types';
-import type { Document } from 'hyperview/src/services/navigator/types-legacy';
+import type { Document } from '../../types-legacy';
 
 /**
  * TS definition of the Parser class to provide an alternate Document response

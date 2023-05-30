@@ -10,7 +10,7 @@ import {
   NavigationProp,
   Route,
 } from 'hyperview/src/services/navigator/imports';
-import { Element } from 'hyperview/src/services/navigator/types-legacy';
+import { Element } from 'hyperview/src/types-legacy';
 import { NavigationContextProps } from 'hyperview/src/contexts/navigation';
 import { NavigatorCache } from 'hyperview/src/contexts/navigator';
 

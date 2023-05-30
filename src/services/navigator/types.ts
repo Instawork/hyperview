@@ -6,7 +6,7 @@
  *
  */
 
-import { NavigationRouteParams } from './types-legacy';
+import { NavigationRouteParams } from '../../types-legacy';
 import { NavigatorScreenParams } from './imports';
 
 export const ANCHOR_ID_SEPARATOR = '#';

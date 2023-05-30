@@ -6,7 +6,7 @@
  *
  */
 
-import { Element } from 'hyperview/src/services/navigator/types-legacy';
+import { Element } from 'hyperview/src/types-legacy';
 
 /**
  * Props used by hv-navigator
