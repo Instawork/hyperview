@@ -74,8 +74,8 @@ export default class Navigation {
 
     let url = href;
     if (!href.startsWith(ANCHOR_ID_SEPARATOR)) {
-    // Serialize form data as query params, if present.
-    const baseUrl = UrlService.getUrlFromHref(href, this.url);
+      // Serialize form data as query params, if present.
+      const baseUrl = UrlService.getUrlFromHref(href, this.url);
       url = UrlService.addFormDataToUrl(baseUrl, formData);
     }
 
