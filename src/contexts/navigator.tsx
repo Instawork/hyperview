@@ -7,7 +7,7 @@
  */
 
 import React, { createContext } from 'react';
-import { Element } from '../types-legacy';
+import { Element } from 'hyperview/src/types-legacy';
 
 type Props = { children: React.ReactNode };
 

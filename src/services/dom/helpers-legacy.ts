@@ -10,8 +10,13 @@
 // THE COMPLETE TS MIGRATION OF THIS FILE WILL REPLACE THIS
 // CHANGES MADE TO ANY IMPLEMENTATIONS ARE NOTEDED BELOW AND MARKED WITH ***** ADDED *****
 
-import * as Namespaces from '../namespaces';
-import { Document, Element, LocalName, NamespaceURI } from '../../types-legacy';
+import * as Namespaces from 'hyperview/src/services/namespaces';
+import {
+  Document,
+  Element,
+  LocalName,
+  NamespaceURI,
+} from 'hyperview/src/types-legacy';
 
 export const getFirstTag = (
   document: Document,

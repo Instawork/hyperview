@@ -6,10 +6,13 @@
  *
  */
 
-import { NavigationProp, Route } from '../../../services/navigator/imports';
-import { Element } from '../../../types-legacy';
-import { NavigationContextProps } from '../../../contexts/navigation';
-import { NavigatorCache } from '../../../contexts/navigator';
+import {
+  NavigationProp,
+  Route,
+} from 'hyperview/src/services/navigator/imports';
+import { Element } from 'hyperview/src/types-legacy';
+import { NavigationContextProps } from 'hyperview/src/contexts/navigation';
+import { NavigatorCache } from 'hyperview/src/contexts/navigator';
 
 /**
  * Props used for data fetching by hv-route
