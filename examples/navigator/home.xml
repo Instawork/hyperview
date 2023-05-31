@@ -1,0 +1,14 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <navigator id="home-nav" type="bottom-tab">
+    <nav-route id="shifts-route" href="/navigator/shifts.xml" />
+    <nav-route id="messages-route" href="/navigator/messages.xml" />
+    <nav-route id="info-route" href="/navigator/info.xml" initial="true" />
+    <nav-route id="settings-route" href="">
+      <navigator id="setting-nav" type="top-tab">
+        <nav-route id="setting-1-route" href="/navigator/settings-1.xml" />
+        <nav-route id="setting-2-route" href="/navigator/settings-2.xml" />
+        <nav-route id="setting-3-route" href="index.xml" />
+      </navigator>
+    </nav-route>
+  </navigator>
+</doc>

@@ -6,12 +6,13 @@
  *
  */
 
+import * as Contexts from './contexts';
 import * as HvScreenProps from './core/components/hv-screen/types';
-import { DateFormatContext, RefreshControlComponentContext } from './contexts';
+import * as NavContexts from './contexts/navigation';
+
 import React, { PureComponent } from 'react';
 import HvRoute from './core/components/hv-route';
 import HvScreen from './core/components/hv-screen';
-import { NavigationContext } from './contexts/navigation';
 
 /**
  * Provides routing to the correct path based on the state passed in
@@ -46,11 +47,11 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
 
     // Without an external navigation, all navigation is handled internally
     return (
-      <DateFormatContext.Provider value={this.props.formatDate}>
-        <RefreshControlComponentContext.Provider
+      <Contexts.DateFormatContext.Provider value={this.props.formatDate}>
+        <Contexts.RefreshControlComponentContext.Provider
           value={this.props.refreshControl}
         >
-          <NavigationContext.Provider
+          <NavContexts.NavigationContext.Provider
             value={{
               behaviors: this.props.behaviors,
               components: this.props.components,
@@ -65,9 +66,9 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
             }}
           >
             <HvRoute />
-          </NavigationContext.Provider>
-        </RefreshControlComponentContext.Provider>
-      </DateFormatContext.Provider>
+          </NavContexts.NavigationContext.Provider>
+        </Contexts.RefreshControlComponentContext.Provider>
+      </Contexts.DateFormatContext.Provider>
     );
   }
 }

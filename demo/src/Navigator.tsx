@@ -8,12 +8,12 @@
 
 import HyperviewScreen from './HyperviewScreen';
 import { NavigationContainer } from '@react-navigation/native';
-import { ENTRY_POINT_URL } from './constants';
+import { ENTRY_POINT_URL_NAV } from './constants';
 
 export default () => {
   return (
     <NavigationContainer>
-      <HyperviewScreen url={ENTRY_POINT_URL} />
+      <HyperviewScreen url={ENTRY_POINT_URL_NAV} />
     </NavigationContainer>
   );
 };
