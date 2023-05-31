@@ -172,7 +172,7 @@ export default class HvNavigator extends PureComponent<Props> {
   /**
    * Build the required navigator from the xml element
    */
-  Navigator = (props: { element: Element }): React.ReactElement => {
+  Navigator = (props: Props): React.ReactElement => {
     const id: DOMString | null | undefined = props.element.getAttribute('id');
     if (!id) {
       throw new Errors.HvNavigatorError('No id found for navigator');

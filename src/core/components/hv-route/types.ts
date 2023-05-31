@@ -10,7 +10,7 @@ import {
   NavigationProp,
   Route,
 } from 'hyperview/src/services/navigator/imports';
-import { Element } from 'hyperview/src/types-legacy';
+import { ContentProps } from 'hyperview/src/core/components/hv-navigator/types';
 import { NavigationContextProps } from 'hyperview/src/contexts/navigation';
 import { NavigatorCache } from 'hyperview/src/contexts/navigator';
 
@@ -48,7 +48,8 @@ export type NavigationProps = {
 export type InnerRouteProps = DataProps &
   NavigationProps &
   NavigationContextProps &
-  NavigatorCache & { element?: Element };
+  NavigatorCache &
+  ContentProps;
 
 /**
  * All of the props used by hv-route
