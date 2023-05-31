@@ -35,7 +35,7 @@ type RouteRenderProps = {
 /**
  * Build the <HvScreen> component with injected props
  */
-const BuildHvScreen = (props: BuildScreenProps): React.ReactElement => {
+const Screen = (props: BuildScreenProps): React.ReactElement => {
   // Inject the corrected url into the params
   const routeProps = {
     ...props.routeProps,
@@ -49,8 +49,6 @@ const BuildHvScreen = (props: BuildScreenProps): React.ReactElement => {
     <DateFormatContext.Consumer>
       {formatter => (
         <HvScreen
-          // eslint-disable-next-line react/jsx-props-no-spreading
-          {...routeProps}
           back={props.navLogic.back}
           behaviors={routeProps.behaviors}
           closeModal={props.navLogic.closeModal}
@@ -68,7 +66,6 @@ const BuildHvScreen = (props: BuildScreenProps): React.ReactElement => {
           onParseBefore={routeProps.onParseBefore}
           openModal={props.navLogic.openModal}
           push={props.navLogic.push}
-          // refreshControl={props.refreshControl}
           route={routeProps.route}
         />
       )}
@@ -76,7 +73,7 @@ const BuildHvScreen = (props: BuildScreenProps): React.ReactElement => {
   );
 };
 
-export const RouteRender = (props: RouteRenderProps): React.ReactElement => {
+export const Route = (props: RouteRenderProps): React.ReactElement => {
   let renderElement: Element | null = null;
 
   if (props.element) {
@@ -116,7 +113,7 @@ export const RouteRender = (props: RouteRenderProps): React.ReactElement => {
       if (props.routeProps.handleBack) {
         return (
           <props.routeProps.handleBack>
-            <BuildHvScreen
+            <Screen
               doc={props.doc}
               navLogic={props.navLogic}
               routeProps={props.routeProps}
@@ -126,7 +123,7 @@ export const RouteRender = (props: RouteRenderProps): React.ReactElement => {
         );
       }
       return (
-        <BuildHvScreen
+        <Screen
           doc={props.doc}
           navLogic={props.navLogic}
           routeProps={props.routeProps}

@@ -22,26 +22,29 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
     if (this.props.navigation) {
       // Externally provided navigation will use the provided navigation and action callbacks
       return (
-        <HvScreen
-          back={this.props.back}
-          behaviors={this.props.behaviors}
-          closeModal={this.props.closeModal}
-          components={this.props.components}
-          elementErrorComponent={this.props.elementErrorComponent}
-          entrypointUrl={this.props.entrypointUrl}
-          errorScreen={this.props.errorScreen}
-          fetch={this.props.fetch}
-          formatDate={this.props.formatDate}
-          loadingScreen={this.props.loadingScreen}
-          navigate={this.props.navigate}
-          navigation={this.props.navigation}
-          onParseAfter={this.props.onParseAfter}
-          onParseBefore={this.props.onParseBefore}
-          openModal={this.props.openModal}
-          push={this.props.push}
-          refreshControl={this.props.refreshControl}
-          route={this.props.route}
-        />
+        <Contexts.RefreshControlComponentContext.Provider
+          value={this.props.refreshControl}
+        >
+          <HvScreen
+            back={this.props.back}
+            behaviors={this.props.behaviors}
+            closeModal={this.props.closeModal}
+            components={this.props.components}
+            elementErrorComponent={this.props.elementErrorComponent}
+            entrypointUrl={this.props.entrypointUrl}
+            errorScreen={this.props.errorScreen}
+            fetch={this.props.fetch}
+            formatDate={this.props.formatDate}
+            loadingScreen={this.props.loadingScreen}
+            navigate={this.props.navigate}
+            navigation={this.props.navigation}
+            onParseAfter={this.props.onParseAfter}
+            onParseBefore={this.props.onParseBefore}
+            openModal={this.props.openModal}
+            push={this.props.push}
+            route={this.props.route}
+          />
+        </Contexts.RefreshControlComponentContext.Provider>
       );
     }
 

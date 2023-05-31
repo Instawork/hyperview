@@ -26,7 +26,7 @@ import LoadError from 'hyperview/src/core/components/load-error';
 import Loading from 'hyperview/src/core/components/loading';
 import type { NavigatorCache } from 'hyperview/src/contexts/navigator';
 import { NavigatorMapContext } from 'hyperview/src/contexts/navigator';
-import { RouteRender } from 'hyperview/src/services/navigator/render';
+import { Route } from 'hyperview/src/services/navigator/render';
 
 type State = {
   doc: Document | null;
@@ -137,7 +137,7 @@ class HvRouteInner extends PureComponent<InnerRouteProps, State> {
     const { ErrorView } = this;
     try {
       return (
-        <RouteRender
+        <Route
           doc={this.state.doc}
           element={this.props.element}
           navLogic={this.navLogic}
