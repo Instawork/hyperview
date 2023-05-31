@@ -6,10 +6,6 @@
  *
  */
 
-/**
- * TypeScript replacements for src/contexts/index.js
- */
-
 import type { ComponentType } from 'react';
 import React from 'react';
 import type { RefreshControlProps } from 'react-native';

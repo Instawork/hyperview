@@ -7,10 +7,7 @@
  */
 
 import * as HvScreenProps from './core/components/hv-screen/types';
-import {
-  DateFormatContext,
-  RefreshControlComponentContext,
-} from './contexts/navigation-legacy';
+import { DateFormatContext, RefreshControlComponentContext } from './contexts';
 import React, { PureComponent } from 'react';
 import HvRoute from './core/components/hv-route';
 import HvScreen from './core/components/hv-screen';
