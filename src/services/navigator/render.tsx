@@ -18,9 +18,10 @@ import React from 'react';
 import { getFirstTag } from 'hyperview/src/services/dom/helpers-legacy';
 
 type BuildScreenProps = {
-  url: string | null;
+  doc: Document;
   navLogic: Navigator.Logic;
   routeProps: InnerRouteProps;
+  url: string | null;
 };
 
 type RouteRenderProps = {
@@ -54,6 +55,7 @@ const BuildHvScreen = (props: BuildScreenProps): React.ReactElement => {
           behaviors={routeProps.behaviors}
           closeModal={props.navLogic.closeModal}
           components={routeProps.components}
+          doc={props.doc}
           elementErrorComponent={routeProps.elementErrorComponent}
           entrypointUrl={props.url || routeProps.entrypointUrl}
           errorScreen={routeProps.errorScreen}
@@ -115,6 +117,7 @@ export const RouteRender = (props: RouteRenderProps): React.ReactElement => {
         return (
           <props.routeProps.handleBack>
             <BuildHvScreen
+              doc={props.doc}
               navLogic={props.navLogic}
               routeProps={props.routeProps}
               url={props.url}
@@ -124,6 +127,7 @@ export const RouteRender = (props: RouteRenderProps): React.ReactElement => {
       }
       return (
         <BuildHvScreen
+          doc={props.doc}
           navLogic={props.navLogic}
           routeProps={props.routeProps}
           url={props.url}
