@@ -8,6 +8,7 @@
  *
  */
 
+// $FlowFixMe: importing code from TypeScript
 import * as Contexts from 'hyperview/src/contexts';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
