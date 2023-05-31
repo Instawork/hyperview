@@ -10,8 +10,6 @@
 // THE COMPLETE TS MIGRATION OF THE TYPES FILE WILL REPLACE THIS
 // CHANGES MADE TO ANY IMPLEMENTATIONS ARE NOTEDED BELOW AND MARKED WITH ***** ADDED *****
 
-import { ParamListBase } from './services/navigator/imports';
-
 /**
  * Minimal local name type copy from 'hyperview/src/types.js'
  */
@@ -121,8 +119,7 @@ export type Document = Node & {
 /**
  * Minimal Document type copy from 'hyperview/src/types.js'
  */
-// ***** ADDED ***** (extends ParamListBase)
-export type NavigationRouteParams = ParamListBase & {
+export type NavigationRouteParams = {
   delay?: number;
   preloadScreen?: number;
   // ***** ADDED *****

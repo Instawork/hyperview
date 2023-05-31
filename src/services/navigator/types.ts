@@ -7,7 +7,6 @@
  */
 
 import { NavigationRouteParams } from 'hyperview/src/types-legacy';
-import { NavigatorScreenParams } from './imports';
 
 export const ANCHOR_ID_SEPARATOR = '#';
 export const ID_DYNAMIC = 'dynamic';
@@ -25,4 +24,7 @@ export const NAVIGATOR_TYPE = {
 /**
  * Mapping of screens and params for navigation
  */
-export type NavigationNavigateParams = NavigatorScreenParams<NavigationRouteParams>;
+export type NavigationNavigateParams = {
+  screen?: string;
+  params?: NavigationNavigateParams | NavigationRouteParams;
+};
