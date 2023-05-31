@@ -72,9 +72,12 @@ export default class Navigation {
     const { showIndicatorId, delay, targetId } = opts;
     const formData: ?FormData = getFormData(element, formComponents);
 
-    // Serialize form data as query params, if present.
-    const baseUrl = UrlService.getUrlFromHref(href, this.url);
-    const url = UrlService.addFormDataToUrl(baseUrl, formData);
+    let url = href;
+    if (!href.startsWith(ANCHOR_ID_SEPARATOR)) {
+      // Serialize form data as query params, if present.
+      const baseUrl = UrlService.getUrlFromHref(href, this.url);
+      url = UrlService.addFormDataToUrl(baseUrl, formData);
+    }
 
     let preloadScreen = null;
     if (showIndicatorId && this.document) {

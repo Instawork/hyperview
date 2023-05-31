@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -10,13 +8,17 @@
 
 import type { ComponentType } from 'react';
 import React from 'react';
+import type { RefreshControlProps } from 'react-native';
 
 // Provides the date format function to use in date fields
 // in the screen. Default to ISO string format.
 export const DateFormatContext = React.createContext<
-  (date: ?Date, format: ?string) => string,
+  (
+    date: Date | null | undefined,
+    format: string | undefined,
+  ) => string | undefined
 >(date => (date ? date.toISOString() : ''));
 
 export const RefreshControlComponentContext = React.createContext<
-  ComponentType<*>,
->(component => component);
+  ComponentType<RefreshControlProps> | undefined
+>(undefined);

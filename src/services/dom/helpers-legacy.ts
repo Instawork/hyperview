@@ -16,7 +16,7 @@ import {
   Element,
   LocalName,
   NamespaceURI,
-} from 'hyperview/src/services/navigator/types-legacy';
+} from 'hyperview/src/types-legacy';
 
 export const getFirstTag = (
   document: Document,

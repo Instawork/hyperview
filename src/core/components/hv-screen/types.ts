@@ -6,18 +6,40 @@
  *
  */
 
+import { ComponentType, ReactNode } from 'react';
 import type { HvBehavior, HvComponent } from 'hyperview/src/types';
-import { Navigation, Route } from '@react-navigation/native';
+import {
+  NavigationProp,
+  Route,
+} from 'hyperview/src/services/navigator/imports';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error/types';
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading/types';
-import React from 'react';
+import type { RefreshControlProps } from 'react-native';
+
+/**
+ * Props required by contexts <see>hyperview/src/contexts/navigation.ts</see>
+ */
+export type ContextProps = {
+  formatDate: (
+    date: Date | null | undefined,
+    format: string | undefined,
+  ) => string | undefined;
+  refreshControl?: ComponentType<RefreshControlProps>;
+};
+
+/**
+ * The navigation prop used by react-navigation
+ */
+// *** AHG TODO GET RIGHT TYPE
+export type RNTypedNavigationProps = NavigationProp<object>;
 
 /**
  * Props used by navigation components
+ * Route contains the type of the params object
  */
 export type NavigationProps = {
-  navigation?: Navigation;
-  route?: Route;
+  navigation?: RNTypedNavigationProps;
+  route?: Route<string, DataProps>;
 };
 
 /**
@@ -25,10 +47,13 @@ export type NavigationProps = {
  */
 export type DataProps = {
   entrypointUrl: string;
-  fetch: (input: string, init: object) => string;
-  formatDate?: (date: string, format: string) => string;
+  fetch: (
+    input: string,
+    init: { headers: { [key: string]: unknown } },
+  ) => Promise<Response>;
   onParseAfter?: (url: string) => void;
   onParseBefore?: (url: string) => void;
+  url?: string;
 };
 
 /**
@@ -48,13 +73,17 @@ export type ActionProps = {
 export type ComponentProps = {
   behaviors?: HvBehavior[];
   components?: HvComponent[];
-  elementErrorComponent?: React.ComponentType<ErrorProps>;
-  errorScreen?: React.ComponentType<ErrorProps>;
-  loadingScreen?: React.ComponentType<LoadingProps>;
-  refreshControl?: React.ComponentType;
+  elementErrorComponent?: ComponentType<ErrorProps>;
+  errorScreen?: ComponentType<ErrorProps>;
+  loadingScreen?: ComponentType<LoadingProps>;
+  handleBack?: ComponentType<{ children: ReactNode }>;
 };
 
 /**
  * All of the props used by hv-screen
  */
-export type Props = NavigationProps & DataProps & ActionProps;
+export type Props = ContextProps &
+  NavigationProps &
+  DataProps &
+  ActionProps &
+  ComponentProps;
