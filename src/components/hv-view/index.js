@@ -47,31 +47,16 @@ export default class HvView extends PureComponent<HvComponentProps> {
 
   props: HvComponentProps;
 
-  attributes: Attributes;
-
-  constructor(props: HvComponentProps) {
-    super(props);
-    this.updateAttributes();
-  }
-
-  componentDidUpdate(prevProps: HvComponentProps) {
-    if (prevProps.element === this.props.element) {
-      return;
-    }
-
-    this.updateAttributes();
-  }
-
-  updateAttributes = () => {
+  get attributes(): Attributes {
     // $FlowFixMe: reduce returns a mixed type, not Attributes
-    this.attributes = Object.values(ATTRIBUTES).reduce(
+    return Object.values(ATTRIBUTES).reduce(
       (attributes, name: string) => ({
         ...attributes,
         [name]: this.props.element.getAttribute(name),
       }),
       {},
     );
-  };
+  }
 
   hasInputFields = (): boolean => {
     const textFields = this.props.element.getElementsByTagNameNS(
