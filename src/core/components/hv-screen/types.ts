@@ -7,11 +7,11 @@
  */
 
 import * as NavigatorService from 'hyperview/src/services/navigator';
+import * as TypesLegacy from 'hyperview/src/types-legacy';
 
 import { ComponentType, ReactNode } from 'react';
-import type { HvBehavior, HvComponent } from 'hyperview/src/types';
-import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error/types';
-import type { Props as LoadingProps } from 'hyperview/src/core/components/loading/types';
+import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
+import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
 import type { RefreshControlProps } from 'react-native';
 
 /**
@@ -69,8 +69,8 @@ export type ActionProps = {
  * Props used just by hv-screen
  */
 export type ComponentProps = {
-  behaviors?: HvBehavior[];
-  components?: HvComponent[];
+  behaviors?: TypesLegacy.HvBehavior[];
+  components?: TypesLegacy.HvComponent[];
   elementErrorComponent?: ComponentType<ErrorProps>;
   errorScreen?: ComponentType<ErrorProps>;
   loadingScreen?: ComponentType<LoadingProps>;
