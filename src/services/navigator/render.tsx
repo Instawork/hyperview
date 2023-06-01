@@ -15,6 +15,7 @@ import * as TypesLegacy from 'hyperview/src/types-legacy';
 import HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
 import React from 'react';
+import { RouteProps } from 'hyperview/src/core/components/hv-screen/types';
 
 type BuildScreenProps = {
   doc: TypesLegacy.Document;
@@ -35,13 +36,12 @@ type RouteRenderProps = {
  * Build the <HvScreen> component with injected props
  */
 const Screen = (props: BuildScreenProps): React.ReactElement => {
-  // Inject the corrected url into the params
-  const routeProps = {
-    ...props.routeProps,
-    route: {
-      ...props.routeProps.route,
-      params: { ...props.routeProps.route?.params, url: props.url },
-    },
+  // Inject the corrected url into the params and cast as correct type
+  const route: RouteProps = {
+    ...props.routeProps.route,
+    key: props.routeProps.route?.key || 'hv-screen',
+    name: props.routeProps.route?.name || 'hv-screen',
+    params: { ...props.routeProps.route?.params, url: props.url || undefined },
   };
 
   return (
@@ -49,23 +49,23 @@ const Screen = (props: BuildScreenProps): React.ReactElement => {
       {formatter => (
         <HvScreen
           back={props.navLogic.back}
-          behaviors={routeProps.behaviors}
+          behaviors={props.routeProps.behaviors}
           closeModal={props.navLogic.closeModal}
-          components={routeProps.components}
+          components={props.routeProps.components}
           doc={props.doc}
-          elementErrorComponent={routeProps.elementErrorComponent}
-          entrypointUrl={props.url || routeProps.entrypointUrl}
-          errorScreen={routeProps.errorScreen}
-          fetch={routeProps.fetch}
+          elementErrorComponent={props.routeProps.elementErrorComponent}
+          entrypointUrl={props.url || props.routeProps.entrypointUrl}
+          errorScreen={props.routeProps.errorScreen}
+          fetch={props.routeProps.fetch}
           formatDate={formatter}
-          loadingScreen={routeProps.loadingScreen}
+          loadingScreen={props.routeProps.loadingScreen}
           navigate={props.navLogic.navigate}
-          navigation={routeProps.navigation}
-          onParseAfter={routeProps.onParseAfter}
-          onParseBefore={routeProps.onParseBefore}
+          navigation={props.routeProps.navigation}
+          onParseAfter={props.routeProps.onParseAfter}
+          onParseBefore={props.routeProps.onParseBefore}
           openModal={props.navLogic.openModal}
           push={props.navLogic.push}
-          route={routeProps.route}
+          route={route}
         />
       )}
     </Contexts.DateFormatContext.Consumer>

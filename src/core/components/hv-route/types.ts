@@ -40,12 +40,20 @@ export type NavigationProps = {
 };
 
 /**
+ * Props used for passing content
+ */
+export type ContentProps = {
+  element?: TypesLegacy.Element;
+};
+
+/**
  * The props used by inner components of hv-route
  */
 export type InnerRouteProps = DataProps &
   NavigationProps &
   NavigationContext.NavigationContextProps &
-  NavigatorContext.NavigatorCache & { element?: TypesLegacy.Element };
+  NavigatorContext.NavigatorCache &
+  ContentProps;
 
 /**
  * All of the props used by hv-route

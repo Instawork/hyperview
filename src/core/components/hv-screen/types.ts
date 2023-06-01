@@ -32,12 +32,17 @@ export type ContextProps = {
 export type RNTypedNavigationProps = NavigatorService.NavigationProp<object>;
 
 /**
+ * The route prop used by react-navigation
+ */
+export type RouteProps = NavigatorService.Route<string, { url?: string }>;
+
+/**
  * Props used by navigation components
  * Route contains the type of the params object
  */
 export type NavigationProps = {
   navigation?: RNTypedNavigationProps;
-  route?: NavigatorService.Route<string, DataProps>;
+  route?: RouteProps;
 };
 
 /**
@@ -66,6 +71,13 @@ export type ActionProps = {
 };
 
 /**
+ * Props used for passing content
+ */
+export type ContentProps = {
+  doc?: TypesLegacy.Document;
+};
+
+/**
  * Props used just by hv-screen
  */
 export type ComponentProps = {
@@ -84,4 +96,5 @@ export type Props = ContextProps &
   NavigationProps &
   DataProps &
   ActionProps &
-  ComponentProps;
+  ComponentProps &
+  ContentProps;
