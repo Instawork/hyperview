@@ -7,13 +7,18 @@
  */
 
 import { ComponentType, ReactNode } from 'react';
-import type { HvBehavior, HvComponent } from 'hyperview/src/types';
+import type {
+  Document,
+  HvBehavior,
+  HvComponent,
+  NavigationRouteParams,
+} from 'hyperview/src/types-legacy';
 import {
   NavigationProp,
   Route,
 } from 'hyperview/src/services/navigator/imports';
-import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error/types';
-import type { Props as LoadingProps } from 'hyperview/src/core/components/loading/types';
+import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
+import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
 import type { RefreshControlProps } from 'react-native';
 
 /**
@@ -60,8 +65,8 @@ export type DataProps = {
  * Props used by legacy external navigation components
  */
 export type ActionProps = {
-  back?: () => void;
-  closeModal?: () => void;
+  back?: (routeParams: NavigationRouteParams) => void;
+  closeModal?: (routeParams: NavigationRouteParams) => void;
   navigate?: (params: object, key: string) => void;
   openModal?: (params: object) => void;
   push?: (params: object) => void;
@@ -71,6 +76,7 @@ export type ActionProps = {
  * Props used just by hv-screen
  */
 export type ComponentProps = {
+  doc?: Document;
   behaviors?: HvBehavior[];
   components?: HvComponent[];
   elementErrorComponent?: ComponentType<ErrorProps>;

@@ -69,7 +69,9 @@ const BuildHvScreen = (props: BuildScreenProps): React.ReactElement => {
           openModal={props.navLogic.openModal}
           push={props.navLogic.push}
           // refreshControl={props.refreshControl}
-          route={routeProps.route}
+          // route={routeProps.route}
+          // TODO: replace next line with previous line
+          route={undefined}
         />
       )}
     </DateFormatContext.Consumer>

@@ -11,8 +11,8 @@ import * as HvScreenProps from './core/components/hv-screen/types';
 import * as NavContexts from './contexts/navigation';
 
 import React, { PureComponent } from 'react';
-import HvRoute from './core/components/hv-route';
-import HvScreen from './core/components/hv-screen';
+import HvRoute from 'hyperview/src/core/components/hv-route';
+import HvScreen from 'hyperview/src/core/components/hv-screen';
 
 /**
  * Provides routing to the correct path based on the state passed in

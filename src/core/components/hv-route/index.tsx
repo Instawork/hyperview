@@ -104,23 +104,25 @@ class HvRouteInner extends PureComponent<InnerRouteProps, State> {
    * View shown while loading
    */
   LoadingView = (): React.ReactElement => {
-    const loadingScreen = this.props.loadingScreen || Loading;
-    return React.createElement(loadingScreen);
+    const LoadingScreen = this.props.loadingScreen || Loading;
+    return <LoadingScreen />;
   };
 
   /**
    * View shown when there is an error
    */
   ErrorView = (props: { error: unknown }): React.ReactElement => {
-    const errorScreen = this.props.errorScreen || LoadError;
-    return React.createElement(errorScreen, {
-      back: () => this.navLogic.back({}),
-      error: props.error,
-      onPressReload: () => this.load(),
-      onPressViewDetails: (uri: string | undefined) => {
-        this.navLogic.openModal({ url: uri });
-      },
-    });
+    const ErrorScreen = this.props.errorScreen || LoadError;
+    return (
+      <ErrorScreen
+        back={() => this.navLogic.back({})}
+        error={props.error}
+        onPressReload={() => this.load()}
+        onPressViewDetails={(uri: string | undefined) => {
+          this.navLogic.openModal({ url: uri });
+        }}
+      />
+    );
   };
 
   /**
@@ -203,6 +205,9 @@ export default function HvRoute(props: Props) {
   let element: Element | undefined;
   if (props.route?.params.id) {
     element = navCache.elementMap?.get(props.route?.params?.id);
+  }
+  if (!element) {
+    return null;
   }
 
   return (
