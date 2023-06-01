@@ -6,7 +6,6 @@
  *
  */
 
-import * as ErrorsService from 'hyperview/src/services/navigator/errors';
 import * as NavigationContext from 'hyperview/src/contexts/navigation';
 import * as NavigatorContext from 'hyperview/src/contexts/navigator';
 import * as NavigatorService from 'hyperview/src/services/navigator';
@@ -59,7 +58,7 @@ export default class HvNavigator extends PureComponent<Props> {
         );
       default:
     }
-    throw new ErrorsService.HvNavigatorError(
+    throw new NavigatorService.HvNavigatorError(
       `No navigator found for type '${type}'`,
     );
   };
@@ -79,7 +78,7 @@ export default class HvNavigator extends PureComponent<Props> {
       NavigatorContext.NavigatorMapContext,
     );
     if (!navProps || !navCache) {
-      throw new ErrorsService.HvRouteError('No context found');
+      throw new NavigatorService.HvRouteError('No context found');
     }
 
     const elements: TypesLegacy.Element[] = NavigatorService.getChildElements(
@@ -93,7 +92,7 @@ export default class HvNavigator extends PureComponent<Props> {
           'id',
         );
         if (!id) {
-          throw new ErrorsService.HvNavigatorError(
+          throw new NavigatorService.HvNavigatorError(
             `No id provided for ${child.localName}`,
           );
         }
@@ -112,7 +111,7 @@ export default class HvNavigator extends PureComponent<Props> {
             | null
             | undefined = child.getAttribute('href');
           if (!href) {
-            throw new ErrorsService.HvNavigatorError(
+            throw new NavigatorService.HvNavigatorError(
               `No href provided for route '${id}'`,
             );
           }
@@ -175,7 +174,7 @@ export default class HvNavigator extends PureComponent<Props> {
       | null
       | undefined = props.element.getAttribute('id');
     if (!id) {
-      throw new ErrorsService.HvNavigatorError('No id found for navigator');
+      throw new NavigatorService.HvNavigatorError('No id found for navigator');
     }
 
     const navProps: NavigationContext.NavigationContextProps | null = useContext(
@@ -185,7 +184,7 @@ export default class HvNavigator extends PureComponent<Props> {
       NavigatorContext.NavigatorMapContext,
     );
     if (!navProps || !navCache) {
-      throw new ErrorsService.HvRouteError('No context found');
+      throw new NavigatorService.HvRouteError('No context found');
     }
 
     const type:
@@ -196,7 +195,7 @@ export default class HvNavigator extends PureComponent<Props> {
       | TypesLegacy.Element
       | undefined = NavigatorService.getInitialNavRouteElement(props.element);
     if (!initial) {
-      throw new ErrorsService.HvNavigatorError(
+      throw new NavigatorService.HvNavigatorError(
         `No initial route defined for '${id}'`,
       );
     }
@@ -254,7 +253,7 @@ export default class HvNavigator extends PureComponent<Props> {
         );
       default:
     }
-    throw new ErrorsService.HvNavigatorError(
+    throw new NavigatorService.HvNavigatorError(
       `No navigator type '${type}'found for '${id}'`,
     );
   };
