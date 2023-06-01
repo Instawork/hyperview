@@ -6,10 +6,10 @@
  *
  */
 
-import * as HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import * as NavigationContext from 'hyperview/src/contexts/navigation';
 import * as NavigatorContext from 'hyperview/src/contexts/navigator';
 import * as NavigatorService from 'hyperview/src/services/navigator';
+import * as TypesLegacy from 'hyperview/src/types-legacy';
 
 /**
  * Props used for data fetching by hv-route
@@ -45,8 +45,7 @@ export type NavigationProps = {
 export type InnerRouteProps = DataProps &
   NavigationProps &
   NavigationContext.NavigationContextProps &
-  NavigatorContext.NavigatorCache &
-  HvNavigator.ContentProps;
+  NavigatorContext.NavigatorCache & { element?: TypesLegacy.Element };
 
 /**
  * All of the props used by hv-route

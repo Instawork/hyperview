@@ -267,5 +267,3 @@ export default class HvNavigator extends PureComponent<Props> {
     );
   }
 }
-
-export type { ContentProps } from './types';

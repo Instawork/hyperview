@@ -198,10 +198,6 @@ export default function HvRoute(props: Types.Props) {
     element = navCache.elementMap?.get(props.route?.params?.id);
   }
 
-  if (!element) {
-    throw new NavigatorService.HvRouteError('No element found');
-  }
-
   return (
     <HvRouteInner
       // eslint-disable-next-line react/jsx-props-no-spreading
