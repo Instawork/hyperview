@@ -156,10 +156,6 @@ export class Navigator {
       return [undefined, '', undefined];
     }
 
-    // Clean up the params to remove the target and url if they are not needed
-    const cleanedParams: TypesLegacy.NavigationRouteParams = { ...routeParams };
-    delete cleanedParams.targetId;
-
     const hasPath: boolean = path !== undefined && path.length > 0;
     let routeId = this.getRouteId(action, routeParams.url, hasPath);
 
@@ -167,11 +163,11 @@ export class Navigator {
       | Types.NavigationNavigateParams
       | TypesLegacy.NavigationRouteParams;
     if (!path || !path.length) {
-      params = cleanedParams;
+      params = routeParams;
     } else {
       // The last path id is the screen id, remove from the path to avoid adding it in params
       const lastPathId = path.pop();
-      params = this.buildParams(routeId, path, cleanedParams);
+      params = this.buildParams(routeId, path, routeParams);
       if (lastPathId) {
         routeId = lastPathId;
       }
@@ -245,6 +241,11 @@ export class Navigator {
     }
 
     if (!navigation) {
+      if (routeParams.targetId) {
+        console.warn(
+          `No navigation found for target '${routeParams.targetId}'`,
+        );
+      }
       return;
     }
 
