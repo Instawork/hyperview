@@ -5642,13 +5642,13 @@ https-browserify@^1.0.0:
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-1.0.0.tgz#ec06c10e0a34c0f2faf199f7fd7fc78fffd03c73"
   integrity sha512-J+FkSdyD+0mA0N+81tMotaRMfSL9SGi+xpD3T6YApKsc3bGSXJlfXri3VyFOeYkfLRQisDk1W+jIFFKBeUBbBg==
 
-hyperview@0.63.0:
-  version "0.63.0"
-  resolved "https://registry.yarnpkg.com/hyperview/-/hyperview-0.63.0.tgz#b9e46242018e96ffbfa4dc9a62d6e5fee35f91ac"
-  integrity sha512-LW1y7cnFDGk8C14Ayh8eLzfbSSx0iU+mpsAbvWWjag+GXxY9sY+eSiE/FI9f+BZXOCTiuLieZ3lGiBkqLhJKRw==
+hyperview@0.64.0:
+  version "0.64.0"
+  resolved "https://registry.yarnpkg.com/hyperview/-/hyperview-0.64.0.tgz#088e630bdf40253f4eeb14933bbf8ed0fe3609b8"
+  integrity sha512-8SrMyt/bD2N8YhppGmzw25oOSL7TyhPclnr3zoDCBdGIt3QzGsHjvZKsfeNIpmb8pR2Q3tTitPe/0ZGlo+04IQ==
   dependencies:
     tiny-emitter "2.1.0"
-    url-parse "1.4.3"
+    url-parse "1.5.10"
     xmldom-instawork "0.0.1"
 
 hyphenate-style-name@^1.0.2, hyphenate-style-name@^1.0.4:
@@ -8522,7 +8522,7 @@ querystring@0.2.0:
   resolved "https://registry.yarnpkg.com/querystring/-/querystring-0.2.0.tgz#b209849203bb25df820da756e747005878521620"
   integrity sha512-X/xY82scca2tau62i9mDyU9K+I+djTMUsvwf7xnUX5GLvVzgJybOJf4Y6o9Zx3oJK/LSXg5tTZBjwzqVPaPO2g==
 
-querystringify@^2.0.0, querystringify@^2.1.1:
+querystringify@^2.1.1:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.2.0.tgz#3345941b4153cb9d082d8eee4cda2016a9aef7f6"
   integrity sha512-FIqgj2EUvTa7R50u0rGsyTftzjYmv/a3hO345bZNrqabNqjtgiDMgmo4mkUjd+nzU5oF3dClKqFIPUKybUyqoQ==
@@ -10388,15 +10388,7 @@ url-loader@~4.1.0:
     mime-types "^2.1.27"
     schema-utils "^3.0.0"
 
-url-parse@1.4.3:
-  version "1.4.3"
-  resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.4.3.tgz#bfaee455c889023219d757e045fa6a684ec36c15"
-  integrity sha512-rh+KuAW36YKo0vClhQzLLveoj8FwPJNu65xLb7Mrt+eZht0IPT0IXgSv8gcMegZ6NvjJUALf6Mf25POlMwD1Fw==
-  dependencies:
-    querystringify "^2.0.0"
-    requires-port "^1.0.0"
-
-url-parse@^1.4.3, url-parse@^1.5.9:
+url-parse@1.5.10, url-parse@^1.4.3, url-parse@^1.5.9:
   version "1.5.10"
   resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.5.10.tgz#9d3c2f736c1d75dd3bd2be507dcc111f1e2ea9c1"
   integrity sha512-WypcfiRhfeUP9vvF0j6rw0J3hrWrw6iZv3+22h6iRMJ/8z1Tj6XfLP4DsUix5MhMPnXpiHDoKyoZ/bdCkwBCiQ==
