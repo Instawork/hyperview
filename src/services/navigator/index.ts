@@ -175,8 +175,7 @@ export class Navigator {
    * Only the current navigator is targeted
    * If the navigator is not type stack, the back request is bubbled
    */
-  // eslint-disable-next-line class-methods-use-this
-  routeBackRequest(
+  static routeBackRequest(
     navigation: HvRoute.RNTypedNavigationProps,
     routeParams: TypesLegacy.NavigationRouteParams,
   ) {
@@ -246,7 +245,7 @@ export class Navigator {
     switch (navAction) {
       case TypesLegacy.NAV_ACTIONS.BACK:
       case TypesLegacy.NAV_ACTIONS.CLOSE:
-        this.routeBackRequest(navigation, routeParams);
+        Navigator.routeBackRequest(navigation, routeParams);
         break;
       case TypesLegacy.NAV_ACTIONS.NAVIGATE:
       case TypesLegacy.NAV_ACTIONS.NEW:
