@@ -54,7 +54,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
         <Contexts.RefreshControlComponentContext.Provider
           value={this.props.refreshControl}
         >
-          <NavContexts.NavigationContext.Provider
+          <NavContexts.Context.Provider
             value={{
               behaviors: this.props.behaviors,
               components: this.props.components,
@@ -69,7 +69,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
             }}
           >
             <HvRoute />
-          </NavContexts.NavigationContext.Provider>
+          </NavContexts.Context.Provider>
         </Contexts.RefreshControlComponentContext.Provider>
       </Contexts.DateFormatContext.Provider>
     );

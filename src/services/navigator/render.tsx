@@ -6,29 +6,28 @@
  *
  */
 
-import * as Errors from 'hyperview/src/services/navigator/errors';
+import * as Contexts from 'hyperview/src/contexts';
+import * as Helpers from 'hyperview/src/services/dom/helpers-legacy';
+import * as HvRoute from 'hyperview/src/core/components/hv-route';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import * as Navigator from 'hyperview/src/services/navigator';
-import { Document, Element, LOCAL_NAME } from 'hyperview/src/types-legacy';
-import { DateFormatContext } from 'hyperview/src/contexts';
+import * as NavigatorService from 'hyperview/src/services/navigator';
+import * as TypesLegacy from 'hyperview/src/types-legacy';
 import HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
-import { InnerRouteProps } from 'hyperview/src/core/components/hv-route/types';
 import React from 'react';
-import { getFirstTag } from 'hyperview/src/services/dom/helpers-legacy';
 
 type BuildScreenProps = {
-  doc: Document;
-  navLogic: Navigator.Logic;
-  routeProps: InnerRouteProps;
+  doc: TypesLegacy.Document;
+  navLogic: NavigatorService.Navigator;
+  routeProps: HvRoute.InnerRouteProps;
   url: string | null;
 };
 
 type RouteRenderProps = {
-  doc: Document;
-  element?: Element;
-  navLogic: Navigator.Logic;
-  routeProps: InnerRouteProps;
+  doc: TypesLegacy.Document;
+  element?: TypesLegacy.Element;
+  navLogic: NavigatorService.Navigator;
+  routeProps: HvRoute.InnerRouteProps;
   url: string;
 };
 
@@ -46,7 +45,7 @@ const Screen = (props: BuildScreenProps): React.ReactElement => {
   };
 
   return (
-    <DateFormatContext.Consumer>
+    <Contexts.DateFormatContext.Consumer>
       {formatter => (
         <HvScreen
           back={props.navLogic.back}
@@ -69,31 +68,37 @@ const Screen = (props: BuildScreenProps): React.ReactElement => {
           route={routeProps.route}
         />
       )}
-    </DateFormatContext.Consumer>
+    </Contexts.DateFormatContext.Consumer>
   );
 };
 
 export const Route = (props: RouteRenderProps): React.ReactElement => {
-  let renderElement: Element | null = null;
+  let renderElement: TypesLegacy.Element | null = null;
 
   if (props.element) {
     renderElement = props.element;
   } else {
     // Get the <doc> element
-    const root: Element | null = getFirstTag(props.doc, LOCAL_NAME.DOC);
+    const root: TypesLegacy.Element | null = Helpers.getFirstTag(
+      props.doc,
+      TypesLegacy.LOCAL_NAME.DOC,
+    );
     if (!root) {
-      throw new Errors.HvRenderError('No root element found');
+      throw new NavigatorService.HvRenderError('No root element found');
     }
 
     // Get the first child as <screen> or <navigator>
-    const screenElement: Element | null = getFirstTag(root, LOCAL_NAME.SCREEN);
-    const navigatorElement: Element | null = getFirstTag(
+    const screenElement: TypesLegacy.Element | null = Helpers.getFirstTag(
       root,
-      LOCAL_NAME.NAVIGATOR,
+      TypesLegacy.LOCAL_NAME.SCREEN,
+    );
+    const navigatorElement: TypesLegacy.Element | null = Helpers.getFirstTag(
+      root,
+      TypesLegacy.LOCAL_NAME.NAVIGATOR,
     );
 
     if (!screenElement && !navigatorElement) {
-      throw new Errors.HvRenderError(
+      throw new NavigatorService.HvRenderError(
         'No <screen> or <navigator> element found',
       );
     }
@@ -101,15 +106,15 @@ export const Route = (props: RouteRenderProps): React.ReactElement => {
   }
 
   if (!renderElement) {
-    throw new Errors.HvRenderError('No element found');
+    throw new NavigatorService.HvRenderError('No element found');
   }
 
   if (renderElement.namespaceURI !== Namespaces.HYPERVIEW) {
-    throw new Errors.HvRenderError('Invalid namespace');
+    throw new NavigatorService.HvRenderError('Invalid namespace');
   }
 
   switch (renderElement.localName) {
-    case LOCAL_NAME.SCREEN:
+    case TypesLegacy.LOCAL_NAME.SCREEN:
       if (props.routeProps.handleBack) {
         return (
           <props.routeProps.handleBack>
@@ -130,9 +135,9 @@ export const Route = (props: RouteRenderProps): React.ReactElement => {
           url={props.url}
         />
       );
-    case LOCAL_NAME.NAVIGATOR:
+    case TypesLegacy.LOCAL_NAME.NAVIGATOR:
       return <HvNavigator element={renderElement} />;
     default:
-      throw new Errors.HvRenderError('Invalid element type');
+      throw new NavigatorService.HvRenderError('Invalid element type');
   }
 };

@@ -6,20 +6,19 @@
  *
  */
 
+import * as Types from 'hyperview/src/types-legacy';
 import * as UrlService from 'hyperview/src/services/url';
-
-import { Element, LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types-legacy';
-import { ANCHOR_ID_SEPARATOR } from 'hyperview/src/services/navigator/types';
+import { ANCHOR_ID_SEPARATOR } from './types';
 
 /**
  * Get an array of all child elements of a node
  */
-export const getChildElements = (element: Element): Element[] => {
-  const elements: Element[] = [];
+export const getChildElements = (element: Types.Element): Types.Element[] => {
+  const elements: Types.Element[] = [];
   if (element?.childNodes?.length) {
     for (let i = 0; i < element?.childNodes?.length; i += 1) {
-      const child: Element = element.childNodes[i];
-      if (child.nodeType === NODE_TYPE.ELEMENT_NODE) {
+      const child: Types.Element = element.childNodes[i];
+      if (child.nodeType === Types.NODE_TYPE.ELEMENT_NODE) {
         elements.push(child);
       }
     }
@@ -31,16 +30,16 @@ export const getChildElements = (element: Element): Element[] => {
  * Get the route designated as 'initial' or the first route if none is marked
  */
 export const getInitialNavRouteElement = (
-  element: Element,
-): Element | undefined => {
-  let firstNavChild: Element | undefined;
-  let initialChild: Element | undefined;
-  const elements: Element[] = getChildElements(element);
+  element: Types.Element,
+): Types.Element | undefined => {
+  let firstNavChild: Types.Element | undefined;
+  let initialChild: Types.Element | undefined;
+  const elements: Types.Element[] = getChildElements(element);
   for (let i = 0; i < elements.length; i += 1) {
-    const child: Element = elements[i];
+    const child: Types.Element = elements[i];
     if (
-      child.localName === LOCAL_NAME.NAVIGATOR ||
-      child.localName === LOCAL_NAME.NAV_ROUTE
+      child.localName === Types.LOCAL_NAME.NAVIGATOR ||
+      child.localName === Types.LOCAL_NAME.NAV_ROUTE
     ) {
       if (
         !initialChild &&

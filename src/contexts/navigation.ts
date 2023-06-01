@@ -17,6 +17,4 @@ export type NavigationContextProps = DataProps & ComponentProps;
 /**
  * Context used by to provide initial values to the navigation components
  */
-export const NavigationContext = React.createContext<NavigationContextProps | null>(
-  null,
-);
+export const Context = React.createContext<NavigationContextProps | null>(null);

@@ -6,13 +6,13 @@
  *
  */
 
-import { Element } from 'hyperview/src/types-legacy';
+import * as TypesLegacy from 'hyperview/src/types-legacy';
 
 /**
  * Props used by hv-navigator
  */
 export type ContentProps = {
-  element: Element;
+  element: TypesLegacy.Element;
 };
 
 /**

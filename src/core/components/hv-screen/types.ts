@@ -6,12 +6,10 @@
  *
  */
 
+import * as NavigatorService from 'hyperview/src/services/navigator';
+
 import { ComponentType, ReactNode } from 'react';
 import type { HvBehavior, HvComponent } from 'hyperview/src/types';
-import {
-  NavigationProp,
-  Route,
-} from 'hyperview/src/services/navigator/imports';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error/types';
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading/types';
 import type { RefreshControlProps } from 'react-native';
@@ -31,7 +29,7 @@ export type ContextProps = {
  * The navigation prop used by react-navigation
  */
 // *** AHG TODO GET RIGHT TYPE
-export type RNTypedNavigationProps = NavigationProp<object>;
+export type RNTypedNavigationProps = NavigatorService.NavigationProp<object>;
 
 /**
  * Props used by navigation components
@@ -39,7 +37,7 @@ export type RNTypedNavigationProps = NavigationProp<object>;
  */
 export type NavigationProps = {
   navigation?: RNTypedNavigationProps;
-  route?: Route<string, DataProps>;
+  route?: NavigatorService.Route<string, DataProps>;
 };
 
 /**

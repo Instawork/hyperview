@@ -1,5 +1,3 @@
-/* eslint-disable instawork/error-object */
-/* eslint-disable max-classes-per-file */
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -8,16 +6,19 @@
  *
  */
 
-import * as Error from 'hyperview/src/services/error';
+/* eslint-disable instawork/error-object */
+/* eslint-disable max-classes-per-file */
 
-export class HvRouteError extends Error.HvBaseError {
+import * as ErrorService from 'hyperview/src/services/error';
+
+export class HvRouteError extends ErrorService.HvBaseError {
   name = 'HvRouteError';
 }
 
-export class HvNavigatorError extends Error.HvBaseError {
+export class HvNavigatorError extends ErrorService.HvBaseError {
   name = 'HvNavigatorError';
 }
 
-export class HvRenderError extends Error.HvBaseError {
+export class HvRenderError extends ErrorService.HvBaseError {
   name = 'HvRenderError';
 }

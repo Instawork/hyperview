@@ -6,11 +6,11 @@
  *
  */
 
+import * as Constants from './constants';
 import React, { PureComponent } from 'react';
 import HandleBack from './HandleBack';
 import Hyperview from 'hyperview/src';
 import moment from 'moment';
-import { MAIN_STACK_NAME, MODAL_STACK_NAME } from './constants';
 
 export default class HyperviewScreenLegacy extends PureComponent {
   goBack = () => {
@@ -26,18 +26,18 @@ export default class HyperviewScreenLegacy extends PureComponent {
     // If we're in the main stack, push the next screen in the main stack.
     // Modal stacks will have modal param set.
     const modal = this.props.route.params?.modal ?? false;
-    this.props.navigation.push(modal ? MODAL_STACK_NAME : MAIN_STACK_NAME, {
+    this.props.navigation.push(modal ? Constants.MODAL_STACK_NAME : Constants.MAIN_STACK_NAME, {
       modal,
       ...params,
     });
   };
 
   navigate = (params, key) => {
-    this.props.navigation.navigate({ key, params, routeName: MAIN_STACK_NAME });
+    this.props.navigation.navigate({ key, params, routeName: Constants.MAIN_STACK_NAME });
   };
 
   openModal = params => {
-    this.props.navigation.push(MODAL_STACK_NAME, params);
+    this.props.navigation.push(Constants.MODAL_STACK_NAME, params);
   };
 
   formatDate = (date, format) => moment(date).format(format);

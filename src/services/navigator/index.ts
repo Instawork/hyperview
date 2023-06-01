@@ -6,41 +6,30 @@
  *
  */
 
-import { CommonActions, NavigationState, StackActions } from './imports';
-import {
-  ID_DYNAMIC,
-  ID_MODAL,
-  NAVIGATOR_TYPE,
-  NavigationNavigateParams,
-} from './types';
-import {
-  NAV_ACTIONS,
-  NavAction,
-  NavigationRouteParams,
-} from 'hyperview/src/types-legacy';
-import {
-  Props,
-  RNTypedNavigationProps,
-} from 'hyperview/src/core/components/hv-route/types';
-import {
-  cleanHrefFragment,
-  isUrlFragment,
-} from 'hyperview/src/services/navigator/helpers';
+import * as Helpers from './helpers';
+import * as HvRoute from 'hyperview/src/core/components/hv-route';
+import * as Imports from './imports';
+import * as Types from './types';
+import * as TypesLegacy from 'hyperview/src/types-legacy';
 
 /**
  * Provide navigation action implementations
  */
-export class Logic {
-  props: Props;
+export class Navigator {
+  props: HvRoute.Props;
 
-  constructor(props: Props) {
+  constructor(props: HvRoute.Props) {
     this.props = props;
   }
 
   /**
    * Recursively search down the navigation path for the target in state and build a path to it
    */
-  findPath = (state: NavigationState, targetId: string, path: string[]) => {
+  findPath = (
+    state: Imports.NavigationState,
+    targetId: string,
+    path: string[],
+  ) => {
     const { routes } = state;
     if (routes) {
       for (let i = 0; i < routes.length; i += 1) {
@@ -49,7 +38,7 @@ export class Logic {
         if (route.name === targetId) {
           path.push(route.name);
         } else if (route.state) {
-          const routeState = route.state as NavigationState;
+          const routeState = route.state as Imports.NavigationState;
           if (routeState) {
             this.findPath(routeState, targetId, path);
             if (path.length) {
@@ -70,7 +59,7 @@ export class Logic {
    */
   getNavigatorAndPath = (
     targetId?: string,
-  ): [RNTypedNavigationProps?, string[]?] => {
+  ): [HvRoute.RNTypedNavigationProps?, string[]?] => {
     let { navigation } = this.props;
     if (!targetId) {
       return [navigation, undefined];
@@ -95,9 +84,9 @@ export class Logic {
   buildParams = (
     routeId: string,
     path: string[],
-    routeParams: NavigationRouteParams,
-  ): NavigationNavigateParams | NavigationRouteParams => {
-    let param: NavigationNavigateParams;
+    routeParams: TypesLegacy.NavigationRouteParams,
+  ): Types.NavigationNavigateParams | TypesLegacy.NavigationRouteParams => {
+    let param: Types.NavigationNavigateParams;
     if (path.length) {
       const screen = path.pop();
       if (!screen) {
@@ -117,28 +106,28 @@ export class Logic {
    * Use the dynamic or modal route for dynamic actions
    */
   getRouteId = (
-    action: NavAction,
+    action: TypesLegacy.NavAction,
     url: string | undefined,
     isStatic: boolean,
   ): string => {
     switch (action) {
-      case NAV_ACTIONS.PUSH:
-        return ID_DYNAMIC;
-      case NAV_ACTIONS.NEW:
-        return ID_MODAL;
+      case TypesLegacy.NAV_ACTIONS.PUSH:
+        return Types.ID_DYNAMIC;
+      case TypesLegacy.NAV_ACTIONS.NEW:
+        return Types.ID_MODAL;
       default:
     }
 
-    if (url && isUrlFragment(url)) {
+    if (url && Helpers.isUrlFragment(url)) {
       // Fragments get cleaned
-      const routeId = cleanHrefFragment(url);
+      const routeId = Helpers.cleanHrefFragment(url);
       if (isStatic) {
         // If the route exists in a navigator, use it, otherwise use dynamic
         return routeId;
       }
-      return ID_DYNAMIC;
+      return Types.ID_DYNAMIC;
     }
-    return ID_DYNAMIC;
+    return Types.ID_DYNAMIC;
   };
 
   /**
@@ -146,15 +135,19 @@ export class Logic {
    * building params, and determining screen id
    */
   buildRequest = (
-    action: NavAction,
-    routeParams: NavigationRouteParams,
+    action: TypesLegacy.NavAction,
+    routeParams: TypesLegacy.NavigationRouteParams,
   ): [
-    RNTypedNavigationProps | undefined,
+    HvRoute.RNTypedNavigationProps | undefined,
     string,
-    NavigationNavigateParams | NavigationRouteParams | undefined,
+    (
+      | Types.NavigationNavigateParams
+      | TypesLegacy.NavigationRouteParams
+      | undefined
+    ),
   ] => {
     // For a back behavior with params, the current navigator is targeted
-    if (action === NAV_ACTIONS.BACK && routeParams.url) {
+    if (action === TypesLegacy.NAV_ACTIONS.BACK && routeParams.url) {
       return [this.props.navigation, '', routeParams];
     }
 
@@ -164,13 +157,15 @@ export class Logic {
     }
 
     // Clean up the params to remove the target and url if they are not needed
-    const cleanedParams: NavigationRouteParams = { ...routeParams };
+    const cleanedParams: TypesLegacy.NavigationRouteParams = { ...routeParams };
     delete cleanedParams.targetId;
 
     const hasPath: boolean = path !== undefined && path.length > 0;
     let routeId = this.getRouteId(action, routeParams.url, hasPath);
 
-    let params: NavigationNavigateParams | NavigationRouteParams;
+    let params:
+      | Types.NavigationNavigateParams
+      | TypesLegacy.NavigationRouteParams;
     if (!path || !path.length) {
       params = cleanedParams;
     } else {
@@ -192,16 +187,16 @@ export class Logic {
    */
   // eslint-disable-next-line class-methods-use-this
   routeBackRequest(
-    navigation: RNTypedNavigationProps,
-    routeParams: NavigationRouteParams,
+    navigation: HvRoute.RNTypedNavigationProps,
+    routeParams: TypesLegacy.NavigationRouteParams,
   ) {
     const state = navigation.getState();
 
-    if (state.type === NAVIGATOR_TYPE.STACK && state.index > 0) {
+    if (state.type === Types.NAVIGATOR_TYPE.STACK && state.index > 0) {
       const prev = state.routes[state.index - 1];
 
       navigation.dispatch({
-        ...CommonActions.setParams({
+        ...Imports.CommonActions.setParams({
           ...routeParams,
         }),
         source: prev.key,
@@ -214,18 +209,27 @@ export class Logic {
   /**
    * Prepare and send the request
    */
-  sendRequest = (action: NavAction, routeParams: NavigationRouteParams) => {
+  sendRequest = (
+    action: TypesLegacy.NavAction,
+    routeParams: TypesLegacy.NavigationRouteParams,
+  ) => {
     let { navigation } = this.props;
     let routeId: string | undefined;
-    let params: NavigationNavigateParams | NavigationRouteParams | undefined;
-    let navAction: NavAction = action;
+    let params:
+      | Types.NavigationNavigateParams
+      | TypesLegacy.NavigationRouteParams
+      | undefined;
+    let navAction: TypesLegacy.NavAction = action;
 
     if (routeParams) {
       // The push action is used for urls which are not associated with a route
       // See use of `this.getRouteKey(url);` in `hyperview/src/services/navigation`
       if (routeParams.url) {
-        if (navAction === NAV_ACTIONS.PUSH && isUrlFragment(routeParams.url)) {
-          navAction = NAV_ACTIONS.NAVIGATE;
+        if (
+          navAction === TypesLegacy.NAV_ACTIONS.PUSH &&
+          Helpers.isUrlFragment(routeParams.url)
+        ) {
+          navAction = TypesLegacy.NAV_ACTIONS.NAVIGATE;
         }
       }
 
@@ -245,53 +249,70 @@ export class Logic {
     }
 
     switch (navAction) {
-      case NAV_ACTIONS.BACK:
+      case TypesLegacy.NAV_ACTIONS.BACK:
         if (routeParams) {
           this.routeBackRequest(navigation, routeParams);
         } else {
           navigation.goBack();
         }
         break;
-      case NAV_ACTIONS.CLOSE:
+      case TypesLegacy.NAV_ACTIONS.CLOSE:
         navigation.goBack();
         break;
-      case NAV_ACTIONS.NAVIGATE:
+      case TypesLegacy.NAV_ACTIONS.NAVIGATE:
         if (routeId) {
-          navigation.dispatch(CommonActions.navigate(routeId, params));
+          navigation.dispatch(Imports.CommonActions.navigate(routeId, params));
         }
         break;
-      case NAV_ACTIONS.NEW:
+      case TypesLegacy.NAV_ACTIONS.NEW:
         if (routeId) {
-          navigation.dispatch(CommonActions.navigate(routeId, params));
+          navigation.dispatch(Imports.CommonActions.navigate(routeId, params));
         }
         break;
-      case NAV_ACTIONS.PUSH:
+      case TypesLegacy.NAV_ACTIONS.PUSH:
         if (routeId) {
-          navigation.dispatch(StackActions.push(routeId, params));
+          navigation.dispatch(Imports.StackActions.push(routeId, params));
         }
         break;
       default:
     }
   };
 
-  back = (routeParams: NavigationRouteParams) => {
-    this.sendRequest(NAV_ACTIONS.BACK, routeParams);
+  back = (routeParams: TypesLegacy.NavigationRouteParams) => {
+    this.sendRequest(TypesLegacy.NAV_ACTIONS.BACK, routeParams);
   };
 
-  closeModal = (routeParams: NavigationRouteParams) => {
-    this.sendRequest(NAV_ACTIONS.CLOSE, routeParams);
+  closeModal = (routeParams: TypesLegacy.NavigationRouteParams) => {
+    this.sendRequest(TypesLegacy.NAV_ACTIONS.CLOSE, routeParams);
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
-  navigate = (routeParams: NavigationRouteParams, _: string) => {
-    this.sendRequest(NAV_ACTIONS.NAVIGATE, routeParams);
+  navigate = (routeParams: TypesLegacy.NavigationRouteParams, _: string) => {
+    this.sendRequest(TypesLegacy.NAV_ACTIONS.NAVIGATE, routeParams);
   };
 
-  openModal = (routeParams: NavigationRouteParams) => {
-    this.sendRequest(NAV_ACTIONS.NEW, routeParams);
+  openModal = (routeParams: TypesLegacy.NavigationRouteParams) => {
+    this.sendRequest(TypesLegacy.NAV_ACTIONS.NEW, routeParams);
   };
 
-  push = (routeParams: NavigationRouteParams) => {
-    this.sendRequest(NAV_ACTIONS.PUSH, routeParams);
+  push = (routeParams: TypesLegacy.NavigationRouteParams) => {
+    this.sendRequest(TypesLegacy.NAV_ACTIONS.PUSH, routeParams);
   };
 }
+
+export type { NavigationProp, Route } from './imports';
+export {
+  createStackNavigator,
+  createBottomTabNavigator,
+  createMaterialTopTabNavigator,
+} from './imports';
+export { HvRouteError, HvNavigatorError, HvRenderError } from './errors';
+export { Route as Render } from './render';
+export {
+  isUrlFragment,
+  cleanHrefFragment,
+  getChildElements,
+  getInitialNavRouteElement,
+  getUrlFromHref,
+} from './helpers';
+export { ID_DYNAMIC, ID_MODAL, NAVIGATOR_TYPE } from './types';
