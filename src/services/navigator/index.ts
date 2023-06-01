@@ -278,25 +278,25 @@ export class Navigator {
     }
   };
 
-  back = (routeParams: TypesLegacy.NavigationRouteParams) => {
-    this.sendRequest(TypesLegacy.NAV_ACTIONS.BACK, routeParams);
+  back = (params: TypesLegacy.NavigationRouteParams) => {
+    this.sendRequest(TypesLegacy.NAV_ACTIONS.BACK, params);
   };
 
-  closeModal = (routeParams: TypesLegacy.NavigationRouteParams) => {
-    this.sendRequest(TypesLegacy.NAV_ACTIONS.CLOSE, routeParams);
+  closeModal = (params: TypesLegacy.NavigationRouteParams) => {
+    this.sendRequest(TypesLegacy.NAV_ACTIONS.CLOSE, params);
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
-  navigate = (routeParams: TypesLegacy.NavigationRouteParams, _: string) => {
-    this.sendRequest(TypesLegacy.NAV_ACTIONS.NAVIGATE, routeParams);
+  navigate = (params: TypesLegacy.NavigationRouteParams, _: string) => {
+    this.sendRequest(TypesLegacy.NAV_ACTIONS.NAVIGATE, params);
   };
 
-  openModal = (routeParams: TypesLegacy.NavigationRouteParams) => {
-    this.sendRequest(TypesLegacy.NAV_ACTIONS.NEW, routeParams);
+  openModal = (params: TypesLegacy.NavigationRouteParams) => {
+    this.sendRequest(TypesLegacy.NAV_ACTIONS.NEW, params);
   };
 
-  push = (routeParams: TypesLegacy.NavigationRouteParams) => {
-    this.sendRequest(TypesLegacy.NAV_ACTIONS.PUSH, routeParams);
+  push = (params: TypesLegacy.NavigationRouteParams) => {
+    this.sendRequest(TypesLegacy.NAV_ACTIONS.PUSH, params);
   };
 }
 

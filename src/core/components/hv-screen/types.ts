@@ -58,8 +58,8 @@ export type DataProps = {
  * Props used by legacy external navigation components
  */
 export type ActionProps = {
-  back?: () => void;
-  closeModal?: () => void;
+  back?: (params: object) => void;
+  closeModal?: (params: object) => void;
   navigate?: (params: object, key: string) => void;
   openModal?: (params: object) => void;
   push?: (params: object) => void;
