@@ -20,7 +20,6 @@ import Loading from 'hyperview/src/core/components/loading';
 type State = {
   doc: TypesLegacy.Document | null;
   error: Error | null;
-  url: string | null;
 };
 
 /**
@@ -41,7 +40,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, State> {
     this.state = {
       doc: null,
       error: null,
-      url: null,
     };
     this.navLogic = new NavigatorService.Navigator(this.props);
   }
@@ -56,6 +54,13 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, State> {
     this.load();
   }
 
+  getUrl = (): string => {
+    return UrlService.getUrlFromHref(
+      this.props.url || this.props.entrypointUrl,
+      this.props.entrypointUrl,
+    );
+  };
+
   /**
    * Load the url and resolve the xml.
    */
@@ -69,22 +74,17 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, State> {
     }
 
     try {
-      const url: string = UrlService.getUrlFromHref(
-        this.props.url || this.props.entrypointUrl,
-        this.props.entrypointUrl,
-      );
+      const url: string = this.getUrl();
 
       const { doc } = await this.parser.loadDocument(url);
       this.setState({
         doc,
         error: null,
-        url,
       });
     } catch (err: unknown) {
       this.setState({
         doc: null,
         error: err as Error,
-        url: null,
       });
     }
   };
@@ -118,7 +118,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, State> {
    * View shown when the document is loaded
    */
   ContentView = (): React.ReactElement => {
-    if (!this.state.url) {
+    if (!this.props.url) {
       throw new NavigatorService.HvRouteError('No url received');
     }
     if (!this.state.doc) {
@@ -133,7 +133,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, State> {
           element={this.props.element}
           navLogic={this.navLogic}
           routeProps={this.props}
-          url={this.state.url}
+          url={this.getUrl()}
         />
       );
     } catch (err) {

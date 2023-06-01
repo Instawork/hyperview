@@ -54,7 +54,7 @@ const Screen = (props: BuildScreenProps): React.ReactElement => {
           components={props.routeProps.components}
           doc={props.doc}
           elementErrorComponent={props.routeProps.elementErrorComponent}
-          entrypointUrl={props.url || props.routeProps.entrypointUrl}
+          entrypointUrl={props.routeProps.entrypointUrl}
           errorScreen={props.routeProps.errorScreen}
           fetch={props.routeProps.fetch}
           formatDate={formatter}
@@ -66,6 +66,7 @@ const Screen = (props: BuildScreenProps): React.ReactElement => {
           openModal={props.navLogic.openModal}
           push={props.navLogic.push}
           route={route}
+          url={props.url || undefined}
         />
       )}
     </Contexts.DateFormatContext.Consumer>
