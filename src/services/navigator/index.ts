@@ -110,22 +110,16 @@ export class Navigator {
     url: string | undefined,
     isStatic: boolean,
   ): string => {
-    switch (action) {
-      case TypesLegacy.NAV_ACTIONS.PUSH:
-        return Types.ID_DYNAMIC;
-      case TypesLegacy.NAV_ACTIONS.NEW:
-        return Types.ID_MODAL;
-      default:
+    if (action === TypesLegacy.NAV_ACTIONS.PUSH) {
+      return Types.ID_DYNAMIC;
+    }
+    if (action === TypesLegacy.NAV_ACTIONS.NEW) {
+      return Types.ID_MODAL;
     }
 
-    if (url && Helpers.isUrlFragment(url)) {
-      // Fragments get cleaned
-      const routeId = Helpers.cleanHrefFragment(url);
-      if (isStatic) {
-        // If the route exists in a navigator, use it, otherwise use dynamic
-        return routeId;
-      }
-      return Types.ID_DYNAMIC;
+    // If the passed url is a fragment, and it is a non-dynamic route, the id is cleaned
+    if (url && Helpers.isUrlFragment(url) && isStatic) {
+      return Helpers.cleanHrefFragment(url);
     }
     return Types.ID_DYNAMIC;
   };
@@ -251,20 +245,10 @@ export class Navigator {
 
     switch (navAction) {
       case TypesLegacy.NAV_ACTIONS.BACK:
-        if (routeParams) {
-          this.routeBackRequest(navigation, routeParams);
-        } else {
-          navigation.goBack();
-        }
-        break;
       case TypesLegacy.NAV_ACTIONS.CLOSE:
-        navigation.goBack();
+        this.routeBackRequest(navigation, routeParams);
         break;
       case TypesLegacy.NAV_ACTIONS.NAVIGATE:
-        if (routeId) {
-          navigation.dispatch(Imports.CommonActions.navigate(routeId, params));
-        }
-        break;
       case TypesLegacy.NAV_ACTIONS.NEW:
         if (routeId) {
           navigation.dispatch(Imports.CommonActions.navigate(routeId, params));

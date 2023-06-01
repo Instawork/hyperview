@@ -114,31 +114,32 @@ export const Route = (props: RouteRenderProps): React.ReactElement => {
     throw new NavigatorService.HvRenderError('Invalid namespace');
   }
 
-  switch (renderElement.localName) {
-    case TypesLegacy.LOCAL_NAME.SCREEN:
-      if (props.routeProps.handleBack) {
-        return (
-          <props.routeProps.handleBack>
-            <Screen
-              doc={props.doc}
-              navLogic={props.navLogic}
-              routeProps={props.routeProps}
-              url={props.url}
-            />
-          </props.routeProps.handleBack>
-        );
-      }
-      return (
-        <Screen
-          doc={props.doc}
-          navLogic={props.navLogic}
-          routeProps={props.routeProps}
-          url={props.url}
-        />
-      );
-    case TypesLegacy.LOCAL_NAME.NAVIGATOR:
-      return <HvNavigator element={renderElement} />;
-    default:
-      throw new NavigatorService.HvRenderError('Invalid element type');
+  if (renderElement.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR) {
+    return <HvNavigator element={renderElement} />;
   }
+
+  if (renderElement.localName === TypesLegacy.LOCAL_NAME.SCREEN) {
+    if (props.routeProps.handleBack) {
+      return (
+        <props.routeProps.handleBack>
+          <Screen
+            doc={props.doc}
+            navLogic={props.navLogic}
+            routeProps={props.routeProps}
+            url={props.url}
+          />
+        </props.routeProps.handleBack>
+      );
+    }
+    return (
+      <Screen
+        doc={props.doc}
+        navLogic={props.navLogic}
+        routeProps={props.routeProps}
+        url={props.url}
+      />
+    );
+  }
+
+  throw new NavigatorService.HvRenderError('Invalid element type');
 };
