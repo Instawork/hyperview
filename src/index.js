@@ -447,10 +447,6 @@ export default class HyperScreen extends React.Component {
     // Fetch the resource, then perform the action on the target and undo indicators.
     const fetchAndUpdate = () => this.fetchElement(href, verb, newRoot, formData)
       .then((newElement) => {
-        // If the fetch failed, don't update the doc state.
-        if (!newElement) {
-          return;
-        }
         // If a target is specified and exists, use it. Otherwise, the action target defaults
         // to the element triggering the action.
         let targetElement = targetId ? this.doc.getElementById(targetId) : currentElement;
@@ -458,7 +454,12 @@ export default class HyperScreen extends React.Component {
           targetElement = currentElement;
         }
 
-        newRoot = Behaviors.performUpdate(action, targetElement, newElement);
+        if (newElement) {
+          newRoot = Behaviors.performUpdate(action, targetElement, newElement);
+        } else {
+          // When fetch fails, make sure to get the latest version of the doc to avoid any race conditions
+          newRoot = this.doc;
+        }
         newRoot = Behaviors.setIndicatorsAfterLoad(showIndicatorIdList, hideIndicatorIdList, newRoot);
         // Re-render the modifications
         this.setState({
