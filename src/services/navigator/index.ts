@@ -269,8 +269,7 @@ export class Navigator {
     this.sendRequest(TypesLegacy.NAV_ACTIONS.CLOSE, params);
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
-  navigate = (params: TypesLegacy.NavigationRouteParams, _: string) => {
+  navigate = (params: TypesLegacy.NavigationRouteParams) => {
     this.sendRequest(TypesLegacy.NAV_ACTIONS.NAVIGATE, params);
   };
 
