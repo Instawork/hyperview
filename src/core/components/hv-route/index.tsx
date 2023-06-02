@@ -295,19 +295,21 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, State> {
 
 /**
  * Functional component wrapper around HvRouteInner
+ * NOTE: The reason for this approach is to allow accessing
+ *  multiple contexts to pass data to HvRouteInner
  * Performs the following:
  * - Retrieves the url from the props, params, or context
  * - Retrieves the navigator element from the context
  * - Passes the props, context, and url to HvRouteInner
  */
 export default function HvRoute(props: Types.Props) {
-  const navProps: NavigationContext.NavigationContextProps | null = useContext(
+  const navigationContext: NavigationContext.NavigationContextProps | null = useContext(
     NavigationContext.Context,
   );
-  const navCache: NavigatorContext.NavigatorCache | null = useContext(
+  const navigatorContext: NavigatorContext.NavigatorCache | null = useContext(
     NavigatorContext.NavigatorMapContext,
   );
-  if (!navProps || !navCache) {
+  if (!navigationContext || !navigatorContext) {
     throw new NavigatorService.HvRouteError('No context found');
   }
 
@@ -315,35 +317,38 @@ export default function HvRoute(props: Types.Props) {
   let url: string | undefined = props.route?.params?.url;
   // Fragment urls are used to designate a route within a document
   if (url && NavigatorService.isUrlFragment(url)) {
-    url = navCache.routeMap?.get(NavigatorService.cleanHrefFragment(url));
+    url = navigatorContext.routeMap?.get(
+      NavigatorService.cleanHrefFragment(url),
+    );
   }
 
   if (!url) {
     // Use the route id if available to look up the url
     if (props.route?.params?.id) {
-      url = navCache.routeMap?.get(props.route.params.id);
+      url = navigatorContext.routeMap?.get(props.route.params.id);
     } else {
       // Try to use the initial route for this <navigator>
-      const initialRoute: string | undefined = navCache.initialRouteName;
+      const initialRoute: string | undefined =
+        navigatorContext.initialRouteName;
       if (initialRoute) {
-        url = navCache.routeMap?.get(initialRoute);
+        url = navigatorContext.routeMap?.get(initialRoute);
       }
     }
   }
 
   // Fall back to the entrypoint url
-  url = url || navProps.entrypointUrl;
+  url = url || navigationContext.entrypointUrl;
 
   // Get the navigator element from the context
   let element: TypesLegacy.Element | undefined;
   if (props.route?.params.id) {
-    element = navCache.elementMap?.get(props.route?.params?.id);
+    element = navigatorContext.elementMap?.get(props.route?.params?.id);
   }
 
   return (
     <HvRouteInner
       // eslint-disable-next-line react/jsx-props-no-spreading
-      {...{ ...props, ...navProps, ...navCache }}
+      {...{ ...props, ...navigationContext, ...navigatorContext }}
       element={element}
       url={url}
     />

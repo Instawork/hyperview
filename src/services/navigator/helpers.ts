@@ -20,16 +20,11 @@ import { ANCHOR_ID_SEPARATOR } from './types';
 export const getChildElements = (
   element: TypesLegacy.Element,
 ): TypesLegacy.Element[] => {
-  const elements: TypesLegacy.Element[] = [];
-  if (element?.childNodes?.length) {
-    for (let i = 0; i < element?.childNodes?.length; i += 1) {
-      const child: TypesLegacy.Element = element.childNodes[i];
-      if (child.nodeType === TypesLegacy.NODE_TYPE.ELEMENT_NODE) {
-        elements.push(child);
-      }
-    }
-  }
-  return elements;
+  return (Array.from(element.childNodes) || []).filter(
+    (child: TypesLegacy.Element) => {
+      return child.nodeType === TypesLegacy.NODE_TYPE.ELEMENT_NODE;
+    },
+  );
 };
 
 /**
@@ -128,6 +123,8 @@ export const findPath = (
   if (!state) {
     return path;
   }
+  console.log('state', state);
+
   const { routes } = state;
   if (!routes) {
     return path;
