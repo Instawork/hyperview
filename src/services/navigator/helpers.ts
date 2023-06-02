@@ -32,13 +32,12 @@ export const getChildElements = (
  * Get the route designated as 'initial' or the first route if none is marked
  */
 export const getInitialNavRouteElement = (
-  for (let i = 0; i < elements.length; i += 1) {
-    const child: Types.Element = elements[i];
   element: TypesLegacy.Element,
 ): TypesLegacy.Element | undefined => {
   let firstNavChild: TypesLegacy.Element | undefined;
   let initialChild: TypesLegacy.Element | undefined;
   const elements: TypesLegacy.Element[] = getChildElements(element);
+  elements.every((child: TypesLegacy.Element) => {
     if (
       child.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR ||
       child.localName === TypesLegacy.LOCAL_NAME.NAV_ROUTE
@@ -55,9 +54,10 @@ export const getInitialNavRouteElement = (
     }
 
     if (initialChild) {
-      break;
+      return false;
     }
-  }
+    return true;
+  });
   return initialChild || firstNavChild;
 };
 

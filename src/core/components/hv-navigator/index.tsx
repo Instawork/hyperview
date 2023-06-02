@@ -89,8 +89,7 @@ export default class HvNavigator extends PureComponent<Props> {
     // For stack navigators, the dynamic screens are added later
     // This iteration will also process nested navigators
     //    and retrieve additional urls from child routes
-    for (let i = 0; i < elements.length; i += 1) {
-      const child: TypesLegacy.Element = elements[i];
+    elements.forEach((child: TypesLegacy.Element) => {
       if (child.localName === TypesLegacy.LOCAL_NAME.NAV_ROUTE) {
         const id: TypesLegacy.DOMString | null | undefined = child.getAttribute(
           'id',
@@ -133,7 +132,7 @@ export default class HvNavigator extends PureComponent<Props> {
           screens.push(buildTabScreen(id, type));
         }
       }
-    }
+    });
 
     // Add the dynamic stack screens
     if (type === NavigatorService.NAVIGATOR_TYPE.STACK) {

@@ -32,9 +32,7 @@ export class Navigator {
   ) => {
     const { routes } = state;
     if (routes) {
-      for (let i = 0; i < routes.length; i += 1) {
-        const route = routes[i];
-
+      routes.every(route => {
         if (route.name === targetId) {
           path.push(route.name);
         } else if (route.state) {
@@ -47,9 +45,10 @@ export class Navigator {
           }
         }
         if (path.length) {
-          break;
+          return false;
         }
-      }
+        return true;
+      });
     }
   };
 
