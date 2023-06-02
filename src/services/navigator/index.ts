@@ -176,11 +176,15 @@ export class Navigator {
    */
   static routeBackRequest(
     navigation: HvRoute.RNTypedNavigationProps,
-    routeParams: TypesLegacy.NavigationRouteParams,
+    routeParams?: TypesLegacy.NavigationRouteParams,
   ) {
     const state = navigation.getState();
 
-    if (state.type === Types.NAVIGATOR_TYPE.STACK && state.index > 0) {
+    if (
+      routeParams &&
+      state.type === Types.NAVIGATOR_TYPE.STACK &&
+      state.index > 0
+    ) {
       const prev = state.routes[state.index - 1];
 
       navigation.dispatch({
@@ -199,7 +203,7 @@ export class Navigator {
    */
   sendRequest = (
     action: TypesLegacy.NavAction,
-    routeParams: TypesLegacy.NavigationRouteParams,
+    routeParams?: TypesLegacy.NavigationRouteParams,
   ) => {
     let { navigation } = this.props;
     let routeId: string | undefined;
@@ -233,7 +237,7 @@ export class Navigator {
     }
 
     if (!navigation) {
-      if (routeParams.targetId) {
+      if (routeParams?.targetId) {
         console.warn(
           `No navigation found for target '${routeParams.targetId}'`,
         );
@@ -261,11 +265,11 @@ export class Navigator {
     }
   };
 
-  back = (params: TypesLegacy.NavigationRouteParams) => {
+  back = (params: TypesLegacy.NavigationRouteParams | undefined) => {
     this.sendRequest(TypesLegacy.NAV_ACTIONS.BACK, params);
   };
 
-  closeModal = (params: TypesLegacy.NavigationRouteParams) => {
+  closeModal = (params: TypesLegacy.NavigationRouteParams | undefined) => {
     this.sendRequest(TypesLegacy.NAV_ACTIONS.CLOSE, params);
   };
 
