@@ -322,7 +322,6 @@ export {
   createMaterialTopTabNavigator,
 } from './imports';
 export { HvRouteError, HvNavigatorError, HvRenderError } from './errors';
-export { Route as Render } from './render';
 export {
   isUrlFragment,
   cleanHrefFragment,
