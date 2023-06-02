@@ -19,8 +19,8 @@ import type { Document } from 'hyperview/src/types-legacy';
 export class Parser {
   constructor(
     fetch: Fetch,
-    onBeforeParse: ?BeforeAfterParseHandler,
-    onAfterParse: ?BeforeAfterParseHandler,
+    onBeforeParse?: BeforeAfterParseHandler,
+    onAfterParse?: BeforeAfterParseHandler,
   );
 
   loadDocument: (
