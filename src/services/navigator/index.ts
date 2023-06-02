@@ -6,6 +6,7 @@
  *
  */
 
+import * as Errors from './errors';
 import * as Helpers from './helpers';
 import * as HvRoute from 'hyperview/src/core/components/hv-route';
 import * as Imports from './imports';
@@ -89,7 +90,7 @@ export class Navigator {
     if (path.length) {
       const screen = path.pop();
       if (!screen) {
-        throw new Error('screen is undefined');
+        throw new Errors.HvNavigatorError('screen is undefined');
       }
       param = { screen };
       param.params = this.buildParams(routeId, path, routeParams);
@@ -116,11 +117,26 @@ export class Navigator {
       return Types.ID_MODAL;
     }
 
-    // If the passed url is a fragment, and it is a non-dynamic route, the id is cleaned
     if (url && Helpers.isUrlFragment(url) && isStatic) {
       return Helpers.cleanHrefFragment(url);
     }
     return Types.ID_DYNAMIC;
+  };
+
+  validateUrl = (
+    action: TypesLegacy.NavAction,
+    routeParams: TypesLegacy.NavigationRouteParams,
+  ) => {
+    if (
+      action === TypesLegacy.NAV_ACTIONS.PUSH ||
+      TypesLegacy.NAV_ACTIONS.NEW
+    ) {
+      if (!routeParams.url || !Helpers.cleanHrefFragment(routeParams.url)) {
+        throw new Errors.HvNavigatorError(
+          `Route params must include a url for action '${action}'`,
+        );
+      }
+    }
   };
 
   /**
@@ -143,6 +159,8 @@ export class Navigator {
     if (action === TypesLegacy.NAV_ACTIONS.BACK && routeParams.url) {
       return [this.props.navigation, '', routeParams];
     }
+
+    this.validateUrl(action, routeParams);
 
     const [navigation, path] = this.getNavigatorAndPath(routeParams.targetId);
     if (!navigation) {
