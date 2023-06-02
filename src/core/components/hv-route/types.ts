@@ -16,7 +16,7 @@ import * as TypesLegacy from 'hyperview/src/types-legacy';
  */
 export type DataProps = {
   id?: string;
-  url?: string;
+  url: string;
 };
 
 /**

@@ -141,7 +141,7 @@ export default class HvNavigator extends PureComponent<Props> {
         <Stack.Screen
           key={NavigatorService.ID_DYNAMIC}
           component={HvRoute}
-          getId={({ params }) => params?.url}
+          getId={({ params }) => params.url}
           // empty object required because hv-screen doesn't check for undefined param
           initialParams={{}}
           name={NavigatorService.ID_DYNAMIC}
@@ -153,7 +153,7 @@ export default class HvNavigator extends PureComponent<Props> {
         <Stack.Screen
           key={NavigatorService.ID_MODAL}
           component={HvRoute}
-          getId={({ params }) => params?.url}
+          getId={({ params }) => params.url}
           // empty object required because hv-screen doesn't check for undefined param
           initialParams={{}}
           name={NavigatorService.ID_MODAL}
