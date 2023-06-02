@@ -6,19 +6,21 @@
  *
  */
 
-import * as Types from 'hyperview/src/types-legacy';
+import * as TypesLegacy from 'hyperview/src/types-legacy';
 import * as UrlService from 'hyperview/src/services/url';
 import { ANCHOR_ID_SEPARATOR } from './types';
 
 /**
  * Get an array of all child elements of a node
  */
-export const getChildElements = (element: Types.Element): Types.Element[] => {
-  const elements: Types.Element[] = [];
+export const getChildElements = (
+  element: TypesLegacy.Element,
+): TypesLegacy.Element[] => {
+  const elements: TypesLegacy.Element[] = [];
   if (element?.childNodes?.length) {
     for (let i = 0; i < element?.childNodes?.length; i += 1) {
-      const child: Types.Element = element.childNodes[i];
-      if (child.nodeType === Types.NODE_TYPE.ELEMENT_NODE) {
+      const child: TypesLegacy.Element = element.childNodes[i];
+      if (child.nodeType === TypesLegacy.NODE_TYPE.ELEMENT_NODE) {
         elements.push(child);
       }
     }
@@ -30,16 +32,16 @@ export const getChildElements = (element: Types.Element): Types.Element[] => {
  * Get the route designated as 'initial' or the first route if none is marked
  */
 export const getInitialNavRouteElement = (
-  element: Types.Element,
-): Types.Element | undefined => {
-  let firstNavChild: Types.Element | undefined;
-  let initialChild: Types.Element | undefined;
-  const elements: Types.Element[] = getChildElements(element);
   for (let i = 0; i < elements.length; i += 1) {
     const child: Types.Element = elements[i];
+  element: TypesLegacy.Element,
+): TypesLegacy.Element | undefined => {
+  let firstNavChild: TypesLegacy.Element | undefined;
+  let initialChild: TypesLegacy.Element | undefined;
+  const elements: TypesLegacy.Element[] = getChildElements(element);
     if (
-      child.localName === Types.LOCAL_NAME.NAVIGATOR ||
-      child.localName === Types.LOCAL_NAME.NAV_ROUTE
+      child.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR ||
+      child.localName === TypesLegacy.LOCAL_NAME.NAV_ROUTE
     ) {
       if (
         !initialChild &&
