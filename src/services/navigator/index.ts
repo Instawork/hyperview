@@ -24,55 +24,56 @@ export class Navigator {
   }
 
   /**
-   * Recursively search down the navigation path for the target in state and build a path to it
+   * Recurse through the route states to find the target
+   * If the target is found, the path is generated to the first element
+   * example: ['home', 'shifts', 'my-shifts']
    */
-  findPath = (
-    state: Imports.NavigationState,
-    targetId: string,
-    path: string[],
-  ) => {
-    const { routes } = state;
-    if (routes) {
-      routes.every(route => {
-        if (route.name === targetId) {
-          path.push(route.name);
-        } else if (route.state) {
-          const routeState = route.state as Imports.NavigationState;
-          if (routeState) {
-            this.findPath(routeState, targetId, path);
-            if (path.length) {
-              path.push(route.name);
-            }
-          }
-        }
-        if (path.length) {
-          return false;
-        }
-        return true;
-      });
+  findPath = (state: Imports.NavigationState, targetId: string): string[] => {
+    let path: string[] = [];
+    if (!state) {
+      return path;
     }
+    const { routes } = state;
+    if (!routes) {
+      return path;
+    }
+    routes.every(route => {
+      if (route.name === targetId) {
+        path.unshift(route.name);
+        return false;
+      }
+      path = [
+        ...path,
+        ...this.findPath(route.state as Imports.NavigationState, targetId),
+      ];
+      // If the recursion found the target, add the current route name to the path as we back out
+      if (path.length) {
+        path.unshift(route.name);
+        return false;
+      }
+      return true;
+    });
+    return path;
   };
 
   /**
    * Continue up the hierarchy until a navigation is found which contains the target
    * If the target is not found, no navigation is returned
+   * If no target is provided, the current navigation is returned
    */
   getNavigatorAndPath = (
     targetId?: string,
+    navigation?: HvRoute.RNTypedNavigationProps,
   ): [HvRoute.RNTypedNavigationProps?, string[]?] => {
-    let { navigation } = this.props;
     if (!targetId) {
-      return [navigation, undefined];
+      return [this.props.navigation, undefined];
     }
-
-    while (navigation) {
-      const path: string[] = [];
-      const state = navigation.getState();
-      this.findPath(state, targetId, path);
+    if (navigation) {
+      const path = this.findPath(navigation.getState(), targetId);
       if (path.length) {
         return [navigation, path];
       }
-      navigation = navigation.getParent();
+      return this.getNavigatorAndPath(targetId, navigation.getParent());
     }
     return [undefined, undefined];
   };
@@ -80,23 +81,30 @@ export class Navigator {
   /**
    * Generate a nested param hierarchy with instructions for each screen
    * to step through to the target
+   * example: { screen: 'home', params:
+   *    { screen: 'shifts', params:
+   *        { screen: 'my-shifts', params:
+   *            { url: 'someurl.xml' } } } }
    */
   buildParams = (
     routeId: string,
     path: string[],
     routeParams: TypesLegacy.NavigationRouteParams,
+    index = 0,
   ): Types.NavigationNavigateParams | TypesLegacy.NavigationRouteParams => {
     let param: Types.NavigationNavigateParams;
-    if (path.length) {
-      const screen = path.pop();
+    if (path.length && index < path.length) {
+      const screen = path[index];
+
       if (!screen) {
         throw new Errors.HvNavigatorError('screen is undefined');
       }
       param = { screen };
-      param.params = this.buildParams(routeId, path, routeParams);
+      param.params = this.buildParams(routeId, path, routeParams, index + 1);
     } else {
       param = { screen: routeId };
       // The last screen in the path receives the route params
+      // example: { url: 'someurl.xml' }
       param.params = routeParams;
     }
     return param;
@@ -162,7 +170,10 @@ export class Navigator {
 
     this.validateUrl(action, routeParams);
 
-    const [navigation, path] = this.getNavigatorAndPath(routeParams.targetId);
+    const [navigation, path] = this.getNavigatorAndPath(
+      routeParams.targetId,
+      this.props.navigation,
+    );
     if (!navigation) {
       return [undefined, '', undefined];
     }
@@ -176,8 +187,8 @@ export class Navigator {
     if (!path || !path.length) {
       params = routeParams;
     } else {
-      // The last path id is the screen id, remove from the path to avoid adding it in params
-      const lastPathId = path.pop();
+      // The first path id is the screen id, remove from the path to avoid adding it in params
+      const lastPathId = path.shift();
       params = this.buildParams(routeId, path, routeParams);
       if (lastPathId) {
         routeId = lastPathId;
