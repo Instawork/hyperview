@@ -123,7 +123,6 @@ export const findPath = (
   if (!state) {
     return path;
   }
-  console.log('state', state);
 
   const { routes } = state;
   if (!routes) {

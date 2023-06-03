@@ -113,7 +113,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, State> {
   /**
    * View shown while loading
    */
-  LoadingComponent = (): React.ReactElement => {
+  Load = (): React.ReactElement => {
     const LoadingScreen = this.props.loadingScreen || Loading;
     return <LoadingScreen />;
   };
@@ -121,7 +121,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, State> {
   /**
    * View shown when there is an error
    */
-  ErrorComponent = (props: { error: unknown }): React.ReactElement => {
+  Error = (props: { error: unknown }): React.ReactElement => {
     const ErrorScreen = this.props.errorScreen || LoadError;
     return (
       <ErrorScreen
@@ -138,7 +138,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, State> {
   /**
    * Build the <HvScreen> component with injected props
    */
-  ScreenComponent = (props: BuildScreenProps): React.ReactElement => {
+  Screen = (props: BuildScreenProps): React.ReactElement => {
     // Inject the corrected url into the params and cast as correct type
     const route: RouteProps = {
       ...props.routeProps.route,
@@ -182,7 +182,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, State> {
   /**
    * Evaluate the <doc> element and render the appropriate component
    */
-  RouteComponent = (props: RouteRenderProps): React.ReactElement => {
+  Route = (props: RouteRenderProps): React.ReactElement => {
     let renderElement: TypesLegacy.Element | null = null;
 
     if (props.element) {
@@ -226,13 +226,13 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, State> {
     if (renderElement.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR) {
       return <HvNavigator element={renderElement} />;
     }
-    const { ScreenComponent } = this;
+    const { Screen } = this;
 
     if (renderElement.localName === TypesLegacy.LOCAL_NAME.SCREEN) {
       if (props.routeProps.handleBack) {
         return (
           <props.routeProps.handleBack>
-            <ScreenComponent
+            <Screen
               doc={props.doc}
               navLogic={props.navLogic}
               routeProps={props.routeProps}
@@ -242,7 +242,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, State> {
         );
       }
       return (
-        <ScreenComponent
+        <Screen
           doc={props.doc}
           navLogic={props.navLogic}
           routeProps={props.routeProps}
@@ -257,7 +257,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, State> {
   /**
    * View shown when the document is loaded
    */
-  ContentComponent = (): React.ReactElement => {
+  Content = (): React.ReactElement => {
     if (!this.props.url) {
       throw new NavigatorService.HvRouteError('No url received');
     }
@@ -265,10 +265,10 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, State> {
       throw new NavigatorService.HvRouteError('No document received');
     }
 
-    const { ErrorComponent, RouteComponent } = this;
+    const { Error, Route } = this;
     try {
       return (
-        <RouteComponent
+        <Route
           doc={this.state.doc}
           element={this.props.element}
           navLogic={this.navLogic}
@@ -277,19 +277,19 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, State> {
         />
       );
     } catch (err) {
-      return <ErrorComponent error={err} />;
+      return <Error error={err} />;
     }
   };
 
   render() {
-    const { ErrorComponent, LoadingComponent, ContentComponent } = this;
+    const { Error, Load, Content } = this;
     if (this.state.error) {
-      return <ErrorComponent error={this.state.error} />;
+      return <Error error={this.state.error} />;
     }
     if (this.state.doc) {
-      return <ContentComponent />;
+      return <Content />;
     }
-    return <LoadingComponent />;
+    return <Load />;
   }
 }
 
