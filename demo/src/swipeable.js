@@ -6,7 +6,7 @@ import type { HvProps } from './types';
 import Hyperview from 'hyperview';
 import Swipeable from 'react-native-swipeable';
 
-const NAMESPACE_URI = 'https://manning.com/hyperview/swipeable';
+const NAMESPACE_URI = 'https://hypermedia.systems/hyperview/swipeable';
 const ROW = 'row';
 const MAIN = 'main';
 const BUTTON = 'button';

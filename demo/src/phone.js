@@ -1,6 +1,6 @@
 import { phonecall } from 'react-native-communications';
 
-const namespace = "https://manning.com/hyperview/communications";
+const namespace = "https://hypermedia.systems/hyperview/communications";
 
 export default {
   action: "open-phone",
