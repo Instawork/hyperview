@@ -6,14 +6,12 @@
  *
  */
 
+import * as NavigatorService from 'hyperview/src/services/navigator';
+import * as TypesLegacy from 'hyperview/src/types-legacy';
+
 import { ComponentType, ReactNode } from 'react';
-import type { HvBehavior, HvComponent } from 'hyperview/src/types';
-import {
-  NavigationProp,
-  Route,
-} from 'hyperview/src/services/navigator/imports';
-import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error/types';
-import type { Props as LoadingProps } from 'hyperview/src/core/components/loading/types';
+import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
+import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
 import type { RefreshControlProps } from 'react-native';
 
 /**
@@ -31,7 +29,12 @@ export type ContextProps = {
  * The navigation prop used by react-navigation
  */
 // *** AHG TODO GET RIGHT TYPE
-export type RNTypedNavigationProps = NavigationProp<object>;
+export type RNTypedNavigationProps = NavigatorService.NavigationProp<object>;
+
+/**
+ * The route prop used by react-navigation
+ */
+export type RouteProps = NavigatorService.Route<string, { url?: string }>;
 
 /**
  * Props used by navigation components
@@ -39,7 +42,7 @@ export type RNTypedNavigationProps = NavigationProp<object>;
  */
 export type NavigationProps = {
   navigation?: RNTypedNavigationProps;
-  route?: Route<string, DataProps>;
+  route?: RouteProps;
 };
 
 /**
@@ -60,19 +63,26 @@ export type DataProps = {
  * Props used by legacy external navigation components
  */
 export type ActionProps = {
-  back?: () => void;
-  closeModal?: () => void;
+  back?: (params: object) => void;
+  closeModal?: (params: object) => void;
   navigate?: (params: object, key: string) => void;
   openModal?: (params: object) => void;
   push?: (params: object) => void;
 };
 
 /**
+ * Props used for passing content
+ */
+export type ContentProps = {
+  doc?: TypesLegacy.Document;
+};
+
+/**
  * Props used just by hv-screen
  */
 export type ComponentProps = {
-  behaviors?: HvBehavior[];
-  components?: HvComponent[];
+  behaviors?: TypesLegacy.HvBehavior[];
+  components?: TypesLegacy.HvComponent[];
   elementErrorComponent?: ComponentType<ErrorProps>;
   errorScreen?: ComponentType<ErrorProps>;
   loadingScreen?: ComponentType<LoadingProps>;
@@ -86,4 +96,5 @@ export type Props = ContextProps &
   NavigationProps &
   DataProps &
   ActionProps &
-  ComponentProps;
+  ComponentProps &
+  ContentProps;

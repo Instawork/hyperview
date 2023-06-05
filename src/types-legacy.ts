@@ -126,3 +126,15 @@ export type NavigationRouteParams = {
   targetId?: string;
   url?: string;
 };
+
+export type HvBehavior = {
+  action: string;
+  callback: (
+    element: Element,
+    onUpdate: unknown,
+    getRoot: unknown,
+    updateRoot: unknown,
+  ) => void;
+};
+
+export type HvComponent = unknown;

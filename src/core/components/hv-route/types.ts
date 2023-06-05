@@ -6,13 +6,10 @@
  *
  */
 
-import {
-  NavigationProp,
-  Route,
-} from 'hyperview/src/services/navigator/imports';
-import { Element } from 'hyperview/src/types-legacy';
-import { NavigationContextProps } from 'hyperview/src/contexts/navigation';
-import { NavigatorCache } from 'hyperview/src/contexts/navigator';
+import * as NavigationContext from 'hyperview/src/contexts/navigation';
+import * as NavigatorContext from 'hyperview/src/contexts/navigator';
+import * as NavigatorService from 'hyperview/src/services/navigator';
+import * as TypesLegacy from 'hyperview/src/types-legacy';
 
 /**
  * Props used for data fetching by hv-route
@@ -31,7 +28,7 @@ export type RouteParams = DataProps;
  * The navigation prop used by react-navigation
  */
 // TODO AHG TODO GET RIGHT TYPE
-export type RNTypedNavigationProps = NavigationProp<object>;
+export type RNTypedNavigationProps = NavigatorService.NavigationProp<object>;
 
 /**
  * Props used by navigation components
@@ -39,7 +36,14 @@ export type RNTypedNavigationProps = NavigationProp<object>;
  */
 export type NavigationProps = {
   navigation?: RNTypedNavigationProps;
-  route?: Route<string, DataProps>;
+  route?: NavigatorService.Route<string, DataProps>;
+};
+
+/**
+ * Props used for passing content
+ */
+export type ContentProps = {
+  element?: TypesLegacy.Element;
 };
 
 /**
@@ -47,8 +51,9 @@ export type NavigationProps = {
  */
 export type InnerRouteProps = DataProps &
   NavigationProps &
-  NavigationContextProps &
-  NavigatorCache & { element?: Element };
+  NavigationContext.NavigationContextProps &
+  NavigatorContext.NavigatorCache &
+  ContentProps;
 
 /**
  * All of the props used by hv-route
