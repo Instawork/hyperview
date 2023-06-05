@@ -53,8 +53,11 @@ export class Navigator {
       return [undefined, '', undefined];
     }
 
-    const hasPath: boolean = path !== undefined && path.length > 0;
-    let routeId = Helpers.getRouteId(action, routeParams.url, hasPath);
+    // Static routes are those found in the current state. Tab navigators are always static.
+    const isStatic: boolean =
+      (path !== undefined && path.length > 0) ||
+      navigation.getState().type !== Types.NAVIGATOR_TYPE.STACK;
+    let routeId = Helpers.getRouteId(action, routeParams.url, isStatic);
 
     let params:
       | Types.NavigationNavigateParams
