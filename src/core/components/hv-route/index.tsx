@@ -75,6 +75,12 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, State> {
     this.load();
   }
 
+  componentDidUpdate(prevProps: Types.InnerRouteProps) {
+    if (prevProps.url !== this.props.url) {
+      this.load();
+    }
+  }
+
   getUrl = (): string => {
     return UrlService.getUrlFromHref(
       this.props.url || this.props.entrypointUrl,
