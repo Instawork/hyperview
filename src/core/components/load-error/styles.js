@@ -26,6 +26,7 @@ export default StyleSheet.create({
     margin: 24,
   },
   title: {
+    color: 'black',
     textAlign: 'center',
   },
 });
