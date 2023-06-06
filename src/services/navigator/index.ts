@@ -57,23 +57,23 @@ export class Navigator {
     const isStatic: boolean =
       (path !== undefined && path.length > 0) ||
       navigation.getState().type !== Types.NAVIGATOR_TYPE.STACK;
-    let routeId = Helpers.getRouteId(action, routeParams.url, isStatic);
+    const routeId = Helpers.getRouteId(action, routeParams.url, isStatic);
 
-    let params:
-      | Types.NavigationNavigateParams
-      | TypesLegacy.NavigationRouteParams;
     if (!path || !path.length) {
-      params = routeParams;
-    } else {
-      // The first path id is the screen id, remove from the path to avoid adding it in params
-      const lastPathId = path.shift();
-      params = Helpers.buildParams(routeId, path, routeParams);
-      if (lastPathId) {
-        routeId = lastPathId;
-      }
+      return [navigation, routeId, routeParams];
     }
 
-    return [navigation, routeId, params];
+    // The first path id is the screen id, remove from the path to avoid adding it in params
+    const lastPathId = path.shift();
+    const params:
+      | Types.NavigationNavigateParams
+      | TypesLegacy.NavigationRouteParams = Helpers.buildParams(
+      routeId,
+      path,
+      routeParams,
+    );
+
+    return [navigation, lastPathId || routeId, params];
   };
 
   /**
@@ -112,36 +112,16 @@ export class Navigator {
     action: TypesLegacy.NavAction,
     routeParams?: TypesLegacy.NavigationRouteParams,
   ) => {
-    let { navigation } = this.props;
-    let routeId: string | undefined;
-    let params:
-      | Types.NavigationNavigateParams
-      | TypesLegacy.NavigationRouteParams
-      | undefined;
-    let navAction: TypesLegacy.NavAction = action;
+    const navAction: TypesLegacy.NavAction = Helpers.getNavAction(
+      action,
+      routeParams,
+    );
 
-    if (routeParams) {
-      // The push action is used for urls which are not associated with a route
-      // See use of `this.getRouteKey(url);` in `hyperview/src/services/navigation`
-      if (routeParams.url) {
-        if (
-          navAction === TypesLegacy.NAV_ACTIONS.PUSH &&
-          Helpers.isUrlFragment(routeParams.url)
-        ) {
-          navAction = TypesLegacy.NAV_ACTIONS.NAVIGATE;
-        }
-      }
-
-      const [
-        requestNavigation,
-        requestRouteId,
-        requestParams,
-      ] = this.buildRequest(navAction, routeParams || {});
-
-      navigation = requestNavigation;
-      routeId = requestRouteId;
-      params = requestParams;
-    }
+    const [navigation, routeId, params] = Helpers.buildRequest(
+      this.props.navigation,
+      navAction,
+      routeParams,
+    );
 
     if (!navigation) {
       if (routeParams?.targetId) {

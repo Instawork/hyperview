@@ -28,36 +28,34 @@ export const getChildElements = (
 };
 
 /**
+ * Determine if an element is a navigation element
+ */
+const isNavigationElement = (element: TypesLegacy.Element): boolean => {
+  return (
+    element.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR ||
+    element.localName === TypesLegacy.LOCAL_NAME.NAV_ROUTE
+  );
+};
+
+/**
  * Get the route designated as 'initial' or the first route if none is marked
  */
 export const getInitialNavRouteElement = (
   element: TypesLegacy.Element,
 ): TypesLegacy.Element | undefined => {
-  let firstNavChild: TypesLegacy.Element | undefined;
-  let initialChild: TypesLegacy.Element | undefined;
-  const elements: TypesLegacy.Element[] = getChildElements(element);
-  elements.every((child: TypesLegacy.Element) => {
-    if (
-      child.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR ||
-      child.localName === TypesLegacy.LOCAL_NAME.NAV_ROUTE
-    ) {
-      if (
-        !initialChild &&
-        child.getAttribute('initial')?.toLowerCase() === 'true'
-      ) {
-        initialChild = child;
-      }
-      if (!initialChild && !firstNavChild) {
-        firstNavChild = child;
-      }
-    }
+  const elements: TypesLegacy.Element[] = getChildElements(
+    element,
+  ).filter(child => isNavigationElement(child));
 
-    if (initialChild) {
-      return false;
-    }
-    return true;
-  });
-  return initialChild || firstNavChild;
+  if (!elements.length) {
+    return undefined;
+  }
+
+  const initialChild = elements.find(
+    child => child.getAttribute('initial')?.toLowerCase() === 'true',
+  );
+
+  return initialChild || elements[0];
 };
 
 /**
@@ -224,4 +222,81 @@ export const getRouteId = (
     return cleanHrefFragment(url);
   }
   return Types.ID_DYNAMIC;
+};
+
+/**
+ * Determine the action to perform based on the route params
+ * Correct for a push action being introduced in
+ * `this.getRouteKey(url);` in `hyperview/src/services/navigation`
+ * Url fragments are treated as a navigate action
+ */
+export const getNavAction = (
+  action: TypesLegacy.NavAction,
+  routeParams?: TypesLegacy.NavigationRouteParams,
+): TypesLegacy.NavAction => {
+  if (
+    routeParams &&
+    routeParams.url &&
+    action === TypesLegacy.NAV_ACTIONS.PUSH &&
+    isUrlFragment(routeParams.url)
+  ) {
+    return TypesLegacy.NAV_ACTIONS.NAVIGATE;
+  }
+  return action;
+};
+
+/**
+ * Build the request structure including finding the navigation,
+ * building params, and determining screen id
+ */
+export const buildRequest = (
+  nav: HvRoute.RNTypedNavigationProps | undefined,
+  action: TypesLegacy.NavAction,
+  routeParams?: TypesLegacy.NavigationRouteParams,
+): [
+  HvRoute.RNTypedNavigationProps | undefined,
+  string,
+  (
+    | Types.NavigationNavigateParams
+    | TypesLegacy.NavigationRouteParams
+    | undefined
+  ),
+] => {
+  if (!routeParams) {
+    return [nav, '', {}];
+  }
+
+  // For a back behavior with params, the current navigator is targeted
+  if (action === TypesLegacy.NAV_ACTIONS.BACK && routeParams.url) {
+    return [nav, '', routeParams];
+  }
+
+  validateUrl(action, routeParams);
+
+  const [navigation, path] = getNavigatorAndPath(routeParams.targetId, nav);
+  if (!navigation) {
+    return [undefined, '', undefined];
+  }
+
+  // Static routes are those found in the current state. Tab navigators are always static.
+  const isStatic: boolean =
+    (path !== undefined && path.length > 0) ||
+    navigation.getState().type !== Types.NAVIGATOR_TYPE.STACK;
+  const routeId = getRouteId(action, routeParams.url, isStatic);
+
+  if (!path || !path.length) {
+    return [navigation, routeId, routeParams];
+  }
+
+  // The first path id is the screen id, remove from the path to avoid adding it in params
+  const lastPathId = path.shift();
+  const params:
+    | Types.NavigationNavigateParams
+    | TypesLegacy.NavigationRouteParams = buildParams(
+    routeId,
+    path,
+    routeParams,
+  );
+
+  return [navigation, lastPathId || routeId, params];
 };
