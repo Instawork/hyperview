@@ -101,7 +101,10 @@ export const validateUrl = (
   action: TypesLegacy.NavAction,
   routeParams: TypesLegacy.NavigationRouteParams,
 ) => {
-  if (action === TypesLegacy.NAV_ACTIONS.PUSH || TypesLegacy.NAV_ACTIONS.NEW) {
+  if (
+    action === TypesLegacy.NAV_ACTIONS.PUSH ||
+    action === TypesLegacy.NAV_ACTIONS.NEW
+  ) {
     if (!routeParams.url || !cleanHrefFragment(routeParams.url)) {
       throw new Errors.HvNavigatorError(
         `Route params must include a url for action '${action}'`,
