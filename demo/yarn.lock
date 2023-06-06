@@ -5642,10 +5642,10 @@ https-browserify@^1.0.0:
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-1.0.0.tgz#ec06c10e0a34c0f2faf199f7fd7fc78fffd03c73"
   integrity sha512-J+FkSdyD+0mA0N+81tMotaRMfSL9SGi+xpD3T6YApKsc3bGSXJlfXri3VyFOeYkfLRQisDk1W+jIFFKBeUBbBg==
 
-hyperview@0.64.0:
-  version "0.64.0"
-  resolved "https://registry.yarnpkg.com/hyperview/-/hyperview-0.64.0.tgz#088e630bdf40253f4eeb14933bbf8ed0fe3609b8"
-  integrity sha512-8SrMyt/bD2N8YhppGmzw25oOSL7TyhPclnr3zoDCBdGIt3QzGsHjvZKsfeNIpmb8pR2Q3tTitPe/0ZGlo+04IQ==
+hyperview@0.65.0:
+  version "0.65.0"
+  resolved "https://registry.yarnpkg.com/hyperview/-/hyperview-0.65.0.tgz#d7f03c3ca5eaab245c514de6c013a090b7a4eddb"
+  integrity sha512-49hy3P9094r9OSY73gev9StXITxBgKorfnhfqIFRU6W2QZ8DiVdf5grYO6O/er4wmlRn06Dqz8ImdtLGSWtO2w==
   dependencies:
     tiny-emitter "2.1.0"
     url-parse "1.5.10"
