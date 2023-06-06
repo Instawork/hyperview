@@ -186,22 +186,23 @@ export const buildParams = (
   routeParams: TypesLegacy.NavigationRouteParams,
   index = 0,
 ): Types.NavigationNavigateParams | TypesLegacy.NavigationRouteParams => {
-  let param: Types.NavigationNavigateParams;
   if (path.length && index < path.length) {
     const screen = path[index];
 
     if (!screen) {
       throw new Errors.HvNavigatorError('screen is undefined');
     }
-    param = { screen };
-    param.params = buildParams(routeId, path, routeParams, index + 1);
-  } else {
-    param = { screen: routeId };
+    return {
+      params: buildParams(routeId, path, routeParams, index + 1),
+      screen,
+    };
+  }
+  return {
     // The last screen in the path receives the route params
     // example: { url: 'someurl.xml' }
-    param.params = routeParams;
-  }
-  return param;
+    params: routeParams,
+    screen: routeId,
+  };
 };
 
 /**

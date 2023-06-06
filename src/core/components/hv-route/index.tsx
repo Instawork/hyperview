@@ -110,6 +110,41 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, State> {
     }
   };
 
+  getRenderElement = (props: RouteRenderProps): TypesLegacy.Element | null => {
+    if (props.element) {
+      return props.element;
+    }
+    // Get the <doc> element
+    const root: TypesLegacy.Element | null = Helpers.getFirstTag(
+      props.doc,
+      TypesLegacy.LOCAL_NAME.DOC,
+    );
+    if (!root) {
+      throw new NavigatorService.HvRenderError('No root element found');
+    }
+
+    // Get the first child as <screen> or <navigator>
+    const screenElement: TypesLegacy.Element | null = Helpers.getFirstTag(
+      root,
+      TypesLegacy.LOCAL_NAME.SCREEN,
+    );
+    if (screenElement) {
+      return screenElement;
+    }
+
+    const navigatorElement: TypesLegacy.Element | null = Helpers.getFirstTag(
+      root,
+      TypesLegacy.LOCAL_NAME.NAVIGATOR,
+    );
+    if (navigatorElement) {
+      return navigatorElement;
+    }
+
+    throw new NavigatorService.HvRenderError(
+      'No <screen> or <navigator> element found',
+    );
+  };
+
   /**
    * View shown while loading
    */
@@ -183,37 +218,9 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, State> {
    * Evaluate the <doc> element and render the appropriate component
    */
   Route = (props: RouteRenderProps): React.ReactElement => {
-    let renderElement: TypesLegacy.Element | null = null;
-
-    if (props.element) {
-      renderElement = props.element;
-    } else {
-      // Get the <doc> element
-      const root: TypesLegacy.Element | null = Helpers.getFirstTag(
-        props.doc,
-        TypesLegacy.LOCAL_NAME.DOC,
-      );
-      if (!root) {
-        throw new NavigatorService.HvRenderError('No root element found');
-      }
-
-      // Get the first child as <screen> or <navigator>
-      const screenElement: TypesLegacy.Element | null = Helpers.getFirstTag(
-        root,
-        TypesLegacy.LOCAL_NAME.SCREEN,
-      );
-      const navigatorElement: TypesLegacy.Element | null = Helpers.getFirstTag(
-        root,
-        TypesLegacy.LOCAL_NAME.NAVIGATOR,
-      );
-
-      if (!screenElement && !navigatorElement) {
-        throw new NavigatorService.HvRenderError(
-          'No <screen> or <navigator> element found',
-        );
-      }
-      renderElement = screenElement || navigatorElement;
-    }
+    const renderElement: TypesLegacy.Element | null = this.getRenderElement(
+      props,
+    );
 
     if (!renderElement) {
       throw new NavigatorService.HvRenderError('No element found');
@@ -340,10 +347,9 @@ export default function HvRoute(props: Types.Props) {
   url = url || navigationContext.entrypointUrl;
 
   // Get the navigator element from the context
-  let element: TypesLegacy.Element | undefined;
-  if (props.route?.params.id) {
-    element = navigatorContext.elementMap?.get(props.route?.params?.id);
-  }
+  const element: TypesLegacy.Element | undefined = props.route?.params?.id
+    ? navigatorContext.elementMap?.get(props.route.params.id)
+    : undefined;
 
   return (
     <HvRouteInner
