@@ -8,7 +8,7 @@
 
 import React, { PureComponent } from 'react';
 import HandleBack from './HandleBack';
-import Toast from './toast';
+import ShowMessage from './message';
 import OpenEmail from './email';
 import OpenPhone from './phone';
 import SwipeableRow from './swipeable';
@@ -71,7 +71,7 @@ export default class HyperviewScreen extends PureComponent {
   ];
 
   behaviors = [
-    Toast,
+    ShowMessage,
     OpenPhone,
     OpenEmail,
   ];
