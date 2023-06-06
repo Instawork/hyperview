@@ -70,13 +70,13 @@ export default class HvNavigator extends PureComponent<Props> {
     type: TypesLegacy.DOMString,
   ): React.ReactNode => {
     const screens: React.ReactElement[] = [];
-    const navProps: NavigationContext.NavigationContextProps | null = useContext(
+    const navigationContext: NavigationContext.NavigationContextProps | null = useContext(
       NavigationContext.Context,
     );
-    const navCache: NavigatorContext.NavigatorCache | null = useContext(
+    const navigatorContext: NavigatorContext.NavigatorCache | null = useContext(
       NavigatorContext.NavigatorMapContext,
     );
-    if (!navProps || !navCache) {
+    if (!navigationContext || !navigatorContext) {
       throw new NavigatorService.HvRouteError('No context found');
     }
 
@@ -107,7 +107,7 @@ export default class HvNavigator extends PureComponent<Props> {
         );
         if (nestedNavigator) {
           // Cache the navigator for the route
-          navCache.elementMap?.set(id, nestedNavigator);
+          navigatorContext.elementMap?.set(id, nestedNavigator);
         } else {
           const href:
             | TypesLegacy.DOMString
@@ -120,14 +120,14 @@ export default class HvNavigator extends PureComponent<Props> {
           }
           const url = NavigatorService.getUrlFromHref(
             href,
-            navProps?.entrypointUrl,
+            navigationContext?.entrypointUrl,
           );
 
           // Cache the url for the route
-          navCache.routeMap?.set(id, url);
+          navigatorContext.routeMap?.set(id, url);
         }
 
-        // Stack uses route urls, other types build out the screens
+        // 'stack' uses route urls, other types build out the screens
         if (type !== NavigatorService.NAVIGATOR_TYPE.STACK) {
           screens.push(buildTabScreen(id, type));
         }
@@ -176,13 +176,13 @@ export default class HvNavigator extends PureComponent<Props> {
       throw new NavigatorService.HvNavigatorError('No id found for navigator');
     }
 
-    const navProps: NavigationContext.NavigationContextProps | null = useContext(
+    const navigationContext: NavigationContext.NavigationContextProps | null = useContext(
       NavigationContext.Context,
     );
-    const navCache: NavigatorContext.NavigatorCache | null = useContext(
+    const navigatorContext: NavigatorContext.NavigatorCache | null = useContext(
       NavigatorContext.NavigatorMapContext,
     );
-    if (!navProps || !navCache) {
+    if (!navigationContext || !navigatorContext) {
       throw new NavigatorService.HvRouteError('No context found');
     }
 
@@ -203,7 +203,7 @@ export default class HvNavigator extends PureComponent<Props> {
       .getAttribute('id')
       ?.toString();
     if (initialId) {
-      navCache.initialRouteName = initialId;
+      navigatorContext.initialRouteName = initialId;
     }
     const { buildScreens } = this;
     switch (type) {
