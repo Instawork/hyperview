@@ -1,0 +1,21 @@
+---
+title: "Copy To Clipboard"
+permalink: "/advanced_behaviors/alert/copy_to_clipboard.xml"
+tags: advanced_behaviors
+---
+{% extends 'base.xml.njk' %}
+
+{% block container %}
+  <text style="Description">
+    Tapping the button below will copy the value "Hello World" to the
+    clipboard.
+  </text>
+  <view
+    action="copy-to-clipboard"
+    trigger="press"
+    copy-to-clipboard-value="Hello World"
+    style="Button"
+  >
+    <text style="Button__Label">Copy to clipboard</text>
+  </view>
+{% endblock %}

@@ -1,0 +1,53 @@
+---
+title: "Custom: Share"
+permalink: "/advanced_behaviors/custom_share.xml"
+tags: advanced_behaviors
+---
+{% extends 'base.xml.njk' %}
+
+{% block container %}
+  <text style="Description">
+    Examples of using custom behaviors to trigger system sharing.
+  </text>
+  <view style="Button">
+    <behavior
+        xmlns:share="https://instawork.com/hyperview-share"
+        action="share"
+        share:message="Test message"
+        trigger="press"
+    />
+    <text style="Button__Label">Message-only</text>
+  </view>
+  <view style="Button">
+    <behavior
+      xmlns:share="https://instawork.com/hyperview-share"
+      action="share"
+      share:url="https://www.xkcd.com"
+      trigger="press"
+    />
+    <text style="Button__Label">URL-only</text>
+  </view>
+  <view style="Button">
+    <behavior
+      xmlns:share="https://instawork.com/hyperview-share"
+      action="share"
+      share:message="Test message"
+      share:url="https://www.xkcd.com"
+      trigger="press"
+    />
+    <text style="Button__Label">Message and URL</text>
+  </view>
+  <view style="Button">
+    <behavior
+      xmlns:share="https://instawork.com/hyperview-share"
+      action="share"
+      share:dialogTitle="This is the dialog title"
+      share:message="Test message"
+      share:subject="This is the subject"
+      share:title="This is the title"
+      share:url="https://www.xkcd.com"
+      trigger="press"
+    />
+    <text style="Button__Label">Title, subject, message, and URL</text>
+  </view>
+{% endblock %}

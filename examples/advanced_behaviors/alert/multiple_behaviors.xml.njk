@@ -1,0 +1,62 @@
+---
+title: "Mulitple Behaviors"
+permalink: "/advanced_behaviors/alert/mulitple_behaviors.xml"
+tags: alert
+---
+{% extends 'base.xml.njk' %}
+
+{% block styles %}
+  <style
+    id="Container"
+    borderColor="#e1e1e1"
+    borderRadius="16"
+    borderWidth="2"
+    margin="24"
+    padding="24"
+  />
+  <style
+    id="Container__Label"
+    color="black"
+    fontSize="16"
+    fontWeight="normal"
+  />
+{% endblock %}
+
+{% block content %}
+  <text style="Description">
+    Alert options can trigger multiple behaviors. The alert below will
+    append fragments to two containers. One of the containers uses a delay
+    and a loading indicator.
+  </text>
+  <spinner id="spinner1" hide="true" />
+  <view id="alert1Container" style="Container" />
+  <view style="Button">
+    <behavior
+      action="alert"
+      alert:message="Pressing the option below will trigger multiple behaviors with loading indicators"
+      alert:title="Navigation"
+      trigger="press"
+      xmlns:alert="https://hyperview.org/hyperview-alert"
+    >
+      <alert:option alert:label="Press">
+        <behavior
+          action="append"
+          href="#option1"
+          target="alert2Container"
+        />
+        <behavior
+          action="append"
+          delay="300"
+          href="#option1"
+          show-during-load="spinner1"
+          target="alert1Container"
+        />
+      </alert:option>
+    </behavior>
+    <text style="Button__Label">Open alert</text>
+  </view>
+  <view id="alert2Container" style="Container" />
+  <view hide="true">
+    <text id="option1" style="Container__Label">Added</text>
+  </view>
+{% endblock %}
