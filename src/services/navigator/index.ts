@@ -23,60 +23,6 @@ export class Navigator {
   }
 
   /**
-   * Build the request structure including finding the navigation,
-   * building params, and determining screen id
-   */
-  buildRequest = (
-    action: TypesLegacy.NavAction,
-    routeParams: TypesLegacy.NavigationRouteParams,
-  ): [
-    HvRoute.RNTypedNavigationProps | undefined,
-    string,
-    (
-      | Types.NavigationNavigateParams
-      | TypesLegacy.NavigationRouteParams
-      | undefined
-    ),
-  ] => {
-    // For a back behavior with params, the current navigator is targeted
-    if (action === TypesLegacy.NAV_ACTIONS.BACK && routeParams.url) {
-      return [this.props.navigation, '', routeParams];
-    }
-
-    Helpers.validateUrl(action, routeParams);
-
-    const [navigation, path] = Helpers.getNavigatorAndPath(
-      routeParams.targetId,
-      this.props.navigation,
-    );
-    if (!navigation) {
-      return [undefined, '', undefined];
-    }
-
-    // Static routes are those found in the current state. Tab navigators are always static.
-    const isStatic: boolean =
-      (path !== undefined && path.length > 0) ||
-      navigation.getState().type !== Types.NAVIGATOR_TYPE.STACK;
-    const routeId = Helpers.getRouteId(action, routeParams.url, isStatic);
-
-    if (!path || !path.length) {
-      return [navigation, routeId, routeParams];
-    }
-
-    // The first path id is the screen id, remove from the path to avoid adding it in params
-    const lastPathId = path.shift();
-    const params:
-      | Types.NavigationNavigateParams
-      | TypesLegacy.NavigationRouteParams = Helpers.buildParams(
-      routeId,
-      path,
-      routeParams,
-    );
-
-    return [navigation, lastPathId || routeId, params];
-  };
-
-  /**
    * Process the request by changing params before going back
    * Only the current navigator is targeted
    * If the navigator is not type stack, the back request is bubbled
