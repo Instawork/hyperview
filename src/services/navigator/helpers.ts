@@ -273,7 +273,7 @@ export const buildRequest = (
 
   const [navigation, path] = getNavigatorAndPath(routeParams.targetId, nav);
   if (!navigation) {
-    return [undefined, '', undefined];
+    return [undefined, '', routeParams];
   }
 
   // Static routes are those found in the current state. Tab navigators are always static.

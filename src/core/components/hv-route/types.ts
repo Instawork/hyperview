@@ -27,7 +27,7 @@ export type RouteParams = DataProps;
 /**
  * The navigation prop used by react-navigation
  */
-// TODO AHG TODO GET RIGHT TYPE
+// TODO GET RIGHT TYPE
 export type RNTypedNavigationProps = NavigatorService.NavigationProp<object>;
 
 /**
