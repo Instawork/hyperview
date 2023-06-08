@@ -6,6 +6,7 @@ import * as TypesLegacy from '../../types-legacy';
 import { ID_DYNAMIC, ID_MODAL } from './types';
 import {
   buildParams,
+  buildRequest,
   cleanHrefFragment,
   findPath,
   getChildElements,
@@ -342,6 +343,7 @@ describe('findPath', () => {
 });
 
 // TODO getNavigatorAndPath
+// - build navigator hierarchy
 
 describe('buildParams', () => {
   describe('valid path', () => {
@@ -498,4 +500,45 @@ describe('getNavAction', () => {
   });
 });
 
-// TODO buildRequest
+describe('buildRequest', () => {
+  const actions = [
+    TypesLegacy.NAV_ACTIONS.BACK,
+    TypesLegacy.NAV_ACTIONS.CLOSE,
+    TypesLegacy.NAV_ACTIONS.NAVIGATE,
+    TypesLegacy.NAV_ACTIONS.NEW,
+    TypesLegacy.NAV_ACTIONS.PUSH,
+  ];
+  describe('ignored', () => {
+    actions.forEach(action => {
+      describe(`action:${action}`, () => {
+        const params = { url: 'url' };
+        it('should ignore object without params', () => {
+          expect(buildRequest(undefined, action, undefined)).toEqual([
+            undefined,
+            '',
+            {},
+          ]);
+        });
+        it('should ignore object without navigator', () => {
+          expect(buildRequest(undefined, action, params)).toEqual([
+            undefined,
+            '',
+            params,
+          ]);
+        });
+      });
+    });
+  });
+  describe('back', () => {
+    const params = { url: 'url' };
+    it('should ignore back actions', () => {
+      expect(
+        buildRequest(undefined, TypesLegacy.NAV_ACTIONS.BACK, params),
+      ).toEqual([undefined, '', params]);
+    });
+  });
+  // TODO buildRequest tests
+  // - invalid navigator
+  // - invalid path
+  // - success
+});
