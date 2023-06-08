@@ -107,7 +107,7 @@
     "react": "16.13.1",
     "react-dom": "16.8.0",
     "react-native": "0.63.3",
-    "react-native-gesture-handler": "2.10.1",
+    "react-native-gesture-handler": "2.11.0",
     "react-native-keyboard-aware-scrollview": "2.1.0",
     "react-native-pager-view": "6.2.0",
     "react-native-tab-view": "3.5.1",
