@@ -30,7 +30,7 @@ export const getChildElements = (
 /**
  * Determine if an element is a navigation element
  */
-const isNavigationElement = (element: TypesLegacy.Element): boolean => {
+export const isNavigationElement = (element: TypesLegacy.Element): boolean => {
   return (
     element.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR ||
     element.localName === TypesLegacy.LOCAL_NAME.NAV_ROUTE
