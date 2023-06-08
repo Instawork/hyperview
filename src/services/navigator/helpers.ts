@@ -83,11 +83,8 @@ export const getUrlFromHref = (
   href: string | null | undefined,
   entrypointUrl: string | undefined,
 ): string => {
-  if (!href) {
-    return entrypointUrl || '';
-  }
   return UrlService.getUrlFromHref(
-    cleanHrefFragment(href),
+    cleanHrefFragment(href || ''),
     entrypointUrl || '',
   );
 };
@@ -205,6 +202,7 @@ export const buildParams = (
 
 /**
  * Use the dynamic or modal route for dynamic actions
+ * isStatic represents a route which is already in the navigation state
  */
 export const getRouteId = (
   action: TypesLegacy.NavAction,
@@ -288,7 +286,12 @@ export const buildRequest = (
     return [navigation, routeId, routeParams];
   }
 
-  // The first path id is the screen id, remove from the path to avoid adding it in params
+  // The first path id the screen which will receive the initial request
+  // remove from the path to avoid adding it in params so that it
+  //  can be added to the navigation request
+  // Example: navigate('home',
+  //  { screen: 'shifts', params:
+  //    { screen: 'my-shifts', params: { url: 'someurl.xml' } } })
   const lastPathId = path.shift();
   const params:
     | Types.NavigationNavigateParams
