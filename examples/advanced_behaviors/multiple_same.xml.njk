@@ -3,97 +3,33 @@ title: "Multiple Same Behaviors"
 permalink: "/advanced_behaviors/multiple_same.xml"
 tags: advanced_behaviors
 ---
+
 {% extends 'base.xml.njk' %}
-
 {% block styles %}
-  <style
-    id="Containers"
-    flex="1"
-    flexDirection="row"
-    marginLeft="24"
-    marginRight="24"
-  />
-  <style id="Container" flex="1" />
-  <style
-    id="Event"
-    fontSize="16"
-    fontWeight="normal"
-    margin="24"
-    marginBottom="0"
-  />
+  <style id="Containers" flex="1" flexDirection="row" marginLeft="24" marginRight="24"/>
+  <style id="Container" flex="1"/>
+  <style id="Event" fontSize="16" fontWeight="normal" margin="24" marginBottom="0"/>
 {% endblock %}
-
 {% block container %}
   <text style="Event">
-    The button below has behaviors for presses that prepend events in two
-    places.
+    The button below has behaviors for presses that prepend events in two places.
   </text>
   <view style="Button">
-    <behavior
-      action="prepend"
-      href="#pressin-fragment"
-      target="left-container"
-      trigger="pressIn"
-    />
-    <behavior
-      action="prepend"
-      href="#pressin-fragment"
-      target="right-container"
-      trigger="pressIn"
-    />
-    <behavior
-      action="prepend"
-      href="#press-fragment"
-      target="left-container"
-      trigger="press"
-    />
-    <behavior
-      action="prepend"
-      href="#press-fragment"
-      target="right-container"
-      trigger="press"
-    />
-    <behavior
-      action="prepend"
-      href="#longpress-fragment"
-      target="left-container"
-      trigger="longPress"
-    />
-    <behavior
-      action="prepend"
-      href="#longpress-fragment"
-      target="right-container"
-      trigger="longPress"
-    />
-    <behavior
-      action="prepend"
-      href="#pressout-fragment"
-      target="left-container"
-      trigger="pressOut"
-    />
-    <behavior
-      action="prepend"
-      href="#pressout-fragment"
-      target="right-container"
-      trigger="pressOut"
-    />
-    <behavior
-      action="prepend"
-      href="#load-fragment"
-      target="left-container"
-      trigger="load"
-    />
-    <behavior
-      action="prepend"
-      href="#load-fragment"
-      target="right-container"
-      trigger="load"
-    />
+    <behavior action="prepend" href="#pressin-fragment" target="left-container" trigger="pressIn"/>
+    <behavior action="prepend" href="#pressin-fragment" target="right-container" trigger="pressIn"/>
+    <behavior action="prepend" href="#press-fragment" target="left-container" trigger="press"/>
+    <behavior action="prepend" href="#press-fragment" target="right-container" trigger="press"/>
+    <behavior action="prepend" href="#longpress-fragment" target="left-container" trigger="longPress"/>
+    <behavior action="prepend" href="#longpress-fragment" target="right-container" trigger="longPress"/>
+    <behavior action="prepend" href="#pressout-fragment" target="left-container" trigger="pressOut"/>
+    <behavior action="prepend" href="#pressout-fragment" target="right-container" trigger="pressOut"/>
+    <behavior action="prepend" href="#load-fragment" target="left-container" trigger="load"/>
+    <behavior action="prepend" href="#load-fragment" target="right-container" trigger="load"/>
     <text style="Button__Label">Press me</text>
   </view>
   <view style="Containers">
-    <view id="right-container" style="Container" />
-    <view id="left-container" style="Container" />
+    <view id="right-container" style="Container"/>
+    <view id="left-container" style="Container"/>
   </view>
   <view hide="true">
     <text id="pressin-fragment" style="Event">Press-in</text>

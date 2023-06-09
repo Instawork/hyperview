@@ -3,33 +3,24 @@ title: "Text"
 permalink: "/styling/text.xml"
 tags: styling
 ---
+
 {% extends 'scrollview.xml.njk' %}
-
 {% block styles %}
-  <style
-    id="Text"
-    fontWeight="normal"
-    marginBottom="8"
-    marginLeft="24"
-    marginRight="24"
-    marginTop="8"
-  />
-  <style id="Text--Small" fontSize="8" />
-  <style id="Text--Medium" fontSize="32" />
-  <style id="Text--Large" fontSize="72" />
-  <style id="Text--LightWeight" fontWeight="300" />
-  <style id="Text--RegularWeight" fontWeight="normal" />
-  <style id="Text--MediumWeight" fontWeight="500" />
-  <style id="Text--SemiBoldWeight" fontWeight="600" />
-  <style id="Text--BoldWeight" fontWeight="bold" />
-  <style id="Text--Green" color="#63CB76" />
-
-  <style id="Text--RGB" color="rgb(255, 0, 255)" />
-  <style id="Text--RGBA" color="rgba(255, 0, 255, 0.5)" />
-  <style id="Text--HSL" color="hsl(230, 100%, 80%)" />
-  <style id="Text-HSLA" color="hsla(230, 100%, 80%, 0.5)" />
+  <style id="Text" fontWeight="normal" marginBottom="8" marginLeft="24" marginRight="24" marginTop="8"/>
+  <style id="Text--Small" fontSize="8"/>
+  <style id="Text--Medium" fontSize="32"/>
+  <style id="Text--Large" fontSize="72"/>
+  <style id="Text--LightWeight" fontWeight="300"/>
+  <style id="Text--RegularWeight" fontWeight="normal"/>
+  <style id="Text--MediumWeight" fontWeight="500"/>
+  <style id="Text--SemiBoldWeight" fontWeight="600"/>
+  <style id="Text--BoldWeight" fontWeight="bold"/>
+  <style id="Text--Green" color="#63CB76"/>
+  <style id="Text--RGB" color="rgb(255, 0, 255)"/>
+  <style id="Text--RGBA" color="rgba(255, 0, 255, 0.5)"/>
+  <style id="Text--HSL" color="hsl(230, 100%, 80%)"/>
+  <style id="Text-HSLA" color="hsla(230, 100%, 80%, 0.5)"/>
 {% endblock %}
-
 {% block content %}
   <text style="Text Text--Small">Small</text>
   <text style="Text Text--Medium">Medium</text>
@@ -42,14 +33,12 @@ tags: styling
   <text style="Text Text--Medium Text--BoldWeight Text--Green">
     Color
   </text>
-
   <text style="Text Text--Medium Text--BoldWeight Text--HSL">
     HSL Color
   </text>
   <text style="Text Text--Medium Text--BoldWeight Text--HSLA">
     HSLA Color
   </text>
-
   <text style="Text Text--Medium Text--BoldWeight Text--RGB">
     RGB Color
   </text>
