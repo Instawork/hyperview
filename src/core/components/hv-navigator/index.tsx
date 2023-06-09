@@ -37,26 +37,25 @@ export default class HvNavigator extends PureComponent<Props> {
     id: string,
     type: TypesLegacy.DOMString,
   ): React.ReactElement => {
-    switch (type) {
-      case NavigatorService.NAVIGATOR_TYPE.TOP_TAB:
-        return (
-          <TopTab.Screen
-            key={id}
-            component={HvRoute}
-            initialParams={{ id }}
-            name={id}
-          />
-        );
-      case NavigatorService.NAVIGATOR_TYPE.BOTTOM_TAB:
-        return (
-          <BottomTab.Screen
-            key={id}
-            component={HvRoute}
-            initialParams={{ id }}
-            name={id}
-          />
-        );
-      default:
+    if (type === NavigatorService.NAVIGATOR_TYPE.TOP_TAB) {
+      return (
+        <TopTab.Screen
+          key={id}
+          component={HvRoute}
+          initialParams={{ id }}
+          name={id}
+        />
+      );
+    }
+    if (type === NavigatorService.NAVIGATOR_TYPE.BOTTOM_TAB) {
+      return (
+        <BottomTab.Screen
+          key={id}
+          component={HvRoute}
+          initialParams={{ id }}
+          name={id}
+        />
+      );
     }
     throw new NavigatorService.HvNavigatorError(
       `No navigator found for type '${type}'`,
@@ -71,22 +70,26 @@ export default class HvNavigator extends PureComponent<Props> {
     type: TypesLegacy.DOMString,
   ): React.ReactNode => {
     const screens: React.ReactElement[] = [];
-    const navProps: NavigationContext.NavigationContextProps | null = useContext(
+    const navigationContext: NavigationContext.NavigationContextProps | null = useContext(
       NavigationContext.Context,
     );
-    const navCache: NavigatorContext.NavigatorCache | null = useContext(
+    const navigatorContext: NavigatorContext.NavigatorCache | null = useContext(
       NavigatorContext.NavigatorMapContext,
     );
-    if (!navProps || !navCache) {
+    if (!navigationContext || !navigatorContext) {
       throw new NavigatorService.HvRouteError('No context found');
     }
 
+    const { buildTabScreen } = this;
     const elements: TypesLegacy.Element[] = NavigatorService.getChildElements(
       element,
     );
-    const { buildTabScreen } = this;
-    for (let i = 0; i < elements.length; i += 1) {
-      const child: TypesLegacy.Element = elements[i];
+
+    // For tab navigators, the screens are appended
+    // For stack navigators, the dynamic screens are added later
+    // This iteration will also process nested navigators
+    //    and retrieve additional urls from child routes
+    elements.forEach((child: TypesLegacy.Element) => {
       if (child.localName === TypesLegacy.LOCAL_NAME.NAV_ROUTE) {
         const id: TypesLegacy.DOMString | null | undefined = child.getAttribute(
           'id',
@@ -104,7 +107,7 @@ export default class HvNavigator extends PureComponent<Props> {
         );
         if (nestedNavigator) {
           // Cache the navigator for the route
-          navCache.elementMap?.set(id, nestedNavigator);
+          navigatorContext.elementMap?.set(id, nestedNavigator);
         } else {
           const href:
             | TypesLegacy.DOMString
@@ -117,50 +120,46 @@ export default class HvNavigator extends PureComponent<Props> {
           }
           const url = NavigatorService.getUrlFromHref(
             href,
-            navProps?.entrypointUrl,
+            navigationContext?.entrypointUrl,
           );
 
           // Cache the url for the route
-          navCache.routeMap?.set(id, url);
+          navigatorContext.routeMap?.set(id, url);
         }
 
-        // Stack uses route urls, other types build out the screens
+        // 'stack' uses route urls, other types build out the screens
         if (type !== NavigatorService.NAVIGATOR_TYPE.STACK) {
           screens.push(buildTabScreen(id, type));
         }
       }
-    }
+    });
 
-    // Add the dynamic screens
-    switch (type) {
-      case NavigatorService.NAVIGATOR_TYPE.STACK:
-        // Dynamic is used to display all routes in stack which are presented as cards
-        screens.push(
-          <Stack.Screen
-            key={NavigatorService.ID_DYNAMIC}
-            component={HvRoute}
-            getId={({ params }) => params?.url}
-            // empty object required because hv-screen doesn't check for undefined param
-            initialParams={{}}
-            name={NavigatorService.ID_DYNAMIC}
-          />,
-        );
+    // Add the dynamic stack screens
+    if (type === NavigatorService.NAVIGATOR_TYPE.STACK) {
+      // Dynamic is used to display all routes in stack which are presented as cards
+      screens.push(
+        <Stack.Screen
+          key={NavigatorService.ID_DYNAMIC}
+          component={HvRoute}
+          getId={({ params }) => params.url}
+          // empty object required because hv-screen doesn't check for undefined param
+          initialParams={{}}
+          name={NavigatorService.ID_DYNAMIC}
+        />,
+      );
 
-        // Modal is used to display all routes in stack which are presented as modals
-        screens.push(
-          <Stack.Screen
-            key={NavigatorService.ID_MODAL}
-            component={HvRoute}
-            getId={({ params }) => params?.url}
-            // empty object required because hv-screen doesn't check for undefined param
-            initialParams={{}}
-            name={NavigatorService.ID_MODAL}
-            options={{ presentation: 'modal' }}
-          />,
-        );
-
-        break;
-      default:
+      // Modal is used to display all routes in stack which are presented as modals
+      screens.push(
+        <Stack.Screen
+          key={NavigatorService.ID_MODAL}
+          component={HvRoute}
+          getId={({ params }) => params.url}
+          // empty object required because hv-screen doesn't check for undefined param
+          initialParams={{}}
+          name={NavigatorService.ID_MODAL}
+          options={{ presentation: 'modal' }}
+        />,
+      );
     }
     return screens;
   };
@@ -177,13 +176,13 @@ export default class HvNavigator extends PureComponent<Props> {
       throw new NavigatorService.HvNavigatorError('No id found for navigator');
     }
 
-    const navProps: NavigationContext.NavigationContextProps | null = useContext(
+    const navigationContext: NavigationContext.NavigationContextProps | null = useContext(
       NavigationContext.Context,
     );
-    const navCache: NavigatorContext.NavigatorCache | null = useContext(
+    const navigatorContext: NavigatorContext.NavigatorCache | null = useContext(
       NavigatorContext.NavigatorMapContext,
     );
-    if (!navProps || !navCache) {
+    if (!navigationContext || !navigatorContext) {
       throw new NavigatorService.HvRouteError('No context found');
     }
 
@@ -204,7 +203,7 @@ export default class HvNavigator extends PureComponent<Props> {
       .getAttribute('id')
       ?.toString();
     if (initialId) {
-      navCache.initialRouteName = initialId;
+      navigatorContext.initialRouteName = initialId;
     }
     const { buildScreens } = this;
     switch (type) {

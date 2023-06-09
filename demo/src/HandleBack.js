@@ -19,7 +19,7 @@ export default ({ children }) => {
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
-        if (!isFirstRouteInParent && route.params?.url.includes('custom_android_back')) {
+        if (!isFirstRouteInParent && route.params?.url?.includes('custom_android_back')) {
           navigation.popToTop(null);
           return true;
         }
