@@ -16,9 +16,8 @@ export const ID_MODAL = 'modal';
  * Definition of the available navigator types
  */
 export const NAVIGATOR_TYPE = {
-  BOTTOM_TAB: 'bottom-tab',
   STACK: 'stack',
-  TOP_TAB: 'top-tab',
+  TAB: 'tab',
 };
 
 /**

@@ -120,11 +120,7 @@ export class Navigator {
 }
 
 export type { NavigationProp, Route } from './imports';
-export {
-  createStackNavigator,
-  createBottomTabNavigator,
-  createMaterialTopTabNavigator,
-} from './imports';
+export { createStackNavigator, createBottomTabNavigator } from './imports';
 export { HvRouteError, HvNavigatorError, HvRenderError } from './errors';
 export {
   isUrlFragment,

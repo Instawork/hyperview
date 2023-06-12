@@ -27,7 +27,6 @@ const SHOW_NAVIGATION_UI = true;
 
 const Stack = NavigatorService.createStackNavigator<ParamTypes>();
 const BottomTab = NavigatorService.createBottomTabNavigator();
-const TopTab = NavigatorService.createMaterialTopTabNavigator();
 
 export default class HvNavigator extends PureComponent<Props> {
   /**
@@ -37,17 +36,7 @@ export default class HvNavigator extends PureComponent<Props> {
     id: string,
     type: TypesLegacy.DOMString,
   ): React.ReactElement => {
-    if (type === NavigatorService.NAVIGATOR_TYPE.TOP_TAB) {
-      return (
-        <TopTab.Screen
-          key={id}
-          component={HvRoute}
-          initialParams={{ id }}
-          name={id}
-        />
-      );
-    }
-    if (type === NavigatorService.NAVIGATOR_TYPE.BOTTOM_TAB) {
+    if (type === NavigatorService.NAVIGATOR_TYPE.TAB) {
       return (
         <BottomTab.Screen
           key={id}
@@ -222,20 +211,7 @@ export default class HvNavigator extends PureComponent<Props> {
             {buildScreens(props.element, type)}
           </Stack.Navigator>
         );
-      case NavigatorService.NAVIGATOR_TYPE.TOP_TAB:
-        return (
-          <TopTab.Navigator
-            backBehavior="none"
-            id={id}
-            initialRouteName={initialId}
-            screenOptions={{
-              tabBarStyle: { display: SHOW_NAVIGATION_UI ? 'flex' : 'none' },
-            }}
-          >
-            {buildScreens(props.element, type)}
-          </TopTab.Navigator>
-        );
-      case NavigatorService.NAVIGATOR_TYPE.BOTTOM_TAB:
+      case NavigatorService.NAVIGATOR_TYPE.TAB:
         return (
           <BottomTab.Navigator
             backBehavior="none"
