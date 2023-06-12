@@ -3,37 +3,25 @@ title: "Back"
 permalink: "/navigation/back.xml"
 tags: navigation
 ---
-{% extends 'scrollview.xml.njk' %}
 
+{% extends 'scrollview.xml.njk' %}
 {% block content %}
-<text style="Description">
-  Tapping the button below will navigate back to the previous screen..
-</text>
-<view action="back" href="/navigation/index.xml" style="Button">
-  <text style="Button__Label">Back</text>
-</view>
-<text style="Description">
-  Tapping the button below will navigate back to a different screen
-</text>
-<view
-  action="back"
-  delay="200"
-  href="/navigation/changed.xml"
-  style="Button"
->
-  <text style="Button__Label">Back to other</text>
-</view>
-<text style="Description">
-  Tapping the button below will navigate back to a different screen, with
-  preload state
-</text>
-<view
-  action="back"
-  delay="500"
-  href="/navigation/changed.xml"
-  show-during-load="loadingScreen"
-  style="Button"
->
-  <text style="Button__Label">Back with loading</text>
-</view>
+  <text style="Description">
+    Tapping the button below will navigate back to the previous screen..
+  </text>
+  <view action="back" href="/navigation/index.xml" style="Button">
+    <text style="Button__Label">Back</text>
+  </view>
+  <text style="Description">
+    Tapping the button below will navigate back to a different screen
+  </text>
+  <view action="back" delay="200" href="/navigation/changed.xml" style="Button">
+    <text style="Button__Label">Back to other</text>
+  </view>
+  <text style="Description">
+    Tapping the button below will navigate back to a different screen, with preload state
+  </text>
+  <view action="back" delay="500" href="/navigation/changed.xml" show-during-load="loadingScreen" style="Button">
+    <text style="Button__Label">Back with loading</text>
+  </view>
 {% endblock %}

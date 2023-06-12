@@ -3,12 +3,11 @@ title: "Options"
 permalink: "/advanced_behaviors/alert/options.xml"
 tags: alert
 ---
-{% extends 'base.xml.njk' %}
 
+{% extends 'base.xml.njk' %}
 {% block container %}
   <text style="Description">
-    If no options are provided, the default system dismiss button will
-    appear.
+    If no options are provided, the default system dismiss button will appear.
   </text>
   <view style="Button">
     <behavior
@@ -16,13 +15,11 @@ tags: alert
       alert:message="With no alert options, a single dismiss button appears."
       alert:title="No options"
       trigger="press"
-      xmlns:alert="https://hyperview.org/hyperview-alert"
-    />
+      xmlns:alert="https://hyperview.org/hyperview-alert"/>
     <text style="Button__Label">No options</text>
   </view>
   <text style="Description">
-    If one option is provided, on iOS the option will appear as a long
-    horizontal button.
+    If one option is provided, on iOS the option will appear as a long horizontal button.
   </text>
   <view style="Button">
     <behavior
@@ -30,15 +27,13 @@ tags: alert
       alert:message="One option on iOS appears as one long horizontal button."
       alert:title="One option"
       trigger="press"
-      xmlns:alert="https://hyperview.org/hyperview-alert"
-    >
-      <alert:option alert:label="Custom option" />
+      xmlns:alert="https://hyperview.org/hyperview-alert">
+      <alert:option alert:label="Custom option"/>
     </behavior>
     <text style="Button__Label">One option</text>
   </view>
   <text style="Description">
-    If two options are provided, on iOS the buttons will appear
-    side-by-side.
+    If two options are provided, on iOS the buttons will appear side-by-side.
   </text>
   <view style="Button">
     <behavior
@@ -46,10 +41,9 @@ tags: alert
       alert:message="One option on iOS appears as one long horizontal button."
       alert:title="One option"
       trigger="press"
-      xmlns:alert="https://hyperview.org/hyperview-alert"
-    >
-      <alert:option alert:label="Custom option 1" />
-      <alert:option alert:label="Custom option 2" />
+      xmlns:alert="https://hyperview.org/hyperview-alert">
+      <alert:option alert:label="Custom option 1"/>
+      <alert:option alert:label="Custom option 2"/>
     </behavior>
     <text style="Button__Label">Two options</text>
   </view>
@@ -62,11 +56,10 @@ tags: alert
       alert:message="One option on iOS appears as one long horizontal button."
       alert:title="One option"
       trigger="press"
-      xmlns:alert="https://hyperview.org/hyperview-alert"
-    >
-      <alert:option alert:label="Custom option 1" />
-      <alert:option alert:label="Custom option 2" />
-      <alert:option alert:label="Custom option 3" />
+      xmlns:alert="https://hyperview.org/hyperview-alert">
+      <alert:option alert:label="Custom option 1"/>
+      <alert:option alert:label="Custom option 2"/>
+      <alert:option alert:label="Custom option 3"/>
     </behavior>
     <text style="Button__Label">Three options</text>
   </view>

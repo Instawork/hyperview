@@ -3,23 +3,19 @@ title: "Button"
 permalink: "/styling/button.xml"
 tags: styling
 ---
-{% extends 'scrollview.xml.njk' %}
 
+{% extends 'scrollview.xml.njk' %}
 {% block content %}
-<text style="Description">Regular</text>
-<view action="reload" href="/styling/button.xml" style="Button">
-  <text style="Button__Label">Hello</text>
-</view>
-<text style="Description">Disabled</text>
-<view style="Button Button--Disabled">
-  <text style="Button__Label">Disabled</text>
-</view>
-<text style="Description">Shadow</text>
-<view
-  action="reload"
-  href="/styling/button.xml"
-  style="Button Button--Shadow"
->
-  <text style="Button__Label">Shadow</text>
-</view>
+  <text style="Description">Regular</text>
+  <view action="reload" href="/styling/button.xml" style="Button">
+    <text style="Button__Label">Hello</text>
+  </view>
+  <text style="Description">Disabled</text>
+  <view style="Button Button--Disabled">
+    <text style="Button__Label">Disabled</text>
+  </view>
+  <text style="Description">Shadow</text>
+  <view action="reload" href="/styling/button.xml" style="Button Button--Shadow">
+    <text style="Button__Label">Shadow</text>
+  </view>
 {% endblock %}
