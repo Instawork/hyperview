@@ -24,19 +24,19 @@ import Loading from 'hyperview/src/core/components/loading';
 import { RouteProps } from 'hyperview/src/core/components/hv-screen/types';
 
 type State = {
-  doc: TypesLegacy.Document | null;
-  error: Error | null;
+  doc?: TypesLegacy.Document;
+  error?: Error;
 };
 
 type BuildScreenProps = {
-  doc: TypesLegacy.Document;
+  doc?: TypesLegacy.Document;
   navLogic: NavigatorService.Navigator;
   routeProps: Types.InnerRouteProps;
   url: string | null;
 };
 
 type RouteRenderProps = {
-  doc: TypesLegacy.Document;
+  doc?: TypesLegacy.Document;
   element?: TypesLegacy.Element;
   navLogic: NavigatorService.Navigator;
   routeProps: Types.InnerRouteProps;
@@ -59,8 +59,8 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, State> {
     super(props);
 
     this.state = {
-      doc: null,
-      error: null,
+      doc: undefined,
+      error: undefined,
     };
     this.navLogic = new NavigatorService.Navigator(this.props);
   }
@@ -72,7 +72,10 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, State> {
       this.props.onParseAfter || null,
     );
 
-    this.load();
+    // When a nested navigator is found, the document is not loaded from url
+    if (this.props.element === undefined) {
+      this.load();
+    }
   }
 
   componentDidUpdate(prevProps: Types.InnerRouteProps) {
@@ -94,7 +97,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, State> {
   load = async (): Promise<void> => {
     if (!this.parser) {
       this.setState({
-        doc: null,
+        doc: undefined,
         error: new NavigatorService.HvRouteError('No parser or context found'),
       });
       return;
@@ -106,11 +109,11 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, State> {
       const { doc } = await this.parser.loadDocument(url);
       this.setState({
         doc,
-        error: null,
+        error: undefined,
       });
     } catch (err: unknown) {
       this.setState({
-        doc: null,
+        doc: undefined,
         error: err as Error,
       });
     }
@@ -120,6 +123,10 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, State> {
     if (props.element) {
       return props.element;
     }
+    if (!props.doc) {
+      throw new NavigatorService.HvRenderError('No document found');
+    }
+
     // Get the <doc> element
     const root: TypesLegacy.Element | null = Helpers.getFirstTag(
       props.doc,
@@ -271,11 +278,13 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, State> {
    * View shown when the document is loaded
    */
   Content = (): React.ReactElement => {
-    if (!this.props.url) {
-      throw new NavigatorService.HvRouteError('No url received');
-    }
-    if (!this.state.doc) {
-      throw new NavigatorService.HvRouteError('No document received');
+    if (this.props.element === undefined) {
+      if (!this.props.url) {
+        throw new NavigatorService.HvRouteError('No url received');
+      }
+      if (!this.state.doc) {
+        throw new NavigatorService.HvRouteError('No document received');
+      }
     }
 
     const { Error, Route } = this;
@@ -299,7 +308,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, State> {
     if (this.state.error) {
       return <Error error={this.state.error} />;
     }
-    if (this.state.doc) {
+    if (this.props.element || this.state.doc) {
       return <Content />;
     }
     return <Load />;
