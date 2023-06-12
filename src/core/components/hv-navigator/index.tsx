@@ -78,30 +78,32 @@ export default class HvNavigator extends PureComponent<Props> {
     // For stack navigators, the dynamic screens are added later
     // This iteration will also process nested navigators
     //    and retrieve additional urls from child routes
-    elements.forEach((child: TypesLegacy.Element) => {
-      if (child.localName === TypesLegacy.LOCAL_NAME.NAV_ROUTE) {
-        const id: TypesLegacy.DOMString | null | undefined = child.getAttribute(
-          'id',
-        );
+    elements.forEach((navRoute: TypesLegacy.Element) => {
+      if (navRoute.localName === TypesLegacy.LOCAL_NAME.NAV_ROUTE) {
+        const id:
+          | TypesLegacy.DOMString
+          | null
+          | undefined = navRoute.getAttribute('id');
         if (!id) {
           throw new NavigatorService.HvNavigatorError(
-            `No id provided for ${child.localName}`,
+            `No id provided for ${navRoute.localName}`,
           );
         }
 
         // Check for nested navigators
         const nestedNavigator: TypesLegacy.Element | null = getFirstTag(
-          child,
+          navRoute,
           TypesLegacy.LOCAL_NAME.NAVIGATOR,
         );
         if (nestedNavigator) {
           // Cache the navigator for the route
           navigatorContext.elementMap?.set(id, nestedNavigator);
+          console.log('>> nestedNavigator:', id);
         } else {
           const href:
             | TypesLegacy.DOMString
             | null
-            | undefined = child.getAttribute('href');
+            | undefined = navRoute.getAttribute('href');
           if (!href) {
             throw new NavigatorService.HvNavigatorError(
               `No href provided for route '${id}'`,
@@ -112,7 +114,7 @@ export default class HvNavigator extends PureComponent<Props> {
             navigationContext?.entrypointUrl,
           );
 
-          // Cache the url for the route
+          // Cache the url for the route by nav-route id
           navigatorContext.routeMap?.set(id, url);
         }
 

@@ -339,6 +339,8 @@ export default function HvRoute(props: Types.Props) {
   let url: string | undefined = props.route?.params?.url;
   // Fragment urls are used to designate a route within a document
   if (url && NavigatorService.isUrlFragment(url)) {
+    // Look up the url from the route map where it would have been
+    //  stored from the initial <nav-route> definition
     url = navigatorContext.routeMap?.get(
       NavigatorService.cleanHrefFragment(url),
     );
@@ -348,13 +350,9 @@ export default function HvRoute(props: Types.Props) {
     // Use the route id if available to look up the url
     if (props.route?.params?.id) {
       url = navigatorContext.routeMap?.get(props.route.params.id);
-    } else {
+    } else if (navigatorContext.initialRouteName) {
       // Try to use the initial route for this <navigator>
-      const initialRoute: string | undefined =
-        navigatorContext.initialRouteName;
-      if (initialRoute) {
-        url = navigatorContext.routeMap?.get(initialRoute);
-      }
+      url = navigatorContext.routeMap?.get(navigatorContext.initialRouteName);
     }
   }
 
