@@ -361,9 +361,12 @@ export default function HvRoute(props: Types.Props) {
   // Fall back to the entrypoint url
   url = url || navigationContext.entrypointUrl;
 
+  const id: string | undefined =
+    props.route?.params?.id || navigatorContext.initialRouteName || undefined;
+
   // Get the navigator element from the context
-  const element: TypesLegacy.Element | undefined = props.route?.params?.id
-    ? navigatorContext.elementMap?.get(props.route.params.id)
+  const element: TypesLegacy.Element | undefined = id
+    ? navigatorContext.elementMap?.get(id)
     : undefined;
 
   return (
