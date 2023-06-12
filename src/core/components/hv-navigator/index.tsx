@@ -23,7 +23,7 @@ type ParamTypes = {
 /**
  * Flag to show the navigator UIs
  */
-const SHOW_NAVIGATION_UI = true;
+const SHOW_NAVIGATION_UI = false;
 
 const Stack = NavigatorService.createStackNavigator<ParamTypes>();
 const BottomTab = NavigatorService.createBottomTabNavigator();
