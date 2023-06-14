@@ -45,7 +45,6 @@
     "test": "yarn generate test && yarn test:flow && yarn test:lint && yarn test:render && yarn test:unit && yarn test:validate-xml"
   },
   "dependencies": {
-    "@react-navigation/native": "6.1.6",
     "tiny-emitter": "2.1.0",
     "url-parse": "1.5.10",
     "xmldom-instawork": "0.0.1"
@@ -55,6 +54,7 @@
     "@react-native-picker/picker": ">= 2.2.1",
     "@react-navigation/bottom-tabs": "6.5.7",
     "@react-navigation/core": "6.4.8",
+    "@react-navigation/native": "6.1.6",
     "@react-navigation/stack": "6.3.16",
     "react": ">= 16.13.1",
     "react-native": ">= 0.63.3",
@@ -74,6 +74,7 @@
     "@react-native-picker/picker": "2.2.1",
     "@react-navigation/bottom-tabs": "6.5.7",
     "@react-navigation/core": "6.4.8",
+    "@react-navigation/native": "6.1.6",
     "@react-navigation/stack": "6.3.16",
     "@storybook/addon-actions": "4.1.18",
     "@storybook/addon-storyshots": "4.1.18",
