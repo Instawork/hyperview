@@ -137,6 +137,14 @@ The following attributes are part of the `https://hyperview.org/hyperview-alert`
 
 The label of the alert option. Appears as a pressable button below the title and message.
 
+### style
+
+| Type                                 | Required |
+| ------------------------------------ | -------- |
+| "default", "cancel" or "destructive" | **No**   |
+
+(iOS only) The style to be applied to the option's button - when unset, default style is "default"
+
 ### Behavior attributes
 
 See the standard [behavior attributes](/docs/reference_behavior_attributes). To support multiple behaviors, use `<behavior>` child elements instead.
