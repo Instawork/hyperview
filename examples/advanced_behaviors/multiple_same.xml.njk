@@ -4,13 +4,13 @@ permalink: "/advanced_behaviors/multiple_same.xml"
 tags: advanced_behaviors
 ---
 
-{% extends 'base.xml.njk' %}
+{% extends 'scrollview.xml.njk' %}
 {% block styles %}
   <style id="Containers" flex="1" flexDirection="row" marginLeft="24" marginRight="24"/>
   <style id="Container" flex="1"/>
   <style id="Event" fontSize="16" fontWeight="normal" margin="24" marginBottom="0"/>
 {% endblock %}
-{% block container %}
+{% block content %}
   <text style="Event">
     The button below has behaviors for presses that prepend events in two places.
   </text>
