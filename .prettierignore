@@ -1,5 +1,6 @@
 flow-typed
 *.gen.js
+_examples_site/
 website/
 /src/index.js
 /src/VisibilityDetectingView.js
