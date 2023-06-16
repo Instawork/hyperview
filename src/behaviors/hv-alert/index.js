@@ -77,6 +77,9 @@ export default {
             );
           });
       },
+      style:
+        optionElement &&
+        optionElement.getAttributeNS(Namespaces.HYPERVIEW_ALERT, 'style'),
       text:
         optionElement &&
         optionElement.getAttributeNS(Namespaces.HYPERVIEW_ALERT, 'label'),
