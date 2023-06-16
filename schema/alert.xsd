@@ -23,5 +23,14 @@
   <xs:attributeGroup name="alertAttributes">
     <xs:attribute name="message" type="xs:string" />
     <xs:attribute name="title" type="xs:string" />
+    <xs:attribute name="style">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="default" />
+          <xs:enumeration value="destructive" />
+          <xs:enumeration value="cancel" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
   </xs:attributeGroup>
 </xs:schema>
