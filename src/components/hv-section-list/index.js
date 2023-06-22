@@ -14,6 +14,7 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import {
   RefreshControl as DefaultRefreshControl,
+  Platform,
   SectionList,
 } from 'react-native';
 
@@ -139,6 +140,13 @@ export default class HvSectionList extends PureComponent<
       });
     }
 
+    // Fix scrollbar rendering issue in iOS 13+
+    // https://github.com/facebook/react-native/issues/26610#issuecomment-539843444
+    const scrollIndicatorInsets =
+      Platform.OS === 'ios' && parseInt(Platform.Version, 10) >= 13
+        ? { right: 1 }
+        : undefined;
+
     const listProps = {
       keyExtractor: item => item.getAttribute('key'),
       renderItem: ({ item }) =>
@@ -155,6 +163,7 @@ export default class HvSectionList extends PureComponent<
           this.props.onUpdate,
           this.props.options,
         ),
+      scrollIndicatorInsets,
       sections,
       stickySectionHeadersEnabled: this.getStickySectionHeadersEnabled(),
       style,

@@ -1,0 +1,83 @@
+---
+title: "Single Behavior"
+permalink: "/advanced_behaviors/alert/behavior.xml"
+tags: alert
+---
+
+{% extends 'scrollview.xml.njk' %}
+{% block styles %}
+  <style id="Container" borderColor="#e1e1e1" borderRadius="16" borderWidth="2" margin="24" padding="24"/>
+  <style id="Container__Label" color="black" fontSize="16" fontWeight="normal"/>
+{% endblock %}
+{% block content %}
+  <text style="Description">
+    Alert options can trigger navigation behaviors.
+  </text>
+  <view style="Button">
+    <behavior
+      action="alert"
+      alert:message="Pressing the options below will navigate screens."
+      alert:title="Navigation"
+      trigger="press"
+      xmlns:alert="https://hyperview.org/hyperview-alert">
+      <alert:option action="push" alert:label="Push" href="/advanced_behaviors/alert/index.xml" trigger="press"/>
+      <alert:option action="back" alert:label="Back" href="#" trigger="press"/>
+      <alert:option alert:label="Cancel"/>
+    </behavior>
+    <text style="Button__Label">Navigation options</text>
+  </view>
+  <text style="Description">
+    Alert options can trigger update behaviors.
+  </text>
+  <view style="Button">
+    <behavior
+      action="alert"
+      alert:message="Pressing the options below will change the content in the screen container."
+      alert:title="Updates"
+      trigger="press"
+      xmlns:alert="https://hyperview.org/hyperview-alert">
+      <alert:option action="append" alert:label="Append" href="#option1" target="alert1Container" trigger="press"/>
+      <alert:option action="prepend" alert:label="Prepend" href="#option2" target="alert1Container" trigger="press"/>
+      <alert:option action="replace-inner" alert:label="Replace" href="#option3" target="alert1Container" trigger="press"/>
+    </behavior>
+    <text style="Button__Label">Update options</text>
+  </view>
+  <view id="alert1Container" style="Container"/>
+  <view hide="true">
+    <text id="option1" style="Container__Label">Appended</text>
+    <text id="option2" style="Container__Label">Prepended</text>
+    <text id="option3" style="Container__Label">Replace</text>
+  </view>
+  <text style="Description">
+    Alert options can trigger other action types, including alerts
+  </text>
+  <view style="Button">
+    <behavior
+      action="alert"
+      alert:message="Press to open a second alert."
+      alert:title="First alert"
+      trigger="press"
+      xmlns:alert="https://hyperview.org/hyperview-alert">
+      <alert:option alert:label="Open Second Alert">
+        <behavior action="alert" alert:message="Press to close the second alert." alert:title="Second Alert" trigger="press">
+          <alert:option alert:label="Close"/>
+        </behavior>
+      </alert:option>
+    </behavior>
+    <text style="Button__Label">Nested</text>
+  </view>
+  <view style="Button">
+    <behavior
+      action="alert"
+      alert:title="Choose an action"
+      trigger="press"
+      xmlns:alert="https://hyperview.org/hyperview-alert"
+      xmlns:phone="https://instawork.com/hyperview-phone"
+      xmlns:sms="https://instawork.com/hyperview-sms">
+      <alert:option action="phone" alert:label="Call phone" phone:number="(555) 555-5555"/>
+      <alert:option action="sms" alert:label="Send SMS" sms:number="(555) 555-5555"/>
+      <alert:option alert:label="Close"/>
+    </behavior>
+    <text style="Button__Label">Other actions</text>
+  </view>
+{% endblock %}
