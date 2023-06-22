@@ -9,6 +9,8 @@
 import * as Contexts from './contexts';
 import * as HvScreenProps from './core/components/hv-screen/types';
 import * as NavContexts from './contexts/navigation';
+import * as Render from './services/render';
+import * as Services from 'hyperview/src/services';
 
 import React, { PureComponent } from 'react';
 import HvRoute from 'hyperview/src/core/components/hv-route';
@@ -18,6 +20,14 @@ import HvScreen from 'hyperview/src/core/components/hv-screen';
  * Provides routing to the correct path based on the state passed in
  */
 export default class Hyperview extends PureComponent<HvScreenProps.Props> {
+  static createProps = Services.createProps;
+
+  static createStyleProp = Services.createStyleProp;
+
+  static renderChildren = Render.renderChildren;
+
+  static renderElement = Render.renderElement;
+
   render() {
     if (this.props.navigation) {
       // Externally provided navigation will use the provided navigation and action callbacks
@@ -75,3 +85,5 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
     );
   }
 }
+
+export * as Events from 'hyperview/src/services/events';
