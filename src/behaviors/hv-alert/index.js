@@ -10,8 +10,8 @@
 
 import * as Dom from 'hyperview/src/services/dom';
 import * as Namespaces from 'hyperview/src/services/namespaces';
+import { Alert, Platform } from 'react-native';
 import type { Element, HvComponentOnUpdate } from 'hyperview/src/types';
-import { Alert } from 'react-native';
 import { later } from 'hyperview/src/services';
 
 export default {
@@ -84,6 +84,15 @@ export default {
         optionElement &&
         optionElement.getAttributeNS(Namespaces.HYPERVIEW_ALERT, 'label'),
     }));
+
+    // On Android, alerts don't have a default button when unspecified, so we need to set one.
+    if (!options.length && Platform.OS === 'android') {
+      options.push({
+        onPress: () => {},
+        text: 'OK',
+      });
+    }
+
     // Show alert
     Alert.alert(title, message, options);
   },
