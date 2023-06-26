@@ -10,7 +10,8 @@
 
 import * as Events from 'hyperview/src/services/events';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import Hyperview from 'hyperview/lib/core/components/hv-root';
+// $FlowFixMe
+import Hyperview from 'hyperview/src/core/components/hv-root';
 
 export * from 'hyperview/src/types';
 export { Events, Namespaces };
