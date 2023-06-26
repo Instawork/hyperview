@@ -85,3 +85,5 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
     );
   }
 }
+
+export * as Events from 'hyperview/src/services/events';
