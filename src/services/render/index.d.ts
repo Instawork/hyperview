@@ -15,11 +15,11 @@ import type {
 import React from 'react';
 
 export function renderElement(
-  element: ?Element,
+  element?: Element,
   stylesheets: StyleSheets,
   onUpdate: HvComponentOnUpdate,
   options: HvComponentOptions,
-): ?(React.ReactElement<unknown> | ?string);
+): React.ReactElement<unknown> | string | undefined;
 
 export function renderChildren(
   element: Element,

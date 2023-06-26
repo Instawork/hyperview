@@ -25,5 +25,5 @@ export class Parser {
 
   loadDocument: (
     url: string,
-  ) => Promise<{ doc: Document; staleHeaderType: ?XResponseStaleReason }>;
+  ) => Promise<{ doc: Document; staleHeaderType?: XResponseStaleReason }>;
 }
