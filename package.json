@@ -24,7 +24,7 @@
     }
   },
   "scripts": {
-    "build": "babel src --out-dir lib",
+    "build": "babel src --extensions \".ts,.tsx,.js,.jsx\" --out-dir lib",
     "sync": "babel-node ./scripts/sync",
     "generate": "babel-node ./scripts/generate",
     "preversion": "yarn test && yarn build",
