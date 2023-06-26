@@ -8,6 +8,6 @@
       "hyperview/*": ["./*"]
     }
   },
-  "files": ["src/core/components/hv-root/index.tsx"],
+  "files": ["src/index.js"],
   "exclude": ["**/*.js", "**/*.jsx"]
 }
