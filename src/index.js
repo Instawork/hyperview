@@ -13,4 +13,5 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import Hyperview from 'hyperview/lib/core/components/hv-root';
 
 export * from 'hyperview/src/types';
-export { Events, Hyperview, Namespaces };
+export { Events, Namespaces };
+export default Hyperview;
