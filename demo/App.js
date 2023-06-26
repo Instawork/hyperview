@@ -7,8 +7,8 @@
  */
 
 import './src/gesture-handler';
-import Root from './src/Root';
+import Navigator from './src/Navigator';
 
 export default function App() {
-  return <Root />;
+  return <Navigator />;
 }
