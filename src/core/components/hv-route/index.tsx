@@ -21,27 +21,6 @@ import HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
 import LoadError from 'hyperview/src/core/components/load-error';
 import Loading from 'hyperview/src/core/components/loading';
-import { RouteProps } from 'hyperview/src/core/components/hv-screen/types';
-
-type State = {
-  doc?: TypesLegacy.Document;
-  error?: Error;
-};
-
-type BuildScreenProps = {
-  doc?: TypesLegacy.Document;
-  navLogic: NavigatorService.Navigator;
-  routeProps: Types.InnerRouteProps;
-  url: string | null;
-};
-
-type RouteRenderProps = {
-  doc?: TypesLegacy.Document;
-  element?: TypesLegacy.Element;
-  navLogic: NavigatorService.Navigator;
-  routeProps: Types.InnerRouteProps;
-  url: string;
-};
 
 /**
  * Implementation of an HvRoute component
@@ -50,7 +29,7 @@ type RouteRenderProps = {
  * - Renders the document
  * - Handles errors
  */
-class HvRouteInner extends PureComponent<Types.InnerRouteProps, State> {
+class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
   parser?: DomService.Parser;
 
   navLogic: NavigatorService.Navigator;
@@ -119,7 +98,9 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, State> {
     }
   };
 
-  getRenderElement = (props: RouteRenderProps): TypesLegacy.Element | null => {
+  getRenderElement = (
+    props: Types.RouteRenderProps,
+  ): TypesLegacy.Element | null => {
     if (props.element) {
       return props.element;
     }
@@ -186,9 +167,9 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, State> {
   /**
    * Build the <HvScreen> component with injected props
    */
-  Screen = (props: BuildScreenProps): React.ReactElement => {
+  Screen = (props: Types.BuildScreenProps): React.ReactElement => {
     // Inject the corrected url into the params and cast as correct type
-    const route: RouteProps = {
+    const route: Types.RouteProps = {
       ...props.routeProps.route,
       key: props.routeProps.route?.key || 'hv-screen',
       name: props.routeProps.route?.name || 'hv-screen',
@@ -230,7 +211,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, State> {
   /**
    * Evaluate the <doc> element and render the appropriate component
    */
-  Route = (props: RouteRenderProps): React.ReactElement => {
+  Route = (props: Types.RouteRenderProps): React.ReactElement => {
     const renderElement: TypesLegacy.Element | null = this.getRenderElement(
       props,
     );
@@ -325,10 +306,10 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, State> {
  * - Passes the props, context, and url to HvRouteInner
  */
 export default function HvRoute(props: Types.Props) {
-  const navigationContext: NavigationContext.NavigationContextProps | null = useContext(
+  const navigationContext: Types.NavigationContextProps | null = useContext(
     NavigationContext.Context,
   );
-  const navigatorContext: NavigatorContext.NavigatorCache | null = useContext(
+  const navigatorContext: Types.NavigatorContextProps | null = useContext(
     NavigatorContext.NavigatorMapContext,
   );
   if (!navigationContext || !navigatorContext) {
@@ -382,9 +363,4 @@ export default function HvRoute(props: Types.Props) {
   );
 }
 
-export type {
-  InnerRouteProps,
-  Props,
-  RNTypedNavigationProps,
-  RouteParams,
-} from './types';
+export type { Props, RNTypedNavigationProps } from './types';

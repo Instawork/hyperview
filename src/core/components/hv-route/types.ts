@@ -6,56 +6,104 @@
  *
  */
 
-import * as NavigationContext from 'hyperview/src/contexts/navigation';
-import * as NavigatorContext from 'hyperview/src/contexts/navigator';
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as TypesLegacy from 'hyperview/src/types-legacy';
+import { ComponentType, ReactNode } from 'react';
+import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
+import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
 
 /**
- * Props used for data fetching by hv-route
+ * Params passed to hv-route
  */
-export type DataProps = {
+type RouteParams = {
   id?: string;
   url: string;
 };
 
 /**
- * Params passed to hv-route
- */
-export type RouteParams = DataProps;
-
-/**
  * The navigation prop used by react-navigation
  */
-// TODO GET RIGHT TYPE
 export type RNTypedNavigationProps = NavigatorService.NavigationProp<object>;
 
-/**
- * Props used by navigation components
- * Route contains the type of the params object
- */
-export type NavigationProps = {
-  navigation?: RNTypedNavigationProps;
-  route?: NavigatorService.Route<string, DataProps>;
+export type NavigationContextProps = {
+  entrypointUrl: string;
+  fetch: (
+    input: string,
+    init: { headers: { [key: string]: unknown } },
+  ) => Promise<Response>;
+  onParseAfter?: (url: string) => void;
+  onParseBefore?: (url: string) => void;
+  url?: string;
+  behaviors?: TypesLegacy.HvBehavior[];
+  components?: TypesLegacy.HvComponent[];
+  elementErrorComponent?: ComponentType<ErrorProps>;
+  errorScreen?: ComponentType<ErrorProps>;
+  loadingScreen?: ComponentType<LoadingProps>;
+  handleBack?: ComponentType<{ children: ReactNode }>;
+};
+
+export type NavigatorContextProps = {
+  routeMap?: Map<string, string>;
+  elementMap?: Map<string, TypesLegacy.Element>;
+  initialRouteName?: string;
+};
+
+export type State = {
+  doc?: TypesLegacy.Document;
+  error?: Error;
+};
+
+export type BuildScreenProps = {
+  doc?: TypesLegacy.Document;
+  navLogic: NavigatorService.Navigator;
+  routeProps: InnerRouteProps;
+  url: string | null;
+};
+
+export type RouteRenderProps = {
+  doc?: TypesLegacy.Document;
+  element?: TypesLegacy.Element;
+  navLogic: NavigatorService.Navigator;
+  routeProps: InnerRouteProps;
+  url: string;
 };
 
 /**
- * Props used for passing content
+ * The route prop used by react-navigation
  */
-export type ContentProps = {
-  element?: TypesLegacy.Element;
-};
+export type RouteProps = NavigatorService.Route<string, { url?: string }>;
 
 /**
  * The props used by inner components of hv-route
  */
-export type InnerRouteProps = DataProps &
-  NavigationProps &
-  NavigationContext.NavigationContextProps &
-  NavigatorContext.NavigatorCache &
-  ContentProps;
+export type InnerRouteProps = {
+  id?: string;
+  url: string;
+  navigation?: RNTypedNavigationProps;
+  route?: NavigatorService.Route<string, RouteParams>;
+  entrypointUrl: string;
+  fetch: (
+    input: string,
+    init: { headers: { [key: string]: unknown } },
+  ) => Promise<Response>;
+  onParseAfter?: (url: string) => void;
+  onParseBefore?: (url: string) => void;
+  behaviors?: TypesLegacy.HvBehavior[];
+  components?: TypesLegacy.HvComponent[];
+  elementErrorComponent?: ComponentType<ErrorProps>;
+  errorScreen?: ComponentType<ErrorProps>;
+  loadingScreen?: ComponentType<LoadingProps>;
+  handleBack?: ComponentType<{ children: ReactNode }>;
+  routeMap?: Map<string, string>;
+  elementMap?: Map<string, TypesLegacy.Element>;
+  initialRouteName?: string;
+  element?: TypesLegacy.Element;
+};
 
 /**
  * All of the props used by hv-route
  */
-export type Props = NavigationProps;
+export type Props = {
+  navigation?: RNTypedNavigationProps;
+  route?: NavigatorService.Route<string, RouteParams>;
+};

@@ -9,26 +9,21 @@
 import * as NavigationContext from 'hyperview/src/contexts/navigation';
 import * as NavigatorContext from 'hyperview/src/contexts/navigator';
 import * as NavigatorService from 'hyperview/src/services/navigator';
+import * as Types from './types';
 import * as TypesLegacy from 'hyperview/src/types-legacy';
-import HvRoute, { RouteParams } from 'hyperview/src/core/components/hv-route';
 import React, { PureComponent, useContext } from 'react';
-import { Props } from './types';
+import HvRoute from 'hyperview/src/core/components/hv-route';
 import { getFirstTag } from 'hyperview/src/services/dom/helpers-legacy';
-
-type ParamTypes = {
-  dynamic: RouteParams;
-  modal: RouteParams;
-};
 
 /**
  * Flag to show the navigator UIs
  */
 const SHOW_NAVIGATION_UI = false;
 
-const Stack = NavigatorService.createStackNavigator<ParamTypes>();
+const Stack = NavigatorService.createStackNavigator<Types.ParamTypes>();
 const BottomTab = NavigatorService.createBottomTabNavigator();
 
-export default class HvNavigator extends PureComponent<Props> {
+export default class HvNavigator extends PureComponent<Types.Props> {
   /**
    * Build an individual tab screen
    */
@@ -59,10 +54,10 @@ export default class HvNavigator extends PureComponent<Props> {
     type: TypesLegacy.DOMString,
   ): React.ReactNode => {
     const screens: React.ReactElement[] = [];
-    const navigationContext: NavigationContext.NavigationContextProps | null = useContext(
+    const navigationContext: Types.NavigationContextProps | null = useContext(
       NavigationContext.Context,
     );
-    const navigatorContext: NavigatorContext.NavigatorCache | null = useContext(
+    const navigatorContext: Types.NavigatorContextProps | null = useContext(
       NavigatorContext.NavigatorMapContext,
     );
     if (!navigationContext || !navigatorContext) {
@@ -157,7 +152,7 @@ export default class HvNavigator extends PureComponent<Props> {
   /**
    * Build the required navigator from the xml element
    */
-  Navigator = (props: Props): React.ReactElement => {
+  Navigator = (props: Types.Props): React.ReactElement => {
     const id:
       | TypesLegacy.DOMString
       | null
@@ -166,10 +161,10 @@ export default class HvNavigator extends PureComponent<Props> {
       throw new NavigatorService.HvNavigatorError('No id found for navigator');
     }
 
-    const navigationContext: NavigationContext.NavigationContextProps | null = useContext(
+    const navigationContext: Types.NavigationContextProps | null = useContext(
       NavigationContext.Context,
     );
-    const navigatorContext: NavigatorContext.NavigatorCache | null = useContext(
+    const navigatorContext: Types.NavigatorContextProps | null = useContext(
       NavigatorContext.NavigatorMapContext,
     );
     if (!navigationContext || !navigatorContext) {
