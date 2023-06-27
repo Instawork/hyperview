@@ -6,30 +6,28 @@
  *
  */
 
+import * as TypesLegacy from 'hyperview/src/types-legacy';
 import React, { createContext } from 'react';
-import { Element } from 'hyperview/src/types-legacy';
 
 type Props = { children: React.ReactNode };
-
-export type NavigatorCache = {
-  routeMap?: Map<string, string>;
-  elementMap?: Map<string, Element>;
-  initialRouteName?: string;
-};
 
 /**
  * Context used to store runtime information about the navigator and urls
  * Each navigator creates its own context
  * Urls defined in <nav-route> elements are stored in the routeMap by their key
  */
-export const NavigatorMapContext = createContext<NavigatorCache>({});
+export const NavigatorMapContext = createContext<{
+  routeMap?: Map<string, string>;
+  elementMap?: Map<string, TypesLegacy.Element>;
+  initialRouteName?: string;
+}>({});
 
 /**
  * Encapsulated context provider
  */
 export function NavigatorMapProvider(props: Props) {
   const routeMap: Map<string, string> = new Map();
-  const elementMap: Map<string, Element> = new Map();
+  const elementMap: Map<string, TypesLegacy.Element> = new Map();
   return (
     <NavigatorMapContext.Provider value={{ elementMap, routeMap }}>
       {props.children}
