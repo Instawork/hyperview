@@ -1,13 +1,13 @@
 {
   "extends": "@tsconfig/react-native/tsconfig.json",
   "compilerOptions": {
-    "allowJs": true,
+    "allowJs": false,
     "checkJs": false,
     "outDir": "lib",
     "paths": {
       "hyperview/*": ["./*"]
     }
   },
-  "files": ["src/index.js"],
+  "files": ["src/core/components/hv-root/index.tsx"],
   "exclude": ["**/*.js", "**/*.jsx"]
 }
