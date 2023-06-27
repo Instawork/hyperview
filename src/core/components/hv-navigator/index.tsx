@@ -18,7 +18,7 @@ import { getFirstTag } from 'hyperview/src/services/dom/helpers-legacy';
 /**
  * Flag to show the navigator UIs
  */
-const SHOW_NAVIGATION_UI = false;
+const SHOW_NAVIGATION_UI = true;
 
 const Stack = NavigatorService.createStackNavigator<Types.ParamTypes>();
 const BottomTab = NavigatorService.createBottomTabNavigator();

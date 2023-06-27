@@ -8,7 +8,7 @@
 
 import React, { PureComponent } from 'react';
 import HandleBack from './HandleBack';
-import Hyperview from 'hyperview';
+import Hyperview from 'hyperview/src/core/components/hv-root';
 import moment from 'moment';
 
 type Props = { url: string };
