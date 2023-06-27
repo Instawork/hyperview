@@ -12,7 +12,6 @@ import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Types from './types';
 import * as TypesLegacy from 'hyperview/src/types-legacy';
 import React, { PureComponent, useContext } from 'react';
-import HvRoute from 'hyperview/src/core/components/hv-route';
 import { getFirstTag } from 'hyperview/src/services/dom/helpers-legacy';
 
 /**
@@ -35,7 +34,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
       return (
         <BottomTab.Screen
           key={id}
-          component={HvRoute}
+          component={this.props.routeComponent}
           initialParams={{ id }}
           name={id}
         />
@@ -125,7 +124,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
       screens.push(
         <Stack.Screen
           key={NavigatorService.ID_DYNAMIC}
-          component={HvRoute}
+          component={this.props.routeComponent}
           getId={({ params }) => params.url}
           // empty object required because hv-screen doesn't check for undefined param
           initialParams={{}}
@@ -137,7 +136,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
       screens.push(
         <Stack.Screen
           key={NavigatorService.ID_MODAL}
-          component={HvRoute}
+          component={this.props.routeComponent}
           getId={({ params }) => params.url}
           // empty object required because hv-screen doesn't check for undefined param
           initialParams={{}}
@@ -233,7 +232,10 @@ export default class HvNavigator extends PureComponent<Types.Props> {
     const { Navigator } = this;
     return (
       <NavigatorContext.NavigatorMapProvider>
-        <Navigator element={this.props.element} />
+        <Navigator
+          element={this.props.element}
+          routeComponent={this.props.routeComponent}
+        />
       </NavigatorContext.NavigatorMapProvider>
     );
   }
