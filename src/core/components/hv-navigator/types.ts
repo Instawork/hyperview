@@ -49,5 +49,5 @@ export type ParamTypes = {
  */
 export type Props = {
   element: TypesLegacy.Element;
-  getRouteComponent: () => FC;
+  routeComponent: FC;
 };

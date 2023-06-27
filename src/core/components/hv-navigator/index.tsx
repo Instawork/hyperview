@@ -27,7 +27,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
 
   constructor(props: Types.Props) {
     super(props);
-    this.hvRoute = props.getRouteComponent();
+    this.hvRoute = props.routeComponent;
   }
 
   /**
@@ -241,7 +241,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
       <NavigatorContext.NavigatorMapProvider>
         <Navigator
           element={this.props.element}
-          getRouteComponent={this.props.getRouteComponent}
+          routeComponent={this.props.routeComponent}
         />
       </NavigatorContext.NavigatorMapProvider>
     );
