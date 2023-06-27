@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -8,9 +6,9 @@
  *
  */
 
+/* eslint instawork/flow-annotate: 0 */
 import * as Events from 'hyperview/src/services/events';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-// $FlowFixMe
 import Hyperview from 'hyperview/src/core/components/hv-root';
 
 export * from 'hyperview/src/types';
