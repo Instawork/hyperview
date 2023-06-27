@@ -17,7 +17,7 @@ const HYPERVIEW_SRC_DIR = path.join(HYPERVIEW_DIR, SRC_DIRNAME);
 
 const updatePackageJson = () => {
   console.log('Updating package.json…');
-  const cmd = `sed -i.bak 's/lib\\/index.js/${SRC_DIRNAME}\\/index.tsx/g; s/lib\\/index.tsx/${SRC_DIRNAME}\\/index.tsx/g; s/${SRC_DIRNAME}\\/index.js/${SRC_DIRNAME}\\/index.tsx/g' ${HYPERVIEW_DIR}/package.json`;
+  const cmd = `sed -i.bak 's/lib\\/index.js/${SRC_DIRNAME}\\/index.js/g;' ${HYPERVIEW_DIR}/package.json`;
   childProcess.execSync(cmd);
 };
 

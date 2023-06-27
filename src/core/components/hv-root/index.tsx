@@ -6,10 +6,10 @@
  *
  */
 
-import * as Contexts from './contexts';
-import * as HvScreenProps from './core/components/hv-screen/types';
-import * as NavContexts from './contexts/navigation';
-import * as Render from './services/render';
+import * as Contexts from 'hyperview/src/contexts';
+import * as HvScreenProps from 'hyperview/src/core/components/hv-screen/types';
+import * as NavContexts from 'hyperview/src/contexts/navigation';
+import * as Render from 'hyperview/src/services/render';
 import * as Services from 'hyperview/src/services';
 
 import React, { PureComponent } from 'react';
@@ -85,5 +85,3 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
     );
   }
 }
-
-export * as Events from 'hyperview/src/services/events';
