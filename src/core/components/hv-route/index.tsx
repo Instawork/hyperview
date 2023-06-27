@@ -225,7 +225,12 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
     }
 
     if (renderElement.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR) {
-      return <HvNavigator element={renderElement} />;
+      return (
+        <HvNavigator
+          element={renderElement}
+          getRouteComponent={() => HvRoute}
+        />
+      );
     }
     const { Screen } = this;
 
