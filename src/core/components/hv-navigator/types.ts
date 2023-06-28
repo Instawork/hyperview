@@ -7,7 +7,7 @@
  */
 
 import * as TypesLegacy from 'hyperview/src/types-legacy';
-import { ComponentType, ReactNode } from 'react';
+import { ComponentType, FC, ReactNode } from 'react';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
 
@@ -49,4 +49,5 @@ export type ParamTypes = {
  */
 export type Props = {
   element: TypesLegacy.Element;
+  routeComponent: FC;
 };
