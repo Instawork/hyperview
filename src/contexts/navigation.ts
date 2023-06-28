@@ -11,10 +11,7 @@ import React, { ComponentType, ReactNode } from 'react';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
 
-/**
- * Context used by to provide initial values to the navigation components
- */
-export const Context = React.createContext<{
+export type NavigationContextProps = {
   entrypointUrl: string;
   fetch: (
     input: string,
@@ -29,4 +26,9 @@ export const Context = React.createContext<{
   errorScreen?: ComponentType<ErrorProps>;
   loadingScreen?: ComponentType<LoadingProps>;
   handleBack?: ComponentType<{ children: ReactNode }>;
-} | null>(null);
+};
+
+/**
+ * Context used by to provide initial values to the navigation components
+ */
+export const Context = React.createContext<NavigationContextProps | null>(null);

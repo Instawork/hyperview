@@ -53,10 +53,10 @@ export default class HvNavigator extends PureComponent<Types.Props> {
     type: TypesLegacy.DOMString,
   ): React.ReactNode => {
     const screens: React.ReactElement[] = [];
-    const navigationContext: Types.NavigationContextProps | null = useContext(
+    const navigationContext: NavigationContext.NavigationContextProps | null = useContext(
       NavigationContext.Context,
     );
-    const navigatorContext: Types.NavigatorContextProps | null = useContext(
+    const navigatorContext: NavigatorContext.NavigatorContextProps | null = useContext(
       NavigatorContext.NavigatorMapContext,
     );
     if (!navigationContext || !navigatorContext) {
@@ -160,10 +160,10 @@ export default class HvNavigator extends PureComponent<Types.Props> {
       throw new NavigatorService.HvNavigatorError('No id found for navigator');
     }
 
-    const navigationContext: Types.NavigationContextProps | null = useContext(
+    const navigationContext: NavigationContext.NavigationContextProps | null = useContext(
       NavigationContext.Context,
     );
-    const navigatorContext: Types.NavigatorContextProps | null = useContext(
+    const navigatorContext: NavigatorContext.NavigatorContextProps | null = useContext(
       NavigatorContext.NavigatorMapContext,
     );
     if (!navigationContext || !navigatorContext) {
