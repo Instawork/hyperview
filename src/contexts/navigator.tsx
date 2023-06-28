@@ -9,18 +9,20 @@
 import * as TypesLegacy from 'hyperview/src/types-legacy';
 import React, { createContext } from 'react';
 
-type Props = { children: React.ReactNode };
+export type NavigatorContextProps = {
+  routeMap?: Map<string, string>;
+  elementMap?: Map<string, TypesLegacy.Element>;
+  initialRouteName?: string;
+};
 
 /**
  * Context used to store runtime information about the navigator and urls
  * Each navigator creates its own context
  * Urls defined in <nav-route> elements are stored in the routeMap by their key
  */
-export const NavigatorMapContext = createContext<{
-  routeMap?: Map<string, string>;
-  elementMap?: Map<string, TypesLegacy.Element>;
-  initialRouteName?: string;
-}>({});
+export const NavigatorMapContext = createContext<NavigatorContextProps>({});
+
+type Props = { children: React.ReactNode };
 
 /**
  * Encapsulated context provider
