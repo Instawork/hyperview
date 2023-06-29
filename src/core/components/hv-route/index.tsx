@@ -187,7 +187,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
             behaviors={props.routeProps.behaviors}
             closeModal={props.navLogic.closeModal}
             components={props.routeProps.components}
-            doc={props.doc}
+            doc={props.doc?.cloneNode(true)}
             elementErrorComponent={props.routeProps.elementErrorComponent}
             entrypointUrl={props.routeProps.entrypointUrl}
             errorScreen={props.routeProps.errorScreen}
