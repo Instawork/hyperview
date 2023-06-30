@@ -16,7 +16,12 @@ import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Types from './types';
 import * as TypesLegacy from 'hyperview/src/types-legacy';
 import * as UrlService from 'hyperview/src/services/url';
-import React, { PureComponent, useContext } from 'react';
+import React, {
+  ComponentType,
+  PureComponent,
+  ReactNode,
+  useContext,
+} from 'react';
 import HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
 import LoadError from 'hyperview/src/core/components/load-error';
@@ -98,19 +103,17 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
     }
   };
 
-  getRenderElement = (
-    props: Types.RouteRenderProps,
-  ): TypesLegacy.Element | null => {
-    if (props.element) {
-      return props.element;
+  getRenderElement = (): TypesLegacy.Element | null => {
+    if (this.props.element) {
+      return this.props.element;
     }
-    if (!props.doc) {
+    if (!this.state.doc) {
       throw new NavigatorService.HvRenderError('No document found');
     }
 
     // Get the <doc> element
     const root: TypesLegacy.Element | null = Helpers.getFirstTag(
-      props.doc,
+      this.state.doc,
       TypesLegacy.LOCAL_NAME.DOC,
     );
     if (!root) {
@@ -167,15 +170,16 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
   /**
    * Build the <HvScreen> component with injected props
    */
-  Screen = (props: Types.BuildScreenProps): React.ReactElement => {
+  Screen = (): React.ReactElement => {
+    const url = this.getUrl();
     // Inject the corrected url into the params and cast as correct type
     const route: Types.RouteProps = {
-      ...props.routeProps.route,
-      key: props.routeProps.route?.key || 'hv-screen',
-      name: props.routeProps.route?.name || 'hv-screen',
+      ...this.props.route,
+      key: this.props.route?.key || 'hv-screen',
+      name: this.props.route?.name || 'hv-screen',
       params: {
-        ...props.routeProps.route?.params,
-        url: props.url || undefined,
+        ...this.props.route?.params,
+        url: url || undefined,
       },
     };
 
@@ -183,25 +187,25 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
       <Contexts.DateFormatContext.Consumer>
         {formatter => (
           <HvScreen
-            back={props.navLogic.back}
-            behaviors={props.routeProps.behaviors}
-            closeModal={props.navLogic.closeModal}
-            components={props.routeProps.components}
-            doc={props.doc?.cloneNode(true)}
-            elementErrorComponent={props.routeProps.elementErrorComponent}
-            entrypointUrl={props.routeProps.entrypointUrl}
-            errorScreen={props.routeProps.errorScreen}
-            fetch={props.routeProps.fetch}
+            back={this.navLogic.back}
+            behaviors={this.props.behaviors}
+            closeModal={this.navLogic.closeModal}
+            components={this.props.components}
+            doc={this.state.doc?.cloneNode(true)}
+            elementErrorComponent={this.props.elementErrorComponent}
+            entrypointUrl={this.props.entrypointUrl}
+            errorScreen={this.props.errorScreen}
+            fetch={this.props.fetch}
             formatDate={formatter}
-            loadingScreen={props.routeProps.loadingScreen}
-            navigate={props.navLogic.navigate}
-            navigation={props.routeProps.navigation}
-            onParseAfter={props.routeProps.onParseAfter}
-            onParseBefore={props.routeProps.onParseBefore}
-            openModal={props.navLogic.openModal}
-            push={props.navLogic.push}
+            loadingScreen={this.props.loadingScreen}
+            navigate={this.navLogic.navigate}
+            navigation={this.props.navigation}
+            onParseAfter={this.props.onParseAfter}
+            onParseBefore={this.props.onParseBefore}
+            openModal={this.navLogic.openModal}
+            push={this.navLogic.push}
             route={route}
-            url={props.url || undefined}
+            url={url || undefined}
           />
         )}
       </Contexts.DateFormatContext.Consumer>
@@ -211,10 +215,10 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
   /**
    * Evaluate the <doc> element and render the appropriate component
    */
-  Route = (props: Types.RouteRenderProps): React.ReactElement => {
-    const renderElement: TypesLegacy.Element | null = this.getRenderElement(
-      props,
-    );
+  Route = (props: {
+    handleBack?: ComponentType<{ children: ReactNode }>;
+  }): React.ReactElement => {
+    const renderElement: TypesLegacy.Element | null = this.getRenderElement();
 
     if (!renderElement) {
       throw new NavigatorService.HvRenderError('No element found');
@@ -230,26 +234,14 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
     const { Screen } = this;
 
     if (renderElement.localName === TypesLegacy.LOCAL_NAME.SCREEN) {
-      if (props.routeProps.handleBack) {
+      if (props.handleBack) {
         return (
-          <props.routeProps.handleBack>
-            <Screen
-              doc={props.doc}
-              navLogic={props.navLogic}
-              routeProps={props.routeProps}
-              url={props.url}
-            />
-          </props.routeProps.handleBack>
+          <props.handleBack>
+            <Screen />
+          </props.handleBack>
         );
       }
-      return (
-        <Screen
-          doc={props.doc}
-          navLogic={props.navLogic}
-          routeProps={props.routeProps}
-          url={props.url}
-        />
-      );
+      return <Screen />;
     }
 
     throw new NavigatorService.HvRenderError('Invalid element type');
@@ -268,31 +260,23 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
       }
     }
 
-    const { Error, Route } = this;
-    try {
-      return (
-        <Route
-          doc={this.state.doc}
-          element={this.props.element}
-          navLogic={this.navLogic}
-          routeProps={this.props}
-          url={this.getUrl()}
-        />
-      );
-    } catch (err) {
-      return <Error error={err} />;
-    }
+    const { Route } = this;
+    return <Route handleBack={this.props.handleBack} />;
   };
 
   render() {
     const { Error, Load, Content } = this;
-    if (this.state.error) {
-      return <Error error={this.state.error} />;
+    try {
+      if (this.state.error) {
+        return <Error error={this.state.error} />;
+      }
+      if (this.props.element || this.state.doc) {
+        return <Content />;
+      }
+      return <Load />;
+    } catch (err) {
+      return <Error error={err} />;
     }
-    if (this.props.element || this.state.doc) {
-      return <Content />;
-    }
-    return <Load />;
   }
 }
 

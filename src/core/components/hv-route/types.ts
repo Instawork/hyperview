@@ -53,21 +53,6 @@ export type State = {
   error?: Error;
 };
 
-export type BuildScreenProps = {
-  doc?: TypesLegacy.Document;
-  navLogic: NavigatorService.Navigator;
-  routeProps: InnerRouteProps;
-  url: string | null;
-};
-
-export type RouteRenderProps = {
-  doc?: TypesLegacy.Document;
-  element?: TypesLegacy.Element;
-  navLogic: NavigatorService.Navigator;
-  routeProps: InnerRouteProps;
-  url: string;
-};
-
 /**
  * The route prop used by react-navigation
  */
