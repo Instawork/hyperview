@@ -51,5 +51,4 @@ export type Props = {
   loadingScreen?: ComponentType<LoadingProps>;
   handleBack?: ComponentType<{ children: ReactNode }>;
   doc?: TypesLegacy.Document;
-  updateDoc?: (doc: TypesLegacy.Document) => void;
 };

@@ -139,10 +139,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
     );
   };
 
-  updateDoc = (doc: TypesLegacy.Document) => {
-    this.setState({ doc });
-  };
-
   /**
    * View shown while loading
    */
@@ -205,7 +201,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
             openModal={props.navLogic.openModal}
             push={props.navLogic.push}
             route={route}
-            updateDoc={this.updateDoc}
             url={props.url || undefined}
           />
         )}
