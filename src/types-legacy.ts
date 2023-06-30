@@ -97,6 +97,9 @@ export type Node = {
  * Minimal Element type copy from 'hyperview/src/types.js'
  */
 export type Element = Node & {
+  // ***** ADDED *****
+  cloneNode: (deep: boolean) => Element;
+
   childNodes: NodeList<Element>;
   getAttribute: (name: DOMString) => DOMString | null | undefined;
 
@@ -110,6 +113,9 @@ export type Element = Node & {
  * Minimal Document type copy from 'hyperview/src/types.js'
  */
 export type Document = Node & {
+  // ***** ADDED *****
+  cloneNode: (deep: boolean) => Document;
+
   getElementsByTagNameNS: (
     namespaceURI: NamespaceURI,
     localName: LocalName,

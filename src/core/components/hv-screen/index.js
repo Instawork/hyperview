@@ -59,6 +59,8 @@ export default class HvScreen extends React.Component {
       styles: null,
       url: null,
     };
+    // Injecting a passed document as a single-use document
+    this.initialDoc = props.doc;
 
     // <HACK>
     // In addition to storing the document on the react state, we keep a reference to it
@@ -199,8 +201,18 @@ export default class HvScreen extends React.Component {
         await later(parseInt(params.delay, 10));
       }
 
-      // eslint-disable-next-line react/no-access-state-in-setstate
-      const { doc, staleHeaderType } = await this.parser.loadDocument(this.state.url);
+      // If an initial document was passed, use it once and then remove
+      let doc;
+      let staleHeaderType;
+      if (this.initialDoc){
+        doc = this.initialDoc;
+        this.initialDoc = null;
+      } else {
+        // eslint-disable-next-line react/no-access-state-in-setstate
+        const { doc : loadedDoc, staleHeaderType : loadedType } = await this.parser.loadDocument(this.state.url);
+        doc = loadedDoc;
+        staleHeaderType = loadedType;
+      }
       const stylesheets = Stylesheets.createStylesheets(doc);
       this.navigation.setRouteKey(this.state.url, routeKey);
       this.setState({
