@@ -75,6 +75,7 @@ export default class HvScreen extends React.Component {
     this.setState = (...args) => {
       if (args[0].doc !== undefined) {
         this.doc = args[0].doc;
+        this.props.updateDoc?.(args[0].doc)
       }
       this.oldSetState(...args);
     }
