@@ -68,6 +68,7 @@ export default class Navigation {
     element: Element,
     formComponents: ComponentRegistry,
     opts: BehaviorOptions,
+    registerPreload?: (id: number, element: Element) => void,
   ): void => {
     const { showIndicatorId, delay, targetId } = opts;
     const formData: ?FormData = getFormData(element, formComponents);
@@ -91,6 +92,9 @@ export default class Navigation {
       if (loadingScreen) {
         preloadScreen = Date.now(); // Not trully unique but sufficient for our use-case
         this.setPreloadScreen(preloadScreen, loadingScreen);
+        if (registerPreload) {
+          registerPreload(preloadScreen, loadingScreen);
+        }
       }
     }
 

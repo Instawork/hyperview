@@ -6,6 +6,7 @@
  *
  */
 
+import * as Components from 'hyperview/src/services/components';
 import * as Contexts from 'hyperview/src/contexts';
 import * as DomService from 'hyperview/src/services/dom';
 import * as Helpers from 'hyperview/src/services/dom/helpers-legacy';
@@ -13,11 +14,14 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as NavigationContext from 'hyperview/src/contexts/navigation';
 import * as NavigatorContext from 'hyperview/src/contexts/navigator';
 import * as NavigatorService from 'hyperview/src/services/navigator';
+import * as Render from 'hyperview/src/services/render';
+import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as Types from './types';
 import * as TypesLegacy from 'hyperview/src/types-legacy';
 import * as UrlService from 'hyperview/src/services/url';
 import React, {
   ComponentType,
+  JSXElementConstructor,
   PureComponent,
   ReactNode,
   useContext,
@@ -39,6 +43,8 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
 
   navLogic: NavigatorService.Navigator;
 
+  componentRegistry: TypesLegacy.ComponentRegistry;
+
   constructor(props: Types.InnerRouteProps) {
     super(props);
 
@@ -47,6 +53,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
       error: undefined,
     };
     this.navLogic = new NavigatorService.Navigator(this.props);
+    this.componentRegistry = Components.getRegistry(this.props.components);
   }
 
   componentDidMount() {
@@ -142,10 +149,35 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
     );
   };
 
+  registerPreload = (id: number, element: TypesLegacy.Element): void => {
+    this.props.preloadMap?.set(id, element);
+  };
+
   /**
    * View shown while loading
+   * Includes preload functionality
    */
   Load = (): React.ReactElement => {
+    if (this.props.route?.params?.preloadScreen) {
+      const preloadElement = this.props.preloadMap?.get(
+        this.props.route?.params?.preloadScreen,
+      );
+      if (preloadElement) {
+        const [body] = Array.from(
+          preloadElement.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'body'),
+        );
+        const styleSheet = Stylesheets.createStylesheets(preloadElement);
+        const component:
+          | string
+          | React.ReactElement<unknown, string | JSXElementConstructor<unknown>>
+          | undefined = Render.renderElement(body, styleSheet, null, {
+          componentRegistry: this.componentRegistry,
+        });
+        if (component) {
+          return <>{component}</>;
+        }
+      }
+    }
     const LoadingScreen = this.props.loadingScreen || Loading;
     return <LoadingScreen />;
   };
@@ -204,6 +236,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
             onParseBefore={this.props.onParseBefore}
             openModal={this.navLogic.openModal}
             push={this.navLogic.push}
+            registerPreload={this.registerPreload}
             route={route}
             url={url || undefined}
           />

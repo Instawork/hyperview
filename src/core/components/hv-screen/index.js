@@ -353,6 +353,12 @@ export default class HvScreen extends React.Component {
     return null;
   }
 
+  registerPreload = (id, element) => {
+    if (this.props.registerPreload){
+      this.props.registerPreload(id, element);
+    }
+  }
+
   /**
    *
    */
@@ -364,7 +370,7 @@ export default class HvScreen extends React.Component {
     } else if (Object.values(NAV_ACTIONS).includes(action)) {
       this.navigation.setUrl(this.state.url);
       this.navigation.setDocument(this.doc);
-      this.navigation.navigate(href || ANCHOR_ID_SEPARATOR, action, currentElement, this.formComponentRegistry, opts);
+      this.navigation.navigate(href || ANCHOR_ID_SEPARATOR, action, currentElement, this.formComponentRegistry, opts, this.registerPreload);
     } else if (Object.values(UPDATE_ACTIONS).includes(action)) {
       this.onUpdateFragment(href, action, currentElement, opts);
     } else if (action === ACTIONS.SWAP) {

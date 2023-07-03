@@ -144,3 +144,11 @@ export type HvBehavior = {
 };
 
 export type HvComponent = unknown;
+
+export type ComponentRegistry = {
+  [key: string]: {
+    [key: string]: HvComponent;
+  };
+};
+
+export type StyleSheet = unknown;
