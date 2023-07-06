@@ -18,6 +18,7 @@ import type { Props as LoadingProps } from 'hyperview/src/core/components/loadin
 type RouteParams = {
   id?: string;
   url: string;
+  preloadScreen?: number;
 };
 
 /**
@@ -80,6 +81,7 @@ export type InnerRouteProps = {
   loadingScreen?: ComponentType<LoadingProps>;
   handleBack?: ComponentType<{ children: ReactNode }>;
   routeMap?: Map<string, string>;
+  preloadMap?: Map<number, TypesLegacy.Element>;
   elementMap?: Map<string, TypesLegacy.Element>;
   initialRouteName?: string;
   element?: TypesLegacy.Element;

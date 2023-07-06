@@ -13,6 +13,7 @@ export type NavigatorContextProps = {
   routeMap?: Map<string, string>;
   elementMap?: Map<string, TypesLegacy.Element>;
   initialRouteName?: string;
+  preloadMap?: Map<number, TypesLegacy.Element>;
 };
 
 /**
@@ -30,8 +31,9 @@ type Props = { children: React.ReactNode };
 export function NavigatorMapProvider(props: Props) {
   const routeMap: Map<string, string> = new Map();
   const elementMap: Map<string, TypesLegacy.Element> = new Map();
+  const preloadMap: Map<number, TypesLegacy.Element> = new Map();
   return (
-    <NavigatorMapContext.Provider value={{ elementMap, routeMap }}>
+    <NavigatorMapContext.Provider value={{ elementMap, preloadMap, routeMap }}>
       {props.children}
     </NavigatorMapContext.Provider>
   );
