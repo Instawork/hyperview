@@ -1,0 +1,21 @@
+---
+title: "Preformatted"
+permalink: "/ui_elements/text/preformatted.xml"
+tags: text
+---
+
+{% extends 'scrollview.xml.njk' %}
+{% block styles %}
+  <style id="Text" fontSize="24" margin="24" />
+{% endblock %}
+
+{% block content %}
+  <text
+    style="Text"
+    preformatted="true"
+  ><![CDATA[<hello>
+  <world />
+</hello>
+]]>
+  </text>
+{% endblock %}

@@ -1,0 +1,56 @@
+---
+title: "Keyboard Avoiding View"
+permalink: "/ui_elements/keyboard_avoiding_view/index.xml"
+tags: ui_elements
+---
+
+{% extends 'scrollview.xml.njk' %}
+{% block styles %}
+  <style id="Footer" backgroundColor="#63CB76" width="100%" padding="24" />
+  <style
+    id="Footer__Description"
+    color="white"
+    fontSize="24"
+    fontWeight="bold"
+    textAlign="center"
+  />
+{% endblock %}
+
+{% block content %}
+  <text style="Description">
+    View with text inputs that open the keyboard.
+    Keyboard awareness is applied on both the scrollable 'Form' view and the non-scrollable 'Footer' view
+  </text>
+
+  <view id="Form" style="FormGroup" scroll="true">
+    <text style="Label">Input field 1</text>
+    <text-field
+      placeholder="First name"
+      placeholderTextColor="#8D9494"
+      name="text"
+      style="Input"
+    />
+
+    <text style="Label">Input field 2</text>
+    <text-field
+      placeholder="Last name"
+      placeholderTextColor="#8D9494"
+      name="text"
+      style="Input"
+    />
+
+    <text style="Label">Input field 3</text>
+    <text-field
+      placeholder="Address"
+      placeholderTextColor="#8D9494"
+      name="text"
+      style="Input"
+    />
+  </view>
+
+  <view id="Footer" avoid-keyboard="true">
+    <view style="Footer">
+      <text style="Footer__Description">Keyboard Avoiding View</text>
+    </view>
+  </view>
+{% endblock %}
