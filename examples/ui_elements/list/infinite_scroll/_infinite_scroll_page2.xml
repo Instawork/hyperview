@@ -26,17 +26,19 @@
   <item key="29" style="Item">
     <text style="Item__Label">Added: List 29</text>
   </item>
-  <item
-    action="append"
-    delay="1000"
-    href="/ui_elements/list/_infinite_scroll_page3.xml"
-    key="30"
-    once="true"
-    show-during-load="myIndicator"
-    style="Item"
-    target="myList"
-    trigger="visible"
-  >
+  <item key="30" style="Item">
     <text style="Item__Label">Added: List 30</text>
+  </item>
+  <item key="page-3-loader" style="Item">
+    <behavior
+      delay="300"
+      trigger="visible"
+      action="replace"
+      once="true"
+      href="/ui_elements/list/infinite_scroll/_infinite_scroll_page3.xml"
+    />
+    <view id="list-loading-indicator" style="Spinner">
+      <spinner />
+    </view>
   </item>
 </items>

@@ -53,7 +53,7 @@
       </header>
       <list>
         <item
-          href="/ui_elements/list/basic.xml"
+          href="/ui_elements/list/basic/index.xml"
           key="basic"
           show-during-load="loadingScreen"
           style="Item"
@@ -62,7 +62,7 @@
           <text style="Item__Chevron">&gt;</text>
         </item>
         <item
-          href="/ui_elements/list/horizontal.xml"
+          href="/ui_elements/list/horizontal/index.xml"
           key="horizontal"
           show-during-load="loadingScreen"
           style="Item"
@@ -71,7 +71,7 @@
           <text style="Item__Chevron">&gt;</text>
         </item>
         <item
-          href="/ui_elements/list/hidden_scroll_bar.xml"
+          href="/ui_elements/list/hidden_scroll_bar/index.xml"
           key="hidden-scroll-bar"
           show-during-load="loadingScreen"
           style="Item"
@@ -80,7 +80,7 @@
           <text style="Item__Chevron">&gt;</text>
         </item>
         <item
-          href="/ui_elements/list/refresh.xml"
+          href="/ui_elements/list/refresh/index.xml"
           key="refresh"
           show-during-load="loadingScreen"
           style="Item"
@@ -89,7 +89,7 @@
           <text style="Item__Chevron">&gt;</text>
         </item>
         <item
-          href="/ui_elements/list/infinite_scroll.xml"
+          href="/ui_elements/list/infinite_scroll/index.xml"
           key="infinite-scroll"
           show-during-load="loadingScreen"
           style="Item"
@@ -98,7 +98,7 @@
           <text style="Item__Chevron">&gt;</text>
         </item>
         <item
-          href="/ui_elements/list/refresh_infinite_scroll.xml"
+          href="/ui_elements/list/refresh_infinite_scroll/index.xml"
           key="refresh-infinite-scroll"
           show-during-load="loadingScreen"
           style="Item"
