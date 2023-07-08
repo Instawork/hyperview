@@ -1,7 +1,7 @@
 <section-list
   action="replace"
   delay="700"
-  href="/ui_elements/sectionlist/_refresh_load.xml"
+  href="/ui_elements/sectionlist/refresh/_refresh_load.xml"
   trigger="refresh"
   xmlns="https://hyperview.org/hyperview"
 >

@@ -59,17 +59,13 @@
   <item key="19" style="Item">
     <text style="Item__Label">List 19</text>
   </item>
-  <item
-    action="append"
-    delay="1000"
-    href="/ui_elements/list/_infinite_scroll_page2.xml"
-    key="20"
-    once="true"
-    show-during-load="myIndicator"
-    style="Item"
-    target="myList"
-    trigger="visible"
-  >
+  <item key="20" style="Item">
     <text style="Item__Label">List 20</text>
+  </item>
+  <item key="page-2-loader" style="Item">
+    <behavior delay="300" trigger="visible" action="replace" once="true" href="/ui_elements/list/refresh_infinite_scroll/_infinite_scroll_page2.xml" />
+    <view id="list-loading-indicator" style="Spinner">
+      <spinner />
+    </view>
   </item>
 </list>

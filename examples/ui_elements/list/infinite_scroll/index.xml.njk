@@ -1,64 +1,16 @@
-<doc xmlns="https://hyperview.org/hyperview">
-  <screen>
-    <styles>
-      <style
-        id="Header"
-        alignItems="center"
-        backgroundColor="white"
-        borderBottomColor="#eee"
-        borderBottomWidth="1"
-        flexDirection="row"
-        paddingLeft="24"
-        paddingRight="24"
-        paddingBottom="16"
-      />
-      <style
-        id="Header__Back"
-        color="blue"
-        fontSize="16"
-        fontWeight="600"
-        paddingRight="16"
-      />
-      <style id="Header__Title" color="black" fontSize="24" fontWeight="600" />
-      <style id="Body" backgroundColor="white" flex="1" />
-      <style
-        id="Description"
-        borderColor="red"
-        borderRadius="4"
-        borderWidth="2"
-        fontSize="16"
-        fontWeight="600"
-        margin="24"
-        padding="16"
-      />
-      <style
-        id="Item"
-        alignItems="center"
-        borderBottomColor="#eee"
-        borderBottomWidth="1"
-        flex="1"
-        flexDirection="row"
-        height="48"
-        justifyContent="space-between"
-        paddingLeft="24"
-        paddingRight="24"
-      />
-      <style id="Item__Label" fontSize="18" fontWeight="normal" />
-      <style id="Item__Chevron" fontSize="18" fontWeight="bold" />
-      <style
-        id="Spinner"
-        flex="1"
-        flexDirection="row"
-        justifyContent="center"
-        padding="24"
-      />
-    </styles>
-    <body style="Body" safe-area="true">
-      <header style="Header">
-        <text action="back" href="#" style="Header__Back">Back</text>
-        <text style="Header__Title">List With Infinite Scroll</text>
-      </header>
-      <list id="myList">
+---
+title: "List With Infinite Scroll"
+permalink: "/ui_elements/list/infinite_scroll/index.xml"
+tags: list
+---
+
+{% extends 'base.xml.njk' %}
+{% block styles %}
+<style id="Spinner" flex="1" flexDirection="row" justifyContent="center" padding="24" />
+{% endblock %}
+
+{% block container %}
+  <list id="myList">
         <item key="1" style="Item">
           <text style="Item__Label">List 1</text>
         </item>
@@ -120,18 +72,10 @@
           <text style="Item__Label">List 20</text>
         </item>
         <item key="page-2-loader" style="Item">
-          <behavior
-            delay="300"
-            trigger="visible"
-            action="replace"
-            once="true"
-            href="/ui_elements/list/infinite_scroll/_infinite_scroll_page2.xml"
-          />
+          <behavior delay="300" trigger="visible" action="replace" once="true" href="/ui_elements/list/infinite_scroll/_infinite_scroll_page2.xml" />
           <view id="list-loading-indicator" style="Spinner">
             <spinner />
           </view>
         </item>
       </list>
-    </body>
-  </screen>
-</doc>
+{% endblock %}
