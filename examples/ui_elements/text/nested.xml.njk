@@ -6,19 +6,18 @@ tags: text
 
 {% extends 'scrollview.xml.njk' %}
 {% block styles %}
-  <style id="Text" fontSize="24" margin="24" />
-  <style id="Bold" fontWeight="bold" />
-  <style id="Italic" fontStyle="italic" />
-  <style id="Color" backgroundColor="#63CB76" color="white" />
-  <style id="Big" fontSize="32" />
-  <style id="Small" fontSize="16" />
+  <style id="Text" fontSize="24" margin="24"/>
+  <style id="Bold" fontWeight="bold"/>
+  <style id="Italic" fontStyle="italic"/>
+  <style id="Color" backgroundColor="#63CB76" color="white"/>
+  <style id="Big" fontSize="32"/>
+  <style id="Small" fontSize="16"/>
   <style id="Link" color="blue">
     <modifier pressed="true">
-      <style color="red" />
+      <style color="red"/>
     </modifier>
   </style>
 {% endblock %}
-
 {% block content %}
   <text style="Text">
     Hello,
@@ -28,7 +27,7 @@ tags: text
     </text>
   </text>
   <text style="Text">
-    <text style="Color"> </text>
+    <text style="Color"></text>
     <text style="Big">
       Hello,
     </text>
@@ -43,13 +42,15 @@ tags: text
     </text>
   </text>
   <text style="Text Small">
-    Tap <text style="Link" action="back">here</text> to go back
+    Tap
+    <text style="Link" action="back">here</text>
+    to go back
   </text>
   <text style="Text Small">
-     Velit voluptas et alias atque provident sapiente consequuntur deserunt.
-     <text style="Link" action="back">
-       Dolorem et non error dolorem voluptate amet accusantium.
-     </text>
-     Corporis rerum sed labore quae sed qui quis quasi.
+    Velit voluptas et alias atque provident sapiente consequuntur deserunt.
+    <text style="Link" action="back">
+      Dolorem et non error dolorem voluptate amet accusantium.
+    </text>
+    Corporis rerum sed labore quae sed qui quis quasi.
   </text>
 {% endblock %}

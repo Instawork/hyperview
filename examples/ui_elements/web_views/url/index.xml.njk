@@ -6,14 +6,13 @@ tags: webviews
 
 {% extends 'base.xml.njk' %}
 {% block styles %}
-<style id="Flex" flex="1" flexDirection="row" justifyContent="space-between" />
-<style id="Main" flex="1" />
+  <style id="Flex" flex="1" flexDirection="row" justifyContent="space-between"/>
+  <style id="Main" flex="1"/>
 {% endblock %}
-
 {% block container %}
   <view style="Main">
-        <view style="Flex">
-          <web-view url="https://hyperview.org/" activity-indicator-color="red" />
-        </view>
-      </view>
+    <view style="Flex">
+      <web-view url="https://hyperview.org/" activity-indicator-color="red"/>
+    </view>
+  </view>
 {% endblock %}

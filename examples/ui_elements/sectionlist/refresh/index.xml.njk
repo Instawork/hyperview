@@ -6,28 +6,34 @@ tags: sectionlist
 
 {% extends 'base.xml.njk' %}
 {% block styles %}
-<style id="Item__Label--Special" color="red" />
-<style id="List__HeaderText" fontSize="18" fontWeight="bold" />
-<style id="List__Header" alignItems="center" backgroundColor="#eee" flex="1" flexDirection="row" height="48" paddingLeft="24" paddingRight="24" />
+  <style id="Item__Label--Special" color="red"/>
+  <style id="List__HeaderText" fontSize="18" fontWeight="bold"/>
+  <style
+    id="List__Header"
+    alignItems="center"
+    backgroundColor="#eee"
+    flex="1"
+    flexDirection="row"
+    height="48"
+    paddingLeft="24"
+    paddingRight="24"/>
 {% endblock %}
-
 {% block container %}
   <text style="Description">
-        Try multiple pull-to-refresh gestures on the section list below.
-      </text>
-<section-list action="replace" delay="700" href="/ui_elements/sectionlist/refresh/_refresh_load.xml" trigger="refresh">
-        
-        <section-title style="List__Header">
-          <text style="List__HeaderText">Section 1</text>
-        </section-title>
-        <item key="1" style="Item">
-          <text style="Item__Label">List 1</text>
-        </item>
-        <item key="2" style="Item">
-          <text style="Item__Label">List 2</text>
-        </item>
-        <item key="3" style="Item">
-          <text style="Item__Label">List 3</text>
-        </item>
-      </section-list>
+    Try multiple pull-to-refresh gestures on the section list below.
+  </text>
+  <section-list action="replace" delay="700" href="/ui_elements/sectionlist/refresh/_refresh_load.xml" trigger="refresh">
+    <section-title style="List__Header">
+      <text style="List__HeaderText">Section 1</text>
+    </section-title>
+    <item key="1" style="Item">
+      <text style="Item__Label">List 1</text>
+    </item>
+    <item key="2" style="Item">
+      <text style="Item__Label">List 2</text>
+    </item>
+    <item key="3" style="Item">
+      <text style="Item__Label">List 3</text>
+    </item>
+  </section-list>
 {% endblock %}
