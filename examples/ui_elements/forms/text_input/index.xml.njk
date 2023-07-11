@@ -6,143 +6,235 @@ tags: forms
 
 {% extends 'scrollview.xml.njk' %}
 {% block styles %}
-<style id="input--error" borderBottomColor="#FF4847" color="#FF4847">
-        <modifier focused="true">
-          <style borderBottomColor="#FF4847" />
-        </modifier>
-      </style>
-<style id="outerInput" flex="1" />
-<style id="label" borderColor="#4E4D4D" fontSize="16" fontWeight="bold" lineHeight="24" marginBottom="8" />
-<style id="help--error" color="#FF4847" />
-<style id="input--noneditable" color="#8D9494" />
-<style id="input" borderBottomColor="#E1E1E1" borderBottomWidth="1" borderColor="#4E4D4D" flex="1" fontSize="16" fontWeight="normal" paddingBottom="8" paddingTop="8">
-        <modifier pressed="true">
-          <style borderBottomColor="green" />
-        </modifier>
-        <modifier focused="true">
-          <style borderBottomColor="#4778FF" />
-        </modifier>
-      </style>
-<style id="FormGroup" flex="1" marginLeft="24" marginRight="24" marginTop="48" />
-<style id="horizontalFormGroup" flex="1" flexDirection="row" />
-<style id="help" borderColor="#FF4847" fontSize="16" fontWeight="normal" lineHeight="24" marginTop="16" />
-<style id="Main" flex="1" marginBottom="40" />
+  <style id="input--error" borderBottomColor="#FF4847" color="#FF4847">
+    <modifier focused="true">
+      <style borderBottomColor="#FF4847"/>
+    </modifier>
+  </style>
+  <style id="outerInput" flex="1"/>
+  <style id="label" borderColor="#4E4D4D" fontSize="16" fontWeight="bold" lineHeight="24" marginBottom="8"/>
+  <style id="help--error" color="#FF4847"/>
+  <style id="input--noneditable" color="#8D9494"/>
+  <style
+    id="input"
+    borderBottomColor="#E1E1E1"
+    borderBottomWidth="1"
+    borderColor="#4E4D4D"
+    flex="1"
+    fontSize="16"
+    fontWeight="normal"
+    paddingBottom="8"
+    paddingTop="8">
+    <modifier pressed="true">
+      <style borderBottomColor="green"/>
+    </modifier>
+    <modifier focused="true">
+      <style borderBottomColor="#4778FF"/>
+    </modifier>
+  </style>
+  <style id="FormGroup" flex="1" marginLeft="24" marginRight="24" marginTop="48"/>
+  <style id="horizontalFormGroup" flex="1" flexDirection="row"/>
+  <style id="help" borderColor="#FF4847" fontSize="16" fontWeight="normal" lineHeight="24" marginTop="16"/>
+  <style id="Main" flex="1" marginBottom="40"/>
 {% endblock %}
-
 {% block content %}
   <view scroll="true" style="Main">
-        <form>
-        <view style="FormGroup">
-          <text style="label">Default input field</text>
-          <text-field placeholder="First name" placeholderTextColor="#8D9494" name="text" style="input" />
-          <text style="help">Please enter your full name</text>
-        </view>
-        <view style="FormGroup">
-          <text style="label">Filled input field</text>
-          <text-field placeholder="First name" placeholderTextColor="#8D9494" name="text" style="input" value="Milhouse" />
-          <text style="help">Please enter your full name</text>
-        </view>
-        <view style="FormGroup">
-          <text style="label">Validation error</text>
-          <text-field placeholder="First name" placeholderTextColor="#8D9494" name="text" style="input input--error" />
-          <text style="help help--error">Please enter your full name</text>
-        </view>
-        <view style="FormGroup">
-          <text style="label">Filled validation error</text>
-          <text-field placeholder="First name" placeholderTextColor="#8D9494" name="text" style="input input--error" value="Milhouse" />
-          <text style="help help--error">Name already taken</text>
-        </view>
-        <view style="FormGroup">
-          <text style="label">Horizontal Layout</text>
-          <view style="horizontalFormGroup">
-            <text-field placeholder="First" placeholderTextColor="#8D9494" name="text" style="input" />
-            <text-field placeholder="Last" placeholderTextColor="#8D9494" name="text" style="input" />
-          </view>
-        </view>
-        <view style="FormGroup">
-          <text style="label">Phone pad keyboard</text>
-          <text-field keyboard-type="phone-pad" placeholder="Phone number" placeholderTextColor="#8D9494" name="text" style="input" value="(281) 555-2048" />
-        </view>
-        <view style="FormGroup">
-          <text style="label">Number pad keyboard</text>
-          <text-field keyboard-type="number-pad" placeholder="SSN" placeholderTextColor="#8D9494" name="text" style="input" value="600 80 5555" />
-        </view>
-        <view style="FormGroup">
-          <text style="label">Email keyboard</text>
-          <text-field keyboard-type="email-address" placeholder="Email" placeholderTextColor="#8D9494" name="text" style="input" value="gigsy@instawork.com" />
-        </view>
-        <view style="FormGroup">
-          <text style="label">Phone number mask</text>
-          <text-field keyboard-type="phone-pad" mask="(999) 999-9999" placeholder="Phone number" placeholderTextColor="#8D9494" name="text" style="input" value="" />
-        </view>
-        <view style="FormGroup">
-          <text style="label">4 digit code mask</text>
-          <text-field keyboard-type="number-pad" mask="9999" placeholder="4-digit code" placeholderTextColor="#8D9494" name="text" style="input" value="" />
-        </view>
-        <view style="FormGroup">
-          <text style="label">SSN mask</text>
-          <text-field keyboard-type="number-pad" mask="999 99 9999" placeholder="SSN or Tax ID" placeholderTextColor="#8D9494" name="text" style="input" value="" />
-        </view>
-
-        <view style="FormGroup">
-          <text style="label">Secure Text</text>
-          <text-field placeholder="Password" placeholderTextColor="#8D9494" name="text" style="input" secure-text="true" value="" />
-        </view>
-
-        <view style="FormGroup">
-          <text style="label">Secure Text + Mask</text>
-          <text-field keyboard-type="number-pad" placeholder="SSN" placeholderTextColor="#8D9494" mask="999 99 9999" name="text" style="input" secure-text="true" value="" />
-        </view>
-        
-        <view style="FormGroup">
-          <text style="label">Noneditable Text</text>
-          <text-field placeholderTextColor="#8D9494" name="text" style="input input--noneditable" value="9999" editable="false" />
-        </view>
-
-        <view style="FormGroup">
-          <text style="label">Editable Text</text>
-          <text-field placeholder="Edit your text" placeholderTextColor="#8D9494" name="text" style="input" value="9999" editable="true" />
-        </view>
-
-        <view style="FormGroup">
-          <text style="label">Multi-line</text>
-          <text-field placeholder="Instructions" multiline="true" name="text" placeholderTextColor="#8D9494" style="input" />
-          <text style="help">Please enter your instructions</text>
-        </view>
-
-        <view style="FormGroup">
-          <text style="label">Multi-line filled</text>
-          <text-field placeholder="Instructions" multiline="true" name="text" placeholderTextColor="#8D9494" style="input" value="One two three four" />
-        </view>
-
-        <view style="FormGroup">
-          <text style="label">Multi-line validation error</text>
-          <text-field placeholder="Instructions" multiline="true" name="text" placeholderTextColor="#8D9494" style="input input--error" />
-          <text style="help help--error">
-            Please enter your gig instructions
-          </text>
-        </view>
-
-        <view style="FormGroup">
-          <text style="label">Multi-line filled with validation error</text>
-          <text-field placeholder="Instructions" multiline="true" name="text" placeholderTextColor="#8D9494" style="input input--error" value="One two three four" />
-          <text style="help help--error">
-            Please enter your gig instructions
-          </text>
-        </view>
-
-        <view style="FormGroup">
-          <text style="label">Multi-line, noneditable</text>
-          <text-field placeholderTextColor="#8D9494" multiline="true" name="text" style="input input--noneditable" value="One two three four" editable="false" />
-        </view>
-
-        <view style="FormGroup">
-          <text style="label">Multi-line, editable</text>
-          <text-field placeholder="Edit your text" multiline="true" placeholderTextColor="#8D9494" name="text" style="input" value="One two three four" editable="true" />
-        </view>
-          <view style="Button" href="/ui_elements/forms/text_input.xml">
-            <text style="Button__Label">Serialize</text>
-          </view>
-        </form>
+    <form>
+      <view style="FormGroup">
+        <text style="label">Default input field</text>
+        <text-field placeholder="First name" placeholderTextColor="#8D9494" name="text" style="input"/>
+        <text style="help">Please enter your full name</text>
       </view>
+      <view style="FormGroup">
+        <text style="label">Filled input field</text>
+        <text-field placeholder="First name" placeholderTextColor="#8D9494" name="text" style="input" value="Milhouse"/>
+        <text style="help">Please enter your full name</text>
+      </view>
+      <view style="FormGroup">
+        <text style="label">Validation error</text>
+        <text-field placeholder="First name" placeholderTextColor="#8D9494" name="text" style="input input--error"/>
+        <text style="help help--error">Please enter your full name</text>
+      </view>
+      <view style="FormGroup">
+        <text style="label">Filled validation error</text>
+        <text-field
+          placeholder="First name"
+          placeholderTextColor="#8D9494"
+          name="text"
+          style="input input--error"
+          value="Milhouse"/>
+        <text style="help help--error">Name already taken</text>
+      </view>
+      <view style="FormGroup">
+        <text style="label">Horizontal Layout</text>
+        <view style="horizontalFormGroup">
+          <text-field placeholder="First" placeholderTextColor="#8D9494" name="text" style="input"/>
+          <text-field placeholder="Last" placeholderTextColor="#8D9494" name="text" style="input"/>
+        </view>
+      </view>
+      <view style="FormGroup">
+        <text style="label">Phone pad keyboard</text>
+        <text-field
+          keyboard-type="phone-pad"
+          placeholder="Phone number"
+          placeholderTextColor="#8D9494"
+          name="text"
+          style="input"
+          value="(281) 555-2048"/>
+      </view>
+      <view style="FormGroup">
+        <text style="label">Number pad keyboard</text>
+        <text-field
+          keyboard-type="number-pad"
+          placeholder="SSN"
+          placeholderTextColor="#8D9494"
+          name="text"
+          style="input"
+          value="600 80 5555"/>
+      </view>
+      <view style="FormGroup">
+        <text style="label">Email keyboard</text>
+        <text-field
+          keyboard-type="email-address"
+          placeholder="Email"
+          placeholderTextColor="#8D9494"
+          name="text"
+          style="input"
+          value="gigsy@instawork.com"/>
+      </view>
+      <view style="FormGroup">
+        <text style="label">Phone number mask</text>
+        <text-field
+          keyboard-type="phone-pad"
+          mask="(999) 999-9999"
+          placeholder="Phone number"
+          placeholderTextColor="#8D9494"
+          name="text"
+          style="input"
+          value=""/>
+      </view>
+      <view style="FormGroup">
+        <text style="label">4 digit code mask</text>
+        <text-field
+          keyboard-type="number-pad"
+          mask="9999"
+          placeholder="4-digit code"
+          placeholderTextColor="#8D9494"
+          name="text"
+          style="input"
+          value=""/>
+      </view>
+      <view style="FormGroup">
+        <text style="label">SSN mask</text>
+        <text-field
+          keyboard-type="number-pad"
+          mask="999 99 9999"
+          placeholder="SSN or Tax ID"
+          placeholderTextColor="#8D9494"
+          name="text"
+          style="input"
+          value=""/>
+      </view>
+      <view style="FormGroup">
+        <text style="label">Secure Text</text>
+        <text-field
+          placeholder="Password"
+          placeholderTextColor="#8D9494"
+          name="text"
+          style="input"
+          secure-text="true"
+          value=""/>
+      </view>
+      <view style="FormGroup">
+        <text style="label">Secure Text + Mask</text>
+        <text-field
+          keyboard-type="number-pad"
+          placeholder="SSN"
+          placeholderTextColor="#8D9494"
+          mask="999 99 9999"
+          name="text"
+          style="input"
+          secure-text="true"
+          value=""/>
+      </view>
+      <view style="FormGroup">
+        <text style="label">Noneditable Text</text>
+        <text-field placeholderTextColor="#8D9494" name="text" style="input input--noneditable" value="9999" editable="false"/>
+      </view>
+      <view style="FormGroup">
+        <text style="label">Editable Text</text>
+        <text-field
+          placeholder="Edit your text"
+          placeholderTextColor="#8D9494"
+          name="text"
+          style="input"
+          value="9999"
+          editable="true"/>
+      </view>
+      <view style="FormGroup">
+        <text style="label">Multi-line</text>
+        <text-field placeholder="Instructions" multiline="true" name="text" placeholderTextColor="#8D9494" style="input"/>
+        <text style="help">Please enter your instructions</text>
+      </view>
+      <view style="FormGroup">
+        <text style="label">Multi-line filled</text>
+        <text-field
+          placeholder="Instructions"
+          multiline="true"
+          name="text"
+          placeholderTextColor="#8D9494"
+          style="input"
+          value="One two three four"/>
+      </view>
+      <view style="FormGroup">
+        <text style="label">Multi-line validation error</text>
+        <text-field
+          placeholder="Instructions"
+          multiline="true"
+          name="text"
+          placeholderTextColor="#8D9494"
+          style="input input--error"/>
+        <text style="help help--error">
+          Please enter your gig instructions
+        </text>
+      </view>
+      <view style="FormGroup">
+        <text style="label">Multi-line filled with validation error</text>
+        <text-field
+          placeholder="Instructions"
+          multiline="true"
+          name="text"
+          placeholderTextColor="#8D9494"
+          style="input input--error"
+          value="One two three four"/>
+        <text style="help help--error">
+          Please enter your gig instructions
+        </text>
+      </view>
+      <view style="FormGroup">
+        <text style="label">Multi-line, noneditable</text>
+        <text-field
+          placeholderTextColor="#8D9494"
+          multiline="true"
+          name="text"
+          style="input input--noneditable"
+          value="One two three four"
+          editable="false"/>
+      </view>
+      <view style="FormGroup">
+        <text style="label">Multi-line, editable</text>
+        <text-field
+          placeholder="Edit your text"
+          multiline="true"
+          placeholderTextColor="#8D9494"
+          name="text"
+          style="input"
+          value="One two three four"
+          editable="true"/>
+      </view>
+      <view style="Button" href="/ui_elements/forms/text_input.xml">
+        <text style="Button__Label">Serialize</text>
+      </view>
+    </form>
+  </view>
 {% endblock %}
