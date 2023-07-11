@@ -22,7 +22,7 @@ import {
   HTTP_METHODS,
   X_RESPONSE_STALE_REASON,
 } from './types';
-import { DOMParser } from 'xmldom-instawork';
+import { DOMParser } from '@instawork/xmldom';
 import { Dimensions } from 'react-native';
 import type { Document } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';

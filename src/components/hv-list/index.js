@@ -18,7 +18,7 @@ import {
   Platform,
 } from 'react-native';
 import React, { PureComponent } from 'react';
-import { DOMParser } from 'xmldom-instawork';
+import { DOMParser } from '@instawork/xmldom';
 import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { State } from './types';

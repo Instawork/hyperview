@@ -16,7 +16,7 @@ import {
   encodeXml,
   flattenRegistry,
 } from 'hyperview/src/services';
-import { DOMParser } from 'xmldom-instawork';
+import { DOMParser } from '@instawork/xmldom';
 import HvDateField from 'hyperview/src/components/hv-date-field';
 import HvPickerField from 'hyperview/src/components/hv-picker-field';
 import HvSelectMultiple from 'hyperview/src/components/hv-select-multiple';

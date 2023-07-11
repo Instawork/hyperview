@@ -47,7 +47,7 @@
   "dependencies": {
     "tiny-emitter": "2.1.0",
     "url-parse": "1.5.10",
-    "xmldom-instawork": "0.0.1"
+    "@instawork/xmldom": "0.0.2"
   },
   "peerDependencies": {
     "@react-native-community/datetimepicker": ">= 3.0.3",
