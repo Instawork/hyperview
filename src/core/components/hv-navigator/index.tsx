@@ -7,7 +7,7 @@
  */
 
 import * as NavigationContext from 'hyperview/src/contexts/navigation';
-import * as NavigatorContext from 'hyperview/src/contexts/navigator';
+import * as NavigatorMapContext from 'hyperview/src/contexts/navigator-map';
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Types from './types';
 import * as TypesLegacy from 'hyperview/src/types-legacy';
@@ -56,10 +56,10 @@ export default class HvNavigator extends PureComponent<Types.Props> {
     const navigationContext: NavigationContext.NavigationContextProps | null = useContext(
       NavigationContext.Context,
     );
-    const navigatorContext: NavigatorContext.NavigatorContextProps | null = useContext(
-      NavigatorContext.NavigatorMapContext,
+    const navigatorMapContext: NavigatorMapContext.NavigatorMapContextProps | null = useContext(
+      NavigatorMapContext.NavigatorMapContext,
     );
-    if (!navigationContext || !navigatorContext) {
+    if (!navigationContext || !navigatorMapContext) {
       throw new NavigatorService.HvRouteError('No context found');
     }
 
@@ -91,7 +91,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
         );
         if (nestedNavigator) {
           // Cache the navigator for the route
-          navigatorContext.elementMap?.set(id, nestedNavigator);
+          navigatorMapContext.setElement(id, nestedNavigator);
         } else {
           const href:
             | TypesLegacy.DOMString
@@ -108,7 +108,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
           );
 
           // Cache the url for the route by nav-route id
-          navigatorContext.routeMap?.set(id, url);
+          navigatorMapContext.setRoute(id, url);
         }
 
         // 'stack' uses route urls, other types build out the screens
@@ -125,7 +125,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
         <Stack.Screen
           key={NavigatorService.ID_DYNAMIC}
           component={this.props.routeComponent}
-          getId={({ params }) => params.url}
+          getId={({ params }: Types.ScreenParams) => params.url}
           // empty object required because hv-screen doesn't check for undefined param
           initialParams={{}}
           name={NavigatorService.ID_DYNAMIC}
@@ -137,7 +137,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
         <Stack.Screen
           key={NavigatorService.ID_MODAL}
           component={this.props.routeComponent}
-          getId={({ params }) => params.url}
+          getId={({ params }: Types.ScreenParams) => params.url}
           // empty object required because hv-screen doesn't check for undefined param
           initialParams={{}}
           name={NavigatorService.ID_MODAL}
@@ -163,10 +163,10 @@ export default class HvNavigator extends PureComponent<Types.Props> {
     const navigationContext: NavigationContext.NavigationContextProps | null = useContext(
       NavigationContext.Context,
     );
-    const navigatorContext: NavigatorContext.NavigatorContextProps | null = useContext(
-      NavigatorContext.NavigatorMapContext,
+    const navigatorMapContext: NavigatorMapContext.NavigatorMapContextProps | null = useContext(
+      NavigatorMapContext.NavigatorMapContext,
     );
-    if (!navigationContext || !navigatorContext) {
+    if (!navigationContext || !navigatorMapContext) {
       throw new NavigatorService.HvRouteError('No context found');
     }
 
@@ -187,7 +187,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
       .getAttribute('id')
       ?.toString();
     if (initialId) {
-      navigatorContext.initialRouteName = initialId;
+      navigatorMapContext.initialRouteName = initialId;
     }
     const { buildScreens } = this;
     switch (type) {
@@ -196,7 +196,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
           <Stack.Navigator
             id={id}
             initialRouteName={NavigatorService.ID_DYNAMIC}
-            screenOptions={({ route }) => ({
+            screenOptions={({ route }: Types.NavigatorParams) => ({
               header: undefined,
               headerMode: 'screen',
               headerShown: SHOW_NAVIGATION_UI,
@@ -231,12 +231,12 @@ export default class HvNavigator extends PureComponent<Types.Props> {
   render() {
     const { Navigator } = this;
     return (
-      <NavigatorContext.NavigatorMapProvider>
+      <NavigatorMapContext.NavigatorMapProvider>
         <Navigator
           element={this.props.element}
           routeComponent={this.props.routeComponent}
         />
-      </NavigatorContext.NavigatorMapProvider>
+      </NavigatorMapContext.NavigatorMapProvider>
     );
   }
 }
