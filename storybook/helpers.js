@@ -3,7 +3,7 @@
 import * as Components from 'hyperview/src/services/components';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
-import { DOMParser } from 'xmldom-instawork';
+import { DOMParser } from '@instawork/xmldom';
 import type { HvComponent } from 'hyperview/src/types';
 import humps from 'humps';
 import { storiesOf } from '@storybook/react-native';
