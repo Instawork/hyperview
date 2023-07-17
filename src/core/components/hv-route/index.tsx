@@ -12,7 +12,7 @@ import * as DomService from 'hyperview/src/services/dom';
 import * as Helpers from 'hyperview/src/services/dom/helpers-legacy';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as NavigationContext from 'hyperview/src/contexts/navigation';
-import * as NavigatorContext from 'hyperview/src/contexts/navigator';
+import * as NavigatorMapContext from 'hyperview/src/contexts/navigator-map';
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Render from 'hyperview/src/services/render';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
@@ -150,7 +150,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
   };
 
   registerPreload = (id: number, element: TypesLegacy.Element): void => {
-    this.props.preloadMap?.set(id, element);
+    this.props.setPreload(id, element);
   };
 
   /**
@@ -159,7 +159,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
    */
   Load = (): React.ReactElement => {
     if (this.props.route?.params?.preloadScreen) {
-      const preloadElement = this.props.preloadMap?.get(
+      const preloadElement = this.props.getPreload(
         this.props.route?.params?.preloadScreen,
       );
       if (preloadElement) {
@@ -326,10 +326,10 @@ export default function HvRoute(props: Types.Props) {
   const navigationContext: Types.NavigationContextProps | null = useContext(
     NavigationContext.Context,
   );
-  const navigatorContext: Types.NavigatorContextProps | null = useContext(
-    NavigatorContext.NavigatorMapContext,
+  const navigatorMapContext: Types.NavigatorMapContextProps | null = useContext(
+    NavigatorMapContext.NavigatorMapContext,
   );
-  if (!navigationContext || !navigatorContext) {
+  if (!navigationContext || !navigatorMapContext) {
     throw new NavigatorService.HvRouteError('No context found');
   }
 
@@ -339,18 +339,16 @@ export default function HvRoute(props: Types.Props) {
   if (url && NavigatorService.isUrlFragment(url)) {
     // Look up the url from the route map where it would have been
     //  stored from the initial <nav-route> definition
-    url = navigatorContext.routeMap?.get(
-      NavigatorService.cleanHrefFragment(url),
-    );
+    url = navigatorMapContext.getRoute(NavigatorService.cleanHrefFragment(url));
   }
 
   if (!url) {
     // Use the route id if available to look up the url
     if (props.route?.params?.id) {
-      url = navigatorContext.routeMap?.get(props.route.params.id);
-    } else if (navigatorContext.initialRouteName) {
+      url = navigatorMapContext.getRoute(props.route.params.id);
+    } else if (navigatorMapContext.initialRouteName) {
       // Try to use the initial route for this <navigator>
-      url = navigatorContext.routeMap?.get(navigatorContext.initialRouteName);
+      url = navigatorMapContext.getRoute(navigatorMapContext.initialRouteName);
     }
   }
 
@@ -358,7 +356,9 @@ export default function HvRoute(props: Types.Props) {
   url = url || navigationContext.entrypointUrl;
 
   const id: string | undefined =
-    props.route?.params?.id || navigatorContext.initialRouteName || undefined;
+    props.route?.params?.id ||
+    navigatorMapContext.initialRouteName ||
+    undefined;
 
   const { index, type } = props.navigation?.getState() || {};
   // The nested element is only used when the navigator is not a stack
@@ -368,12 +368,12 @@ export default function HvRoute(props: Types.Props) {
 
   // Get the navigator element from the context
   const element: TypesLegacy.Element | undefined =
-    id && includeElement ? navigatorContext.elementMap?.get(id) : undefined;
+    id && includeElement ? navigatorMapContext.getElement(id) : undefined;
 
   return (
     <HvRouteInner
       // eslint-disable-next-line react/jsx-props-no-spreading
-      {...{ ...props, ...navigationContext, ...navigatorContext }}
+      {...{ ...props, ...navigationContext, ...navigatorMapContext }}
       element={element}
       url={url}
     />

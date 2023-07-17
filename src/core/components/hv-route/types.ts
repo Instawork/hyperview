@@ -43,9 +43,11 @@ export type NavigationContextProps = {
   handleBack?: ComponentType<{ children: ReactNode }>;
 };
 
-export type NavigatorContextProps = {
-  routeMap?: Map<string, string>;
-  elementMap?: Map<string, TypesLegacy.Element>;
+export type NavigatorMapContextProps = {
+  getRoute: (key: string) => string | undefined;
+  getElement: (key: string) => TypesLegacy.Element | undefined;
+  setPreload: (key: number, element: TypesLegacy.Element) => void;
+  getPreload: (key: number) => TypesLegacy.Element | undefined;
   initialRouteName?: string;
 };
 
@@ -80,9 +82,10 @@ export type InnerRouteProps = {
   errorScreen?: ComponentType<ErrorProps>;
   loadingScreen?: ComponentType<LoadingProps>;
   handleBack?: ComponentType<{ children: ReactNode }>;
-  routeMap?: Map<string, string>;
-  preloadMap?: Map<number, TypesLegacy.Element>;
-  elementMap?: Map<string, TypesLegacy.Element>;
+  getRoute: (key: string) => string | undefined;
+  getElement: (key: string) => TypesLegacy.Element | undefined;
+  setPreload: (key: number, element: TypesLegacy.Element) => void;
+  getPreload: (key: number) => TypesLegacy.Element | undefined;
   initialRouteName?: string;
   element?: TypesLegacy.Element;
 };
