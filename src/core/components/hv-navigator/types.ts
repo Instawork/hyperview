@@ -9,7 +9,7 @@
 import * as TypesLegacy from 'hyperview/src/types-legacy';
 import { FC } from 'react';
 
-type RouteParams = {
+export type RouteParams = {
   id?: string;
   url: string;
 };
@@ -17,6 +17,14 @@ type RouteParams = {
 export type ParamTypes = {
   dynamic: RouteParams;
   modal: RouteParams;
+};
+
+export type ScreenParams = {
+  params: RouteParams;
+};
+
+export type NavigatorParams = {
+  route: ScreenParams;
 };
 
 /**
