@@ -1461,6 +1461,13 @@
   resolved "https://registry.yarnpkg.com/@iarna/toml/-/toml-2.2.5.tgz#b32366c89b43c6f8cefbdefac778b9c828e3ba8c"
   integrity sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==
 
+"@instawork/xmldom@0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@instawork/xmldom/-/xmldom-0.0.2.tgz#3c6348fc9dfd101cb939aa41d149274a3781ce27"
+  integrity sha512-6a0WM8OcgnAujFksEcdynrESb1OciKHEPWgSSinSO++oDgICTdMpzvK2j1gfVo1i1o8QC641q67DkJccvf48BA==
+  dependencies:
+    string.prototype.matchall "3.0.1"
+
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@istanbuljs/load-nyc-config/-/load-nyc-config-1.1.0.tgz#fd3db1d59ecf7cf121e80650bb86712f9b55eced"
@@ -15099,12 +15106,6 @@ xmldoc@^1.1.2:
   integrity sha512-ruPC/fyPNck2BD1dpz0AZZyrEwMOrWTO5lDdIXS91rs3wtm4j+T8Rp2o+zoOYkkAxJTZRPOSnOGei1egoRmKMQ==
   dependencies:
     sax "^1.2.1"
-
-xmldom-instawork@0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/xmldom-instawork/-/xmldom-instawork-0.0.1.tgz#57c7351a68126d3407c6a685588bc51eef8e3623"
-  dependencies:
-    string.prototype.matchall "3.0.1"
 
 xmldom@0.1.x:
   version "0.1.27"

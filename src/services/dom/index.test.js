@@ -13,10 +13,10 @@ import * as UrlService from 'hyperview/src/services/url';
 import { X_RESPONSE_STALE_REASON } from './types';
 import { version } from 'hyperview/package.json';
 
-// Mock instawork-xmldom module
+// Mock @instawork/xmldom module
 const mockExpectedDocument = { foo: 'bar' };
 const mockParseFromString = jest.fn().mockReturnValue(mockExpectedDocument);
-jest.mock('xmldom-instawork', () => {
+jest.mock('@instawork/xmldom', () => {
   const DOMParser = () => null;
   DOMParser.prototype.parseFromString = (...args) =>
     mockParseFromString.apply(this, args);

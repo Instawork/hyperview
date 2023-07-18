@@ -40,7 +40,7 @@ import {
 } from 'react-native';
 import type { Node } from 'react';
 import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
-import { XMLSerializer } from 'xmldom-instawork';
+import { XMLSerializer } from '@instawork/xmldom';
 import { X_RESPONSE_STALE_REASON } from 'hyperview/src/services/dom/types';
 import { createTestProps } from 'hyperview/src/services';
 

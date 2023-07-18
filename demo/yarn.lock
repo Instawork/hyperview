@@ -1553,6 +1553,13 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
+"@instawork/xmldom@0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@instawork/xmldom/-/xmldom-0.0.2.tgz#3c6348fc9dfd101cb939aa41d149274a3781ce27"
+  integrity sha512-6a0WM8OcgnAujFksEcdynrESb1OciKHEPWgSSinSO++oDgICTdMpzvK2j1gfVo1i1o8QC641q67DkJccvf48BA==
+  dependencies:
+    string.prototype.matchall "3.0.1"
+
 "@jest/create-cache-key-function@^27.0.1":
   version "27.5.1"
   resolved "https://registry.yarnpkg.com/@jest/create-cache-key-function/-/create-cache-key-function-27.5.1.tgz#7448fae15602ea95c828f5eceed35c202a820b31"
@@ -5634,14 +5641,14 @@ https-browserify@^1.0.0:
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-1.0.0.tgz#ec06c10e0a34c0f2faf199f7fd7fc78fffd03c73"
   integrity sha512-J+FkSdyD+0mA0N+81tMotaRMfSL9SGi+xpD3T6YApKsc3bGSXJlfXri3VyFOeYkfLRQisDk1W+jIFFKBeUBbBg==
 
-hyperview@0.66.0:
-  version "0.66.0"
-  resolved "https://registry.yarnpkg.com/hyperview/-/hyperview-0.66.0.tgz#8c920cbcdee67562d6315e06169af4cd3ea7770f"
-  integrity sha512-oL0gPyeva7Okmk6vDQjwCgBUEjA8M/TkcZ5yTT6taMe5ajmuLuD3rYLNbRiE0eG4Gulmj5iLoFEhJUhVcNOQVw==
+hyperview@0.67.0:
+  version "0.67.0"
+  resolved "https://registry.yarnpkg.com/hyperview/-/hyperview-0.67.0.tgz#a3581719226aeb76d76586c9dd3fe4d1edce21f7"
+  integrity sha512-pkKj4XFs0SRCJIUqVwgKL0Y1Mdj6J0O36SG+ln/OLlzIOIrVlgkflEgC04jQMkeTWBqqxwRDFyWS9/9gh3h40w==
   dependencies:
+    "@instawork/xmldom" "0.0.2"
     tiny-emitter "2.1.0"
     url-parse "1.5.10"
-    xmldom-instawork "0.0.1"
 
 hyphenate-style-name@^1.0.2, hyphenate-style-name@^1.0.4:
   version "1.0.4"
@@ -10822,13 +10829,6 @@ xmldoc@^1.1.2:
   integrity sha512-2eN8QhjBsMW2uVj7JHLHkMytpvGHLHxKXBy4J3fAT/HujsEtM6yU84iGjpESYGHg6XwK0Vu4l+KgqQ2dv2cCqg==
   dependencies:
     sax "^1.2.4"
-
-xmldom-instawork@0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/xmldom-instawork/-/xmldom-instawork-0.0.1.tgz#57c7351a68126d3407c6a685588bc51eef8e3623"
-  integrity sha512-i+txX8H1jFxoAPgJyAHhErk5+ede5pb51w0yknWL6ITPrv4Vu8W1GRzAYh5eH32HKw5n5yh3IWvGjcidKRa6DQ==
-  dependencies:
-    string.prototype.matchall "3.0.1"
 
 xtend@^4.0.0, xtend@~4.0.1:
   version "4.0.2"
