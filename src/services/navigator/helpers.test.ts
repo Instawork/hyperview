@@ -18,7 +18,7 @@ import {
   isUrlFragment,
   validateUrl,
 } from './helpers';
-import { DOMParser } from 'xmldom-instawork';
+import { DOMParser } from '@instawork/xmldom';
 
 import StateSource from './test.state.json';
 
