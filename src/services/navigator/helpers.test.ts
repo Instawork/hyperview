@@ -67,7 +67,7 @@ const parser = new DOMParser({
 
 describe('getChildElements', () => {
   it('should find 2 route elements', () => {
-    const doc: TypesLegacy.Document = parser.parseFromString(navDocSource);
+    const doc = parser.parseFromString(navDocSource);
     const navigators = doc.getElementsByTagNameNS(
       Namespaces.HYPERVIEW,
       'navigator',
@@ -76,11 +76,11 @@ describe('getChildElements', () => {
     expect(routes.length).toEqual(2);
   });
   it('should find one element', () => {
-    const doc: TypesLegacy.Document = parser.parseFromString(blankDoc);
+    const doc = parser.parseFromString(blankDoc);
     expect(getChildElements(doc).length).toEqual(1);
   });
   it('should find no elements', () => {
-    const doc: TypesLegacy.Document = parser.parseFromString(blankDoc);
+    const doc = parser.parseFromString(blankDoc);
     const { firstChild } = doc;
     expect(getChildElements(firstChild).length).toEqual(0);
   });
@@ -91,7 +91,7 @@ describe('getChildElements', () => {
 
 describe('isNavigationElement', () => {
   describe('navigator', () => {
-    const doc: TypesLegacy.Document = parser.parseFromString(navDocSource);
+    const doc = parser.parseFromString(navDocSource);
     it('should not identify <doc> as navigation element', () => {
       expect(isNavigationElement(doc)).toBe(false);
     });
@@ -118,7 +118,7 @@ describe('isNavigationElement', () => {
     });
   });
   describe('screen', () => {
-    const doc: TypesLegacy.Document = parser.parseFromString(screenDocSource);
+    const doc = parser.parseFromString(screenDocSource);
     it('should not identify <doc> as navigation element', () => {
       expect(isNavigationElement(doc)).toBe(false);
     });
@@ -137,7 +137,7 @@ describe('isNavigationElement', () => {
 
 describe('getInitialNavRouteElement', () => {
   it('should find route2 as initial', () => {
-    const doc: TypesLegacy.Document = parser.parseFromString(navDocSource);
+    const doc = parser.parseFromString(navDocSource);
     const navigators = doc.getElementsByTagNameNS(
       Namespaces.HYPERVIEW,
       'navigator',
@@ -146,7 +146,7 @@ describe('getInitialNavRouteElement', () => {
     expect(initial?.getAttribute('id')).toEqual('route2');
   });
   it('should find route1 as initial', () => {
-    const doc: TypesLegacy.Document = parser.parseFromString(navDocSourceAlt);
+    const doc = parser.parseFromString(navDocSourceAlt);
     const navigators = doc.getElementsByTagNameNS(
       Namespaces.HYPERVIEW,
       'navigator',
@@ -155,7 +155,7 @@ describe('getInitialNavRouteElement', () => {
     expect(initial?.getAttribute('id')).toEqual('route1');
   });
   it('should not find an initial route', () => {
-    const doc: TypesLegacy.Document = parser.parseFromString(
+    const doc = parser.parseFromString(
       '<doc xmlns="https://hyperview.org/hyperview"><navigator id="navigator"></navigator></doc>',
     );
     const navigators = doc.getElementsByTagNameNS(
