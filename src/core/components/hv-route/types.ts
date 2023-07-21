@@ -21,11 +21,6 @@ type RouteParams = {
   preloadScreen?: number;
 };
 
-/**
- * The navigation prop used by react-navigation
- */
-export type RNTypedNavigationProps = NavigatorService.NavigationProp;
-
 export type NavigationContextProps = {
   entrypointUrl: string;
   fetch: (
@@ -67,7 +62,7 @@ export type RouteProps = NavigatorService.Route<string, { url?: string }>;
 export type InnerRouteProps = {
   id?: string;
   url: string;
-  navigation?: RNTypedNavigationProps;
+  navigation?: NavigatorService.NavigationProp;
   route?: NavigatorService.Route<string, RouteParams>;
   entrypointUrl: string;
   fetch: (
@@ -94,6 +89,6 @@ export type InnerRouteProps = {
  * All of the props used by hv-route
  */
 export type Props = {
-  navigation?: RNTypedNavigationProps;
+  navigation?: NavigatorService.NavigationProp;
   route?: NavigatorService.Route<string, RouteParams>;
 };

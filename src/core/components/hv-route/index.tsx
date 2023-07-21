@@ -380,4 +380,4 @@ export default function HvRoute(props: Types.Props) {
   );
 }
 
-export type { Props, RNTypedNavigationProps } from './types';
+export type { Props } from './types';
