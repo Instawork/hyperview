@@ -28,7 +28,7 @@ export class Navigator {
    * If the navigator is not type stack, the back request is bubbled
    */
   static routeBackRequest(
-    navigation: HvRoute.RNTypedNavigationProps,
+    navigation: Types.NavigationProp,
     routeParams?: TypesLegacy.NavigationRouteParams,
   ) {
     const state = navigation.getState();
@@ -119,7 +119,7 @@ export class Navigator {
   };
 }
 
-export type { NavigationProp, Route } from './imports';
+export type { NavigationProp, Route } from './types';
 export { createStackNavigator, createBottomTabNavigator } from './imports';
 export { HvRouteError, HvNavigatorError, HvRenderError } from './errors';
 export {

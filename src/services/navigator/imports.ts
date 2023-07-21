@@ -10,12 +10,6 @@
  * Centralized capturing of the navigation library imports.
  */
 
-export type {
-  NavigatorScreenParams,
-  NavigationProp,
-  Route,
-} from '@react-navigation/native';
-export type { NavigationState } from '@react-navigation/core';
 export { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 export { createStackNavigator } from '@react-navigation/stack';
 export { CommonActions, StackActions } from '@react-navigation/native';
