@@ -24,7 +24,7 @@ type RouteParams = {
 /**
  * The navigation prop used by react-navigation
  */
-export type RNTypedNavigationProps = NavigatorService.NavigationProp<object>;
+export type RNTypedNavigationProps = NavigatorService.NavigationProp;
 
 export type NavigationContextProps = {
   entrypointUrl: string;
