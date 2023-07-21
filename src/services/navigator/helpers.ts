@@ -7,8 +7,6 @@
  */
 
 import * as Errors from './errors';
-import * as HvRoute from 'hyperview/src/core/components/hv-route';
-import * as Imports from './imports';
 import * as Types from './types';
 import * as TypesLegacy from 'hyperview/src/types-legacy';
 import * as UrlService from 'hyperview/src/services/url';
@@ -114,7 +112,7 @@ export const validateUrl = (
  * example: ['home', 'shifts', 'my-shifts']
  */
 export const findPath = (
-  state: Imports.NavigationState,
+  state: Types.NavigationState,
   targetId: string,
 ): string[] => {
   let path: string[] = [];
@@ -133,7 +131,7 @@ export const findPath = (
     }
     path = [
       ...path,
-      ...findPath(route.state as Imports.NavigationState, targetId),
+      ...findPath(route.state as Types.NavigationState, targetId),
     ];
     // If the recursion found the target, add the current route name to the path as we back out
     if (path.length) {
@@ -152,8 +150,8 @@ export const findPath = (
  */
 export const getNavigatorAndPath = (
   targetId?: string,
-  navigation?: HvRoute.RNTypedNavigationProps,
-): [HvRoute.RNTypedNavigationProps?, string[]?] => {
+  navigation?: Types.NavigationProp,
+): [Types.NavigationProp?, string[]?] => {
   if (!targetId) {
     return [navigation, undefined];
   }
@@ -248,11 +246,11 @@ export const getNavAction = (
  * building params, and determining screen id
  */
 export const buildRequest = (
-  nav: HvRoute.RNTypedNavigationProps | undefined,
+  nav: Types.NavigationProp | undefined,
   action: TypesLegacy.NavAction,
   routeParams?: TypesLegacy.NavigationRouteParams,
 ): [
-  HvRoute.RNTypedNavigationProps | undefined,
+  Types.NavigationProp | undefined,
   string,
   (
     | Types.NavigationNavigateParams
