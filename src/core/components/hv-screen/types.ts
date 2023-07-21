@@ -22,7 +22,7 @@ export type Props = {
     format: string | undefined,
   ) => string | undefined;
   refreshControl?: ComponentType<RefreshControlProps>;
-  navigation?: NavigatorService.NavigationProp<object>;
+  navigation?: NavigatorService.NavigationProp;
   route?: NavigatorService.Route<string, { url?: string }>;
   entrypointUrl: string;
   fetch: (
