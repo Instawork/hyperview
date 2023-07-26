@@ -6,10 +6,4 @@
  *
  */
 
-import './src/gesture-handler';
-import Navigator from './src/Navigator';
-import React from 'react';
-
-export default function App() {
-  return <Navigator />;
-}
+export function getUrlFromHref(href: string, baseUrl: string): string;

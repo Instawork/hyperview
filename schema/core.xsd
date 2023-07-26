@@ -417,9 +417,10 @@
 
   <xs:element name="doc">
     <xs:complexType>
-      <xs:sequence>
+      <xs:choice>
         <xs:element minOccurs="1" maxOccurs="unbounded" ref="hv:screen" />
-      </xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="1" ref="hv:navigator" />
+      </xs:choice>
       <xs:anyAttribute namespace="##other" processContents="lax" />
     </xs:complexType>
   </xs:element>
@@ -1174,6 +1175,34 @@
       <xs:enumeration value="password" />
       <xs:enumeration value="newPassword" />
       <xs:enumeration value="oneTimeCode" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:element name="navigator">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="unbounded" ref="hv:nav-route" />
+      </xs:sequence>
+      <xs:attribute name="id" use="required" type="hv:ID" />
+      <xs:attribute name="type" use="required" type="hv:navigator-type" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="nav-route">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="hv:navigator" />
+      </xs:sequence>
+      <xs:attribute name="id" use="required" type="hv:ID" />
+      <xs:attribute name="href" use="required" type="xs:string" />
+      <xs:attribute name="initial" type="xs:boolean" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:simpleType name="navigator-type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="stack" />
+      <xs:enumeration value="tab" />
     </xs:restriction>
   </xs:simpleType>
 

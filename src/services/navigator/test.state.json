@@ -1,0 +1,57 @@
+{
+  "stale": false,
+  "type": "stack",
+  "key": "stack-0IkXWZqL-qyJxBqKK3c_U",
+  "index": 0,
+  "routeNames": ["screen_stack_root_home"],
+  "routes": [
+    {
+      "key": "screen_stack_root_home-jIH535mQmyL-A3z2Duv-s",
+      "name": "screen_stack_root_home",
+      "state": {
+        "stale": false,
+        "type": "tab",
+        "key": "tab-B2sS-dK_m-79gFf7S7Tmn",
+        "index": 1,
+        "routeNames": ["profile", "performance"],
+        "history": [
+          { "type": "route", "key": "performance-iVyyr9A3N-p7zxO7ofycI" }
+        ],
+        "routes": [
+          { "name": "profile", "key": "profile-VLyzHkrHDUL8XKDS3cBKr" },
+          {
+            "name": "performance",
+            "key": "performance-iVyyr9A3N-p7zxO7ofycI",
+            "state": {
+              "stale": false,
+              "type": "tab",
+              "key": "tab-sVMFhcpaAT4GTOwgeEy-x",
+              "index": 2,
+              "routeNames": ["performance_1", "performance_2", "performance_3"],
+              "history": [
+                {
+                  "type": "route",
+                  "key": "performance_3-vkuTc6Rd3XdoJWTb2Jh40"
+                }
+              ],
+              "routes": [
+                {
+                  "name": "performance_1",
+                  "key": "performance_1-Lhdql5d6oDyXt2AM1UHSq"
+                },
+                {
+                  "name": "performance_2",
+                  "key": "performance_2-x4pup0Yt6iFAJFJ9DUpn3"
+                },
+                {
+                  "name": "performance_3",
+                  "key": "performance_3-vkuTc6Rd3XdoJWTb2Jh40"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

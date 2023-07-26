@@ -68,13 +68,17 @@ export default class Navigation {
     element: Element,
     formComponents: ComponentRegistry,
     opts: BehaviorOptions,
+    registerPreload?: (id: number, element: Element) => void,
   ): void => {
-    const { showIndicatorId, delay } = opts;
+    const { showIndicatorId, delay, targetId } = opts;
     const formData: ?FormData = getFormData(element, formComponents);
 
-    // Serialize form data as query params, if present.
-    const baseUrl = UrlService.getUrlFromHref(href, this.url);
-    const url = UrlService.addFormDataToUrl(baseUrl, formData);
+    let url = href;
+    if (!href.startsWith(ANCHOR_ID_SEPARATOR)) {
+      // Serialize form data as query params, if present.
+      const baseUrl = UrlService.getUrlFromHref(href, this.url);
+      url = UrlService.addFormDataToUrl(baseUrl, formData);
+    }
 
     let preloadScreen = null;
     if (showIndicatorId && this.document) {
@@ -88,10 +92,13 @@ export default class Navigation {
       if (loadingScreen) {
         preloadScreen = Date.now(); // Not trully unique but sufficient for our use-case
         this.setPreloadScreen(preloadScreen, loadingScreen);
+        if (registerPreload) {
+          registerPreload(preloadScreen, loadingScreen);
+        }
       }
     }
 
-    const routeParams = { delay, preloadScreen, url };
+    const routeParams = { delay, preloadScreen, targetId, url };
 
     switch (action) {
       case NAV_ACTIONS.PUSH:

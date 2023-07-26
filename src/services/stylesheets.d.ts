@@ -5,11 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
+import * as TypesLegacy from 'hyperview/src/types-legacy';
 
-import './src/gesture-handler';
-import Navigator from './src/Navigator';
-import React from 'react';
-
-export default function App() {
-  return <Navigator />;
-}
+export function createStylesheets(
+  document: TypesLegacy.Document,
+): TypesLegacy.StyleSheets;

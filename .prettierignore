@@ -2,7 +2,7 @@ flow-typed
 *.gen.js
 _examples_site/
 website/
-/src/index.js
+/src/core/components/hv-screen/index.js
 /src/VisibilityDetectingView.js
 /src/mask.js
 /demo/*

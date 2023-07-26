@@ -6,10 +6,10 @@
  *
  */
 
-import './src/gesture-handler';
-import Navigator from './src/Navigator';
 import React from 'react';
 
-export default function App() {
-  return <Navigator />;
+type Props = Record<string, never>;
+
+export default class Loading extends React.PureComponent<Props> {
+  new(props: Props); // eslint-disable-line instawork/component-methods-use-arrows
 }
