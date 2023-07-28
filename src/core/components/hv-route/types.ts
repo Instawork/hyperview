@@ -49,6 +49,9 @@ export type NavigatorMapContextProps = {
 export type State = {
   doc?: TypesLegacy.Document;
   error?: Error;
+  navigator?: TypesLegacy.Element;
+  root?: TypesLegacy.Element;
+  screen?: TypesLegacy.Element;
 };
 
 /**
