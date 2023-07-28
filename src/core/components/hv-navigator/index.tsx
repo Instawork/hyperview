@@ -89,10 +89,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
           navRoute,
           TypesLegacy.LOCAL_NAME.NAVIGATOR,
         );
-        if (nestedNavigator) {
-          // Cache the navigator for the route
-          navigatorMapContext.setElement(id, nestedNavigator);
-        } else {
+        if (!nestedNavigator) {
           const href:
             | TypesLegacy.DOMString
             | null

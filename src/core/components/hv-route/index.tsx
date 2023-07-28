@@ -15,6 +15,7 @@ import * as NavigationContext from 'hyperview/src/contexts/navigation';
 import * as NavigatorMapContext from 'hyperview/src/contexts/navigator-map';
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Render from 'hyperview/src/services/render';
+import * as RouteDocContext from 'hyperview/src/contexts/route-doc';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as Types from './types';
 import * as TypesLegacy from 'hyperview/src/types-legacy';
@@ -262,6 +263,15 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
     }
 
     if (renderElement.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR) {
+      if (this.state.doc) {
+        // The <RouteDocContext> provides doc access to nested navigators
+        return (
+          <RouteDocContext.Context.Provider value={this.state.doc}>
+            <HvNavigator element={renderElement} routeComponent={HvRoute} />
+          </RouteDocContext.Context.Provider>
+        );
+      }
+      // Without a doc, the navigator shares the higher level context
       return <HvNavigator element={renderElement} routeComponent={HvRoute} />;
     }
     const { Screen } = this;
@@ -314,6 +324,36 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
 }
 
 /**
+ * Retrieve a nested navigator as a child of the nav-route with the given id
+ */
+const getNestedNavigator = (
+  id?: string,
+  doc?: TypesLegacy.Document,
+): TypesLegacy.Element | undefined => {
+  if (!id || !doc) {
+    return undefined;
+  }
+
+  const routes = doc
+    .getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      TypesLegacy.LOCAL_NAME.NAV_ROUTE,
+    )
+    .filter((n: TypesLegacy.Element) => {
+      return n.getAttribute('id') === id;
+    });
+  const route = routes && routes.length > 0 ? routes[0] : undefined;
+  if (route) {
+    const navigators = route.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      TypesLegacy.LOCAL_NAME.NAVIGATOR,
+    );
+    return navigators && navigators.length > 0 ? navigators[0] : undefined;
+  }
+  return undefined;
+};
+
+/**
  * Functional component wrapper around HvRouteInner
  * NOTE: The reason for this approach is to allow accessing
  *  multiple contexts to pass data to HvRouteInner
@@ -332,6 +372,10 @@ export default function HvRoute(props: Types.Props) {
   if (!navigationContext || !navigatorMapContext) {
     throw new NavigatorService.HvRouteError('No context found');
   }
+
+  const routeDocContext: TypesLegacy.Document | undefined = useContext(
+    RouteDocContext.Context,
+  );
 
   // Retrieve the url from params or from the context
   let url: string | undefined = props.route?.params?.url;
@@ -361,15 +405,11 @@ export default function HvRoute(props: Types.Props) {
     url = url || '';
   }
 
-  const { index, type } = props.navigation?.getState() || {};
-  // The nested element is only used when the navigator is not a stack
-  //    or is the first screen in a stack. Other stack screens will require a url
-  const includeElement: boolean =
-    type !== NavigatorService.NAVIGATOR_TYPE.STACK || index === 0;
-
   // Get the navigator element from the context
-  const element: TypesLegacy.Element | undefined =
-    id && includeElement ? navigatorMapContext.getElement(id) : undefined;
+  const element: TypesLegacy.Element | undefined = getNestedNavigator(
+    id,
+    routeDocContext,
+  );
 
   return (
     <HvRouteInner

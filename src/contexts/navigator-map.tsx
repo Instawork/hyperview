@@ -12,8 +12,6 @@ import React, { createContext, useState } from 'react';
 export type NavigatorMapContextProps = {
   setRoute: (key: string, route: string) => void;
   getRoute: (key: string) => string | undefined;
-  setElement: (key: string, element: TypesLegacy.Element) => void;
-  getElement: (key: string) => TypesLegacy.Element | undefined;
   setPreload: (key: number, element: TypesLegacy.Element) => void;
   getPreload: (key: number) => TypesLegacy.Element | undefined;
   initialRouteName?: string;
@@ -28,10 +26,8 @@ export type NavigatorMapContextProps = {
  *  - preloadMap: A map of preload elements by their id
  */
 export const NavigatorMapContext = createContext<NavigatorMapContextProps>({
-  getElement: () => undefined,
   getPreload: () => undefined,
   getRoute: () => '',
-  setElement: () => undefined,
   setPreload: () => undefined,
   setRoute: () => undefined,
 });
@@ -44,7 +40,6 @@ type Props = { children: React.ReactNode };
  */
 export function NavigatorMapProvider(props: Props) {
   const [routeMap] = useState<Map<string, string>>(new Map());
-  const [elementMap] = useState<Map<string, TypesLegacy.Element>>(new Map());
   const [preloadMap] = useState<Map<number, TypesLegacy.Element>>(new Map());
 
   const setRoute = (key: string, route: string) => {
@@ -53,14 +48,6 @@ export function NavigatorMapProvider(props: Props) {
 
   const getRoute = (key: string): string | undefined => {
     return routeMap.get(key);
-  };
-
-  const setElement = (key: string, element: TypesLegacy.Element) => {
-    elementMap.set(key, element);
-  };
-
-  const getElement = (key: string): TypesLegacy.Element | undefined => {
-    return elementMap.get(key);
   };
 
   const setPreload = (key: number, element: TypesLegacy.Element) => {
@@ -74,10 +61,8 @@ export function NavigatorMapProvider(props: Props) {
   return (
     <NavigatorMapContext.Provider
       value={{
-        getElement,
         getPreload,
         getRoute,
-        setElement,
         setPreload,
         setRoute,
       }}
