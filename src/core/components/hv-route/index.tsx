@@ -349,23 +349,24 @@ export default function HvRoute(props: Types.Props) {
     url = navigatorMapContext.getRoute(NavigatorService.cleanHrefFragment(url));
   }
 
-  if (!url) {
-    // Use the route id if available to look up the url
-    if (props.route?.params?.id) {
-      url = navigatorMapContext.getRoute(props.route.params.id);
-    } else if (navigatorMapContext.initialRouteName) {
-      // Try to use the initial route for this <navigator>
-      url = navigatorMapContext.getRoute(navigatorMapContext.initialRouteName);
-    }
-  }
-
-  // Fall back to the entrypoint url
-  url = url || navigationContext.entrypointUrl;
-
   const id: string | undefined =
     props.route?.params?.id ||
     navigatorMapContext.initialRouteName ||
     undefined;
+
+  if (!url) {
+    // Use the route id or initial routeto look up the url
+    if (id) {
+      url = navigatorMapContext.getRoute(id);
+    }
+  }
+
+  // Fall back to the entrypoint url, only for the top route
+  if (!url && !props.navigation) {
+    url = navigationContext.entrypointUrl;
+  } else {
+    url = url || '';
+  }
 
   const { index, type } = props.navigation?.getState() || {};
   // The nested element is only used when the navigator is not a stack
