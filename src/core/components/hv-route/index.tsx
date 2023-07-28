@@ -51,9 +51,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
     this.state = {
       doc: undefined,
       error: undefined,
-      navigator: undefined,
-      root: undefined,
-      screen: undefined,
     };
     this.navLogic = new NavigatorService.Navigator(this.props);
     this.componentRegistry = Components.getRegistry(this.props.components);
@@ -93,9 +90,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
       this.setState({
         doc: undefined,
         error: new NavigatorService.HvRouteError('No parser or context found'),
-        navigator: undefined,
-        root: undefined,
-        screen: undefined,
       });
       return;
     }
@@ -104,26 +98,14 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
       const url: string = this.getUrl();
 
       const { doc } = await this.parser.loadDocument(url);
-      const root = Helpers.getFirstTag(doc, TypesLegacy.LOCAL_NAME.DOC);
-      const navigator = Helpers.getFirstTag(
-        doc,
-        TypesLegacy.LOCAL_NAME.NAVIGATOR,
-      );
-      const screen = Helpers.getFirstTag(doc, TypesLegacy.LOCAL_NAME.SCREEN);
       this.setState({
         doc,
         error: undefined,
-        navigator: navigator || undefined,
-        root: root || undefined,
-        screen: screen || undefined,
       });
     } catch (err: unknown) {
       this.setState({
         doc: undefined,
         error: err as Error,
-        navigator: undefined,
-        root: undefined,
-        screen: undefined,
       });
     }
   };
@@ -137,18 +119,34 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
     }
 
     // Get the <doc> element
-    if (!this.state.root) {
+    const root: TypesLegacy.Element | null = Helpers.getFirstTag(
+      this.state.doc,
+      TypesLegacy.LOCAL_NAME.DOC,
+    );
+    if (!root) {
       throw new NavigatorService.HvRenderError('No root element found');
     }
 
     // Get the first child as <screen> or <navigator>
-    if (!this.state.screen && !this.state.navigator) {
-      throw new NavigatorService.HvRenderError(
-        'No <screen> or <navigator> element found',
-      );
+    const screenElement: TypesLegacy.Element | null = Helpers.getFirstTag(
+      root,
+      TypesLegacy.LOCAL_NAME.SCREEN,
+    );
+    if (screenElement) {
+      return screenElement;
     }
 
-    return this.state.screen || this.state.navigator || null;
+    const navigatorElement: TypesLegacy.Element | null = Helpers.getFirstTag(
+      root,
+      TypesLegacy.LOCAL_NAME.NAVIGATOR,
+    );
+    if (navigatorElement) {
+      return navigatorElement;
+    }
+
+    throw new NavigatorService.HvRenderError(
+      'No <screen> or <navigator> element found',
+    );
   };
 
   registerPreload = (id: number, element: TypesLegacy.Element): void => {
