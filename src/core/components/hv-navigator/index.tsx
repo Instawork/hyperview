@@ -23,6 +23,13 @@ const Stack = NavigatorService.createStackNavigator<Types.ParamTypes>();
 const BottomTab = NavigatorService.createBottomTabNavigator();
 
 export default class HvNavigator extends PureComponent<Types.Props> {
+  uuid: string;
+
+  constructor(props: Types.Props) {
+    super(props);
+    this.uuid = Date.now().toString();
+  }
+
   /**
    * Build an individual tab screen
    */
@@ -72,7 +79,8 @@ export default class HvNavigator extends PureComponent<Types.Props> {
     // For stack navigators, the dynamic screens are added later
     // This iteration will also process nested navigators
     //    and retrieve additional urls from child routes
-    elements.forEach((navRoute: TypesLegacy.Element) => {
+    for (let index = 0; index < elements.length; index += 1) {
+      const navRoute: TypesLegacy.Element = elements[index];
       if (navRoute.localName === TypesLegacy.LOCAL_NAME.NAV_ROUTE) {
         const id:
           | TypesLegacy.DOMString
@@ -91,7 +99,12 @@ export default class HvNavigator extends PureComponent<Types.Props> {
         );
         if (nestedNavigator) {
           // Cache the navigator for the route
-          navigatorMapContext.setElement(id, nestedNavigator);
+          // using the unique instance id of this navigator, the id of the route, and the index
+          // to ensure it's injected into the correct route
+          navigatorMapContext.setElement(
+            `${this.uuid}:${id}:${index}`,
+            nestedNavigator,
+          );
         } else {
           const href:
             | TypesLegacy.DOMString
@@ -116,7 +129,9 @@ export default class HvNavigator extends PureComponent<Types.Props> {
           screens.push(buildTabScreen(id, type));
         }
       }
-    });
+    }
+
+    const initialParams = { parentId: this.uuid };
 
     // Add the dynamic stack screens
     if (type === NavigatorService.NAVIGATOR_TYPE.STACK) {
@@ -127,7 +142,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
           component={this.props.routeComponent}
           getId={({ params }: Types.ScreenParams) => params.url}
           // empty object required because hv-screen doesn't check for undefined param
-          initialParams={{}}
+          initialParams={initialParams}
           name={NavigatorService.ID_DYNAMIC}
         />,
       );
@@ -139,7 +154,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
           component={this.props.routeComponent}
           getId={({ params }: Types.ScreenParams) => params.url}
           // empty object required because hv-screen doesn't check for undefined param
-          initialParams={{}}
+          initialParams={initialParams}
           name={NavigatorService.ID_MODAL}
           options={{ presentation: 'modal' }}
         />,

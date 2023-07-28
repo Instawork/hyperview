@@ -363,15 +363,22 @@ export default function HvRoute(props: Types.Props) {
     url = url || '';
   }
 
-  const { index, type } = props.navigation?.getState() || {};
-  // The nested element is only used when the navigator is not a stack
-  //    or is the first screen in a stack. Other stack screens will require a url
-  const includeElement: boolean =
-    type !== NavigatorService.NAVIGATOR_TYPE.STACK || index === 0;
+  // Get the index of the route in the stack
+  const state = props.navigation?.getState();
+  let index = -1;
+  if (state && state.routes) {
+    index = state.routes.findIndex(r => r.key === props.route?.key);
+  }
 
   // Get the navigator element from the context
-  const element: TypesLegacy.Element | undefined =
-    id && includeElement ? navigatorMapContext.getElement(id) : undefined;
+  // The parentId is injected into params by hv-navigator
+  // The element was stored by id by hv-navigator
+  const routeElementId: string | undefined = id
+    ? `${props.route?.params?.parentId || 'none'}:${id}:${index}`
+    : undefined;
+  const element: TypesLegacy.Element | undefined = routeElementId
+    ? navigatorMapContext.getElement(routeElementId)
+    : undefined;
 
   return (
     <HvRouteInner

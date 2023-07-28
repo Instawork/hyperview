@@ -12,6 +12,7 @@ import { FC } from 'react';
 export type RouteParams = {
   id?: string;
   url: string;
+  parentId?: string;
 };
 
 export type ParamTypes = {

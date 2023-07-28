@@ -19,6 +19,7 @@ type RouteParams = {
   id?: string;
   url: string;
   preloadScreen?: number;
+  parentId?: string;
 };
 
 export type NavigationContextProps = {
