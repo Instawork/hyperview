@@ -12,7 +12,7 @@ import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Types from './types';
 import * as TypesLegacy from 'hyperview/src/types-legacy';
 import React, { PureComponent, useContext } from 'react';
-import { getFirstTag } from 'hyperview/src/services/dom/helpers-legacy';
+import { getFirstChildTag } from 'hyperview/src/services/dom/helpers-legacy';
 
 /**
  * Flag to show the navigator UIs
@@ -85,10 +85,11 @@ export default class HvNavigator extends PureComponent<Types.Props> {
         }
 
         // Check for nested navigators
-        const nestedNavigator: TypesLegacy.Element | null = getFirstTag(
+        const nestedNavigator: TypesLegacy.Element | null = getFirstChildTag<TypesLegacy.Element>(
           navRoute,
           TypesLegacy.LOCAL_NAME.NAVIGATOR,
         );
+
         if (!nestedNavigator) {
           const href:
             | TypesLegacy.DOMString

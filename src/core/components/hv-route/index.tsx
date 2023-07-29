@@ -344,11 +344,12 @@ const getNestedNavigator = (
     });
   const route = routes && routes.length > 0 ? routes[0] : undefined;
   if (route) {
-    const navigators = route.getElementsByTagNameNS(
-      Namespaces.HYPERVIEW,
-      TypesLegacy.LOCAL_NAME.NAVIGATOR,
+    return (
+      Helpers.getFirstChildTag<TypesLegacy.Element>(
+        route,
+        TypesLegacy.LOCAL_NAME.NAVIGATOR,
+      ) || undefined
     );
-    return navigators && navigators.length > 0 ? navigators[0] : undefined;
   }
   return undefined;
 };
