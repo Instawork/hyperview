@@ -3,7 +3,7 @@ version: 2
 jobs:
   test:
     docker:
-      - image: cimg/node:18.7.0
+      - image: cimg/node:18.17.0
     steps:
       - checkout
       - run: yarn
