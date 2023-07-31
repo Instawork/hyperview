@@ -324,6 +324,39 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
 }
 
 /**
+ * Retrieve the url from the props, params, or context
+ */
+const getRouteUrl = (
+  props: Types.Props,
+  navigationContext: Types.NavigationContextProps,
+  navigatorMapContext: Types.NavigatorMapContextProps,
+) => {
+  // The initial hv-route element will use the entrypoint url
+  if (props.navigation === undefined) {
+    return navigationContext.entrypointUrl;
+  }
+
+  // Use the passed url
+  if (props.route?.params?.url) {
+    if (NavigatorService.isUrlFragment(props.route?.params?.url)) {
+      // Look up the url from the route map where it would have been
+      //  stored from the initial <nav-route> definition
+      return navigatorMapContext.getRoute(
+        NavigatorService.cleanHrefFragment(props.route?.params?.url),
+      );
+    }
+    return props.route?.params?.url;
+  }
+
+  // Look up by route id
+  if (props.route?.params?.id) {
+    return navigatorMapContext.getRoute(props.route?.params?.id);
+  }
+
+  return undefined;
+};
+
+/**
  * Retrieve a nested navigator as a child of the nav-route with the given id
  */
 const getNestedNavigator = (
@@ -378,37 +411,11 @@ export default function HvRoute(props: Types.Props) {
     RouteDocContext.Context,
   );
 
-  // Retrieve the url from params or from the context
-  let url: string | undefined = props.route?.params?.url;
-  // Fragment urls are used to designate a route within a document
-  if (url && NavigatorService.isUrlFragment(url)) {
-    // Look up the url from the route map where it would have been
-    //  stored from the initial <nav-route> definition
-    url = navigatorMapContext.getRoute(NavigatorService.cleanHrefFragment(url));
-  }
-
-  const id: string | undefined =
-    props.route?.params?.id ||
-    navigatorMapContext.initialRouteName ||
-    undefined;
-
-  if (!url) {
-    // Use the route id or initial routeto look up the url
-    if (id) {
-      url = navigatorMapContext.getRoute(id);
-    }
-  }
-
-  // Fall back to the entrypoint url, only for the top route
-  if (!url && !props.navigation) {
-    url = navigationContext.entrypointUrl;
-  } else {
-    url = url || '';
-  }
+  const url = getRouteUrl(props, navigationContext, navigatorMapContext);
 
   // Get the navigator element from the context
   const element: TypesLegacy.Element | undefined = getNestedNavigator(
-    id,
+    props.route?.params?.id,
     routeDocContext,
   );
 
