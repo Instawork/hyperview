@@ -6,7 +6,7 @@
  *
  */
 
-import type {BehaviorRegistry, HvBehavior} from 'hyperview/src/types';
+import type { BehaviorRegistry, HvBehavior } from 'hyperview/src/types';
 import HvAlert from 'hyperview/src/behaviors/hv-alert';
 import HvCopyToClipboard from 'hyperview/src/behaviors/hv-copy-to-clipboard';
 import HvHide from 'hyperview/src/behaviors/hv-hide';
@@ -31,10 +31,13 @@ const HYPERVIEW_BEHAVIORS = [
   HvUnselectAll,
 ];
 
-export const getRegistry = (behaviors: HvBehavior[] = []): BehaviorRegistry => [...HYPERVIEW_BEHAVIORS, ...behaviors].reduce<Record<string, any>>((registry: BehaviorRegistry, behavior: HvBehavior) => ({
-  ...registry,
-  [behavior.action]: behavior,
-}), {});
+export const getRegistry = (behaviors: HvBehavior[] = []): BehaviorRegistry => [...HYPERVIEW_BEHAVIORS, ...behaviors].reduce<Record<string, any>>(
+    (registry: BehaviorRegistry, behavior: HvBehavior) => ({
+      ...registry,
+      [behavior.action]: behavior,
+    }),
+    {},
+  );
 
 export {
   setIndicatorsBeforeLoad,

@@ -15,28 +15,31 @@ import type {
 } from 'hyperview/src/types';
 
 export type FieldProps = {
-  children?: React.ReactNode,
-  element: Element,
-  focused: boolean,
-  onPress: () => void,
-  options: HvComponentOptions,
-  stylesheets: StyleSheets,
-  value: Date | null | undefined
+  children?: React.ReactNode;
+  element: Element;
+  focused: boolean;
+  onPress: () => void;
+  options: HvComponentOptions;
+  stylesheets: StyleSheets;
+  value: Date | null | undefined;
 };
 
 export type FieldLabelProps = {
-  focused: boolean,
-  formatter: (value?: Date | null | undefined, format?: string | null | undefined) => string,
-  labelFormat: string | null | undefined,
-  placeholder: string | null | undefined,
-  placeholderTextColor: string | null | undefined,
-  pressed: boolean,
-  style: StyleSheetType,
-  value: Date | null | undefined
+  focused: boolean;
+  formatter: (
+    value?: Date | null | undefined,
+    format?: string | null | undefined,
+  ) => string;
+  labelFormat: string | null | undefined;
+  placeholder: string | null | undefined;
+  placeholderTextColor: string | null | undefined;
+  pressed: boolean;
+  style: StyleSheetType;
+  value: Date | null | undefined;
 };
 
 export type ModalButtonProps = {
-  getStyle: (pressed: boolean) => Array<StyleSheetType>,
-  label: string,
-  onPress: () => void
+  getStyle: (pressed: boolean) => Array<StyleSheetType>;
+  label: string;
+  onPress: () => void;
 };

@@ -6,7 +6,7 @@
  *
  */
 
-import {NODE_TYPE} from 'hyperview/src/types';
+import { NODE_TYPE } from 'hyperview/src/types';
 import { parse } from 'hyperview/test/helpers';
 import { preorder } from './helpers';
 

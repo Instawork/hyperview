@@ -6,7 +6,7 @@
  *
  */
 
-import * as TypesLegacy from 'hyperview/src/types-legacy';
+import * as TypesLegacy from 'hyperview/src/types';
 
 export const ANCHOR_ID_SEPARATOR = '#';
 export const ID_DYNAMIC = 'dynamic';

@@ -6,7 +6,7 @@
  *
  */
 
-import * as TypesLegacy from 'hyperview/src/types-legacy';
+import * as TypesLegacy from 'hyperview/src/types';
 import { FC } from 'react';
 
 export type RouteParams = {

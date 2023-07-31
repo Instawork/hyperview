@@ -46,10 +46,13 @@ export default class HvView extends PureComponent<HvComponentProps> {
   props: HvComponentProps;
 
   get attributes(): Attributes {
-    return Object.values(ATTRIBUTES).reduce<Record<string, any>>((attributes, name: string) => ({
-      ...attributes,
-      [name]: this.props.element.getAttribute(name),
-    }), {});
+    return Object.values(ATTRIBUTES).reduce<Record<string, any>>(
+      (attributes, name: string) => ({
+        ...attributes,
+        [name]: this.props.element.getAttribute(name),
+      }),
+      {},
+    );
   }
 
   hasInputFields = (): boolean => {
@@ -103,11 +106,13 @@ export default class HvView extends PureComponent<HvComponentProps> {
         : undefined;
 
     // add sticky indicies
-    const stickyHeaderIndices = children.reduce<Array<any>>((acc, element, index) =>
-      typeof element !== 'string' &&
-      element.props?.element?.getAttribute('sticky') === 'true'
-        ? [...acc, index]
-        : acc, []);
+    const stickyHeaderIndices = children.reduce<Array<any>>(
+      (acc, element, index) => (typeof element !== 'string' &&
+        element.props?.element?.getAttribute('sticky') === 'true'
+          ? [...acc, index]
+          : acc,
+      [],
+    );
 
     return {
       contentContainerStyle,
@@ -131,7 +136,9 @@ export default class HvView extends PureComponent<HvComponentProps> {
     return defaultOffset;
   };
 
-  getKeyboardAwareScrollViewProps = (inputFieldRefs: Array<any>): KeyboardAwareScrollViewProps => ({
+  getKeyboardAwareScrollViewProps = (
+    inputFieldRefs: Array<any>,
+  ): KeyboardAwareScrollViewProps => ({
     automaticallyAdjustContentInsets: false,
     getTextInputRefs: () => inputFieldRefs,
     keyboardShouldPersistTaps: 'handled',

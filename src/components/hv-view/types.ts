@@ -6,7 +6,7 @@
  *
  */
 
-import type {DOMString} from 'hyperview/src/types';
+import type { DOMString } from 'hyperview/src/types';
 import type { ViewStyleProp } from 'react-native/Libraries/StyleSheet/StyleSheet';
 
 export const ATTRIBUTES = {
@@ -23,48 +23,48 @@ export type Attribute = typeof ATTRIBUTES[keyof typeof ATTRIBUTES];
 
 // eslint-disable-next-line instawork/exact-object-types
 export type Attributes = {
-  ['avoid-keyboard']?: DOMString | null | undefined,
-  ['content-container-style']?: DOMString | null | undefined,
-  ['safe-area']?: DOMString | null | undefined,
-  scroll?: DOMString | null | undefined,
-  ['scroll-orientation']?: DOMString | null | undefined,
-  ['scroll-to-input-offset']?: DOMString | null | undefined,
-  ['shows-scroll-indicator']?: DOMString | null | undefined
+  ['avoid-keyboard']?: DOMString | null | undefined;
+  ['content-container-style']?: DOMString | null | undefined;
+  ['safe-area']?: DOMString | null | undefined;
+  scroll?: DOMString | null | undefined;
+  ['scroll-orientation']?: DOMString | null | undefined;
+  ['scroll-to-input-offset']?: DOMString | null | undefined;
+  ['shows-scroll-indicator']?: DOMString | null | undefined;
 };
 
 export type CommonProps = {
-  accessibilityLabel?: string | null | undefined,
-  testID?: string | null | undefined,
-  children?: any | null | undefined,
-  style?: ViewStyleProp | null | undefined
+  accessibilityLabel?: string | null | undefined;
+  testID?: string | null | undefined;
+  children?: any | null | undefined;
+  style?: ViewStyleProp | null | undefined;
 };
 
 export type ScrollViewProps = {
-  accessibilityLabel?: string | null | undefined,
-  testID?: string | null | undefined,
-  children?: any | null | undefined,
-  style?: ViewStyleProp | null | undefined,
-  contentContainerStyle?: ViewStyleProp | null | undefined,
-  horizontal?: boolean | null | undefined,
+  accessibilityLabel?: string | null | undefined;
+  testID?: string | null | undefined;
+  children?: any | null | undefined;
+  style?: ViewStyleProp | null | undefined;
+  contentContainerStyle?: ViewStyleProp | null | undefined;
+  horizontal?: boolean | null | undefined;
   scrollIndicatorInsets?: Readonly<{
-    bottom?: number | null | undefined,
-    left?: number | null | undefined,
-    right?: number | null | undefined,
-    top?: number | null | undefined
-  }>,
-  showsHorizontalScrollIndicator?: boolean | null | undefined,
-  showsVerticalScrollIndicator?: boolean | null | undefined,
-  stickyHeaderIndices?: number[] | null | undefined
+    bottom?: number | null | undefined;
+    left?: number | null | undefined;
+    right?: number | null | undefined;
+    top?: number | null | undefined;
+  }>;
+  showsHorizontalScrollIndicator?: boolean | null | undefined;
+  showsVerticalScrollIndicator?: boolean | null | undefined;
+  stickyHeaderIndices?: number[] | null | undefined;
 };
 
 export type KeyboardAwareScrollViewProps = {
-  accessibilityLabel?: string | null | undefined,
-  testID?: string | null | undefined,
-  children?: any | null | undefined,
-  style?: ViewStyleProp | null | undefined,
-  automaticallyAdjustContentInsets?: boolean | null | undefined,
-  getTextInputRefs?: () => Array<any> | null | undefined,
-  keyboardShouldPersistTaps?: string | null | undefined,
-  scrollEventThrottle?: number | null | undefined,
-  scrollToInputAdditionalOffset?: number | null | undefined
+  accessibilityLabel?: string | null | undefined;
+  testID?: string | null | undefined;
+  children?: any | null | undefined;
+  style?: ViewStyleProp | null | undefined;
+  automaticallyAdjustContentInsets?: boolean | null | undefined;
+  getTextInputRefs?: () => Array<any> | null | undefined;
+  keyboardShouldPersistTaps?: string | null | undefined;
+  scrollEventThrottle?: number | null | undefined;
+  scrollToInputAdditionalOffset?: number | null | undefined;
 };

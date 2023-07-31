@@ -48,7 +48,10 @@ import { createTestProps } from 'hyperview/src/services';
  * This prevents clicks on various elements to trigger browser navigation
  * when using Hyperview for web.
  */
-export const createEventHandler = (handler: () => void, preventDefault: boolean = false): (event?: any) => void => event => {
+export const createEventHandler = (
+  handler: () => void,
+  preventDefault = false,
+): ((event?: any) => void) => event => {
   if (preventDefault) {
     event?.preventDefault();
   }
@@ -116,8 +119,14 @@ export default class HyperRef extends PureComponent<Props, State> {
     const behaviorElements = Dom.getBehaviorElements(this.props.element);
     const onEventBehaviors = behaviorElements.filter(e => {
       if (e.getAttribute(ATTRIBUTES.TRIGGER) === TRIGGERS.ON_EVENT) {
-        const currentAttributeEventName: string | null | undefined = e.getAttribute('event-name');
-        const currentAttributeAction: string | null | undefined = e.getAttribute('action');
+        const currentAttributeEventName:
+          | string
+          | null
+          | undefined = e.getAttribute('event-name');
+        const currentAttributeAction:
+          | string
+          | null
+          | undefined = e.getAttribute('action');
         if (currentAttributeAction === 'dispatch-event') {
           throw new Error(
             'trigger="on-event" and action="dispatch-event" cannot be used on the same element',
@@ -238,13 +247,7 @@ export default class HyperRef extends PureComponent<Props, State> {
     });
   };
 
-  TouchableView = (
-    {
-      children,
-    }: {
-      children: Node
-    },
-  ): Node => {
+  TouchableView = ({ children }: { children: Node }): Node => {
     const behaviors = this.behaviorElements.filter(
       e =>
         PRESS_TRIGGERS.indexOf(
@@ -365,13 +368,7 @@ export default class HyperRef extends PureComponent<Props, State> {
     );
   };
 
-  ScrollableView = (
-    {
-      children,
-    }: {
-      children: Node
-    },
-  ): Node => {
+  ScrollableView = ({ children }: { children: Node }): Node => {
     const behaviors = this.getBehaviorElements(TRIGGERS.REFRESH);
     if (!behaviors.length) {
       return children;
@@ -392,13 +389,7 @@ export default class HyperRef extends PureComponent<Props, State> {
     );
   };
 
-  VisibilityView = (
-    {
-      children,
-    }: {
-      children: Node
-    },
-  ): Node => {
+  VisibilityView = ({ children }: { children: Node }): Node => {
     const behaviors = this.getBehaviorElements(TRIGGERS.VISIBLE);
     if (!behaviors.length) {
       return children;

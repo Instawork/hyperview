@@ -6,7 +6,7 @@
  *
  */
 
-import {SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
+import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import type { Props } from './types';
 import React from 'react';
 import styles from './styles';

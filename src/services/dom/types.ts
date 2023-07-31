@@ -39,8 +39,8 @@ export type Fetch = (
   url: string,
   options: {
     headers: {
-      [key: string]: any
-    }
+      [key: string]: any;
+    };
   },
 ) => Promise<Response>;
 

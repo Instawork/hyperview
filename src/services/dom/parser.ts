@@ -67,8 +67,8 @@ export class Parser {
     httpMethod?: HttpMethod | null,
     acceptContentType: string = CONTENT_TYPE.APPLICATION_VND_HYPERVIEW_XML,
   ): Promise<{
-    doc: Document,
-    staleHeaderType: XResponseStaleReason | null | undefined
+    doc: Document;
+    staleHeaderType: XResponseStaleReason | null | undefined;
   }> => {
     // HTTP method can either be POST when explicitly set
     // Any other value and we'll default to GET
@@ -124,9 +124,11 @@ export class Parser {
     return { doc, staleHeaderType: staleHeaderType || null };
   };
 
-  loadDocument = async (baseUrl: string): Promise<{
-    doc: Document,
-    staleHeaderType: XResponseStaleReason | null | undefined
+  loadDocument = async (
+    baseUrl: string,
+  ): Promise<{
+    doc: Document;
+    staleHeaderType: XResponseStaleReason | null | undefined;
   }> => {
     const { doc, staleHeaderType } = await this.load(baseUrl);
     const docElement = getFirstTag(doc, LOCAL_NAME.DOC);
@@ -170,8 +172,8 @@ export class Parser {
     data?: FormData | null,
     method: HttpMethod | null = HTTP_METHODS.GET,
   ): Promise<{
-    doc: Document,
-    staleHeaderType: XResponseStaleReason | null | undefined
+    doc: Document;
+    staleHeaderType: XResponseStaleReason | null | undefined;
   }> => {
     const { doc, staleHeaderType } = await this.load(
       baseUrl,

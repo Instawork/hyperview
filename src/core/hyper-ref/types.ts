@@ -16,15 +16,15 @@ import type {
 import { TRIGGERS } from 'hyperview/src/types';
 
 export type Props = {
-  element: Element,
-  onUpdate: HvComponentOnUpdate,
-  options: HvComponentOptions,
-  stylesheets: StyleSheets
+  element: Element;
+  onUpdate: HvComponentOnUpdate;
+  options: HvComponentOptions;
+  stylesheets: StyleSheets;
 };
 
 export type State = {
-  pressed: boolean,
-  refreshing: boolean
+  pressed: boolean;
+  refreshing: boolean;
 };
 
 export const ATTRIBUTES = {
@@ -44,10 +44,10 @@ export const ATTRIBUTES = {
 export type Attribute = typeof ATTRIBUTES[keyof typeof ATTRIBUTES];
 
 export type PressHandlers = {
-  onLongPress?: () => void,
-  onPressIn?: () => void,
-  onPressOut?: () => void,
-  onPress?: () => void
+  onLongPress?: () => void;
+  onPressIn?: () => void;
+  onPressOut?: () => void;
+  onPress?: () => void;
 };
 
 export const PRESS_PROP_NAMES = {
@@ -59,7 +59,9 @@ export const PRESS_PROP_NAMES = {
 
 export type PressPropName = typeof PRESS_PROP_NAMES[keyof typeof PRESS_PROP_NAMES];
 
-export const PRESS_TRIGGERS_PROP_NAMES: Partial<Record<PressTrigger, PressPropName>> = {
+export const PRESS_TRIGGERS_PROP_NAMES: Partial<
+  Record<PressTrigger, PressPropName>
+> = {
   [TRIGGERS.LONG_PRESS]: PRESS_PROP_NAMES.ON_LONG_PRESS,
   [TRIGGERS.PRESS_IN]: PRESS_PROP_NAMES.ON_PRESS_IN,
   [TRIGGERS.PRESS_OUT]: PRESS_PROP_NAMES.ON_PRESS_OUT,

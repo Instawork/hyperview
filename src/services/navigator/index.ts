@@ -10,7 +10,7 @@ import * as Helpers from './helpers';
 import * as HvRoute from 'hyperview/src/core/components/hv-route';
 import * as Imports from './imports';
 import * as Types from './types';
-import * as TypesLegacy from 'hyperview/src/types-legacy';
+import * as TypesLegacy from 'hyperview/src/types';
 
 /**
  * Provide navigation action implementations

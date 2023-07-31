@@ -7,5 +7,5 @@
  */
 
 export type State = {
- pressed: boolean
+  pressed: boolean;
 };

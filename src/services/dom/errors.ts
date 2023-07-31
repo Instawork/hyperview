@@ -6,7 +6,7 @@
  *
  */
 
-import type {LocalName} from 'hyperview/src/types';
+import type { LocalName } from 'hyperview/src/types';
 
 export class UnsupportedContentTypeError extends Error {
   name = 'UnsupportedContentTypeError';

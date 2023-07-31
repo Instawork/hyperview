@@ -6,7 +6,7 @@
  *
  */
 
-import {Dimensions} from 'react-native';
+import { Dimensions } from 'react-native';
 import React from 'react';
 
 // Currently partially implemented, should be brought to parity

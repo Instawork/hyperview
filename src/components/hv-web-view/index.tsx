@@ -24,11 +24,13 @@ export default class HvWebView extends PureComponent<HvComponentProps> {
 
   props: HvComponentProps;
 
-  onMessage = (event?: {
-    nativeEvent: {
-      data: string
-    }
-  } | null) => {
+  onMessage = (
+    event?: {
+      nativeEvent: {
+        data: string;
+      };
+    } | null,
+  ) => {
     if (!event) {
       return;
     }

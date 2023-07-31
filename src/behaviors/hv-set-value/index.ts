@@ -18,7 +18,9 @@ export default {
     getRoot: HvGetRoot,
     updateRoot: HvUpdateRoot,
   ) => {
-    const targetId: DOMString | null | undefined = element.getAttribute('target');
+    const targetId: DOMString | null | undefined = element.getAttribute(
+      'target',
+    );
     if (!targetId) {
       console.warn('[behaviors/set-value]: missing "target" attribute');
       return;
@@ -39,7 +41,9 @@ export default {
 
     const setValue = () => {
       const doc: Document = getRoot();
-      const targetElement: Element | null | undefined = doc.getElementById(targetId);
+      const targetElement: Element | null | undefined = doc.getElementById(
+        targetId,
+      );
       if (!targetElement) {
         return;
       }

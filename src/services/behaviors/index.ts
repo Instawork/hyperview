@@ -6,7 +6,12 @@
  *
  */
 
-import type {Document, Element, Node, UpdateAction} from 'hyperview/src/types';
+import type {
+  Document,
+  Element,
+  Node,
+  UpdateAction,
+} from 'hyperview/src/types';
 import { ACTIONS } from 'hyperview/src/types';
 import { shallowCloneToRoot } from 'hyperview/src/services';
 
@@ -15,14 +20,20 @@ import { shallowCloneToRoot } from 'hyperview/src/services';
  * visible or hidden based on showIndicators.
  * Returns a new Document object with the toggled indicators.
  */
-export const toggleIndicators = (ids: Array<string>, showIndicators: boolean, root: Document): Document => ids.reduce((newRoot, id) => {
-  const indicatorElement: Element | null | undefined = newRoot.getElementById(id);
-  if (!indicatorElement) {
-    return newRoot;
-  }
-  indicatorElement.setAttribute('hide', showIndicators ? 'false' : 'true');
-  return shallowCloneToRoot(indicatorElement);
-}, root);
+export const toggleIndicators = (
+  ids: Array<string>,
+  showIndicators: boolean,
+  root: Document,
+): Document => ids.reduce((newRoot, id) => {
+    const indicatorElement: Element | null | undefined = newRoot.getElementById(
+      id,
+    );
+    if (!indicatorElement) {
+      return newRoot;
+    }
+    indicatorElement.setAttribute('hide', showIndicators ? 'false' : 'true');
+    return shallowCloneToRoot(indicatorElement);
+  }, root);
 
 /**
  * Returns a new Document object that shows the "show" indicators
@@ -58,12 +69,16 @@ export const setIndicatorsAfterLoad = (
  * Returns a new Document object where the given action was applied to the target element
  * with the new element.
  */
-export const performUpdate = (action: UpdateAction, targetElement: Element, newElement: Element): Document => {
+export const performUpdate = (
+  action: UpdateAction,
+  targetElement: Element,
+  newElement: Element,
+): Document => {
   if (action === ACTIONS.REPLACE) {
     const { parentNode } = targetElement;
     if (parentNode) {
       parentNode.replaceChild(newElement, targetElement);
-      return shallowCloneToRoot((parentNode as any));
+      return shallowCloneToRoot(parentNode as any);
     }
   }
 

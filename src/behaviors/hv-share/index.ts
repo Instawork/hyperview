@@ -31,7 +31,10 @@ const getContent = (
   return null;
 };
 
-const getOptions = (dialogTitle?: DOMString | null, subject?: DOMString | null): Options => {
+const getOptions = (
+  dialogTitle?: DOMString | null,
+  subject?: DOMString | null,
+): Options => {
   if (dialogTitle) {
     if (subject) {
       return { dialogTitle, subject };
@@ -74,8 +77,14 @@ export default {
       Namespaces.SHARE,
       'subject',
     );
-    const title: DOMString | null | undefined = element.getAttributeNS(Namespaces.SHARE, 'title');
-    const url: DOMString | null | undefined = element.getAttributeNS(Namespaces.SHARE, 'url');
+    const title: DOMString | null | undefined = element.getAttributeNS(
+      Namespaces.SHARE,
+      'title',
+    );
+    const url: DOMString | null | undefined = element.getAttributeNS(
+      Namespaces.SHARE,
+      'url',
+    );
 
     const content = platformSpecificContent(message, title, url);
     if (content) {

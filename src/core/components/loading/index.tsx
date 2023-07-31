@@ -6,7 +6,7 @@
  *
  */
 
-import {ActivityIndicator, View} from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 import React, { PureComponent } from 'react';
 import type { Props } from './types';
 import styles from './styles';

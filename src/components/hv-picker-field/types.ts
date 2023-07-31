@@ -7,10 +7,10 @@
  */
 
 export type State = {
- value: string | null | undefined,
- pickerValue: string | null | undefined,
- focused: boolean,
- fieldPressed: boolean,
- donePressed: boolean,
- cancelPressed: boolean
+  value: string | null | undefined;
+  pickerValue: string | null | undefined;
+  focused: boolean;
+  fieldPressed: boolean;
+  donePressed: boolean;
+  cancelPressed: boolean;
 };

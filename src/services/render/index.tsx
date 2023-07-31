@@ -20,7 +20,7 @@ import React from 'react';
 export const renderElement = (
   element: Element | null | undefined,
   stylesheets: StyleSheets,
-  onUpdate: HvComponentOnUpdate,
+  onUpdate: HvComponentOnUpdate | null,
   options: HvComponentOptions,
 ): React.ReactElement<any> | null | undefined | string | null | undefined => {
   if (!element) {
@@ -91,7 +91,7 @@ export const renderElement = (
       // Object spreading will define the prop only when its value is truthy
       const extraProps = {
         key: element.getAttribute('key'),
-      } as const;
+      };
       if (!extraProps.key) {
         delete extraProps.key;
       }

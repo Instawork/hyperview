@@ -18,10 +18,10 @@ const QUERY_SEPARATOR = '?';
 const getHrefKey = (href: string): string => href.split(QUERY_SEPARATOR)[0];
 
 const routeKeys: {
-  [key: string]: string
+  [key: string]: string;
 } = {};
 const preloadScreens: {
-  [key: number]: Element
+  [key: number]: Element;
 } = {};
 
 export default class Navigation {
@@ -73,7 +73,10 @@ export default class Navigation {
     registerPreload?: (id: number, element: Element) => void,
   ): void => {
     const { showIndicatorId, delay, targetId } = opts;
-    const formData: FormData | null | undefined = getFormData(element, formComponents);
+    const formData: FormData | null | undefined = getFormData(
+      element,
+      formComponents,
+    );
 
     let url = href;
     if (!href.startsWith(ANCHOR_ID_SEPARATOR)) {
@@ -88,9 +91,9 @@ export default class Navigation {
         Namespaces.HYPERVIEW,
         'screen',
       );
-      const loadingScreen: Element | null | undefined = Array.from(screens).find(
-        s => s && s.getAttribute('id') === showIndicatorId,
-      );
+      const loadingScreen: Element | null | undefined = Array.from(
+        screens,
+      ).find(s => s && s.getAttribute('id') === showIndicatorId);
       if (loadingScreen) {
         preloadScreen = Date.now(); // Not trully unique but sufficient for our use-case
         this.setPreloadScreen(preloadScreen, loadingScreen);

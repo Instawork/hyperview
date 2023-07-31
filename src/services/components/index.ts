@@ -48,8 +48,15 @@ const reducer = (registry: ComponentRegistry, component: HvComponent) => ({
   },
 });
 
-export const getRegistry = (components: HvComponent[] = []): ComponentRegistry => [...HYPERVIEW_COMPONENTS, ...components].reduce<Record<string, any>>(reducer, {});
+export const getRegistry = (
+  components: HvComponent[] = [],
+): ComponentRegistry => [...HYPERVIEW_COMPONENTS, ...components].reduce<Record<string, any>>(
+    reducer,
+    {},
+  );
 
-export const getFormRegistry = (components: HvComponent[] = []): ComponentRegistry => [...HYPERVIEW_COMPONENTS, ...components]
-  .filter(c => Object.prototype.hasOwnProperty.call(c, 'getFormInputValues'))
-  .reduce<Record<string, any>>(reducer, {});
+export const getFormRegistry = (
+  components: HvComponent[] = [],
+): ComponentRegistry => [...HYPERVIEW_COMPONENTS, ...components]
+    .filter(c => Object.prototype.hasOwnProperty.call(c, 'getFormInputValues'))
+    .reduce<Record<string, any>>(reducer, {});

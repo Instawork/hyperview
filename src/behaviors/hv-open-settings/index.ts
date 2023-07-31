@@ -6,7 +6,7 @@
  *
  */
 
-import {Linking} from 'react-native';
+import { Linking } from 'react-native';
 
 export default {
   action: 'open-settings',

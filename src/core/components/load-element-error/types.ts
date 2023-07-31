@@ -7,6 +7,6 @@
  */
 
 export type Props = {
- error: Error,
- onPressReload: () => void
+  error: Error;
+  onPressReload: () => void;
 };

@@ -130,6 +130,7 @@ export type DOMImplementation = {
 };
 
 export type Document = Node & {
+  cloneNode: (deep: boolean) => Document;
   doctype: DocumentType;
   documentElement: Element;
   implementation: DOMImplementation;
@@ -256,7 +257,7 @@ export type NamedNodeMap = {
   setNamedItemNS: (attribute: Attribute) => Attribute | null | undefined;
 };
 
-export type StyleSheet = unknown;
+export type StyleSheet = any;
 
 export type StyleSheets = {
   regular: StyleSheet;
@@ -315,7 +316,7 @@ export type HvUpdateRoot = (root: Document, updateStylesheet?: boolean) => void;
 
 export type HvComponentProps = {
   element: Element;
-  onUpdate: HvComponentOnUpdate;
+  onUpdate: HvComponentOnUpdate | null;
   options: HvComponentOptions;
   stylesheets: StyleSheets;
 };

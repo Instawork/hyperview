@@ -6,11 +6,18 @@
  *
  */
 
-import type {HvComponent} from 'hyperview/src/types';
+import type { HvComponent } from 'hyperview/src/types';
 
-export const registerComponent = (component: HvComponent): {
-  [key: string]: HvComponent
-} => [component.localName, ...(component.localNameAliases || [])].reduce<Record<string, any>>((acc, localName: string) => ({
-  ...acc,
-  [localName]: component,
-}), {});
+export const registerComponent = (
+  component: HvComponent,
+): {
+  [key: string]: HvComponent;
+} => [component.localName, ...(component.localNameAliases || [])].reduce<
+    Record<string, any>
+  >(
+    (acc, localName: string) => ({
+      ...acc,
+      [localName]: component,
+    }),
+    {},
+  );

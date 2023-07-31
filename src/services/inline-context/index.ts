@@ -6,7 +6,6 @@
  *
  */
 
-import * as Dom from 'hyperview/src/services/dom';
 import {
   EMPTY,
   convertLineBreaksIntoSpaces,
@@ -16,6 +15,7 @@ import {
 } from './helpers';
 import type { Element, Node } from 'hyperview/src/types';
 import { NODE_TYPE } from 'hyperview/src/types';
+import { preorder } from 'hyperview/src/services/dom/helpers';
 
 /**
  * Given the following markup:
@@ -33,7 +33,7 @@ import { NODE_TYPE } from 'hyperview/src/types';
    ◦◦◦◦of HyperView!⏎
    ◦◦</text>⏎
    </text>
-   
+
    And its associated tree representation:
 
                                           [<text id="a">]
@@ -73,13 +73,14 @@ import { NODE_TYPE } from 'hyperview/src/types';
   (inspired by: https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Whitespace#how_does_css_process_whitespace#explanation)
  */
 export const formatter = (root: Element): [Node[], string[]] => {
-  const nodes = Dom.preorder(root, NODE_TYPE.TEXT_NODE);
+  const nodes = preorder(root, NODE_TYPE.TEXT_NODE);
 
-  const nodeValues: string[] = Array.from(nodes)
-    .map((node: Node): string => node && node.nodeValue
-    ? ignoreSpacesAfterLineBreak(node.nodeValue)
-    : EMPTY,
-    )
+  const nodeValues: string[] = Array.from<Node>(nodes)
+    .map((node: Node): string => {
+      return node && node.nodeValue
+        ? ignoreSpacesAfterLineBreak(node.nodeValue)
+        : EMPTY;
+    })
     .map((nodeValue: string) => convertLineBreaksIntoSpaces(nodeValue));
 
   return [nodes, trim(ignoreSpacesFollowingSpace(nodeValues))];

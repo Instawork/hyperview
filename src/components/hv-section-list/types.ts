@@ -7,5 +7,5 @@
  */
 
 export type State = {
- refreshing: boolean
+  refreshing: boolean;
 };

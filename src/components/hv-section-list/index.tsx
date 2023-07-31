@@ -22,7 +22,10 @@ import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { State } from './types';
 
-export default class HvSectionList extends PureComponent<HvComponentProps, State> {
+export default class HvSectionList extends PureComponent<
+  HvComponentProps,
+  State
+> {
   static namespaceURI = Namespaces.HYPERVIEW;
 
   static localName = LOCAL_NAME.SECTION_LIST;
@@ -107,10 +110,13 @@ export default class HvSectionList extends PureComponent<HvComponentProps, State
 
     let items: Array<any> = [];
     let titleElement = null;
-    const sections: Array<any | {
-      data: Array<any>,
-      title: any | null
-    }> = [];
+    const sections: Array<
+      | any
+      | {
+          data: Array<any>;
+          title: any | null;
+        }
+    > = [];
 
     for (let j = 0; j < flattened.length; j += 1) {
       const sectionElement = flattened[j];

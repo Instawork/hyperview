@@ -6,7 +6,7 @@
  *
  */
 
-import {getDummyHvProps, getElements} from 'hyperview/test/helpers';
+import { getDummyHvProps, getElements } from 'hyperview/test/helpers';
 import HvList from 'hyperview/src/components/hv-list';
 import { LOCAL_NAME } from 'hyperview/src/types';
 

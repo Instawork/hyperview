@@ -9,7 +9,7 @@
 import * as Components from 'hyperview/src/services/components';
 import * as Contexts from 'hyperview/src/contexts';
 import * as DomService from 'hyperview/src/services/dom';
-import * as Helpers from 'hyperview/src/services/dom/helpers-legacy';
+import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as NavigationContext from 'hyperview/src/contexts/navigation';
 import * as NavigatorMapContext from 'hyperview/src/contexts/navigator-map';
@@ -17,7 +17,7 @@ import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Render from 'hyperview/src/services/render';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as Types from './types';
-import * as TypesLegacy from 'hyperview/src/types-legacy';
+import * as TypesLegacy from 'hyperview/src/types';
 import * as UrlService from 'hyperview/src/services/url';
 import React, {
   ComponentType,
@@ -166,11 +166,14 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
         const [body] = Array.from(
           preloadElement.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'body'),
         );
-        const styleSheet = Stylesheets.createStylesheets(preloadElement);
+        const styleSheet = Stylesheets.createStylesheets(
+          (preloadElement as unknown) as TypesLegacy.Document,
+        );
         const component:
           | string
           | React.ReactElement<unknown, string | JSXElementConstructor<unknown>>
-          | undefined = Render.renderElement(body, styleSheet, null, {
+          | undefined
+          | null = Render.renderElement(body, styleSheet, null, {
           componentRegistry: this.componentRegistry,
         });
         if (component) {
@@ -189,11 +192,13 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
     const ErrorScreen = this.props.errorScreen || LoadError;
     return (
       <ErrorScreen
-        back={() => this.navLogic.back({})}
+        back={() => this.navLogic.back({} as TypesLegacy.NavigationRouteParams)}
         error={props.error}
         onPressReload={() => this.load()}
         onPressViewDetails={(uri: string | undefined) => {
-          this.navLogic.openModal({ url: uri });
+          this.navLogic.openModal({
+            url: uri as string,
+          } as TypesLegacy.NavigationRouteParams);
         }}
       />
     );

@@ -7,7 +7,7 @@
  */
 
 import * as NavigatorService from 'hyperview/src/services/navigator';
-import * as TypesLegacy from 'hyperview/src/types-legacy';
+import * as TypesLegacy from 'hyperview/src/types';
 import { ComponentType, ReactNode } from 'react';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
@@ -32,18 +32,11 @@ export type Props = {
   onParseAfter?: (url: string) => void;
   onParseBefore?: (url: string) => void;
   url?: string;
-  back?: (
-    params: TypesLegacy.NavigationRouteParams | object | undefined,
-  ) => void;
-  closeModal?: (
-    params: TypesLegacy.NavigationRouteParams | object | undefined,
-  ) => void;
-  navigate?: (
-    params: TypesLegacy.NavigationRouteParams | object,
-    key: string,
-  ) => void;
-  openModal?: (params: TypesLegacy.NavigationRouteParams | object) => void;
-  push?: (params: object) => void;
+  back?: (params: TypesLegacy.NavigationRouteParams | undefined) => void;
+  closeModal?: (params: TypesLegacy.NavigationRouteParams | undefined) => void;
+  navigate?: (params: TypesLegacy.NavigationRouteParams, key: string) => void;
+  openModal?: (params: TypesLegacy.NavigationRouteParams) => void;
+  push?: (params: TypesLegacy.NavigationRouteParams) => void;
   behaviors?: TypesLegacy.HvBehavior[];
   components?: TypesLegacy.HvComponent[];
   elementErrorComponent?: ComponentType<ErrorProps>;
