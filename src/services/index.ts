@@ -15,6 +15,7 @@ import type {
   HvComponent,
   HvComponentOptions,
   HvFormValues,
+  LocalName,
   Node,
   NodeList,
   StyleSheet,
@@ -29,7 +30,11 @@ import { Platform } from 'react-native';
  * various Hyperview components.
  */
 
-export const createStyleProp = (element: Element, stylesheets: StyleSheets, options: HvComponentOptions): Array<StyleSheet> => {
+export const createStyleProp = (
+  element: Element,
+  stylesheets: StyleSheets,
+  options: HvComponentOptions,
+): Array<StyleSheet> => {
   const styleAttr: string = options.styleAttr || 'style';
   if (!element.getAttribute(styleAttr)) {
     return [];
@@ -79,9 +84,11 @@ export const createStyleProp = (element: Element, stylesheets: StyleSheets, opti
  * Sets the element's id attribute as a test id and accessibility label
  * (for testing automation purposes).
  */
-export const createTestProps = (element: Element): {
-  testID?: string,
-  accessibilityLabel?: string
+export const createTestProps = (
+  element: Element,
+): {
+  testID?: string;
+  accessibilityLabel?: string;
 } => {
   const testProps: Record<string, any> = {};
   const id: DOMString | null | undefined = element.getAttribute('id');
@@ -125,7 +132,10 @@ export const createProps = (
   return { ...props, ...testProps };
 };
 
-export const later = (delayMs: number): Promise<void> => new Promise(resolve: (result?: Promise<never>) => void => setTimeout(resolve, delayMs));
+export const later = (delayMs: number): Promise<void> =>
+  new Promise((resolve: (result?: Promise<never>) => void) =>
+    setTimeout(resolve, delayMs),
+  );
 
 /**
  * Clones the element and moves all children from the original element
@@ -162,7 +172,7 @@ export const shallowCloneToRoot = (element: Element): Document => {
   }
 
   parentNode.replaceChild(elementClone, element);
-  return shallowCloneToRoot((parentNode as any));
+  return shallowCloneToRoot(parentNode as any);
 };
 
 /**
@@ -190,12 +200,15 @@ const visitNode = (node: Node, callback: (n: Node) => boolean): boolean => {
  * Note this is different from the element's regular id, this is
  * used for tracking delayed behaviors.
  */
-export const getElementByTimeoutId = (doc: Document, id: string): Element | null | undefined => {
+export const getElementByTimeoutId = (
+  doc: Document,
+  id: string,
+): Element | null | undefined => {
   let foundElement: Element | null | undefined = null;
   const callback = (node: Node): boolean => {
     if (node.nodeType === NODE_TYPE.ELEMENT_NODE) {
       // We know the node is an element, so we can safely cast it.
-      const element: Element = (node as any);
+      const element: Element = node as any;
       if (element.getAttribute(HV_TIMEOUT_ID_ATTR) === id) {
         foundElement = element;
         return true;
@@ -226,7 +239,10 @@ export const removeTimeoutId = (element: Element) => {
  * element with the given tag name. If no ancestor with the tagName is found,
  * returns null.
  */
-export const getAncestorByTagName = (element: Element, tagName: string): Element | null | undefined => {
+export const getAncestorByTagName = (
+  element: Element,
+  tagName: string,
+): Element | null | undefined => {
   let { parentNode } = element;
   if (!parentNode) {
     return null;
@@ -241,12 +257,14 @@ export const getAncestorByTagName = (element: Element, tagName: string): Element
   return parentNode as Element;
 };
 
-export const flattenRegistry = (registry: ComponentRegistry): Array<[string, string, HvComponent]> => {
+export const flattenRegistry = (
+  registry: ComponentRegistry,
+): Array<[string, string, HvComponent]> => {
   const entries: Array<[string, string, HvComponent]> = [];
 
   Object.keys(registry).forEach((ns: string) => {
     const nameRegistry: {
-      [key: string]: HvComponent
+      [key: string]: HvComponent;
     } = registry[ns];
     Object.keys(nameRegistry).forEach((name: string) => {
       const component: HvComponent = nameRegistry[name];
@@ -262,7 +280,10 @@ export const flattenRegistry = (registry: ComponentRegistry): Array<[string, str
  * form ancestor, or if there is no form data to send.
  * If the given element is a form element, its form data will be returned.
  */
-export const getFormData = (element: Element, formComponents: ComponentRegistry): FormData | null | undefined => {
+export const getFormData = (
+  element: Element,
+  formComponents: ComponentRegistry,
+): FormData | null | undefined => {
   const formElement: Element | null | undefined =
     element.tagName === 'form'
       ? element
@@ -280,13 +301,13 @@ export const getFormData = (element: Element, formComponents: ComponentRegistry)
       const [ns, tag, component] = data;
       const inputElements: NodeList<Element> = formElement.getElementsByTagNameNS(
         ns,
-        tag,
+        tag as LocalName,
       );
       for (let i = 0; i < inputElements.length; i += 1) {
         const inputElement = inputElements.item(i);
         if (inputElement) {
           // Casting necessary due to limitations of our Flow version (no optional properties)
-          const formComponent: HvFormValues = (component as any);
+          const formComponent: HvFormValues = component as any;
           formComponent
             .getFormInputValues(inputElement)
             // eslint-disable-next-line no-loop-func
@@ -302,7 +323,9 @@ export const getFormData = (element: Element, formComponents: ComponentRegistry)
   return formHasData ? formData : null;
 };
 
-export const getNameValueFormInputValues = (element: Element): Array<[string, string]> => {
+export const getNameValueFormInputValues = (
+  element: Element,
+): Array<[string, string]> => {
   const name = element.getAttribute('name');
   if (name) {
     return [[name, element.getAttribute('value') || '']];
@@ -310,9 +333,10 @@ export const getNameValueFormInputValues = (element: Element): Array<[string, st
   return [];
 };
 
-export const encodeXml = (xml: string): string => xml
-  .replace(/&/g, '&amp;')
-  .replace(/</g, '&lt;')
-  .replace(/>/g, '&gt;')
-  .replace(/"/g, '&quot;')
-  .replace(/'/g, '&apos;');
+export const encodeXml = (xml: string): string =>
+  xml
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
