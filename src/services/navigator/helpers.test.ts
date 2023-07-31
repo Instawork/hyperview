@@ -1,7 +1,7 @@
 import * as DomErrors from '../dom/errors';
 import * as Errors from './errors';
-import * as Imports from './imports';
 import * as Namespaces from '../namespaces';
+import * as Types from './types';
 import * as TypesLegacy from '../../types-legacy';
 import { ID_DYNAMIC, ID_MODAL } from './types';
 import {
@@ -16,6 +16,7 @@ import {
   getUrlFromHref,
   isNavigationElement,
   isUrlFragment,
+  mergeDocument,
   validateUrl,
 } from './helpers';
 import { DOMParser } from '@instawork/xmldom';
@@ -46,6 +47,67 @@ const screenDocSource =
  * Test blank document
  */
 const blankDoc = '<doc xmlns="https://hyperview.org/hyperview"></doc>';
+
+/**
+ * Test merge original document
+ */
+const mergeOriginalDoc = `
+<doc xmlns="https://hyperview.org/hyperview">
+  <navigator id="root-navigator" type="stack">
+    <nav-route id="tabs-route">
+      <navigator id="tabs-navigator" type="tab">
+        <nav-route id="live-shifts-route" href="{% url 'biz-app-hub' %}" initial="false"/>
+        <nav-route id="shifts-route" href="{% url 'biz-app-shift-group-list' %}" initial="true"/>
+        <nav-route id="account-route" href="http://localhost:8080/biz_app/account"/>
+      </navigator>
+    </nav-route>
+  </navigator>
+</doc>
+`;
+
+/**
+ * Test merge document with merging disabled
+ * Expect this document to replace original
+ */
+const mergeSourceDisabledDoc = `
+<doc xmlns="https://hyperview.org/hyperview">
+  <navigator id="root-navigator" type="stack" merge="false">
+    <nav-route id="tabs-route">
+      <navigator id="tabs-navigator" type="tab" merge="false">
+        <nav-route id="live-shifts-route" href="{% url 'biz-app-hub' %}" initial="false"/>
+        <nav-route id="shifts-route" href="{% url 'biz-app-shift-group-list' %}" initial="true">
+          <navigator id="shift-navigator" type="tab">
+            <nav-route id="upcoming-shifts" href="http://localhost:8080/biz_app/gigs/groups" initial="false"/>
+            <nav-route id="past-shifts" href="http://localhost:8080/biz_app/gigs/groups" initial="true"/>
+          </navigator>
+        </nav-route>
+      </navigator>
+    </nav-route>
+  </navigator>
+</doc>
+`;
+
+/**
+ * Test merge document with merging enabled
+ * Expect the merge to contain a merged document
+ */
+const mergeSourceEnabledDoc = `
+<doc xmlns="https://hyperview.org/hyperview">
+  <navigator id="root-navigator" type="stack" merge="true">
+    <nav-route id="tabs-route">
+      <navigator id="tabs-navigator" type="tab" merge="true">
+        <nav-route id="live-shifts-route" href="{% url 'biz-app-hub' %}" initial="false"/>
+        <nav-route id="shifts-route" href="{% url 'biz-app-shift-group-list' %}" initial="true">
+          <navigator id="shift-navigator" type="tab">
+            <nav-route id="upcoming-shifts" href="http://localhost:8080/biz_app/gigs/groups" initial="false"/>
+            <nav-route id="past-shifts" href="http://localhost:8080/biz_app/gigs/groups" initial="true"/>
+          </navigator>
+        </nav-route>
+      </navigator>
+    </nav-route>
+  </navigator>
+</doc>
+`;
 
 /**
  * Parser used to parse the document
@@ -318,7 +380,7 @@ describe('validateUrl', () => {
 });
 
 describe('findPath', () => {
-  const state = StateSource as Imports.NavigationState;
+  const state = StateSource as Types.NavigationState;
   describe('found', () => {
     const path = findPath(state, 'performance_2');
     it('should find the path 3 levels from the top', () => {
@@ -541,4 +603,116 @@ describe('buildRequest', () => {
   // - invalid navigator
   // - invalid path
   // - success
+});
+
+describe('mergeDocuments', () => {
+  const originalDoc = parser.parseFromString(mergeOriginalDoc);
+  const origNavigators = originalDoc.getElementsByTagNameNS(
+    Namespaces.HYPERVIEW,
+    'navigator',
+  );
+  const [origTabNavigator] = origNavigators.filter(
+    n => n.getAttribute('id') === 'tabs-navigator',
+  );
+
+  it('should contain a navigator called tabs-navigator', () => {
+    expect(origTabNavigator).toBeDefined();
+  });
+
+  const origTabRoutes = getChildElements(origTabNavigator);
+
+  it('should find 3 route elements on tab-navigator', () => {
+    expect(origTabRoutes.length).toEqual(3);
+  });
+
+  it('should not contain a sub navigator for shifts-route', () => {
+    const [origShiftRoute] = origTabRoutes.filter(
+      n => n.getAttribute('id') === 'shifts-route',
+    );
+    expect(origShiftRoute.childNodes?.length).toEqual(0);
+  });
+
+  describe('merge documents with merge="false"', () => {
+    // With merging disabled, the merge source should replace the original
+    const mergeDoc = parser.parseFromString(mergeSourceDisabledDoc);
+    const outputDoc = mergeDocument(mergeDoc, originalDoc);
+    it('should merge successfully', () => {
+      expect(outputDoc).toBeDefined();
+    });
+
+    const mergedNavigators = outputDoc.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      'navigator',
+    );
+    const [mergedTabNavigator] = mergedNavigators.filter(
+      n => n.getAttribute('id') === 'tabs-navigator',
+    );
+    const mergedTabRoutes = getChildElements(mergedTabNavigator);
+    it('should find 2 route elements on tabs-navigator', () => {
+      expect(mergedTabRoutes.length).toEqual(2);
+    });
+
+    const [mergedshiftRoute] = mergedTabRoutes.filter(
+      n => n.getAttribute('id') === 'shifts-route',
+    );
+
+    const shiftNavigators = mergedshiftRoute.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      'navigator',
+    );
+
+    it('should have one navigator under shifts-route', () => {
+      expect(shiftNavigators.length).toEqual(1);
+    });
+
+    const shiftNavRoutes = shiftNavigators[0].getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      'nav-route',
+    );
+    it('should find 2 route elements under shifts-navigator', () => {
+      expect(shiftNavRoutes.length).toEqual(2);
+    });
+  });
+
+  describe('merge documents with merge="true"', () => {
+    // With merging enabled, the docs should be merged
+    const mergeDoc = parser.parseFromString(mergeSourceEnabledDoc);
+    const outputDoc = mergeDocument(mergeDoc, originalDoc);
+    it('should merge successfully', () => {
+      expect(outputDoc).toBeDefined();
+    });
+
+    const mergedNavigators = outputDoc.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      'navigator',
+    );
+    const [mergedTabNavigator] = mergedNavigators.filter(
+      n => n.getAttribute('id') === 'tabs-navigator',
+    );
+    const mergedTabRoutes = getChildElements(mergedTabNavigator);
+    it('should find 3 route elements on tabs-navigator', () => {
+      expect(mergedTabRoutes.length).toEqual(3);
+    });
+
+    const [mergedshiftRoute] = mergedTabRoutes.filter(
+      n => n.getAttribute('id') === 'shifts-route',
+    );
+
+    const shiftNavigators = mergedshiftRoute.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      'navigator',
+    );
+
+    it('should have one navigator under shifts-route', () => {
+      expect(shiftNavigators.length).toEqual(1);
+    });
+
+    const shiftNavRoutes = shiftNavigators[0].getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      'nav-route',
+    );
+    it('should find 2 route elements under shifts-navigator', () => {
+      expect(shiftNavRoutes.length).toEqual(2);
+    });
+  });
 });

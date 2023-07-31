@@ -7,6 +7,7 @@
  */
 
 import * as Errors from './errors';
+import * as Helpers from 'hyperview/src/services/dom/helpers-legacy';
 import * as Types from './types';
 import * as TypesLegacy from 'hyperview/src/types-legacy';
 import * as UrlService from 'hyperview/src/services/url';
@@ -300,4 +301,133 @@ export const buildRequest = (
   );
 
   return [navigation, lastPathId || routeId, params];
+};
+
+/**
+ * Create a map of <id, element> from a list of nodes
+ */
+const nodesToMap = (
+  nodes: TypesLegacy.NodeList<TypesLegacy.Node>,
+): Map<string, TypesLegacy.Node> => {
+  const map: Map<string, TypesLegacy.Node> = new Map();
+  if (!nodes) {
+    return map;
+  }
+  Array.from(nodes).forEach(node => {
+    if (node.nodeType === TypesLegacy.NODE_TYPE.ELEMENT_NODE) {
+      const element = node as TypesLegacy.Element;
+      if (isNavigationElement(element)) {
+        const id = element.getAttribute('id');
+        if (id) {
+          map.set(id, element);
+        }
+      }
+    }
+  });
+  return map;
+};
+
+const KEY_MERGE = 'merge';
+const KEY_INITIAL = 'initial';
+
+/**
+ * Merge the nodes from the new document into the current
+ * All attributes in the current are reset (initial, merge)
+ * If an id is found in both docs, the current node is updated
+ * If an id is found only in the new doc, the node is added to the current
+ * the 'merge' attribute on a navigator determines if the children are merged or replaced
+ */
+const mergeNodes = (
+  current: TypesLegacy.Element,
+  newNodes: TypesLegacy.NodeList<TypesLegacy.Node>,
+): void => {
+  if (!current || !current.childNodes || !newNodes || newNodes.length === 0) {
+    return;
+  }
+
+  // Clean out current node attributes for 'merge' and 'initial'
+  Array.from(current.childNodes).forEach(node => {
+    const element = node as TypesLegacy.Element;
+    if (isNavigationElement(element)) {
+      if (element.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR) {
+        element.setAttribute(KEY_MERGE, 'false');
+      } else if (element.localName === TypesLegacy.LOCAL_NAME.NAV_ROUTE) {
+        element.setAttribute(KEY_INITIAL, 'false');
+      }
+    }
+  });
+
+  const currentMap = nodesToMap(current.childNodes);
+
+  Array.from(newNodes).forEach(node => {
+    if (node.nodeType === TypesLegacy.NODE_TYPE.ELEMENT_NODE) {
+      const newElement = node as TypesLegacy.Element;
+      if (isNavigationElement(newElement)) {
+        const id = newElement.getAttribute('id');
+        if (id) {
+          const currentElement = currentMap.get(id) as TypesLegacy.Element;
+          if (currentElement) {
+            if (newElement.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR) {
+              const isMergeable =
+                newElement.getAttribute('merge')?.toLowerCase() === 'true';
+              if (isMergeable) {
+                currentElement.setAttribute(KEY_MERGE, 'true');
+                mergeNodes(currentElement, newElement.childNodes);
+              } else {
+                current.replaceChild(newElement, currentElement);
+              }
+            } else if (
+              newElement.localName === TypesLegacy.LOCAL_NAME.NAV_ROUTE
+            ) {
+              // Update the initial route
+              currentElement.setAttribute(
+                KEY_INITIAL,
+                newElement.getAttribute(KEY_INITIAL)?.toLowerCase() || 'false',
+              );
+              mergeNodes(currentElement, newElement.childNodes);
+            }
+          } else {
+            // Add new element
+            current.appendChild(newElement);
+          }
+        }
+      }
+    }
+  });
+};
+
+/**
+ * Merge the new document into the current document
+ * Creates a clone to force a re-render
+ */
+export const mergeDocument = (
+  newDoc: TypesLegacy.Document,
+  currentDoc?: TypesLegacy.Document,
+): TypesLegacy.Document => {
+  if (!currentDoc) {
+    return newDoc;
+  }
+  if (!newDoc || !newDoc.childNodes) {
+    return currentDoc;
+  }
+
+  // Create a clone of the current document
+  const composite = currentDoc.cloneNode(true);
+  const currentRoot = Helpers.getFirstTag(
+    composite,
+    TypesLegacy.LOCAL_NAME.DOC,
+  );
+
+  if (!currentRoot) {
+    throw new Errors.HvRouteError('No root element found in current document');
+  }
+
+  // Get the <doc>
+  const newRoot = Helpers.getFirstTag(newDoc, TypesLegacy.LOCAL_NAME.DOC);
+  if (!newRoot) {
+    throw new Errors.HvRouteError('No root element found in new document');
+  }
+
+  mergeNodes(currentRoot, newRoot.childNodes);
+  return composite;
 };
