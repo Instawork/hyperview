@@ -74,7 +74,7 @@ export default class Navigation {
     element: Element,
     formComponents: ComponentRegistry,
     opts: BehaviorOptions,
-    registerPreload?: (id: number, element: Element) => void,
+    registerPreload?: (id: number, e: Element) => void,
   ): void => {
     const { showIndicatorId, delay, targetId } = opts;
     const formData: FormData | null | undefined = getFormData(

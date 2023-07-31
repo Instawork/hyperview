@@ -409,6 +409,7 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
    * - on iOS, bring up a bottom sheet with date picker
    * - on Android, show the system date picker
    */
+  // eslint-disable-next-line react/require-render-return
   render = (): ReactNode => {
     if (this.props.element.getAttribute('hide') === 'true') {
       return null;

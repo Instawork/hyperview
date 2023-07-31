@@ -1,19 +1,9 @@
 // Type definitions for mapping Flow types to TypeScript
 // Project: flow-to-typescript-codemod
+import type React from 'react';
 
 type SetComplement<A, B extends A> = A extends B ? never : A;
 
-type DefaultProps<T> = T extends { defaultProps: infer D } ? D : {};
-
-type OmitDefaultProps<T, D> = Omit<T, keyof D> &
-  Partial<Pick<T, Extract<keyof T, keyof D>>> &
-  Partial<Pick<D, Extract<keyof D, keyof T>>>;
-
-type HasComponentProps<T, D extends unknown = DefaultProps<T>> = T extends (
-  prop: infer P,
-) => React.ReactElement
-  ? OmitDefaultProps<P, D>
-  : never;
 export declare namespace Flow {
   // Abstract Component utility type
   // https://flow.org/en/docs/react/types/#toc-react-abstractcomponent
@@ -33,12 +23,6 @@ export declare namespace Flow {
     T,
     SetComplement<keyof T, keyof U>
   >;
-
-  type ComponentProps<T> = T extends
-    | React.ComponentType<infer P>
-    | React.Component<infer P>
-    ? JSX.LibraryManagedAttributes<T, P>
-    : HasComponentProps<T>;
 
   type ObjMap<
     O extends Record<string, any>,

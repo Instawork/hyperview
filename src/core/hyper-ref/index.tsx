@@ -36,7 +36,6 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-import type { ReactNode } from 'react';
 import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
 import { XMLSerializer } from '@instawork/xmldom';
 import { X_RESPONSE_STALE_REASON } from 'hyperview/src/services/dom/types';
@@ -330,6 +329,7 @@ export default class HyperRef extends PureComponent<Props, State> {
       this.props.element.parentNode?.localName === LOCAL_NAME.TEXT;
 
     if (isNestedUnderText) {
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
       const noop = () => {};
       return (
         <Text

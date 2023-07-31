@@ -24,12 +24,13 @@ export default {
 
     // Get the immediate alert:option nodes. We don't use getElementsByTagname to
     // avoid getting options for nested alerts.
-    const optionElements = childNodes.filter(
-      n =>
+    const optionElements = childNodes.filter(n => {
+      return (
         n &&
         n.namespaceURI === Namespaces.HYPERVIEW_ALERT &&
-        n.localName === 'option',
-    );
+        n.localName === 'option'
+      );
+    });
 
     // Create the options for the alert.
     // NOTE: Android supports at most 3 options.
@@ -40,9 +41,12 @@ export default {
             // Only behaviors with "press" trigger will get executed.
             // "press" is also the default trigger, so if no trigger is specified,
             // the behavior will also execute.
-            e =>
-              !e.getAttribute('trigger') ||
-              e.getAttribute('trigger') === 'press',
+            e => {
+              return (
+                !e.getAttribute('trigger') ||
+                e.getAttribute('trigger') === 'press'
+              );
+            },
           )
           .forEach((behaviorElement, i) => {
             const href = behaviorElement.getAttribute('href');
@@ -60,8 +64,8 @@ export default {
             // With multiple behaviors for the same trigger, we need to stagger
             // the updates a bit so that each update operates on the latest DOM.
             // Ideally, we could apply multiple DOM updates at a time.
-            later(i).then(
-              () =>
+            later(i).then(() => {
+              return (
                 optionElement &&
                 onUpdate(href, action, optionElement, {
                   behaviorElement,
@@ -71,8 +75,9 @@ export default {
                   showIndicatorIds,
                   targetId,
                   verb,
-                }),
-            );
+                })
+              );
+            });
           });
       },
       style:
@@ -86,6 +91,7 @@ export default {
     // On Android, alerts don't have a default button when unspecified, so we need to set one.
     if (!options.length && Platform.OS === 'android') {
       options.push({
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
         onPress: () => {},
         text: 'OK',
       });
