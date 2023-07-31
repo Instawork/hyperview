@@ -66,7 +66,7 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
   };
 
   getItems = () => {
-    const isOwnedBySelf = item: undefined => {
+    const isOwnedBySelf = (item: undefined) => {
       if (item.parentNode === this.props.element) {
         return true;
       }

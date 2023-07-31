@@ -12,7 +12,8 @@ export const registerComponent = (
   component: HvComponent,
 ): {
   [key: string]: HvComponent;
-} => [component.localName, ...(component.localNameAliases || [])].reduce<
+} => {
+  return [component.localName, ...(component.localNameAliases || [])].reduce<
     Record<string, any>
   >(
     (acc, localName: string) => ({
@@ -21,3 +22,4 @@ export const registerComponent = (
     }),
     {},
   );
+};

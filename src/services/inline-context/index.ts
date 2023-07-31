@@ -6,11 +6,10 @@
  *
  */
 
-import {
+import ignoreSpacesFollowingSpace, {
   EMPTY,
   convertLineBreaksIntoSpaces,
   ignoreSpacesAfterLineBreak,
-  ignoreSpacesFollowingSpace,
   trim,
 } from './helpers';
 import type { Element, Node } from 'hyperview/src/types';

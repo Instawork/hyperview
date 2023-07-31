@@ -46,7 +46,7 @@
   },
   "overrides": [
     {
-      "files": ["**/types.js"],
+      "files": ["**/types.ts"],
       "rules": {
         "no-use-before-define": "off",
         "max-len": "off"
@@ -67,7 +67,8 @@
         "operator-linebreak": "off",
         "no-use-before-define": "off",
         "object-curly-newline": "off",
-        "instawork/error-object": "off"
+        "instawork/error-object": "off",
+        "@typescript-eslint/no-explicit-any": "off"
       }
     }
   ]

@@ -255,19 +255,27 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
   /**
    * Returns true if the field is focused (and picker is showing).
    */
-  isFocused = (): boolean => this.props.element.getAttribute('focused') === 'true';
+  isFocused = (): boolean => {
+    return this.props.element.getAttribute('focused') === 'true';
+  };
 
   /**
    * Returns a Date object representing the value in the picker.
    */
-  getPickerValue = (): Date | null | undefined => HvDateField.createDateFromString(
+  getPickerValue = (): Date | null | undefined => {
+    return HvDateField.createDateFromString(
       this.props.element.getAttribute('picker-value'),
     );
+  };
 
   /**
    * Returns a Date object representing the value in the field.
    */
-  getValue = (): Date | null | undefined => HvDateField.createDateFromString(this.props.element.getAttribute('value'));
+  getValue = (): Date | null | undefined => {
+    return HvDateField.createDateFromString(
+      this.props.element.getAttribute('value'),
+    );
+  };
 
   /**
    * Renders the date picker component, with the given min and max dates.
@@ -356,7 +364,8 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
     const doneLabel: string =
       this.props.element.getAttribute('done-label') || 'Done';
 
-    const getTextStyle = (pressed: boolean): Array<StyleSheetType> => createStyleProp(this.props.element, this.props.stylesheets, {
+    const getTextStyle = (pressed: boolean): Array<StyleSheetType> =>
+      createStyleProp(this.props.element, this.props.stylesheets, {
         ...this.props.options,
         pressed,
         styleAttr: 'modal-text-style',
