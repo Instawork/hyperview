@@ -7,8 +7,7 @@ import { Flow } from 'flow-to-typescript-codemod';
  * LICENSE file in the root directory of this source tree.
  *
  */
-
-import type { ElementRef } from 'react';
+import type React from 'react';
 
 import type { XResponseStaleReason } from './services/dom/types';
 
@@ -257,7 +256,7 @@ export type NamedNodeMap = {
   setNamedItemNS: (attribute: Attribute) => Attribute | null | undefined;
 };
 
-export type StyleSheet = any;
+export type StyleSheet = unknown;
 
 export type StyleSheets = {
   regular: StyleSheet;
@@ -287,7 +286,9 @@ export type HvComponentOptions = {
   preformatted?: boolean | null | undefined;
   pressed?: boolean | null | undefined;
   pressedSelected?: boolean | null | undefined;
-  registerInputHandler?: (ref?: ElementRef<any> | null | undefined) => void;
+  registerInputHandler?: (
+    ref?: React.ElementRef<any> | null | undefined,
+  ) => void;
   screenUrl?: string | object | undefined;
   selected?: boolean | null | undefined;
   skipHref?: boolean | null | undefined;
@@ -332,7 +333,9 @@ export type HvComponentStatics = {
   namespaceURI: NamespaceURI;
 };
 
-export type HvComponent = Flow.Class<React.Component<HvComponentProps, any>> &
+export type HvComponent = Flow.Class<
+  React.Component<HvComponentProps, unknown>
+> &
   HvComponentStatics;
 
 export type HvBehavior = {
