@@ -14,7 +14,6 @@ export type NavigatorMapContextProps = {
   getRoute: (key: string) => string | undefined;
   setPreload: (key: number, element: TypesLegacy.Element) => void;
   getPreload: (key: number) => TypesLegacy.Element | undefined;
-  initialRouteName?: string;
 };
 
 /**
@@ -22,7 +21,6 @@ export type NavigatorMapContextProps = {
  * Each navigator creates its own context
  *  - routeMap: Urls defined in <nav-route> elements are stored in the routeMap by their key
  *  - elementMap: Contains element sub-navigators defined in a <nav-route> element
- *  - initialRouteName: The name of the first route to render
  *  - preloadMap: A map of preload elements by their id
  */
 export const NavigatorMapContext = createContext<NavigatorMapContextProps>({
