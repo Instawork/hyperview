@@ -103,6 +103,9 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
         error: undefined,
       });
     } catch (err: unknown) {
+      if (this.props.onError) {
+        this.props.onError(err as Error);
+      }
       this.setState({
         doc: undefined,
         error: err as Error,
@@ -308,6 +311,9 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
       }
       return <Load />;
     } catch (err) {
+      if (this.props.onError) {
+        this.props.onError(err as Error);
+      }
       return <Error error={err} />;
     }
   }

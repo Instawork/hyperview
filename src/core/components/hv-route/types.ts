@@ -69,6 +69,7 @@ export type InnerRouteProps = {
     input: string,
     init: { headers: { [key: string]: unknown } },
   ) => Promise<Response>;
+  onError?: (error: Error) => void;
   onParseAfter?: (url: string) => void;
   onParseBefore?: (url: string) => void;
   behaviors?: TypesLegacy.HvBehavior[];
