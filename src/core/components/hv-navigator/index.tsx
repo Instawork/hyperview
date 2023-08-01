@@ -174,20 +174,20 @@ export default class HvNavigator extends PureComponent<Types.Props> {
       | TypesLegacy.DOMString
       | null
       | undefined = props.element.getAttribute('type');
-    const initial:
+    const selected:
       | TypesLegacy.Element
-      | undefined = NavigatorService.getInitialNavRouteElement(props.element);
-    if (!initial) {
+      | undefined = NavigatorService.getSelectedNavRouteElement(props.element);
+    if (!selected) {
       throw new NavigatorService.HvNavigatorError(
-        `No initial route defined for '${id}'`,
+        `No selected route defined for '${id}'`,
       );
     }
 
-    const initialId: string | undefined = initial
+    const selectedId: string | undefined = selected
       .getAttribute('id')
       ?.toString();
-    if (initialId) {
-      navigatorMapContext.initialRouteName = initialId;
+    if (selectedId) {
+      navigatorMapContext.initialRouteName = selectedId;
     }
     const { buildScreens } = this;
     switch (type) {
@@ -211,7 +211,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
           <BottomTab.Navigator
             backBehavior="none"
             id={id}
-            initialRouteName={initialId}
+            initialRouteName={selectedId}
             screenOptions={{
               headerShown: SHOW_NAVIGATION_UI,
               tabBarStyle: { display: SHOW_NAVIGATION_UI ? 'flex' : 'none' },
