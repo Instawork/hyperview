@@ -8,6 +8,7 @@
 
 import * as Errors from './errors';
 import * as Helpers from 'hyperview/src/services/dom/helpers-legacy';
+import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Types from './types';
 import * as TypesLegacy from 'hyperview/src/types-legacy';
 import * as UrlService from 'hyperview/src/services/url';
@@ -31,8 +32,9 @@ export const getChildElements = (
  */
 export const isNavigationElement = (element: TypesLegacy.Element): boolean => {
   return (
-    element.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR ||
-    element.localName === TypesLegacy.LOCAL_NAME.NAV_ROUTE
+    element.namespaceURI === Namespaces.HYPERVIEW &&
+    (element.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR ||
+      element.localName === TypesLegacy.LOCAL_NAME.NAV_ROUTE)
   );
 };
 
