@@ -73,6 +73,9 @@ export type DOMString = string;
 export type NamespaceURI = string;
 
 export type NodeList<T> = {
+  // ***** ADDED *****
+  filter: (predicate: (item: T) => boolean) => T[];
+
   length: number;
   item: (index: number) => T | null | undefined;
 } & {

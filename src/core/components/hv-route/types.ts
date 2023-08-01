@@ -40,10 +40,8 @@ export type NavigationContextProps = {
 
 export type NavigatorMapContextProps = {
   getRoute: (key: string) => string | undefined;
-  getElement: (key: string) => TypesLegacy.Element | undefined;
   setPreload: (key: number, element: TypesLegacy.Element) => void;
   getPreload: (key: number) => TypesLegacy.Element | undefined;
-  initialRouteName?: string;
 };
 
 export type State = {
@@ -60,8 +58,7 @@ export type RouteProps = NavigatorService.Route<string, { url?: string }>;
  * The props used by inner components of hv-route
  */
 export type InnerRouteProps = {
-  id?: string;
-  url: string;
+  url?: string;
   navigation?: NavigatorService.NavigationProp;
   route?: NavigatorService.Route<string, RouteParams>;
   entrypointUrl: string;
@@ -79,10 +76,8 @@ export type InnerRouteProps = {
   loadingScreen?: ComponentType<LoadingProps>;
   handleBack?: ComponentType<{ children: ReactNode }>;
   getRoute: (key: string) => string | undefined;
-  getElement: (key: string) => TypesLegacy.Element | undefined;
   setPreload: (key: number, element: TypesLegacy.Element) => void;
   getPreload: (key: number) => TypesLegacy.Element | undefined;
-  initialRouteName?: string;
   element?: TypesLegacy.Element;
 };
 

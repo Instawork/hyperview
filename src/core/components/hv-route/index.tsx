@@ -15,6 +15,7 @@ import * as NavigationContext from 'hyperview/src/contexts/navigation';
 import * as NavigatorMapContext from 'hyperview/src/contexts/navigator-map';
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Render from 'hyperview/src/services/render';
+import * as RouteDocContext from 'hyperview/src/contexts/route-doc';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as Types from './types';
 import * as TypesLegacy from 'hyperview/src/types-legacy';
@@ -266,6 +267,15 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
     }
 
     if (renderElement.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR) {
+      if (this.state.doc) {
+        // The <RouteDocContext> provides doc access to nested navigators
+        return (
+          <RouteDocContext.Context.Provider value={this.state.doc}>
+            <HvNavigator element={renderElement} routeComponent={HvRoute} />
+          </RouteDocContext.Context.Provider>
+        );
+      }
+      // Without a doc, the navigator shares the higher level context
       return <HvNavigator element={renderElement} routeComponent={HvRoute} />;
     }
     const { Screen } = this;
@@ -321,6 +331,70 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
 }
 
 /**
+ * Retrieve the url from the props, params, or context
+ */
+const getRouteUrl = (
+  props: Types.Props,
+  navigationContext: Types.NavigationContextProps,
+  navigatorMapContext: Types.NavigatorMapContextProps,
+) => {
+  // The initial hv-route element will use the entrypoint url
+  if (props.navigation === undefined) {
+    return navigationContext.entrypointUrl;
+  }
+
+  // Use the passed url
+  if (props.route?.params?.url) {
+    if (NavigatorService.isUrlFragment(props.route?.params?.url)) {
+      // Look up the url from the route map where it would have been
+      //  stored from the initial <nav-route> definition
+      return navigatorMapContext.getRoute(
+        NavigatorService.cleanHrefFragment(props.route?.params?.url),
+      );
+    }
+    return props.route?.params?.url;
+  }
+
+  // Look up by route id
+  if (props.route?.params?.id) {
+    return navigatorMapContext.getRoute(props.route?.params?.id);
+  }
+
+  return undefined;
+};
+
+/**
+ * Retrieve a nested navigator as a child of the nav-route with the given id
+ */
+const getNestedNavigator = (
+  id?: string,
+  doc?: TypesLegacy.Document,
+): TypesLegacy.Element | undefined => {
+  if (!id || !doc) {
+    return undefined;
+  }
+
+  const routes = doc
+    .getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      TypesLegacy.LOCAL_NAME.NAV_ROUTE,
+    )
+    .filter((n: TypesLegacy.Element) => {
+      return n.getAttribute('id') === id;
+    });
+  const route = routes && routes.length > 0 ? routes[0] : undefined;
+  if (route) {
+    return (
+      Helpers.getFirstChildTag<TypesLegacy.Element>(
+        route,
+        TypesLegacy.LOCAL_NAME.NAVIGATOR,
+      ) || undefined
+    );
+  }
+  return undefined;
+};
+
+/**
  * Functional component wrapper around HvRouteInner
  * NOTE: The reason for this approach is to allow accessing
  *  multiple contexts to pass data to HvRouteInner
@@ -340,43 +414,17 @@ export default function HvRoute(props: Types.Props) {
     throw new NavigatorService.HvRouteError('No context found');
   }
 
-  // Retrieve the url from params or from the context
-  let url: string | undefined = props.route?.params?.url;
-  // Fragment urls are used to designate a route within a document
-  if (url && NavigatorService.isUrlFragment(url)) {
-    // Look up the url from the route map where it would have been
-    //  stored from the initial <nav-route> definition
-    url = navigatorMapContext.getRoute(NavigatorService.cleanHrefFragment(url));
-  }
+  const routeDocContext: TypesLegacy.Document | undefined = useContext(
+    RouteDocContext.Context,
+  );
 
-  const id: string | undefined =
-    props.route?.params?.id ||
-    navigatorMapContext.initialRouteName ||
-    undefined;
-
-  if (!url) {
-    // Use the route id or initial routeto look up the url
-    if (id) {
-      url = navigatorMapContext.getRoute(id);
-    }
-  }
-
-  // Fall back to the entrypoint url, only for the top route
-  if (!url && !props.navigation) {
-    url = navigationContext.entrypointUrl;
-  } else {
-    url = url || '';
-  }
-
-  const { index, type } = props.navigation?.getState() || {};
-  // The nested element is only used when the navigator is not a stack
-  //    or is the first screen in a stack. Other stack screens will require a url
-  const includeElement: boolean =
-    type !== NavigatorService.NAVIGATOR_TYPE.STACK || index === 0;
+  const url = getRouteUrl(props, navigationContext, navigatorMapContext);
 
   // Get the navigator element from the context
-  const element: TypesLegacy.Element | undefined =
-    id && includeElement ? navigatorMapContext.getElement(id) : undefined;
+  const element: TypesLegacy.Element | undefined = getNestedNavigator(
+    props.route?.params?.id,
+    routeDocContext,
+  );
 
   return (
     <HvRouteInner

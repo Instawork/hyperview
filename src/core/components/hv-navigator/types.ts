@@ -14,10 +14,7 @@ export type RouteParams = {
   url: string;
 };
 
-export type ParamTypes = {
-  dynamic: RouteParams;
-  modal: RouteParams;
-};
+export type ParamTypes = Record<string, RouteParams>;
 
 export type ScreenParams = {
   params: RouteParams;
