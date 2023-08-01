@@ -224,6 +224,9 @@ export default class HvScreen extends React.Component {
       });
 
     } catch (err) {
+      if (this.props.onError) {
+        this.props.onError(err);
+      }
       this.setState({
         doc: null,
         elementError: null,
@@ -348,6 +351,9 @@ export default class HvScreen extends React.Component {
       }
       return doc.documentElement;
     } catch (err) {
+      if (this.props.onError) {
+        this.props.onError(err);
+      }
       this.setState({ elementError: err });
     }
     return null;
