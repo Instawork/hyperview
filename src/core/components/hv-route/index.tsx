@@ -236,6 +236,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
             loadingScreen={this.props.loadingScreen}
             navigate={this.navLogic.navigate}
             navigation={this.props.navigation}
+            onError={this.props.onError}
             onParseAfter={this.props.onParseAfter}
             onParseBefore={this.props.onParseBefore}
             openModal={this.navLogic.openModal}
