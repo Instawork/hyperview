@@ -53,7 +53,7 @@ export const getInitialNavRouteElement = (
   }
 
   const initialChild = elements.find(
-    child => child.getAttribute('initial')?.toLowerCase() === 'true',
+    child => child.getAttribute('initial') === 'true',
   );
 
   return initialChild || elements[0];
@@ -370,8 +370,7 @@ const mergeNodes = (
           const currentElement = currentMap.get(id) as TypesLegacy.Element;
           if (currentElement) {
             if (newElement.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR) {
-              const isMergeable =
-                newElement.getAttribute('merge')?.toLowerCase() === 'true';
+              const isMergeable = newElement.getAttribute('merge') === 'true';
               if (isMergeable) {
                 currentElement.setAttribute(KEY_MERGE, 'true');
                 mergeNodes(currentElement, newElement.childNodes);
@@ -384,7 +383,7 @@ const mergeNodes = (
               // Update the initial route
               currentElement.setAttribute(
                 KEY_INITIAL,
-                newElement.getAttribute(KEY_INITIAL)?.toLowerCase() || 'false',
+                newElement.getAttribute(KEY_INITIAL) || 'false',
               );
               mergeNodes(currentElement, newElement.childNodes);
             }
