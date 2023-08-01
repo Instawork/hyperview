@@ -12,7 +12,7 @@ import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Types from './types';
 import * as TypesLegacy from 'hyperview/src/types-legacy';
 import React, { PureComponent, useContext } from 'react';
-import { getFirstTag } from 'hyperview/src/services/dom/helpers-legacy';
+import { getFirstChildTag } from 'hyperview/src/services/dom/helpers-legacy';
 
 /**
  * Flag to show the navigator UIs
@@ -26,13 +26,23 @@ export default class HvNavigator extends PureComponent<Types.Props> {
   /**
    * Build an individual tab screen
    */
-  buildTabScreen = (
+  buildScreen = (
     id: string,
     type: TypesLegacy.DOMString,
   ): React.ReactElement => {
     if (type === NavigatorService.NAVIGATOR_TYPE.TAB) {
       return (
         <BottomTab.Screen
+          key={id}
+          component={this.props.routeComponent}
+          initialParams={{ id }}
+          name={id}
+        />
+      );
+    }
+    if (type === NavigatorService.NAVIGATOR_TYPE.STACK) {
+      return (
+        <Stack.Screen
           key={id}
           component={this.props.routeComponent}
           initialParams={{ id }}
@@ -63,7 +73,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
       throw new NavigatorService.HvRouteError('No context found');
     }
 
-    const { buildTabScreen } = this;
+    const { buildScreen } = this;
     const elements: TypesLegacy.Element[] = NavigatorService.getChildElements(
       element,
     );
@@ -85,14 +95,12 @@ export default class HvNavigator extends PureComponent<Types.Props> {
         }
 
         // Check for nested navigators
-        const nestedNavigator: TypesLegacy.Element | null = getFirstTag(
+        const nestedNavigator: TypesLegacy.Element | null = getFirstChildTag<TypesLegacy.Element>(
           navRoute,
           TypesLegacy.LOCAL_NAME.NAVIGATOR,
         );
-        if (nestedNavigator) {
-          // Cache the navigator for the route
-          navigatorMapContext.setElement(id, nestedNavigator);
-        } else {
+
+        if (!nestedNavigator) {
           const href:
             | TypesLegacy.DOMString
             | null
@@ -110,11 +118,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
           // Cache the url for the route by nav-route id
           navigatorMapContext.setRoute(id, url);
         }
-
-        // 'stack' uses route urls, other types build out the screens
-        if (type !== NavigatorService.NAVIGATOR_TYPE.STACK) {
-          screens.push(buildTabScreen(id, type));
-        }
+        screens.push(buildScreen(id, type));
       }
     });
 
@@ -186,16 +190,14 @@ export default class HvNavigator extends PureComponent<Types.Props> {
     const selectedId: string | undefined = selected
       .getAttribute('id')
       ?.toString();
-    if (selectedId) {
-      navigatorMapContext.initialRouteName = selectedId;
-    }
+
     const { buildScreens } = this;
     switch (type) {
       case NavigatorService.NAVIGATOR_TYPE.STACK:
         return (
           <Stack.Navigator
             id={id}
-            initialRouteName={NavigatorService.ID_DYNAMIC}
+            initialRouteName={selectedId}
             screenOptions={({ route }: Types.NavigatorParams) => ({
               header: undefined,
               headerMode: 'screen',
