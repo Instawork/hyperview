@@ -56,9 +56,9 @@ const mergeOriginalDoc = `
   <navigator id="root-navigator" type="stack">
     <nav-route id="tabs-route">
       <navigator id="tabs-navigator" type="tab">
-        <nav-route id="live-shifts-route" href="biz-app-hub" selected="false"/>
-        <nav-route id="shifts-route" href="biz-app-shift-group-list" selected="true"/>
-        <nav-route id="account-route" href="http://localhost:8080/biz_app/account"/>
+        <nav-route id="live-shifts-route" href="/biz-app-hub" selected="false"/>
+        <nav-route id="shifts-route" href="/biz-app-shift-group-list" selected="true"/>
+        <nav-route id="account-route" href="/biz_app/account"/>
       </navigator>
     </nav-route>
   </navigator>
@@ -74,11 +74,11 @@ const mergeSourceDisabledDoc = `
   <navigator id="root-navigator" type="stack" merge="false">
     <nav-route id="tabs-route">
       <navigator id="tabs-navigator" type="tab" merge="false">
-        <nav-route id="live-shifts-route" href="biz-app-hub" selected="false"/>
-        <nav-route id="shifts-route" href="biz-app-shift-group-list" selected="true">
+        <nav-route id="live-shifts-route" href="/biz-app-hub" selected="false"/>
+        <nav-route id="shifts-route" href="/biz-app-shift-group-list" selected="true">
           <navigator id="shift-navigator" type="tab">
-            <nav-route id="upcoming-shifts" href="http://localhost:8080/biz_app/gigs/groups" selected="false"/>
-            <nav-route id="past-shifts" href="http://localhost:8080/biz_app/gigs/groups" selected="true"/>
+            <nav-route id="upcoming-shifts" href="/biz_app/gigs/groups" selected="false"/>
+            <nav-route id="past-shifts" href="/biz_app/gigs/groups" selected="true"/>
           </navigator>
         </nav-route>
       </navigator>
@@ -96,11 +96,11 @@ const mergeSourceEnabledDoc = `
   <navigator id="root-navigator" type="stack" merge="true">
     <nav-route id="tabs-route">
       <navigator id="tabs-navigator" type="tab" merge="true">
-        <nav-route id="live-shifts-route" href="biz-app-hub" selected="false"/>
-        <nav-route id="shifts-route" href="biz-app-shift-group-list" selected="true">
+        <nav-route id="live-shifts-route" href="/biz-app-hub" selected="false"/>
+        <nav-route id="shifts-route" href="/biz-app-shift-group-list" selected="true">
           <navigator id="shift-navigator" type="tab">
-            <nav-route id="upcoming-shifts" href="http://localhost:8080/biz_app/gigs/groups" selected="false"/>
-            <nav-route id="past-shifts" href="http://localhost:8080/biz_app/gigs/groups" selected="true"/>
+            <nav-route id="upcoming-shifts" href="/biz_app/gigs/groups" selected="false"/>
+            <nav-route id="past-shifts" href="/biz_app/gigs/groups" selected="true"/>
           </navigator>
         </nav-route>
       </navigator>

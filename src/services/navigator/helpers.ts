@@ -15,6 +15,13 @@ import * as UrlService from 'hyperview/src/services/url';
 import { ANCHOR_ID_SEPARATOR } from './types';
 
 /**
+ * Type defining a map of <id, element>
+ */
+type RouteMap = {
+  [key: string]: TypesLegacy.Element;
+};
+
+/**
  * Get an array of all child elements of a node
  */
 export const getChildElements = (
@@ -310,8 +317,8 @@ export const buildRequest = (
  */
 const nodesToMap = (
   nodes: TypesLegacy.NodeList<TypesLegacy.Node>,
-): Map<string, TypesLegacy.Node> => {
-  const map: Map<string, TypesLegacy.Node> = new Map();
+): RouteMap => {
+  const map: RouteMap = {};
   if (!nodes) {
     return map;
   }
@@ -321,7 +328,7 @@ const nodesToMap = (
       if (isNavigationElement(element)) {
         const id = element.getAttribute('id');
         if (id) {
-          map.set(id, element);
+          map[id] = element;
         }
       }
     }
@@ -359,7 +366,7 @@ const mergeNodes = (
     }
   });
 
-  const currentMap = nodesToMap(current.childNodes);
+  const currentMap: RouteMap = nodesToMap(current.childNodes);
 
   Array.from(newNodes).forEach(node => {
     if (node.nodeType === TypesLegacy.NODE_TYPE.ELEMENT_NODE) {
@@ -367,7 +374,7 @@ const mergeNodes = (
       if (isNavigationElement(newElement)) {
         const id = newElement.getAttribute('id');
         if (id) {
-          const currentElement = currentMap.get(id) as TypesLegacy.Element;
+          const currentElement = currentMap[id] as TypesLegacy.Element;
           if (currentElement) {
             if (newElement.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR) {
               const isMergeable = newElement.getAttribute('merge') === 'true';
