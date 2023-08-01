@@ -56,8 +56,8 @@ const mergeOriginalDoc = `
   <navigator id="root-navigator" type="stack">
     <nav-route id="tabs-route">
       <navigator id="tabs-navigator" type="tab">
-        <nav-route id="live-shifts-route" href="{% url 'biz-app-hub' %}" initial="false"/>
-        <nav-route id="shifts-route" href="{% url 'biz-app-shift-group-list' %}" initial="true"/>
+        <nav-route id="live-shifts-route" href="biz-app-hub" initial="false"/>
+        <nav-route id="shifts-route" href="biz-app-shift-group-list" initial="true"/>
         <nav-route id="account-route" href="http://localhost:8080/biz_app/account"/>
       </navigator>
     </nav-route>
@@ -74,8 +74,8 @@ const mergeSourceDisabledDoc = `
   <navigator id="root-navigator" type="stack" merge="false">
     <nav-route id="tabs-route">
       <navigator id="tabs-navigator" type="tab" merge="false">
-        <nav-route id="live-shifts-route" href="{% url 'biz-app-hub' %}" initial="false"/>
-        <nav-route id="shifts-route" href="{% url 'biz-app-shift-group-list' %}" initial="true">
+        <nav-route id="live-shifts-route" href="biz-app-hub" initial="false"/>
+        <nav-route id="shifts-route" href="biz-app-shift-group-list" initial="true">
           <navigator id="shift-navigator" type="tab">
             <nav-route id="upcoming-shifts" href="http://localhost:8080/biz_app/gigs/groups" initial="false"/>
             <nav-route id="past-shifts" href="http://localhost:8080/biz_app/gigs/groups" initial="true"/>
@@ -96,8 +96,8 @@ const mergeSourceEnabledDoc = `
   <navigator id="root-navigator" type="stack" merge="true">
     <nav-route id="tabs-route">
       <navigator id="tabs-navigator" type="tab" merge="true">
-        <nav-route id="live-shifts-route" href="{% url 'biz-app-hub' %}" initial="false"/>
-        <nav-route id="shifts-route" href="{% url 'biz-app-shift-group-list' %}" initial="true">
+        <nav-route id="live-shifts-route" href="biz-app-hub" initial="false"/>
+        <nav-route id="shifts-route" href="biz-app-shift-group-list" initial="true">
           <navigator id="shift-navigator" type="tab">
             <nav-route id="upcoming-shifts" href="http://localhost:8080/biz_app/gigs/groups" initial="false"/>
             <nav-route id="past-shifts" href="http://localhost:8080/biz_app/gigs/groups" initial="true"/>
