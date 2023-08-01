@@ -39,9 +39,9 @@ export const isNavigationElement = (element: TypesLegacy.Element): boolean => {
 };
 
 /**
- * Get the route designated as 'initial' or the first route if none is marked
+ * Get the route designated as 'selected' or the first route if none is marked
  */
-export const getInitialNavRouteElement = (
+export const getSelectedNavRouteElement = (
   element: TypesLegacy.Element,
 ): TypesLegacy.Element | undefined => {
   const elements: TypesLegacy.Element[] = getChildElements(
@@ -52,11 +52,11 @@ export const getInitialNavRouteElement = (
     return undefined;
   }
 
-  const initialChild = elements.find(
-    child => child.getAttribute('initial') === 'true',
+  const selectedChild = elements.find(
+    child => child.getAttribute('selected') === 'true',
   );
 
-  return initialChild || elements[0];
+  return selectedChild || elements[0];
 };
 
 /**
@@ -330,11 +330,11 @@ const nodesToMap = (
 };
 
 const KEY_MERGE = 'merge';
-const KEY_INITIAL = 'initial';
+const KEY_SELECTED = 'selected';
 
 /**
  * Merge the nodes from the new document into the current
- * All attributes in the current are reset (initial, merge)
+ * All attributes in the current are reset (selected, merge)
  * If an id is found in both docs, the current node is updated
  * If an id is found only in the new doc, the node is added to the current
  * the 'merge' attribute on a navigator determines if the children are merged or replaced
@@ -347,14 +347,14 @@ const mergeNodes = (
     return;
   }
 
-  // Clean out current node attributes for 'merge' and 'initial'
+  // Clean out current node attributes for 'merge' and 'selected'
   Array.from(current.childNodes).forEach(node => {
     const element = node as TypesLegacy.Element;
     if (isNavigationElement(element)) {
       if (element.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR) {
         element.setAttribute(KEY_MERGE, 'false');
       } else if (element.localName === TypesLegacy.LOCAL_NAME.NAV_ROUTE) {
-        element.setAttribute(KEY_INITIAL, 'false');
+        element.setAttribute(KEY_SELECTED, 'false');
       }
     }
   });
@@ -380,10 +380,10 @@ const mergeNodes = (
             } else if (
               newElement.localName === TypesLegacy.LOCAL_NAME.NAV_ROUTE
             ) {
-              // Update the initial route
+              // Update the selected route
               currentElement.setAttribute(
-                KEY_INITIAL,
-                newElement.getAttribute(KEY_INITIAL) || 'false',
+                KEY_SELECTED,
+                newElement.getAttribute(KEY_SELECTED) || 'false',
               );
               mergeNodes(currentElement, newElement.childNodes);
             }

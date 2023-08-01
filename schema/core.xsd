@@ -1196,7 +1196,7 @@
       </xs:sequence>
       <xs:attribute name="id" use="required" type="hv:ID" />
       <xs:attribute name="href" use="required" type="xs:string" />
-      <xs:attribute name="initial" type="xs:boolean" />
+      <xs:attribute name="selected" type="xs:boolean" />
     </xs:complexType>
   </xs:element>
 

@@ -126,7 +126,7 @@ export {
   isUrlFragment,
   cleanHrefFragment,
   getChildElements,
-  getInitialNavRouteElement,
+  getSelectedNavRouteElement,
   getUrlFromHref,
   mergeDocument,
 } from './helpers';
