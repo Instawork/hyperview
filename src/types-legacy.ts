@@ -93,7 +93,9 @@ export type Node = {
   readonly namespaceURI: NamespaceURI | null | undefined;
   readonly nextSibling: Node | null | undefined;
   readonly nodeType: NodeType;
+  appendChild: (newChild: Node) => Node;
   hasChildNodes: () => boolean;
+  replaceChild: (newChild: Node, oldChild: Node) => Node;
 };
 
 /**
@@ -110,6 +112,7 @@ export type Element = Node & {
     namespaceURI: NamespaceURI,
     localName: LocalName,
   ) => NodeList<Element>;
+  setAttribute: (name: DOMString, value: DOMString) => void;
 };
 
 /**

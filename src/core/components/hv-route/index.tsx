@@ -99,9 +99,21 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
       const url: string = this.getUrl();
 
       const { doc } = await this.parser.loadDocument(url);
-      this.setState({
-        doc,
-        error: undefined,
+
+      // Set the state with the merged document
+      this.setState(state => {
+        const merged = NavigatorService.mergeDocument(doc, state.doc);
+        const root = Helpers.getFirstTag(merged, TypesLegacy.LOCAL_NAME.DOC);
+        if (!root) {
+          return {
+            doc: undefined,
+            error: new NavigatorService.HvRouteError('No root element found'),
+          };
+        }
+        return {
+          doc: merged,
+          error: undefined,
+        };
       });
     } catch (err: unknown) {
       if (this.props.onError) {
