@@ -10,8 +10,6 @@ import * as TypesLegacy from 'hyperview/src/types-legacy';
 import React, { createContext, useState } from 'react';
 
 export type NavigatorMapContextProps = {
-  setRoute: (key: string, route: string) => void;
-  getRoute: (key: string) => string | undefined;
   setPreload: (key: number, element: TypesLegacy.Element) => void;
   getPreload: (key: number) => TypesLegacy.Element | undefined;
 };
@@ -25,9 +23,7 @@ export type NavigatorMapContextProps = {
  */
 export const NavigatorMapContext = createContext<NavigatorMapContextProps>({
   getPreload: () => undefined,
-  getRoute: () => '',
   setPreload: () => undefined,
-  setRoute: () => undefined,
 });
 
 type Props = { children: React.ReactNode };
@@ -37,16 +33,7 @@ type Props = { children: React.ReactNode };
  * store runtime information about the navigator and urls.
  */
 export function NavigatorMapProvider(props: Props) {
-  const [routeMap] = useState<Map<string, string>>(new Map());
   const [preloadMap] = useState<Map<number, TypesLegacy.Element>>(new Map());
-
-  const setRoute = (key: string, route: string) => {
-    routeMap.set(key, route);
-  };
-
-  const getRoute = (key: string): string | undefined => {
-    return routeMap.get(key);
-  };
 
   const setPreload = (key: number, element: TypesLegacy.Element) => {
     preloadMap.set(key, element);
@@ -60,9 +47,7 @@ export function NavigatorMapProvider(props: Props) {
     <NavigatorMapContext.Provider
       value={{
         getPreload,
-        getRoute,
         setPreload,
-        setRoute,
       }}
     >
       {props.children}

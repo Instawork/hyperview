@@ -114,9 +114,6 @@ export default class HvNavigator extends PureComponent<Types.Props> {
             href,
             navigationContext?.entrypointUrl,
           );
-
-          // Cache the url for the route by nav-route id
-          navigatorMapContext.setRoute(id, url);
         }
         screens.push(buildScreen(id, type));
       }
