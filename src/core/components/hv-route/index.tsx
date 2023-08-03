@@ -386,15 +386,7 @@ const getNestedNavigator = (
     return undefined;
   }
 
-  const routes = doc
-    .getElementsByTagNameNS(
-      Namespaces.HYPERVIEW,
-      TypesLegacy.LOCAL_NAME.NAV_ROUTE,
-    )
-    .filter((n: TypesLegacy.Element) => {
-      return n.getAttribute('id') === id;
-    });
-  const route = routes && routes.length > 0 ? routes[0] : undefined;
+  const route = NavigatorService.getRouteById(doc, id);
   if (route) {
     return (
       Helpers.getFirstChildTag<TypesLegacy.Element>(

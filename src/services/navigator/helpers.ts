@@ -15,13 +15,6 @@ import * as UrlService from 'hyperview/src/services/url';
 import { ANCHOR_ID_SEPARATOR } from './types';
 
 /**
- * Type defining a map of <id, element>
- */
-type RouteMap = {
-  [key: string]: TypesLegacy.Element;
-};
-
-/**
  * Get an array of all child elements of a node
  */
 export const getChildElements = (
@@ -231,6 +224,24 @@ export const getRouteId = (
 };
 
 /**
+ * Search for a route with the given id
+ */
+export const getRouteById = (
+  doc: TypesLegacy.Document,
+  id: string,
+): TypesLegacy.Element | undefined => {
+  const routes = doc
+    .getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      TypesLegacy.LOCAL_NAME.NAV_ROUTE,
+    )
+    .filter((n: TypesLegacy.Element) => {
+      return n.getAttribute('id') === id;
+    });
+  return routes && routes.length > 0 ? routes[0] : undefined;
+};
+
+/**
  * Determine the action to perform based on the route params
  * Correct for a push action being introduced in
  * `this.getRouteKey(url);` in `hyperview/src/services/navigation`
@@ -317,8 +328,8 @@ export const buildRequest = (
  */
 const nodesToMap = (
   nodes: TypesLegacy.NodeList<TypesLegacy.Node>,
-): RouteMap => {
-  const map: RouteMap = {};
+): Types.RouteMap => {
+  const map: Types.RouteMap = {};
   if (!nodes) {
     return map;
   }
@@ -335,9 +346,6 @@ const nodesToMap = (
   });
   return map;
 };
-
-const KEY_MERGE = 'merge';
-const KEY_SELECTED = 'selected';
 
 /**
  * Merge the nodes from the new document into the current
@@ -359,14 +367,14 @@ const mergeNodes = (
     const element = node as TypesLegacy.Element;
     if (isNavigationElement(element)) {
       if (element.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR) {
-        element.setAttribute(KEY_MERGE, 'false');
+        element.setAttribute(Types.KEY_MERGE, 'false');
       } else if (element.localName === TypesLegacy.LOCAL_NAME.NAV_ROUTE) {
-        element.setAttribute(KEY_SELECTED, 'false');
+        element.setAttribute(Types.KEY_SELECTED, 'false');
       }
     }
   });
 
-  const currentMap: RouteMap = nodesToMap(current.childNodes);
+  const currentMap: Types.RouteMap = nodesToMap(current.childNodes);
 
   Array.from(newNodes).forEach(node => {
     if (node.nodeType === TypesLegacy.NODE_TYPE.ELEMENT_NODE) {
@@ -379,7 +387,7 @@ const mergeNodes = (
             if (newElement.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR) {
               const isMergeable = newElement.getAttribute('merge') === 'true';
               if (isMergeable) {
-                currentElement.setAttribute(KEY_MERGE, 'true');
+                currentElement.setAttribute(Types.KEY_MERGE, 'true');
                 mergeNodes(currentElement, newElement.childNodes);
               } else {
                 current.replaceChild(newElement, currentElement);
@@ -389,8 +397,8 @@ const mergeNodes = (
             ) {
               // Update the selected route
               currentElement.setAttribute(
-                KEY_SELECTED,
-                newElement.getAttribute(KEY_SELECTED) || 'false',
+                Types.KEY_SELECTED,
+                newElement.getAttribute(Types.KEY_SELECTED) || 'false',
               );
               mergeNodes(currentElement, newElement.childNodes);
             }
