@@ -189,7 +189,6 @@ export default class HvNavigator extends PureComponent<Types.Props> {
         return (
           <Stack.Navigator
             id={id}
-            initialRouteName={selectedId}
             screenOptions={({ route }: Types.NavigatorParams) => ({
               header: undefined,
               headerMode: 'screen',
