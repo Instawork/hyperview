@@ -39,7 +39,7 @@ export const isNavigationElement = (element: TypesLegacy.Element): boolean => {
 };
 
 /**
- * Get the route designated as 'selected' or the first route if none is marked
+ * Get the route designated as 'selected'
  */
 export const getSelectedNavRouteElement = (
   element: TypesLegacy.Element,
@@ -56,7 +56,7 @@ export const getSelectedNavRouteElement = (
     child => child.getAttribute('selected') === 'true',
   );
 
-  return selectedChild || elements[0];
+  return selectedChild;
 };
 
 /**
@@ -202,25 +202,19 @@ export const buildParams = (
 };
 
 /**
- * Use the dynamic or modal route for dynamic actions
- * isStatic represents a route which is already in the navigation state
+ * Use the dynamic or modal route for dynamic actions, otherwise use the given id
  */
 export const getRouteId = (
   action: TypesLegacy.NavAction,
   url: string | undefined,
-  isStatic: boolean,
 ): string => {
-  if (action === TypesLegacy.NAV_ACTIONS.PUSH) {
-    return Types.ID_DYNAMIC;
-  }
-  if (action === TypesLegacy.NAV_ACTIONS.NEW) {
-    return Types.ID_MODAL;
-  }
-
-  if (url && isUrlFragment(url) && isStatic) {
+  if (url && isUrlFragment(url)) {
     return cleanHrefFragment(url);
   }
-  return Types.ID_DYNAMIC;
+
+  return action === TypesLegacy.NAV_ACTIONS.NEW
+    ? Types.ID_MODAL
+    : Types.ID_DYNAMIC;
 };
 
 /**
@@ -291,18 +285,23 @@ export const buildRequest = (
   validateUrl(action, routeParams);
 
   const [navigation, path] = getNavigatorAndPath(routeParams.targetId, nav);
-  if (!navigation) {
-    return [undefined, '', routeParams];
+
+  const cleanedParams: TypesLegacy.NavigationRouteParams = { ...routeParams };
+  if (cleanedParams.url && isUrlFragment(cleanedParams.url)) {
+    // When a fragment is used, the original url is used for the route
+    // setting url to undefined will overwrite the value, so the url has to be
+    // deleted to allow merging the params while retaining the original url
+    delete cleanedParams.url;
   }
 
-  // Static routes are those found in the current state. Tab navigators are always static.
-  const isStatic: boolean =
-    (path !== undefined && path.length > 0) ||
-    navigation.getState().type !== Types.NAVIGATOR_TYPE.STACK;
-  const routeId = getRouteId(action, routeParams.url, isStatic);
+  if (!navigation) {
+    return [undefined, '', cleanedParams];
+  }
+
+  const routeId = getRouteId(action, routeParams.url);
 
   if (!path || !path.length) {
-    return [navigation, routeId, routeParams];
+    return [navigation, routeId, cleanedParams];
   }
 
   // The first path id the screen which will receive the initial request
@@ -317,7 +316,7 @@ export const buildRequest = (
     | TypesLegacy.NavigationRouteParams = buildParams(
     routeId,
     path,
-    routeParams,
+    cleanedParams,
   );
 
   return [navigation, lastPathId || routeId, params];
