@@ -11,6 +11,8 @@ import * as TypesLegacy from 'hyperview/src/types-legacy';
 export const ANCHOR_ID_SEPARATOR = '#';
 export const ID_DYNAMIC = 'dynamic';
 export const ID_MODAL = 'modal';
+export const KEY_MERGE = 'merge';
+export const KEY_SELECTED = 'selected';
 
 /**
  * Definition of the available navigator types
@@ -63,4 +65,11 @@ export type NavigationState = {
   stale: false;
   type: string;
   history?: unknown[];
+};
+
+/**
+ * Type defining a map of <id, element>
+ */
+export type RouteMap = {
+  [key: string]: TypesLegacy.Element;
 };

@@ -126,6 +126,7 @@ export {
   isUrlFragment,
   cleanHrefFragment,
   getChildElements,
+  getRouteById,
   getSelectedNavRouteElement,
   getUrlFromHref,
   mergeDocument,
