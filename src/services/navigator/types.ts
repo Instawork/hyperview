@@ -13,6 +13,7 @@ export const ID_DYNAMIC = 'dynamic';
 export const ID_MODAL = 'modal';
 export const KEY_MERGE = 'merge';
 export const KEY_SELECTED = 'selected';
+export const KEY_MODAL = 'modal';
 
 /**
  * Definition of the available navigator types

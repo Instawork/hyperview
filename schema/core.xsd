@@ -1250,6 +1250,7 @@
       <xs:attribute name="id" use="required" type="hv:ID" />
       <xs:attribute name="href" use="required" type="xs:string" />
       <xs:attribute name="selected" type="xs:boolean" />
+      <xs:attribute name="modal" type="xs:boolean" />
     </xs:complexType>
   </xs:element>
 

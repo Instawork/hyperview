@@ -207,14 +207,14 @@ describe('getSelectedNavRouteElement', () => {
     const selected = getSelectedNavRouteElement(navigators[0]);
     expect(selected?.getAttribute('id')).toEqual('route2');
   });
-  it('should find route1 as selected', () => {
+  it('should find nothing as selected', () => {
     const doc = parser.parseFromString(navDocSourceAlt);
     const navigators = doc.getElementsByTagNameNS(
       Namespaces.HYPERVIEW,
       'navigator',
     );
     const selected = getSelectedNavRouteElement(navigators[0]);
-    expect(selected?.getAttribute('id')).toEqual('route1');
+    expect(selected).toBeUndefined();
   });
   it('should not find an selected route', () => {
     const doc = parser.parseFromString(
@@ -451,17 +451,45 @@ describe('buildParams', () => {
 });
 
 describe('getRouteId', () => {
-  const urls = ['url', '/url', '#url', '', '#', undefined];
-  describe('simple', () => {
+  describe('fragment', () => {
+    const urls = ['#url', '#'];
     describe('action:push', () => {
       urls.forEach(url => {
-        it(`should return type 'dynamic' from url with static: ${url}`, () => {
-          expect(getRouteId(TypesLegacy.NAV_ACTIONS.PUSH, url, true)).toEqual(
+        it(`should not return route 'dynamic' from url with fragment: ${url}`, () => {
+          expect(getRouteId(TypesLegacy.NAV_ACTIONS.PUSH, url)).not.toEqual(
             ID_DYNAMIC,
           );
         });
-        it(`should return type 'dynamic' from url with non-static: ${url}`, () => {
-          expect(getRouteId(TypesLegacy.NAV_ACTIONS.PUSH, url, false)).toEqual(
+        it(`should return route id with fragment: ${url}`, () => {
+          expect(getRouteId(TypesLegacy.NAV_ACTIONS.PUSH, url)).toEqual(
+            cleanHrefFragment(url),
+          );
+        });
+      });
+    });
+
+    describe('action:new', () => {
+      urls.forEach(url => {
+        it(`should not return type 'modal' from url with fragment: ${url}`, () => {
+          expect(getRouteId(TypesLegacy.NAV_ACTIONS.NEW, url)).not.toEqual(
+            ID_MODAL,
+          );
+        });
+        it(`should return route id with fragment: ${url}`, () => {
+          expect(getRouteId(TypesLegacy.NAV_ACTIONS.NEW, url)).toEqual(
+            cleanHrefFragment(url),
+          );
+        });
+      });
+    });
+  });
+
+  describe('non-fragment', () => {
+    const urls = ['url', '/url', '', undefined];
+    describe('action:push', () => {
+      urls.forEach(url => {
+        it(`should return type 'dynamic' from url with non-fragment: ${url}`, () => {
+          expect(getRouteId(TypesLegacy.NAV_ACTIONS.PUSH, url)).toEqual(
             ID_DYNAMIC,
           );
         });
@@ -470,13 +498,8 @@ describe('getRouteId', () => {
 
     describe('action:new', () => {
       urls.forEach(url => {
-        it(`should return type 'modal' from url with static: ${url}`, () => {
-          expect(getRouteId(TypesLegacy.NAV_ACTIONS.NEW, url, true)).toEqual(
-            ID_MODAL,
-          );
-        });
-        it(`should return type 'modal' from url with non-static: ${url}`, () => {
-          expect(getRouteId(TypesLegacy.NAV_ACTIONS.NEW, url, false)).toEqual(
+        it(`should return type 'modal' from url with non-fragment: ${url}`, () => {
+          expect(getRouteId(TypesLegacy.NAV_ACTIONS.NEW, url)).toEqual(
             ID_MODAL,
           );
         });
@@ -492,19 +515,19 @@ describe('getRouteId', () => {
     ].forEach(action => {
       describe(`action:${action}`, () => {
         ['#url', '#'].forEach(url => {
-          it(`should return cleaned url with static: ${url}`, () => {
-            expect(getRouteId(action, url, true)).toEqual(url.slice(1));
+          it(`should return cleaned url with fragment: ${url}`, () => {
+            expect(getRouteId(action, url)).toEqual(url.slice(1));
           });
-          it(`should return type 'dynamic' from url with non-static: ${url}`, () => {
-            expect(getRouteId(action, url, false)).toEqual(ID_DYNAMIC);
+          it(`should not return type 'dynamic' from url with fragment: ${url}`, () => {
+            expect(getRouteId(action, url)).not.toEqual(ID_DYNAMIC);
           });
         });
         ['url', '/url', '', undefined].forEach(url => {
-          it(`should return cleaned url with static: ${url}`, () => {
-            expect(getRouteId(action, url, true)).toEqual(ID_DYNAMIC);
+          it(`should return cleaned url with non-fragment: ${url}`, () => {
+            expect(getRouteId(action, url)).toEqual(ID_DYNAMIC);
           });
-          it(`should return type 'dynamic' from url with non-static: ${url}`, () => {
-            expect(getRouteId(action, url, false)).toEqual(ID_DYNAMIC);
+          it(`should return type 'dynamic' from url with non-fragment: ${url}`, () => {
+            expect(getRouteId(action, url)).toEqual(ID_DYNAMIC);
           });
         });
       });
