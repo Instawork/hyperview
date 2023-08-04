@@ -231,6 +231,11 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
       },
     };
 
+    // If an element is passed, do not pass the doc
+    const doc = this.props.element
+      ? undefined
+      : this.state.doc?.cloneNode(true);
+
     return (
       <Contexts.DateFormatContext.Consumer>
         {formatter => (
@@ -239,7 +244,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
             behaviors={this.props.behaviors}
             closeModal={this.navLogic.closeModal}
             components={this.props.components}
-            doc={this.state.doc?.cloneNode(true)}
+            doc={doc}
             elementErrorComponent={this.props.elementErrorComponent}
             entrypointUrl={this.props.entrypointUrl}
             errorScreen={this.props.errorScreen}
@@ -279,8 +284,9 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
     }
 
     if (renderElement.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR) {
-      if (this.state.doc) {
+      if (!this.props.element && this.state.doc) {
         // The <RouteDocContext> provides doc access to nested navigators
+        // only pass it when the doc is available and is not being overridden by an element
         return (
           <RouteDocContext.Context.Provider value={this.state.doc}>
             <HvNavigator element={renderElement} routeComponent={HvRoute} />
