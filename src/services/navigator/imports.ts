@@ -11,5 +11,8 @@
  */
 
 export { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-export { createStackNavigator } from '@react-navigation/stack';
+export {
+  CardStyleInterpolators,
+  createStackNavigator,
+} from '@react-navigation/stack';
 export { CommonActions, StackActions } from '@react-navigation/native';

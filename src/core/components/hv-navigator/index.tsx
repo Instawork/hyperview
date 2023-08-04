@@ -50,7 +50,12 @@ export default class HvNavigator extends PureComponent<Types.Props> {
           component={this.props.routeComponent}
           initialParams={initialParams}
           name={id}
-          options={{ presentation: isModal ? 'modal' : 'card' }}
+          options={{
+            cardStyleInterpolator: isModal
+              ? NavigatorService.CardStyleInterpolators.forVerticalIOS
+              : undefined,
+            presentation: isModal ? 'modal' : 'card',
+          }}
         />
       );
     }
@@ -142,7 +147,11 @@ export default class HvNavigator extends PureComponent<Types.Props> {
           // empty object required because hv-screen doesn't check for undefined param
           initialParams={{}}
           name={NavigatorService.ID_MODAL}
-          options={{ presentation: 'modal' }}
+          options={{
+            cardStyleInterpolator:
+              NavigatorService.CardStyleInterpolators.forVerticalIOS,
+            presentation: 'modal',
+          }}
         />,
       );
     }
