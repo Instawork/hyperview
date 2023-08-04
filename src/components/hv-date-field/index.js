@@ -26,6 +26,7 @@ import DateTimePicker from 'hyperview/src/core/components/date-time-picker';
 import Field from './field';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import ModalButton from './modal-button';
+import type { PickerProps } from './types';
 import type { Node as ReactNode } from 'react';
 import styles from './styles';
 
@@ -181,28 +182,25 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
    * handled differently in each Platform, and on iOS we need to wrap this component
    * in our own modal for consistency.
    */
-  renderPicker = (onChange: (evt: Event, date?: Date) => void): ReactNode => {
+  Picker = (props: PickerProps): ReactNode => {
     const minValue: ?DOMString = this.props.element.getAttribute('min');
     const maxValue: ?DOMString = this.props.element.getAttribute('max');
     const minDate: ?Date = HvDateField.createDateFromString(minValue);
     const maxDate: ?Date = HvDateField.createDateFromString(maxValue);
     const displayMode: ?DOMString = this.props.element.getAttribute('mode');
     const locale: ?DOMString = this.props.element.getAttribute('locale');
-    const props: Object = {
-      display: displayMode,
-      locale,
-      mode: 'date',
-      onChange,
-      value: this.getPickerValue(),
-    };
-    if (minDate) {
-      props.minimumDate = minDate;
-    }
-    if (maxDate) {
-      props.maximumDate = maxDate;
-    }
 
-    return <DateTimePicker {...props} />;
+    return (
+      <DateTimePicker
+        display={displayMode}
+        locale={locale}
+        maximumDate={maxDate || undefined}
+        minimumDate={minDate || undefined}
+        mode="date"
+        onChange={props.onChange}
+        value={this.getPickerValue()}
+      />
+    );
   };
 
   /**
@@ -222,7 +220,8 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
         this.onModalDone(date);
       }
     };
-    return this.renderPicker(onChange);
+    const { Picker } = this;
+    return <Picker onChange={onChange} />;
   };
 
   /**
@@ -256,6 +255,8 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
       this.setPickerValue(date);
     };
 
+    const { Picker } = this;
+
     return (
       <Modal
         animationType="slide"
@@ -277,7 +278,7 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
                 onPress={() => this.onModalDone(this.getPickerValue())}
               />
             </View>
-            {this.renderPicker(onChange)}
+            <Picker onChange={onChange} />
           </View>
         </View>
       </Modal>
