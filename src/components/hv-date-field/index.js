@@ -18,12 +18,10 @@ import type {
   HvComponentProps,
   StyleSheet as StyleSheetType,
 } from 'hyperview/src/types';
-import type { FieldLabelProps, FieldProps } from './types';
 import {
   Modal,
   Platform,
   StyleSheet,
-  Text,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
@@ -35,27 +33,12 @@ import {
   getNameValueFormInputValues,
 } from 'hyperview/src/services';
 import DateTimePicker from 'hyperview/src/core/components/date-time-picker';
+import FieldLabel from './field-label';
+import type { FieldProps } from './types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import ModalButton from './modal-button';
 import type { Node as ReactNode } from 'react';
 import styles from './styles';
-
-/**
- * This text label of the field. Contains logic to decide how to format the value
- * or show the placeholder, including applying the right styles.
- */
-const FieldLabel = (props: FieldLabelProps) => {
-  const labelStyles: Array<StyleSheetType> = [props.style];
-  if (!props.value && props.placeholderTextColor) {
-    labelStyles.push({ color: props.placeholderTextColor });
-  }
-
-  const label: string = props.value
-    ? props.formatter(props.value, props.labelFormat)
-    : props.placeholder || '';
-
-  return <Text style={labelStyles}>{label}</Text>;
-};
 
 /**
  * The input field component. This is a box with text in it.
