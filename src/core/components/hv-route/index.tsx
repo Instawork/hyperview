@@ -348,31 +348,15 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
 const getRouteUrl = (
   props: Types.Props,
   navigationContext: Types.NavigationContextProps,
-  navigatorMapContext: Types.NavigatorMapContextProps,
 ) => {
   // The initial hv-route element will use the entrypoint url
   if (props.navigation === undefined) {
     return navigationContext.entrypointUrl;
   }
 
-  // Use the passed url
-  if (props.route?.params?.url) {
-    if (NavigatorService.isUrlFragment(props.route?.params?.url)) {
-      // Look up the url from the route map where it would have been
-      //  stored from the initial <nav-route> definition
-      return navigatorMapContext.getRoute(
-        NavigatorService.cleanHrefFragment(props.route?.params?.url),
-      );
-    }
-    return props.route?.params?.url;
-  }
-
-  // Look up by route id
-  if (props.route?.params?.id) {
-    return navigatorMapContext.getRoute(props.route?.params?.id);
-  }
-
-  return undefined;
+  return props.route?.params?.url
+    ? NavigatorService.cleanHrefFragment(props.route?.params?.url)
+    : undefined;
 };
 
 /**
@@ -422,7 +406,7 @@ export default function HvRoute(props: Types.Props) {
     RouteDocContext.Context,
   );
 
-  const url = getRouteUrl(props, navigationContext, navigatorMapContext);
+  const url = getRouteUrl(props, navigationContext);
 
   // Get the navigator element from the context
   const element: TypesLegacy.Element | undefined = getNestedNavigator(

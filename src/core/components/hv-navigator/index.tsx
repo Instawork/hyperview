@@ -29,13 +29,16 @@ export default class HvNavigator extends PureComponent<Types.Props> {
   buildScreen = (
     id: string,
     type: TypesLegacy.DOMString,
+    href: TypesLegacy.DOMString | undefined,
+    isModal: boolean,
   ): React.ReactElement => {
+    const initialParams = { id, url: href };
     if (type === NavigatorService.NAVIGATOR_TYPE.TAB) {
       return (
         <BottomTab.Screen
           key={id}
           component={this.props.routeComponent}
-          initialParams={{ id }}
+          initialParams={initialParams}
           name={id}
         />
       );
@@ -45,8 +48,9 @@ export default class HvNavigator extends PureComponent<Types.Props> {
         <Stack.Screen
           key={id}
           component={this.props.routeComponent}
-          initialParams={{ id }}
+          initialParams={initialParams}
           name={id}
+          options={{ presentation: isModal ? 'modal' : 'card' }}
         />
       );
     }
@@ -93,6 +97,12 @@ export default class HvNavigator extends PureComponent<Types.Props> {
             `No id provided for ${navRoute.localName}`,
           );
         }
+        const href:
+          | TypesLegacy.DOMString
+          | null
+          | undefined = navRoute.getAttribute('href');
+        const isModal =
+          navRoute.getAttribute(NavigatorService.KEY_MODAL) === 'true';
 
         // Check for nested navigators
         const nestedNavigator: TypesLegacy.Element | null = getFirstChildTag<TypesLegacy.Element>(
@@ -100,25 +110,12 @@ export default class HvNavigator extends PureComponent<Types.Props> {
           TypesLegacy.LOCAL_NAME.NAVIGATOR,
         );
 
-        if (!nestedNavigator) {
-          const href:
-            | TypesLegacy.DOMString
-            | null
-            | undefined = navRoute.getAttribute('href');
-          if (!href) {
-            throw new NavigatorService.HvNavigatorError(
-              `No href provided for route '${id}'`,
-            );
-          }
-          const url = NavigatorService.getUrlFromHref(
-            href,
-            navigationContext?.entrypointUrl,
+        if (!nestedNavigator && !href) {
+          throw new NavigatorService.HvNavigatorError(
+            `No href provided for route '${id}'`,
           );
-
-          // Cache the url for the route by nav-route id
-          navigatorMapContext.setRoute(id, url);
         }
-        screens.push(buildScreen(id, type));
+        screens.push(buildScreen(id, type, href || undefined, isModal));
       }
     });
 
@@ -181,15 +178,10 @@ export default class HvNavigator extends PureComponent<Types.Props> {
     const selected:
       | TypesLegacy.Element
       | undefined = NavigatorService.getSelectedNavRouteElement(props.element);
-    if (!selected) {
-      throw new NavigatorService.HvNavigatorError(
-        `No selected route defined for '${id}'`,
-      );
-    }
 
     const selectedId: string | undefined = selected
-      .getAttribute('id')
-      ?.toString();
+      ? selected.getAttribute('id')?.toString()
+      : undefined;
 
     const { buildScreens } = this;
     switch (type) {
@@ -197,7 +189,6 @@ export default class HvNavigator extends PureComponent<Types.Props> {
         return (
           <Stack.Navigator
             id={id}
-            initialRouteName={selectedId}
             screenOptions={({ route }: Types.NavigatorParams) => ({
               header: undefined,
               headerMode: 'screen',

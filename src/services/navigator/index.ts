@@ -132,4 +132,4 @@ export {
   mergeDocument,
   setSelected,
 } from './helpers';
-export { ID_DYNAMIC, ID_MODAL, NAVIGATOR_TYPE } from './types';
+export { ID_DYNAMIC, ID_MODAL, KEY_MODAL, NAVIGATOR_TYPE } from './types';
