@@ -8,8 +8,6 @@
  *
  */
 
-// $FlowFixMe: importing code from TypeScript
-import * as Contexts from 'hyperview/src/contexts';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type {
@@ -18,81 +16,18 @@ import type {
   HvComponentProps,
   StyleSheet as StyleSheetType,
 } from 'hyperview/src/types';
+import { Modal, Platform, View } from 'react-native';
+import React, { PureComponent } from 'react';
 import {
-  Modal,
-  Platform,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
-// $FlowFixMe: update Flow to support typings for React Hooks
-import React, { PureComponent, useState } from 'react';
-import {
-  createProps,
   createStyleProp,
   getNameValueFormInputValues,
 } from 'hyperview/src/services';
 import DateTimePicker from 'hyperview/src/core/components/date-time-picker';
-import FieldLabel from './field-label';
-import type { FieldProps } from './types';
+import Field from './field';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import ModalButton from './modal-button';
 import type { Node as ReactNode } from 'react';
 import styles from './styles';
-
-/**
- * The input field component. This is a box with text in it.
- * Tapping the box focuses the field and brings up the date picker.
- */
-const Field = (props: FieldProps) => {
-  // Styles selected based on pressed state of the field.
-  const [pressed, setPressed] = useState(false);
-
-  // Create the props (including styles) for the box of the input field.
-  const viewProps = createProps(props.element, props.stylesheets, {
-    ...props.options,
-    focused: props.focused,
-    pressed,
-    styleAttr: 'field-style',
-  });
-
-  const labelStyle: StyleSheetType = StyleSheet.flatten(
-    createStyleProp(props.element, props.stylesheets, {
-      ...props.options,
-      focused: props.focused,
-      pressed,
-      styleAttr: 'field-text-style',
-    }),
-  );
-
-  return (
-    <TouchableWithoutFeedback
-      onPress={props.onPress}
-      onPressIn={() => setPressed(true)}
-      onPressOut={() => setPressed(false)}
-    >
-      <View {...viewProps}>
-        <Contexts.DateFormatContext.Consumer>
-          {formatter => (
-            <FieldLabel
-              focused={props.focused}
-              formatter={formatter}
-              labelFormat={props.element.getAttribute('label-format')}
-              placeholder={props.element.getAttribute('placeholder')}
-              placeholderTextColor={props.element.getAttribute(
-                'placeholderTextColor',
-              )}
-              pressed={pressed}
-              style={labelStyle}
-              value={props.value}
-            />
-          )}
-        </Contexts.DateFormatContext.Consumer>
-        {props.children}
-      </View>
-    </TouchableWithoutFeedback>
-  );
-};
 
 /**
  * A date field renders a form field with ISO date fields (YYYY-MM-DD).

@@ -8,15 +8,15 @@
  *
  */
 
-import * as React from 'react';
 import type {
   Element,
   HvComponentOptions,
   StyleSheets,
 } from 'hyperview/src/types';
+import type { Node } from 'react';
 
-export type FieldProps = {|
-  children?: React.Node,
+export type Props = {|
+  children?: Node,
   element: Element,
   focused: boolean,
   onPress: () => void,
