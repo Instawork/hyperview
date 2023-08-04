@@ -93,6 +93,7 @@ export type Node = {
   readonly namespaceURI: NamespaceURI | null | undefined;
   readonly nextSibling: Node | null | undefined;
   readonly nodeType: NodeType;
+  parentNode: Node | null | undefined;
   appendChild: (newChild: Node) => Node;
   hasChildNodes: () => boolean;
   replaceChild: (newChild: Node, oldChild: Node) => Node;

@@ -430,6 +430,17 @@ export default function HvRoute(props: Types.Props) {
     routeDocContext,
   );
 
+  React.useEffect(() => {
+    if (props.navigation) {
+      const unsubscribe = props.navigation.addListener('focus', () => {
+        NavigatorService.setSelected(routeDocContext, props.route?.params?.id);
+      });
+
+      return unsubscribe;
+    }
+    return undefined;
+  }, [props.navigation, props.route?.params?.id, routeDocContext]);
+
   return (
     <HvRouteInner
       // eslint-disable-next-line react/jsx-props-no-spreading

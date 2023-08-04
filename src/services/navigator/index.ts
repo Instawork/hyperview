@@ -130,5 +130,6 @@ export {
   getSelectedNavRouteElement,
   getUrlFromHref,
   mergeDocument,
+  setSelected,
 } from './helpers';
 export { ID_DYNAMIC, ID_MODAL, NAVIGATOR_TYPE } from './types';
