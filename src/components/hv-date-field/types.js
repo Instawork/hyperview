@@ -36,9 +36,3 @@ export type FieldLabelProps = {|
   style: StyleSheetType,
   value: ?Date,
 |};
-
-export type ModalButtonProps = {|
-  getStyle: (pressed: boolean) => Array<StyleSheetType>,
-  label: string,
-  onPress: () => void,
-|};

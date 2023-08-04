@@ -18,7 +18,7 @@ import type {
   HvComponentProps,
   StyleSheet as StyleSheetType,
 } from 'hyperview/src/types';
-import type { FieldLabelProps, FieldProps, ModalButtonProps } from './types';
+import type { FieldLabelProps, FieldProps } from './types';
 import {
   Modal,
   Platform,
@@ -36,27 +36,9 @@ import {
 } from 'hyperview/src/services';
 import DateTimePicker from 'hyperview/src/core/components/date-time-picker';
 import { LOCAL_NAME } from 'hyperview/src/types';
+import ModalButton from './modal-button';
 import type { Node as ReactNode } from 'react';
 import styles from './styles';
-
-/**
- * Component used to render the Cancel/Done buttons in the picker modal.
- */
-const ModalButton = (props: ModalButtonProps) => {
-  const [pressed, setPressed] = useState(false);
-
-  return (
-    <TouchableWithoutFeedback
-      onPress={props.onPress}
-      onPressIn={() => setPressed(true)}
-      onPressOut={() => setPressed(false)}
-    >
-      <View>
-        <Text style={props.getStyle(pressed)}>{props.label}</Text>
-      </View>
-    </TouchableWithoutFeedback>
-  );
-};
 
 /**
  * This text label of the field. Contains logic to decide how to format the value
