@@ -447,3 +447,31 @@ export const mergeDocument = (
   mergeNodes(currentRoot, newRoot.childNodes);
   return composite;
 };
+
+export const setSelected = (
+  routeDocContext: TypesLegacy.Document | undefined,
+  id: string | undefined,
+) => {
+  if (!routeDocContext || !id) {
+    return;
+  }
+  const route = getRouteById(routeDocContext, id);
+  if (route) {
+    // Reset all siblings
+    if (route.parentNode && route.parentNode.childNodes) {
+      Array.from(route.parentNode.childNodes).forEach(
+        (sibling: TypesLegacy.Node) => {
+          if (sibling.localName === TypesLegacy.LOCAL_NAME.NAV_ROUTE) {
+            (sibling as TypesLegacy.Element)?.setAttribute(
+              Types.KEY_SELECTED,
+              'false',
+            );
+          }
+        },
+      );
+    }
+
+    // Set the selected route
+    route.setAttribute(Types.KEY_SELECTED, 'true');
+  }
+};
