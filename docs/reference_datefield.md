@@ -13,6 +13,7 @@ The `<date-field>` element renders a date picker. The value of the `<date-field>
     field-text-style="Input__Text"
     label-format="MMMM D, YYYY"
     modal-style="PickerModal"
+    modal-overlay-style="PickerModal__overlay"
     modal-text-style="PickerModal__text"
     placeholder="Select date"
     placeholderTextColor="#8D9494"
@@ -36,6 +37,7 @@ A `<date-field>` element can appear anywhere within a `<form>` element.
 - [`field-style`](#field-style)
 - [`field-text-style`](#field-text-style)
 - [`modal-style`](#modal-style)
+- [`modal-overlay-style`](#modal-overlay-style)
 - [`modal-text-style`](#modal-text-style)
 - [`id`](#id)
 - [`hide`](#hide)
@@ -128,6 +130,14 @@ A space-separated list of styles to apply to the date field input label. See [St
 
 A space-separated list of styles to apply to the date selection modal on IOS (Android uses a [system style date picker](https://facebook.github.io/react-native/docs/datepickerandroid)). See [Styles](/docs/reference_style).
 
+#### `modal-overlay-style`
+
+| Type   | Required |
+| ------ | -------- |
+| string | No       |
+
+A space-separated list of styles to apply to the overlay on date selection modal for IOS (Android uses a [system style date picker](https://facebook.github.io/react-native/docs/datepickerandroid)). See [Styles](/docs/reference_style).
+
 #### `modal-text-style`
 
 | Type   | Required |
@@ -135,6 +145,14 @@ A space-separated list of styles to apply to the date selection modal on IOS (An
 | string | No       |
 
 A space-separated list of styles to apply to the text on date selection modal for IOS (Android uses a [system style date picker](https://facebook.github.io/react-native/docs/datepickerandroid)). See [Styles](/docs/reference_style).
+
+#### `modal-animation-duration`
+
+| Type   | Required |
+| ------ | -------- |
+| number | No       |
+
+The duration in milliseconds that the open and close animation of the date selection modal for IOS takes. Defaults to 250ms
 
 #### `id`
 
