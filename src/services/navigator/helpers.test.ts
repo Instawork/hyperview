@@ -1,8 +1,8 @@
 import * as DomErrors from '../dom/errors';
 import * as Errors from './errors';
-import * as Imports from './imports';
 import * as Namespaces from '../namespaces';
-import * as TypesLegacy from '../../types';
+import * as Types from './types';
+import * as TypesLegacy from '../../types-legacy';
 import { ID_DYNAMIC, ID_MODAL } from './types';
 import {
   buildParams,
@@ -10,9 +10,9 @@ import {
   cleanHrefFragment,
   findPath,
   getChildElements,
-  getInitialNavRouteElement,
   getNavAction,
   getRouteId,
+  getSelectedNavRouteElement,
   getUrlFromHref,
   isNavigationElement,
   isUrlFragment,
@@ -24,14 +24,14 @@ import StateSource from './test.state.json';
 
 /**
  * Test document response
- * Includes a navigator with two routes, the second of which is marked as initial
+ * Includes a navigator with two routes, the second of which is marked as selected
  */
 const navDocSource =
-  '<doc xmlns="https://hyperview.org/hyperview"><navigator id="navigator"><nav-route id="route1" href="/route1" /><nav-route id="route2" href="/route2" initial="true" /></navigator></doc>';
+  '<doc xmlns="https://hyperview.org/hyperview"><navigator id="navigator"><nav-route id="route1" href="/route1" /><nav-route id="route2" href="/route2" selected="true" /></navigator></doc>';
 
 /**
  * Alternate test document response
- * Includes a navigator with two routes, neither of which is marked as initial
+ * Includes a navigator with two routes, neither of which is marked as selected
  */
 const navDocSourceAlt =
   '<doc xmlns="https://hyperview.org/hyperview"><navigator id="navigator"><nav-route id="route1" href="/route1" /><nav-route id="route2" href="/route2" /></navigator></doc>';
@@ -135,26 +135,26 @@ describe('isNavigationElement', () => {
   });
 });
 
-describe('getInitialNavRouteElement', () => {
-  it('should find route2 as initial', () => {
+describe('getSelectedNavRouteElement', () => {
+  it('should find route2 as selected', () => {
     const doc = parser.parseFromString(navDocSource);
     const navigators = doc.getElementsByTagNameNS(
       Namespaces.HYPERVIEW,
       'navigator',
     );
-    const initial = getInitialNavRouteElement(navigators[0]);
-    expect(initial?.getAttribute('id')).toEqual('route2');
+    const selected = getSelectedNavRouteElement(navigators[0]);
+    expect(selected?.getAttribute('id')).toEqual('route2');
   });
-  it('should find route1 as initial', () => {
+  it('should find route1 as selected', () => {
     const doc = parser.parseFromString(navDocSourceAlt);
     const navigators = doc.getElementsByTagNameNS(
       Namespaces.HYPERVIEW,
       'navigator',
     );
-    const initial = getInitialNavRouteElement(navigators[0]);
-    expect(initial?.getAttribute('id')).toEqual('route1');
+    const selected = getSelectedNavRouteElement(navigators[0]);
+    expect(selected?.getAttribute('id')).toEqual('route1');
   });
-  it('should not find an initial route', () => {
+  it('should not find an selected route', () => {
     const doc = parser.parseFromString(
       '<doc xmlns="https://hyperview.org/hyperview"><navigator id="navigator"></navigator></doc>',
     );
@@ -162,8 +162,8 @@ describe('getInitialNavRouteElement', () => {
       Namespaces.HYPERVIEW,
       'navigator',
     );
-    const initial = getInitialNavRouteElement(navigators[0]);
-    expect(initial).toBeUndefined();
+    const selected = getSelectedNavRouteElement(navigators[0]);
+    expect(selected).toBeUndefined();
   });
 });
 
@@ -318,7 +318,7 @@ describe('validateUrl', () => {
 });
 
 describe('findPath', () => {
-  const state = StateSource as Imports.NavigationState;
+  const state = StateSource as Types.NavigationState;
   describe('found', () => {
     const path = findPath(state, 'performance_2');
     it('should find the path 3 levels from the top', () => {
