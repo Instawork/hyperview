@@ -14,17 +14,15 @@ import type {
   HvComponentOptions,
   StyleSheets,
 } from 'hyperview/src/types';
-import type { ComponentType } from 'react';
+import type { Node } from 'react';
 
 export type Props = {|
+  children: Node,
   element: Element,
-  getPickerValue: () => ?Date,
   isFocused: () => boolean,
   onModalCancel: () => void,
-  onModalDone: (date: ?Date) => void,
+  onModalDone: () => void,
   onUpdate: HvComponentOnUpdate,
   options: HvComponentOptions,
-  PickerComponent: ComponentType<*>,
-  setPickerValue: (value: ?Date) => void,
   stylesheets: StyleSheets,
 |};
