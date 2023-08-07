@@ -8,126 +8,18 @@
  *
  */
 
-// $FlowFixMe: importing code from TypeScript
-import * as Contexts from 'hyperview/src/contexts';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import type {
-  DOMString,
-  Element,
-  HvComponentProps,
-  StyleSheet as StyleSheetType,
-} from 'hyperview/src/types';
-import type { FieldLabelProps, FieldProps, ModalButtonProps } from './types';
-import {
-  Modal,
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
-// $FlowFixMe: update Flow to support typings for React Hooks
-import React, { PureComponent, useState } from 'react';
-import {
-  createProps,
-  createStyleProp,
-  getNameValueFormInputValues,
-} from 'hyperview/src/services';
+import type { DOMString, Element, HvComponentProps } from 'hyperview/src/types';
+import React, { PureComponent } from 'react';
 import DateTimePicker from 'hyperview/src/core/components/date-time-picker';
+import Field from './field';
 import { LOCAL_NAME } from 'hyperview/src/types';
+import Modal from './modal';
+import type { PickerProps } from './types';
+import { Platform } from 'react-native';
 import type { Node as ReactNode } from 'react';
-import styles from './styles';
-
-/**
- * Component used to render the Cancel/Done buttons in the picker modal.
- */
-const ModalButton = (props: ModalButtonProps) => {
-  const [pressed, setPressed] = useState(false);
-
-  return (
-    <TouchableWithoutFeedback
-      onPress={props.onPress}
-      onPressIn={() => setPressed(true)}
-      onPressOut={() => setPressed(false)}
-    >
-      <View>
-        <Text style={props.getStyle(pressed)}>{props.label}</Text>
-      </View>
-    </TouchableWithoutFeedback>
-  );
-};
-
-/**
- * This text label of the field. Contains logic to decide how to format the value
- * or show the placeholder, including applying the right styles.
- */
-const FieldLabel = (props: FieldLabelProps) => {
-  const labelStyles: Array<StyleSheetType> = [props.style];
-  if (!props.value && props.placeholderTextColor) {
-    labelStyles.push({ color: props.placeholderTextColor });
-  }
-
-  const label: string = props.value
-    ? props.formatter(props.value, props.labelFormat)
-    : props.placeholder || '';
-
-  return <Text style={labelStyles}>{label}</Text>;
-};
-
-/**
- * The input field component. This is a box with text in it.
- * Tapping the box focuses the field and brings up the date picker.
- */
-const Field = (props: FieldProps) => {
-  // Styles selected based on pressed state of the field.
-  const [pressed, setPressed] = useState(false);
-
-  // Create the props (including styles) for the box of the input field.
-  const viewProps = createProps(props.element, props.stylesheets, {
-    ...props.options,
-    focused: props.focused,
-    pressed,
-    styleAttr: 'field-style',
-  });
-
-  const labelStyle: StyleSheetType = StyleSheet.flatten(
-    createStyleProp(props.element, props.stylesheets, {
-      ...props.options,
-      focused: props.focused,
-      pressed,
-      styleAttr: 'field-text-style',
-    }),
-  );
-
-  return (
-    <TouchableWithoutFeedback
-      onPress={props.onPress}
-      onPressIn={() => setPressed(true)}
-      onPressOut={() => setPressed(false)}
-    >
-      <View {...viewProps}>
-        <Contexts.DateFormatContext.Consumer>
-          {formatter => (
-            <FieldLabel
-              focused={props.focused}
-              formatter={formatter}
-              labelFormat={props.element.getAttribute('label-format')}
-              placeholder={props.element.getAttribute('placeholder')}
-              placeholderTextColor={props.element.getAttribute(
-                'placeholderTextColor',
-              )}
-              pressed={pressed}
-              style={labelStyle}
-              value={props.value}
-            />
-          )}
-        </Contexts.DateFormatContext.Consumer>
-        {props.children}
-      </View>
-    </TouchableWithoutFeedback>
-  );
-};
+import { getNameValueFormInputValues } from 'hyperview/src/services';
 
 /**
  * A date field renders a form field with ISO date fields (YYYY-MM-DD).
@@ -193,7 +85,7 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
   /**
    * Hides the picker without applying the chosen value.
    */
-  onModalCancel = () => {
+  onCancel = () => {
     const newElement = this.props.element.cloneNode(true);
     newElement.setAttribute('focused', 'false');
     newElement.removeAttribute('picker-value');
@@ -204,7 +96,7 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
   /**
    * Hides the picker and applies the chosen value to the field.
    */
-  onModalDone = (newValue: ?Date) => {
+  onDone = (newValue: ?Date) => {
     const value = HvDateField.createStringFromDate(newValue);
     const hasChanged = this.props.element.getAttribute('value') !== value;
     const newElement = this.props.element.cloneNode(true);
@@ -276,112 +168,69 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
 
   /**
    * Renders the date picker component, with the given min and max dates.
-   * Used for both iOS and Android. However, on iOS this component is rendered inline,
-   * and on Android it's rendered as a modal. Thus, the on-change callback needs to be
-   * handled differently in each Platform, and on iOS we need to wrap this component
-   * in our own modal for consistency.
    */
-  renderPicker = (onChange: (evt: Event, date?: Date) => void): ReactNode => {
+  Picker = (props: PickerProps): ReactNode => {
     const minValue: ?DOMString = this.props.element.getAttribute('min');
     const maxValue: ?DOMString = this.props.element.getAttribute('max');
     const minDate: ?Date = HvDateField.createDateFromString(minValue);
     const maxDate: ?Date = HvDateField.createDateFromString(maxValue);
-    const displayMode: ?DOMString = this.props.element.getAttribute('mode');
-    const locale: ?DOMString = this.props.element.getAttribute('locale');
-    const props: Object = {
-      display: displayMode,
-      locale,
-      mode: 'date',
-      onChange,
-      value: this.getPickerValue(),
-    };
-    if (minDate) {
-      props.minimumDate = minDate;
-    }
-    if (maxDate) {
-      props.maximumDate = maxDate;
-    }
 
-    return <DateTimePicker {...props} />;
+    // On iOS, the "default" mode renders a system-styled field that needs
+    // to be tapped again in order to unveil the picker. We default it to spinner
+    // so that the picking experience is available immediately.
+    const displayMode: ?DOMString =
+      this.props.element.getAttribute('mode') || Platform.OS === 'ios'
+        ? 'spinner'
+        : 'default';
+    const locale: ?DOMString = this.props.element.getAttribute('locale');
+
+    return (
+      <DateTimePicker
+        display={displayMode}
+        locale={locale}
+        maximumDate={maxDate || undefined}
+        minimumDate={minDate || undefined}
+        mode="date"
+        onChange={props.onChange}
+        value={this.getPickerValue()}
+      />
+    );
   };
 
-  /**
-   * Unlike iOS, the Android picker natively uses a modal. So we don't need
-   * to wrap it in an extra component, just render it when we want the modal
-   * to appear.
-   */
-  renderPickerModalAndroid = (): ?ReactNode => {
+  Content = () => {
     if (!this.isFocused()) {
       return null;
     }
+
+    /**
+     * On iOS this component is rendered inline, and on Android it's rendered as a modal.
+     * Thus, on iOS we need to wrap this component in our own modal for consistency.
+     */
+    if (Platform.OS === 'ios') {
+      return (
+        <Modal
+          element={this.props.element}
+          getPickerValue={this.getPickerValue}
+          isFocused={this.isFocused}
+          onModalCancel={this.onCancel}
+          onModalDone={this.onDone}
+          onUpdate={this.props.onUpdate}
+          options={this.props.options}
+          PickerComponent={this.Picker}
+          setPickerValue={this.setPickerValue}
+          stylesheets={this.props.stylesheets}
+        />
+      );
+    }
     const onChange = (evt: Event, date?: Date) => {
       if (date === undefined) {
-        // Modal was dismissed (cancel button)
-        this.onModalCancel();
+        this.onCancel();
       } else {
-        this.onModalDone(date);
+        this.onDone(date);
       }
     };
-    return this.renderPicker(onChange);
-  };
-
-  /**
-   * Renders a bottom sheet with cancel/done buttons and a picker component.
-   * Uses styles defined on the <picker-field> element for the modal and buttons.
-   * This is used on iOS only.
-   */
-  renderPickerModaliOS = (): ReactNode => {
-    const modalStyle: Array<StyleSheetType> = createStyleProp(
-      this.props.element,
-      this.props.stylesheets,
-      {
-        ...this.props.options,
-        styleAttr: 'modal-style',
-      },
-    );
-
-    const cancelLabel: string =
-      this.props.element.getAttribute('cancel-label') || 'Cancel';
-    const doneLabel: string =
-      this.props.element.getAttribute('done-label') || 'Done';
-
-    const getTextStyle = (pressed: boolean): Array<StyleSheetType> =>
-      createStyleProp(this.props.element, this.props.stylesheets, {
-        ...this.props.options,
-        pressed,
-        styleAttr: 'modal-text-style',
-      });
-
-    const onChange = (evt: Event, date?: Date) => {
-      this.setPickerValue(date);
-    };
-
-    return (
-      <Modal
-        animationType="slide"
-        onRequestClose={this.onModalCancel}
-        transparent
-        visible={this.isFocused()}
-      >
-        <View style={styles.modalWrapper}>
-          <View style={modalStyle}>
-            <View style={styles.modalActions}>
-              <ModalButton
-                getStyle={getTextStyle}
-                label={cancelLabel}
-                onPress={this.onModalCancel}
-              />
-              <ModalButton
-                getStyle={getTextStyle}
-                label={doneLabel}
-                onPress={() => this.onModalDone(this.getPickerValue())}
-              />
-            </View>
-            {this.renderPicker(onChange)}
-          </View>
-        </View>
-      </Modal>
-    );
+    const { Picker } = this;
+    return <Picker onChange={onChange} />;
   };
 
   /**
@@ -395,22 +244,18 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
       return null;
     }
 
-    const focused: boolean = this.isFocused();
-    const picker =
-      Platform.OS === 'ios'
-        ? this.renderPickerModaliOS()
-        : this.renderPickerModalAndroid();
+    const { Content } = this;
 
     return (
       <Field
         element={this.props.element}
-        focused={focused}
+        focused={this.isFocused()}
         onPress={this.onFieldPress}
         options={this.props.options}
         stylesheets={this.props.stylesheets}
         value={this.getValue()}
       >
-        {picker}
+        <Content />
       </Field>
     );
   };
