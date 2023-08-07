@@ -103,6 +103,9 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
         error: undefined,
       });
     } catch (err: unknown) {
+      if (this.props.onError) {
+        this.props.onError(err as Error);
+      }
       this.setState({
         doc: undefined,
         error: err as Error,
@@ -237,6 +240,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
             loadingScreen={this.props.loadingScreen}
             navigate={this.navLogic.navigate}
             navigation={this.props.navigation}
+            onError={this.props.onError}
             onParseAfter={this.props.onParseAfter}
             onParseBefore={this.props.onParseBefore}
             openModal={this.navLogic.openModal}
@@ -313,6 +317,9 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
       }
       return <Load />;
     } catch (err) {
+      if (this.props.onError) {
+        this.props.onError(err as Error);
+      }
       return <Error error={err} />;
     }
   }

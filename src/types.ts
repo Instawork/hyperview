@@ -234,6 +234,7 @@ export type CDATASection = CharacterData & {
 };
 
 export type NodeList<T> = {
+  filter: (predicate: (item: T) => boolean) => T[];
   length: number;
   item: (index: number) => T | null | undefined;
 } & {
@@ -429,8 +430,8 @@ export type BehaviorOptions = {
 export type NavigationRouteParams = {
   delay: number | null | undefined;
   preloadScreen: number | null | undefined;
-  url: string;
-  targetId?: string;
+  url: string | null | undefined;
+  targetId?: string | null | undefined;
 };
 
 export type NavigationProps = {

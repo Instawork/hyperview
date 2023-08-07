@@ -126,7 +126,7 @@ export {
   isUrlFragment,
   cleanHrefFragment,
   getChildElements,
-  getInitialNavRouteElement,
+  getSelectedNavRouteElement,
   getUrlFromHref,
 } from './helpers';
 export { ID_DYNAMIC, ID_MODAL, NAVIGATOR_TYPE } from './types';

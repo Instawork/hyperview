@@ -36,9 +36,9 @@ export const isNavigationElement = (element: TypesLegacy.Element): boolean => {
 };
 
 /**
- * Get the route designated as 'initial' or the first route if none is marked
+ * Get the route designated as 'selected' or the first route if none is marked
  */
-export const getInitialNavRouteElement = (
+export const getSelectedNavRouteElement = (
   element: TypesLegacy.Element,
 ): TypesLegacy.Element | undefined => {
   const elements: TypesLegacy.Element[] = getChildElements(
@@ -49,11 +49,11 @@ export const getInitialNavRouteElement = (
     return undefined;
   }
 
-  const initialChild = elements.find(
-    child => child.getAttribute('initial')?.toLowerCase() === 'true',
+  const selectedChild = elements.find(
+    child => child.getAttribute('selected')?.toLowerCase() === 'true',
   );
 
-  return initialChild || elements[0];
+  return selectedChild || elements[0];
 };
 
 /**

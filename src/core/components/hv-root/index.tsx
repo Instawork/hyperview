@@ -48,6 +48,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
             loadingScreen={this.props.loadingScreen}
             navigate={this.props.navigate}
             navigation={this.props.navigation}
+            onError={this.props.onError}
             onParseAfter={this.props.onParseAfter}
             onParseBefore={this.props.onParseBefore}
             openModal={this.props.openModal}
@@ -74,6 +75,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
               fetch: this.props.fetch,
               handleBack: this.props.handleBack,
               loadingScreen: this.props.loadingScreen,
+              onError: this.props.onError,
               onParseAfter: this.props.onParseAfter,
               onParseBefore: this.props.onParseBefore,
             }}
