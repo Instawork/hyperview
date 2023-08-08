@@ -66,14 +66,18 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
     newElement.setAttribute('focused', 'false');
     newElement.removeAttribute('picker-value');
     this.props.onUpdate(null, 'swap', this.props.element, { newElement });
-    this.triggerBehaviors(newElement, 'blur');
+    // Android has a dedicated blur handler
+    if (Platform.OS !== 'android') {
+      this.triggerBehaviors(newElement, 'blur');
+    }
   };
 
   /**
    * Hides the picker and applies the chosen value to the field.
    */
-  onDone = () => {
-    const pickerValue = this.getPickerValue();
+  onDone = (newValue?: string) => {
+    const pickerValue =
+      newValue !== undefined ? newValue : this.getPickerValue();
     const value = this.getValue();
     const newElement = this.props.element.cloneNode(true);
     newElement.setAttribute('value', pickerValue);
@@ -85,7 +89,10 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
     if (hasChanged) {
       this.triggerBehaviors(newElement, 'change');
     }
-    this.triggerBehaviors(newElement, 'blur');
+    // Android has a dedicated blur handler
+    if (Platform.OS !== 'android') {
+      this.triggerBehaviors(newElement, 'blur');
+    }
   };
 
   triggerBehaviors = (newElement: Element, triggerName: string) => {
@@ -119,7 +126,10 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
    */
   setPickerValue = (value: string) => {
     const newElement = this.props.element.cloneNode(true);
-    newElement.setAttribute('picker-value', value);
+    newElement.setAttribute(
+      Platform.OS === 'android' ? 'value' : 'picker-value',
+      value,
+    );
     this.props.onUpdate(null, 'swap', this.props.element, { newElement });
   };
 
@@ -133,7 +143,9 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
    * Returns a string representing the value in the picker.
    */
   getPickerValue = (): string =>
-    this.props.element.getAttribute('picker-value') || '';
+    this.props.element.getAttribute(
+      Platform.OS === 'android' ? 'value' : 'picker-value',
+    ) || '';
 
   getPickerItems = (): Element[] =>
     Array.from(
@@ -178,7 +190,7 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
     const placeholderTextColor: ?DOMString = this.props.element.getAttribute(
       'placeholderTextColor',
     );
-    if (!value && placeholderTextColor) {
+    if ([undefined, null, ''].includes(value) && placeholderTextColor) {
       style.push({ color: placeholderTextColor });
     }
 
@@ -211,6 +223,8 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
         testID={testID}
       >
         <Picker
+          onBlur={() => this.triggerBehaviors(this.props.element, 'blur')}
+          onFocus={() => this.triggerBehaviors(this.props.element, 'focus')}
           onValueChange={props.onChange}
           selectedValue={this.getPickerValue()}
           style={style}
@@ -258,8 +272,7 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
       if (value === undefined) {
         this.onCancel();
       } else {
-        this.setPickerValue(value || '');
-        this.onDone();
+        this.onDone(value || '');
       }
     };
 
