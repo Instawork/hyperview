@@ -72,7 +72,6 @@
         "no-use-before-define": "off",
         "object-curly-newline": "off",
         "instawork/error-object": "off",
-        "@typescript-eslint/no-explicit-any": "off",
         "import/no-extraneous-dependencies": "off" // TODO: fix?
       }
     }
