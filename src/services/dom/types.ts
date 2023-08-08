@@ -33,7 +33,8 @@ export const X_RESPONSE_STALE_REASON = {
   STALE_IF_ERROR: 'stale-if-error',
 } as const;
 
-export type XResponseStaleReason = typeof X_RESPONSE_STALE_REASON[keyof typeof X_RESPONSE_STALE_REASON];
+type Reason = typeof X_RESPONSE_STALE_REASON[keyof typeof X_RESPONSE_STALE_REASON];
+export type XResponseStaleReason = Reason;
 
 export type Fetch = (
   url: string,

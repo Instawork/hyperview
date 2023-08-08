@@ -74,7 +74,6 @@
         "instawork/error-object": "off",
         "@typescript-eslint/no-explicit-any": "off",
         "implicit-arrow-linebreak": "off",
-        "max-len": "off",
         "import/no-extraneous-dependencies": "off" // TODO: fix?
       }
     }

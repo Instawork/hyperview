@@ -27,7 +27,9 @@ export const getElements = (
 };
 
 export const getDummyHvProps = () => ({
-  onUpdate: () => {},
+  onUpdate: () => {
+    /** PASS */
+  },
   options: {},
   stylesheets: {
     focused: [],

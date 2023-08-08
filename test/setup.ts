@@ -7,7 +7,9 @@
  */
 
 class FormData {
-  append: (arg1: string, arg2: string) => void = () => {};
+  append: (arg1: string, arg2: string) => void = () => {
+    /** PASS */
+  };
 }
 
 global.FormData = FormData;

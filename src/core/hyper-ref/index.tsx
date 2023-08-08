@@ -336,7 +336,8 @@ export default class HyperRef extends PureComponent<Props, State> {
           accessibilityLabel={accessibilityLabel}
           accessible={false}
           onLongPress={onLongPress}
-          // when no press handler set, we still need an empty handler for pressIn or pressOut handlers to work
+          // when no press handler set, we still need an empty handler for pressIn or pressOut
+          // handlers to work
           onPress={onPress || (onPressIn || onPressOut ? noop : undefined)}
           onResponderGrant={onPressIn}
           // Both release and terminate responder are needed to properly pressOut

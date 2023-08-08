@@ -2,7 +2,7 @@ import * as DomErrors from '../dom/errors';
 import * as Errors from './errors';
 import * as Namespaces from '../namespaces';
 import * as Types from './types';
-import * as TypesLegacy from '../../types-legacy';
+import * as TypesLegacy from '../../types';
 import { ID_DYNAMIC, ID_MODAL } from './types';
 import {
   buildParams,

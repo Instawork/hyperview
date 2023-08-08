@@ -173,7 +173,8 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
   };
 
   /**
-   * Shows the picker, defaulting to the field's value. If the field is not set, use today's date in the picker.
+   * Shows the picker, defaulting to the field's value. If the field is not set, use today's date
+   * in the picker.
    */
   onFieldPress = () => {
     const newElement = this.props.element.cloneNode(true);
