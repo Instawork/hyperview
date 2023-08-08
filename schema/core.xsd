@@ -996,6 +996,7 @@
       <xs:attribute name="field-style" type="hv:styleList" />
       <xs:attribute name="field-text-style" type="hv:styleList" />
       <xs:attribute name="modal-style" type="hv:styleList" />
+      <xs:attribute name="modal-overlay-style" type="hv:styleList" />
       <xs:attribute name="modal-text-style" type="hv:styleList" />
       <xs:attribute name="id" type="hv:ID" />
       <xs:attribute name="key" type="hv:KEY" />
