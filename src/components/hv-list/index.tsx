@@ -116,14 +116,17 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
       data: this.getItems(),
       horizontal,
       keyExtractor: item => item && item.getAttribute('key'),
-      renderItem: ({ item }) =>
-        item &&
-        Render.renderElement(
-          item,
-          this.props.stylesheets,
-          this.props.onUpdate,
-          this.props.options,
-        ),
+      renderItem: ({ item }) => {
+        return (
+          item &&
+          Render.renderElement(
+            item,
+            this.props.stylesheets,
+            this.props.onUpdate,
+            this.props.options,
+          )
+        );
+      },
       scrollIndicatorInsets,
       showsHorizontalScrollIndicator: horizontal && showScrollIndicator,
       showsVerticalScrollIndicator: !horizontal && showScrollIndicator,

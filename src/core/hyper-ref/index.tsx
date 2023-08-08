@@ -205,8 +205,9 @@ export default class HyperRef extends PureComponent<Props, State> {
       };
     }
     // Custom behavior
-    return (element: Element) =>
-      onUpdate(null, action, element, { behaviorElement, custom: true });
+    return (element: Element) => {
+      return onUpdate(null, action, element, { behaviorElement, custom: true });
+    };
   };
 
   getBehaviorElements = (trigger: Trigger): Element[] => {
@@ -247,12 +248,14 @@ export default class HyperRef extends PureComponent<Props, State> {
   };
 
   TouchableView = ({ children }: { children: Node }): Node => {
-    const behaviors = this.behaviorElements.filter(
-      e =>
+    const behaviors = this.behaviorElements.filter(e => {
+      return (
         PRESS_TRIGGERS.indexOf(
           e.getAttribute(ATTRIBUTES.TRIGGER) || TRIGGERS.PRESS,
-        ) >= 0,
-    );
+        ) >= 0
+      );
+    });
+
     if (!behaviors.length) {
       return children;
     }
@@ -281,9 +284,9 @@ export default class HyperRef extends PureComponent<Props, State> {
           time += 1;
         });
       } else {
-        pressHandlers[triggerPropName] = createEventHandler(() =>
-          handler(this.props.element),
-        );
+        pressHandlers[triggerPropName] = createEventHandler(() => {
+          return handler(this.props.element);
+        });
       }
     });
 
@@ -374,9 +377,9 @@ export default class HyperRef extends PureComponent<Props, State> {
     if (!behaviors.length) {
       return children;
     }
-    const refreshHandlers = behaviors.map(behaviorElement =>
-      this.createActionHandler(behaviorElement, this.props.onUpdate),
-    );
+    const refreshHandlers = behaviors.map(behaviorElement => {
+      return this.createActionHandler(behaviorElement, this.props.onUpdate);
+    });
     const onRefresh = () => refreshHandlers.forEach(h => h(this.props.element));
 
     const refreshControl = React.createElement(RefreshControl, {
@@ -395,9 +398,9 @@ export default class HyperRef extends PureComponent<Props, State> {
     if (!behaviors.length) {
       return children;
     }
-    const visibleHandlers = behaviors.map(behaviorElement =>
-      this.createActionHandler(behaviorElement, this.props.onUpdate),
-    );
+    const visibleHandlers = behaviors.map(behaviorElement => {
+      return this.createActionHandler(behaviorElement, this.props.onUpdate);
+    });
     const onVisible = () => {
       visibleHandlers.forEach(h => h(this.props.element));
     };

@@ -152,20 +152,22 @@ export default class HvSectionList extends PureComponent<
 
     const listProps = {
       keyExtractor: item => item.getAttribute('key'),
-      renderItem: ({ item }) =>
-        Render.renderElement(
+      renderItem: ({ item }) => {
+        return Render.renderElement(
           item,
           this.props.stylesheets,
           this.props.onUpdate,
           this.props.options,
-        ),
-      renderSectionHeader: ({ section: { title } }) =>
-        Render.renderElement(
+        );
+      },
+      renderSectionHeader: ({ section: { title } }) => {
+        return Render.renderElement(
           title,
           this.props.stylesheets,
           this.props.onUpdate,
           this.props.options,
-        ),
+        );
+      },
       scrollIndicatorInsets,
       sections,
       stickySectionHeadersEnabled: this.getStickySectionHeadersEnabled(),

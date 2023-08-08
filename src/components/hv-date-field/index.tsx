@@ -365,12 +365,13 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
     const doneLabel: string =
       this.props.element.getAttribute('done-label') || 'Done';
 
-    const getTextStyle = (pressed: boolean): Array<StyleSheetType> =>
-      createStyleProp(this.props.element, this.props.stylesheets, {
+    const getTextStyle = (pressed: boolean): Array<StyleSheetType> => {
+      return createStyleProp(this.props.element, this.props.stylesheets, {
         ...this.props.options,
         pressed,
         styleAttr: 'modal-text-style',
       });
+    };
 
     const onChange = (evt: Event, date?: Date) => {
       this.setPickerValue(date);
