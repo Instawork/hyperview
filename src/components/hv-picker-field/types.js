@@ -8,11 +8,6 @@
  *
  */
 
-export type State = {|
-  value: ?string,
-  pickerValue: ?string,
-  focused: boolean,
-  fieldPressed: boolean,
-  donePressed: boolean,
-  cancelPressed: boolean,
+export type PickerProps = {|
+  onChange: (value: string) => void,
 |};
