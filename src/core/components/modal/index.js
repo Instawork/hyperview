@@ -11,9 +11,9 @@
 import { Animated, Modal, View } from 'react-native';
 import React, { useRef, useState } from 'react';
 import type { LayoutEvent } from 'react-native/Libraries/Types/CoreEventTypes';
-import ModalButton from '../modal-button';
+import ModalButton from './modal-button';
 import type { Node } from 'react';
-import Overlay from '../overlay';
+import Overlay from './overlay';
 import type { Props } from './types';
 import type { StyleSheet } from 'hyperview/src/types';
 import { createStyleProp } from 'hyperview/src/services';
@@ -58,10 +58,6 @@ export default (props: Props): Node => {
     },
   );
 
-  const onChange = (evt: Event, date?: Date) => {
-    props.setPickerValue(date);
-  };
-
   const onLayout = (event: LayoutEvent) => {
     setHeight(event.nativeEvent.layout.height);
   };
@@ -94,7 +90,7 @@ export default (props: Props): Node => {
   const onDone = animate(0, height, ({ finished }) => {
     if (finished) {
       setVisible(false);
-      props.onModalDone(props.getPickerValue());
+      props.onModalDone();
     }
   });
 
@@ -123,7 +119,7 @@ export default (props: Props): Node => {
               onPress={onDone}
             />
           </View>
-          <props.PickerComponent onChange={onChange} />
+          {props.children}
         </View>
       </Animated.View>
     </Modal>
