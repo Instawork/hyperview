@@ -110,7 +110,10 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
       // Set the state with the merged document
       this.setState(state => {
         const merged = NavigatorService.mergeDocument(doc, state.doc);
-        const root = Helpers.getFirstTag(merged, TypesLegacy.LOCAL_NAME.DOC);
+        const root = Helpers.getFirstChildTag(
+          merged,
+          TypesLegacy.LOCAL_NAME.DOC,
+        );
         if (!root) {
           return {
             doc: undefined,
@@ -142,7 +145,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
     }
 
     // Get the <doc> element
-    const root: TypesLegacy.Element | null = Helpers.getFirstTag(
+    const root: TypesLegacy.Element | null = Helpers.getFirstChildTag(
       this.state.doc,
       TypesLegacy.LOCAL_NAME.DOC,
     );
@@ -151,7 +154,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
     }
 
     // Get the first child as <screen> or <navigator>
-    const screenElement: TypesLegacy.Element | null = Helpers.getFirstTag(
+    const screenElement: TypesLegacy.Element | null = Helpers.getFirstChildTag(
       root,
       TypesLegacy.LOCAL_NAME.SCREEN,
     );
@@ -159,7 +162,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
       return screenElement;
     }
 
-    const navigatorElement: TypesLegacy.Element | null = Helpers.getFirstTag(
+    const navigatorElement: TypesLegacy.Element | null = Helpers.getFirstChildTag(
       root,
       TypesLegacy.LOCAL_NAME.NAVIGATOR,
     );
