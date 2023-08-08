@@ -57,6 +57,19 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
     this.componentRegistry = Components.getRegistry(this.props.components);
   }
 
+  /**
+   * Override the state to clear the doc when an element is passed
+   */
+  static getDerivedStateFromProps(
+    props: Types.InnerRouteProps,
+    state: Types.State,
+  ) {
+    if (props.element) {
+      return { ...state, doc: undefined };
+    }
+    return state;
+  }
+
   componentDidMount() {
     this.parser = new DomService.Parser(
       this.props.fetch,
@@ -231,11 +244,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
       },
     };
 
-    // If an element is passed, do not pass the doc
-    const doc = this.props.element
-      ? undefined
-      : this.state.doc?.cloneNode(true);
-
     return (
       <Contexts.DateFormatContext.Consumer>
         {formatter => (
@@ -244,7 +252,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
             behaviors={this.props.behaviors}
             closeModal={this.navLogic.closeModal}
             components={this.props.components}
-            doc={doc}
+            doc={this.state.doc?.cloneNode(true)}
             elementErrorComponent={this.props.elementErrorComponent}
             entrypointUrl={this.props.entrypointUrl}
             errorScreen={this.props.errorScreen}
@@ -284,7 +292,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
     }
 
     if (renderElement.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR) {
-      if (!this.props.element && this.state.doc) {
+      if (this.state.doc) {
         // The <RouteDocContext> provides doc access to nested navigators
         // only pass it when the doc is available and is not being overridden by an element
         return (
