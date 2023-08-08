@@ -10,6 +10,7 @@
           "**/stories/*.ts",
           "**/*.test.ts",
           "**/stories.ts",
+          "**/stories/index.tsx",
           "**/scripts/*",
           "**/scripts/*/*",
           "**/scripts/*/*/*",
@@ -71,11 +72,7 @@
         "operator-linebreak": "off",
         "no-use-before-define": "off",
         "object-curly-newline": "off",
-        "instawork/error-object": "off",
-        "@typescript-eslint/no-explicit-any": "off",
-        "implicit-arrow-linebreak": "off",
-        "max-len": "off",
-        "import/no-extraneous-dependencies": "off" // TODO: fix?
+        "instawork/error-object": "off"
       }
     }
   ]
