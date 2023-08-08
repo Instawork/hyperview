@@ -120,7 +120,11 @@ export class Navigator {
 }
 
 export type { NavigationProp, Route } from './types';
-export { createStackNavigator, createBottomTabNavigator } from './imports';
+export {
+  CardStyleInterpolators,
+  createStackNavigator,
+  createBottomTabNavigator,
+} from './imports';
 export { HvRouteError, HvNavigatorError, HvRenderError } from './errors';
 export {
   isUrlFragment,
