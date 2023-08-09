@@ -12,6 +12,7 @@ import { FC } from 'react';
 export type RouteParams = {
   id?: string;
   url: string;
+  isModal?: boolean;
 };
 
 export type ParamTypes = Record<string, RouteParams>;
@@ -28,7 +29,8 @@ export type NavigatorParams = {
  * All of the props used by hv-navigator
  */
 export type Props = {
-  element: TypesLegacy.Element;
+  element?: TypesLegacy.Element;
+  params?: RouteParams;
   routeComponent: FC;
 };
 
