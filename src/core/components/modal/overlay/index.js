@@ -8,13 +8,13 @@
  *
  */
 
-import { TouchableWithoutFeedback, View } from 'react-native';
+import { Animated, TouchableWithoutFeedback } from 'react-native';
 import type { Props } from './types';
 import React from 'react';
 import styles from './styles';
 
 export default (props: Props) => (
   <TouchableWithoutFeedback onPress={props.onPress}>
-    <View style={[styles.overlay, props.style]} />
+    <Animated.View style={[styles.overlay, props.style]} />
   </TouchableWithoutFeedback>
 );

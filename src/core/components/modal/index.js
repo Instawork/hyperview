@@ -8,14 +8,14 @@
  *
  */
 
-import { Animated, Modal, View } from 'react-native';
+import { Animated, Modal, StyleSheet, View } from 'react-native';
 import React, { useRef, useState } from 'react';
 import type { LayoutEvent } from 'react-native/Libraries/Types/CoreEventTypes';
 import ModalButton from './modal-button';
 import type { Node } from 'react';
 import Overlay from './overlay';
 import type { Props } from './types';
-import type { StyleSheet } from 'hyperview/src/types';
+import type { StyleSheet as StyleSheetType } from 'hyperview/src/types';
 import { createStyleProp } from 'hyperview/src/services';
 import styles from './styles';
 
@@ -29,7 +29,9 @@ export default (props: Props): Node => {
   const [height, setHeight] = useState(0);
 
   const translateY = useRef(new Animated.Value(0)).current;
-  const style: Array<StyleSheet> = createStyleProp(
+  const opacity = useRef(new Animated.Value(0)).current;
+
+  const style: Array<StyleSheetType> = createStyleProp(
     props.element,
     props.stylesheets,
     {
@@ -42,20 +44,18 @@ export default (props: Props): Node => {
     props.element.getAttribute('cancel-label') || 'Cancel';
   const doneLabel: string = props.element.getAttribute('done-label') || 'Done';
 
-  const getTextStyle = (pressed: boolean): Array<StyleSheet> =>
+  const getTextStyle = (pressed: boolean): Array<StyleSheetType> =>
     createStyleProp(props.element, props.stylesheets, {
       ...props.options,
       pressed,
       styleAttr: 'modal-text-style',
     });
 
-  const overlayStyle: Array<StyleSheet> = createStyleProp(
-    props.element,
-    props.stylesheets,
-    {
+  const overlayStyle = StyleSheet.flatten(
+    createStyleProp(props.element, props.stylesheets, {
       ...props.options,
       styleAttr: 'modal-overlay-style',
-    },
+    }),
   );
 
   const onLayout = (event: LayoutEvent) => {
@@ -65,34 +65,44 @@ export default (props: Props): Node => {
   const animationDuration: number =
     parseInt(props.element.getAttribute('modal-animation-duration'), 10) || 250;
 
-  const animate = (
-    fromValue: number,
-    toValue: number,
-    callback?: ({ finished: boolean }) => void,
-  ) => () => {
-    translateY.setValue(fromValue);
+  // $FlowFixMe: casting with Number() causes crashes
+  const targetOpacity: number = overlayStyle?.opacity ?? 1;
+
+  const openModal = () => () => {
+    translateY.setValue(height);
     Animated.timing(translateY, {
       duration: animationDuration,
-      toValue,
+      toValue: 0,
       useNativeDriver: true,
-    }).start(callback);
+    }).start();
+    Animated.timing(opacity, {
+      duration: animationDuration,
+      toValue: targetOpacity,
+      useNativeDriver: true,
+    }).start();
   };
 
-  const onShow = animate(height, 0);
+  const dismissModal = (callback: () => void) => () => {
+    Animated.timing(translateY, {
+      duration: 150,
+      toValue: height,
+      useNativeDriver: true,
+    }).start(({ finished }) => {
+      if (finished) {
+        setVisible(false);
+        callback();
+      }
+    });
+    Animated.timing(opacity, {
+      duration: 150,
+      toValue: 0,
+      useNativeDriver: true,
+    }).start();
+  };
 
-  const onDismiss = animate(0, height, ({ finished }) => {
-    if (finished) {
-      setVisible(false);
-      props.onModalCancel();
-    }
-  });
-
-  const onDone = animate(0, height, ({ finished }) => {
-    if (finished) {
-      setVisible(false);
-      props.onModalDone();
-    }
-  });
+  const onShow = openModal();
+  const onDismiss = dismissModal(props.onModalCancel);
+  const onDone = dismissModal(props.onModalDone);
 
   return (
     <Modal
@@ -101,7 +111,7 @@ export default (props: Props): Node => {
       transparent
       visible={visible}
     >
-      <Overlay onPress={onDismiss} style={overlayStyle} />
+      <Overlay onPress={onDismiss} style={[overlayStyle, { opacity }]} />
       <Animated.View
         onLayout={onLayout}
         style={[styles.wrapper, { transform: [{ translateY }] }]}
