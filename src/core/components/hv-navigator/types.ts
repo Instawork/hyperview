@@ -29,7 +29,8 @@ export type NavigatorParams = {
  * All of the props used by hv-navigator
  */
 export type Props = {
-  element: TypesLegacy.Element;
+  element?: TypesLegacy.Element;
+  params?: RouteParams;
   routeComponent: FC;
 };
 

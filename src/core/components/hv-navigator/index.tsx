@@ -99,10 +99,11 @@ export default class HvNavigator extends PureComponent<Types.Props> {
    * Build the dynamic and modal screens for a stack navigator
    */
   buildDynamics = (): React.ReactElement[] => {
+    const { buildScreen } = this;
     const screens: React.ReactElement[] = [];
     // Dynamic is used to display all routes in stack which are presented as cards
     screens.push(
-      this.buildScreen(
+      buildScreen(
         NavigatorService.ID_DYNAMIC,
         NavigatorService.NAVIGATOR_TYPE.STACK,
         undefined,
@@ -112,7 +113,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
 
     // Modal is used to display all routes in stack which are presented as modals
     screens.push(
-      this.buildScreen(
+      buildScreen(
         NavigatorService.ID_MODAL,
         NavigatorService.NAVIGATOR_TYPE.STACK,
         undefined,
@@ -140,7 +141,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
       throw new NavigatorService.HvRouteError('No context found');
     }
 
-    const { buildScreen } = this;
+    const { buildDynamics, buildScreen } = this;
     const elements: TypesLegacy.Element[] = NavigatorService.getChildElements(
       element,
     );
@@ -184,7 +185,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
 
     // Add the dynamic stack screens
     if (type === NavigatorService.NAVIGATOR_TYPE.STACK) {
-      screens.push(...this.buildDynamics());
+      screens.push(...buildDynamics());
     }
     return screens;
   };
@@ -193,35 +194,40 @@ export default class HvNavigator extends PureComponent<Types.Props> {
    * Build the required navigator from the xml element
    */
   Navigator = (props: Types.Props): React.ReactElement => {
-    const id:
-      | TypesLegacy.DOMString
-      | null
-      | undefined = props.element.getAttribute('id');
+    const { element } = props;
+    if (!element) {
+      throw new NavigatorService.HvNavigatorError(
+        'No element found for navigator',
+      );
+    }
+
+    const id: TypesLegacy.DOMString | null | undefined = element.getAttribute(
+      'id',
+    );
     if (!id) {
       throw new NavigatorService.HvNavigatorError('No id found for navigator');
     }
 
-    const type:
-      | TypesLegacy.DOMString
-      | null
-      | undefined = props.element.getAttribute('type');
+    const type: TypesLegacy.DOMString | null | undefined = element.getAttribute(
+      'type',
+    );
     const selected:
       | TypesLegacy.Element
-      | undefined = NavigatorService.getSelectedNavRouteElement(props.element);
+      | undefined = NavigatorService.getSelectedNavRouteElement(element);
 
     const selectedId: string | undefined = selected
       ? selected.getAttribute('id')?.toString()
       : undefined;
 
-    const { buildScreens } = this;
+    const { buildScreens, stackScreenOptions } = this;
     switch (type) {
       case NavigatorService.NAVIGATOR_TYPE.STACK:
         return (
           <Stack.Navigator
             id={id}
-            screenOptions={({ route }) => this.stackScreenOptions(route)}
+            screenOptions={({ route }) => stackScreenOptions(route)}
           >
-            {buildScreens(props.element, type)}
+            {buildScreens(element, type)}
           </Stack.Navigator>
         );
       case NavigatorService.NAVIGATOR_TYPE.TAB:
@@ -236,7 +242,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
             }}
             tabBar={undefined}
           >
-            {buildScreens(props.element, type)}
+            {buildScreens(element, type)}
           </BottomTab.Navigator>
         );
       default:
@@ -246,14 +252,63 @@ export default class HvNavigator extends PureComponent<Types.Props> {
     );
   };
 
+  /**
+   * Build a stack navigator for a modal
+   */
+  ModalNavigator = (props: Types.ScreenParams): React.ReactElement => {
+    const { params } = props;
+    if (!params) {
+      throw new NavigatorService.HvNavigatorError(
+        'No params found for modal screen',
+      );
+    }
+
+    if (!params.id) {
+      throw new NavigatorService.HvNavigatorError(
+        'No id found for modal screen',
+      );
+    }
+
+    const id = `stack-${params.id}`;
+    const screenId = `modal-screen-${params.id}`;
+    const { buildScreen, buildDynamics, stackScreenOptions } = this;
+
+    // Generate a simple structure for the modal
+    const screens: React.ReactElement[] = [];
+    screens.push(
+      buildScreen(
+        screenId,
+        NavigatorService.NAVIGATOR_TYPE.STACK,
+        params?.url || undefined,
+        false,
+      ),
+    );
+    screens.push(...buildDynamics());
+
+    return (
+      <Stack.Navigator
+        id={id}
+        screenOptions={({ route }) => stackScreenOptions(route)}
+      >
+        {screens}
+      </Stack.Navigator>
+    );
+  };
+
   render() {
-    const { Navigator } = this;
+    const { ModalNavigator, Navigator } = this;
+
+    const { isModal } = this.props.params || { isModal: false };
     return (
       <NavigatorMapContext.NavigatorMapProvider>
-        <Navigator
-          element={this.props.element}
-          routeComponent={this.props.routeComponent}
-        />
+        {isModal && this.props.params ? (
+          <ModalNavigator params={this.props.params} />
+        ) : (
+          <Navigator
+            element={this.props.element}
+            routeComponent={this.props.routeComponent}
+          />
+        )}
       </NavigatorMapContext.NavigatorMapProvider>
     );
   }

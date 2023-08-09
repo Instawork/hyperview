@@ -136,7 +136,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
     }
   };
 
-  getRenderElement = (): TypesLegacy.Element | null => {
+  getRenderElement = (): TypesLegacy.Element | undefined => {
     if (this.props.element) {
       return this.props.element;
     }
@@ -276,32 +276,51 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
    * Evaluate the <doc> element and render the appropriate component
    */
   Route = (): React.ReactElement => {
-    const renderElement: TypesLegacy.Element | null = this.getRenderElement();
+    const { isModal } = this.props.route?.params || { isModal: false };
 
-    if (!renderElement) {
-      throw new NavigatorService.HvRenderError('No element found');
+    const renderElement: TypesLegacy.Element | undefined = isModal
+      ? undefined
+      : this.getRenderElement();
+
+    if (!isModal) {
+      if (!renderElement) {
+        throw new NavigatorService.HvRenderError('No element found');
+      }
+
+      if (renderElement.namespaceURI !== Namespaces.HYPERVIEW) {
+        throw new NavigatorService.HvRenderError('Invalid namespace');
+      }
     }
 
-    if (renderElement.namespaceURI !== Namespaces.HYPERVIEW) {
-      throw new NavigatorService.HvRenderError('Invalid namespace');
-    }
-
-    if (renderElement.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR) {
+    if (
+      isModal ||
+      renderElement?.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR
+    ) {
       if (this.state.doc) {
         // The <RouteDocContext> provides doc access to nested navigators
         // only pass it when the doc is available and is not being overridden by an element
         return (
           <RouteDocContext.Context.Provider value={this.state.doc}>
-            <HvNavigator element={renderElement} routeComponent={HvRoute} />
+            <HvNavigator
+              element={renderElement}
+              params={this.props.route?.params}
+              routeComponent={HvRoute}
+            />
           </RouteDocContext.Context.Provider>
         );
       }
       // Without a doc, the navigator shares the higher level context
-      return <HvNavigator element={renderElement} routeComponent={HvRoute} />;
+      return (
+        <HvNavigator
+          element={renderElement}
+          params={this.props.route?.params}
+          routeComponent={HvRoute}
+        />
+      );
     }
     const { Screen } = this;
 
-    if (renderElement.localName === TypesLegacy.LOCAL_NAME.SCREEN) {
+    if (renderElement?.localName === TypesLegacy.LOCAL_NAME.SCREEN) {
       if (this.props.handleBack) {
         return (
           <this.props.handleBack>
@@ -319,7 +338,10 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
    * View shown when the document is loaded
    */
   Content = (): React.ReactElement => {
-    if (this.props.element === undefined) {
+    if (
+      this.props.element === undefined &&
+      !this.props.route?.params?.isModal
+    ) {
       if (!this.props.url) {
         throw new NavigatorService.HvRouteError('No url received');
       }
@@ -338,7 +360,11 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
       if (this.state.error) {
         return <Error error={this.state.error} />;
       }
-      if (this.props.element || this.state.doc) {
+      if (
+        this.props.element ||
+        this.state.doc ||
+        this.props.route?.params?.isModal
+      ) {
         return <Content />;
       }
       return <Load />;
