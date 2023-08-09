@@ -22,7 +22,9 @@ import {
   createTestProps,
   getNameValueFormInputValues,
 } from 'hyperview/src/services';
+import Field from './field';
 import { LOCAL_NAME } from 'hyperview/src/types';
+import Modal from 'hyperview/src/core/components/modal';
 import type { Node } from 'react';
 import Picker from 'hyperview/src/core/components/picker';
 import { View } from 'react-native';
@@ -43,6 +45,18 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
     return getNameValueFormInputValues(element);
   };
 
+  getPickerInitialValue = (): string => {
+    const value = this.getValue();
+    const pickerItems = this.getPickerItems();
+    if (pickerItems.map(item => item.getAttribute('value')).includes(value)) {
+      return value;
+    }
+    if (pickerItems.length > 0) {
+      return pickerItems[0].getAttribute('value') || '';
+    }
+    return '';
+  };
+
   /**
    * Returns a string representing the value in the field.
    */
@@ -51,7 +65,8 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
   /**
    * Returns a string representing the value in the picker.
    */
-  getPickerValue = (): string => this.props.element.getAttribute('value') || '';
+  getPickerValue = (): string =>
+    this.props.element.getAttribute('picker-value') || '';
 
   getPickerItems = (): Element[] =>
     Array.from(
@@ -63,6 +78,17 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
     );
 
   /**
+   * Shows the picker, defaulting to the field's value. If the field is not set, use the first value in the picker.
+   */
+  onFieldPress = () => {
+    const newElement = this.props.element.cloneNode(true);
+    newElement.setAttribute('focused', 'true');
+    newElement.setAttribute('picker-value', this.getPickerInitialValue());
+    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+    Behaviors.trigger('focus', newElement, this.props.onUpdate);
+  };
+
+  /**
    * Hides the picker without applying the chosen value.
    */
   onCancel = () => {
@@ -70,36 +96,43 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
     newElement.setAttribute('focused', 'false');
     newElement.removeAttribute('picker-value');
     this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+    Behaviors.trigger('blur', newElement, this.props.onUpdate);
   };
 
   /**
    * Hides the picker and applies the chosen value to the field.
    */
-  onDone = (newValue?: string) => {
-    const pickerValue =
-      newValue !== undefined ? newValue : this.getPickerValue();
+  onDone = () => {
+    const pickerValue = this.getPickerValue();
     const value = this.getValue();
     const newElement = this.props.element.cloneNode(true);
     newElement.setAttribute('value', pickerValue);
     newElement.removeAttribute('picker-value');
     newElement.setAttribute('focused', 'false');
     this.props.onUpdate(null, 'swap', this.props.element, { newElement });
-
     const hasChanged = value !== pickerValue;
     if (hasChanged) {
       Behaviors.trigger('change', newElement, this.props.onUpdate);
     }
+    Behaviors.trigger('blur', newElement, this.props.onUpdate);
   };
 
-  render = (): Node => {
-    const onChange = (value: ?string) => {
-      if (value === undefined) {
-        this.onCancel();
-      } else {
-        this.onDone(value || '');
-      }
-    };
+  /**
+   * Updates the picker value while keeping the picker open.
+   */
+  setPickerValue = (value: string) => {
+    const newElement = this.props.element.cloneNode(true);
+    newElement.setAttribute('picker-value', value);
+    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+  };
 
+  /**
+   * Returns true if the field is focused (and picker is showing).
+   */
+  isFocused = (): boolean =>
+    this.props.element.getAttribute('focused') === 'true';
+
+  render = (): Node => {
     const style: Array<StyleSheet> = createStyleProp(
       this.props.element,
       this.props.stylesheets,
@@ -140,25 +173,40 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
       });
 
     return (
-      <View
-        accessibilityLabel={accessibilityLabel}
-        style={fieldStyle}
-        testID={testID}
+      <Field
+        element={this.props.element}
+        focused={this.isFocused()}
+        onPress={this.onFieldPress}
+        options={this.props.options}
+        stylesheets={this.props.stylesheets}
+        value={this.getValue()}
       >
-        <Picker
-          onBlur={() =>
-            Behaviors.trigger('blur', this.props.element, this.props.onUpdate)
-          }
-          onFocus={() =>
-            Behaviors.trigger('focus', this.props.element, this.props.onUpdate)
-          }
-          onValueChange={onChange}
-          selectedValue={this.getPickerValue()}
-          style={style}
-        >
-          {children}
-        </Picker>
-      </View>
+        {this.isFocused() ? (
+          <Modal
+            element={this.props.element}
+            isFocused={this.isFocused}
+            onModalCancel={this.onCancel}
+            onModalDone={this.onDone}
+            onUpdate={this.props.onUpdate}
+            options={this.props.options}
+            stylesheets={this.props.stylesheets}
+          >
+            <View
+              accessibilityLabel={accessibilityLabel}
+              style={fieldStyle}
+              testID={testID}
+            >
+              <Picker
+                onValueChange={this.setPickerValue}
+                selectedValue={this.getPickerValue()}
+                style={style}
+              >
+                {children}
+              </Picker>
+            </View>
+          </Modal>
+        ) : null}
+      </Field>
     );
   };
 }
