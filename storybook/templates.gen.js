@@ -32,7 +32,7 @@ export default {
         shadowOpacity="0.2"
         shadowRadius="5"
       />
-      <style id="PickerModal_overlay" backgroundColor="#1f1f1fa0" />
+      <style id="PickerModal__overlay" backgroundColor="#1f1f1fa0" />
       <style
         id="PickerModal__text"
         color="blue"
