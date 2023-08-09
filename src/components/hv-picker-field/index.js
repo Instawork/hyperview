@@ -14,28 +14,21 @@ import type {
   DOMString,
   Element,
   HvComponentProps,
-  NodeList,
-  StyleSheet as StyleSheetType,
+  StyleSheet,
 } from 'hyperview/src/types';
-import {
-  Modal,
-  Platform,
-  Text,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
+import { Platform, View } from 'react-native';
 import React, { PureComponent } from 'react';
 import {
-  createProps,
   createStyleProp,
   createTestProps,
   getNameValueFormInputValues,
 } from 'hyperview/src/services';
+import Field from './field';
 import { LOCAL_NAME } from 'hyperview/src/types';
+import Modal from 'hyperview/src/core/components/modal';
 import Picker from 'hyperview/src/core/components/picker';
+import type { PickerProps } from './types';
 import type { Node as ReactNode } from 'react';
-import type { State } from './types';
-import styles from './styles';
 
 /**
  * A picker field renders a form field with values that come from a pre-defined list.
@@ -43,10 +36,7 @@ import styles from './styles';
  * - On Android, the system picker is rendered inline on the screen. Pressing the picker
  *   opens a system dialog.
  */
-export default class HvPickerField extends PureComponent<
-  HvComponentProps,
-  State,
-> {
+export default class HvPickerField extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
 
   static localName = LOCAL_NAME.PICKER_FIELD;
@@ -57,119 +47,56 @@ export default class HvPickerField extends PureComponent<
     return getNameValueFormInputValues(element);
   };
 
-  props: HvComponentProps;
-
-  state: State;
-
-  constructor(props: HvComponentProps) {
-    super(props);
-    const { element } = props;
-    const value: ?DOMString = element.getAttribute('value');
-    this.state = {
-      cancelPressed: false,
-      donePressed: false,
-      fieldPressed: false,
-      focused: false,
-      // on iOS, pickerValue is used to display the selected choice
-      // in the picker modal. On Android, the picker is shown in-line on the screen,
-      // so this value gets displayed.
-      pickerValue: value,
-      // on iOS, value is used to display the selected choice when
-      // the picker modal is hidden
-      value,
-    };
-  }
-
-  static getDerivedStateFromProps(
-    nextProps: HvComponentProps,
-    prevState: State,
-  ) {
-    const value = nextProps.element.getAttribute('value') || '';
-    return value !== prevState.value ? { value } : {};
-  }
-
-  toggleFieldPress = () => {
-    this.setState(state => ({
-      ...state,
-      fieldPressed: !state.fieldPressed,
-    }));
-  };
-
-  toggleCancelPress = () => {
-    this.setState(state => ({
-      ...state,
-      cancelPressed: !state.cancelPressed,
-    }));
-  };
-
-  toggleSavePress = () => {
-    this.setState(state => ({
-      ...state,
-      donePressed: !state.donePressed,
-    }));
-  };
-
   /**
-   * Gets the label from the picker items for the given value.
-   * If the value doesn't have a picker item, returns null.
-   */
-  getLabelForValue = (value: DOMString): ?string => {
-    const pickerItemElements: NodeList<Element> = this.props.element.getElementsByTagNameNS(
-      Namespaces.HYPERVIEW,
-      LOCAL_NAME.PICKER_ITEM,
-    );
-
-    let item: ?Element = null;
-    for (let i = 0; i < pickerItemElements.length; i += 1) {
-      const pickerItemElement: ?Element = pickerItemElements.item(i);
-      if (
-        pickerItemElement &&
-        pickerItemElement.getAttribute('value') === value
-      ) {
-        item = pickerItemElement;
-        break;
-      }
-    }
-    return item ? item.getAttribute('label') : null;
-  };
-
-  /**
-   * Shows the picker, defaulting to the field's value.
+   * Shows the picker, defaulting to the field's value. If the field is not set, use the first value in the picker.
    */
   onFieldPress = () => {
-    this.setState(state => ({
-      ...state,
-      focused: true,
-      pickerValue: state.value,
-    }));
-    this.triggerBehaviors('focus');
+    const newElement = this.props.element.cloneNode(true);
+    newElement.setAttribute('focused', 'true');
+    newElement.setAttribute('picker-value', this.getPickerInitialValue());
+    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+    this.triggerBehaviors(newElement, 'focus');
   };
 
   /**
    * Hides the picker without applying the chosen value.
    */
-  onModalCancel = () => {
-    this.setState({
-      focused: false,
-    });
-    this.triggerBehaviors('blur');
+  onCancel = () => {
+    const newElement = this.props.element.cloneNode(true);
+    newElement.setAttribute('focused', 'false');
+    newElement.removeAttribute('picker-value');
+    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+    // Android has a dedicated blur handler
+    if (Platform.OS !== 'android') {
+      this.triggerBehaviors(newElement, 'blur');
+    }
   };
 
   /**
    * Hides the picker and applies the chosen value to the field.
    */
-  onModalDone = () => {
-    this.setState(state => ({
-      ...state,
-      focused: false,
-      value: state.pickerValue,
-    }));
-    this.props.element.setAttribute('value', this.state.pickerValue || '');
-    this.triggerBehaviors('blur');
+  onDone = (newValue?: string) => {
+    const pickerValue =
+      newValue !== undefined ? newValue : this.getPickerValue();
+    const value = this.getValue();
+    const newElement = this.props.element.cloneNode(true);
+    newElement.setAttribute('value', pickerValue);
+    newElement.removeAttribute('picker-value');
+    newElement.setAttribute('focused', 'false');
+    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+
+    const hasChanged = value !== pickerValue;
+    if (hasChanged) {
+      this.triggerBehaviors(newElement, 'change');
+    }
+    // Android has a dedicated blur handler
+    if (Platform.OS !== 'android') {
+      this.triggerBehaviors(newElement, 'blur');
+    }
   };
 
-  triggerBehaviors = (triggerName: string) => {
-    const behaviorElements = Dom.getBehaviorElements(this.props.element);
+  triggerBehaviors = (newElement: Element, triggerName: string) => {
+    const behaviorElements = Dom.getBehaviorElements(newElement);
     const matchingBehaviors = behaviorElements.filter(
       e => e.getAttribute('trigger') === triggerName,
     );
@@ -182,7 +109,7 @@ export default class HvPickerField extends PureComponent<
       const hideIndicatorIds = behaviorElement.getAttribute('hide-during-load');
       const delay = behaviorElement.getAttribute('delay');
       const once = behaviorElement.getAttribute('once');
-      this.props.onUpdate(href, action, this.props.element, {
+      this.props.onUpdate(href, action, newElement, {
         behaviorElement,
         delay,
         hideIndicatorIds,
@@ -195,136 +122,62 @@ export default class HvPickerField extends PureComponent<
   };
 
   /**
-   * Renders the picker component. Picker items come from the
-   * <picker-item> elements in the <picker-field> element.
+   * Updates the picker value while keeping the picker open.
    */
-  renderPicker = (style: StyleSheetType): ReactNode => {
-    const props = {
-      onValueChange: (value: any) => {
-        this.setState({ pickerValue: value });
-        if (Platform.OS !== 'ios') {
-          // On non-iOS platforms, the value should be propagated immediately.
-          this.props.element.setAttribute('value', value || '');
-        }
-        this.triggerBehaviors('change');
-      },
-      selectedValue: this.state.pickerValue,
-      style,
-    };
+  setPickerValue = (value: string) => {
+    const newElement = this.props.element.cloneNode(true);
+    newElement.setAttribute(
+      Platform.OS === 'android' ? 'value' : 'picker-value',
+      value,
+    );
+    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+  };
 
-    // Gets all of the <picker-item> elements. All picker item elements
-    // with a value and label are turned into options for the picker.
-    const children: Array<ReactNode> = Array.from(
+  /**
+   * Returns true if the field is focused (and picker is showing).
+   */
+  isFocused = (): boolean =>
+    this.props.element.getAttribute('focused') === 'true';
+
+  /**
+   * Returns a string representing the value in the picker.
+   */
+  getPickerValue = (): string =>
+    this.props.element.getAttribute(
+      Platform.OS === 'android' ? 'value' : 'picker-value',
+    ) || '';
+
+  getPickerItems = (): Element[] =>
+    Array.from(
+      // $FlowFixMe: flow thinks `element` is a `Node` instead of an `Element`
       this.props.element.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
         LOCAL_NAME.PICKER_ITEM,
       ),
-    )
-      .filter(Boolean)
-      .map((item: Element) => {
-        const label: ?DOMString = item.getAttribute('label');
-        const value: ?DOMString = item.getAttribute('value');
-        if (!label || value === null) {
-          return null;
-        }
-        return React.createElement(Picker.Item, { label, value });
-      });
+    );
 
-    return React.createElement(Picker, props, ...children);
+  getPickerInitialValue = (): string => {
+    const value = this.getValue();
+    const pickerItems = this.getPickerItems();
+    if (pickerItems.map(item => item.getAttribute('value')).includes(value)) {
+      return value;
+    }
+    if (pickerItems.length > 0) {
+      return pickerItems[0].getAttribute('value') || '';
+    }
+    return '';
   };
 
   /**
-   * Renders a bottom sheet with cancel/done buttons and a picker component.
-   * Uses styles defined on the <picker-field> element for the modal and buttons.
+   * Returns a string representing the value in the field.
    */
-  renderPickerModal = (): ReactNode => {
-    const modalStyle: Array<StyleSheetType> = createStyleProp(
-      this.props.element,
-      this.props.stylesheets,
-      {
-        ...this.props.options,
-        styleAttr: 'modal-style',
-      },
-    );
-    const cancelTextStyle: Array<StyleSheetType> = createStyleProp(
-      this.props.element,
-      this.props.stylesheets,
-      {
-        ...this.props.options,
-        pressed: this.state.cancelPressed,
-        styleAttr: 'modal-text-style',
-      },
-    );
-    const doneTextStyle: Array<StyleSheetType> = createStyleProp(
-      this.props.element,
-      this.props.stylesheets,
-      {
-        ...this.props.options,
-        pressed: this.state.donePressed,
-        styleAttr: 'modal-text-style',
-      },
-    );
-    const cancelLabel: string =
-      this.props.element.getAttribute('cancel-label') || 'Cancel';
-    const doneLabel: string =
-      this.props.element.getAttribute('done-label') || 'Done';
+  getValue = (): string => this.props.element.getAttribute('value') || '';
 
-    return (
-      <Modal
-        animationType="slide"
-        onRequestClose={this.onModalCancel}
-        transparent
-        visible={this.state.focused}
-      >
-        <View style={styles.modalWrapper}>
-          <View style={modalStyle}>
-            <View style={styles.modalActions}>
-              <TouchableWithoutFeedback
-                onPress={this.onModalCancel}
-                onPressIn={this.toggleCancelPress}
-                onPressOut={this.toggleCancelPress}
-              >
-                <View>
-                  <Text style={cancelTextStyle}>{cancelLabel}</Text>
-                </View>
-              </TouchableWithoutFeedback>
-              <TouchableWithoutFeedback
-                onPress={this.onModalDone}
-                onPressIn={this.toggleSavePress}
-                onPressOut={this.toggleSavePress}
-              >
-                <View>
-                  <Text style={doneTextStyle}>{doneLabel}</Text>
-                </View>
-              </TouchableWithoutFeedback>
-            </View>
-            {this.renderPicker()}
-          </View>
-        </View>
-      </Modal>
-    );
-  };
-
-  render(): ReactNode {
-    if (Platform.OS === 'ios') {
-      return this.renderiOS();
-    }
-
-    /**
-     * On non-iOS platforms, we render a view containing the system picker, which delegates to the correct UX
-     * Android's system picker opens a modal when pressed so the user can select an option. The selected option
-     * gets applied immediately. The user can cancel by hitting the back button or tapping outside of the modal.
-     */
-    const fieldStyle: StyleSheetType = createStyleProp(
-      this.props.element,
-      this.props.stylesheets,
-      {
-        ...this.props.options,
-        styleAttr: 'field-style',
-      },
-    );
-
-    const textStyle: StyleSheetType = createStyleProp(
+  /**
+   * Renders the picker component.
+   */
+  PickerWrapper = (props: PickerProps): ReactNode => {
+    const style: Array<StyleSheet> = createStyleProp(
       this.props.element,
       this.props.stylesheets,
       {
@@ -337,72 +190,108 @@ export default class HvPickerField extends PureComponent<
     const placeholderTextColor: ?DOMString = this.props.element.getAttribute(
       'placeholderTextColor',
     );
-    if (!value && placeholderTextColor) {
-      textStyle.push({ color: placeholderTextColor });
+    if ([undefined, null, ''].includes(value) && placeholderTextColor) {
+      style.push({ color: placeholderTextColor });
     }
 
-    const pickerComponent = this.renderPicker(textStyle);
+    const fieldStyle: Array<StyleSheet> = createStyleProp(
+      this.props.element,
+      this.props.stylesheets,
+      {
+        ...this.props.options,
+        styleAttr: 'field-style',
+      },
+    );
+
+    // Gets all of the <picker-item> elements. All picker item elements
+    // with a value and label are turned into options for the picker.
+    const children = this.getPickerItems()
+      .filter(Boolean)
+      .map((item: Element) => {
+        const l: ?DOMString = item.getAttribute('label');
+        const v: ?DOMString = item.getAttribute('value');
+        if (!l || typeof v !== 'string') {
+          return null;
+        }
+        return <Picker.Item key={l + v} label={l} value={v} />;
+      });
+
     return (
       <View
         accessibilityLabel={accessibilityLabel}
         style={fieldStyle}
         testID={testID}
       >
-        {pickerComponent}
+        <Picker
+          onBlur={() => this.triggerBehaviors(this.props.element, 'blur')}
+          onFocus={() => this.triggerBehaviors(this.props.element, 'focus')}
+          onValueChange={props.onChange}
+          selectedValue={this.getPickerValue()}
+          style={style}
+        >
+          {children}
+        </Picker>
       </View>
     );
-  }
+  };
+
+  Content = () => {
+    const { PickerWrapper } = this;
+
+    /**
+     * On iOS this component is rendered inline, and on Android it's rendered as a modal.
+     * Thus, on iOS we need to wrap this component in our own modal for consistency.
+     */
+    if (Platform.OS === 'ios') {
+      return (
+        <Field
+          element={this.props.element}
+          focused={this.isFocused()}
+          onPress={this.onFieldPress}
+          options={this.props.options}
+          stylesheets={this.props.stylesheets}
+          value={this.getValue()}
+        >
+          {this.isFocused() ? (
+            <Modal
+              element={this.props.element}
+              isFocused={this.isFocused}
+              onModalCancel={this.onCancel}
+              onModalDone={this.onDone}
+              onUpdate={this.props.onUpdate}
+              options={this.props.options}
+              stylesheets={this.props.stylesheets}
+            >
+              <PickerWrapper onChange={this.setPickerValue} />
+            </Modal>
+          ) : null}
+        </Field>
+      );
+    }
+    const onChange = (value: ?string) => {
+      if (value === undefined) {
+        this.onCancel();
+      } else {
+        this.onDone(value || '');
+      }
+    };
+
+    return <PickerWrapper onChange={onChange} />;
+  };
 
   /**
-   * On iOS, we render a view containing a text label. Pressing the view opens a modal with a system picker and
-   * action buttons along the bottom of the screen. After selecting an option, the user must press the save button.
-   * To cancel, the user must press the cancel button.
+   * Renders the field (view and text label).
+   * Pressing the field will focus it and:
+   * - on iOS, bring up a bottom sheet with picker
+   * - on Android, show the system picker
    */
-  renderiOS = (): ReactNode => {
+  render = (): ReactNode => {
     if (this.props.element.getAttribute('hide') === 'true') {
       return null;
     }
 
-    const pressed: boolean = this.state.fieldPressed;
-    const props = createProps(this.props.element, this.props.stylesheets, {
-      ...this.props.options,
-      focused: this.state.focused,
-      pressed,
-      styleAttr: 'field-style',
-    });
-    const fieldTextStyle = createStyleProp(
-      this.props.element,
-      this.props.stylesheets,
-      {
-        ...this.props.options,
-        focused: this.state.focused,
-        pressed,
-        styleAttr: 'field-text-style',
-      },
-    );
-    const value: ?DOMString = this.props.element.getAttribute('value');
-    const placeholderTextColor: ?DOMString = this.props.element.getAttribute(
-      'placeholderTextColor',
-    );
-    if (!value && placeholderTextColor) {
-      fieldTextStyle.push({ color: placeholderTextColor });
-    }
+    const { Content } = this;
 
-    const label: string = value
-      ? this.getLabelForValue(value) || value
-      : this.props.element.getAttribute('placeholder') || '';
-
-    return (
-      <TouchableWithoutFeedback
-        onPress={this.onFieldPress}
-        onPressIn={this.toggleFieldPress}
-        onPressOut={this.toggleFieldPress}
-      >
-        <View {...props}>
-          <Text style={fieldTextStyle}>{label}</Text>
-          {this.renderPickerModal()}
-        </View>
-      </TouchableWithoutFeedback>
-    );
+    return <Content />;
   };
 }
