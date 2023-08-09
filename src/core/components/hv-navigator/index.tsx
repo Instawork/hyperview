@@ -65,7 +65,9 @@ export default class HvNavigator extends PureComponent<Types.Props> {
     href: TypesLegacy.DOMString | undefined,
     isModal: boolean,
   ): React.ReactElement => {
-    const initialParams = { id, url: href };
+    const initialParams = NavigatorService.isDynamicId(id)
+      ? {}
+      : { id, url: href };
     if (type === NavigatorService.NAVIGATOR_TYPE.TAB) {
       return (
         <BottomTab.Screen
@@ -96,6 +98,33 @@ export default class HvNavigator extends PureComponent<Types.Props> {
     throw new NavigatorService.HvNavigatorError(
       `No navigator found for type '${type}'`,
     );
+  };
+
+  /**
+   * Build the dynamic and modal screens for a stack navigator
+   */
+  buildDynamics = (): React.ReactElement[] => {
+    const screens: React.ReactElement[] = [];
+    // Dynamic is used to display all routes in stack which are presented as cards
+    screens.push(
+      this.buildScreen(
+        NavigatorService.ID_DYNAMIC,
+        NavigatorService.NAVIGATOR_TYPE.STACK,
+        undefined,
+        false,
+      ),
+    );
+
+    // Modal is used to display all routes in stack which are presented as modals
+    screens.push(
+      this.buildScreen(
+        NavigatorService.ID_MODAL,
+        NavigatorService.NAVIGATOR_TYPE.STACK,
+        undefined,
+        true,
+      ),
+    );
+    return screens;
   };
 
   /**
@@ -160,34 +189,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
 
     // Add the dynamic stack screens
     if (type === NavigatorService.NAVIGATOR_TYPE.STACK) {
-      // Dynamic is used to display all routes in stack which are presented as cards
-      screens.push(
-        <Stack.Screen
-          key={NavigatorService.ID_DYNAMIC}
-          component={this.props.routeComponent}
-          getId={({ params }: Types.ScreenParams) => params.url}
-          // empty object required because hv-screen doesn't check for undefined param
-          initialParams={{}}
-          name={NavigatorService.ID_DYNAMIC}
-        />,
-      );
-
-      // Modal is used to display all routes in stack which are presented as modals
-      screens.push(
-        <Stack.Screen
-          key={NavigatorService.ID_MODAL}
-          component={this.props.routeComponent}
-          getId={({ params }: Types.ScreenParams) => params.url}
-          // empty object required because hv-screen doesn't check for undefined param
-          initialParams={{}}
-          name={NavigatorService.ID_MODAL}
-          options={{
-            cardStyleInterpolator:
-              NavigatorService.CardStyleInterpolators.forVerticalIOS,
-            presentation: 'modal',
-          }}
-        />,
-      );
+      screens.push(...this.buildDynamics());
     }
     return screens;
   };
