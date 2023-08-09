@@ -276,7 +276,9 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
    * Evaluate the <doc> element and render the appropriate component
    */
   Route = (): React.ReactElement => {
-    const { isModal } = this.props.route?.params || { isModal: false };
+    const isModal = this.props.route?.params.isModal
+      ? this.props.route.params
+      : false;
 
     const renderElement: TypesLegacy.Element | undefined = isModal
       ? undefined
@@ -318,17 +320,16 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
         />
       );
     }
-    const { Screen } = this;
 
     if (renderElement?.localName === TypesLegacy.LOCAL_NAME.SCREEN) {
       if (this.props.handleBack) {
         return (
           <this.props.handleBack>
-            <Screen />
+            <this.Screen />
           </this.props.handleBack>
         );
       }
-      return <Screen />;
+      return <this.Screen />;
     }
 
     throw new NavigatorService.HvRenderError('Invalid element type');
@@ -350,29 +351,27 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
       }
     }
 
-    const { Route } = this;
-    return <Route />;
+    return <this.Route />;
   };
 
   render() {
-    const { Error, Load, Content } = this;
     try {
       if (this.state.error) {
-        return <Error error={this.state.error} />;
+        return <this.Error error={this.state.error} />;
       }
       if (
         this.props.element ||
         this.state.doc ||
         this.props.route?.params?.isModal
       ) {
-        return <Content />;
+        return <this.Content />;
       }
-      return <Load />;
+      return <this.Load />;
     } catch (err) {
       if (this.props.onError) {
         this.props.onError(err as Error);
       }
-      return <Error error={err} />;
+      return <this.Error error={err} />;
     }
   }
 }
