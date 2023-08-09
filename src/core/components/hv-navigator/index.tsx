@@ -204,15 +204,6 @@ export default class HvNavigator extends PureComponent<Types.Props> {
       throw new NavigatorService.HvNavigatorError('No id found for navigator');
     }
 
-    const navigationContext: NavigationContext.NavigationContextProps | null = useContext(
-      NavigationContext.Context,
-    );
-    const navigatorMapContext: NavigatorMapContext.NavigatorMapContextProps | null = useContext(
-      NavigatorMapContext.NavigatorMapContext,
-    );
-    if (!navigationContext || !navigatorMapContext) {
-      throw new NavigatorService.HvRouteError('No context found');
-    }
 
     const type:
       | TypesLegacy.DOMString
