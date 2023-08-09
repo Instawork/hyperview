@@ -205,7 +205,6 @@ export default class HvNavigator extends PureComponent<Types.Props> {
       throw new NavigatorService.HvNavigatorError('No id found for navigator');
     }
 
-
     const type:
       | TypesLegacy.DOMString
       | null
