@@ -26,6 +26,7 @@ import { LOCAL_NAME } from 'hyperview/src/types';
 import type { Node } from 'react';
 import Picker from 'hyperview/src/core/components/picker';
 import { View } from 'react-native';
+
 /**
  * A picker field renders a form field with values that come from a pre-defined list.
  * - On iOS, pressing the field brings up a custom bottom sheet with a picker and action buttons.
@@ -61,6 +62,20 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
         LOCAL_NAME.PICKER_ITEM,
       ),
     );
+
+  onFocus = () => {
+    const newElement = this.props.element.cloneNode(true);
+    newElement.setAttribute('focused', 'true');
+    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+    Behaviors.trigger('focus', newElement, this.props.onUpdate);
+  };
+
+  onBlur = () => {
+    const newElement = this.props.element.cloneNode(true);
+    newElement.setAttribute('focused', 'false');
+    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+    Behaviors.trigger('blur', newElement, this.props.onUpdate);
+  };
 
   /**
    * Hides the picker without applying the chosen value.
@@ -128,16 +143,31 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
 
     // Gets all of the <picker-item> elements. All picker item elements
     // with a value and label are turned into options for the picker.
-    const children = this.getPickerItems()
-      .filter(Boolean)
-      .map((item: Element) => {
-        const l: ?DOMString = item.getAttribute('label');
-        const v: ?DOMString = item.getAttribute('value');
-        if (!l || typeof v !== 'string') {
-          return null;
-        }
-        return <Picker.Item key={l + v} label={l} value={v} />;
-      });
+    const items = this.getPickerItems();
+    const children = items.filter(Boolean).map((item: Element) => {
+      const l: ?DOMString = item.getAttribute('label');
+      const v: ?DOMString = item.getAttribute('value');
+      if (!l || typeof v !== 'string') {
+        return null;
+      }
+      const enabled = ['', 'true'].includes(item.getAttribute('enabled'));
+      return <Picker.Item key={l + v} enabled={enabled} label={l} value={v} />;
+    });
+
+    // If there are no items, or the first item has a value,
+    // we need to add an empty option that acts as a placeholder.
+    if (items.length > 0 && items[0].getAttribute('value') !== '') {
+      children.unshift(
+        <Picker.Item
+          key="empty"
+          // `enabled` needs to be true when the field is not focused, otherwise the the field will not be selectable
+          // fix inspired by https://github.com/react-native-picker/picker/issues/95#issuecomment-935718568
+          enabled={this.props.element.getAttribute('focused') !== 'true'}
+          label={this.props.element.getAttribute('placeholder')}
+          value=""
+        />,
+      );
+    }
 
     return (
       <View
@@ -146,12 +176,8 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
         testID={testID}
       >
         <Picker
-          onBlur={() =>
-            Behaviors.trigger('blur', this.props.element, this.props.onUpdate)
-          }
-          onFocus={() =>
-            Behaviors.trigger('focus', this.props.element, this.props.onUpdate)
-          }
+          onBlur={this.onBlur}
+          onFocus={this.onFocus}
           onValueChange={onChange}
           selectedValue={this.getPickerValue()}
           style={style}
