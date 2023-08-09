@@ -19,6 +19,7 @@ type RouteParams = {
   id?: string;
   url: string;
   preloadScreen?: number;
+  isModal?: boolean;
 };
 
 export type NavigationContextProps = {

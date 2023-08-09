@@ -12,6 +12,7 @@ import { FC } from 'react';
 export type RouteParams = {
   id?: string;
   url: string;
+  isModal?: boolean;
 };
 
 export type ParamTypes = Record<string, RouteParams>;

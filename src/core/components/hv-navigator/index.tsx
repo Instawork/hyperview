@@ -62,7 +62,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
   ): React.ReactElement => {
     const initialParams = NavigatorService.isDynamicId(id)
       ? {}
-      : { id, url: href };
+      : { id, isModal, url: href };
     if (type === NavigatorService.NAVIGATOR_TYPE.TAB) {
       return (
         <BottomTab.Screen
