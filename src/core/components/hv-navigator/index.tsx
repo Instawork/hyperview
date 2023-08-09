@@ -24,6 +24,39 @@ const BottomTab = NavigatorService.createBottomTabNavigator();
 
 export default class HvNavigator extends PureComponent<Types.Props> {
   /**
+   * Encapsulated options for the stack screenOptions
+   */
+  stackScreenOptions = (
+    id: string,
+    route: Types.ScreenParams,
+  ): {
+    headerMode: 'float' | 'screen' | undefined;
+    headerShown: boolean;
+    title: string | undefined;
+  } => ({
+    headerMode: 'screen',
+    headerShown: SHOW_NAVIGATION_UI,
+    title: route.params?.url || id,
+  });
+
+  /**
+   * Logic to determine the nav route id
+   */
+  getId = (params: Types.RouteParams): string => {
+    if (!params) {
+      throw new NavigatorService.HvNavigatorError('No params found for route');
+    }
+    if (params.id) {
+      if (NavigatorService.isDynamicId(params.id)) {
+        // Dynamic screens use their url as id
+        return params.url || params.id;
+      }
+      return params.id;
+    }
+    return params.url;
+  };
+
+  /**
    * Build an individual tab screen
    */
   buildScreen = (
@@ -48,6 +81,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
         <Stack.Screen
           key={id}
           component={this.props.routeComponent}
+          getId={({ params }: Types.ScreenParams) => this.getId(params)}
           initialParams={initialParams}
           name={id}
           options={{
@@ -199,10 +233,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
           <Stack.Navigator
             id={id}
             screenOptions={({ route }: Types.NavigatorParams) => ({
-              header: undefined,
-              headerMode: 'screen',
-              headerShown: SHOW_NAVIGATION_UI,
-              title: route.params?.url || id,
+              ...this.stackScreenOptions(id, route),
             })}
           >
             {buildScreens(props.element, type)}

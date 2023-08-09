@@ -15,6 +15,13 @@ import * as UrlService from 'hyperview/src/services/url';
 import { ANCHOR_ID_SEPARATOR } from './types';
 
 /**
+ * Dynamic and modal routes are not defined in the document
+ */
+export const isDynamicId = (id: string): boolean => {
+  return id === Types.ID_DYNAMIC || id === Types.ID_MODAL;
+};
+
+/**
  * Get an array of all child elements of a node
  */
 export const getChildElements = (
