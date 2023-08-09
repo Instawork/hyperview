@@ -20,13 +20,7 @@ import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as Types from './types';
 import * as TypesLegacy from 'hyperview/src/types-legacy';
 import * as UrlService from 'hyperview/src/services/url';
-import React, {
-  ComponentType,
-  JSXElementConstructor,
-  PureComponent,
-  ReactNode,
-  useContext,
-} from 'react';
+import React, { JSXElementConstructor, PureComponent, useContext } from 'react';
 import HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
 import LoadError from 'hyperview/src/core/components/load-error';
@@ -116,7 +110,10 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
       // Set the state with the merged document
       this.setState(state => {
         const merged = NavigatorService.mergeDocument(doc, state.doc);
-        const root = Helpers.getFirstTag(merged, TypesLegacy.LOCAL_NAME.DOC);
+        const root = Helpers.getFirstChildTag(
+          merged,
+          TypesLegacy.LOCAL_NAME.DOC,
+        );
         if (!root) {
           return {
             doc: undefined,
@@ -148,7 +145,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
     }
 
     // Get the <doc> element
-    const root: TypesLegacy.Element | null = Helpers.getFirstTag(
+    const root: TypesLegacy.Element | null = Helpers.getFirstChildTag(
       this.state.doc,
       TypesLegacy.LOCAL_NAME.DOC,
     );
@@ -157,7 +154,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
     }
 
     // Get the first child as <screen> or <navigator>
-    const screenElement: TypesLegacy.Element | null = Helpers.getFirstTag(
+    const screenElement: TypesLegacy.Element | null = Helpers.getFirstChildTag(
       root,
       TypesLegacy.LOCAL_NAME.SCREEN,
     );
@@ -165,7 +162,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
       return screenElement;
     }
 
-    const navigatorElement: TypesLegacy.Element | null = Helpers.getFirstTag(
+    const navigatorElement: TypesLegacy.Element | null = Helpers.getFirstChildTag(
       root,
       TypesLegacy.LOCAL_NAME.NAVIGATOR,
     );
@@ -278,9 +275,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
   /**
    * Evaluate the <doc> element and render the appropriate component
    */
-  Route = (props: {
-    handleBack?: ComponentType<{ children: ReactNode }>;
-  }): React.ReactElement => {
+  Route = (): React.ReactElement => {
     const renderElement: TypesLegacy.Element | null = this.getRenderElement();
 
     if (!renderElement) {
@@ -307,11 +302,11 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
     const { Screen } = this;
 
     if (renderElement.localName === TypesLegacy.LOCAL_NAME.SCREEN) {
-      if (props.handleBack) {
+      if (this.props.handleBack) {
         return (
-          <props.handleBack>
+          <this.props.handleBack>
             <Screen />
-          </props.handleBack>
+          </this.props.handleBack>
         );
       }
       return <Screen />;
@@ -334,7 +329,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
     }
 
     const { Route } = this;
-    return <Route handleBack={this.props.handleBack} />;
+    return <Route />;
   };
 
   render() {
