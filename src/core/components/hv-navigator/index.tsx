@@ -28,11 +28,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
    */
   stackScreenOptions = (
     route: Types.ScreenParams,
-  ): {
-    headerMode: 'float' | 'screen' | undefined;
-    headerShown: boolean;
-    title: string | undefined;
-  } => ({
+  ): Types.StackScreenOptions => ({
     headerMode: 'screen',
     headerShown: SHOW_NAVIGATION_UI,
     title: this.getId(route.params),
@@ -223,9 +219,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
         return (
           <Stack.Navigator
             id={id}
-            screenOptions={({ route }: Types.NavigatorParams) => ({
-              ...this.stackScreenOptions(route),
-            })}
+            screenOptions={({ route }) => this.stackScreenOptions(route)}
           >
             {buildScreens(props.element, type)}
           </Stack.Navigator>
