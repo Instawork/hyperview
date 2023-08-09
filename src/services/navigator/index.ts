@@ -127,6 +127,7 @@ export {
 } from './imports';
 export { HvRouteError, HvNavigatorError, HvRenderError } from './errors';
 export {
+  isDynamicId,
   isUrlFragment,
   cleanHrefFragment,
   getChildElements,

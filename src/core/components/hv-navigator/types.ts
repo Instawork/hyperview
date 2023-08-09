@@ -31,3 +31,12 @@ export type Props = {
   element: TypesLegacy.Element;
   routeComponent: FC;
 };
+
+/**
+ * Options used for a stack navigator's screenOptions
+ */
+export type StackScreenOptions = {
+  headerMode: 'float' | 'screen' | undefined;
+  headerShown: boolean;
+  title: string | undefined;
+};
