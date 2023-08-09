@@ -9,7 +9,7 @@
 import * as TypesLegacy from 'hyperview/src/types-legacy';
 
 export const ANCHOR_ID_SEPARATOR = '#';
-export const ID_DYNAMIC = 'dynamic';
+export const ID_CARD = 'card';
 export const ID_MODAL = 'modal';
 export const KEY_MERGE = 'merge';
 export const KEY_SELECTED = 'selected';

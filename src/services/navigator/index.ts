@@ -127,7 +127,7 @@ export {
 } from './imports';
 export { HvRouteError, HvNavigatorError, HvRenderError } from './errors';
 export {
-  isDynamicId,
+  isDynamicRoute,
   isUrlFragment,
   cleanHrefFragment,
   getChildElements,
@@ -137,4 +137,4 @@ export {
   mergeDocument,
   setSelected,
 } from './helpers';
-export { ID_DYNAMIC, ID_MODAL, KEY_MODAL, NAVIGATOR_TYPE } from './types';
+export { ID_CARD, ID_MODAL, KEY_MODAL, NAVIGATOR_TYPE } from './types';
