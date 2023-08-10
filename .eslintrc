@@ -6,10 +6,6 @@
       "warn",
       {
         "devDependencies": [
-          "**/*.stories.tsx",
-          "**/stories/*.tsx",
-          "**/*.test.ts",
-          "**/stories.tsx",
           "**/scripts/*",
           "**/scripts/*/*",
           "**/scripts/*/*/*",
@@ -67,13 +63,15 @@
         "operator-linebreak": "off",
         "no-use-before-define": "off",
         "object-curly-newline": "off",
-        "instawork/error-object": "off"
-      }
-    },
-    {
-      "files": ["**/stories/**/*.tsx"],
-      "rules": {
-        "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
+        "instawork/error-object": "off",
+        "import/no-extraneous-dependencies": [
+          "warn",
+          {
+            "devDependencies": [
+              "**/stories/*.tsx"
+            ]
+          }
+        ]
       }
     }
   ]
