@@ -269,7 +269,10 @@ export const buildRequest = (
 
   validateUrl(action, routeParams);
 
-  const [navigation, path] = getNavigatorAndPath(routeParams.targetId, nav);
+  const [navigation, path] = getNavigatorAndPath(
+    routeParams.targetId ?? '',
+    nav,
+  );
   if (!navigation) {
     return [undefined, '', routeParams];
   }
@@ -278,7 +281,7 @@ export const buildRequest = (
   const isStatic: boolean =
     (path !== undefined && path.length > 0) ||
     navigation.getState().type !== Types.NAVIGATOR_TYPE.STACK;
-  const routeId = getRouteId(action, routeParams.url, isStatic);
+  const routeId = getRouteId(action, routeParams.url ?? '', isStatic);
 
   if (!path || !path.length) {
     return [navigation, routeId, routeParams];
