@@ -277,7 +277,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
    */
   Route = (): React.ReactElement => {
     const isModal = this.props.route?.params.isModal
-      ? this.props.route.params
+      ? this.props.route.params.isModal
       : false;
 
     const renderElement: TypesLegacy.Element | undefined = isModal
