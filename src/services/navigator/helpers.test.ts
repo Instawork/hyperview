@@ -3,7 +3,7 @@ import * as Errors from './errors';
 import * as Namespaces from '../namespaces';
 import * as Types from './types';
 import * as TypesLegacy from '../../types-legacy';
-import { ID_DYNAMIC, ID_MODAL } from './types';
+import { ID_CARD, ID_MODAL } from './types';
 import {
   buildParams,
   buildRequest,
@@ -455,9 +455,9 @@ describe('getRouteId', () => {
     const urls = ['#url', '#'];
     describe('action:push', () => {
       urls.forEach(url => {
-        it(`should not return route 'dynamic' from url with fragment: ${url}`, () => {
+        it(`should not return route 'card' from url with fragment: ${url}`, () => {
           expect(getRouteId(TypesLegacy.NAV_ACTIONS.PUSH, url)).not.toEqual(
-            ID_DYNAMIC,
+            ID_CARD,
           );
         });
         it(`should return route id with fragment: ${url}`, () => {
@@ -488,9 +488,9 @@ describe('getRouteId', () => {
     const urls = ['url', '/url', '', undefined];
     describe('action:push', () => {
       urls.forEach(url => {
-        it(`should return type 'dynamic' from url with non-fragment: ${url}`, () => {
+        it(`should return type 'card' from url with non-fragment: ${url}`, () => {
           expect(getRouteId(TypesLegacy.NAV_ACTIONS.PUSH, url)).toEqual(
-            ID_DYNAMIC,
+            ID_CARD,
           );
         });
       });
@@ -518,16 +518,16 @@ describe('getRouteId', () => {
           it(`should return cleaned url with fragment: ${url}`, () => {
             expect(getRouteId(action, url)).toEqual(url.slice(1));
           });
-          it(`should not return type 'dynamic' from url with fragment: ${url}`, () => {
-            expect(getRouteId(action, url)).not.toEqual(ID_DYNAMIC);
+          it(`should not return type 'card' from url with fragment: ${url}`, () => {
+            expect(getRouteId(action, url)).not.toEqual(ID_CARD);
           });
         });
         ['url', '/url', '', undefined].forEach(url => {
           it(`should return cleaned url with non-fragment: ${url}`, () => {
-            expect(getRouteId(action, url)).toEqual(ID_DYNAMIC);
+            expect(getRouteId(action, url)).toEqual(ID_CARD);
           });
-          it(`should return type 'dynamic' from url with non-fragment: ${url}`, () => {
-            expect(getRouteId(action, url)).toEqual(ID_DYNAMIC);
+          it(`should return type 'card' from url with non-fragment: ${url}`, () => {
+            expect(getRouteId(action, url)).toEqual(ID_CARD);
           });
         });
       });
