@@ -15,10 +15,10 @@ import * as UrlService from 'hyperview/src/services/url';
 import { ANCHOR_ID_SEPARATOR } from './types';
 
 /**
- * Dynamic and modal routes are not defined in the document
+ * Card and modal routes are not defined in the document
  */
-export const isDynamicId = (id: string): boolean => {
-  return id === Types.ID_DYNAMIC || id === Types.ID_MODAL;
+export const isDynamicRoute = (id: string): boolean => {
+  return id === Types.ID_CARD || id === Types.ID_MODAL;
 };
 
 /**
@@ -209,7 +209,7 @@ export const buildParams = (
 };
 
 /**
- * Use the dynamic or modal route for dynamic actions, otherwise use the given id
+ * Use the card or modal route for dynamic actions, otherwise use the given id
  */
 export const getRouteId = (
   action: TypesLegacy.NavAction,
@@ -221,7 +221,7 @@ export const getRouteId = (
 
   return action === TypesLegacy.NAV_ACTIONS.NEW
     ? Types.ID_MODAL
-    : Types.ID_DYNAMIC;
+    : Types.ID_CARD;
 };
 
 /**

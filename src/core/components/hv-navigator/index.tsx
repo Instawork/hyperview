@@ -42,8 +42,8 @@ export default class HvNavigator extends PureComponent<Types.Props> {
       throw new NavigatorService.HvNavigatorError('No params found for route');
     }
     if (params.id) {
-      if (NavigatorService.isDynamicId(params.id)) {
-        // Dynamic screens use their url as id
+      if (NavigatorService.isDynamicRoute(params.id)) {
+        // Dynamic routes use their url as id
         return params.url || params.id;
       }
       return params.id;
@@ -60,7 +60,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
     href: TypesLegacy.DOMString | undefined,
     isModal: boolean,
   ): React.ReactElement => {
-    const initialParams = NavigatorService.isDynamicId(id)
+    const initialParams = NavigatorService.isDynamicRoute(id)
       ? {}
       : { id, isModal, url: href };
     if (type === NavigatorService.NAVIGATOR_TYPE.TAB) {
@@ -85,7 +85,9 @@ export default class HvNavigator extends PureComponent<Types.Props> {
             cardStyleInterpolator: isModal
               ? NavigatorService.CardStyleInterpolators.forVerticalIOS
               : undefined,
-            presentation: isModal ? 'modal' : 'card',
+            presentation: isModal
+              ? NavigatorService.ID_MODAL
+              : NavigatorService.ID_CARD,
           }}
         />
       );
@@ -96,22 +98,21 @@ export default class HvNavigator extends PureComponent<Types.Props> {
   };
 
   /**
-   * Build the dynamic and modal screens for a stack navigator
+   * Build the card and modal screens for a stack navigator
    */
-  buildDynamics = (): React.ReactElement[] => {
+  buildDynamicScreens = (): React.ReactElement[] => {
     const { buildScreen } = this;
     const screens: React.ReactElement[] = [];
-    // Dynamic is used to display all routes in stack which are presented as cards
+
     screens.push(
       buildScreen(
-        NavigatorService.ID_DYNAMIC,
+        NavigatorService.ID_CARD,
         NavigatorService.NAVIGATOR_TYPE.STACK,
         undefined,
         false,
       ),
     );
 
-    // Modal is used to display all routes in stack which are presented as modals
     screens.push(
       buildScreen(
         NavigatorService.ID_MODAL,
@@ -141,13 +142,14 @@ export default class HvNavigator extends PureComponent<Types.Props> {
       throw new NavigatorService.HvRouteError('No context found');
     }
 
-    const { buildDynamics, buildScreen } = this;
+    const { buildDynamicScreens, buildScreen } = this;
     const elements: TypesLegacy.Element[] = NavigatorService.getChildElements(
       element,
     );
 
     // For tab navigators, the screens are appended
-    // For stack navigators, the dynamic screens are added later
+    // For stack navigators, defined routes are appened,
+    // the dynamic screens are added later
     // This iteration will also process nested navigators
     //    and retrieve additional urls from child routes
     elements.forEach((navRoute: TypesLegacy.Element) => {
@@ -185,7 +187,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
 
     // Add the dynamic stack screens
     if (type === NavigatorService.NAVIGATOR_TYPE.STACK) {
-      screens.push(...buildDynamics());
+      screens.push(...buildDynamicScreens());
     }
     return screens;
   };
@@ -271,7 +273,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
 
     const id = `stack-${params.id}`;
     const screenId = `modal-screen-${params.id}`;
-    const { buildScreen, buildDynamics, stackScreenOptions } = this;
+    const { buildScreen, buildDynamicScreens, stackScreenOptions } = this;
 
     // Generate a simple structure for the modal
     const screens: React.ReactElement[] = [];
@@ -283,7 +285,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
         false,
       ),
     );
-    screens.push(...buildDynamics());
+    screens.push(...buildDynamicScreens());
 
     return (
       <Stack.Navigator
