@@ -276,6 +276,8 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
    * Evaluate the <doc> element and render the appropriate component
    */
   Route = (): React.ReactElement => {
+    const { Screen } = this;
+
     const isModal = this.props.route?.params.isModal
       ? this.props.route.params.isModal
       : false;
@@ -325,11 +327,11 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
       if (this.props.handleBack) {
         return (
           <this.props.handleBack>
-            <this.Screen />
+            <Screen />
           </this.props.handleBack>
         );
       }
-      return <this.Screen />;
+      return <Screen />;
     }
 
     throw new NavigatorService.HvRenderError('Invalid element type');
@@ -351,10 +353,12 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
       }
     }
 
-    return <this.Route />;
+    const { Route } = this;
+    return <Route />;
   };
 
   render() {
+    const { Content, Error, Load } = this;
     try {
       if (this.state.error) {
         return <this.Error error={this.state.error} />;
@@ -364,14 +368,14 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
         this.state.doc ||
         this.props.route?.params?.isModal
       ) {
-        return <this.Content />;
+        return <Content />;
       }
-      return <this.Load />;
+      return <Load />;
     } catch (err) {
       if (this.props.onError) {
         this.props.onError(err as Error);
       }
-      return <this.Error error={err} />;
+      return <Error error={err} />;
     }
   }
 }
