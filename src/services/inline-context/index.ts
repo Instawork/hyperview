@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -50,12 +51,11 @@ import { preorder } from 'hyperview/src/services/dom/helpers';
                |                            |
                |                            |
                |                            |
-         [⏎◦◦◦◦◦Hello⏎]              [⏎◦◦◦◦◦World⏎◦◦◦]
+         [⏎◦◦◦◦◦◦Hello⏎]              [⏎◦◦◦◦◦◦World⏎◦◦◦◦]
 
-  We're using using preorder traversal algorithm to retrieve leaf nodes, and put them in a list,
-  such as:
+  We're using using preorder traversal algorithm to retrieve leaf nodes, and put them in a list, such as:
 
-  ['⏎◦', '⏎◦◦◦', '⏎◦◦◦◦◦Hello⏎', '⏎◦◦◦', '⏎◦◦◦◦◦World⏎◦◦◦', '⏎◦', '⏎◦', '⏎◦◦◦of HyperView!⏎', '⏎']
+  ['⏎◦◦', '⏎◦◦◦◦', '⏎◦◦◦◦◦◦Hello⏎', '⏎◦◦◦◦', '⏎◦◦◦◦◦◦World⏎◦◦◦◦', '⏎◦◦', '⏎◦◦', '⏎◦◦◦◦of HyperView!⏎', '⏎']
 
   For each node, we then apply the following rules:
 

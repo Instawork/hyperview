@@ -7,9 +7,8 @@
  */
 
 class FormData {
-  append: (arg1: string, arg2: string) => void = () => {
-    /** PASS */
-  };
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  append: (arg1: string, arg2: string) => void = () => {};
 }
 
 global.FormData = FormData;
