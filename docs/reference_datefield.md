@@ -152,7 +152,31 @@ A space-separated list of styles to apply to the text on date selection modal fo
 | ------ | -------- |
 | number | No       |
 
-The duration in milliseconds that the open and close animation of the date selection modal for IOS takes. Defaults to 250ms
+The duration in milliseconds that the open and close animation (including the fading animation of the overlay) of the date selection modal for IOS takes. Defaults to 250ms.
+
+#### `modal-overlay-animation-duration`
+
+| Type   | Required |
+| ------ | -------- |
+| number | No       |
+
+The duration in milliseconds that the open and close animation of the date selection modal overlay for IOS takes. Defaults to value of `modal-animation-duration`.
+
+#### `modal-dismiss-animation-duration`
+
+| Type   | Required |
+| ------ | -------- |
+| number | No       |
+
+The duration in milliseconds that the close animation of the date selection modal for IOS takes. Defaults to value of `modal-animation-duration`.
+
+#### `modal-dimiss-overlay-animation-duration`
+
+| Type   | Required |
+| ------ | -------- |
+| number | No       |
+
+The duration in milliseconds that the close animation of the date selection modal overlay for IOS takes. Defaults to value of `modal-overlay-animation-duration`.
 
 #### `id`
 

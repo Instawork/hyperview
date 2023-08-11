@@ -277,6 +277,24 @@ tags: forms
         <text style="help help--error">Please select a different date</text>
       </view>
       <view style="FormGroup">
+        <text style="label">Customized animation durations (iOS only)</text>
+        <date-field
+          field-style="Input"
+          field-text-style="Input__Text"
+          label-format="MMMM D, YYYY"
+          modal-overlay-style="PickerModal__overlay"
+          modal-style="PickerModal"
+          modal-text-style="PickerModal__text"
+          modal-animation-duration="400"
+          modal-overlay-animation-duration="400"
+          modal-dismiss-animation-duration="200"
+          modal-dismiss-overlay-animation-duration="200"
+          name="date"
+          placeholder="Select date"
+          placeholderTextColor="#8D9494"
+          value="2018-03-07"/>
+      </view>
+      <view style="FormGroup">
         <text style="label">Customized</text>
         <date-field
           field-style="InputCustom"
