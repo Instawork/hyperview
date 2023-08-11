@@ -21,8 +21,9 @@ const templates = glob
   .sync(path.join(rootDir, 'src/**/stories/*.xml'))
   .map(templateAbsolutePath => {
     const templatePath = templateAbsolutePath.replace(rootDir, projectName);
-    return `  '${templatePath}':\n  \`${Files.read(templateAbsolutePath) ||
-      ''}\`,`;
+    return `  '${templatePath}':\n  \`${
+      Files.read(templateAbsolutePath) || ''
+    }\`,`;
   })
   .sort();
 

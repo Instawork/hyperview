@@ -312,9 +312,11 @@ export default class HvPickerField extends PureComponent<
     }
 
     /**
-     * On non-iOS platforms, we render a view containing the system picker, which delegates to the correct UX
-     * Android's system picker opens a modal when pressed so the user can select an option. The selected option
-     * gets applied immediately. The user can cancel by hitting the back button or tapping outside of the modal.
+     * On non-iOS platforms, we render a view containing the system picker, which delegates to the
+     * correct UX
+     * Android's system picker opens a modal when pressed so the user can select an option. The
+     * selected option gets applied immediately.
+     * The user can cancel by hitting the back button or tapping outside of the modal.
      */
     const fieldStyle: StyleSheetType = createStyleProp(
       this.props.element,
@@ -358,8 +360,9 @@ export default class HvPickerField extends PureComponent<
   }
 
   /**
-   * On iOS, we render a view containing a text label. Pressing the view opens a modal with a system picker and
-   * action buttons along the bottom of the screen. After selecting an option, the user must press the save button.
+   * On iOS, we render a view containing a text label. Pressing the view opens a modal with a system
+   * picker and action buttons along the bottom of the screen. After selecting an option, the user
+   * must press the save button.
    * To cancel, the user must press the cancel button.
    */
   renderiOS = (): ReactNode => {

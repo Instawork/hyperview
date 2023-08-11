@@ -132,10 +132,11 @@ export const createProps = (
   return { ...props, ...testProps };
 };
 
-export const later = (delayMs: number): Promise<void> =>
-  new Promise((resolve: (result?: Promise<never>) => void) =>
-    setTimeout(resolve, delayMs),
-  );
+export const later = (delayMs: number): Promise<void> => {
+  return new Promise((resolve: (result?: Promise<never>) => void) => {
+    return setTimeout(resolve, delayMs);
+  });
+};
 
 /**
  * Clones the element and moves all children from the original element
@@ -333,10 +334,11 @@ export const getNameValueFormInputValues = (
   return [];
 };
 
-export const encodeXml = (xml: string): string =>
-  xml
+export const encodeXml = (xml: string): string => {
+  return xml
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&apos;');
+};

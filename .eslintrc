@@ -6,10 +6,6 @@
       "warn",
       {
         "devDependencies": [
-          "**/*.stories.ts",
-          "**/stories/*.ts",
-          "**/*.test.ts",
-          "**/stories.ts",
           "**/scripts/*",
           "**/scripts/*/*",
           "**/scripts/*/*/*",
@@ -54,11 +50,7 @@
     },
     {
       "files": ["**/*.ts", "**/*.tsx"],
-      "extends": [
-        "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:instawork/recommended-typescript"
-      ],
+      "extends": ["plugin:instawork/recommended-typescript"],
       "rules": {
         "instawork/flow-annotate": "off",
         "flowtype/no-types-missing-file-annotation": "off",
@@ -72,10 +64,14 @@
         "no-use-before-define": "off",
         "object-curly-newline": "off",
         "instawork/error-object": "off",
-        "@typescript-eslint/no-explicit-any": "off",
-        "implicit-arrow-linebreak": "off",
-        "max-len": "off",
-        "import/no-extraneous-dependencies": "off" // TODO: fix?
+        "import/no-extraneous-dependencies": [
+          "warn",
+          {
+            "devDependencies": [
+              "**/stories/*.tsx"
+            ]
+          }
+        ]
       }
     }
   ]

@@ -16,8 +16,9 @@ const mockExpectedDocument = { foo: 'bar' } as const;
 const mockParseFromString = jest.fn().mockReturnValue(mockExpectedDocument);
 jest.mock('@instawork/xmldom', () => {
   const DOMParser = () => null;
-  DOMParser.prototype.parseFromString = (...args: any) =>
-    mockParseFromString.apply(this, args);
+  DOMParser.prototype.parseFromString = (...args: any) => {
+    return mockParseFromString.apply(this, args);
+  };
   return { DOMParser };
 });
 

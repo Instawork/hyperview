@@ -27,6 +27,7 @@ export const getElements = (
 };
 
 export const getDummyHvProps = () => ({
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   onUpdate: () => {},
   options: {},
   stylesheets: {
