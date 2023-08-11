@@ -8,7 +8,7 @@
  *
  */
 
-import * as Dom from 'hyperview/src/services/dom';
+import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type { Element, HvComponentProps } from 'hyperview/src/types';
 import { Platform, StyleSheet, Switch } from 'react-native';
@@ -76,7 +76,7 @@ export default class HvSwitch extends PureComponent<HvComponentProps> {
         : null,
       onChange: () => {
         const newElement = this.props.element.cloneNode(true);
-        Dom.triggerBehaviors(newElement, 'change', this.props.onUpdate);
+        Behaviors.trigger('change', newElement, this.props.onUpdate);
       },
       onValueChange: value => {
         const newElement = this.props.element.cloneNode(true);
