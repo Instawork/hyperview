@@ -480,3 +480,23 @@ export const setSelected = (
     route.setAttribute(Types.KEY_SELECTED, 'true');
   }
 };
+
+/**
+ * Remove a stack route from the document
+ */
+export const removeStackRoute = (
+  doc: TypesLegacy.Document | undefined,
+  id: string | undefined,
+) => {
+  if (!doc || !id) {
+    return;
+  }
+  const route = getRouteById(doc, id);
+  if (route && route.parentNode) {
+    const parentNode = route.parentNode as TypesLegacy.Element;
+    const type = parentNode.getAttribute('type');
+    if (type === Types.NAVIGATOR_TYPE.STACK) {
+      route.parentNode.removeChild(route);
+    }
+  }
+};

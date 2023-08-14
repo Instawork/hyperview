@@ -96,6 +96,7 @@ export type Node = {
   parentNode: Node | null | undefined;
   appendChild: (newChild: Node) => Node;
   hasChildNodes: () => boolean;
+  removeChild: (oldChild: Node) => Node;
   replaceChild: (newChild: Node, oldChild: Node) => Node;
 };
 
