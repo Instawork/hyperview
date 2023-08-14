@@ -130,11 +130,10 @@ export const findPath = (
     return path;
   }
 
-  const { routes } = state;
-  if (!routes) {
+  if (!state.routes) {
     return path;
   }
-  routes.every(route => {
+  state.routes.every(route => {
     if (route.name === targetId) {
       path.unshift(route.name);
       return false;

@@ -276,7 +276,11 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
    * Evaluate the <doc> element and render the appropriate component
    */
   Route = (): React.ReactElement => {
-    const { isModal } = this.props.route?.params || { isModal: false };
+    const { Screen } = this;
+
+    const isModal = this.props.route?.params.isModal
+      ? this.props.route.params.isModal
+      : false;
 
     const renderElement: TypesLegacy.Element | undefined = isModal
       ? undefined
@@ -318,7 +322,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
         />
       );
     }
-    const { Screen } = this;
 
     if (renderElement?.localName === TypesLegacy.LOCAL_NAME.SCREEN) {
       if (this.props.handleBack) {
@@ -355,10 +358,10 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
   };
 
   render() {
-    const { Error, Load, Content } = this;
+    const { Content, Error, Load } = this;
     try {
       if (this.state.error) {
-        return <Error error={this.state.error} />;
+        return <this.Error error={this.state.error} />;
       }
       if (
         this.props.element ||
