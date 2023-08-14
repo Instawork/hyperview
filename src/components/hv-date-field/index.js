@@ -96,8 +96,9 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
   /**
    * Hides the picker and applies the chosen value to the field.
    */
-  onDone = () => {
-    const pickerValue = this.getPickerValue();
+  onDone = (newValue?: Date) => {
+    const pickerValue =
+      newValue !== undefined ? newValue : this.getPickerValue();
     const value = HvDateField.createStringFromDate(pickerValue);
     const hasChanged = this.props.element.getAttribute('value') !== value;
     const newElement = this.props.element.cloneNode(true);
@@ -230,8 +231,7 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
       if (date === undefined) {
         this.onCancel();
       } else {
-        this.setPickerValue(date);
-        this.onDone();
+        this.onDone(date);
       }
     };
     return <Picker onChange={onChange} />;
