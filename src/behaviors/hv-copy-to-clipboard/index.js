@@ -8,7 +8,7 @@
  *
  */
 
-import Clipboard from '@react-native-clipboard/clipboard';
+import { Clipboard } from 'react-native';
 import type { Element } from 'hyperview/src/types';
 
 export default {
