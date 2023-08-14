@@ -452,13 +452,33 @@ export default function HvRoute(props: Types.Props) {
     routeDocContext,
   );
 
+  // Use the focus event to set the selected route
   React.useEffect(() => {
     if (props.navigation) {
-      const unsubscribe = props.navigation.addListener('focus', () => {
-        NavigatorService.setSelected(routeDocContext, props.route?.params?.id);
-      });
+      const unsubscribeFocus: () => void = props.navigation.addListener(
+        'focus',
+        () => {
+          NavigatorService.setSelected(
+            routeDocContext,
+            props.route?.params?.id,
+          );
+        },
+      );
 
-      return unsubscribe;
+      const unsubscribeRemove: () => void = props.navigation.addListener(
+        'beforeRemove',
+        () => {
+          NavigatorService.removeStackRoute(
+            routeDocContext,
+            props.route?.params?.id,
+          );
+        },
+      );
+
+      return () => {
+        unsubscribeFocus();
+        unsubscribeRemove();
+      };
     }
     return undefined;
   }, [props.navigation, props.route?.params?.id, routeDocContext]);
