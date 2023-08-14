@@ -64,6 +64,21 @@ export default (props: Props): Node => {
 
   const animationDuration: number =
     parseInt(props.element.getAttribute('modal-animation-duration'), 10) || 250;
+  const overlayAnimationDuration: number =
+    parseInt(
+      props.element.getAttribute('modal-overlay-animation-duration'),
+      10,
+    ) || animationDuration;
+  const dismissAnimationDuration: number =
+    parseInt(
+      props.element.getAttribute('modal-dismiss-animation-duration'),
+      10,
+    ) || animationDuration;
+  const dismissOverlayAnimationDuration: number =
+    parseInt(
+      props.element.getAttribute('modal-dismiss-overlay-animation-duration'),
+      10,
+    ) || overlayAnimationDuration;
 
   // $FlowFixMe: casting with Number() causes crashes
   const targetOpacity: number = overlayStyle?.opacity ?? 1;
@@ -76,7 +91,7 @@ export default (props: Props): Node => {
       useNativeDriver: true,
     }).start();
     Animated.timing(opacity, {
-      duration: animationDuration,
+      duration: overlayAnimationDuration,
       toValue: targetOpacity,
       useNativeDriver: true,
     }).start();
@@ -84,7 +99,7 @@ export default (props: Props): Node => {
 
   const dismissModal = (callback: () => void) => () => {
     Animated.timing(translateY, {
-      duration: 150,
+      duration: dismissAnimationDuration,
       toValue: height,
       useNativeDriver: true,
     }).start(({ finished }) => {
@@ -94,7 +109,7 @@ export default (props: Props): Node => {
       }
     });
     Animated.timing(opacity, {
-      duration: 150,
+      duration: dismissOverlayAnimationDuration,
       toValue: 0,
       useNativeDriver: true,
     }).start();
