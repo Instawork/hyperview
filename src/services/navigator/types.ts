@@ -40,7 +40,7 @@ export type NavigationProp = {
   goBack: () => void;
   getState: () => NavigationState;
   getParent: (id?: string) => NavigationProp | undefined;
-  addListener: (event: string, callback: () => void) => void;
+  addListener: (event: string, callback: () => void) => () => void;
 };
 
 /**
