@@ -135,6 +135,7 @@ export {
   getSelectedNavRouteElement,
   getUrlFromHref,
   mergeDocument,
+  removeStackRoute,
   setSelected,
 } from './helpers';
 export { ID_CARD, ID_MODAL, KEY_MODAL, NAVIGATOR_TYPE } from './types';
