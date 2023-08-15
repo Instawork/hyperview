@@ -68,6 +68,7 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
    * If the value doesn't have a picker item, returns null.
    */
   getLabelForValue = (value: DOMString): ?string => {
+    // $FlowFixMe: flow thinks `element` is a `Node` instead of an `Element`
     const pickerItemElements: NodeList<Element> = this.props.element.getElementsByTagNameNS(
       Namespaces.HYPERVIEW,
       LOCAL_NAME.PICKER_ITEM,
