@@ -64,6 +64,31 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
   getValue = (): string => this.props.element.getAttribute('value') || '';
 
   /**
+   * Gets the label from the picker items for the given value.
+   * If the value doesn't have a picker item, returns null.
+   */
+  getLabelForValue = (value: DOMString): ?string => {
+    // $FlowFixMe: flow thinks `element` is a `Node` instead of an `Element`
+    const pickerItemElements: NodeList<Element> = this.props.element.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      LOCAL_NAME.PICKER_ITEM,
+    );
+
+    let item: ?Element = null;
+    for (let i = 0; i < pickerItemElements.length; i += 1) {
+      const pickerItemElement: ?Element = pickerItemElements.item(i);
+      if (
+        pickerItemElement &&
+        pickerItemElement.getAttribute('value') === value
+      ) {
+        item = pickerItemElement;
+        break;
+      }
+    }
+    return item ? item.getAttribute('label') : null;
+  };
+
+  /**
    * Returns a string representing the value in the picker.
    */
   getPickerValue = (): string =>
@@ -180,7 +205,7 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
         onPress={this.onFieldPress}
         options={this.props.options}
         stylesheets={this.props.stylesheets}
-        value={this.getValue()}
+        value={this.getLabelForValue(this.getValue())}
       >
         {this.isFocused() ? (
           <Modal
