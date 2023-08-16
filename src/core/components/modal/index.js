@@ -62,23 +62,27 @@ export default (props: Props): Node => {
     setHeight(event.nativeEvent.layout.height);
   };
 
-  const animationDuration: number =
-    parseInt(props.element.getAttribute('modal-animation-duration'), 10) || 250;
-  const overlayAnimationDuration: number =
-    parseInt(
-      props.element.getAttribute('modal-overlay-animation-duration'),
-      10,
-    ) || animationDuration;
-  const dismissAnimationDuration: number =
-    parseInt(
-      props.element.getAttribute('modal-dismiss-animation-duration'),
-      10,
-    ) || animationDuration;
-  const dismissOverlayAnimationDuration: number =
-    parseInt(
-      props.element.getAttribute('modal-dismiss-overlay-animation-duration'),
-      10,
-    ) || overlayAnimationDuration;
+  const getDuration = (attribute: string, defaultValue: number) => {
+    const value = parseInt(props.element.getAttribute(attribute), 10);
+    return Number.isNaN(value) || value < 0 ? defaultValue : value;
+  };
+
+  const animationDuration: number = getDuration(
+    'modal-animation-duration',
+    250,
+  );
+  const overlayAnimationDuration: number = getDuration(
+    'modal-overlay-animation-duration',
+    animationDuration,
+  );
+  const dismissAnimationDuration: number = getDuration(
+    'modal-dismiss-animation-duration',
+    animationDuration,
+  );
+  const dismissOverlayAnimationDuration: number = getDuration(
+    'modal-dismiss-overlay-animation-duration',
+    overlayAnimationDuration,
+  );
 
   // $FlowFixMe: casting with Number() causes crashes
   const targetOpacity: number = overlayStyle?.opacity ?? 1;
