@@ -8,9 +8,11 @@
  *
  */
 
+import * as Dom from 'hyperview/src/services/dom';
 import type {
   Document,
   Element,
+  HvComponentOnUpdate,
   Node,
   UpdateAction,
 } from 'hyperview/src/types';
@@ -111,4 +113,34 @@ export const performUpdate = (
   }
 
   return shallowCloneToRoot(targetElement);
+};
+
+export const trigger = (
+  name: string,
+  element: Element,
+  onUpdate: HvComponentOnUpdate,
+) => {
+  const behaviorElements = Dom.getBehaviorElements(element);
+  const matchingBehaviors = behaviorElements.filter(
+    e => e.getAttribute('trigger') === name,
+  );
+  matchingBehaviors.forEach(behaviorElement => {
+    const href = behaviorElement.getAttribute('href');
+    const action = behaviorElement.getAttribute('action');
+    const verb = behaviorElement.getAttribute('verb');
+    const targetId = behaviorElement.getAttribute('target');
+    const showIndicatorIds = behaviorElement.getAttribute('show-during-load');
+    const hideIndicatorIds = behaviorElement.getAttribute('hide-during-load');
+    const delay = behaviorElement.getAttribute('delay');
+    const once = behaviorElement.getAttribute('once');
+    onUpdate(href, action, element, {
+      behaviorElement,
+      delay,
+      hideIndicatorIds,
+      once,
+      showIndicatorIds,
+      targetId,
+      verb,
+    });
+  });
 };

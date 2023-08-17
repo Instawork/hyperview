@@ -32,6 +32,7 @@ export default {
         shadowOpacity="0.2"
         shadowRadius="5"
       />
+      <style id="PickerModal__overlay" backgroundColor="#1f1f1fa0" />
       <style
         id="PickerModal__text"
         color="blue"
@@ -51,6 +52,7 @@ export default {
         field-text-style="Input__Text"
         label-format="MMMM D, YYYY"
         modal-style="PickerModal"
+        modal-overlay-style="PickerModal__overlay"
         modal-text-style="PickerModal__text"
         placeholder="Select date"
         placeholderTextColor="#8D9494"

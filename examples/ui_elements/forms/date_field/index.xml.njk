@@ -41,6 +41,10 @@ tags: forms
     shadowOffsetY="-5"
     shadowOpacity="0.2"
     shadowRadius="5"/>
+  <style
+    id="PickerModal__overlay"
+    backgroundColor="#1f1f1fa0"
+  />
   <style id="help--error" color="#FF4847"/>
   <style
     id="Input"
@@ -66,6 +70,7 @@ tags: forms
     </modifier>
   </style>
   <style id="PickerModalCustom" backgroundColor="purple" borderTopColor="#E1E1E1" borderTopWidth="1"/>
+  <style id="PickerModalCustom_overlay" backgroundColor="purple" opacity="0.4" />
   <style id="PickerModalCustom__text" color="white" fontSize="20" fontWeight="600" padding="24" paddingBottom="0">
     <modifier pressed="true">
       <style color="yellow"/>
@@ -91,6 +96,7 @@ tags: forms
           field-style="Input"
           field-text-style="Input__Text"
           label-format="MMMM D, YYYY"
+          modal-overlay-style="PickerModal__overlay"
           modal-style="PickerModal"
           modal-text-style="PickerModal__text"
           name="date"
@@ -104,6 +110,7 @@ tags: forms
           field-text-style="Input__Text"
           label-format="MMMM D, YYYY"
           modal-style="PickerModal"
+          modal-overlay-style="PickerModal__overlay"
           modal-text-style="PickerModal__text"
           mode="spinner"
           name="date"
@@ -116,6 +123,7 @@ tags: forms
           field-style="Input"
           field-text-style="Input__Text"
           label-format="MMMM D, YYYY"
+          modal-overlay-style="PickerModal__overlay"
           modal-style="PickerModal"
           modal-text-style="PickerModal__text"
           name="date"
@@ -129,6 +137,7 @@ tags: forms
           field-style="Input"
           field-text-style="Input__Text"
           label-format="MMMM D, YYYY"
+          modal-overlay-style="PickerModal__overlay"
           modal-style="PickerModal"
           modal-text-style="PickerModal__text"
           name="date"
@@ -139,6 +148,7 @@ tags: forms
           field-style="Input"
           field-text-style="Input__Text"
           label-format="L"
+          modal-overlay-style="PickerModal__overlay"
           modal-style="PickerModal"
           modal-text-style="PickerModal__text"
           name="date"
@@ -149,6 +159,7 @@ tags: forms
           field-style="Input"
           field-text-style="Input__Text"
           label-format="MMMM [the] Do, [`]YY"
+          modal-overlay-style="PickerModal__overlay"
           modal-style="PickerModal"
           modal-text-style="PickerModal__text"
           name="date"
@@ -163,6 +174,7 @@ tags: forms
           field-text-style="Input__Text"
           label-format="MMMM D, YYYY"
           min="2018-05-05"
+          modal-overlay-style="PickerModal__overlay"
           modal-style="PickerModal"
           modal-text-style="PickerModal__text"
           name="date"
@@ -174,6 +186,7 @@ tags: forms
           label-format="MMMM D, YYYY"
           min="2018-05-05"
           modal-style="PickerModal"
+          modal-overlay-style="PickerModal__overlay"
           modal-text-style="PickerModal__text"
           mode="spinner"
           name="date"
@@ -187,6 +200,7 @@ tags: forms
           field-text-style="Input__Text"
           label-format="MMMM D, YYYY"
           max="2024-05-05"
+          modal-overlay-style="PickerModal__overlay"
           modal-style="PickerModal"
           modal-text-style="PickerModal__text"
           name="date"
@@ -198,6 +212,7 @@ tags: forms
           label-format="MMMM D, YYYY"
           max="2024-05-05"
           modal-style="PickerModal"
+          modal-overlay-style="PickerModal__overlay"
           modal-text-style="PickerModal__text"
           mode="spinner"
           name="date"
@@ -212,6 +227,7 @@ tags: forms
           label-format="MMMM D, YYYY"
           max="2024-05-05"
           min="2018-05-05"
+          modal-overlay-style="PickerModal__overlay"
           modal-style="PickerModal"
           modal-text-style="PickerModal__text"
           name="date"
@@ -224,6 +240,7 @@ tags: forms
           max="2024-05-05"
           min="2018-05-05"
           modal-style="PickerModal"
+          modal-overlay-style="PickerModal__overlay"
           modal-text-style="PickerModal__text"
           mode="spinner"
           name="date"
@@ -236,6 +253,7 @@ tags: forms
           field-style="Input Input--Error"
           field-text-style="Input__Text Input__Text--Error"
           label-format="MMMM D, YYYY"
+          modal-overlay-style="PickerModal__overlay"
           modal-style="PickerModal"
           modal-text-style="PickerModal__text"
           name="date"
@@ -249,6 +267,7 @@ tags: forms
           field-style="Input Input--Error"
           field-text-style="Input__Text Input__Text--Error"
           label-format="MMMM D, YYYY"
+          modal-overlay-style="PickerModal__overlay"
           modal-style="PickerModal"
           modal-text-style="PickerModal__text"
           name="date"
@@ -258,11 +277,30 @@ tags: forms
         <text style="help help--error">Please select a different date</text>
       </view>
       <view style="FormGroup">
+        <text style="label">Customized animation durations (iOS only)</text>
+        <date-field
+          field-style="Input"
+          field-text-style="Input__Text"
+          label-format="MMMM D, YYYY"
+          modal-overlay-style="PickerModal__overlay"
+          modal-style="PickerModal"
+          modal-text-style="PickerModal__text"
+          modal-animation-duration="400"
+          modal-overlay-animation-duration="400"
+          modal-dismiss-animation-duration="200"
+          modal-dismiss-overlay-animation-duration="200"
+          name="date"
+          placeholder="Select date"
+          placeholderTextColor="#8D9494"
+          value="2018-03-07"/>
+      </view>
+      <view style="FormGroup">
         <text style="label">Customized</text>
         <date-field
           field-style="InputCustom"
           field-text-style="InputCustom__Text"
           label-format="MMMM D, YYYY"
+          modal-overlay-style="PickerModalCustom_overlay"
           modal-style="PickerModalCustom"
           modal-text-style="PickerModalCustom__text"
           name="date"

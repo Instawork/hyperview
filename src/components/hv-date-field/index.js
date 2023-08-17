@@ -15,7 +15,7 @@ import React, { PureComponent } from 'react';
 import DateTimePicker from 'hyperview/src/core/components/date-time-picker';
 import Field from './field';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import Modal from './modal';
+import Modal from 'hyperview/src/core/components/modal';
 import type { PickerProps } from './types';
 import { Platform } from 'react-native';
 import type { Node as ReactNode } from 'react';
@@ -96,8 +96,10 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
   /**
    * Hides the picker and applies the chosen value to the field.
    */
-  onDone = (newValue: ?Date) => {
-    const value = HvDateField.createStringFromDate(newValue);
+  onDone = (newValue?: Date) => {
+    const pickerValue =
+      newValue !== undefined ? newValue : this.getPickerValue();
+    const value = HvDateField.createStringFromDate(pickerValue);
     const hasChanged = this.props.element.getAttribute('value') !== value;
     const newElement = this.props.element.cloneNode(true);
     newElement.setAttribute('value', value);
@@ -202,6 +204,8 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
       return null;
     }
 
+    const { Picker } = this;
+
     /**
      * On iOS this component is rendered inline, and on Android it's rendered as a modal.
      * Thus, on iOS we need to wrap this component in our own modal for consistency.
@@ -210,16 +214,17 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
       return (
         <Modal
           element={this.props.element}
-          getPickerValue={this.getPickerValue}
           isFocused={this.isFocused}
           onModalCancel={this.onCancel}
           onModalDone={this.onDone}
           onUpdate={this.props.onUpdate}
           options={this.props.options}
-          PickerComponent={this.Picker}
-          setPickerValue={this.setPickerValue}
           stylesheets={this.props.stylesheets}
-        />
+        >
+          <Picker
+            onChange={(evt: Event, date?: Date) => this.setPickerValue(date)}
+          />
+        </Modal>
       );
     }
     const onChange = (evt: Event, date?: Date) => {
@@ -229,7 +234,6 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
         this.onDone(date);
       }
     };
-    const { Picker } = this;
     return <Picker onChange={onChange} />;
   };
 
