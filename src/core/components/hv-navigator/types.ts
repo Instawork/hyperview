@@ -42,3 +42,12 @@ export type StackScreenOptions = {
   headerShown: boolean;
   title: string | undefined;
 };
+
+/**
+ * Options used for a tab navigator's screenOptions
+ */
+export type TabScreenOptions = {
+  headerShown: boolean;
+  tabBarStyle: { display: 'flex' | 'none' | undefined };
+  title: string | undefined;
+};

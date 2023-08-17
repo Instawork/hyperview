@@ -20,7 +20,7 @@ import { getFirstChildTag } from 'hyperview/src/services/dom/helpers-legacy';
 const SHOW_NAVIGATION_UI = false;
 
 const Stack = NavigatorService.createStackNavigator<Types.ParamTypes>();
-const BottomTab = NavigatorService.createBottomTabNavigator();
+const BottomTab = NavigatorService.createBottomTabNavigator<Types.ParamTypes>();
 
 export default class HvNavigator extends PureComponent<Types.Props> {
   /**
@@ -31,6 +31,15 @@ export default class HvNavigator extends PureComponent<Types.Props> {
   ): Types.StackScreenOptions => ({
     headerMode: 'screen',
     headerShown: SHOW_NAVIGATION_UI,
+    title: this.getId(route.params),
+  });
+
+  /**
+   * Encapsulated options for the tab screenOptions
+   */
+  tabScreenOptions = (route: Types.ScreenParams): Types.TabScreenOptions => ({
+    headerShown: SHOW_NAVIGATION_UI,
+    tabBarStyle: { display: SHOW_NAVIGATION_UI ? 'flex' : 'none' },
     title: this.getId(route.params),
   });
 
@@ -236,11 +245,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
             backBehavior="none"
             id={id}
             initialRouteName={selectedId}
-            screenOptions={{
-              headerShown: SHOW_NAVIGATION_UI,
-              tabBarStyle: { display: SHOW_NAVIGATION_UI ? 'flex' : 'none' },
-            }}
-            tabBar={undefined}
+            screenOptions={({ route }) => this.tabScreenOptions(route)}
           >
             {this.buildScreens(props.element, type)}
           </BottomTab.Navigator>
