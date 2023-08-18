@@ -28,6 +28,15 @@ export default class HvImage extends PureComponent<HvComponentProps> {
 
   render() {
     const { skipHref } = this.props.options || {};
+    if (!skipHref) {
+      return addHref(
+        HvImage,
+        this.props.element,
+        this.props.stylesheets,
+        this.props.onUpdate,
+        this.props.options,
+      );
+    }
     const imageProps = {};
     if (this.props.element.getAttribute('source')) {
       let source = this.props.element.getAttribute('source');
@@ -42,15 +51,6 @@ export default class HvImage extends PureComponent<HvComponentProps> {
       ),
       ...imageProps,
     };
-    const component = React.createElement(Image, props);
-    return skipHref
-      ? component
-      : addHref(
-          component,
-          this.props.element,
-          this.props.stylesheets,
-          this.props.onUpdate,
-          this.props.options,
-        );
+    return React.createElement(Image, props);
   }
 }

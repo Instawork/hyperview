@@ -233,7 +233,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
       <Content />
     ) : (
       addHref(
-        <Content />,
+        HvView,
         this.props.element,
         this.props.stylesheets,
         this.props.onUpdate,

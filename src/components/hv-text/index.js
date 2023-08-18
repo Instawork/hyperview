@@ -28,12 +28,21 @@ export default class HvText extends PureComponent<HvComponentProps> {
 
   render() {
     const { skipHref } = this.props.options || {};
+    if (!skipHref) {
+      return addHref(
+        HvText,
+        this.props.element,
+        this.props.stylesheets,
+        this.props.onUpdate,
+        this.props.options,
+      );
+    }
     const props = createProps(
       this.props.element,
       this.props.stylesheets,
       this.props.options,
     );
-    const component = React.createElement(
+    return React.createElement(
       Text,
       props,
       ...Render.renderChildren(
@@ -47,15 +56,5 @@ export default class HvText extends PureComponent<HvComponentProps> {
         },
       ),
     );
-
-    return skipHref
-      ? component
-      : addHref(
-          component,
-          this.props.element,
-          this.props.stylesheets,
-          this.props.onUpdate,
-          this.props.options,
-        );
   }
 }

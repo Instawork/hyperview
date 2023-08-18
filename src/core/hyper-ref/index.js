@@ -21,6 +21,7 @@ import {
   UPDATE_ACTIONS,
 } from 'hyperview/src/types';
 import { ATTRIBUTES, PRESS_TRIGGERS_PROP_NAMES } from './types';
+import type { ComponentType, Node } from 'react';
 import type {
   Element,
   HvComponentOnUpdate,
@@ -38,7 +39,6 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-import type { Node } from 'react';
 import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
 import { XMLSerializer } from '@instawork/xmldom';
 import { X_RESPONSE_STALE_REASON } from 'hyperview/src/services/dom/types';
@@ -400,7 +400,11 @@ export default class HyperRef extends PureComponent<Props, State> {
 
     return React.createElement(
       VisibilityDetectingView,
-      { onInvisible: null, onVisible, style: this.getStyle() },
+      {
+        onInvisible: null,
+        onVisible,
+        style: this.getStyle(),
+      },
       children,
     );
   };
@@ -428,7 +432,7 @@ export default class HyperRef extends PureComponent<Props, State> {
 }
 
 export const addHref = (
-  component: any,
+  Component: ComponentType<any>,
   element: Element,
   stylesheets: StyleSheets,
   onUpdate: HvComponentOnUpdate,
@@ -440,14 +444,24 @@ export const addHref = (
   const behaviorElements = childNodes.filter(
     n => n && n.nodeType === 1 && n.tagName === 'behavior',
   );
+
   const hasBehaviors = href || action || behaviorElements.length > 0;
   if (!hasBehaviors) {
-    return component;
+    return (
+      <Component
+        element={element}
+        onUpdate={onUpdate}
+        options={{ ...options, skipHref: true }}
+        stylesheets={stylesheets}
+      />
+    );
   }
-
-  return React.createElement(
-    HyperRef,
-    { element, onUpdate, options, stylesheets },
-    ...Render.renderChildren(element, stylesheets, onUpdate, options),
+  return (
+    <HyperRef
+      element={element}
+      onUpdate={onUpdate}
+      options={options}
+      stylesheets={stylesheets}
+    />
   );
 };
