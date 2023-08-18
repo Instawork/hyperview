@@ -12,9 +12,9 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import React, { PureComponent } from 'react';
 import type { HvComponentProps } from 'hyperview/src/types';
+import HyperRef from 'hyperview/src/core/hyper-ref';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { Text } from 'react-native';
-import { addHref } from 'hyperview/src/core/hyper-ref';
 import { createProps } from 'hyperview/src/services';
 
 export default class HvText extends PureComponent<HvComponentProps> {
@@ -29,12 +29,13 @@ export default class HvText extends PureComponent<HvComponentProps> {
   render() {
     const { skipHref } = this.props.options || {};
     if (!skipHref) {
-      return addHref(
-        HvText,
-        this.props.element,
-        this.props.stylesheets,
-        this.props.onUpdate,
-        this.props.options,
+      return (
+        <HyperRef
+          element={this.props.element}
+          onUpdate={this.props.onUpdate}
+          options={this.props.options}
+          stylesheets={this.props.stylesheets}
+        />
       );
     }
     const props = createProps(

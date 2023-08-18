@@ -21,14 +21,11 @@ import {
   UPDATE_ACTIONS,
 } from 'hyperview/src/types';
 import { ATTRIBUTES, PRESS_TRIGGERS_PROP_NAMES } from './types';
-import type { ComponentType, Node } from 'react';
 import type {
   Element,
   HvComponentOnUpdate,
-  HvComponentOptions,
   PressTrigger,
   StyleSheet,
-  StyleSheets,
   Trigger,
 } from 'hyperview/src/types';
 import type { PressHandlers, Props, State } from './types';
@@ -39,6 +36,7 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
+import type { Node } from 'react';
 import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
 import { XMLSerializer } from '@instawork/xmldom';
 import { X_RESPONSE_STALE_REASON } from 'hyperview/src/services/dom/types';
@@ -430,38 +428,3 @@ export default class HyperRef extends PureComponent<Props, State> {
     );
   }
 }
-
-export const addHref = (
-  Component: ComponentType<any>,
-  element: Element,
-  stylesheets: StyleSheets,
-  onUpdate: HvComponentOnUpdate,
-  options: HvComponentOptions,
-) => {
-  const href = element.getAttribute('href');
-  const action = element.getAttribute('action');
-  const childNodes = element.childNodes ? Array.from(element.childNodes) : [];
-  const behaviorElements = childNodes.filter(
-    n => n && n.nodeType === 1 && n.tagName === 'behavior',
-  );
-
-  const hasBehaviors = href || action || behaviorElements.length > 0;
-  if (!hasBehaviors) {
-    return (
-      <Component
-        element={element}
-        onUpdate={onUpdate}
-        options={{ ...options, skipHref: true }}
-        stylesheets={stylesheets}
-      />
-    );
-  }
-  return (
-    <HyperRef
-      element={element}
-      onUpdate={onUpdate}
-      options={options}
-      stylesheets={stylesheets}
-    />
-  );
-};
