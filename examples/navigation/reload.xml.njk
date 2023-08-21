@@ -55,8 +55,12 @@ tags: navigation
         <text style="Description">
           Tapping the button below will reload this entire screen. Modifications to the file will appear without navigation.
         </text>
-        <view action="reload" href="#" show-during-load="loadingScreen" style="Button">
+        <view action="reload" href="#" show-during-load="loadingElement" style="Button">
           <text style="Button__Label">Reload!</text>
+        </view>
+        <view id="loadingElement" hide="true">
+          <spinner id="myIndicator"/>
+          <text style="Item">Loading...</text>
         </view>
         <text style="Description">
           Tapping the button below will reload this screen with a new URL
