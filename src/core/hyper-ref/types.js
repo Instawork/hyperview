@@ -32,10 +32,12 @@ export type State = {|
 export const ATTRIBUTES = {
   ACTION: 'action',
   DELAY: 'delay',
+  EVENT_NAME: 'event-name',
   HIDE_DURING_LOAD: 'hide-during-load',
   HREF: 'href',
   HREF_STYLE: 'href-style',
   IMMEDIATE: 'immediate',
+  NEW_VALUE: 'new-value',
   ONCE: 'once',
   SHOW_DURING_LOAD: 'show-during-load',
   TARGET: 'target',

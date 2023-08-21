@@ -389,16 +389,33 @@ export default class HyperRef extends PureComponent<Props, State> {
     if (!behaviors.length) {
       return children;
     }
-    const visibleHandlers = behaviors.map(behaviorElement =>
-      this.createActionHandler(behaviorElement, this.props.onUpdate),
-    );
     const onVisible = () => {
-      visibleHandlers.forEach(h => h(this.props.element));
+      // We don't want to use the cached `behaviors` list here because
+      // the DOM might have been mutated since.
+      this.getBehaviorElements(TRIGGERS.VISIBLE)
+        .map(behaviorElement =>
+          this.createActionHandler(behaviorElement, this.props.onUpdate),
+        )
+        .forEach(h => h(this.props.element));
     };
+
+    // If element does not have an `id` attribute, generate a pseudo id from list of attributes
+    // This is necessary to indicate to the VisibilityDetectingView that the element has changed
+    // and the internal state needs to be reset.
+    const id =
+      this.props.element.getAttribute('id') ||
+      Object.values(ATTRIBUTES)
+        // $FlowFixMe: every value in ATTRIBUTES are strings
+        .reduce((acc: string[], name: string) => {
+          const value = this.props.element.getAttribute(name);
+          return value ? [...acc, `${name}:${value}`] : acc;
+        }, [])
+        .join('_');
 
     return React.createElement(
       VisibilityDetectingView,
       {
+        id,
         onInvisible: null,
         onVisible,
         style: this.getStyle(),
