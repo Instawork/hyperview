@@ -8,7 +8,7 @@
  *
  */
 
-import * as Dom from 'hyperview/src/services/dom';
+import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type { Element, HvComponentProps } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
@@ -41,44 +41,6 @@ export default class HvTextField extends PureComponent<HvComponentProps> {
     }
   }
 
-  triggerFocusBehaviors = (newElement: Element) => {
-    this.triggerBehaviors(newElement, 'focus');
-  };
-
-  triggerBlurBehaviors = (newElement: Element) => {
-    this.triggerBehaviors(newElement, 'blur');
-  };
-
-  triggerChangeBehaviors = (newElement: Element) => {
-    this.triggerBehaviors(newElement, 'change');
-  };
-
-  triggerBehaviors = (newElement: Element, triggerName: string) => {
-    const behaviorElements = Dom.getBehaviorElements(this.props.element);
-    const matchingBehaviors = behaviorElements.filter(
-      e => e.getAttribute('trigger') === triggerName,
-    );
-    matchingBehaviors.forEach(behaviorElement => {
-      const href = behaviorElement.getAttribute('href');
-      const action = behaviorElement.getAttribute('action');
-      const verb = behaviorElement.getAttribute('verb');
-      const targetId = behaviorElement.getAttribute('target');
-      const showIndicatorIds = behaviorElement.getAttribute('show-during-load');
-      const hideIndicatorIds = behaviorElement.getAttribute('hide-during-load');
-      const delay = behaviorElement.getAttribute('delay');
-      const once = behaviorElement.getAttribute('once');
-      this.props.onUpdate(href, action, newElement, {
-        behaviorElement,
-        delay,
-        hideIndicatorIds,
-        once,
-        showIndicatorIds,
-        targetId,
-        verb,
-      });
-    });
-  };
-
   /**
    * Formats the user's input based on element attributes.
    * Currently supports the "mask" attribute, which will be applied
@@ -101,9 +63,9 @@ export default class HvTextField extends PureComponent<HvComponentProps> {
     this.props.onUpdate(null, 'swap', this.props.element, { newElement });
 
     if (focused) {
-      this.triggerFocusBehaviors(newElement);
+      Behaviors.trigger('focus', newElement, this.props.onUpdate);
     } else {
-      this.triggerBlurBehaviors(newElement);
+      Behaviors.trigger('blur', newElement, this.props.onUpdate);
     }
   };
 
@@ -139,7 +101,7 @@ export default class HvTextField extends PureComponent<HvComponentProps> {
         const newElement = this.props.element.cloneNode(true);
         newElement.setAttribute('value', formattedValue);
         this.props.onUpdate(null, 'swap', this.props.element, { newElement });
-        this.triggerChangeBehaviors(newElement);
+        Behaviors.trigger('change', newElement, this.props.onUpdate);
       },
       onFocus: () => this.setFocus(true),
       ref: this.props.options.registerInputHandler,
