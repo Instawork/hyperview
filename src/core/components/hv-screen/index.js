@@ -368,7 +368,7 @@ export default class HvScreen extends React.Component {
       if (element) {
         return element.cloneNode(true);
       }
-      throw new Error();
+      throw new Error(`Element with id ${href} not found in document`);
     }
 
     try {
