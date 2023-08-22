@@ -24,8 +24,10 @@ import { ATTRIBUTES, PRESS_TRIGGERS_PROP_NAMES } from './types';
 import type {
   Element,
   HvComponentOnUpdate,
+  HvComponentOptions,
   PressTrigger,
   StyleSheet,
+  StyleSheets,
   Trigger,
 } from 'hyperview/src/types';
 import type { PressHandlers, Props, State } from './types';
@@ -441,3 +443,28 @@ export default class HyperRef extends PureComponent<Props, State> {
     );
   }
 }
+
+export const addHref = (
+  component: any,
+  element: Element,
+  stylesheets: StyleSheets,
+  onUpdate: HvComponentOnUpdate,
+  options: HvComponentOptions,
+) => {
+  const href = element.getAttribute('href');
+  const action = element.getAttribute('action');
+  const childNodes = element.childNodes ? Array.from(element.childNodes) : [];
+  const behaviorElements = childNodes.filter(
+    n => n && n.nodeType === 1 && n.tagName === 'behavior',
+  );
+  const hasBehaviors = href || action || behaviorElements.length > 0;
+  if (!hasBehaviors) {
+    return component;
+  }
+
+  return React.createElement(
+    HyperRef,
+    { element, onUpdate, options, stylesheets },
+    ...Render.renderChildren(element, stylesheets, onUpdate, options),
+  );
+};
