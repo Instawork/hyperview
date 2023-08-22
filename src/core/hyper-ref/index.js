@@ -157,13 +157,6 @@ export default class HyperRef extends PureComponent<Props, State> {
   ) => {
     const action =
       behaviorElement.getAttribute(ATTRIBUTES.ACTION) || NAV_ACTIONS.PUSH;
-
-    if (action === ACTIONS.RELOAD) {
-      return (element: Element) => {
-        const href = behaviorElement.getAttribute(ATTRIBUTES.HREF);
-        onUpdate(href, action, element, {});
-      };
-    }
     if (Object.values(NAV_ACTIONS).indexOf(action) >= 0) {
       return (element: Element) => {
         const href = behaviorElement.getAttribute(ATTRIBUTES.HREF);
@@ -175,7 +168,10 @@ export default class HyperRef extends PureComponent<Props, State> {
         onUpdate(href, action, element, { delay, showIndicatorId, targetId });
       };
     }
-    if (Object.values(UPDATE_ACTIONS).indexOf(action) >= 0) {
+    if (
+      action === ACTIONS.RELOAD ||
+      Object.values(UPDATE_ACTIONS).indexOf(action) >= 0
+    ) {
       return (element: Element) => {
         const href = behaviorElement.getAttribute(ATTRIBUTES.HREF);
         const verb = behaviorElement.getAttribute(ATTRIBUTES.VERB);

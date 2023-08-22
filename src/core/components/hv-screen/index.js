@@ -241,12 +241,44 @@ export default class HvScreen extends React.Component {
    * @param opt_href: Optional string href to use when reloading the screen. If not provided,
    * the screen's current URL will be used.
    */
-  reload = (optHref) => {
+  reload = (optHref, opts) => {
     const url = (optHref === undefined || optHref === '#')
       ? this.state.url // eslint-disable-line react/no-access-state-in-setstate
       : UrlService.getUrlFromHref(optHref, this.state.url); // eslint-disable-line react/no-access-state-in-setstate
+
+    if (!url) {
+      return;
+    }
+
+    const options = opts || {};
+    const {
+      behaviorElement, showIndicatorIds, hideIndicatorIds, once, onEnd,
+    } = options;
+
+    const showIndicatorIdList = showIndicatorIds ? Xml.splitAttributeList(showIndicatorIds) : [];
+    const hideIndicatorIdList = hideIndicatorIds ? Xml.splitAttributeList(hideIndicatorIds) : [];
+
+    if (once) {
+      if (behaviorElement.getAttribute('ran-once')) {
+        // This action is only supposed to run once, and it already ran,
+        // so there's nothing more to do.
+        if (typeof onEnd === 'function') {
+          onEnd();
+        }
+        return;
+      }
+      behaviorElement.setAttribute('ran-once', 'true');
+    }
+
+    let newRoot = this.doc;
+    if (showIndicatorIdList || hideIndicatorIdList){
+      newRoot = Behaviors.setIndicatorsBeforeLoad(showIndicatorIdList, hideIndicatorIdList, newRoot);
+    }
+
+    // Re-render the modifications
     this.needsLoad = true;
     this.setState({
+      doc: newRoot,
       elementError: null,
       error: null,
       url,
@@ -370,7 +402,7 @@ export default class HvScreen extends React.Component {
    */
   onUpdate = (href, action, currentElement, opts) => {
     if (action === ACTIONS.RELOAD) {
-      this.reload(href);
+      this.reload(href, opts);
     } else if (action === ACTIONS.DEEP_LINK) {
       Linking.openURL(href);
     } else if (Object.values(NAV_ACTIONS).includes(action)) {
