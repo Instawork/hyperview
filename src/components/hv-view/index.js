@@ -26,9 +26,9 @@ import {
 import React, { PureComponent } from 'react';
 import { ATTRIBUTES } from './types';
 import type { HvComponentProps } from 'hyperview/src/types';
-import HyperRef from 'hyperview/src/core/hyper-ref';
 import KeyboardAwareScrollView from 'hyperview/src/core/components/keyboard-aware-scroll-view';
 import { LOCAL_NAME } from 'hyperview/src/types';
+import { addHref } from 'hyperview/src/core/hyper-ref';
 import { createStyleProp } from 'hyperview/src/services';
 
 export default class HvView extends PureComponent<HvComponentProps> {
@@ -232,12 +232,13 @@ export default class HvView extends PureComponent<HvComponentProps> {
     return this.props.options?.skipHref ? (
       <Content />
     ) : (
-      <HyperRef
-        element={this.props.element}
-        onUpdate={this.props.onUpdate}
-        options={this.props.options}
-        stylesheets={this.props.stylesheets}
-      />
+      addHref(
+        <Content />,
+        this.props.element,
+        this.props.stylesheets,
+        this.props.onUpdate,
+        this.props.options,
+      )
     );
   }
 }
