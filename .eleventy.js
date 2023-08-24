@@ -1,4 +1,9 @@
-const { sortCollectionFilter } = require('./.eleventy/filters.js');
+const {
+  sortCollectionFilter,
+  highlightFilter,
+  paginateFilter,
+  pageCountFilter,
+} = require('./.eleventy/filters.js');
 
 module.exports = function (eleventyConfig) {
   eleventyConfig.setBrowserSyncConfig({
@@ -37,6 +42,9 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy('examples/**/*.png');
   // Add filters
   eleventyConfig.addNunjucksFilter('sortCollection', sortCollectionFilter);
+  eleventyConfig.addNunjucksFilter('highlight', highlightFilter);
+  eleventyConfig.addNunjucksFilter('paginate', paginateFilter);
+  eleventyConfig.addNunjucksFilter('pageCount', pageCountFilter);
   return {
     dir: {
       input: 'examples',
