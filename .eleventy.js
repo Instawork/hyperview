@@ -1,3 +1,5 @@
+const { sortCollectionFilter } = require('./.eleventy/filters.js');
+
 module.exports = function (eleventyConfig) {
   eleventyConfig.setBrowserSyncConfig({
     middleware: function (req, res, next) {
@@ -11,29 +13,34 @@ module.exports = function (eleventyConfig) {
         res.writeHead(200, {});
         res.end();
       } else {
-        next();
+        try {
+          const handler = require(`./examples${req._parsedUrl.pathname}.js`);
+          if (handler) {
+            handler(req, res, next);
+          } else {
+            // No handler found for route, pass through to 11ty
+            next();
+          }
+        } catch (err) {
+          // Error loading the handler, pass through to 11ty
+          next();
+        }
       }
     },
   });
   // Pass through any XML files that haven't been ported yet.
   // Once everything is ported, we can remove this.
-  eleventyConfig.addPassthroughCopy("examples/**/*.xml");
+  eleventyConfig.addPassthroughCopy('examples/**/*.xml');
   // Pass through images used by different screens.
-  eleventyConfig.addPassthroughCopy("examples/**/*.jpg");
-  eleventyConfig.addPassthroughCopy("examples/**/*.jpeg");
-  eleventyConfig.addPassthroughCopy("examples/**/*.png");
-  // Filter that sorts collections of files in alphabetical order
-  eleventyConfig.addNunjucksFilter('sort', function (collection) {
-    if (collection) {
-      return collection.sort(function (a, b) {
-        return a.template.inputPath > b.template.inputPath;
-      });
-    }
-  });
+  eleventyConfig.addPassthroughCopy('examples/**/*.jpg');
+  eleventyConfig.addPassthroughCopy('examples/**/*.jpeg');
+  eleventyConfig.addPassthroughCopy('examples/**/*.png');
+  // Add filters
+  eleventyConfig.addNunjucksFilter('sortCollection', sortCollectionFilter);
   return {
     dir: {
-      input: "examples",
-      output: "_examples_site",
+      input: 'examples',
+      output: '_examples_site',
     },
   };
 };
