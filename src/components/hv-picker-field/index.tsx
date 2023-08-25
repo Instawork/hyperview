@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -23,7 +21,7 @@ import {
   getNameValueFormInputValues,
 } from 'hyperview/src/services';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import type { Node } from 'react';
+import type { ReactNode } from 'react';
 import Picker from 'hyperview/src/core/components/picker';
 import { View } from 'react-native';
 
@@ -54,14 +52,13 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
    */
   getPickerValue = (): string => this.props.element.getAttribute('value') || '';
 
-  getPickerItems = (): Element[] =>
-    Array.from(
-      // $FlowFixMe: flow thinks `element` is a `Node` instead of an `Element`
-      this.props.element.getElementsByTagNameNS(
-        Namespaces.HYPERVIEW,
-        LOCAL_NAME.PICKER_ITEM,
-      ),
-    );
+  getPickerItems = (): Element[] => Array.from(
+    // $FlowFixMe: flow thinks `element` is a `Node` instead of an `Element`
+    this.props.element.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      LOCAL_NAME.PICKER_ITEM,
+    ),
+  );
 
   onFocus = () => {
     const newElement = this.props.element.cloneNode(true);
@@ -107,7 +104,7 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
   };
 
   render = (): Node => {
-    const onChange = (value: ?string) => {
+    const onChange = (value?: string | null) => {
       if (value === undefined) {
         this.onCancel();
       } else {
@@ -124,8 +121,8 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
       },
     );
     const { testID, accessibilityLabel } = createTestProps(this.props.element);
-    const value: ?DOMString = this.props.element.getAttribute('value');
-    const placeholderTextColor: ?DOMString = this.props.element.getAttribute(
+    const value: DOMString | null | undefined = this.props.element.getAttribute('value');
+    const placeholderTextColor: DOMString | null | undefined = this.props.element.getAttribute(
       'placeholderTextColor',
     );
     if ([undefined, null, ''].includes(value) && placeholderTextColor) {
@@ -145,8 +142,8 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
     // with a value and label are turned into options for the picker.
     const items = this.getPickerItems();
     const children = items.filter(Boolean).map((item: Element) => {
-      const l: ?DOMString = item.getAttribute('label');
-      const v: ?DOMString = item.getAttribute('value');
+      const l: DOMString | null | undefined = item.getAttribute('label');
+      const v: DOMString | null | undefined = item.getAttribute('value');
       if (!l || typeof v !== 'string') {
         return null;
       }

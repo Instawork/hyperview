@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -8,17 +6,15 @@
  *
  */
 
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
-  actions: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  wrapper: {
+  overlay: {
     bottom: 0,
     left: 0,
+    opacity: 0.6,
     position: 'absolute',
     right: 0,
+    top: 0,
   },
 });

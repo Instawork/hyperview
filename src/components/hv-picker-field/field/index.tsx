@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -8,9 +6,7 @@
  *
  */
 
-// $FlowFixMe: importing code from TypeScript
-import * as Contexts from 'hyperview/src/contexts';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import { createProps, createStyleProp } from 'hyperview/src/services';
 import FieldLabel from '../field-label';
@@ -49,22 +45,17 @@ export default (props: Props) => {
       onPressOut={() => setPressed(false)}
     >
       <View {...viewProps}>
-        <Contexts.DateFormatContext.Consumer>
-          {formatter => (
-            <FieldLabel
-              focused={props.focused}
-              formatter={formatter}
-              labelFormat={props.element.getAttribute('label-format')}
-              placeholder={props.element.getAttribute('placeholder')}
-              placeholderTextColor={props.element.getAttribute(
-                'placeholderTextColor',
-              )}
-              pressed={pressed}
-              style={labelStyle}
-              value={props.value}
-            />
+        <FieldLabel
+          focused={props.focused}
+          labelFormat={props.element.getAttribute('label-format')}
+          placeholder={props.element.getAttribute('placeholder')}
+          placeholderTextColor={props.element.getAttribute(
+            'placeholderTextColor',
           )}
-        </Contexts.DateFormatContext.Consumer>
+          pressed={pressed}
+          style={labelStyle}
+          value={props.value}
+        />
         {props.children}
       </View>
     </TouchableWithoutFeedback>

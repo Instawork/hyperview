@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -8,7 +6,7 @@
  *
  */
 
-import { Animated, TouchableWithoutFeedback } from 'react-native';
+import {Animated, TouchableWithoutFeedback} from 'react-native';
 import type { Props } from './types';
 import React from 'react';
 import styles from './styles';

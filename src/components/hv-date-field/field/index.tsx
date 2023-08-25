@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -8,6 +6,7 @@
  *
  */
 
+import * as Contexts from 'hyperview/src/contexts';
 import React, { useState } from 'react';
 import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import { createProps, createStyleProp } from 'hyperview/src/services';
@@ -47,17 +46,22 @@ export default (props: Props) => {
       onPressOut={() => setPressed(false)}
     >
       <View {...viewProps}>
-        <FieldLabel
-          focused={props.focused}
-          labelFormat={props.element.getAttribute('label-format')}
-          placeholder={props.element.getAttribute('placeholder')}
-          placeholderTextColor={props.element.getAttribute(
-            'placeholderTextColor',
+        <Contexts.DateFormatContext.Consumer>
+          {formatter => (
+            <FieldLabel
+              focused={props.focused}
+              formatter={formatter}
+              labelFormat={props.element.getAttribute('label-format')}
+              placeholder={props.element.getAttribute('placeholder')}
+              placeholderTextColor={props.element.getAttribute(
+                'placeholderTextColor',
+              )}
+              pressed={pressed}
+              style={labelStyle}
+              value={props.value}
+            />
           )}
-          pressed={pressed}
-          style={labelStyle}
-          value={props.value}
-        />
+        </Contexts.DateFormatContext.Consumer>
         {props.children}
       </View>
     </TouchableWithoutFeedback>

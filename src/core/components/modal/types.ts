@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -8,15 +6,10 @@
  *
  */
 
-import type {
-  Element,
-  HvComponentOnUpdate,
-  HvComponentOptions,
-  StyleSheets,
-} from 'hyperview/src/types';
-import type { Node } from 'react';
+import type {Element, HvComponentOnUpdate, HvComponentOptions, StyleSheets} from 'hyperview/src/types';
+import type { ReactNode } from 'react';
 
-export type Props = {|
+export type Props = {
   children: Node,
   element: Element,
   isFocused: () => boolean,
@@ -24,5 +17,5 @@ export type Props = {|
   onModalDone: () => void,
   onUpdate: HvComponentOnUpdate,
   options: HvComponentOptions,
-  stylesheets: StyleSheets,
-|};
+  stylesheets: StyleSheets
+};
