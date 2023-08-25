@@ -10,7 +10,6 @@ import { Animated, Modal, StyleSheet, View } from 'react-native';
 import React, { useRef, useState } from 'react';
 import type { LayoutEvent } from 'react-native/Libraries/Types/CoreEventTypes';
 import ModalButton from './modal-button';
-import type { ReactNode } from 'react';
 import Overlay from './overlay';
 import type { Props } from './types';
 import type { StyleSheet as StyleSheetType } from 'hyperview/src/types';
@@ -42,11 +41,13 @@ export default (props: Props): Node => {
     props.element.getAttribute('cancel-label') || 'Cancel';
   const doneLabel: string = props.element.getAttribute('done-label') || 'Done';
 
-  const getTextStyle = (pressed: boolean): Array<StyleSheetType> => createStyleProp(props.element, props.stylesheets, {
+  const getTextStyle = (pressed: boolean): Array<StyleSheetType> => {
+    return createStyleProp(props.element, props.stylesheets, {
       ...props.options,
       pressed,
       styleAttr: 'modal-text-style',
     });
+  };
 
   const overlayStyle = StyleSheet.flatten(
     createStyleProp(props.element, props.stylesheets, {

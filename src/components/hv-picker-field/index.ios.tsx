@@ -23,7 +23,6 @@ import {
 import Field from './field';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import Modal from 'hyperview/src/core/components/modal';
-import type { ReactNode } from 'react';
 import Picker from 'hyperview/src/core/components/picker';
 import { View } from 'react-native';
 
@@ -59,7 +58,9 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
   /**
    * Returns a string representing the value in the field.
    */
-  getValue = (): string => this.props.element.getAttribute('value') || '';
+  getValue = (): string => {
+    return this.props.element.getAttribute('value') || '';
+  };
 
   /**
    * Gets the label from the picker items for the given value.
@@ -91,18 +92,23 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
   /**
    * Returns a string representing the value in the picker.
    */
-  getPickerValue = (): string => this.props.element.getAttribute('picker-value') || '';
+  getPickerValue = (): string => {
+    return this.props.element.getAttribute('picker-value') || '';
+  };
 
-  getPickerItems = (): Element[] => Array.from(
+  getPickerItems = (): Element[] => {
+    return Array.from(
       // $FlowFixMe: flow thinks `element` is a `Node` instead of an `Element`
       this.props.element.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
         LOCAL_NAME.PICKER_ITEM,
       ),
     );
+  };
 
   /**
-   * Shows the picker, defaulting to the field's value. If the field is not set, use the first value in the picker.
+   * Shows the picker, defaulting to the field's value.
+   * If the field is not set, use the first value in the picker.
    */
   onFieldPress = () => {
     const newElement = this.props.element.cloneNode(true);
@@ -153,9 +159,11 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
   /**
    * Returns true if the field is focused (and picker is showing).
    */
-  isFocused = (): boolean => this.props.element.getAttribute('focused') === 'true';
+  isFocused = (): boolean => {
+    return this.props.element.getAttribute('focused') === 'true';
+  };
 
-  render = (): Node => {
+  render() {
     const style: Array<StyleSheet> = createStyleProp(
       this.props.element,
       this.props.stylesheets,
@@ -234,5 +242,5 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
         ) : null}
       </Field>
     );
-  };
+  }
 }

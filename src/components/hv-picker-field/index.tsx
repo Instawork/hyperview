@@ -21,7 +21,6 @@ import {
   getNameValueFormInputValues,
 } from 'hyperview/src/services';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import type { ReactNode } from 'react';
 import Picker from 'hyperview/src/core/components/picker';
 import { View } from 'react-native';
 
@@ -52,13 +51,15 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
    */
   getPickerValue = (): string => this.props.element.getAttribute('value') || '';
 
-  getPickerItems = (): Element[] => Array.from(
+  getPickerItems = (): Element[] => {
+    return Array.from(
       // $FlowFixMe: flow thinks `element` is a `Node` instead of an `Element`
       this.props.element.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
         LOCAL_NAME.PICKER_ITEM,
       ),
     );
+  };
 
   onFocus = () => {
     const newElement = this.props.element.cloneNode(true);
@@ -103,7 +104,7 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
     }
   };
 
-  render = (): Node => {
+  render() {
     const onChange = (value?: string | null) => {
       if (value === undefined) {
         this.onCancel();
@@ -160,7 +161,8 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
       children.unshift(
         <Picker.Item
           key="empty"
-          // `enabled` needs to be true when the field is not focused, otherwise the the field will not be selectable
+          // `enabled` needs to be true when the field is not focused,
+          // otherwise the the field will not be selectable
           // fix inspired by https://github.com/react-native-picker/picker/issues/95#issuecomment-935718568
           enabled={this.props.element.getAttribute('focused') !== 'true'}
           label={this.props.element.getAttribute('placeholder')}
@@ -186,5 +188,5 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
         </Picker>
       </View>
     );
-  };
+  }
 }
