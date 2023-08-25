@@ -6,7 +6,7 @@
  *
  */
 
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Text, TouchableWithoutFeedback, View } from 'react-native';
 import type { Props } from './types';
 

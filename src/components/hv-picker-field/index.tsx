@@ -53,12 +53,12 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
   getPickerValue = (): string => this.props.element.getAttribute('value') || '';
 
   getPickerItems = (): Element[] => Array.from(
-    // $FlowFixMe: flow thinks `element` is a `Node` instead of an `Element`
-    this.props.element.getElementsByTagNameNS(
-      Namespaces.HYPERVIEW,
-      LOCAL_NAME.PICKER_ITEM,
-    ),
-  );
+      // $FlowFixMe: flow thinks `element` is a `Node` instead of an `Element`
+      this.props.element.getElementsByTagNameNS(
+        Namespaces.HYPERVIEW,
+        LOCAL_NAME.PICKER_ITEM,
+      ),
+    );
 
   onFocus = () => {
     const newElement = this.props.element.cloneNode(true);
@@ -121,10 +121,13 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
       },
     );
     const { testID, accessibilityLabel } = createTestProps(this.props.element);
-    const value: DOMString | null | undefined = this.props.element.getAttribute('value');
-    const placeholderTextColor: DOMString | null | undefined = this.props.element.getAttribute(
-      'placeholderTextColor',
+    const value: DOMString | null | undefined = this.props.element.getAttribute(
+      'value',
     );
+    const placeholderTextColor:
+      | DOMString
+      | null
+      | undefined = this.props.element.getAttribute('placeholderTextColor');
     if ([undefined, null, ''].includes(value) && placeholderTextColor) {
       style.push({ color: placeholderTextColor });
     }

@@ -6,7 +6,7 @@
  *
  */
 
-import {Animated, Modal, StyleSheet, View} from 'react-native';
+import { Animated, Modal, StyleSheet, View } from 'react-native';
 import React, { useRef, useState } from 'react';
 import type { LayoutEvent } from 'react-native/Libraries/Types/CoreEventTypes';
 import ModalButton from './modal-button';
@@ -43,10 +43,10 @@ export default (props: Props): Node => {
   const doneLabel: string = props.element.getAttribute('done-label') || 'Done';
 
   const getTextStyle = (pressed: boolean): Array<StyleSheetType> => createStyleProp(props.element, props.stylesheets, {
-    ...props.options,
-    pressed,
-    styleAttr: 'modal-text-style',
-  });
+      ...props.options,
+      pressed,
+      styleAttr: 'modal-text-style',
+    });
 
   const overlayStyle = StyleSheet.flatten(
     createStyleProp(props.element, props.stylesheets, {

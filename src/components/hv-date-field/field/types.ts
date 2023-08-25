@@ -6,15 +6,19 @@
  *
  */
 
-import type {Element, HvComponentOptions, StyleSheets} from 'hyperview/src/types';
+import type {
+  Element,
+  HvComponentOptions,
+  StyleSheets,
+} from 'hyperview/src/types';
 import type { ReactNode } from 'react';
 
 export type Props = {
-  children?: Node,
-  element: Element,
-  focused: boolean,
-  onPress: () => void,
-  options: HvComponentOptions,
-  stylesheets: StyleSheets,
-  value: Date | null | undefined
+  children?: Node;
+  element: Element;
+  focused: boolean;
+  onPress: () => void;
+  options: HvComponentOptions;
+  stylesheets: StyleSheets;
+  value: Date | null | undefined;
 };

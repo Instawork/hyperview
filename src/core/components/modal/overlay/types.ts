@@ -6,9 +6,9 @@
  *
  */
 
-import type {StyleSheet} from 'hyperview/src/types';
+import type { StyleSheet } from 'hyperview/src/types';
 
 export type Props = {
- onPress: () => void,
- style: StyleSheet
+  onPress: () => void;
+  style: StyleSheet;
 };

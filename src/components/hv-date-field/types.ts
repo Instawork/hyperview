@@ -7,5 +7,5 @@
  */
 
 export type PickerProps = {
- onChange: (evt: Event, date?: Date) => void
+  onChange: (evt: Event, date?: Date) => void;
 };

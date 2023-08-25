@@ -6,7 +6,7 @@
  *
  */
 
-import type {Props} from './types';
+import type { Props } from './types';
 import React from 'react';
 import type { StyleSheet } from 'hyperview/src/types';
 import { Text } from 'react-native';

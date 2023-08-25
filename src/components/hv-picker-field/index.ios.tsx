@@ -73,7 +73,10 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
 
     let item: Element | null | undefined = null;
     for (let i = 0; i < pickerItemElements.length; i += 1) {
-      const pickerItemElement: Element | null | undefined = pickerItemElements.item(i);
+      const pickerItemElement:
+        | Element
+        | null
+        | undefined = pickerItemElements.item(i);
       if (
         pickerItemElement &&
         pickerItemElement.getAttribute('value') === value
@@ -91,12 +94,12 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
   getPickerValue = (): string => this.props.element.getAttribute('picker-value') || '';
 
   getPickerItems = (): Element[] => Array.from(
-    // $FlowFixMe: flow thinks `element` is a `Node` instead of an `Element`
-    this.props.element.getElementsByTagNameNS(
-      Namespaces.HYPERVIEW,
-      LOCAL_NAME.PICKER_ITEM,
-    ),
-  );
+      // $FlowFixMe: flow thinks `element` is a `Node` instead of an `Element`
+      this.props.element.getElementsByTagNameNS(
+        Namespaces.HYPERVIEW,
+        LOCAL_NAME.PICKER_ITEM,
+      ),
+    );
 
   /**
    * Shows the picker, defaulting to the field's value. If the field is not set, use the first value in the picker.
@@ -162,10 +165,13 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
       },
     );
     const { testID, accessibilityLabel } = createTestProps(this.props.element);
-    const value: DOMString | null | undefined = this.props.element.getAttribute('value');
-    const placeholderTextColor: DOMString | null | undefined = this.props.element.getAttribute(
-      'placeholderTextColor',
+    const value: DOMString | null | undefined = this.props.element.getAttribute(
+      'value',
     );
+    const placeholderTextColor:
+      | DOMString
+      | null
+      | undefined = this.props.element.getAttribute('placeholderTextColor');
     if ([undefined, null, ''].includes(value) && placeholderTextColor) {
       style.push({ color: placeholderTextColor });
     }

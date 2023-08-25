@@ -6,7 +6,7 @@
  *
  */
 
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import { createProps, createStyleProp } from 'hyperview/src/services';
 import FieldLabel from '../field-label';

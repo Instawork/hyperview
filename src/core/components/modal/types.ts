@@ -6,16 +6,21 @@
  *
  */
 
-import type {Element, HvComponentOnUpdate, HvComponentOptions, StyleSheets} from 'hyperview/src/types';
+import type {
+  Element,
+  HvComponentOnUpdate,
+  HvComponentOptions,
+  StyleSheets,
+} from 'hyperview/src/types';
 import type { ReactNode } from 'react';
 
 export type Props = {
-  children: Node,
-  element: Element,
-  isFocused: () => boolean,
-  onModalCancel: () => void,
-  onModalDone: () => void,
-  onUpdate: HvComponentOnUpdate,
-  options: HvComponentOptions,
-  stylesheets: StyleSheets
+  children: Node;
+  element: Element;
+  isFocused: () => boolean;
+  onModalCancel: () => void;
+  onModalDone: () => void;
+  onUpdate: HvComponentOnUpdate;
+  options: HvComponentOptions;
+  stylesheets: StyleSheets;
 };
