@@ -152,19 +152,32 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
    * Renders the date picker component, with the given min and max dates.
    */
   Picker = (props: PickerProps): ReactNode => {
-    const minValue: ?DOMString = this.props.element.getAttribute('min');
-    const maxValue: ?DOMString = this.props.element.getAttribute('max');
-    const minDate: ?Date = HvDateField.createDateFromString(minValue);
-    const maxDate: ?Date = HvDateField.createDateFromString(maxValue);
+    const minValue:
+      | DOMString
+      | null
+      | undefined = this.props.element.getAttribute('min');
+    const maxValue:
+      | DOMString
+      | null
+      | undefined = this.props.element.getAttribute('max');
+    const minDate: Date | null | undefined = HvDateField.createDateFromString(
+      minValue,
+    );
+    const maxDate: Date | null | undefined = HvDateField.createDateFromString(
+      maxValue,
+    );
 
     // On iOS, the "default" mode renders a system-styled field that needs
     // to be tapped again in order to unveil the picker. We default it to spinner
     // so that the picking experience is available immediately.
-    const displayMode: ?DOMString =
+    const displayMode: DOMString | null | undefined =
       this.props.element.getAttribute('mode') || Platform.OS === 'ios'
         ? 'spinner'
         : 'default';
-    const locale: ?DOMString = this.props.element.getAttribute('locale');
+    const locale:
+      | DOMString
+      | null
+      | undefined = this.props.element.getAttribute('locale');
 
     return (
       <DateTimePicker
