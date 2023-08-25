@@ -9,6 +9,7 @@
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type {
   Document,
+  Element,
   LocalName,
   NamespaceURI,
   Node,
