@@ -34,6 +34,8 @@ const HvTextField = (props: HvComponentProps) => {
 
   // Extract known attributes into their own variables
   const autoFocus = props.element.getAttribute('auto-focus') === 'true';
+  const debounceTime =
+    parseInt(props.element.getAttribute('debounce'), 10) || 0;
   const defaultValue = props.element.getAttribute('value');
   const editable = props.element.getAttribute('editable') !== 'false';
   const keyboardType = props.element.getAttribute('keyboard-type') || undefined;
@@ -57,12 +59,21 @@ const HvTextField = (props: HvComponentProps) => {
     }
   };
 
+  // Create a memoized, debounced function to trigger the "change" behavior
+  const triggerChangeBehaviors = useCallback(
+    debounce((newElement: Element) => {
+      Behaviors.trigger('change', newElement, props.onUpdate);
+    }, debounceTime),
+    [],
+  );
+
+  // This handler takes care of handling the state, so it shouldn't be debounced
   const onChangeText = (value: string) => {
     const formattedValue = HvTextField.getFormattedValue(props.element, value);
     const newElement = props.element.cloneNode(true);
     newElement.setAttribute('value', formattedValue);
     props.onUpdate(null, 'swap', props.element, { newElement });
-    Behaviors.trigger('change', newElement, props.onUpdate);
+    triggerChangeBehaviors(newElement);
   };
 
   const p = {

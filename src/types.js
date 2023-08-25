@@ -317,7 +317,10 @@ export type HvComponentStatics = {
   namespaceURI: NamespaceURI,
 };
 
-export type HvComponent = Class<React$Component<HvComponentProps, any>> &
+export type HvComponent = (
+  | Class<React$Component<HvComponentProps, any>>
+  | React$StatelessFunctionalComponent<HvComponentProps>
+) &
   HvComponentStatics;
 
 export type HvBehavior = {
