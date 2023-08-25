@@ -1,6 +1,4 @@
 {
   "flow.pathToFlow": "${workspaceRoot}/node_modules/.bin/flow",
-  "editor.formatOnSave": true,
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.validate.enable": false
+  "editor.formatOnSave": true
 }

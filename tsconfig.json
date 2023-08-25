@@ -5,19 +5,9 @@
     "checkJs": false,
     "outDir": "lib",
     "paths": {
-      "hyperview/*": [
-        "./*"
-      ],
-      "flow-to-typescript-codemod": [
-        "./src/flow.d.ts"
-      ]
+      "hyperview/*": ["./*"]
     }
   },
-  "files": [
-    "src/core/components/hv-root/index.tsx"
-  ],
-  "exclude": [
-    "**/*.js",
-    "**/*.jsx"
-  ]
+  "files": ["src/core/components/hv-root/index.tsx"],
+  "exclude": ["**/*.js", "**/*.jsx"]
 }
