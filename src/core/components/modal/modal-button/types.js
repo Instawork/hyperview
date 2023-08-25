@@ -8,6 +8,10 @@
  *
  */
 
-import { Picker } from '@react-native-picker/picker';
+import type { StyleSheet } from 'hyperview/src/types';
 
-export default Picker;
+export type Props = {|
+  getStyle: (pressed: boolean) => Array<StyleSheet>,
+  label: string,
+  onPress: () => void,
+|};

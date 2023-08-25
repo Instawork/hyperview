@@ -75,6 +75,10 @@ tags: advanced_behaviors
         shadowOffsetY="-5"
         shadowOpacity="0.2"
         shadowRadius="5"/>
+      <style
+        id="PickerModal__overlay"
+        backgroundColor="#1f1f1fa0"
+      />
       <style id="PickerModal__text" color="blue" fontSize="16" fontWeight="600" marginBottom="16" padding="24">
         <modifier pressed="true">
           <style opacity="0.5"/>
@@ -249,6 +253,7 @@ tags: advanced_behaviors
             id="id_df"
             label-format="MMMM D, YYYY"
             modal-style="PickerModal"
+            modal-overlay-style="PickerModal__overlay"
             modal-text-style="PickerModal__text"
             name="df"
             placeholder="Select date"

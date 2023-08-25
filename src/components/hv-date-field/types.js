@@ -8,6 +8,6 @@
  *
  */
 
-import { Picker } from '@react-native-picker/picker';
-
-export default Picker;
+export type PickerProps = {|
+  onChange: (evt: Event, date?: Date) => void,
+|};
