@@ -34,7 +34,7 @@ const HvTextField = (props: HvComponentProps) => {
 
   // Extract known attributes into their own variables
   const autoFocus = props.element.getAttribute('auto-focus') === 'true';
-  const debounceTime =
+  const debounceTimeMs =
     parseInt(props.element.getAttribute('debounce'), 10) || 0;
   const defaultValue = props.element.getAttribute('value');
   const editable = props.element.getAttribute('editable') !== 'false';
@@ -63,7 +63,7 @@ const HvTextField = (props: HvComponentProps) => {
   const triggerChangeBehaviors = useCallback(
     debounce((newElement: Element) => {
       Behaviors.trigger('change', newElement, props.onUpdate);
-    }, debounceTime),
+    }, debounceTimeMs),
     [],
   );
 

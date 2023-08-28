@@ -145,6 +145,8 @@ Triggers when the element value changes. Only works on editable elements.
 
 > **NOTE**: when using the `change` trigger on a `<text-field>` that include the `mask` attribute, the behavior will be triggered even if the mask prevents the pressed key from being set.
 
+> **NOTE**: on a `<text-field>`, the `change` trigger can be paired with the `debounce` attribute, which can be set with the number of milliseconds to debounce change events, i.e. `debounce="200"` will debounce the `change` event to 200ms after the last change on the text field occured.
+
 These elements support the `change` trigger:
 
 - [`<text-field>`](/docs/reference_textfield)
