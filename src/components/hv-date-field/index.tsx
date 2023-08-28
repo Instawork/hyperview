@@ -16,7 +16,6 @@ import { LOCAL_NAME } from 'hyperview/src/types';
 import Modal from 'hyperview/src/core/components/modal';
 import type { PickerProps } from './types';
 import { Platform } from 'react-native';
-import type { Node as ReactNode } from 'react';
 import { getNameValueFormInputValues } from 'hyperview/src/services';
 
 /**
@@ -151,7 +150,7 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
   /**
    * Renders the date picker component, with the given min and max dates.
    */
-  Picker = (props: PickerProps): ReactNode => {
+  Picker = (props: PickerProps): React.ReactNode => {
     const minValue:
       | DOMString
       | null
@@ -237,7 +236,7 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
    * - on Android, show the system date picker
    */
   // eslint-disable-next-line react/require-render-return
-  render = (): ReactNode => {
+  render() {
     if (this.props.element.getAttribute('hide') === 'true') {
       return null;
     }
@@ -256,5 +255,5 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
         <Content />
       </Field>
     );
-  };
+  }
 }
