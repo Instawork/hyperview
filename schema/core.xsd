@@ -1095,6 +1095,7 @@
       <xs:attribute name="type" type="xs:string" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
       <xs:attribute name="text-content-type" type="hv:text-content-type" />
+      <xs:attribute name="debounce" type="xs:nonNegativeInteger" />
     </xs:complexType>
   </xs:element>
 

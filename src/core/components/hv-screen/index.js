@@ -505,7 +505,7 @@ export default class HvScreen extends React.Component {
       .then((newElement) => {
         // If a target is specified and exists, use it. Otherwise, the action target defaults
         // to the element triggering the action.
-        let targetElement = targetId ? this.doc.getElementById(targetId) : currentElement;
+        let targetElement = targetId ? this.doc?.getElementById(targetId) : currentElement;
         if (!targetElement) {
           targetElement = currentElement;
         }

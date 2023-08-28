@@ -1,0 +1,7 @@
+{# The wrapping view is necessary to ensure the list scroll position to be reset upon new search results #}
+<view xmlns="https://hyperview.org/hyperview">
+  <list id="contacts">
+    {% set page = 1 %}
+    {% include "./contacts.xml.njk" %}
+  </list>
+</view>
