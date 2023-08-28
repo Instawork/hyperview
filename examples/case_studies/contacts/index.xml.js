@@ -16,7 +16,7 @@ module.exports = function handler(req, res, next) {
     return;
   }
 
-  const { search, page = 1, template } = query;
+  const { search, page = 1, template = 'contacts' } = query;
 
   // Configure Nunjucks env, and add a custom filters
   const env = nunjucks.configure('examples/case_studies/contacts');
