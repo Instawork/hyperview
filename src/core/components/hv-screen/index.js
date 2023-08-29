@@ -242,7 +242,12 @@ export default class HvScreen extends React.Component {
    * the screen's current URL will be used.
    */
   reload = (optHref, opts) => {
-    const url = (optHref === undefined || optHref === '#')
+    const isBlankHref =
+      optHref === null ||
+      optHref === undefined ||
+      optHref === '#' ||
+      optHref === '';
+    const url = isBlankHref
       ? this.state.url // eslint-disable-line react/no-access-state-in-setstate
       : UrlService.getUrlFromHref(optHref, this.state.url); // eslint-disable-line react/no-access-state-in-setstate
 
