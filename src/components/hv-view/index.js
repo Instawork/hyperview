@@ -108,7 +108,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
         ? { right: 1 }
         : undefined;
 
-    // add sticky indicies
+    // add sticky indices
     const stickyHeaderIndices = children.reduce(
       (acc, element, index) =>
         typeof element !== 'string' &&

@@ -919,6 +919,7 @@
       <xs:attribute name="key" type="hv:KEY" use="required" />
       <xs:attribute name="hide" type="xs:boolean" />
       <xs:attribute name="value" type="xs:string" />
+      <xs:attribute name="sticky" type="xs:boolean" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
     </xs:complexType>
   </xs:element>

@@ -115,6 +115,20 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
         ? { right: 1 }
         : undefined;
 
+    // add sticky indices
+    const stickyHeaderIndices = Array.from(
+      this.props.element.getElementsByTagNameNS(
+        Namespaces.HYPERVIEW,
+        LOCAL_NAME.ITEM,
+      ),
+    ).reduce((acc, element, index) => {
+      return typeof element !== 'string' &&
+        element &&
+        element.getAttribute &&
+        element.getAttribute('sticky') === 'true'
+        ? [...acc, index]
+        : acc;
+    }, []);
     const listProps = {
       data: this.getItems(),
       horizontal,
@@ -130,6 +144,7 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
       scrollIndicatorInsets,
       showsHorizontalScrollIndicator: horizontal && showScrollIndicator,
       showsVerticalScrollIndicator: !horizontal && showScrollIndicator,
+      stickyHeaderIndices,
       style,
     };
 
