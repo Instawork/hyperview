@@ -42,6 +42,16 @@ export const getFirstTag = (
   return null;
 };
 
+export const getPreviousNodeOfType = (node: ?Node, type: NodeType): ?Node => {
+  if (!node || !node.previousSibling) {
+    return null;
+  }
+  if (node.previousSibling?.nodeType === type) {
+    return node.previousSibling;
+  }
+  return getPreviousNodeOfType(node.previousSibling, type);
+};
+
 /**
  * N-ary Tree Preorder Traversal
  */
