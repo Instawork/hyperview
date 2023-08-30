@@ -5,11 +5,16 @@
   targetNamespace="https://hyperview.org/hyperview"
   xmlns:hv="https://hyperview.org/hyperview"
   xmlns:alert="https://hyperview.org/hyperview-alert"
+  xmlns:scroll="https://hyperview.org/hyperview-scroll"
 >
 
   <xs:import
     namespace="https://hyperview.org/hyperview-alert"
     schemaLocation="alert.xsd"
+  />
+  <xs:import
+    namespace="https://hyperview.org/hyperview-scroll"
+    schemaLocation="scroll.xsd"
   />
 
   <xs:simpleType name="action">
@@ -399,6 +404,7 @@
     <xs:attribute name="copy-to-clipboard-value" type="xs:string" />
     <xs:attribute name="immediate" type="xs:boolean" />
     <xs:attributeGroup ref="alert:alertAttributes" />
+    <xs:attributeGroup ref="scroll:scrollAttributes" />
   </xs:attributeGroup>
 
   <xs:attributeGroup name="scrollAttributes">
