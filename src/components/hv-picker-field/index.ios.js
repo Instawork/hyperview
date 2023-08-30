@@ -176,15 +176,6 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
       style.push({ color: placeholderTextColor });
     }
 
-    const fieldStyle: Array<StyleSheet> = createStyleProp(
-      this.props.element,
-      this.props.stylesheets,
-      {
-        ...this.props.options,
-        styleAttr: 'field-style',
-      },
-    );
-
     // Gets all of the <picker-item> elements. All picker item elements
     // with a value and label are turned into options for the picker.
     const children = this.getPickerItems()
@@ -217,11 +208,7 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
             options={this.props.options}
             stylesheets={this.props.stylesheets}
           >
-            <View
-              accessibilityLabel={accessibilityLabel}
-              style={fieldStyle}
-              testID={testID}
-            >
+            <View accessibilityLabel={accessibilityLabel} testID={testID}>
               <Picker
                 onValueChange={this.setPickerValue}
                 selectedValue={this.getPickerValue()}
