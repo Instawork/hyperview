@@ -4999,12 +4999,13 @@ human-signals@^2.1.0:
   resolved "https://registry.yarnpkg.com/human-signals/-/human-signals-2.1.0.tgz#dc91fcba42e4d06e4abaed33b3e7a3c02f514ea0"
   integrity sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==
 
-hyperview@^0.68.1:
-  version "0.68.1"
-  resolved "https://registry.yarnpkg.com/hyperview/-/hyperview-0.68.1.tgz#179dfd18dd9d4d9f7f56855044857d1500d87f5b"
-  integrity sha512-Ht2cTfiswDQS+GfkfzPBoqTtztKEVgTdm6Ykm9YSW+c5LaiAg4LoWNwM98g3yacGi10wX+HwyQ3SbeizgVOvDA==
+hyperview@0.69.0:
+  version "0.69.0"
+  resolved "https://registry.yarnpkg.com/hyperview/-/hyperview-0.69.0.tgz#e953f917d31d92ffa5b3b437b7693423ee28156e"
+  integrity sha512-WRMH0V2AQ3zhytHSC6kjAxvR/DN2QE7KlEI6sh8ivreFoXHuOmNnOCY9H/cgDEYcndEyDrCbJylvEmRasL9RIA==
   dependencies:
     "@instawork/xmldom" "0.0.2"
+    lodash "4.17.21"
     tiny-emitter "2.1.0"
     url-parse "1.5.10"
 
@@ -5800,7 +5801,7 @@ lodash.uniq@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha512-xfBaXQd9ryd9dlSDvnvI0lvxfLJlYAZzXomUYzLKtUeOQvOP5piqAWuGtrhWeqaXK9hhoM/iyJc5AV+XfsX3HQ==
 
-lodash@^4.17.13, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.17.4:
+lodash@4.17.21, lodash@^4.17.13, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.17.4:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
