@@ -19,8 +19,19 @@ import * as UrlService from 'hyperview/src/services/url';
 import * as Xml from 'hyperview/src/services/xml';
 import { ACTIONS, NAV_ACTIONS, UPDATE_ACTIONS } from 'hyperview/src/types';
 // eslint-disable-next-line instawork/import-services
-import Navigation, { ANCHOR_ID_SEPARATOR } from 'hyperview/src/services/navigation';
-import { createProps, createStyleProp, getElementByTimeoutId, getFormData, later, removeTimeoutId, setTimeoutId, shallowCloneToRoot } from 'hyperview/src/services';
+import Navigation, {
+  ANCHOR_ID_SEPARATOR,
+} from 'hyperview/src/services/navigation';
+import {
+  createProps,
+  createStyleProp,
+  getElementByTimeoutId,
+  getFormData,
+  later,
+  removeTimeoutId,
+  setTimeoutId,
+  shallowCloneToRoot,
+} from 'hyperview/src/services';
 import { Linking } from 'react-native';
 import LoadElementError from '../load-element-error';
 import LoadError from 'hyperview/src/core/components/load-error';
@@ -37,7 +48,7 @@ export default class HvScreen extends React.Component {
 
   static renderElement = Render.renderElement;
 
-  constructor(props) {
+  constructor(props: any) {
     super(props);
 
     this.onUpdate = this.onUpdate.bind(this);
@@ -47,7 +58,7 @@ export default class HvScreen extends React.Component {
     this.parser = new Dom.Parser(
       this.props.fetch,
       this.props.onParseBefore,
-      this.props.onParseAfter
+      this.props.onParseAfter,
     );
 
     this.needsLoad = false;
@@ -77,19 +88,21 @@ export default class HvScreen extends React.Component {
         this.doc = args[0].doc;
       }
       this.oldSetState(...args);
-    }
+    };
     // </HACK>
 
     this.behaviorRegistry = Behaviors.getRegistry(this.props.behaviors);
     this.componentRegistry = Components.getRegistry(this.props.components);
-    this.formComponentRegistry = Components.getFormRegistry(this.props.components);
+    this.formComponentRegistry = Components.getFormRegistry(
+      this.props.components,
+    );
     this.navigation = new Navigation(props.entrypointUrl, this.getNavigation());
   }
 
-  getRoute = (props) => {
+  getRoute = (props: any) => {
     // The prop route is available in React Navigation v5 and above
     if (props.route) {
-      return props.route
+      return props.route;
     }
 
     // Fallback for older versions of React Navigation
@@ -97,7 +110,7 @@ export default class HvScreen extends React.Component {
       return props.navigation.state;
     }
     return { params: {} };
-  }
+  };
 
   componentDidMount() {
     const { params } = this.getRoute(this.props);
@@ -109,7 +122,9 @@ export default class HvScreen extends React.Component {
     const preloadScreen = params.preloadScreen
       ? this.navigation.getPreloadScreen(params.preloadScreen)
       : null;
-    const preloadStyles = preloadScreen ? Stylesheets.createStylesheets(preloadScreen) : {};
+    const preloadStyles = preloadScreen
+      ? Stylesheets.createStylesheets(preloadScreen)
+      : {};
 
     this.needsLoad = true;
     if (preloadScreen) {
@@ -135,7 +150,7 @@ export default class HvScreen extends React.Component {
    * preload screen and URL to load.
    */
   // eslint-disable-next-line camelcase
-  UNSAFE_componentWillReceiveProps = (nextProps) => {
+  UNSAFE_componentWillReceiveProps = (nextProps: any) => {
     const oldNavigationState = this.getRoute(this.props);
     const newNavigationState = this.getRoute(nextProps);
 
@@ -159,12 +174,14 @@ export default class HvScreen extends React.Component {
         : null;
 
       const doc = preloadScreen || this.doc;
-      // eslint-disable-next-line react/no-access-state-in-setstate
-      const styles = preloadScreen ? Stylesheets.createStylesheets(preloadScreen) : this.state.styles;
+
+      const styles = preloadScreen
+        ? Stylesheets.createStylesheets(preloadScreen)
+        : this.state.styles; // eslint-disable-line react/no-access-state-in-setstate
 
       this.setState({ doc, styles, url: newUrl });
     }
-  }
+  };
 
   /**
    * Clear out the preload screen associated with this screen.
@@ -176,7 +193,7 @@ export default class HvScreen extends React.Component {
       this.navigation.removePreloadScreen(preloadScreen);
     }
     if (this.state.url) {
-      this.navigation.removeRouteKey(this.state.url)
+      this.navigation.removeRouteKey(this.state.url);
     }
   }
 
@@ -204,12 +221,15 @@ export default class HvScreen extends React.Component {
       // If an initial document was passed, use it once and then remove
       let doc;
       let staleHeaderType;
-      if (this.initialDoc){
+      if (this.initialDoc) {
         doc = this.initialDoc;
         this.initialDoc = null;
       } else {
         // eslint-disable-next-line react/no-access-state-in-setstate
-        const { doc : loadedDoc, staleHeaderType : loadedType } = await this.parser.loadDocument(this.state.url);
+        const {
+          doc: loadedDoc,
+          staleHeaderType: loadedType,
+        } = await this.parser.loadDocument(this.state.url);
         doc = loadedDoc;
         staleHeaderType = loadedType;
       }
@@ -222,8 +242,7 @@ export default class HvScreen extends React.Component {
         staleHeaderType,
         styles: stylesheets,
       });
-
-    } catch (err) {
+    } catch (err: any) {
       if (this.props.onError) {
         this.props.onError(err);
       }
@@ -234,24 +253,69 @@ export default class HvScreen extends React.Component {
         styles: null,
       });
     }
-  }
+  };
 
   /**
    * Reload if an error occured.
    * @param opt_href: Optional string href to use when reloading the screen. If not provided,
    * the screen's current URL will be used.
    */
-  reload = (optHref) => {
-    const url = (optHref === undefined || optHref === '#')
-      ? this.state.url // eslint-disable-line react/no-access-state-in-setstate
-      : UrlService.getUrlFromHref(optHref, this.state.url); // eslint-disable-line react/no-access-state-in-setstate
+  reload = (optHref: any, opts: any) => {
+    const url =
+      optHref === undefined || optHref === '#'
+        ? this.state.url // eslint-disable-line  react/no-access-state-in-setstate
+        : UrlService.getUrlFromHref(optHref, this.state.url); // eslint-disable-line react/no-access-state-in-setstate, max-len
+
+    if (!url) {
+      return;
+    }
+
+    const options = opts || {};
+    const {
+      behaviorElement,
+      showIndicatorIds,
+      hideIndicatorIds,
+      once,
+      onEnd,
+    } = options;
+
+    const showIndicatorIdList = showIndicatorIds
+      ? Xml.splitAttributeList(showIndicatorIds)
+      : [];
+    const hideIndicatorIdList = hideIndicatorIds
+      ? Xml.splitAttributeList(hideIndicatorIds)
+      : [];
+
+    if (once) {
+      if (behaviorElement.getAttribute('ran-once')) {
+        // This action is only supposed to run once, and it already ran,
+        // so there's nothing more to do.
+        if (typeof onEnd === 'function') {
+          onEnd();
+        }
+        return;
+      }
+      behaviorElement.setAttribute('ran-once', 'true');
+    }
+
+    let newRoot = this.doc;
+    if (showIndicatorIdList || hideIndicatorIdList) {
+      newRoot = Behaviors.setIndicatorsBeforeLoad(
+        showIndicatorIdList,
+        hideIndicatorIdList,
+        newRoot,
+      );
+    }
+
+    // Re-render the modifications
     this.needsLoad = true;
     this.setState({
+      doc: newRoot,
       elementError: null,
       error: null,
       url,
     });
-  }
+  };
 
   /**
    * Renders the XML doc into React components. Shows blank screen until the XML doc is available.
@@ -262,16 +326,20 @@ export default class HvScreen extends React.Component {
       return React.createElement(errorScreen, {
         back: () => this.getNavigation().back(),
         error: this.state.error,
-        onPressReload: () => this.reload(),  // Make sure reload() is called without any args
-        onPressViewDetails: (uri) => this.props.openModal({ url: uri }),
+        onPressReload: () => this.reload(), // Make sure reload() is called without any args
+        onPressViewDetails: uri => this.props.openModal({ url: uri }),
       });
     }
     if (!this.state.doc) {
       const loadingScreen = this.props.loadingScreen || Loading;
       return React.createElement(loadingScreen);
     }
-    const elementErrorComponent = this.state.elementError ? this.props.elementErrorComponent || LoadElementError : null;
-    const [body] = Array.from(this.state.doc.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'body'));
+    const elementErrorComponent = this.state.elementError
+      ? this.props.elementErrorComponent || LoadElementError
+      : null;
+    const [body] = Array.from(
+      this.state.doc.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'body'),
+    );
     const screenElement = Render.renderElement(
       body,
       this.state.styles,
@@ -285,9 +353,16 @@ export default class HvScreen extends React.Component {
 
     return (
       <Contexts.DateFormatContext.Provider value={this.props.formatDate}>
-        <Contexts.RefreshControlComponentContext.Provider value={this.props.refreshControl}>
+        <Contexts.RefreshControlComponentContext.Provider
+          value={this.props.refreshControl}
+        >
           {screenElement}
-          {elementErrorComponent ? (React.createElement(elementErrorComponent, { error: this.state.elementError, onPressReload: () => this.reload() })) : null}
+          {elementErrorComponent
+            ? React.createElement(elementErrorComponent, {
+                error: this.state.elementError,
+                onPressReload: () => this.reload(),
+              })
+            : null}
         </Contexts.RefreshControlComponentContext.Provider>
       </Contexts.DateFormatContext.Provider>
     );
@@ -296,18 +371,18 @@ export default class HvScreen extends React.Component {
   /**
    * Checks if `once` is previously applied.
    */
-  isOncePreviouslyApplied = (behaviorElement) => {
+  isOncePreviouslyApplied = (behaviorElement: any) => {
     const once = behaviorElement.getAttribute('once');
     const ranOnce = behaviorElement.getAttribute('ran-once');
     if (once === 'true' && ranOnce === 'true') {
-        return true;
+      return true;
     }
     return false;
-  }
+  };
 
-  setRanOnce = (behaviorElement) => {
+  setRanOnce = (behaviorElement: any) => {
     behaviorElement.setAttribute('ran-once', 'true');
-  }
+  };
 
   /**
    * Returns a navigation object similar to the one provided by React Navigation,
@@ -319,7 +394,7 @@ export default class HvScreen extends React.Component {
     navigate: this.props.navigate,
     openModal: this.props.openModal,
     push: this.props.push,
-  })
+  });
 
   /**
    * Fetches the provided reference.
@@ -330,18 +405,22 @@ export default class HvScreen extends React.Component {
    *   used to render the screen.
    * Returns a promise that resolves to a DOM element.
    */
-  fetchElement = async (href, method, root, formData) => {
+  fetchElement = async (href: any, method: any, root: any, formData: any) => {
     if (href[0] === '#') {
       const element = root.getElementById(href.slice(1));
       if (element) {
         return element.cloneNode(true);
       }
-      throw new Error();
+      throw new Error(`Element with id ${href} not found in document`);
     }
 
     try {
       const url = UrlService.getUrlFromHref(href, this.state.url, method);
-      const { doc, staleHeaderType } = await this.parser.loadElement(url, formData, method);
+      const { doc, staleHeaderType } = await this.parser.loadElement(
+        url,
+        formData,
+        method,
+      );
       if (staleHeaderType) {
         // We are doing this to ensure that we keep the screen stale until a `reload` happens
         this.setState({ staleHeaderType });
@@ -350,33 +429,40 @@ export default class HvScreen extends React.Component {
         this.setState({ elementError: null });
       }
       return doc.documentElement;
-    } catch (err) {
+    } catch (err: any) {
       if (this.props.onError) {
         this.props.onError(err);
       }
       this.setState({ elementError: err });
     }
     return null;
-  }
+  };
 
-  registerPreload = (id, element) => {
-    if (this.props.registerPreload){
+  registerPreload = (id: any, element: any) => {
+    if (this.props.registerPreload) {
       this.props.registerPreload(id, element);
     }
-  }
+  };
 
   /**
    *
    */
-  onUpdate = (href, action, currentElement, opts) => {
+  onUpdate = (href: any, action: any, currentElement: any, opts: any) => {
     if (action === ACTIONS.RELOAD) {
-      this.reload(href);
+      this.reload(href, opts);
     } else if (action === ACTIONS.DEEP_LINK) {
       Linking.openURL(href);
     } else if (Object.values(NAV_ACTIONS).includes(action)) {
       this.navigation.setUrl(this.state.url);
       this.navigation.setDocument(this.doc);
-      this.navigation.navigate(href || ANCHOR_ID_SEPARATOR, action, currentElement, this.formComponentRegistry, opts, this.registerPreload);
+      this.navigation.navigate(
+        href || ANCHOR_ID_SEPARATOR,
+        action,
+        currentElement,
+        this.formComponentRegistry,
+        opts,
+        this.registerPreload,
+      );
     } else if (Object.values(UPDATE_ACTIONS).includes(action)) {
       this.onUpdateFragment(href, action, currentElement, opts);
     } else if (action === ACTIONS.SWAP) {
@@ -395,15 +481,19 @@ export default class HvScreen extends React.Component {
 
       // Check for event loop formation
       if (trigger === 'on-event') {
-        throw new Error('trigger="on-event" and action="dispatch-event" cannot be used on the same element');
+        throw new Error(
+          'trigger="on-event" and action="dispatch-event" cannot be used on the same element',
+        );
       }
       if (!eventName) {
-        throw new Error('dispatch-event requires an event-name attribute to be present');
+        throw new Error(
+          'dispatch-event requires an event-name attribute to be present',
+        );
       }
 
       const dispatch = () => {
         Events.dispatch(eventName);
-      }
+      };
 
       if (delay) {
         setTimeout(dispatch, parseInt(delay, 10));
@@ -414,7 +504,7 @@ export default class HvScreen extends React.Component {
       const { behaviorElement } = opts;
       this.onCustomUpdate(behaviorElement);
     }
-  }
+  };
 
   /**
    * Handler for behaviors on the screen.
@@ -437,14 +527,30 @@ export default class HvScreen extends React.Component {
    *  - behaviorElement: The behavior element triggering the behavior. Can be different from
    *    the currentElement.
    */
-  onUpdateFragment = (href, action, currentElement, opts) => {
+  onUpdateFragment = (
+    href: any,
+    action: any,
+    currentElement: any,
+    opts: any,
+  ) => {
     const options = opts || {};
     const {
-      behaviorElement, verb, targetId, showIndicatorIds, hideIndicatorIds, delay, once, onEnd,
+      behaviorElement,
+      verb,
+      targetId,
+      showIndicatorIds,
+      hideIndicatorIds,
+      delay,
+      once,
+      onEnd,
     } = options;
 
-    const showIndicatorIdList = showIndicatorIds ? Xml.splitAttributeList(showIndicatorIds) : [];
-    const hideIndicatorIdList = hideIndicatorIds ? Xml.splitAttributeList(hideIndicatorIds) : [];
+    const showIndicatorIdList = showIndicatorIds
+      ? Xml.splitAttributeList(showIndicatorIds)
+      : [];
+    const hideIndicatorIdList = hideIndicatorIds
+      ? Xml.splitAttributeList(hideIndicatorIds)
+      : [];
 
     const formData = getFormData(currentElement, this.formComponentRegistry);
 
@@ -458,42 +564,59 @@ export default class HvScreen extends React.Component {
         return;
       }
       behaviorElement.setAttribute('ran-once', 'true');
-
     }
 
     let newRoot = this.doc;
-    newRoot = Behaviors.setIndicatorsBeforeLoad(showIndicatorIdList, hideIndicatorIdList, newRoot);
+    newRoot = Behaviors.setIndicatorsBeforeLoad(
+      showIndicatorIdList,
+      hideIndicatorIdList,
+      newRoot,
+    );
     // Re-render the modifications
     this.setState({
       doc: newRoot,
     });
 
     // Fetch the resource, then perform the action on the target and undo indicators.
-    const fetchAndUpdate = () => this.fetchElement(href, verb, newRoot, formData)
-      .then((newElement) => {
-        // If a target is specified and exists, use it. Otherwise, the action target defaults
-        // to the element triggering the action.
-        let targetElement = targetId ? this.doc.getElementById(targetId) : currentElement;
-        if (!targetElement) {
-          targetElement = currentElement;
-        }
+    const fetchAndUpdate = () => {
+      return this.fetchElement(href, verb, newRoot, formData).then(
+        newElement => {
+          // If a target is specified and exists, use it. Otherwise, the action target defaults
+          // to the element triggering the action.
+          let targetElement = targetId
+            ? this.doc.getElementById(targetId)
+            : currentElement;
+          if (!targetElement) {
+            targetElement = currentElement;
+          }
 
-        if (newElement) {
-          newRoot = Behaviors.performUpdate(action, targetElement, newElement);
-        } else {
-          // When fetch fails, make sure to get the latest version of the doc to avoid any race conditions
-          newRoot = this.doc;
-        }
-        newRoot = Behaviors.setIndicatorsAfterLoad(showIndicatorIdList, hideIndicatorIdList, newRoot);
-        // Re-render the modifications
-        this.setState({
-          doc: newRoot,
-        });
+          if (newElement) {
+            newRoot = Behaviors.performUpdate(
+              action,
+              targetElement,
+              newElement,
+            );
+          } else {
+            // When fetch fails, make sure to get the latest version of the doc
+            // to avoid any race conditions
+            newRoot = this.doc;
+          }
+          newRoot = Behaviors.setIndicatorsAfterLoad(
+            showIndicatorIdList,
+            hideIndicatorIdList,
+            newRoot,
+          );
+          // Re-render the modifications
+          this.setState({
+            doc: newRoot,
+          });
 
-        if (typeof onEnd === 'function') {
-          onEnd();
-        }
-      });
+          if (typeof onEnd === 'function') {
+            onEnd();
+          }
+        },
+      );
+    };
 
     if (delay) {
       /**
@@ -501,21 +624,29 @@ export default class HvScreen extends React.Component {
        * During that time, the DOM may change and the triggering element may no longer
        * be in the document. When that happens, we don't want to trigger the behavior after the time
        * elapses. To track this, we store the timeout id (generated by setTimeout) on the triggering
-       * element, and then look it up in the document after the elapsed time. If the timeout id is not
-       * present, we update the indicators but don't execute the behavior.
+       * element, and then look it up in the document after the elapsed time.
+       * If the timeout id is not present, we update the indicators but don't execute the behavior.
        */
       const delayMs = parseInt(delay, 10);
       let timeoutId = null;
       timeoutId = setTimeout(() => {
         // Check the current doc for an element with the same timeout ID
-        const timeoutElement = getElementByTimeoutId(this.doc, timeoutId.toString());
+        const timeoutElement = getElementByTimeoutId(
+          this.doc,
+          timeoutId.toString(),
+        );
         if (timeoutElement) {
           // Element with the same ID exists, we can execute the behavior
           removeTimeoutId(timeoutElement);
           fetchAndUpdate();
         } else {
-          // Element with the same ID does not exist, we don't execute the behavior and undo the indicators.
-          newRoot = Behaviors.setIndicatorsAfterLoad(showIndicatorIdList, hideIndicatorIdList, this.doc);
+          // Element with the same ID does not exist,
+          // we don't execute the behavior and undo the indicators.
+          newRoot = Behaviors.setIndicatorsAfterLoad(
+            showIndicatorIdList,
+            hideIndicatorIdList,
+            this.doc,
+          );
           this.setState({
             doc: newRoot,
           });
@@ -530,24 +661,24 @@ export default class HvScreen extends React.Component {
       // If there's no delay, fetch immediately and update the doc when done.
       fetchAndUpdate();
     }
-  }
+  };
 
   /**
    * Used internally to update the state of things like select forms.
    */
-  onSwap = (currentElement, newElement) => {
+  onSwap = (currentElement: any, newElement: any) => {
     const parentElement = currentElement.parentNode;
     parentElement.replaceChild(newElement, currentElement);
     const newRoot = shallowCloneToRoot(parentElement);
     this.setState({
       doc: newRoot,
     });
-  }
+  };
 
   /**
    * Extensions for custom behaviors.
    */
-  onCustomUpdate = (behaviorElement) => {
+  onCustomUpdate = (behaviorElement: any) => {
     const action = behaviorElement.getAttribute('action');
     const behavior = this.behaviorRegistry[action];
 
@@ -558,16 +689,21 @@ export default class HvScreen extends React.Component {
     this.setRanOnce(behaviorElement);
 
     if (behavior) {
-      const updateRoot = (newRoot, updateStylesheet = false) => updateStylesheet
-        ? this.setState({ doc: newRoot, styles: Stylesheets.createStylesheets(newRoot) })
-        : this.setState({ doc: newRoot });
+      const updateRoot = (newRoot: any, updateStylesheet = false) => {
+        return updateStylesheet
+          ? this.setState({
+              doc: newRoot,
+              styles: Stylesheets.createStylesheets(newRoot),
+            })
+          : this.setState({ doc: newRoot });
+      };
       const getRoot = () => this.doc;
       behavior.callback(behaviorElement, this.onUpdate, getRoot, updateRoot);
     } else {
       // No behavior detected.
       console.warn(`No behavior registered for action "${action}"`);
     }
-  }
+  };
 }
 
 export * from 'hyperview/src/types';

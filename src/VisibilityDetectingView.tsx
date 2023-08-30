@@ -7,6 +7,7 @@ const TICK_INTERVAL = 100;
 
 type Props = {
   children: any;
+  id: string;
   onInvisible: () => void | null | undefined;
   onVisible: () => void | null | undefined;
   style: ViewStyleProp | null | undefined;
@@ -77,15 +78,31 @@ export default class VisibilityDetectingView extends PureComponent<Props> {
     this.previouslyVisible = visible;
   };
 
-  componentDidMount() {
+  start = () => {
     this.tickInterval = setInterval(this.onTick, TICK_INTERVAL);
-  }
+  };
 
-  componentWillUnmount() {
+  stop = () => {
     if (this.tickInterval) {
       clearInterval(this.tickInterval);
     }
+  };
+
+  componentDidMount() {
+    this.start();
+  }
+
+  componentWillUnmount() {
+    this.stop();
     this.unmounted = true;
+  }
+
+  componentDidUpdate(prevProps: Props) {
+    if (prevProps.id !== this.props.id) {
+      this.stop();
+      this.previouslyVisible = false;
+      this.start();
+    }
   }
 
   render() {

@@ -1,5 +1,5 @@
 flow-typed
 *.gen.js
 website/
-/src/mask.js
+/src/mask.ts
 /demo/*

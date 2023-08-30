@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -8,6 +6,9 @@
  *
  */
 
-import { Picker } from '@react-native-picker/picker';
+import type { StyleSheet } from 'hyperview/src/types';
 
-export default Picker;
+export type Props = {
+  onPress: () => void;
+  style: StyleSheet;
+};

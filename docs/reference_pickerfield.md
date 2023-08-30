@@ -132,6 +132,38 @@ A space-separated list of styles to apply to the iOS bottom-sheet modal. You can
 
 A space-separated list of styles to apply to the buttons in the iOS bottom-sheet modal. You can use these styles to define the size, color, and weight of the buttons in the iOS modal. On Android, the system defines the look of the modal, so these styles will not be applied. See [Styles](/docs/reference_style). Note that text style rules cannot be applied to the modal.
 
+#### `modal-animation-duration`
+
+| Type   | Required |
+| ------ | -------- |
+| number | No       |
+
+The duration in milliseconds that the open and close animation (including the fading animation of the overlay) of the picker modal for IOS takes. Defaults to 250ms.
+
+#### `modal-overlay-animation-duration`
+
+| Type   | Required |
+| ------ | -------- |
+| number | No       |
+
+The duration in milliseconds that the open and close animation of the picker modal overlay for IOS takes. Defaults to value of `modal-animation-duration`.
+
+#### `modal-dismiss-animation-duration`
+
+| Type   | Required |
+| ------ | -------- |
+| number | No       |
+
+The duration in milliseconds that the close animation of the picker modal for IOS takes. Defaults to value of `modal-animation-duration`.
+
+#### `modal-dimiss-overlay-animation-duration`
+
+| Type   | Required |
+| ------ | -------- |
+| number | No       |
+
+The duration in milliseconds that the close animation of the picker modal overlay for IOS takes. Defaults to value of `modal-overlay-animation-duration`.
+
 #### `id`
 
 | Type   | Required |

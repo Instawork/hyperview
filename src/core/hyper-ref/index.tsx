@@ -162,13 +162,6 @@ export default class HyperRef extends PureComponent<Props, State> {
   ) => {
     const action =
       behaviorElement.getAttribute(ATTRIBUTES.ACTION) || NAV_ACTIONS.PUSH;
-
-    if (action === ACTIONS.RELOAD) {
-      return (element: Element) => {
-        const href = behaviorElement.getAttribute(ATTRIBUTES.HREF);
-        onUpdate(href, action, element, {});
-      };
-    }
     if (Object.values(NAV_ACTIONS).indexOf(action) >= 0) {
       return (element: Element) => {
         const href = behaviorElement.getAttribute(ATTRIBUTES.HREF);
@@ -180,7 +173,10 @@ export default class HyperRef extends PureComponent<Props, State> {
         onUpdate(href, action, element, { delay, showIndicatorId, targetId });
       };
     }
-    if (Object.values(UPDATE_ACTIONS).indexOf(action) >= 0) {
+    if (
+      action === ACTIONS.RELOAD ||
+      Object.values(UPDATE_ACTIONS).indexOf(action) >= 0
+    ) {
       return (element: Element) => {
         const href = behaviorElement.getAttribute(ATTRIBUTES.HREF);
         const verb = behaviorElement.getAttribute(ATTRIBUTES.VERB);
@@ -398,16 +394,37 @@ export default class HyperRef extends PureComponent<Props, State> {
     if (!behaviors.length) {
       return children;
     }
-    const visibleHandlers = behaviors.map(behaviorElement => {
-      return this.createActionHandler(behaviorElement, this.props.onUpdate);
-    });
     const onVisible = () => {
-      visibleHandlers.forEach(h => h(this.props.element));
+      // We don't want to use the cached `behaviors` list here because
+      // the DOM might have been mutated since.
+      this.getBehaviorElements(TRIGGERS.VISIBLE)
+        .map(behaviorElement => {
+          return this.createActionHandler(behaviorElement, this.props.onUpdate);
+        })
+        .forEach(h => h(this.props.element));
     };
+
+    // If element does not have an `id` attribute, generate a pseudo id from list of attributes
+    // This is necessary to indicate to the VisibilityDetectingView that the element has changed
+    // and the internal state needs to be reset.
+    const id =
+      this.props.element.getAttribute('id') ||
+      Object.values(ATTRIBUTES)
+        // $FlowFixMe: every value in ATTRIBUTES are strings
+        .reduce((acc: string[], name: string) => {
+          const value = this.props.element.getAttribute(name);
+          return value ? [...acc, `${name}:${value}`] : acc;
+        }, [])
+        .join('_');
 
     return React.createElement(
       VisibilityDetectingView,
-      { onInvisible: null, onVisible, style: this.getStyle() },
+      {
+        id,
+        onInvisible: null,
+        onVisible,
+        style: this.getStyle(),
+      },
       children,
     );
   };

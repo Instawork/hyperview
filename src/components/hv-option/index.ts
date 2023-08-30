@@ -6,7 +6,7 @@
  *
  */
 
-import * as Dom from 'hyperview/src/services/dom';
+import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import React, { PureComponent } from 'react';
@@ -38,65 +38,13 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
     const selected = this.props.element.getAttribute('selected') === 'true';
     const prevSelected = prevProps.element.getAttribute('selected') === 'true';
     if (selected && !prevSelected) {
-      this.triggerSelectBehaviors();
+      Behaviors.trigger('select', this.props.element, this.props.onUpdate);
     }
 
     if (!selected && prevSelected) {
-      this.triggerDeselectBehaviors();
+      Behaviors.trigger('deselect', this.props.element, this.props.onUpdate);
     }
   }
-
-  triggerSelectBehaviors = () => {
-    const behaviorElements = Dom.getBehaviorElements(this.props.element);
-    const selectBehaviors = behaviorElements.filter(
-      e => e.getAttribute('trigger') === 'select',
-    );
-    selectBehaviors.forEach(behaviorElement => {
-      const href = behaviorElement.getAttribute('href');
-      const action = behaviorElement.getAttribute('action');
-      const verb = behaviorElement.getAttribute('verb');
-      const targetId = behaviorElement.getAttribute('target');
-      const showIndicatorIds = behaviorElement.getAttribute('show-during-load');
-      const hideIndicatorIds = behaviorElement.getAttribute('hide-during-load');
-      const delay = behaviorElement.getAttribute('delay');
-      const once = behaviorElement.getAttribute('once');
-      this.props.onUpdate(href, action, this.props.element, {
-        behaviorElement,
-        delay,
-        hideIndicatorIds,
-        once,
-        showIndicatorIds,
-        targetId,
-        verb,
-      });
-    });
-  };
-
-  triggerDeselectBehaviors = () => {
-    const behaviorElements = Dom.getBehaviorElements(this.props.element);
-    const deselectBehaviors = behaviorElements.filter(
-      e => e.getAttribute('trigger') === 'deselect',
-    );
-    deselectBehaviors.forEach(behaviorElement => {
-      const href = behaviorElement.getAttribute('href');
-      const action = behaviorElement.getAttribute('action');
-      const verb = behaviorElement.getAttribute('verb');
-      const targetId = behaviorElement.getAttribute('target');
-      const showIndicatorIds = behaviorElement.getAttribute('show-during-load');
-      const hideIndicatorIds = behaviorElement.getAttribute('hide-during-load');
-      const delay = behaviorElement.getAttribute('delay');
-      const once = behaviorElement.getAttribute('once');
-      this.props.onUpdate(href, action, this.props.element, {
-        behaviorElement,
-        delay,
-        hideIndicatorIds,
-        once,
-        showIndicatorIds,
-        targetId,
-        verb,
-      });
-    });
-  };
 
   render() {
     const { onSelect, onToggle } = this.props.options;
