@@ -16,7 +16,7 @@ import {
 } from 'hyperview/src/services';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { TextInput } from 'react-native';
-import TinyMask from 'hyperview/src/mask.js';
+import TinyMask from 'hyperview/src/mask.ts';
 
 export default class HvTextField extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
