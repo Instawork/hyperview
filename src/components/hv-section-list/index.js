@@ -124,116 +124,117 @@ export default class HvSectionList extends PureComponent<
       targetElement,
       LOCAL_NAME.SECTION_LIST,
     );
-    if (targetElementParentList === this.props.element) {
-      // Target can either be an <item> or a child of an <item>
-      const targetListItem =
-        targetElement.localName === LOCAL_NAME.ITEM
-          ? targetElement
-          : getAncestorByTagName(targetElement, LOCAL_NAME.ITEM);
+    if (targetElementParentList !== this.props.element) {
+      return;
+    }
 
-      const animated: boolean =
+    // Target can either be an <item> or a child of an <item>
+    const targetListItem =
+      targetElement.localName === LOCAL_NAME.ITEM
+        ? targetElement
+        : getAncestorByTagName(targetElement, LOCAL_NAME.ITEM);
+
+    const animated: boolean =
+      behaviorElement?.getAttributeNS(
+        Namespaces.HYPERVIEW_SCROLL,
+        'animated',
+      ) === 'true';
+
+    const viewOffset: ?number =
+      parseInt(
+        behaviorElement?.getAttributeNS(Namespaces.HYPERVIEW_SCROLL, 'offset'),
+        10,
+      ) || undefined;
+
+    const viewPosition: ?number =
+      parseFloat(
         behaviorElement?.getAttributeNS(
           Namespaces.HYPERVIEW_SCROLL,
-          'animated',
-        ) === 'true';
+          'position',
+        ),
+      ) || undefined;
 
-      const viewOffset: ?number =
-        parseInt(
-          behaviorElement?.getAttributeNS(
-            Namespaces.HYPERVIEW_SCROLL,
-            'offset',
-          ),
-          10,
-        ) || undefined;
+    if (!targetListItem) {
+      return;
+    }
 
-      const viewPosition: ?number =
-        parseFloat(
-          behaviorElement?.getAttributeNS(
-            Namespaces.HYPERVIEW_SCROLL,
-            'position',
-          ),
-        ) || undefined;
-
-      if (targetListItem) {
-        // find index of target in section-list
-        // first, check legacy section-list format, where items are nested under a <section>
-        const targetElementParentSection = getAncestorByTagName(
-          targetElement,
-          LOCAL_NAME.SECTION,
-        );
-        if (targetElementParentSection) {
-          const sections = this.props.element.getElementsByTagNameNS(
-            Namespaces.HYPERVIEW,
-            LOCAL_NAME.SECTION,
-          );
-          const sectionIndex = Array.from(sections).indexOf(
-            targetElementParentSection,
-          );
-          if (sectionIndex === -1) {
-            return;
-          }
-          const itemsInSection = Array.from(
-            targetElementParentSection.getElementsByTagNameNS(
-              Namespaces.HYPERVIEW,
-              LOCAL_NAME.ITEM,
-            ),
-          );
-          const itemIndex = itemsInSection.indexOf(targetListItem);
-          if (itemIndex === -1) {
-            return;
-          }
-
-          const params: ScrollParams = {
-            animated,
-            itemIndex: itemIndex + 1,
-            sectionIndex,
-          };
-          if (typeof viewOffset === 'number') {
-            params.viewOffset = viewOffset;
-          }
-
-          if (typeof viewPosition === 'number') {
-            params.viewPosition = viewPosition;
-          }
-
-          this.ref?.scrollToLocation(params);
-        } else {
-          // No parent section? Check new section-list format, where items are nested under the section-list
-          const items = this.props.element.getElementsByTagNameNS(
-            Namespaces.HYPERVIEW,
-            LOCAL_NAME.ITEM,
-          );
-          if (Array.from(items).indexOf(targetListItem) === -1) {
-            return;
-          }
-          const [sectionTitle, itemIndex] = getPreviousSectionTitle(
-            targetListItem,
-            1, // 1 instead of 0 as it appears itemIndex is 1-based
-          );
-          const sectionTitles = this.props.element.getElementsByTagNameNS(
-            Namespaces.HYPERVIEW,
-            LOCAL_NAME.SECTION_TITLE,
-          );
-          const sectionIndex = sectionTitle
-            ? getSectionIndex(sectionTitle, sectionTitles)
-            : 0;
-          if (sectionIndex === -1) {
-            return;
-          }
-          const params: ScrollParams = {
-            animated,
-            itemIndex,
-            sectionIndex,
-          };
-          if (viewOffset) {
-            params.viewOffset = viewOffset;
-          }
-          if (viewPosition) {
-            params.viewPosition = viewPosition;
-          }
-          this.ref?.scrollToLocation(params);
-        }
+    // find index of target in section-list
+    // first, check legacy section-list format, where items are nested under a <section>
+    const targetElementParentSection = getAncestorByTagName(
+      targetElement,
+      LOCAL_NAME.SECTION,
+    );
+    if (targetElementParentSection) {
+      const sections = this.props.element.getElementsByTagNameNS(
+        Namespaces.HYPERVIEW,
+        LOCAL_NAME.SECTION,
+      );
+      const sectionIndex = Array.from(sections).indexOf(
+        targetElementParentSection,
+      );
+      if (sectionIndex === -1) {
+        return;
       }
+      const itemsInSection = Array.from(
+        targetElementParentSection.getElementsByTagNameNS(
+          Namespaces.HYPERVIEW,
+          LOCAL_NAME.ITEM,
+        ),
+      );
+      const itemIndex = itemsInSection.indexOf(targetListItem);
+      if (itemIndex === -1) {
+        return;
+      }
+
+      const params: ScrollParams = {
+        animated,
+        itemIndex: itemIndex + 1,
+        sectionIndex,
+      };
+      if (typeof viewOffset === 'number') {
+        params.viewOffset = viewOffset;
+      }
+
+      if (typeof viewPosition === 'number') {
+        params.viewPosition = viewPosition;
+      }
+
+      this.ref?.scrollToLocation(params);
+    } else {
+      // No parent section? Check new section-list format, where items are nested under the section-list
+      const items = this.props.element.getElementsByTagNameNS(
+        Namespaces.HYPERVIEW,
+        LOCAL_NAME.ITEM,
+      );
+      if (Array.from(items).indexOf(targetListItem) === -1) {
+        return;
+      }
+      const [sectionTitle, itemIndex] = getPreviousSectionTitle(
+        targetListItem,
+        1, // 1 instead of 0 as it appears itemIndex is 1-based
+      );
+      const sectionTitles = this.props.element.getElementsByTagNameNS(
+        Namespaces.HYPERVIEW,
+        LOCAL_NAME.SECTION_TITLE,
+      );
+      const sectionIndex = sectionTitle
+        ? getSectionIndex(sectionTitle, sectionTitles)
+        : 0;
+      if (sectionIndex === -1) {
+        return;
+      }
+      const params: ScrollParams = {
+        animated,
+        itemIndex,
+        sectionIndex,
+      };
+      if (viewOffset) {
+        params.viewOffset = viewOffset;
+      }
+      if (viewPosition) {
+        params.viewPosition = viewPosition;
+      }
+      this.ref?.scrollToLocation(params);
     }
   };
 

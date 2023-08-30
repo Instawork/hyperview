@@ -83,59 +83,61 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
       targetElement,
       LOCAL_NAME.LIST,
     );
-    if (targetElementParentList === this.props.element) {
-      const listItems = Array.from(
-        this.props.element.getElementsByTagNameNS(
-          Namespaces.HYPERVIEW,
-          LOCAL_NAME.ITEM,
-        ),
-      );
-
-      // Target can either be an <item> or a child of an <item>
-      const targetListItem =
-        targetElement.localName === LOCAL_NAME.ITEM
-          ? targetElement
-          : getAncestorByTagName(targetElement, LOCAL_NAME.ITEM);
-
-      if (targetListItem) {
-        // find index of target in list
-        const index = listItems.indexOf(targetListItem);
-        if (index >= 0) {
-          const animated: boolean =
-            behaviorElement?.getAttributeNS(
-              Namespaces.HYPERVIEW_SCROLL,
-              'animated',
-            ) === 'true';
-          const params: ScrollParams = { animated, index };
-
-          const viewOffset: ?number =
-            parseInt(
-              behaviorElement?.getAttributeNS(
-                Namespaces.HYPERVIEW_SCROLL,
-                'offset',
-              ),
-              10,
-            ) || undefined;
-          if (typeof viewOffset === 'number') {
-            params.viewOffset = viewOffset;
-          }
-
-          const viewPosition: ?number =
-            parseFloat(
-              behaviorElement?.getAttributeNS(
-                Namespaces.HYPERVIEW_SCROLL,
-                'position',
-              ),
-            ) || undefined;
-
-          if (typeof viewPosition === 'number') {
-            params.viewPosition = viewPosition;
-          }
-
-          this.ref?.scrollToIndex(params);
-        }
-      }
+    if (targetElementParentList !== this.props.element) {
+      return;
     }
+    const listItems = Array.from(
+      this.props.element.getElementsByTagNameNS(
+        Namespaces.HYPERVIEW,
+        LOCAL_NAME.ITEM,
+      ),
+    );
+
+    // Target can either be an <item> or a child of an <item>
+    const targetListItem =
+      targetElement.localName === LOCAL_NAME.ITEM
+        ? targetElement
+        : getAncestorByTagName(targetElement, LOCAL_NAME.ITEM);
+
+    if (!targetListItem) {
+      return;
+    }
+
+    // find index of target in list
+    const index = listItems.indexOf(targetListItem);
+    if (index < 0) {
+      return;
+    }
+
+    const animated: boolean =
+      behaviorElement?.getAttributeNS(
+        Namespaces.HYPERVIEW_SCROLL,
+        'animated',
+      ) === 'true';
+    const params: ScrollParams = { animated, index };
+
+    const viewOffset: ?number =
+      parseInt(
+        behaviorElement?.getAttributeNS(Namespaces.HYPERVIEW_SCROLL, 'offset'),
+        10,
+      ) || undefined;
+    if (typeof viewOffset === 'number') {
+      params.viewOffset = viewOffset;
+    }
+
+    const viewPosition: ?number =
+      parseFloat(
+        behaviorElement?.getAttributeNS(
+          Namespaces.HYPERVIEW_SCROLL,
+          'position',
+        ),
+      ) || undefined;
+
+    if (typeof viewPosition === 'number') {
+      params.viewPosition = viewPosition;
+    }
+
+    this.ref?.scrollToIndex(params);
   };
 
   refresh = () => {
