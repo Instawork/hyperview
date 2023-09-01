@@ -163,6 +163,7 @@ export default class HvSectionList extends PureComponent<
                   refreshing={this.state.refreshing}
                 />
               }
+              removeClippedSubviews={false}
               renderItem={({ item }) =>
                 // $FlowFixMe: return type of renderElement is not compatible with expected type for renderItem
                 Render.renderElement(

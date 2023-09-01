@@ -143,6 +143,7 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
                   refreshing={this.state.refreshing}
                 />
               }
+              removeClippedSubviews={false}
               renderItem={({ item }) =>
                 item &&
                 Render.renderElement(
