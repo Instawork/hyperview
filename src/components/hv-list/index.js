@@ -235,6 +235,7 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
           const RefreshControl = ContextRefreshControl || DefaultRefreshControl;
           return (
             <FlatList
+              ref={this.onRef}
               data={this.getItems()}
               horizontal={horizontal}
               keyExtractor={item => item && item.getAttribute('key')}
@@ -250,7 +251,7 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
                 Render.renderElement(
                   item,
                   this.props.stylesheets,
-                  this.props.onUpdate,
+                  this.onUpdate,
                   this.props.options,
                 )
               }

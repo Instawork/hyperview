@@ -351,6 +351,7 @@ export default class HvSectionList extends PureComponent<
           const RefreshControl = ContextRefreshControl || DefaultRefreshControl;
           return (
             <SectionList
+              ref={this.onRef}
               keyExtractor={item => item.getAttribute('key')}
               refreshControl={
                 <RefreshControl
@@ -364,7 +365,7 @@ export default class HvSectionList extends PureComponent<
                 Render.renderElement(
                   item,
                   this.props.stylesheets,
-                  this.props.onUpdate,
+                  this.onUpdate,
                   this.props.options,
                 )
               }
@@ -373,7 +374,7 @@ export default class HvSectionList extends PureComponent<
                 Render.renderElement(
                   title,
                   this.props.stylesheets,
-                  this.props.onUpdate,
+                  this.onUpdate,
                   this.props.options,
                 )
               }
