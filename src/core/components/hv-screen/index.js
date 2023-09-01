@@ -322,10 +322,8 @@ export default class HvScreen extends React.Component {
 
     return (
       <Contexts.DateFormatContext.Provider value={this.props.formatDate}>
-        <Contexts.RefreshControlComponentContext.Provider value={this.props.refreshControl}>
-          {screenElement}
-          {elementErrorComponent ? (React.createElement(elementErrorComponent, { error: this.state.elementError, onPressReload: () => this.reload() })) : null}
-        </Contexts.RefreshControlComponentContext.Provider>
+        {screenElement}
+        {elementErrorComponent ? (React.createElement(elementErrorComponent, { error: this.state.elementError, onPressReload: () => this.reload() })) : null}
       </Contexts.DateFormatContext.Provider>
     );
   }
