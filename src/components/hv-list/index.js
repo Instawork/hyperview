@@ -40,6 +40,8 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
 
   static localNameAliases = [];
 
+  static contextType = Contexts.DocContext;
+
   parser: DOMParser = new DOMParser();
 
   props: HvComponentProps;
@@ -73,7 +75,7 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
       console.warn('[behaviors/scroll]: missing "target" attribute');
       return;
     }
-    const doc: ?Document = this.props.element.ownerDocument;
+    const doc: ?Document = this.context();
     const targetElement: ?Element = doc?.getElementById(targetId);
     if (!targetElement) {
       return;

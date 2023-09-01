@@ -6,6 +6,7 @@
  *
  */
 
+import * as TypesLegacy from 'hyperview/src/types-legacy';
 import type { ComponentType } from 'react';
 import React from 'react';
 import type { RefreshControlProps } from 'react-native';
@@ -22,3 +23,7 @@ export const DateFormatContext = React.createContext<
 export const RefreshControlComponentContext = React.createContext<
   ComponentType<RefreshControlProps> | undefined
 >(undefined);
+
+export const DocContext = React.createContext<{
+  getDoc: () => TypesLegacy.Document;
+} | null>(null);
