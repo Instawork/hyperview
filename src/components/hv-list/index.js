@@ -31,8 +31,6 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
 
   static localNameAliases = [];
 
-  static contextType = Contexts.RefreshControlComponentContext;
-
   parser: DOMParser = new DOMParser();
 
   props: HvComponentProps;
@@ -129,42 +127,41 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
         ? [...acc, index]
         : acc;
     }, []);
-    const listProps = {
-      data: this.getItems(),
-      horizontal,
-      keyExtractor: item => item && item.getAttribute('key'),
-      renderItem: ({ item }) =>
-        item &&
-        Render.renderElement(
-          item,
-          this.props.stylesheets,
-          this.props.onUpdate,
-          this.props.options,
-        ),
-      scrollIndicatorInsets,
-      showsHorizontalScrollIndicator: horizontal && showScrollIndicator,
-      showsVerticalScrollIndicator: !horizontal && showScrollIndicator,
-      stickyHeaderIndices,
-      style,
-    };
 
-    let refreshProps = {};
-    if (this.props.element.getAttribute('trigger') === 'refresh') {
-      const RefreshControl = this.context || DefaultRefreshControl;
-      refreshProps = {
-        refreshControl: (
-          <RefreshControl
-            onRefresh={this.refresh}
-            refreshing={this.state.refreshing}
-          />
-        ),
-      };
-    }
-
-    // $FlowFixMe
-    return React.createElement(FlatList, {
-      ...listProps,
-      ...refreshProps,
-    });
+    return (
+      <Contexts.RefreshControlComponentContext.Consumer>
+        {ContextRefreshControl => {
+          const RefreshControl = ContextRefreshControl || DefaultRefreshControl;
+          return (
+            <FlatList
+              data={this.getItems()}
+              horizontal={horizontal}
+              keyExtractor={item => item && item.getAttribute('key')}
+              refreshControl={
+                <RefreshControl
+                  onRefresh={this.refresh}
+                  refreshing={this.state.refreshing}
+                />
+              }
+              removeClippedSubviews={false}
+              renderItem={({ item }) =>
+                item &&
+                Render.renderElement(
+                  item,
+                  this.props.stylesheets,
+                  this.props.onUpdate,
+                  this.props.options,
+                )
+              }
+              scrollIndicatorInsets={scrollIndicatorInsets}
+              showsHorizontalScrollIndicator={horizontal && showScrollIndicator}
+              showsVerticalScrollIndicator={!horizontal && showScrollIndicator}
+              stickyHeaderIndices={stickyHeaderIndices}
+              style={style}
+            />
+          );
+        }}
+      </Contexts.RefreshControlComponentContext.Consumer>
+    );
   }
 }

@@ -35,8 +35,6 @@ export default class HvSectionList extends PureComponent<
 
   static localNameAliases = [];
 
-  static contextType = Contexts.RefreshControlComponentContext;
-
   parser: DOMParser = new DOMParser();
 
   props: HvComponentProps;
@@ -45,7 +43,7 @@ export default class HvSectionList extends PureComponent<
     refreshing: false,
   };
 
-  getStickySectionHeadersEnabled = (): ?boolean => {
+  getStickySectionHeadersEnabled = (): boolean => {
     const stickySectionTitles = this.props.element.getAttribute(
       'sticky-section-titles',
     );
@@ -55,7 +53,12 @@ export default class HvSectionList extends PureComponent<
     if (stickySectionTitles === 'false') {
       return false;
     }
-    return undefined;
+    // Set platform default behavior
+    // https://reactnative.dev/docs/sectionlist#stickysectionheadersenabled
+    return Platform.select({
+      android: false,
+      ios: true,
+    });
   };
 
   refresh = () => {
@@ -147,46 +150,46 @@ export default class HvSectionList extends PureComponent<
         ? { right: 1 }
         : undefined;
 
-    const listProps = {
-      keyExtractor: item => item.getAttribute('key'),
-      renderItem: ({ item }) =>
-        Render.renderElement(
-          item,
-          this.props.stylesheets,
-          this.props.onUpdate,
-          this.props.options,
-        ),
-      renderSectionHeader: ({ section: { title } }) =>
-        Render.renderElement(
-          title,
-          this.props.stylesheets,
-          this.props.onUpdate,
-          this.props.options,
-        ),
-      scrollIndicatorInsets,
-      sections,
-      stickySectionHeadersEnabled: this.getStickySectionHeadersEnabled(),
-      style,
-    };
-
-    let refreshProps = {};
-    if (this.props.element.getAttribute('trigger') === 'refresh') {
-      const RefreshControl = this.context || DefaultRefreshControl;
-      refreshProps = {
-        refreshControl: (
-          <RefreshControl
-            onRefresh={this.refresh}
-            refreshing={this.state.refreshing}
-          />
-        ),
-      };
-    }
-
-    const props: any = {
-      ...listProps,
-      ...refreshProps,
-    };
-
-    return React.createElement(SectionList, props);
+    return (
+      <Contexts.RefreshControlComponentContext.Consumer>
+        {ContextRefreshControl => {
+          const RefreshControl = ContextRefreshControl || DefaultRefreshControl;
+          return (
+            <SectionList
+              keyExtractor={item => item.getAttribute('key')}
+              refreshControl={
+                <RefreshControl
+                  onRefresh={this.refresh}
+                  refreshing={this.state.refreshing}
+                />
+              }
+              removeClippedSubviews={false}
+              renderItem={({ item }) =>
+                // $FlowFixMe: return type of renderElement is not compatible with expected type for renderItem
+                Render.renderElement(
+                  item,
+                  this.props.stylesheets,
+                  this.props.onUpdate,
+                  this.props.options,
+                )
+              }
+              renderSectionHeader={({ section: { title } }) =>
+                // $FlowFixMe: return type of renderElement is not compatible with expected type for renderSectionHeader
+                Render.renderElement(
+                  title,
+                  this.props.stylesheets,
+                  this.props.onUpdate,
+                  this.props.options,
+                )
+              }
+              scrollIndicatorInsets={scrollIndicatorInsets}
+              sections={sections}
+              stickySectionHeadersEnabled={this.getStickySectionHeadersEnabled()}
+              style={style}
+            />
+          );
+        }}
+      </Contexts.RefreshControlComponentContext.Consumer>
+    );
   }
 }
