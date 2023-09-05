@@ -11,11 +11,12 @@
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type { Element, HvComponentProps } from 'hyperview/src/types';
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import {
   createProps,
   getNameValueFormInputValues,
 } from 'hyperview/src/services';
+import type { ElementRef } from 'react';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { TextInput } from 'react-native';
 import TinyMask from 'hyperview/src/mask.js';
@@ -49,7 +50,6 @@ const HvTextField = (props: HvComponentProps) => {
   // Handlers
   const setFocus = (focused: boolean) => {
     const newElement = props.element.cloneNode(true);
-    newElement.setAttribute('focused', focused.toString());
     props.onUpdate(null, 'swap', props.element, { newElement });
 
     if (focused) {
@@ -76,17 +76,24 @@ const HvTextField = (props: HvComponentProps) => {
     triggerChangeBehaviors(newElement);
   };
 
+  const textInputRef: ElementRef<typeof TextInput> = useRef(null);
+
   const p = {
     ...createProps(props.element, props.stylesheets, {
       ...props.options,
-      focused: props.element.getAttribute('focused') === 'true',
+      focused: textInputRef.current?.isFocused(),
     }),
   };
 
   return (
     <TextInput
       {...p}
-      ref={props.options.registerInputHandler}
+      ref={(ref: ?ElementRef<typeof TextInput>) => {
+        textInputRef.current = ref;
+        if (props.options?.registerInputHandler) {
+          props.options?.registerInputHandler(ref);
+        }
+      }}
       autoFocus={autoFocus}
       defaultValue={defaultValue}
       editable={editable}
