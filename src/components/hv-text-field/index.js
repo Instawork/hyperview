@@ -91,7 +91,7 @@ const HvTextField = (props: HvComponentProps) => {
       ref={(ref: ?ElementRef<typeof TextInput>) => {
         textInputRef.current = ref;
         if (props.options?.registerInputHandler) {
-          props.options?.registerInputHandler(ref);
+          props.options.registerInputHandler(ref);
         }
       }}
       autoFocus={autoFocus}
