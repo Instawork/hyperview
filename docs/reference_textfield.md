@@ -88,7 +88,13 @@ Sets the type of keybaord to show when the user focuses the input. Supported opt
 - **number-pad**: Keyboard restricted to 0-9 digits plus decimals
 - **decimal-pad**: Keyboard restricted to 0-9 digits with no decimals
 - **phone-pad**: Keyboard restricted to digits and symbols that appear in phone numbers
-- **email-address**: Keyboard adapted for easier email address input (handy @ symbol)
+- **email-address**: Keyboard adapted for easier email address input (handy `@` symbol)
+- **url**: Keyboard adapted for easier URL input (`.`, `/` and `.com` in place of space bar)
+- **ascii-capable**(iOS only): Similar to the default keyboard, without emojis
+- **numbers-and-punctuation**(iOS only): Keyboard that opens by default on the page with numbers and punctuation. User can switch back to first page showing alphabetical characters.
+- **name-phone-pad**(iOS only): Keyboard that opens by default on the page with alphabetical characters, where user can switch to second page showing a phone pad (useful to search for contacts, either by their name, or phone number).
+- **twitter**(iOS only): Keyboard with `@` and `#` keys in place of "Return" key
+- **web-search**(iOS only): Keyboard with "Go" key im place of "Return" key
 
 #### `mask`
 
