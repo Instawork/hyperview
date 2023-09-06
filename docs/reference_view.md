@@ -61,6 +61,7 @@ A `<view>` element can only appear anywhere within a `<screen>` element.
 - [`hide`](#hide)
 - [`avoid-keyboard`](#avoid-keyboard)
 - [`sticky`](#sticky)
+- [`dismiss-keyboard-on-drag`](#dismiss-keyboard-on-drag)
 
 #### Behavior attributes
 
@@ -155,3 +156,11 @@ An attribute to solve the common problem of views that need to move out of the w
 | **false** (default), true | No       |
 
 If `sticky="true"`, the element will remain fixed at the top of the screen when scrolling. This should be used in conjunction with an immediate parent view with `scroll="true"` and `scroll-orientation="vertical"`.
+
+#### `dismiss-keyboard-on-drag`
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| true, **false** (default) | No       |
+
+An attribute that causes the virtual keyboard to be dismiss upon dragging the scrollable view. Attribute `scroll` should be set in for this to have any effect.

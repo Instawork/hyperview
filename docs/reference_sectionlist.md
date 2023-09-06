@@ -37,6 +37,7 @@ A `<section-list>` element will only render `<section-title>` and `<item>` child
 - [`id`](#id)
 - [`hide`](#hide)
 - [`sticky-section-titles`](#sticky-section-titles)
+- [`dismiss-keyboard-on-drag`](#dismiss-keyboard-on-drag)
 
 #### Behavior attributes
 
@@ -73,3 +74,11 @@ If `hide="true"`, the element will not be rendered on screen. If the element or 
 | true, false | No       |
 
 When set to `"true"`, the section titles will remain sticky at the top of their section items, as the list is being scrolled. When set to `"false"`, the section titles will scroll along with the items of the list. When not explicitly set, the section titles will adopt the platform behaviors: sticky on iOS, not sticky on Android.
+
+#### `dismiss-keyboard-on-drag`
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| true, **false** (default) | No       |
+
+An attribute that causes the virtual keyboard to be dismiss upon dragging the scrollable view.

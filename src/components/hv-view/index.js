@@ -8,6 +8,8 @@
  *
  */
 
+// $FlowFixMe: importing code from TypeScript
+import * as Keyboard from 'hyperview/src/services/keyboard';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import type {
@@ -121,6 +123,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
     return {
       contentContainerStyle,
       horizontal,
+      keyboardDismissMode: Keyboard.getKeyboardDismissMode(this.props.element),
       scrollIndicatorInsets,
       showsHorizontalScrollIndicator: horizontal && showScrollIndicator,
       showsVerticalScrollIndicator: !horizontal && showScrollIndicator,
