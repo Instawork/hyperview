@@ -1069,6 +1069,12 @@
             <xs:enumeration value="decimal-pad" />
             <xs:enumeration value="phone-pad" />
             <xs:enumeration value="email-address" />
+            <xs:enumeration value="url" />
+            <xs:enumeration value="ascii-capable" />
+            <xs:enumeration value="numbers-and-punctuation" />
+            <xs:enumeration value="name-phone-pad" />
+            <xs:enumeration value="twitter" />
+            <xs:enumeration value="web-search" />
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>
