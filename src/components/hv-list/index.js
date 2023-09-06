@@ -13,16 +13,25 @@ import * as Contexts from 'hyperview/src/contexts';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
+import type {
+  DOMString,
+  Document,
+  Element,
+  HvComponentOnUpdate,
+  HvComponentOptions,
+  HvComponentProps,
+} from 'hyperview/src/types';
 import {
   RefreshControl as DefaultRefreshControl,
   FlatList,
   Platform,
 } from 'react-native';
 import React, { PureComponent } from 'react';
+import type { ScrollParams, State } from './types';
 import { DOMParser } from '@instawork/xmldom';
-import type { HvComponentProps } from 'hyperview/src/types';
+import type { ElementRef } from 'react';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import type { State } from './types';
+import { getAncestorByTagName } from 'hyperview/src/services';
 
 export default class HvList extends PureComponent<HvComponentProps, State> {
   static namespaceURI = Namespaces.HYPERVIEW;
@@ -31,12 +40,106 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
 
   static localNameAliases = [];
 
+  static contextType = Contexts.DocContext;
+
   parser: DOMParser = new DOMParser();
 
   props: HvComponentProps;
 
+  ref: ?ElementRef<typeof FlatList>;
+
   state: State = {
     refreshing: false,
+  };
+
+  onRef = (ref: ?ElementRef<typeof FlatList>) => {
+    this.ref = ref;
+  };
+
+  onUpdate: HvComponentOnUpdate = (
+    href: ?DOMString,
+    action: ?DOMString,
+    element: Element,
+    options: HvComponentOptions,
+  ) => {
+    if (action === 'scroll' && options.behaviorElement) {
+      this.handleScrollBehavior(options.behaviorElement);
+      return;
+    }
+    this.props.onUpdate(href, action, element, options);
+  };
+
+  handleScrollBehavior = (behaviorElement: Element) => {
+    const targetId: ?DOMString = behaviorElement?.getAttribute('target');
+    if (!targetId) {
+      console.warn('[behaviors/scroll]: missing "target" attribute');
+      return;
+    }
+    const doc: ?Document = this.context();
+    const targetElement: ?Element = doc?.getElementById(targetId);
+    if (!targetElement) {
+      return;
+    }
+
+    const targetElementParentList = getAncestorByTagName(
+      targetElement,
+      LOCAL_NAME.LIST,
+    );
+    if (targetElementParentList !== this.props.element) {
+      return;
+    }
+    const listItems = Array.from(
+      this.props.element.getElementsByTagNameNS(
+        Namespaces.HYPERVIEW,
+        LOCAL_NAME.ITEM,
+      ),
+    );
+
+    // Target can either be an <item> or a child of an <item>
+    const targetListItem =
+      targetElement.localName === LOCAL_NAME.ITEM
+        ? targetElement
+        : getAncestorByTagName(targetElement, LOCAL_NAME.ITEM);
+
+    if (!targetListItem) {
+      return;
+    }
+
+    // find index of target in list
+    const index = listItems.indexOf(targetListItem);
+    if (index < 0) {
+      return;
+    }
+
+    const animated: boolean =
+      behaviorElement?.getAttributeNS(
+        Namespaces.HYPERVIEW_SCROLL,
+        'animated',
+      ) === 'true';
+    const params: ScrollParams = { animated, index };
+
+    const viewOffset: ?number =
+      parseInt(
+        behaviorElement?.getAttributeNS(Namespaces.HYPERVIEW_SCROLL, 'offset'),
+        10,
+      ) || undefined;
+    if (typeof viewOffset === 'number') {
+      params.viewOffset = viewOffset;
+    }
+
+    const viewPosition: ?number =
+      parseFloat(
+        behaviorElement?.getAttributeNS(
+          Namespaces.HYPERVIEW_SCROLL,
+          'position',
+        ),
+      ) || undefined;
+
+    if (typeof viewPosition === 'number') {
+      params.viewPosition = viewPosition;
+    }
+
+    this.ref?.scrollToIndex(params);
   };
 
   refresh = () => {
@@ -134,6 +237,7 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
           const RefreshControl = ContextRefreshControl || DefaultRefreshControl;
           return (
             <FlatList
+              ref={this.onRef}
               data={this.getItems()}
               horizontal={horizontal}
               keyExtractor={item => item && item.getAttribute('key')}
@@ -149,7 +253,7 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
                 Render.renderElement(
                   item,
                   this.props.stylesheets,
-                  this.props.onUpdate,
+                  this.onUpdate,
                   this.props.options,
                 )
               }

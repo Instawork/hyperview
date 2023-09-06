@@ -321,10 +321,12 @@ export default class HvScreen extends React.Component {
     );
 
     return (
-      <Contexts.DateFormatContext.Provider value={this.props.formatDate}>
-        {screenElement}
-        {elementErrorComponent ? (React.createElement(elementErrorComponent, { error: this.state.elementError, onPressReload: () => this.reload() })) : null}
-      </Contexts.DateFormatContext.Provider>
+      <Contexts.DocContext.Provider value={() => this.doc}>
+        <Contexts.DateFormatContext.Provider value={this.props.formatDate}>
+          {screenElement}
+          {elementErrorComponent ? (React.createElement(elementErrorComponent, { error: this.state.elementError, onPressReload: () => this.reload() })) : null}
+        </Contexts.DateFormatContext.Provider>
+      </Contexts.DocContext.Provider>
     );
   }
 

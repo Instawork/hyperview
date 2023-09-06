@@ -1,0 +1,24 @@
+<xs:schema
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  attributeFormDefault="qualified"
+  elementFormDefault="qualified"
+  targetNamespace="https://hyperview.org/hyperview-scroll"
+  xmlns:hv="https://hyperview.org/hyperview"
+>
+  <xs:import
+    namespace="https://hyperview.org/hyperview"
+    schemaLocation="hyperview.xsd"
+  />
+  <xs:attributeGroup name="scrollAttributes">
+    <xs:attribute name="animated" type="xs:boolean" />
+    <xs:attribute name="offset" type="xs:integer" />
+    <xs:attribute name="position">
+      <xs:simpleType>
+        <xs:restriction base="xs:float">
+          <xs:minInclusive value="0" />
+          <xs:maxInclusive value="1" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+</xs:schema>

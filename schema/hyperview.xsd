@@ -29,6 +29,7 @@
         <xs:enumeration value="copy-to-clipboard" />
         <xs:enumeration value="select-all" />
         <xs:enumeration value="unselect-all" />
+        <xs:enumeration value="scroll" />
       </xs:restriction>
     </xs:simpleType>
   </xs:redefine>
