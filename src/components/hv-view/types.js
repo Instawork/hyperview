@@ -48,7 +48,7 @@ export type ScrollViewProps = {|
   style?: ?ViewStyleProp,
   contentContainerStyle?: ?ViewStyleProp,
   horizontal?: ?boolean,
-  keyboardDismissMode?: ?('none' | 'on-drag'),
+  keyboardDismissMode?: ?('none' | 'on-drag' | 'interactive'),
   scrollIndicatorInsets?: $ReadOnly<{|
     bottom?: ?number,
     left?: ?number,
