@@ -11,6 +11,8 @@
 // $FlowFixMe: importing code from TypeScript
 import * as Contexts from 'hyperview/src/contexts';
 import * as Dom from 'hyperview/src/services/dom';
+// $FlowFixMe: importing code from TypeScript
+import * as Keyboard from 'hyperview/src/services/keyboard';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import type {
@@ -354,6 +356,9 @@ export default class HvSectionList extends PureComponent<
           return (
             <SectionList
               ref={this.onRef}
+              keyboardDismissMode={Keyboard.getKeyboardDismissMode(
+                this.props.element,
+              )}
               keyExtractor={item => item.getAttribute('key')}
               refreshControl={
                 <RefreshControl
