@@ -35,7 +35,7 @@ A `<list>` element will only render `<item>` and `<items>` children elements. Ot
 - [`hide`](#hide)
 - [`scroll-orientation`](#scroll-orientation)
 - [`shows-scroll-indicator`](#shows-scroll-indicator)
-- [`dismiss-keyboard-on-drag`](#dismiss-keyboard-on-drag)
+- [`keyboard-dismiss-mode`](#keyboard-dismiss-mode)
 
 #### Behavior attributes
 
@@ -89,10 +89,10 @@ An attribute indicating the direction in which the body will scroll.
 
 An attribute indicating whether the scroll bar should be shown.
 
-#### `dismiss-keyboard-on-drag`
+#### `keyboard-dismiss-mode`
 
-| Type                      | Required |
-| ------------------------- | -------- |
-| true, **false** (default) | No       |
+| Type                                         | Required |
+| -------------------------------------------- | -------- |
+| **none** (default), `on-drag`, `interactive` | No       |
 
-An attribute that causes the virtual keyboard to be dismiss upon dragging the scrollable view.
+An attribute that controls the virtual keyboard behavior when the scrollable view is interacted with. Note: `interactive` value is only supported on iOS. When set to this value, the keyboard is dismissed interactively with the drag and moves in synchrony with the touch, dragging upwards cancels the dismissal. On Android this is not supported and it will have the same behavior as `none`.

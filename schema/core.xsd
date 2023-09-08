@@ -419,7 +419,15 @@
     </xs:attribute>
     <xs:attribute name="shows-scroll-indicator" type="xs:boolean" />
     <xs:attribute name="content-container-style" type="hv:styleList" />
-    <xs:attribute name="dismiss-keyboard-on-drag" type="xs:boolean" />
+    <xs:attribute name="keyboard-dismiss-mode">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="none" />
+          <xs:enumeration value="on-drag" />
+          <xs:enumeration value="interactive" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
   </xs:attributeGroup>
 
   <xs:element name="doc">
@@ -874,7 +882,15 @@
       <xs:attribute name="hide" type="xs:boolean" />
       <xs:attribute name="value" type="xs:string" />
       <xs:attribute name="sticky-section-titles" type="xs:boolean" />
-      <xs:attribute name="dismiss-keyboard-on-drag" type="xs:boolean" />
+      <xs:attribute name="keyboard-dismiss-mode">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="none" />
+          <xs:enumeration value="on-drag" />
+          <xs:enumeration value="interactive" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
       <xs:attributeGroup ref="hv:behaviorAttributes" />
     </xs:complexType>
   </xs:element>

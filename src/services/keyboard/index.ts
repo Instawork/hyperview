@@ -8,10 +8,18 @@
 
 import * as TypesLegacy from 'hyperview/src/types-legacy';
 
+type KeyboardDismissMode = 'none' | 'on-drag' | 'interactive';
+
 export const getKeyboardDismissMode = (
   element: TypesLegacy.Element,
-): 'on-drag' | undefined => {
-  return element.getAttribute('dismiss-keyboard-on-drag') === 'true'
-    ? 'on-drag'
-    : undefined;
+): KeyboardDismissMode | undefined => {
+  const mode = element.getAttribute('keyboard-dismiss-mode');
+  switch (mode) {
+    case 'none':
+    case 'on-drag':
+    case 'interactive':
+      return mode;
+    default:
+      return undefined;
+  }
 };
