@@ -1,0 +1,43 @@
+---
+title: "Async behaviors"
+permalink: "/case_studies/async_behaviors/index.xml"
+tags: case_studies
+---
+
+{% extends 'base.xml.njk' %}
+{% block styles %}
+  <style id="Content" backgroundColor="gray" borderRadius="16" padding="24" margin="24" />
+  <style id="Content__Label" color="white" fontSize="18" fontWeight="bold" />
+  <style id="Button__Spinner" position="absolute" right="24" top="28" />
+{% endblock %}
+{% block container %}
+  <view scroll="true">
+    <view
+      action="replace-inner"
+      href="/case_studies/async_behaviors/top.xml"
+      target="content"
+      style="Button"
+      show-during-load="top-spinner"
+    >
+      <text style="Button__Label">Top</text>
+      <view id="top-spinner" hide="true" style="Button__Spinner">
+        <spinner color="white" />
+      </view>
+    </view>
+    <view
+      action="replace-inner"
+      href="/case_studies/async_behaviors/bottom.xml"
+      target="content"
+      style="Button"
+      show-during-load="bottom-spinner"
+    >
+      <text style="Button__Label">Bottom</text>
+      <view id="bottom-spinner" hide="true" style="Button__Spinner">
+        <spinner color="white" />
+      </view>
+    </view>
+    <view id="content" style="Content" mode="last">
+      <text style="Content__Label">Press both buttons</text>
+    </view>
+  </view>
+{% endblock %}

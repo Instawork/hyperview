@@ -21,6 +21,7 @@ import { ACTIONS, NAV_ACTIONS, UPDATE_ACTIONS } from 'hyperview/src/types';
 // eslint-disable-next-line instawork/import-services
 import Navigation, { ANCHOR_ID_SEPARATOR } from 'hyperview/src/services/navigation';
 import { createProps, createStyleProp, getElementByTimeoutId, getFormData, later, removeTimeoutId, setTimeoutId, shallowCloneToRoot } from 'hyperview/src/services';
+import { ATTRIBUTES } from 'hyperview/src/core/hyper-ref/types';
 import { Linking } from 'react-native';
 import LoadElementError from '../load-element-error';
 import LoadError from 'hyperview/src/core/components/load-error';
@@ -498,6 +499,28 @@ export default class HvScreen extends React.Component {
 
     }
 
+    // If a target is specified and exists, use it. Otherwise, the action target defaults
+    // to the element triggering the action.
+    const getTargetElement = () =>
+      targetId && this.doc?.getElementById(targetId) || currentElement;
+
+    const behaviorId = behaviorElement.getAttribute('id') || Object.values(ATTRIBUTES)
+      .reduce((acc, name) => {
+        const value = behaviorElement.getAttribute(name);
+        return value ? [...acc, `${name}:${value}`] : acc;
+      }, [])
+      .join('_');
+
+    const targetElement = getTargetElement();
+
+    const mode = targetElement.getAttribute('mode');
+    if (mode) {
+      if (mode === 'first' && targetElement.getAttribute('lock')) {
+        return;
+      }
+      targetElement.setAttribute('lock', behaviorId);
+    }
+
     let newRoot = this.doc;
     newRoot = Behaviors.setIndicatorsBeforeLoad(showIndicatorIdList, hideIndicatorIdList, newRoot);
     // Re-render the modifications
@@ -508,15 +531,16 @@ export default class HvScreen extends React.Component {
     // Fetch the resource, then perform the action on the target and undo indicators.
     const fetchAndUpdate = () => this.fetchElement(href, verb, newRoot, formData)
       .then((newElement) => {
-        // If a target is specified and exists, use it. Otherwise, the action target defaults
-        // to the element triggering the action.
-        let targetElement = targetId ? this.doc?.getElementById(targetId) : currentElement;
-        if (!targetElement) {
-          targetElement = currentElement;
-        }
+        // We need to retrieve the target element from the DOM again as the DOM may have changed
+        const newTargetElement = getTargetElement();
+        const newMode = newTargetElement.getAttribute('mode');
+        const canUpdate = newMode === 'last' && newTargetElement.getAttribute('lock') === behaviorId || newMode !== 'last';
 
-        if (newElement) {
-          newRoot = Behaviors.performUpdate(action, targetElement, newElement);
+        if (canUpdate) {
+          newTargetElement.setAttribute('lock', '');
+        }
+        if (canUpdate && newElement) {
+            newRoot = Behaviors.performUpdate(action, newTargetElement, newElement);
         } else {
           // When fetch fails, make sure to get the latest version of the doc to avoid any race conditions
           newRoot = this.doc;

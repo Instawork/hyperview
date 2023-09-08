@@ -1,4 +1,7 @@
-<items xmlns="https://hyperview.org/hyperview">
+<items
+  xmlns="https://hyperview.org/hyperview"
+  id="contacts"
+>
   {% for contact in contacts|paginate(page) %}
     <item key="{{ contact.id }}" style="mx-24 py-8 border-bottom">
       <text>{{ contact.name|highlight(search)|safe }}</text>
