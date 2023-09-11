@@ -569,6 +569,8 @@
 
       <xs:attribute name="color" type="hv:color" />
 
+      <xs:attribute name="columnGap" type="xs:integer" />
+
       <xs:attribute name="display">
         <xs:simpleType>
           <xs:restriction base="xs:string">
@@ -643,6 +645,8 @@
         </xs:simpleType>
       </xs:attribute>
 
+      <xs:attribute name="gap" type="xs:integer" />
+
       <xs:attribute name="height" type="hv:pointsOrPercent" />
 
       <xs:attribute name="id" type="xs:NCName" />
@@ -712,6 +716,7 @@
       </xs:attribute>
 
       <xs:attribute name="right" type="hv:pointsOrPercent" />
+      <xs:attribute name="rowGap" type="xs:integer" />
       <xs:attribute name="shadowColor" type="hv:color" />
       <xs:attribute name="shadowOffsetX" type="xs:integer" />
       <xs:attribute name="shadowOffsetY" type="xs:decimal" />
