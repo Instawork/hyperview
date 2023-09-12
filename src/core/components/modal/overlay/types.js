@@ -8,11 +8,9 @@
  *
  */
 
-export type State = {|
-  value: ?string,
-  pickerValue: ?string,
-  focused: boolean,
-  fieldPressed: boolean,
-  donePressed: boolean,
-  cancelPressed: boolean,
+import type { StyleSheet } from 'hyperview/src/types';
+
+export type Props = {|
+  onPress: () => void,
+  style: StyleSheet,
 |};

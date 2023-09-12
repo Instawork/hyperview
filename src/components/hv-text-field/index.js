@@ -8,147 +8,129 @@
  *
  */
 
-import * as Dom from 'hyperview/src/services/dom';
+import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type { Element, HvComponentProps } from 'hyperview/src/types';
-import React, { PureComponent } from 'react';
+import React, { useCallback, useRef } from 'react';
 import {
   createProps,
   getNameValueFormInputValues,
 } from 'hyperview/src/services';
+import type { ElementRef } from 'react';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { TextInput } from 'react-native';
 import TinyMask from 'hyperview/src/mask.js';
+import debounce from 'lodash/debounce';
 
-export default class HvTextField extends PureComponent<HvComponentProps> {
-  static namespaceURI = Namespaces.HYPERVIEW;
-
-  static localName = LOCAL_NAME.TEXT_FIELD;
-
-  static localNameAliases = [LOCAL_NAME.TEXT_AREA];
-
-  static getFormInputValues = (element: Element): Array<[string, string]> => {
-    return getNameValueFormInputValues(element);
-  };
-
-  constructor(props: HvComponentProps) {
-    super(props);
-    this.setFocus = this.setFocus.bind(this);
-    if (this.props.element.localName === LOCAL_NAME.TEXT_AREA) {
-      console.warn(
-        'Deprecation notice: <text-area> tag is deprecated and will be removed in a future version. See https://hyperview.org/docs/reference_textarea for details.',
-      );
-    }
+const HvTextField = (props: HvComponentProps) => {
+  if (props.element.localName === LOCAL_NAME.TEXT_AREA) {
+    console.warn(
+      'Deprecation notice: <text-area> tag is deprecated and will be removed in a future version. See https://hyperview.org/docs/reference_textarea for details.',
+    );
   }
 
-  triggerFocusBehaviors = (newElement: Element) => {
-    this.triggerBehaviors(newElement, 'focus');
-  };
+  if (props.element.getAttribute('hide') === 'true') {
+    return null;
+  }
 
-  triggerBlurBehaviors = (newElement: Element) => {
-    this.triggerBehaviors(newElement, 'blur');
-  };
+  // Extract known attributes into their own variables
+  const autoFocus = props.element.getAttribute('auto-focus') === 'true';
+  const debounceTimeMs =
+    parseInt(props.element.getAttribute('debounce'), 10) || 0;
+  const defaultValue = props.element.getAttribute('value');
+  const editable = props.element.getAttribute('editable') !== 'false';
+  const keyboardType = props.element.getAttribute('keyboard-type') || undefined;
+  const multiline =
+    props.element.localName === LOCAL_NAME.TEXT_AREA ||
+    props.element.getAttribute('multiline') === 'true';
+  const secureTextEntry = props.element.getAttribute('secure-text') === 'true';
+  const textContentType =
+    props.element.getAttribute('text-content-type') || 'none';
 
-  triggerChangeBehaviors = (newElement: Element) => {
-    this.triggerBehaviors(newElement, 'change');
-  };
-
-  triggerBehaviors = (newElement: Element, triggerName: string) => {
-    const behaviorElements = Dom.getBehaviorElements(this.props.element);
-    const matchingBehaviors = behaviorElements.filter(
-      e => e.getAttribute('trigger') === triggerName,
-    );
-    matchingBehaviors.forEach(behaviorElement => {
-      const href = behaviorElement.getAttribute('href');
-      const action = behaviorElement.getAttribute('action');
-      const verb = behaviorElement.getAttribute('verb');
-      const targetId = behaviorElement.getAttribute('target');
-      const showIndicatorIds = behaviorElement.getAttribute('show-during-load');
-      const hideIndicatorIds = behaviorElement.getAttribute('hide-during-load');
-      const delay = behaviorElement.getAttribute('delay');
-      const once = behaviorElement.getAttribute('once');
-      this.props.onUpdate(href, action, newElement, {
-        behaviorElement,
-        delay,
-        hideIndicatorIds,
-        once,
-        showIndicatorIds,
-        targetId,
-        verb,
-      });
-    });
-  };
-
-  /**
-   * Formats the user's input based on element attributes.
-   * Currently supports the "mask" attribute, which will be applied
-   * to format the provided value.
-   */
-  static getFormattedValue = (element: Element, value: string) => {
-    if (!element.hasAttribute('mask')) {
-      return value;
-    }
-    const mask = new TinyMask(element.getAttribute('mask'));
-    // TinyMask returns undefined in some cases (like if the value is an empty string).
-    // In those situations, we want the formatted value to be an empty string
-    // (for proper serialization).
-    return mask.mask(value) || '';
-  };
-
-  setFocus = (focused: boolean) => {
-    const newElement = this.props.element.cloneNode(true);
-    newElement.setAttribute('focused', focused.toString());
-    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+  // Handlers
+  const setFocus = (focused: boolean) => {
+    const newElement = props.element.cloneNode(true);
+    props.onUpdate(null, 'swap', props.element, { newElement });
 
     if (focused) {
-      this.triggerFocusBehaviors(newElement);
+      Behaviors.trigger('focus', newElement, props.onUpdate);
     } else {
-      this.triggerBlurBehaviors(newElement);
+      Behaviors.trigger('blur', newElement, props.onUpdate);
     }
   };
 
-  render() {
-    if (this.props.element.getAttribute('hide') === 'true') {
-      return null;
-    }
+  // Create a memoized, debounced function to trigger the "change" behavior
+  const triggerChangeBehaviors = useCallback(
+    debounce((newElement: Element) => {
+      Behaviors.trigger('change', newElement, props.onUpdate);
+    }, debounceTimeMs),
+    [],
+  );
 
-    const focused = this.props.element.getAttribute('focused') === 'true';
-    const editable = this.props.element.getAttribute('editable') !== 'false';
-    const textContentType = this.props.element.getAttribute(
-      'text-content-type',
-    );
-    const keyboardType =
-      this.props.element.getAttribute('keyboard-type') || undefined;
-    const props = {
-      ...createProps(this.props.element, this.props.stylesheets, {
-        ...this.props.options,
-        focused,
-      }),
-      autoFocus: this.props.element.getAttribute('auto-focus') === 'true',
-      editable,
-      keyboardType,
-      multiline:
-        this.props.element.localName === LOCAL_NAME.TEXT_AREA ||
-        this.props.element.getAttribute('multiline') === 'true',
-      onBlur: () => this.setFocus(false),
-      onChangeText: value => {
-        const formattedValue = HvTextField.getFormattedValue(
-          this.props.element,
-          value,
-        );
-        const newElement = this.props.element.cloneNode(true);
-        newElement.setAttribute('value', formattedValue);
-        this.props.onUpdate(null, 'swap', this.props.element, { newElement });
-        this.triggerChangeBehaviors(newElement);
-      },
-      onFocus: () => this.setFocus(true),
-      ref: this.props.options.registerInputHandler,
-      secureTextEntry:
-        this.props.element.getAttribute('secure-text') === 'true',
-      textContentType: textContentType || 'none',
-      value: this.props.element.getAttribute('value'),
-    };
+  // This handler takes care of handling the state, so it shouldn't be debounced
+  const onChangeText = (value: string) => {
+    const formattedValue = HvTextField.getFormattedValue(props.element, value);
+    const newElement = props.element.cloneNode(true);
+    newElement.setAttribute('value', formattedValue);
+    props.onUpdate(null, 'swap', props.element, { newElement });
+    triggerChangeBehaviors(newElement);
+  };
 
-    return React.createElement(TextInput, props);
+  const textInputRef: ElementRef<typeof TextInput> = useRef(null);
+
+  const p = {
+    ...createProps(props.element, props.stylesheets, {
+      ...props.options,
+      focused: textInputRef.current?.isFocused(),
+    }),
+  };
+
+  return (
+    <TextInput
+      {...p}
+      ref={(ref: ?ElementRef<typeof TextInput>) => {
+        textInputRef.current = ref;
+        if (props.options?.registerInputHandler) {
+          props.options.registerInputHandler(ref);
+        }
+      }}
+      autoFocus={autoFocus}
+      defaultValue={defaultValue}
+      editable={editable}
+      keyboardType={keyboardType}
+      multiline={multiline}
+      onBlur={() => setFocus(false)}
+      onChangeText={onChangeText}
+      onFocus={() => setFocus(true)}
+      secureTextEntry={secureTextEntry}
+      textContentType={textContentType}
+    />
+  );
+};
+
+HvTextField.namespaceURI = Namespaces.HYPERVIEW;
+HvTextField.localName = LOCAL_NAME.TEXT_FIELD;
+HvTextField.localNameAliases = [LOCAL_NAME.TEXT_AREA];
+HvTextField.getFormInputValues = (
+  element: Element,
+): Array<[string, string]> => {
+  return getNameValueFormInputValues(element);
+};
+
+/**
+ * Formats the user's input based on element attributes.
+ * Currently supports the "mask" attribute, which will be applied
+ * to format the provided value.
+ */
+HvTextField.getFormattedValue = (element: Element, value: string) => {
+  if (!element.hasAttribute('mask')) {
+    return value;
   }
-}
+  const mask = new TinyMask(element.getAttribute('mask'));
+  // TinyMask returns undefined in some cases (like if the value is an empty string).
+  // In those situations, we want the formatted value to be an empty string
+  // (for proper serialization).
+  return mask.mask(value) || '';
+};
+
+export default HvTextField;

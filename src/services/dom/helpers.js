@@ -11,8 +11,6 @@
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type {
   Document,
-  Element,
-  HvComponentOnUpdate,
   LocalName,
   NamespaceURI,
   Node,
@@ -44,39 +42,14 @@ export const getFirstTag = (
   return null;
 };
 
-export const triggerBehaviors = (
-  targetElement: Element,
-  triggerName: string,
-  onUpdate: HvComponentOnUpdate,
-) => {
-  /*
-  Triggers all events in `targetElement` with trigger `triggerName`
-  */
-  const behaviorElements = getBehaviorElements(targetElement);
-  const matchingBehaviors = behaviorElements.filter(
-    e => e.getAttribute('trigger') === triggerName,
-  );
-
-  matchingBehaviors.forEach(behaviorElement => {
-    const href = behaviorElement.getAttribute('href');
-    const action = behaviorElement.getAttribute('action');
-    const verb = behaviorElement.getAttribute('verb');
-    const targetId = behaviorElement.getAttribute('target');
-    const showIndicatorIds = behaviorElement.getAttribute('show-during-load');
-    const hideIndicatorIds = behaviorElement.getAttribute('hide-during-load');
-    const delay = behaviorElement.getAttribute('delay');
-    const once = behaviorElement.getAttribute('once');
-
-    onUpdate(href, action, targetElement, {
-      behaviorElement,
-      delay,
-      hideIndicatorIds,
-      once,
-      showIndicatorIds,
-      targetId,
-      verb,
-    });
-  });
+export const getPreviousNodeOfType = (node: ?Node, type: NodeType): ?Node => {
+  if (!node || !node.previousSibling) {
+    return null;
+  }
+  if (node.previousSibling?.nodeType === type) {
+    return node.previousSibling;
+  }
+  return getPreviousNodeOfType(node.previousSibling, type);
 };
 
 /**

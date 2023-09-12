@@ -241,12 +241,49 @@ export default class HvScreen extends React.Component {
    * @param opt_href: Optional string href to use when reloading the screen. If not provided,
    * the screen's current URL will be used.
    */
-  reload = (optHref) => {
-    const url = (optHref === undefined || optHref === '#')
+  reload = (optHref, opts) => {
+    const isBlankHref =
+      optHref === null ||
+      optHref === undefined ||
+      optHref === '#' ||
+      optHref === '';
+    const url = isBlankHref
       ? this.state.url // eslint-disable-line react/no-access-state-in-setstate
       : UrlService.getUrlFromHref(optHref, this.state.url); // eslint-disable-line react/no-access-state-in-setstate
+
+    if (!url) {
+      return;
+    }
+
+    const options = opts || {};
+    const {
+      behaviorElement, showIndicatorIds, hideIndicatorIds, once, onEnd,
+    } = options;
+
+    const showIndicatorIdList = showIndicatorIds ? Xml.splitAttributeList(showIndicatorIds) : [];
+    const hideIndicatorIdList = hideIndicatorIds ? Xml.splitAttributeList(hideIndicatorIds) : [];
+
+    if (once) {
+      if (behaviorElement.getAttribute('ran-once')) {
+        // This action is only supposed to run once, and it already ran,
+        // so there's nothing more to do.
+        if (typeof onEnd === 'function') {
+          onEnd();
+        }
+        return;
+      }
+      behaviorElement.setAttribute('ran-once', 'true');
+    }
+
+    let newRoot = this.doc;
+    if (showIndicatorIdList || hideIndicatorIdList){
+      newRoot = Behaviors.setIndicatorsBeforeLoad(showIndicatorIdList, hideIndicatorIdList, newRoot);
+    }
+
+    // Re-render the modifications
     this.needsLoad = true;
     this.setState({
+      doc: newRoot,
       elementError: null,
       error: null,
       url,
@@ -284,12 +321,12 @@ export default class HvScreen extends React.Component {
     );
 
     return (
-      <Contexts.DateFormatContext.Provider value={this.props.formatDate}>
-        <Contexts.RefreshControlComponentContext.Provider value={this.props.refreshControl}>
+      <Contexts.DocContext.Provider value={() => this.doc}>
+        <Contexts.DateFormatContext.Provider value={this.props.formatDate}>
           {screenElement}
           {elementErrorComponent ? (React.createElement(elementErrorComponent, { error: this.state.elementError, onPressReload: () => this.reload() })) : null}
-        </Contexts.RefreshControlComponentContext.Provider>
-      </Contexts.DateFormatContext.Provider>
+        </Contexts.DateFormatContext.Provider>
+      </Contexts.DocContext.Provider>
     );
   }
 
@@ -336,7 +373,7 @@ export default class HvScreen extends React.Component {
       if (element) {
         return element.cloneNode(true);
       }
-      throw new Error();
+      throw new Error(`Element with id ${href} not found in document`);
     }
 
     try {
@@ -370,7 +407,7 @@ export default class HvScreen extends React.Component {
    */
   onUpdate = (href, action, currentElement, opts) => {
     if (action === ACTIONS.RELOAD) {
-      this.reload(href);
+      this.reload(href, opts);
     } else if (action === ACTIONS.DEEP_LINK) {
       Linking.openURL(href);
     } else if (Object.values(NAV_ACTIONS).includes(action)) {
@@ -473,7 +510,7 @@ export default class HvScreen extends React.Component {
       .then((newElement) => {
         // If a target is specified and exists, use it. Otherwise, the action target defaults
         // to the element triggering the action.
-        let targetElement = targetId ? this.doc.getElementById(targetId) : currentElement;
+        let targetElement = targetId ? this.doc?.getElementById(targetId) : currentElement;
         if (!targetElement) {
           targetElement = currentElement;
         }
