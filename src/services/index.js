@@ -78,6 +78,20 @@ export const createStyleProp = (
     styleRules = styleRules.concat(pressedSelectedRules);
   }
 
+  if (options.disabled) {
+    const disabledRules = styleIds
+      .map(s => stylesheets.disabled[s])
+      .filter(Boolean);
+    styleRules = styleRules.concat(disabledRules);
+  }
+
+  if (options.selectedDisabled) {
+    const selectedDisabledRules = styleIds
+      .map(s => stylesheets.selectedDisabled[s])
+      .filter(Boolean);
+    styleRules = styleRules.concat(selectedDisabledRules);
+  }
+
   return styleRules;
 };
 

@@ -253,6 +253,8 @@ export type StyleSheets = {
   pressed: StyleSheet,
   focused: StyleSheet,
   pressedSelected: StyleSheet,
+  disabled: StyleSheet,
+  selectedDisabled: StyleSheet,
 };
 
 export type ComponentRegistry = {
@@ -283,6 +285,8 @@ export type HvComponentOptions = {
   styleAttr?: ?DOMString,
   targetId?: ?DOMString,
   inlineFormattingContext?: ?[Node[], string[]],
+  disabled?: ?boolean,
+  selectedDisabled?: ?boolean,
 };
 
 export type HvComponentOnUpdate = (

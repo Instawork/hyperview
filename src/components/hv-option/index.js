@@ -53,14 +53,17 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
 
     const value = this.props.element.getAttribute('value');
     const selected = this.props.element.getAttribute('selected') === 'true';
+    const disabled = this.props.element.getAttribute('disabled') === 'true';
 
     // Updates options with pressed/selected state, so that child element can render
     // using the appropriate modifier styles.
     const newOptions = {
       ...this.props.options,
+      disabled,
       pressed: this.state.pressed,
       pressedSelected: this.state.pressed && selected,
       selected,
+      selectedDisabled: selected && disabled,
     };
     const props = createProps(
       this.props.element,
@@ -71,20 +74,26 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
     // Option renders as an outer TouchableWithoutFeedback view and inner view.
     // The outer view handles presses, the inner view handles styling.
     const outerProps = {
-      onPress: createEventHandler(() => {
-        if (onSelect) {
-          // Updates the DOM state, causing this element to re-render as selected.
-          // Used in select-single context.
-          onSelect(value);
-        }
-        if (onToggle) {
-          // Updates the DOM state, toggling this element.
-          // Used in select-multiple context.
-          onToggle(value);
-        }
-      }, true),
-      onPressIn: createEventHandler(() => this.setState({ pressed: true })),
-      onPressOut: createEventHandler(() => this.setState({ pressed: false })),
+      onPress: !disabled
+        ? createEventHandler(() => {
+            if (onSelect) {
+              // Updates the DOM state, causing this element to re-render as selected.
+              // Used in select-single context.
+              onSelect(value);
+            }
+            if (onToggle) {
+              // Updates the DOM state, toggling this element.
+              // Used in select-multiple context.
+              onToggle(value);
+            }
+          }, true)
+        : undefined,
+      onPressIn: !disabled
+        ? createEventHandler(() => this.setState({ pressed: true }))
+        : undefined,
+      onPressOut: !disabled
+        ? createEventHandler(() => this.setState({ pressed: false }))
+        : undefined,
       style: undefined,
     };
     if (props.style && props.style.flex) {

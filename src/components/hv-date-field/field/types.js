@@ -19,7 +19,7 @@ export type Props = {|
   children?: Node,
   element: Element,
   focused: boolean,
-  onPress: () => void,
+  onPress: ?() => void,
   options: HvComponentOptions,
   stylesheets: StyleSheets,
   value: ?Date,
