@@ -28,15 +28,22 @@ export const getElements = (
   return Array.from(document.getElementsByTagNameNS(namespaceURI, localName));
 };
 
+export const getStylesheets = (xml: string) => {
+  const document = parser.parseFromString(xml);
+  return Stylesheets.createStylesheets(document);
+};
+
 export const getDummyHvProps = () => ({
   onUpdate: () => {},
   options: {},
   stylesheets: {
+    disabled: [],
     focused: [],
     pressed: [],
     pressedSelected: [],
     regular: [],
     selected: [],
+    selectedDisabled: [],
   },
 });
 
