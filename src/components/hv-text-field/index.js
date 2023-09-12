@@ -38,7 +38,16 @@ const HvTextField = (props: HvComponentProps) => {
   const debounceTimeMs =
     parseInt(props.element.getAttribute('debounce'), 10) || 0;
   const defaultValue = props.element.getAttribute('value');
-  const editable = props.element.getAttribute('editable') !== 'false';
+  const editableAttr = props.element.getAttribute('editable');
+  if (editableAttr) {
+    console.warn(
+      'Deprecation notice: `editable` attribute is deprecated and will be removed in a future version. Use `disabled` attribute instead.',
+    );
+  }
+  const editable =
+    editableAttr !== 'false' &&
+    props.element.getAttribute('disabled') !== 'true';
+
   const keyboardType = props.element.getAttribute('keyboard-type') || undefined;
   const multiline =
     props.element.localName === LOCAL_NAME.TEXT_AREA ||
@@ -81,6 +90,7 @@ const HvTextField = (props: HvComponentProps) => {
   const p = {
     ...createProps(props.element, props.stylesheets, {
       ...props.options,
+      disabled: !editable,
       focused: textInputRef.current?.isFocused(),
     }),
   };

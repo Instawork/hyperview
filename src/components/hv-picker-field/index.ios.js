@@ -193,7 +193,11 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
       <Field
         element={this.props.element}
         focused={this.isFocused()}
-        onPress={this.onFieldPress}
+        onPress={
+          this.props.element.getAttribute('disabled') !== 'true'
+            ? this.onFieldPress
+            : undefined
+        }
         options={this.props.options}
         stylesheets={this.props.stylesheets}
         value={this.getLabelForValue(this.getValue())}

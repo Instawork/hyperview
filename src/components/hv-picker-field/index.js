@@ -176,6 +176,7 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
         testID={testID}
       >
         <Picker
+          enabled={this.props.element.getAttribute('disabled') !== 'true'}
           onBlur={this.onBlur}
           onFocus={this.onFocus}
           onValueChange={onChange}
