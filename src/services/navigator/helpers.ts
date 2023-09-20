@@ -353,6 +353,40 @@ const nodesToMap = (
 };
 
 /**
+ * Clean all of the 'selected' attributes from the document
+ *  to ensure no more than one is true per navigator
+ */
+export const cleanDocSelected = (doc: TypesLegacy.Document) => {
+  const currentRoot = Helpers.getFirstTag(doc, TypesLegacy.LOCAL_NAME.DOC);
+  if (currentRoot) {
+    cleanElementSelected(currentRoot);
+  }
+};
+
+export const cleanElementSelected = (element: TypesLegacy.Element) => {
+  const elements: TypesLegacy.Element[] = getChildElements(element);
+  let hasSelected = false;
+  Array.from(elements).forEach(node => {
+    if (node.nodeType === TypesLegacy.NODE_TYPE.ELEMENT_NODE) {
+      const nodeElement = node as TypesLegacy.Element;
+
+      if (isNavigationElement(nodeElement)) {
+        const isSelected =
+          nodeElement.getAttribute(Types.KEY_SELECTED) || 'false';
+
+        if (isSelected === 'true') {
+          if (hasSelected) {
+            nodeElement.setAttribute(Types.KEY_SELECTED, 'false');
+          }
+          hasSelected = true;
+        }
+        cleanElementSelected(nodeElement);
+      }
+    }
+  });
+};
+
+/**
  * Merge the nodes from the new document into the current
  * All attributes in the current are reset (selected, merge)
  * If an id is found in both docs, the current node is updated
@@ -381,6 +415,7 @@ const mergeNodes = (
 
   const currentMap: Types.RouteMap = nodesToMap(current.childNodes);
 
+  let hasSelected = false;
   Array.from(newNodes).forEach(node => {
     if (node.nodeType === TypesLegacy.NODE_TYPE.ELEMENT_NODE) {
       const newElement = node as TypesLegacy.Element;
@@ -402,10 +437,15 @@ const mergeNodes = (
               newElement.localName === TypesLegacy.LOCAL_NAME.NAV_ROUTE
             ) {
               // Update the selected route
-              currentElement.setAttribute(
-                Types.KEY_SELECTED,
-                newElement.getAttribute(Types.KEY_SELECTED) || 'false',
-              );
+              const isSelected =
+                newElement.getAttribute(Types.KEY_SELECTED) || 'false';
+              if (isSelected === 'true') {
+                if (!hasSelected) {
+                  currentElement.setAttribute(Types.KEY_SELECTED, 'true');
+                }
+                hasSelected = true;
+              }
+
               mergeNodes(currentElement, newElement.childNodes);
             }
           } else {
@@ -427,9 +467,11 @@ export const mergeDocument = (
   currentDoc?: TypesLegacy.Document,
 ): TypesLegacy.Document => {
   if (!currentDoc) {
+    cleanDocSelected(newDoc);
     return newDoc;
   }
   if (!newDoc || !newDoc.childNodes) {
+    cleanDocSelected(currentDoc);
     return currentDoc;
   }
 
