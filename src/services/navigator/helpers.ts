@@ -60,7 +60,7 @@ export const getSelectedNavRouteElement = (
   }
 
   const selectedChild = elements.find(
-    child => child.getAttribute('selected') === 'true',
+    child => child.getAttribute(Types.KEY_SELECTED) === 'true',
   );
 
   return selectedChild;
@@ -236,7 +236,7 @@ export const getRouteById = (
       TypesLegacy.LOCAL_NAME.NAV_ROUTE,
     )
     .filter((n: TypesLegacy.Element) => {
-      return n.getAttribute('id') === id;
+      return n.getAttribute(Types.KEY_ID) === id;
     });
   return routes && routes.length > 0 ? routes[0] : undefined;
 };
@@ -342,7 +342,7 @@ const nodesToMap = (
     if (node.nodeType === TypesLegacy.NODE_TYPE.ELEMENT_NODE) {
       const element = node as TypesLegacy.Element;
       if (isNavigationElement(element)) {
-        const id = element.getAttribute('id');
+        const id = element.getAttribute(Types.KEY_ID);
         if (id) {
           map[id] = element;
         }
@@ -385,12 +385,13 @@ const mergeNodes = (
     if (node.nodeType === TypesLegacy.NODE_TYPE.ELEMENT_NODE) {
       const newElement = node as TypesLegacy.Element;
       if (isNavigationElement(newElement)) {
-        const id = newElement.getAttribute('id');
+        const id = newElement.getAttribute(Types.KEY_ID);
         if (id) {
           const currentElement = currentMap[id] as TypesLegacy.Element;
           if (currentElement) {
             if (newElement.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR) {
-              const isMergeable = newElement.getAttribute('merge') === 'true';
+              const isMergeable =
+                newElement.getAttribute(Types.KEY_MERGE) === 'true';
               if (isMergeable) {
                 currentElement.setAttribute(Types.KEY_MERGE, 'true');
                 mergeNodes(currentElement, newElement.childNodes);
@@ -494,7 +495,7 @@ export const removeStackRoute = (
   const route = getRouteById(doc, id);
   if (route && route.parentNode) {
     const parentNode = route.parentNode as TypesLegacy.Element;
-    const type = parentNode.getAttribute('type');
+    const type = parentNode.getAttribute(Types.KEY_TYPE);
     if (type === Types.NAVIGATOR_TYPE.STACK) {
       route.parentNode.removeChild(route);
     }
