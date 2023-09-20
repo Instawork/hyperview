@@ -14,6 +14,8 @@ export const ID_MODAL = 'modal';
 export const KEY_MERGE = 'merge';
 export const KEY_SELECTED = 'selected';
 export const KEY_MODAL = 'modal';
+export const KEY_ID = 'id';
+export const KEY_TYPE = 'type';
 
 /**
  * Definition of the available navigator types
