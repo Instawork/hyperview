@@ -67,7 +67,7 @@ In HXML, text content can only appear in `<text>` elements:
 
 ### Form inputs
 
-In HTML, the `<input>` element has a `type` attribute that's used to render the element as a checbox or radio input. The use of a shared `name` attribute determines the behavior of a group of inputs (whether one or multiple can be selected).
+In HTML, the `<input>` element has a `type` attribute that's used to render the element as a checkbox or radio input. The use of a shared `name` attribute determines the behavior of a group of inputs (whether one or multiple can be selected).
 
 In HXML, two parent elements called [`<select-single>`](/docs/reference_selectsingle) and [`<select-multiple>`](/docs/reference_selectmultiple) take several [`<option>`](/docs/reference_option) elements. The outer element determines whether one or many options can be selected. The [`<option>`](/docs/reference_option) element has no default styling, and can be customized to look like a checkbox, button, or anything else.
 
