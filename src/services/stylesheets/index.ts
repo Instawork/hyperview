@@ -77,6 +77,7 @@ const STYLE_ATTRIBUTE_CONVERTERS = {
   borderTopWidth: number,
   borderWidth: number,
   bottom: numberOrPercent,
+  columnGap: number,
   display: string,
   elevation: number,
   flex: number,
@@ -85,6 +86,7 @@ const STYLE_ATTRIBUTE_CONVERTERS = {
   flexGrow: number,
   flexShrink: number,
   flexWrap: string,
+  gap: number,
   height: numberOrPercent,
   justifyContent: string,
   left: numberOrPercent,
@@ -109,6 +111,7 @@ const STYLE_ATTRIBUTE_CONVERTERS = {
   paddingVertical: numberOrPercent,
   position: string,
   right: numberOrPercent,
+  rowGap: number,
   top: numberOrPercent,
   width: numberOrPercent,
   zIndex: number,
@@ -173,13 +176,12 @@ function createStylesheet(document: Document, modifiers = {}): StyleSheetType {
     for (let i = 0; i < styleElements.length; i += 1) {
       const styleElement = styleElements.item(i);
       const hasModifier =
-        styleElement.parentNode &&
-        styleElement.parentNode.tagName === 'modifier';
+        styleElement?.parentNode?.tagName === 'modifier';
 
-      let styleId = styleElement.getAttribute('id');
+      let styleId = styleElement?.getAttribute('id');
       if (hasModifier) {
         // TODO(adam): Use less hacky way to get id of parent style element.
-        styleId = styleElement.parentNode.parentNode.getAttribute('id');
+        styleId = styleElement?.parentNode?.parentNode?.getAttribute('id');
       }
 
       // This must be a root style or a modifier style
@@ -195,7 +197,7 @@ function createStylesheet(document: Document, modifiers = {}): StyleSheetType {
         const [modifier, state] = modifierEntries[j];
 
         const elementModifierState =
-          styleElement.parentNode.getAttribute(modifier) === 'true';
+          styleElement?.parentNode?.getAttribute(modifier) === 'true';
 
         if (elementModifierState !== state) {
           matchesModifiers = false;
@@ -209,11 +211,15 @@ function createStylesheet(document: Document, modifiers = {}): StyleSheetType {
       }
 
       const rules: Record<string, any> = {};
-      for (let j = 0; j < styleElement.attributes.length; j += 1) {
-        const attr = styleElement.attributes.item(j);
-        const converter = STYLE_ATTRIBUTE_CONVERTERS[attr.name];
-        if (converter) {
-          rules[attr.name] = converter(attr.value);
+      if (styleElement?.attributes !== null && typeof styleElement?.attributes !== 'undefined') {
+        for (let j = 0; j < styleElement.attributes.length; j += 1) {
+          const attr = styleElement.attributes.item(j);
+          if (attr !== null && typeof attr !== 'undefined') {
+            const converter = STYLE_ATTRIBUTE_CONVERTERS[attr.name as keyof typeof STYLE_ATTRIBUTE_CONVERTERS];
+            if (converter) {
+              rules[attr.name] = converter(attr.value);
+            }
+          }
         }
       }
 

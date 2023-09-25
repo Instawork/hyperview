@@ -6,6 +6,7 @@
  *
  */
 
+import type { Event } from '@react-native-community/datetimepicker';
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type { DOMString, Element, HvComponentProps } from 'hyperview/src/types';
@@ -35,7 +36,7 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
     return getNameValueFormInputValues(element);
   };
 
-  props: HvComponentProps;
+  declare props: HvComponentProps;
 
   /**
    * Given a Date object, returns an ISO date string (YYYY-MM-DD). If the Date
@@ -66,8 +67,7 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
   };
 
   /**
-   * Shows the picker, defaulting to the field's value. If the field is not set, use today's date
-   * in the picker.
+   * Shows the picker, defaulting to the field's value. If the field is not set, use today's date in the picker.
    */
   onFieldPress = () => {
     const newElement = this.props.element.cloneNode(true);
@@ -78,8 +78,10 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
     // Focus the field and populate the picker with the field's value.
     newElement.setAttribute('focused', 'true');
     newElement.setAttribute('picker-value', value);
-    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
-    Behaviors.trigger('focus', newElement, this.props.onUpdate);
+    if (this.props.onUpdate !== null) {
+      this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+      Behaviors.trigger('focus', newElement, this.props.onUpdate);
+    }
   };
 
   /**
@@ -89,8 +91,10 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
     const newElement = this.props.element.cloneNode(true);
     newElement.setAttribute('focused', 'false');
     newElement.removeAttribute('picker-value');
-    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
-    Behaviors.trigger('blur', newElement, this.props.onUpdate);
+    if (this.props.onUpdate !== null) {
+      this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+      Behaviors.trigger('blur', newElement, this.props.onUpdate);
+    }
   };
 
   /**
@@ -105,11 +109,13 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
     newElement.setAttribute('value', value);
     newElement.removeAttribute('picker-value');
     newElement.setAttribute('focused', 'false');
-    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
-    if (hasChanged) {
-      Behaviors.trigger('change', newElement, this.props.onUpdate);
+    if (this.props.onUpdate !== null) {
+      this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+      if (hasChanged) {
+        Behaviors.trigger('change', newElement, this.props.onUpdate);
+      }
+      Behaviors.trigger('blur', newElement, this.props.onUpdate);
     }
-    Behaviors.trigger('blur', newElement, this.props.onUpdate);
   };
 
   /**
@@ -119,7 +125,9 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
     const formattedValue: string = HvDateField.createStringFromDate(value);
     const newElement = this.props.element.cloneNode(true);
     newElement.setAttribute('picker-value', formattedValue);
-    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+    if (this.props.onUpdate !== null) {
+      this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+    }
   };
 
   /**
@@ -169,14 +177,13 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
     // On iOS, the "default" mode renders a system-styled field that needs
     // to be tapped again in order to unveil the picker. We default it to spinner
     // so that the picking experience is available immediately.
-    const displayMode: DOMString | null | undefined =
+    const displayMode: 'spinner' | 'default' =
       this.props.element.getAttribute('mode') || Platform.OS === 'ios'
         ? 'spinner'
         : 'default';
     const locale:
       | DOMString
-      | null
-      | undefined = this.props.element.getAttribute('locale');
+      | undefined = this.props.element.getAttribute('locale') ?? undefined;
 
     return (
       <DateTimePicker
@@ -255,5 +262,5 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
         <Content />
       </Field>
     );
-  }
+  };
 }

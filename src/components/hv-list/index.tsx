@@ -8,18 +8,28 @@
 
 import * as Contexts from 'hyperview/src/contexts';
 import * as Dom from 'hyperview/src/services/dom';
+import * as Keyboard from 'hyperview/src/services/keyboard';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
+import type {
+  DOMString,
+  Document,
+  Element,
+  HvComponentOnUpdate,
+  HvComponentOptions,
+  HvComponentProps,
+} from 'hyperview/src/types';
 import {
   RefreshControl as DefaultRefreshControl,
   FlatList,
   Platform,
 } from 'react-native';
 import React, { PureComponent } from 'react';
+import type { ScrollParams, State } from './types';
 import { DOMParser } from '@instawork/xmldom';
-import type { HvComponentProps } from 'hyperview/src/types';
+import type { ElementRef } from 'react';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import type { State } from './types';
+import { getAncestorByTagName } from 'hyperview/src/services';
 
 export default class HvList extends PureComponent<HvComponentProps, State> {
   static namespaceURI = Namespaces.HYPERVIEW;
@@ -28,14 +38,107 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
 
   static localNameAliases = [];
 
-  static contextType = Contexts.RefreshControlComponentContext;
+  static contextType = Contexts.DocContext;
+
+  declare context: React.ContextType<typeof Contexts.DocContext>;
 
   parser: DOMParser = new DOMParser();
 
-  props: HvComponentProps;
+  declare props: HvComponentProps;
+
+  ref: ElementRef<typeof FlatList> | null | undefined;
 
   state: State = {
     refreshing: false,
+  };
+
+  onRef = (ref?: ElementRef<typeof FlatList> | null) => {
+    this.ref = ref;
+  };
+
+  onUpdate: HvComponentOnUpdate = (
+    href: DOMString | null | undefined,
+    action: DOMString | null | undefined,
+    element: Element,
+    options: HvComponentOptions,
+  ) => {
+    if (action === 'scroll' && options.behaviorElement) {
+      this.handleScrollBehavior(options.behaviorElement);
+      return;
+    }
+    if (this.props.onUpdate !== null) {
+      this.props.onUpdate(href, action, element, options);
+    }
+  };
+
+  handleScrollBehavior = (behaviorElement: Element) => {
+    const targetId:
+      | DOMString
+      | null
+      | undefined = behaviorElement?.getAttribute('target');
+    if (!targetId) {
+      console.warn('[behaviors/scroll]: missing "target" attribute');
+      return;
+    }
+    const doc: Document | null | undefined =
+      this.context === null ? null : this.context();
+    const targetElement: Element | null | undefined = doc?.getElementById(
+      targetId,
+    );
+    if (!targetElement) {
+      return;
+    }
+
+    const targetElementParentList = getAncestorByTagName(
+      targetElement,
+      LOCAL_NAME.LIST,
+    );
+    if (targetElementParentList !== this.props.element) {
+      return;
+    }
+    const listItems = Array.from(
+      this.props.element.getElementsByTagNameNS(
+        Namespaces.HYPERVIEW,
+        LOCAL_NAME.ITEM,
+      ),
+    );
+
+    // Target can either be an <item> or a child of an <item>
+    const targetListItem =
+      targetElement.localName === LOCAL_NAME.ITEM
+        ? targetElement
+        : getAncestorByTagName(targetElement, LOCAL_NAME.ITEM);
+
+    if (!targetListItem) {
+      return;
+    }
+
+    // find index of target in list
+    const index = listItems.indexOf(targetListItem);
+    if (index < 0) {
+      return;
+    }
+
+    const animated: boolean =
+      behaviorElement?.getAttributeNS(
+        Namespaces.HYPERVIEW_SCROLL,
+        'animated',
+      ) === 'true';
+    const params: ScrollParams = { animated, index };
+
+    const viewOffset: number | null | undefined =
+      Dom.safeParseIntAttributeNS(behaviorElement, Namespaces.HYPERVIEW_SCROLL, 'offset');
+    if (typeof viewOffset === 'number') {
+      params.viewOffset = viewOffset;
+    }
+
+    const viewPosition: number | null | undefined =
+      Dom.safeParseFloatAttributeNS(behaviorElement, Namespaces.HYPERVIEW_SCROLL, 'position');
+    if (typeof viewPosition === 'number') {
+      params.viewPosition = viewPosition;
+    }
+
+    this.ref?.scrollToIndex(params);
   };
 
   refresh = () => {
@@ -53,22 +156,27 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
         const once = e.getAttribute('once');
         const onEnd =
           i === 0 ? () => this.setState({ refreshing: false }) : null;
-        this.props.onUpdate(path, action, this.props.element, {
-          behaviorElement: e,
-          delay,
-          hideIndicatorIds,
-          once,
-          onEnd,
-          showIndicatorIds,
-          targetId,
-        });
+        if (this.props.onUpdate !== null) {
+          this.props.onUpdate(path, action, this.props.element, {
+            behaviorElement: e,
+            delay,
+            hideIndicatorIds,
+            once,
+            onEnd,
+            showIndicatorIds,
+            targetId,
+          });
+        }
       });
   };
 
   getItems = () => {
-    const isOwnedBySelf = (item: undefined) => {
+    const isOwnedBySelf = (item: Element): boolean => {
       if (item.parentNode === this.props.element) {
         return true;
+      }
+      if (item.parentNode === null || typeof item.parentNode === 'undefined') {
+        return false;
       }
       if (
         item.parentNode.tagName === LOCAL_NAME.ITEMS &&
@@ -112,43 +220,59 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
         ? { right: 1 }
         : undefined;
 
-    const listProps = {
-      data: this.getItems(),
-      horizontal,
-      keyExtractor: item => item && item.getAttribute('key'),
-      renderItem: ({ item }) => {
-        return (
-          item &&
-          Render.renderElement(
-            item,
-            this.props.stylesheets,
-            this.props.onUpdate,
-            this.props.options,
-          )
-        );
-      },
-      scrollIndicatorInsets,
-      showsHorizontalScrollIndicator: horizontal && showScrollIndicator,
-      showsVerticalScrollIndicator: !horizontal && showScrollIndicator,
-      style,
-    } as const;
+    // add sticky indices
+    const stickyHeaderIndices = Array.from(
+      this.props.element.getElementsByTagNameNS(
+        Namespaces.HYPERVIEW,
+        LOCAL_NAME.ITEM,
+      ),
+    ).reduce<Array<any>>((acc, element, index) => {
+      return typeof element !== 'string' &&
+        element &&
+        element.getAttribute &&
+        element.getAttribute('sticky') === 'true'
+        ? [...acc, index]
+        : acc;
+    }, []);
 
-    let refreshProps: Record<string, any> = {};
-    if (this.props.element.getAttribute('trigger') === 'refresh') {
-      const RefreshControl = this.context || DefaultRefreshControl;
-      refreshProps = {
-        refreshControl: (
-          <RefreshControl
-            onRefresh={this.refresh}
-            refreshing={this.state.refreshing}
-          />
-        ),
-      };
-    }
-
-    return React.createElement(FlatList, {
-      ...listProps,
-      ...refreshProps,
-    });
+    return (
+      <Contexts.RefreshControlComponentContext.Consumer>
+        {ContextRefreshControl => {
+          const RefreshControl = ContextRefreshControl || DefaultRefreshControl;
+          return (
+            <FlatList
+              ref={this.onRef}
+              data={this.getItems()}
+              horizontal={horizontal}
+              keyboardDismissMode={Keyboard.getKeyboardDismissMode(
+                this.props.element,
+              )}
+              keyExtractor={item => item && item.getAttribute('key')}
+              refreshControl={
+                <RefreshControl
+                  onRefresh={this.refresh}
+                  refreshing={this.state.refreshing}
+                />
+              }
+              removeClippedSubviews={false}
+              renderItem={({ item }) =>
+                item &&
+                Render.renderElement(
+                  item,
+                  this.props.stylesheets,
+                  this.onUpdate,
+                  this.props.options,
+                )
+              }
+              scrollIndicatorInsets={scrollIndicatorInsets}
+              showsHorizontalScrollIndicator={horizontal && showScrollIndicator}
+              showsVerticalScrollIndicator={!horizontal && showScrollIndicator}
+              stickyHeaderIndices={stickyHeaderIndices}
+              style={style}
+            />
+          );
+        }}
+      </Contexts.RefreshControlComponentContext.Consumer>
+    );
   }
 }

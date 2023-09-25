@@ -4,6 +4,7 @@
     "allowJs": false,
     "checkJs": false,
     "outDir": "lib",
+    "baseUrl": ".",
     "paths": {
       "hyperview/*": ["./*"],
       "flow-to-typescript-codemod": ["./src/flow.d.ts"]

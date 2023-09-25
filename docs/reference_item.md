@@ -55,6 +55,7 @@ An `<item>` element can only apear as a direct child of a `<list>` or `<section-
 - [`style`](#style)
 - [`id`](#id)
 - [`hide`](#hide)
+- [`sticky`](#sticky)
 
 #### Behavior attributes
 
@@ -91,3 +92,13 @@ A global attribute uniquely identifying the element in the whole document.
 | **false** (default), true | No       |
 
 If `hide="true"`, the element will not be rendered on screen. If the element or any of the element's children have a behavior that triggers on "load" or "visible", those behaviors will not trigger while the element is hidden.
+
+#### `sticky`
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| **false** (default), true | No       |
+
+Makes the item "sticky" at the top of the list when scrolling, until another item with the sticky attribute replaces it.
+
+**NOTE:** This attribute is only observed for `<item>` element rendered within a `<list>` element. `<section-list>` element has its own mechanism for sticky section headers, hence does not support setting individual items as sticky.

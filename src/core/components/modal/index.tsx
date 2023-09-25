@@ -6,13 +6,19 @@
  *
  */
 
-import { Animated, Modal, StyleSheet, View } from 'react-native';
-import React, { useRef, useState } from 'react';
-import type { LayoutEvent } from 'react-native/Libraries/Types/CoreEventTypes';
+import {
+  Animated,
+  LayoutChangeEvent,
+  Modal,
+  StyleSheet,
+  View,
+} from 'react-native';
+import React, { ReactNode, useRef, useState } from 'react';
 import ModalButton from './modal-button';
 import Overlay from './overlay';
 import type { Props } from './types';
 import type { StyleSheet as StyleSheetType } from 'hyperview/src/types';
+import * as Dom from 'hyperview/src/services/dom';
 import { createStyleProp } from 'hyperview/src/services';
 import styles from './styles';
 
@@ -21,7 +27,7 @@ import styles from './styles';
  * Uses styles defined on the <picker-field> element for the modal and buttons.
  * This is used on iOS only.
  */
-export default (props: Props): Node => {
+export default (props: Props): ReactNode => {
   const [visible, setVisible] = useState(props.isFocused());
   const [height, setHeight] = useState(0);
 
@@ -56,13 +62,13 @@ export default (props: Props): Node => {
     }),
   );
 
-  const onLayout = (event: LayoutEvent) => {
+  const onLayout = (event: LayoutChangeEvent) => {
     setHeight(event.nativeEvent.layout.height);
   };
 
   const getDuration = (attribute: string, defaultValue: number) => {
-    const value = parseInt(props.element.getAttribute(attribute), 10);
-    return Number.isNaN(value) || value < 0 ? defaultValue : value;
+    const value = Dom.safeParseIntAttribute(props.element, attribute);
+    return value ?? defaultValue;
   };
 
   const animationDuration: number = getDuration(
@@ -145,7 +151,7 @@ export default (props: Props): Node => {
               onPress={onDone}
             />
           </View>
-          {props.children}
+          <>{props.children}</>
         </View>
       </Animated.View>
     </Modal>

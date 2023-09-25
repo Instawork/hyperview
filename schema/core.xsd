@@ -5,11 +5,16 @@
   targetNamespace="https://hyperview.org/hyperview"
   xmlns:hv="https://hyperview.org/hyperview"
   xmlns:alert="https://hyperview.org/hyperview-alert"
+  xmlns:scroll="https://hyperview.org/hyperview-scroll"
 >
 
   <xs:import
     namespace="https://hyperview.org/hyperview-alert"
     schemaLocation="alert.xsd"
+  />
+  <xs:import
+    namespace="https://hyperview.org/hyperview-scroll"
+    schemaLocation="scroll.xsd"
   />
 
   <xs:simpleType name="action">
@@ -398,7 +403,9 @@
     <xs:attribute name="new-value" type="xs:string" />
     <xs:attribute name="copy-to-clipboard-value" type="xs:string" />
     <xs:attribute name="immediate" type="xs:boolean" />
+    <xs:attribute name="debounce" type="xs:nonNegativeInteger" />
     <xs:attributeGroup ref="alert:alertAttributes" />
+    <xs:attributeGroup ref="scroll:scrollAttributes" />
   </xs:attributeGroup>
 
   <xs:attributeGroup name="scrollAttributes">
@@ -413,6 +420,15 @@
     </xs:attribute>
     <xs:attribute name="shows-scroll-indicator" type="xs:boolean" />
     <xs:attribute name="content-container-style" type="hv:styleList" />
+    <xs:attribute name="keyboard-dismiss-mode">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="none" />
+          <xs:enumeration value="on-drag" />
+          <xs:enumeration value="interactive" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
   </xs:attributeGroup>
 
   <xs:element name="doc">
@@ -554,6 +570,8 @@
 
       <xs:attribute name="color" type="hv:color" />
 
+      <xs:attribute name="columnGap" type="xs:integer" />
+
       <xs:attribute name="display">
         <xs:simpleType>
           <xs:restriction base="xs:string">
@@ -628,6 +646,8 @@
         </xs:simpleType>
       </xs:attribute>
 
+      <xs:attribute name="gap" type="xs:integer" />
+
       <xs:attribute name="height" type="hv:pointsOrPercent" />
 
       <xs:attribute name="id" type="xs:NCName" />
@@ -697,6 +717,7 @@
       </xs:attribute>
 
       <xs:attribute name="right" type="hv:pointsOrPercent" />
+      <xs:attribute name="rowGap" type="xs:integer" />
       <xs:attribute name="shadowColor" type="hv:color" />
       <xs:attribute name="shadowOffsetX" type="xs:integer" />
       <xs:attribute name="shadowOffsetY" type="xs:decimal" />
@@ -867,6 +888,15 @@
       <xs:attribute name="hide" type="xs:boolean" />
       <xs:attribute name="value" type="xs:string" />
       <xs:attribute name="sticky-section-titles" type="xs:boolean" />
+      <xs:attribute name="keyboard-dismiss-mode">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="none" />
+          <xs:enumeration value="on-drag" />
+          <xs:enumeration value="interactive" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
       <xs:attributeGroup ref="hv:behaviorAttributes" />
     </xs:complexType>
   </xs:element>
@@ -919,6 +949,7 @@
       <xs:attribute name="key" type="hv:KEY" use="required" />
       <xs:attribute name="hide" type="xs:boolean" />
       <xs:attribute name="value" type="xs:string" />
+      <xs:attribute name="sticky" type="xs:boolean" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
     </xs:complexType>
   </xs:element>
@@ -1068,6 +1099,12 @@
             <xs:enumeration value="decimal-pad" />
             <xs:enumeration value="phone-pad" />
             <xs:enumeration value="email-address" />
+            <xs:enumeration value="url" />
+            <xs:enumeration value="ascii-capable" />
+            <xs:enumeration value="numbers-and-punctuation" />
+            <xs:enumeration value="name-phone-pad" />
+            <xs:enumeration value="twitter" />
+            <xs:enumeration value="web-search" />
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>

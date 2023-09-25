@@ -40,6 +40,19 @@ export const getFirstTag = (
   return null;
 };
 
+export const getPreviousNodeOfType = (
+  node: Node | null,
+  type: NodeType,
+): Node | null => {
+  if (!node || !node.previousSibling) {
+    return null;
+  }
+  if (node.previousSibling?.nodeType === type) {
+    return node.previousSibling;
+  }
+  return getPreviousNodeOfType(node.previousSibling, type);
+};
+
 /**
  * N-ary Tree Preorder Traversal
  */
@@ -58,4 +71,56 @@ export const preorder = (
     acc.push(root);
   }
   return acc;
+};
+
+export const safeParseIntAttribute = (
+  element: Element,
+  attribute: string,
+): number | undefined => {
+  const attrValue = element.getAttribute(attribute);
+  if (attrValue === null || typeof attrValue === 'undefined') {
+    return undefined;
+  }
+  return parseInt(attrValue, 10);
+};
+
+export const safeParseIntAttributeNS = (
+  element: Element | null | undefined,
+  namespaceURI: NamespaceURI,
+  localName: LocalName,
+): number | undefined => {
+  if (!element) {
+    return undefined;
+  }
+  const attrValue = element.getAttributeNS(namespaceURI, localName);
+  if (attrValue === null || typeof attrValue === 'undefined') {
+    return undefined;
+  }
+  return parseInt(attrValue, 10);
+};
+
+export const safeParseFloatAttribute = (
+  element: Element,
+  attribute: string,
+): number | undefined => {
+  const attrValue = element.getAttribute(attribute);
+  if (attrValue === null || typeof attrValue === 'undefined') {
+    return undefined;
+  }
+  return parseFloat(attrValue);
+};
+
+export const safeParseFloatAttributeNS = (
+  element: Element | null | undefined,
+  namespaceURI: NamespaceURI,
+  localName: LocalName,
+): number | undefined => {
+  if (!element) {
+    return undefined;
+  }
+  const attrValue = element.getAttributeNS(namespaceURI, localName);
+  if (attrValue === null || typeof attrValue === 'undefined') {
+    return undefined;
+  }
+  return parseFloat(attrValue);
 };

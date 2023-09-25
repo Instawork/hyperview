@@ -6,6 +6,7 @@
  *
  */
 
+import * as Keyboard from 'hyperview/src/services/keyboard';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import type {
@@ -44,7 +45,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
     LOCAL_NAME.SECTION_TITLE,
   ];
 
-  props: HvComponentProps;
+  declare props: HvComponentProps;
 
   get attributes(): Attributes {
     return Object.values(ATTRIBUTES).reduce<Record<string, any>>(
@@ -70,6 +71,8 @@ export default class HvView extends PureComponent<HvComponentProps> {
 
   getCommonProps = (): CommonProps => {
     // TODO: fix type
+    //       createStyleProp returns an array of StyleSheet, but it appears something wants a ViewStyle, which is not
+    //       not an array type. Does a type need to get fixed elsewhere?
     const style = (createStyleProp(
       this.props.element,
       this.props.stylesheets,
@@ -107,7 +110,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
         ? { right: 1 }
         : undefined;
 
-    // add sticky indicies
+    // add sticky indices
     const stickyHeaderIndices = children.reduce<Array<any>>(
       (acc, element, index) => {
         return typeof element !== 'string' &&
@@ -121,6 +124,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
     return {
       contentContainerStyle,
       horizontal,
+      keyboardDismissMode: Keyboard.getKeyboardDismissMode(this.props.element),
       scrollIndicatorInsets,
       showsHorizontalScrollIndicator: horizontal && showScrollIndicator,
       showsVerticalScrollIndicator: !horizontal && showScrollIndicator,
