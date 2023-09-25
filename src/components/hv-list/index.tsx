@@ -126,14 +126,23 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
       ) === 'true';
     const params: ScrollParams = { animated, index };
 
-    const viewOffset: number | null | undefined =
-      Dom.safeParseIntAttributeNS(behaviorElement, Namespaces.HYPERVIEW_SCROLL, 'offset');
+    const viewOffset: number | null | undefined = Dom.safeParseIntAttributeNS(
+      behaviorElement,
+      Namespaces.HYPERVIEW_SCROLL,
+      'offset',
+    );
     if (typeof viewOffset === 'number') {
       params.viewOffset = viewOffset;
     }
 
-    const viewPosition: number | null | undefined =
-      Dom.safeParseFloatAttributeNS(behaviorElement, Namespaces.HYPERVIEW_SCROLL, 'position');
+    const viewPosition:
+      | number
+      | null
+      | undefined = Dom.safeParseFloatAttributeNS(
+      behaviorElement,
+      Namespaces.HYPERVIEW_SCROLL,
+      'position',
+    );
     if (typeof viewPosition === 'number') {
       params.viewPosition = viewPosition;
     }

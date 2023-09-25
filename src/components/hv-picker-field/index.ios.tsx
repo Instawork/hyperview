@@ -47,7 +47,11 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
   getPickerInitialValue = (): string => {
     const value = this.getValue();
     const pickerItems: Element[] = this.getPickerItems();
-    if (pickerItems.map((item: Element) => item.getAttribute('value')).includes(value)) {
+    if (
+      pickerItems
+        .map((item: Element) => item.getAttribute('value'))
+        .includes(value)
+    ) {
       return value;
     }
     if (pickerItems.length > 0) {
@@ -73,7 +77,10 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
 
     let item: Element | null | undefined = null;
     for (let i = 0; i < pickerItemElements.length; i += 1) {
-      const pickerItemElement: Element | null | undefined = pickerItemElements.item(i);
+      const pickerItemElement:
+        | Element
+        | null
+        | undefined = pickerItemElements.item(i);
       if (
         pickerItemElement &&
         pickerItemElement.getAttribute('value') === value
@@ -88,14 +95,16 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
   /**
    * Returns a string representing the value in the picker.
    */
-  getPickerValue = (): string => this.props.element.getAttribute('picker-value') || '';
+  getPickerValue = (): string =>
+    this.props.element.getAttribute('picker-value') || '';
 
-  getPickerItems = (): Element[] => Array.from(
-    this.props.element.getElementsByTagNameNS(
-      Namespaces.HYPERVIEW,
-      LOCAL_NAME.PICKER_ITEM,
-    ),
-  );
+  getPickerItems = (): Element[] =>
+    Array.from(
+      this.props.element.getElementsByTagNameNS(
+        Namespaces.HYPERVIEW,
+        LOCAL_NAME.PICKER_ITEM,
+      ),
+    );
 
   /**
    * Shows the picker, defaulting to the field's value. If the field is not set, use the first value in the picker.
@@ -149,7 +158,8 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
   /**
    * Returns true if the field is focused (and picker is showing).
    */
-  isFocused = (): boolean => this.props.element.getAttribute('focused') === 'true';
+  isFocused = (): boolean =>
+    this.props.element.getAttribute('focused') === 'true';
 
   render = (): Node => {
     const style: StyleSheet[] = createStyleProp(
@@ -161,10 +171,13 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
       },
     );
     const { testID, accessibilityLabel } = createTestProps(this.props.element);
-    const value: DOMString | null | undefined = this.props.element.getAttribute('value');
-    const placeholderTextColor: DOMString | null | undefined = this.props.element.getAttribute(
-      'placeholderTextColor',
+    const value: DOMString | null | undefined = this.props.element.getAttribute(
+      'value',
     );
+    const placeholderTextColor:
+      | DOMString
+      | null
+      | undefined = this.props.element.getAttribute('placeholderTextColor');
     if ([undefined, null, ''].includes(value) && placeholderTextColor) {
       style.push({ color: placeholderTextColor });
     }

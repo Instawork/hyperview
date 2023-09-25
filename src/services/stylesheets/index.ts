@@ -175,8 +175,7 @@ function createStylesheet(document: Document, modifiers = {}): StyleSheetType {
 
     for (let i = 0; i < styleElements.length; i += 1) {
       const styleElement = styleElements.item(i);
-      const hasModifier =
-        styleElement?.parentNode?.tagName === 'modifier';
+      const hasModifier = styleElement?.parentNode?.tagName === 'modifier';
 
       let styleId = styleElement?.getAttribute('id');
       if (hasModifier) {
@@ -211,11 +210,17 @@ function createStylesheet(document: Document, modifiers = {}): StyleSheetType {
       }
 
       const rules: Record<string, any> = {};
-      if (styleElement?.attributes !== null && typeof styleElement?.attributes !== 'undefined') {
+      if (
+        styleElement?.attributes !== null &&
+        typeof styleElement?.attributes !== 'undefined'
+      ) {
         for (let j = 0; j < styleElement.attributes.length; j += 1) {
           const attr = styleElement.attributes.item(j);
           if (attr !== null && typeof attr !== 'undefined') {
-            const converter = STYLE_ATTRIBUTE_CONVERTERS[attr.name as keyof typeof STYLE_ATTRIBUTE_CONVERTERS];
+            const converter =
+              STYLE_ATTRIBUTE_CONVERTERS[
+                attr.name as keyof typeof STYLE_ATTRIBUTE_CONVERTERS
+              ];
             if (converter) {
               rules[attr.name] = converter(attr.value);
             }

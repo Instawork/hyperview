@@ -181,9 +181,8 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
       this.props.element.getAttribute('mode') || Platform.OS === 'ios'
         ? 'spinner'
         : 'default';
-    const locale:
-      | DOMString
-      | undefined = this.props.element.getAttribute('locale') ?? undefined;
+    const locale: DOMString | undefined =
+      this.props.element.getAttribute('locale') ?? undefined;
 
     return (
       <DateTimePicker
@@ -262,5 +261,5 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
         <Content />
       </Field>
     );
-  };
+  }
 }

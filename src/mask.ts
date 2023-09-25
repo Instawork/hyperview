@@ -1,11 +1,9 @@
 // NOTE(adam): Code originally taken from https://github.com/benhurott/tinymask
 
 export default class TinyMask {
-
   private _options: any;
   private _handlers: any[];
   constructor(pattern: string | undefined | null, options?: any) {
-
     const defaultOptions = {
       translation: {
         9(val: string) {
@@ -47,7 +45,6 @@ export default class TinyMask {
   }
 
   public mask(value: string): string | undefined {
-
     let result = '';
 
     const val = String(value);

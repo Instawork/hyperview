@@ -32,7 +32,8 @@ const HvTextField = (props: HvComponentProps) => {
 
   // Extract known attributes into their own variables
   const autoFocus = props.element.getAttribute('auto-focus') === 'true';
-  const debounceTimeMs = Dom.safeParseIntAttribute(props.element, 'debounce') ?? 0;
+  const debounceTimeMs =
+    Dom.safeParseIntAttribute(props.element, 'debounce') ?? 0;
   const defaultValue = props.element.getAttribute('value');
   const editable = props.element.getAttribute('editable') !== 'false';
   const keyboardType = props.element.getAttribute('keyboard-type') || undefined;
@@ -48,7 +49,6 @@ const HvTextField = (props: HvComponentProps) => {
     const newElement = props.element.cloneNode(true);
     if (props.onUpdate !== null) {
       props.onUpdate(null, 'swap', props.element, { newElement });
-
 
       if (focused) {
         Behaviors.trigger('focus', newElement, props.onUpdate);
@@ -79,7 +79,9 @@ const HvTextField = (props: HvComponentProps) => {
     triggerChangeBehaviors(newElement);
   };
 
-  const textInputRef: MutableRefObject<TextInput | null> = useRef(null as TextInput | null);
+  const textInputRef: MutableRefObject<TextInput | null> = useRef(
+    null as TextInput | null,
+  );
 
   const p = {
     ...createProps(props.element, props.stylesheets, {
