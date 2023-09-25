@@ -15,10 +15,11 @@ export type DOMString = string;
 export type NamespaceURI = string;
 
 export const LOCAL_NAME = {
+  ANIMATED: 'animated',
   BEHAVIOR: 'behavior',
   BODY: 'body',
   DATE_FIELD: 'date-field',
-  DIAGLOG_TITLE: 'dialog-title',
+  DIALOG_TITLE: 'dialog-title',
   DOC: 'doc',
   FORM: 'form',
   HEADER: 'header',
@@ -31,9 +32,11 @@ export const LOCAL_NAME = {
   MODIFIER: 'modifier',
   NAV_ROUTE: 'nav-route',
   NAVIGATOR: 'navigator',
+  OFFSET: 'offset',
   OPTION: 'option',
   PICKER_FIELD: 'picker-field',
   PICKER_ITEM: 'picker-item',
+  POSITION: 'position',
   SCREEN: 'screen',
   SECTION: 'section',
   SECTION_LIST: 'section-list',
@@ -282,7 +285,7 @@ export type HvComponentOptions = {
   hideIndicatorIds?: DOMString | null | undefined;
   staleHeaderType?: XResponseStaleReason;
   once?: DOMString | null | undefined;
-  onEnd?: () => void | null | undefined;
+  onEnd?: (() => void | null | undefined) | null | undefined;
   onSelect?: (value?: DOMString | null | undefined) => void | null | undefined;
   onToggle?: (value?: DOMString | null | undefined) => void | null | undefined;
   preformatted?: boolean | null | undefined;
@@ -304,11 +307,10 @@ export type HvComponentOptions = {
 };
 
 export type HvComponentOnUpdate = (
-  path: DOMString | null | undefined,
+  href: DOMString | null | undefined,
   action: DOMString | null | undefined,
   element: Element,
   options: HvComponentOptions,
-  target?: DOMString | null | undefined,
 ) => void;
 
 export type HvGetRoot = () => Document;
@@ -336,7 +338,8 @@ export type HvComponentStatics = {
 };
 
 export type HvComponent = Flow.Class<
-  React.Component<HvComponentProps, unknown>
+  | React.Component<HvComponentProps, unknown>
+  | React.FunctionComponent<HvComponentProps>
 > &
   HvComponentStatics;
 

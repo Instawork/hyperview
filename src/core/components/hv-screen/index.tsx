@@ -352,10 +352,8 @@ export default class HvScreen extends React.Component {
     );
 
     return (
-      <Contexts.DateFormatContext.Provider value={this.props.formatDate}>
-        <Contexts.RefreshControlComponentContext.Provider
-          value={this.props.refreshControl}
-        >
+      <Contexts.DocContext.Provider value={() => this.doc}>
+        <Contexts.DateFormatContext.Provider value={this.props.formatDate}>
           {screenElement}
           {elementErrorComponent
             ? React.createElement(elementErrorComponent, {
@@ -363,8 +361,8 @@ export default class HvScreen extends React.Component {
                 onPressReload: () => this.reload(),
               })
             : null}
-        </Contexts.RefreshControlComponentContext.Provider>
-      </Contexts.DateFormatContext.Provider>
+        </Contexts.DateFormatContext.Provider>
+      </Contexts.DocContext.Provider>
     );
   }
 
@@ -584,7 +582,7 @@ export default class HvScreen extends React.Component {
           // If a target is specified and exists, use it. Otherwise, the action target defaults
           // to the element triggering the action.
           let targetElement = targetId
-            ? this.doc.getElementById(targetId)
+            ? this.doc?.getElementById(targetId)
             : currentElement;
           if (!targetElement) {
             targetElement = currentElement;

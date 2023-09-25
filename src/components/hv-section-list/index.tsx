@@ -7,20 +7,67 @@
  */
 
 import * as Contexts from 'hyperview/src/contexts';
+import * as Dom from 'hyperview/src/services/dom';
+import * as Keyboard from 'hyperview/src/services/keyboard';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
+import type {
+  DOMString,
+  Document,
+  Element,
+  HvComponentOnUpdate,
+  HvComponentOptions,
+  HvComponentProps,
+  Node,
+  NodeList,
+} from 'hyperview/src/types';
 import {
   RefreshControl as DefaultRefreshControl,
   Platform,
   SectionList,
 } from 'react-native';
-
+import { LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
-
+import type { ScrollParams, State } from './types';
 import { DOMParser } from '@instawork/xmldom';
-import type { HvComponentProps } from 'hyperview/src/types';
-import { LOCAL_NAME } from 'hyperview/src/types';
-import type { State } from './types';
+import type { ElementRef } from 'react';
+import { getAncestorByTagName } from 'hyperview/src/services';
+
+const getSectionIndex = (
+  sectionTitle: Node,
+  sectionTitles: NodeList<Node>,
+): number => {
+  const sectionIndex = Array.from(sectionTitles).indexOf(sectionTitle);
+
+  // If first section did not have an explicit title, we still need to account for it
+  const previousElement = Dom.getPreviousNodeOfType(
+    sectionTitles[0],
+    NODE_TYPE.ELEMENT_NODE,
+  );
+  if (previousElement?.localName === LOCAL_NAME.ITEM) {
+    return sectionIndex + 1;
+  }
+
+  return sectionIndex;
+};
+
+const getPreviousSectionTitle = (
+  element: Node,
+  itemIndex: number,
+): [Node | null, number] => {
+  const { previousSibling } = element;
+  if (!previousSibling) {
+    return [null, itemIndex];
+  }
+  if (previousSibling.localName === LOCAL_NAME.SECTION_TITLE) {
+    return [previousSibling, itemIndex];
+  }
+  if (previousSibling.localName === LOCAL_NAME.ITEM) {
+    // eslint-disable-next-line no-param-reassign
+    itemIndex += 1;
+  }
+  return getPreviousSectionTitle(previousSibling, itemIndex);
+};
 
 export default class HvSectionList extends PureComponent<
   HvComponentProps,
@@ -32,17 +79,180 @@ export default class HvSectionList extends PureComponent<
 
   static localNameAliases = [];
 
-  static contextType = Contexts.RefreshControlComponentContext;
+  static contextType = Contexts.DocContext;
+
+  declare context: React.ContextType<typeof Contexts.DocContext>;
 
   parser: DOMParser = new DOMParser();
 
-  props: HvComponentProps;
+  declare props: HvComponentProps;
+
+  declare ref: ElementRef<typeof SectionList> | null;
 
   state: State = {
     refreshing: false,
   };
 
-  getStickySectionHeadersEnabled = (): boolean | null | undefined => {
+  onRef = (ref: ElementRef<typeof SectionList> | null) => {
+    this.ref = ref;
+  };
+
+  onUpdate: HvComponentOnUpdate = (
+    href: DOMString | null | undefined,
+    action: DOMString | null | undefined,
+    element: Element,
+    options: HvComponentOptions,
+  ) => {
+    if (action === 'scroll' && options.behaviorElement) {
+      this.handleScrollBehavior(options.behaviorElement);
+      return;
+    }
+    if (this.props.onUpdate !== null) {
+      this.props.onUpdate(href, action, element, options);
+    }
+  };
+
+  handleScrollBehavior = (behaviorElement: Element) => {
+    const targetId:
+      | DOMString
+      | null
+      | undefined = behaviorElement?.getAttribute('target');
+    if (!targetId) {
+      console.warn('[behaviors/scroll]: missing "target" attribute');
+      return;
+    }
+    const doc: Document | null = this.context !== null ? this.context() : null;
+    const targetElement: Element | null | undefined = doc?.getElementById(
+      targetId,
+    );
+    if (!targetElement) {
+      return;
+    }
+
+    const targetElementParentList = getAncestorByTagName(
+      targetElement,
+      LOCAL_NAME.SECTION_LIST,
+    );
+    if (targetElementParentList !== this.props.element) {
+      return;
+    }
+
+    // Target can either be an <item> or a child of an <item>
+    const targetListItem =
+      targetElement.localName === LOCAL_NAME.ITEM
+        ? targetElement
+        : getAncestorByTagName(targetElement, LOCAL_NAME.ITEM);
+
+    const animated: boolean =
+      behaviorElement?.getAttributeNS(
+        Namespaces.HYPERVIEW_SCROLL,
+        'animated',
+      ) === 'true';
+
+    const offsetAttribute = behaviorElement?.getAttributeNS(
+      Namespaces.HYPERVIEW_SCROLL,
+      'offset',
+    );
+    const viewOffset: number | null | undefined =
+      offsetAttribute !== null && typeof offsetAttribute !== 'undefined'
+        ? parseInt(offsetAttribute, 10)
+        : undefined;
+
+    const positionAttribute = behaviorElement?.getAttributeNS(
+      Namespaces.HYPERVIEW_SCROLL,
+      'position',
+    );
+    const viewPosition: number | null | undefined =
+      positionAttribute !== null && typeof positionAttribute !== 'undefined'
+        ? parseFloat(positionAttribute)
+        : undefined;
+
+    if (!targetListItem) {
+      return;
+    }
+
+    // find index of target in section-list
+    // first, check legacy section-list format, where items are nested under a <section>
+    const targetElementParentSection = getAncestorByTagName(
+      targetElement,
+      LOCAL_NAME.SECTION,
+    );
+    if (targetElementParentSection) {
+      const sections = this.props.element.getElementsByTagNameNS(
+        Namespaces.HYPERVIEW,
+        LOCAL_NAME.SECTION,
+      );
+      const sectionIndex = Array.from(sections).indexOf(
+        targetElementParentSection,
+      );
+      if (sectionIndex === -1) {
+        return;
+      }
+      const itemsInSection = Array.from(
+        targetElementParentSection.getElementsByTagNameNS(
+          Namespaces.HYPERVIEW,
+          LOCAL_NAME.ITEM,
+        ),
+      );
+      const itemIndex = itemsInSection.indexOf(targetListItem);
+      if (itemIndex === -1) {
+        return;
+      }
+
+      const params: ScrollParams = {
+        animated,
+        itemIndex: itemIndex + 1,
+        sectionIndex,
+      };
+      if (typeof viewOffset === 'number') {
+        params.viewOffset = viewOffset;
+      }
+
+      if (typeof viewPosition === 'number') {
+        params.viewPosition = viewPosition;
+      }
+
+      this.ref?.scrollToLocation(params);
+    } else {
+      // No parent section? Check new section-list format, where items are nested under the
+      // section-list
+      const items = this.props.element.getElementsByTagNameNS(
+        Namespaces.HYPERVIEW,
+        LOCAL_NAME.ITEM,
+      );
+      if (Array.from(items).indexOf(targetListItem) === -1) {
+        return;
+      }
+      const [sectionTitle, itemIndex] = getPreviousSectionTitle(
+        targetListItem,
+        1, // 1 instead of 0 as it appears itemIndex is 1-based
+      );
+      const sectionTitles = this.props.element.getElementsByTagNameNS(
+        Namespaces.HYPERVIEW,
+        LOCAL_NAME.SECTION_TITLE,
+      );
+      const sectionIndex = sectionTitle
+        ? getSectionIndex(sectionTitle, sectionTitles)
+        : 0;
+      if (sectionIndex === -1) {
+        return;
+      }
+      const params: ScrollParams = {
+        animated,
+        itemIndex,
+        sectionIndex,
+      };
+      if (viewOffset) {
+        params.viewOffset = viewOffset;
+      }
+      if (viewPosition) {
+        params.viewPosition = viewPosition;
+      }
+      this.ref?.scrollToLocation(params);
+    }
+  };
+
+  getStickySectionHeadersEnabled = (): boolean | undefined => {
     const stickySectionTitles = this.props.element.getAttribute(
       'sticky-section-titles',
     );
@@ -52,7 +262,12 @@ export default class HvSectionList extends PureComponent<
     if (stickySectionTitles === 'false') {
       return false;
     }
-    return undefined;
+    // Set platform default behavior
+    // https://reactnative.dev/docs/sectionlist#stickysectionheadersenabled
+    return Platform.select({
+      android: false,
+      ios: true,
+    });
   };
 
   refresh = () => {
@@ -67,16 +282,18 @@ export default class HvSectionList extends PureComponent<
     const delay = this.props.element.getAttribute('delay');
     const once = this.props.element.getAttribute('once') || null;
 
-    this.props.onUpdate(path, action, this.props.element, {
-      delay,
-      hideIndicatorIds,
-      once,
-      onEnd: () => {
-        this.setState({ refreshing: false });
-      },
-      showIndicatorIds,
-      targetId,
-    });
+    if (this.props.onUpdate !== null) {
+      this.props.onUpdate(path, action, this.props.element, {
+        delay,
+        hideIndicatorIds,
+        once,
+        onEnd: () => {
+          this.setState({ refreshing: false });
+        },
+        showIndicatorIds,
+        targetId,
+      });
+    }
   };
 
   render() {
@@ -85,9 +302,9 @@ export default class HvSectionList extends PureComponent<
       ? styleAttr.split(' ').map(s => this.props.stylesheets.regular[s])
       : null;
 
-    const flattened: Array<any> = [];
+    const flattened: Element[] = [];
 
-    const addNodes = sectionElement => {
+    const addNodes = (sectionElement: Element) => {
       if (sectionElement.childNodes) {
         for (let j = 0; j < sectionElement.childNodes.length; j += 1) {
           const node = sectionElement.childNodes[j];
@@ -108,15 +325,9 @@ export default class HvSectionList extends PureComponent<
 
     addNodes(this.props.element);
 
-    let items: Array<any> = [];
+    let items = [];
     let titleElement = null;
-    const sections: Array<
-      | any
-      | {
-          data: Array<any>;
-          title: any | null;
-        }
-    > = [];
+    const sections: { data: Element[]; title: Element | null }[] = [];
 
     for (let j = 0; j < flattened.length; j += 1) {
       const sectionElement = flattened[j];
@@ -150,48 +361,50 @@ export default class HvSectionList extends PureComponent<
         ? { right: 1 }
         : undefined;
 
-    const listProps = {
-      keyExtractor: item => item.getAttribute('key'),
-      renderItem: ({ item }) => {
-        return Render.renderElement(
-          item,
-          this.props.stylesheets,
-          this.props.onUpdate,
-          this.props.options,
-        );
-      },
-      renderSectionHeader: ({ section: { title } }) => {
-        return Render.renderElement(
-          title,
-          this.props.stylesheets,
-          this.props.onUpdate,
-          this.props.options,
-        );
-      },
-      scrollIndicatorInsets,
-      sections,
-      stickySectionHeadersEnabled: this.getStickySectionHeadersEnabled(),
-      style,
-    } as const;
-
-    let refreshProps: Record<string, any> = {};
-    if (this.props.element.getAttribute('trigger') === 'refresh') {
-      const RefreshControl = this.context || DefaultRefreshControl;
-      refreshProps = {
-        refreshControl: (
-          <RefreshControl
-            onRefresh={this.refresh}
-            refreshing={this.state.refreshing}
-          />
-        ),
-      };
-    }
-
-    const props: any = {
-      ...listProps,
-      ...refreshProps,
-    };
-
-    return React.createElement(SectionList, props);
+    return (
+      <Contexts.RefreshControlComponentContext.Consumer>
+        {ContextRefreshControl => {
+          const RefreshControl = ContextRefreshControl || DefaultRefreshControl;
+          return (
+            <SectionList
+              ref={this.onRef}
+              keyboardDismissMode={Keyboard.getKeyboardDismissMode(
+                this.props.element,
+              )}
+              keyExtractor={item => item.getAttribute('key')}
+              refreshControl={
+                <RefreshControl
+                  onRefresh={this.refresh}
+                  refreshing={this.state.refreshing}
+                />
+              }
+              removeClippedSubviews={false}
+              renderItem={({ item }) =>
+                // $FlowFixMe: return type of renderElement is not compatible with expected type for renderItem
+                Render.renderElement(
+                  item,
+                  this.props.stylesheets,
+                  this.onUpdate,
+                  this.props.options,
+                )
+              }
+              renderSectionHeader={({ section: { title } }) =>
+                // $FlowFixMe: return type of renderElement is not compatible with expected type for renderSectionHeader
+                Render.renderElement(
+                  title,
+                  this.props.stylesheets,
+                  this.onUpdate,
+                  this.props.options,
+                )
+              }
+              scrollIndicatorInsets={scrollIndicatorInsets}
+              sections={sections}
+              stickySectionHeadersEnabled={this.getStickySectionHeadersEnabled()}
+              style={style}
+            />
+          );
+        }}
+      </Contexts.RefreshControlComponentContext.Consumer>
+    );
   }
 }

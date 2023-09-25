@@ -21,10 +21,38 @@ tags: ui_elements
   <style id="ScrollChild--Vertical" height="40"/>
   <style id="ScrollChild--Horizontal" width="40"/>
   <style id="Text" color="#ffffff" alignSelf="center" textAlign="center" fontSize="24"/>
+  <style
+    id="input"
+    borderBottomColor="#E1E1E1"
+    borderBottomWidth="1"
+    borderColor="#4E4D4D"
+    flex="1"
+    fontSize="16"
+    fontWeight="normal"
+    margin="8"
+    paddingBottom="8"
+    paddingTop="8">
+    <modifier pressed="true">
+      <style borderBottomColor="green"/>
+    </modifier>
+    <modifier focused="true">
+      <style borderBottomColor="#4778FF"/>
+    </modifier>
+  </style>
 {% endblock %}
 {% block content %}
   <text style="Description">Vertical Scroll</text>
   <view scroll="true" style="ScrollContainer ScrollContainer--Vertical">
+    <view style="ScrollChild ScrollChild--Vertical"/>
+    <view style="ScrollChild ScrollChild--Vertical"/>
+    <view style="ScrollChild ScrollChild--Vertical"/>
+    <view style="ScrollChild ScrollChild--Vertical"/>
+    <view style="ScrollChild ScrollChild--Vertical"/>
+    <view style="ScrollChild ScrollChild--Vertical"/>
+  </view>
+  <text style="Description">Dismiss Keyboard On Drag</text>
+  <view scroll="true" keyboard-dismiss-mode="on-drag" style="ScrollContainer ScrollContainer--Vertical">
+    <text-field name="field" style="input" placeholder="Focus me, then scroll!"/>
     <view style="ScrollChild ScrollChild--Vertical"/>
     <view style="ScrollChild ScrollChild--Vertical"/>
     <view style="ScrollChild ScrollChild--Vertical"/>

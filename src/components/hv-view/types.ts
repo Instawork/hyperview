@@ -7,7 +7,7 @@
  */
 
 import type { DOMString } from 'hyperview/src/types';
-import type { ViewStyleProp } from 'react-native/Libraries/StyleSheet/StyleSheet';
+import type { StyleProp, ViewStyle } from 'react-native';
 
 export const ATTRIBUTES = {
   AVOID_KEYBOARD: 'avoid-keyboard',
@@ -36,16 +36,17 @@ export type CommonProps = {
   accessibilityLabel?: string | null | undefined;
   testID?: string | null | undefined;
   children?: any | null | undefined;
-  style?: ViewStyleProp | null | undefined;
+  style?: StyleProp<ViewStyle> | null | undefined;
 };
 
 export type ScrollViewProps = {
   accessibilityLabel?: string | null | undefined;
   testID?: string | null | undefined;
   children?: any | null | undefined;
-  style?: ViewStyleProp | null | undefined;
-  contentContainerStyle?: ViewStyleProp | null | undefined;
+  style?: StyleProp<ViewStyle> | null | undefined;
+  contentContainerStyle?: StyleProp<ViewStyle> | null | undefined;
   horizontal?: boolean | null | undefined;
+  keyboardDismissMode?: 'none' | 'on-drag' | 'interactive' | null | undefined;
   scrollIndicatorInsets?: Readonly<{
     bottom?: number | null | undefined;
     left?: number | null | undefined;
@@ -61,7 +62,7 @@ export type KeyboardAwareScrollViewProps = {
   accessibilityLabel?: string | null | undefined;
   testID?: string | null | undefined;
   children?: any | null | undefined;
-  style?: ViewStyleProp | null | undefined;
+  style?: StyleProp<ViewStyle> | null | undefined;
   automaticallyAdjustContentInsets?: boolean | null | undefined;
   getTextInputRefs?: () => Array<any> | null | undefined;
   keyboardShouldPersistTaps?: string | null | undefined;

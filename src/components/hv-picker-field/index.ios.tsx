@@ -23,6 +23,7 @@ import {
 import Field from './field';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import Modal from 'hyperview/src/core/components/modal';
+import type { ReactNode } from 'react';
 import Picker from 'hyperview/src/core/components/picker';
 import { View } from 'react-native';
 
@@ -39,14 +40,18 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
 
   static localNameAliases = [];
 
-  static getFormInputValues = (element: Element): Array<[string, string]> => {
+  static getFormInputValues = (element: Element): [string, string][] => {
     return getNameValueFormInputValues(element);
   };
 
   getPickerInitialValue = (): string => {
     const value = this.getValue();
-    const pickerItems = this.getPickerItems();
-    if (pickerItems.map(item => item.getAttribute('value')).includes(value)) {
+    const pickerItems: Element[] = this.getPickerItems();
+    if (
+      pickerItems
+        .map((item: Element) => item.getAttribute('value'))
+        .includes(value)
+    ) {
       return value;
     }
     if (pickerItems.length > 0) {
@@ -58,9 +63,7 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
   /**
    * Returns a string representing the value in the field.
    */
-  getValue = (): string => {
-    return this.props.element.getAttribute('value') || '';
-  };
+  getValue = (): string => this.props.element.getAttribute('value') || '';
 
   /**
    * Gets the label from the picker items for the given value.
@@ -92,23 +95,19 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
   /**
    * Returns a string representing the value in the picker.
    */
-  getPickerValue = (): string => {
-    return this.props.element.getAttribute('picker-value') || '';
-  };
+  getPickerValue = (): string =>
+    this.props.element.getAttribute('picker-value') || '';
 
-  getPickerItems = (): Element[] => {
-    return Array.from(
-      // $FlowFixMe: flow thinks `element` is a `Node` instead of an `Element`
+  getPickerItems = (): Element[] =>
+    Array.from(
       this.props.element.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
         LOCAL_NAME.PICKER_ITEM,
       ),
     );
-  };
 
   /**
-   * Shows the picker, defaulting to the field's value.
-   * If the field is not set, use the first value in the picker.
+   * Shows the picker, defaulting to the field's value. If the field is not set, use the first value in the picker.
    */
   onFieldPress = () => {
     const newElement = this.props.element.cloneNode(true);
@@ -159,12 +158,11 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
   /**
    * Returns true if the field is focused (and picker is showing).
    */
-  isFocused = (): boolean => {
-    return this.props.element.getAttribute('focused') === 'true';
-  };
+  isFocused = (): boolean =>
+    this.props.element.getAttribute('focused') === 'true';
 
-  render() {
-    const style: Array<StyleSheet> = createStyleProp(
+  render = (): Node => {
+    const style: StyleSheet[] = createStyleProp(
       this.props.element,
       this.props.stylesheets,
       {
@@ -183,15 +181,6 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
     if ([undefined, null, ''].includes(value) && placeholderTextColor) {
       style.push({ color: placeholderTextColor });
     }
-
-    const fieldStyle: Array<StyleSheet> = createStyleProp(
-      this.props.element,
-      this.props.stylesheets,
-      {
-        ...this.props.options,
-        styleAttr: 'field-style',
-      },
-    );
 
     // Gets all of the <picker-item> elements. All picker item elements
     // with a value and label are turned into options for the picker.
@@ -225,11 +214,7 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
             options={this.props.options}
             stylesheets={this.props.stylesheets}
           >
-            <View
-              accessibilityLabel={accessibilityLabel}
-              style={fieldStyle}
-              testID={testID}
-            >
+            <View accessibilityLabel={accessibilityLabel} testID={testID}>
               <Picker
                 onValueChange={this.setPickerValue}
                 selectedValue={this.getPickerValue()}
@@ -242,5 +227,5 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
         ) : null}
       </Field>
     );
-  }
+  };
 }

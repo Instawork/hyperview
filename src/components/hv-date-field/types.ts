@@ -6,6 +6,8 @@
  *
  */
 
+import type { Event } from '@react-native-community/datetimepicker';
+
 export type PickerProps = {
-  onChange: (evt: Event, date?: Date) => void;
+  onChange: (event: Event, date?: Date) => void;
 };
