@@ -12,6 +12,8 @@ import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Types from './types';
 import * as TypesLegacy from 'hyperview/src/types-legacy';
 import React, { PureComponent, useContext } from 'react';
+import { createCustomStackNavigator } from 'hyperview/src/core/components/navigator-stack';
+import { createCustomTabNavigator } from 'hyperview/src/core/components/navigator-tab';
 import { getFirstChildTag } from 'hyperview/src/services/dom/helpers-legacy';
 
 /**
@@ -19,8 +21,8 @@ import { getFirstChildTag } from 'hyperview/src/services/dom/helpers-legacy';
  */
 const SHOW_NAVIGATION_UI = false;
 
-const Stack = NavigatorService.createStackNavigator<Types.ParamTypes>();
-const BottomTab = NavigatorService.createBottomTabNavigator<Types.ParamTypes>();
+const Stack = createCustomStackNavigator<Types.ParamTypes>();
+const BottomTab = createCustomTabNavigator<Types.ParamTypes>();
 
 export default class HvNavigator extends PureComponent<Types.Props> {
   /**
