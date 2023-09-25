@@ -26,5 +26,5 @@ export const RefreshControlComponentContext = React.createContext<
 
 export const DocContext = React.createContext<{
   getDoc: () => TypesLegacy.Document | undefined;
-  setDoc: (doc: TypesLegacy.Document) => void;
+  setDoc?: (doc: TypesLegacy.Document) => void;
 } | null>(null);
