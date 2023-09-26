@@ -245,27 +245,44 @@ function createStylesheet(document: Document, modifiers = {}): StyleSheetType {
 
 export function createStylesheets(document: Document): StyleSheets {
   const styles = {
+    disabled: createStylesheet(document, {
+      disabled: true,
+      focused: false,
+      pressed: false,
+      selected: false,
+    }),
     focused: createStylesheet(document, {
+      disabled: false,
       focused: true,
       pressed: false,
       selected: false,
     }),
     pressed: createStylesheet(document, {
+      disabled: false,
       focused: false,
       pressed: true,
       selected: false,
     }),
     pressedSelected: createStylesheet(document, {
+      disabled: false,
       focused: false,
       pressed: true,
       selected: true,
     }),
     regular: createStylesheet(document, {
+      disabled: false,
       focused: false,
       pressed: false,
       selected: false,
     }),
     selected: createStylesheet(document, {
+      disabled: false,
+      focused: false,
+      pressed: false,
+      selected: true,
+    }),
+    selectedDisabled: createStylesheet(document, {
+      disabled: true,
       focused: false,
       pressed: false,
       selected: true,

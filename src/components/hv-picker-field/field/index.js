@@ -43,8 +43,8 @@ export default (props: Props) => {
   return (
     <TouchableWithoutFeedback
       onPress={props.onPress}
-      onPressIn={() => setPressed(true)}
-      onPressOut={() => setPressed(false)}
+      onPressIn={props.onPress ? () => setPressed(true) : undefined}
+      onPressOut={props.onPress ? () => setPressed(false) : undefined}
     >
       <View {...viewProps}>
         <FieldLabel

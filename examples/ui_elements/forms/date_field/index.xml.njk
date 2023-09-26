@@ -62,6 +62,9 @@ tags: forms
     <modifier focused="true">
       <style borderBottomColor="#4778FF"/>
     </modifier>
+    <modifier disabled="true">
+      <style borderBottomColor="#FAFAFA"/>
+    </modifier>
   </style>
   <style id="InputCustom__Text" color="purple" fontSize="18" fontWeight="600"/>
   <style id="Input--Error" borderBottomColor="#FF4847">
@@ -102,6 +105,20 @@ tags: forms
           name="date"
           placeholder="Select date"
           placeholderTextColor="#8D9494"/>
+      </view>
+      <view style="FormGroup">
+        <text style="label">Disabled date field</text>
+        <date-field
+          field-style="Input"
+          field-text-style="Input__Text"
+          label-format="MMMM D, YYYY"
+          modal-overlay-style="PickerModal__overlay"
+          modal-style="PickerModal"
+          modal-text-style="PickerModal__text"
+          name="date"
+          placeholder="Select date"
+          placeholderTextColor="#8D9494"
+          disabled="true"/>
       </view>
       <view style="FormGroup">
         <text style="label">Date field in spinner mode</text>

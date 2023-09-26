@@ -34,6 +34,9 @@ tags: forms
     <modifier focused="true">
       <style borderBottomColor="#4778FF"/>
     </modifier>
+    <modifier disabled="true">
+      <style borderBottomColor="#FAFAFA"/>
+    </modifier>
   </style>
   <style id="help--error" color="#FF4847"/>
   <style id="Input__Text--Error" color="#FF4847"/>
@@ -97,6 +100,27 @@ tags: forms
           name="picker1"
           placeholder="Select choice"
           placeholderTextColor="#8D9494">
+          <picker-item label="Choice 0" value="0"/>
+          <picker-item label="Choice 1" value="1"/>
+          <picker-item label="Choice 2" value="2"/>
+          <picker-item label="Choice 3" value="3"/>
+          <picker-item label="Choice 4" value="4"/>
+          <picker-item label="Choice 5" value="5"/>
+          <picker-item label="Choice 6" value="6"/>
+        </picker-field>
+      </view>
+      <view style="FormGroup">
+        <text style="label">Disabled picker field</text>
+        <picker-field
+          field-style="Input"
+          field-text-style="Input__Text"
+          modal-overlay-style="PickerModal__overlay"
+          modal-style="PickerModal"
+          modal-text-style="PickerModal__text"
+          name="picker1"
+          placeholder="Select choice"
+          placeholderTextColor="#8D9494"
+          disabled="true">
           <picker-item label="Choice 0" value="0"/>
           <picker-item label="Choice 1" value="1"/>
           <picker-item label="Choice 2" value="2"/>

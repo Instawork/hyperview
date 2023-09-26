@@ -69,8 +69,20 @@ export default class HvSwitch extends PureComponent<HvComponentProps> {
         selected: true,
       }),
     );
+    const disabledStyle = StyleSheet.flatten(
+      createStyleProp(this.props.element, this.props.stylesheets, {
+        disabled: true,
+      }),
+    );
+    const selectedDisabledStyle = StyleSheet.flatten(
+      createStyleProp(this.props.element, this.props.stylesheets, {
+        disabled: true,
+        selected: true,
+      }),
+    );
 
     const props = {
+      disabled: this.props.element.getAttribute('disabled') === 'true',
       ios_backgroundColor: unselectedStyle
         ? unselectedStyle.backgroundColor
         : null,
