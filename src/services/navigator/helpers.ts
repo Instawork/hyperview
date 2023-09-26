@@ -455,13 +455,13 @@ export const mergeDocument = (
 };
 
 export const setSelected = (
-  routeDocContext: TypesLegacy.Document | undefined,
+  doc: TypesLegacy.Document | undefined,
   id: string | undefined,
 ) => {
-  if (!routeDocContext || !id) {
+  if (!doc || !id) {
     return;
   }
-  const route = getRouteById(routeDocContext, id);
+  const route = getRouteById(doc, id);
   if (route) {
     // Reset all siblings
     if (route.parentNode && route.parentNode.childNodes) {

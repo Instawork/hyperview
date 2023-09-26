@@ -15,7 +15,6 @@ import * as NavigationContext from 'hyperview/src/contexts/navigation';
 import * as NavigatorMapContext from 'hyperview/src/contexts/navigator-map';
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Render from 'hyperview/src/services/render';
-import * as RouteDocContext from 'hyperview/src/contexts/route-doc';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as Types from './types';
 import * as TypesLegacy from 'hyperview/src/types-legacy';
@@ -301,16 +300,21 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
       renderElement?.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR
     ) {
       if (this.state.doc) {
-        // The <RouteDocContext> provides doc access to nested navigators
+        // The <DocContext> provides doc access to nested navigators
         // only pass it when the doc is available and is not being overridden by an element
         return (
-          <RouteDocContext.Context.Provider value={this.state.doc}>
+          <Contexts.DocContext.Provider
+            value={{
+              getDoc: () => this.state.doc,
+              setDoc: (doc: TypesLegacy.Document) => this.setState({ doc }),
+            }}
+          >
             <HvNavigator
               element={renderElement}
               params={this.props.route?.params}
               routeComponent={HvRoute}
             />
-          </RouteDocContext.Context.Provider>
+          </Contexts.DocContext.Provider>
         );
       }
       // Without a doc, the navigator shares the higher level context
@@ -440,16 +444,14 @@ export default function HvRoute(props: Types.Props) {
     throw new NavigatorService.HvRouteError('No context found');
   }
 
-  const routeDocContext: TypesLegacy.Document | undefined = useContext(
-    RouteDocContext.Context,
-  );
+  const docContext = useContext(Contexts.DocContext);
 
   const url = getRouteUrl(props, navigationContext);
 
   // Get the navigator element from the context
   const element: TypesLegacy.Element | undefined = getNestedNavigator(
     props.route?.params?.id,
-    routeDocContext,
+    docContext?.getDoc(),
   );
 
   // Use the focus event to set the selected route
@@ -459,7 +461,7 @@ export default function HvRoute(props: Types.Props) {
         'focus',
         () => {
           NavigatorService.setSelected(
-            routeDocContext,
+            docContext?.getDoc(),
             props.route?.params?.id,
           );
         },
@@ -469,7 +471,7 @@ export default function HvRoute(props: Types.Props) {
         'beforeRemove',
         () => {
           NavigatorService.removeStackRoute(
-            routeDocContext,
+            docContext?.getDoc(),
             props.route?.params?.id,
           );
         },
@@ -481,7 +483,7 @@ export default function HvRoute(props: Types.Props) {
       };
     }
     return undefined;
-  }, [props.navigation, props.route?.params?.id, routeDocContext]);
+  }, [props.navigation, props.route?.params?.id, docContext]);
 
   return (
     <HvRouteInner

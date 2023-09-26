@@ -118,7 +118,7 @@ export default class HvSectionList extends PureComponent<
       console.warn('[behaviors/scroll]: missing "target" attribute');
       return;
     }
-    const doc: ?Document = this.context();
+    const doc: ?Document = this.context.getDoc();
     const targetElement: ?Element = doc?.getElementById(targetId);
     if (!targetElement) {
       return;
