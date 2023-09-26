@@ -75,7 +75,7 @@
         "src/core/components/**/*",
       ],
       "rules": {
-        "instawork/stories-components": "off",
+        "instawork/stories-components": "warn",
       }
     }
   ]
