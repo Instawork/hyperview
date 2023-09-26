@@ -69,6 +69,14 @@
         "object-curly-newline": "off",
         "instawork/error-object": "off"
       }
+    },
+    {
+      "files": [
+        "src/core/components/**/*",
+      ],
+      "rules": {
+        "instawork/stories-components": "off",
+      }
     }
   ]
 }
