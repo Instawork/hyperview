@@ -22,10 +22,7 @@ import {
   useNavigationBuilder,
 } from '@react-navigation/native';
 
-const CustomTabNavigator = (
-  props: Types.Props,
-  ...restWithDeprecated: undefined[]
-) => {
+const CustomTabNavigator = (props: Types.Props) => {
   const {
     state,
     descriptors,
@@ -55,14 +52,10 @@ const CustomTabNavigator = (
         descriptors={descriptors}
         navigation={navigation}
         state={state}
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        {...restWithDeprecated}
       />
     </NavigationContent>
   );
 };
-
-// export default createNavigatorFactory(CustomTabNavigator);
 
 export const createCustomTabNavigator = createNavigatorFactory<
   Readonly<Types.NavigationState>,

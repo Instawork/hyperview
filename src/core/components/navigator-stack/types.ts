@@ -7,18 +7,13 @@
  */
 
 import * as React from 'react';
-import {
-  // StackNavigationEventMap,
-  StackNavigationOptions,
-} from '@react-navigation/stack';
+import { StackNavigationOptions } from '@react-navigation/stack';
 
 export type Props = {
   id: string;
-  // backBehavior?: 'none' | 'initialRoute' | 'history' | 'order';
   children?: React.ReactNode;
   initialRouteName?: string;
   screenOptions?: StackNavigationOptions;
-  // screenListeners?: StackNavigationEventMap;
 };
 
 export type ParamListBase = Record<string, object | undefined>;

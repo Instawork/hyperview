@@ -22,7 +22,7 @@ import {
   StackView,
 } from '@react-navigation/stack';
 
-const CustomStackNavigator = (props: Types.Props, ...rest: undefined[]) => {
+const CustomStackNavigator = (props: Types.Props) => {
   const {
     state,
     descriptors,
@@ -35,19 +35,15 @@ const CustomStackNavigator = (props: Types.Props, ...rest: undefined[]) => {
     StackNavigationOptions,
     StackNavigationEventMap
   >(CustomStackRouter.Router, {
-    // backBehavior: props.backBehavior,
     children: props.children,
     id: props.id,
     initialRouteName: props.initialRouteName,
-    // screenListeners: props.screenListeners,
     screenOptions: props.screenOptions,
   });
 
   return (
     <NavigationContent>
       <StackView
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        {...rest}
         descriptors={descriptors}
         navigation={navigation}
         state={state}
@@ -58,7 +54,7 @@ const CustomStackNavigator = (props: Types.Props, ...rest: undefined[]) => {
 
 export const createCustomStackNavigator = createNavigatorFactory<
   Readonly<Types.NavigationState>,
-  object,
+  StackNavigationOptions,
   Types.EventMapBase,
   typeof CustomStackNavigator
 >(CustomStackNavigator);
