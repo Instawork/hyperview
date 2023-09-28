@@ -6,18 +6,4 @@
  *
  */
 
-<<<<<<< HEAD:src/core/components/loading/types.ts
 export type Props = Record<any, any>;
-=======
-export type State = {|
-  refreshing: boolean,
-|};
-
-// https://reactnative.dev/docs/flatlist#scrolltoindex
-export type ScrollParams = {|
-  animated?: ?boolean,
-  index: number,
-  viewOffset?: number,
-  viewPosition?: number,
-|};
->>>>>>> master:src/components/hv-list/types.js

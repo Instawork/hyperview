@@ -1,10 +1,6 @@
 {
   "name": "hyperview",
-<<<<<<< HEAD
   "version": "0.70.1",
-=======
-  "version": "0.70.0",
->>>>>>> master
   "main": "src/index.js",
   "description": "React Native client for Hyperview XML",
   "homepage": "https://hyperview.org",
@@ -50,10 +46,7 @@
   },
   "dependencies": {
     "@instawork/xmldom": "0.0.2",
-<<<<<<< HEAD
     "@types/lodash": "^4.14.198",
-=======
->>>>>>> master
     "lodash": "4.17.21",
     "tiny-emitter": "2.1.0",
     "url-parse": "1.5.10"
@@ -64,11 +57,7 @@
     "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/stack": "^6.3.16",
-<<<<<<< HEAD
     "@types/react": "^18.2.22",
-=======
-    "@types/react": "^18.0.28",
->>>>>>> master
     "react": "^16.13.1",
     "react-native": "^0.63.3",
     "react-native-gesture-handler": "^2.11.0",

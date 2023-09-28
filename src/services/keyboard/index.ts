@@ -6,20 +6,12 @@
  *
  */
 
-<<<<<<< HEAD
 import type { Element } from 'hyperview/src/types';
-=======
-import * as TypesLegacy from 'hyperview/src/types-legacy';
->>>>>>> master
 
 type KeyboardDismissMode = 'none' | 'on-drag' | 'interactive';
 
 export const getKeyboardDismissMode = (
-<<<<<<< HEAD
   element: Element,
-=======
-  element: TypesLegacy.Element,
->>>>>>> master
 ): KeyboardDismissMode | undefined => {
   const mode = element.getAttribute('keyboard-dismiss-mode');
   switch (mode) {

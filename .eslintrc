@@ -73,14 +73,6 @@
           }
         ]
       }
-    },
-    {
-      "files": [
-        "src/core/components/**/*",
-      ],
-      "rules": {
-        "instawork/stories-components": "warn",
-      }
     }
   ]
 }

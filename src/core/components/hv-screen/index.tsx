@@ -242,12 +242,7 @@ export default class HvScreen extends React.Component {
         staleHeaderType,
         styles: stylesheets,
       });
-<<<<<<< HEAD:src/core/components/hv-screen/index.tsx
     } catch (err: any) {
-=======
-
-    } catch (err) {
->>>>>>> master:src/core/components/hv-screen/index.js
       if (this.props.onError) {
         this.props.onError(err);
       }
@@ -265,23 +260,11 @@ export default class HvScreen extends React.Component {
    * @param opt_href: Optional string href to use when reloading the screen. If not provided,
    * the screen's current URL will be used.
    */
-<<<<<<< HEAD:src/core/components/hv-screen/index.tsx
   reload = (optHref: any, opts: any) => {
     const url =
       optHref === undefined || optHref === '#'
         ? this.state.url // eslint-disable-line  react/no-access-state-in-setstate
         : UrlService.getUrlFromHref(optHref, this.state.url); // eslint-disable-line react/no-access-state-in-setstate, max-len
-=======
-  reload = (optHref, opts) => {
-    const isBlankHref =
-      optHref === null ||
-      optHref === undefined ||
-      optHref === '#' ||
-      optHref === '';
-    const url = isBlankHref
-      ? this.state.url // eslint-disable-line react/no-access-state-in-setstate
-      : UrlService.getUrlFromHref(optHref, this.state.url); // eslint-disable-line react/no-access-state-in-setstate
->>>>>>> master:src/core/components/hv-screen/index.js
 
     if (!url) {
       return;
@@ -289,7 +272,6 @@ export default class HvScreen extends React.Component {
 
     const options = opts || {};
     const {
-<<<<<<< HEAD:src/core/components/hv-screen/index.tsx
       behaviorElement,
       showIndicatorIds,
       hideIndicatorIds,
@@ -303,13 +285,6 @@ export default class HvScreen extends React.Component {
     const hideIndicatorIdList = hideIndicatorIds
       ? Xml.splitAttributeList(hideIndicatorIds)
       : [];
-=======
-      behaviorElement, showIndicatorIds, hideIndicatorIds, once, onEnd,
-    } = options;
-
-    const showIndicatorIdList = showIndicatorIds ? Xml.splitAttributeList(showIndicatorIds) : [];
-    const hideIndicatorIdList = hideIndicatorIds ? Xml.splitAttributeList(hideIndicatorIds) : [];
->>>>>>> master:src/core/components/hv-screen/index.js
 
     if (once) {
       if (behaviorElement.getAttribute('ran-once')) {
@@ -324,17 +299,12 @@ export default class HvScreen extends React.Component {
     }
 
     let newRoot = this.doc;
-<<<<<<< HEAD:src/core/components/hv-screen/index.tsx
     if (showIndicatorIdList || hideIndicatorIdList) {
       newRoot = Behaviors.setIndicatorsBeforeLoad(
         showIndicatorIdList,
         hideIndicatorIdList,
         newRoot,
       );
-=======
-    if (showIndicatorIdList || hideIndicatorIdList){
-      newRoot = Behaviors.setIndicatorsBeforeLoad(showIndicatorIdList, hideIndicatorIdList, newRoot);
->>>>>>> master:src/core/components/hv-screen/index.js
     }
 
     // Re-render the modifications
@@ -385,16 +355,12 @@ export default class HvScreen extends React.Component {
       <Contexts.DocContext.Provider value={() => this.doc}>
         <Contexts.DateFormatContext.Provider value={this.props.formatDate}>
           {screenElement}
-<<<<<<< HEAD:src/core/components/hv-screen/index.tsx
           {elementErrorComponent
             ? React.createElement(elementErrorComponent, {
                 error: this.state.elementError,
                 onPressReload: () => this.reload(),
               })
             : null}
-=======
-          {elementErrorComponent ? (React.createElement(elementErrorComponent, { error: this.state.elementError, onPressReload: () => this.reload() })) : null}
->>>>>>> master:src/core/components/hv-screen/index.js
         </Contexts.DateFormatContext.Provider>
       </Contexts.DocContext.Provider>
     );
@@ -461,11 +427,7 @@ export default class HvScreen extends React.Component {
         this.setState({ elementError: null });
       }
       return doc.documentElement;
-<<<<<<< HEAD:src/core/components/hv-screen/index.tsx
     } catch (err: any) {
-=======
-    } catch (err) {
->>>>>>> master:src/core/components/hv-screen/index.js
       if (this.props.onError) {
         this.props.onError(err);
       }
@@ -614,7 +576,6 @@ export default class HvScreen extends React.Component {
     });
 
     // Fetch the resource, then perform the action on the target and undo indicators.
-<<<<<<< HEAD:src/core/components/hv-screen/index.tsx
     const fetchAndUpdate = () => {
       return this.fetchElement(href, verb, newRoot, formData).then(
         newElement => {
@@ -626,16 +587,6 @@ export default class HvScreen extends React.Component {
           if (!targetElement) {
             targetElement = currentElement;
           }
-=======
-    const fetchAndUpdate = () => this.fetchElement(href, verb, newRoot, formData)
-      .then((newElement) => {
-        // If a target is specified and exists, use it. Otherwise, the action target defaults
-        // to the element triggering the action.
-        let targetElement = targetId ? this.doc?.getElementById(targetId) : currentElement;
-        if (!targetElement) {
-          targetElement = currentElement;
-        }
->>>>>>> master:src/core/components/hv-screen/index.js
 
           if (newElement) {
             newRoot = Behaviors.performUpdate(

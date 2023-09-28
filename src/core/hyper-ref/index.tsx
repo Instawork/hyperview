@@ -398,15 +398,9 @@ export default class HyperRef extends PureComponent<Props, State> {
       // We don't want to use the cached `behaviors` list here because
       // the DOM might have been mutated since.
       this.getBehaviorElements(TRIGGERS.VISIBLE)
-<<<<<<< HEAD:src/core/hyper-ref/index.tsx
         .map(behaviorElement => {
           return this.createActionHandler(behaviorElement, this.props.onUpdate);
         })
-=======
-        .map(behaviorElement =>
-          this.createActionHandler(behaviorElement, this.props.onUpdate),
-        )
->>>>>>> master:src/core/hyper-ref/index.js
         .forEach(h => h(this.props.element));
     };
 
