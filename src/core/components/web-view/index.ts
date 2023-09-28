@@ -6,6 +6,21 @@
  *
  */
 
+<<<<<<< HEAD:src/core/components/web-view/index.ts
 import WebView from 'react-native-webview';
 
 export default WebView;
+=======
+export type State = {|
+  refreshing: boolean,
+|};
+
+// https://reactnative.dev/docs/sectionlist#scrolltolocation
+export type ScrollParams = {|
+  animated?: ?boolean,
+  itemIndex: number,
+  sectionIndex: number,
+  viewOffset?: number,
+  viewPosition?: number,
+|};
+>>>>>>> master:src/components/hv-section-list/types.js

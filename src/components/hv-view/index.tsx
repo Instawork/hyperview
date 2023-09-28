@@ -6,6 +6,10 @@
  *
  */
 
+<<<<<<< HEAD:src/components/hv-view/index.tsx
+=======
+// $FlowFixMe: importing code from TypeScript
+>>>>>>> master:src/components/hv-view/index.js
 import * as Keyboard from 'hyperview/src/services/keyboard';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
@@ -111,10 +115,17 @@ export default class HvView extends PureComponent<HvComponentProps> {
         : undefined;
 
     // add sticky indices
+<<<<<<< HEAD:src/components/hv-view/index.tsx
     const stickyHeaderIndices = children.reduce<Array<any>>(
       (acc, element, index) => {
         return typeof element !== 'string' &&
           element.props?.element?.getAttribute('sticky') === 'true'
+=======
+    const stickyHeaderIndices = children.reduce(
+      (acc, element, index) =>
+        typeof element !== 'string' &&
+        element.props?.element?.getAttribute('sticky') === 'true'
+>>>>>>> master:src/components/hv-view/index.js
           ? [...acc, index]
           : acc;
       },
