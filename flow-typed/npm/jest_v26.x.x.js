@@ -942,22 +942,22 @@ type JestDoneFn = {|
 
 /** Runs this function after every test inside this context */
 declare function afterEach(
-  fn: (done: JestDoneFn) => Promise | null<mixed>,
+  fn: (done: JestDoneFn) => ?Promise<mixed>,
   timeout?: number
 ): void;
 /** Runs this function before every test inside this context */
 declare function beforeEach(
-  fn: (done: JestDoneFn) => Promise | null<mixed>,
+  fn: (done: JestDoneFn) => ?Promise<mixed>,
   timeout?: number
 ): void;
 /** Runs this function after all tests have finished inside this context */
 declare function afterAll(
-  fn: (done: JestDoneFn) => Promise | null<mixed>,
+  fn: (done: JestDoneFn) => ?Promise<mixed>,
   timeout?: number
 ): void;
 /** Runs this function before any tests have started inside this context */
 declare function beforeAll(
-  fn: (done: JestDoneFn) => Promise | null<mixed>,
+  fn: (done: JestDoneFn) => ?Promise<mixed>,
   timeout?: number
 ): void;
 
@@ -984,7 +984,7 @@ declare var describe: {
     ...table: Array<Array<mixed> | mixed> | [Array<string>, string]
   ): (
     name: JestTestName,
-    fn?: (...args: Array<any>) => Promise | null<mixed>,
+    fn?: (...args: Array<any>) => ?Promise<mixed>,
     timeout?: number
   ) => void,
   ...
@@ -1001,7 +1001,7 @@ declare var it: {
    */
   (
     name: JestTestName,
-    fn?: (done: JestDoneFn) => Promise | null<mixed>,
+    fn?: (done: JestDoneFn) => ?Promise<mixed>,
     timeout?: number
   ): void,
   /**
@@ -1014,14 +1014,14 @@ declare var it: {
   only: {|
     (
       name: JestTestName,
-      fn?: (done: JestDoneFn) => Promise | null<mixed>,
+      fn?: (done: JestDoneFn) => ?Promise<mixed>,
       timeout?: number
     ): void,
     each(
       ...table: Array<Array<mixed> | mixed> | [Array<string>, string]
     ): (
       name: JestTestName,
-      fn?: (...args: Array<any>) => Promise | null<mixed>,
+      fn?: (...args: Array<any>) => ?Promise<mixed>,
       timeout?: number
     ) => void,
   |},
@@ -1034,7 +1034,7 @@ declare var it: {
    */
   skip(
     name: JestTestName,
-    fn?: (done: JestDoneFn) => Promise | null<mixed>,
+    fn?: (done: JestDoneFn) => ?Promise<mixed>,
     timeout?: number
   ): void,
   /**
@@ -1052,7 +1052,7 @@ declare var it: {
    */
   concurrent(
     name: JestTestName,
-    fn?: (done: JestDoneFn) => Promise | null<mixed>,
+    fn?: (done: JestDoneFn) => ?Promise<mixed>,
     timeout?: number
   ): void,
   /**
@@ -1064,7 +1064,7 @@ declare var it: {
     ...table: Array<Array<mixed> | mixed> | [Array<string>, string]
   ): (
     name: JestTestName,
-    fn?: (...args: Array<any>) => Promise | null<mixed>,
+    fn?: (...args: Array<any>) => ?Promise<mixed>,
     timeout?: number
   ) => void,
   ...
@@ -1072,7 +1072,7 @@ declare var it: {
 
 declare function fit(
   name: JestTestName,
-  fn: (done: JestDoneFn) => Promise | null<mixed>,
+  fn: (done: JestDoneFn) => ?Promise<mixed>,
   timeout?: number
 ): void;
 /** An individual test unit */
