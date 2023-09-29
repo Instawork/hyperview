@@ -93,7 +93,7 @@ const HvTextField = (props: HvComponentProps) => {
   return (
     <TextInput
       {...p}
-      ref={(ref: React.ElementRef | typeof TextInput | null) => {
+      ref={(ref: React.ElementRef<typeof TextInput> | null) => {
         textInputRef.current = ref;
         if (props.options?.registerInputHandler) {
           props.options.registerInputHandler(ref);

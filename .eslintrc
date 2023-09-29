@@ -64,6 +64,7 @@
         "no-use-before-define": "off",
         "object-curly-newline": "off",
         "instawork/error-object": "off",
+        "react/jsx-wrap-multilines": ["error", { "prop": false }],
         "import/no-extraneous-dependencies": [
           "warn",
           {

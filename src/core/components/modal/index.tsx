@@ -6,6 +6,7 @@
  *
  */
 
+import * as Dom from 'hyperview/src/services/dom';
 import {
   Animated,
   LayoutChangeEvent,
@@ -18,7 +19,6 @@ import ModalButton from './modal-button';
 import Overlay from './overlay';
 import type { Props } from './types';
 import type { StyleSheet as StyleSheetType } from 'hyperview/src/types';
-import * as Dom from 'hyperview/src/services/dom';
 import { createStyleProp } from 'hyperview/src/services';
 import styles from './styles';
 

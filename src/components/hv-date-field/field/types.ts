@@ -9,6 +9,7 @@
 import type {
   Element,
   HvComponentOptions,
+  Node,
   StyleSheets,
 } from 'hyperview/src/types';
 

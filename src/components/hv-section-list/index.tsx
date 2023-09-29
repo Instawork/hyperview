@@ -379,24 +379,22 @@ export default class HvSectionList extends PureComponent<
                 />
               }
               removeClippedSubviews={false}
-              renderItem={({ item }) =>
-                // $FlowFixMe: return type of renderElement is not compatible with expected type for renderItem
-                Render.renderElement(
+              renderItem={({ item }) => {
+                return Render.renderElement(
                   item,
                   this.props.stylesheets,
                   this.onUpdate,
                   this.props.options,
-                )
-              }
-              renderSectionHeader={({ section: { title } }) =>
-                // $FlowFixMe: return type of renderElement is not compatible with expected type for renderSectionHeader
-                Render.renderElement(
+                );
+              }}
+              renderSectionHeader={({ section: { title } }) => {
+                return Render.renderElement(
                   title,
                   this.props.stylesheets,
                   this.onUpdate,
                   this.props.options,
-                )
-              }
+                );
+              }}
               scrollIndicatorInsets={scrollIndicatorInsets}
               sections={sections}
               stickySectionHeadersEnabled={this.getStickySectionHeadersEnabled()}
