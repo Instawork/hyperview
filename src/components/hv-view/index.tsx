@@ -71,8 +71,9 @@ export default class HvView extends PureComponent<HvComponentProps> {
 
   getCommonProps = (): CommonProps => {
     // TODO: fix type
-    //       createStyleProp returns an array of StyleSheet, but it appears something wants a ViewStyle, which is not
-    //       not an array type. Does a type need to get fixed elsewhere?
+    // createStyleProp returns an array of StyleSheet,
+    // but it appears something wants a ViewStyle, which is not
+    // not an array type. Does a type need to get fixed elsewhere?
     const style = (createStyleProp(
       this.props.element,
       this.props.stylesheets,

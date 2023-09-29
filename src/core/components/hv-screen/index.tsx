@@ -260,11 +260,15 @@ export default class HvScreen extends React.Component {
    * @param opt_href: Optional string href to use when reloading the screen. If not provided,
    * the screen's current URL will be used.
    */
-  reload = (optHref: any, opts: any) => {
-    const url =
-      optHref === undefined || optHref === '#'
-        ? this.state.url // eslint-disable-line  react/no-access-state-in-setstate
-        : UrlService.getUrlFromHref(optHref, this.state.url); // eslint-disable-line react/no-access-state-in-setstate, max-len
+  reload = (optHref, opts) => {
+    const isBlankHref =
+      optHref === null ||
+      optHref === undefined ||
+      optHref === '#' ||
+      optHref === '';
+    const url = isBlankHref
+      ? this.state.url // eslint-disable-line react/no-access-state-in-setstate
+      : UrlService.getUrlFromHref(optHref, this.state.url); // eslint-disable-line react/no-access-state-in-setstate, max-len
 
     if (!url) {
       return;
