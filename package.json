@@ -87,6 +87,7 @@
     "@types/react": "^18.2.22",
     "@types/react-native": "^0.72.2",
     "@types/react-test-renderer": "18.0.0",
+    "@types/url-parse": "^1.4.9",
     "babel-eslint": "10.1.0",
     "babel-jest": "26.6.3",
     "babel-plugin-module-resolver": "4.1.0",
@@ -112,7 +113,10 @@
     "react-native-keyboard-aware-scrollview": "2.1.0",
     "react-native-webview": "10.10.2",
     "react-test-renderer": "16.13.1",
-    "typescript": "4.9.5"
+    "typescript": "5.1.6"
+  },
+  "resolutions": {
+    "@types/react": "^18.2.22"
   },
   "jest": {
     "preset": "react-native",
