@@ -15,6 +15,10 @@ import type {
   KeyboardAwareScrollViewProps,
   ScrollViewProps,
 } from './types';
+import type {
+  HvComponentOnUpdate,
+  HvComponentProps,
+} from 'hyperview/src/types';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -25,7 +29,6 @@ import {
 } from 'react-native';
 import React, { PureComponent } from 'react';
 import { ATTRIBUTES } from './types';
-import type { HvComponentProps } from 'hyperview/src/types';
 import KeyboardAwareScrollView from 'hyperview/src/core/components/keyboard-aware-scroll-view';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { addHref } from 'hyperview/src/core/hyper-ref';
@@ -175,7 +178,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
     const children = Render.renderChildren(
       this.props.element,
       this.props.stylesheets,
-      this.props.onUpdate,
+      this.props.onUpdate as HvComponentOnUpdate,
       {
         ...this.props.options,
         ...(scrollable && hasInputFields
@@ -239,7 +242,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
         <Content />,
         this.props.element,
         this.props.stylesheets,
-        this.props.onUpdate,
+        this.props.onUpdate as HvComponentOnUpdate,
         this.props.options,
       )
     );

@@ -7,9 +7,12 @@
  */
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
+import type {
+  HvComponentOnUpdate,
+  HvComponentProps,
+} from 'hyperview/src/types';
+import { Image, ImageProps } from 'react-native';
 import React, { PureComponent } from 'react';
-import type { HvComponentProps } from 'hyperview/src/types';
-import { Image } from 'react-native';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { addHref } from 'hyperview/src/core/hyper-ref';
 import { createProps } from 'hyperview/src/services';
@@ -22,13 +25,13 @@ export default class HvImage extends PureComponent<HvComponentProps> {
 
   static localNameAliases = [];
 
-  props: HvComponentProps;
+  declare props: HvComponentProps;
 
   render() {
     const { skipHref } = this.props.options || {};
     const imageProps: Record<string, any> = {};
-    if (this.props.element.getAttribute('source')) {
-      let source = this.props.element.getAttribute('source');
+    let source = this.props.element.getAttribute('source');
+    if (source) {
       source = urlParse(source, this.props.options.screenUrl, true).toString();
       imageProps.source = { uri: source };
     }
@@ -39,7 +42,7 @@ export default class HvImage extends PureComponent<HvComponentProps> {
         this.props.options,
       ),
       ...imageProps,
-    } as const;
+    } as ImageProps;
     const component = React.createElement(Image, props);
     return skipHref
       ? component
@@ -47,7 +50,7 @@ export default class HvImage extends PureComponent<HvComponentProps> {
           component,
           this.props.element,
           this.props.stylesheets,
-          this.props.onUpdate,
+          this.props.onUpdate as HvComponentOnUpdate,
           this.props.options,
         );
   }

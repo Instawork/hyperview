@@ -371,7 +371,7 @@ export default class HvSectionList extends PureComponent<
               keyboardDismissMode={Keyboard.getKeyboardDismissMode(
                 this.props.element,
               )}
-              keyExtractor={item => item.getAttribute('key')}
+              keyExtractor={(item: any) => item.getAttribute('key')}
               refreshControl={
                 <RefreshControl
                   onRefresh={this.refresh}
@@ -379,7 +379,7 @@ export default class HvSectionList extends PureComponent<
                 />
               }
               removeClippedSubviews={false}
-              renderItem={({ item }) => {
+              renderItem={({ item }: any): any => {
                 return Render.renderElement(
                   item,
                   this.props.stylesheets,
@@ -387,7 +387,7 @@ export default class HvSectionList extends PureComponent<
                   this.props.options,
                 );
               }}
-              renderSectionHeader={({ section: { title } }) => {
+              renderSectionHeader={({ section: { title } }: any): any => {
                 return Render.renderElement(
                   title,
                   this.props.stylesheets,

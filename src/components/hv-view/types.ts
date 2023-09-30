@@ -33,29 +33,29 @@ export type Attributes = {
 };
 
 export type CommonProps = {
-  accessibilityLabel?: string | null | undefined;
-  testID?: string | null | undefined;
-  children?: any | null | undefined;
-  style?: StyleProp<ViewStyle> | null | undefined;
+  accessibilityLabel?: string | undefined;
+  testID?: string | undefined;
+  children?: any | undefined;
+  style?: StyleProp<ViewStyle> | undefined;
 };
 
 export type ScrollViewProps = {
-  accessibilityLabel?: string | null | undefined;
-  testID?: string | null | undefined;
-  children?: any | null | undefined;
-  style?: StyleProp<ViewStyle> | null | undefined;
-  contentContainerStyle?: StyleProp<ViewStyle> | null | undefined;
-  horizontal?: boolean | null | undefined;
-  keyboardDismissMode?: 'none' | 'on-drag' | 'interactive' | null | undefined;
+  accessibilityLabel?: string | undefined;
+  testID?: string | undefined;
+  children?: any | undefined;
+  style?: StyleProp<ViewStyle> | undefined;
+  contentContainerStyle?: StyleProp<ViewStyle> | undefined;
+  horizontal?: boolean | undefined;
+  keyboardDismissMode?: 'none' | 'on-drag' | 'interactive' | undefined;
   scrollIndicatorInsets?: Readonly<{
-    bottom?: number | null | undefined;
-    left?: number | null | undefined;
-    right?: number | null | undefined;
-    top?: number | null | undefined;
+    bottom?: number | undefined;
+    left?: number | undefined;
+    right?: number | undefined;
+    top?: number | undefined;
   }>;
-  showsHorizontalScrollIndicator?: boolean | null | undefined;
-  showsVerticalScrollIndicator?: boolean | null | undefined;
-  stickyHeaderIndices?: number[] | null | undefined;
+  showsHorizontalScrollIndicator?: boolean | undefined;
+  showsVerticalScrollIndicator?: boolean | undefined;
+  stickyHeaderIndices?: number[] | undefined;
 };
 
 export type KeyboardAwareScrollViewProps = {

@@ -6,12 +6,17 @@
  *
  */
 
-import type { Event } from '@react-native-community/datetimepicker';
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import type { DOMString, Element, HvComponentProps } from 'hyperview/src/types';
+import type {
+  DOMString,
+  Element,
+  HvComponentOnUpdate,
+  HvComponentProps,
+} from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
 import DateTimePicker from 'hyperview/src/core/components/date-time-picker';
+import type { Event } from '@react-native-community/datetimepicker';
 import Field from './field';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import Modal from 'hyperview/src/core/components/modal';
@@ -54,20 +59,19 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
 
   /**
    * Given a ISO date string (YYYY-MM-DD), returns a Date object. If the string
-   * cannot be parsed or is falsey, returns null.
+   * cannot be parsed or is falsey, returns default new Date() value.
    */
-  static createDateFromString = (
-    value?: string | null,
-  ): Date | null | undefined => {
+  static createDateFromString = (value?: string | null): Date => {
     if (!value) {
-      return null;
+      return new Date();
     }
     const [year, month, day] = value.split('-').map(p => parseInt(p, 10));
     return new Date(year, month - 1, day);
   };
 
   /**
-   * Shows the picker, defaulting to the field's value. If the field is not set, use today's date in the picker.
+   * Shows the picker, defaulting to the field's value.
+   * If the field is not set, use today's date in the picker.
    */
   onFieldPress = () => {
     const newElement = this.props.element.cloneNode(true);
@@ -140,7 +144,7 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
   /**
    * Returns a Date object representing the value in the picker.
    */
-  getPickerValue = (): Date | null | undefined => {
+  getPickerValue = (): Date => {
     return HvDateField.createDateFromString(
       this.props.element.getAttribute('picker-value'),
     );
@@ -215,7 +219,7 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
           isFocused={this.isFocused}
           onModalCancel={this.onCancel}
           onModalDone={this.onDone}
-          onUpdate={this.props.onUpdate}
+          onUpdate={this.props.onUpdate as HvComponentOnUpdate}
           options={this.props.options}
           stylesheets={this.props.stylesheets}
         >

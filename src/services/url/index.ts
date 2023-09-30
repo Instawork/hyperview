@@ -66,7 +66,7 @@ export const addFormDataToUrl = (
       const params = Array.from(formData.entries());
       return addParamsToUrl(
         url,
-        params.map(p => ({
+        params.map((p: any) => ({
           name: p[0],
           value: String(p[1]),
         })),

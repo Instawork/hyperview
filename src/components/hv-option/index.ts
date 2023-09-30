@@ -9,9 +9,12 @@
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
+import type {
+  HvComponentOnUpdate,
+  HvComponentProps,
+} from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
 import { TouchableWithoutFeedback, View } from 'react-native';
-import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { State } from './types';
 import { createEventHandler } from 'hyperview/src/core/hyper-ref';
@@ -28,7 +31,7 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
 
   static localNameAliases = [];
 
-  props: HvComponentProps;
+  declare props: HvComponentProps;
 
   state: State = {
     pressed: false,
@@ -83,8 +86,8 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
       }, true),
       onPressIn: createEventHandler(() => this.setState({ pressed: true })),
       onPressOut: createEventHandler(() => this.setState({ pressed: false })),
-      style: undefined,
-    } as const;
+      style: {},
+    };
     if (props.style && props.style.flex) {
       // Flex is a style that needs to be lifted from the inner component to the outer
       // component to ensure proper layout.
@@ -100,7 +103,7 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
         ...Render.renderChildren(
           this.props.element,
           this.props.stylesheets,
-          this.props.onUpdate,
+          this.props.onUpdate as HvComponentOnUpdate,
           newOptions,
         ),
       ),

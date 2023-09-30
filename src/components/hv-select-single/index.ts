@@ -11,6 +11,7 @@ import * as Render from 'hyperview/src/services/render';
 import type {
   DOMString,
   Element,
+  HvComponentOnUpdate,
   HvComponentProps,
   NodeList,
 } from 'hyperview/src/types';
@@ -94,7 +95,9 @@ export default class HvSelectSingle extends PureComponent<HvComponentProps> {
         }
       }
     }
-    this.props.onUpdate('#', 'swap', this.props.element, { newElement });
+    if (this.props.onUpdate) {
+      this.props.onUpdate('#', 'swap', this.props.element, { newElement });
+    }
   };
 
   render() {
@@ -110,7 +113,7 @@ export default class HvSelectSingle extends PureComponent<HvComponentProps> {
       ...Render.renderChildren(
         this.props.element,
         this.props.stylesheets,
-        this.props.onUpdate,
+        this.props.onUpdate as HvComponentOnUpdate,
         {
           ...this.props.options,
           onSelect: this.onSelect,

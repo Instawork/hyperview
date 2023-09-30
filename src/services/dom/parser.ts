@@ -63,7 +63,7 @@ export class Parser {
 
   load = async (
     baseUrl: string,
-    data?: FormData | null,
+    data?: any | null,
     httpMethod?: HttpMethod | null,
     acceptContentType: string = CONTENT_TYPE.APPLICATION_VND_HYPERVIEW_XML,
   ): Promise<{
@@ -95,12 +95,12 @@ export class Parser {
 
     const response: Response = await this.fetch(url, options);
     const responseText: string = await response.text();
-    const contentType: string = response.headers?.get(
+    const contentType: string | null = response.headers?.get(
       HTTP_HEADERS.CONTENT_TYPE,
     );
     const staleHeaderType: XResponseStaleReason = response.headers?.get(
       HTTP_HEADERS.X_RESPONSE_STALE_REASON,
-    );
+    ) as XResponseStaleReason;
     if (
       response.status >= 500 &&
       staleHeaderType !== X_RESPONSE_STALE_REASON.STALE_IF_ERROR &&
@@ -169,7 +169,7 @@ export class Parser {
 
   loadElement = async (
     baseUrl: string,
-    data?: FormData | null,
+    data?: any | null,
     method: HttpMethod | null = HTTP_METHODS.GET,
   ): Promise<{
     doc: Document;

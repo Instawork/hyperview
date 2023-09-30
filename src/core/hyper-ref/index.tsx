@@ -23,13 +23,15 @@ import type {
   Element,
   HvComponentOnUpdate,
   HvComponentOptions,
+  NavAction,
   PressTrigger,
   StyleSheet,
   StyleSheets,
   Trigger,
+  UpdateAction,
 } from 'hyperview/src/types';
-import type { PressHandlers, Props, State } from './types';
-import React, { PureComponent } from 'react';
+import type { PressHandlers, PressPropName, Props, State } from './types';
+import React, { PureComponent, ReactNode } from 'react';
 import {
   RefreshControl,
   ScrollView,
@@ -40,7 +42,6 @@ import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
 import { XMLSerializer } from '@instawork/xmldom';
 import { X_RESPONSE_STALE_REASON } from 'hyperview/src/services/dom/types';
 import { createTestProps } from 'hyperview/src/services';
-
 /**
  * Wrapper to handle UI events
  * Stop propagation and prevent default client behavior
@@ -62,14 +63,14 @@ export const createEventHandler = (
  * triggers.
  */
 export default class HyperRef extends PureComponent<Props, State> {
-  props: Props;
+  declare props: Props;
 
   state: State = {
     pressed: false,
     refreshing: false,
   };
 
-  behaviorElements: Element[];
+  behaviorElements: Element[] = [];
 
   style: StyleSheet | null | undefined;
 
@@ -146,7 +147,10 @@ export default class HyperRef extends PureComponent<Props, State> {
       handler(this.props.element);
       if (__DEV__) {
         const listenerElement: Element = behaviorElement.cloneNode(false);
-        const caughtEvent: string = behaviorElement.getAttribute('event-name');
+        const caughtEvent:
+          | string
+          | undefined
+          | null = behaviorElement.getAttribute('event-name');
         const serializer = new XMLSerializer();
         console.log(
           `[on-event] trigger [${caughtEvent}] caught by:`,
@@ -162,7 +166,7 @@ export default class HyperRef extends PureComponent<Props, State> {
   ) => {
     const action =
       behaviorElement.getAttribute(ATTRIBUTES.ACTION) || NAV_ACTIONS.PUSH;
-    if (Object.values(NAV_ACTIONS).indexOf(action) >= 0) {
+    if (Object.values(NAV_ACTIONS).indexOf(action as NavAction) >= 0) {
       return (element: Element) => {
         const href = behaviorElement.getAttribute(ATTRIBUTES.HREF);
         const targetId = behaviorElement.getAttribute(ATTRIBUTES.TARGET);
@@ -175,7 +179,7 @@ export default class HyperRef extends PureComponent<Props, State> {
     }
     if (
       action === ACTIONS.RELOAD ||
-      Object.values(UPDATE_ACTIONS).indexOf(action) >= 0
+      Object.values(UPDATE_ACTIONS).indexOf(action as UpdateAction) >= 0
     ) {
       return (element: Element) => {
         const href = behaviorElement.getAttribute(ATTRIBUTES.HREF);
@@ -243,13 +247,10 @@ export default class HyperRef extends PureComponent<Props, State> {
     });
   };
 
-  TouchableView = ({ children }: { children: Node }): Node => {
+  TouchableView = ({ children }: { children: ReactNode }): ReactNode => {
     const behaviors = this.behaviorElements.filter(e => {
-      return (
-        PRESS_TRIGGERS.indexOf(
-          e.getAttribute(ATTRIBUTES.TRIGGER) || TRIGGERS.PRESS,
-        ) >= 0
-      );
+      const trigger = e.getAttribute(ATTRIBUTES.TRIGGER) || TRIGGERS.PRESS;
+      return PRESS_TRIGGERS.indexOf(trigger as PressTrigger) >= 0;
     });
 
     if (!behaviors.length) {
@@ -264,25 +265,30 @@ export default class HyperRef extends PureComponent<Props, State> {
     const pressHandlers: PressHandlers = {};
 
     behaviors.forEach(behaviorElement => {
-      const trigger: PressTrigger =
-        // $FlowFixMe: casting DOMString to PressTrigger should probably be enforced by code
+      const trigger =
         behaviorElement.getAttribute(ATTRIBUTES.TRIGGER) || TRIGGERS.PRESS;
-      const triggerPropName = PRESS_TRIGGERS_PROP_NAMES[trigger];
+      const triggerPropName =
+        PRESS_TRIGGERS_PROP_NAMES[trigger as PressTrigger];
       const handler = this.createActionHandler(
         behaviorElement,
         this.props.onUpdate,
       );
-      if (pressHandlers[triggerPropName]) {
-        const oldHandler = pressHandlers[triggerPropName];
-        pressHandlers[triggerPropName] = createEventHandler(() => {
-          oldHandler();
-          setTimeout(() => handler(this.props.element), time);
-          time += 1;
-        });
+      const pressHandler = pressHandlers[triggerPropName as PressPropName];
+      if (pressHandler) {
+        const oldHandler = pressHandler;
+        pressHandlers[triggerPropName as PressPropName] = createEventHandler(
+          () => {
+            oldHandler();
+            setTimeout(() => handler(this.props.element), time);
+            time += 1;
+          },
+        );
       } else {
-        pressHandlers[triggerPropName] = createEventHandler(() => {
-          return handler(this.props.element);
-        });
+        pressHandlers[triggerPropName as PressPropName] = createEventHandler(
+          () => {
+            return handler(this.props.element);
+          },
+        );
       }
     });
 
@@ -298,24 +304,28 @@ export default class HyperRef extends PureComponent<Props, State> {
       });
     }
 
+    const delayOnPress = () => {
+      // Fix a conflict between onPressOut and onPress triggering at the same time.
+      if (pressHandlers.onPress) {
+        const onPressHandler = pressHandlers.onPress;
+        pressHandlers.onPress = createEventHandler(() => {
+          setTimeout(onPressHandler, time);
+        });
+      }
+    };
+
     if (pressHandlers.onPressOut) {
       const oldHandler = pressHandlers.onPressOut;
       pressHandlers.onPressOut = createEventHandler(() => {
         this.setState({ pressed: false });
         oldHandler();
       });
+      delayOnPress();
     } else {
       pressHandlers.onPressOut = createEventHandler(() => {
         this.setState({ pressed: false });
       });
-    }
-
-    // Fix a conflict between onPressOut and onPress triggering at the same time.
-    if (pressHandlers.onPressOut && pressHandlers.onPress) {
-      const onPressHandler = pressHandlers.onPress;
-      pressHandlers.onPress = createEventHandler(() => {
-        setTimeout(onPressHandler, time);
-      });
+      delayOnPress();
     }
 
     const style = this.getStyle();
@@ -368,7 +378,7 @@ export default class HyperRef extends PureComponent<Props, State> {
     );
   };
 
-  ScrollableView = ({ children }: { children: Node }): Node => {
+  ScrollableView = ({ children }: { children: ReactNode }): ReactNode => {
     const behaviors = this.getBehaviorElements(TRIGGERS.REFRESH);
     if (!behaviors.length) {
       return children;
@@ -389,7 +399,7 @@ export default class HyperRef extends PureComponent<Props, State> {
     );
   };
 
-  VisibilityView = ({ children }: { children: Node }): Node => {
+  VisibilityView = ({ children }: { children: ReactNode }): ReactNode => {
     const behaviors = this.getBehaviorElements(TRIGGERS.VISIBLE);
     if (!behaviors.length) {
       return children;
@@ -421,7 +431,9 @@ export default class HyperRef extends PureComponent<Props, State> {
       VisibilityDetectingView,
       {
         id,
-        onInvisible: null,
+        onInvisible: () => {
+          return null;
+        },
         onVisible,
         style: this.getStyle(),
       },

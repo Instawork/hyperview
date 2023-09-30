@@ -50,7 +50,7 @@ export default class HvSwitch extends PureComponent<HvComponentProps> {
     return getNameValueFormInputValues(element);
   };
 
-  props: HvComponentProps;
+  declare props: HvComponentProps;
 
   render() {
     if (this.props.element.getAttribute('hide') === 'true') {
@@ -76,10 +76,12 @@ export default class HvSwitch extends PureComponent<HvComponentProps> {
         const newElement = this.props.element.cloneNode(true);
         Behaviors.trigger('change', newElement, this.props.onUpdate);
       },
-      onValueChange: value => {
+      onValueChange: (value: any) => {
         const newElement = this.props.element.cloneNode(true);
         newElement.setAttribute('value', value ? 'on' : 'off');
-        this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+        if (this.props.onUpdate) {
+          this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+        }
       },
       // iOS thumbColor default
       thumbColor: unselectedStyle?.color || selectedStyle?.color,
@@ -88,7 +90,7 @@ export default class HvSwitch extends PureComponent<HvComponentProps> {
         true: selectedStyle ? selectedStyle.backgroundColor : null,
       },
       value: this.props.element.getAttribute('value') === 'on',
-    } as const;
+    };
 
     // android thumbColor default
     if (
