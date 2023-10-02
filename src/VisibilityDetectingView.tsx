@@ -1,4 +1,4 @@
-import { Dimensions, UIManager, View } from 'react-native';
+import { Dimensions, View } from 'react-native';
 import React, { PureComponent } from 'react';
 import type { StyleProp, ViewStyle } from 'react-native';
 import type { ElementRef } from 'react';
@@ -37,7 +37,7 @@ export default class VisibilityDetectingView extends PureComponent<Props> {
 
     // UIManager.measure may not exist during render-testing, which might break the
     // `view.measure` call
-    if (this.view && UIManager.measure) {
+    if (this.view && this.view.measure) {
       this.view.measure(this.onMeasure);
     }
   };
