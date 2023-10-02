@@ -138,9 +138,12 @@ export class Parser {
 
     const screenElement = getFirstTag(docElement, LOCAL_NAME.SCREEN);
     const navigatorElement = getFirstTag(docElement, LOCAL_NAME.NAVIGATOR);
-    if (!screenElement && !navigatorElement) {
+    if (!screenElement) {
+      throw new Errors.XMLRequiredElementNotFound(LOCAL_NAME.SCREEN, baseUrl);
+    }
+    if (!navigatorElement) {
       throw new Errors.XMLRequiredElementNotFound(
-        `${LOCAL_NAME.SCREEN}/${LOCAL_NAME.NAVIGATOR}`,
+        LOCAL_NAME.NAVIGATOR,
         baseUrl,
       );
     }
@@ -159,10 +162,15 @@ export class Parser {
         );
       }
     } else {
-      throw new Errors.XMLRequiredElementNotFound(
-        `${LOCAL_NAME.SCREEN}/${LOCAL_NAME.NAVIGATOR}`,
-        baseUrl,
-      );
+      if (!screenElement) {
+        throw new Errors.XMLRequiredElementNotFound(LOCAL_NAME.SCREEN, baseUrl);
+      }
+      if (!navigatorElement) {
+        throw new Errors.XMLRequiredElementNotFound(
+          LOCAL_NAME.NAVIGATOR,
+          baseUrl,
+        );
+      }
     }
     return { doc, staleHeaderType };
   };
