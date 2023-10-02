@@ -43,7 +43,13 @@ const CustomTabNavigator = (props: Types.Props) => {
   });
 
   React.useEffect(() => {
-    navigation.navigate(props.initialRouteName);
+    const curState = navigation.getState();
+    const foundIndex = curState.routes.findIndex(
+      route => route.name === props.initialRouteName,
+    );
+    if (foundIndex > -1) {
+      navigation.reset({ ...curState, index: foundIndex });
+    }
   }, [props.initialRouteName, navigation]);
 
   return (
