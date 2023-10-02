@@ -42,7 +42,7 @@
     "test:unit": "jest --testPathPattern src",
     "test:xmlserver": "eleventy --serve --port=8085",
     "test:validate-xml": "eleventy; find _examples_site -name '*.xml' -not -path '*/advanced_behaviors/instawork.xml' -not -path '*/advanced_behaviors/custom_share.xml' -not -path '*/advanced_behaviors/alert/behavior.xml' -not -path '*/case_studies/business_rating.xml' -not -path '*/case_studies/_rating_save.xml' | xargs xmllint --schema schema/hyperview.xsd --noout",
-    "test": "yarn generate test && yarn test:flow && yarn test:lint && yarn test:render && yarn test:unit && yarn test:validate-xml"
+    "test": "yarn generate test && tsc && yarn test:flow && yarn test:lint && yarn test:render && yarn test:unit && yarn test:validate-xml"
   },
   "dependencies": {
     "@instawork/xmldom": "git+ssh://git@github.com:Instawork/xmldom-new#373ab81560dbbc62fef5a96acc9335af16b6831c",
