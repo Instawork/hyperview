@@ -7,7 +7,7 @@
  */
 
 import { ON_EVENT_DISPATCH } from 'hyperview/src/types';
-import TinyEmitter from 'tiny-emitter';
+import { TinyEmitter } from 'tiny-emitter';
 
 const tinyEmitter = new TinyEmitter();
 

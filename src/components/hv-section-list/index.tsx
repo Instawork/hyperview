@@ -371,7 +371,7 @@ export default class HvSectionList extends PureComponent<
               keyboardDismissMode={Keyboard.getKeyboardDismissMode(
                 this.props.element,
               )}
-              keyExtractor={item => item.getAttribute('key')}
+              keyExtractor={(item: any) => item.getAttribute('key')}
               refreshControl={
                 <RefreshControl
                   onRefresh={this.refresh}
@@ -379,24 +379,22 @@ export default class HvSectionList extends PureComponent<
                 />
               }
               removeClippedSubviews={false}
-              renderItem={({ item }) =>
-                // $FlowFixMe: return type of renderElement is not compatible with expected type for renderItem
-                Render.renderElement(
+              renderItem={({ item }: any): any => {
+                return Render.renderElement(
                   item,
                   this.props.stylesheets,
                   this.onUpdate,
                   this.props.options,
-                )
-              }
-              renderSectionHeader={({ section: { title } }) =>
-                // $FlowFixMe: return type of renderElement is not compatible with expected type for renderSectionHeader
-                Render.renderElement(
+                );
+              }}
+              renderSectionHeader={({ section: { title } }: any): any => {
+                return Render.renderElement(
                   title,
                   this.props.stylesheets,
                   this.onUpdate,
                   this.props.options,
-                )
-              }
+                );
+              }}
               scrollIndicatorInsets={scrollIndicatorInsets}
               sections={sections}
               stickySectionHeadersEnabled={this.getStickySectionHeadersEnabled()}

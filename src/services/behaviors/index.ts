@@ -119,7 +119,7 @@ export const performUpdate = (
 export const trigger = (
   name: string,
   element: Element,
-  onUpdate: HvComponentOnUpdate,
+  onUpdate?: HvComponentOnUpdate | null,
 ) => {
   const behaviorElements = Dom.getBehaviorElements(element);
   const matchingBehaviors = behaviorElements.filter(

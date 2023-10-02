@@ -7,9 +7,9 @@
  */
 
 import type { ComponentType } from 'react';
+import type { Document } from 'hyperview/src/types';
 import React from 'react';
 import type { RefreshControlProps } from 'react-native';
-import type { Document } from 'hyperview/src/types';
 
 // Provides the date format function to use in date fields
 // in the screen. Default to ISO string format.

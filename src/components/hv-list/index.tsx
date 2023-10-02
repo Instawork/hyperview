@@ -256,7 +256,7 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
               keyboardDismissMode={Keyboard.getKeyboardDismissMode(
                 this.props.element,
               )}
-              keyExtractor={item => item && item.getAttribute('key')}
+              keyExtractor={(item: any) => item && item.getAttribute('key')}
               refreshControl={
                 <RefreshControl
                   onRefresh={this.refresh}
@@ -264,15 +264,17 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
                 />
               }
               removeClippedSubviews={false}
-              renderItem={({ item }) =>
-                item &&
-                Render.renderElement(
-                  item,
-                  this.props.stylesheets,
-                  this.onUpdate,
-                  this.props.options,
-                )
-              }
+              renderItem={({ item }: any) => {
+                return (
+                  item &&
+                  Render.renderElement(
+                    item,
+                    this.props.stylesheets,
+                    this.onUpdate,
+                    this.props.options,
+                  )
+                );
+              }}
               scrollIndicatorInsets={scrollIndicatorInsets}
               showsHorizontalScrollIndicator={horizontal && showScrollIndicator}
               showsVerticalScrollIndicator={!horizontal && showScrollIndicator}

@@ -13,8 +13,10 @@ import type {
   StyleSheets,
 } from 'hyperview/src/types';
 
+import type { ReactNode } from 'react';
+
 export type Props = {
-  children: Node;
+  children: ReactNode;
   element: Element;
   isFocused: () => boolean;
   onModalCancel: () => void;

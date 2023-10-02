@@ -304,6 +304,7 @@ export type HvComponentOptions = {
   verb?: DOMString | null | undefined;
   custom?: boolean;
   newElement?: Element | null | undefined;
+  showIndicatorId?: string | null | undefined;
 };
 
 export type HvComponentOnUpdate = (
@@ -382,6 +383,37 @@ export const PRESS_TRIGGERS = Object.freeze([
 ]);
 
 export type PressTrigger = 'longPress' | 'pressIn' | 'pressOut' | 'press';
+
+export type TextContextType =
+  | 'none'
+  | 'URL'
+  | 'addressCity'
+  | 'addressCityAndState'
+  | 'addressState'
+  | 'countryName'
+  | 'creditCardNumber'
+  | 'emailAddress'
+  | 'familyName'
+  | 'fullStreetAddress'
+  | 'givenName'
+  | 'jobTitle'
+  | 'location'
+  | 'middleName'
+  | 'name'
+  | 'namePrefix'
+  | 'nameSuffix'
+  | 'nickname'
+  | 'organizationName'
+  | 'postalCode'
+  | 'streetAddressLine1'
+  | 'streetAddressLine2'
+  | 'sublocality'
+  | 'telephoneNumber'
+  | 'username'
+  | 'password'
+  | 'newPassword'
+  | 'oneTimeCode'
+  | undefined;
 
 // https://hyperview.org/docs/reference_behavior_attributes#action
 export const ACTIONS = {

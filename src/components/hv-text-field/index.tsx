@@ -8,12 +8,17 @@
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import type { Element, HvComponentProps } from 'hyperview/src/types';
+import type {
+  Element,
+  HvComponentProps,
+  TextContextType,
+} from 'hyperview/src/types';
 import React, { MutableRefObject, useCallback, useRef } from 'react';
 import {
   createProps,
   getNameValueFormInputValues,
 } from 'hyperview/src/services';
+import type { KeyboardTypeOptions } from 'react-native';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { TextInput } from 'react-native';
 import TinyMask from 'hyperview/src/mask.js';
@@ -34,15 +39,18 @@ const HvTextField = (props: HvComponentProps) => {
   const autoFocus = props.element.getAttribute('auto-focus') === 'true';
   const debounceTimeMs =
     Dom.safeParseIntAttribute(props.element, 'debounce') ?? 0;
-  const defaultValue = props.element.getAttribute('value');
+  const defaultValue = props.element.getAttribute('value') || undefined;
   const editable = props.element.getAttribute('editable') !== 'false';
-  const keyboardType = props.element.getAttribute('keyboard-type') || undefined;
+  const keyboardType =
+    (props.element.getAttribute('keyboard-type') as KeyboardTypeOptions) ||
+    undefined;
   const multiline =
     props.element.localName === LOCAL_NAME.TEXT_AREA ||
     props.element.getAttribute('multiline') === 'true';
   const secureTextEntry = props.element.getAttribute('secure-text') === 'true';
   const textContentType =
-    props.element.getAttribute('text-content-type') || 'none';
+    (props.element.getAttribute('text-content-type') as TextContextType) ||
+    'none';
 
   // Handlers
   const setFocus = (focused: boolean) => {
@@ -93,7 +101,7 @@ const HvTextField = (props: HvComponentProps) => {
   return (
     <TextInput
       {...p}
-      ref={(ref: React.ElementRef | typeof TextInput | null) => {
+      ref={(ref: React.ElementRef<typeof TextInput> | null) => {
         textInputRef.current = ref;
         if (props.options?.registerInputHandler) {
           props.options.registerInputHandler(ref);

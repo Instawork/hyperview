@@ -1,16 +1,16 @@
-import { Dimensions, UIManager, View } from 'react-native';
+import { Dimensions, View } from 'react-native';
 import React, { PureComponent } from 'react';
+import type { StyleProp, ViewStyle } from 'react-native';
 import type { ElementRef } from 'react';
-import type { ViewStyleProp } from 'react-native/Libraries/StyleSheet/StyleSheet';
 
 const TICK_INTERVAL = 100;
 
 type Props = {
-  children: any;
   id: string;
   onInvisible: () => void | null | undefined;
   onVisible: () => void | null | undefined;
-  style: ViewStyleProp | null | undefined;
+  style: StyleProp<ViewStyle> | null | undefined;
+  children?: React.ReactNode | undefined;
 };
 
 /** A view that lets you know when its contents become visible/invisible in the screen.
@@ -37,7 +37,7 @@ export default class VisibilityDetectingView extends PureComponent<Props> {
 
     // UIManager.measure may not exist during render-testing, which might break the
     // `view.measure` call
-    if (this.view && UIManager.measure) {
+    if (this.view && this.view.measure) {
       this.view.measure(this.onMeasure);
     }
   };

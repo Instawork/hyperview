@@ -45,7 +45,7 @@
     "test": "yarn generate test && yarn test:flow && yarn test:lint && yarn test:render && yarn test:unit && yarn test:validate-xml"
   },
   "dependencies": {
-    "@instawork/xmldom": "0.0.2",
+    "@instawork/xmldom": "git+ssh://git@github.com:Instawork/xmldom-new#373ab81560dbbc62fef5a96acc9335af16b6831c",
     "@types/lodash": "^4.14.198",
     "lodash": "4.17.21",
     "tiny-emitter": "2.1.0",
@@ -57,7 +57,7 @@
     "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/stack": "^6.3.16",
-    "@types/react": "^18.2.22",
+    "@types/react": "^18.0.28",
     "react": "^16.13.1",
     "react-native": "^0.63.3",
     "react-native-gesture-handler": "^2.11.0",
@@ -87,6 +87,7 @@
     "@types/react": "^18.2.22",
     "@types/react-native": "^0.72.2",
     "@types/react-test-renderer": "18.0.0",
+    "@types/url-parse": "^1.4.9",
     "babel-eslint": "10.1.0",
     "babel-jest": "26.6.3",
     "babel-plugin-module-resolver": "4.1.0",
@@ -112,7 +113,10 @@
     "react-native-keyboard-aware-scrollview": "2.1.0",
     "react-native-webview": "10.10.2",
     "react-test-renderer": "16.13.1",
-    "typescript": "4.9.5"
+    "typescript": "5.1.6"
+  },
+  "resolutions": {
+    "@types/react": "^18.2.22"
   },
   "jest": {
     "preset": "react-native",
