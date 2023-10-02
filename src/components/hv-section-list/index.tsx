@@ -81,13 +81,9 @@ export default class HvSectionList extends PureComponent<
 
   static contextType = Contexts.DocContext;
 
-  declare context: React.ContextType<typeof Contexts.DocContext>;
-
   parser: DOMParser = new DOMParser();
 
-  declare props: HvComponentProps;
-
-  declare ref: ElementRef<typeof SectionList> | null;
+  ref: ElementRef<typeof SectionList> | null = null;
 
   state: State = {
     refreshing: false,

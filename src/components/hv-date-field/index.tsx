@@ -41,8 +41,6 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
     return getNameValueFormInputValues(element);
   };
 
-  declare props: HvComponentProps;
-
   /**
    * Given a Date object, returns an ISO date string (YYYY-MM-DD). If the Date
    * object is null, returns an empty string.

@@ -6,8 +6,8 @@
  *
  */
 
-import type { DOMString } from 'hyperview/src/types';
 import type { StyleProp, ViewStyle } from 'react-native';
+import type { DOMString } from 'hyperview/src/types';
 
 export const ATTRIBUTES = {
   AVOID_KEYBOARD: 'avoid-keyboard',

@@ -16,5 +16,5 @@ export type FormData = Readonly<{
   }>;
   // Web API
   // https://developer.mozilla.org/en-US/docs/Web/API/FormData/entries
-  entries?: () => Iterator<[string, string | File]>;
+  entries?: () => Iterable<string | File> | ArrayLike<string | File>;
 }>;

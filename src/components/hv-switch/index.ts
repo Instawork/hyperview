@@ -50,8 +50,6 @@ export default class HvSwitch extends PureComponent<HvComponentProps> {
     return getNameValueFormInputValues(element);
   };
 
-  declare props: HvComponentProps;
-
   render() {
     if (this.props.element.getAttribute('hide') === 'true') {
       return null;

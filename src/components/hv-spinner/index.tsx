@@ -19,8 +19,6 @@ export default class HvSpinner extends PureComponent<HvComponentProps> {
 
   static localNameAliases = [];
 
-  declare props: HvComponentProps;
-
   render() {
     const color = this.props.element.getAttribute('color') || '#8d9494';
     return <ActivityIndicator color={color} />;

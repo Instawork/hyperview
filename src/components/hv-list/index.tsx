@@ -40,11 +40,7 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
 
   static contextType = Contexts.DocContext;
 
-  declare context: React.ContextType<typeof Contexts.DocContext>;
-
   parser: DOMParser = new DOMParser();
-
-  declare props: HvComponentProps;
 
   ref: ElementRef<typeof FlatList> | null | undefined;
 

@@ -21,7 +21,7 @@ import {
 import type { KeyboardTypeOptions } from 'react-native';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { TextInput } from 'react-native';
-import TinyMask from 'hyperview/src/mask.js';
+import TinyMask from 'hyperview/src/mask';
 import debounce from 'lodash/debounce';
 
 const HvTextField = (props: HvComponentProps) => {
@@ -66,7 +66,9 @@ const HvTextField = (props: HvComponentProps) => {
     }
   };
 
+  // TODO: move this to top
   // Create a memoized, debounced function to trigger the "change" behavior
+  // eslint-disable-next-line
   const triggerChangeBehaviors = useCallback(
     debounce((newElement: Element) => {
       if (props.onUpdate !== null) {
@@ -87,6 +89,8 @@ const HvTextField = (props: HvComponentProps) => {
     triggerChangeBehaviors(newElement);
   };
 
+  // TODO: move this to top
+  // eslint-disable-next-line
   const textInputRef: MutableRefObject<TextInput | null> = useRef(
     null as TextInput | null,
   );

@@ -25,8 +25,6 @@ export default class HvText extends PureComponent<HvComponentProps> {
 
   static localNameAliases = [];
 
-  declare props: HvComponentProps;
-
   render() {
     const { skipHref } = this.props.options || {};
     const props = createProps(

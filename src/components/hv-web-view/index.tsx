@@ -22,8 +22,6 @@ export default class HvWebView extends PureComponent<HvComponentProps> {
 
   static localNameAliases = [];
 
-  declare props: HvComponentProps;
-
   onMessage = (
     event?: {
       nativeEvent: {

@@ -25,8 +25,6 @@ export default class HvImage extends PureComponent<HvComponentProps> {
 
   static localNameAliases = [];
 
-  declare props: HvComponentProps;
-
   render() {
     const { skipHref } = this.props.options || {};
     const imageProps: Record<string, any> = {};

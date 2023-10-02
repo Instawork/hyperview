@@ -63,8 +63,6 @@ export const createEventHandler = (
  * triggers.
  */
 export default class HyperRef extends PureComponent<Props, State> {
-  declare props: Props;
-
   state: State = {
     pressed: false,
     refreshing: false,
@@ -347,7 +345,12 @@ export default class HyperRef extends PureComponent<Props, State> {
           onLongPress={onLongPress}
           // when no press handler set, we still need an empty handler for pressIn or pressOut
           // handlers to work
-          onPress={onPress || (onPressIn || onPressOut ? noop : undefined)}
+          onPress={
+            onPress ||
+            (onPressIn !== undefined || onPressOut !== undefined
+              ? noop
+              : undefined)
+          }
           onResponderGrant={onPressIn}
           // Both release and terminate responder are needed to properly pressOut
           onResponderRelease={onPressOut}

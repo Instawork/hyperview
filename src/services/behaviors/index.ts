@@ -134,14 +134,16 @@ export const trigger = (
     const hideIndicatorIds = behaviorElement.getAttribute('hide-during-load');
     const delay = behaviorElement.getAttribute('delay');
     const once = behaviorElement.getAttribute('once');
-    onUpdate(href, action, element, {
-      behaviorElement,
-      delay,
-      hideIndicatorIds,
-      once,
-      showIndicatorIds,
-      targetId,
-      verb,
-    });
+    if (onUpdate) {
+      onUpdate(href, action, element, {
+        behaviorElement,
+        delay,
+        hideIndicatorIds,
+        once,
+        showIndicatorIds,
+        targetId,
+        verb,
+      });
+    }
   });
 };

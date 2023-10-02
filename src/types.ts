@@ -1,5 +1,3 @@
-import { Flow } from 'flow-to-typescript-codemod';
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -338,10 +336,10 @@ export type HvComponentStatics = {
   namespaceURI: NamespaceURI;
 };
 
-export type HvComponent = Flow.Class<
-  | React.Component<HvComponentProps, unknown>
+export type HvComponent = (
+  | React.ComponentClass<HvComponentProps, unknown>
   | React.FunctionComponent<HvComponentProps>
-> &
+) &
   HvComponentStatics;
 
 export type HvBehavior = {

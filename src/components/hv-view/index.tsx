@@ -48,8 +48,6 @@ export default class HvView extends PureComponent<HvComponentProps> {
     LOCAL_NAME.SECTION_TITLE,
   ];
 
-  declare props: HvComponentProps;
-
   get attributes(): Attributes {
     return Object.values(ATTRIBUTES).reduce<Record<string, any>>(
       (attributes, name: string) => ({
