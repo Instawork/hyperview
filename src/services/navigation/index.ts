@@ -88,7 +88,7 @@ export default class Navigation {
 
     let preloadScreen = null;
     if (showIndicatorId && this.document) {
-      const screens: NodeList<Element> = this.document.getElementsByTagNameNS(
+      const screens: HTMLCollectionOf<Element> = this.document.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
         'screen',
       );

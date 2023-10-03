@@ -35,66 +35,75 @@ export default {
 
     // Create the options for the alert.
     // NOTE: Android supports at most 3 options.
-    const options = optionElements.map(optionElement => ({
-      onPress: () => {
-        Dom.getBehaviorElements(optionElement)
-          .filter(
-            // Only behaviors with "press" trigger will get executed.
-            // "press" is also the default trigger, so if no trigger is specified,
-            // the behavior will also execute.
-            e => {
-              return (
-                !e.getAttribute('trigger') ||
-                e.getAttribute('trigger') === 'press'
+    const options = optionElements.map(optionElement => {
+      const styleString =
+        optionElement &&
+        optionElement.getAttributeNS(Namespaces.HYPERVIEW_ALERT, 'style');
+      const style =
+        (styleString as 'default' | 'cancel' | 'destructive' | undefined) ||
+        undefined;
+      const label =
+        (optionElement &&
+          optionElement.getAttributeNS(Namespaces.HYPERVIEW_ALERT, 'label')) ||
+        undefined;
+
+      return {
+        onPress: () => {
+          Dom.getBehaviorElements(optionElement)
+            .filter(
+              // Only behaviors with "press" trigger will get executed.
+              // "press" is also the default trigger, so if no trigger is specified,
+              // the behavior will also execute.
+              e => {
+                return (
+                  !e.getAttribute('trigger') ||
+                  e.getAttribute('trigger') === 'press'
+                );
+              },
+            )
+            .forEach((behaviorElement, i) => {
+              const href = behaviorElement.getAttribute('href');
+              const action = behaviorElement.getAttribute('action');
+              const verb = behaviorElement.getAttribute('verb');
+              const targetId = behaviorElement.getAttribute('target');
+              const showIndicatorIds = behaviorElement.getAttribute(
+                'show-during-load',
               );
-            },
-          )
-          .forEach((behaviorElement, i) => {
-            const href = behaviorElement.getAttribute('href');
-            const action = behaviorElement.getAttribute('action');
-            const verb = behaviorElement.getAttribute('verb');
-            const targetId = behaviorElement.getAttribute('target');
-            const showIndicatorIds = behaviorElement.getAttribute(
-              'show-during-load',
-            );
-            const hideIndicatorIds = behaviorElement.getAttribute(
-              'hide-during-load',
-            );
-            const delay = behaviorElement.getAttribute('delay');
-            const once = behaviorElement.getAttribute('once');
-            // With multiple behaviors for the same trigger, we need to stagger
-            // the updates a bit so that each update operates on the latest DOM.
-            // Ideally, we could apply multiple DOM updates at a time.
-            later(i).then(() => {
-              return (
-                optionElement &&
-                onUpdate(href, action, optionElement, {
-                  behaviorElement,
-                  delay,
-                  hideIndicatorIds,
-                  once,
-                  showIndicatorIds,
-                  targetId,
-                  verb,
-                })
+              const hideIndicatorIds = behaviorElement.getAttribute(
+                'hide-during-load',
               );
+              const delay = behaviorElement.getAttribute('delay');
+              const once = behaviorElement.getAttribute('once');
+              // With multiple behaviors for the same trigger, we need to stagger
+              // the updates a bit so that each update operates on the latest DOM.
+              // Ideally, we could apply multiple DOM updates at a time.
+              later(i).then(() => {
+                return (
+                  optionElement &&
+                  onUpdate(href, action, optionElement, {
+                    behaviorElement,
+                    delay,
+                    hideIndicatorIds,
+                    once,
+                    showIndicatorIds,
+                    targetId,
+                    verb,
+                  })
+                );
+              });
             });
-          });
-      },
-      style:
-        optionElement &&
-        optionElement.getAttributeNS(Namespaces.HYPERVIEW_ALERT, 'style'),
-      text:
-        optionElement &&
-        optionElement.getAttributeNS(Namespaces.HYPERVIEW_ALERT, 'label'),
-    }));
+        },
+        style,
+        text: label,
+      };
+    });
 
     // On Android, alerts don't have a default button when unspecified, so we need to set one.
     if (!options.length && Platform.OS === 'android') {
       options.push({
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         onPress: () => {},
-        style: null,
+        style: undefined,
         text: 'OK',
       });
     }
