@@ -282,4 +282,4 @@ export function createStylesheets(document: Document): StyleSheets {
   return styles;
 }
 
-export { StyleSheets };
+export type { StyleSheets };
