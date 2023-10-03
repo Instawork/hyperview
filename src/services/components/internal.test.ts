@@ -8,6 +8,7 @@
 
 // eslint-disable-next-line max-classes-per-file
 import * as ComponentsInternal from './internal';
+import { LOCAL_NAME } from 'hyperview/src/types';
 import { PureComponent } from 'react';
 
 describe('ComponentsInternal', () => {
@@ -16,7 +17,7 @@ describe('ComponentsInternal', () => {
       class Foo extends PureComponent<any> {
         static namespaceURI = 'http://foo';
 
-        static localName = 'foo';
+        static localName = LOCAL_NAME.ANIMATED;
 
         static localNameAliases = [];
       }
@@ -24,18 +25,18 @@ describe('ComponentsInternal', () => {
       class Bar extends PureComponent<any> {
         static namespaceURI = 'http://bar';
 
-        static localName = 'bar';
+        static localName = LOCAL_NAME.BEHAVIOR;
 
         static localNameAliases = ['bar-1', 'bar-2'];
       }
       expect(ComponentsInternal.registerComponent(Foo)).toEqual({
-        foo: Foo,
+        animated: Foo,
       });
 
       expect(ComponentsInternal.registerComponent(Bar)).toEqual({
-        bar: Bar,
         'bar-1': Bar,
         'bar-2': Bar,
+        behavior: Bar,
       });
     });
   });

@@ -22,6 +22,7 @@ import HvText from 'hyperview/src/components/hv-text';
 import HvTextField from 'hyperview/src/components/hv-text-field';
 import HvView from 'hyperview/src/components/hv-view';
 import HvWebView from 'hyperview/src/components/hv-web-view';
+import { LOCAL_NAME } from 'hyperview/src/types';
 import { PureComponent } from 'react';
 
 const defaultRegistryContent = {
@@ -72,7 +73,7 @@ describe('Components', () => {
         class Foo extends PureComponent<any> {
           static namespaceURI = 'http://foo';
 
-          static localName = 'foo';
+          static localName = LOCAL_NAME.ANIMATED;
 
           static localNameAliases = [];
         }
@@ -80,7 +81,7 @@ describe('Components', () => {
         class Bar extends PureComponent<any> {
           static namespaceURI = 'http://bar';
 
-          static localName = 'bar';
+          static localName = LOCAL_NAME.BEHAVIOR;
 
           static localNameAliases = [];
         }
@@ -88,22 +89,22 @@ describe('Components', () => {
         class Baz extends PureComponent<any> {
           static namespaceURI = 'https://hyperview.org/hyperview';
 
-          static localName = 'baz';
+          static localName = LOCAL_NAME.BODY;
 
           static localNameAliases = ['baz-1', 'baz-2'];
         }
         expect(Components.getRegistry([Foo, Bar, Baz])).toEqual({
           'http://bar': {
-            bar: Bar,
+            behavior: Bar,
           },
           'http://foo': {
-            foo: Foo,
+            animated: Foo,
           },
           'https://hyperview.org/hyperview': {
             ...defaultRegistryContent,
-            baz: Baz,
             'baz-1': Baz,
             'baz-2': Baz,
+            body: Baz,
           },
         });
       });
@@ -123,7 +124,7 @@ describe('Components', () => {
         class Foo extends PureComponent<any> {
           static namespaceURI = 'http://foo';
 
-          static localName = 'foo';
+          static localName = LOCAL_NAME.ANIMATED;
 
           static localNameAliases = [];
 
@@ -135,7 +136,7 @@ describe('Components', () => {
         class Bar extends PureComponent<any> {
           static namespaceURI = 'http://bar';
 
-          static localName = 'bar';
+          static localName = LOCAL_NAME.BEHAVIOR;
 
           static localNameAliases = [];
         }
@@ -143,7 +144,7 @@ describe('Components', () => {
         class Baz extends PureComponent<any> {
           static namespaceURI = 'https://hyperview.org/hyperview';
 
-          static localName = 'baz';
+          static localName = LOCAL_NAME.BODY;
 
           static localNameAliases = ['baz-1', 'baz-2'];
 
@@ -153,13 +154,13 @@ describe('Components', () => {
         }
         expect(Components.getFormRegistry([Foo, Bar, Baz])).toEqual({
           'http://foo': {
-            foo: Foo,
+            animated: Foo,
           },
           'https://hyperview.org/hyperview': {
             ...defaultFormRegistryContent,
-            baz: Baz,
             'baz-1': Baz,
             'baz-2': Baz,
+            body: Baz,
           },
         });
       });
