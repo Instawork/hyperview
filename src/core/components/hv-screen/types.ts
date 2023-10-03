@@ -12,6 +12,7 @@ import { ComponentType, ReactNode } from 'react';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
 import type { RefreshControlProps } from 'react-native';
+import type { StyleSheets } from 'hyperview/src/services/stylesheets';
 
 /**
  * All of the props used by hv-screen
@@ -46,4 +47,13 @@ export type Props = {
   handleBack?: ComponentType<{ children: ReactNode }>;
   doc?: Document;
   registerPreload?: (id: number, element: Element) => void;
+};
+
+export type State = {
+  doc: Node | null;
+  elementError: Error | null;
+  error: Error | null;
+  staleHeaderType: 'stale-if-error' | null | undefined;
+  styles: StyleSheets | object | null;
+  url: string | null;
 };

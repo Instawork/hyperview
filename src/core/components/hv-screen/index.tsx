@@ -17,11 +17,17 @@ import * as Render from 'hyperview/src/services/render';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as UrlService from 'hyperview/src/services/url';
 import * as Xml from 'hyperview/src/services/xml';
-import { ACTIONS, NAV_ACTIONS, UPDATE_ACTIONS } from 'hyperview/src/types';
+import {
+  ACTIONS,
+  HvComponentOptions,
+  NAV_ACTIONS,
+  UPDATE_ACTIONS,
+} from 'hyperview/src/types';
 // eslint-disable-next-line instawork/import-services
 import Navigation, {
   ANCHOR_ID_SEPARATOR,
 } from 'hyperview/src/services/navigation';
+import type { Props, State } from './types';
 import {
   createProps,
   createStyleProp,
@@ -32,6 +38,7 @@ import {
   setTimeoutId,
   shallowCloneToRoot,
 } from 'hyperview/src/services';
+
 import { Linking } from 'react-native';
 import LoadElementError from '../load-element-error';
 import LoadError from 'hyperview/src/core/components/load-error';
@@ -39,7 +46,7 @@ import Loading from 'hyperview/src/core/components/loading';
 import React from 'react';
 
 // eslint-disable-next-line instawork/pure-components
-export default class HvScreen extends React.Component {
+export default class HvScreen extends React.Component<Props, State> {
   static createProps = createProps;
 
   static createStyleProp = createStyleProp;
@@ -48,7 +55,37 @@ export default class HvScreen extends React.Component {
 
   static renderElement = Render.renderElement;
 
-  constructor(props: any) {
+  updateActions: string[];
+
+  parser: Dom.Parser;
+
+  needsLoad: boolean;
+
+  initialDoc: Document | null;
+
+  doc: Document | null;
+
+  behaviorRegistry: import('/Users/hardingray/Documents/Work/Instawork/Development/GitRepos/hyperview-clean/src/types').BehaviorRegistry;
+
+  componentRegistry: import('/Users/hardingray/Documents/Work/Instawork/Development/GitRepos/hyperview-clean/src/types').ComponentRegistry;
+
+  formComponentRegistry: import('/Users/hardingray/Documents/Work/Instawork/Development/GitRepos/hyperview-clean/src/types').ComponentRegistry;
+
+  navigation: Navigation;
+
+  oldSetState: <K extends 'styles'>(
+    state:
+      | State
+      | ((
+          prevState: Readonly<State>,
+          props: Readonly<Props>,
+        ) => State | Pick<State, K> | null)
+      | Pick<State, K>
+      | null,
+    callback?: (() => void) | undefined,
+  ) => void;
+
+  constructor(props: Props) {
     super(props);
 
     this.onUpdate = this.onUpdate.bind(this);
@@ -71,7 +108,7 @@ export default class HvScreen extends React.Component {
       url: null,
     };
     // Injecting a passed document as a single-use document
-    this.initialDoc = props.doc;
+    this.initialDoc = props.doc || null;
 
     // <HACK>
     // In addition to storing the document on the react state, we keep a reference to it
@@ -99,7 +136,7 @@ export default class HvScreen extends React.Component {
     this.navigation = new Navigation(props.entrypointUrl, this.getNavigation());
   }
 
-  getRoute = (props: any) => {
+  getRoute = (props: Props) => {
     // The prop route is available in React Navigation v5 and above
     if (props.route) {
       return props.route;
@@ -150,7 +187,7 @@ export default class HvScreen extends React.Component {
    * preload screen and URL to load.
    */
   // eslint-disable-next-line camelcase
-  UNSAFE_componentWillReceiveProps = (nextProps: any) => {
+  UNSAFE_componentWillReceiveProps = (nextProps: Props) => {
     const oldNavigationState = this.getRoute(this.props);
     const newNavigationState = this.getRoute(nextProps);
 
@@ -202,7 +239,7 @@ export default class HvScreen extends React.Component {
    */
   componentDidUpdate() {
     if (this.needsLoad) {
-      this.load(this.state.url);
+      this.load();
       this.needsLoad = false;
     }
   }
@@ -213,45 +250,53 @@ export default class HvScreen extends React.Component {
   load = async () => {
     const { params, key: routeKey } = this.getRoute(this.props);
 
-    try {
-      if (params.delay) {
-        await later(parseInt(params.delay, 10));
-      }
-
-      // If an initial document was passed, use it once and then remove
-      let doc;
-      let staleHeaderType;
-      if (this.initialDoc) {
-        doc = this.initialDoc;
-        this.initialDoc = null;
-      } else {
-        // eslint-disable-next-line react/no-access-state-in-setstate
-        const {
-          doc: loadedDoc,
-          staleHeaderType: loadedType,
-        } = await this.parser.loadDocument(this.state.url);
-        doc = loadedDoc;
-        staleHeaderType = loadedType;
-      }
-      const stylesheets = Stylesheets.createStylesheets(doc);
-      this.navigation.setRouteKey(this.state.url, routeKey);
-      this.setState({
-        doc,
-        elementError: null,
-        error: null,
-        staleHeaderType,
-        styles: stylesheets,
-      });
-    } catch (err: any) {
-      if (this.props.onError) {
-        this.props.onError(err);
-      }
+    if (!this.state.url) {
       this.setState({
         doc: null,
         elementError: null,
-        error: err,
+        error: new Error('No URL provided to screen'),
         styles: null,
       });
+    } else {
+      try {
+        if (params.delay) {
+          await later(parseInt(params.delay, 10));
+        }
+
+        // If an initial document was passed, use it once and then remove
+        let doc;
+        let staleHeaderType;
+        if (this.initialDoc) {
+          doc = this.initialDoc;
+          this.initialDoc = null;
+        } else {
+          const {
+            doc: loadedDoc,
+            staleHeaderType: loadedType,
+          } = await this.parser.loadDocument(this.state.url);
+          doc = loadedDoc;
+          staleHeaderType = loadedType;
+        }
+        const stylesheets = Stylesheets.createStylesheets(doc);
+        this.navigation.setRouteKey(this.state.url, routeKey);
+        this.setState({
+          doc,
+          elementError: null,
+          error: null,
+          staleHeaderType,
+          styles: stylesheets,
+        });
+      } catch (err: any) {
+        if (this.props.onError) {
+          this.props.onError(err);
+        }
+        this.setState({
+          doc: null,
+          elementError: null,
+          error: err,
+          styles: null,
+        });
+      }
     }
   };
 
@@ -260,7 +305,7 @@ export default class HvScreen extends React.Component {
    * @param opt_href: Optional string href to use when reloading the screen. If not provided,
    * the screen's current URL will be used.
    */
-  reload = (optHref, opts) => {
+  reload = (optHref?: '#' | '' | null, opts?: HvComponentOptions) => {
     const isBlankHref =
       optHref === null ||
       optHref === undefined ||
@@ -268,7 +313,7 @@ export default class HvScreen extends React.Component {
       optHref === '';
     const url = isBlankHref
       ? this.state.url // eslint-disable-line react/no-access-state-in-setstate
-      : UrlService.getUrlFromHref(optHref, this.state.url); // eslint-disable-line react/no-access-state-in-setstate, max-len
+      : UrlService.getUrlFromHref(optHref, this.state.url || ''); // eslint-disable-line react/no-access-state-in-setstate, max-len
 
     if (!url) {
       return;
@@ -290,7 +335,7 @@ export default class HvScreen extends React.Component {
       ? Xml.splitAttributeList(hideIndicatorIds)
       : [];
 
-    if (once) {
+    if (once && behaviorElement) {
       if (behaviorElement.getAttribute('ran-once')) {
         // This action is only supposed to run once, and it already ran,
         // so there's nothing more to do.
@@ -303,7 +348,7 @@ export default class HvScreen extends React.Component {
     }
 
     let newRoot = this.doc;
-    if (showIndicatorIdList || hideIndicatorIdList) {
+    if (newRoot && (showIndicatorIdList || hideIndicatorIdList)) {
       newRoot = Behaviors.setIndicatorsBeforeLoad(
         showIndicatorIdList,
         hideIndicatorIdList,
@@ -342,7 +387,10 @@ export default class HvScreen extends React.Component {
       ? this.props.elementErrorComponent || LoadElementError
       : null;
     const [body] = Array.from(
-      this.state.doc.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'body'),
+      (this.state.doc as Element).getElementsByTagNameNS(
+        Namespaces.HYPERVIEW,
+        'body',
+      ),
     );
     const screenElement = Render.renderElement(
       body,
@@ -411,13 +459,13 @@ export default class HvScreen extends React.Component {
     if (href[0] === '#') {
       const element = root.getElementById(href.slice(1));
       if (element) {
-        return element.cloneNode(true);
+        return element.cloneNode(true) as Element;
       }
       throw new Error(`Element with id ${href} not found in document`);
     }
 
     try {
-      const url = UrlService.getUrlFromHref(href, this.state.url, method);
+      const url = UrlService.getUrlFromHref(href, this.state.url || '');
       const { doc, staleHeaderType } = await this.parser.loadElement(
         url,
         formData,

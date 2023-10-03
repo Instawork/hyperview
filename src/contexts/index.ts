@@ -23,4 +23,6 @@ export const RefreshControlComponentContext = React.createContext<
   ComponentType<RefreshControlProps> | undefined
 >(undefined);
 
-export const DocContext = React.createContext<(() => Document) | null>(null);
+export const DocContext = React.createContext<(() => Document | null) | null>(
+  null,
+);

@@ -13,6 +13,5 @@
       ]
     }
   },
-  "files": ["src/core/components/hv-root/index.tsx"],
   "exclude": ["**/*.js", "**/*.jsx"]
 }
