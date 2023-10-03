@@ -45,7 +45,7 @@
     "test": "yarn generate test && yarn test:flow && yarn test:lint && yarn test:render && yarn test:unit && yarn test:validate-xml"
   },
   "dependencies": {
-    "@instawork/xmldom": "0.0.2",
+    "@instawork/xmldom": "0.0.3",
     "lodash": "4.17.21",
     "tiny-emitter": "2.1.0",
     "url-parse": "1.5.10"
@@ -56,9 +56,9 @@
     "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/stack": "^6.3.16",
-    "@types/react": "^18.0.28",
-    "react": "^16.13.1",
-    "react-native": "^0.63.3",
+    "@types/react": "^17.0.67",
+    "react": "^17.0.2",
+    "react-native": "^0.67.4",
     "react-native-gesture-handler": "^2.11.0",
     "react-native-keyboard-aware-scrollview": "^2.1.0",
     "react-native-safe-area-context": "^4.2.4",
@@ -81,10 +81,10 @@
     "@storybook/addon-actions": "4.1.18",
     "@storybook/addon-storyshots": "4.1.18",
     "@storybook/react-native": "4.1.18",
-    "@tsconfig/react-native": "2.0.3",
+    "@tsconfig/react-native": "3.0.2",
     "@types/jest": "29.4.0",
-    "@types/react": "18.0.28",
-    "@types/react-native": "0.71.3",
+    "@types/react": "17.0.67",
+    "@types/react-native": "0.67.8",
     "@types/react-test-renderer": "18.0.0",
     "babel-eslint": "10.1.0",
     "babel-jest": "26.6.3",
@@ -92,7 +92,7 @@
     "babel-preset-react-native": "4.0.1",
     "chokidar": "3.5.1",
     "eslint": "7.20.0",
-    "eslint-plugin-instawork": "0.11.0",
+    "eslint-plugin-instawork": "0.12.0",
     "flow-bin": "0.122.0",
     "glob": "7.1.6",
     "humps": "2.0.1",
@@ -104,14 +104,19 @@
     "patch-package": "6.2.2",
     "prettier": "2.2.1",
     "pretty-quick": "3.1.0",
-    "react": "16.13.1",
+    "react": "17.0.2",
     "react-dom": "16.8.0",
-    "react-native": "0.63.3",
+    "react-native": "0.67.4",
     "react-native-gesture-handler": "2.11.0",
     "react-native-keyboard-aware-scrollview": "2.1.0",
     "react-native-webview": "10.10.2",
     "react-test-renderer": "16.13.1",
-    "typescript": "4.9.5"
+    "typescript": "5.2.2"
+  },
+  "resolutions": {
+    "@types/react": "17.0.67",
+    "@typescript-eslint/eslint-plugin": "6.7.4",
+    "@typescript-eslint/parser": "6.7.4"
   },
   "jest": {
     "preset": "react-native",
