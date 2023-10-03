@@ -111,7 +111,7 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
    * If the field is not set, use the first value in the picker.
    */
   onFieldPress = () => {
-    const newElement = this.props.element.cloneNode(true);
+    const newElement = this.props.element.cloneNode(true) as Element;
     newElement.setAttribute('focused', 'true');
     newElement.setAttribute('picker-value', this.getPickerInitialValue());
     this.props.onUpdate(null, 'swap', this.props.element, { newElement });
@@ -122,7 +122,7 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
    * Hides the picker without applying the chosen value.
    */
   onCancel = () => {
-    const newElement = this.props.element.cloneNode(true);
+    const newElement = this.props.element.cloneNode(true) as Element;
     newElement.setAttribute('focused', 'false');
     newElement.removeAttribute('picker-value');
     this.props.onUpdate(null, 'swap', this.props.element, { newElement });
@@ -135,7 +135,7 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
   onDone = () => {
     const pickerValue = this.getPickerValue();
     const value = this.getValue();
-    const newElement = this.props.element.cloneNode(true);
+    const newElement = this.props.element.cloneNode(true) as Element;
     newElement.setAttribute('value', pickerValue);
     newElement.removeAttribute('picker-value');
     newElement.setAttribute('focused', 'false');
@@ -151,7 +151,7 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
    * Updates the picker value while keeping the picker open.
    */
   setPickerValue = (value: string) => {
-    const newElement = this.props.element.cloneNode(true);
+    const newElement = this.props.element.cloneNode(true) as Element;
     newElement.setAttribute('picker-value', value);
     this.props.onUpdate(null, 'swap', this.props.element, { newElement });
   };
