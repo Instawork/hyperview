@@ -22,6 +22,7 @@ import { ACTIONS, NAV_ACTIONS, UPDATE_ACTIONS } from 'hyperview/src/types';
 import Navigation, {
   ANCHOR_ID_SEPARATOR,
 } from 'hyperview/src/services/navigation';
+import type { Props, State } from './types';
 import {
   createProps,
   createStyleProp,
@@ -32,6 +33,7 @@ import {
   setTimeoutId,
   shallowCloneToRoot,
 } from 'hyperview/src/services';
+
 import { Linking } from 'react-native';
 import LoadElementError from '../load-element-error';
 import LoadError from 'hyperview/src/core/components/load-error';
@@ -39,7 +41,7 @@ import Loading from 'hyperview/src/core/components/loading';
 import React from 'react';
 
 // eslint-disable-next-line instawork/pure-components
-export default class HvScreen extends React.Component {
+export default class HvScreen extends React.Component<Props, State> {
   static createProps = createProps;
 
   static createStyleProp = createStyleProp;
@@ -48,7 +50,37 @@ export default class HvScreen extends React.Component {
 
   static renderElement = Render.renderElement;
 
-  constructor(props: any) {
+  updateActions: string[];
+
+  parser: Dom.Parser;
+
+  needsLoad: boolean;
+
+  initialDoc: Document | null;
+
+  doc: Document | null;
+
+  behaviorRegistry: import('/Users/hardingray/Documents/Work/Instawork/Development/GitRepos/hyperview-clean/src/types').BehaviorRegistry;
+
+  componentRegistry: import('/Users/hardingray/Documents/Work/Instawork/Development/GitRepos/hyperview-clean/src/types').ComponentRegistry;
+
+  formComponentRegistry: import('/Users/hardingray/Documents/Work/Instawork/Development/GitRepos/hyperview-clean/src/types').ComponentRegistry;
+
+  navigation: Navigation;
+
+  oldSetState: <K extends 'styles'>(
+    state:
+      | State
+      | ((
+          prevState: Readonly<State>,
+          props: Readonly<Props>,
+        ) => State | Pick<State, K> | null)
+      | Pick<State, K>
+      | null,
+    callback?: (() => void) | undefined,
+  ) => void;
+
+  constructor(props: Props) {
     super(props);
 
     this.onUpdate = this.onUpdate.bind(this);
@@ -99,7 +131,7 @@ export default class HvScreen extends React.Component {
     this.navigation = new Navigation(props.entrypointUrl, this.getNavigation());
   }
 
-  getRoute = (props: any) => {
+  getRoute = (props: Props) => {
     // The prop route is available in React Navigation v5 and above
     if (props.route) {
       return props.route;
@@ -150,7 +182,7 @@ export default class HvScreen extends React.Component {
    * preload screen and URL to load.
    */
   // eslint-disable-next-line camelcase
-  UNSAFE_componentWillReceiveProps = (nextProps: any) => {
+  UNSAFE_componentWillReceiveProps = (nextProps: Props) => {
     const oldNavigationState = this.getRoute(this.props);
     const newNavigationState = this.getRoute(nextProps);
 
@@ -202,7 +234,7 @@ export default class HvScreen extends React.Component {
    */
   componentDidUpdate() {
     if (this.needsLoad) {
-      this.load(this.state.url);
+      this.load();
       this.needsLoad = false;
     }
   }
@@ -411,7 +443,7 @@ export default class HvScreen extends React.Component {
     if (href[0] === '#') {
       const element = root.getElementById(href.slice(1));
       if (element) {
-        return element.cloneNode(true);
+        return element.cloneNode(true) as Element;
       }
       throw new Error(`Element with id ${href} not found in document`);
     }

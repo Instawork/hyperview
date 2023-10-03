@@ -358,10 +358,10 @@ export type BehaviorOptions = {
 };
 
 export type NavigationRouteParams = {
-  delay: number | null | undefined;
-  preloadScreen: number | null | undefined;
-  url: string | null | undefined;
-  targetId?: string | null | undefined;
+  delay?: number | null;
+  preloadScreen?: number | null;
+  url?: string | null;
+  targetId?: string | null;
 };
 
 export type NavigationProps = {
