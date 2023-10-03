@@ -10,10 +10,8 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import type {
   DOMString,
-  Element,
   HvComponentOnUpdate,
   HvComponentProps,
-  NodeList,
 } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
 import { LOCAL_NAME } from 'hyperview/src/types';
@@ -33,7 +31,7 @@ export default class HvSelectSingle extends PureComponent<HvComponentProps> {
       return [];
     }
     // Add each selected option to the form data
-    const optionElements: NodeList<Element> = element.getElementsByTagNameNS(
+    const optionElements = element.getElementsByTagNameNS(
       Namespaces.HYPERVIEW,
       LOCAL_NAME.OPTION,
     );
@@ -71,7 +69,7 @@ export default class HvSelectSingle extends PureComponent<HvComponentProps> {
    * selected=true attribute.
    */
   onSelect = (selectedValue?: DOMString | null) => {
-    const newElement = this.props.element.cloneNode(true);
+    const newElement = this.props.element.cloneNode(true) as Element;
     const allowDeselect = this.props.element.getAttribute('allow-deselect');
     const options = newElement.getElementsByTagNameNS(
       Namespaces.HYPERVIEW,

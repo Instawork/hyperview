@@ -10,7 +10,6 @@ import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type {
   DOMString,
-  Element,
   HvComponentProps,
   StyleSheet,
 } from 'hyperview/src/types';
@@ -68,14 +67,14 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
   };
 
   onFocus = () => {
-    const newElement = this.props.element.cloneNode(true);
+    const newElement = this.props.element.cloneNode(true) as Element;
     newElement.setAttribute('focused', 'true');
     this.onUpdate(newElement);
     Behaviors.trigger('focus', newElement, this.props.onUpdate);
   };
 
   onBlur = () => {
-    const newElement = this.props.element.cloneNode(true);
+    const newElement = this.props.element.cloneNode(true) as Element;
     newElement.setAttribute('focused', 'false');
     this.onUpdate(newElement);
     Behaviors.trigger('blur', newElement, this.props.onUpdate);
@@ -85,7 +84,7 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
    * Hides the picker without applying the chosen value.
    */
   onCancel = () => {
-    const newElement = this.props.element.cloneNode(true);
+    const newElement = this.props.element.cloneNode(true) as Element;
     newElement.setAttribute('focused', 'false');
     newElement.removeAttribute('picker-value');
     this.onUpdate(newElement);
@@ -98,7 +97,7 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
     const pickerValue =
       newValue !== undefined ? newValue : this.getPickerValue();
     const value = this.getValue();
-    const newElement = this.props.element.cloneNode(true);
+    const newElement = this.props.element.cloneNode(true) as Element;
     newElement.setAttribute('value', pickerValue);
     newElement.removeAttribute('picker-value');
     newElement.setAttribute('focused', 'false');

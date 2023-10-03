@@ -6,11 +6,7 @@
  *
  */
 
-import type {
-  Element,
-  HvComponentOptions,
-  StyleSheets,
-} from 'hyperview/src/types';
+import type { HvComponentOptions, StyleSheets } from 'hyperview/src/types';
 
 import { ReactNode } from 'react';
 

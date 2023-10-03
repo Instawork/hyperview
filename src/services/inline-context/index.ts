@@ -14,7 +14,6 @@ import {
   ignoreSpacesFollowingSpace,
   trim,
 } from './helpers';
-import type { Element, Node } from 'hyperview/src/types';
 import { NODE_TYPE } from 'hyperview/src/types';
 import { preorder } from 'hyperview/src/services/dom/helpers';
 

@@ -2,8 +2,6 @@ import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Xml from 'hyperview/src/services/xml';
 import type {
   DOMString,
-  Document,
-  Element,
   HvComponentOnUpdate,
   HvGetRoot,
   HvUpdateRoot,

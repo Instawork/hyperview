@@ -10,7 +10,6 @@ import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type {
   DOMString,
-  Element,
   HvComponentProps,
   StyleSheet,
 } from 'hyperview/src/types';

@@ -20,7 +20,6 @@ import {
 } from 'hyperview/src/types';
 import { ATTRIBUTES, PRESS_TRIGGERS_PROP_NAMES } from './types';
 import type {
-  Element,
   HvComponentOnUpdate,
   HvComponentOptions,
   NavAction,
@@ -144,7 +143,9 @@ export default class HyperRef extends PureComponent<Props, State> {
       );
       handler(this.props.element);
       if (__DEV__) {
-        const listenerElement: Element = behaviorElement.cloneNode(false);
+        const listenerElement: Element = behaviorElement.cloneNode(
+          false,
+        ) as Element;
         const caughtEvent:
           | string
           | undefined
@@ -332,8 +333,9 @@ export default class HyperRef extends PureComponent<Props, State> {
 
     // If element is a <text> nested under another <text>, simply add press events
     const isNestedUnderText =
-      this.props.element.parentNode?.namespaceURI === Namespaces.HYPERVIEW &&
-      this.props.element.parentNode?.localName === LOCAL_NAME.TEXT;
+      (this.props.element.parentNode as Element)?.namespaceURI ===
+        Namespaces.HYPERVIEW &&
+      (this.props.element.parentNode as Element)?.localName === LOCAL_NAME.TEXT;
 
     if (isNestedUnderText) {
       // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -351,10 +353,6 @@ export default class HyperRef extends PureComponent<Props, State> {
               ? noop
               : undefined)
           }
-          onResponderGrant={onPressIn}
-          // Both release and terminate responder are needed to properly pressOut
-          onResponderRelease={onPressOut}
-          onResponderTerminate={onPressOut}
           style={style}
           suppressHighlighting
           testID={testID}
@@ -477,7 +475,7 @@ export const addHref = (
   const action = element.getAttribute('action');
   const childNodes = element.childNodes ? Array.from(element.childNodes) : [];
   const behaviorElements = childNodes.filter(
-    n => n && n.nodeType === 1 && n.tagName === 'behavior',
+    n => n && n.nodeType === 1 && (n as Element).tagName === 'behavior',
   );
   const hasBehaviors = href || action || behaviorElements.length > 0;
   if (!hasBehaviors) {

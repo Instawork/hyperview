@@ -6,8 +6,6 @@
  *
  */
 
-import type { Element } from 'hyperview/src/types';
-
 type KeyboardDismissMode = 'none' | 'on-drag' | 'interactive';
 
 export const getKeyboardDismissMode = (

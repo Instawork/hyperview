@@ -44,6 +44,6 @@ export type Props = {
   errorScreen?: ComponentType<ErrorProps>;
   loadingScreen?: ComponentType<LoadingProps>;
   handleBack?: ComponentType<{ children: ReactNode }>;
-  doc?: TypesLegacy.Document;
-  registerPreload?: (id: number, element: TypesLegacy.Element) => void;
+  doc?: Document;
+  registerPreload?: (id: number, element: Element) => void;
 };

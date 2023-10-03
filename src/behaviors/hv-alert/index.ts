@@ -9,7 +9,7 @@
 import * as Dom from 'hyperview/src/services/dom';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import { Alert, Platform } from 'react-native';
-import type { Element, HvComponentOnUpdate } from 'hyperview/src/types';
+import type { HvComponentOnUpdate } from 'hyperview/src/types';
 import { later } from 'hyperview/src/services';
 
 export default {

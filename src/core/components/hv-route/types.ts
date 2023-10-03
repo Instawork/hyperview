@@ -9,12 +9,7 @@
 import * as NavigatorService from 'hyperview/src/services/navigator';
 
 import { ComponentType, ReactNode } from 'react';
-import {
-  Document,
-  Element,
-  HvBehavior,
-  HvComponent,
-} from 'hyperview/src/types';
+import { HvBehavior, HvComponent } from 'hyperview/src/types';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
 

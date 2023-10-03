@@ -7,7 +7,6 @@
  */
 
 import type {
-  Element,
   HvComponentOnUpdate,
   HvComponentOptions,
   StyleSheets,

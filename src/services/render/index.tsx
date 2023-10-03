@@ -9,7 +9,6 @@
 import * as InlineContext from 'hyperview/src/services/inline-context';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type {
-  Element,
   HvComponentOnUpdate,
   HvComponentOptions,
   StyleSheets,
@@ -91,11 +90,9 @@ export const renderElement = (
       // Explicitly setting the key causes collision when several components render
       // with `undefined` value for `key`
       // Object spreading will define the prop only when its value is truthy
-      const extraProps = {
-        key: element.getAttribute('key'),
-      };
-      if (!extraProps.key) {
-        delete extraProps.key;
+      const extraProps: Partial<{ [key: string]: string | null }> = {};
+      if (element.getAttribute('key')) {
+        extraProps.key = element.getAttribute('key');
       }
       return (
         <Component
@@ -119,9 +116,10 @@ export const renderElement = (
     // Render non-empty text nodes, when wrapped inside a <text> element
     if (element.nodeValue) {
       if (
-        (element.parentNode?.namespaceURI === Namespaces.HYPERVIEW &&
-          element.parentNode?.localName === LOCAL_NAME.TEXT) ||
-        element.parentNode?.namespaceURI !== Namespaces.HYPERVIEW
+        ((element.parentNode as Element)?.namespaceURI ===
+          Namespaces.HYPERVIEW &&
+          (element.parentNode as Element)?.localName === LOCAL_NAME.TEXT) ||
+        (element.parentNode as Element)?.namespaceURI !== Namespaces.HYPERVIEW
       ) {
         if (options.preformatted) {
           return element.nodeValue;
@@ -162,7 +160,7 @@ export const renderChildren = (
     for (let i = 0; i < childNodes.length; i += 1) {
       const e = renderElement(
         // $FlowFixMe
-        element.childNodes.item(i),
+        element.childNodes.item(i) as Element,
         stylesheets,
         onUpdate,
         { ...options, skipHref: false },

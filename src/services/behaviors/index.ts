@@ -7,13 +7,7 @@
  */
 
 import * as Dom from 'hyperview/src/services/dom';
-import type {
-  Document,
-  Element,
-  HvComponentOnUpdate,
-  Node,
-  UpdateAction,
-} from 'hyperview/src/types';
+import type { HvComponentOnUpdate, UpdateAction } from 'hyperview/src/types';
 import { ACTIONS } from 'hyperview/src/types';
 import { shallowCloneToRoot } from 'hyperview/src/services';
 

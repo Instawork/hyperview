@@ -8,7 +8,6 @@
 
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import type { Element, HvComponentProps } from 'hyperview/src/types';
 import { Platform, StyleSheet, Switch } from 'react-native';
 import React, { PureComponent } from 'react';
 import {
@@ -16,6 +15,7 @@ import {
   getNameValueFormInputValues,
 } from 'hyperview/src/services';
 import type { ColorValue } from './style-sheet';
+import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import normalizeColor from './style-sheet';
 
@@ -71,11 +71,11 @@ export default class HvSwitch extends PureComponent<HvComponentProps> {
         ? unselectedStyle.backgroundColor
         : null,
       onChange: () => {
-        const newElement = this.props.element.cloneNode(true);
+        const newElement = this.props.element.cloneNode(true) as Element;
         Behaviors.trigger('change', newElement, this.props.onUpdate);
       },
       onValueChange: (value: any) => {
-        const newElement = this.props.element.cloneNode(true);
+        const newElement = this.props.element.cloneNode(true) as Element;
         newElement.setAttribute('value', value ? 'on' : 'off');
         if (this.props.onUpdate) {
           this.props.onUpdate(null, 'swap', this.props.element, { newElement });

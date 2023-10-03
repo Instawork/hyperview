@@ -8,11 +8,7 @@
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import type {
-  Element,
-  HvComponentProps,
-  TextContextType,
-} from 'hyperview/src/types';
+import type { HvComponentProps, TextContextType } from 'hyperview/src/types';
 import React, { MutableRefObject, useCallback, useRef } from 'react';
 import {
   createProps,
@@ -54,7 +50,7 @@ const HvTextField = (props: HvComponentProps) => {
 
   // Handlers
   const setFocus = (focused: boolean) => {
-    const newElement = props.element.cloneNode(true);
+    const newElement = props.element.cloneNode(true) as Element;
     if (props.onUpdate !== null) {
       props.onUpdate(null, 'swap', props.element, { newElement });
 
@@ -81,7 +77,7 @@ const HvTextField = (props: HvComponentProps) => {
   // This handler takes care of handling the state, so it shouldn't be debounced
   const onChangeText = (value: string) => {
     const formattedValue = HvTextField.getFormattedValue(props.element, value);
-    const newElement = props.element.cloneNode(true);
+    const newElement = props.element.cloneNode(true) as Element;
     newElement.setAttribute('value', formattedValue);
     if (props.onUpdate !== null) {
       props.onUpdate(null, 'swap', props.element, { newElement });

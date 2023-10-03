@@ -22,7 +22,6 @@ import {
 } from './types';
 import { DOMParser } from '@instawork/xmldom';
 import { Dimensions } from 'react-native';
-import type { Document } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { getFirstTag } from './helpers';
 import { version } from 'hyperview/package.json';
