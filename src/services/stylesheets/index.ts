@@ -9,7 +9,6 @@
 import * as Dom from 'hyperview/src/services/dom';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type {
-  Document,
   StyleSheet as StyleSheetType,
   StyleSheets,
 } from 'hyperview/src/types';
@@ -175,12 +174,14 @@ function createStylesheet(document: Document, modifiers = {}): StyleSheetType {
 
     for (let i = 0; i < styleElements.length; i += 1) {
       const styleElement = styleElements.item(i);
-      const hasModifier = styleElement?.parentNode?.tagName === 'modifier';
+      const hasModifier =
+        (styleElement?.parentNode as Element)?.tagName === 'modifier';
 
       let styleId = styleElement?.getAttribute('id');
       if (hasModifier) {
         // TODO(adam): Use less hacky way to get id of parent style element.
-        styleId = styleElement?.parentNode?.parentNode?.getAttribute('id');
+        styleId = (styleElement?.parentNode
+          ?.parentNode as Element)?.getAttribute('id');
       }
 
       // This must be a root style or a modifier style
@@ -196,7 +197,8 @@ function createStylesheet(document: Document, modifiers = {}): StyleSheetType {
         const [modifier, state] = modifierEntries[j];
 
         const elementModifierState =
-          styleElement?.parentNode?.getAttribute(modifier) === 'true';
+          (styleElement?.parentNode as Element)?.getAttribute(modifier) ===
+          'true';
 
         if (elementModifierState !== state) {
           matchesModifiers = false;

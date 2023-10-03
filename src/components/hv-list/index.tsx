@@ -13,8 +13,6 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import type {
   DOMString,
-  Document,
-  Element,
   HvComponentOnUpdate,
   HvComponentOptions,
   HvComponentProps,
@@ -77,7 +75,7 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
       return;
     }
     const doc: Document | null | undefined =
-      this.context === null ? null : this.context();
+      typeof this.context === 'function' ? this.context() : null;
     const targetElement: Element | null | undefined = doc?.getElementById(
       targetId,
     );
@@ -184,20 +182,20 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
         return false;
       }
       if (
-        item.parentNode.tagName === LOCAL_NAME.ITEMS &&
-        item.parentNode.namespaceURI === Namespaces.HYPERVIEW &&
+        (item.parentNode as Element).tagName === LOCAL_NAME.ITEMS &&
+        (item.parentNode as Element).namespaceURI === Namespaces.HYPERVIEW &&
         item.parentNode.parentNode === this.props.element
       ) {
         return true;
       }
       if (
-        item.parentNode.tagName === LOCAL_NAME.LIST &&
-        item.parentNode.namespaceURI === Namespaces.HYPERVIEW &&
+        (item.parentNode as Element).tagName === LOCAL_NAME.LIST &&
+        (item.parentNode as Element).namespaceURI === Namespaces.HYPERVIEW &&
         item.parentNode.parentNode !== this.props.element
       ) {
         return false;
       }
-      return isOwnedBySelf(item.parentNode);
+      return isOwnedBySelf(item.parentNode as Element);
     };
 
     return Array.from(

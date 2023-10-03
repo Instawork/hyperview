@@ -8,8 +8,8 @@
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type { Content, Options } from './types';
-import type { DOMString, Element } from 'hyperview/src/types';
 import { Platform, Share } from 'react-native';
+import type { DOMString } from 'hyperview/src/types';
 
 const getContent = (
   message?: DOMString | null,

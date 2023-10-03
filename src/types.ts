@@ -74,31 +74,6 @@ export const NODE_TYPE = {
 
 export type NodeType = typeof NODE_TYPE[keyof typeof NODE_TYPE];
 
-export type Node = {
-  tagName: DOMString;
-  localName: LocalName;
-  readonly attributes: NamedNodeMap | null | undefined;
-  readonly childNodes: NodeList<Node> | null | undefined;
-  readonly firstChild: Node | null | undefined;
-  readonly lastChild: Node | null | undefined;
-  readonly namespaceURI: NamespaceURI | null | undefined;
-  readonly nextSibling: Node | null | undefined;
-  readonly nodeName: DOMString;
-  readonly nodeType: NodeType;
-  nodeValue: string | null | undefined;
-  readonly ownerDocument: Document | null | undefined;
-  readonly parentNode: Node | null | undefined;
-  readonly previousSibling: Node | null | undefined;
-  appendChild: (newChild: Node) => Node;
-  hasAttributes: () => boolean;
-  hasChildNodes: () => boolean;
-  insertBefore: (newChild: Node, refChild: Node) => Node;
-  isSupported: (feature: DOMString, version: DOMString) => boolean;
-  normalize: () => void;
-  removeChild: (oldChild: Node) => Node;
-  replaceChild: (newChild: Node, oldChild: Node) => Node;
-};
-
 export type Attribute = Node & {
   value: DOMString;
   nodeType: typeof NODE_TYPE.ATTRIBUTE_NODE;
@@ -128,76 +103,6 @@ export type DOMImplementation = {
     systemId: DOMString,
   ) => DocumentType;
   hasFeature: (feature: DOMString, version: DOMString) => boolean;
-};
-
-export type Document = Node & {
-  cloneNode: (deep: boolean) => Document;
-  doctype: DocumentType;
-  documentElement: Element;
-  implementation: DOMImplementation;
-  createAttribute: (name: DOMString) => Attribute;
-  createAttributeNS: (
-    namespaceURI: NamespaceURI,
-    qualifiedName: DOMString,
-  ) => Attribute;
-  createCDATASection: (data: DOMString) => CDATASection;
-  createComment: (data: DOMString) => Comment;
-  createDocumentFragment: () => DocumentFragment;
-  createElement: (tagName: DOMString) => Element;
-  createElementNS: (
-    namespaceURI: NamespaceURI,
-    qualifiedName: DOMString,
-  ) => Node;
-  createEntityReference: (name: DOMString) => EntityReference;
-  createProcessingInstruction: (
-    target: DOMString,
-    data: DOMString,
-  ) => ProcessingInstruction;
-  createTextNode: (data: DOMString) => Node;
-  getElementById: (elementId: DOMString) => Element | null | undefined;
-  getElementsByTagName: (tagName: DOMString) => NodeList<Element>;
-  getElementsByTagNameNS: (
-    namespaceURI: NamespaceURI,
-    localName: LocalName,
-  ) => NodeList<Element>;
-  importNode: (importedNode: Node, deep: boolean) => Node;
-};
-
-export type Element = Omit<Node, 'childNodes' | 'parentNode'> & {
-  // not technically correct, but it's how we're using it
-  // TODO: fix?
-  childNodes: NodeList<Element>;
-  parentNode: Element | null | undefined;
-
-  cloneNode: (deep: boolean) => Element;
-  getAttribute: (name: DOMString) => DOMString | null | undefined;
-  getAttributeNode: (name: DOMString) => Attribute | null | undefined;
-  getAttributeNodeNS: (
-    namespaceURI: NamespaceURI,
-    localName: LocalName,
-  ) => Attribute | null | undefined;
-  getAttributeNS: (
-    namespaceURI: NamespaceURI,
-    localName: LocalName,
-  ) => DOMString | null | undefined;
-  getElementsByTagName: (name: DOMString) => NodeList<Element>;
-  getElementsByTagNameNS: (
-    namespaceURI: NamespaceURI,
-    localName: LocalName,
-  ) => NodeList<Element>;
-  hasAttribute: (name: DOMString) => boolean;
-  hasAttributeNS: (namespaceURI: NamespaceURI, localName: LocalName) => boolean;
-  removeAttribute: (name: DOMString) => void;
-  removeAttributeNode: (attribute: Attribute) => Attribute;
-  removeAttributeNS: (namespaceURI: NamespaceURI, localName: LocalName) => void;
-  setAttribute: (name: DOMString, value: DOMString) => void;
-  setAttributeNode: (attribute: Attribute) => Attribute;
-  setAttributeNodeNS: (attribute: Attribute) => Attribute;
-  setAttributeNS: (
-    namespaceURI: NamespaceURI,
-    qualifiedName: LocalName,
-    value: DOMString,
-  ) => void;
 };
 
 export type DocumentFragment = Node;
@@ -232,14 +137,6 @@ export type Comment = CharacterData & {
 export type CDATASection = CharacterData & {
   nodeName: '#cdata-section';
   nodeType: typeof NODE_TYPE.CDATA_SECTION_NODE;
-};
-
-export type NodeList<T> = {
-  filter: (predicate: (item: T) => boolean) => T[];
-  length: number;
-  item: (index: number) => T | null | undefined;
-} & {
-  [index: number]: T;
 };
 
 export type NamedNodeMap = {

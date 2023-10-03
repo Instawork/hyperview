@@ -7,7 +7,6 @@
  */
 
 import type { ComponentType } from 'react';
-import type { Document } from 'hyperview/src/types';
 import React from 'react';
 import type { RefreshControlProps } from 'react-native';
 

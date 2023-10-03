@@ -13,13 +13,9 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import type {
   DOMString,
-  Document,
-  Element,
   HvComponentOnUpdate,
   HvComponentOptions,
   HvComponentProps,
-  Node,
-  NodeList,
 } from 'hyperview/src/types';
 import {
   RefreshControl as DefaultRefreshControl,
@@ -34,8 +30,8 @@ import type { ElementRef } from 'react';
 import { getAncestorByTagName } from 'hyperview/src/services';
 
 const getSectionIndex = (
-  sectionTitle: Node,
-  sectionTitles: NodeList<Node>,
+  sectionTitle: Element,
+  sectionTitles: HTMLCollectionOf<Element>,
 ): number => {
   const sectionIndex = Array.from(sectionTitles).indexOf(sectionTitle);
 
@@ -44,7 +40,7 @@ const getSectionIndex = (
     sectionTitles[0],
     NODE_TYPE.ELEMENT_NODE,
   );
-  if (previousElement?.localName === LOCAL_NAME.ITEM) {
+  if ((previousElement as Element)?.localName === LOCAL_NAME.ITEM) {
     return sectionIndex + 1;
   }
 
@@ -52,21 +48,21 @@ const getSectionIndex = (
 };
 
 const getPreviousSectionTitle = (
-  element: Node,
+  element: Element,
   itemIndex: number,
-): [Node | null, number] => {
+): [Element | null, number] => {
   const { previousSibling } = element;
   if (!previousSibling) {
     return [null, itemIndex];
   }
-  if (previousSibling.localName === LOCAL_NAME.SECTION_TITLE) {
-    return [previousSibling, itemIndex];
+  if ((previousSibling as Element).localName === LOCAL_NAME.SECTION_TITLE) {
+    return [previousSibling as Element, itemIndex];
   }
-  if (previousSibling.localName === LOCAL_NAME.ITEM) {
+  if ((previousSibling as Element).localName === LOCAL_NAME.ITEM) {
     // eslint-disable-next-line no-param-reassign
     itemIndex += 1;
   }
-  return getPreviousSectionTitle(previousSibling, itemIndex);
+  return getPreviousSectionTitle(previousSibling as Element, itemIndex);
 };
 
 export default class HvSectionList extends PureComponent<
@@ -117,7 +113,8 @@ export default class HvSectionList extends PureComponent<
       console.warn('[behaviors/scroll]: missing "target" attribute');
       return;
     }
-    const doc: Document | null = this.context !== null ? this.context() : null;
+    const doc: Document | null =
+      typeof this.context === 'function' ? this.context() : null;
     const targetElement: Element | null | undefined = doc?.getElementById(
       targetId,
     );
@@ -308,12 +305,12 @@ export default class HvSectionList extends PureComponent<
             node.nodeName === LOCAL_NAME.ITEMS ||
             node.nodeName === LOCAL_NAME.SECTION
           ) {
-            addNodes(node);
+            addNodes(node as Element);
           } else if (
             node.nodeName === LOCAL_NAME.ITEM ||
             node.nodeName === LOCAL_NAME.SECTION_TITLE
           ) {
-            flattened.push(sectionElement.childNodes[j]);
+            flattened.push(sectionElement.childNodes[j] as Element);
           }
         }
       }

@@ -61,6 +61,7 @@
         "indent": "off",
         "arrow-body-style": "off",
         "operator-linebreak": "off",
+        "no-undef": "off",
         "no-use-before-define": "off",
         "object-curly-newline": "off",
         "instawork/error-object": "off",
@@ -68,19 +69,15 @@
         "import/no-extraneous-dependencies": [
           "warn",
           {
-            "devDependencies": [
-              "**/stories/*.tsx"
-            ]
+            "devDependencies": ["**/stories/*.tsx"]
           }
         ]
       }
     },
     {
-      "files": [
-        "src/core/components/**/*",
-      ],
+      "files": ["src/core/components/**/*"],
       "rules": {
-        "instawork/stories-components": "warn",
+        "instawork/stories-components": "warn"
       }
     }
   ]

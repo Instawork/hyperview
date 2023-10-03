@@ -7,14 +7,7 @@
  */
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import type {
-  Document,
-  Element,
-  LocalName,
-  NamespaceURI,
-  Node,
-  NodeType,
-} from 'hyperview/src/types';
+import type { LocalName, NamespaceURI, NodeType } from 'hyperview/src/types';
 
 export const getBehaviorElements = (element: any) => {
   const behaviorElements = Array.from<Element>(element.childNodes).filter(

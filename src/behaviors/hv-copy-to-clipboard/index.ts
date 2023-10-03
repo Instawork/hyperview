@@ -7,7 +7,6 @@
  */
 
 import { Clipboard } from 'react-native';
-import type { Element } from 'hyperview/src/types';
 
 export default {
   action: 'copy-to-clipboard',

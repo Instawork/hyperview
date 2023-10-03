@@ -10,7 +10,7 @@ import * as Components from 'hyperview/src/services/components';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
-import type { Element, HvComponent, LocalName } from 'hyperview/src/types';
+import type { HvComponent, LocalName } from 'hyperview/src/types';
 import { DOMParser } from '@instawork/xmldom';
 import React from 'react';
 import { action } from '@storybook/addon-actions';

@@ -6,7 +6,6 @@
  *
  */
 
-import * as TypesLegacy from 'hyperview/src/types';
 import { FC } from 'react';
 
 export type RouteParams = {
@@ -31,6 +30,6 @@ export type NavigatorParams = {
  * All of the props used by hv-navigator
  */
 export type Props = {
-  element: TypesLegacy.Element;
+  element: Element;
   routeComponent: FC;
 };

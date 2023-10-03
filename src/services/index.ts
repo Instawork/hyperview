@@ -10,14 +10,10 @@ import * as Xml from 'hyperview/src/services/xml';
 import type {
   ComponentRegistry,
   DOMString,
-  Document,
-  Element,
   HvComponent,
   HvComponentOptions,
   HvFormValues,
   LocalName,
-  Node,
-  NodeList,
   StyleSheet,
   StyleSheets,
 } from 'hyperview/src/types';
@@ -144,7 +140,7 @@ export const later = (delayMs: number): Promise<void> => {
  * nodes will be existing objects.
  */
 export const shallowClone = (element: Element): Element => {
-  const newElement: Element = element.cloneNode(false);
+  const newElement: Element = element.cloneNode(false) as Element;
   let childNode: Node | null | undefined = element.firstChild;
   while (childNode) {
     const nextChild: Node | null | undefined = childNode.nextSibling;
@@ -249,7 +245,7 @@ export const getAncestorByTagName = (
     return null;
   }
 
-  while (parentNode.tagName !== tagName) {
+  while ((parentNode as Element).tagName !== tagName) {
     ({ parentNode } = parentNode);
     if (!parentNode) {
       return null;
@@ -300,7 +296,7 @@ export const getFormData = (
     // Get all inputs in the form
     .forEach((data: [string, string, HvComponent]) => {
       const [ns, tag, component] = data;
-      const inputElements: NodeList<Element> = formElement.getElementsByTagNameNS(
+      const inputElements = formElement.getElementsByTagNameNS(
         ns,
         tag as LocalName,
       );

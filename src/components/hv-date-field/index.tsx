@@ -10,7 +10,6 @@ import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type {
   DOMString,
-  Element,
   HvComponentOnUpdate,
   HvComponentProps,
 } from 'hyperview/src/types';
@@ -72,7 +71,7 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
    * If the field is not set, use today's date in the picker.
    */
   onFieldPress = () => {
-    const newElement = this.props.element.cloneNode(true);
+    const newElement = this.props.element.cloneNode(true) as Element;
     const value: string =
       this.props.element.getAttribute('value') ||
       HvDateField.createStringFromDate(new Date());
@@ -90,7 +89,7 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
    * Hides the picker without applying the chosen value.
    */
   onCancel = () => {
-    const newElement = this.props.element.cloneNode(true);
+    const newElement = this.props.element.cloneNode(true) as Element;
     newElement.setAttribute('focused', 'false');
     newElement.removeAttribute('picker-value');
     if (this.props.onUpdate !== null) {
@@ -107,7 +106,7 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
       newValue !== undefined ? newValue : this.getPickerValue();
     const value = HvDateField.createStringFromDate(pickerValue);
     const hasChanged = this.props.element.getAttribute('value') !== value;
-    const newElement = this.props.element.cloneNode(true);
+    const newElement = this.props.element.cloneNode(true) as Element;
     newElement.setAttribute('value', value);
     newElement.removeAttribute('picker-value');
     newElement.setAttribute('focused', 'false');
@@ -125,7 +124,7 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
    */
   setPickerValue = (value?: Date | null) => {
     const formattedValue: string = HvDateField.createStringFromDate(value);
-    const newElement = this.props.element.cloneNode(true);
+    const newElement = this.props.element.cloneNode(true) as Element;
     newElement.setAttribute('picker-value', formattedValue);
     if (this.props.onUpdate !== null) {
       this.props.onUpdate(null, 'swap', this.props.element, { newElement });

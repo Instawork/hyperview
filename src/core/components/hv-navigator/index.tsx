@@ -49,7 +49,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
    * Build all screens from received routes
    */
   buildScreens = (
-    element: TypesLegacy.Element,
+    element: Element,
     type: TypesLegacy.DOMString,
   ): React.ReactNode => {
     const screens: React.ReactElement[] = [];
@@ -64,15 +64,13 @@ export default class HvNavigator extends PureComponent<Types.Props> {
     }
 
     const { buildTabScreen } = this;
-    const elements: TypesLegacy.Element[] = NavigatorService.getChildElements(
-      element,
-    );
+    const elements: Element[] = NavigatorService.getChildElements(element);
 
     // For tab navigators, the screens are appended
     // For stack navigators, the dynamic screens are added later
     // This iteration will also process nested navigators
     //    and retrieve additional urls from child routes
-    elements.forEach((navRoute: TypesLegacy.Element) => {
+    elements.forEach((navRoute: Element) => {
       if (navRoute.localName === TypesLegacy.LOCAL_NAME.NAV_ROUTE) {
         const id:
           | TypesLegacy.DOMString
@@ -85,7 +83,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
         }
 
         // Check for nested navigators
-        const nestedNavigator: TypesLegacy.Element | null = getFirstTag(
+        const nestedNavigator: Element | null = getFirstTag(
           navRoute,
           TypesLegacy.LOCAL_NAME.NAVIGATOR,
         );
@@ -175,7 +173,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
       | null
       | undefined = props.element.getAttribute('type');
     const selected:
-      | TypesLegacy.Element
+      | Element
       | undefined = NavigatorService.getSelectedNavRouteElement(props.element);
     if (!selected) {
       throw new NavigatorService.HvNavigatorError(
