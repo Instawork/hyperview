@@ -8,8 +8,7 @@ jobs:
       - checkout
       - run: yarn
       - run: yarn test:generators
-      - run: yarn test:flow
-      - run: npx tsc
+      - run: yarn test:ts
       - run: yarn test:lint
       - run: yarn test:render
       - run: yarn test:unit

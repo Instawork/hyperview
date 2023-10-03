@@ -35,14 +35,14 @@
     "release:minor": "yarn version --minor",
     "release:major": "yarn version --major",
     "storybook": "storybook start -p 7007",
-    "test:flow": "flow",
+    "test:ts": "tsc",
     "test:generators": "yarn generate test && git diff --quiet HEAD",
     "test:lint": "eslint src && prettier --check '**/*.xsd' '**/*.xml' '**/*.md'",
     "test:render": "npx patch-package && jest test/render.test.js --forceExit",
     "test:unit": "jest --testPathPattern src",
     "test:xmlserver": "eleventy --serve --port=8085",
     "test:validate-xml": "eleventy; find _examples_site -name '*.xml' -not -path '*/advanced_behaviors/instawork.xml' -not -path '*/advanced_behaviors/custom_share.xml' -not -path '*/advanced_behaviors/alert/behavior.xml' -not -path '*/case_studies/business_rating.xml' -not -path '*/case_studies/_rating_save.xml' | xargs xmllint --schema schema/hyperview.xsd --noout",
-    "test": "yarn generate test && yarn test:flow && yarn test:lint && yarn test:render && yarn test:unit && yarn test:validate-xml"
+    "test": "yarn generate test && yarn test:ts && yarn test:lint && yarn test:render && yarn test:unit && yarn test:validate-xml"
   },
   "dependencies": {
     "@instawork/xmldom": "0.0.3",
