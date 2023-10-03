@@ -6,6 +6,7 @@
  *
  */
 
+// eslint-disable-next-line max-classes-per-file
 import * as ComponentsInternal from './internal';
 import { PureComponent } from 'react';
 
