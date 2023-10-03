@@ -3,11 +3,8 @@ import * as UrlService from 'hyperview/src/services/url';
 import type {
   BehaviorOptions,
   ComponentRegistry,
-  Document,
-  Element,
   NavAction,
   NavigationProps,
-  NodeList,
 } from 'hyperview/src/types';
 import { NAV_ACTIONS } from 'hyperview/src/types';
 import { getFormData } from 'hyperview/src/services';

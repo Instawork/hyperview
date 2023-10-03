@@ -12,8 +12,6 @@ import type { Props } from './types';
 import styles from './styles';
 
 export default class Loading extends PureComponent<Props> {
-  props: Props;
-
   render() {
     return (
       <View style={styles.container}>
