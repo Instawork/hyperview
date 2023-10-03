@@ -7,7 +7,10 @@
     "baseUrl": ".",
     "paths": {
       "hyperview/*": ["./*"],
-      "flow-to-typescript-codemod": ["./src/flow.d.ts"]
+      "flow-to-typescript-codemod": ["./src/flow.d.ts"],
+      "react-native-keyboard-aware-scrollview": [
+        "./src/core/components/keyboard-aware-scroll-view/index.d.ts"
+      ]
     }
   },
   "files": ["src/core/components/hv-root/index.tsx"],
