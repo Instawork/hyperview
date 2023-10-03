@@ -128,6 +128,9 @@
     ],
     "setupFiles": [
       "./test/setup.js"
+    ],
+    "transformIgnorePatterns": [
+      "/node_modules/(?!react-native-keyboard-aware-scrollview)/"
     ]
   }
 }
