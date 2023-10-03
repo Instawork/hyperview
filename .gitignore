@@ -9,7 +9,6 @@ node_modules/
 lib/
 
 storybook/app-key.gen.js
-storybook/app-key.gen.ts
 
 _examples_site/
 
