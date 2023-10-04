@@ -10,9 +10,9 @@ import * as NavigationContext from 'hyperview/src/contexts/navigation';
 import * as NavigatorMapContext from 'hyperview/src/contexts/navigator-map';
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Types from './types';
-import * as TypesLegacy from 'hyperview/src/types-legacy';
+import * as TypesLegacy from 'hyperview/src/types';
 import React, { PureComponent, useContext } from 'react';
-import { getFirstTag } from 'hyperview/src/services/dom/helpers-legacy';
+import { getFirstTag } from 'hyperview/src/services/dom/helpers';
 
 /**
  * Flag to show the navigator UIs
