@@ -61,10 +61,12 @@
         "flowtype/no-types-missing-file-annotation": "off",
         "func-call-spacing": "off",
         "function-paren-newline": "off",
+        "implicit-arrow-linebreak": "off",
         "indent": "off",
         "instawork/error-object": "off",
         "instawork/flow-annotate": "off",
         "no-spaced-func": "off",
+        "no-undef": "off",
         "no-use-before-define": "off",
         "object-curly-newline": "off",
         "operator-linebreak": "off"
