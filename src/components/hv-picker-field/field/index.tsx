@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -46,7 +44,10 @@ export default (props: Props) => {
       onPressIn={() => setPressed(true)}
       onPressOut={() => setPressed(false)}
     >
-      <View {...viewProps}>
+      <View
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...viewProps}
+      >
         <FieldLabel
           focused={props.focused}
           labelFormat={props.element.getAttribute('label-format')}

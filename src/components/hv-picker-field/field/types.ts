@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -10,18 +8,17 @@
 
 import type {
   DOMString,
-  Element,
   HvComponentOptions,
   StyleSheets,
 } from 'hyperview/src/types';
-import type { Node } from 'react';
+import { ReactNode } from 'react';
 
-export type Props = {|
-  children?: Node,
-  element: Element,
-  focused: boolean,
-  onPress: () => void,
-  options: HvComponentOptions,
-  stylesheets: StyleSheets,
-  value: ?DOMString,
-|};
+export type Props = {
+  children?: ReactNode;
+  element: Element;
+  focused: boolean;
+  onPress: () => void;
+  options: HvComponentOptions;
+  stylesheets: StyleSheets;
+  value: DOMString | null | undefined;
+};

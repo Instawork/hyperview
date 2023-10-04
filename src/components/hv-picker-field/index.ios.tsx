@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -12,7 +10,6 @@ import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type {
   DOMString,
-  Element,
   HvComponentProps,
   StyleSheet,
 } from 'hyperview/src/types';
@@ -25,7 +22,6 @@ import {
 import Field from './field';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import Modal from 'hyperview/src/core/components/modal';
-import type { Node } from 'react';
 import Picker from 'hyperview/src/core/components/picker';
 import { View } from 'react-native';
 
@@ -42,14 +38,21 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
 
   static localNameAliases = [];
 
-  static getFormInputValues = (element: Element): Array<[string, string]> => {
+  static getFormInputValues = (element: Element): [string, string][] => {
     return getNameValueFormInputValues(element);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  noop = () => {};
+
   getPickerInitialValue = (): string => {
     const value = this.getValue();
-    const pickerItems = this.getPickerItems();
-    if (pickerItems.map(item => item.getAttribute('value')).includes(value)) {
+    const pickerItems: Element[] = this.getPickerItems();
+    if (
+      pickerItems
+        .map((item: Element) => item.getAttribute('value'))
+        .includes(value)
+    ) {
       return value;
     }
     if (pickerItems.length > 0) {
@@ -67,16 +70,18 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
    * Gets the label from the picker items for the given value.
    * If the value doesn't have a picker item, returns null.
    */
-  getLabelForValue = (value: DOMString): ?string => {
-    // $FlowFixMe: flow thinks `element` is a `Node` instead of an `Element`
-    const pickerItemElements: NodeList<Element> = this.props.element.getElementsByTagNameNS(
+  getLabelForValue = (value: DOMString): string | null | undefined => {
+    const pickerItemElements: HTMLCollectionOf<Element> = this.props.element.getElementsByTagNameNS(
       Namespaces.HYPERVIEW,
       LOCAL_NAME.PICKER_ITEM,
     );
 
-    let item: ?Element = null;
+    let item: Element | null | undefined = null;
     for (let i = 0; i < pickerItemElements.length; i += 1) {
-      const pickerItemElement: ?Element = pickerItemElements.item(i);
+      const pickerItemElement:
+        | Element
+        | null
+        | undefined = pickerItemElements.item(i);
       if (
         pickerItemElement &&
         pickerItemElement.getAttribute('value') === value
@@ -91,26 +96,30 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
   /**
    * Returns a string representing the value in the picker.
    */
-  getPickerValue = (): string =>
-    this.props.element.getAttribute('picker-value') || '';
+  getPickerValue = (): string => {
+    return this.props.element.getAttribute('picker-value') || '';
+  };
 
-  getPickerItems = (): Element[] =>
-    Array.from(
-      // $FlowFixMe: flow thinks `element` is a `Node` instead of an `Element`
+  getPickerItems = (): Element[] => {
+    return Array.from(
       this.props.element.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
         LOCAL_NAME.PICKER_ITEM,
       ),
     );
+  };
 
   /**
-   * Shows the picker, defaulting to the field's value. If the field is not set, use the first value in the picker.
+   * Shows the picker, defaulting to the field's value.
+   * If the field is not set, use the first value in the picker.
    */
   onFieldPress = () => {
-    const newElement = this.props.element.cloneNode(true);
+    const newElement = this.props.element.cloneNode(true) as Element;
     newElement.setAttribute('focused', 'true');
     newElement.setAttribute('picker-value', this.getPickerInitialValue());
-    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+    if (this.props.onUpdate) {
+      this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+    }
     Behaviors.trigger('focus', newElement, this.props.onUpdate);
   };
 
@@ -118,10 +127,12 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
    * Hides the picker without applying the chosen value.
    */
   onCancel = () => {
-    const newElement = this.props.element.cloneNode(true);
+    const newElement = this.props.element.cloneNode(true) as Element;
     newElement.setAttribute('focused', 'false');
     newElement.removeAttribute('picker-value');
-    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+    if (this.props.onUpdate) {
+      this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+    }
     Behaviors.trigger('blur', newElement, this.props.onUpdate);
   };
 
@@ -131,11 +142,13 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
   onDone = () => {
     const pickerValue = this.getPickerValue();
     const value = this.getValue();
-    const newElement = this.props.element.cloneNode(true);
+    const newElement = this.props.element.cloneNode(true) as Element;
     newElement.setAttribute('value', pickerValue);
     newElement.removeAttribute('picker-value');
     newElement.setAttribute('focused', 'false');
-    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+    if (this.props.onUpdate) {
+      this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+    }
     const hasChanged = value !== pickerValue;
     if (hasChanged) {
       Behaviors.trigger('change', newElement, this.props.onUpdate);
@@ -147,19 +160,22 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
    * Updates the picker value while keeping the picker open.
    */
   setPickerValue = (value: string) => {
-    const newElement = this.props.element.cloneNode(true);
+    const newElement = this.props.element.cloneNode(true) as Element;
     newElement.setAttribute('picker-value', value);
-    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+    if (this.props.onUpdate) {
+      this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+    }
   };
 
   /**
    * Returns true if the field is focused (and picker is showing).
    */
-  isFocused = (): boolean =>
-    this.props.element.getAttribute('focused') === 'true';
+  isFocused = (): boolean => {
+    return this.props.element.getAttribute('focused') === 'true';
+  };
 
-  render = (): Node => {
-    const style: Array<StyleSheet> = createStyleProp(
+  render() {
+    const style: StyleSheet[] = createStyleProp(
       this.props.element,
       this.props.stylesheets,
       {
@@ -168,10 +184,13 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
       },
     );
     const { testID, accessibilityLabel } = createTestProps(this.props.element);
-    const value: ?DOMString = this.props.element.getAttribute('value');
-    const placeholderTextColor: ?DOMString = this.props.element.getAttribute(
-      'placeholderTextColor',
+    const value: DOMString | null | undefined = this.props.element.getAttribute(
+      'value',
     );
+    const placeholderTextColor:
+      | DOMString
+      | null
+      | undefined = this.props.element.getAttribute('placeholderTextColor');
     if ([undefined, null, ''].includes(value) && placeholderTextColor) {
       style.push({ color: placeholderTextColor });
     }
@@ -181,8 +200,8 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
     const children = this.getPickerItems()
       .filter(Boolean)
       .map((item: Element) => {
-        const l: ?DOMString = item.getAttribute('label');
-        const v: ?DOMString = item.getAttribute('value');
+        const l: DOMString | null | undefined = item.getAttribute('label');
+        const v: DOMString | null | undefined = item.getAttribute('value');
         if (!l || typeof v !== 'string') {
           return null;
         }
@@ -204,7 +223,7 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
             isFocused={this.isFocused}
             onModalCancel={this.onCancel}
             onModalDone={this.onDone}
-            onUpdate={this.props.onUpdate}
+            onUpdate={this.props.onUpdate || this.noop}
             options={this.props.options}
             stylesheets={this.props.stylesheets}
           >
@@ -221,5 +240,5 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
         ) : null}
       </Field>
     );
-  };
+  }
 }
