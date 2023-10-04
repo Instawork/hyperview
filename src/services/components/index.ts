@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -52,12 +50,23 @@ const reducer = (registry: ComponentRegistry, component: HvComponent) => ({
 
 export const getRegistry = (
   components: HvComponent[] = [],
-): ComponentRegistry =>
-  [...HYPERVIEW_COMPONENTS, ...components].reduce(reducer, {});
+): ComponentRegistry => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return [...HYPERVIEW_COMPONENTS, ...components].reduce<Record<string, any>>(
+    reducer,
+    {},
+  );
+};
 
 export const getFormRegistry = (
   components: HvComponent[] = [],
-): ComponentRegistry =>
-  [...HYPERVIEW_COMPONENTS, ...components]
-    .filter(c => Object.prototype.hasOwnProperty.call(c, 'getFormInputValues'))
-    .reduce(reducer, {});
+): ComponentRegistry => {
+  return (
+    [...HYPERVIEW_COMPONENTS, ...components]
+      .filter(c =>
+        Object.prototype.hasOwnProperty.call(c, 'getFormInputValues'),
+      )
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .reduce<Record<string, any>>(reducer, {})
+  );
+};
