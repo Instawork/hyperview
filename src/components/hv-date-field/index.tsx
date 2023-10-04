@@ -62,7 +62,7 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
     value: string | null | undefined,
   ): Date | null => {
     if (!value) {
-      return null;
+      return new Date();
     }
     const [year, month, day] = value.split('-').map(p => parseInt(p, 10));
     return new Date(year, month - 1, day);
@@ -81,8 +81,10 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
     // Focus the field and populate the picker with the field's value.
     newElement.setAttribute('focused', 'true');
     newElement.setAttribute('picker-value', value);
-    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
-    Behaviors.trigger('focus', newElement, this.props.onUpdate);
+    if (this.props.onUpdate !== null) {
+      this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+      Behaviors.trigger('focus', newElement, this.props.onUpdate);
+    }
   };
 
   /**
@@ -92,8 +94,10 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
     const newElement = this.props.element.cloneNode(true) as Element;
     newElement.setAttribute('focused', 'false');
     newElement.removeAttribute('picker-value');
-    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
-    Behaviors.trigger('blur', newElement, this.props.onUpdate);
+    if (this.props.onUpdate !== null) {
+      this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+      Behaviors.trigger('blur', newElement, this.props.onUpdate);
+    }
   };
 
   /**
@@ -108,11 +112,13 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
     newElement.setAttribute('value', value);
     newElement.removeAttribute('picker-value');
     newElement.setAttribute('focused', 'false');
-    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
-    if (hasChanged) {
-      Behaviors.trigger('change', newElement, this.props.onUpdate);
+    if (this.props.onUpdate !== null) {
+      this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+      if (hasChanged) {
+        Behaviors.trigger('change', newElement, this.props.onUpdate);
+      }
+      Behaviors.trigger('blur', newElement, this.props.onUpdate);
     }
-    Behaviors.trigger('blur', newElement, this.props.onUpdate);
   };
 
   /**
@@ -122,14 +128,17 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
     const formattedValue: string = HvDateField.createStringFromDate(value);
     const newElement = this.props.element.cloneNode(true) as Element;
     newElement.setAttribute('picker-value', formattedValue);
-    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+    if (this.props.onUpdate !== null) {
+      this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+    }
   };
 
   /**
    * Returns true if the field is focused (and picker is showing).
    */
-  isFocused = (): boolean =>
-    this.props.element.getAttribute('focused') === 'true';
+  isFocused = (): boolean => {
+    return this.props.element.getAttribute('focused') === 'true';
+  };
 
   /**
    * Returns a Date object representing the value in the picker.
@@ -138,6 +147,7 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
     HvDateField.createDateFromString(
       this.props.element.getAttribute('picker-value'),
     );
+  };
 
   /**
    * Returns a Date object representing the value in the field.
