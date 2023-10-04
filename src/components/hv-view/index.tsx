@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -8,7 +6,6 @@
  *
  */
 
-// $FlowFixMe: importing code from TypeScript
 import * as Keyboard from 'hyperview/src/services/keyboard';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
@@ -18,16 +15,20 @@ import type {
   KeyboardAwareScrollViewProps,
   ScrollViewProps,
 } from './types';
+import type {
+  HvComponentOnUpdate,
+  HvComponentProps,
+} from 'hyperview/src/types';
 import {
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
   ScrollView,
   View,
+  ViewStyle,
 } from 'react-native';
 import React, { PureComponent } from 'react';
 import { ATTRIBUTES } from './types';
-import type { HvComponentProps } from 'hyperview/src/types';
 import KeyboardAwareScrollView from 'hyperview/src/core/components/keyboard-aware-scroll-view';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { addHref } from 'hyperview/src/core/hyper-ref';
@@ -47,11 +48,9 @@ export default class HvView extends PureComponent<HvComponentProps> {
     LOCAL_NAME.SECTION_TITLE,
   ];
 
-  props: HvComponentProps;
-
   get attributes(): Attributes {
-    // $FlowFixMe: reduce returns a mixed type, not Attributes
-    return Object.values(ATTRIBUTES).reduce(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return Object.values(ATTRIBUTES).reduce<Record<string, any>>(
       (attributes, name: string) => ({
         ...attributes,
         [name]: this.props.element.getAttribute(name),
@@ -73,11 +72,15 @@ export default class HvView extends PureComponent<HvComponentProps> {
   };
 
   getCommonProps = (): CommonProps => {
-    const style = createStyleProp(
+    // TODO: fix type
+    // createStyleProp returns an array of StyleSheet,
+    // but it appears something wants a ViewStyle, which is not
+    // not an array type. Does a type need to get fixed elsewhere?
+    const style = (createStyleProp(
       this.props.element,
       this.props.stylesheets,
       this.props.options,
-    );
+    ) as unknown) as ViewStyle;
     const id = this.props.element.getAttribute('id');
     if (!id) {
       return { style };
@@ -88,35 +91,38 @@ export default class HvView extends PureComponent<HvComponentProps> {
     return { accessibilityLabel: id, style };
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getScrollViewProps = (children: Array<any>): ScrollViewProps => {
     const horizontal =
       this.attributes[ATTRIBUTES.SCROLL_ORIENTATION] === 'horizontal';
     const showScrollIndicator =
       this.attributes[ATTRIBUTES.SHOWS_SCROLL_INDICATOR] !== 'false';
 
-    const contentContainerStyle = this.attributes[
+    const contentContainerStyle = (this.attributes[
       ATTRIBUTES.CONTENT_CONTAINER_STYLE
     ]
       ? createStyleProp(this.props.element, this.props.stylesheets, {
           ...this.props.options,
           styleAttr: ATTRIBUTES.CONTENT_CONTAINER_STYLE,
         })
-      : undefined;
+      : undefined) as ViewStyle;
 
     // Fix scrollbar rendering issue in iOS 13+
     // https://github.com/facebook/react-native/issues/26610#issuecomment-539843444
     const scrollIndicatorInsets =
-      Platform.OS === 'ios' && parseInt(Platform.Version, 10) >= 13
+      Platform.OS === 'ios' && +Platform.Version >= 13
         ? { right: 1 }
         : undefined;
 
     // add sticky indices
-    const stickyHeaderIndices = children.reduce(
-      (acc, element, index) =>
-        typeof element !== 'string' &&
-        element.props?.element?.getAttribute('sticky') === 'true'
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const stickyHeaderIndices = children.reduce<Array<any>>(
+      (acc, element, index) => {
+        return typeof element !== 'string' &&
+          element.props?.element?.getAttribute('sticky') === 'true'
           ? [...acc, index]
-          : acc,
+          : acc;
+      },
       [],
     );
 
@@ -133,17 +139,16 @@ export default class HvView extends PureComponent<HvComponentProps> {
 
   getScrollToInputAdditionalOffsetProp = (): number => {
     const defaultOffset = 120;
-    if (this.attributes[ATTRIBUTES.SCROLL_TO_INPUT_OFFSET]) {
-      const offset = parseInt(
-        this.attributes[ATTRIBUTES.SCROLL_TO_INPUT_OFFSET],
-        10,
-      );
+    const offsetStr = this.attributes[ATTRIBUTES.SCROLL_TO_INPUT_OFFSET];
+    if (offsetStr) {
+      const offset = parseInt(offsetStr, 10);
       return Number.isNaN(offset) ? 0 : defaultOffset;
     }
     return defaultOffset;
   };
 
   getKeyboardAwareScrollViewProps = (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     inputFieldRefs: Array<any>,
   ): KeyboardAwareScrollViewProps => ({
     automaticallyAdjustContentInsets: false,
@@ -163,7 +168,8 @@ export default class HvView extends PureComponent<HvComponentProps> {
       Platform.OS === 'ios';
 
     const hasInputFields = this.hasInputFields();
-    const inputFieldRefs = [];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const inputFieldRefs: Array<any | undefined> = [];
     const scrollable = this.attributes[ATTRIBUTES.SCROLL] === 'true';
     const safeArea = this.attributes[ATTRIBUTES.SAFE_AREA] === 'true';
     if (safeArea) {
@@ -175,7 +181,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
     const children = Render.renderChildren(
       this.props.element,
       this.props.stylesheets,
-      this.props.onUpdate,
+      this.props.onUpdate as HvComponentOnUpdate,
       {
         ...this.props.options,
         ...(scrollable && hasInputFields
@@ -239,7 +245,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
         <Content />,
         this.props.element,
         this.props.stylesheets,
-        this.props.onUpdate,
+        this.props.onUpdate as HvComponentOnUpdate,
         this.props.options,
       )
     );
