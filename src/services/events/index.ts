@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -9,7 +7,7 @@
  */
 
 import { ON_EVENT_DISPATCH } from 'hyperview/src/types';
-import TinyEmitter from 'tiny-emitter';
+import { TinyEmitter } from 'tiny-emitter';
 
 const tinyEmitter = new TinyEmitter();
 
@@ -20,8 +18,10 @@ export const dispatch = (eventName: string) => {
   tinyEmitter.emit(ON_EVENT_DISPATCH, eventName);
 };
 
-export const subscribe = (callback: (eventName: string) => void) =>
-  tinyEmitter.on(ON_EVENT_DISPATCH, callback);
+export const subscribe = (callback: (eventName: string) => void) => {
+  return tinyEmitter.on(ON_EVENT_DISPATCH, callback);
+};
 
-export const unsubscribe = (callback: (eventName: string) => void) =>
-  tinyEmitter.off(ON_EVENT_DISPATCH, callback);
+export const unsubscribe = (callback: (eventName: string) => void) => {
+  return tinyEmitter.off(ON_EVENT_DISPATCH, callback);
+};
