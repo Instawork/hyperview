@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -8,4 +6,5 @@
  *
  */
 
-export type Props = {||};
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Props = Record<any, any>;
