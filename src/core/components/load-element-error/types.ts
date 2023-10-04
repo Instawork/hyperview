@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -8,7 +6,7 @@
  *
  */
 
-export type Props = {|
-  error: Error,
-  onPressReload: () => void,
-|};
+export type Props = {
+  error: Error;
+  onPressReload: () => void;
+};
