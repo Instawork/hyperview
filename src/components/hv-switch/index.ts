@@ -78,7 +78,9 @@ export default class HvSwitch extends PureComponent<HvComponentProps> {
       onValueChange: (value: any) => {
         const newElement = this.props.element.cloneNode(true) as Element;
         newElement.setAttribute('value', value ? 'on' : 'off');
-        this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+        if (this.props.onUpdate) {
+          this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+        }
       },
       // iOS thumbColor default
       thumbColor: unselectedStyle?.color || selectedStyle?.color,
