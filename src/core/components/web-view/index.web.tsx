@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -13,6 +11,7 @@ import React from 'react';
 
 // Currently partially implemented, should be brought to parity
 // with mobile in https://github.com/Instawork/hyperview/issues/455
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default (props: any) => {
   const windowDimensions = Dimensions.get('window');
   const windowHeight = windowDimensions.height;
