@@ -16,7 +16,7 @@ const targetFilePath = path.join(__dirname, '../../storybook/stories.gen.js');
 const projectPath = path.join(__dirname, '../..');
 
 const stories = glob
-  .sync(path.join(__dirname, '../../src/**/stories/index.js'))
+  .sync(path.join(__dirname, '../../src/**/stories/index.tsx'))
   .map(
     storyPath =>
       `import '../${path
