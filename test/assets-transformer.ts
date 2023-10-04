@@ -1,9 +1,7 @@
-// @flow
-
 // This file is a workaround mentioned here:
 // https://github.com/facebook/jest/issues/2663#issuecomment-317109798
 
-const path = require('path');
+import path from 'path';
 
 module.exports = {
   process(src: string, filename: string) {
