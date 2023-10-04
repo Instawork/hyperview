@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -14,7 +12,7 @@ import { getElements } from 'hyperview/test/helpers';
 
 describe('HvSelectSingle', () => {
   describe('getFormInputValues', () => {
-    let elements;
+    let elements: Element[];
     beforeEach(() => {
       elements = getElements(
         `

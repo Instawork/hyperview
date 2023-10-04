@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -12,9 +10,8 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import type {
   DOMString,
-  Element,
+  HvComponentOnUpdate,
   HvComponentProps,
-  NodeList,
 } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
 import { LOCAL_NAME } from 'hyperview/src/types';
@@ -34,7 +31,7 @@ export default class HvSelectSingle extends PureComponent<HvComponentProps> {
       return [];
     }
     // Add each selected option to the form data
-    const optionElements: NodeList<Element> = element.getElementsByTagNameNS(
+    const optionElements = element.getElementsByTagNameNS(
       Namespaces.HYPERVIEW,
       LOCAL_NAME.OPTION,
     );
@@ -71,8 +68,8 @@ export default class HvSelectSingle extends PureComponent<HvComponentProps> {
    * SingleSelect will update the XML DOM so that only the selected option is has a
    * selected=true attribute.
    */
-  onSelect = (selectedValue: ?DOMString) => {
-    const newElement = this.props.element.cloneNode(true);
+  onSelect = (selectedValue?: DOMString | null) => {
+    const newElement = this.props.element.cloneNode(true) as Element;
     const allowDeselect = this.props.element.getAttribute('allow-deselect');
     const options = newElement.getElementsByTagNameNS(
       Namespaces.HYPERVIEW,
@@ -96,7 +93,9 @@ export default class HvSelectSingle extends PureComponent<HvComponentProps> {
         }
       }
     }
-    this.props.onUpdate('#', 'swap', this.props.element, { newElement });
+    if (this.props.onUpdate) {
+      this.props.onUpdate('#', 'swap', this.props.element, { newElement });
+    }
   };
 
   render() {
@@ -112,7 +111,7 @@ export default class HvSelectSingle extends PureComponent<HvComponentProps> {
       ...Render.renderChildren(
         this.props.element,
         this.props.stylesheets,
-        this.props.onUpdate,
+        this.props.onUpdate as HvComponentOnUpdate,
         {
           ...this.props.options,
           onSelect: this.onSelect,
