@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -8,8 +6,8 @@
  *
  */
 
-import type { ColorValue } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
-import normalizeColor from 'react-native/Libraries/StyleSheet/normalizeColor';
+import type { ColorValue } from 'react-native';
+import { processColor } from 'react-native';
 
-export default normalizeColor;
+export default processColor;
 export type { ColorValue };
