@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -16,9 +14,7 @@ import WebView from 'hyperview/src/core/components/web-view';
 import styles from './styles';
 
 export default class LoadError extends PureComponent<Props> {
-  props: Props;
-
-  getHTML = (): ?string => {
+  getHTML = (): string | null | undefined => {
     if (
       !__DEV__ ||
       !this.props.error ||
@@ -79,3 +75,5 @@ export default class LoadError extends PureComponent<Props> {
     );
   }
 }
+
+export * from './types';
