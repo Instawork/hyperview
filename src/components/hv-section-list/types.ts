@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -8,15 +6,15 @@
  *
  */
 
-export type State = {|
-  refreshing: boolean,
-|};
+export type State = {
+  refreshing: boolean;
+};
 
 // https://reactnative.dev/docs/sectionlist#scrolltolocation
-export type ScrollParams = {|
-  animated?: ?boolean,
-  itemIndex: number,
-  sectionIndex: number,
-  viewOffset?: number,
-  viewPosition?: number,
-|};
+export type ScrollParams = {
+  animated?: boolean;
+  itemIndex: number;
+  sectionIndex: number;
+  viewOffset?: number;
+  viewPosition?: number;
+};

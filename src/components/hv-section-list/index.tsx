@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -8,22 +6,16 @@
  *
  */
 
-// $FlowFixMe: importing code from TypeScript
 import * as Contexts from 'hyperview/src/contexts';
 import * as Dom from 'hyperview/src/services/dom';
-// $FlowFixMe: importing code from TypeScript
 import * as Keyboard from 'hyperview/src/services/keyboard';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import type {
   DOMString,
-  Document,
-  Element,
   HvComponentOnUpdate,
   HvComponentOptions,
   HvComponentProps,
-  Node,
-  NodeList,
 } from 'hyperview/src/types';
 import {
   RefreshControl as DefaultRefreshControl,
@@ -38,8 +30,8 @@ import type { ElementRef } from 'react';
 import { getAncestorByTagName } from 'hyperview/src/services';
 
 const getSectionIndex = (
-  sectionTitle: Node,
-  sectionTitles: NodeList<Element>,
+  sectionTitle: Element,
+  sectionTitles: HTMLCollectionOf<Element>,
 ): number => {
   const sectionIndex = Array.from(sectionTitles).indexOf(sectionTitle);
 
@@ -48,7 +40,7 @@ const getSectionIndex = (
     sectionTitles[0],
     NODE_TYPE.ELEMENT_NODE,
   );
-  if (previousElement?.localName === LOCAL_NAME.ITEM) {
+  if ((previousElement as Element)?.localName === LOCAL_NAME.ITEM) {
     return sectionIndex + 1;
   }
 
@@ -56,26 +48,26 @@ const getSectionIndex = (
 };
 
 const getPreviousSectionTitle = (
-  element: Node,
+  element: Element,
   itemIndex: number,
-): [?Node, number] => {
+): [Element | null, number] => {
   const { previousSibling } = element;
   if (!previousSibling) {
     return [null, itemIndex];
   }
-  if (previousSibling.localName === LOCAL_NAME.SECTION_TITLE) {
-    return [previousSibling, itemIndex];
+  if ((previousSibling as Element).localName === LOCAL_NAME.SECTION_TITLE) {
+    return [previousSibling as Element, itemIndex];
   }
-  if (previousSibling.localName === LOCAL_NAME.ITEM) {
+  if ((previousSibling as Element).localName === LOCAL_NAME.ITEM) {
     // eslint-disable-next-line no-param-reassign
     itemIndex += 1;
   }
-  return getPreviousSectionTitle(previousSibling, itemIndex);
+  return getPreviousSectionTitle(previousSibling as Element, itemIndex);
 };
 
 export default class HvSectionList extends PureComponent<
   HvComponentProps,
-  State,
+  State
 > {
   static namespaceURI = Namespaces.HYPERVIEW;
 
@@ -87,21 +79,19 @@ export default class HvSectionList extends PureComponent<
 
   parser: DOMParser = new DOMParser();
 
-  props: HvComponentProps;
-
-  ref: ?ElementRef<typeof SectionList>;
+  ref: ElementRef<typeof SectionList> | null = null;
 
   state: State = {
     refreshing: false,
   };
 
-  onRef = (ref: ?ElementRef<typeof SectionList>) => {
+  onRef = (ref: ElementRef<typeof SectionList> | null) => {
     this.ref = ref;
   };
 
   onUpdate: HvComponentOnUpdate = (
-    href: ?DOMString,
-    action: ?DOMString,
+    href: DOMString | null | undefined,
+    action: DOMString | null | undefined,
     element: Element,
     options: HvComponentOptions,
   ) => {
@@ -109,17 +99,25 @@ export default class HvSectionList extends PureComponent<
       this.handleScrollBehavior(options.behaviorElement);
       return;
     }
-    this.props.onUpdate(href, action, element, options);
+    if (this.props.onUpdate !== null) {
+      this.props.onUpdate(href, action, element, options);
+    }
   };
 
   handleScrollBehavior = (behaviorElement: Element) => {
-    const targetId: ?DOMString = behaviorElement?.getAttribute('target');
+    const targetId:
+      | DOMString
+      | null
+      | undefined = behaviorElement?.getAttribute('target');
     if (!targetId) {
       console.warn('[behaviors/scroll]: missing "target" attribute');
       return;
     }
-    const doc: ?Document = this.context();
-    const targetElement: ?Element = doc?.getElementById(targetId);
+    const doc: Document | null =
+      typeof this.context === 'function' ? this.context() : null;
+    const targetElement: Element | null | undefined = doc?.getElementById(
+      targetId,
+    );
     if (!targetElement) {
       return;
     }
@@ -144,19 +142,23 @@ export default class HvSectionList extends PureComponent<
         'animated',
       ) === 'true';
 
-    const viewOffset: ?number =
-      parseInt(
-        behaviorElement?.getAttributeNS(Namespaces.HYPERVIEW_SCROLL, 'offset'),
-        10,
-      ) || undefined;
+    const offsetAttribute = behaviorElement?.getAttributeNS(
+      Namespaces.HYPERVIEW_SCROLL,
+      'offset',
+    );
+    const viewOffset: number | null | undefined =
+      offsetAttribute !== null && typeof offsetAttribute !== 'undefined'
+        ? parseInt(offsetAttribute, 10)
+        : undefined;
 
-    const viewPosition: ?number =
-      parseFloat(
-        behaviorElement?.getAttributeNS(
-          Namespaces.HYPERVIEW_SCROLL,
-          'position',
-        ),
-      ) || undefined;
+    const positionAttribute = behaviorElement?.getAttributeNS(
+      Namespaces.HYPERVIEW_SCROLL,
+      'position',
+    );
+    const viewPosition: number | null | undefined =
+      positionAttribute !== null && typeof positionAttribute !== 'undefined'
+        ? parseFloat(positionAttribute)
+        : undefined;
 
     if (!targetListItem) {
       return;
@@ -205,7 +207,8 @@ export default class HvSectionList extends PureComponent<
 
       this.ref?.scrollToLocation(params);
     } else {
-      // No parent section? Check new section-list format, where items are nested under the section-list
+      // No parent section? Check new section-list format, where items are nested under the
+      // section-list
       const items = this.props.element.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
         LOCAL_NAME.ITEM,
@@ -242,7 +245,7 @@ export default class HvSectionList extends PureComponent<
     }
   };
 
-  getStickySectionHeadersEnabled = (): boolean => {
+  getStickySectionHeadersEnabled = (): boolean | undefined => {
     const stickySectionTitles = this.props.element.getAttribute(
       'sticky-section-titles',
     );
@@ -272,16 +275,18 @@ export default class HvSectionList extends PureComponent<
     const delay = this.props.element.getAttribute('delay');
     const once = this.props.element.getAttribute('once') || null;
 
-    this.props.onUpdate(path, action, this.props.element, {
-      delay,
-      hideIndicatorIds,
-      once,
-      onEnd: () => {
-        this.setState({ refreshing: false });
-      },
-      showIndicatorIds,
-      targetId,
-    });
+    if (this.props.onUpdate !== null) {
+      this.props.onUpdate(path, action, this.props.element, {
+        delay,
+        hideIndicatorIds,
+        once,
+        onEnd: () => {
+          this.setState({ refreshing: false });
+        },
+        showIndicatorIds,
+        targetId,
+      });
+    }
   };
 
   render() {
@@ -290,9 +295,9 @@ export default class HvSectionList extends PureComponent<
       ? styleAttr.split(' ').map(s => this.props.stylesheets.regular[s])
       : null;
 
-    const flattened = [];
+    const flattened: Element[] = [];
 
-    const addNodes = sectionElement => {
+    const addNodes = (sectionElement: Element) => {
       if (sectionElement.childNodes) {
         for (let j = 0; j < sectionElement.childNodes.length; j += 1) {
           const node = sectionElement.childNodes[j];
@@ -300,12 +305,12 @@ export default class HvSectionList extends PureComponent<
             node.nodeName === LOCAL_NAME.ITEMS ||
             node.nodeName === LOCAL_NAME.SECTION
           ) {
-            addNodes(node);
+            addNodes(node as Element);
           } else if (
             node.nodeName === LOCAL_NAME.ITEM ||
             node.nodeName === LOCAL_NAME.SECTION_TITLE
           ) {
-            flattened.push(sectionElement.childNodes[j]);
+            flattened.push(sectionElement.childNodes[j] as Element);
           }
         }
       }
@@ -315,7 +320,7 @@ export default class HvSectionList extends PureComponent<
 
     let items = [];
     let titleElement = null;
-    const sections = [];
+    const sections: { data: Element[]; title: Element | null }[] = [];
 
     for (let j = 0; j < flattened.length; j += 1) {
       const sectionElement = flattened[j];
@@ -359,7 +364,8 @@ export default class HvSectionList extends PureComponent<
               keyboardDismissMode={Keyboard.getKeyboardDismissMode(
                 this.props.element,
               )}
-              keyExtractor={item => item.getAttribute('key')}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              keyExtractor={(item: any) => item.getAttribute('key')}
               refreshControl={
                 <RefreshControl
                   onRefresh={this.refresh}
@@ -367,24 +373,24 @@ export default class HvSectionList extends PureComponent<
                 />
               }
               removeClippedSubviews={false}
-              renderItem={({ item }) =>
-                // $FlowFixMe: return type of renderElement is not compatible with expected type for renderItem
-                Render.renderElement(
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              renderItem={({ item }: any): any => {
+                return Render.renderElement(
                   item,
                   this.props.stylesheets,
                   this.onUpdate,
                   this.props.options,
-                )
-              }
-              renderSectionHeader={({ section: { title } }) =>
-                // $FlowFixMe: return type of renderElement is not compatible with expected type for renderSectionHeader
-                Render.renderElement(
+                );
+              }}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              renderSectionHeader={({ section: { title } }: any): any => {
+                return Render.renderElement(
                   title,
                   this.props.stylesheets,
                   this.onUpdate,
                   this.props.options,
-                )
-              }
+                );
+              }}
               scrollIndicatorInsets={scrollIndicatorInsets}
               sections={sections}
               stickySectionHeadersEnabled={this.getStickySectionHeadersEnabled()}
