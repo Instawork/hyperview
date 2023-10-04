@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -65,7 +63,6 @@ describe('inlineFormatter', () => {
       '',
       '',
     ];
-    // $FlowFixMe: formatter expects a Node (which Document is a subtype of)
     expect(InlineContext.formatter(node)).toEqual([
       expectedNodes,
       expectedValues,

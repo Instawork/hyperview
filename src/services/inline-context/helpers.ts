@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -15,14 +13,16 @@ export const SPACE = ' ';
 /**
  * Removes any space that follows a line break
  */
-export const ignoreSpacesAfterLineBreak = (input: string): string =>
-  input.replace(/\n\s+/g, LINE_BREAK);
+export const ignoreSpacesAfterLineBreak = (input: string): string => {
+  return input.replace(/\n\s+/g, LINE_BREAK);
+};
 
 /**
  * Replaces any line break by a space
  */
-export const convertLineBreaksIntoSpaces = (input: string): string =>
-  input.replace(/\n/g, SPACE);
+export const convertLineBreaksIntoSpaces = (input: string): string => {
+  return input.replace(/\n/g, SPACE);
+};
 
 /**
  * Provided a list of strings as input, removes any spaces
@@ -60,7 +60,8 @@ export const ignoreSpacesFollowingSpace = (input: string[]): string[] => {
 export const trim = (input: string[]): string[] => {
   // Trim the start of the string
   let trimStartDone = false;
-  const startTrimmed = [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const startTrimmed: Array<any | string> = [];
   input.forEach((value: string) => {
     let shouldTrim = false;
     if (startTrimmed.length === 0) {
@@ -78,7 +79,7 @@ export const trim = (input: string[]): string[] => {
 
   // Trim the end of the string
   let trimEndDone = false;
-  const endTrimmed = [];
+  const endTrimmed: Array<string> = [];
   startTrimmed.reverse().forEach((value: string) => {
     let shouldTrim = false;
     if (endTrimmed.length === 0) {
