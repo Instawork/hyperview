@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -8,7 +6,6 @@
  *
  */
 
-import type { FormData } from 'hyperview/src/services/url/types';
 import urlParse from 'url-parse';
 
 const QUERY_SEPARATOR = '?';
@@ -29,7 +26,10 @@ export const getUrlFromHref = (href: string, baseUrl: string): string => {
  */
 export const addParamsToUrl = (
   url: string,
-  params: Array<{ name: string, value: string }>,
+  params: Array<{
+    name: string;
+    value: string;
+  }>,
 ): string => {
   const [baseUrl, existingParams] = url.split(QUERY_SEPARATOR);
   const query = (existingParams
@@ -46,23 +46,28 @@ export const addParamsToUrl = (
 /**
  * Add FormData as query params to a url. Ignores files in the formdata.
  */
-export const addFormDataToUrl = (url: string, formData: ?FormData): string => {
+
+export const addFormDataToUrl = (
+  url: string,
+  formData?: FormDataRN | FormDataWeb | null,
+): string => {
   if (formData) {
-    if (formData.getParts) {
-      const params = formData.getParts();
+    if ((formData as FormDataRN).getParts) {
+      const params = (formData as FormDataRN).getParts();
       return addParamsToUrl(
         url,
         params.map(p => ({
           name: p.fieldName,
-          value: p.string,
+          value: 'string' in p ? p.string : '',
         })),
       );
     }
-    if (formData.entries) {
-      const params = Array.from(formData.entries());
+    if ((formData as FormDataWeb).entries) {
+      const params = Array.from((formData as FormDataWeb).entries());
       return addParamsToUrl(
         url,
-        params.map(p => ({
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        params.map((p: any) => ({
           name: p[0],
           value: String(p[1]),
         })),
