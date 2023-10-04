@@ -7,6 +7,7 @@
  */
 
 import * as NavigatorService from 'hyperview/src/services/navigator';
+import * as Types from 'hyperview/src/types';
 import * as TypesLegacy from 'hyperview/src/types-legacy';
 import { ComponentType, ReactNode } from 'react';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
@@ -45,8 +46,8 @@ export type Props = {
   ) => void;
   openModal?: (params: TypesLegacy.NavigationRouteParams | object) => void;
   push?: (params: object) => void;
-  behaviors?: TypesLegacy.HvBehavior[];
-  components?: TypesLegacy.HvComponent[];
+  behaviors?: Types.HvBehavior[];
+  components?: Types.HvComponent[];
   elementErrorComponent?: ComponentType<ErrorProps>;
   errorScreen?: ComponentType<ErrorProps>;
   loadingScreen?: ComponentType<LoadingProps>;
