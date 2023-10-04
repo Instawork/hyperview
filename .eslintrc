@@ -62,6 +62,20 @@
         "func-call-spacing": "off",
         "function-paren-newline": "off",
         "implicit-arrow-linebreak": "off",
+        "import/no-extraneous-dependencies": [
+          "warn",
+          {
+            "devDependencies": [
+              "**/scripts/*",
+              "**/scripts/*/*",
+              "**/scripts/*/*/*",
+              "**/storybook/*",
+              "**/test",
+              "**/test/*",
+              "**/test/**/*"
+            ]
+          }
+        ],
         "indent": "off",
         "instawork/error-object": "off",
         "instawork/flow-annotate": "off",
@@ -69,7 +83,8 @@
         "no-undef": "off",
         "no-use-before-define": "off",
         "object-curly-newline": "off",
-        "operator-linebreak": "off"
+        "operator-linebreak": "off",
+        "react/jsx-wrap-multilines": "off"
       }
     },
     {
