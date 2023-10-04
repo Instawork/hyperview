@@ -6,12 +6,10 @@
  *
  */
 
-import * as TypesLegacy from 'hyperview/src/types-legacy';
-
 type KeyboardDismissMode = 'none' | 'on-drag' | 'interactive';
 
 export const getKeyboardDismissMode = (
-  element: TypesLegacy.Element,
+  element: Element,
 ): KeyboardDismissMode | undefined => {
   const mode = element.getAttribute('keyboard-dismiss-mode');
   switch (mode) {

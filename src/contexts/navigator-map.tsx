@@ -6,16 +6,15 @@
  *
  */
 
-import * as TypesLegacy from 'hyperview/src/types-legacy';
 import React, { createContext, useState } from 'react';
 
 export type NavigatorMapContextProps = {
   setRoute: (key: string, route: string) => void;
   getRoute: (key: string) => string | undefined;
-  setElement: (key: string, element: TypesLegacy.Element) => void;
-  getElement: (key: string) => TypesLegacy.Element | undefined;
-  setPreload: (key: number, element: TypesLegacy.Element) => void;
-  getPreload: (key: number) => TypesLegacy.Element | undefined;
+  setElement: (key: string, element: Element) => void;
+  getElement: (key: string) => Element | undefined;
+  setPreload: (key: number, element: Element) => void;
+  getPreload: (key: number) => Element | undefined;
   initialRouteName?: string;
 };
 
@@ -44,8 +43,8 @@ type Props = { children: React.ReactNode };
  */
 export function NavigatorMapProvider(props: Props) {
   const [routeMap] = useState<Map<string, string>>(new Map());
-  const [elementMap] = useState<Map<string, TypesLegacy.Element>>(new Map());
-  const [preloadMap] = useState<Map<number, TypesLegacy.Element>>(new Map());
+  const [elementMap] = useState<Map<string, Element>>(new Map());
+  const [preloadMap] = useState<Map<number, Element>>(new Map());
 
   const setRoute = (key: string, route: string) => {
     routeMap.set(key, route);
@@ -55,19 +54,19 @@ export function NavigatorMapProvider(props: Props) {
     return routeMap.get(key);
   };
 
-  const setElement = (key: string, element: TypesLegacy.Element) => {
+  const setElement = (key: string, element: Element) => {
     elementMap.set(key, element);
   };
 
-  const getElement = (key: string): TypesLegacy.Element | undefined => {
+  const getElement = (key: string): Element | undefined => {
     return elementMap.get(key);
   };
 
-  const setPreload = (key: number, element: TypesLegacy.Element) => {
+  const setPreload = (key: number, element: Element) => {
     preloadMap.set(key, element);
   };
 
-  const getPreload = (key: number): TypesLegacy.Element | undefined => {
+  const getPreload = (key: number): Element | undefined => {
     return preloadMap.get(key);
   };
 

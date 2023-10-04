@@ -7,6 +7,4 @@
  */
 import * as TypesLegacy from 'hyperview/src/types-legacy';
 
-export function createStylesheets(
-  document: TypesLegacy.Document,
-): TypesLegacy.StyleSheets;
+export function createStylesheets(document: Document): TypesLegacy.StyleSheets;
