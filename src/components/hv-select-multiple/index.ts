@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -12,9 +10,8 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import type {
   DOMString,
-  Element,
+  HvComponentOnUpdate,
   HvComponentProps,
-  NodeList,
 } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
 import { LOCAL_NAME } from 'hyperview/src/types';
@@ -35,7 +32,7 @@ export default class HvSelectMultiple extends PureComponent<HvComponentProps> {
       return values;
     }
     // Add each selected option to the form data
-    const optionElements: NodeList<Element> = element.getElementsByTagNameNS(
+    const optionElements = element.getElementsByTagNameNS(
       Namespaces.HYPERVIEW,
       LOCAL_NAME.OPTION,
     );
@@ -70,8 +67,8 @@ export default class HvSelectMultiple extends PureComponent<HvComponentProps> {
    * Callback passed to children. Option components invoke this callback when toggles.
    * Will update the XML DOM to toggle the option with the given value.
    */
-  onToggle = (selectedValue: ?DOMString) => {
-    const newElement = this.props.element.cloneNode(true);
+  onToggle = (selectedValue?: DOMString | null) => {
+    const newElement = this.props.element.cloneNode(true) as Element;
     const options = newElement.getElementsByTagNameNS(
       Namespaces.HYPERVIEW,
       'option',
@@ -86,11 +83,13 @@ export default class HvSelectMultiple extends PureComponent<HvComponentProps> {
         }
       }
     }
-    this.props.onUpdate('#', 'swap', this.props.element, { newElement });
+    if (this.props.onUpdate) {
+      this.props.onUpdate('#', 'swap', this.props.element, { newElement });
+    }
   };
 
   applyToAllOptions = (selected: boolean) => {
-    const newElement = this.props.element.cloneNode(true);
+    const newElement = this.props.element.cloneNode(true) as Element;
     const options = newElement.getElementsByTagNameNS(
       Namespaces.HYPERVIEW,
       'option',
@@ -101,7 +100,9 @@ export default class HvSelectMultiple extends PureComponent<HvComponentProps> {
         option.setAttribute('selected', selected ? 'true' : 'false');
       }
     }
-    this.props.onUpdate('#', 'swap', this.props.element, { newElement });
+    if (this.props.onUpdate) {
+      this.props.onUpdate('#', 'swap', this.props.element, { newElement });
+    }
   };
 
   render() {
@@ -117,7 +118,7 @@ export default class HvSelectMultiple extends PureComponent<HvComponentProps> {
       ...Render.renderChildren(
         this.props.element,
         this.props.stylesheets,
-        this.props.onUpdate,
+        this.props.onUpdate as HvComponentOnUpdate,
         {
           ...this.props.options,
           onToggle: this.onToggle,
