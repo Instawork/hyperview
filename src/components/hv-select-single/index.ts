@@ -93,7 +93,9 @@ export default class HvSelectSingle extends PureComponent<HvComponentProps> {
         }
       }
     }
-    this.props.onUpdate('#', 'swap', this.props.element, { newElement });
+    if (this.props.onUpdate) {
+      this.props.onUpdate('#', 'swap', this.props.element, { newElement });
+    }
   };
 
   render() {
