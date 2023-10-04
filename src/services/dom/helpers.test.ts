@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -32,7 +30,6 @@ describe('preorder', () => {
           <text id="h"> </text>
         </text>`,
     );
-    // $FlowFixMe: preorder expects a Node (which Document is a subtype of)
     expect(preorder(node, NODE_TYPE.TEXT_NODE)).toEqual([
       node.getElementById('a')?.firstChild, // ⏎◦◦◦◦◦◦◦◦◦◦◦◦
       node.getElementById('b')?.firstChild, // ⏎◦◦◦◦◦◦◦◦◦◦◦◦◦◦

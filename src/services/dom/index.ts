@@ -6,6 +6,7 @@
  *
  */
 
-export class XMLParserError extends Error {}
-export class XMLParserFatalError extends Error {}
-export class XMLParserWarning extends Error {}
+export * from './errors';
+export * from './helpers';
+export * from './parser';
+export * from './types';

@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -14,19 +12,20 @@ import { X_RESPONSE_STALE_REASON } from './types';
 import { version } from 'hyperview/package.json';
 
 // Mock @instawork/xmldom module
-const mockExpectedDocument = { foo: 'bar' };
+const mockExpectedDocument = { foo: 'bar' } as const;
 const mockParseFromString = jest.fn().mockReturnValue(mockExpectedDocument);
 jest.mock('@instawork/xmldom', () => {
   const DOMParser = () => null;
-  DOMParser.prototype.parseFromString = (...args) =>
-    mockParseFromString.apply(this, args);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  DOMParser.prototype.parseFromString = (...args: any) => {
+    return mockParseFromString.apply(this, args);
+  };
   return { DOMParser };
 });
 
 // Mock other dependencies
 const fetchMock = jest.fn();
 const responseTextMock = jest.fn();
-// $FlowFixMe
 fetchMock.mockResolvedValue({ text: responseTextMock });
 const beforeParseMock = jest.fn();
 const afterParseMock = jest.fn();
@@ -58,7 +57,7 @@ describe('Parser', () => {
             'X-Hyperview-Version': version,
           },
           method: 'get',
-        };
+        } as const;
         const responseText = 'foobarbaz';
         responseTextMock.mockResolvedValue(responseText);
 
@@ -116,7 +115,7 @@ describe('Parser', () => {
             'X-Hyperview-Version': version,
           },
           method: 'get',
-        };
+        } as const;
         const responseText = 'foobarbaz';
         responseTextMock.mockResolvedValue(responseText);
         const headers = new Map();
@@ -124,7 +123,6 @@ describe('Parser', () => {
           Dom.HTTP_HEADERS.X_RESPONSE_STALE_REASON,
           X_RESPONSE_STALE_REASON.STALE_IF_ERROR,
         );
-        // $FlowFixMe
         fetchMock.mockResolvedValueOnce({ headers, text: responseTextMock });
 
         const { doc, staleHeaderType } = await parser.load(url);

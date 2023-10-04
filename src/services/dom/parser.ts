@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -24,7 +22,6 @@ import {
 } from './types';
 import { DOMParser } from '@instawork/xmldom';
 import { Dimensions } from 'react-native';
-import type { Document } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { getFirstTag } from './helpers';
 import { version } from 'hyperview/package.json';
@@ -49,14 +46,14 @@ const parser = new DOMParser({
 export class Parser {
   fetch: Fetch;
 
-  onBeforeParse: ?BeforeAfterParseHandler;
+  onBeforeParse: BeforeAfterParseHandler | null | undefined;
 
-  onAfterParse: ?BeforeAfterParseHandler;
+  onAfterParse: BeforeAfterParseHandler | null | undefined;
 
   constructor(
     fetch: Fetch,
-    onBeforeParse: ?BeforeAfterParseHandler,
-    onAfterParse: ?BeforeAfterParseHandler,
+    onBeforeParse?: BeforeAfterParseHandler | null,
+    onAfterParse?: BeforeAfterParseHandler | null,
   ) {
     this.fetch = fetch;
     this.onBeforeParse = onBeforeParse;
@@ -65,10 +62,14 @@ export class Parser {
 
   load = async (
     baseUrl: string,
-    data: ?FormData,
-    httpMethod: ?HttpMethod,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    data?: any | null,
+    httpMethod?: HttpMethod | null,
     acceptContentType: string = CONTENT_TYPE.APPLICATION_VND_HYPERVIEW_XML,
-  ): Promise<{ doc: Document, staleHeaderType: ?XResponseStaleReason }> => {
+  ): Promise<{
+    doc: Document;
+    staleHeaderType: XResponseStaleReason | null | undefined;
+  }> => {
     // HTTP method can either be POST when explicitly set
     // Any other value and we'll default to GET
     const method =
@@ -90,16 +91,16 @@ export class Parser {
         [HTTP_HEADERS.X_HYPERVIEW_DIMENSIONS]: `${width}w ${height}h`,
       },
       method,
-    };
+    } as const;
 
     const response: Response = await this.fetch(url, options);
     const responseText: string = await response.text();
-    const contentType: string = response.headers?.get(
+    const contentType: string | null = response.headers?.get(
       HTTP_HEADERS.CONTENT_TYPE,
     );
     const staleHeaderType: XResponseStaleReason = response.headers?.get(
       HTTP_HEADERS.X_RESPONSE_STALE_REASON,
-    );
+    ) as XResponseStaleReason;
     if (
       response.status >= 500 &&
       staleHeaderType !== X_RESPONSE_STALE_REASON.STALE_IF_ERROR &&
@@ -125,7 +126,10 @@ export class Parser {
 
   loadDocument = async (
     baseUrl: string,
-  ): Promise<{ doc: Document, staleHeaderType: ?XResponseStaleReason }> => {
+  ): Promise<{
+    doc: Document;
+    staleHeaderType: XResponseStaleReason | null | undefined;
+  }> => {
     const { doc, staleHeaderType } = await this.load(baseUrl);
     const docElement = getFirstTag(doc, LOCAL_NAME.DOC);
     if (!docElement) {
@@ -134,9 +138,12 @@ export class Parser {
 
     const screenElement = getFirstTag(docElement, LOCAL_NAME.SCREEN);
     const navigatorElement = getFirstTag(docElement, LOCAL_NAME.NAVIGATOR);
-    if (!screenElement && !navigatorElement) {
+    if (!screenElement) {
+      throw new Errors.XMLRequiredElementNotFound(LOCAL_NAME.SCREEN, baseUrl);
+    }
+    if (!navigatorElement) {
       throw new Errors.XMLRequiredElementNotFound(
-        `${LOCAL_NAME.SCREEN}/${LOCAL_NAME.NAVIGATOR}`,
+        LOCAL_NAME.NAVIGATOR,
         baseUrl,
       );
     }
@@ -155,19 +162,28 @@ export class Parser {
         );
       }
     } else {
-      throw new Errors.XMLRequiredElementNotFound(
-        `${LOCAL_NAME.SCREEN}/${LOCAL_NAME.NAVIGATOR}`,
-        baseUrl,
-      );
+      if (!screenElement) {
+        throw new Errors.XMLRequiredElementNotFound(LOCAL_NAME.SCREEN, baseUrl);
+      }
+      if (!navigatorElement) {
+        throw new Errors.XMLRequiredElementNotFound(
+          LOCAL_NAME.NAVIGATOR,
+          baseUrl,
+        );
+      }
     }
     return { doc, staleHeaderType };
   };
 
   loadElement = async (
     baseUrl: string,
-    data: ?FormData,
-    method: ?HttpMethod = HTTP_METHODS.GET,
-  ): Promise<{ doc: Document, staleHeaderType: ?XResponseStaleReason }> => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    data?: any | null,
+    method: HttpMethod | null = HTTP_METHODS.GET,
+  ): Promise<{
+    doc: Document;
+    staleHeaderType: XResponseStaleReason | null | undefined;
+  }> => {
     const { doc, staleHeaderType } = await this.load(
       baseUrl,
       data,

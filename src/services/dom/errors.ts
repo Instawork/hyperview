@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -8,6 +6,7 @@
  *
  */
 
+// eslint-disable-next-line max-classes-per-file
 import type { LocalName } from 'hyperview/src/types';
 
 export class UnsupportedContentTypeError extends Error {
