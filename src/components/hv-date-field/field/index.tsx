@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -8,7 +6,6 @@
  *
  */
 
-// $FlowFixMe: importing code from TypeScript
 import * as Contexts from 'hyperview/src/contexts';
 import React, { useState } from 'react';
 import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';

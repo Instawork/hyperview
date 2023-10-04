@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -23,8 +21,8 @@ export default (props: Props) => {
     labelStyles.push({ color: props.placeholderTextColor });
   }
 
-  const label: string = props.value
-    ? props.formatter(props.value, props.labelFormat)
+  const label: string | undefined = props.value
+    ? props.formatter(props.value, props.labelFormat || undefined)
     : props.placeholder || '';
 
   return <Text style={labelStyles}>{label}</Text>;

@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -8,6 +6,8 @@
  *
  */
 
-export type PickerProps = {|
-  onChange: (evt: Event, date?: Date) => void,
-|};
+import type { Event } from '@react-native-community/datetimepicker';
+
+export type PickerProps = {
+  onChange: (event: Event, date?: Date) => void;
+};
