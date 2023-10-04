@@ -1,15 +1,10 @@
-// @flow
-
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as UrlService from 'hyperview/src/services/url';
 import type {
   BehaviorOptions,
   ComponentRegistry,
-  Document,
-  Element,
   NavAction,
   NavigationProps,
-  NodeList,
 } from 'hyperview/src/types';
 import { NAV_ACTIONS } from 'hyperview/src/types';
 import { getFormData } from 'hyperview/src/services';
@@ -19,13 +14,17 @@ const QUERY_SEPARATOR = '?';
 
 const getHrefKey = (href: string): string => href.split(QUERY_SEPARATOR)[0];
 
-const routeKeys: { [string]: string } = {};
-const preloadScreens: { [number]: Element } = {};
+const routeKeys: {
+  [key: string]: string;
+} = {};
+const preloadScreens: {
+  [key: number]: Element;
+} = {};
 
 export default class Navigation {
   url: string;
 
-  document: ?Document = null;
+  document: Document | null | undefined = null;
 
   navigation: NavigationProps;
 
@@ -42,7 +41,9 @@ export default class Navigation {
     this.document = document;
   };
 
-  getPreloadScreen = (id: number): ?Element => preloadScreens[id];
+  getPreloadScreen = (id: number): Element | null | undefined => {
+    return preloadScreens[id];
+  };
 
   setPreloadScreen = (id: number, element: Element): void => {
     preloadScreens[id] = element;
@@ -52,7 +53,9 @@ export default class Navigation {
     delete preloadScreens[id];
   };
 
-  getRouteKey = (href: string): ?string => routeKeys[getHrefKey(href)];
+  getRouteKey = (href: string): string | null | undefined => {
+    return routeKeys[getHrefKey(href)];
+  };
 
   setRouteKey = (href: string, key: string): void => {
     routeKeys[getHrefKey(href)] = key;
@@ -68,10 +71,13 @@ export default class Navigation {
     element: Element,
     formComponents: ComponentRegistry,
     opts: BehaviorOptions,
-    registerPreload?: (id: number, element: Element) => void,
+    registerPreload?: (id: number, e: Element) => void,
   ): void => {
     const { showIndicatorId, delay, targetId } = opts;
-    const formData: ?FormData = getFormData(element, formComponents);
+    const formData: FormDataRN | FormDataWeb | null | undefined = getFormData(
+      element,
+      formComponents,
+    );
 
     let url = href;
     if (!href.startsWith(ANCHOR_ID_SEPARATOR)) {
@@ -82,13 +88,13 @@ export default class Navigation {
 
     let preloadScreen = null;
     if (showIndicatorId && this.document) {
-      const screens: NodeList<Element> = this.document.getElementsByTagNameNS(
+      const screens: HTMLCollectionOf<Element> = this.document.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
         'screen',
       );
-      const loadingScreen: ?Element = Array.from(screens).find(
-        s => s && s.getAttribute('id') === showIndicatorId,
-      );
+      const loadingScreen: Element | null | undefined = Array.from(
+        screens,
+      ).find(s => s && s.getAttribute('id') === showIndicatorId);
       if (loadingScreen) {
         preloadScreen = Date.now(); // Not trully unique but sufficient for our use-case
         this.setPreloadScreen(preloadScreen, loadingScreen);
@@ -98,7 +104,7 @@ export default class Navigation {
       }
     }
 
-    const routeParams = { delay, preloadScreen, targetId, url };
+    const routeParams = { delay, preloadScreen, targetId, url } as const;
 
     switch (action) {
       case NAV_ACTIONS.PUSH:
