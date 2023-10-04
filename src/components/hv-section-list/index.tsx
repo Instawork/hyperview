@@ -99,7 +99,9 @@ export default class HvSectionList extends PureComponent<
       this.handleScrollBehavior(options.behaviorElement);
       return;
     }
-    this.props.onUpdate(href, action, element, options);
+    if (this.props.onUpdate !== null) {
+      this.props.onUpdate(href, action, element, options);
+    }
   };
 
   handleScrollBehavior = (behaviorElement: Element) => {
@@ -242,7 +244,7 @@ export default class HvSectionList extends PureComponent<
     }
   };
 
-  getStickySectionHeadersEnabled = (): boolean => {
+  getStickySectionHeadersEnabled = (): boolean | undefined => {
     const stickySectionTitles = this.props.element.getAttribute(
       'sticky-section-titles',
     );
@@ -274,16 +276,18 @@ export default class HvSectionList extends PureComponent<
     const delay = this.props.element.getAttribute('delay');
     const once = this.props.element.getAttribute('once') || null;
 
-    this.props.onUpdate(path, action, this.props.element, {
-      delay,
-      hideIndicatorIds,
-      once,
-      onEnd: () => {
-        this.setState({ refreshing: false });
-      },
-      showIndicatorIds,
-      targetId,
-    });
+    if (this.props.onUpdate !== null) {
+      this.props.onUpdate(path, action, this.props.element, {
+        delay,
+        hideIndicatorIds,
+        once,
+        onEnd: () => {
+          this.setState({ refreshing: false });
+        },
+        showIndicatorIds,
+        targetId,
+      });
+    }
   };
 
   render() {
@@ -386,8 +390,8 @@ export default class HvSectionList extends PureComponent<
                   this.props.stylesheets,
                   this.onUpdate,
                   this.props.options,
-                )
-              }
+                );
+              }}
               scrollIndicatorInsets={scrollIndicatorInsets}
               sections={sections}
               stickySectionHeadersEnabled={this.getStickySectionHeadersEnabled()}
