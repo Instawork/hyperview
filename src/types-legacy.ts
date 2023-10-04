@@ -69,7 +69,6 @@ export const NAV_ACTIONS = {
 
 export type NavAction = typeof NAV_ACTIONS[keyof typeof NAV_ACTIONS];
 
-export type DOMString = string;
 export type NamespaceURI = string;
 
 export type NodeList<T> = {
@@ -80,50 +79,7 @@ export type NodeList<T> = {
 };
 
 /**
- * Minimal Node type copy from 'hyperview/src/types.js'
- */
-export type Node = {
-  tagName: DOMString;
-  localName: LocalName;
-  readonly childNodes: NodeList<Node> | null | undefined;
-  readonly firstChild: Node | null | undefined;
-  readonly namespaceURI: NamespaceURI | null | undefined;
-  readonly nextSibling: Node | null | undefined;
-  readonly nodeType: NodeType;
-  hasChildNodes: () => boolean;
-};
-
-/**
- * Minimal Element type copy from 'hyperview/src/types.js'
- */
-export type Element = Node & {
-  // ***** ADDED *****
-  cloneNode: (deep: boolean) => Element;
-
-  childNodes: NodeList<Element>;
-  getAttribute: (name: DOMString) => DOMString | null | undefined;
-
-  getElementsByTagNameNS: (
-    namespaceURI: NamespaceURI,
-    localName: LocalName,
-  ) => NodeList<Element>;
-};
-
-/**
- * Minimal Document type copy from 'hyperview/src/types.js'
- */
-export type Document = Node & {
-  // ***** ADDED *****
-  cloneNode: (deep: boolean) => Document;
-
-  getElementsByTagNameNS: (
-    namespaceURI: NamespaceURI,
-    localName: LocalName,
-  ) => NodeList<Element>;
-};
-
-/**
- * Minimal Document type copy from 'hyperview/src/types.js'
+ * Minimal NavigationRouteParams type copy from 'hyperview/src/types.js'
  */
 export type NavigationRouteParams = {
   delay?: number;

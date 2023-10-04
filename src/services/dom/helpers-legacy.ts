@@ -11,15 +11,10 @@
 // CHANGES MADE TO ANY IMPLEMENTATIONS ARE NOTEDED BELOW AND MARKED WITH ***** ADDED *****
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import {
-  Document,
-  Element,
-  LocalName,
-  NamespaceURI,
-} from 'hyperview/src/types-legacy';
+import { LocalName, NamespaceURI } from 'hyperview/src/types-legacy';
 
 export const getFirstTag = (
-  document: Document,
+  document: Document | Element,
   localName: LocalName,
   namespace: NamespaceURI = Namespaces.HYPERVIEW,
 ): Element | null => {

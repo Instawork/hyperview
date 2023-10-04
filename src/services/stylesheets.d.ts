@@ -8,5 +8,5 @@
 import * as TypesLegacy from 'hyperview/src/types-legacy';
 
 export function createStylesheets(
-  document: TypesLegacy.Document,
+  document: Document | Element,
 ): TypesLegacy.StyleSheets;
