@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -8,17 +6,13 @@
  *
  */
 
-// $FlowFixMe: importing code from TypeScript
 import * as Contexts from 'hyperview/src/contexts';
 import * as Dom from 'hyperview/src/services/dom';
-// $FlowFixMe: importing code from TypeScript
 import * as Keyboard from 'hyperview/src/services/keyboard';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import type {
   DOMString,
-  Document,
-  Element,
   HvComponentOnUpdate,
   HvComponentOptions,
   HvComponentProps,
@@ -46,21 +40,19 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
 
   parser: DOMParser = new DOMParser();
 
-  props: HvComponentProps;
-
-  ref: ?ElementRef<typeof FlatList>;
+  ref: ElementRef<typeof FlatList> | null | undefined;
 
   state: State = {
     refreshing: false,
   };
 
-  onRef = (ref: ?ElementRef<typeof FlatList>) => {
+  onRef = (ref?: ElementRef<typeof FlatList> | null) => {
     this.ref = ref;
   };
 
   onUpdate: HvComponentOnUpdate = (
-    href: ?DOMString,
-    action: ?DOMString,
+    href: DOMString | null | undefined,
+    action: DOMString | null | undefined,
     element: Element,
     options: HvComponentOptions,
   ) => {
@@ -68,17 +60,25 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
       this.handleScrollBehavior(options.behaviorElement);
       return;
     }
-    this.props.onUpdate(href, action, element, options);
+    if (this.props.onUpdate !== null) {
+      this.props.onUpdate(href, action, element, options);
+    }
   };
 
   handleScrollBehavior = (behaviorElement: Element) => {
-    const targetId: ?DOMString = behaviorElement?.getAttribute('target');
+    const targetId:
+      | DOMString
+      | null
+      | undefined = behaviorElement?.getAttribute('target');
     if (!targetId) {
       console.warn('[behaviors/scroll]: missing "target" attribute');
       return;
     }
-    const doc: ?Document = this.context();
-    const targetElement: ?Element = doc?.getElementById(targetId);
+    const doc: Document | null | undefined =
+      typeof this.context === 'function' ? this.context() : null;
+    const targetElement: Element | null | undefined = doc?.getElementById(
+      targetId,
+    );
     if (!targetElement) {
       return;
     }
@@ -120,23 +120,23 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
       ) === 'true';
     const params: ScrollParams = { animated, index };
 
-    const viewOffset: ?number =
-      parseInt(
-        behaviorElement?.getAttributeNS(Namespaces.HYPERVIEW_SCROLL, 'offset'),
-        10,
-      ) || undefined;
+    const viewOffset: number | null | undefined = Dom.safeParseIntAttributeNS(
+      behaviorElement,
+      Namespaces.HYPERVIEW_SCROLL,
+      'offset',
+    );
     if (typeof viewOffset === 'number') {
       params.viewOffset = viewOffset;
     }
 
-    const viewPosition: ?number =
-      parseFloat(
-        behaviorElement?.getAttributeNS(
-          Namespaces.HYPERVIEW_SCROLL,
-          'position',
-        ),
-      ) || undefined;
-
+    const viewPosition:
+      | number
+      | null
+      | undefined = Dom.safeParseFloatAttributeNS(
+      behaviorElement,
+      Namespaces.HYPERVIEW_SCROLL,
+      'position',
+    );
     if (typeof viewPosition === 'number') {
       params.viewPosition = viewPosition;
     }
@@ -159,44 +159,50 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
         const once = e.getAttribute('once');
         const onEnd =
           i === 0 ? () => this.setState({ refreshing: false }) : null;
-        this.props.onUpdate(path, action, this.props.element, {
-          behaviorElement: e,
-          delay,
-          hideIndicatorIds,
-          once,
-          onEnd,
-          showIndicatorIds,
-          targetId,
-        });
+        if (this.props.onUpdate !== null) {
+          this.props.onUpdate(path, action, this.props.element, {
+            behaviorElement: e,
+            delay,
+            hideIndicatorIds,
+            once,
+            onEnd,
+            showIndicatorIds,
+            targetId,
+          });
+        }
       });
   };
 
   getItems = () => {
-    const isOwnedBySelf = item => {
+    const isOwnedBySelf = (item: Element): boolean => {
       if (item.parentNode === this.props.element) {
         return true;
       }
+      if (item.parentNode === null || typeof item.parentNode === 'undefined') {
+        return false;
+      }
       if (
-        item.parentNode.tagName === LOCAL_NAME.ITEMS &&
-        item.parentNode.namespaceURI === Namespaces.HYPERVIEW &&
+        (item.parentNode as Element).tagName === LOCAL_NAME.ITEMS &&
+        (item.parentNode as Element).namespaceURI === Namespaces.HYPERVIEW &&
         item.parentNode.parentNode === this.props.element
       ) {
         return true;
       }
       if (
-        item.parentNode.tagName === LOCAL_NAME.LIST &&
-        item.parentNode.namespaceURI === Namespaces.HYPERVIEW &&
+        (item.parentNode as Element).tagName === LOCAL_NAME.LIST &&
+        (item.parentNode as Element).namespaceURI === Namespaces.HYPERVIEW &&
         item.parentNode.parentNode !== this.props.element
       ) {
         return false;
       }
-      return isOwnedBySelf(item.parentNode);
+      return isOwnedBySelf(item.parentNode as Element);
     };
 
     return Array.from(
-      this.props.element
-        // $FlowFixMe: this.props.element is an Element, not a Node
-        .getElementsByTagNameNS(Namespaces.HYPERVIEW, LOCAL_NAME.ITEM),
+      this.props.element.getElementsByTagNameNS(
+        Namespaces.HYPERVIEW,
+        LOCAL_NAME.ITEM,
+      ),
     ).filter(isOwnedBySelf);
   };
 
@@ -224,7 +230,8 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
         Namespaces.HYPERVIEW,
         LOCAL_NAME.ITEM,
       ),
-    ).reduce((acc, element, index) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ).reduce<Array<any>>((acc, element, index) => {
       return typeof element !== 'string' &&
         element &&
         element.getAttribute &&
@@ -245,7 +252,8 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
               keyboardDismissMode={Keyboard.getKeyboardDismissMode(
                 this.props.element,
               )}
-              keyExtractor={item => item && item.getAttribute('key')}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              keyExtractor={(item: any) => item && item.getAttribute('key')}
               refreshControl={
                 <RefreshControl
                   onRefresh={this.refresh}
@@ -253,15 +261,18 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
                 />
               }
               removeClippedSubviews={false}
-              renderItem={({ item }) =>
-                item &&
-                Render.renderElement(
-                  item,
-                  this.props.stylesheets,
-                  this.onUpdate,
-                  this.props.options,
-                )
-              }
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              renderItem={({ item }: any) => {
+                return (
+                  item &&
+                  Render.renderElement(
+                    item,
+                    this.props.stylesheets,
+                    this.onUpdate,
+                    this.props.options,
+                  )
+                );
+              }}
               scrollIndicatorInsets={scrollIndicatorInsets}
               showsHorizontalScrollIndicator={horizontal && showScrollIndicator}
               showsVerticalScrollIndicator={!horizontal && showScrollIndicator}

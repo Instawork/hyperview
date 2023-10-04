@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -14,7 +12,7 @@ import { LOCAL_NAME } from 'hyperview/src/types';
 
 describe('HvList', () => {
   describe('getItems', () => {
-    let items;
+    let items: Element[];
     describe('simple list', () => {
       beforeEach(() => {
         const elements = getElements(
@@ -49,7 +47,7 @@ describe('HvList', () => {
       });
     });
     describe('nested lists', () => {
-      let elements;
+      let elements: Element[];
       beforeAll(() => {
         elements = getElements(
           `
@@ -109,7 +107,7 @@ describe('HvList', () => {
       });
     });
     describe('paginated lists', () => {
-      let elements;
+      let elements: Element[];
       beforeAll(() => {
         elements = getElements(
           `
@@ -159,7 +157,7 @@ describe('HvList', () => {
       });
     });
     describe('paginated and nested lists', () => {
-      let elements;
+      let elements: Element[];
       beforeAll(() => {
         elements = getElements(
           `

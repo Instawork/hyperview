@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -8,14 +6,14 @@
  *
  */
 
-export type State = {|
-  refreshing: boolean,
-|};
+export type State = {
+  refreshing: boolean;
+};
 
 // https://reactnative.dev/docs/flatlist#scrolltoindex
-export type ScrollParams = {|
-  animated?: ?boolean,
-  index: number,
-  viewOffset?: number,
-  viewPosition?: number,
-|};
+export type ScrollParams = {
+  animated?: boolean | null | undefined;
+  index: number;
+  viewOffset?: number;
+  viewPosition?: number;
+};
