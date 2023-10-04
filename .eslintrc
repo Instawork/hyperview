@@ -31,9 +31,9 @@
         ]
       }
     ],
-    "instawork/error-object": "off",
     "instawork/deprecate-components": "error",
     "instawork/deprecate-stateless": "error",
+    "instawork/error-object": "off",
     "instawork/import-modules": "error",
     "instawork/import-services": "error",
     "instawork/pure-components": "error",
@@ -56,26 +56,24 @@
       "files": ["**/*.ts", "**/*.tsx"],
       "extends": ["plugin:instawork/recommended-typescript"],
       "rules": {
-        "instawork/flow-annotate": "off",
-        "flowtype/no-types-missing-file-annotation": "off",
-        "no-spaced-func": "off",
-        "func-call-spacing": "off",
+        "arrow-body-style": "off",
         "arrow-parens": "off",
+        "flowtype/no-types-missing-file-annotation": "off",
+        "func-call-spacing": "off",
         "function-paren-newline": "off",
         "indent": "off",
-        "arrow-body-style": "off",
-        "operator-linebreak": "off",
+        "instawork/error-object": "off",
+        "instawork/flow-annotate": "off",
+        "no-spaced-func": "off",
         "no-use-before-define": "off",
         "object-curly-newline": "off",
-        "instawork/error-object": "off"
+        "operator-linebreak": "off"
       }
     },
     {
-      "files": [
-        "src/core/components/**/*",
-      ],
+      "files": ["src/core/components/**/*"],
       "rules": {
-        "instawork/stories-components": "warn",
+        "instawork/stories-components": "warn"
       }
     }
   ]
