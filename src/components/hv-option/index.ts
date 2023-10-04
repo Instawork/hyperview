@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -11,9 +9,12 @@
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
+import type {
+  HvComponentOnUpdate,
+  HvComponentProps,
+} from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
 import { TouchableWithoutFeedback, View } from 'react-native';
-import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { State } from './types';
 import { createEventHandler } from 'hyperview/src/core/hyper-ref';
@@ -29,8 +30,6 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
   static localName = LOCAL_NAME.OPTION;
 
   static localNameAliases = [];
-
-  props: HvComponentProps;
 
   state: State = {
     pressed: false,
@@ -61,7 +60,7 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
       pressed: this.state.pressed,
       pressedSelected: this.state.pressed && selected,
       selected,
-    };
+    } as const;
     const props = createProps(
       this.props.element,
       this.props.stylesheets,
@@ -85,7 +84,7 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
       }, true),
       onPressIn: createEventHandler(() => this.setState({ pressed: true })),
       onPressOut: createEventHandler(() => this.setState({ pressed: false })),
-      style: undefined,
+      style: {},
     };
     if (props.style && props.style.flex) {
       // Flex is a style that needs to be lifted from the inner component to the outer
@@ -93,7 +92,6 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
       outerProps.style = { flex: props.style.flex };
     }
 
-    // $FlowFixMe
     return React.createElement(
       TouchableWithoutFeedback,
       outerProps,
@@ -103,7 +101,7 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
         ...Render.renderChildren(
           this.props.element,
           this.props.stylesheets,
-          this.props.onUpdate,
+          this.props.onUpdate as HvComponentOnUpdate,
           newOptions,
         ),
       ),
