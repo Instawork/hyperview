@@ -38,9 +38,12 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
 
   static localNameAliases = [];
 
-  static getFormInputValues = (element: Element): Array<[string, string]> => {
+  static getFormInputValues = (element: Element): [string, string][] => {
     return getNameValueFormInputValues(element);
   };
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  noop = () => {};
 
   getPickerInitialValue = (): string => {
     const value = this.getValue();
@@ -93,8 +96,9 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
   /**
    * Returns a string representing the value in the picker.
    */
-  getPickerValue = (): string =>
-    this.props.element.getAttribute('picker-value') || '';
+  getPickerValue = (): string => {
+    return this.props.element.getAttribute('picker-value') || '';
+  };
 
   getPickerItems = (): Element[] =>
     Array.from(
@@ -103,6 +107,7 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
         LOCAL_NAME.PICKER_ITEM,
       ),
     );
+  };
 
   /**
    * Shows the picker, defaulting to the field's value.
@@ -112,7 +117,9 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
     const newElement = this.props.element.cloneNode(true) as Element;
     newElement.setAttribute('focused', 'true');
     newElement.setAttribute('picker-value', this.getPickerInitialValue());
-    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+    if (this.props.onUpdate) {
+      this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+    }
     Behaviors.trigger('focus', newElement, this.props.onUpdate);
   };
 
@@ -123,7 +130,9 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
     const newElement = this.props.element.cloneNode(true) as Element;
     newElement.setAttribute('focused', 'false');
     newElement.removeAttribute('picker-value');
-    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+    if (this.props.onUpdate) {
+      this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+    }
     Behaviors.trigger('blur', newElement, this.props.onUpdate);
   };
 
@@ -137,7 +146,9 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
     newElement.setAttribute('value', pickerValue);
     newElement.removeAttribute('picker-value');
     newElement.setAttribute('focused', 'false');
-    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+    if (this.props.onUpdate) {
+      this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+    }
     const hasChanged = value !== pickerValue;
     if (hasChanged) {
       Behaviors.trigger('change', newElement, this.props.onUpdate);
@@ -151,14 +162,17 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
   setPickerValue = (value: string) => {
     const newElement = this.props.element.cloneNode(true) as Element;
     newElement.setAttribute('picker-value', value);
-    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+    if (this.props.onUpdate) {
+      this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+    }
   };
 
   /**
    * Returns true if the field is focused (and picker is showing).
    */
-  isFocused = (): boolean =>
-    this.props.element.getAttribute('focused') === 'true';
+  isFocused = (): boolean => {
+    return this.props.element.getAttribute('focused') === 'true';
+  };
 
   render() {
     const style: Array<StyleSheet> = createStyleProp(
@@ -209,7 +223,7 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
             isFocused={this.isFocused}
             onModalCancel={this.onCancel}
             onModalDone={this.onDone}
-            onUpdate={this.props.onUpdate}
+            onUpdate={this.props.onUpdate || this.noop}
             options={this.props.options}
             stylesheets={this.props.stylesheets}
           >
