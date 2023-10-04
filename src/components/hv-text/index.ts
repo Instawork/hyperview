@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -10,8 +8,11 @@
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
+import type {
+  HvComponentOnUpdate,
+  HvComponentProps,
+} from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
-import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { Text } from 'react-native';
 import { addHref } from 'hyperview/src/core/hyper-ref';
@@ -23,8 +24,6 @@ export default class HvText extends PureComponent<HvComponentProps> {
   static localName = LOCAL_NAME.TEXT;
 
   static localNameAliases = [];
-
-  props: HvComponentProps;
 
   render() {
     const { skipHref } = this.props.options || {};
@@ -39,7 +38,7 @@ export default class HvText extends PureComponent<HvComponentProps> {
       ...Render.renderChildren(
         this.props.element,
         this.props.stylesheets,
-        this.props.onUpdate,
+        this.props.onUpdate as HvComponentOnUpdate,
         {
           ...this.props.options,
           preformatted:
@@ -54,7 +53,7 @@ export default class HvText extends PureComponent<HvComponentProps> {
           component,
           this.props.element,
           this.props.stylesheets,
-          this.props.onUpdate,
+          this.props.onUpdate as HvComponentOnUpdate,
           this.props.options,
         );
   }
