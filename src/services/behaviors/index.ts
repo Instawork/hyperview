@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -9,13 +7,7 @@
  */
 
 import * as Dom from 'hyperview/src/services/dom';
-import type {
-  Document,
-  Element,
-  HvComponentOnUpdate,
-  Node,
-  UpdateAction,
-} from 'hyperview/src/types';
+import type { HvComponentOnUpdate, UpdateAction } from 'hyperview/src/types';
 import { ACTIONS } from 'hyperview/src/types';
 import { shallowCloneToRoot } from 'hyperview/src/services';
 
@@ -28,15 +20,18 @@ export const toggleIndicators = (
   ids: Array<string>,
   showIndicators: boolean,
   root: Document,
-): Document =>
-  ids.reduce((newRoot, id) => {
-    const indicatorElement: ?Element = newRoot.getElementById(id);
+): Document => {
+  return ids.reduce((newRoot, id) => {
+    const indicatorElement: Element | null | undefined = newRoot.getElementById(
+      id,
+    );
     if (!indicatorElement) {
       return newRoot;
     }
     indicatorElement.setAttribute('hide', showIndicators ? 'false' : 'true');
     return shallowCloneToRoot(indicatorElement);
   }, root);
+};
 
 /**
  * Returns a new Document object that shows the "show" indicators
@@ -81,15 +76,16 @@ export const performUpdate = (
     const { parentNode } = targetElement;
     if (parentNode) {
       parentNode.replaceChild(newElement, targetElement);
-      return shallowCloneToRoot((parentNode: any));
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return shallowCloneToRoot(parentNode as any);
     }
   }
 
   if (action === ACTIONS.REPLACE_INNER) {
-    let child: ?Node = targetElement.firstChild;
+    let child: Node | null | undefined = targetElement.firstChild;
     // Remove the target's children
     while (child !== null && child !== undefined) {
-      const nextChild: ?Node = child.nextSibling;
+      const nextChild: Node | null | undefined = child.nextSibling;
       targetElement.removeChild(child);
       child = nextChild;
     }
@@ -118,7 +114,7 @@ export const performUpdate = (
 export const trigger = (
   name: string,
   element: Element,
-  onUpdate: HvComponentOnUpdate,
+  onUpdate?: HvComponentOnUpdate | null,
 ) => {
   const behaviorElements = Dom.getBehaviorElements(element);
   const matchingBehaviors = behaviorElements.filter(
@@ -133,14 +129,16 @@ export const trigger = (
     const hideIndicatorIds = behaviorElement.getAttribute('hide-during-load');
     const delay = behaviorElement.getAttribute('delay');
     const once = behaviorElement.getAttribute('once');
-    onUpdate(href, action, element, {
-      behaviorElement,
-      delay,
-      hideIndicatorIds,
-      once,
-      showIndicatorIds,
-      targetId,
-      verb,
-    });
+    if (onUpdate) {
+      onUpdate(href, action, element, {
+        behaviorElement,
+        delay,
+        hideIndicatorIds,
+        once,
+        showIndicatorIds,
+        targetId,
+        verb,
+      });
+    }
   });
 };
