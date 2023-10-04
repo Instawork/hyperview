@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -24,9 +22,13 @@ export default class HvWebView extends PureComponent<HvComponentProps> {
 
   static localNameAliases = [];
 
-  props: HvComponentProps;
-
-  onMessage = (event: ?{ nativeEvent: { data: string } }) => {
+  onMessage = (
+    event?: {
+      nativeEvent: {
+        data: string;
+      };
+    } | null,
+  ) => {
     if (!event) {
       return;
     }
@@ -37,6 +39,7 @@ export default class HvWebView extends PureComponent<HvComponentProps> {
   };
 
   render() {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const props: any = createProps(
       this.props.element,
       this.props.stylesheets,
@@ -44,7 +47,7 @@ export default class HvWebView extends PureComponent<HvComponentProps> {
     );
     const color = props['activity-indicator-color'] || '#8d9494';
     const injectedJavaScript = props['injected-java-script'];
-    const source = { html: props.html, uri: props.url };
+    const source = { html: props.html, uri: props.url } as const;
     return (
       <WebView
         injectedJavaScript={injectedJavaScript}
