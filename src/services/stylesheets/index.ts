@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -11,7 +9,6 @@
 import * as Dom from 'hyperview/src/services/dom';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type {
-  Document,
   StyleSheet as StyleSheetType,
   StyleSheets,
 } from 'hyperview/src/types';
@@ -164,11 +161,12 @@ const STYLE_ATTRIBUTE_CONVERTERS = {
   outlineOffset: numberOrString,
   outlineStyle: string,
   outlineWidth: numberOrString,
-};
+} as const;
 
 function createStylesheet(document: Document, modifiers = {}): StyleSheetType {
   const styles = Dom.getFirstTag(document, 'styles');
-  const stylesheet = {};
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const stylesheet: Record<string, any> = {};
   if (styles) {
     const styleElements = styles.getElementsByTagNameNS(
       Namespaces.HYPERVIEW,
@@ -178,13 +176,13 @@ function createStylesheet(document: Document, modifiers = {}): StyleSheetType {
     for (let i = 0; i < styleElements.length; i += 1) {
       const styleElement = styleElements.item(i);
       const hasModifier =
-        styleElement.parentNode &&
-        styleElement.parentNode.tagName === 'modifier';
+        (styleElement?.parentNode as Element)?.tagName === 'modifier';
 
-      let styleId = styleElement.getAttribute('id');
+      let styleId = styleElement?.getAttribute('id');
       if (hasModifier) {
         // TODO(adam): Use less hacky way to get id of parent style element.
-        styleId = styleElement.parentNode.parentNode.getAttribute('id');
+        styleId = (styleElement?.parentNode
+          ?.parentNode as Element)?.getAttribute('id');
       }
 
       // This must be a root style or a modifier style
@@ -200,7 +198,8 @@ function createStylesheet(document: Document, modifiers = {}): StyleSheetType {
         const [modifier, state] = modifierEntries[j];
 
         const elementModifierState =
-          styleElement.parentNode.getAttribute(modifier) === 'true';
+          (styleElement?.parentNode as Element)?.getAttribute(modifier) ===
+          'true';
 
         if (elementModifierState !== state) {
           matchesModifiers = false;
@@ -213,12 +212,23 @@ function createStylesheet(document: Document, modifiers = {}): StyleSheetType {
         continue; // eslint-disable-line
       }
 
-      const rules = {};
-      for (let j = 0; j < styleElement.attributes.length; j += 1) {
-        const attr = styleElement.attributes.item(j);
-        const converter = STYLE_ATTRIBUTE_CONVERTERS[attr.name];
-        if (converter) {
-          rules[attr.name] = converter(attr.value);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const rules: Record<string, any> = {};
+      if (
+        styleElement?.attributes !== null &&
+        typeof styleElement?.attributes !== 'undefined'
+      ) {
+        for (let j = 0; j < styleElement.attributes.length; j += 1) {
+          const attr = styleElement.attributes.item(j);
+          if (attr !== null && typeof attr !== 'undefined') {
+            const converter =
+              STYLE_ATTRIBUTE_CONVERTERS[
+                attr.name as keyof typeof STYLE_ATTRIBUTE_CONVERTERS
+              ];
+            if (converter) {
+              rules[attr.name] = converter(attr.value);
+            }
+          }
         }
       }
 
@@ -270,6 +280,8 @@ export function createStylesheets(document: Document): StyleSheets {
       pressed: false,
       selected: true,
     }),
-  };
+  } as const;
   return styles;
 }
+
+export type { StyleSheets };
