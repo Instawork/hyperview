@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -14,7 +12,7 @@ import { getElements } from 'hyperview/test/helpers';
 
 describe('HvTextField', () => {
   describe('getFormInputValues', () => {
-    let elements;
+    let elements: Element[];
     beforeEach(() => {
       elements = getElements(
         `
@@ -49,7 +47,7 @@ describe('HvTextField', () => {
 
 describe('HvTextArea', () => {
   describe('getFormInputValues', () => {
-    let elements;
+    let elements: Element[];
     beforeEach(() => {
       elements = getElements(
         `

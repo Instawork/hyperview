@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -7,19 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-
 import * as Behaviors from 'hyperview/src/services/behaviors';
+import * as Dom from 'hyperview/src/services/dom';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import type { Element, HvComponentProps } from 'hyperview/src/types';
-import React, { useCallback, useRef } from 'react';
+import type { HvComponentProps, TextContextType } from 'hyperview/src/types';
+import React, { MutableRefObject, useCallback, useRef } from 'react';
 import {
   createProps,
   getNameValueFormInputValues,
 } from 'hyperview/src/services';
-import type { ElementRef } from 'react';
+import type { KeyboardTypeOptions } from 'react-native';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { TextInput } from 'react-native';
-import TinyMask from 'hyperview/src/mask.js';
+import TinyMask from 'hyperview/src/mask';
 import debounce from 'lodash/debounce';
 
 const HvTextField = (props: HvComponentProps) => {
@@ -36,33 +34,42 @@ const HvTextField = (props: HvComponentProps) => {
   // Extract known attributes into their own variables
   const autoFocus = props.element.getAttribute('auto-focus') === 'true';
   const debounceTimeMs =
-    parseInt(props.element.getAttribute('debounce'), 10) || 0;
-  const defaultValue = props.element.getAttribute('value');
+    Dom.safeParseIntAttribute(props.element, 'debounce') ?? 0;
+  const defaultValue = props.element.getAttribute('value') || undefined;
   const editable = props.element.getAttribute('editable') !== 'false';
-  const keyboardType = props.element.getAttribute('keyboard-type') || undefined;
+  const keyboardType =
+    (props.element.getAttribute('keyboard-type') as KeyboardTypeOptions) ||
+    undefined;
   const multiline =
     props.element.localName === LOCAL_NAME.TEXT_AREA ||
     props.element.getAttribute('multiline') === 'true';
   const secureTextEntry = props.element.getAttribute('secure-text') === 'true';
   const textContentType =
-    props.element.getAttribute('text-content-type') || 'none';
+    (props.element.getAttribute('text-content-type') as TextContextType) ||
+    'none';
 
   // Handlers
   const setFocus = (focused: boolean) => {
-    const newElement = props.element.cloneNode(true);
-    props.onUpdate(null, 'swap', props.element, { newElement });
+    const newElement = props.element.cloneNode(true) as Element;
+    if (props.onUpdate !== null) {
+      props.onUpdate(null, 'swap', props.element, { newElement });
 
-    if (focused) {
-      Behaviors.trigger('focus', newElement, props.onUpdate);
-    } else {
-      Behaviors.trigger('blur', newElement, props.onUpdate);
+      if (focused) {
+        Behaviors.trigger('focus', newElement, props.onUpdate);
+      } else {
+        Behaviors.trigger('blur', newElement, props.onUpdate);
+      }
     }
   };
 
+  // TODO: move this to top
   // Create a memoized, debounced function to trigger the "change" behavior
+  // eslint-disable-next-line
   const triggerChangeBehaviors = useCallback(
     debounce((newElement: Element) => {
-      Behaviors.trigger('change', newElement, props.onUpdate);
+      if (props.onUpdate !== null) {
+        Behaviors.trigger('change', newElement, props.onUpdate);
+      }
     }, debounceTimeMs),
     [],
   );
@@ -70,13 +77,19 @@ const HvTextField = (props: HvComponentProps) => {
   // This handler takes care of handling the state, so it shouldn't be debounced
   const onChangeText = (value: string) => {
     const formattedValue = HvTextField.getFormattedValue(props.element, value);
-    const newElement = props.element.cloneNode(true);
+    const newElement = props.element.cloneNode(true) as Element;
     newElement.setAttribute('value', formattedValue);
-    props.onUpdate(null, 'swap', props.element, { newElement });
+    if (props.onUpdate !== null) {
+      props.onUpdate(null, 'swap', props.element, { newElement });
+    }
     triggerChangeBehaviors(newElement);
   };
 
-  const textInputRef: ElementRef<typeof TextInput> = useRef(null);
+  // TODO: move this to top
+  // eslint-disable-next-line
+  const textInputRef: MutableRefObject<TextInput | null> = useRef(
+    null as TextInput | null,
+  );
 
   const p = {
     ...createProps(props.element, props.stylesheets, {
@@ -88,7 +101,7 @@ const HvTextField = (props: HvComponentProps) => {
   return (
     <TextInput
       {...p}
-      ref={(ref: ?ElementRef<typeof TextInput>) => {
+      ref={(ref: React.ElementRef<typeof TextInput> | null) => {
         textInputRef.current = ref;
         if (props.options?.registerInputHandler) {
           props.options.registerInputHandler(ref);
