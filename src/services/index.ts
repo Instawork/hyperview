@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -12,13 +10,10 @@ import * as Xml from 'hyperview/src/services/xml';
 import type {
   ComponentRegistry,
   DOMString,
-  Document,
-  Element,
   HvComponent,
   HvComponentOptions,
   HvFormValues,
-  Node,
-  NodeList,
+  LocalName,
   StyleSheet,
   StyleSheets,
 } from 'hyperview/src/types';
@@ -87,9 +82,12 @@ export const createStyleProp = (
  */
 export const createTestProps = (
   element: Element,
-): { testID?: string, accessibilityLabel?: string } => {
+): {
+  testID?: string;
+  accessibilityLabel?: string;
+} => {
   const testProps = {};
-  const id: ?DOMString = element.getAttribute('id');
+  const id: DOMString | null | undefined = element.getAttribute('id');
   if (!id) {
     return testProps;
   }
@@ -107,7 +105,8 @@ export const createProps = (
   const numericRules = ['numberOfLines'];
   const booleanRules = ['multiline', 'selectable', 'adjustsFontSizeToFit'];
 
-  const props = {};
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const props: Record<string, any> = {};
   if (!element.attributes) {
     return props;
   }
@@ -127,23 +126,25 @@ export const createProps = (
 
   props.style = createStyleProp(element, stylesheets, options);
   const testProps = createTestProps(element);
-  // $FlowFixMe
   return { ...props, ...testProps };
 };
 
-export const later = (delayMs: number): Promise<void> =>
-  new Promise(resolve => setTimeout(resolve, delayMs));
+export const later = (delayMs: number): Promise<void> => {
+  return new Promise((resolve: (result?: Promise<never>) => void) => {
+    return setTimeout(resolve, delayMs);
+  });
+};
 
 /**
  * Clones the element and moves all children from the original element
  * to the clone. The returned element will be a new object, but all of the child
  * nodes will be existing objects.
  */
-export const shallowClone = (element: Element): Element => {
-  const newElement: Element = element.cloneNode(false);
-  let childNode: ?Node = element.firstChild;
+export const shallowClone = (element: Element | Document): Element => {
+  const newElement: Element = element.cloneNode(false) as Element;
+  let childNode: Node | null | undefined = element.firstChild;
   while (childNode) {
-    const nextChild: ?Node = childNode.nextSibling;
+    const nextChild: Node | null | undefined = childNode.nextSibling;
     newElement.appendChild(childNode);
     childNode = nextChild;
   }
@@ -155,21 +156,20 @@ export const shallowClone = (element: Element): Element => {
  * Returns the new root object. Essentially, this produces a new DOM object
  * that re-uses as many existing nodes as possible.
  */
-export const shallowCloneToRoot = (element: Element): Document => {
-  const elementClone: Element = shallowClone(element);
+export const shallowCloneToRoot = (element: Element | Document): Document => {
+  const elementClone: unknown = shallowClone(element);
   if (element.nodeType === 9) {
-    // Need to typecast here because Flow doesn't know that nodeType of 9 is a Document.
-    return (elementClone: any);
+    return elementClone as Document;
   }
 
   // Need to check parentNode to satisfy Flow
   const { parentNode } = element;
   if (!parentNode) {
-    return (elementClone: any);
+    return elementClone as Document;
   }
 
-  parentNode.replaceChild(elementClone, element);
-  return shallowCloneToRoot((parentNode: any));
+  parentNode.replaceChild(elementClone as Document, element);
+  return shallowCloneToRoot(parentNode as Document);
 };
 
 /**
@@ -182,7 +182,7 @@ const visitNode = (node: Node, callback: (n: Node) => boolean): boolean => {
     return true;
   }
 
-  let childNode: ?Node = node.firstChild;
+  let childNode: Node | null | undefined = node.firstChild;
   while (childNode) {
     if (visitNode(childNode, callback)) {
       return true;
@@ -197,12 +197,14 @@ const visitNode = (node: Node, callback: (n: Node) => boolean): boolean => {
  * Note this is different from the element's regular id, this is
  * used for tracking delayed behaviors.
  */
-export const getElementByTimeoutId = (doc: Document, id: string): ?Element => {
-  let foundElement: ?Element = null;
+export const getElementByTimeoutId = (
+  doc: Document,
+  id: string,
+): Element | null | undefined => {
+  let foundElement: Element | null | undefined = null;
   const callback = (node: Node): boolean => {
     if (node.nodeType === NODE_TYPE.ELEMENT_NODE) {
-      // We know the node is an element, so we can safely cast it.
-      const element: Element = (node: any);
+      const element = node as Element;
       if (element.getAttribute(HV_TIMEOUT_ID_ATTR) === id) {
         foundElement = element;
         return true;
@@ -236,19 +238,19 @@ export const removeTimeoutId = (element: Element) => {
 export const getAncestorByTagName = (
   element: Element,
   tagName: string,
-): ?Element => {
+): Element | null | undefined => {
   let { parentNode } = element;
   if (!parentNode) {
     return null;
   }
 
-  while (parentNode.tagName !== tagName) {
+  while ((parentNode as Element).tagName !== tagName) {
     ({ parentNode } = parentNode);
     if (!parentNode) {
       return null;
     }
   }
-  return ((parentNode: any): Element);
+  return parentNode as Element;
 };
 
 export const flattenRegistry = (
@@ -257,7 +259,9 @@ export const flattenRegistry = (
   const entries: Array<[string, string, HvComponent]> = [];
 
   Object.keys(registry).forEach((ns: string) => {
-    const nameRegistry: { [string]: HvComponent } = registry[ns];
+    const nameRegistry: {
+      [key: string]: HvComponent;
+    } = registry[ns];
     Object.keys(nameRegistry).forEach((name: string) => {
       const component: HvComponent = nameRegistry[name];
       entries.push([ns, name, component]);
@@ -272,11 +276,12 @@ export const flattenRegistry = (
  * form ancestor, or if there is no form data to send.
  * If the given element is a form element, its form data will be returned.
  */
+type FormData = FormDataRN | FormDataWeb;
 export const getFormData = (
   element: Element,
   formComponents: ComponentRegistry,
-): ?FormData => {
-  const formElement: ?Element =
+): FormData | null | undefined => {
+  const formElement: Element | null | undefined =
     element.tagName === 'form'
       ? element
       : getAncestorByTagName(element, 'form');
@@ -284,27 +289,26 @@ export const getFormData = (
     return null;
   }
 
-  const formData: FormData = new FormData();
+  const formData: unknown = new FormData();
 
   let formHasData = false;
   flattenRegistry(formComponents)
     // Get all inputs in the form
     .forEach((data: [string, string, HvComponent]) => {
-      const [ns: string, tag: string, component: HvComponent] = data;
-      const inputElements: NodeList<Element> = formElement.getElementsByTagNameNS(
+      const [ns, tag, component] = data;
+      const inputElements = formElement.getElementsByTagNameNS(
         ns,
-        tag,
+        tag as LocalName,
       );
       for (let i = 0; i < inputElements.length; i += 1) {
         const inputElement = inputElements.item(i);
         if (inputElement) {
-          // Casting necessary due to limitations of our Flow version (no optional properties)
-          const formComponent: HvFormValues = (component: any);
+          const formComponent = component as HvComponent & HvFormValues;
           formComponent
             .getFormInputValues(inputElement)
             // eslint-disable-next-line no-loop-func
-            .forEach(([name: string, value: string]) => {
-              formData.append(name, value);
+            .forEach(([name, value]: [string, string]) => {
+              (formData as FormData).append(name, value);
               formHasData = true;
             });
         }
@@ -312,7 +316,7 @@ export const getFormData = (
     });
 
   // Ensure that we only return form data with content in it. Otherwise, it will crash on Android
-  return formHasData ? formData : null;
+  return formHasData ? (formData as FormData) : null;
 };
 
 export const getNameValueFormInputValues = (
@@ -325,10 +329,11 @@ export const getNameValueFormInputValues = (
   return [];
 };
 
-export const encodeXml = (xml: string): string =>
-  xml
+export const encodeXml = (xml: string): string => {
+  return xml
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&apos;');
+};

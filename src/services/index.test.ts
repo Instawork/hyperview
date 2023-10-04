@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -25,7 +23,7 @@ import HvSwitch from 'hyperview/src/components/hv-switch';
 import HvTextField from 'hyperview/src/components/hv-text-field';
 
 const parser = new DOMParser();
-const createElement = (id: ?string) => {
+const createElement = (id?: string | null) => {
   const doc = parser.parseFromString('<doc></doc>');
   const el = doc.createElement('<el>');
   if (id) {
@@ -38,7 +36,7 @@ describe('encodeXml', () => {
   it('encodes XML entities in an XML string', () => {
     expect(
       encodeXml(
-        `<behavior href="https://hyperview.org/foo=bar&bar=baz" action='new' />`,
+        '<behavior href="https://hyperview.org/foo=bar&bar=baz" action=\'new\' />',
       ),
     ).toEqual(
       '&lt;behavior href=&quot;https://hyperview.org/foo=bar&amp;bar=baz&quot; action=&apos;new&apos; /&gt;',
@@ -46,17 +44,21 @@ describe('encodeXml', () => {
   });
 });
 
-const mockPlatform = OS => {
+const mockPlatform = (OS: 'android' | 'ios' | 'web') => {
   jest.resetModules();
   jest.doMock('react-native/Libraries/Utilities/Platform', () => ({
     OS,
-    select: objs => objs[OS],
+    select: (objs: { android?: unknown; ios?: unknown; web?: unknown }) =>
+      objs[OS],
   }));
 };
 
 describe('createTestProps', () => {
   describe('valid cases', () => {
-    let testProps;
+    let testProps: {
+      testID?: string;
+      accessibilityLabel?: string;
+    };
     beforeEach(() => {
       testProps = createTestProps(createElement('myID'));
     });
@@ -96,7 +98,10 @@ describe('createProps', () => {
   const styleSheets = Stylesheets.createStylesheets(
     parser.parseFromString('<doc></doc>'),
   );
-  let props;
+  let props: {
+    testID?: string;
+    accessibilityLabel?: string;
+  };
   beforeEach(() => {
     props = createProps(createElement('myID'), styleSheets, {});
   });
