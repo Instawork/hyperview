@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -10,7 +8,8 @@
 
 import type { StyleSheet } from 'hyperview/src/types';
 
-export type Props = {|
-  onPress: () => void,
-  style: StyleSheet,
-|};
+export type Props = {
+  getStyle: (pressed: boolean) => Array<StyleSheet>;
+  label: string;
+  onPress: () => void;
+};
