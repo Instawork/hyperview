@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -20,8 +18,6 @@ export default class HvSpinner extends PureComponent<HvComponentProps> {
   static localName = LOCAL_NAME.SPINNER;
 
   static localNameAliases = [];
-
-  props: HvComponentProps;
 
   render() {
     const color = this.props.element.getAttribute('color') || '#8d9494';
