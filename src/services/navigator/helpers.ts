@@ -16,9 +16,11 @@ import { ANCHOR_ID_SEPARATOR } from './types';
  * Get an array of all child elements of a node
  */
 export const getChildElements = (element: Element): Element[] => {
-  return (Array.from(element.childNodes) || []).filter((child: Element) => {
-    return child.nodeType === TypesLegacy.NODE_TYPE.ELEMENT_NODE;
-  });
+  return (Array.from(element.childNodes as NodeListOf<Element>) || []).filter(
+    (child: Element) => {
+      return child.nodeType === TypesLegacy.NODE_TYPE.ELEMENT_NODE;
+    },
+  );
 };
 
 /**

@@ -1,4 +1,4 @@
-import * as DomErrors from '../dom/errors';
+import * as DomErrors from 'hyperview/src/services/dom/errors';
 import * as Errors from './errors';
 import * as Namespaces from '../namespaces';
 import * as Types from './types';
