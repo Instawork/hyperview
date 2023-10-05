@@ -34,8 +34,6 @@ export default {
 
     type Style = 'default' | 'cancel' | 'destructive' | undefined;
 
-    type Style = 'default' | 'cancel' | 'destructive' | undefined;
-
     // Create the options for the alert.
     // NOTE: Android supports at most 3 options.
     const options = optionElements.map(optionElement => ({

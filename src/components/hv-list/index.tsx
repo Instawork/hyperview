@@ -60,9 +60,7 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
       this.handleScrollBehavior(options.behaviorElement);
       return;
     }
-    if (this.props.onUpdate !== null) {
-      this.props.onUpdate(href, action, element, options);
-    }
+    this.props.onUpdate(href, action, element, options);
   };
 
   handleScrollBehavior = (behaviorElement: Element) => {
@@ -161,17 +159,15 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
         const once = e.getAttribute('once');
         const onEnd =
           i === 0 ? () => this.setState({ refreshing: false }) : null;
-        if (this.props.onUpdate !== null) {
-          this.props.onUpdate(path, action, this.props.element, {
-            behaviorElement: e,
-            delay,
-            hideIndicatorIds,
-            once,
-            onEnd,
-            showIndicatorIds,
-            targetId,
-          });
-        }
+        this.props.onUpdate(path, action, this.props.element, {
+          behaviorElement: e,
+          delay,
+          hideIndicatorIds,
+          once,
+          onEnd,
+          showIndicatorIds,
+          targetId,
+        });
       });
   };
 

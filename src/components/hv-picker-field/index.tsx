@@ -57,25 +57,18 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
         LOCAL_NAME.PICKER_ITEM,
       ),
     );
-  };
-
-  onUpdate = (newElement: Element) => {
-    if (this.props.onUpdate) {
-      this.props.onUpdate(null, 'swap', this.props.element, { newElement });
-    }
-  };
 
   onFocus = () => {
     const newElement = this.props.element.cloneNode(true) as Element;
     newElement.setAttribute('focused', 'true');
-    this.onUpdate(newElement);
+    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
     Behaviors.trigger('focus', newElement, this.props.onUpdate);
   };
 
   onBlur = () => {
     const newElement = this.props.element.cloneNode(true) as Element;
     newElement.setAttribute('focused', 'false');
-    this.onUpdate(newElement);
+    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
     Behaviors.trigger('blur', newElement, this.props.onUpdate);
   };
 
@@ -86,7 +79,7 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
     const newElement = this.props.element.cloneNode(true) as Element;
     newElement.setAttribute('focused', 'false');
     newElement.removeAttribute('picker-value');
-    this.onUpdate(newElement);
+    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
   };
 
   /**
@@ -100,7 +93,7 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
     newElement.setAttribute('value', pickerValue);
     newElement.removeAttribute('picker-value');
     newElement.setAttribute('focused', 'false');
-    this.onUpdate(newElement);
+    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
 
     const hasChanged = value !== pickerValue;
     if (hasChanged) {
@@ -162,7 +155,6 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
     // If there are no items, or the first item has a value,
     // we need to add an empty option that acts as a placeholder.
     if (items.length > 0 && items[0].getAttribute('value') !== '') {
-      const label = this.props.element.getAttribute('placeholder') || undefined;
       children.unshift(
         <Picker.Item
           key="empty"

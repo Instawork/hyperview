@@ -6,7 +6,6 @@
  *
  */
 import * as Behaviors from 'hyperview/src/services/behaviors';
-import * as Dom from 'hyperview/src/services/dom';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type { HvComponentProps, TextContextType } from 'hyperview/src/types';
 import React, { MutableRefObject, useCallback, useRef } from 'react';
@@ -54,22 +53,18 @@ const HvTextField = (props: HvComponentProps) => {
     const newElement = props.element.cloneNode(true) as Element;
     props.onUpdate(null, 'swap', props.element, { newElement });
 
-      if (focused) {
-        Behaviors.trigger('focus', newElement, props.onUpdate);
-      } else {
-        Behaviors.trigger('blur', newElement, props.onUpdate);
-      }
+    if (focused) {
+      Behaviors.trigger('focus', newElement, props.onUpdate);
+    } else {
+      Behaviors.trigger('blur', newElement, props.onUpdate);
     }
   };
 
-  // TODO: move this to top
   // Create a memoized, debounced function to trigger the "change" behavior
   // eslint-disable-next-line react-hooks/rules-of-hooks, react-hooks/exhaustive-deps
   const triggerChangeBehaviors = useCallback(
     debounce((newElement: Element) => {
-      if (props.onUpdate !== null) {
-        Behaviors.trigger('change', newElement, props.onUpdate);
-      }
+      Behaviors.trigger('change', newElement, props.onUpdate);
     }, debounceTimeMs),
     [],
   );
@@ -79,9 +74,7 @@ const HvTextField = (props: HvComponentProps) => {
     const formattedValue = HvTextField.getFormattedValue(props.element, value);
     const newElement = props.element.cloneNode(true) as Element;
     newElement.setAttribute('value', formattedValue);
-    if (props.onUpdate !== null) {
-      props.onUpdate(null, 'swap', props.element, { newElement });
-    }
+    props.onUpdate(null, 'swap', props.element, { newElement });
     triggerChangeBehaviors(newElement);
   };
 

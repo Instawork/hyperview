@@ -12,11 +12,7 @@ export type State = {
 
 // https://reactnative.dev/docs/sectionlist#scrolltolocation
 export type ScrollParams = {
-<<<<<<< HEAD
   animated?: boolean | undefined;
-=======
-  animated?: boolean;
->>>>>>> a1c52dd (chore: migrate src/components/hv-section-list)
   itemIndex: number;
   sectionIndex: number;
   viewOffset?: number;
