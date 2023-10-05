@@ -25,13 +25,12 @@ export default {
 
     // Get the immediate alert:option nodes. We don't use getElementsByTagname to
     // avoid getting options for nested alerts.
-    const optionElements = childNodes.filter(n => {
-      return (
+    const optionElements = childNodes.filter(
+      n =>
         n &&
         n.namespaceURI === Namespaces.HYPERVIEW_ALERT &&
-        n.localName === 'option'
-      );
-    });
+        n.localName === 'option',
+    );
 
     type Style = 'default' | 'cancel' | 'destructive' | undefined;
 
@@ -44,12 +43,9 @@ export default {
             // Only behaviors with "press" trigger will get executed.
             // "press" is also the default trigger, so if no trigger is specified,
             // the behavior will also execute.
-            e => {
-              return (
-                !e.getAttribute('trigger') ||
-                e.getAttribute('trigger') === 'press'
-              );
-            },
+            e =>
+              !e.getAttribute('trigger') ||
+              e.getAttribute('trigger') === 'press',
           )
           .forEach((behaviorElement, i) => {
             const href = behaviorElement.getAttribute('href');
@@ -67,8 +63,8 @@ export default {
             // With multiple behaviors for the same trigger, we need to stagger
             // the updates a bit so that each update operates on the latest DOM.
             // Ideally, we could apply multiple DOM updates at a time.
-            later(i).then(() => {
-              return (
+            later(i).then(
+              () =>
                 optionElement &&
                 onUpdate(href, action, optionElement, {
                   behaviorElement,
@@ -78,9 +74,8 @@ export default {
                   showIndicatorIds,
                   targetId,
                   verb,
-                })
-              );
-            });
+                }),
+            );
           });
       },
       style: ((optionElement &&
