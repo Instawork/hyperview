@@ -6,7 +6,6 @@
  *
  */
 import * as Behaviors from 'hyperview/src/services/behaviors';
-import * as Dom from 'hyperview/src/services/dom';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type { HvComponentProps, TextContextType } from 'hyperview/src/types';
 import React, { MutableRefObject, useCallback, useRef } from 'react';
@@ -14,6 +13,7 @@ import {
   createProps,
   getNameValueFormInputValues,
 } from 'hyperview/src/services';
+import type { ElementRef } from 'react';
 import type { KeyboardTypeOptions } from 'react-native';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { TextInput } from 'react-native';
@@ -34,7 +34,7 @@ const HvTextField = (props: HvComponentProps) => {
   // Extract known attributes into their own variables
   const autoFocus = props.element.getAttribute('auto-focus') === 'true';
   const debounceTimeMs =
-    Dom.safeParseIntAttribute(props.element, 'debounce') ?? 0;
+    parseInt(props.element.getAttribute('debounce') || '', 10) || 0;
   const defaultValue = props.element.getAttribute('value') || undefined;
   const editable = props.element.getAttribute('editable') !== 'false';
   const keyboardType =
@@ -51,25 +51,20 @@ const HvTextField = (props: HvComponentProps) => {
   // Handlers
   const setFocus = (focused: boolean) => {
     const newElement = props.element.cloneNode(true) as Element;
-    if (props.onUpdate !== null) {
-      props.onUpdate(null, 'swap', props.element, { newElement });
+    props.onUpdate(null, 'swap', props.element, { newElement });
 
-      if (focused) {
-        Behaviors.trigger('focus', newElement, props.onUpdate);
-      } else {
-        Behaviors.trigger('blur', newElement, props.onUpdate);
-      }
+    if (focused) {
+      Behaviors.trigger('focus', newElement, props.onUpdate);
+    } else {
+      Behaviors.trigger('blur', newElement, props.onUpdate);
     }
   };
 
-  // TODO: move this to top
   // Create a memoized, debounced function to trigger the "change" behavior
-  // eslint-disable-next-line
+  // eslint-disable-next-line react-hooks/rules-of-hooks, react-hooks/exhaustive-deps
   const triggerChangeBehaviors = useCallback(
     debounce((newElement: Element) => {
-      if (props.onUpdate !== null) {
-        Behaviors.trigger('change', newElement, props.onUpdate);
-      }
+      Behaviors.trigger('change', newElement, props.onUpdate);
     }, debounceTimeMs),
     [],
   );
@@ -79,14 +74,11 @@ const HvTextField = (props: HvComponentProps) => {
     const formattedValue = HvTextField.getFormattedValue(props.element, value);
     const newElement = props.element.cloneNode(true) as Element;
     newElement.setAttribute('value', formattedValue);
-    if (props.onUpdate !== null) {
-      props.onUpdate(null, 'swap', props.element, { newElement });
-    }
+    props.onUpdate(null, 'swap', props.element, { newElement });
     triggerChangeBehaviors(newElement);
   };
 
-  // TODO: move this to top
-  // eslint-disable-next-line
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const textInputRef: MutableRefObject<TextInput | null> = useRef(
     null as TextInput | null,
   );
@@ -101,7 +93,7 @@ const HvTextField = (props: HvComponentProps) => {
   return (
     <TextInput
       {...p}
-      ref={(ref: React.ElementRef<typeof TextInput> | null) => {
+      ref={(ref: ElementRef<typeof TextInput> | null) => {
         textInputRef.current = ref;
         if (props.options?.registerInputHandler) {
           props.options.registerInputHandler(ref);

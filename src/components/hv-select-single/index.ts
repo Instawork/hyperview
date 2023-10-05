@@ -68,7 +68,7 @@ export default class HvSelectSingle extends PureComponent<HvComponentProps> {
    * SingleSelect will update the XML DOM so that only the selected option is has a
    * selected=true attribute.
    */
-  onSelect = (selectedValue?: DOMString | null) => {
+  onSelect = (selectedValue: DOMString | null | undefined) => {
     const newElement = this.props.element.cloneNode(true) as Element;
     const allowDeselect = this.props.element.getAttribute('allow-deselect');
     const options = newElement.getElementsByTagNameNS(
@@ -93,9 +93,7 @@ export default class HvSelectSingle extends PureComponent<HvComponentProps> {
         }
       }
     }
-    if (this.props.onUpdate) {
-      this.props.onUpdate('#', 'swap', this.props.element, { newElement });
-    }
+    this.props.onUpdate('#', 'swap', this.props.element, { newElement });
   };
 
   render() {

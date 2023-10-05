@@ -46,7 +46,7 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
     refreshing: false,
   };
 
-  onRef = (ref?: ElementRef<typeof FlatList> | null) => {
+  onRef = (ref: ElementRef<typeof FlatList> | null) => {
     this.ref = ref;
   };
 
@@ -60,9 +60,7 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
       this.handleScrollBehavior(options.behaviorElement);
       return;
     }
-    if (this.props.onUpdate !== null) {
-      this.props.onUpdate(href, action, element, options);
-    }
+    this.props.onUpdate(href, action, element, options);
   };
 
   handleScrollBehavior = (behaviorElement: Element) => {
@@ -120,23 +118,25 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
       ) === 'true';
     const params: ScrollParams = { animated, index };
 
-    const viewOffset: number | null | undefined = Dom.safeParseIntAttributeNS(
-      behaviorElement,
-      Namespaces.HYPERVIEW_SCROLL,
-      'offset',
-    );
+    const viewOffset: number | null | undefined =
+      parseInt(
+        behaviorElement?.getAttributeNS(
+          Namespaces.HYPERVIEW_SCROLL,
+          'offset',
+        ) || '',
+        10,
+      ) || undefined;
     if (typeof viewOffset === 'number') {
       params.viewOffset = viewOffset;
     }
 
-    const viewPosition:
-      | number
-      | null
-      | undefined = Dom.safeParseFloatAttributeNS(
-      behaviorElement,
-      Namespaces.HYPERVIEW_SCROLL,
-      'position',
-    );
+    const viewPosition: number | null | undefined =
+      parseFloat(
+        behaviorElement?.getAttributeNS(
+          Namespaces.HYPERVIEW_SCROLL,
+          'position',
+        ) || '',
+      ) || undefined;
     if (typeof viewPosition === 'number') {
       params.viewPosition = viewPosition;
     }
@@ -159,17 +159,15 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
         const once = e.getAttribute('once');
         const onEnd =
           i === 0 ? () => this.setState({ refreshing: false }) : null;
-        if (this.props.onUpdate !== null) {
-          this.props.onUpdate(path, action, this.props.element, {
-            behaviorElement: e,
-            delay,
-            hideIndicatorIds,
-            once,
-            onEnd,
-            showIndicatorIds,
-            targetId,
-          });
-        }
+        this.props.onUpdate(path, action, this.props.element, {
+          behaviorElement: e,
+          delay,
+          hideIndicatorIds,
+          once,
+          onEnd,
+          showIndicatorIds,
+          targetId,
+        });
       });
   };
 
@@ -262,17 +260,15 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
               }
               removeClippedSubviews={false}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              renderItem={({ item }: any) => {
-                return (
-                  item &&
-                  Render.renderElement(
-                    item,
-                    this.props.stylesheets,
-                    this.onUpdate,
-                    this.props.options,
-                  )
-                );
-              }}
+              renderItem={({ item }: any) =>
+                item &&
+                Render.renderElement(
+                  item,
+                  this.props.stylesheets,
+                  this.onUpdate,
+                  this.props.options,
+                )
+              }
               scrollIndicatorInsets={scrollIndicatorInsets}
               showsHorizontalScrollIndicator={horizontal && showScrollIndicator}
               showsVerticalScrollIndicator={!horizontal && showScrollIndicator}

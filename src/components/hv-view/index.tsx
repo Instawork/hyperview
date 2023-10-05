@@ -110,19 +110,19 @@ export default class HvView extends PureComponent<HvComponentProps> {
     // Fix scrollbar rendering issue in iOS 13+
     // https://github.com/facebook/react-native/issues/26610#issuecomment-539843444
     const scrollIndicatorInsets =
-      Platform.OS === 'ios' && +Platform.Version >= 13
+      Platform.OS === 'ios' && parseInt(Platform.Version, 10) >= 13
         ? { right: 1 }
         : undefined;
 
     // add sticky indices
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const stickyHeaderIndices = children.reduce<Array<any>>(
-      (acc, element, index) => {
-        return typeof element !== 'string' &&
-          element.props?.element?.getAttribute('sticky') === 'true'
+      // eslint-disable-next-line no-confusing-arrow
+      (acc, element, index) =>
+        typeof element !== 'string' &&
+        element.props?.element?.getAttribute('sticky') === 'true'
           ? [...acc, index]
-          : acc;
-      },
+          : acc,
       [],
     );
 

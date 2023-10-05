@@ -83,9 +83,7 @@ export default class HvSelectMultiple extends PureComponent<HvComponentProps> {
         }
       }
     }
-    if (this.props.onUpdate) {
-      this.props.onUpdate('#', 'swap', this.props.element, { newElement });
-    }
+    this.props.onUpdate('#', 'swap', this.props.element, { newElement });
   };
 
   applyToAllOptions = (selected: boolean) => {
@@ -100,9 +98,7 @@ export default class HvSelectMultiple extends PureComponent<HvComponentProps> {
         option.setAttribute('selected', selected ? 'true' : 'false');
       }
     }
-    if (this.props.onUpdate) {
-      this.props.onUpdate('#', 'swap', this.props.element, { newElement });
-    }
+    this.props.onUpdate('#', 'swap', this.props.element, { newElement });
   };
 
   render() {

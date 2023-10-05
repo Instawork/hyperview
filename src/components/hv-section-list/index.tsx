@@ -99,9 +99,7 @@ export default class HvSectionList extends PureComponent<
       this.handleScrollBehavior(options.behaviorElement);
       return;
     }
-    if (this.props.onUpdate !== null) {
-      this.props.onUpdate(href, action, element, options);
-    }
+    this.props.onUpdate(href, action, element, options);
   };
 
   handleScrollBehavior = (behaviorElement: Element) => {
@@ -142,23 +140,22 @@ export default class HvSectionList extends PureComponent<
         'animated',
       ) === 'true';
 
-    const offsetAttribute = behaviorElement?.getAttributeNS(
-      Namespaces.HYPERVIEW_SCROLL,
-      'offset',
-    );
     const viewOffset: number | null | undefined =
-      offsetAttribute !== null && typeof offsetAttribute !== 'undefined'
-        ? parseInt(offsetAttribute, 10)
-        : undefined;
+      parseInt(
+        behaviorElement?.getAttributeNS(
+          Namespaces.HYPERVIEW_SCROLL,
+          'offset',
+        ) || '',
+        10,
+      ) || undefined;
 
-    const positionAttribute = behaviorElement?.getAttributeNS(
-      Namespaces.HYPERVIEW_SCROLL,
-      'position',
-    );
     const viewPosition: number | null | undefined =
-      positionAttribute !== null && typeof positionAttribute !== 'undefined'
-        ? parseFloat(positionAttribute)
-        : undefined;
+      parseFloat(
+        behaviorElement?.getAttributeNS(
+          Namespaces.HYPERVIEW_SCROLL,
+          'position',
+        ) || '',
+      ) || undefined;
 
     if (!targetListItem) {
       return;
@@ -207,8 +204,8 @@ export default class HvSectionList extends PureComponent<
 
       this.ref?.scrollToLocation(params);
     } else {
-      // No parent section? Check new section-list format, where items are nested under the
-      // section-list
+      // eslint-disable-next-line max-len
+      // No parent section? Check new section-list format, where items are nested under the section-list
       const items = this.props.element.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
         LOCAL_NAME.ITEM,
@@ -245,7 +242,7 @@ export default class HvSectionList extends PureComponent<
     }
   };
 
-  getStickySectionHeadersEnabled = (): boolean | undefined => {
+  getStickySectionHeadersEnabled = (): boolean => {
     const stickySectionTitles = this.props.element.getAttribute(
       'sticky-section-titles',
     );
@@ -257,10 +254,12 @@ export default class HvSectionList extends PureComponent<
     }
     // Set platform default behavior
     // https://reactnative.dev/docs/sectionlist#stickysectionheadersenabled
-    return Platform.select({
-      android: false,
-      ios: true,
-    });
+    return (
+      Platform.select({
+        android: false,
+        ios: true,
+      }) || false
+    );
   };
 
   refresh = () => {
@@ -275,18 +274,16 @@ export default class HvSectionList extends PureComponent<
     const delay = this.props.element.getAttribute('delay');
     const once = this.props.element.getAttribute('once') || null;
 
-    if (this.props.onUpdate !== null) {
-      this.props.onUpdate(path, action, this.props.element, {
-        delay,
-        hideIndicatorIds,
-        once,
-        onEnd: () => {
-          this.setState({ refreshing: false });
-        },
-        showIndicatorIds,
-        targetId,
-      });
-    }
+    this.props.onUpdate(path, action, this.props.element, {
+      delay,
+      hideIndicatorIds,
+      once,
+      onEnd: () => {
+        this.setState({ refreshing: false });
+      },
+      showIndicatorIds,
+      targetId,
+    });
   };
 
   render() {
@@ -374,23 +371,23 @@ export default class HvSectionList extends PureComponent<
               }
               removeClippedSubviews={false}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              renderItem={({ item }: any): any => {
-                return Render.renderElement(
+              renderItem={({ item }: any): any =>
+                Render.renderElement(
                   item,
                   this.props.stylesheets,
                   this.onUpdate,
                   this.props.options,
-                );
-              }}
+                )
+              }
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              renderSectionHeader={({ section: { title } }: any): any => {
-                return Render.renderElement(
+              renderSectionHeader={({ section: { title } }: any): any =>
+                Render.renderElement(
                   title,
                   this.props.stylesheets,
                   this.onUpdate,
                   this.props.options,
-                );
-              }}
+                )
+              }
               scrollIndicatorInsets={scrollIndicatorInsets}
               sections={sections}
               stickySectionHeadersEnabled={this.getStickySectionHeadersEnabled()}

@@ -23,7 +23,7 @@ export default class HvWebView extends PureComponent<HvComponentProps> {
   static localNameAliases = [];
 
   onMessage = (
-    event?: {
+    event: {
       nativeEvent: {
         data: string;
       };
