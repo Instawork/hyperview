@@ -1,27 +1,27 @@
-// @flow
-
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Xml from 'hyperview/src/services/xml';
 import type {
   DOMString,
-  Document,
-  Element,
   HvComponentOnUpdate,
   HvGetRoot,
   HvUpdateRoot,
 } from 'hyperview/src/types';
 import { later, shallowCloneToRoot } from 'hyperview/src/services';
+import { ACTIONS } from 'hyperview/src/types';
 
 export default {
-  action: 'hide',
+  action: ACTIONS.UNSELECT_ALL,
   callback: (
     element: Element,
     onUpdate: HvComponentOnUpdate,
     getRoot: HvGetRoot,
     updateRoot: HvUpdateRoot,
   ) => {
-    const targetId: ?DOMString = element.getAttribute('target');
+    const targetId: DOMString | null | undefined = element.getAttribute(
+      'target',
+    );
     if (!targetId) {
+      console.warn('[behaviors/unselect-all]: missing "target" attribute');
       return;
     }
 
@@ -36,15 +36,16 @@ export default {
       element.getAttribute('hide-during-load') || '',
     );
 
-    const hideElement = () => {
+    const unselectAll = () => {
       const doc: Document = getRoot();
-      const targetElement: ?Element = doc.getElementById(targetId);
+      const targetElement: Element | null | undefined = doc.getElementById(
+        targetId,
+      );
       if (!targetElement) {
         return;
       }
 
-      // Hide the target
-      targetElement.setAttribute('hide', 'true');
+      targetElement.setAttribute('unselect-all', 'true');
       let newRoot: Document = shallowCloneToRoot(targetElement);
 
       // If using delay, we need to undo the indicators shown earlier.
@@ -55,16 +56,16 @@ export default {
           newRoot,
         );
       }
-      // Update the DOM with the new hidden state and finished indicators.
+      // Update the DOM with the new shown state and finished indicators.
       updateRoot(newRoot);
     };
 
     if (delay === 0) {
-      // If there's no delay, hide target immediately without showing/hiding
+      // If there's no delay, unselect-all the target immediately without showing/hiding
       // any indicators.
-      hideElement();
+      unselectAll();
     } else {
-      // If there's a delay, first trigger the indicators before the hide
+      // If there's a delay, first trigger the indicators before the unselect-all.
       const newRoot = Behaviors.setIndicatorsBeforeLoad(
         showIndicatorIds,
         hideIndicatorIds,
@@ -72,8 +73,8 @@ export default {
       );
       // Update the DOM to reflect the new state of the indicators.
       updateRoot(newRoot);
-      // Wait for the delay then hide the target.
-      later(delay).then(hideElement).catch(hideElement);
+      // Wait for the delay then unselect-all the target.
+      later(delay).then(unselectAll).catch(unselectAll);
     }
   },
 };

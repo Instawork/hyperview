@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -11,18 +9,19 @@
 import * as Dom from 'hyperview/src/services/dom';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import { Alert, Platform } from 'react-native';
-import type { Element, HvComponentOnUpdate } from 'hyperview/src/types';
+import type { HvComponentOnUpdate } from 'hyperview/src/types';
 import { later } from 'hyperview/src/services';
 
 export default {
   action: 'alert',
   callback: (element: Element, onUpdate: HvComponentOnUpdate) => {
-    const title = element.getAttributeNS(Namespaces.HYPERVIEW_ALERT, 'title');
-    const message = element.getAttributeNS(
-      Namespaces.HYPERVIEW_ALERT,
-      'message',
-    );
-    const childNodes = element.childNodes ? Array.from(element.childNodes) : [];
+    const title =
+      element.getAttributeNS(Namespaces.HYPERVIEW_ALERT, 'title') || '';
+    const message =
+      element.getAttributeNS(Namespaces.HYPERVIEW_ALERT, 'message') || '';
+    const childNodes = element.childNodes
+      ? Array.from(element.childNodes as NodeListOf<Element>)
+      : [];
 
     // Get the immediate alert:option nodes. We don't use getElementsByTagname to
     // avoid getting options for nested alerts.
@@ -32,6 +31,8 @@ export default {
         n.namespaceURI === Namespaces.HYPERVIEW_ALERT &&
         n.localName === 'option',
     );
+
+    type Style = 'default' | 'cancel' | 'destructive' | undefined;
 
     // Create the options for the alert.
     // NOTE: Android supports at most 3 options.
@@ -77,18 +78,21 @@ export default {
             );
           });
       },
-      style:
-        optionElement &&
-        optionElement.getAttributeNS(Namespaces.HYPERVIEW_ALERT, 'style'),
+      style: ((optionElement &&
+        optionElement.getAttributeNS(Namespaces.HYPERVIEW_ALERT, 'style')) ||
+        undefined) as Style,
       text:
-        optionElement &&
-        optionElement.getAttributeNS(Namespaces.HYPERVIEW_ALERT, 'label'),
+        (optionElement &&
+          optionElement.getAttributeNS(Namespaces.HYPERVIEW_ALERT, 'label')) ||
+        undefined,
     }));
 
     // On Android, alerts don't have a default button when unspecified, so we need to set one.
     if (!options.length && Platform.OS === 'android') {
       options.push({
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
         onPress: () => {},
+        style: undefined,
         text: 'OK',
       });
     }

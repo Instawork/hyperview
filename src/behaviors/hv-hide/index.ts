@@ -1,11 +1,7 @@
-// @flow
-
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Xml from 'hyperview/src/services/xml';
 import type {
   DOMString,
-  Document,
-  Element,
   HvComponentOnUpdate,
   HvGetRoot,
   HvUpdateRoot,
@@ -13,14 +9,16 @@ import type {
 import { later, shallowCloneToRoot } from 'hyperview/src/services';
 
 export default {
-  action: 'show',
+  action: 'hide',
   callback: (
     element: Element,
     onUpdate: HvComponentOnUpdate,
     getRoot: HvGetRoot,
     updateRoot: HvUpdateRoot,
   ) => {
-    const targetId: ?DOMString = element.getAttribute('target');
+    const targetId: DOMString | null | undefined = element.getAttribute(
+      'target',
+    );
     if (!targetId) {
       return;
     }
@@ -36,15 +34,17 @@ export default {
       element.getAttribute('hide-during-load') || '',
     );
 
-    const showElement = () => {
+    const hideElement = () => {
       const doc: Document = getRoot();
-      const targetElement: ?Element = doc.getElementById(targetId);
+      const targetElement: Element | null | undefined = doc.getElementById(
+        targetId,
+      );
       if (!targetElement) {
         return;
       }
 
-      // Show the target
-      targetElement.setAttribute('hide', 'false');
+      // Hide the target
+      targetElement.setAttribute('hide', 'true');
       let newRoot: Document = shallowCloneToRoot(targetElement);
 
       // If using delay, we need to undo the indicators shown earlier.
@@ -55,16 +55,16 @@ export default {
           newRoot,
         );
       }
-      // Update the DOM with the new shown state and finished indicators.
+      // Update the DOM with the new hidden state and finished indicators.
       updateRoot(newRoot);
     };
 
     if (delay === 0) {
-      // If there's no delay, show target immediately without showing/hiding
+      // If there's no delay, hide target immediately without showing/hiding
       // any indicators.
-      showElement();
+      hideElement();
     } else {
-      // If there's a delay, first trigger the indicators before the show.
+      // If there's a delay, first trigger the indicators before the hide
       const newRoot = Behaviors.setIndicatorsBeforeLoad(
         showIndicatorIds,
         hideIndicatorIds,
@@ -72,8 +72,8 @@ export default {
       );
       // Update the DOM to reflect the new state of the indicators.
       updateRoot(newRoot);
-      // Wait for the delay then show the target.
-      later(delay).then(showElement).catch(showElement);
+      // Wait for the delay then hide the target.
+      later(delay).then(hideElement).catch(hideElement);
     }
   },
 };

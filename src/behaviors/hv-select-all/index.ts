@@ -1,27 +1,27 @@
-// @flow
-
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Xml from 'hyperview/src/services/xml';
 import type {
   DOMString,
-  Document,
-  Element,
   HvComponentOnUpdate,
   HvGetRoot,
   HvUpdateRoot,
 } from 'hyperview/src/types';
 import { later, shallowCloneToRoot } from 'hyperview/src/services';
+import { ACTIONS } from 'hyperview/src/types';
 
 export default {
-  action: 'toggle',
+  action: ACTIONS.SELECT_ALL,
   callback: (
     element: Element,
     onUpdate: HvComponentOnUpdate,
     getRoot: HvGetRoot,
     updateRoot: HvUpdateRoot,
   ) => {
-    const targetId: ?DOMString = element.getAttribute('target');
+    const targetId: DOMString | null | undefined = element.getAttribute(
+      'target',
+    );
     if (!targetId) {
+      console.warn('[behaviors/select-all]: missing "target" attribute');
       return;
     }
 
@@ -36,21 +36,19 @@ export default {
       element.getAttribute('hide-during-load') || '',
     );
 
-    const toggleElement = () => {
+    const selectAll = () => {
       const doc: Document = getRoot();
-      const targetElement: ?Element = doc.getElementById(targetId);
+      const targetElement: Element | null | undefined = doc.getElementById(
+        targetId,
+      );
       if (!targetElement) {
         return;
       }
 
-      // Toggle the hide attribute of the target
-      const isCurrentlyHidden: boolean =
-        targetElement.getAttribute('hide') === 'true';
-      const newToggleState: string = isCurrentlyHidden ? 'false' : 'true';
-      targetElement.setAttribute('hide', newToggleState);
+      targetElement.setAttribute('select-all', 'true');
       let newRoot: Document = shallowCloneToRoot(targetElement);
 
-      // If using the delay, we need to undo the indicators shown earlier.
+      // If using delay, we need to undo the indicators shown earlier.
       if (delay > 0) {
         newRoot = Behaviors.setIndicatorsAfterLoad(
           showIndicatorIds,
@@ -58,16 +56,16 @@ export default {
           newRoot,
         );
       }
-      // Update the DOM with the new toggle state and finished indicators.
+      // Update the DOM with the new shown state and finished indicators.
       updateRoot(newRoot);
     };
 
     if (delay === 0) {
-      // If there's no delay, toggle immediately without showing/hiding
+      // If there's no delay, select-all the target immediately without showing/hiding
       // any indicators.
-      toggleElement();
+      selectAll();
     } else {
-      // If there's a delay, first trigger the indicators before the toggle.
+      // If there's a delay, first trigger the indicators before the select-all.
       const newRoot = Behaviors.setIndicatorsBeforeLoad(
         showIndicatorIds,
         hideIndicatorIds,
@@ -75,8 +73,8 @@ export default {
       );
       // Update the DOM to reflect the new state of the indicators.
       updateRoot(newRoot);
-      // Wait for the delay then toggle the target.
-      later(delay).then(toggleElement).catch(toggleElement);
+      // Wait for the delay then select-all the target.
+      later(delay).then(selectAll).catch(selectAll);
     }
   },
 };

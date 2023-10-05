@@ -1,11 +1,7 @@
-// @flow
-
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Xml from 'hyperview/src/services/xml';
 import type {
   DOMString,
-  Document,
-  Element,
   HvComponentOnUpdate,
   HvGetRoot,
   HvUpdateRoot,
@@ -13,20 +9,19 @@ import type {
 import { later, shallowCloneToRoot } from 'hyperview/src/services';
 
 export default {
-  action: 'set-value',
+  action: 'show',
   callback: (
     element: Element,
     onUpdate: HvComponentOnUpdate,
     getRoot: HvGetRoot,
     updateRoot: HvUpdateRoot,
   ) => {
-    const targetId: ?DOMString = element.getAttribute('target');
+    const targetId: DOMString | null | undefined = element.getAttribute(
+      'target',
+    );
     if (!targetId) {
-      console.warn('[behaviors/set-value]: missing "target" attribute');
       return;
     }
-
-    const newValue: string = element.getAttribute('new-value') || '';
 
     const delayAttr: string = element.getAttribute('delay') || '0';
     const parsedDelay: number = parseInt(delayAttr, 10);
@@ -39,15 +34,17 @@ export default {
       element.getAttribute('hide-during-load') || '',
     );
 
-    const setValue = () => {
+    const showElement = () => {
       const doc: Document = getRoot();
-      const targetElement: ?Element = doc.getElementById(targetId);
+      const targetElement: Element | null | undefined = doc.getElementById(
+        targetId,
+      );
       if (!targetElement) {
         return;
       }
 
       // Show the target
-      targetElement.setAttribute('value', newValue);
+      targetElement.setAttribute('hide', 'false');
       let newRoot: Document = shallowCloneToRoot(targetElement);
 
       // If using delay, we need to undo the indicators shown earlier.
@@ -65,7 +62,7 @@ export default {
     if (delay === 0) {
       // If there's no delay, show target immediately without showing/hiding
       // any indicators.
-      setValue();
+      showElement();
     } else {
       // If there's a delay, first trigger the indicators before the show.
       const newRoot = Behaviors.setIndicatorsBeforeLoad(
@@ -76,7 +73,7 @@ export default {
       // Update the DOM to reflect the new state of the indicators.
       updateRoot(newRoot);
       // Wait for the delay then show the target.
-      later(delay).then(setValue).catch(setValue);
+      later(delay).then(showElement).catch(showElement);
     }
   },
 };
