@@ -56,7 +56,7 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
 
   /**
    * Given a ISO date string (YYYY-MM-DD), returns a Date object. If the string
-   * cannot be parsed or is falsey, returns default new Date() value.
+   * cannot be parsed or is falsey, returns null.
    */
   static createDateFromString = (
     value: string | null | undefined,

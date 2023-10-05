@@ -76,7 +76,7 @@ import { NODE_TYPE } from 'hyperview/src/types';
 export const formatter = (root: Element | Document): [Node[], string[]] => {
   const nodes = Dom.preorder(root, NODE_TYPE.TEXT_NODE);
 
-  const nodeValues: string[] = Array.from<Node>(nodes)
+  const nodeValues: string[] = Array.from(nodes)
     // eslint-disable-next-line no-confusing-arrow
     .map((node: Node): string =>
       node && node.nodeValue
