@@ -22,7 +22,7 @@ export const renderElement = (
   onUpdate: HvComponentOnUpdate,
   options: HvComponentOptions,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): React.ReactElement<any> | null | undefined | string | null | undefined => {
+): React.ReactElement<any> | null | string => {
   if (!element) {
     return null;
   }
@@ -86,11 +86,11 @@ export const renderElement = (
       const Component =
         options.componentRegistry[element.namespaceURI][element.localName];
 
-      // Use object spreading instead of explicitly setting the key (to potentially
-      // undefined values)
-      // Explicitly setting the key causes collision when several components render
-      // with `undefined` value for `key`
+      /* eslint-disable max-len */
+      // Use object spreading instead of explicitly setting the key (to potentially undefined values)
+      // Explicitly setting the key causes collision when several components render with `undefined` value for `key`
       // Object spreading will define the prop only when its value is truthy
+      /* eslint-enable max-len */
       const extraProps: Partial<{ [key: string]: string | null }> = {};
       if (element.getAttribute('key')) {
         extraProps.key = element.getAttribute('key');
