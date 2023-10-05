@@ -31,15 +31,14 @@ const HYPERVIEW_BEHAVIORS = [
   HvUnselectAll,
 ];
 
-export const getRegistry = (behaviors: HvBehavior[] = []): BehaviorRegistry => {
-  return [...HYPERVIEW_BEHAVIORS, ...behaviors].reduce(
+export const getRegistry = (behaviors: HvBehavior[] = []): BehaviorRegistry =>
+  [...HYPERVIEW_BEHAVIORS, ...behaviors].reduce(
     (registry: BehaviorRegistry, behavior: HvBehavior) => ({
       ...registry,
       [behavior.action]: behavior,
     }),
     {},
   );
-};
 
 export {
   setIndicatorsBeforeLoad,
