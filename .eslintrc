@@ -84,6 +84,7 @@
         "no-use-before-define": "off",
         "object-curly-newline": "off",
         "operator-linebreak": "off",
+        "react/jsx-curly-newline": "off",
         "react/jsx-wrap-multilines": "off"
       }
     },
