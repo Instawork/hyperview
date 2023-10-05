@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -12,7 +10,7 @@ import * as Components from 'hyperview/src/services/components';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
-import type { Element, HvComponent, LocalName } from 'hyperview/src/types';
+import type { HvComponent, LocalName } from 'hyperview/src/types';
 import { DOMParser } from '@instawork/xmldom';
 import React from 'react';
 import { action } from '@storybook/addon-actions';
@@ -29,6 +27,7 @@ export const getElements = (
 };
 
 export const getDummyHvProps = () => ({
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   onUpdate: () => {},
   options: {},
   stylesheets: {
@@ -45,8 +44,8 @@ export const parse = (template: string) => parser.parseFromString(template);
 export const render = (
   Component: HvComponent,
   template: string,
-  ComponentsRegistry: ?(HvComponent[]) = null,
-): ?HvComponent => {
+  ComponentsRegistry: HvComponent[] | null = null,
+): JSX.Element | null => {
   const document = parse(template);
   const element = Dom.getFirstTag(
     document,
@@ -58,7 +57,6 @@ export const render = (
     return null;
   }
   return (
-    // $FlowFixMe: HvComponentStatics type mixin causes type inference issues
     <Component
       element={element}
       onUpdate={action('action')}

@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -8,8 +6,4 @@
  *
  */
 
-class FormData {
-  append: (string, string) => void = () => {};
-}
-
-global.FormData = FormData;
+declare module 'humps';

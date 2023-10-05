@@ -1,10 +1,9 @@
-// @flow
-
 import * as Components from 'hyperview/src/services/components';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import { DOMParser } from '@instawork/xmldom';
 import type { HvComponent } from 'hyperview/src/types';
+import type { LocalName } from 'hyperview/src/types';
 import humps from 'humps';
 import { storiesOf } from '@storybook/react-native';
 import templates from 'hyperview/storybook/templates.gen';
@@ -16,10 +15,10 @@ const getComponentPath = (componentName: string) => {
 
 export const stories = (
   Component: HvComponent,
-): ((template: string, render: any, tagName?: string) => void) => {
+): ((template: string, render?: any, tagName?: LocalName) => void) => {
   const componentPath = getComponentPath(Component.name);
   const s = storiesOf(Component.name, module);
-  return (templateName: string, render: any, tagName?: string) => {
+  return (templateName: string, render: any, tagName?: LocalName) => {
     const templatePath = `${componentPath}/stories/${templateName}.xml`;
     const storyName = humps.pascalize(templateName);
     const parser = new DOMParser();

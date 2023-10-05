@@ -1,5 +1,3 @@
-// @flow
-
 import { configure, getStorybookUI } from '@storybook/react-native';
 import { AppRegistry } from 'react-native';
 import appKey from './app-key.gen';
