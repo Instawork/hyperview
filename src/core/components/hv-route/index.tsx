@@ -175,7 +175,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
         const component:
           | string
           | React.ReactElement<unknown, string | JSXElementConstructor<unknown>>
-          | null = Render.renderElement(body, styleSheet, null, {
+          | null = Render.renderElement(body, styleSheet, () => {}, {
           componentRegistry: this.componentRegistry,
         });
         if (component) {
