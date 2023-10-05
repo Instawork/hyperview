@@ -6,7 +6,6 @@
  *
  */
 
-// eslint-disable-next-line max-classes-per-file
 import * as ComponentsInternal from './internal';
 import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';

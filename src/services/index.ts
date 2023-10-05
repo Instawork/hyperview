@@ -129,11 +129,10 @@ export const createProps = (
   return { ...props, ...testProps };
 };
 
-export const later = (delayMs: number): Promise<void> => {
-  return new Promise((resolve: (result?: Promise<never>) => void) => {
-    return setTimeout(resolve, delayMs);
-  });
-};
+export const later = (delayMs: number): Promise<void> =>
+  new Promise((resolve: (result?: Promise<never>) => void) =>
+    setTimeout(resolve, delayMs),
+  );
 
 /**
  * Clones the element and moves all children from the original element
@@ -276,7 +275,6 @@ export const flattenRegistry = (
  * form ancestor, or if there is no form data to send.
  * If the given element is a form element, its form data will be returned.
  */
-type FormData = FormDataRN | FormDataWeb;
 export const getFormData = (
   element: Element,
   formComponents: ComponentRegistry,
@@ -289,7 +287,7 @@ export const getFormData = (
     return null;
   }
 
-  const formData: unknown = new FormData();
+  const formData: FormData = new FormData();
 
   let formHasData = false;
   flattenRegistry(formComponents)
@@ -308,7 +306,7 @@ export const getFormData = (
             .getFormInputValues(inputElement)
             // eslint-disable-next-line no-loop-func
             .forEach(([name, value]: [string, string]) => {
-              (formData as FormData).append(name, value);
+              formData.append(name, value);
               formHasData = true;
             });
         }
@@ -316,7 +314,7 @@ export const getFormData = (
     });
 
   // Ensure that we only return form data with content in it. Otherwise, it will crash on Android
-  return formHasData ? (formData as FormData) : null;
+  return formHasData ? formData : null;
 };
 
 export const getNameValueFormInputValues = (
@@ -329,11 +327,10 @@ export const getNameValueFormInputValues = (
   return [];
 };
 
-export const encodeXml = (xml: string): string => {
-  return xml
+export const encodeXml = (xml: string): string =>
+  xml
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&apos;');
-};

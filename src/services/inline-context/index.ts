@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -7,6 +6,7 @@
  *
  */
 
+import * as Dom from 'hyperview/src/services/dom';
 import {
   EMPTY,
   convertLineBreaksIntoSpaces,
@@ -15,8 +15,8 @@ import {
   trim,
 } from './helpers';
 import { NODE_TYPE } from 'hyperview/src/types';
-import { preorder } from 'hyperview/src/services/dom/helpers';
 
+/* eslint-disable max-len */
 /**
  * Given the following markup:
 
@@ -72,15 +72,17 @@ import { preorder } from 'hyperview/src/services/dom/helpers';
 
   (inspired by: https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Whitespace#how_does_css_process_whitespace#explanation)
  */
+/* eslint-enable max-len */
 export const formatter = (root: Element | Document): [Node[], string[]] => {
-  const nodes = preorder(root, NODE_TYPE.TEXT_NODE);
+  const nodes = Dom.preorder(root, NODE_TYPE.TEXT_NODE);
 
   const nodeValues: string[] = Array.from<Node>(nodes)
-    .map((node: Node): string => {
-      return node && node.nodeValue
+    // eslint-disable-next-line no-confusing-arrow
+    .map((node: Node): string =>
+      node && node.nodeValue
         ? ignoreSpacesAfterLineBreak(node.nodeValue)
-        : EMPTY;
-    })
+        : EMPTY,
+    )
     .map((nodeValue: string) => convertLineBreaksIntoSpaces(nodeValue));
 
   return [nodes, trim(ignoreSpacesFollowingSpace(nodeValues))];

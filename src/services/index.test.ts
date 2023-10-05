@@ -23,7 +23,7 @@ import HvSwitch from 'hyperview/src/components/hv-switch';
 import HvTextField from 'hyperview/src/components/hv-text-field';
 
 const parser = new DOMParser();
-const createElement = (id?: string | null) => {
+const createElement = (id: string | null) => {
   const doc = parser.parseFromString('<doc></doc>');
   const el = doc.createElement('<el>');
   if (id) {

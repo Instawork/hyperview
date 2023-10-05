@@ -17,9 +17,8 @@ const mockParseFromString = jest.fn().mockReturnValue(mockExpectedDocument);
 jest.mock('@instawork/xmldom', () => {
   const DOMParser = () => null;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  DOMParser.prototype.parseFromString = (...args: any) => {
-    return mockParseFromString.apply(this, args);
-  };
+  DOMParser.prototype.parseFromString = (...args: any) =>
+    mockParseFromString.apply(this, args);
   return { DOMParser };
 });
 

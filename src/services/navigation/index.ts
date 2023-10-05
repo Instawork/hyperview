@@ -41,9 +41,8 @@ export default class Navigation {
     this.document = document;
   };
 
-  getPreloadScreen = (id: number): Element | null | undefined => {
-    return preloadScreens[id];
-  };
+  getPreloadScreen = (id: number): Element | null | undefined =>
+    preloadScreens[id];
 
   setPreloadScreen = (id: number, element: Element): void => {
     preloadScreens[id] = element;
@@ -53,9 +52,8 @@ export default class Navigation {
     delete preloadScreens[id];
   };
 
-  getRouteKey = (href: string): string | null | undefined => {
-    return routeKeys[getHrefKey(href)];
-  };
+  getRouteKey = (href: string): string | null | undefined =>
+    routeKeys[getHrefKey(href)];
 
   setRouteKey = (href: string, key: string): void => {
     routeKeys[getHrefKey(href)] = key;
@@ -74,7 +72,7 @@ export default class Navigation {
     registerPreload?: (id: number, e: Element) => void,
   ): void => {
     const { showIndicatorId, delay, targetId } = opts;
-    const formData: FormDataRN | FormDataWeb | null | undefined = getFormData(
+    const formData: FormData | null | undefined = getFormData(
       element,
       formComponents,
     );

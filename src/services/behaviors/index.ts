@@ -20,8 +20,8 @@ export const toggleIndicators = (
   ids: Array<string>,
   showIndicators: boolean,
   root: Document,
-): Document => {
-  return ids.reduce((newRoot, id) => {
+): Document =>
+  ids.reduce((newRoot, id) => {
     const indicatorElement: Element | null | undefined = newRoot.getElementById(
       id,
     );
@@ -31,7 +31,6 @@ export const toggleIndicators = (
     indicatorElement.setAttribute('hide', showIndicators ? 'false' : 'true');
     return shallowCloneToRoot(indicatorElement);
   }, root);
-};
 
 /**
  * Returns a new Document object that shows the "show" indicators
@@ -76,8 +75,7 @@ export const performUpdate = (
     const { parentNode } = targetElement;
     if (parentNode) {
       parentNode.replaceChild(newElement, targetElement);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      return shallowCloneToRoot(parentNode as any);
+      return shallowCloneToRoot(parentNode as Element);
     }
   }
 
@@ -114,7 +112,7 @@ export const performUpdate = (
 export const trigger = (
   name: string,
   element: Element,
-  onUpdate?: HvComponentOnUpdate | null,
+  onUpdate: HvComponentOnUpdate,
 ) => {
   const behaviorElements = Dom.getBehaviorElements(element);
   const matchingBehaviors = behaviorElements.filter(
@@ -129,16 +127,14 @@ export const trigger = (
     const hideIndicatorIds = behaviorElement.getAttribute('hide-during-load');
     const delay = behaviorElement.getAttribute('delay');
     const once = behaviorElement.getAttribute('once');
-    if (onUpdate) {
-      onUpdate(href, action, element, {
-        behaviorElement,
-        delay,
-        hideIndicatorIds,
-        once,
-        showIndicatorIds,
-        targetId,
-        verb,
-      });
-    }
+    onUpdate(href, action, element, {
+      behaviorElement,
+      delay,
+      hideIndicatorIds,
+      once,
+      showIndicatorIds,
+      targetId,
+      verb,
+    });
   });
 };

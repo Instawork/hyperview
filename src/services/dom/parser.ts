@@ -23,6 +23,7 @@ import {
 import { DOMParser } from '@instawork/xmldom';
 import { Dimensions } from 'react-native';
 import { LOCAL_NAME } from 'hyperview/src/types';
+import type { LocalName } from 'hyperview/src/types';
 import { getFirstTag } from './helpers';
 import { version } from 'hyperview/package.json';
 
@@ -52,8 +53,8 @@ export class Parser {
 
   constructor(
     fetch: Fetch,
-    onBeforeParse?: BeforeAfterParseHandler | null,
-    onAfterParse?: BeforeAfterParseHandler | null,
+    onBeforeParse: BeforeAfterParseHandler | null | undefined,
+    onAfterParse: BeforeAfterParseHandler | null | undefined,
   ) {
     this.fetch = fetch;
     this.onBeforeParse = onBeforeParse;
@@ -62,9 +63,8 @@ export class Parser {
 
   load = async (
     baseUrl: string,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    data?: any | null,
-    httpMethod?: HttpMethod | null,
+    data: FormData | null | undefined = undefined,
+    httpMethod: HttpMethod | null | undefined = undefined,
     acceptContentType: string = CONTENT_TYPE.APPLICATION_VND_HYPERVIEW_XML,
   ): Promise<{
     doc: Document;
@@ -138,12 +138,9 @@ export class Parser {
 
     const screenElement = getFirstTag(docElement, LOCAL_NAME.SCREEN);
     const navigatorElement = getFirstTag(docElement, LOCAL_NAME.NAVIGATOR);
-    if (!screenElement) {
-      throw new Errors.XMLRequiredElementNotFound(LOCAL_NAME.SCREEN, baseUrl);
-    }
-    if (!navigatorElement) {
+    if (!screenElement && !navigatorElement) {
       throw new Errors.XMLRequiredElementNotFound(
-        LOCAL_NAME.NAVIGATOR,
+        `${LOCAL_NAME.SCREEN}/${LOCAL_NAME.NAVIGATOR}` as LocalName,
         baseUrl,
       );
     }
@@ -162,23 +159,17 @@ export class Parser {
         );
       }
     } else {
-      if (!screenElement) {
-        throw new Errors.XMLRequiredElementNotFound(LOCAL_NAME.SCREEN, baseUrl);
-      }
-      if (!navigatorElement) {
-        throw new Errors.XMLRequiredElementNotFound(
-          LOCAL_NAME.NAVIGATOR,
-          baseUrl,
-        );
-      }
+      throw new Errors.XMLRequiredElementNotFound(
+        `${LOCAL_NAME.SCREEN}/${LOCAL_NAME.NAVIGATOR}` as LocalName,
+        baseUrl,
+      );
     }
     return { doc, staleHeaderType };
   };
 
   loadElement = async (
     baseUrl: string,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    data?: any | null,
+    data: FormData | null,
     method: HttpMethod | null = HTTP_METHODS.GET,
   ): Promise<{
     doc: Document;

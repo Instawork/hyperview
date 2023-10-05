@@ -49,21 +49,34 @@ export const addParamsToUrl = (
 
 export const addFormDataToUrl = (
   url: string,
-  formData?: FormDataRN | FormDataWeb | null,
+  formData?: FormData | null,
 ): string => {
   if (formData) {
-    if ((formData as FormDataRN).getParts) {
-      const params = (formData as FormDataRN).getParts();
+    if ('getParts' in formData && typeof formData.getParts === 'function') {
+      const params = formData.getParts();
+      type FormDataPart =
+        | {
+            string: string;
+            headers: { [name: string]: string };
+            fieldName: string;
+          }
+        | {
+            uri: string;
+            headers: { [name: string]: string };
+            name?: string | undefined;
+            type?: string | undefined;
+            fieldName: string;
+          };
       return addParamsToUrl(
         url,
-        params.map(p => ({
+        (params as Array<FormDataPart>).map(p => ({
           name: p.fieldName,
           value: 'string' in p ? p.string : '',
         })),
       );
     }
-    if ((formData as FormDataWeb).entries) {
-      const params = Array.from((formData as FormDataWeb).entries());
+    if ('entries' in formData && typeof formData.entries === 'function') {
+      const params = Array.from(formData.entries());
       return addParamsToUrl(
         url,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

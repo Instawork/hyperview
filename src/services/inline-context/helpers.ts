@@ -13,16 +13,14 @@ export const SPACE = ' ';
 /**
  * Removes any space that follows a line break
  */
-export const ignoreSpacesAfterLineBreak = (input: string): string => {
-  return input.replace(/\n\s+/g, LINE_BREAK);
-};
+export const ignoreSpacesAfterLineBreak = (input: string): string =>
+  input.replace(/\n\s+/g, LINE_BREAK);
 
 /**
  * Replaces any line break by a space
  */
-export const convertLineBreaksIntoSpaces = (input: string): string => {
-  return input.replace(/\n/g, SPACE);
-};
+export const convertLineBreaksIntoSpaces = (input: string): string =>
+  input.replace(/\n/g, SPACE);
 
 /**
  * Provided a list of strings as input, removes any spaces

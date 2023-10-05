@@ -6,7 +6,6 @@
  *
  */
 
-// eslint-disable-next-line max-classes-per-file
 import * as Components from 'hyperview/src/services/components';
 import type { HvComponentProps } from 'hyperview/src/types';
 import HvDateField from 'hyperview/src/components/hv-date-field';

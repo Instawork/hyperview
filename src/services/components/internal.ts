@@ -12,8 +12,8 @@ export const registerComponent = (
   component: HvComponent,
 ): {
   [key: string]: HvComponent;
-} => {
-  return [component.localName, ...(component.localNameAliases || [])].reduce<
+} =>
+  [component.localName, ...(component.localNameAliases || [])].reduce<
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     Record<string, any>
   >(
@@ -23,4 +23,3 @@ export const registerComponent = (
     }),
     {},
   );
-};

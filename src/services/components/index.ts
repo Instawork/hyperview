@@ -50,23 +50,17 @@ const reducer = (registry: ComponentRegistry, component: HvComponent) => ({
 
 export const getRegistry = (
   components: HvComponent[] = [],
-): ComponentRegistry => {
+): ComponentRegistry =>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return [...HYPERVIEW_COMPONENTS, ...components].reduce<Record<string, any>>(
+  [...HYPERVIEW_COMPONENTS, ...components].reduce<Record<string, any>>(
     reducer,
     {},
   );
-};
 
 export const getFormRegistry = (
   components: HvComponent[] = [],
-): ComponentRegistry => {
-  return (
-    [...HYPERVIEW_COMPONENTS, ...components]
-      .filter(c =>
-        Object.prototype.hasOwnProperty.call(c, 'getFormInputValues'),
-      )
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .reduce<Record<string, any>>(reducer, {})
-  );
-};
+): ComponentRegistry =>
+  [...HYPERVIEW_COMPONENTS, ...components]
+    .filter(c => Object.prototype.hasOwnProperty.call(c, 'getFormInputValues'))
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    .reduce<Record<string, any>>(reducer, {});
