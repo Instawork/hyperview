@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -8,6 +6,8 @@
  *
  */
 
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import type { Props } from './types';
+import React from 'react';
 
-export default KeyboardAwareScrollView;
+const HvScreen: React.ComponentClass<Props>;
+export default HvScreen;

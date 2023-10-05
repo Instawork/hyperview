@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -22,15 +20,16 @@ import {
 } from 'hyperview/src/types';
 import { ATTRIBUTES, PRESS_TRIGGERS_PROP_NAMES } from './types';
 import type {
-  Element,
   HvComponentOnUpdate,
   HvComponentOptions,
+  NavAction,
   PressTrigger,
   StyleSheet,
   StyleSheets,
   Trigger,
+  UpdateAction,
 } from 'hyperview/src/types';
-import type { PressHandlers, Props, State } from './types';
+import type { PressHandlers, PressPropName, Props, State } from './types';
 import React, { PureComponent } from 'react';
 import {
   RefreshControl,
@@ -38,12 +37,10 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-import type { Node } from 'react';
 import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
 import { XMLSerializer } from '@instawork/xmldom';
 import { X_RESPONSE_STALE_REASON } from 'hyperview/src/services/dom/types';
 import { createTestProps } from 'hyperview/src/services';
-
 /**
  * Wrapper to handle UI events
  * Stop propagation and prevent default client behavior
@@ -52,8 +49,9 @@ import { createTestProps } from 'hyperview/src/services';
  */
 export const createEventHandler = (
   handler: () => void,
-  preventDefault: boolean = false,
-): ((event: any) => void) => event => {
+  preventDefault = false,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): ((event?: any) => void) => event => {
   if (preventDefault) {
     event?.preventDefault();
   }
@@ -65,16 +63,14 @@ export const createEventHandler = (
  * triggers.
  */
 export default class HyperRef extends PureComponent<Props, State> {
-  props: Props;
-
   state: State = {
     pressed: false,
     refreshing: false,
   };
 
-  behaviorElements: Element[];
+  behaviorElements: Element[] = [];
 
-  style: ?StyleSheet;
+  style: StyleSheet | null | undefined;
 
   constructor(props: Props, state: State) {
     super(props, state);
@@ -121,8 +117,14 @@ export default class HyperRef extends PureComponent<Props, State> {
     const behaviorElements = Dom.getBehaviorElements(this.props.element);
     const onEventBehaviors = behaviorElements.filter(e => {
       if (e.getAttribute(ATTRIBUTES.TRIGGER) === TRIGGERS.ON_EVENT) {
-        const currentAttributeEventName: ?string = e.getAttribute('event-name');
-        const currentAttributeAction: ?string = e.getAttribute('action');
+        const currentAttributeEventName:
+          | string
+          | null
+          | undefined = e.getAttribute('event-name');
+        const currentAttributeAction:
+          | string
+          | null
+          | undefined = e.getAttribute('action');
         if (currentAttributeAction === 'dispatch-event') {
           throw new Error(
             'trigger="on-event" and action="dispatch-event" cannot be used on the same element',
@@ -142,8 +144,13 @@ export default class HyperRef extends PureComponent<Props, State> {
       );
       handler(this.props.element);
       if (__DEV__) {
-        const listenerElement: Element = behaviorElement.cloneNode(false);
-        const caughtEvent: string = behaviorElement.getAttribute('event-name');
+        const listenerElement: Element = behaviorElement.cloneNode(
+          false,
+        ) as Element;
+        const caughtEvent:
+          | string
+          | undefined
+          | null = behaviorElement.getAttribute('event-name');
         const serializer = new XMLSerializer();
         console.log(
           `[on-event] trigger [${caughtEvent}] caught by:`,
@@ -159,7 +166,7 @@ export default class HyperRef extends PureComponent<Props, State> {
   ) => {
     const action =
       behaviorElement.getAttribute(ATTRIBUTES.ACTION) || NAV_ACTIONS.PUSH;
-    if (Object.values(NAV_ACTIONS).indexOf(action) >= 0) {
+    if (Object.values(NAV_ACTIONS).indexOf(action as NavAction) >= 0) {
       return (element: Element) => {
         const href = behaviorElement.getAttribute(ATTRIBUTES.HREF);
         const targetId = behaviorElement.getAttribute(ATTRIBUTES.TARGET);
@@ -172,7 +179,7 @@ export default class HyperRef extends PureComponent<Props, State> {
     }
     if (
       action === ACTIONS.RELOAD ||
-      Object.values(UPDATE_ACTIONS).indexOf(action) >= 0
+      Object.values(UPDATE_ACTIONS).indexOf(action as UpdateAction) >= 0
     ) {
       return (element: Element) => {
         const href = behaviorElement.getAttribute(ATTRIBUTES.HREF);
@@ -208,7 +215,7 @@ export default class HyperRef extends PureComponent<Props, State> {
     );
   };
 
-  getStyle = (): ?StyleSheet => {
+  getStyle = (): StyleSheet | null | undefined => {
     const styleAttr = this.props.element.getAttribute(ATTRIBUTES.HREF_STYLE);
     return styleAttr
       ? styleAttr.split(' ').map(s => this.props.stylesheets.regular[s])
@@ -239,13 +246,15 @@ export default class HyperRef extends PureComponent<Props, State> {
     });
   };
 
-  TouchableView = ({ children }: { children: Node }): Node => {
+  TouchableView = ({ children }: { children: JSX.Element }): JSX.Element => {
     const behaviors = this.behaviorElements.filter(
       e =>
         PRESS_TRIGGERS.indexOf(
-          e.getAttribute(ATTRIBUTES.TRIGGER) || TRIGGERS.PRESS,
+          (e.getAttribute(ATTRIBUTES.TRIGGER) ||
+            TRIGGERS.PRESS) as PressTrigger,
         ) >= 0,
     );
+
     if (!behaviors.length) {
       return children;
     }
@@ -255,29 +264,31 @@ export default class HyperRef extends PureComponent<Props, State> {
     // Ideally, we could apply multiple DOM updates at a time.
     let time = 0;
 
-    // $FlowFixMe
     const pressHandlers: PressHandlers = {};
 
     behaviors.forEach(behaviorElement => {
-      const trigger: PressTrigger =
-        // $FlowFixMe: casting DOMString to PressTrigger should probably be enforced by code
+      const trigger =
         behaviorElement.getAttribute(ATTRIBUTES.TRIGGER) || TRIGGERS.PRESS;
-      const triggerPropName = PRESS_TRIGGERS_PROP_NAMES[trigger];
+      const triggerPropName =
+        PRESS_TRIGGERS_PROP_NAMES[trigger as PressTrigger];
       const handler = this.createActionHandler(
         behaviorElement,
         this.props.onUpdate,
       );
-      if (pressHandlers[triggerPropName]) {
-        const oldHandler = pressHandlers[triggerPropName];
-        pressHandlers[triggerPropName] = createEventHandler(() => {
-          oldHandler();
-          setTimeout(() => handler(this.props.element), time);
-          time += 1;
-        });
-      } else {
-        pressHandlers[triggerPropName] = createEventHandler(() =>
-          handler(this.props.element),
+      const pressHandler = pressHandlers[triggerPropName as PressPropName];
+      if (pressHandler) {
+        const oldHandler = pressHandler;
+        pressHandlers[triggerPropName as PressPropName] = createEventHandler(
+          () => {
+            oldHandler();
+            setTimeout(() => handler(this.props.element), time);
+            time += 1;
+          },
         );
+      } else {
+        pressHandlers[
+          triggerPropName as PressPropName
+        ] = createEventHandler(() => handler(this.props.element));
       }
     });
 
@@ -303,14 +314,13 @@ export default class HyperRef extends PureComponent<Props, State> {
       pressHandlers.onPressOut = createEventHandler(() => {
         this.setState({ pressed: false });
       });
-    }
-
-    // Fix a conflict between onPressOut and onPress triggering at the same time.
-    if (pressHandlers.onPressOut && pressHandlers.onPress) {
-      const onPressHandler = pressHandlers.onPress;
-      pressHandlers.onPress = createEventHandler(() => {
-        setTimeout(onPressHandler, time);
-      });
+      // Fix a conflict between onPressOut and onPress triggering at the same time.
+      if (pressHandlers.onPress) {
+        const onPressHandler = pressHandlers.onPress;
+        pressHandlers.onPress = createEventHandler(() => {
+          setTimeout(onPressHandler, time);
+        });
+      }
     }
 
     const style = this.getStyle();
@@ -319,18 +329,28 @@ export default class HyperRef extends PureComponent<Props, State> {
 
     // If element is a <text> nested under another <text>, simply add press events
     const isNestedUnderText =
-      this.props.element.parentNode?.namespaceURI === Namespaces.HYPERVIEW &&
-      this.props.element.parentNode?.localName === LOCAL_NAME.TEXT;
+      (this.props.element.parentNode as Element)?.namespaceURI ===
+        Namespaces.HYPERVIEW &&
+      (this.props.element.parentNode as Element)?.localName === LOCAL_NAME.TEXT;
 
     if (isNestedUnderText) {
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
       const noop = () => {};
       return (
         <Text
           accessibilityLabel={accessibilityLabel}
           accessible={false}
           onLongPress={onLongPress}
-          // when no press handler set, we still need an empty handler for pressIn or pressOut handlers to work
-          onPress={onPress || (onPressIn || onPressOut ? noop : undefined)}
+          // when no press handler set, we still need an empty handler for pressIn or pressOut
+          // handlers to work
+          onPress={
+            onPress ||
+            (onPressIn !== undefined || onPressOut !== undefined
+              ? noop
+              : undefined)
+          }
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore TS2300: no overload matches this call
           onResponderGrant={onPressIn}
           // Both release and terminate responder are needed to properly pressOut
           onResponderRelease={onPressOut}
@@ -361,7 +381,7 @@ export default class HyperRef extends PureComponent<Props, State> {
     );
   };
 
-  ScrollableView = ({ children }: { children: Node }): Node => {
+  ScrollableView = ({ children }: { children: JSX.Element }): JSX.Element => {
     const behaviors = this.getBehaviorElements(TRIGGERS.REFRESH);
     if (!behaviors.length) {
       return children;
@@ -382,7 +402,7 @@ export default class HyperRef extends PureComponent<Props, State> {
     );
   };
 
-  VisibilityView = ({ children }: { children: Node }): Node => {
+  VisibilityView = ({ children }: { children: JSX.Element }): JSX.Element => {
     const behaviors = this.getBehaviorElements(TRIGGERS.VISIBLE);
     if (!behaviors.length) {
       return children;
@@ -403,7 +423,6 @@ export default class HyperRef extends PureComponent<Props, State> {
     const id =
       this.props.element.getAttribute('id') ||
       Object.values(ATTRIBUTES)
-        // $FlowFixMe: every value in ATTRIBUTES are strings
         .reduce((acc: string[], name: string) => {
           const value = this.props.element.getAttribute(name);
           return value ? [...acc, `${name}:${value}`] : acc;
@@ -437,7 +456,7 @@ export default class HyperRef extends PureComponent<Props, State> {
     return (
       <VisibilityView>
         <ScrollableView>
-          <TouchableView>{children || null}</TouchableView>
+          <TouchableView>{(children as JSX.Element) || null}</TouchableView>
         </ScrollableView>
       </VisibilityView>
     );
@@ -445,6 +464,7 @@ export default class HyperRef extends PureComponent<Props, State> {
 }
 
 export const addHref = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   component: any,
   element: Element,
   stylesheets: StyleSheets,
@@ -455,7 +475,7 @@ export const addHref = (
   const action = element.getAttribute('action');
   const childNodes = element.childNodes ? Array.from(element.childNodes) : [];
   const behaviorElements = childNodes.filter(
-    n => n && n.nodeType === 1 && n.tagName === 'behavior',
+    n => n && n.nodeType === 1 && (n as Element).tagName === 'behavior',
   );
   const hasBehaviors = href || action || behaviorElements.length > 0;
   if (!hasBehaviors) {

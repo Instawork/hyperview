@@ -7,8 +7,9 @@
  */
 
 import * as NavigatorService from 'hyperview/src/services/navigator';
-import * as TypesLegacy from 'hyperview/src/types-legacy';
+
 import { ComponentType, ReactNode } from 'react';
+import { HvBehavior, HvComponent } from 'hyperview/src/types';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
 
@@ -30,8 +31,8 @@ export type NavigationContextProps = {
   onParseAfter?: (url: string) => void;
   onParseBefore?: (url: string) => void;
   url?: string;
-  behaviors?: TypesLegacy.HvBehavior[];
-  components?: TypesLegacy.HvComponent[];
+  behaviors?: HvBehavior[];
+  components?: HvComponent[];
   elementErrorComponent?: ComponentType<ErrorProps>;
   errorScreen?: ComponentType<ErrorProps>;
   loadingScreen?: ComponentType<LoadingProps>;
@@ -72,8 +73,8 @@ export type InnerRouteProps = {
   onError?: (error: Error) => void;
   onParseAfter?: (url: string) => void;
   onParseBefore?: (url: string) => void;
-  behaviors?: TypesLegacy.HvBehavior[];
-  components?: TypesLegacy.HvComponent[];
+  behaviors?: HvBehavior[];
+  components?: HvComponent[];
   elementErrorComponent?: ComponentType<ErrorProps>;
   errorScreen?: ComponentType<ErrorProps>;
   loadingScreen?: ComponentType<LoadingProps>;

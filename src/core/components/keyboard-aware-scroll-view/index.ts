@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -8,7 +6,6 @@
  *
  */
 
-export type Props = {|
-  error: Error,
-  onPressReload: () => void,
-|};
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+
+export default KeyboardAwareScrollView;

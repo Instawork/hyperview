@@ -7,18 +7,20 @@
  */
 
 import type {
-  DOMString,
+  HvComponentOnUpdate,
   HvComponentOptions,
   StyleSheets,
 } from 'hyperview/src/types';
-import { ReactNode } from 'react';
+
+import type { ReactNode } from 'react';
 
 export type Props = {
-  children?: ReactNode;
+  children: ReactNode;
   element: Element;
-  focused: boolean;
-  onPress: () => void;
+  isFocused: () => boolean;
+  onModalCancel: () => void;
+  onModalDone: () => void;
+  onUpdate: HvComponentOnUpdate;
   options: HvComponentOptions;
   stylesheets: StyleSheets;
-  value: DOMString | null | undefined;
 };

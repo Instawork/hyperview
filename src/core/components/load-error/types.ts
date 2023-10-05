@@ -6,15 +6,9 @@
  *
  */
 
-import React from 'react';
-
-type Props = {
+export type Props = {
   back: () => void;
-  error: unknown;
+  error: Error | null | undefined;
   onPressReload: () => void;
   onPressViewDetails: (uri: string) => void;
 };
-
-export default class LoadError extends React.PureComponent<Props> {
-  new(props: Props); // eslint-disable-line instawork/component-methods-use-arrows
-}

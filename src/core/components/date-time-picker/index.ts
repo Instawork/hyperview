@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -8,9 +6,6 @@
  *
  */
 
-import type { StyleSheet } from 'hyperview/src/types';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
-export type Props = {|
-  onPress: () => void,
-  style: StyleSheet,
-|};
+export default DateTimePicker;

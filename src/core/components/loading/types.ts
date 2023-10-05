@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -8,6 +6,5 @@
  *
  */
 
-import DateTimePicker from '@react-native-community/datetimepicker';
-
-export default DateTimePicker;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Props = Record<any, any>;
