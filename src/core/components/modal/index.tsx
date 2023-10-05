@@ -6,7 +6,6 @@
  *
  */
 
-import * as Dom from 'hyperview/src/services/dom';
 import {
   Animated,
   LayoutChangeEvent,
@@ -47,13 +46,12 @@ export default (props: Props): JSX.Element => {
     props.element.getAttribute('cancel-label') || 'Cancel';
   const doneLabel: string = props.element.getAttribute('done-label') || 'Done';
 
-  const getTextStyle = (pressed: boolean): Array<StyleSheetType> => {
-    return createStyleProp(props.element, props.stylesheets, {
+  const getTextStyle = (pressed: boolean): Array<StyleSheetType> =>
+    createStyleProp(props.element, props.stylesheets, {
       ...props.options,
       pressed,
       styleAttr: 'modal-text-style',
     });
-  };
 
   const overlayStyle = StyleSheet.flatten(
     createStyleProp(props.element, props.stylesheets, {
@@ -67,8 +65,8 @@ export default (props: Props): JSX.Element => {
   };
 
   const getDuration = (attribute: string, defaultValue: number) => {
-    const value = Dom.safeParseIntAttribute(props.element, attribute);
-    return value ?? defaultValue;
+    const value = parseInt(props.element.getAttribute(attribute) || '', 10);
+    return Number.isNaN(value) || value < 0 ? defaultValue : value;
   };
 
   const animationDuration: number = getDuration(
@@ -151,7 +149,7 @@ export default (props: Props): JSX.Element => {
               onPress={onDone}
             />
           </View>
-          <>{props.children}</>
+          {props.children}
         </View>
       </Animated.View>
     </Modal>

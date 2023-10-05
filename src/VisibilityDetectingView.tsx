@@ -8,7 +8,7 @@ const TICK_INTERVAL = 100;
 type Props = {
   children?: React.ReactNode | undefined;
   id: string;
-  onInvisible: () => void | null | undefined;
+  onInvisible: (() => void | null | undefined) | null;
   onVisible: () => void | null | undefined;
   style: StyleProp<ViewStyle> | null | undefined;
 };

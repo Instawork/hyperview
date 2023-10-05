@@ -205,9 +205,8 @@ export default class HyperRef extends PureComponent<Props, State> {
       };
     }
     // Custom behavior
-    return (element: Element) => {
-      return onUpdate(null, action, element, { behaviorElement, custom: true });
-    };
+    return (element: Element) =>
+      onUpdate(null, action, element, { behaviorElement, custom: true });
   };
 
   getBehaviorElements = (trigger: Trigger): Element[] => {
@@ -248,10 +247,13 @@ export default class HyperRef extends PureComponent<Props, State> {
   };
 
   TouchableView = ({ children }: { children: JSX.Element }): JSX.Element => {
-    const behaviors = this.behaviorElements.filter(e => {
-      const trigger = e.getAttribute(ATTRIBUTES.TRIGGER) || TRIGGERS.PRESS;
-      return PRESS_TRIGGERS.indexOf(trigger as PressTrigger) >= 0;
-    });
+    const behaviors = this.behaviorElements.filter(
+      e =>
+        PRESS_TRIGGERS.indexOf(
+          (e.getAttribute(ATTRIBUTES.TRIGGER) ||
+            TRIGGERS.PRESS) as PressTrigger,
+        ) >= 0,
+    );
 
     if (!behaviors.length) {
       return children;
@@ -284,11 +286,9 @@ export default class HyperRef extends PureComponent<Props, State> {
           },
         );
       } else {
-        pressHandlers[triggerPropName as PressPropName] = createEventHandler(
-          () => {
-            return handler(this.props.element);
-          },
-        );
+        pressHandlers[
+          triggerPropName as PressPropName
+        ] = createEventHandler(() => handler(this.props.element));
       }
     });
 
@@ -304,7 +304,16 @@ export default class HyperRef extends PureComponent<Props, State> {
       });
     }
 
-    const delayOnPress = () => {
+    if (pressHandlers.onPressOut) {
+      const oldHandler = pressHandlers.onPressOut;
+      pressHandlers.onPressOut = createEventHandler(() => {
+        this.setState({ pressed: false });
+        oldHandler();
+      });
+    } else {
+      pressHandlers.onPressOut = createEventHandler(() => {
+        this.setState({ pressed: false });
+      });
       // Fix a conflict between onPressOut and onPress triggering at the same time.
       if (pressHandlers.onPress) {
         const onPressHandler = pressHandlers.onPress;
@@ -312,20 +321,6 @@ export default class HyperRef extends PureComponent<Props, State> {
           setTimeout(onPressHandler, time);
         });
       }
-    };
-
-    if (pressHandlers.onPressOut) {
-      const oldHandler = pressHandlers.onPressOut;
-      pressHandlers.onPressOut = createEventHandler(() => {
-        this.setState({ pressed: false });
-        oldHandler();
-      });
-      delayOnPress();
-    } else {
-      pressHandlers.onPressOut = createEventHandler(() => {
-        this.setState({ pressed: false });
-      });
-      delayOnPress();
     }
 
     const style = this.getStyle();
@@ -354,6 +349,12 @@ export default class HyperRef extends PureComponent<Props, State> {
               ? noop
               : undefined)
           }
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore TS2300: no overload matches this call
+          onResponderGrant={onPressIn}
+          // Both release and terminate responder are needed to properly pressOut
+          onResponderRelease={onPressOut}
+          onResponderTerminate={onPressOut}
           style={style}
           suppressHighlighting
           testID={testID}
@@ -385,9 +386,9 @@ export default class HyperRef extends PureComponent<Props, State> {
     if (!behaviors.length) {
       return children;
     }
-    const refreshHandlers = behaviors.map(behaviorElement => {
-      return this.createActionHandler(behaviorElement, this.props.onUpdate);
-    });
+    const refreshHandlers = behaviors.map(behaviorElement =>
+      this.createActionHandler(behaviorElement, this.props.onUpdate),
+    );
     const onRefresh = () => refreshHandlers.forEach(h => h(this.props.element));
 
     const refreshControl = React.createElement(RefreshControl, {
@@ -410,9 +411,9 @@ export default class HyperRef extends PureComponent<Props, State> {
       // We don't want to use the cached `behaviors` list here because
       // the DOM might have been mutated since.
       this.getBehaviorElements(TRIGGERS.VISIBLE)
-        .map(behaviorElement => {
-          return this.createActionHandler(behaviorElement, this.props.onUpdate);
-        })
+        .map(behaviorElement =>
+          this.createActionHandler(behaviorElement, this.props.onUpdate),
+        )
         .forEach(h => h(this.props.element));
     };
 
@@ -432,9 +433,7 @@ export default class HyperRef extends PureComponent<Props, State> {
       VisibilityDetectingView,
       {
         id,
-        onInvisible: () => {
-          return null;
-        },
+        onInvisible: null,
         onVisible,
         style: this.getStyle(),
       },
