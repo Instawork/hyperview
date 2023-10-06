@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import type { HvBehavior, HvComponent } from 'hyperview/src/types';
+import type { Fetch, HvBehavior, HvComponent } from 'hyperview/src/types';
 
 import React, { ComponentType, ReactNode } from 'react';
 
@@ -14,10 +14,7 @@ import type { Props as LoadingProps } from 'hyperview/src/core/components/loadin
 
 export type NavigationContextProps = {
   entrypointUrl: string;
-  fetch: (
-    input: string,
-    init: { headers: { [key: string]: unknown } },
-  ) => Promise<Response>;
+  fetch: Fetch;
   onError?: (error: Error) => void;
   onParseAfter?: (url: string) => void;
   onParseBefore?: (url: string) => void;

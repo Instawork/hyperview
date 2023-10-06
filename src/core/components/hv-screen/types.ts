@@ -26,10 +26,7 @@ export type Props = {
   navigation?: NavigatorService.NavigationProp;
   route?: NavigatorService.Route<string, { url?: string }>;
   entrypointUrl: string;
-  fetch: (
-    input: string,
-    init: { headers: { [key: string]: unknown } },
-  ) => Promise<Response>;
+  fetch: Types.Fetch;
   onError?: (error: Error) => void;
   onParseAfter?: (url: string) => void;
   onParseBefore?: (url: string) => void;
