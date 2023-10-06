@@ -15,7 +15,7 @@ import type {
 } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
 import DateTimePicker from 'hyperview/src/core/components/date-time-picker';
-import type { Event } from '@react-native-community/datetimepicker';
+import type { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import Field from './field';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import Modal from 'hyperview/src/core/components/modal';
@@ -210,12 +210,14 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
           stylesheets={this.props.stylesheets}
         >
           <Picker
-            onChange={(evt: Event, date?: Date) => this.setPickerValue(date)}
+            onChange={(evt: DateTimePickerEvent, date?: Date) =>
+              this.setPickerValue(date)
+            }
           />
         </Modal>
       );
     }
-    const onChange = (evt: Event, date?: Date) => {
+    const onChange = (evt: DateTimePickerEvent, date?: Date) => {
       if (date === undefined) {
         this.onCancel();
       } else {

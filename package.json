@@ -51,8 +51,8 @@
     "url-parse": "1.5.10"
   },
   "peerDependencies": {
-    "@react-native-community/datetimepicker": "^3.0.3",
-    "@react-native-picker/picker": "^2.2.1",
+    "@react-native-community/datetimepicker": "^6.1.1",
+    "@react-native-picker/picker": "^2.4.0",
     "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/stack": "^6.3.16",
@@ -73,8 +73,8 @@
     "@babel/runtime": "7.13.7",
     "@faker-js/faker": "^8.0.2",
     "@prettier/plugin-xml": "0.13.0",
-    "@react-native-community/datetimepicker": "3.0.3",
-    "@react-native-picker/picker": "2.2.1",
+    "@react-native-community/datetimepicker": "6.1.1",
+    "@react-native-picker/picker": "2.4.0",
     "@react-navigation/bottom-tabs": "6.5.7",
     "@react-navigation/native": "6.1.6",
     "@react-navigation/stack": "6.3.16",
