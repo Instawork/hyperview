@@ -378,3 +378,8 @@ export type NavigationProps = {
 };
 
 export const ON_EVENT_DISPATCH = 'hyperview:on-event';
+
+export type Fetch = (
+  input: RequestInfo | URL,
+  init?: RequestInit | undefined,
+) => Promise<Response>;
