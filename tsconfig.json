@@ -25,5 +25,5 @@
     },
     "types": ["react-native", "jest", "node"]
   },
-  "exclude": ["**/*.js", "**/*.jsx"]
+  "exclude": ["**/*.js", "**/*.jsx", "demo/**/*"]
 }

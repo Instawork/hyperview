@@ -23,7 +23,8 @@ export type Props = {
     format: string | undefined,
   ) => string | undefined;
   refreshControl?: ComponentType<RefreshControlProps>;
-  navigation?: NavigatorService.NavigationProp;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  navigation?: any;
   route?: NavigatorService.Route<string, { url?: string }>;
   entrypointUrl: string;
   fetch: Types.Fetch;
