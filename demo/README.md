@@ -9,7 +9,7 @@ However, it's possible that some of these commands will need to be tweaked. If t
 
 ```sh
 mv demo/ demo-old
-npx --yes create-expo-app demo --template blank
+npx --yes create-expo-app demo --template expo-template-blank-typescript
 cd demo/
 npx expo install @react-native-community/datetimepicker @react-native-picker/picker react-native-gesture-handler react-native-safe-area-context react-native-screens react-native-web react-native-webview
 yarn add @babel/preset-env @react-navigation/bottom-tabs @react-navigation/native @react-navigation/stack @types/react moment react-dom typescript hyperview
@@ -17,7 +17,7 @@ yarn add @expo/webpack-config -D
 yarn add react-native-keyboard-aware-scrollview@2.1.0 --exact
 cd ..
 mv demo-old/src demo
-mv demo-old/App.js demo
+mv demo-old/App.tsx demo
 mv demo-old/assets/* demo/assets
 mv demo-old/webpack.config.js demo
 mv demo-old/tsconfig.json demo
