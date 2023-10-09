@@ -14,10 +14,11 @@ import {
 import HyperviewScreen from './HyperviewScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
+import type { RootStackParamList } from './types';
 import { View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<RootStackParamList>();
 
 const Navigation = () => {
   const insets = useSafeAreaInsets();
