@@ -7,6 +7,7 @@
  */
 
 import * as NavigatorService from 'hyperview/src/services/navigator';
+import * as Types from 'hyperview/src/types';
 import * as TypesLegacy from 'hyperview/src/types-legacy';
 import { ComponentType, ReactNode } from 'react';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
@@ -22,13 +23,11 @@ export type Props = {
     format: string | undefined,
   ) => string | undefined;
   refreshControl?: ComponentType<RefreshControlProps>;
-  navigation?: NavigatorService.NavigationProp;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  navigation?: any;
   route?: NavigatorService.Route<string, { url?: string }>;
   entrypointUrl: string;
-  fetch: (
-    input: string,
-    init: { headers: { [key: string]: unknown } },
-  ) => Promise<Response>;
+  fetch: Types.Fetch;
   onError?: (error: Error) => void;
   onParseAfter?: (url: string) => void;
   onParseBefore?: (url: string) => void;
@@ -45,12 +44,12 @@ export type Props = {
   ) => void;
   openModal?: (params: TypesLegacy.NavigationRouteParams | object) => void;
   push?: (params: object) => void;
-  behaviors?: TypesLegacy.HvBehavior[];
-  components?: TypesLegacy.HvComponent[];
+  behaviors?: Types.HvBehavior[];
+  components?: Types.HvComponent[];
   elementErrorComponent?: ComponentType<ErrorProps>;
   errorScreen?: ComponentType<ErrorProps>;
   loadingScreen?: ComponentType<LoadingProps>;
   handleBack?: ComponentType<{ children: ReactNode }>;
-  doc?: TypesLegacy.Document;
-  registerPreload?: (id: number, element: TypesLegacy.Element) => void;
+  doc?: Document;
+  registerPreload?: (id: number, element: Element) => void;
 };

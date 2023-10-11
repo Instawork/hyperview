@@ -3,7 +3,7 @@
   "compilerOptions": {
     "checkJs": false,
     "paths": {
-      "hyperview/*": ["./*"]
+      "hyperview/*": ["./node_modules/hyperview/*"]
     }
   },
   "exclude": ["**/*.js", "**/*.jsx"]

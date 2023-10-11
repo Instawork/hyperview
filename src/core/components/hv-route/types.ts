@@ -7,8 +7,9 @@
  */
 
 import * as NavigatorService from 'hyperview/src/services/navigator';
-import * as TypesLegacy from 'hyperview/src/types-legacy';
+
 import { ComponentType, ReactNode } from 'react';
+import { Fetch, HvBehavior, HvComponent } from 'hyperview/src/types';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
 
@@ -23,15 +24,12 @@ type RouteParams = {
 
 export type NavigationContextProps = {
   entrypointUrl: string;
-  fetch: (
-    input: string,
-    init: { headers: { [key: string]: unknown } },
-  ) => Promise<Response>;
+  fetch: Fetch;
   onParseAfter?: (url: string) => void;
   onParseBefore?: (url: string) => void;
   url?: string;
-  behaviors?: TypesLegacy.HvBehavior[];
-  components?: TypesLegacy.HvComponent[];
+  behaviors?: HvBehavior[];
+  components?: HvComponent[];
   elementErrorComponent?: ComponentType<ErrorProps>;
   errorScreen?: ComponentType<ErrorProps>;
   loadingScreen?: ComponentType<LoadingProps>;
@@ -40,14 +38,14 @@ export type NavigationContextProps = {
 
 export type NavigatorMapContextProps = {
   getRoute: (key: string) => string | undefined;
-  getElement: (key: string) => TypesLegacy.Element | undefined;
-  setPreload: (key: number, element: TypesLegacy.Element) => void;
-  getPreload: (key: number) => TypesLegacy.Element | undefined;
+  getElement: (key: string) => Element | undefined;
+  setPreload: (key: number, element: Element) => void;
+  getPreload: (key: number) => Element | undefined;
   initialRouteName?: string;
 };
 
 export type State = {
-  doc?: TypesLegacy.Document;
+  doc?: Document;
   error?: Error;
 };
 
@@ -65,25 +63,22 @@ export type InnerRouteProps = {
   navigation?: NavigatorService.NavigationProp;
   route?: NavigatorService.Route<string, RouteParams>;
   entrypointUrl: string;
-  fetch: (
-    input: string,
-    init: { headers: { [key: string]: unknown } },
-  ) => Promise<Response>;
+  fetch: Fetch;
   onError?: (error: Error) => void;
   onParseAfter?: (url: string) => void;
   onParseBefore?: (url: string) => void;
-  behaviors?: TypesLegacy.HvBehavior[];
-  components?: TypesLegacy.HvComponent[];
+  behaviors?: HvBehavior[];
+  components?: HvComponent[];
   elementErrorComponent?: ComponentType<ErrorProps>;
   errorScreen?: ComponentType<ErrorProps>;
   loadingScreen?: ComponentType<LoadingProps>;
   handleBack?: ComponentType<{ children: ReactNode }>;
   getRoute: (key: string) => string | undefined;
-  getElement: (key: string) => TypesLegacy.Element | undefined;
-  setPreload: (key: number, element: TypesLegacy.Element) => void;
-  getPreload: (key: number) => TypesLegacy.Element | undefined;
+  getElement: (key: string) => Element | undefined;
+  setPreload: (key: number, element: Element) => void;
+  getPreload: (key: number) => Element | undefined;
   initialRouteName?: string;
-  element?: TypesLegacy.Element;
+  element?: Element;
 };
 
 /**

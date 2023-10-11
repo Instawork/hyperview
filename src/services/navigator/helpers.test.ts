@@ -1,8 +1,8 @@
-import * as DomErrors from '../dom/errors';
+import * as DomErrors from 'hyperview/src/services/dom/errors';
 import * as Errors from './errors';
 import * as Namespaces from '../namespaces';
 import * as Types from './types';
-import * as TypesLegacy from '../../types-legacy';
+import * as TypesLegacy from '../../types';
 import { ID_DYNAMIC, ID_MODAL } from './types';
 import {
   buildParams,
@@ -82,19 +82,13 @@ describe('getChildElements', () => {
   it('should find no elements', () => {
     const doc = parser.parseFromString(blankDoc);
     const { firstChild } = doc;
-    expect(getChildElements(firstChild).length).toEqual(0);
-  });
-  it('should throw a TypeError', () => {
-    expect(() => getChildElements(undefined)).toThrow(TypeError);
+    expect(getChildElements(firstChild as Element).length).toEqual(0);
   });
 });
 
 describe('isNavigationElement', () => {
   describe('navigator', () => {
     const doc = parser.parseFromString(navDocSource);
-    it('should not identify <doc> as navigation element', () => {
-      expect(isNavigationElement(doc)).toBe(false);
-    });
     it('should identify <navigator> as navigation element', () => {
       const navigators = doc.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
@@ -119,9 +113,6 @@ describe('isNavigationElement', () => {
   });
   describe('screen', () => {
     const doc = parser.parseFromString(screenDocSource);
-    it('should not identify <doc> as navigation element', () => {
-      expect(isNavigationElement(doc)).toBe(false);
-    });
     it('should not identify <screen> as navigation element', () => {
       const screens = doc.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
@@ -266,7 +257,7 @@ describe('getUrlFromHref', () => {
 
 describe('validateUrl', () => {
   describe('ignored', () => {
-    const urls = ['url', '/url', '#url', '', '#', undefined, null];
+    const urls = ['url', '/url', '#url', '', '#', undefined];
     [
       TypesLegacy.NAV_ACTIONS.BACK,
       TypesLegacy.NAV_ACTIONS.CLOSE,
@@ -345,6 +336,24 @@ describe('findPath', () => {
 // TODO getNavigatorAndPath
 // - build navigator hierarchy
 
+function isNavigateParam(
+  p:
+    | TypesLegacy.NavigationRouteParams
+    | Types.NavigationNavigateParams
+    | undefined,
+): p is Types.NavigationNavigateParams {
+  return (p as Types.NavigationNavigateParams).screen !== undefined;
+}
+
+function isRouteParam(
+  p:
+    | TypesLegacy.NavigationRouteParams
+    | Types.NavigationNavigateParams
+    | undefined,
+): p is TypesLegacy.NavigationRouteParams {
+  return (p as TypesLegacy.NavigationRouteParams).url !== undefined;
+}
+
 describe('buildParams', () => {
   describe('valid path', () => {
     // Expected response:
@@ -358,32 +367,75 @@ describe('buildParams', () => {
       expect(params).not.toBeUndefined();
     });
     it('should contain `a` as first screen', () => {
-      expect(params.screen).toEqual('a');
+      if (isNavigateParam(params)) {
+        expect(params.screen).toEqual('a');
+      } else {
+        fail();
+      }
     });
     it('should contain `b` as second screen', () => {
-      expect(params.params.screen).toEqual('b');
+      if (isNavigateParam(params) && isNavigateParam(params?.params)) {
+        expect(params.params.screen).toEqual('b');
+      } else {
+        fail();
+      }
     });
     it('should contain `c` as third screen', () => {
-      expect(params.params.params.screen).toEqual('c');
+      if (
+        isNavigateParam(params) &&
+        isNavigateParam(params?.params) &&
+        isNavigateParam(params?.params?.params)
+      ) {
+        expect(params.params.params.screen).toEqual('c');
+      } else {
+        fail();
+      }
     });
     it('should contain `d` as fourth screen', () => {
-      expect(params.params.params.params.screen).toEqual('d');
+      if (
+        isNavigateParam(params) &&
+        isNavigateParam(params?.params) &&
+        isNavigateParam(params?.params?.params) &&
+        isNavigateParam(params?.params?.params?.params)
+      ) {
+        expect(params.params.params.params.screen).toEqual('d');
+      } else {
+        fail();
+      }
     });
     it('should assign params to the last screen', () => {
-      expect(params.params.params.params.params.url).toEqual('url');
+      if (
+        isNavigateParam(params) &&
+        isNavigateParam(params?.params) &&
+        isNavigateParam(params?.params?.params) &&
+        isNavigateParam(params?.params?.params?.params) &&
+        isRouteParam(params?.params?.params?.params?.params)
+      ) {
+        expect(params.params.params.params.params.url).toEqual('url');
+      } else {
+        fail();
+      }
     });
   });
   describe('invalid path', () => {
-    const path = [];
+    const path = [] as string[];
     const params = buildParams('a', path, { url: 'url' });
     it('should return a value', () => {
       expect(params).not.toBeUndefined();
     });
     it('should contain `a` as first screen', () => {
-      expect(params.screen).toEqual('a');
+      if (isNavigateParam(params)) {
+        expect(params.screen).toEqual('a');
+      } else {
+        fail();
+      }
     });
     it('should assign params to the last screen', () => {
-      expect(params.params.url).toEqual('url');
+      if (isNavigateParam(params) && isRouteParam(params?.params)) {
+        expect(params.params.url).toEqual('url');
+      } else {
+        fail();
+      }
     });
   });
 });
@@ -452,7 +504,7 @@ describe('getRouteId', () => {
 
 describe('getNavAction', () => {
   describe('ignored', () => {
-    const urls = ['url', '/url', '#url', '', '#', undefined, null];
+    const urls = ['url', '/url', '#url', '', '#', undefined];
     [
       TypesLegacy.NAV_ACTIONS.BACK,
       TypesLegacy.NAV_ACTIONS.CLOSE,

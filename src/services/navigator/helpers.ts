@@ -8,18 +8,16 @@
 
 import * as Errors from './errors';
 import * as Types from './types';
-import * as TypesLegacy from 'hyperview/src/types-legacy';
+import * as TypesLegacy from 'hyperview/src/types';
 import * as UrlService from 'hyperview/src/services/url';
 import { ANCHOR_ID_SEPARATOR } from './types';
 
 /**
  * Get an array of all child elements of a node
  */
-export const getChildElements = (
-  element: TypesLegacy.Element,
-): TypesLegacy.Element[] => {
-  return (Array.from(element.childNodes) || []).filter(
-    (child: TypesLegacy.Element) => {
+export const getChildElements = (element: Element | Document): Element[] => {
+  return (Array.from(element.childNodes as NodeListOf<Element>) || []).filter(
+    (child: Element) => {
       return child.nodeType === TypesLegacy.NODE_TYPE.ELEMENT_NODE;
     },
   );
@@ -28,7 +26,7 @@ export const getChildElements = (
 /**
  * Determine if an element is a navigation element
  */
-export const isNavigationElement = (element: TypesLegacy.Element): boolean => {
+export const isNavigationElement = (element: Element): boolean => {
   return (
     element.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR ||
     element.localName === TypesLegacy.LOCAL_NAME.NAV_ROUTE
@@ -39,11 +37,11 @@ export const isNavigationElement = (element: TypesLegacy.Element): boolean => {
  * Get the route designated as 'selected' or the first route if none is marked
  */
 export const getSelectedNavRouteElement = (
-  element: TypesLegacy.Element,
-): TypesLegacy.Element | undefined => {
-  const elements: TypesLegacy.Element[] = getChildElements(
-    element,
-  ).filter(child => isNavigationElement(child));
+  element: Element,
+): Element | undefined => {
+  const elements: Element[] = getChildElements(element).filter(child =>
+    isNavigationElement(child),
+  );
 
   if (!elements.length) {
     return undefined;
@@ -269,7 +267,10 @@ export const buildRequest = (
 
   validateUrl(action, routeParams);
 
-  const [navigation, path] = getNavigatorAndPath(routeParams.targetId, nav);
+  const [navigation, path] = getNavigatorAndPath(
+    routeParams.targetId ?? '',
+    nav,
+  );
   if (!navigation) {
     return [undefined, '', routeParams];
   }
@@ -278,7 +279,7 @@ export const buildRequest = (
   const isStatic: boolean =
     (path !== undefined && path.length > 0) ||
     navigation.getState().type !== Types.NAVIGATOR_TYPE.STACK;
-  const routeId = getRouteId(action, routeParams.url, isStatic);
+  const routeId = getRouteId(action, routeParams.url ?? '', isStatic);
 
   if (!path || !path.length) {
     return [navigation, routeId, routeParams];
