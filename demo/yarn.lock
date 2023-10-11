@@ -1989,10 +1989,10 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
-"@instawork/xmldom@0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@instawork/xmldom/-/xmldom-0.0.2.tgz#3c6348fc9dfd101cb939aa41d149274a3781ce27"
-  integrity sha512-6a0WM8OcgnAujFksEcdynrESb1OciKHEPWgSSinSO++oDgICTdMpzvK2j1gfVo1i1o8QC641q67DkJccvf48BA==
+"@instawork/xmldom@0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@instawork/xmldom/-/xmldom-0.0.3.tgz#239579cbbe0bc2d0ef87e982cd8b923654d3c337"
+  integrity sha512-DDw455VVt24c1LTWLQTjdvovr0/IiVRh5Gh0NHwdGYAoaEUy/QcHVMh/FqWDWbqqTU7nPe9Sm1kcJ72HDdo8UA==
   dependencies:
     string.prototype.matchall "3.0.1"
 
@@ -5462,12 +5462,12 @@ human-signals@^2.1.0:
   resolved "https://registry.yarnpkg.com/human-signals/-/human-signals-2.1.0.tgz#dc91fcba42e4d06e4abaed33b3e7a3c02f514ea0"
   integrity sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==
 
-hyperview@0.70.0:
-  version "0.70.0"
-  resolved "https://registry.yarnpkg.com/hyperview/-/hyperview-0.70.0.tgz#e1295ba1c9357e58c0a2f07d6a1abc758756d99e"
-  integrity sha512-GdZOzPb6HzmhycYwsXw07NVCn6EEhn4/L4kLrcnNV9K+8nuaTwdQEd3f6OQGqbOHsdHtbHj5x/ee3M52MBdCIg==
+hyperview@0.71.0:
+  version "0.71.0"
+  resolved "https://registry.yarnpkg.com/hyperview/-/hyperview-0.71.0.tgz#efdd7ca010c060da9a3f24e1e0c30fcc902328a6"
+  integrity sha512-hwkVtpC1A58/kuG/L3ZieC+PdCc/BKbKCfs/DP/WBdqtCIVt4EuMUXWpqzyZakSe0OZR7tXyta2HAWkhr50EXQ==
   dependencies:
-    "@instawork/xmldom" "0.0.2"
+    "@instawork/xmldom" "0.0.3"
     lodash "4.17.21"
     tiny-emitter "2.1.0"
     url-parse "1.5.10"
