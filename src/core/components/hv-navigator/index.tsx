@@ -10,11 +10,11 @@ import * as NavigationContext from 'hyperview/src/contexts/navigation';
 import * as NavigatorMapContext from 'hyperview/src/contexts/navigator-map';
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Types from './types';
-import * as TypesLegacy from 'hyperview/src/types-legacy';
+import * as TypesLegacy from 'hyperview/src/types';
 import React, { PureComponent, useContext } from 'react';
 import { createCustomStackNavigator } from 'hyperview/src/core/components/navigator-stack';
 import { createCustomTabNavigator } from 'hyperview/src/core/components/navigator-tab';
-import { getFirstChildTag } from 'hyperview/src/services/dom/helpers-legacy';
+import { getFirstChildTag } from 'hyperview/src/services/dom/helpers';
 
 /**
  * Flag to show the navigator UIs
@@ -67,8 +67,8 @@ export default class HvNavigator extends PureComponent<Types.Props> {
    */
   buildScreen = (
     id: string,
-    type: TypesLegacy.DOMString,
-    href: TypesLegacy.DOMString | undefined,
+    type: string,
+    href: string | undefined,
     isModal: boolean,
   ): React.ReactElement => {
     const initialParams = NavigatorService.isDynamicRoute(id)
@@ -137,10 +137,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
   /**
    * Build all screens from received routes
    */
-  buildScreens = (
-    element: TypesLegacy.Element,
-    type: TypesLegacy.DOMString,
-  ): React.ReactNode => {
+  buildScreens = (element: Element, type: string): React.ReactNode => {
     const screens: React.ReactElement[] = [];
     const navigationContext: NavigationContext.NavigationContextProps | null = useContext(
       NavigationContext.Context,
@@ -152,35 +149,27 @@ export default class HvNavigator extends PureComponent<Types.Props> {
       throw new NavigatorService.HvRouteError('No context found');
     }
 
-    const elements: TypesLegacy.Element[] = NavigatorService.getChildElements(
-      element,
-    );
+    const elements: Element[] = NavigatorService.getChildElements(element);
 
     // For tab navigators, the screens are appended
     // For stack navigators, defined routes are appened,
     // the dynamic screens are added later
     // This iteration will also process nested navigators
     //    and retrieve additional urls from child routes
-    elements.forEach((navRoute: TypesLegacy.Element) => {
+    elements.forEach((navRoute: Element) => {
       if (navRoute.localName === TypesLegacy.LOCAL_NAME.NAV_ROUTE) {
-        const id:
-          | TypesLegacy.DOMString
-          | null
-          | undefined = navRoute.getAttribute('id');
+        const id: string | null | undefined = navRoute.getAttribute('id');
         if (!id) {
           throw new NavigatorService.HvNavigatorError(
             `No id provided for ${navRoute.localName}`,
           );
         }
-        const href:
-          | TypesLegacy.DOMString
-          | null
-          | undefined = navRoute.getAttribute('href');
+        const href: string | null | undefined = navRoute.getAttribute('href');
         const isModal =
           navRoute.getAttribute(NavigatorService.KEY_MODAL) === 'true';
 
         // Check for nested navigators
-        const nestedNavigator: TypesLegacy.Element | null = getFirstChildTag<TypesLegacy.Element>(
+        const nestedNavigator: Element | null = getFirstChildTag(
           navRoute,
           TypesLegacy.LOCAL_NAME.NAVIGATOR,
         );
@@ -211,20 +200,16 @@ export default class HvNavigator extends PureComponent<Types.Props> {
       );
     }
 
-    const id:
-      | TypesLegacy.DOMString
-      | null
-      | undefined = this.props.element.getAttribute('id');
+    const id: string | null | undefined = this.props.element.getAttribute('id');
     if (!id) {
       throw new NavigatorService.HvNavigatorError('No id found for navigator');
     }
 
-    const type:
-      | TypesLegacy.DOMString
-      | null
-      | undefined = this.props.element.getAttribute('type');
+    const type: string | null | undefined = this.props.element.getAttribute(
+      'type',
+    );
     const selected:
-      | TypesLegacy.Element
+      | Element
       | undefined = NavigatorService.getSelectedNavRouteElement(
       this.props.element,
     );

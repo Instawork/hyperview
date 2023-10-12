@@ -6,7 +6,7 @@
  *
  */
 
-import * as TypesLegacy from 'hyperview/src/types-legacy';
+import * as TypesLegacy from 'hyperview/src/types';
 
 export const ANCHOR_ID_SEPARATOR = '#';
 export const ID_CARD = 'card';
@@ -75,5 +75,5 @@ export type NavigationState = {
  * Type defining a map of <id, element>
  */
 export type RouteMap = {
-  [key: string]: TypesLegacy.Element;
+  [key: string]: Element;
 };

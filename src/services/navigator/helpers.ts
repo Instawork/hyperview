@@ -7,10 +7,10 @@
  */
 
 import * as Errors from './errors';
-import * as Helpers from 'hyperview/src/services/dom/helpers-legacy';
+import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Types from './types';
-import * as TypesLegacy from 'hyperview/src/types-legacy';
+import * as TypesLegacy from 'hyperview/src/types';
 import * as UrlService from 'hyperview/src/services/url';
 import { ANCHOR_ID_SEPARATOR } from './types';
 
@@ -24,11 +24,9 @@ export const isDynamicRoute = (id: string): boolean => {
 /**
  * Get an array of all child elements of a node
  */
-export const getChildElements = (
-  element: TypesLegacy.Element,
-): TypesLegacy.Element[] => {
-  return (Array.from(element.childNodes) || []).filter(
-    (child: TypesLegacy.Element) => {
+export const getChildElements = (element: Element | Document): Element[] => {
+  return (Array.from(element.childNodes as NodeListOf<Element>) || []).filter(
+    (child: Element) => {
       return child.nodeType === TypesLegacy.NODE_TYPE.ELEMENT_NODE;
     },
   );
@@ -37,7 +35,7 @@ export const getChildElements = (
 /**
  * Determine if an element is a navigation element
  */
-export const isNavigationElement = (element: TypesLegacy.Element): boolean => {
+export const isNavigationElement = (element: Element): boolean => {
   return (
     element.namespaceURI === Namespaces.HYPERVIEW &&
     (element.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR ||
@@ -49,11 +47,11 @@ export const isNavigationElement = (element: TypesLegacy.Element): boolean => {
  * Get the route designated as 'selected'
  */
 export const getSelectedNavRouteElement = (
-  element: TypesLegacy.Element,
-): TypesLegacy.Element | undefined => {
-  const elements: TypesLegacy.Element[] = getChildElements(
-    element,
-  ).filter(child => isNavigationElement(child));
+  element: Element,
+): Element | undefined => {
+  const elements: Element[] = getChildElements(element).filter(child =>
+    isNavigationElement(child),
+  );
 
   if (!elements.length) {
     return undefined;
@@ -227,17 +225,17 @@ export const getRouteId = (
  * Search for a route with the given id
  */
 export const getRouteById = (
-  doc: TypesLegacy.Document,
+  doc: Document,
   id: string,
-): TypesLegacy.Element | undefined => {
-  const routes = doc
-    .getElementsByTagNameNS(
+): Element | undefined => {
+  const routes = Array.from(
+    doc.getElementsByTagNameNS(
       Namespaces.HYPERVIEW,
       TypesLegacy.LOCAL_NAME.NAV_ROUTE,
-    )
-    .filter((n: TypesLegacy.Element) => {
-      return n.getAttribute(Types.KEY_ID) === id;
-    });
+    ),
+  ).filter((n: Element) => {
+    return n.getAttribute(Types.KEY_ID) === id;
+  });
   return routes && routes.length > 0 ? routes[0] : undefined;
 };
 
@@ -290,7 +288,10 @@ export const buildRequest = (
 
   validateUrl(action, routeParams);
 
-  const [navigation, path] = getNavigatorAndPath(routeParams.targetId, nav);
+  const [navigation, path] = getNavigatorAndPath(
+    routeParams.targetId || '',
+    nav,
+  );
 
   const cleanedParams: TypesLegacy.NavigationRouteParams = { ...routeParams };
   if (cleanedParams.url && isUrlFragment(cleanedParams.url)) {
@@ -304,7 +305,7 @@ export const buildRequest = (
     return [undefined, '', cleanedParams];
   }
 
-  const routeId = getRouteId(action, routeParams.url);
+  const routeId = getRouteId(action, routeParams.url ?? undefined);
 
   if (!path || !path.length) {
     return [navigation, routeId, cleanedParams];
@@ -331,16 +332,14 @@ export const buildRequest = (
 /**
  * Create a map of <id, element> from a list of nodes
  */
-const nodesToMap = (
-  nodes: TypesLegacy.NodeList<TypesLegacy.Node>,
-): Types.RouteMap => {
+const nodesToMap = (nodes: NodeListOf<Node>): Types.RouteMap => {
   const map: Types.RouteMap = {};
   if (!nodes) {
     return map;
   }
   Array.from(nodes).forEach(node => {
     if (node.nodeType === TypesLegacy.NODE_TYPE.ELEMENT_NODE) {
-      const element = node as TypesLegacy.Element;
+      const element = node as Element;
       if (isNavigationElement(element)) {
         const id = element.getAttribute(Types.KEY_ID);
         if (id) {
@@ -359,17 +358,14 @@ const nodesToMap = (
  * If an id is found only in the new doc, the node is added to the current
  * the 'merge' attribute on a navigator determines if the children are merged or replaced
  */
-const mergeNodes = (
-  current: TypesLegacy.Element,
-  newNodes: TypesLegacy.NodeList<TypesLegacy.Node>,
-): void => {
+const mergeNodes = (current: Element, newNodes: NodeListOf<Node>): void => {
   if (!current || !current.childNodes || !newNodes || newNodes.length === 0) {
     return;
   }
 
   // Clean out current node attributes for 'merge' and 'selected'
   Array.from(current.childNodes).forEach(node => {
-    const element = node as TypesLegacy.Element;
+    const element = node as Element;
     if (isNavigationElement(element)) {
       if (element.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR) {
         element.setAttribute(Types.KEY_MERGE, 'false');
@@ -383,11 +379,11 @@ const mergeNodes = (
 
   Array.from(newNodes).forEach(node => {
     if (node.nodeType === TypesLegacy.NODE_TYPE.ELEMENT_NODE) {
-      const newElement = node as TypesLegacy.Element;
+      const newElement = node as Element;
       if (isNavigationElement(newElement)) {
         const id = newElement.getAttribute(Types.KEY_ID);
         if (id) {
-          const currentElement = currentMap[id] as TypesLegacy.Element;
+          const currentElement = currentMap[id] as Element;
           if (currentElement) {
             if (newElement.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR) {
               const isMergeable =
@@ -423,9 +419,9 @@ const mergeNodes = (
  * Creates a clone to force a re-render
  */
 export const mergeDocument = (
-  newDoc: TypesLegacy.Document,
-  currentDoc?: TypesLegacy.Document,
-): TypesLegacy.Document => {
+  newDoc: Document,
+  currentDoc?: Document,
+): Document => {
   if (!currentDoc) {
     return newDoc;
   }
@@ -434,7 +430,7 @@ export const mergeDocument = (
   }
 
   // Create a clone of the current document
-  const composite = currentDoc.cloneNode(true);
+  const composite = currentDoc.cloneNode(true) as Document;
   const currentRoot = Helpers.getFirstTag(
     composite,
     TypesLegacy.LOCAL_NAME.DOC,
@@ -455,7 +451,7 @@ export const mergeDocument = (
 };
 
 export const setSelected = (
-  doc: TypesLegacy.Document | undefined,
+  doc: Document | undefined,
   id: string | undefined,
 ) => {
   if (!doc || !id) {
@@ -465,16 +461,12 @@ export const setSelected = (
   if (route) {
     // Reset all siblings
     if (route.parentNode && route.parentNode.childNodes) {
-      Array.from(route.parentNode.childNodes).forEach(
-        (sibling: TypesLegacy.Node) => {
-          if (sibling.localName === TypesLegacy.LOCAL_NAME.NAV_ROUTE) {
-            (sibling as TypesLegacy.Element)?.setAttribute(
-              Types.KEY_SELECTED,
-              'false',
-            );
-          }
-        },
-      );
+      Array.from(route.parentNode.childNodes).forEach((child: Node) => {
+        const sibling = child as Element;
+        if (sibling && sibling.localName === TypesLegacy.LOCAL_NAME.NAV_ROUTE) {
+          sibling.setAttribute(Types.KEY_SELECTED, 'false');
+        }
+      });
     }
 
     // Set the selected route
@@ -486,7 +478,7 @@ export const setSelected = (
  * Remove a stack route from the document
  */
 export const removeStackRoute = (
-  doc: TypesLegacy.Document | undefined,
+  doc: Document | undefined,
   id: string | undefined,
 ) => {
   if (!doc || !id) {
@@ -494,7 +486,7 @@ export const removeStackRoute = (
   }
   const route = getRouteById(doc, id);
   if (route && route.parentNode) {
-    const parentNode = route.parentNode as TypesLegacy.Element;
+    const parentNode = route.parentNode as Element;
     const type = parentNode.getAttribute(Types.KEY_TYPE);
     if (type === Types.NAVIGATOR_TYPE.STACK) {
       route.parentNode.removeChild(route);

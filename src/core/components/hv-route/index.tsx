@@ -9,7 +9,7 @@
 import * as Components from 'hyperview/src/services/components';
 import * as Contexts from 'hyperview/src/contexts';
 import * as DomService from 'hyperview/src/services/dom';
-import * as Helpers from 'hyperview/src/services/dom/helpers-legacy';
+import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as NavigationContext from 'hyperview/src/contexts/navigation';
 import * as NavigatorMapContext from 'hyperview/src/contexts/navigator-map';
@@ -17,7 +17,7 @@ import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Render from 'hyperview/src/services/render';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as Types from './types';
-import * as TypesLegacy from 'hyperview/src/types-legacy';
+import * as TypesLegacy from 'hyperview/src/types';
 import * as UrlService from 'hyperview/src/services/url';
 import React, { JSXElementConstructor, PureComponent, useContext } from 'react';
 import HvNavigator from 'hyperview/src/core/components/hv-navigator';
@@ -135,7 +135,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
     }
   };
 
-  getRenderElement = (): TypesLegacy.Element | undefined => {
+  getRenderElement = (): Element | undefined => {
     if (this.props.element) {
       return this.props.element;
     }
@@ -144,7 +144,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
     }
 
     // Get the <doc> element
-    const root: TypesLegacy.Element | null = Helpers.getFirstChildTag(
+    const root: Element | null = Helpers.getFirstChildTag(
       this.state.doc,
       TypesLegacy.LOCAL_NAME.DOC,
     );
@@ -153,7 +153,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
     }
 
     // Get the first child as <screen> or <navigator>
-    const screenElement: TypesLegacy.Element | null = Helpers.getFirstChildTag(
+    const screenElement: Element | null = Helpers.getFirstChildTag(
       root,
       TypesLegacy.LOCAL_NAME.SCREEN,
     );
@@ -161,7 +161,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
       return screenElement;
     }
 
-    const navigatorElement: TypesLegacy.Element | null = Helpers.getFirstChildTag(
+    const navigatorElement: Element | null = Helpers.getFirstChildTag(
       root,
       TypesLegacy.LOCAL_NAME.NAVIGATOR,
     );
@@ -174,7 +174,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
     );
   };
 
-  registerPreload = (id: number, element: TypesLegacy.Element): void => {
+  registerPreload = (id: number, element: Element): void => {
     this.props.setPreload(id, element);
   };
 
@@ -183,19 +183,27 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
    * Includes preload functionality
    */
   Load = (): React.ReactElement => {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    const noop = () => {};
+
     if (this.props.route?.params?.preloadScreen) {
       const preloadElement = this.props.getPreload(
         this.props.route?.params?.preloadScreen,
       );
       if (preloadElement) {
         const [body] = Array.from(
-          preloadElement.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'body'),
+          preloadElement.getElementsByTagNameNS(
+            Namespaces.HYPERVIEW,
+            'body',
+          ) as HTMLCollectionOf<Element>,
         );
-        const styleSheet = Stylesheets.createStylesheets(preloadElement);
+        const styleSheet = Stylesheets.createStylesheets(
+          (preloadElement as unknown) as Document,
+        );
         const component:
           | string
           | React.ReactElement<unknown, string | JSXElementConstructor<unknown>>
-          | undefined = Render.renderElement(body, styleSheet, null, {
+          | null = Render.renderElement(body, styleSheet, () => noop, {
           componentRegistry: this.componentRegistry,
         });
         if (component) {
@@ -210,15 +218,17 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
   /**
    * View shown when there is an error
    */
-  Error = (props: { error: unknown }): React.ReactElement => {
+  Error = (props: { error: Error | null | undefined }): React.ReactElement => {
     const ErrorScreen = this.props.errorScreen || LoadError;
     return (
       <ErrorScreen
-        back={() => this.navLogic.back({})}
+        back={() => this.navLogic.back({} as TypesLegacy.NavigationRouteParams)}
         error={props.error}
         onPressReload={() => this.load()}
         onPressViewDetails={(uri: string | undefined) => {
-          this.navLogic.openModal({ url: uri });
+          this.navLogic.openModal({
+            url: uri as string,
+          } as TypesLegacy.NavigationRouteParams);
         }}
       />
     );
@@ -248,7 +258,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
             behaviors={this.props.behaviors}
             closeModal={this.navLogic.closeModal}
             components={this.props.components}
-            doc={this.state.doc?.cloneNode(true)}
+            doc={this.state.doc?.cloneNode(true) as Document}
             elementErrorComponent={this.props.elementErrorComponent}
             entrypointUrl={this.props.entrypointUrl}
             errorScreen={this.props.errorScreen}
@@ -281,7 +291,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
       ? this.props.route.params.isModal
       : false;
 
-    const renderElement: TypesLegacy.Element | undefined = isModal
+    const renderElement: Element | undefined = isModal
       ? undefined
       : this.getRenderElement();
 
@@ -306,7 +316,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
           <Contexts.DocContext.Provider
             value={{
               getDoc: () => this.state.doc,
-              setDoc: (doc: TypesLegacy.Document) => this.setState({ doc }),
+              setDoc: (doc: Document) => this.setState({ doc }),
             }}
           >
             <HvNavigator
@@ -362,10 +372,10 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
   };
 
   render() {
-    const { Content, Error, Load } = this;
+    const { Error: Err, Load, Content } = this;
     try {
       if (this.state.error) {
-        return <this.Error error={this.state.error} />;
+        return <Err error={this.state.error} />;
       }
       if (
         this.props.element ||
@@ -379,7 +389,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
       if (this.props.onError) {
         this.props.onError(err as Error);
       }
-      return <Error error={err} />;
+      return <Err error={err as Error} />;
     }
   }
 }
@@ -406,8 +416,8 @@ const getRouteUrl = (
  */
 const getNestedNavigator = (
   id?: string,
-  doc?: TypesLegacy.Document,
-): TypesLegacy.Element | undefined => {
+  doc?: Document,
+): Element | undefined => {
   if (!id || !doc) {
     return undefined;
   }
@@ -415,10 +425,8 @@ const getNestedNavigator = (
   const route = NavigatorService.getRouteById(doc, id);
   if (route) {
     return (
-      Helpers.getFirstChildTag<TypesLegacy.Element>(
-        route,
-        TypesLegacy.LOCAL_NAME.NAVIGATOR,
-      ) || undefined
+      Helpers.getFirstChildTag(route, TypesLegacy.LOCAL_NAME.NAVIGATOR) ||
+      undefined
     );
   }
   return undefined;
@@ -449,7 +457,7 @@ export default function HvRoute(props: Types.Props) {
   const url = getRouteUrl(props, navigationContext);
 
   // Get the navigator element from the context
-  const element: TypesLegacy.Element | undefined = getNestedNavigator(
+  const element: Element | undefined = getNestedNavigator(
     props.route?.params?.id,
     docContext?.getDoc(),
   );

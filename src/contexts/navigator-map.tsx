@@ -6,12 +6,11 @@
  *
  */
 
-import * as TypesLegacy from 'hyperview/src/types-legacy';
 import React, { createContext, useState } from 'react';
 
 export type NavigatorMapContextProps = {
-  setPreload: (key: number, element: TypesLegacy.Element) => void;
-  getPreload: (key: number) => TypesLegacy.Element | undefined;
+  setPreload: (key: number, element: Element) => void;
+  getPreload: (key: number) => Element | undefined;
 };
 
 /**
@@ -33,13 +32,13 @@ type Props = { children: React.ReactNode };
  * store runtime information about the navigator and urls.
  */
 export function NavigatorMapProvider(props: Props) {
-  const [preloadMap] = useState<Map<number, TypesLegacy.Element>>(new Map());
+  const [preloadMap] = useState<Map<number, Element>>(new Map());
 
-  const setPreload = (key: number, element: TypesLegacy.Element) => {
+  const setPreload = (key: number, element: Element) => {
     preloadMap.set(key, element);
   };
 
-  const getPreload = (key: number): TypesLegacy.Element | undefined => {
+  const getPreload = (key: number): Element | undefined => {
     return preloadMap.get(key);
   };
 
