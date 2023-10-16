@@ -7,7 +7,8 @@
  */
 
 import type { ColorValue } from 'react-native';
-import { processColor } from 'react-native';
+// @ts-ignore
+import normalizeColor from 'react-native/Libraries/StyleSheet/normalizeColor';
 
-export default processColor;
+export default normalizeColor;
 export type { ColorValue };
