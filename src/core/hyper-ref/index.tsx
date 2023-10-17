@@ -6,28 +6,24 @@
  *
  */
 
+import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Events from 'hyperview/src/services/events';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import {
-  ACTIONS,
   ATTRIBUTES,
   LOCAL_NAME,
-  NAV_ACTIONS,
   PRESS_TRIGGERS,
   TRIGGERS,
-  UPDATE_ACTIONS,
 } from 'hyperview/src/types';
 import type {
   HvComponentOnUpdate,
   HvComponentOptions,
-  NavAction,
   PressTrigger,
   StyleSheet,
   StyleSheets,
   Trigger,
-  UpdateAction,
 } from 'hyperview/src/types';
 import type { PressHandlers, PressPropName, Props, State } from './types';
 import React, { PureComponent } from 'react';
@@ -42,6 +38,7 @@ import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
 import { XMLSerializer } from '@instawork/xmldom';
 import { X_RESPONSE_STALE_REASON } from 'hyperview/src/services/dom/types';
 import { createTestProps } from 'hyperview/src/services';
+
 /**
  * Wrapper to handle UI events
  * Stop propagation and prevent default client behavior
@@ -139,7 +136,7 @@ export default class HyperRef extends PureComponent<Props, State> {
       return false;
     });
     onEventBehaviors.forEach(behaviorElement => {
-      const handler = this.createActionHandler(
+      const handler = Behaviors.createActionHandler(
         behaviorElement,
         this.props.onUpdate,
       );
@@ -159,55 +156,6 @@ export default class HyperRef extends PureComponent<Props, State> {
         );
       }
     });
-  };
-
-  createActionHandler = (
-    behaviorElement: Element,
-    onUpdate: HvComponentOnUpdate,
-  ) => {
-    const action =
-      behaviorElement.getAttribute(ATTRIBUTES.ACTION) || NAV_ACTIONS.PUSH;
-    if (Object.values(NAV_ACTIONS).indexOf(action as NavAction) >= 0) {
-      return (element: Element) => {
-        const href = behaviorElement.getAttribute(ATTRIBUTES.HREF);
-        const targetId = behaviorElement.getAttribute(ATTRIBUTES.TARGET);
-        const showIndicatorId = behaviorElement.getAttribute(
-          ATTRIBUTES.SHOW_DURING_LOAD,
-        );
-        const delay = behaviorElement.getAttribute(ATTRIBUTES.DELAY);
-        onUpdate(href, action, element, { delay, showIndicatorId, targetId });
-      };
-    }
-    if (
-      action === ACTIONS.RELOAD ||
-      Object.values(UPDATE_ACTIONS).indexOf(action as UpdateAction) >= 0
-    ) {
-      return (element: Element) => {
-        const href = behaviorElement.getAttribute(ATTRIBUTES.HREF);
-        const verb = behaviorElement.getAttribute(ATTRIBUTES.VERB);
-        const targetId = behaviorElement.getAttribute(ATTRIBUTES.TARGET);
-        const showIndicatorIds = behaviorElement.getAttribute(
-          ATTRIBUTES.SHOW_DURING_LOAD,
-        );
-        const hideIndicatorIds = behaviorElement.getAttribute(
-          ATTRIBUTES.HIDE_DURING_LOAD,
-        );
-        const delay = behaviorElement.getAttribute(ATTRIBUTES.DELAY);
-        const once = behaviorElement.getAttribute(ATTRIBUTES.ONCE);
-        onUpdate(href, action, element, {
-          behaviorElement,
-          delay,
-          hideIndicatorIds,
-          once,
-          showIndicatorIds,
-          targetId,
-          verb,
-        });
-      };
-    }
-    // Custom behavior
-    return (element: Element) =>
-      onUpdate(null, action, element, { behaviorElement, custom: true });
   };
 
   getBehaviorElements = (trigger: Trigger): Element[] => {
@@ -234,17 +182,14 @@ export default class HyperRef extends PureComponent<Props, State> {
       );
       loadBehaviors = loadBehaviors.concat(loadStaleBehaviors);
     }
-    loadBehaviors.forEach(behaviorElement => {
-      const handler = this.createActionHandler(
-        behaviorElement,
+
+    if (loadBehaviors.length > 0) {
+      Behaviors.triggerBehaviors(
+        this.props.element,
+        loadBehaviors,
         this.props.onUpdate,
       );
-      if (behaviorElement.getAttribute(ATTRIBUTES.IMMEDIATE) === 'true') {
-        handler(this.props.element);
-      } else {
-        setTimeout(() => handler(this.props.element), 0);
-      }
-    });
+    }
   };
 
   TouchableView = ({ children }: { children: JSX.Element }): JSX.Element => {
@@ -272,7 +217,7 @@ export default class HyperRef extends PureComponent<Props, State> {
         behaviorElement.getAttribute(ATTRIBUTES.TRIGGER) || TRIGGERS.PRESS;
       const triggerPropName =
         PRESS_TRIGGERS_PROP_NAMES[trigger as PressTrigger];
-      const handler = this.createActionHandler(
+      const handler = Behaviors.createActionHandler(
         behaviorElement,
         this.props.onUpdate,
       );
@@ -388,7 +333,7 @@ export default class HyperRef extends PureComponent<Props, State> {
       return children;
     }
     const refreshHandlers = behaviors.map(behaviorElement =>
-      this.createActionHandler(behaviorElement, this.props.onUpdate),
+      Behaviors.createActionHandler(behaviorElement, this.props.onUpdate),
     );
     const onRefresh = () => refreshHandlers.forEach(h => h(this.props.element));
 
@@ -413,7 +358,7 @@ export default class HyperRef extends PureComponent<Props, State> {
       // the DOM might have been mutated since.
       this.getBehaviorElements(TRIGGERS.VISIBLE)
         .map(behaviorElement =>
-          this.createActionHandler(behaviorElement, this.props.onUpdate),
+          Behaviors.createActionHandler(behaviorElement, this.props.onUpdate),
         )
         .forEach(h => h(this.props.element));
     };

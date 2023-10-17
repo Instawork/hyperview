@@ -138,3 +138,5 @@ export const trigger = (
     });
   });
 };
+
+export { createActionHandler, triggerBehaviors } from './helpers';
