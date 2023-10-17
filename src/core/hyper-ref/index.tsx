@@ -12,7 +12,7 @@ import * as Events from 'hyperview/src/services/events';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import {
-  ATTRIBUTES,
+  BEHAVIOR_ATTRIBUTES,
   LOCAL_NAME,
   PRESS_TRIGGERS,
   TRIGGERS,
@@ -105,7 +105,9 @@ export default class HyperRef extends PureComponent<Props, State> {
 
   updateStyle = () => {
     // Retrieve and cache style
-    const styleAttr = this.props.element.getAttribute(ATTRIBUTES.HREF_STYLE);
+    const styleAttr = this.props.element.getAttribute(
+      BEHAVIOR_ATTRIBUTES.HREF_STYLE,
+    );
     this.style = styleAttr
       ? styleAttr.split(' ').map(s => this.props.stylesheets.regular[s])
       : null;
@@ -114,7 +116,7 @@ export default class HyperRef extends PureComponent<Props, State> {
   onEventDispatch = (eventName: string) => {
     const behaviorElements = Dom.getBehaviorElements(this.props.element);
     const onEventBehaviors = behaviorElements.filter(e => {
-      if (e.getAttribute(ATTRIBUTES.TRIGGER) === TRIGGERS.ON_EVENT) {
+      if (e.getAttribute(BEHAVIOR_ATTRIBUTES.TRIGGER) === TRIGGERS.ON_EVENT) {
         const currentAttributeEventName:
           | string
           | null
@@ -160,12 +162,14 @@ export default class HyperRef extends PureComponent<Props, State> {
 
   getBehaviorElements = (trigger: Trigger): Element[] => {
     return this.behaviorElements.filter(
-      e => e.getAttribute(ATTRIBUTES.TRIGGER) === trigger,
+      e => e.getAttribute(BEHAVIOR_ATTRIBUTES.TRIGGER) === trigger,
     );
   };
 
   getStyle = (): StyleSheet | null | undefined => {
-    const styleAttr = this.props.element.getAttribute(ATTRIBUTES.HREF_STYLE);
+    const styleAttr = this.props.element.getAttribute(
+      BEHAVIOR_ATTRIBUTES.HREF_STYLE,
+    );
     return styleAttr
       ? styleAttr.split(' ').map(s => this.props.stylesheets.regular[s])
       : null;
@@ -196,7 +200,7 @@ export default class HyperRef extends PureComponent<Props, State> {
     const behaviors = this.behaviorElements.filter(
       e =>
         PRESS_TRIGGERS.indexOf(
-          (e.getAttribute(ATTRIBUTES.TRIGGER) ||
+          (e.getAttribute(BEHAVIOR_ATTRIBUTES.TRIGGER) ||
             TRIGGERS.PRESS) as PressTrigger,
         ) >= 0,
     );
@@ -214,7 +218,8 @@ export default class HyperRef extends PureComponent<Props, State> {
 
     behaviors.forEach(behaviorElement => {
       const trigger =
-        behaviorElement.getAttribute(ATTRIBUTES.TRIGGER) || TRIGGERS.PRESS;
+        behaviorElement.getAttribute(BEHAVIOR_ATTRIBUTES.TRIGGER) ||
+        TRIGGERS.PRESS;
       const triggerPropName =
         PRESS_TRIGGERS_PROP_NAMES[trigger as PressTrigger];
       const handler = Behaviors.createActionHandler(
@@ -368,7 +373,7 @@ export default class HyperRef extends PureComponent<Props, State> {
     // and the internal state needs to be reset.
     const id =
       this.props.element.getAttribute('id') ||
-      Object.values(ATTRIBUTES)
+      Object.values(BEHAVIOR_ATTRIBUTES)
         .reduce((acc: string[], name: string) => {
           const value = this.props.element.getAttribute(name);
           return value ? [...acc, `${name}:${value}`] : acc;

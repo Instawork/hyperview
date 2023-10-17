@@ -256,7 +256,7 @@ export type BehaviorRegistry = {
 };
 
 // https://hyperview.org/docs/reference_behavior_attributes
-export const ATTRIBUTES = {
+export const BEHAVIOR_ATTRIBUTES = {
   ACTION: 'action',
   DELAY: 'delay',
   EVENT_NAME: 'event-name',

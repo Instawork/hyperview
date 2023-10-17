@@ -8,7 +8,7 @@
 
 import {
   ACTIONS,
-  ATTRIBUTES,
+  BEHAVIOR_ATTRIBUTES,
   HvComponentOnUpdate,
   NAV_ACTIONS,
   NavAction,
@@ -23,7 +23,9 @@ export const triggerBehaviors = (
 ) => {
   behaviors.forEach(behaviorElement => {
     const handler = createActionHandler(behaviorElement, onUpdate);
-    if (behaviorElement.getAttribute(ATTRIBUTES.IMMEDIATE) === 'true') {
+    if (
+      behaviorElement.getAttribute(BEHAVIOR_ATTRIBUTES.IMMEDIATE) === 'true'
+    ) {
       handler(element);
     } else {
       setTimeout(() => handler(element), 0);
@@ -36,15 +38,16 @@ export const createActionHandler = (
   onUpdate: HvComponentOnUpdate,
 ) => {
   const action =
-    behaviorElement.getAttribute(ATTRIBUTES.ACTION) || NAV_ACTIONS.PUSH;
+    behaviorElement.getAttribute(BEHAVIOR_ATTRIBUTES.ACTION) ||
+    NAV_ACTIONS.PUSH;
   if (Object.values(NAV_ACTIONS).indexOf(action as NavAction) >= 0) {
     return (element: Element) => {
-      const href = behaviorElement.getAttribute(ATTRIBUTES.HREF);
-      const targetId = behaviorElement.getAttribute(ATTRIBUTES.TARGET);
+      const href = behaviorElement.getAttribute(BEHAVIOR_ATTRIBUTES.HREF);
+      const targetId = behaviorElement.getAttribute(BEHAVIOR_ATTRIBUTES.TARGET);
       const showIndicatorId = behaviorElement.getAttribute(
-        ATTRIBUTES.SHOW_DURING_LOAD,
+        BEHAVIOR_ATTRIBUTES.SHOW_DURING_LOAD,
       );
-      const delay = behaviorElement.getAttribute(ATTRIBUTES.DELAY);
+      const delay = behaviorElement.getAttribute(BEHAVIOR_ATTRIBUTES.DELAY);
       onUpdate(href, action, element, { delay, showIndicatorId, targetId });
     };
   }
@@ -53,17 +56,17 @@ export const createActionHandler = (
     Object.values(UPDATE_ACTIONS).indexOf(action as UpdateAction) >= 0
   ) {
     return (element: Element) => {
-      const href = behaviorElement.getAttribute(ATTRIBUTES.HREF);
-      const verb = behaviorElement.getAttribute(ATTRIBUTES.VERB);
-      const targetId = behaviorElement.getAttribute(ATTRIBUTES.TARGET);
+      const href = behaviorElement.getAttribute(BEHAVIOR_ATTRIBUTES.HREF);
+      const verb = behaviorElement.getAttribute(BEHAVIOR_ATTRIBUTES.VERB);
+      const targetId = behaviorElement.getAttribute(BEHAVIOR_ATTRIBUTES.TARGET);
       const showIndicatorIds = behaviorElement.getAttribute(
-        ATTRIBUTES.SHOW_DURING_LOAD,
+        BEHAVIOR_ATTRIBUTES.SHOW_DURING_LOAD,
       );
       const hideIndicatorIds = behaviorElement.getAttribute(
-        ATTRIBUTES.HIDE_DURING_LOAD,
+        BEHAVIOR_ATTRIBUTES.HIDE_DURING_LOAD,
       );
-      const delay = behaviorElement.getAttribute(ATTRIBUTES.DELAY);
-      const once = behaviorElement.getAttribute(ATTRIBUTES.ONCE);
+      const delay = behaviorElement.getAttribute(BEHAVIOR_ATTRIBUTES.DELAY);
+      const once = behaviorElement.getAttribute(BEHAVIOR_ATTRIBUTES.ONCE);
       onUpdate(href, action, element, {
         behaviorElement,
         delay,
