@@ -255,6 +255,23 @@ export type BehaviorRegistry = {
   [key: string]: HvBehavior;
 };
 
+// https://hyperview.org/docs/reference_behavior_attributes
+export const ATTRIBUTES = {
+  ACTION: 'action',
+  DELAY: 'delay',
+  EVENT_NAME: 'event-name',
+  HIDE_DURING_LOAD: 'hide-during-load',
+  HREF: 'href',
+  HREF_STYLE: 'href-style',
+  IMMEDIATE: 'immediate',
+  NEW_VALUE: 'new-value',
+  ONCE: 'once',
+  SHOW_DURING_LOAD: 'show-during-load',
+  TARGET: 'target',
+  TRIGGER: 'trigger',
+  VERB: 'verb',
+} as const;
+
 // https://hyperview.org/docs/reference_behavior_attributes#trigger
 export const TRIGGERS = Object.freeze({
   DESELECT: 'deselect',

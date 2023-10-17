@@ -12,13 +12,13 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import {
   ACTIONS,
+  ATTRIBUTES,
   LOCAL_NAME,
   NAV_ACTIONS,
   PRESS_TRIGGERS,
   TRIGGERS,
   UPDATE_ACTIONS,
 } from 'hyperview/src/types';
-import { ATTRIBUTES, PRESS_TRIGGERS_PROP_NAMES } from './types';
 import type {
   HvComponentOnUpdate,
   HvComponentOptions,
@@ -37,6 +37,7 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
+import { PRESS_TRIGGERS_PROP_NAMES } from './types';
 import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
 import { XMLSerializer } from '@instawork/xmldom';
 import { X_RESPONSE_STALE_REASON } from 'hyperview/src/services/dom/types';

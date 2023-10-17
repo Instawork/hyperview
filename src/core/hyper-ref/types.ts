@@ -26,24 +26,6 @@ export type State = {
   refreshing: boolean;
 };
 
-export const ATTRIBUTES = {
-  ACTION: 'action',
-  DELAY: 'delay',
-  EVENT_NAME: 'event-name',
-  HIDE_DURING_LOAD: 'hide-during-load',
-  HREF: 'href',
-  HREF_STYLE: 'href-style',
-  IMMEDIATE: 'immediate',
-  NEW_VALUE: 'new-value',
-  ONCE: 'once',
-  SHOW_DURING_LOAD: 'show-during-load',
-  TARGET: 'target',
-  TRIGGER: 'trigger',
-  VERB: 'verb',
-} as const;
-
-export type Attribute = typeof ATTRIBUTES[keyof typeof ATTRIBUTES];
-
 export type PressHandlers = {
   onLongPress?: () => void;
   onPressIn?: () => void;
