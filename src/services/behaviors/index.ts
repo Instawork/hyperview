@@ -220,3 +220,22 @@ export const createActionHandler = (
   return (element: Element) =>
     onUpdate(null, action, element, { behaviorElement, custom: true });
 };
+
+/**
+ * Set the `ran-once` attribute to true.
+ */
+export const setRanOnce = (behaviorElement: Element) => {
+  behaviorElement.setAttribute('ran-once', 'true');
+};
+
+/**
+ * Checks if `once` is previously applied.
+ */
+export const isOncePreviouslyApplied = (behaviorElement: Element) => {
+  const once = behaviorElement.getAttribute('once');
+  const ranOnce = behaviorElement.getAttribute('ran-once');
+  if (once === 'true' && ranOnce === 'true') {
+    return true;
+  }
+  return false;
+};

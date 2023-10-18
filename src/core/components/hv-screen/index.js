@@ -272,7 +272,7 @@ export default class HvScreen extends React.Component {
         }
         return;
       }
-      behaviorElement.setAttribute('ran-once', 'true');
+      Behaviors.setRanOnce(behaviorElement);
     }
 
     let newRoot = this.doc;
@@ -330,22 +330,6 @@ export default class HvScreen extends React.Component {
         </Contexts.DateFormatContext.Provider>
       </Contexts.DocContext.Provider>
     );
-  }
-
-  /**
-   * Checks if `once` is previously applied.
-   */
-  isOncePreviouslyApplied = (behaviorElement) => {
-    const once = behaviorElement.getAttribute('once');
-    const ranOnce = behaviorElement.getAttribute('ran-once');
-    if (once === 'true' && ranOnce === 'true') {
-        return true;
-    }
-    return false;
-  }
-
-  setRanOnce = (behaviorElement) => {
-    behaviorElement.setAttribute('ran-once', 'true');
   }
 
   /**
@@ -426,11 +410,11 @@ export default class HvScreen extends React.Component {
       const trigger = behaviorElement.getAttribute('trigger');
       const delay = behaviorElement.getAttribute('delay');
 
-      if (this.isOncePreviouslyApplied(behaviorElement)) {
+      if (Behaviors.isOncePreviouslyApplied(behaviorElement)) {
         return;
       }
 
-      this.setRanOnce(behaviorElement);
+      Behaviors.setRanOnce(behaviorElement);
 
       // Check for event loop formation
       if (trigger === 'on-event') {
@@ -496,7 +480,7 @@ export default class HvScreen extends React.Component {
         }
         return;
       }
-      behaviorElement.setAttribute('ran-once', 'true');
+      Behaviors.setRanOnce(behaviorElement);
 
     }
 
@@ -590,11 +574,11 @@ export default class HvScreen extends React.Component {
     const action = behaviorElement.getAttribute('action');
     const behavior = this.behaviorRegistry[action];
 
-    if (this.isOncePreviouslyApplied(behaviorElement)) {
+    if (Behaviors.isOncePreviouslyApplied(behaviorElement)) {
       return;
     }
 
-    this.setRanOnce(behaviorElement);
+    Behaviors.setRanOnce(behaviorElement);
 
     if (behavior) {
       const updateRoot = (newRoot, updateStylesheet = false) => updateStylesheet
