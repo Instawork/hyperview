@@ -525,6 +525,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
             onError={this.props.onError}
             onParseAfter={this.props.onParseAfter}
             onParseBefore={this.props.onParseBefore}
+            onUpdate={this.onUpdate}
             openModal={this.props.openModal}
             push={this.props.push}
             refreshControl={this.props.refreshControl}
@@ -553,6 +554,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
               onError: this.props.onError,
               onParseAfter: this.props.onParseAfter,
               onParseBefore: this.props.onParseBefore,
+              onUpdate: this.onUpdate,
             }}
           >
             <HvRoute />
