@@ -5,6 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
+
+import Navigation from './services/navigation';
+
 import type React from 'react';
 
 import type { XResponseStaleReason } from './services/dom/types';
@@ -400,3 +403,23 @@ export type Fetch = (
   input: RequestInfo | URL,
   init?: RequestInit | undefined,
 ) => Promise<Response>;
+
+export type RootOnUpdate = (
+  href: DOMString | null | undefined,
+  action: DOMString | null | undefined,
+  element: Element,
+  options: HvComponentOptions,
+  callbacks: OnUpdateCallbacks,
+) => void;
+
+export type OnUpdateCallbacks = {
+  clearElementError: () => void;
+  getNavigation: () => Navigation;
+  getOnUpdate: () => HvComponentOnUpdate;
+  getStateDoc: () => Document;
+  getDoc: () => Document;
+  getStateUrl: () => string;
+  registerPreload: (id: number, element: Element) => void;
+  setNeedsLoad: () => void;
+  setState: (state: object) => void;
+};
