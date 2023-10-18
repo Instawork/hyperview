@@ -369,8 +369,8 @@ export const UPDATE_ACTIONS = {
 export type UpdateAction = typeof UPDATE_ACTIONS[keyof typeof UPDATE_ACTIONS];
 
 export type BehaviorOptions = {
-  newElement: Element;
-  behaviorElement: Element;
+  newElement?: Element;
+  behaviorElement?: Element;
   showIndicatorId?: string;
   delay?: number;
   targetId?: string;
