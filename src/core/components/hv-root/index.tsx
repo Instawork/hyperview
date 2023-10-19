@@ -160,7 +160,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
     root: Document,
     formData: FormData | null | undefined,
     callbacks: OnUpdateCallbacks,
-  ) => {
+  ): Promise<Element | null> => {
     if (!href) {
       throw new Error('No href passed to fetchElement');
     }
