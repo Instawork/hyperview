@@ -125,7 +125,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
     }
 
     let newRoot = onUpdateCallbacks.getDoc();
-    if (showIndicatorIdList || hideIndicatorIdList) {
+    if (newRoot && (showIndicatorIdList || hideIndicatorIdList)) {
       newRoot = Behaviors.setIndicatorsBeforeLoad(
         showIndicatorIdList,
         hideIndicatorIdList,
@@ -216,11 +216,12 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
       Linking.openURL(href);
     } else if (navAction && Object.values(NAV_ACTIONS).includes(navAction)) {
       const navigation = options.onUpdateCallbacks.getNavigation();
-      if (navigation) {
+      const doc = options.onUpdateCallbacks.getDoc();
+      if (navigation && doc) {
         const { behaviorElement, delay, newElement, targetId } = options;
         const delayVal: number = +(delay || '');
         navigation.setUrl(options.onUpdateCallbacks.getState().url || '');
-        navigation.setDocument(options.onUpdateCallbacks.getDoc());
+        navigation.setDocument(doc);
         navigation.navigate(
           href || Navigation.ANCHOR_ID_SEPARATOR,
           navAction,
@@ -354,21 +355,29 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
       Behaviors.setRanOnce(behaviorElement);
     }
 
-    let newRoot: Document = onUpdateCallbacks.getDoc();
-    newRoot = Behaviors.setIndicatorsBeforeLoad(
-      showIndicatorIdList,
-      hideIndicatorIdList,
-      newRoot,
-    );
+    let newRoot = onUpdateCallbacks.getDoc();
+    if (newRoot) {
+      newRoot = Behaviors.setIndicatorsBeforeLoad(
+        showIndicatorIdList,
+        hideIndicatorIdList,
+        newRoot,
+      );
+    }
     // Re-render the modifications
     onUpdateCallbacks.setState({
       doc: newRoot,
     });
 
     // Fetch the resource, then perform the action on the target and undo indicators.
-    const fetchAndUpdate = () =>
-      this.fetchElement(href, verb, newRoot, formData, onUpdateCallbacks).then(
-        newElement => {
+    const fetchAndUpdate = () => {
+      if (newRoot) {
+        this.fetchElement(
+          href,
+          verb,
+          newRoot,
+          formData,
+          onUpdateCallbacks,
+        ).then(newElement => {
           // If a target is specified and exists, use it. Otherwise, the action target defaults
           // to the element triggering the action.
           let targetElement = targetId
@@ -389,21 +398,23 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
             // the doc to avoid any race conditions
             newRoot = onUpdateCallbacks.getDoc();
           }
-          newRoot = Behaviors.setIndicatorsAfterLoad(
-            showIndicatorIdList,
-            hideIndicatorIdList,
-            newRoot,
-          );
-          // Re-render the modifications
-          onUpdateCallbacks.setState({
-            doc: newRoot,
-          });
-
+          if (newRoot) {
+            newRoot = Behaviors.setIndicatorsAfterLoad(
+              showIndicatorIdList,
+              hideIndicatorIdList,
+              newRoot,
+            );
+            // Re-render the modifications
+            onUpdateCallbacks.setState({
+              doc: newRoot,
+            });
+          }
           if (typeof onEnd === 'function') {
             onEnd();
           }
-        },
-      );
+        });
+      }
+    };
 
     if (delay) {
       /**
@@ -417,25 +428,27 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
       const delayMs = parseInt(delay, 10);
       const timeoutId = setTimeout(() => {
         // Check the current doc for an element with the same timeout ID
-        const timeoutElement = Services.getElementByTimeoutId(
-          onUpdateCallbacks.getDoc(),
-          timeoutId.toString(),
-        );
+        const timeoutDoc = onUpdateCallbacks.getDoc();
+        const timeoutElement = timeoutDoc
+          ? Services.getElementByTimeoutId(timeoutDoc, timeoutId.toString())
+          : null;
         if (timeoutElement) {
           // Element with the same ID exists, we can execute the behavior
           Services.removeTimeoutId(timeoutElement);
           fetchAndUpdate();
         } else {
-          // Element with the same ID does not exist,
-          // we don't execute the behavior and undo the indicators.
-          newRoot = Behaviors.setIndicatorsAfterLoad(
-            showIndicatorIdList,
-            hideIndicatorIdList,
-            onUpdateCallbacks.getDoc(),
-          );
-          onUpdateCallbacks.setState({
-            doc: newRoot,
-          });
+          if (timeoutDoc) {
+            // Element with the same ID does not exist,
+            // we don't execute the behavior and undo the indicators.
+            newRoot = Behaviors.setIndicatorsAfterLoad(
+              showIndicatorIdList,
+              hideIndicatorIdList,
+              timeoutDoc,
+            );
+            onUpdateCallbacks.setState({
+              doc: newRoot,
+            });
+          }
           if (typeof onEnd === 'function') {
             onEnd();
           }
