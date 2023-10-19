@@ -80,14 +80,14 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
   reload = (
     optHref: DOMString | null | undefined,
     opts: HvComponentOptions,
-    callbacks: OnUpdateCallbacks,
+    onUpdateCallbacks: OnUpdateCallbacks,
   ) => {
     const isBlankHref =
       optHref === null ||
       optHref === undefined ||
       optHref === '#' ||
       optHref === '';
-    const stateUrl = callbacks.getState().url;
+    const stateUrl = onUpdateCallbacks.getState().url;
     const url = isBlankHref
       ? stateUrl
       : UrlService.getUrlFromHref(optHref, stateUrl || '');
@@ -124,7 +124,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
       Behaviors.setRanOnce(behaviorElement);
     }
 
-    let newRoot = callbacks.getDoc();
+    let newRoot = onUpdateCallbacks.getDoc();
     if (showIndicatorIdList || hideIndicatorIdList) {
       newRoot = Behaviors.setIndicatorsBeforeLoad(
         showIndicatorIdList,
@@ -134,8 +134,8 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
     }
 
     // Re-render the modifications
-    callbacks.setNeedsLoad();
-    callbacks.setState({
+    onUpdateCallbacks.setNeedsLoad();
+    onUpdateCallbacks.setState({
       doc: newRoot,
       elementError: null,
       error: null,
@@ -157,7 +157,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
     method: DOMString | null | undefined = Dom.HTTP_METHODS.GET,
     root: Document,
     formData: FormData | null | undefined,
-    callbacks: OnUpdateCallbacks,
+    onUpdateCallbacks: OnUpdateCallbacks,
   ): Promise<Element | null> => {
     if (!href) {
       throw new Error('No href passed to fetchElement');
@@ -174,7 +174,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
     try {
       const url = UrlService.getUrlFromHref(
         href,
-        callbacks.getState().url || '',
+        onUpdateCallbacks.getState().url || '',
       );
       const httpMethod: Dom.HttpMethod = method as Dom.HttpMethod;
       const { doc, staleHeaderType } = await this.parser.loadElement(
@@ -184,15 +184,15 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
       );
       if (staleHeaderType) {
         // We are doing this to ensure that we keep the screen stale until a `reload` happens
-        callbacks.setState({ staleHeaderType });
+        onUpdateCallbacks.setState({ staleHeaderType });
       }
-      callbacks.clearElementError();
+      onUpdateCallbacks.clearElementError();
       return doc.documentElement;
     } catch (err: Error | unknown) {
       if (this.props.onError) {
         this.props.onError(err as Error);
       }
-      callbacks.setState({ elementError: err as Error });
+      onUpdateCallbacks.setState({ elementError: err as Error });
     }
     return null;
   };
@@ -202,22 +202,25 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
     action: DOMString | null | undefined,
     element: Element,
     options: HvComponentOptions,
-    callbacks: OnUpdateCallbacks,
   ) => {
+    if (!options.onUpdateCallbacks) {
+      console.warn('onUpdate requires an onUpdateCallbacks object');
+      return;
+    }
     const navAction: NavAction = action as NavAction;
     const updateAction: UpdateAction = action as UpdateAction;
 
     if (action === ACTIONS.RELOAD) {
-      this.reload(href, options, callbacks);
+      this.reload(href, options, options.onUpdateCallbacks);
     } else if (action === ACTIONS.DEEP_LINK && href) {
       Linking.openURL(href);
     } else if (navAction && Object.values(NAV_ACTIONS).includes(navAction)) {
-      const navigation = callbacks.getNavigation();
+      const navigation = options.onUpdateCallbacks.getNavigation();
       if (navigation) {
         const { behaviorElement, delay, newElement, targetId } = options;
         const delayVal: number = +(delay || '');
-        navigation.setUrl(callbacks.getState().url || '');
-        navigation.setDocument(callbacks.getDoc());
+        navigation.setUrl(options.onUpdateCallbacks.getState().url || '');
+        navigation.setDocument(options.onUpdateCallbacks.getDoc());
         navigation.navigate(
           href || Navigation.ANCHOR_ID_SEPARATOR,
           navAction,
@@ -229,16 +232,22 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
             newElement: newElement || undefined,
             targetId: targetId || undefined,
           },
-          callbacks.registerPreload,
+          options.onUpdateCallbacks.registerPreload,
         );
       }
     } else if (
       updateAction &&
       Object.values(UPDATE_ACTIONS).includes(updateAction)
     ) {
-      this.onUpdateFragment(href, updateAction, element, options, callbacks);
+      this.onUpdateFragment(
+        href,
+        updateAction,
+        element,
+        options,
+        options.onUpdateCallbacks,
+      );
     } else if (action === ACTIONS.SWAP) {
-      this.onSwap(element, options.newElement, callbacks);
+      this.onSwap(element, options.newElement, options.onUpdateCallbacks);
     } else if (action === ACTIONS.DISPATCH_EVENT) {
       const { behaviorElement } = options;
       if (!behaviorElement) {
@@ -278,7 +287,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
       }
     } else {
       const { behaviorElement } = options;
-      this.onCustomUpdate(behaviorElement, callbacks);
+      this.onCustomUpdate(behaviorElement, options.onUpdateCallbacks);
     }
   };
 
@@ -302,13 +311,15 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
    *  - onEnd: Callback to run when the resource is fetched.
    *  - behaviorElement: The behavior element triggering the behavior. Can be different from
    *    the currentElement.
+   * @param onUpdateCallbacks {OnUpdateCallbacks} Callbacks to pass state
+   *  back to the update handlers
    */
   onUpdateFragment = (
     href: DOMString | null | undefined,
     action: UpdateAction,
     element: Element,
     options: HvComponentOptions,
-    callbacks: OnUpdateCallbacks,
+    onUpdateCallbacks: OnUpdateCallbacks,
   ) => {
     const opts = options || {};
     const {
@@ -343,25 +354,25 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
       Behaviors.setRanOnce(behaviorElement);
     }
 
-    let newRoot: Document = callbacks.getDoc();
+    let newRoot: Document = onUpdateCallbacks.getDoc();
     newRoot = Behaviors.setIndicatorsBeforeLoad(
       showIndicatorIdList,
       hideIndicatorIdList,
       newRoot,
     );
     // Re-render the modifications
-    callbacks.setState({
+    onUpdateCallbacks.setState({
       doc: newRoot,
     });
 
     // Fetch the resource, then perform the action on the target and undo indicators.
     const fetchAndUpdate = () =>
-      this.fetchElement(href, verb, newRoot, formData, callbacks).then(
+      this.fetchElement(href, verb, newRoot, formData, onUpdateCallbacks).then(
         newElement => {
           // If a target is specified and exists, use it. Otherwise, the action target defaults
           // to the element triggering the action.
           let targetElement = targetId
-            ? callbacks.getDoc()?.getElementById(targetId)
+            ? onUpdateCallbacks.getDoc()?.getElementById(targetId)
             : element;
           if (!targetElement) {
             targetElement = element;
@@ -376,7 +387,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
           } else {
             // When fetch fails, make sure to get the latest version of
             // the doc to avoid any race conditions
-            newRoot = callbacks.getDoc();
+            newRoot = onUpdateCallbacks.getDoc();
           }
           newRoot = Behaviors.setIndicatorsAfterLoad(
             showIndicatorIdList,
@@ -384,7 +395,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
             newRoot,
           );
           // Re-render the modifications
-          callbacks.setState({
+          onUpdateCallbacks.setState({
             doc: newRoot,
           });
 
@@ -407,7 +418,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
       const timeoutId = setTimeout(() => {
         // Check the current doc for an element with the same timeout ID
         const timeoutElement = Services.getElementByTimeoutId(
-          callbacks.getDoc(),
+          onUpdateCallbacks.getDoc(),
           timeoutId.toString(),
         );
         if (timeoutElement) {
@@ -420,9 +431,9 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
           newRoot = Behaviors.setIndicatorsAfterLoad(
             showIndicatorIdList,
             hideIndicatorIdList,
-            callbacks.getDoc(),
+            onUpdateCallbacks.getDoc(),
           );
-          callbacks.setState({
+          onUpdateCallbacks.setState({
             doc: newRoot,
           });
           if (typeof onEnd === 'function') {
@@ -444,7 +455,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
   onSwap = (
     currentElement: Element,
     newElement: Element | null | undefined,
-    callbacks: OnUpdateCallbacks,
+    onUpdateCallbacks: OnUpdateCallbacks,
   ) => {
     const parentElement = currentElement.parentNode as Element;
     if (!parentElement || !newElement) {
@@ -452,7 +463,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
     }
     parentElement.replaceChild(newElement, currentElement);
     const newRoot = Services.shallowCloneToRoot(parentElement);
-    callbacks.setState({
+    onUpdateCallbacks.setState({
       doc: newRoot,
     });
   };
@@ -462,7 +473,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
    */
   onCustomUpdate = (
     behaviorElement: Element | null | undefined,
-    callbacks: OnUpdateCallbacks,
+    onUpdateCallbacks: OnUpdateCallbacks,
   ) => {
     if (!behaviorElement) {
       console.warn('Custom behavior requires a behaviorElement');
@@ -484,16 +495,16 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
     if (behavior) {
       const updateRoot = (newRoot: Document, updateStylesheet = false) => {
         return updateStylesheet
-          ? callbacks.setState({
+          ? onUpdateCallbacks.setState({
               doc: newRoot,
               styles: Stylesheets.createStylesheets(newRoot),
             })
-          : callbacks.setState({ doc: newRoot });
+          : onUpdateCallbacks.setState({ doc: newRoot });
       };
-      const getRoot = () => callbacks.getDoc();
+      const getRoot = () => onUpdateCallbacks.getDoc();
       behavior.callback(
         behaviorElement,
-        callbacks.getOnUpdate(),
+        onUpdateCallbacks.getOnUpdate(),
         getRoot,
         updateRoot,
       );

@@ -295,23 +295,25 @@ export default class HvScreen extends React.Component {
    *
    */
   onUpdate = (href, action, currentElement, opts) => {
-    this.props.onUpdate(href, action, currentElement, opts, {
-      clearElementError: () => {
-        if (this.state.elementError) {
-          this.setState({ elementError: null });
-        }
-      },
-      getDoc: () => this.doc,
-      getNavigation: () => this.navigation,
-      getOnUpdate: () => this.onUpdate,
-      getState: () => this.state,
-      registerPreload: (id, element)=>this.registerPreload(id, element),
-      setNeedsLoad: () => {
-        this.needsLoad = true
-      },
-      setState: (state) => {
-        this.setState(state)
-      },
+    this.props.onUpdate(href, action, currentElement, {...opts,
+      onUpdateCallbacks: {
+        clearElementError: () => {
+          if (this.state.elementError) {
+            this.setState({ elementError: null });
+          }
+        },
+        getDoc: () => this.doc,
+        getNavigation: () => this.navigation,
+        getOnUpdate: () => this.onUpdate,
+        getState: () => this.state,
+        registerPreload: (id, element)=>this.registerPreload(id, element),
+        setNeedsLoad: () => {
+          this.needsLoad = true
+        },
+        setState: (state) => {
+          this.setState(state)
+        },
+      }
     });
   }
 }

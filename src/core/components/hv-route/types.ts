@@ -12,7 +12,7 @@ import {
   Fetch,
   HvBehavior,
   HvComponent,
-  RootOnUpdate,
+  HvComponentOnUpdate,
 } from 'hyperview/src/types';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
@@ -32,7 +32,7 @@ export type NavigationContextProps = {
   fetch: Fetch;
   onParseAfter?: (url: string) => void;
   onParseBefore?: (url: string) => void;
-  onUpdate: RootOnUpdate;
+  onUpdate: HvComponentOnUpdate;
   url?: string;
   behaviors?: HvBehavior[];
   components?: HvComponent[];
@@ -69,7 +69,7 @@ export type InnerRouteProps = {
   onError?: (error: Error) => void;
   onParseAfter?: (url: string) => void;
   onParseBefore?: (url: string) => void;
-  onUpdate: RootOnUpdate;
+  onUpdate: HvComponentOnUpdate;
   behaviors?: HvBehavior[];
   components?: HvComponent[];
   elementErrorComponent?: ComponentType<ErrorProps>;

@@ -206,6 +206,7 @@ export type HvComponentOptions = {
   custom?: boolean;
   newElement?: Element | null | undefined;
   showIndicatorId?: string | null | undefined;
+  onUpdateCallbacks?: OnUpdateCallbacks;
 };
 
 export type HvComponentOnUpdate = (
@@ -404,14 +405,6 @@ export type Fetch = (
   input: RequestInfo | URL,
   init?: RequestInit | undefined,
 ) => Promise<Response>;
-
-export type RootOnUpdate = (
-  href: DOMString | null | undefined,
-  action: DOMString | null | undefined,
-  element: Element,
-  options: HvComponentOptions,
-  callbacks: OnUpdateCallbacks,
-) => void;
 
 export type OnUpdateCallbacks = {
   clearElementError: () => void;
