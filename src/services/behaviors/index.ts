@@ -231,7 +231,7 @@ export const setRanOnce = (behaviorElement: Element) => {
 /**
  * Checks if `once` is previously applied.
  */
-export const isOncePreviouslyApplied = (behaviorElement: Element) => {
+export const isOncePreviouslyApplied = (behaviorElement: Element): boolean => {
   const once = behaviorElement.getAttribute('once');
   const ranOnce = behaviorElement.getAttribute('ran-once');
   return once === 'true' && ranOnce === 'true';
