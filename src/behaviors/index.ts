@@ -44,4 +44,6 @@ export {
   setIndicatorsBeforeLoad,
   performUpdate,
   setIndicatorsAfterLoad,
+  isOncePreviouslyApplied,
+  setRanOnce,
 } from 'hyperview/src/services/behaviors';

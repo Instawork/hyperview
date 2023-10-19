@@ -31,6 +31,7 @@ export type Props = {
   onError?: (error: Error) => void;
   onParseAfter?: (url: string) => void;
   onParseBefore?: (url: string) => void;
+  onUpdate: Types.HvComponentOnUpdate;
   url?: string;
   back?: (
     params: TypesLegacy.NavigationRouteParams | object | undefined,

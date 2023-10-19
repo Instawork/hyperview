@@ -8,7 +8,12 @@
 
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import { ComponentType, ReactNode } from 'react';
-import { Fetch, HvBehavior, HvComponent } from 'hyperview/src/types';
+import {
+  Fetch,
+  HvBehavior,
+  HvComponent,
+  HvComponentOnUpdate,
+} from 'hyperview/src/types';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
 
@@ -27,6 +32,7 @@ export type NavigationContextProps = {
   fetch: Fetch;
   onParseAfter?: (url: string) => void;
   onParseBefore?: (url: string) => void;
+  onUpdate: HvComponentOnUpdate;
   url?: string;
   behaviors?: HvBehavior[];
   components?: HvComponent[];
@@ -63,6 +69,7 @@ export type InnerRouteProps = {
   onError?: (error: Error) => void;
   onParseAfter?: (url: string) => void;
   onParseBefore?: (url: string) => void;
+  onUpdate: HvComponentOnUpdate;
   behaviors?: HvBehavior[];
   components?: HvComponent[];
   elementErrorComponent?: ComponentType<ErrorProps>;

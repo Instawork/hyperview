@@ -15,16 +15,12 @@ import * as Events from 'hyperview/src/services/events';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
-import * as UrlService from 'hyperview/src/services/url';
-import * as Xml from 'hyperview/src/services/xml';
-import { ACTIONS, NAV_ACTIONS, UPDATE_ACTIONS } from 'hyperview/src/types';
-// eslint-disable-next-line instawork/import-services
-import Navigation, { ANCHOR_ID_SEPARATOR } from 'hyperview/src/services/navigation';
-import { createProps, createStyleProp, getElementByTimeoutId, getFormData, later, removeTimeoutId, setTimeoutId, shallowCloneToRoot } from 'hyperview/src/services';
-import { Linking } from 'react-native';
+import { createProps, createStyleProp, later } from 'hyperview/src/services';
 import LoadElementError from '../load-element-error';
 import LoadError from 'hyperview/src/core/components/load-error';
 import Loading from 'hyperview/src/core/components/loading';
+// eslint-disable-next-line instawork/import-services
+import Navigation from 'hyperview/src/services/navigation';
 import React from 'react';
 
 // eslint-disable-next-line instawork/pure-components
@@ -41,7 +37,6 @@ export default class HvScreen extends React.Component {
     super(props);
 
     this.onUpdate = this.onUpdate.bind(this);
-    this.reload = this.reload.bind(this);
 
     this.updateActions = ['replace', 'replace-inner', 'append', 'prepend'];
     this.parser = new Dom.Parser(
@@ -237,60 +232,6 @@ export default class HvScreen extends React.Component {
   }
 
   /**
-   * Reload if an error occured.
-   * @param opt_href: Optional string href to use when reloading the screen. If not provided,
-   * the screen's current URL will be used.
-   */
-  reload = (optHref, opts) => {
-    const isBlankHref =
-      optHref === null ||
-      optHref === undefined ||
-      optHref === '#' ||
-      optHref === '';
-    const url = isBlankHref
-      ? this.state.url // eslint-disable-line react/no-access-state-in-setstate
-      : UrlService.getUrlFromHref(optHref, this.state.url); // eslint-disable-line react/no-access-state-in-setstate
-
-    if (!url) {
-      return;
-    }
-
-    const options = opts || {};
-    const {
-      behaviorElement, showIndicatorIds, hideIndicatorIds, once, onEnd,
-    } = options;
-
-    const showIndicatorIdList = showIndicatorIds ? Xml.splitAttributeList(showIndicatorIds) : [];
-    const hideIndicatorIdList = hideIndicatorIds ? Xml.splitAttributeList(hideIndicatorIds) : [];
-
-    if (once) {
-      if (behaviorElement.getAttribute('ran-once')) {
-        // This action is only supposed to run once, and it already ran,
-        // so there's nothing more to do.
-        if (typeof onEnd === 'function') {
-          onEnd();
-        }
-        return;
-      }
-      behaviorElement.setAttribute('ran-once', 'true');
-    }
-
-    let newRoot = this.doc;
-    if (showIndicatorIdList || hideIndicatorIdList){
-      newRoot = Behaviors.setIndicatorsBeforeLoad(showIndicatorIdList, hideIndicatorIdList, newRoot);
-    }
-
-    // Re-render the modifications
-    this.needsLoad = true;
-    this.setState({
-      doc: newRoot,
-      elementError: null,
-      error: null,
-      url,
-    });
-  }
-
-  /**
    * Renders the XML doc into React components. Shows blank screen until the XML doc is available.
    */
   render() {
@@ -333,22 +274,6 @@ export default class HvScreen extends React.Component {
   }
 
   /**
-   * Checks if `once` is previously applied.
-   */
-  isOncePreviouslyApplied = (behaviorElement) => {
-    const once = behaviorElement.getAttribute('once');
-    const ranOnce = behaviorElement.getAttribute('ran-once');
-    if (once === 'true' && ranOnce === 'true') {
-        return true;
-    }
-    return false;
-  }
-
-  setRanOnce = (behaviorElement) => {
-    behaviorElement.setAttribute('ran-once', 'true');
-  }
-
-  /**
    * Returns a navigation object similar to the one provided by React Navigation,
    * but connected to props injected by the parent app.
    */
@@ -360,44 +285,6 @@ export default class HvScreen extends React.Component {
     push: this.props.push,
   })
 
-  /**
-   * Fetches the provided reference.
-   * - If the references is an id reference (starting with #),
-   *   returns a clone of that element.
-   * - If the reference is a full URL, fetches the URL.
-   * - If the reference is a path, fetches the path from the host of the URL
-   *   used to render the screen.
-   * Returns a promise that resolves to a DOM element.
-   */
-  fetchElement = async (href, method, root, formData) => {
-    if (href[0] === '#') {
-      const element = root.getElementById(href.slice(1));
-      if (element) {
-        return element.cloneNode(true);
-      }
-      throw new Error(`Element with id ${href} not found in document`);
-    }
-
-    try {
-      const url = UrlService.getUrlFromHref(href, this.state.url, method);
-      const { doc, staleHeaderType } = await this.parser.loadElement(url, formData, method);
-      if (staleHeaderType) {
-        // We are doing this to ensure that we keep the screen stale until a `reload` happens
-        this.setState({ staleHeaderType });
-      }
-      if (this.state.elementError) {
-        this.setState({ elementError: null });
-      }
-      return doc.documentElement;
-    } catch (err) {
-      if (this.props.onError) {
-        this.props.onError(err);
-      }
-      this.setState({ elementError: err });
-    }
-    return null;
-  }
-
   registerPreload = (id, element) => {
     if (this.props.registerPreload){
       this.props.registerPreload(id, element);
@@ -408,204 +295,26 @@ export default class HvScreen extends React.Component {
    *
    */
   onUpdate = (href, action, currentElement, opts) => {
-    if (action === ACTIONS.RELOAD) {
-      this.reload(href, opts);
-    } else if (action === ACTIONS.DEEP_LINK) {
-      Linking.openURL(href);
-    } else if (Object.values(NAV_ACTIONS).includes(action)) {
-      this.navigation.setUrl(this.state.url);
-      this.navigation.setDocument(this.doc);
-      this.navigation.navigate(href || ANCHOR_ID_SEPARATOR, action, currentElement, this.formComponentRegistry, opts, this.registerPreload);
-    } else if (Object.values(UPDATE_ACTIONS).includes(action)) {
-      this.onUpdateFragment(href, action, currentElement, opts);
-    } else if (action === ACTIONS.SWAP) {
-      this.onSwap(currentElement, opts.newElement);
-    } else if (action === ACTIONS.DISPATCH_EVENT) {
-      const { behaviorElement } = opts;
-      const eventName = behaviorElement.getAttribute('event-name');
-      const trigger = behaviorElement.getAttribute('trigger');
-      const delay = behaviorElement.getAttribute('delay');
-
-      if (this.isOncePreviouslyApplied(behaviorElement)) {
-        return;
-      }
-
-      this.setRanOnce(behaviorElement);
-
-      // Check for event loop formation
-      if (trigger === 'on-event') {
-        throw new Error('trigger="on-event" and action="dispatch-event" cannot be used on the same element');
-      }
-      if (!eventName) {
-        throw new Error('dispatch-event requires an event-name attribute to be present');
-      }
-
-      const dispatch = () => {
-        Events.dispatch(eventName);
-      }
-
-      if (delay) {
-        setTimeout(dispatch, parseInt(delay, 10));
-      } else {
-        dispatch();
-      }
-    } else {
-      const { behaviorElement } = opts;
-      this.onCustomUpdate(behaviorElement);
-    }
-  }
-
-  /**
-   * Handler for behaviors on the screen.
-   * @param href {string} A reference to the XML to fetch. Can be local (via id reference prepended
-   *        by #) or a
-   * remote resource.
-   * @param action {string} The name of the action to perform with the returned XML.
-   * @param currentElement {Element} The XML DOM element triggering the behavior.
-   * @param options {Object} Optional attributes:
-   *  - verb: The HTTP method to use for the request
-   *  - targetId: An id reference of the element to apply the action to. Defaults to currentElement
-   *    if not provided.
-   *  - showIndicatorIds: Space-separated list of id references to show during the fetch.
-   *  - hideIndicatorIds: Space-separated list of id references to hide during the fetch.
-   *  - delay: Minimum time to wait to fetch the resource. Indicators will be shown/hidden during
-   *    this time.
-   *  - once: If true, the action should only trigger once. If already triggered, onUpdate will be
-   *    a no-op.
-   *  - onEnd: Callback to run when the resource is fetched.
-   *  - behaviorElement: The behavior element triggering the behavior. Can be different from
-   *    the currentElement.
-   */
-  onUpdateFragment = (href, action, currentElement, opts) => {
-    const options = opts || {};
-    const {
-      behaviorElement, verb, targetId, showIndicatorIds, hideIndicatorIds, delay, once, onEnd,
-    } = options;
-
-    const showIndicatorIdList = showIndicatorIds ? Xml.splitAttributeList(showIndicatorIds) : [];
-    const hideIndicatorIdList = hideIndicatorIds ? Xml.splitAttributeList(hideIndicatorIds) : [];
-
-    const formData = getFormData(currentElement, this.formComponentRegistry);
-
-    if (once) {
-      if (behaviorElement.getAttribute('ran-once')) {
-        // This action is only supposed to run once, and it already ran,
-        // so there's nothing more to do.
-        if (typeof onEnd === 'function') {
-          onEnd();
-        }
-        return;
-      }
-      behaviorElement.setAttribute('ran-once', 'true');
-
-    }
-
-    let newRoot = this.doc;
-    newRoot = Behaviors.setIndicatorsBeforeLoad(showIndicatorIdList, hideIndicatorIdList, newRoot);
-    // Re-render the modifications
-    this.setState({
-      doc: newRoot,
-    });
-
-    // Fetch the resource, then perform the action on the target and undo indicators.
-    const fetchAndUpdate = () => this.fetchElement(href, verb, newRoot, formData)
-      .then((newElement) => {
-        // If a target is specified and exists, use it. Otherwise, the action target defaults
-        // to the element triggering the action.
-        let targetElement = targetId ? this.doc?.getElementById(targetId) : currentElement;
-        if (!targetElement) {
-          targetElement = currentElement;
-        }
-
-        if (newElement) {
-          newRoot = Behaviors.performUpdate(action, targetElement, newElement);
-        } else {
-          // When fetch fails, make sure to get the latest version of the doc to avoid any race conditions
-          newRoot = this.doc;
-        }
-        newRoot = Behaviors.setIndicatorsAfterLoad(showIndicatorIdList, hideIndicatorIdList, newRoot);
-        // Re-render the modifications
-        this.setState({
-          doc: newRoot,
-        });
-
-        if (typeof onEnd === 'function') {
-          onEnd();
-        }
-      });
-
-    if (delay) {
-      /**
-       * Delayed behaviors will only trigger after a given amount of time.
-       * During that time, the DOM may change and the triggering element may no longer
-       * be in the document. When that happens, we don't want to trigger the behavior after the time
-       * elapses. To track this, we store the timeout id (generated by setTimeout) on the triggering
-       * element, and then look it up in the document after the elapsed time. If the timeout id is not
-       * present, we update the indicators but don't execute the behavior.
-       */
-      const delayMs = parseInt(delay, 10);
-      let timeoutId = null;
-      timeoutId = setTimeout(() => {
-        // Check the current doc for an element with the same timeout ID
-        const timeoutElement = getElementByTimeoutId(this.doc, timeoutId.toString());
-        if (timeoutElement) {
-          // Element with the same ID exists, we can execute the behavior
-          removeTimeoutId(timeoutElement);
-          fetchAndUpdate();
-        } else {
-          // Element with the same ID does not exist, we don't execute the behavior and undo the indicators.
-          newRoot = Behaviors.setIndicatorsAfterLoad(showIndicatorIdList, hideIndicatorIdList, this.doc);
-          this.setState({
-            doc: newRoot,
-          });
-          if (typeof onEnd === 'function') {
-            onEnd();
+    this.props.onUpdate(href, action, currentElement, {...opts,
+      onUpdateCallbacks: {
+        clearElementError: () => {
+          if (this.state.elementError) {
+            this.setState({ elementError: null });
           }
-        }
-      }, delayMs);
-      // Store the timeout ID
-      setTimeoutId(currentElement, timeoutId.toString());
-    } else {
-      // If there's no delay, fetch immediately and update the doc when done.
-      fetchAndUpdate();
-    }
-  }
-
-  /**
-   * Used internally to update the state of things like select forms.
-   */
-  onSwap = (currentElement, newElement) => {
-    const parentElement = currentElement.parentNode;
-    parentElement.replaceChild(newElement, currentElement);
-    const newRoot = shallowCloneToRoot(parentElement);
-    this.setState({
-      doc: newRoot,
+        },
+        getDoc: () => this.doc,
+        getNavigation: () => this.navigation,
+        getOnUpdate: () => this.onUpdate,
+        getState: () => this.state,
+        registerPreload: (id, element)=>this.registerPreload(id, element),
+        setNeedsLoad: () => {
+          this.needsLoad = true
+        },
+        setState: (state) => {
+          this.setState(state)
+        },
+      }
     });
-  }
-
-  /**
-   * Extensions for custom behaviors.
-   */
-  onCustomUpdate = (behaviorElement) => {
-    const action = behaviorElement.getAttribute('action');
-    const behavior = this.behaviorRegistry[action];
-
-    if (this.isOncePreviouslyApplied(behaviorElement)) {
-      return;
-    }
-
-    this.setRanOnce(behaviorElement);
-
-    if (behavior) {
-      const updateRoot = (newRoot, updateStylesheet = false) => updateStylesheet
-        ? this.setState({ doc: newRoot, styles: Stylesheets.createStylesheets(newRoot) })
-        : this.setState({ doc: newRoot });
-      const getRoot = () => this.doc;
-      behavior.callback(behaviorElement, this.onUpdate, getRoot, updateRoot);
-    } else {
-      // No behavior detected.
-      console.warn(`No behavior registered for action "${action}"`);
-    }
   }
 }
 

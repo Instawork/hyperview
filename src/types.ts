@@ -5,6 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
+
+import * as Stylesheets from './services/stylesheets';
+import Navigation from './services/navigation';
+
 import type React from 'react';
 
 import type { XResponseStaleReason } from './services/dom/types';
@@ -202,6 +206,7 @@ export type HvComponentOptions = {
   custom?: boolean;
   newElement?: Element | null | undefined;
   showIndicatorId?: string | null | undefined;
+  onUpdateCallbacks?: OnUpdateCallbacks;
 };
 
 export type HvComponentOnUpdate = (
@@ -369,8 +374,8 @@ export const UPDATE_ACTIONS = {
 export type UpdateAction = typeof UPDATE_ACTIONS[keyof typeof UPDATE_ACTIONS];
 
 export type BehaviorOptions = {
-  newElement: Element;
-  behaviorElement: Element;
+  newElement?: Element;
+  behaviorElement?: Element;
   showIndicatorId?: string;
   delay?: number;
   targetId?: string;
@@ -400,3 +405,23 @@ export type Fetch = (
   input: RequestInfo | URL,
   init?: RequestInit | undefined,
 ) => Promise<Response>;
+
+export type OnUpdateCallbacks = {
+  clearElementError: () => void;
+  getNavigation: () => Navigation;
+  getOnUpdate: () => HvComponentOnUpdate;
+  getDoc: () => Document;
+  registerPreload: (id: number, element: Element) => void;
+  setNeedsLoad: () => void;
+  getState: () => ScreenState;
+  setState: (state: ScreenState) => void;
+};
+
+export type ScreenState = {
+  doc?: Document | null | undefined;
+  elementError?: Error | null | undefined;
+  error?: Error | null | undefined;
+  staleHeaderType?: 'stale-if-error' | null | undefined;
+  styles?: Stylesheets.StyleSheets | null | undefined;
+  url?: string | null | undefined;
+};
