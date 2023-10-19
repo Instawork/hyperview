@@ -47,11 +47,6 @@ export type NavigatorMapContextProps = {
   getPreload: (key: number) => Element | undefined;
 };
 
-export type State = {
-  doc?: Document;
-  error?: Error;
-};
-
 /**
  * The route prop used by react-navigation
  */

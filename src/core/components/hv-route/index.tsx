@@ -19,6 +19,9 @@ import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as Types from './types';
 import * as TypesLegacy from 'hyperview/src/types';
 import * as UrlService from 'hyperview/src/services/url';
+import {
+  ScreenState,
+} from 'hyperview/src/types';
 import React, { JSXElementConstructor, PureComponent, useContext } from 'react';
 import HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
@@ -32,7 +35,7 @@ import Loading from 'hyperview/src/core/components/loading';
  * - Renders the document
  * - Handles errors
  */
-class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
+class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
   parser?: DomService.Parser;
 
   navLogic: NavigatorService.Navigator;
@@ -43,8 +46,8 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
     super(props);
 
     this.state = {
-      doc: undefined,
-      error: undefined,
+      doc: null,
+      error: null,
     };
     this.navLogic = new NavigatorService.Navigator(this.props);
     this.componentRegistry = Components.getRegistry(this.props.components);
@@ -55,10 +58,10 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
    */
   static getDerivedStateFromProps(
     props: Types.InnerRouteProps,
-    state: Types.State,
+    state: ScreenState,
   ) {
     if (props.element) {
-      return { ...state, doc: undefined };
+      return { ...state, doc: null };
     }
     return state;
   }
@@ -95,7 +98,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
   load = async (): Promise<void> => {
     if (!this.parser) {
       this.setState({
-        doc: undefined,
+        doc: null,
         error: new NavigatorService.HvRouteError('No parser or context found'),
       });
       return;
@@ -108,14 +111,17 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
 
       // Set the state with the merged document
       this.setState(state => {
-        const merged = NavigatorService.mergeDocument(doc, state.doc);
+        const merged = NavigatorService.mergeDocument(
+          doc,
+          state.doc || undefined,
+        );
         const root = Helpers.getFirstChildTag(
           merged,
           TypesLegacy.LOCAL_NAME.DOC,
         );
         if (!root) {
           return {
-            doc: undefined,
+            doc: null,
             error: new NavigatorService.HvRouteError('No root element found'),
           };
         }
@@ -129,7 +135,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
         this.props.onError(err as Error);
       }
       this.setState({
-        doc: undefined,
+        doc: null,
         error: err as Error,
       });
     }
@@ -316,7 +322,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
         return (
           <Contexts.DocContext.Provider
             value={{
-              getDoc: () => this.state.doc,
+              getDoc: () => this.state.doc || undefined,
               setDoc: (doc: Document) => this.setState({ doc }),
             }}
           >
