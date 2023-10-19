@@ -310,8 +310,7 @@ export default class HvScreen extends React.Component {
       setNeedsLoad: () => {
         this.needsLoad = true
       },
-      // eslint-disable-next-line flowtype/no-types-missing-file-annotation
-      setState: (state: object) => {
+      setState: (state) => {
         this.setState(state)
       },
     });

@@ -6,6 +6,7 @@
  *
  */
 
+import * as Stylesheets from './services/stylesheets';
 import Navigation from './services/navigation';
 
 import type React from 'react';
@@ -421,5 +422,14 @@ export type OnUpdateCallbacks = {
   getStateUrl: () => string;
   registerPreload: (id: number, element: Element) => void;
   setNeedsLoad: () => void;
-  setState: (state: object) => void;
+  setState: (state: ScreenState) => void;
+};
+
+export type ScreenState = {
+  doc?: Document | null | undefined;
+  elementError?: Error | null | undefined;
+  error?: Error | null | undefined;
+  staleHeaderType?: 'stale-if-error' | null | undefined;
+  styles?: Stylesheets.StyleSheets | null | undefined;
+  url?: string | null | undefined;
 };

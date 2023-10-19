@@ -188,7 +188,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
       if (this.props.onError) {
         this.props.onError(err as Error);
       }
-      callbacks.setState({ elementError: err });
+      callbacks.setState({ elementError: err as Error });
     }
     return null;
   };
