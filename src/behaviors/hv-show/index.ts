@@ -36,9 +36,9 @@ export default {
 
     const showElement = () => {
       const doc: Document | null = getRoot();
-      const targetElement: Element | null | undefined = doc
-        ? doc.getElementById(targetId)
-        : null;
+      const targetElement: Element | null | undefined = doc?.getElementById(
+        targetId,
+      );
       if (!targetElement) {
         return;
       }
