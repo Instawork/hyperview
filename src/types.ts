@@ -216,7 +216,7 @@ export type HvComponentOnUpdate = (
   options: HvComponentOptions,
 ) => void;
 
-export type HvGetRoot = () => Document;
+export type HvGetRoot = () => Document | null;
 
 export type HvUpdateRoot = (root: Document, updateStylesheet?: boolean) => void;
 

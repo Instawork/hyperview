@@ -38,10 +38,10 @@ export default {
     );
 
     const setValue = () => {
-      const doc: Document = getRoot();
-      const targetElement: Element | null | undefined = doc.getElementById(
-        targetId,
-      );
+      const doc: Document | null = getRoot();
+      const targetElement: Element | null | undefined = doc
+        ? doc.getElementById(targetId)
+        : null;
       if (!targetElement) {
         return;
       }
@@ -68,13 +68,16 @@ export default {
       setValue();
     } else {
       // If there's a delay, first trigger the indicators before the show.
-      const newRoot = Behaviors.setIndicatorsBeforeLoad(
-        showIndicatorIds,
-        hideIndicatorIds,
-        getRoot(),
-      );
-      // Update the DOM to reflect the new state of the indicators.
-      updateRoot(newRoot);
+      const doc: Document | null = getRoot();
+      if (doc) {
+        const newRoot = Behaviors.setIndicatorsBeforeLoad(
+          showIndicatorIds,
+          hideIndicatorIds,
+          doc,
+        );
+        // Update the DOM to reflect the new state of the indicators.
+        updateRoot(newRoot);
+      }
       // Wait for the delay then show the target.
       later(delay).then(setValue).catch(setValue);
     }
