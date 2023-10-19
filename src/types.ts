@@ -410,7 +410,7 @@ export type OnUpdateCallbacks = {
   clearElementError: () => void;
   getNavigation: () => Navigation;
   getOnUpdate: () => HvComponentOnUpdate;
-  getDoc: () => Document;
+  getDoc: () => Document | null;
   registerPreload: (id: number, element: Element) => void;
   setNeedsLoad: () => void;
   getState: () => ScreenState;
@@ -418,10 +418,10 @@ export type OnUpdateCallbacks = {
 };
 
 export type ScreenState = {
-  doc?: Document | null | undefined;
-  elementError?: Error | null | undefined;
-  error?: Error | null | undefined;
-  staleHeaderType?: 'stale-if-error' | null | undefined;
-  styles?: Stylesheets.StyleSheets | null | undefined;
-  url?: string | null | undefined;
+  doc?: Document | null;
+  elementError?: Error | null;
+  error?: Error | null;
+  staleHeaderType?: XResponseStaleReason | null;
+  styles?: Stylesheets.StyleSheets | null;
+  url?: string | null;
 };
