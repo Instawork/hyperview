@@ -87,9 +87,10 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
       optHref === undefined ||
       optHref === '#' ||
       optHref === '';
+    const stateUrl = callbacks.getState().url;
     const url = isBlankHref
-      ? callbacks.getStateUrl()
-      : UrlService.getUrlFromHref(optHref, callbacks.getStateUrl());
+      ? stateUrl
+      : UrlService.getUrlFromHref(optHref, stateUrl || '');
 
     if (!url) {
       return;
@@ -171,7 +172,10 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
     }
 
     try {
-      const url = UrlService.getUrlFromHref(href, callbacks.getStateUrl());
+      const url = UrlService.getUrlFromHref(
+        href,
+        callbacks.getState().url || '',
+      );
       const httpMethod: Dom.HttpMethod = method as Dom.HttpMethod;
       const { doc, staleHeaderType } = await this.parser.loadElement(
         url,
@@ -212,7 +216,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
       if (navigation) {
         const { behaviorElement, delay, newElement, targetId } = options;
         const delayVal: number = +(delay || '');
-        navigation.setUrl(callbacks.getStateUrl());
+        navigation.setUrl(callbacks.getState().url || '');
         navigation.setDocument(callbacks.getDoc());
         navigation.navigate(
           href || Navigation.ANCHOR_ID_SEPARATOR,

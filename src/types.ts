@@ -417,11 +417,10 @@ export type OnUpdateCallbacks = {
   clearElementError: () => void;
   getNavigation: () => Navigation;
   getOnUpdate: () => HvComponentOnUpdate;
-  getStateDoc: () => Document;
   getDoc: () => Document;
-  getStateUrl: () => string;
   registerPreload: (id: number, element: Element) => void;
   setNeedsLoad: () => void;
+  getState: () => ScreenState;
   setState: (state: ScreenState) => void;
 };
 

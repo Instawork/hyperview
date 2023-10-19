@@ -304,8 +304,7 @@ export default class HvScreen extends React.Component {
       getDoc: () => this.doc,
       getNavigation: () => this.navigation,
       getOnUpdate: () => this.onUpdate,
-      getStateDoc: () => this.state.doc,
-      getStateUrl: () => this.state.url,
+      getState: () => this.state,
       registerPreload: (id, element)=>this.registerPreload(id, element),
       setNeedsLoad: () => {
         this.needsLoad = true
