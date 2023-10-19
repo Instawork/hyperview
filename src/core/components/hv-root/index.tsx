@@ -59,9 +59,6 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
   constructor(props: HvScreenProps.Props) {
     super(props);
 
-    this.onUpdate = this.onUpdate.bind(this);
-    this.reload = this.reload.bind(this);
-
     this.parser = new Dom.Parser(
       this.props.fetch,
       this.props.onParseBefore,
