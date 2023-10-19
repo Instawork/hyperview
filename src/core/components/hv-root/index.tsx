@@ -165,7 +165,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
     if (href[0] === '#') {
       const element = root.getElementById(href.slice(1));
       if (element) {
-        return element.cloneNode(true);
+        return element.cloneNode(true) as Element;
       }
       throw new Error(`Element with id ${href} not found in document`);
     }
