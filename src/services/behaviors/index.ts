@@ -234,8 +234,5 @@ export const setRanOnce = (behaviorElement: Element) => {
 export const isOncePreviouslyApplied = (behaviorElement: Element) => {
   const once = behaviorElement.getAttribute('once');
   const ranOnce = behaviorElement.getAttribute('ran-once');
-  if (once === 'true' && ranOnce === 'true') {
-    return true;
-  }
-  return false;
+  return once === 'true' && ranOnce === 'true';
 };
