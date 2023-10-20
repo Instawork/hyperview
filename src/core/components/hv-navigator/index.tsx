@@ -6,12 +6,11 @@
  *
  */
 
-import * as NavigationContext from 'hyperview/src/contexts/navigation';
 import * as NavigatorMapContext from 'hyperview/src/contexts/navigator-map';
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Types from './types';
 import * as TypesLegacy from 'hyperview/src/types';
-import React, { PureComponent, useContext } from 'react';
+import React, { PureComponent } from 'react';
 import { createCustomStackNavigator } from 'hyperview/src/core/components/navigator-stack';
 import { createCustomTabNavigator } from 'hyperview/src/core/components/navigator-tab';
 import { getFirstChildTag } from 'hyperview/src/services/dom/helpers';
@@ -139,15 +138,6 @@ export default class HvNavigator extends PureComponent<Types.Props> {
    */
   buildScreens = (element: Element, type: string): React.ReactNode => {
     const screens: React.ReactElement[] = [];
-    const navigationContext: NavigationContext.NavigationContextProps | null = useContext(
-      NavigationContext.Context,
-    );
-    const navigatorMapContext: NavigatorMapContext.NavigatorMapContextProps | null = useContext(
-      NavigatorMapContext.NavigatorMapContext,
-    );
-    if (!navigationContext || !navigatorMapContext) {
-      throw new NavigatorService.HvRouteError('No context found');
-    }
 
     const elements: Element[] = NavigatorService.getChildElements(element);
 
