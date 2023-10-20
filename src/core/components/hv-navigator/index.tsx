@@ -6,6 +6,8 @@
  *
  */
 
+import * as Behaviors from 'hyperview/src/services/behaviors';
+import * as Dom from 'hyperview/src/services/dom';
 import * as NavigatorMapContext from 'hyperview/src/contexts/navigator-map';
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import { BEHAVIOR_ATTRIBUTES, LOCAL_NAME, TRIGGERS } from 'hyperview/src/types';
@@ -31,6 +33,56 @@ const Stack = createCustomStackNavigator<ParamTypes>();
 const BottomTab = createCustomTabNavigator<ParamTypes>();
 
 export default class HvNavigator extends PureComponent<Props> {
+  behaviorElements: Element[] = [];
+
+  constructor(props: Props) {
+    super(props);
+    this.updateBehaviorElements();
+  }
+
+  componentDidMount() {
+    this.triggerLoadBehaviors();
+  }
+
+  componentDidUpdate(prevProps: Props) {
+    if (prevProps.element === this.props.element) {
+      return;
+    }
+
+    this.updateBehaviorElements();
+    this.triggerLoadBehaviors();
+  }
+
+  /**
+   * Cache all behaviors with a `load` trigger
+   */
+  updateBehaviorElements = () => {
+    if (this.props.element) {
+      this.behaviorElements = Dom.getBehaviorElements(
+        this.props.element,
+      ).filter(e => {
+        const triggerAttr = e.getAttribute(BEHAVIOR_ATTRIBUTES.TRIGGER);
+        if (triggerAttr !== TRIGGERS.LOAD) {
+          console.warn(
+            `Unsupported trigger '${triggerAttr}'. Only "load" is supported`,
+          );
+          return false;
+        }
+        return true;
+      });
+    }
+  };
+
+  triggerLoadBehaviors = () => {
+    if (this.behaviorElements.length > 0 && this.props.element) {
+      Behaviors.triggerBehaviors(
+        this.props.element,
+        this.behaviorElements,
+        this.props.onUpdate,
+      );
+    }
+  };
+
   /**
    * Encapsulated options for the stack screenOptions
    */

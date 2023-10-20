@@ -1235,6 +1235,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="1" maxOccurs="unbounded" ref="hv:nav-route" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="hv:behavior" />
       </xs:sequence>
       <xs:attribute name="id" use="required" type="hv:ID" />
       <xs:attribute name="type" use="required" type="hv:navigator-type" />
