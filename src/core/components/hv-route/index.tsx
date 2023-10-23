@@ -216,12 +216,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
    * Implement the callbacks from this class
    */
   updateCallbacks = (): OnUpdateCallbacks => {
-    if (!this.state.doc || !this.props.navigation) {
-      throw new NavigatorService.HvRouteError(
-        'No document or navigator found for onUpdate',
-      );
-    }
-
     return {
       clearElementError: () => {
         // Noop
