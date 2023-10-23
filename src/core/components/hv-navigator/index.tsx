@@ -6,12 +6,20 @@
  *
  */
 
-import * as NavigationContext from 'hyperview/src/contexts/navigation';
+import * as Behaviors from 'hyperview/src/services/behaviors';
+import * as Dom from 'hyperview/src/services/dom';
 import * as NavigatorMapContext from 'hyperview/src/contexts/navigator-map';
 import * as NavigatorService from 'hyperview/src/services/navigator';
-import * as Types from './types';
-import * as TypesLegacy from 'hyperview/src/types';
-import React, { PureComponent, useContext } from 'react';
+import { BEHAVIOR_ATTRIBUTES, LOCAL_NAME, TRIGGERS } from 'hyperview/src/types';
+import {
+  ParamTypes,
+  Props,
+  RouteParams,
+  ScreenParams,
+  StackScreenOptions,
+  TabScreenOptions,
+} from './types';
+import React, { PureComponent } from 'react';
 import { createCustomStackNavigator } from 'hyperview/src/core/components/navigator-stack';
 import { createCustomTabNavigator } from 'hyperview/src/core/components/navigator-tab';
 import { getFirstChildTag } from 'hyperview/src/services/dom/helpers';
@@ -21,16 +29,64 @@ import { getFirstChildTag } from 'hyperview/src/services/dom/helpers';
  */
 const SHOW_NAVIGATION_UI = false;
 
-const Stack = createCustomStackNavigator<Types.ParamTypes>();
-const BottomTab = createCustomTabNavigator<Types.ParamTypes>();
+const Stack = createCustomStackNavigator<ParamTypes>();
+const BottomTab = createCustomTabNavigator<ParamTypes>();
 
-export default class HvNavigator extends PureComponent<Types.Props> {
+export default class HvNavigator extends PureComponent<Props> {
+  behaviorElements: Element[] = [];
+
+  constructor(props: Props) {
+    super(props);
+    this.updateBehaviorElements();
+  }
+
+  componentDidMount() {
+    this.triggerLoadBehaviors();
+  }
+
+  componentDidUpdate(prevProps: Props) {
+    if (prevProps.element === this.props.element) {
+      return;
+    }
+
+    this.updateBehaviorElements();
+    this.triggerLoadBehaviors();
+  }
+
+  /**
+   * Cache all behaviors with a `load` trigger
+   */
+  updateBehaviorElements = () => {
+    if (this.props.element) {
+      this.behaviorElements = Dom.getBehaviorElements(
+        this.props.element,
+      ).filter(e => {
+        const triggerAttr = e.getAttribute(BEHAVIOR_ATTRIBUTES.TRIGGER);
+        if (triggerAttr !== TRIGGERS.LOAD) {
+          console.warn(
+            `Unsupported trigger '${triggerAttr}'. Only "load" is supported`,
+          );
+          return false;
+        }
+        return true;
+      });
+    }
+  };
+
+  triggerLoadBehaviors = () => {
+    if (this.behaviorElements.length > 0 && this.props.element) {
+      Behaviors.triggerBehaviors(
+        this.props.element,
+        this.behaviorElements,
+        this.props.onUpdate,
+      );
+    }
+  };
+
   /**
    * Encapsulated options for the stack screenOptions
    */
-  stackScreenOptions = (
-    route: Types.ScreenParams,
-  ): Types.StackScreenOptions => ({
+  stackScreenOptions = (route: ScreenParams): StackScreenOptions => ({
     headerMode: 'screen',
     headerShown: SHOW_NAVIGATION_UI,
     title: this.getId(route.params),
@@ -39,7 +95,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
   /**
    * Encapsulated options for the tab screenOptions
    */
-  tabScreenOptions = (route: Types.ScreenParams): Types.TabScreenOptions => ({
+  tabScreenOptions = (route: ScreenParams): TabScreenOptions => ({
     headerShown: SHOW_NAVIGATION_UI,
     tabBarStyle: { display: SHOW_NAVIGATION_UI ? 'flex' : 'none' },
     title: this.getId(route.params),
@@ -48,7 +104,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
   /**
    * Logic to determine the nav route id
    */
-  getId = (params: Types.RouteParams): string => {
+  getId = (params: RouteParams): string => {
     if (!params) {
       throw new NavigatorService.HvNavigatorError('No params found for route');
     }
@@ -89,7 +145,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
         <Stack.Screen
           key={id}
           component={this.props.routeComponent}
-          getId={({ params }: Types.ScreenParams) => this.getId(params)}
+          getId={({ params }: ScreenParams) => this.getId(params)}
           initialParams={initialParams}
           name={id}
           options={{
@@ -139,15 +195,6 @@ export default class HvNavigator extends PureComponent<Types.Props> {
    */
   buildScreens = (element: Element, type: string): React.ReactNode => {
     const screens: React.ReactElement[] = [];
-    const navigationContext: NavigationContext.NavigationContextProps | null = useContext(
-      NavigationContext.Context,
-    );
-    const navigatorMapContext: NavigatorMapContext.NavigatorMapContextProps | null = useContext(
-      NavigatorMapContext.NavigatorMapContext,
-    );
-    if (!navigationContext || !navigatorMapContext) {
-      throw new NavigatorService.HvRouteError('No context found');
-    }
 
     const elements: Element[] = NavigatorService.getChildElements(element);
 
@@ -157,7 +204,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
     // This iteration will also process nested navigators
     //    and retrieve additional urls from child routes
     elements.forEach((navRoute: Element) => {
-      if (navRoute.localName === TypesLegacy.LOCAL_NAME.NAV_ROUTE) {
+      if (navRoute.localName === LOCAL_NAME.NAV_ROUTE) {
         const id: string | null | undefined = navRoute.getAttribute('id');
         if (!id) {
           throw new NavigatorService.HvNavigatorError(
@@ -171,7 +218,7 @@ export default class HvNavigator extends PureComponent<Types.Props> {
         // Check for nested navigators
         const nestedNavigator: Element | null = getFirstChildTag(
           navRoute,
-          TypesLegacy.LOCAL_NAME.NAVIGATOR,
+          LOCAL_NAME.NAVIGATOR,
         );
 
         if (!nestedNavigator && !href) {
