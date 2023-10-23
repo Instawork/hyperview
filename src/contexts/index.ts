@@ -7,7 +7,7 @@
  */
 
 import type { ComponentType } from 'react';
-import type { HvComponentOnUpdate } from '../types';
+import type { HvComponentOnUpdate } from 'hyperview/src/types';
 import React from 'react';
 import type { RefreshControlProps } from 'react-native';
 
