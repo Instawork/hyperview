@@ -7,6 +7,7 @@
  */
 
 import type { ComponentType } from 'react';
+import type { HvComponentOnUpdate } from 'hyperview/src/types';
 import React from 'react';
 import type { RefreshControlProps } from 'react-native';
 
@@ -27,3 +28,8 @@ export const DocContext = React.createContext<{
   getDoc: () => Document | undefined;
   setDoc?: (doc: Document) => void;
 } | null>(null);
+
+export const OnUpdateContext = React.createContext<{
+  onUpdate: HvComponentOnUpdate;
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+}>({ onUpdate: () => {} });

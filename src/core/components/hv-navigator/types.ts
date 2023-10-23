@@ -7,6 +7,7 @@
  */
 
 import { FC } from 'react';
+import type { HvComponentOnUpdate } from 'hyperview/src/types';
 import type { Props as HvRouteProps } from 'hyperview/src/core/components/hv-route';
 
 export type RouteParams = {
@@ -30,6 +31,7 @@ export type NavigatorParams = {
  */
 export type Props = {
   element?: Element;
+  onUpdate: HvComponentOnUpdate;
   params?: RouteParams;
   routeComponent: FC<HvRouteProps>;
 };

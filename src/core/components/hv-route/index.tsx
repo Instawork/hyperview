@@ -19,11 +19,19 @@ import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as Types from './types';
 import * as TypesLegacy from 'hyperview/src/types';
 import * as UrlService from 'hyperview/src/services/url';
+import {
+  DOMString,
+  HvComponentOptions,
+  OnUpdateCallbacks,
+  ScreenState,
+} from 'hyperview/src/types';
 import React, { JSXElementConstructor, PureComponent, useContext } from 'react';
 import HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
 import LoadError from 'hyperview/src/core/components/load-error';
 import Loading from 'hyperview/src/core/components/loading';
+// eslint-disable-next-line instawork/import-services
+import Navigation from 'hyperview/src/services/navigation';
 
 /**
  * Implementation of an HvRoute component
@@ -32,22 +40,28 @@ import Loading from 'hyperview/src/core/components/loading';
  * - Renders the document
  * - Handles errors
  */
-class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
+class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
   parser?: DomService.Parser;
 
   navLogic: NavigatorService.Navigator;
 
   componentRegistry: TypesLegacy.ComponentRegistry;
 
+  needsLoad = false;
+
+  navigation: Navigation;
+
   constructor(props: Types.InnerRouteProps) {
     super(props);
 
     this.state = {
-      doc: undefined,
-      error: undefined,
+      doc: null,
+      error: null,
     };
     this.navLogic = new NavigatorService.Navigator(this.props);
     this.componentRegistry = Components.getRegistry(this.props.components);
+    this.needsLoad = false;
+    this.navigation = new Navigation(props.entrypointUrl, this.getNavigation());
   }
 
   /**
@@ -55,10 +69,10 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
    */
   static getDerivedStateFromProps(
     props: Types.InnerRouteProps,
-    state: Types.State,
+    state: ScreenState,
   ) {
     if (props.element) {
-      return { ...state, doc: undefined };
+      return { ...state, doc: null };
     }
     return state;
   }
@@ -77,10 +91,23 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
   }
 
   componentDidUpdate(prevProps: Types.InnerRouteProps) {
-    if (prevProps.url !== this.props.url) {
+    if (prevProps.url !== this.props.url || this.needsLoad) {
       this.load();
     }
+    this.needsLoad = false;
   }
+
+  /**
+   * Returns a navigation object similar to the one provided by React Navigation,
+   * but connected to the nav logic of this component.
+   */
+  getNavigation = () => ({
+    back: this.navLogic.back,
+    closeModal: this.navLogic.closeModal,
+    navigate: this.navLogic.navigate,
+    openModal: this.navLogic.openModal,
+    push: this.navLogic.push,
+  });
 
   getUrl = (): string => {
     return UrlService.getUrlFromHref(
@@ -95,8 +122,9 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
   load = async (): Promise<void> => {
     if (!this.parser) {
       this.setState({
-        doc: undefined,
+        doc: null,
         error: new NavigatorService.HvRouteError('No parser or context found'),
+        url: null,
       });
       return;
     }
@@ -108,20 +136,25 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
 
       // Set the state with the merged document
       this.setState(state => {
-        const merged = NavigatorService.mergeDocument(doc, state.doc);
+        const merged = NavigatorService.mergeDocument(
+          doc,
+          state.doc || undefined,
+        );
         const root = Helpers.getFirstChildTag(
           merged,
           TypesLegacy.LOCAL_NAME.DOC,
         );
         if (!root) {
           return {
-            doc: undefined,
+            doc: null,
             error: new NavigatorService.HvRouteError('No root element found'),
+            url: null,
           };
         }
         return {
           doc: merged,
           error: undefined,
+          url,
         };
       });
     } catch (err: unknown) {
@@ -129,8 +162,9 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
         this.props.onError(err as Error);
       }
       this.setState({
-        doc: undefined,
+        doc: null,
         error: err as Error,
+        url: null,
       });
     }
   };
@@ -176,6 +210,40 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
 
   registerPreload = (id: number, element: Element): void => {
     this.props.setPreload(id, element);
+  };
+
+  /**
+   * Implement the callbacks from this class
+   */
+  updateCallbacks = (): OnUpdateCallbacks => {
+    return {
+      clearElementError: () => {
+        // Noop
+      },
+      getDoc: () => this.state.doc || null,
+      getNavigation: () => this.navigation,
+      getOnUpdate: () => this.onUpdate,
+      getState: () => this.state,
+      registerPreload: (id, element) => this.registerPreload(id, element),
+      setNeedsLoad: () => {
+        this.needsLoad = true;
+      },
+      setState: (state: ScreenState) => {
+        this.setState(state);
+      },
+    };
+  };
+
+  onUpdate = (
+    href: DOMString | null | undefined,
+    action: DOMString | null | undefined,
+    element: Element,
+    options: HvComponentOptions,
+  ) => {
+    this.props.onUpdate(href, action, element, {
+      ...options,
+      onUpdateCallbacks: this.updateCallbacks(),
+    });
   };
 
   /**
@@ -312,29 +380,42 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
     ) {
       if (this.state.doc) {
         // The <DocContext> provides doc access to nested navigators
+        // The <UpdateContext> provides access to the onUpdate method for this route
         // only pass it when the doc is available and is not being overridden by an element
         return (
           <Contexts.DocContext.Provider
             value={{
-              getDoc: () => this.state.doc,
+              getDoc: () => this.state.doc || undefined,
               setDoc: (doc: Document) => this.setState({ doc }),
             }}
           >
-            <HvNavigator
-              element={renderElement}
-              params={this.props.route?.params}
-              routeComponent={HvRoute}
-            />
+            <Contexts.OnUpdateContext.Provider
+              value={{
+                onUpdate: this.onUpdate,
+              }}
+            >
+              <HvNavigator
+                element={renderElement}
+                onUpdate={this.onUpdate}
+                params={this.props.route?.params}
+                routeComponent={HvRoute}
+              />
+            </Contexts.OnUpdateContext.Provider>
           </Contexts.DocContext.Provider>
         );
       }
       // Without a doc, the navigator shares the higher level context
       return (
-        <HvNavigator
-          element={renderElement}
-          params={this.props.route?.params}
-          routeComponent={HvRoute}
-        />
+        <Contexts.OnUpdateContext.Consumer>
+          {updater => (
+            <HvNavigator
+              element={renderElement}
+              onUpdate={updater.onUpdate}
+              params={this.props.route?.params}
+              routeComponent={HvRoute}
+            />
+          )}
+        </Contexts.OnUpdateContext.Consumer>
       );
     }
 

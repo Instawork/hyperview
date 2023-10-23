@@ -217,10 +217,11 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
     } else if (navAction && Object.values(NAV_ACTIONS).includes(navAction)) {
       const navigation = options.onUpdateCallbacks.getNavigation();
       const doc = options.onUpdateCallbacks.getDoc();
-      if (navigation && doc) {
+      const state = options.onUpdateCallbacks.getState();
+      if (navigation && doc && state.url) {
         const { behaviorElement, delay, newElement, targetId } = options;
         const delayVal: number = +(delay || '');
-        navigation.setUrl(options.onUpdateCallbacks.getState().url || '');
+        navigation.setUrl(state.url);
         navigation.setDocument(doc);
         navigation.navigate(
           href || Navigation.ANCHOR_ID_SEPARATOR,

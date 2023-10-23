@@ -98,7 +98,7 @@ export class Navigator {
     }
   };
 
-  back = (params: TypesLegacy.NavigationRouteParams | undefined) => {
+  back = (params?: TypesLegacy.NavigationRouteParams | undefined) => {
     this.sendRequest(TypesLegacy.NAV_ACTIONS.BACK, params);
   };
 

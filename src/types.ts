@@ -389,13 +389,13 @@ export type NavigationRouteParams = {
 };
 
 export type NavigationProps = {
-  back: (routeParams?: NavigationRouteParams | null | undefined) => void;
-  closeModal: (routeParams?: NavigationRouteParams | null | undefined) => void;
+  back: (routeParams?: NavigationRouteParams | undefined) => void;
+  closeModal: (routeParams?: NavigationRouteParams | undefined) => void;
   navigate: (
     routeParams: NavigationRouteParams,
     key?: string | null | undefined,
   ) => void;
-  openModal: (routeParams?: NavigationRouteParams | null | undefined) => void;
+  openModal: (routeParams: NavigationRouteParams) => void;
   push: (routeParams: NavigationRouteParams) => void;
 };
 
