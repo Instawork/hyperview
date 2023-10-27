@@ -8,10 +8,11 @@
 
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Dom from 'hyperview/src/services/dom';
+import * as NavigationContext from 'hyperview/src/contexts/navigation';
 import * as NavigatorMapContext from 'hyperview/src/contexts/navigator-map';
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import { BEHAVIOR_ATTRIBUTES, LOCAL_NAME, TRIGGERS } from 'hyperview/src/types';
-import {
+import type {
   ParamTypes,
   Props,
   RouteParams,
@@ -195,7 +196,6 @@ export default class HvNavigator extends PureComponent<Props> {
    */
   buildScreens = (element: Element, type: string): React.ReactNode => {
     const screens: React.ReactElement[] = [];
-
     const elements: Element[] = NavigatorService.getChildElements(element);
 
     // For tab navigators, the screens are appended
@@ -336,13 +336,17 @@ export default class HvNavigator extends PureComponent<Props> {
 
   render() {
     return (
-      <NavigatorMapContext.NavigatorMapProvider>
-        {this.props.params && this.props.params.isModal ? (
-          <this.ModalNavigator />
-        ) : (
-          <this.Navigator />
+      <NavigationContext.Context.Consumer>
+        {() => (
+          <NavigatorMapContext.NavigatorMapProvider>
+            {this.props.params && this.props.params.isModal ? (
+              <this.ModalNavigator />
+            ) : (
+              <this.Navigator />
+            )}
+          </NavigatorMapContext.NavigatorMapProvider>
         )}
-      </NavigatorMapContext.NavigatorMapProvider>
+      </NavigationContext.Context.Consumer>
     );
   }
 }
