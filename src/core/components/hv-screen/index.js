@@ -505,27 +505,52 @@ export default class HvScreen extends React.Component {
       doc: newRoot,
     });
 
+    // If a target is specified and exists, use it. Otherwise, the action target defaults
+    // to the element triggering the action.
+    const getTargetElement = () => {
+      let targetElement = targetId ? this.doc?.getElementById(targetId) : currentElement;
+      if (!targetElement) {
+        targetElement = currentElement;
+      }
+      return targetElement
+    }
+
+    // Before fetching, check if the behavior needs order to be preserved.
+    // If so, we need to set a flag on the element that we check upon receiving the response.
+    // If that flag has changed, that means another more recent request has been made, and we
+    // need to discard the response.
+    const targetElement = getTargetElement();
+    const preserveOrderId = (
+      behaviorElement || currentElement
+    )?.getAttribute('preserve-order') === 'true'
+      ? String(Math.random())
+      : null;
+    if (preserveOrderId !== null) {
+      targetElement.setAttribute('_preserve-order-id', preserveOrderId);
+    }
+
     // Fetch the resource, then perform the action on the target and undo indicators.
     const fetchAndUpdate = () => this.fetchElement(href, verb, newRoot, formData)
       .then((newElement) => {
-        // If a target is specified and exists, use it. Otherwise, the action target defaults
-        // to the element triggering the action.
-        let targetElement = targetId ? this.doc?.getElementById(targetId) : currentElement;
-        if (!targetElement) {
-          targetElement = currentElement;
+        const targetElement = getTargetElement();
+        const shouldSkipUpdate = preserveOrderId !== null && targetElement.getAttribute('_preserve-order-id') !== preserveOrderId;
+        if (!shouldSkipUpdate) {
+          if (newElement) {
+            newRoot = Behaviors.performUpdate(action, targetElement, newElement);
+            if (preserveOrderId) {
+              // Un-set the preserve order id on the target element as the update is now done
+              targetElement.setAttribute('_preserve-order-id', "");
+            }
+          } else {
+            // When fetch fails, make sure to get the latest version of the doc to avoid any race conditions
+            newRoot = this.doc;
+          }
+          newRoot = Behaviors.setIndicatorsAfterLoad(showIndicatorIdList, hideIndicatorIdList, newRoot);
+          // Re-render the modifications
+          this.setState({
+            doc: newRoot,
+          });
         }
-
-        if (newElement) {
-          newRoot = Behaviors.performUpdate(action, targetElement, newElement);
-        } else {
-          // When fetch fails, make sure to get the latest version of the doc to avoid any race conditions
-          newRoot = this.doc;
-        }
-        newRoot = Behaviors.setIndicatorsAfterLoad(showIndicatorIdList, hideIndicatorIdList, newRoot);
-        // Re-render the modifications
-        this.setState({
-          doc: newRoot,
-        });
 
         if (typeof onEnd === 'function') {
           onEnd();

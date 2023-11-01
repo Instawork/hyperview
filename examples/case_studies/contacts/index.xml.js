@@ -11,7 +11,9 @@ module.exports = function handler(req, res, next) {
   const { query } = urlParse(req.originalUrl, true);
 
   // no search or next page? pass through to 11ty to render the entire document
-  if (query.search === undefined && !query.page) {
+  // note: we also test for "template" to work mitigate this bug
+  // https://github.com/Instawork/hyperview/issues/735
+  if (query.search === undefined && !query.page && !query.template) {
     next();
     return;
   }
