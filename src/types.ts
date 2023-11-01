@@ -5,6 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
+
+import * as Stylesheets from './services/stylesheets';
+import Navigation from './services/navigation';
+
 import type React from 'react';
 
 import type { XResponseStaleReason } from './services/dom/types';
@@ -202,6 +206,7 @@ export type HvComponentOptions = {
   custom?: boolean;
   newElement?: Element | null | undefined;
   showIndicatorId?: string | null | undefined;
+  onUpdateCallbacks?: OnUpdateCallbacks;
 };
 
 export type HvComponentOnUpdate = (
@@ -211,7 +216,7 @@ export type HvComponentOnUpdate = (
   options: HvComponentOptions,
 ) => void;
 
-export type HvGetRoot = () => Document;
+export type HvGetRoot = () => Document | null;
 
 export type HvUpdateRoot = (root: Document, updateStylesheet?: boolean) => void;
 
@@ -254,6 +259,23 @@ export type HvBehavior = {
 export type BehaviorRegistry = {
   [key: string]: HvBehavior;
 };
+
+// https://hyperview.org/docs/reference_behavior_attributes
+export const BEHAVIOR_ATTRIBUTES = {
+  ACTION: 'action',
+  DELAY: 'delay',
+  EVENT_NAME: 'event-name',
+  HIDE_DURING_LOAD: 'hide-during-load',
+  HREF: 'href',
+  HREF_STYLE: 'href-style',
+  IMMEDIATE: 'immediate',
+  NEW_VALUE: 'new-value',
+  ONCE: 'once',
+  SHOW_DURING_LOAD: 'show-during-load',
+  TARGET: 'target',
+  TRIGGER: 'trigger',
+  VERB: 'verb',
+} as const;
 
 // https://hyperview.org/docs/reference_behavior_attributes#trigger
 export const TRIGGERS = Object.freeze({
@@ -352,8 +374,8 @@ export const UPDATE_ACTIONS = {
 export type UpdateAction = typeof UPDATE_ACTIONS[keyof typeof UPDATE_ACTIONS];
 
 export type BehaviorOptions = {
-  newElement: Element;
-  behaviorElement: Element;
+  newElement?: Element;
+  behaviorElement?: Element;
   showIndicatorId?: string;
   delay?: number;
   targetId?: string;
@@ -367,13 +389,13 @@ export type NavigationRouteParams = {
 };
 
 export type NavigationProps = {
-  back: (routeParams?: NavigationRouteParams | null | undefined) => void;
-  closeModal: (routeParams?: NavigationRouteParams | null | undefined) => void;
+  back: (routeParams?: NavigationRouteParams | undefined) => void;
+  closeModal: (routeParams?: NavigationRouteParams | undefined) => void;
   navigate: (
     routeParams: NavigationRouteParams,
     key?: string | null | undefined,
   ) => void;
-  openModal: (routeParams?: NavigationRouteParams | null | undefined) => void;
+  openModal: (routeParams: NavigationRouteParams) => void;
   push: (routeParams: NavigationRouteParams) => void;
 };
 
@@ -383,3 +405,23 @@ export type Fetch = (
   input: RequestInfo | URL,
   init?: RequestInit | undefined,
 ) => Promise<Response>;
+
+export type OnUpdateCallbacks = {
+  clearElementError: () => void;
+  getNavigation: () => Navigation;
+  getOnUpdate: () => HvComponentOnUpdate;
+  getDoc: () => Document | null;
+  registerPreload: (id: number, element: Element) => void;
+  setNeedsLoad: () => void;
+  getState: () => ScreenState;
+  setState: (state: ScreenState) => void;
+};
+
+export type ScreenState = {
+  doc?: Document | null;
+  elementError?: Error | null;
+  error?: Error | null;
+  staleHeaderType?: XResponseStaleReason | null;
+  styles?: Stylesheets.StyleSheets | null;
+  url?: string | null;
+};

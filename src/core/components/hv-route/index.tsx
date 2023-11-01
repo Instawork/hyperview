@@ -19,17 +19,19 @@ import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as Types from './types';
 import * as TypesLegacy from 'hyperview/src/types';
 import * as UrlService from 'hyperview/src/services/url';
-import React, {
-  ComponentType,
-  JSXElementConstructor,
-  PureComponent,
-  ReactNode,
-  useContext,
-} from 'react';
+import {
+  DOMString,
+  HvComponentOptions,
+  OnUpdateCallbacks,
+  ScreenState,
+} from 'hyperview/src/types';
+import React, { JSXElementConstructor, PureComponent, useContext } from 'react';
 import HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
 import LoadError from 'hyperview/src/core/components/load-error';
 import Loading from 'hyperview/src/core/components/loading';
+// eslint-disable-next-line instawork/import-services
+import Navigation from 'hyperview/src/services/navigation';
 
 /**
  * Implementation of an HvRoute component
@@ -38,22 +40,41 @@ import Loading from 'hyperview/src/core/components/loading';
  * - Renders the document
  * - Handles errors
  */
-class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
+class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
   parser?: DomService.Parser;
 
   navLogic: NavigatorService.Navigator;
 
   componentRegistry: TypesLegacy.ComponentRegistry;
 
+  needsLoad = false;
+
+  navigation: Navigation;
+
   constructor(props: Types.InnerRouteProps) {
     super(props);
 
     this.state = {
-      doc: undefined,
-      error: undefined,
+      doc: null,
+      error: null,
     };
     this.navLogic = new NavigatorService.Navigator(this.props);
     this.componentRegistry = Components.getRegistry(this.props.components);
+    this.needsLoad = false;
+    this.navigation = new Navigation(props.entrypointUrl, this.getNavigation());
+  }
+
+  /**
+   * Override the state to clear the doc when an element is passed
+   */
+  static getDerivedStateFromProps(
+    props: Types.InnerRouteProps,
+    state: ScreenState,
+  ) {
+    if (props.element) {
+      return { ...state, doc: null };
+    }
+    return state;
   }
 
   componentDidMount() {
@@ -70,10 +91,23 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
   }
 
   componentDidUpdate(prevProps: Types.InnerRouteProps) {
-    if (prevProps.url !== this.props.url) {
+    if (prevProps.url !== this.props.url || this.needsLoad) {
       this.load();
     }
+    this.needsLoad = false;
   }
+
+  /**
+   * Returns a navigation object similar to the one provided by React Navigation,
+   * but connected to the nav logic of this component.
+   */
+  getNavigation = () => ({
+    back: this.navLogic.back,
+    closeModal: this.navLogic.closeModal,
+    navigate: this.navLogic.navigate,
+    openModal: this.navLogic.openModal,
+    push: this.navLogic.push,
+  });
 
   getUrl = (): string => {
     return UrlService.getUrlFromHref(
@@ -88,8 +122,9 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
   load = async (): Promise<void> => {
     if (!this.parser) {
       this.setState({
-        doc: undefined,
+        doc: null,
         error: new NavigatorService.HvRouteError('No parser or context found'),
+        url: null,
       });
       return;
     }
@@ -98,22 +133,43 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
       const url: string = this.getUrl();
 
       const { doc } = await this.parser.loadDocument(url);
-      this.setState({
-        doc,
-        error: undefined,
+
+      // Set the state with the merged document
+      this.setState(state => {
+        const merged = NavigatorService.mergeDocument(
+          doc,
+          state.doc || undefined,
+        );
+        const root = Helpers.getFirstChildTag(
+          merged,
+          TypesLegacy.LOCAL_NAME.DOC,
+        );
+        if (!root) {
+          return {
+            doc: null,
+            error: new NavigatorService.HvRouteError('No root element found'),
+            url: null,
+          };
+        }
+        return {
+          doc: merged,
+          error: undefined,
+          url,
+        };
       });
     } catch (err: unknown) {
       if (this.props.onError) {
         this.props.onError(err as Error);
       }
       this.setState({
-        doc: undefined,
+        doc: null,
         error: err as Error,
+        url: null,
       });
     }
   };
 
-  getRenderElement = (): Element | null => {
+  getRenderElement = (): Element | undefined => {
     if (this.props.element) {
       return this.props.element;
     }
@@ -122,7 +178,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
     }
 
     // Get the <doc> element
-    const root: Element | null = Helpers.getFirstTag(
+    const root: Element | null = Helpers.getFirstChildTag(
       this.state.doc,
       TypesLegacy.LOCAL_NAME.DOC,
     );
@@ -131,7 +187,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
     }
 
     // Get the first child as <screen> or <navigator>
-    const screenElement: Element | null = Helpers.getFirstTag(
+    const screenElement: Element | null = Helpers.getFirstChildTag(
       root,
       TypesLegacy.LOCAL_NAME.SCREEN,
     );
@@ -139,7 +195,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
       return screenElement;
     }
 
-    const navigatorElement: Element | null = Helpers.getFirstTag(
+    const navigatorElement: Element | null = Helpers.getFirstChildTag(
       root,
       TypesLegacy.LOCAL_NAME.NAVIGATOR,
     );
@@ -157,17 +213,57 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
   };
 
   /**
+   * Implement the callbacks from this class
+   */
+  updateCallbacks = (): OnUpdateCallbacks => {
+    return {
+      clearElementError: () => {
+        // Noop
+      },
+      getDoc: () => this.state.doc || null,
+      getNavigation: () => this.navigation,
+      getOnUpdate: () => this.onUpdate,
+      getState: () => this.state,
+      registerPreload: (id, element) => this.registerPreload(id, element),
+      setNeedsLoad: () => {
+        this.needsLoad = true;
+      },
+      setState: (state: ScreenState) => {
+        this.setState(state);
+      },
+    };
+  };
+
+  onUpdate = (
+    href: DOMString | null | undefined,
+    action: DOMString | null | undefined,
+    element: Element,
+    options: HvComponentOptions,
+  ) => {
+    this.props.onUpdate(href, action, element, {
+      ...options,
+      onUpdateCallbacks: this.updateCallbacks(),
+    });
+  };
+
+  /**
    * View shown while loading
    * Includes preload functionality
    */
   Load = (): React.ReactElement => {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    const noop = () => {};
+
     if (this.props.route?.params?.preloadScreen) {
       const preloadElement = this.props.getPreload(
         this.props.route?.params?.preloadScreen,
       );
       if (preloadElement) {
         const [body] = Array.from(
-          preloadElement.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'body'),
+          preloadElement.getElementsByTagNameNS(
+            Namespaces.HYPERVIEW,
+            'body',
+          ) as HTMLCollectionOf<Element>,
         );
         const styleSheet = Stylesheets.createStylesheets(
           (preloadElement as unknown) as Document,
@@ -175,7 +271,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
         const component:
           | string
           | React.ReactElement<unknown, string | JSXElementConstructor<unknown>>
-          | null = Render.renderElement(body, styleSheet, () => {}, {
+          | null = Render.renderElement(body, styleSheet, () => noop, {
           componentRegistry: this.componentRegistry,
         });
         if (component) {
@@ -242,6 +338,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
             onError={this.props.onError}
             onParseAfter={this.props.onParseAfter}
             onParseBefore={this.props.onParseBefore}
+            onUpdate={this.props.onUpdate}
             openModal={this.navLogic.openModal}
             push={this.navLogic.push}
             registerPreload={this.registerPreload}
@@ -256,30 +353,78 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
   /**
    * Evaluate the <doc> element and render the appropriate component
    */
-  Route = (props: {
-    handleBack?: ComponentType<{ children: ReactNode }>;
-  }): React.ReactElement => {
-    const renderElement: Element | null = this.getRenderElement();
-
-    if (!renderElement) {
-      throw new NavigatorService.HvRenderError('No element found');
-    }
-
-    if (renderElement.namespaceURI !== Namespaces.HYPERVIEW) {
-      throw new NavigatorService.HvRenderError('Invalid namespace');
-    }
-
-    if (renderElement.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR) {
-      return <HvNavigator element={renderElement} routeComponent={HvRoute} />;
-    }
+  Route = (): React.ReactElement => {
     const { Screen } = this;
 
-    if (renderElement.localName === TypesLegacy.LOCAL_NAME.SCREEN) {
-      if (props.handleBack) {
+    const isModal = this.props.route?.params.isModal
+      ? this.props.route.params.isModal
+      : false;
+
+    const renderElement: Element | undefined = isModal
+      ? undefined
+      : this.getRenderElement();
+
+    if (!isModal) {
+      if (!renderElement) {
+        throw new NavigatorService.HvRenderError('No element found');
+      }
+
+      if (renderElement.namespaceURI !== Namespaces.HYPERVIEW) {
+        throw new NavigatorService.HvRenderError('Invalid namespace');
+      }
+    }
+
+    if (
+      isModal ||
+      renderElement?.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR
+    ) {
+      if (this.state.doc) {
+        // The <DocContext> provides doc access to nested navigators
+        // The <UpdateContext> provides access to the onUpdate method for this route
+        // only pass it when the doc is available and is not being overridden by an element
         return (
-          <props.handleBack>
+          <Contexts.DocContext.Provider
+            value={{
+              getDoc: () => this.state.doc || undefined,
+              setDoc: (doc: Document) => this.setState({ doc }),
+            }}
+          >
+            <Contexts.OnUpdateContext.Provider
+              value={{
+                onUpdate: this.onUpdate,
+              }}
+            >
+              <HvNavigator
+                element={renderElement}
+                onUpdate={this.onUpdate}
+                params={this.props.route?.params}
+                routeComponent={HvRoute}
+              />
+            </Contexts.OnUpdateContext.Provider>
+          </Contexts.DocContext.Provider>
+        );
+      }
+      // Without a doc, the navigator shares the higher level context
+      return (
+        <Contexts.OnUpdateContext.Consumer>
+          {updater => (
+            <HvNavigator
+              element={renderElement}
+              onUpdate={updater.onUpdate}
+              params={this.props.route?.params}
+              routeComponent={HvRoute}
+            />
+          )}
+        </Contexts.OnUpdateContext.Consumer>
+      );
+    }
+
+    if (renderElement?.localName === TypesLegacy.LOCAL_NAME.SCREEN) {
+      if (this.props.handleBack) {
+        return (
+          <this.props.handleBack>
             <Screen />
-          </props.handleBack>
+          </this.props.handleBack>
         );
       }
       return <Screen />;
@@ -292,7 +437,10 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
    * View shown when the document is loaded
    */
   Content = (): React.ReactElement => {
-    if (this.props.element === undefined) {
+    if (
+      this.props.element === undefined &&
+      !this.props.route?.params?.isModal
+    ) {
       if (!this.props.url) {
         throw new NavigatorService.HvRouteError('No url received');
       }
@@ -302,7 +450,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
     }
 
     const { Route } = this;
-    return <Route handleBack={this.props.handleBack} />;
+    return <Route />;
   };
 
   render() {
@@ -311,7 +459,11 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
       if (this.state.error) {
         return <Err error={this.state.error} />;
       }
-      if (this.props.element || this.state.doc) {
+      if (
+        this.props.element ||
+        this.state.doc ||
+        this.props.route?.params?.isModal
+      ) {
         return <Content />;
       }
       return <Load />;
@@ -323,6 +475,44 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, Types.State> {
     }
   }
 }
+
+/**
+ * Retrieve the url from the props, params, or context
+ */
+const getRouteUrl = (
+  props: Types.Props,
+  navigationContext: Types.NavigationContextProps,
+) => {
+  // The initial hv-route element will use the entrypoint url
+  if (props.navigation === undefined) {
+    return navigationContext.entrypointUrl;
+  }
+
+  return props.route?.params?.url
+    ? NavigatorService.cleanHrefFragment(props.route?.params?.url)
+    : undefined;
+};
+
+/**
+ * Retrieve a nested navigator as a child of the nav-route with the given id
+ */
+const getNestedNavigator = (
+  id?: string,
+  doc?: Document,
+): Element | undefined => {
+  if (!id || !doc) {
+    return undefined;
+  }
+
+  const route = NavigatorService.getRouteById(doc, id);
+  if (route) {
+    return (
+      Helpers.getFirstChildTag(route, TypesLegacy.LOCAL_NAME.NAVIGATOR) ||
+      undefined
+    );
+  }
+  return undefined;
+};
 
 /**
  * Functional component wrapper around HvRouteInner
@@ -344,42 +534,46 @@ export default function HvRoute(props: Types.Props) {
     throw new NavigatorService.HvRouteError('No context found');
   }
 
-  // Retrieve the url from params or from the context
-  let url: string | undefined = props.route?.params?.url;
-  // Fragment urls are used to designate a route within a document
-  if (url && NavigatorService.isUrlFragment(url)) {
-    // Look up the url from the route map where it would have been
-    //  stored from the initial <nav-route> definition
-    url = navigatorMapContext.getRoute(NavigatorService.cleanHrefFragment(url));
-  }
+  const docContext = useContext(Contexts.DocContext);
 
-  if (!url) {
-    // Use the route id if available to look up the url
-    if (props.route?.params?.id) {
-      url = navigatorMapContext.getRoute(props.route.params.id);
-    } else if (navigatorMapContext.initialRouteName) {
-      // Try to use the initial route for this <navigator>
-      url = navigatorMapContext.getRoute(navigatorMapContext.initialRouteName);
-    }
-  }
-
-  // Fall back to the entrypoint url
-  url = url || navigationContext.entrypointUrl;
-
-  const id: string | undefined =
-    props.route?.params?.id ||
-    navigatorMapContext.initialRouteName ||
-    undefined;
-
-  const { index, type } = props.navigation?.getState() || {};
-  // The nested element is only used when the navigator is not a stack
-  //    or is the first screen in a stack. Other stack screens will require a url
-  const includeElement: boolean =
-    type !== NavigatorService.NAVIGATOR_TYPE.STACK || index === 0;
+  const url = getRouteUrl(props, navigationContext);
 
   // Get the navigator element from the context
-  const element: Element | undefined =
-    id && includeElement ? navigatorMapContext.getElement(id) : undefined;
+  const element: Element | undefined = getNestedNavigator(
+    props.route?.params?.id,
+    docContext?.getDoc(),
+  );
+
+  // Use the focus event to set the selected route
+  React.useEffect(() => {
+    if (props.navigation) {
+      const unsubscribeFocus: () => void = props.navigation.addListener(
+        'focus',
+        () => {
+          NavigatorService.setSelected(
+            docContext?.getDoc(),
+            props.route?.params?.id,
+          );
+        },
+      );
+
+      const unsubscribeRemove: () => void = props.navigation.addListener(
+        'beforeRemove',
+        () => {
+          NavigatorService.removeStackRoute(
+            docContext?.getDoc(),
+            props.route?.params?.id,
+          );
+        },
+      );
+
+      return () => {
+        unsubscribeFocus();
+        unsubscribeRemove();
+      };
+    }
+    return undefined;
+  }, [props.navigation, props.route?.params?.id, docContext]);
 
   return (
     <HvRouteInner

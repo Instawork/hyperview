@@ -8,6 +8,7 @@
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type { LocalName, NamespaceURI, NodeType } from 'hyperview/src/types';
+import { NODE_TYPE } from 'hyperview/src/types';
 
 export const getBehaviorElements = (element: Element) => {
   const behaviorElements = Array.from(
@@ -29,6 +30,30 @@ export const getFirstTag = (
   const elements = document.getElementsByTagNameNS(namespace, localName);
   if (elements && elements[0]) {
     return elements[0];
+  }
+  return null;
+};
+
+/**
+ * Find the first child element of a node with a given local name and namespace
+ */
+export const getFirstChildTag = (
+  node: Node,
+  localName: LocalName,
+  namespace: NamespaceURI = Namespaces.HYPERVIEW,
+): Element | null => {
+  if (!node || !node.childNodes) {
+    return null;
+  }
+  for (let i = 0; i < node.childNodes.length; i += 1) {
+    const child = node.childNodes[i] as Element;
+    if (
+      child.nodeType === NODE_TYPE.ELEMENT_NODE &&
+      child.localName === localName &&
+      child.namespaceURI === namespace
+    ) {
+      return child;
+    }
   }
   return null;
 };

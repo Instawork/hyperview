@@ -7,9 +7,13 @@
  */
 
 import * as NavigatorService from 'hyperview/src/services/navigator';
-
 import { ComponentType, ReactNode } from 'react';
-import { Fetch, HvBehavior, HvComponent } from 'hyperview/src/types';
+import {
+  Fetch,
+  HvBehavior,
+  HvComponent,
+  HvComponentOnUpdate,
+} from 'hyperview/src/types';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
 
@@ -20,6 +24,7 @@ type RouteParams = {
   id?: string;
   url: string;
   preloadScreen?: number;
+  isModal?: boolean;
 };
 
 export type NavigationContextProps = {
@@ -27,6 +32,7 @@ export type NavigationContextProps = {
   fetch: Fetch;
   onParseAfter?: (url: string) => void;
   onParseBefore?: (url: string) => void;
+  onUpdate: HvComponentOnUpdate;
   url?: string;
   behaviors?: HvBehavior[];
   components?: HvComponent[];
@@ -37,16 +43,8 @@ export type NavigationContextProps = {
 };
 
 export type NavigatorMapContextProps = {
-  getRoute: (key: string) => string | undefined;
-  getElement: (key: string) => Element | undefined;
   setPreload: (key: number, element: Element) => void;
   getPreload: (key: number) => Element | undefined;
-  initialRouteName?: string;
-};
-
-export type State = {
-  doc?: Document;
-  error?: Error;
 };
 
 /**
@@ -58,8 +56,7 @@ export type RouteProps = NavigatorService.Route<string, { url?: string }>;
  * The props used by inner components of hv-route
  */
 export type InnerRouteProps = {
-  id?: string;
-  url: string;
+  url?: string;
   navigation?: NavigatorService.NavigationProp;
   route?: NavigatorService.Route<string, RouteParams>;
   entrypointUrl: string;
@@ -67,17 +64,15 @@ export type InnerRouteProps = {
   onError?: (error: Error) => void;
   onParseAfter?: (url: string) => void;
   onParseBefore?: (url: string) => void;
+  onUpdate: HvComponentOnUpdate;
   behaviors?: HvBehavior[];
   components?: HvComponent[];
   elementErrorComponent?: ComponentType<ErrorProps>;
   errorScreen?: ComponentType<ErrorProps>;
   loadingScreen?: ComponentType<LoadingProps>;
   handleBack?: ComponentType<{ children: ReactNode }>;
-  getRoute: (key: string) => string | undefined;
-  getElement: (key: string) => Element | undefined;
   setPreload: (key: number, element: Element) => void;
   getPreload: (key: number) => Element | undefined;
-  initialRouteName?: string;
   element?: Element;
 };
 

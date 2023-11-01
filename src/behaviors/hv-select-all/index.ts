@@ -37,8 +37,8 @@ export default {
     );
 
     const selectAll = () => {
-      const doc: Document = getRoot();
-      const targetElement: Element | null | undefined = doc.getElementById(
+      const doc: Document | null = getRoot();
+      const targetElement: Element | null | undefined = doc?.getElementById(
         targetId,
       );
       if (!targetElement) {
@@ -66,13 +66,16 @@ export default {
       selectAll();
     } else {
       // If there's a delay, first trigger the indicators before the select-all.
-      const newRoot = Behaviors.setIndicatorsBeforeLoad(
-        showIndicatorIds,
-        hideIndicatorIds,
-        getRoot(),
-      );
-      // Update the DOM to reflect the new state of the indicators.
-      updateRoot(newRoot);
+      const doc: Document | null = getRoot();
+      if (doc) {
+        const newRoot = Behaviors.setIndicatorsBeforeLoad(
+          showIndicatorIds,
+          hideIndicatorIds,
+          doc,
+        );
+        // Update the DOM to reflect the new state of the indicators.
+        updateRoot(newRoot);
+      }
       // Wait for the delay then select-all the target.
       later(delay).then(selectAll).catch(selectAll);
     }

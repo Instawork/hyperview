@@ -98,7 +98,7 @@ export class Navigator {
     }
   };
 
-  back = (params: TypesLegacy.NavigationRouteParams | undefined) => {
+  back = (params?: TypesLegacy.NavigationRouteParams | undefined) => {
     this.sendRequest(TypesLegacy.NAV_ACTIONS.BACK, params);
   };
 
@@ -120,13 +120,22 @@ export class Navigator {
 }
 
 export type { NavigationProp, Route } from './types';
-export { createStackNavigator, createBottomTabNavigator } from './imports';
+export {
+  CardStyleInterpolators,
+  createStackNavigator,
+  createBottomTabNavigator,
+} from './imports';
 export { HvRouteError, HvNavigatorError, HvRenderError } from './errors';
 export {
+  isDynamicRoute,
   isUrlFragment,
   cleanHrefFragment,
   getChildElements,
+  getRouteById,
   getSelectedNavRouteElement,
   getUrlFromHref,
+  mergeDocument,
+  removeStackRoute,
+  setSelected,
 } from './helpers';
-export { ID_DYNAMIC, ID_MODAL, NAVIGATOR_TYPE } from './types';
+export { ID_CARD, ID_MODAL, KEY_MODAL, NAVIGATOR_TYPE } from './types';

@@ -3,7 +3,7 @@ import * as Errors from './errors';
 import * as Namespaces from '../namespaces';
 import * as Types from './types';
 import * as TypesLegacy from '../../types';
-import { ID_DYNAMIC, ID_MODAL } from './types';
+import { ID_CARD, ID_MODAL } from './types';
 import {
   buildParams,
   buildRequest,
@@ -16,6 +16,7 @@ import {
   getUrlFromHref,
   isNavigationElement,
   isUrlFragment,
+  mergeDocument,
   validateUrl,
 } from './helpers';
 import { DOMParser } from '@instawork/xmldom';
@@ -46,6 +47,67 @@ const screenDocSource =
  * Test blank document
  */
 const blankDoc = '<doc xmlns="https://hyperview.org/hyperview"></doc>';
+
+/**
+ * Test merge original document
+ */
+const mergeOriginalDoc = `
+<doc xmlns="https://hyperview.org/hyperview">
+  <navigator id="root-navigator" type="stack">
+    <nav-route id="tabs-route">
+      <navigator id="tabs-navigator" type="tab">
+        <nav-route id="live-shifts-route" href="/biz-app-hub" selected="false"/>
+        <nav-route id="shifts-route" href="/biz-app-shift-group-list" selected="true"/>
+        <nav-route id="account-route" href="/biz_app/account"/>
+      </navigator>
+    </nav-route>
+  </navigator>
+</doc>
+`;
+
+/**
+ * Test merge document with merging disabled
+ * Expect this document to replace original
+ */
+const mergeSourceDisabledDoc = `
+<doc xmlns="https://hyperview.org/hyperview">
+  <navigator id="root-navigator" type="stack" merge="false">
+    <nav-route id="tabs-route">
+      <navigator id="tabs-navigator" type="tab" merge="false">
+        <nav-route id="live-shifts-route" href="/biz-app-hub" selected="false"/>
+        <nav-route id="shifts-route" href="/biz-app-shift-group-list" selected="true">
+          <navigator id="shift-navigator" type="tab">
+            <nav-route id="upcoming-shifts" href="/biz_app/gigs/groups" selected="false"/>
+            <nav-route id="past-shifts" href="/biz_app/gigs/groups" selected="true"/>
+          </navigator>
+        </nav-route>
+      </navigator>
+    </nav-route>
+  </navigator>
+</doc>
+`;
+
+/**
+ * Test merge document with merging enabled
+ * Expect the merge to contain a merged document
+ */
+const mergeSourceEnabledDoc = `
+<doc xmlns="https://hyperview.org/hyperview">
+  <navigator id="root-navigator" type="stack" merge="true">
+    <nav-route id="tabs-route">
+      <navigator id="tabs-navigator" type="tab" merge="true">
+        <nav-route id="live-shifts-route" href="/biz-app-hub" selected="false"/>
+        <nav-route id="shifts-route" href="/biz-app-shift-group-list" selected="true">
+          <navigator id="shift-navigator" type="tab">
+            <nav-route id="upcoming-shifts" href="/biz_app/gigs/groups" selected="false"/>
+            <nav-route id="past-shifts" href="/biz_app/gigs/groups" selected="true"/>
+          </navigator>
+        </nav-route>
+      </navigator>
+    </nav-route>
+  </navigator>
+</doc>
+`;
 
 /**
  * Parser used to parse the document
@@ -136,14 +198,14 @@ describe('getSelectedNavRouteElement', () => {
     const selected = getSelectedNavRouteElement(navigators[0]);
     expect(selected?.getAttribute('id')).toEqual('route2');
   });
-  it('should find route1 as selected', () => {
+  it('should find nothing as selected', () => {
     const doc = parser.parseFromString(navDocSourceAlt);
     const navigators = doc.getElementsByTagNameNS(
       Namespaces.HYPERVIEW,
       'navigator',
     );
     const selected = getSelectedNavRouteElement(navigators[0]);
-    expect(selected?.getAttribute('id')).toEqual('route1');
+    expect(selected).toBeUndefined();
   });
   it('should not find an selected route', () => {
     const doc = parser.parseFromString(
@@ -441,18 +503,18 @@ describe('buildParams', () => {
 });
 
 describe('getRouteId', () => {
-  const urls = ['url', '/url', '#url', '', '#', undefined];
-  describe('simple', () => {
+  describe('fragment', () => {
+    const urls = ['#url', '#'];
     describe('action:push', () => {
       urls.forEach(url => {
-        it(`should return type 'dynamic' from url with static: ${url}`, () => {
-          expect(getRouteId(TypesLegacy.NAV_ACTIONS.PUSH, url, true)).toEqual(
-            ID_DYNAMIC,
+        it(`should not return route 'card' from url with fragment: ${url}`, () => {
+          expect(getRouteId(TypesLegacy.NAV_ACTIONS.PUSH, url)).not.toEqual(
+            ID_CARD,
           );
         });
-        it(`should return type 'dynamic' from url with non-static: ${url}`, () => {
-          expect(getRouteId(TypesLegacy.NAV_ACTIONS.PUSH, url, false)).toEqual(
-            ID_DYNAMIC,
+        it(`should return route id with fragment: ${url}`, () => {
+          expect(getRouteId(TypesLegacy.NAV_ACTIONS.PUSH, url)).toEqual(
+            cleanHrefFragment(url),
           );
         });
       });
@@ -460,13 +522,36 @@ describe('getRouteId', () => {
 
     describe('action:new', () => {
       urls.forEach(url => {
-        it(`should return type 'modal' from url with static: ${url}`, () => {
-          expect(getRouteId(TypesLegacy.NAV_ACTIONS.NEW, url, true)).toEqual(
+        it(`should not return type 'modal' from url with fragment: ${url}`, () => {
+          expect(getRouteId(TypesLegacy.NAV_ACTIONS.NEW, url)).not.toEqual(
             ID_MODAL,
           );
         });
-        it(`should return type 'modal' from url with non-static: ${url}`, () => {
-          expect(getRouteId(TypesLegacy.NAV_ACTIONS.NEW, url, false)).toEqual(
+        it(`should return route id with fragment: ${url}`, () => {
+          expect(getRouteId(TypesLegacy.NAV_ACTIONS.NEW, url)).toEqual(
+            cleanHrefFragment(url),
+          );
+        });
+      });
+    });
+  });
+
+  describe('non-fragment', () => {
+    const urls = ['url', '/url', '', undefined];
+    describe('action:push', () => {
+      urls.forEach(url => {
+        it(`should return type 'card' from url with non-fragment: ${url}`, () => {
+          expect(getRouteId(TypesLegacy.NAV_ACTIONS.PUSH, url)).toEqual(
+            ID_CARD,
+          );
+        });
+      });
+    });
+
+    describe('action:new', () => {
+      urls.forEach(url => {
+        it(`should return type 'modal' from url with non-fragment: ${url}`, () => {
+          expect(getRouteId(TypesLegacy.NAV_ACTIONS.NEW, url)).toEqual(
             ID_MODAL,
           );
         });
@@ -482,19 +567,19 @@ describe('getRouteId', () => {
     ].forEach(action => {
       describe(`action:${action}`, () => {
         ['#url', '#'].forEach(url => {
-          it(`should return cleaned url with static: ${url}`, () => {
-            expect(getRouteId(action, url, true)).toEqual(url.slice(1));
+          it(`should return cleaned url with fragment: ${url}`, () => {
+            expect(getRouteId(action, url)).toEqual(url.slice(1));
           });
-          it(`should return type 'dynamic' from url with non-static: ${url}`, () => {
-            expect(getRouteId(action, url, false)).toEqual(ID_DYNAMIC);
+          it(`should not return type 'card' from url with fragment: ${url}`, () => {
+            expect(getRouteId(action, url)).not.toEqual(ID_CARD);
           });
         });
         ['url', '/url', '', undefined].forEach(url => {
-          it(`should return cleaned url with static: ${url}`, () => {
-            expect(getRouteId(action, url, true)).toEqual(ID_DYNAMIC);
+          it(`should return cleaned url with non-fragment: ${url}`, () => {
+            expect(getRouteId(action, url)).toEqual(ID_CARD);
           });
-          it(`should return type 'dynamic' from url with non-static: ${url}`, () => {
-            expect(getRouteId(action, url, false)).toEqual(ID_DYNAMIC);
+          it(`should return type 'card' from url with non-fragment: ${url}`, () => {
+            expect(getRouteId(action, url)).toEqual(ID_CARD);
           });
         });
       });
@@ -593,4 +678,116 @@ describe('buildRequest', () => {
   // - invalid navigator
   // - invalid path
   // - success
+});
+
+describe('mergeDocuments', () => {
+  const originalDoc = parser.parseFromString(mergeOriginalDoc);
+  const origNavigators = originalDoc.getElementsByTagNameNS(
+    Namespaces.HYPERVIEW,
+    'navigator',
+  );
+  const [origTabNavigator] = Array.from(origNavigators).filter(
+    n => n.getAttribute('id') === 'tabs-navigator',
+  );
+
+  it('should contain a navigator called tabs-navigator', () => {
+    expect(origTabNavigator).toBeDefined();
+  });
+
+  const origTabRoutes = getChildElements(origTabNavigator);
+
+  it('should find 3 route elements on tab-navigator', () => {
+    expect(origTabRoutes.length).toEqual(3);
+  });
+
+  it('should not contain a sub navigator for shifts-route', () => {
+    const [origShiftRoute] = origTabRoutes.filter(
+      n => n.getAttribute('id') === 'shifts-route',
+    );
+    expect(origShiftRoute.childNodes?.length).toEqual(0);
+  });
+
+  describe('merge documents with merge="false"', () => {
+    // With merging disabled, the merge source should replace the original
+    const mergeDoc = parser.parseFromString(mergeSourceDisabledDoc);
+    const outputDoc = mergeDocument(mergeDoc, originalDoc);
+    it('should merge successfully', () => {
+      expect(outputDoc).toBeDefined();
+    });
+
+    const mergedNavigators = outputDoc.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      'navigator',
+    );
+    const [mergedTabNavigator] = Array.from(mergedNavigators).filter(
+      n => n.getAttribute('id') === 'tabs-navigator',
+    );
+    const mergedTabRoutes = getChildElements(mergedTabNavigator);
+    it('should find 2 route elements on tabs-navigator', () => {
+      expect(mergedTabRoutes.length).toEqual(2);
+    });
+
+    const [mergedshiftRoute] = mergedTabRoutes.filter(
+      n => n.getAttribute('id') === 'shifts-route',
+    );
+
+    const shiftNavigators = mergedshiftRoute.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      'navigator',
+    );
+
+    it('should have one navigator under shifts-route', () => {
+      expect(shiftNavigators.length).toEqual(1);
+    });
+
+    const shiftNavRoutes = shiftNavigators[0].getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      'nav-route',
+    );
+    it('should find 2 route elements under shifts-navigator', () => {
+      expect(shiftNavRoutes.length).toEqual(2);
+    });
+  });
+
+  describe('merge documents with merge="true"', () => {
+    // With merging enabled, the docs should be merged
+    const mergeDoc = parser.parseFromString(mergeSourceEnabledDoc);
+    const outputDoc = mergeDocument(mergeDoc, originalDoc);
+    it('should merge successfully', () => {
+      expect(outputDoc).toBeDefined();
+    });
+
+    const mergedNavigators = outputDoc.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      'navigator',
+    );
+    const [mergedTabNavigator] = Array.from(mergedNavigators).filter(
+      n => n.getAttribute('id') === 'tabs-navigator',
+    );
+    const mergedTabRoutes = getChildElements(mergedTabNavigator);
+    it('should find 3 route elements on tabs-navigator', () => {
+      expect(mergedTabRoutes.length).toEqual(3);
+    });
+
+    const [mergedshiftRoute] = mergedTabRoutes.filter(
+      n => n.getAttribute('id') === 'shifts-route',
+    );
+
+    const shiftNavigators = mergedshiftRoute.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      'navigator',
+    );
+
+    it('should have one navigator under shifts-route', () => {
+      expect(shiftNavigators.length).toEqual(1);
+    });
+
+    const shiftNavRoutes = shiftNavigators[0].getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      'nav-route',
+    );
+    it('should find 2 route elements under shifts-navigator', () => {
+      expect(shiftNavRoutes.length).toEqual(2);
+    });
+  });
 });
