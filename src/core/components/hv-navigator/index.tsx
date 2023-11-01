@@ -63,9 +63,12 @@ export default class HvNavigator extends PureComponent<Props> {
         this.props.element,
       ).filter(e => {
         const triggerAttr = e.getAttribute(BEHAVIOR_ATTRIBUTES.TRIGGER);
-        if (triggerAttr !== TRIGGERS.LOAD) {
+        if (
+          triggerAttr !== TRIGGERS.LOAD &&
+          triggerAttr !== TRIGGERS.ON_EVENT
+        ) {
           console.warn(
-            `Unsupported trigger '${triggerAttr}'. Only "load" is supported`,
+            `Unsupported trigger '${triggerAttr}'. Only "load" and "on-event" are supported`,
           );
           return false;
         }
