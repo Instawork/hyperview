@@ -79,15 +79,15 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
    */
   reload = (
     optHref: DOMString | null | undefined,
-    opts: HvComponentOptions,
-    onUpdateCallbacks: OnUpdateCallbacks,
+    opts: HvComponentOptions | undefined,
+    onUpdateCallbacks: OnUpdateCallbacks | undefined,
   ) => {
     const isBlankHref =
       optHref === null ||
       optHref === undefined ||
       optHref === '#' ||
       optHref === '';
-    const stateUrl = onUpdateCallbacks.getState().url;
+    const stateUrl = onUpdateCallbacks?.getState().url;
     const url = isBlankHref
       ? stateUrl
       : UrlService.getUrlFromHref(optHref, stateUrl || '');
@@ -124,7 +124,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
       Behaviors.setRanOnce(behaviorElement);
     }
 
-    let newRoot = onUpdateCallbacks.getDoc();
+    let newRoot = onUpdateCallbacks?.getDoc();
     if (newRoot && (showIndicatorIdList || hideIndicatorIdList)) {
       newRoot = Behaviors.setIndicatorsBeforeLoad(
         showIndicatorIdList,
@@ -134,8 +134,8 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
     }
 
     // Re-render the modifications
-    onUpdateCallbacks.setNeedsLoad();
-    onUpdateCallbacks.setState({
+    onUpdateCallbacks?.setNeedsLoad();
+    onUpdateCallbacks?.setState({
       doc: newRoot,
       elementError: null,
       error: null,
@@ -555,6 +555,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
             openModal={this.props.openModal}
             push={this.props.push}
             refreshControl={this.props.refreshControl}
+            reload={this.reload}
             route={this.props.route}
           />
         </Contexts.RefreshControlComponentContext.Provider>
@@ -581,6 +582,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
               onParseAfter: this.props.onParseAfter,
               onParseBefore: this.props.onParseBefore,
               onUpdate: this.onUpdate,
+              reload: this.reload,
             }}
           >
             <HvRoute />

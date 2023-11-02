@@ -10,6 +10,7 @@ import type {
   HvBehavior,
   HvComponent,
   HvComponentOnUpdate,
+  Reload,
 } from 'hyperview/src/types';
 
 import React, { ComponentType, ReactNode } from 'react';
@@ -24,6 +25,7 @@ export type NavigationContextProps = {
   onParseAfter?: (url: string) => void;
   onParseBefore?: (url: string) => void;
   onUpdate: HvComponentOnUpdate;
+  reload: Reload;
   url?: string;
   behaviors?: HvBehavior[];
   components?: HvComponent[];

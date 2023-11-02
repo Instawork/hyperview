@@ -425,3 +425,9 @@ export type ScreenState = {
   styles?: Stylesheets.StyleSheets | null;
   url?: string | null;
 };
+
+export type Reload = (
+  optHref: DOMString | null | undefined,
+  opts: HvComponentOptions | undefined,
+  onUpdateCallbacks: OnUpdateCallbacks | undefined,
+) => void;

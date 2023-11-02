@@ -240,7 +240,7 @@ export default class HvScreen extends React.Component {
       return React.createElement(errorScreen, {
         back: () => this.getNavigation().back(),
         error: this.state.error,
-        onPressReload: () => this.reload(),  // Make sure reload() is called without any args
+        onPressReload: () => this.props.reload(),  // Make sure reload() is called without any args
         onPressViewDetails: (uri) => this.props.openModal({ url: uri }),
       });
     }
@@ -267,7 +267,7 @@ export default class HvScreen extends React.Component {
       }}>
         <Contexts.DateFormatContext.Provider value={this.props.formatDate}>
           {screenElement}
-          {elementErrorComponent ? (React.createElement(elementErrorComponent, { error: this.state.elementError, onPressReload: () => this.reload() })) : null}
+          {elementErrorComponent ? (React.createElement(elementErrorComponent, { error: this.state.elementError, onPressReload: () => this.props.reload() })) : null}
         </Contexts.DateFormatContext.Provider>
       </Contexts.DocContext.Provider>
     );

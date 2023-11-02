@@ -342,6 +342,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
             openModal={this.navLogic.openModal}
             push={this.navLogic.push}
             registerPreload={this.registerPreload}
+            reload={this.props.reload}
             route={route}
             url={url || undefined}
           />
