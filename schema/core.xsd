@@ -1233,10 +1233,10 @@
 
   <xs:element name="navigator">
     <xs:complexType>
-      <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
         <xs:element minOccurs="1" maxOccurs="unbounded" ref="hv:nav-route" />
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="hv:behavior" />
-      </xs:sequence>
+      </xs:choice>
       <xs:attribute name="id" use="required" type="hv:ID" />
       <xs:attribute name="type" use="required" type="hv:navigator-type" />
       <xs:attribute name="merge" type="xs:boolean" />
