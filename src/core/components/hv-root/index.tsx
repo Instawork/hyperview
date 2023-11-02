@@ -79,8 +79,8 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
    */
   reload = (
     optHref: DOMString | null | undefined,
+    onUpdateCallbacks: OnUpdateCallbacks,
     opts: HvComponentOptions | undefined,
-    onUpdateCallbacks: OnUpdateCallbacks | undefined,
   ) => {
     const isBlankHref =
       optHref === null ||
@@ -211,7 +211,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
     const updateAction: UpdateAction = action as UpdateAction;
 
     if (action === ACTIONS.RELOAD) {
-      this.reload(href, options, options.onUpdateCallbacks);
+      this.reload(href, options.onUpdateCallbacks, options);
     } else if (action === ACTIONS.DEEP_LINK && href) {
       Linking.openURL(href);
     } else if (navAction && Object.values(NAV_ACTIONS).includes(navAction)) {
