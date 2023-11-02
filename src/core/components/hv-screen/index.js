@@ -231,6 +231,13 @@ export default class HvScreen extends React.Component {
     }
   }
 
+    /**
+   * Reload if an error occured using the screen's current URL
+   */
+    reload = () => {
+      this.props.reload(this.state.url, this.updateCallbacks());
+    };
+
   /**
    * Renders the XML doc into React components. Shows blank screen until the XML doc is available.
    */
@@ -240,7 +247,7 @@ export default class HvScreen extends React.Component {
       return React.createElement(errorScreen, {
         back: () => this.getNavigation().back(),
         error: this.state.error,
-        onPressReload: () => this.props.reload(),  // Make sure reload() is called without any args
+        onPressReload: () => this.reload(),  // Make sure reload() is called without any args
         onPressViewDetails: (uri) => this.props.openModal({ url: uri }),
       });
     }
@@ -267,7 +274,7 @@ export default class HvScreen extends React.Component {
       }}>
         <Contexts.DateFormatContext.Provider value={this.props.formatDate}>
           {screenElement}
-          {elementErrorComponent ? (React.createElement(elementErrorComponent, { error: this.state.elementError, onPressReload: () => this.props.reload() })) : null}
+          {elementErrorComponent ? (React.createElement(elementErrorComponent, { error: this.state.elementError, onPressReload: () => this.reload() })) : null}
         </Contexts.DateFormatContext.Provider>
       </Contexts.DocContext.Provider>
     );
@@ -292,28 +299,36 @@ export default class HvScreen extends React.Component {
   }
 
   /**
+   * Implement the callbacks from this class
+   */
+  updateCallbacks = () => {
+    return {
+      clearElementError: () => {
+        if (this.state.elementError) {
+          this.setState({ elementError: null });
+        }
+      },
+      getDoc: () => this.doc,
+      getNavigation: () => this.navigation,
+      getOnUpdate: () => this.onUpdate,
+      getState: () => this.state,
+      registerPreload: (id, element)=>this.registerPreload(id, element),
+      setNeedsLoad: () => {
+        this.needsLoad = true
+      },
+      setState: (state) => {
+        this.setState(state)
+      },
+    };
+  };
+
+  /**
    *
    */
   onUpdate = (href, action, currentElement, opts) => {
-    this.props.onUpdate(href, action, currentElement, {...opts,
-      onUpdateCallbacks: {
-        clearElementError: () => {
-          if (this.state.elementError) {
-            this.setState({ elementError: null });
-          }
-        },
-        getDoc: () => this.doc,
-        getNavigation: () => this.navigation,
-        getOnUpdate: () => this.onUpdate,
-        getState: () => this.state,
-        registerPreload: (id, element)=>this.registerPreload(id, element),
-        setNeedsLoad: () => {
-          this.needsLoad = true
-        },
-        setState: (state) => {
-          this.setState(state)
-        },
-      }
+    this.props.onUpdate(href, action, currentElement, {
+      onUpdateCallbacks: this.updateCallbacks(),
+      ...opts,
     });
   }
 }
