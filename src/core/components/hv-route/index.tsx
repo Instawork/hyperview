@@ -241,8 +241,8 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     options: HvComponentOptions,
   ) => {
     this.props.onUpdate(href, action, element, {
-      onUpdateCallbacks: this.updateCallbacks(),
       ...options,
+      onUpdateCallbacks: this.updateCallbacks(),
     });
   };
 
