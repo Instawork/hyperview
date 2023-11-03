@@ -1,0 +1,15 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <navigator id="root-navigator" type="stack">
+    <behavior
+      xmlns:alert="https://hyperview.org/hyperview-alert"
+      trigger="load"
+      action="alert"
+      alert:title="Lorem ipsum"
+      alert:message="dolor sit amet"
+    />
+    <nav-route id="test-route-1" href="http://localhost:8085/test1" />
+    <behavior trigger="load" action="dispatch-event" event-name="event-one" />
+    <nav-route id="test-route-2" href="http://localhost:8085/test2" />
+    <behavior trigger="load" action="dispatch-event" event-name="event-two" />
+  </navigator>
+</doc>
