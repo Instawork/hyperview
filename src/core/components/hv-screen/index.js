@@ -231,12 +231,12 @@ export default class HvScreen extends React.Component {
     }
   }
 
-    /**
+  /**
    * Reload if an error occured using the screen's current URL
    */
-    reload = () => {
-      this.props.reload(this.state.url, this.updateCallbacks);
-    };
+  reload = () => {
+    this.props.reload(this.state.url, null, this.updateCallbacks);
+  };
 
   /**
    * Renders the XML doc into React components. Shows blank screen until the XML doc is available.

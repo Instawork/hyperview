@@ -428,6 +428,6 @@ export type ScreenState = {
 
 export type Reload = (
   optHref: DOMString | null | undefined,
+  opts: HvComponentOptions,
   onUpdateCallbacks: OnUpdateCallbacks,
-  opts: HvComponentOptions | undefined,
 ) => void;
