@@ -301,25 +301,23 @@ export default class HvScreen extends React.Component {
   /**
    * Implement the callbacks from this class
    */
-  updateCallbacks = () => {
-    return {
-      clearElementError: () => {
-        if (this.state.elementError) {
-          this.setState({ elementError: null });
-        }
-      },
-      getDoc: () => this.doc,
-      getNavigation: () => this.navigation,
-      getOnUpdate: () => this.onUpdate,
-      getState: () => this.state,
-      registerPreload: (id, element)=>this.registerPreload(id, element),
-      setNeedsLoad: () => {
-        this.needsLoad = true
-      },
-      setState: (state) => {
-        this.setState(state)
-      },
-    };
+  updateCallbacks =  {
+    clearElementError: () => {
+      if (this.state.elementError) {
+        this.setState({ elementError: null });
+      }
+    },
+    getDoc: () => this.doc,
+    getNavigation: () => this.navigation,
+    getOnUpdate: () => this.onUpdate,
+    getState: () => this.state,
+    registerPreload: (id, element) => this.registerPreload(id, element),
+    setNeedsLoad: () => {
+      this.needsLoad = true
+    },
+    setState: (state) => {
+      this.setState(state)
+    },
   };
 
   /**
@@ -327,7 +325,7 @@ export default class HvScreen extends React.Component {
    */
   onUpdate = (href, action, currentElement, opts) => {
     this.props.onUpdate(href, action, currentElement, {
-      onUpdateCallbacks: this.updateCallbacks(),
+      onUpdateCallbacks: this.updateCallbacks,
       ...opts,
     });
   }
