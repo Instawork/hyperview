@@ -235,7 +235,7 @@ export default class HvScreen extends React.Component {
    * Reload if an error occured using the screen's current URL
    */
     reload = () => {
-      this.props.reload(this.state.url, this.updateCallbacks());
+      this.props.reload(this.state.url, this.updateCallbacks);
     };
 
   /**
