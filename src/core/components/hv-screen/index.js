@@ -232,6 +232,13 @@ export default class HvScreen extends React.Component {
   }
 
   /**
+   * Reload if an error occured using the screen's current URL
+   */
+  reload = () => {
+    this.props.reload(this.state.url, null, this.updateCallbacks);
+  };
+
+  /**
    * Renders the XML doc into React components. Shows blank screen until the XML doc is available.
    */
   render() {
@@ -292,28 +299,34 @@ export default class HvScreen extends React.Component {
   }
 
   /**
+   * Implement the callbacks from this class
+   */
+  updateCallbacks =  {
+    clearElementError: () => {
+      if (this.state.elementError) {
+        this.setState({ elementError: null });
+      }
+    },
+    getDoc: () => this.doc,
+    getNavigation: () => this.navigation,
+    getOnUpdate: () => this.onUpdate,
+    getState: () => this.state,
+    registerPreload: (id, element) => this.registerPreload(id, element),
+    setNeedsLoad: () => {
+      this.needsLoad = true
+    },
+    setState: (state) => {
+      this.setState(state)
+    },
+  };
+
+  /**
    *
    */
   onUpdate = (href, action, currentElement, opts) => {
-    this.props.onUpdate(href, action, currentElement, {...opts,
-      onUpdateCallbacks: {
-        clearElementError: () => {
-          if (this.state.elementError) {
-            this.setState({ elementError: null });
-          }
-        },
-        getDoc: () => this.doc,
-        getNavigation: () => this.navigation,
-        getOnUpdate: () => this.onUpdate,
-        getState: () => this.state,
-        registerPreload: (id, element)=>this.registerPreload(id, element),
-        setNeedsLoad: () => {
-          this.needsLoad = true
-        },
-        setState: (state) => {
-          this.setState(state)
-        },
-      }
+    this.props.onUpdate(href, action, currentElement, {
+      onUpdateCallbacks: this.updateCallbacks,
+      ...opts,
     });
   }
 }

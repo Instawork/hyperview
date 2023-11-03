@@ -13,6 +13,7 @@ import {
   HvBehavior,
   HvComponent,
   HvComponentOnUpdate,
+  Reload,
 } from 'hyperview/src/types';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
@@ -40,6 +41,7 @@ export type NavigationContextProps = {
   errorScreen?: ComponentType<ErrorProps>;
   loadingScreen?: ComponentType<LoadingProps>;
   handleBack?: ComponentType<{ children: ReactNode }>;
+  reload: Reload;
 };
 
 export type NavigatorMapContextProps = {
@@ -74,6 +76,7 @@ export type InnerRouteProps = {
   setPreload: (key: number, element: Element) => void;
   getPreload: (key: number) => Element | undefined;
   element?: Element;
+  reload: Reload;
 };
 
 /**

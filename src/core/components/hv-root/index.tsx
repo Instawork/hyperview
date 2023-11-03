@@ -555,6 +555,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
             openModal={this.props.openModal}
             push={this.props.push}
             refreshControl={this.props.refreshControl}
+            reload={this.reload}
             route={this.props.route}
           />
         </Contexts.RefreshControlComponentContext.Provider>
@@ -581,6 +582,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
               onParseAfter: this.props.onParseAfter,
               onParseBefore: this.props.onParseBefore,
               onUpdate: this.onUpdate,
+              reload: this.reload,
             }}
           >
             <HvRoute />

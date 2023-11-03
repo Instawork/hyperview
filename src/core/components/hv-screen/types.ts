@@ -53,4 +53,5 @@ export type Props = {
   handleBack?: ComponentType<{ children: ReactNode }>;
   doc?: Document;
   registerPreload?: (id: number, element: Element) => void;
+  reload: Types.Reload;
 };
