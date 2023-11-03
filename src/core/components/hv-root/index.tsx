@@ -87,7 +87,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
       optHref === undefined ||
       optHref === '#' ||
       optHref === '';
-    const stateUrl = onUpdateCallbacks?.getState().url;
+    const stateUrl = onUpdateCallbacks.getState().url;
     const url = isBlankHref
       ? stateUrl
       : UrlService.getUrlFromHref(optHref, stateUrl || '');
@@ -124,7 +124,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
       Behaviors.setRanOnce(behaviorElement);
     }
 
-    let newRoot = onUpdateCallbacks?.getDoc();
+    let newRoot = onUpdateCallbacks.getDoc();
     if (newRoot && (showIndicatorIdList || hideIndicatorIdList)) {
       newRoot = Behaviors.setIndicatorsBeforeLoad(
         showIndicatorIdList,
@@ -134,8 +134,8 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
     }
 
     // Re-render the modifications
-    onUpdateCallbacks?.setNeedsLoad();
-    onUpdateCallbacks?.setState({
+    onUpdateCallbacks.setNeedsLoad();
+    onUpdateCallbacks.setState({
       doc: newRoot,
       elementError: null,
       error: null,
