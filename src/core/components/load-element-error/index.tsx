@@ -22,7 +22,7 @@ const LoadElementError = (props: Props) => {
     ) {
       return 'You seem to be offline, check your connection';
     }
-    return 'An error occured';
+    return 'An error occurred';
   };
 
   return (

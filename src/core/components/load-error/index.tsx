@@ -34,7 +34,7 @@ export default class LoadError extends PureComponent<Props> {
 
   getTitle = () => {
     if (!__DEV__ || !this.props.error) {
-      return 'An error occured';
+      return 'An error occurred';
     }
     return `${this.props.error.name}: ${this.props.error.message}`;
   };
