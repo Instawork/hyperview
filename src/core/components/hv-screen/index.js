@@ -158,10 +158,10 @@ export default class HvScreen extends React.Component {
         : null;
 
       const doc = preloadScreen || this.doc;
-      // eslint-disable-next-line react/no-access-state-in-setstate
       const styles = preloadScreen
         ? Stylesheets.createStylesheets(preloadScreen)
-        : this.state.styles;
+        : // eslint-disable-next-line react/no-access-state-in-setstate
+          this.state.styles;
 
       this.setState({ doc, styles, url: newUrl });
     }
