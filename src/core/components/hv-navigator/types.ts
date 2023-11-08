@@ -6,15 +6,9 @@
  *
  */
 
+import type { HvComponentOnUpdate, RouteParams } from 'hyperview/src/types';
 import { FC } from 'react';
-import type { HvComponentOnUpdate } from 'hyperview/src/types';
 import type { Props as HvRouteProps } from 'hyperview/src/core/components/hv-route';
-
-export type RouteParams = {
-  id?: string;
-  url: string;
-  isModal?: boolean;
-};
 
 export type ParamTypes = Record<string, RouteParams>;
 

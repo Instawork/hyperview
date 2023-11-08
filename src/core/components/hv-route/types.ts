@@ -18,16 +18,6 @@ import {
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
 
-/**
- * Params passed to hv-route
- */
-type RouteParams = {
-  id?: string;
-  url: string;
-  preloadScreen?: number;
-  isModal?: boolean;
-};
-
 export type NavigationContextProps = {
   entrypointUrl: string;
   fetch: Fetch;

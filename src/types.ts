@@ -399,6 +399,13 @@ export type NavigationProps = {
   push: (routeParams: NavigationRouteParams) => void;
 };
 
+export type RouteParams = {
+  id?: string;
+  url: string;
+  preloadScreen?: number;
+  isModal?: boolean;
+};
+
 export const ON_EVENT_DISPATCH = 'hyperview:on-event';
 
 export type Fetch = (

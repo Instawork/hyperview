@@ -30,6 +30,7 @@ import {
   OnUpdateCallbacks,
   UPDATE_ACTIONS,
   UpdateAction,
+  RouteParams,
 } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
 import HvRoute from 'hyperview/src/core/components/hv-route';

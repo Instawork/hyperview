@@ -11,11 +11,15 @@ import * as Dom from 'hyperview/src/services/dom';
 import * as NavigationContext from 'hyperview/src/contexts/navigation';
 import * as NavigatorMapContext from 'hyperview/src/contexts/navigator-map';
 import * as NavigatorService from 'hyperview/src/services/navigator';
-import { BEHAVIOR_ATTRIBUTES, LOCAL_NAME, TRIGGERS } from 'hyperview/src/types';
+import {
+  BEHAVIOR_ATTRIBUTES,
+  LOCAL_NAME,
+  RouteParams,
+  TRIGGERS,
+} from 'hyperview/src/types';
 import type {
   ParamTypes,
   Props,
-  RouteParams,
   ScreenParams,
   StackScreenOptions,
   TabScreenOptions,
