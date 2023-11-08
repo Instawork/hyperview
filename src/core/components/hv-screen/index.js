@@ -346,8 +346,8 @@ export default class HvScreen extends React.Component {
    */
   onUpdate = (href, action, currentElement, opts) => {
     this.props.onUpdate(href, action, currentElement, {
-      onUpdateCallbacks: this.updateCallbacks,
       ...opts,
+      onUpdateCallbacks: this.updateCallbacks,
     });
   };
 }
