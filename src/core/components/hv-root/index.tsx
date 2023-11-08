@@ -80,14 +80,13 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
   reload = (
     optHref: DOMString | null | undefined,
     opts: HvComponentOptions,
-    onUpdateCallbacks: OnUpdateCallbacks,
   ) => {
     const isBlankHref =
       optHref === null ||
       optHref === undefined ||
       optHref === '#' ||
       optHref === '';
-    const stateUrl = onUpdateCallbacks.getState().url;
+    const stateUrl = opts.onUpdateCallbacks?.getState().url;
     const url = isBlankHref
       ? stateUrl
       : UrlService.getUrlFromHref(optHref, stateUrl || '');
@@ -124,7 +123,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
       Behaviors.setRanOnce(behaviorElement);
     }
 
-    let newRoot = onUpdateCallbacks.getDoc();
+    let newRoot = opts.onUpdateCallbacks?.getDoc();
     if (newRoot && (showIndicatorIdList || hideIndicatorIdList)) {
       newRoot = Behaviors.setIndicatorsBeforeLoad(
         showIndicatorIdList,
@@ -134,8 +133,8 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
     }
 
     // Re-render the modifications
-    onUpdateCallbacks.setNeedsLoad();
-    onUpdateCallbacks.setState({
+    opts.onUpdateCallbacks?.setNeedsLoad();
+    opts.onUpdateCallbacks?.setState({
       doc: newRoot,
       elementError: null,
       error: null,
@@ -211,7 +210,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
     const updateAction: UpdateAction = action as UpdateAction;
 
     if (action === ACTIONS.RELOAD) {
-      this.reload(href, options, options.onUpdateCallbacks);
+      this.reload(href, options);
     } else if (action === ACTIONS.DEEP_LINK && href) {
       Linking.openURL(href);
     } else if (navAction && Object.values(NAV_ACTIONS).includes(navAction)) {
