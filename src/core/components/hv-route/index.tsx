@@ -549,10 +549,7 @@ export default function HvRoute(props: Types.Props) {
         'blur',
         () => {
           if (navigationContext.onRouteBlur) {
-            navigationContext.onRouteBlur(
-              props.route?.params?.id,
-              props.route?.params?.url,
-            );
+            navigationContext.onRouteBlur(props.route?.params);
           }
         },
       );
@@ -566,10 +563,7 @@ export default function HvRoute(props: Types.Props) {
             props.route?.params?.id,
           );
           if (navigationContext.onRouteFocus) {
-            navigationContext.onRouteFocus(
-              props.route?.params?.id,
-              props.route?.params?.url,
-            );
+            navigationContext.onRouteFocus(props.route?.params);
           }
         },
       );
@@ -592,13 +586,7 @@ export default function HvRoute(props: Types.Props) {
       };
     }
     return undefined;
-  }, [
-    props.navigation,
-    props.route?.params?.id,
-    props.route?.params?.url,
-    docContext,
-    navigationContext,
-  ]);
+  }, [props.navigation, props.route?.params, docContext, navigationContext]);
 
   return (
     <HvRouteInner
