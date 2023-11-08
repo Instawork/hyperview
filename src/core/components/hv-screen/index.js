@@ -42,7 +42,7 @@ export default class HvScreen extends React.Component {
     this.parser = new Dom.Parser(
       this.props.fetch,
       this.props.onParseBefore,
-      this.props.onParseAfter
+      this.props.onParseAfter,
     );
 
     this.needsLoad = false;
@@ -72,19 +72,21 @@ export default class HvScreen extends React.Component {
         this.doc = args[0].doc;
       }
       this.oldSetState(...args);
-    }
+    };
     // </HACK>
 
     this.behaviorRegistry = Behaviors.getRegistry(this.props.behaviors);
     this.componentRegistry = Components.getRegistry(this.props.components);
-    this.formComponentRegistry = Components.getFormRegistry(this.props.components);
+    this.formComponentRegistry = Components.getFormRegistry(
+      this.props.components,
+    );
     this.navigation = new Navigation(props.entrypointUrl, this.getNavigation());
   }
 
-  getRoute = (props) => {
+  getRoute = props => {
     // The prop route is available in React Navigation v5 and above
     if (props.route) {
-      return props.route
+      return props.route;
     }
 
     // Fallback for older versions of React Navigation
@@ -92,7 +94,7 @@ export default class HvScreen extends React.Component {
       return props.navigation.state;
     }
     return { params: {} };
-  }
+  };
 
   componentDidMount() {
     const { params } = this.getRoute(this.props);
@@ -104,7 +106,9 @@ export default class HvScreen extends React.Component {
     const preloadScreen = params.preloadScreen
       ? this.navigation.getPreloadScreen(params.preloadScreen)
       : null;
-    const preloadStyles = preloadScreen ? Stylesheets.createStylesheets(preloadScreen) : {};
+    const preloadStyles = preloadScreen
+      ? Stylesheets.createStylesheets(preloadScreen)
+      : {};
 
     this.needsLoad = true;
     if (preloadScreen) {
@@ -130,7 +134,7 @@ export default class HvScreen extends React.Component {
    * preload screen and URL to load.
    */
   // eslint-disable-next-line camelcase
-  UNSAFE_componentWillReceiveProps = (nextProps) => {
+  UNSAFE_componentWillReceiveProps = nextProps => {
     const oldNavigationState = this.getRoute(this.props);
     const newNavigationState = this.getRoute(nextProps);
 
@@ -154,12 +158,14 @@ export default class HvScreen extends React.Component {
         : null;
 
       const doc = preloadScreen || this.doc;
-      // eslint-disable-next-line react/no-access-state-in-setstate
-      const styles = preloadScreen ? Stylesheets.createStylesheets(preloadScreen) : this.state.styles;
+      const styles = preloadScreen
+        ? Stylesheets.createStylesheets(preloadScreen)
+        : // eslint-disable-next-line react/no-access-state-in-setstate
+          this.state.styles;
 
       this.setState({ doc, styles, url: newUrl });
     }
-  }
+  };
 
   /**
    * Clear out the preload screen associated with this screen.
@@ -171,7 +177,7 @@ export default class HvScreen extends React.Component {
       this.navigation.removePreloadScreen(preloadScreen);
     }
     if (this.state.url) {
-      this.navigation.removeRouteKey(this.state.url)
+      this.navigation.removeRouteKey(this.state.url);
     }
   }
 
@@ -199,12 +205,15 @@ export default class HvScreen extends React.Component {
       // If an initial document was passed, use it once and then remove
       let doc;
       let staleHeaderType;
-      if (this.initialDoc){
+      if (this.initialDoc) {
         doc = this.initialDoc;
         this.initialDoc = null;
       } else {
         // eslint-disable-next-line react/no-access-state-in-setstate
-        const { doc : loadedDoc, staleHeaderType : loadedType } = await this.parser.loadDocument(this.state.url);
+        const {
+          doc: loadedDoc,
+          staleHeaderType: loadedType,
+        } = await this.parser.loadDocument(this.state.url);
         doc = loadedDoc;
         staleHeaderType = loadedType;
       }
@@ -217,7 +226,6 @@ export default class HvScreen extends React.Component {
         staleHeaderType,
         styles: stylesheets,
       });
-
     } catch (err) {
       if (this.props.onError) {
         this.props.onError(err);
@@ -229,7 +237,7 @@ export default class HvScreen extends React.Component {
         styles: null,
       });
     }
-  }
+  };
 
   /**
    * Reload if an error occured using the screen's current URL
@@ -247,16 +255,20 @@ export default class HvScreen extends React.Component {
       return React.createElement(errorScreen, {
         back: () => this.getNavigation().back(),
         error: this.state.error,
-        onPressReload: () => this.reload(),  // Make sure reload() is called without any args
-        onPressViewDetails: (uri) => this.props.openModal({ url: uri }),
+        onPressReload: () => this.reload(), // Make sure reload() is called without any args
+        onPressViewDetails: uri => this.props.openModal({ url: uri }),
       });
     }
     if (!this.state.doc) {
       const loadingScreen = this.props.loadingScreen || Loading;
       return React.createElement(loadingScreen);
     }
-    const elementErrorComponent = this.state.elementError ? this.props.elementErrorComponent || LoadElementError : null;
-    const [body] = Array.from(this.state.doc.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'body'));
+    const elementErrorComponent = this.state.elementError
+      ? this.props.elementErrorComponent || LoadElementError
+      : null;
+    const [body] = Array.from(
+      this.state.doc.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'body'),
+    );
     const screenElement = Render.renderElement(
       body,
       this.state.styles,
@@ -269,12 +281,19 @@ export default class HvScreen extends React.Component {
     );
 
     return (
-      <Contexts.DocContext.Provider value={{
-        getDoc: () => this.doc,
-      }}>
+      <Contexts.DocContext.Provider
+        value={{
+          getDoc: () => this.doc,
+        }}
+      >
         <Contexts.DateFormatContext.Provider value={this.props.formatDate}>
           {screenElement}
-          {elementErrorComponent ? (React.createElement(elementErrorComponent, { error: this.state.elementError, onPressReload: () => this.reload() })) : null}
+          {elementErrorComponent
+            ? React.createElement(elementErrorComponent, {
+                error: this.state.elementError,
+                onPressReload: () => this.reload(),
+              })
+            : null}
         </Contexts.DateFormatContext.Provider>
       </Contexts.DocContext.Provider>
     );
@@ -290,18 +309,18 @@ export default class HvScreen extends React.Component {
     navigate: this.props.navigate,
     openModal: this.props.openModal,
     push: this.props.push,
-  })
+  });
 
   registerPreload = (id, element) => {
-    if (this.props.registerPreload){
+    if (this.props.registerPreload) {
       this.props.registerPreload(id, element);
     }
-  }
+  };
 
   /**
    * Implement the callbacks from this class
    */
-  updateCallbacks =  {
+  updateCallbacks = {
     clearElementError: () => {
       if (this.state.elementError) {
         this.setState({ elementError: null });
@@ -313,10 +332,10 @@ export default class HvScreen extends React.Component {
     getState: () => this.state,
     registerPreload: (id, element) => this.registerPreload(id, element),
     setNeedsLoad: () => {
-      this.needsLoad = true
+      this.needsLoad = true;
     },
-    setState: (state) => {
-      this.setState(state)
+    setState: state => {
+      this.setState(state);
     },
   };
 
@@ -328,7 +347,7 @@ export default class HvScreen extends React.Component {
       onUpdateCallbacks: this.updateCallbacks,
       ...opts,
     });
-  }
+  };
 }
 
 export * from 'hyperview/src/types';
