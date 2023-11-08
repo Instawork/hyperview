@@ -22,7 +22,6 @@ import * as UrlService from 'hyperview/src/services/url';
 import {
   DOMString,
   HvComponentOptions,
-  OnUpdateCallbacks,
   ScreenState,
 } from 'hyperview/src/types';
 import React, { JSXElementConstructor, PureComponent, useContext } from 'react';
@@ -215,23 +214,22 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
   /**
    * Implement the callbacks from this class
    */
-  updateCallbacks = (): OnUpdateCallbacks => {
-    return {
-      clearElementError: () => {
-        // Noop
-      },
-      getDoc: () => this.state.doc || null,
-      getNavigation: () => this.navigation,
-      getOnUpdate: () => this.onUpdate,
-      getState: () => this.state,
-      registerPreload: (id, element) => this.registerPreload(id, element),
-      setNeedsLoad: () => {
-        this.needsLoad = true;
-      },
-      setState: (state: ScreenState) => {
-        this.setState(state);
-      },
-    };
+  updateCallbacks = {
+    clearElementError: () => {
+      // Noop
+    },
+    getDoc: () => this.state.doc || null,
+    getNavigation: () => this.navigation,
+    getOnUpdate: () => this.onUpdate,
+    getState: () => this.state,
+    registerPreload: (id: number, element: Element) =>
+      this.registerPreload(id, element),
+    setNeedsLoad: () => {
+      this.needsLoad = true;
+    },
+    setState: (state: ScreenState) => {
+      this.setState(state);
+    },
   };
 
   onUpdate = (
@@ -242,7 +240,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
   ) => {
     this.props.onUpdate(href, action, element, {
       ...options,
-      onUpdateCallbacks: this.updateCallbacks(),
+      onUpdateCallbacks: this.updateCallbacks,
     });
   };
 
