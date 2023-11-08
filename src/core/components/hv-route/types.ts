@@ -33,6 +33,8 @@ export type NavigationContextProps = {
   fetch: Fetch;
   onParseAfter?: (url: string) => void;
   onParseBefore?: (url: string) => void;
+  onRouteBlur?: (id?: string, url?: string) => void;
+  onRouteFocus?: (id?: string, url?: string) => void;
   onUpdate: HvComponentOnUpdate;
   url?: string;
   behaviors?: HvBehavior[];

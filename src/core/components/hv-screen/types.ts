@@ -31,6 +31,8 @@ export type Props = {
   onError?: (error: Error) => void;
   onParseAfter?: (url: string) => void;
   onParseBefore?: (url: string) => void;
+  onRouteBlur?: (id?: string, url?: string) => void;
+  onRouteFocus?: (id?: string, url?: string) => void;
   onUpdate: Types.HvComponentOnUpdate;
   url?: string;
   back?: (
