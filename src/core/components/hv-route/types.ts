@@ -14,6 +14,7 @@ import {
   HvComponent,
   HvComponentOnUpdate,
   Reload,
+  Route,
   RouteParams,
 } from 'hyperview/src/types';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
@@ -24,8 +25,8 @@ export type NavigationContextProps = {
   fetch: Fetch;
   onParseAfter?: (url: string) => void;
   onParseBefore?: (url: string) => void;
-  onRouteBlur?: (routeParams?: RouteParams) => void;
-  onRouteFocus?: (routeParams?: RouteParams) => void;
+  onRouteBlur?: (route: Route) => void;
+  onRouteFocus?: (route: Route) => void;
   onUpdate: HvComponentOnUpdate;
   url?: string;
   behaviors?: HvBehavior[];

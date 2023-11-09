@@ -548,8 +548,8 @@ export default function HvRoute(props: Types.Props) {
       const unsubscribeBlur: () => void = props.navigation.addListener(
         'blur',
         () => {
-          if (navigationContext.onRouteBlur) {
-            navigationContext.onRouteBlur(props.route?.params);
+          if (navigationContext.onRouteBlur && props.route) {
+            navigationContext.onRouteBlur(props.route);
           }
         },
       );
@@ -562,8 +562,8 @@ export default function HvRoute(props: Types.Props) {
             docContext?.getDoc(),
             props.route?.params?.id,
           );
-          if (navigationContext.onRouteFocus) {
-            navigationContext.onRouteFocus(props.route?.params);
+          if (navigationContext.onRouteFocus && props.route) {
+            navigationContext.onRouteFocus(props.route);
           }
         },
       );
@@ -586,7 +586,7 @@ export default function HvRoute(props: Types.Props) {
       };
     }
     return undefined;
-  }, [props.navigation, props.route?.params, docContext, navigationContext]);
+  }, [props.navigation, props.route, docContext, navigationContext]);
 
   return (
     <HvRouteInner
