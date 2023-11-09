@@ -10,8 +10,9 @@ import * as Errors from './errors';
 import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Types from './types';
-import * as TypesLegacy from 'hyperview/src/types';
 import * as UrlService from 'hyperview/src/services/url';
+import { LOCAL_NAME, NAV_ACTIONS, NODE_TYPE } from 'hyperview/src/types';
+import type { NavAction, NavigationRouteParams } from 'hyperview/src/types';
 import { ANCHOR_ID_SEPARATOR } from './types';
 
 /**
@@ -27,7 +28,7 @@ export const isDynamicRoute = (id: string): boolean => {
 export const getChildElements = (element: Element | Document): Element[] => {
   return (Array.from(element.childNodes as NodeListOf<Element>) || []).filter(
     (child: Element) => {
-      return child.nodeType === TypesLegacy.NODE_TYPE.ELEMENT_NODE;
+      return child.nodeType === NODE_TYPE.ELEMENT_NODE;
     },
   );
 };
@@ -38,8 +39,8 @@ export const getChildElements = (element: Element | Document): Element[] => {
 export const isNavigationElement = (element: Element): boolean => {
   return (
     element.namespaceURI === Namespaces.HYPERVIEW &&
-    (element.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR ||
-      element.localName === TypesLegacy.LOCAL_NAME.NAV_ROUTE)
+    (element.localName === LOCAL_NAME.NAVIGATOR ||
+      element.localName === LOCAL_NAME.NAV_ROUTE)
   );
 };
 
@@ -99,13 +100,10 @@ export const getUrlFromHref = (
  * If the params contain a url, ensure that it is valid
  */
 export const validateUrl = (
-  action: TypesLegacy.NavAction,
-  routeParams: TypesLegacy.NavigationRouteParams,
+  action: NavAction,
+  routeParams: NavigationRouteParams,
 ) => {
-  if (
-    action === TypesLegacy.NAV_ACTIONS.PUSH ||
-    action === TypesLegacy.NAV_ACTIONS.NEW
-  ) {
+  if (action === NAV_ACTIONS.PUSH || action === NAV_ACTIONS.NEW) {
     if (!routeParams.url || !cleanHrefFragment(routeParams.url)) {
       throw new Errors.HvNavigatorError(
         `Route params must include a url for action '${action}'`,
@@ -183,9 +181,9 @@ export const getNavigatorAndPath = (
 export const buildParams = (
   routeId: string,
   path: string[],
-  routeParams: TypesLegacy.NavigationRouteParams,
+  routeParams: NavigationRouteParams,
   index = 0,
-): Types.NavigationNavigateParams | TypesLegacy.NavigationRouteParams => {
+): Types.NavigationNavigateParams | NavigationRouteParams => {
   if (path.length && index < path.length) {
     const screen = path[index];
 
@@ -209,16 +207,14 @@ export const buildParams = (
  * Use the card or modal route for dynamic actions, otherwise use the given id
  */
 export const getRouteId = (
-  action: TypesLegacy.NavAction,
+  action: NavAction,
   url: string | undefined,
 ): string => {
   if (url && isUrlFragment(url)) {
     return cleanHrefFragment(url);
   }
 
-  return action === TypesLegacy.NAV_ACTIONS.NEW
-    ? Types.ID_MODAL
-    : Types.ID_CARD;
+  return action === NAV_ACTIONS.NEW ? Types.ID_MODAL : Types.ID_CARD;
 };
 
 /**
@@ -229,10 +225,7 @@ export const getRouteById = (
   id: string,
 ): Element | undefined => {
   const routes = Array.from(
-    doc.getElementsByTagNameNS(
-      Namespaces.HYPERVIEW,
-      TypesLegacy.LOCAL_NAME.NAV_ROUTE,
-    ),
+    doc.getElementsByTagNameNS(Namespaces.HYPERVIEW, LOCAL_NAME.NAV_ROUTE),
   ).filter((n: Element) => {
     return n.getAttribute(Types.KEY_ID) === id;
   });
@@ -246,16 +239,16 @@ export const getRouteById = (
  * Url fragments are treated as a navigate action
  */
 export const getNavAction = (
-  action: TypesLegacy.NavAction,
-  routeParams?: TypesLegacy.NavigationRouteParams,
-): TypesLegacy.NavAction => {
+  action: NavAction,
+  routeParams?: NavigationRouteParams,
+): NavAction => {
   if (
     routeParams &&
     routeParams.url &&
-    action === TypesLegacy.NAV_ACTIONS.PUSH &&
+    action === NAV_ACTIONS.PUSH &&
     isUrlFragment(routeParams.url)
   ) {
-    return TypesLegacy.NAV_ACTIONS.NAVIGATE;
+    return NAV_ACTIONS.NAVIGATE;
   }
   return action;
 };
@@ -266,23 +259,19 @@ export const getNavAction = (
  */
 export const buildRequest = (
   nav: Types.NavigationProp | undefined,
-  action: TypesLegacy.NavAction,
-  routeParams?: TypesLegacy.NavigationRouteParams,
+  action: NavAction,
+  routeParams?: NavigationRouteParams,
 ): [
   Types.NavigationProp | undefined,
   string,
-  (
-    | Types.NavigationNavigateParams
-    | TypesLegacy.NavigationRouteParams
-    | undefined
-  ),
+  Types.NavigationNavigateParams | NavigationRouteParams | undefined,
 ] => {
   if (!routeParams) {
     return [nav, '', {}];
   }
 
   // For a back behavior with params, the current navigator is targeted
-  if (action === TypesLegacy.NAV_ACTIONS.BACK && routeParams.url) {
+  if (action === NAV_ACTIONS.BACK && routeParams.url) {
     return [nav, '', routeParams];
   }
 
@@ -293,7 +282,7 @@ export const buildRequest = (
     nav,
   );
 
-  const cleanedParams: TypesLegacy.NavigationRouteParams = { ...routeParams };
+  const cleanedParams: NavigationRouteParams = { ...routeParams };
   if (cleanedParams.url && isUrlFragment(cleanedParams.url)) {
     // When a fragment is used, the original url is used for the route
     // setting url to undefined will overwrite the value, so the url has to be
@@ -320,11 +309,7 @@ export const buildRequest = (
   const lastPathId = path.shift();
   const params:
     | Types.NavigationNavigateParams
-    | TypesLegacy.NavigationRouteParams = buildParams(
-    routeId,
-    path,
-    cleanedParams,
-  );
+    | NavigationRouteParams = buildParams(routeId, path, cleanedParams);
 
   return [navigation, lastPathId || routeId, params];
 };
@@ -338,7 +323,7 @@ const nodesToMap = (nodes: NodeListOf<Node>): Types.RouteMap => {
     return map;
   }
   Array.from(nodes).forEach(node => {
-    if (node.nodeType === TypesLegacy.NODE_TYPE.ELEMENT_NODE) {
+    if (node.nodeType === NODE_TYPE.ELEMENT_NODE) {
       const element = node as Element;
       if (isNavigationElement(element)) {
         const id = element.getAttribute(Types.KEY_ID);
@@ -367,9 +352,9 @@ const mergeNodes = (current: Element, newNodes: NodeListOf<Node>): void => {
   Array.from(current.childNodes).forEach(node => {
     const element = node as Element;
     if (isNavigationElement(element)) {
-      if (element.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR) {
+      if (element.localName === LOCAL_NAME.NAVIGATOR) {
         element.setAttribute(Types.KEY_MERGE, 'false');
-      } else if (element.localName === TypesLegacy.LOCAL_NAME.NAV_ROUTE) {
+      } else if (element.localName === LOCAL_NAME.NAV_ROUTE) {
         element.setAttribute(Types.KEY_SELECTED, 'false');
       }
     }
@@ -378,14 +363,14 @@ const mergeNodes = (current: Element, newNodes: NodeListOf<Node>): void => {
   const currentMap: Types.RouteMap = nodesToMap(current.childNodes);
 
   Array.from(newNodes).forEach(node => {
-    if (node.nodeType === TypesLegacy.NODE_TYPE.ELEMENT_NODE) {
+    if (node.nodeType === NODE_TYPE.ELEMENT_NODE) {
       const newElement = node as Element;
       if (isNavigationElement(newElement)) {
         const id = newElement.getAttribute(Types.KEY_ID);
         if (id) {
           const currentElement = currentMap[id] as Element;
           if (currentElement) {
-            if (newElement.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR) {
+            if (newElement.localName === LOCAL_NAME.NAVIGATOR) {
               const isMergeable =
                 newElement.getAttribute(Types.KEY_MERGE) === 'true';
               if (isMergeable) {
@@ -394,9 +379,7 @@ const mergeNodes = (current: Element, newNodes: NodeListOf<Node>): void => {
               } else {
                 current.replaceChild(newElement, currentElement);
               }
-            } else if (
-              newElement.localName === TypesLegacy.LOCAL_NAME.NAV_ROUTE
-            ) {
+            } else if (newElement.localName === LOCAL_NAME.NAV_ROUTE) {
               // Update the selected route
               currentElement.setAttribute(
                 Types.KEY_SELECTED,
@@ -431,17 +414,14 @@ export const mergeDocument = (
 
   // Create a clone of the current document
   const composite = currentDoc.cloneNode(true) as Document;
-  const currentRoot = Helpers.getFirstTag(
-    composite,
-    TypesLegacy.LOCAL_NAME.DOC,
-  );
+  const currentRoot = Helpers.getFirstTag(composite, LOCAL_NAME.DOC);
 
   if (!currentRoot) {
     throw new Errors.HvRouteError('No root element found in current document');
   }
 
   // Get the <doc>
-  const newRoot = Helpers.getFirstTag(newDoc, TypesLegacy.LOCAL_NAME.DOC);
+  const newRoot = Helpers.getFirstTag(newDoc, LOCAL_NAME.DOC);
   if (!newRoot) {
     throw new Errors.HvRouteError('No root element found in new document');
   }
@@ -463,7 +443,7 @@ export const setSelected = (
     if (route.parentNode && route.parentNode.childNodes) {
       Array.from(route.parentNode.childNodes).forEach((child: Node) => {
         const sibling = child as Element;
-        if (sibling && sibling.localName === TypesLegacy.LOCAL_NAME.NAV_ROUTE) {
+        if (sibling && sibling.localName === LOCAL_NAME.NAV_ROUTE) {
           sibling.setAttribute(Types.KEY_SELECTED, 'false');
         }
       });
