@@ -8,7 +8,6 @@
 
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Types from 'hyperview/src/types';
-import * as TypesLegacy from 'hyperview/src/types-legacy';
 import { ComponentType, ReactNode } from 'react';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
