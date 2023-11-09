@@ -55,14 +55,8 @@ export class Navigator {
   /**
    * Prepare and send the request
    */
-  sendRequest = (
-    action: NavAction,
-    routeParams?: NavigationRouteParams,
-  ) => {
-    const navAction: NavAction = Helpers.getNavAction(
-      action,
-      routeParams,
-    );
+  sendRequest = (action: NavAction, routeParams?: NavigationRouteParams) => {
+    const navAction: NavAction = Helpers.getNavAction(action, routeParams);
 
     const [navigation, routeId, params] = Helpers.buildRequest(
       this.props.navigation,

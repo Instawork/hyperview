@@ -103,10 +103,7 @@ export const validateUrl = (
   action: NavAction,
   routeParams: NavigationRouteParams,
 ) => {
-  if (
-    action === NAV_ACTIONS.PUSH ||
-    action === NAV_ACTIONS.NEW
-  ) {
+  if (action === NAV_ACTIONS.PUSH || action === NAV_ACTIONS.NEW) {
     if (!routeParams.url || !cleanHrefFragment(routeParams.url)) {
       throw new Errors.HvNavigatorError(
         `Route params must include a url for action '${action}'`,
@@ -217,9 +214,7 @@ export const getRouteId = (
     return cleanHrefFragment(url);
   }
 
-  return action === NAV_ACTIONS.NEW
-    ? Types.ID_MODAL
-    : Types.ID_CARD;
+  return action === NAV_ACTIONS.NEW ? Types.ID_MODAL : Types.ID_CARD;
 };
 
 /**
@@ -230,10 +225,7 @@ export const getRouteById = (
   id: string,
 ): Element | undefined => {
   const routes = Array.from(
-    doc.getElementsByTagNameNS(
-      Namespaces.HYPERVIEW,
-      LOCAL_NAME.NAV_ROUTE,
-    ),
+    doc.getElementsByTagNameNS(Namespaces.HYPERVIEW, LOCAL_NAME.NAV_ROUTE),
   ).filter((n: Element) => {
     return n.getAttribute(Types.KEY_ID) === id;
   });
@@ -272,11 +264,7 @@ export const buildRequest = (
 ): [
   Types.NavigationProp | undefined,
   string,
-  (
-    | Types.NavigationNavigateParams
-    | NavigationRouteParams
-    | undefined
-  ),
+  Types.NavigationNavigateParams | NavigationRouteParams | undefined,
 ] => {
   if (!routeParams) {
     return [nav, '', {}];
@@ -321,11 +309,7 @@ export const buildRequest = (
   const lastPathId = path.shift();
   const params:
     | Types.NavigationNavigateParams
-    | NavigationRouteParams = buildParams(
-    routeId,
-    path,
-    cleanedParams,
-  );
+    | NavigationRouteParams = buildParams(routeId, path, cleanedParams);
 
   return [navigation, lastPathId || routeId, params];
 };
@@ -395,9 +379,7 @@ const mergeNodes = (current: Element, newNodes: NodeListOf<Node>): void => {
               } else {
                 current.replaceChild(newElement, currentElement);
               }
-            } else if (
-              newElement.localName === LOCAL_NAME.NAV_ROUTE
-            ) {
+            } else if (newElement.localName === LOCAL_NAME.NAV_ROUTE) {
               // Update the selected route
               currentElement.setAttribute(
                 Types.KEY_SELECTED,
@@ -432,10 +414,7 @@ export const mergeDocument = (
 
   // Create a clone of the current document
   const composite = currentDoc.cloneNode(true) as Document;
-  const currentRoot = Helpers.getFirstTag(
-    composite,
-    LOCAL_NAME.DOC,
-  );
+  const currentRoot = Helpers.getFirstTag(composite, LOCAL_NAME.DOC);
 
   if (!currentRoot) {
     throw new Errors.HvRouteError('No root element found in current document');

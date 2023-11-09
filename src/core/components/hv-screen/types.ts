@@ -42,16 +42,9 @@ export type Props = {
   onRouteFocus?: (route: Route) => void;
   onUpdate: HvComponentOnUpdate;
   url?: string;
-  back?: (
-    params: NavigationRouteParams | object | undefined,
-  ) => void;
-  closeModal?: (
-    params: NavigationRouteParams | object | undefined,
-  ) => void;
-  navigate?: (
-    params: NavigationRouteParams | object,
-    key: string,
-  ) => void;
+  back?: (params: NavigationRouteParams | object | undefined) => void;
+  closeModal?: (params: NavigationRouteParams | object | undefined) => void;
+  navigate?: (params: NavigationRouteParams | object, key: string) => void;
   openModal?: (params: NavigationRouteParams | object) => void;
   push?: (params: object) => void;
   behaviors?: HvBehavior[];

@@ -320,46 +320,17 @@ describe('getUrlFromHref', () => {
 describe('validateUrl', () => {
   describe('ignored', () => {
     const urls = ['url', '/url', '#url', '', '#', undefined];
-    [
-      NAV_ACTIONS.BACK,
-      NAV_ACTIONS.CLOSE,
-      NAV_ACTIONS.NAVIGATE,
-    ].forEach(action => {
-      describe(`action:${action}`, () => {
-        it('should ignore object without url', () => {
-          expect(() => validateUrl(action, {})).not.toThrow(
-            Errors.HvNavigatorError,
-          );
-        });
-        urls.forEach(url => {
-          it(`should ignore url: ${url}`, () => {
-            expect(() => validateUrl(action, { url })).not.toThrow(
-              Errors.HvNavigatorError,
-            );
-          });
-        });
-      });
-    });
-  });
-  describe('processed', () => {
-    [NAV_ACTIONS.PUSH, NAV_ACTIONS.NEW].forEach(
+    [NAV_ACTIONS.BACK, NAV_ACTIONS.CLOSE, NAV_ACTIONS.NAVIGATE].forEach(
       action => {
         describe(`action:${action}`, () => {
-          it('should throw when no url is present', () => {
-            expect(() => validateUrl(action, {})).toThrow(
+          it('should ignore object without url', () => {
+            expect(() => validateUrl(action, {})).not.toThrow(
               Errors.HvNavigatorError,
             );
           });
-          ['url', '/url', '#url'].forEach(url => {
-            it(`should validate url:${url}`, () => {
+          urls.forEach(url => {
+            it(`should ignore url: ${url}`, () => {
               expect(() => validateUrl(action, { url })).not.toThrow(
-                Errors.HvNavigatorError,
-              );
-            });
-          });
-          ['', '#', undefined, null].forEach(url => {
-            it(`should not validate url:${url}`, () => {
-              expect(() => validateUrl(action, {})).toThrow(
                 Errors.HvNavigatorError,
               );
             });
@@ -367,6 +338,31 @@ describe('validateUrl', () => {
         });
       },
     );
+  });
+  describe('processed', () => {
+    [NAV_ACTIONS.PUSH, NAV_ACTIONS.NEW].forEach(action => {
+      describe(`action:${action}`, () => {
+        it('should throw when no url is present', () => {
+          expect(() => validateUrl(action, {})).toThrow(
+            Errors.HvNavigatorError,
+          );
+        });
+        ['url', '/url', '#url'].forEach(url => {
+          it(`should validate url:${url}`, () => {
+            expect(() => validateUrl(action, { url })).not.toThrow(
+              Errors.HvNavigatorError,
+            );
+          });
+        });
+        ['', '#', undefined, null].forEach(url => {
+          it(`should not validate url:${url}`, () => {
+            expect(() => validateUrl(action, {})).toThrow(
+              Errors.HvNavigatorError,
+            );
+          });
+        });
+      });
+    });
   });
 });
 
@@ -399,19 +395,13 @@ describe('findPath', () => {
 // - build navigator hierarchy
 
 function isNavigateParam(
-  p:
-    | NavigationRouteParams
-    | Types.NavigationNavigateParams
-    | undefined,
+  p: NavigationRouteParams | Types.NavigationNavigateParams | undefined,
 ): p is Types.NavigationNavigateParams {
   return (p as Types.NavigationNavigateParams).screen !== undefined;
 }
 
 function isRouteParam(
-  p:
-    | NavigationRouteParams
-    | Types.NavigationNavigateParams
-    | undefined,
+  p: NavigationRouteParams | Types.NavigationNavigateParams | undefined,
 ): p is NavigationRouteParams {
   return (p as NavigationRouteParams).url !== undefined;
 }
@@ -508,9 +498,7 @@ describe('getRouteId', () => {
     describe('action:push', () => {
       urls.forEach(url => {
         it(`should not return route 'card' from url with fragment: ${url}`, () => {
-          expect(getRouteId(NAV_ACTIONS.PUSH, url)).not.toEqual(
-            ID_CARD,
-          );
+          expect(getRouteId(NAV_ACTIONS.PUSH, url)).not.toEqual(ID_CARD);
         });
         it(`should return route id with fragment: ${url}`, () => {
           expect(getRouteId(NAV_ACTIONS.PUSH, url)).toEqual(
@@ -523,9 +511,7 @@ describe('getRouteId', () => {
     describe('action:new', () => {
       urls.forEach(url => {
         it(`should not return type 'modal' from url with fragment: ${url}`, () => {
-          expect(getRouteId(NAV_ACTIONS.NEW, url)).not.toEqual(
-            ID_MODAL,
-          );
+          expect(getRouteId(NAV_ACTIONS.NEW, url)).not.toEqual(ID_MODAL);
         });
         it(`should return route id with fragment: ${url}`, () => {
           expect(getRouteId(NAV_ACTIONS.NEW, url)).toEqual(
@@ -541,9 +527,7 @@ describe('getRouteId', () => {
     describe('action:push', () => {
       urls.forEach(url => {
         it(`should return type 'card' from url with non-fragment: ${url}`, () => {
-          expect(getRouteId(NAV_ACTIONS.PUSH, url)).toEqual(
-            ID_CARD,
-          );
+          expect(getRouteId(NAV_ACTIONS.PUSH, url)).toEqual(ID_CARD);
         });
       });
     });
@@ -551,39 +535,35 @@ describe('getRouteId', () => {
     describe('action:new', () => {
       urls.forEach(url => {
         it(`should return type 'modal' from url with non-fragment: ${url}`, () => {
-          expect(getRouteId(NAV_ACTIONS.NEW, url)).toEqual(
-            ID_MODAL,
-          );
+          expect(getRouteId(NAV_ACTIONS.NEW, url)).toEqual(ID_MODAL);
         });
       });
     });
   });
 
   describe('processed', () => {
-    [
-      NAV_ACTIONS.BACK,
-      NAV_ACTIONS.CLOSE,
-      NAV_ACTIONS.NAVIGATE,
-    ].forEach(action => {
-      describe(`action:${action}`, () => {
-        ['#url', '#'].forEach(url => {
-          it(`should return cleaned url with fragment: ${url}`, () => {
-            expect(getRouteId(action, url)).toEqual(url.slice(1));
+    [NAV_ACTIONS.BACK, NAV_ACTIONS.CLOSE, NAV_ACTIONS.NAVIGATE].forEach(
+      action => {
+        describe(`action:${action}`, () => {
+          ['#url', '#'].forEach(url => {
+            it(`should return cleaned url with fragment: ${url}`, () => {
+              expect(getRouteId(action, url)).toEqual(url.slice(1));
+            });
+            it(`should not return type 'card' from url with fragment: ${url}`, () => {
+              expect(getRouteId(action, url)).not.toEqual(ID_CARD);
+            });
           });
-          it(`should not return type 'card' from url with fragment: ${url}`, () => {
-            expect(getRouteId(action, url)).not.toEqual(ID_CARD);
-          });
-        });
-        ['url', '/url', '', undefined].forEach(url => {
-          it(`should return cleaned url with non-fragment: ${url}`, () => {
-            expect(getRouteId(action, url)).toEqual(ID_CARD);
-          });
-          it(`should return type 'card' from url with non-fragment: ${url}`, () => {
-            expect(getRouteId(action, url)).toEqual(ID_CARD);
+          ['url', '/url', '', undefined].forEach(url => {
+            it(`should return cleaned url with non-fragment: ${url}`, () => {
+              expect(getRouteId(action, url)).toEqual(ID_CARD);
+            });
+            it(`should return type 'card' from url with non-fragment: ${url}`, () => {
+              expect(getRouteId(action, url)).toEqual(ID_CARD);
+            });
           });
         });
-      });
-    });
+      },
+    );
   });
 });
 
@@ -627,9 +607,7 @@ describe('getNavAction', () => {
         });
         ['#url', '#'].forEach(url => {
           it(`should use navigation for url:${url}`, () => {
-            expect(getNavAction(action, { url })).toEqual(
-              NAV_ACTIONS.NAVIGATE,
-            );
+            expect(getNavAction(action, { url })).toEqual(NAV_ACTIONS.NAVIGATE);
           });
         });
       });
@@ -669,9 +647,11 @@ describe('buildRequest', () => {
   describe('back', () => {
     const params = { url: 'url' };
     it('should ignore back actions', () => {
-      expect(
-        buildRequest(undefined, NAV_ACTIONS.BACK, params),
-      ).toEqual([undefined, '', params]);
+      expect(buildRequest(undefined, NAV_ACTIONS.BACK, params)).toEqual([
+        undefined,
+        '',
+        params,
+      ]);
     });
   });
   // TODO buildRequest tests

@@ -141,10 +141,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
           doc,
           state.doc || undefined,
         );
-        const root = Helpers.getFirstChildTag(
-          merged,
-          LOCAL_NAME.DOC,
-        );
+        const root = Helpers.getFirstChildTag(merged, LOCAL_NAME.DOC);
         if (!root) {
           return {
             doc: null,
@@ -375,10 +372,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       }
     }
 
-    if (
-      isModal ||
-      renderElement?.localName === LOCAL_NAME.NAVIGATOR
-    ) {
+    if (isModal || renderElement?.localName === LOCAL_NAME.NAVIGATOR) {
       if (this.state.doc) {
         // The <DocContext> provides doc access to nested navigators
         // The <UpdateContext> provides access to the onUpdate method for this route
@@ -507,10 +501,7 @@ const getNestedNavigator = (
 
   const route = NavigatorService.getRouteById(doc, id);
   if (route) {
-    return (
-      Helpers.getFirstChildTag(route, LOCAL_NAME.NAVIGATOR) ||
-      undefined
-    );
+    return Helpers.getFirstChildTag(route, LOCAL_NAME.NAVIGATOR) || undefined;
   }
   return undefined;
 };
