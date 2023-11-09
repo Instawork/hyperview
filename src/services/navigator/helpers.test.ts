@@ -2,7 +2,6 @@ import * as DomErrors from 'hyperview/src/services/dom/errors';
 import * as Errors from './errors';
 import * as Namespaces from '../namespaces';
 import * as Types from './types';
-import * as TypesLegacy from '../../types';
 import { ID_CARD, ID_MODAL } from './types';
 import {
   buildParams,
@@ -20,7 +19,8 @@ import {
   validateUrl,
 } from './helpers';
 import { DOMParser } from '@instawork/xmldom';
-
+import { NAV_ACTIONS } from 'hyperview/src/types';
+import type { NavigationRouteParams } from 'hyperview/src/types';
 import StateSource from './test.state.json';
 
 /**
@@ -321,9 +321,9 @@ describe('validateUrl', () => {
   describe('ignored', () => {
     const urls = ['url', '/url', '#url', '', '#', undefined];
     [
-      TypesLegacy.NAV_ACTIONS.BACK,
-      TypesLegacy.NAV_ACTIONS.CLOSE,
-      TypesLegacy.NAV_ACTIONS.NAVIGATE,
+      NAV_ACTIONS.BACK,
+      NAV_ACTIONS.CLOSE,
+      NAV_ACTIONS.NAVIGATE,
     ].forEach(action => {
       describe(`action:${action}`, () => {
         it('should ignore object without url', () => {
@@ -342,7 +342,7 @@ describe('validateUrl', () => {
     });
   });
   describe('processed', () => {
-    [TypesLegacy.NAV_ACTIONS.PUSH, TypesLegacy.NAV_ACTIONS.NEW].forEach(
+    [NAV_ACTIONS.PUSH, NAV_ACTIONS.NEW].forEach(
       action => {
         describe(`action:${action}`, () => {
           it('should throw when no url is present', () => {
@@ -400,7 +400,7 @@ describe('findPath', () => {
 
 function isNavigateParam(
   p:
-    | TypesLegacy.NavigationRouteParams
+    | NavigationRouteParams
     | Types.NavigationNavigateParams
     | undefined,
 ): p is Types.NavigationNavigateParams {
@@ -409,11 +409,11 @@ function isNavigateParam(
 
 function isRouteParam(
   p:
-    | TypesLegacy.NavigationRouteParams
+    | NavigationRouteParams
     | Types.NavigationNavigateParams
     | undefined,
-): p is TypesLegacy.NavigationRouteParams {
-  return (p as TypesLegacy.NavigationRouteParams).url !== undefined;
+): p is NavigationRouteParams {
+  return (p as NavigationRouteParams).url !== undefined;
 }
 
 describe('buildParams', () => {
@@ -508,12 +508,12 @@ describe('getRouteId', () => {
     describe('action:push', () => {
       urls.forEach(url => {
         it(`should not return route 'card' from url with fragment: ${url}`, () => {
-          expect(getRouteId(TypesLegacy.NAV_ACTIONS.PUSH, url)).not.toEqual(
+          expect(getRouteId(NAV_ACTIONS.PUSH, url)).not.toEqual(
             ID_CARD,
           );
         });
         it(`should return route id with fragment: ${url}`, () => {
-          expect(getRouteId(TypesLegacy.NAV_ACTIONS.PUSH, url)).toEqual(
+          expect(getRouteId(NAV_ACTIONS.PUSH, url)).toEqual(
             cleanHrefFragment(url),
           );
         });
@@ -523,12 +523,12 @@ describe('getRouteId', () => {
     describe('action:new', () => {
       urls.forEach(url => {
         it(`should not return type 'modal' from url with fragment: ${url}`, () => {
-          expect(getRouteId(TypesLegacy.NAV_ACTIONS.NEW, url)).not.toEqual(
+          expect(getRouteId(NAV_ACTIONS.NEW, url)).not.toEqual(
             ID_MODAL,
           );
         });
         it(`should return route id with fragment: ${url}`, () => {
-          expect(getRouteId(TypesLegacy.NAV_ACTIONS.NEW, url)).toEqual(
+          expect(getRouteId(NAV_ACTIONS.NEW, url)).toEqual(
             cleanHrefFragment(url),
           );
         });
@@ -541,7 +541,7 @@ describe('getRouteId', () => {
     describe('action:push', () => {
       urls.forEach(url => {
         it(`should return type 'card' from url with non-fragment: ${url}`, () => {
-          expect(getRouteId(TypesLegacy.NAV_ACTIONS.PUSH, url)).toEqual(
+          expect(getRouteId(NAV_ACTIONS.PUSH, url)).toEqual(
             ID_CARD,
           );
         });
@@ -551,7 +551,7 @@ describe('getRouteId', () => {
     describe('action:new', () => {
       urls.forEach(url => {
         it(`should return type 'modal' from url with non-fragment: ${url}`, () => {
-          expect(getRouteId(TypesLegacy.NAV_ACTIONS.NEW, url)).toEqual(
+          expect(getRouteId(NAV_ACTIONS.NEW, url)).toEqual(
             ID_MODAL,
           );
         });
@@ -561,9 +561,9 @@ describe('getRouteId', () => {
 
   describe('processed', () => {
     [
-      TypesLegacy.NAV_ACTIONS.BACK,
-      TypesLegacy.NAV_ACTIONS.CLOSE,
-      TypesLegacy.NAV_ACTIONS.NAVIGATE,
+      NAV_ACTIONS.BACK,
+      NAV_ACTIONS.CLOSE,
+      NAV_ACTIONS.NAVIGATE,
     ].forEach(action => {
       describe(`action:${action}`, () => {
         ['#url', '#'].forEach(url => {
@@ -591,10 +591,10 @@ describe('getNavAction', () => {
   describe('ignored', () => {
     const urls = ['url', '/url', '#url', '', '#', undefined];
     [
-      TypesLegacy.NAV_ACTIONS.BACK,
-      TypesLegacy.NAV_ACTIONS.CLOSE,
-      TypesLegacy.NAV_ACTIONS.NAVIGATE,
-      TypesLegacy.NAV_ACTIONS.NEW,
+      NAV_ACTIONS.BACK,
+      NAV_ACTIONS.CLOSE,
+      NAV_ACTIONS.NAVIGATE,
+      NAV_ACTIONS.NEW,
     ].forEach(action => {
       describe(`action:${action}`, () => {
         it('should ignore object without params', () => {
@@ -612,7 +612,7 @@ describe('getNavAction', () => {
     });
   });
   describe('processed', () => {
-    [TypesLegacy.NAV_ACTIONS.PUSH].forEach(action => {
+    [NAV_ACTIONS.PUSH].forEach(action => {
       describe(`action:${action}`, () => {
         it('should ignore object without params', () => {
           expect(getNavAction(action)).toEqual(action);
@@ -628,7 +628,7 @@ describe('getNavAction', () => {
         ['#url', '#'].forEach(url => {
           it(`should use navigation for url:${url}`, () => {
             expect(getNavAction(action, { url })).toEqual(
-              TypesLegacy.NAV_ACTIONS.NAVIGATE,
+              NAV_ACTIONS.NAVIGATE,
             );
           });
         });
@@ -639,11 +639,11 @@ describe('getNavAction', () => {
 
 describe('buildRequest', () => {
   const actions = [
-    TypesLegacy.NAV_ACTIONS.BACK,
-    TypesLegacy.NAV_ACTIONS.CLOSE,
-    TypesLegacy.NAV_ACTIONS.NAVIGATE,
-    TypesLegacy.NAV_ACTIONS.NEW,
-    TypesLegacy.NAV_ACTIONS.PUSH,
+    NAV_ACTIONS.BACK,
+    NAV_ACTIONS.CLOSE,
+    NAV_ACTIONS.NAVIGATE,
+    NAV_ACTIONS.NEW,
+    NAV_ACTIONS.PUSH,
   ];
   describe('ignored', () => {
     actions.forEach(action => {
@@ -670,7 +670,7 @@ describe('buildRequest', () => {
     const params = { url: 'url' };
     it('should ignore back actions', () => {
       expect(
-        buildRequest(undefined, TypesLegacy.NAV_ACTIONS.BACK, params),
+        buildRequest(undefined, NAV_ACTIONS.BACK, params),
       ).toEqual([undefined, '', params]);
     });
   });

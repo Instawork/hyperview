@@ -6,7 +6,7 @@
  *
  */
 
-import * as TypesLegacy from 'hyperview/src/types';
+import type { NavigationRouteParams } from 'hyperview/src/types';
 
 export const ANCHOR_ID_SEPARATOR = '#';
 export const ID_CARD = 'card';
@@ -30,7 +30,7 @@ export const NAVIGATOR_TYPE = {
  */
 export type NavigationNavigateParams = {
   screen?: string;
-  params?: NavigationNavigateParams | TypesLegacy.NavigationRouteParams;
+  params?: NavigationNavigateParams | NavigationRouteParams;
 };
 
 /**

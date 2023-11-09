@@ -10,7 +10,8 @@ import * as Helpers from './helpers';
 import * as HvRoute from 'hyperview/src/core/components/hv-route';
 import * as Imports from './imports';
 import * as Types from './types';
-import * as TypesLegacy from 'hyperview/src/types';
+import type { NavAction, NavigationRouteParams } from 'hyperview/src/types';
+import { NAV_ACTIONS } from 'hyperview/src/types';
 
 /**
  * Provide navigation action implementations
@@ -29,7 +30,7 @@ export class Navigator {
    */
   static routeBackRequest(
     navigation: Types.NavigationProp,
-    routeParams?: TypesLegacy.NavigationRouteParams,
+    routeParams?: NavigationRouteParams,
   ) {
     const state = navigation.getState();
 
@@ -55,10 +56,10 @@ export class Navigator {
    * Prepare and send the request
    */
   sendRequest = (
-    action: TypesLegacy.NavAction,
-    routeParams?: TypesLegacy.NavigationRouteParams,
+    action: NavAction,
+    routeParams?: NavigationRouteParams,
   ) => {
-    const navAction: TypesLegacy.NavAction = Helpers.getNavAction(
+    const navAction: NavAction = Helpers.getNavAction(
       action,
       routeParams,
     );
@@ -79,17 +80,17 @@ export class Navigator {
     }
 
     switch (navAction) {
-      case TypesLegacy.NAV_ACTIONS.BACK:
-      case TypesLegacy.NAV_ACTIONS.CLOSE:
+      case NAV_ACTIONS.BACK:
+      case NAV_ACTIONS.CLOSE:
         Navigator.routeBackRequest(navigation, routeParams);
         break;
-      case TypesLegacy.NAV_ACTIONS.NAVIGATE:
-      case TypesLegacy.NAV_ACTIONS.NEW:
+      case NAV_ACTIONS.NAVIGATE:
+      case NAV_ACTIONS.NEW:
         if (routeId) {
           navigation.dispatch(Imports.CommonActions.navigate(routeId, params));
         }
         break;
-      case TypesLegacy.NAV_ACTIONS.PUSH:
+      case NAV_ACTIONS.PUSH:
         if (routeId) {
           navigation.dispatch(Imports.StackActions.push(routeId, params));
         }
@@ -98,24 +99,24 @@ export class Navigator {
     }
   };
 
-  back = (params?: TypesLegacy.NavigationRouteParams | undefined) => {
-    this.sendRequest(TypesLegacy.NAV_ACTIONS.BACK, params);
+  back = (params?: NavigationRouteParams | undefined) => {
+    this.sendRequest(NAV_ACTIONS.BACK, params);
   };
 
-  closeModal = (params: TypesLegacy.NavigationRouteParams | undefined) => {
-    this.sendRequest(TypesLegacy.NAV_ACTIONS.CLOSE, params);
+  closeModal = (params: NavigationRouteParams | undefined) => {
+    this.sendRequest(NAV_ACTIONS.CLOSE, params);
   };
 
-  navigate = (params: TypesLegacy.NavigationRouteParams) => {
-    this.sendRequest(TypesLegacy.NAV_ACTIONS.NAVIGATE, params);
+  navigate = (params: NavigationRouteParams) => {
+    this.sendRequest(NAV_ACTIONS.NAVIGATE, params);
   };
 
-  openModal = (params: TypesLegacy.NavigationRouteParams) => {
-    this.sendRequest(TypesLegacy.NAV_ACTIONS.NEW, params);
+  openModal = (params: NavigationRouteParams) => {
+    this.sendRequest(NAV_ACTIONS.NEW, params);
   };
 
-  push = (params: TypesLegacy.NavigationRouteParams) => {
-    this.sendRequest(TypesLegacy.NAV_ACTIONS.PUSH, params);
+  push = (params: NavigationRouteParams) => {
+    this.sendRequest(NAV_ACTIONS.PUSH, params);
   };
 }
 

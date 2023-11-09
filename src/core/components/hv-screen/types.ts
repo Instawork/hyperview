@@ -7,8 +7,16 @@
  */
 
 import * as NavigatorService from 'hyperview/src/services/navigator';
-import * as Types from 'hyperview/src/types';
 import { ComponentType, ReactNode } from 'react';
+import type {
+  Fetch,
+  HvBehavior,
+  HvComponent,
+  HvComponentOnUpdate,
+  NavigationRouteParams,
+  Reload,
+  Route,
+} from 'hyperview/src/types';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
 import type { RefreshControlProps } from 'react-native';
@@ -26,33 +34,33 @@ export type Props = {
   navigation?: any;
   route?: NavigatorService.Route<string, { url?: string }>;
   entrypointUrl: string;
-  fetch: Types.Fetch;
+  fetch: Fetch;
   onError?: (error: Error) => void;
   onParseAfter?: (url: string) => void;
   onParseBefore?: (url: string) => void;
-  onRouteBlur?: (route: Types.Route) => void;
-  onRouteFocus?: (route: Types.Route) => void;
-  onUpdate: Types.HvComponentOnUpdate;
+  onRouteBlur?: (route: Route) => void;
+  onRouteFocus?: (route: Route) => void;
+  onUpdate: HvComponentOnUpdate;
   url?: string;
   back?: (
-    params: TypesLegacy.NavigationRouteParams | object | undefined,
+    params: NavigationRouteParams | object | undefined,
   ) => void;
   closeModal?: (
-    params: TypesLegacy.NavigationRouteParams | object | undefined,
+    params: NavigationRouteParams | object | undefined,
   ) => void;
   navigate?: (
-    params: TypesLegacy.NavigationRouteParams | object,
+    params: NavigationRouteParams | object,
     key: string,
   ) => void;
-  openModal?: (params: TypesLegacy.NavigationRouteParams | object) => void;
+  openModal?: (params: NavigationRouteParams | object) => void;
   push?: (params: object) => void;
-  behaviors?: Types.HvBehavior[];
-  components?: Types.HvComponent[];
+  behaviors?: HvBehavior[];
+  components?: HvComponent[];
   elementErrorComponent?: ComponentType<ErrorProps>;
   errorScreen?: ComponentType<ErrorProps>;
   loadingScreen?: ComponentType<LoadingProps>;
   handleBack?: ComponentType<{ children: ReactNode }>;
   doc?: Document;
   registerPreload?: (id: number, element: Element) => void;
-  reload: Types.Reload;
+  reload: Reload;
 };

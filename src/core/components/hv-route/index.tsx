@@ -17,16 +17,18 @@ import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Render from 'hyperview/src/services/render';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as Types from './types';
-import * as TypesLegacy from 'hyperview/src/types';
 import * as UrlService from 'hyperview/src/services/url';
-import {
+import type {
+  ComponentRegistry,
   DOMString,
   HvComponentOptions,
+  NavigationRouteParams,
   ScreenState,
 } from 'hyperview/src/types';
 import React, { JSXElementConstructor, PureComponent, useContext } from 'react';
 import HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
+import { LOCAL_NAME } from 'hyperview/src/types';
 import LoadError from 'hyperview/src/core/components/load-error';
 import Loading from 'hyperview/src/core/components/loading';
 // eslint-disable-next-line instawork/import-services
@@ -44,7 +46,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
 
   navLogic: NavigatorService.Navigator;
 
-  componentRegistry: TypesLegacy.ComponentRegistry;
+  componentRegistry: ComponentRegistry;
 
   needsLoad = false;
 
@@ -141,7 +143,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
         );
         const root = Helpers.getFirstChildTag(
           merged,
-          TypesLegacy.LOCAL_NAME.DOC,
+          LOCAL_NAME.DOC,
         );
         if (!root) {
           return {
@@ -179,7 +181,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     // Get the <doc> element
     const root: Element | null = Helpers.getFirstChildTag(
       this.state.doc,
-      TypesLegacy.LOCAL_NAME.DOC,
+      LOCAL_NAME.DOC,
     );
     if (!root) {
       throw new NavigatorService.HvRenderError('No root element found');
@@ -188,7 +190,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     // Get the first child as <screen> or <navigator>
     const screenElement: Element | null = Helpers.getFirstChildTag(
       root,
-      TypesLegacy.LOCAL_NAME.SCREEN,
+      LOCAL_NAME.SCREEN,
     );
     if (screenElement) {
       return screenElement;
@@ -196,7 +198,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
 
     const navigatorElement: Element | null = Helpers.getFirstChildTag(
       root,
-      TypesLegacy.LOCAL_NAME.NAVIGATOR,
+      LOCAL_NAME.NAVIGATOR,
     );
     if (navigatorElement) {
       return navigatorElement;
@@ -288,13 +290,13 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     const ErrorScreen = this.props.errorScreen || LoadError;
     return (
       <ErrorScreen
-        back={() => this.navLogic.back({} as TypesLegacy.NavigationRouteParams)}
+        back={() => this.navLogic.back({} as NavigationRouteParams)}
         error={props.error}
         onPressReload={() => this.load()}
         onPressViewDetails={(uri: string | undefined) => {
           this.navLogic.openModal({
             url: uri as string,
-          } as TypesLegacy.NavigationRouteParams);
+          } as NavigationRouteParams);
         }}
       />
     );
@@ -375,7 +377,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
 
     if (
       isModal ||
-      renderElement?.localName === TypesLegacy.LOCAL_NAME.NAVIGATOR
+      renderElement?.localName === LOCAL_NAME.NAVIGATOR
     ) {
       if (this.state.doc) {
         // The <DocContext> provides doc access to nested navigators
@@ -418,7 +420,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       );
     }
 
-    if (renderElement?.localName === TypesLegacy.LOCAL_NAME.SCREEN) {
+    if (renderElement?.localName === LOCAL_NAME.SCREEN) {
       if (this.props.handleBack) {
         return (
           <this.props.handleBack>
@@ -506,7 +508,7 @@ const getNestedNavigator = (
   const route = NavigatorService.getRouteById(doc, id);
   if (route) {
     return (
-      Helpers.getFirstChildTag(route, TypesLegacy.LOCAL_NAME.NAVIGATOR) ||
+      Helpers.getFirstChildTag(route, LOCAL_NAME.NAVIGATOR) ||
       undefined
     );
   }
