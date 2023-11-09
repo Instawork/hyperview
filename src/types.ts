@@ -8,7 +8,7 @@
 
 import * as Stylesheets from './services/stylesheets';
 import Navigation from './services/navigation';
-
+import type { Route as NavigatorRoute } from './services/navigator';
 import type React from 'react';
 
 import type { XResponseStaleReason } from './services/dom/types';
@@ -397,6 +397,15 @@ export type NavigationProps = {
   ) => void;
   openModal: (routeParams: NavigationRouteParams) => void;
   push: (routeParams: NavigationRouteParams) => void;
+};
+
+export type Route = NavigatorRoute<string, RouteParams>;
+
+export type RouteParams = {
+  id?: string;
+  url: string;
+  preloadScreen?: number;
+  isModal?: boolean;
 };
 
 export const ON_EVENT_DISPATCH = 'hyperview:on-event';

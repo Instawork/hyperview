@@ -14,25 +14,19 @@ import {
   HvComponent,
   HvComponentOnUpdate,
   Reload,
+  Route,
+  RouteParams,
 } from 'hyperview/src/types';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
-
-/**
- * Params passed to hv-route
- */
-type RouteParams = {
-  id?: string;
-  url: string;
-  preloadScreen?: number;
-  isModal?: boolean;
-};
 
 export type NavigationContextProps = {
   entrypointUrl: string;
   fetch: Fetch;
   onParseAfter?: (url: string) => void;
   onParseBefore?: (url: string) => void;
+  onRouteBlur?: (route: Route) => void;
+  onRouteFocus?: (route: Route) => void;
   onUpdate: HvComponentOnUpdate;
   url?: string;
   behaviors?: HvBehavior[];

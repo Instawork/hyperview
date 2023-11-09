@@ -543,9 +543,18 @@ export default function HvRoute(props: Types.Props) {
     docContext?.getDoc(),
   );
 
-  // Use the focus event to set the selected route
   React.useEffect(() => {
     if (props.navigation) {
+      const unsubscribeBlur: () => void = props.navigation.addListener(
+        'blur',
+        () => {
+          if (navigationContext.onRouteBlur && props.route) {
+            navigationContext.onRouteBlur(props.route);
+          }
+        },
+      );
+
+      // Use the focus event to set the selected route
       const unsubscribeFocus: () => void = props.navigation.addListener(
         'focus',
         () => {
@@ -553,9 +562,13 @@ export default function HvRoute(props: Types.Props) {
             docContext?.getDoc(),
             props.route?.params?.id,
           );
+          if (navigationContext.onRouteFocus && props.route) {
+            navigationContext.onRouteFocus(props.route);
+          }
         },
       );
 
+      // Use the beforeRemove event to remove the route from the stack
       const unsubscribeRemove: () => void = props.navigation.addListener(
         'beforeRemove',
         () => {
@@ -567,12 +580,13 @@ export default function HvRoute(props: Types.Props) {
       );
 
       return () => {
+        unsubscribeBlur();
         unsubscribeFocus();
         unsubscribeRemove();
       };
     }
     return undefined;
-  }, [props.navigation, props.route?.params?.id, docContext]);
+  }, [props.navigation, props.route, docContext, navigationContext]);
 
   return (
     <HvRouteInner

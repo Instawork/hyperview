@@ -580,6 +580,8 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
               onError: this.props.onError,
               onParseAfter: this.props.onParseAfter,
               onParseBefore: this.props.onParseBefore,
+              onRouteBlur: this.props.onRouteBlur,
+              onRouteFocus: this.props.onRouteFocus,
               onUpdate: this.onUpdate,
               reload: this.reload,
             }}
