@@ -218,7 +218,13 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
       const doc = options.onUpdateCallbacks.getDoc();
       const state = options.onUpdateCallbacks.getState();
       if (navigation && doc && state.url) {
-        const { behaviorElement, delay, newElement, targetId } = options;
+        const {
+          behaviorElement,
+          delay,
+          newElement,
+          showIndicatorId,
+          targetId,
+        } = options;
         const delayVal: number = +(delay || '');
         navigation.setUrl(state.url);
         navigation.setDocument(doc);
@@ -231,6 +237,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
             behaviorElement: behaviorElement || undefined,
             delay: delayVal,
             newElement: newElement || undefined,
+            showIndicatorId: showIndicatorId || undefined,
             targetId: targetId || undefined,
           },
           options.onUpdateCallbacks.registerPreload,
