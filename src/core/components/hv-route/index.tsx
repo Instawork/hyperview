@@ -134,10 +134,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       // When a modal is included, a wrapper stack navigator is created
       // The route which contains the navigator should not load the document
       // The code below prevents the route from loading the document
-      if (
-        this.props.route?.params?.isModal &&
-        this.props.route?.name === this.props.route?.params?.id
-      ) {
+      if (this.props.route?.params?.isModal) {
         return;
       }
 
