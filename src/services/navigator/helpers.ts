@@ -412,21 +412,20 @@ export const mergeDocument = (
     return currentDoc;
   }
 
-  // Create a clone of the current document
-  const composite = currentDoc.cloneNode(true) as Document;
-  const currentRoot = Helpers.getFirstTag(composite, LOCAL_NAME.DOC);
-
-  if (!currentRoot) {
-    throw new Errors.HvRouteError('No root element found in current document');
-  }
-
   // Get the <doc>
   const newRoot = Helpers.getFirstTag(newDoc, LOCAL_NAME.DOC);
   if (!newRoot) {
     throw new Errors.HvRouteError('No root element found in new document');
   }
+  // Create a clone of the current document
+  const composite = currentDoc.cloneNode(true) as Document;
+  const compositeRoot = Helpers.getFirstTag(composite, LOCAL_NAME.DOC);
 
-  mergeNodes(currentRoot, newRoot.childNodes);
+  if (!compositeRoot) {
+    throw new Errors.HvRouteError('No root element found in current document');
+  }
+
+  mergeNodes(compositeRoot, newRoot.childNodes);
   return composite;
 };
 
