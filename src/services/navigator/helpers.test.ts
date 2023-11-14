@@ -770,4 +770,56 @@ describe('mergeDocuments', () => {
       expect(shiftNavRoutes.length).toEqual(2);
     });
   });
+
+  describe('merge screen with navigator', () => {
+    // The incoming <screen> should replace the original <navigator>
+    const mergeDoc = parser.parseFromString(screenDocSource);
+    const outputDoc = mergeDocument(mergeDoc, originalDoc);
+    it('should merge successfully', () => {
+      expect(outputDoc).toBeDefined();
+    });
+
+    const mergedNavigators = outputDoc.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      'navigator',
+    );
+
+    it('should find 0 navigators', () => {
+      expect(mergedNavigators.length).toEqual(0);
+    });
+
+    const screens = outputDoc.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      'screen',
+    );
+
+    it('should find 1 screen', () => {
+      expect(screens.length).toEqual(1);
+    });
+  });
+
+  describe('merge navigator with screen', () => {
+    // The incoming <navigator> should replace the original <screen>
+    const screenDoc = parser.parseFromString(screenDocSource);
+    const outputDoc = mergeDocument(originalDoc, screenDoc);
+    it('should merge successfully', () => {
+      expect(outputDoc).toBeDefined();
+    });
+
+    const mergedNavigators = outputDoc.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      'navigator',
+    );
+    it('should find 2 navigators', () => {
+      expect(mergedNavigators.length).toEqual(2);
+    });
+
+    const screens = outputDoc.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      'screen',
+    );
+    it('should find 0 screens', () => {
+      expect(screens.length).toEqual(0);
+    });
+  });
 });

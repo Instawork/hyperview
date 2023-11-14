@@ -90,3 +90,18 @@ export const preorder = (
   }
   return acc;
 };
+
+/**
+ * Get an array of the direct decendant elements of a document or element
+ */
+export const getChildElements = (element: Document | Element): Element[] => {
+  const childElements: Element[] = [];
+  if (element.childNodes) {
+    Array.from(element.childNodes).forEach((child: Node | null) => {
+      if (child && child.nodeType === NODE_TYPE.ELEMENT_NODE) {
+        childElements.push(child as Element);
+      }
+    });
+  }
+  return childElements;
+};

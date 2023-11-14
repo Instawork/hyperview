@@ -417,6 +417,20 @@ export const mergeDocument = (
   if (!newRoot) {
     throw new Errors.HvRouteError('No root element found in new document');
   }
+  const currentRoot = Helpers.getFirstTag(currentDoc, LOCAL_NAME.DOC);
+  if (!currentRoot) {
+    throw new Errors.HvRouteError('No root element found in current document');
+  }
+
+  // Look for a primary difference in the first element
+  // Example: <navigator> to <screen>
+  const [newElement] = Helpers.getChildElements(newRoot);
+  const [currentElement] = Helpers.getChildElements(currentRoot);
+  if (currentElement?.localName !== newElement?.localName) {
+    // Replace the current document if the first elements are different
+    return newDoc;
+  }
+
   // Create a clone of the current document
   const composite = currentDoc.cloneNode(true) as Document;
   const compositeRoot = Helpers.getFirstTag(composite, LOCAL_NAME.DOC);
