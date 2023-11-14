@@ -427,8 +427,8 @@ export const mergeDocument = (
 
   // Look for a primary difference in the first element
   // Example: <navigator> to <screen>
-  const [newElement] = Helpers.getChildElements(newRoot);
-  const [currentElement] = Helpers.getChildElements(currentRoot);
+  const [newElement] = getChildElements(newRoot);
+  const [currentElement] = getChildElements(currentRoot);
   if (currentElement?.localName !== newElement?.localName) {
     // Replace the current document if the first elements are different
     return newDoc;
