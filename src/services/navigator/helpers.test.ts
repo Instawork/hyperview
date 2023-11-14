@@ -110,6 +110,24 @@ const mergeSourceEnabledDoc = `
 `;
 
 /**
+ * Test merge document with merging enabled and an alternate navigator type
+ * Expect the merge to contain a merged document
+ */
+const mergeSourceEnabledTabToStackDoc = `
+<doc xmlns="https://hyperview.org/hyperview">
+  <navigator id="root-navigator" type="stack" merge="true">
+    <nav-route id="tabs-route">
+      <navigator id="tabs-navigator" type="stack" merge="true">
+        <nav-route id="live-shifts-route2" href="/biz-app-hub" selected="false"/>
+        <nav-route id="shifts-route2" href="/biz-app-shift-group-list" selected="true"/>
+        <nav-route id="account-route2" href="/biz_app/account"/>
+      </navigator>
+    </nav-route>
+  </navigator>
+</doc>
+`;
+
+/**
  * Parser used to parse the document
  */
 const parser = new DOMParser({
@@ -820,6 +838,28 @@ describe('mergeDocuments', () => {
     );
     it('should find 0 screens', () => {
       expect(screens.length).toEqual(0);
+    });
+  });
+
+  describe('merge documents with merge="true" and different nav types', () => {
+    // With merging enabled, the docs should be merged, the tab navigator should replace the stack
+    const mergeDoc = parser.parseFromString(mergeSourceEnabledTabToStackDoc);
+    const outputDoc = mergeDocument(mergeDoc, originalDoc);
+
+    it('should merge successfully', () => {
+      expect(outputDoc).toBeDefined();
+    });
+
+    const mergedNavigators = outputDoc.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      'navigator',
+    );
+    const [mergedTabNavigator] = Array.from(mergedNavigators).filter(
+      n => n.getAttribute('id') === 'tabs-navigator',
+    );
+    const mergedTabRoutes = getChildElements(mergedTabNavigator);
+    it('should find 3 route elements on tabs-navigator', () => {
+      expect(mergedTabRoutes.length).toEqual(3);
     });
   });
 });

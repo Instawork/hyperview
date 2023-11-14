@@ -371,8 +371,11 @@ const mergeNodes = (current: Element, newNodes: NodeListOf<Node>): void => {
           const currentElement = currentMap[id] as Element;
           if (currentElement) {
             if (newElement.localName === LOCAL_NAME.NAVIGATOR) {
+              // Merge if the attribute is set and the navigator types are the same
               const isMergeable =
-                newElement.getAttribute(Types.KEY_MERGE) === 'true';
+                newElement.getAttribute(Types.KEY_MERGE) === 'true' &&
+                newElement.getAttribute(Types.KEY_TYPE) ===
+                  currentElement.getAttribute(Types.KEY_TYPE);
               if (isMergeable) {
                 currentElement.setAttribute(Types.KEY_MERGE, 'true');
                 mergeNodes(currentElement, newElement.childNodes);
