@@ -371,8 +371,11 @@ const mergeNodes = (current: Element, newNodes: NodeListOf<Node>): void => {
           const currentElement = currentMap[id] as Element;
           if (currentElement) {
             if (newElement.localName === LOCAL_NAME.NAVIGATOR) {
+              // Merge if the attribute is set and the navigator types are the same
               const isMergeable =
-                newElement.getAttribute(Types.KEY_MERGE) === 'true';
+                newElement.getAttribute(Types.KEY_MERGE) === 'true' &&
+                newElement.getAttribute(Types.KEY_TYPE) ===
+                  currentElement.getAttribute(Types.KEY_TYPE);
               if (isMergeable) {
                 currentElement.setAttribute(Types.KEY_MERGE, 'true');
                 mergeNodes(currentElement, newElement.childNodes);
@@ -412,21 +415,34 @@ export const mergeDocument = (
     return currentDoc;
   }
 
-  // Create a clone of the current document
-  const composite = currentDoc.cloneNode(true) as Document;
-  const currentRoot = Helpers.getFirstTag(composite, LOCAL_NAME.DOC);
-
-  if (!currentRoot) {
-    throw new Errors.HvRouteError('No root element found in current document');
-  }
-
   // Get the <doc>
   const newRoot = Helpers.getFirstTag(newDoc, LOCAL_NAME.DOC);
   if (!newRoot) {
     throw new Errors.HvRouteError('No root element found in new document');
   }
+  const currentRoot = Helpers.getFirstTag(currentDoc, LOCAL_NAME.DOC);
+  if (!currentRoot) {
+    throw new Errors.HvRouteError('No root element found in current document');
+  }
 
-  mergeNodes(currentRoot, newRoot.childNodes);
+  // Look for a primary difference in the first element
+  // Example: <navigator> to <screen>
+  const [newElement] = getChildElements(newRoot);
+  const [currentElement] = getChildElements(currentRoot);
+  if (currentElement?.localName !== newElement?.localName) {
+    // Replace the current document if the first elements are different
+    return newDoc;
+  }
+
+  // Create a clone of the current document
+  const composite = currentDoc.cloneNode(true) as Document;
+  const compositeRoot = Helpers.getFirstTag(composite, LOCAL_NAME.DOC);
+
+  if (!compositeRoot) {
+    throw new Errors.HvRouteError('No root element found in current document');
+  }
+
+  mergeNodes(compositeRoot, newRoot.childNodes);
   return composite;
 };
 
