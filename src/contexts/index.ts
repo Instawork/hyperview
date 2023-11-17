@@ -24,10 +24,11 @@ export const RefreshControlComponentContext = React.createContext<
   ComponentType<RefreshControlProps> | undefined
 >(undefined);
 
-export const DocContext = React.createContext<{
+export type DocContextProps = {
   getDoc: () => Document | undefined;
   setDoc?: (doc: Document) => void;
-} | null>(null);
+};
+export const DocContext = React.createContext<DocContextProps | null>(null);
 
 export const OnUpdateContext = React.createContext<{
   onUpdate: HvComponentOnUpdate;

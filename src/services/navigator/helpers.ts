@@ -11,9 +11,9 @@ import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Types from './types';
 import * as UrlService from 'hyperview/src/services/url';
+import { ANCHOR_ID_SEPARATOR, Route } from './types';
 import { LOCAL_NAME, NAV_ACTIONS, NODE_TYPE } from 'hyperview/src/types';
 import type { NavAction, NavigationRouteParams } from 'hyperview/src/types';
-import { ANCHOR_ID_SEPARATOR } from './types';
 
 /**
  * Card and modal routes are not defined in the document
@@ -230,6 +230,40 @@ export const getRouteById = (
     return n.getAttribute(Types.KEY_ID) === id;
   });
   return routes && routes.length > 0 ? routes[0] : undefined;
+};
+
+/**
+ * Search for a route with the given url
+ */
+export const getRouteByUrl = (
+  doc: Document,
+  url: string,
+  baseUrl: string,
+): Element | undefined => {
+  const routes = Array.from(
+    doc.getElementsByTagNameNS(Namespaces.HYPERVIEW, LOCAL_NAME.NAV_ROUTE),
+  ).filter((n: Element) => {
+    return (
+      getUrlFromHref(n.getAttribute(Types.KEY_HREF), baseUrl) ===
+      getUrlFromHref(url, baseUrl)
+    );
+  });
+  return routes[0];
+};
+
+/**
+ * Search for a navigator with the given id
+ */
+export const getNavigatorById = (
+  doc: Document,
+  id: string,
+): Element | undefined => {
+  const navigators = Array.from(
+    doc.getElementsByTagNameNS(Namespaces.HYPERVIEW, LOCAL_NAME.NAVIGATOR),
+  ).filter((n: Element) => {
+    return n.getAttribute(Types.KEY_ID) === id;
+  });
+  return navigators[0];
 };
 
 /**
@@ -475,17 +509,56 @@ export const setSelected = (
  */
 export const removeStackRoute = (
   doc: Document | undefined,
-  id: string | undefined,
+  url: string | undefined,
+  baseUrl: string,
 ) => {
-  if (!doc || !id) {
+  if (!doc || !url) {
     return;
   }
-  const route = getRouteById(doc, id);
+  const route = getRouteByUrl(doc, url, baseUrl);
   if (route && route.parentNode) {
     const parentNode = route.parentNode as Element;
     const type = parentNode.getAttribute(Types.KEY_TYPE);
     if (type === Types.NAVIGATOR_TYPE.STACK) {
       route.parentNode.removeChild(route);
+    }
+  }
+};
+
+/**
+ * Add a route to a stack navigator
+ */
+export const addStackRoute = (
+  doc: Document | undefined,
+  id: string | undefined,
+  route: Route<string, NavigationRouteParams> | undefined,
+  siblingName: string | undefined,
+  baseUrl: string,
+) => {
+  if (
+    !doc ||
+    !id ||
+    !route ||
+    !siblingName ||
+    !isDynamicRoute(route.name) ||
+    !route.params.url ||
+    getRouteByUrl(doc, route.params.url, baseUrl)
+  ) {
+    return;
+  }
+
+  const siblingElement = getRouteById(doc, siblingName);
+  if (siblingElement && siblingElement.parentNode) {
+    const parentElement = siblingElement.parentNode as Element;
+    const type = parentElement.getAttribute(Types.KEY_TYPE);
+    if (type === Types.NAVIGATOR_TYPE.STACK) {
+      const element = doc.createElementNS(
+        Namespaces.HYPERVIEW,
+        LOCAL_NAME.NAV_ROUTE,
+      );
+      element.setAttribute(Types.KEY_ID, id);
+      element.setAttribute(Types.KEY_HREF, route.params.url);
+      parentElement.appendChild(element);
     }
   }
 };

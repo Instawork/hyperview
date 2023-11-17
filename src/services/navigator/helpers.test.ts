@@ -4,18 +4,21 @@ import * as Namespaces from '../namespaces';
 import * as Types from './types';
 import { ID_CARD, ID_MODAL } from './types';
 import {
+  addStackRoute,
   buildParams,
   buildRequest,
   cleanHrefFragment,
   findPath,
   getChildElements,
   getNavAction,
+  getNavigatorById,
   getRouteId,
   getSelectedNavRouteElement,
   getUrlFromHref,
   isNavigationElement,
   isUrlFragment,
   mergeDocument,
+  removeStackRoute,
   validateUrl,
 } from './helpers';
 import { DOMParser } from '@instawork/xmldom';
@@ -126,6 +129,13 @@ const mergeSourceEnabledTabToStackDoc = `
   </navigator>
 </doc>
 `;
+
+/**
+ * Test stack navigator response
+ * Includes a navigator with two routes, the second of which is marked as selected
+ */
+const navDocStackNavigatorSource =
+  '<doc xmlns="https://hyperview.org/hyperview"><navigator id="navigator" type="stack"><nav-route id="route1" href="/route1" /><nav-route id="route2" href="/route2" selected="true" /></navigator></doc>';
 
 /**
  * Parser used to parse the document
@@ -861,5 +871,55 @@ describe('mergeDocuments', () => {
     it('should find 3 route elements on tabs-navigator', () => {
       expect(mergedTabRoutes.length).toEqual(3);
     });
+  });
+});
+
+describe('addStackRoute', () => {
+  const doc = parser.parseFromString(navDocStackNavigatorSource);
+
+  it('should find 2 route elements', () => {
+    const navigators = doc.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      'navigator',
+    );
+    const routes = getChildElements(navigators[0]);
+    expect(routes.length).toEqual(2);
+  });
+
+  addStackRoute(
+    doc,
+    'test-route',
+    { key: 'key1', name: 'card', params: { url: '/a/b/c' } },
+    'route1',
+    'http://foo.com',
+  );
+
+  const navigators = doc.getElementsByTagNameNS(
+    Namespaces.HYPERVIEW,
+    'navigator',
+  );
+  const routes = getChildElements(navigators[0]);
+
+  it('should find 3 route elements', () => {
+    expect(routes.length).toEqual(3);
+  });
+
+  it('should contain added route', () => {
+    expect(routes[2].getAttribute('id')).toEqual('test-route');
+  });
+
+  removeStackRoute(doc, '/a/b/c', 'http://foo.com');
+});
+
+describe('getNavigatorById', () => {
+  const doc = parser.parseFromString(mergeSourceDisabledDoc);
+
+  it('should find navigator', () => {
+    const navigator = getNavigatorById(doc, 'shift-navigator');
+    expect(navigator).toBeDefined();
+    if (navigator) {
+      const routes = getChildElements(navigator);
+      expect(routes.length).toEqual(2);
+    }
   });
 });

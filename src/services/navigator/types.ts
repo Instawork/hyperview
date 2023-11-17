@@ -16,6 +16,7 @@ export const KEY_SELECTED = 'selected';
 export const KEY_MODAL = 'modal';
 export const KEY_ID = 'id';
 export const KEY_TYPE = 'type';
+export const KEY_HREF = 'href';
 
 /**
  * Definition of the available navigator types
