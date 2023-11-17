@@ -874,7 +874,7 @@ describe('mergeDocuments', () => {
   });
 });
 
-describe('add route', () => {
+describe('addStackRoute', () => {
   const doc = parser.parseFromString(navDocStackNavigatorSource);
 
   it('should find 2 route elements', () => {
@@ -886,34 +886,32 @@ describe('add route', () => {
     expect(routes.length).toEqual(2);
   });
 
-  describe('add stack route', () => {
-    addStackRoute(
-      doc,
-      'test-route',
-      { key: 'key1', name: 'card', params: { url: '/a/b/c' } },
-      'route1',
-      'http://foo.com',
-    );
+  addStackRoute(
+    doc,
+    'test-route',
+    { key: 'key1', name: 'card', params: { url: '/a/b/c' } },
+    'route1',
+    'http://foo.com',
+  );
 
-    const navigators = doc.getElementsByTagNameNS(
-      Namespaces.HYPERVIEW,
-      'navigator',
-    );
-    const routes = getChildElements(navigators[0]);
+  const navigators = doc.getElementsByTagNameNS(
+    Namespaces.HYPERVIEW,
+    'navigator',
+  );
+  const routes = getChildElements(navigators[0]);
 
-    it('should find 3 route elements', () => {
-      expect(routes.length).toEqual(3);
-    });
-
-    it('should contain added route', () => {
-      expect(routes[2].getAttribute('id')).toEqual('test-route');
-    });
-
-    removeStackRoute(doc, '/a/b/c', 'http://foo.com');
+  it('should find 3 route elements', () => {
+    expect(routes.length).toEqual(3);
   });
+
+  it('should contain added route', () => {
+    expect(routes[2].getAttribute('id')).toEqual('test-route');
+  });
+
+  removeStackRoute(doc, '/a/b/c', 'http://foo.com');
 });
 
-describe('find navigator by id', () => {
+describe('getNavigatorById', () => {
   const doc = parser.parseFromString(mergeSourceDisabledDoc);
 
   it('should find navigator', () => {
