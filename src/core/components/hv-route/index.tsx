@@ -558,9 +558,15 @@ export default function HvRoute(props: Types.Props) {
       const unsubscribeFocus: () => void = props.navigation.addListener(
         'focus',
         () => {
-          NavigatorService.setSelected(
-            docContext?.getDoc(),
-            props.route?.params?.id,
+          const doc = docContext?.getDoc();
+          const id = props.route?.params?.id || props.route?.key;
+          NavigatorService.setSelected(doc, id);
+          NavigatorService.addStackRoute(
+            doc,
+            id,
+            props.route,
+            props.navigation?.getState().routes[0]?.name,
+            navigationContext.entrypointUrl,
           );
           if (navigationContext.onRouteFocus && props.route) {
             navigationContext.onRouteFocus(props.route);
@@ -574,7 +580,8 @@ export default function HvRoute(props: Types.Props) {
         () => {
           NavigatorService.removeStackRoute(
             docContext?.getDoc(),
-            props.route?.params?.id,
+            props.route?.params?.url,
+            navigationContext.entrypointUrl,
           );
         },
       );
