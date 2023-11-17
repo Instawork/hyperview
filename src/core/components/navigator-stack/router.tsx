@@ -6,19 +6,9 @@
  *
  */
 
-import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Types from './types';
 import { StackNavigationState, StackRouter } from '@react-navigation/native';
-import { LOCAL_NAME } from 'hyperview/src/types';
-
-type Route = {
-  key: string;
-  name: string;
-  params?: {
-    id?: string;
-    url?: string;
-  };
-};
+import { buildRoutesFromDom } from './helpers';
 
 /**
  * Provides a custom stack router that allows us to set the initial route
@@ -57,58 +47,13 @@ const mutateState = (
 ) => {
   const entrypointUrl = stackOptions.navContextProps?.entrypointUrl;
   const doc = stackOptions.docContextProps?.getDoc();
-  const element = doc
-    ? NavigatorService.getNavigatorById(doc, stackOptions.id)
-    : null;
-  const elementRoutes = element
-    ? NavigatorService.getChildElements(element).filter(
-        e => e.localName === LOCAL_NAME.NAV_ROUTE,
-      )
-    : [];
-
-  const routes: Route[] = [];
-  const routeIds = state.routes.map((r: Route) => r.params?.id);
-  const routeHrefs = state.routes.map((r: Route) => {
-    return r.params?.url
-      ? NavigatorService.getUrlFromHref(r.params.url, entrypointUrl)
-      : undefined;
-  });
-
-  let sequenceBroken = false;
-  for (let i = 0; i < elementRoutes.length; i += 1) {
-    const routeElement = elementRoutes[i];
-    const href = routeElement.getAttribute('href');
-    const id = routeElement.getAttribute('id');
-    const isModal = routeElement.getAttribute('modal') === 'true';
-    if (id) {
-      const existingIndex = href
-        ? routeHrefs.indexOf(
-            NavigatorService.getUrlFromHref(href, entrypointUrl),
-          )
-        : routeIds.indexOf(id);
-      // Ensure each existing route is in the same order and hasn't been disrupted
-      if (!sequenceBroken && existingIndex !== i) {
-        sequenceBroken = true;
-      }
-      if (
-        existingIndex > -1 &&
-        !sequenceBroken &&
-        // Ensure the presentation matches
-        (isModal
-          ? state.routes[existingIndex].name === NavigatorService.ID_MODAL
-          : state.routes[existingIndex].name === NavigatorService.ID_CARD)
-      ) {
-        routes.push(state.routes[existingIndex]);
-      } else {
-        const params = options.routeParamList[id] || {};
-        routes.push({
-          key: id,
-          name: id,
-          params,
-        });
-      }
-    }
-  }
+  const routes = buildRoutesFromDom(
+    doc,
+    state,
+    stackOptions.id,
+    options.routeParamList,
+    entrypointUrl,
+  );
 
   return {
     ...state,
