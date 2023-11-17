@@ -6,7 +6,9 @@
  *
  */
 
+import * as Contexts from 'hyperview/src/contexts';
 import * as CustomStackRouter from 'hyperview/src/core/components/navigator-stack/router';
+import * as NavigationContext from 'hyperview/src/contexts/navigation';
 import * as React from 'react';
 import * as Types from './types';
 
@@ -23,6 +25,9 @@ import {
 } from '@react-navigation/stack';
 
 const CustomStackNavigator = (props: Types.Props) => {
+  const docContextProps = React.useContext(Contexts.DocContext);
+  const navContextProps = React.useContext(NavigationContext.Context);
+
   const {
     state,
     descriptors,
@@ -36,8 +41,10 @@ const CustomStackNavigator = (props: Types.Props) => {
     StackNavigationEventMap
   >(CustomStackRouter.Router, {
     children: props.children,
+    docContextProps,
     id: props.id,
     initialRouteName: props.initialRouteName,
+    navContextProps,
     screenOptions: props.screenOptions,
   });
 

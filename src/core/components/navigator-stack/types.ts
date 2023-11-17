@@ -6,6 +6,8 @@
  *
  */
 
+import * as Contexts from 'hyperview/src/contexts';
+import * as NavigationContext from 'hyperview/src/contexts/navigation';
 import * as React from 'react';
 import { StackNavigationOptions } from '@react-navigation/stack';
 
@@ -33,8 +35,10 @@ export type RouterRenameOptions = RouterConfigOptions & {
 };
 
 export type StackOptions = {
-  id?: string;
+  docContextProps: Contexts.DocContextProps | null;
+  id: string;
   initialRouteName?: string;
+  navContextProps: NavigationContext.NavigationContextProps | null;
 };
 
 /**
