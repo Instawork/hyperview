@@ -122,10 +122,12 @@ export {
 } from './imports';
 export { HvRouteError, HvNavigatorError, HvRenderError } from './errors';
 export {
+  addStackRoute,
   isDynamicRoute,
   isUrlFragment,
   cleanHrefFragment,
   getChildElements,
+  getNavigatorById,
   getRouteById,
   getSelectedNavRouteElement,
   getUrlFromHref,
