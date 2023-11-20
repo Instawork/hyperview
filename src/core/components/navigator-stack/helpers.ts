@@ -57,10 +57,11 @@ export const buildRoutesFromDom = (
       if (
         existingIndex > -1 &&
         !sequenceBroken &&
-        // Ensure the presentation matches
-        (isModal
-          ? state.routes[existingIndex].name === ID_MODAL
-          : state.routes[existingIndex].name === ID_CARD)
+        // Ensure the presentation matches for dynamic screens
+        (!NavigatorHelpers.isDynamicRoute(state.routes[existingIndex].name) ||
+          (isModal
+            ? state.routes[existingIndex].name === ID_MODAL
+            : state.routes[existingIndex].name === ID_CARD))
       ) {
         routes.push(state.routes[existingIndex]);
       } else {
