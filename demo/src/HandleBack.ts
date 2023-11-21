@@ -10,7 +10,6 @@ import { useFocusEffect, useNavigation, useNavigationState, useRoute } from '@re
 import { BackHandler } from 'react-native';
 import React from 'react';
 import type { RouteProp } from '@react-navigation/core';
-import type { RouteParams } from './types';
 
 export default ({ children }: { children: JSX.Element }) => {
   const route = useRoute<RouteProp<any>>();

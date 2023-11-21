@@ -11,7 +11,6 @@ import * as CustomStackRouter from 'hyperview/src/core/components/navigator-stac
 import * as NavigationContext from 'hyperview/src/contexts/navigation';
 import * as React from 'react';
 import * as Types from './types';
-
 import {
   StackActionHelpers,
   StackNavigationState,
