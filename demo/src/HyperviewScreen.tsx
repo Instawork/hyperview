@@ -14,7 +14,6 @@ import type { NavigationRouteParams } from 'hyperview';
 import React from 'react';
 import { fetchWrapper, formatDate } from './helpers';
 
-
 export default (props: Props) => {
   const entrypointUrl = props.route.params?.url;
 

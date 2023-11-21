@@ -40,6 +40,15 @@
     "instawork/stories-components": "error",
     "instawork/stories-navbars": "error",
     "instawork/stories-screens": "error",
+    "padding-line-between-statements": "off",
+    "@typescript-eslint/padding-line-between-statements": [
+      "error",
+      {
+        "blankLine": "never",
+        "prev": "import",
+        "next": "import"
+      }
+    ],
     "react/destructuring-assignment": "error",
     "react/jsx-sort-props": "error",
     "sort-keys": "error"

@@ -7,7 +7,6 @@
  */
 
 import type { HvComponentOptions, StyleSheets } from 'hyperview/src/types';
-
 import { ReactNode } from 'react';
 
 export type Props = {
