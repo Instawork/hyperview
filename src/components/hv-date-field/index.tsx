@@ -49,7 +49,7 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
       return '';
     }
     const year = date.getFullYear();
-    const month = date.getMonth() + 1;
+    const month = `${date.getMonth() + 1}`.padStart(2, '0');
     const day = date.getDate();
     return `${year}-${month}-${day}`;
   };
