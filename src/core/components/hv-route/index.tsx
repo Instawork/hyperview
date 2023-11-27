@@ -28,6 +28,7 @@ import type {
 import React, { JSXElementConstructor, PureComponent, useContext } from 'react';
 import HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
+import HvScreenState from 'hyperview/src/core/components/hv-screen-state';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import LoadError from 'hyperview/src/core/components/load-error';
 import Loading from 'hyperview/src/core/components/loading';
@@ -596,12 +597,14 @@ export default function HvRoute(props: Types.Props) {
   }, [props.navigation, props.route, docContext, navigationContext]);
 
   return (
-    <HvRouteInner
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      {...{ ...props, ...navigationContext, ...navigatorMapContext }}
-      element={element}
-      url={url}
-    />
+    <HvScreenState>
+      <HvRouteInner
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...{ ...props, ...navigationContext, ...navigatorMapContext }}
+        element={element}
+        url={url}
+      />
+    </HvScreenState>
   );
 }
 
