@@ -61,4 +61,22 @@ describe('HvDateField', () => {
       );
     });
   });
+
+  describe('createDateFromString', () => {
+    it('returns null if no date', () => {
+      expect(HvDateField.createDateFromString(null)).toBeNull();
+    });
+
+    it('returns correct date for double digit month', () => {
+      expect(HvDateField.createDateFromString('2023-11-12')).toEqual(
+        new Date(2023, 10, 12),
+      );
+    });
+
+    it('returns correct date for single digit month', () => {
+      expect(HvDateField.createDateFromString('2023-07-12')).toEqual(
+        new Date(2023, 6, 12),
+      );
+    });
+  });
 });
