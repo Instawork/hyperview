@@ -43,6 +43,8 @@ import Navigation from 'hyperview/src/services/navigation';
  * - Handles errors
  */
 class HvRouteComponent extends PureComponent<Types.InnerRouteProps> {
+  static contextType = Contexts.ScreenStateContext;
+
   parser?: DomService.Parser;
 
   navLogic: NavigatorService.Navigator;
@@ -119,7 +121,7 @@ class HvRouteComponent extends PureComponent<Types.InnerRouteProps> {
    */
   load = async (): Promise<void> => {
     if (!this.parser) {
-      this.props.setState({
+      this.context.setState({
         doc: null,
         error: new NavigatorService.HvRouteError('No parser or context found'),
         url: null,
@@ -140,7 +142,7 @@ class HvRouteComponent extends PureComponent<Types.InnerRouteProps> {
       const { doc } = await this.parser.loadDocument(url);
 
       // Set the state with the merged document
-      this.props.setState((prevState: ScreenState) => {
+      this.context.setState((prevState: ScreenState) => {
         const merged = NavigatorService.mergeDocument(
           doc,
           prevState.doc || undefined,
@@ -163,7 +165,7 @@ class HvRouteComponent extends PureComponent<Types.InnerRouteProps> {
       if (this.props.onError) {
         this.props.onError(err as Error);
       }
-      this.props.setState({
+      this.context.setState({
         doc: null,
         error: err as Error,
         url: null,
@@ -175,13 +177,13 @@ class HvRouteComponent extends PureComponent<Types.InnerRouteProps> {
     if (this.props.element) {
       return this.props.element;
     }
-    if (!this.props.state.doc) {
+    if (!this.context.state.doc) {
       throw new NavigatorService.HvRenderError('No document found');
     }
 
     // Get the <doc> element
     const root: Element | null = Helpers.getFirstChildTag(
-      this.props.state.doc,
+      this.context.state.doc,
       LOCAL_NAME.DOC,
     );
     if (!root) {
@@ -221,17 +223,17 @@ class HvRouteComponent extends PureComponent<Types.InnerRouteProps> {
     clearElementError: () => {
       // Noop
     },
-    getDoc: () => this.props.state.doc || null,
+    getDoc: () => this.context.state.doc || null,
     getNavigation: () => this.navigation,
     getOnUpdate: () => this.onUpdate,
-    getState: () => this.props.state,
+    getState: () => this.context.state,
     registerPreload: (id: number, element: Element) =>
       this.registerPreload(id, element),
     setNeedsLoad: () => {
       this.needsLoad = true;
     },
     setState: (state: ScreenState) => {
-      this.props.setState(state);
+      this.context.setState(state);
     },
   };
 
@@ -376,15 +378,15 @@ class HvRouteComponent extends PureComponent<Types.InnerRouteProps> {
     }
 
     if (isModal || renderElement?.localName === LOCAL_NAME.NAVIGATOR) {
-      if (this.props.state.doc) {
+      if (this.context.state.doc) {
         // The <DocContext> provides doc access to nested navigators
         // The <UpdateContext> provides access to the onUpdate method for this route
         // only pass it when the doc is available and is not being overridden by an element
         return (
           <Contexts.DocContext.Provider
             value={{
-              getDoc: () => this.props.state.doc || undefined,
-              setDoc: (doc: Document) => this.props.setState({ doc }),
+              getDoc: () => this.context.state.doc || undefined,
+              setDoc: (doc: Document) => this.context.setState({ doc }),
             }}
           >
             <Contexts.OnUpdateContext.Provider
@@ -442,7 +444,7 @@ class HvRouteComponent extends PureComponent<Types.InnerRouteProps> {
       if (!this.props.url) {
         throw new NavigatorService.HvRouteError('No url received');
       }
-      if (!this.props.state.doc) {
+      if (!this.context.state.doc) {
         throw new NavigatorService.HvRouteError('No document received');
       }
     }
@@ -454,12 +456,12 @@ class HvRouteComponent extends PureComponent<Types.InnerRouteProps> {
   render() {
     const { Error: Err, Load, Content } = this;
     try {
-      if (this.props.state.error) {
-        return <Err error={this.props.state.error} />;
+      if (this.context.state.error) {
+        return <Err error={this.context.state.error} />;
       }
       if (
         this.props.element ||
-        this.props.state.doc ||
+        this.context.state.doc ||
         this.props.route?.params?.isModal
       ) {
         return <Content />;
@@ -602,7 +604,6 @@ function ContextWrapper(props: Types.Props) {
         ...props,
         ...navigationContext,
         ...navigatorMapContext,
-        ...stateContext,
       }}
       element={element}
       url={url}
