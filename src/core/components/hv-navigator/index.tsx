@@ -7,7 +7,9 @@
  */
 
 import * as Behaviors from 'hyperview/src/services/behaviors';
+import * as Contexts from 'hyperview/src/contexts';
 import * as Dom from 'hyperview/src/services/dom';
+import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as NavigationContext from 'hyperview/src/contexts/navigation';
 import * as NavigatorMapContext from 'hyperview/src/contexts/navigator-map';
 import * as NavigatorService from 'hyperview/src/services/navigator';
@@ -300,7 +302,9 @@ export default class HvNavigator extends PureComponent<Props> {
   /**
    * Build a stack navigator for a modal
    */
-  ModalNavigator = (): React.ReactElement => {
+  ModalNavigator = (props: {
+    doc: Document | undefined;
+  }): React.ReactElement => {
     if (!this.props.params) {
       throw new NavigatorService.HvNavigatorError(
         'No params found for modal screen',
@@ -313,7 +317,7 @@ export default class HvNavigator extends PureComponent<Props> {
       );
     }
 
-    const id = `stack-${this.props.params.id}`;
+    const navigatorId = `stack-${this.props.params.id}`;
     const screenId = `modal-screen-${this.props.params.id}`;
 
     // Generate a simple structure for the modal
@@ -328,9 +332,32 @@ export default class HvNavigator extends PureComponent<Props> {
     );
     screens.push(...this.buildDynamicScreens());
 
+    // Mutate the dom to match
+    if (props.doc) {
+      const route: Element | null = props.doc.getElementById(
+        this.props.params.id,
+      );
+      if (route) {
+        const navigator = props.doc.createElementNS(
+          Namespaces.HYPERVIEW,
+          LOCAL_NAME.NAVIGATOR,
+        );
+        navigator.setAttribute('id', navigatorId);
+        navigator.setAttribute('type', 'stack');
+        const screen = props.doc.createElementNS(
+          Namespaces.HYPERVIEW,
+          LOCAL_NAME.NAV_ROUTE,
+        );
+        screen.setAttribute('id', screenId);
+        screen.setAttribute('url', this.props.params?.url || '');
+        navigator.appendChild(screen);
+        route.appendChild(navigator);
+      }
+    }
+
     return (
       <Stack.Navigator
-        id={id}
+        id={navigatorId}
         screenOptions={({ route }) => this.stackScreenOptions(route)}
       >
         {screens}
@@ -342,13 +369,17 @@ export default class HvNavigator extends PureComponent<Props> {
     return (
       <NavigationContext.Context.Consumer>
         {() => (
-          <NavigatorMapContext.NavigatorMapProvider>
-            {this.props.params && this.props.params.isModal ? (
-              <this.ModalNavigator />
-            ) : (
-              <this.Navigator />
+          <Contexts.DocContext.Consumer>
+            {docProvider => (
+              <NavigatorMapContext.NavigatorMapProvider>
+                {this.props.params && this.props.params.isModal ? (
+                  <this.ModalNavigator doc={docProvider?.getDoc()} />
+                ) : (
+                  <this.Navigator />
+                )}
+              </NavigatorMapContext.NavigatorMapProvider>
             )}
-          </NavigatorMapContext.NavigatorMapProvider>
+          </Contexts.DocContext.Consumer>
         )}
       </NavigationContext.Context.Consumer>
     );
