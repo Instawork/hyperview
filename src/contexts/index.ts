@@ -35,9 +35,19 @@ export const OnUpdateContext = React.createContext<{
   // eslint-disable-next-line @typescript-eslint/no-empty-function
 }>({ onUpdate: () => {} });
 
+export type SetState = (
+  state:
+    | ScreenState
+    | ((
+        prevState: Readonly<ScreenState>,
+        props: Readonly<unknown>,
+      ) => ScreenState),
+  callback?: () => void,
+) => void;
+
 export type ScreenStateContextProps = {
   state: ScreenState;
-  setState: (state: ScreenState) => void;
+  setState: SetState;
 };
 
 export const ScreenStateContext = React.createContext<ScreenStateContextProps>({

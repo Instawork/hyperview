@@ -45,11 +45,19 @@ export default class HvScreenState extends PureComponent<
     return (
       <Contexts.ScreenStateContext.Provider
         value={{
-          setState: (state: ScreenState) => {
-            this.localDoc = state.doc || null;
-            this.setState(state);
+          setState: (s): void => {
+            if (typeof s === 'object') {
+              this.localDoc = s.doc || null;
+              this.setState(s);
+            } else if (typeof s === 'function') {
+              this.setState((prevState, props) => {
+                const newState = s(prevState, props);
+                this.localDoc = newState.doc || null;
+                return newState;
+              });
+            }
           },
-          state: { ...this.state, doc: this.localDoc },
+          state: { ...this.state, doc: this.localDoc ?? this.state.doc },
         }}
       >
         {this.props.children}
