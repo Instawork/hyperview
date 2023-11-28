@@ -50,9 +50,6 @@ export default class HvScreen extends React.Component {
 
     this.needsLoad = false;
 
-    // Injecting a passed document as a single-use document
-    this.initialDoc = props.doc;
-
     this.behaviorRegistry = Behaviors.getRegistry(this.props.behaviors);
     this.componentRegistry = Components.getRegistry(this.props.components);
     this.formComponentRegistry = Components.getFormRegistry(
@@ -75,34 +72,42 @@ export default class HvScreen extends React.Component {
   };
 
   componentDidMount() {
-    const { params } = this.getRoute(this.props);
+    const { params, key } = this.getRoute(this.props);
     // The screen may be rendering via a navigation from another HyperScreen.
     // In this case, the url to load in the screen will be passed via navigation props.
     // Otherwise, use the entrypoint URL provided as a prop to the first HyperScreen.
     const url = params.url || this.props.entrypointUrl || null;
 
-    const preloadScreen = params.preloadScreen
-      ? this.navigation.getPreloadScreen(params.preloadScreen)
-      : null;
-    const preloadStyles = preloadScreen
-      ? Stylesheets.createStylesheets(preloadScreen)
-      : {};
-
-    this.needsLoad = true;
-    if (preloadScreen) {
+    if (this.context.state.doc) {
+      const stylesheets = Stylesheets.createStylesheets(this.context.state.doc);
+      this.navigation.setRouteKey(this.context.state.url, key);
       this.context.setState({
-        doc: preloadScreen,
-        elementError: null,
-        error: null,
-        styles: preloadStyles,
-        url,
+        styles: stylesheets,
       });
     } else {
-      this.context.setState({
-        elementError: null,
-        error: null,
-        url,
-      });
+      const preloadScreen = params.preloadScreen
+        ? this.navigation.getPreloadScreen(params.preloadScreen)
+        : null;
+      const preloadStyles = preloadScreen
+        ? Stylesheets.createStylesheets(preloadScreen)
+        : {};
+
+      this.needsLoad = true;
+      if (preloadScreen) {
+        this.context.setState({
+          doc: preloadScreen,
+          elementError: null,
+          error: null,
+          styles: preloadStyles,
+          url,
+        });
+      } else {
+        this.context.setState({
+          elementError: null,
+          error: null,
+          url,
+        });
+      }
     }
   }
 
@@ -180,21 +185,9 @@ export default class HvScreen extends React.Component {
         await later(parseInt(params.delay, 10));
       }
 
-      // If an initial document was passed, use it once and then remove
-      let doc;
-      let staleHeaderType;
-      if (this.initialDoc) {
-        doc = this.initialDoc;
-        this.initialDoc = null;
-      } else {
-        // eslint-disable-next-line react/no-access-state-in-setstate
-        const {
-          doc: loadedDoc,
-          staleHeaderType: loadedType,
-        } = await this.parser.loadDocument(this.context.state.url);
-        doc = loadedDoc;
-        staleHeaderType = loadedType;
-      }
+      const { doc, staleHeaderType } = await this.parser.loadDocument(
+        this.context.state.url,
+      );
       const stylesheets = Stylesheets.createStylesheets(doc);
       this.navigation.setRouteKey(this.context.state.url, routeKey);
       this.context.setState({
@@ -239,7 +232,7 @@ export default class HvScreen extends React.Component {
         onPressViewDetails: uri => this.props.openModal({ url: uri }),
       });
     }
-    if (!this.context.state.doc) {
+    if (!this.context.state.styles) {
       const loadingScreen = this.props.loadingScreen || Loading;
       return React.createElement(loadingScreen);
     }
