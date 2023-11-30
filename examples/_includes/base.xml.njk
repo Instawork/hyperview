@@ -6,7 +6,7 @@
       {% block styles %}{% endblock %}
     </styles>
     <body style="Body" safe-area="true">
-      <header style="Header">
+      <header style="Header" safe-area="true">
         {% if not hide_back_button %}
           <text action="back" href="#" style="Header__Back">Back</text>
         {% endif %}
@@ -15,5 +15,4 @@
       {% block container %}{% endblock %}
     </body>
   </screen>
-  {% include 'loading_screen.xml.njk' %}
 </doc>

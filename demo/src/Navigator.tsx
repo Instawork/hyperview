@@ -28,10 +28,10 @@ const Navigation = () => {
           flex: 1,
 
           // Paddings to handle safe area
-          paddingBottom: insets.bottom,
+          paddingBottom: 0,
           paddingLeft: insets.left,
           paddingRight: insets.right,
-          paddingTop: insets.top,
+          paddingTop: 0,
         }}
       >
         <NavigationContainer>

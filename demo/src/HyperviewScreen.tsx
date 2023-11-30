@@ -14,6 +14,26 @@ import type { NavigationRouteParams } from 'hyperview';
 import React from 'react';
 import { fetchWrapper, formatDate } from './helpers';
 
+import { ActivityIndicator, StatusBar, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    backgroundColor: 'black',
+    flex: 1,
+    justifyContent: 'center',
+  },
+});
+
+const LoadingScreen = () => {
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator color="#fff" />
+      </View>
+    );
+};
+
 export default (props: Props) => {
   const entrypointUrl = props.route.params?.url;
 
@@ -53,12 +73,14 @@ export default (props: Props) => {
 
   return (
     <HandleBack>
+      <StatusBar barStyle="light-content" />
       <Hyperview
         back={goBack}
         closeModal={closeModal}
         entrypointUrl={entrypointUrl as string}
         fetch={fetchWrapper}
         formatDate={formatDate}
+        loadingScreen={LoadingScreen}
         navigate={navigate}
         navigation={props.navigation}
         openModal={openModal}
