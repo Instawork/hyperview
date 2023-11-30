@@ -16,9 +16,11 @@ import {
   Reload,
   Route,
   RouteParams,
+  ScreenState,
 } from 'hyperview/src/types';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
+import { SetState } from 'hyperview/src/contexts';
 
 export type NavigationContextProps = {
   entrypointUrl: string;
@@ -71,6 +73,10 @@ export type InnerRouteProps = {
   getPreload: (key: number) => Element | undefined;
   element?: Element;
   reload: Reload;
+  getState: () => ScreenState;
+  setState: SetState;
+  onRouteBlur?: (route: Route) => void;
+  onRouteFocus?: (route: Route) => void;
 };
 
 /**

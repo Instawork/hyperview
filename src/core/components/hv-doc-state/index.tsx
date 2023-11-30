@@ -12,9 +12,9 @@ import React, { PureComponent } from 'react';
 import { ScreenState } from 'hyperview/src/types';
 
 /**
- * Provides a state context for hv-screen components.
+ * Provides a state context for hv-route and hv-screen components.
  */
-export default class HvScreenState extends PureComponent<
+export default class HvDocState extends PureComponent<
   Types.Props,
   ScreenState
 > {
@@ -43,25 +43,31 @@ export default class HvScreenState extends PureComponent<
 
   render(): React.ReactNode {
     return (
-      <Contexts.ScreenStateContext.Provider
+      <Contexts.DocStateContext.Provider
         value={{
+          getState: (): ScreenState => {
+            return { ...this.state, doc: this.localDoc };
+          },
           setState: (s): void => {
             if (typeof s === 'object') {
-              this.localDoc = s.doc || null;
+              if (s.doc !== undefined) {
+                this.localDoc = s.doc;
+              }
               this.setState(s);
             } else if (typeof s === 'function') {
               this.setState((prevState, props) => {
                 const newState = s(prevState, props);
-                this.localDoc = newState.doc || null;
+                if (newState.doc !== undefined) {
+                  this.localDoc = newState.doc;
+                }
                 return newState;
               });
             }
           },
-          state: { ...this.state, doc: this.localDoc ?? this.state.doc },
         }}
       >
         {this.props.children}
-      </Contexts.ScreenStateContext.Provider>
+      </Contexts.DocStateContext.Provider>
     );
   }
 }

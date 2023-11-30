@@ -32,9 +32,9 @@ import {
   UpdateAction,
 } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
+import HvDocState from 'hyperview/src/core/components/hv-doc-state';
 import HvRoute from 'hyperview/src/core/components/hv-route';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
-import HvScreenState from 'hyperview/src/core/components/hv-screen-state';
 import { Linking } from 'react-native';
 
 /**
@@ -542,7 +542,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
         <Contexts.RefreshControlComponentContext.Provider
           value={this.props.refreshControl}
         >
-          <HvScreenState>
+          <HvDocState>
             <HvScreen
               back={this.props.back}
               behaviors={this.props.behaviors}
@@ -566,7 +566,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
               reload={this.reload}
               route={this.props.route}
             />
-          </HvScreenState>
+          </HvDocState>
         </Contexts.RefreshControlComponentContext.Provider>
       );
     }

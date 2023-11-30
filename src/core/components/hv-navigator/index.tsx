@@ -368,17 +368,19 @@ export default class HvNavigator extends PureComponent<Props> {
     return (
       <NavigationContext.Context.Consumer>
         {() => (
-          <Contexts.DocContext.Consumer>
-            {docProvider => (
+          <Contexts.DocStateContext.Consumer>
+            {stateProvider => (
               <NavigatorMapContext.NavigatorMapProvider>
                 {this.props.params && this.props.params.isModal ? (
-                  <this.ModalNavigator doc={docProvider?.getDoc()} />
+                  <this.ModalNavigator
+                    doc={stateProvider.getState().doc || undefined}
+                  />
                 ) : (
                   <this.Navigator />
                 )}
               </NavigatorMapContext.NavigatorMapProvider>
             )}
-          </Contexts.DocContext.Consumer>
+          </Contexts.DocStateContext.Consumer>
         )}
       </NavigationContext.Context.Consumer>
     );

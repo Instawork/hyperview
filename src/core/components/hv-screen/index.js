@@ -26,7 +26,7 @@ import React from 'react';
 // eslint-disable-next-line instawork/pure-components
 export default class HvScreen extends React.Component {
   // eslint-disable-next-line react/static-property-placement
-  static contextType = Contexts.ScreenStateContext;
+  static contextType = Contexts.DocStateContext;
 
   static createProps = createProps;
 
@@ -78,9 +78,12 @@ export default class HvScreen extends React.Component {
     // Otherwise, use the entrypoint URL provided as a prop to the first HyperScreen.
     const url = params.url || this.props.entrypointUrl || null;
 
-    if (this.context.state.doc) {
-      const stylesheets = Stylesheets.createStylesheets(this.context.state.doc);
-      this.navigation.setRouteKey(this.context.state.url, key);
+    if (this.context.getState().doc) {
+      const stylesheets = Stylesheets.createStylesheets(
+        this.context.getState().doc,
+      );
+      this.needsLoad = false;
+      this.navigation.setRouteKey(this.context.getState().url, key);
       this.context.setState({
         styles: stylesheets,
       });
@@ -140,11 +143,10 @@ export default class HvScreen extends React.Component {
         ? this.navigation.getPreloadScreen(newPreloadScreen)
         : null;
 
-      const doc = preloadScreen || this.context.state.doc;
+      const doc = preloadScreen || this.context.getState().doc;
       const styles = preloadScreen
         ? Stylesheets.createStylesheets(preloadScreen)
-        : // eslint-disable-next-line react/no-access-state-in-setstate
-          this.context.state.styles;
+        : this.context.getState().styles;
 
       this.context.setState({ doc, styles, url: newUrl });
     }
@@ -159,8 +161,8 @@ export default class HvScreen extends React.Component {
     if (preloadScreen && this.navigation.getPreloadScreen(preloadScreen)) {
       this.navigation.removePreloadScreen(preloadScreen);
     }
-    if (this.context.state.url) {
-      this.navigation.removeRouteKey(this.context.state.url);
+    if (this.context.getState().url) {
+      this.navigation.removeRouteKey(this.context.getState().url);
     }
   }
 
@@ -186,10 +188,10 @@ export default class HvScreen extends React.Component {
       }
 
       const { doc, staleHeaderType } = await this.parser.loadDocument(
-        this.context.state.url,
+        this.context.getState().url,
       );
       const stylesheets = Stylesheets.createStylesheets(doc);
-      this.navigation.setRouteKey(this.context.state.url, routeKey);
+      this.navigation.setRouteKey(this.context.getState().url, routeKey);
       this.context.setState({
         doc,
         elementError: null,
@@ -214,7 +216,7 @@ export default class HvScreen extends React.Component {
    * Reload if an error occured using the screen's current URL
    */
   reload = () => {
-    this.props.reload(this.context.state.url, {
+    this.props.reload(this.context.getState().url, {
       onUpdateCallbacks: this.updateCallbacks,
     });
   };
@@ -223,55 +225,48 @@ export default class HvScreen extends React.Component {
    * Renders the XML doc into React components. Shows blank screen until the XML doc is available.
    */
   render() {
-    if (this.context.state.error) {
+    if (this.context.getState().error) {
       const errorScreen = this.props.errorScreen || LoadError;
       return React.createElement(errorScreen, {
         back: () => this.getNavigation().back(),
-        error: this.context.state.error,
+        error: this.context.getState().error,
         onPressReload: () => this.reload(), // Make sure reload() is called without any args
         onPressViewDetails: uri => this.props.openModal({ url: uri }),
       });
     }
-    if (!this.context.state.styles) {
+    if (!this.context.getState().styles) {
       const loadingScreen = this.props.loadingScreen || Loading;
       return React.createElement(loadingScreen);
     }
-    const elementErrorComponent = this.context.state.elementError
+    const elementErrorComponent = this.context.getState().elementError
       ? this.props.elementErrorComponent || LoadElementError
       : null;
     const [body] = Array.from(
-      this.context.state.doc.getElementsByTagNameNS(
-        Namespaces.HYPERVIEW,
-        'body',
-      ),
+      this.context
+        .getState()
+        .doc.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'body'),
     );
     const screenElement = Render.renderElement(
       body,
-      this.context.state.styles,
+      this.context.getState().styles,
       this.onUpdate,
       {
         componentRegistry: this.componentRegistry,
-        screenUrl: this.context.state.url,
-        staleHeaderType: this.context.state.staleHeaderType,
+        screenUrl: this.context.getState().url,
+        staleHeaderType: this.context.getState().staleHeaderType,
       },
     );
 
     return (
-      <Contexts.DocContext.Provider
-        value={{
-          getDoc: () => this.context.state.doc,
-        }}
-      >
-        <Contexts.DateFormatContext.Provider value={this.props.formatDate}>
-          {screenElement}
-          {elementErrorComponent
-            ? React.createElement(elementErrorComponent, {
-                error: this.context.state.elementError,
-                onPressReload: () => this.reload(),
-              })
-            : null}
-        </Contexts.DateFormatContext.Provider>
-      </Contexts.DocContext.Provider>
+      <Contexts.DateFormatContext.Provider value={this.props.formatDate}>
+        {screenElement}
+        {elementErrorComponent
+          ? React.createElement(elementErrorComponent, {
+              error: this.context.getState().elementError,
+              onPressReload: () => this.reload(),
+            })
+          : null}
+      </Contexts.DateFormatContext.Provider>
     );
   }
 
@@ -298,14 +293,14 @@ export default class HvScreen extends React.Component {
    */
   updateCallbacks = {
     clearElementError: () => {
-      if (this.context.state.elementError) {
+      if (this.context.getState().elementError) {
         this.context.setState({ elementError: null });
       }
     },
-    getDoc: () => this.context.state.doc,
+    getDoc: () => this.context.getState().doc,
     getNavigation: () => this.navigation,
     getOnUpdate: () => this.onUpdate,
-    getState: () => this.context.state,
+    getState: () => this.context.getState(),
     registerPreload: (id, element) => this.registerPreload(id, element),
     setNeedsLoad: () => {
       this.needsLoad = true;

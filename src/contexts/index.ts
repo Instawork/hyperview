@@ -24,12 +24,6 @@ export const RefreshControlComponentContext = React.createContext<
   ComponentType<RefreshControlProps> | undefined
 >(undefined);
 
-export type DocContextProps = {
-  getDoc: () => Document | undefined;
-  setDoc?: (doc: Document) => void;
-};
-export const DocContext = React.createContext<DocContextProps | null>(null);
-
 export const OnUpdateContext = React.createContext<{
   onUpdate: HvComponentOnUpdate;
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -45,12 +39,14 @@ export type SetState = (
   callback?: () => void,
 ) => void;
 
-export type ScreenStateContextProps = {
-  state: ScreenState;
+export type DocStateContextProps = {
+  getState: () => ScreenState;
   setState: SetState;
 };
 
-export const ScreenStateContext = React.createContext<ScreenStateContextProps>({
+export const DocStateContext = React.createContext<DocStateContextProps>({
+  getState: () => {
+    return {};
+  },
   setState: () => {},
-  state: {},
 });

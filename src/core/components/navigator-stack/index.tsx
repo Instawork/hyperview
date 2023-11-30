@@ -24,7 +24,7 @@ import {
 } from '@react-navigation/stack';
 
 const CustomStackNavigator = (props: Types.Props) => {
-  const docContextProps = React.useContext(Contexts.DocContext);
+  const docStateContextProps = React.useContext(Contexts.DocStateContext);
   const navContextProps = React.useContext(NavigationContext.Context);
 
   const {
@@ -40,7 +40,7 @@ const CustomStackNavigator = (props: Types.Props) => {
     StackNavigationEventMap
   >(CustomStackRouter.Router, {
     children: props.children,
-    docContextProps,
+    docStateContextProps,
     id: props.id,
     initialRouteName: props.initialRouteName,
     navContextProps,
