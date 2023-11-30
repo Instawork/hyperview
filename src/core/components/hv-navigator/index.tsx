@@ -337,7 +337,7 @@ export default class HvNavigator extends PureComponent<Props> {
       const route: Element | null = props.doc.getElementById(
         this.props.params.id,
       );
-      if (route) {
+      if (route && !NavigatorService.getNavigatorById(props.doc, navigatorId)) {
         const navigator = props.doc.createElementNS(
           Namespaces.HYPERVIEW,
           LOCAL_NAME.NAVIGATOR,
@@ -349,7 +349,6 @@ export default class HvNavigator extends PureComponent<Props> {
           LOCAL_NAME.NAV_ROUTE,
         );
         screen.setAttribute('id', screenId);
-        screen.setAttribute('url', this.props.params?.url || '');
         navigator.appendChild(screen);
         route.appendChild(navigator);
       }
