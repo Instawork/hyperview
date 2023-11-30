@@ -484,7 +484,7 @@ const getNestedNavigator = (
 };
 
 /**
- * Processess the route lifecycle events
+ * Processes the route lifecycle events
  * Requires access to the contexts passed by the HvRoute component
  */
 function RouteFC(props: Types.InnerRouteProps) {
