@@ -35,7 +35,7 @@ export type RouterRenameOptions = RouterConfigOptions & {
 };
 
 export type StackOptions = {
-  docContextProps: Contexts.DocContextProps | null;
+  docStateContextProps: Contexts.DocStateContextProps | null;
   id: string;
   initialRouteName?: string;
   navContextProps: NavigationContext.NavigationContextProps | null;

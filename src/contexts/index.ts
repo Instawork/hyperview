@@ -6,8 +6,8 @@
  *
  */
 
+import type { HvComponentOnUpdate, ScreenState } from 'hyperview/src/types';
 import type { ComponentType } from 'react';
-import type { HvComponentOnUpdate } from 'hyperview/src/types';
 import React from 'react';
 import type { RefreshControlProps } from 'react-native';
 
@@ -24,13 +24,29 @@ export const RefreshControlComponentContext = React.createContext<
   ComponentType<RefreshControlProps> | undefined
 >(undefined);
 
-export type DocContextProps = {
-  getDoc: () => Document | undefined;
-  setDoc?: (doc: Document) => void;
-};
-export const DocContext = React.createContext<DocContextProps | null>(null);
-
 export const OnUpdateContext = React.createContext<{
   onUpdate: HvComponentOnUpdate;
   // eslint-disable-next-line @typescript-eslint/no-empty-function
 }>({ onUpdate: () => {} });
+
+export type SetState = (
+  state:
+    | ScreenState
+    | ((
+        prevState: Readonly<ScreenState>,
+        props: Readonly<unknown>,
+      ) => ScreenState),
+  callback?: () => void,
+) => void;
+
+export type DocStateContextProps = {
+  getState: () => ScreenState;
+  setState: SetState;
+};
+
+export const DocStateContext = React.createContext<DocStateContextProps>({
+  getState: () => {
+    return {};
+  },
+  setState: () => {},
+});

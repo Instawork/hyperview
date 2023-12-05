@@ -32,6 +32,7 @@ import {
   UpdateAction,
 } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
+import HvDocState from 'hyperview/src/core/components/hv-doc-state';
 import HvRoute from 'hyperview/src/core/components/hv-route';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
 import { Linking } from 'react-native';
@@ -541,29 +542,31 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
         <Contexts.RefreshControlComponentContext.Provider
           value={this.props.refreshControl}
         >
-          <HvScreen
-            back={this.props.back}
-            behaviors={this.props.behaviors}
-            closeModal={this.props.closeModal}
-            components={this.props.components}
-            elementErrorComponent={this.props.elementErrorComponent}
-            entrypointUrl={this.props.entrypointUrl}
-            errorScreen={this.props.errorScreen}
-            fetch={this.props.fetch}
-            formatDate={this.props.formatDate}
-            loadingScreen={this.props.loadingScreen}
-            navigate={this.props.navigate}
-            navigation={this.props.navigation}
-            onError={this.props.onError}
-            onParseAfter={this.props.onParseAfter}
-            onParseBefore={this.props.onParseBefore}
-            onUpdate={this.onUpdate}
-            openModal={this.props.openModal}
-            push={this.props.push}
-            refreshControl={this.props.refreshControl}
-            reload={this.reload}
-            route={this.props.route}
-          />
+          <HvDocState>
+            <HvScreen
+              back={this.props.back}
+              behaviors={this.props.behaviors}
+              closeModal={this.props.closeModal}
+              components={this.props.components}
+              elementErrorComponent={this.props.elementErrorComponent}
+              entrypointUrl={this.props.entrypointUrl}
+              errorScreen={this.props.errorScreen}
+              fetch={this.props.fetch}
+              formatDate={this.props.formatDate}
+              loadingScreen={this.props.loadingScreen}
+              navigate={this.props.navigate}
+              navigation={this.props.navigation}
+              onError={this.props.onError}
+              onParseAfter={this.props.onParseAfter}
+              onParseBefore={this.props.onParseBefore}
+              onUpdate={this.onUpdate}
+              openModal={this.props.openModal}
+              push={this.props.push}
+              refreshControl={this.props.refreshControl}
+              reload={this.reload}
+              route={this.props.route}
+            />
+          </HvDocState>
         </Contexts.RefreshControlComponentContext.Provider>
       );
     }

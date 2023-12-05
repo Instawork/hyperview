@@ -26,6 +26,7 @@ import type {
   ScreenState,
 } from 'hyperview/src/types';
 import React, { JSXElementConstructor, PureComponent, useContext } from 'react';
+import HvDocState from 'hyperview/src/core/components/hv-doc-state';
 import HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
 import { LOCAL_NAME } from 'hyperview/src/types';
@@ -41,7 +42,9 @@ import Navigation from 'hyperview/src/services/navigation';
  * - Renders the document
  * - Handles errors
  */
-class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
+class HvRouteInner extends PureComponent<Types.InnerRouteProps> {
+  static contextType = Contexts.DocStateContext;
+
   parser?: DomService.Parser;
 
   navLogic: NavigatorService.Navigator;
@@ -55,10 +58,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
   constructor(props: Types.InnerRouteProps) {
     super(props);
 
-    this.state = {
-      doc: null,
-      error: null,
-    };
     this.navLogic = new NavigatorService.Navigator(this.props);
     this.componentRegistry = Components.getRegistry(this.props.components);
     this.needsLoad = false;
@@ -122,7 +121,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
    */
   load = async (): Promise<void> => {
     if (!this.parser) {
-      this.setState({
+      this.context.setState({
         doc: null,
         error: new NavigatorService.HvRouteError('No parser or context found'),
         url: null,
@@ -143,10 +142,10 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       const { doc } = await this.parser.loadDocument(url);
 
       // Set the state with the merged document
-      this.setState(state => {
+      this.context.setState((prevState: ScreenState) => {
         const merged = NavigatorService.mergeDocument(
           doc,
-          state.doc || undefined,
+          prevState.doc || undefined,
         );
         const root = Helpers.getFirstChildTag(merged, LOCAL_NAME.DOC);
         if (!root) {
@@ -166,7 +165,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       if (this.props.onError) {
         this.props.onError(err as Error);
       }
-      this.setState({
+      this.context.setState({
         doc: null,
         error: err as Error,
         url: null,
@@ -178,13 +177,13 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     if (this.props.element) {
       return this.props.element;
     }
-    if (!this.state.doc) {
+    if (!this.context.getState().doc) {
       throw new NavigatorService.HvRenderError('No document found');
     }
 
     // Get the <doc> element
     const root: Element | null = Helpers.getFirstChildTag(
-      this.state.doc,
+      this.context.getState().doc,
       LOCAL_NAME.DOC,
     );
     if (!root) {
@@ -224,17 +223,17 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     clearElementError: () => {
       // Noop
     },
-    getDoc: () => this.state.doc || null,
+    getDoc: () => this.context.getState().doc || null,
     getNavigation: () => this.navigation,
     getOnUpdate: () => this.onUpdate,
-    getState: () => this.state,
+    getState: () => this.context.getState(),
     registerPreload: (id: number, element: Element) =>
       this.registerPreload(id, element),
     setNeedsLoad: () => {
       this.needsLoad = true;
     },
     setState: (state: ScreenState) => {
-      this.setState(state);
+      this.context.setState(state);
     },
   };
 
@@ -321,7 +320,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
         url: url || undefined,
       },
     };
-
     return (
       <Contexts.DateFormatContext.Consumer>
         {formatter => (
@@ -330,7 +328,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
             behaviors={this.props.behaviors}
             closeModal={this.navLogic.closeModal}
             components={this.props.components}
-            doc={this.state.doc?.cloneNode(true) as Document}
             elementErrorComponent={this.props.elementErrorComponent}
             entrypointUrl={this.props.entrypointUrl}
             errorScreen={this.props.errorScreen}
@@ -380,33 +377,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     }
 
     if (isModal || renderElement?.localName === LOCAL_NAME.NAVIGATOR) {
-      if (this.state.doc) {
-        // The <DocContext> provides doc access to nested navigators
-        // The <UpdateContext> provides access to the onUpdate method for this route
-        // only pass it when the doc is available and is not being overridden by an element
-        return (
-          <Contexts.DocContext.Provider
-            value={{
-              getDoc: () => this.state.doc || undefined,
-              setDoc: (doc: Document) => this.setState({ doc }),
-            }}
-          >
-            <Contexts.OnUpdateContext.Provider
-              value={{
-                onUpdate: this.onUpdate,
-              }}
-            >
-              <HvNavigator
-                element={renderElement}
-                onUpdate={this.onUpdate}
-                params={this.props.route?.params}
-                routeComponent={HvRoute}
-              />
-            </Contexts.OnUpdateContext.Provider>
-          </Contexts.DocContext.Provider>
-        );
-      }
-      // Without a doc, the navigator shares the higher level context
       return (
         <Contexts.OnUpdateContext.Consumer>
           {updater => (
@@ -446,7 +416,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       if (!this.props.url) {
         throw new NavigatorService.HvRouteError('No url received');
       }
-      if (!this.state.doc) {
+      if (!this.context.getState().doc) {
         throw new NavigatorService.HvRouteError('No document received');
       }
     }
@@ -458,12 +428,12 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
   render() {
     const { Error: Err, Load, Content } = this;
     try {
-      if (this.state.error) {
-        return <Err error={this.state.error} />;
+      if (this.context.getState().error) {
+        return <Err error={this.context.getState().error} />;
       }
       if (
         this.props.element ||
-        this.state.doc ||
+        this.context.getState().doc ||
         this.props.route?.params?.isModal
       ) {
         return <Content />;
@@ -514,74 +484,55 @@ const getNestedNavigator = (
 };
 
 /**
- * Functional component wrapper around HvRouteInner
- * NOTE: The reason for this approach is to allow accessing
- *  multiple contexts to pass data to HvRouteInner
- * Performs the following:
- * - Retrieves the url from the props, params, or context
- * - Retrieves the navigator element from the context
- * - Passes the props, context, and url to HvRouteInner
+ * Processes the route lifecycle events
+ * Requires access to the contexts passed by the HvRoute component
  */
-export default function HvRoute(props: Types.Props) {
-  const navigationContext: Types.NavigationContextProps | null = useContext(
-    NavigationContext.Context,
-  );
-  const navigatorMapContext: Types.NavigatorMapContextProps | null = useContext(
-    NavigatorMapContext.NavigatorMapContext,
-  );
-  if (!navigationContext || !navigatorMapContext) {
-    throw new NavigatorService.HvRouteError('No context found');
-  }
-
-  const docContext = useContext(Contexts.DocContext);
-
-  const url = getRouteUrl(props, navigationContext);
-
-  // Get the navigator element from the context
-  const element: Element | undefined = getNestedNavigator(
-    props.route?.params?.id,
-    docContext?.getDoc(),
-  );
-
+function RouteFC(props: Types.InnerRouteProps) {
+  // eslint-disable-next-line react/destructuring-assignment
+  const {
+    entrypointUrl,
+    getState,
+    route,
+    navigation,
+    onRouteBlur,
+    onRouteFocus,
+  } = props;
   React.useEffect(() => {
-    if (props.navigation) {
-      const unsubscribeBlur: () => void = props.navigation.addListener(
-        'blur',
-        () => {
-          if (navigationContext.onRouteBlur && props.route) {
-            navigationContext.onRouteBlur(props.route);
-          }
-        },
-      );
+    if (navigation) {
+      const unsubscribeBlur: () => void = navigation.addListener('blur', () => {
+        if (onRouteBlur && route) {
+          onRouteBlur(route);
+        }
+      });
 
       // Use the focus event to set the selected route
-      const unsubscribeFocus: () => void = props.navigation.addListener(
+      const unsubscribeFocus: () => void = navigation.addListener(
         'focus',
         () => {
-          const doc = docContext?.getDoc();
-          const id = props.route?.params?.id || props.route?.key;
+          const doc = getState().doc || undefined;
+          const id = route?.params?.id || route?.key;
           NavigatorService.setSelected(doc, id);
           NavigatorService.addStackRoute(
             doc,
             id,
-            props.route,
-            props.navigation?.getState().routes[0]?.name,
-            navigationContext.entrypointUrl,
+            route,
+            navigation?.getState().routes[0]?.name,
+            entrypointUrl,
           );
-          if (navigationContext.onRouteFocus && props.route) {
-            navigationContext.onRouteFocus(props.route);
+          if (onRouteFocus && route) {
+            onRouteFocus(route);
           }
         },
       );
 
       // Use the beforeRemove event to remove the route from the stack
-      const unsubscribeRemove: () => void = props.navigation.addListener(
+      const unsubscribeRemove: () => void = navigation.addListener(
         'beforeRemove',
         () => {
           NavigatorService.removeStackRoute(
-            docContext?.getDoc(),
-            props.route?.params?.url,
-            navigationContext.entrypointUrl,
+            getState().doc || undefined,
+            route?.params?.url,
+            entrypointUrl,
           );
         },
       );
@@ -593,16 +544,62 @@ export default function HvRoute(props: Types.Props) {
       };
     }
     return undefined;
-  }, [props.navigation, props.route, docContext, navigationContext]);
+  }, [entrypointUrl, getState, route, navigation, onRouteBlur, onRouteFocus]);
 
   return (
     <HvRouteInner
       // eslint-disable-next-line react/jsx-props-no-spreading
-      {...{ ...props, ...navigationContext, ...navigatorMapContext }}
-      element={element}
-      url={url}
+      {...props}
     />
   );
+}
+
+/**
+ * Functional component wrapper around HvRouteInner
+ * NOTE: The reason for this approach is to allow accessing
+ *  multiple contexts to pass data to HvRouteInner
+ * Performs the following:
+ * - Retrieves the url from the props, params, or context
+ * - Retrieves the navigator element from the context
+ * - Passes the props, contexts, and url to HvRouteComponent
+ */
+export default function HvRoute(props: Types.Props) {
+  const navigationContext: Types.NavigationContextProps | null = useContext(
+    NavigationContext.Context,
+  );
+  const navigatorMapContext: Types.NavigatorMapContextProps | null = useContext(
+    NavigatorMapContext.NavigatorMapContext,
+  );
+  if (!navigationContext || !navigatorMapContext) {
+    throw new NavigatorService.HvRouteError('No context found');
+  }
+  const stateContext = useContext(Contexts.DocStateContext);
+
+  // Get the navigator element from the context or the parent context
+  const element: Element | undefined = getNestedNavigator(
+    props.route?.params?.id,
+    stateContext?.getState().doc || undefined,
+  );
+  const url = getRouteUrl(props, navigationContext);
+
+  const Component = (
+    <RouteFC
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...{
+        ...props,
+        ...navigationContext,
+        ...navigatorMapContext,
+        ...stateContext,
+        element,
+        url,
+      }}
+    />
+  );
+
+  // When an element is present, or the route is being processed as a modal
+  // this route is not a document owner and does not need a state context
+  const needsContext = element === undefined && !props.route?.params?.isModal;
+  return needsContext ? <HvDocState>{Component}</HvDocState> : Component;
 }
 
 export type { Props } from './types';
