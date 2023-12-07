@@ -384,7 +384,7 @@
   <xs:attributeGroup name="behaviorAttributes">
     <xs:attribute name="action" type="hv:action" />
     <xs:attribute name="target" type="hv:IDREF" />
-    <xs:attribute name="href" type="xs:string" />
+    <xs:attribute name="href" type="hv:nonEmptyString" />
     <xs:attribute name="href-style" type="hv:styleList" />
     <xs:attribute name="once" type="xs:boolean" />
     <xs:attribute name="trigger" type="hv:trigger" />
@@ -1259,6 +1259,12 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="stack" />
       <xs:enumeration value="tab" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="nonEmptyString">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
     </xs:restriction>
   </xs:simpleType>
 
