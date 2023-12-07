@@ -242,6 +242,8 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
       <Contexts.RefreshControlComponentContext.Consumer>
         {ContextRefreshControl => {
           const RefreshControl = ContextRefreshControl || DefaultRefreshControl;
+          const hasRefreshTrigger =
+            this.props.element.getAttribute('trigger') === 'refresh';
           return (
             <FlatList
               ref={this.onRef}
@@ -253,10 +255,12 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               keyExtractor={(item: any) => item && item.getAttribute('key')}
               refreshControl={
-                <RefreshControl
-                  onRefresh={this.refresh}
-                  refreshing={this.state.refreshing}
-                />
+                hasRefreshTrigger ? (
+                  <RefreshControl
+                    onRefresh={this.refresh}
+                    refreshing={this.state.refreshing}
+                  />
+                ) : undefined
               }
               removeClippedSubviews={false}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
