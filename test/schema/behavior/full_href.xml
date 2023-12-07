@@ -1,0 +1,9 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <body>
+      <view id="test-view">
+        <behavior href="http://localhost:8085/test" />
+      </view>
+    </body>
+  </screen>
+</doc>

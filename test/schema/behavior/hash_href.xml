@@ -1,0 +1,9 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <body>
+      <view id="test-view">
+        <behavior href="#" />
+      </view>
+    </body>
+  </screen>
+</doc>

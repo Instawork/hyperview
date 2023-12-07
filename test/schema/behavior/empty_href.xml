@@ -1,0 +1,10 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <body>
+      <view id="test-view">
+        <!-- This is an invalid behavior because it has an empty href -->
+        <!-- <behavior href="" /> -->
+      </view>
+    </body>
+  </screen>
+</doc>
