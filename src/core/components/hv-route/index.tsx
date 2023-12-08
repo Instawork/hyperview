@@ -489,14 +489,11 @@ const getNestedNavigator = (
  */
 function RouteFC(props: Types.InnerRouteProps) {
   // eslint-disable-next-line react/destructuring-assignment
-  const {
-    entrypointUrl,
-    getState,
-    route,
-    navigation,
-    onRouteBlur,
-    onRouteFocus,
-  } = props;
+  const { entrypointUrl, route, navigation, onRouteBlur, onRouteFocus } = props;
+
+  // This is the context provided by either this route or a parent component
+  const stateContext = useContext(Contexts.DocStateContext);
+
   React.useEffect(() => {
     if (navigation) {
       const unsubscribeBlur: () => void = navigation.addListener('blur', () => {
@@ -509,7 +506,7 @@ function RouteFC(props: Types.InnerRouteProps) {
       const unsubscribeFocus: () => void = navigation.addListener(
         'focus',
         () => {
-          const doc = getState().doc || undefined;
+          const doc = stateContext.getState().doc || undefined;
           const id = route?.params?.id || route?.key;
           NavigatorService.setSelected(doc, id);
           NavigatorService.addStackRoute(
@@ -530,7 +527,7 @@ function RouteFC(props: Types.InnerRouteProps) {
         'beforeRemove',
         () => {
           NavigatorService.removeStackRoute(
-            getState().doc || undefined,
+            stateContext.getState().doc || undefined,
             route?.params?.url,
             entrypointUrl,
           );
@@ -544,7 +541,14 @@ function RouteFC(props: Types.InnerRouteProps) {
       };
     }
     return undefined;
-  }, [entrypointUrl, getState, route, navigation, onRouteBlur, onRouteFocus]);
+  }, [
+    entrypointUrl,
+    stateContext,
+    route,
+    navigation,
+    onRouteBlur,
+    onRouteFocus,
+  ]);
 
   return (
     <HvRouteInner
@@ -573,6 +577,7 @@ export default function HvRoute(props: Types.Props) {
   if (!navigationContext || !navigatorMapContext) {
     throw new NavigatorService.HvRouteError('No context found');
   }
+  // This is the context provided by a parent component
   const stateContext = useContext(Contexts.DocStateContext);
 
   // Get the navigator element from the context or the parent context
