@@ -184,41 +184,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps> {
   };
 
   /**
-   * Implement the callbacks from this class
-   */
-  updateCallbacks = {
-    clearElementError: () => {
-      // Noop
-    },
-    getDoc: () => this.context.getState().doc || null,
-    getNavigation: () => this.props.navigationService.current,
-    getOnUpdate: () => this.onUpdate,
-    getState: () => this.context.getState(),
-    registerPreload: (id: number, element: Element) =>
-      this.props.setPreload(id, element),
-    setNeedsLoad: () => {
-      if (this.props.needsLoad) {
-        this.props.needsLoad.current = true;
-      }
-    },
-    setState: (state: ScreenState) => {
-      this.context.setState(state);
-    },
-  };
-
-  onUpdate = (
-    href: DOMString | null | undefined,
-    action: DOMString | null | undefined,
-    element: Element,
-    options: HvComponentOptions,
-  ) => {
-    this.props.onUpdate(href, action, element, {
-      ...options,
-      onUpdateCallbacks: this.updateCallbacks,
-    });
-  };
-
-  /**
    * View shown while loading
    * Includes preload functionality
    */
@@ -479,6 +444,39 @@ function RouteFC(props: Types.FCProps) {
       push: navigator.current.push,
     }),
   );
+
+  /**
+   * Implement the callbacks from this class
+   */
+  const updateCallbacks = {
+    clearElementError: () => {
+      // Noop
+    },
+    getDoc: () => stateContext.getState().doc || null,
+    getNavigation: () => navigationService.current,
+    getOnUpdate: () => onUpdate,
+    getState: () => stateContext.getState(),
+    registerPreload: (id: number, element: Element) =>
+      props.setPreload(id, element),
+    setNeedsLoad: () => {
+      needsLoad.current = true;
+    },
+    setState: (state: ScreenState) => {
+      stateContext.setState(state);
+    },
+  };
+
+  const onUpdate = (
+    href: DOMString | null | undefined,
+    action: DOMString | null | undefined,
+    element: Element,
+    options: HvComponentOptions,
+  ) => {
+    props.onUpdate(href, action, element, {
+      ...options,
+      onUpdateCallbacks: updateCallbacks,
+    });
+  };
 
   React.useEffect(() => {
     if (navigation) {
