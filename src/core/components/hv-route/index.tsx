@@ -64,19 +64,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps> {
     this.navigation = new Navigation(props.entrypointUrl, this.getNavigation());
   }
 
-  /**
-   * Override the state to clear the doc when an element is passed
-   */
-  static getDerivedStateFromProps(
-    props: Types.InnerRouteProps,
-    state: ScreenState,
-  ) {
-    if (props.element) {
-      return { ...state, doc: null };
-    }
-    return state;
-  }
-
   componentDidMount() {
     this.parser = new DomService.Parser(
       this.props.fetch,
