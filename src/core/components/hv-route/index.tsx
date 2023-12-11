@@ -47,21 +47,12 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps> {
 
   parser?: DomService.Parser;
 
-  navLogic: NavigatorService.Navigator;
-
   componentRegistry: ComponentRegistry;
-
-  needsLoad = false;
-
-  navigation: Navigation;
 
   constructor(props: Types.InnerRouteProps) {
     super(props);
 
-    this.navLogic = new NavigatorService.Navigator(this.props);
     this.componentRegistry = Components.getRegistry(this.props.components);
-    this.needsLoad = false;
-    this.navigation = new Navigation(props.entrypointUrl, this.getNavigation());
   }
 
   componentDidMount() {
@@ -78,23 +69,16 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps> {
   }
 
   componentDidUpdate(prevProps: Types.InnerRouteProps) {
-    if (prevProps.url !== this.props.url || this.needsLoad) {
+    if (
+      prevProps.url !== this.props.url ||
+      this.props.needsLoad?.current === true
+    ) {
       this.load();
     }
-    this.needsLoad = false;
+    if (this.props.needsLoad) {
+      this.props.needsLoad.current = false;
+    }
   }
-
-  /**
-   * Returns a navigation object similar to the one provided by React Navigation,
-   * but connected to the nav logic of this component.
-   */
-  getNavigation = () => ({
-    back: this.navLogic.back,
-    closeModal: this.navLogic.closeModal,
-    navigate: this.navLogic.navigate,
-    openModal: this.navLogic.openModal,
-    push: this.navLogic.push,
-  });
 
   getUrl = (): string => {
     return UrlService.getUrlFromHref(
@@ -199,10 +183,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps> {
     );
   };
 
-  registerPreload = (id: number, element: Element): void => {
-    this.props.setPreload(id, element);
-  };
-
   /**
    * Implement the callbacks from this class
    */
@@ -211,13 +191,15 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps> {
       // Noop
     },
     getDoc: () => this.context.getState().doc || null,
-    getNavigation: () => this.navigation,
+    getNavigation: () => this.props.navigationService.current,
     getOnUpdate: () => this.onUpdate,
     getState: () => this.context.getState(),
     registerPreload: (id: number, element: Element) =>
-      this.registerPreload(id, element),
+      this.props.setPreload(id, element),
     setNeedsLoad: () => {
-      this.needsLoad = true;
+      if (this.props.needsLoad) {
+        this.props.needsLoad.current = true;
+      }
     },
     setState: (state: ScreenState) => {
       this.context.setState(state);
@@ -280,11 +262,13 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps> {
     const ErrorScreen = this.props.errorScreen || LoadError;
     return (
       <ErrorScreen
-        back={() => this.navLogic.back({} as NavigationRouteParams)}
+        back={() =>
+          this.props.navigator?.current.back({} as NavigationRouteParams)
+        }
         error={props.error}
         onPressReload={() => this.load()}
         onPressViewDetails={(uri: string | undefined) => {
-          this.navLogic.openModal({
+          this.props.navigator?.current.openModal({
             url: uri as string,
           } as NavigationRouteParams);
         }}
@@ -311,9 +295,9 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps> {
       <Contexts.DateFormatContext.Consumer>
         {formatter => (
           <HvScreen
-            back={this.navLogic.back}
+            back={this.props.navigator?.current.back}
             behaviors={this.props.behaviors}
-            closeModal={this.navLogic.closeModal}
+            closeModal={this.props.navigator?.current.closeModal}
             components={this.props.components}
             elementErrorComponent={this.props.elementErrorComponent}
             entrypointUrl={this.props.entrypointUrl}
@@ -321,15 +305,15 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps> {
             fetch={this.props.fetch}
             formatDate={formatter}
             loadingScreen={this.props.loadingScreen}
-            navigate={this.navLogic.navigate}
+            navigate={this.props.navigator?.current.navigate}
             navigation={this.props.navigation}
             onError={this.props.onError}
             onParseAfter={this.props.onParseAfter}
             onParseBefore={this.props.onParseBefore}
             onUpdate={this.props.onUpdate}
-            openModal={this.navLogic.openModal}
-            push={this.navLogic.push}
-            registerPreload={this.registerPreload}
+            openModal={this.props.navigator?.current.openModal}
+            push={this.props.navigator?.current.push}
+            registerPreload={this.props.setPreload}
             reload={this.props.reload}
             route={route}
             url={url || undefined}
@@ -474,12 +458,27 @@ const getNestedNavigator = (
  * Processes the route lifecycle events
  * Requires access to the contexts passed by the HvRoute component
  */
-function RouteFC(props: Types.InnerRouteProps) {
+function RouteFC(props: Types.FCProps) {
   // eslint-disable-next-line react/destructuring-assignment
   const { entrypointUrl, route, navigation, onRouteBlur, onRouteFocus } = props;
 
   // This is the context provided by either this route or a parent component
   const stateContext = useContext(Contexts.DocStateContext);
+
+  // These are provided as a ref instead of a state to avoid re-rendering
+  const needsLoad = React.useRef<boolean>(false);
+  const navigator = React.useRef<NavigatorService.Navigator>(
+    new NavigatorService.Navigator(props),
+  );
+  const navigationService = React.useRef<Navigation>(
+    new Navigation(props.entrypointUrl, {
+      back: navigator.current.back,
+      closeModal: navigator.current.closeModal,
+      navigate: navigator.current.navigate,
+      openModal: navigator.current.openModal,
+      push: navigator.current.push,
+    }),
+  );
 
   React.useEffect(() => {
     if (navigation) {
@@ -540,7 +539,7 @@ function RouteFC(props: Types.InnerRouteProps) {
   return (
     <HvRouteInner
       // eslint-disable-next-line react/jsx-props-no-spreading
-      {...props}
+      {...{ ...props, navigationService, navigator, needsLoad }}
     />
   );
 }
