@@ -9,7 +9,7 @@
 import * as Contexts from 'hyperview/src/contexts';
 import * as Types from './types';
 import React, { PureComponent } from 'react';
-import { ScreenState, Trigger } from 'hyperview/src/types';
+import { ScreenState } from 'hyperview/src/types';
 
 /**
  * Provides a state context for hv-route and hv-screen components.
@@ -27,8 +27,8 @@ export default class HvDoc extends PureComponent<Types.Props, ScreenState> {
   // </HACK>
   localDoc: Document | null = null;
 
-  // Cache elements by trigger
-  elementCache: { [trigger: string]: Element[] };
+  // Cache elements
+  backBehaviorElementCache: Element[];
 
   constructor(props: Types.Props) {
     super(props);
@@ -40,37 +40,38 @@ export default class HvDoc extends PureComponent<Types.Props, ScreenState> {
       styles: null,
       url: null,
     };
-    this.elementCache = {};
+    this.backBehaviorElementCache = [];
   }
 
   render(): React.ReactNode {
     return (
       <Contexts.DocContext.Provider
         value={{
-          addElements: (t: Trigger, elements: Element[]): void => {
-            const registry = this.elementCache[t.toString()] || [];
-            if (elements?.length > 0) {
-              elements.forEach(e => {
-                registry.push(e);
-              });
-            }
-            this.elementCache[t.toString()] = registry;
+          backBehaviorElements: {
+            add: (elements: Element[]): void => {
+              if (elements?.length > 0) {
+                elements.forEach(e => {
+                  this.backBehaviorElementCache.push(e);
+                });
+              }
+            },
+            get: (): Element[] => this.backBehaviorElementCache,
+            remove: (elements: Element[]): void => {
+              if (
+                elements?.length > 0 &&
+                this.backBehaviorElementCache.length > 0
+              ) {
+                elements.forEach(e => {
+                  const ind = this.backBehaviorElementCache.indexOf(e);
+                  if (ind > -1) {
+                    this.backBehaviorElementCache.splice(ind, 1);
+                  }
+                });
+              }
+            },
           },
-          getElements: (t: Trigger): Element[] =>
-            this.elementCache[t.toString()] || [],
           getState: (): ScreenState => {
             return { ...this.state, doc: this.localDoc };
-          },
-          removeElements: (t: Trigger, elements: Element[]): void => {
-            const registry = this.elementCache[t.toString()] || [];
-            if (elements?.length > 0 && registry.length > 0) {
-              elements.forEach(e => {
-                const ind = registry.indexOf(e);
-                if (ind > -1) {
-                  registry.splice(ind, 1);
-                }
-              });
-            }
           },
           setState: (s): void => {
             if (typeof s === 'object') {

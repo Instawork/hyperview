@@ -6,11 +6,7 @@
  *
  */
 
-import type {
-  HvComponentOnUpdate,
-  ScreenState,
-  Trigger,
-} from 'hyperview/src/types';
+import type { HvComponentOnUpdate, ScreenState } from 'hyperview/src/types';
 import type { ComponentType } from 'react';
 import React from 'react';
 import type { RefreshControlProps } from 'react-native';
@@ -43,20 +39,26 @@ export type SetState = (
   callback?: () => void,
 ) => void;
 
+export type BackBehaviorElements = {
+  add: (elements: Element[]) => void;
+  get: () => Element[];
+  remove: (elements: Element[]) => void;
+};
+
 export type DocContextProps = {
-  addElements: (trigger: Trigger, elements: Element[]) => void;
-  getElements: (trigger: Trigger) => Element[];
+  backBehaviorElements: BackBehaviorElements;
   getState: () => ScreenState;
-  removeElements: (trigger: Trigger, elements: Element[]) => void;
   setState: SetState;
 };
 
 export const DocContext = React.createContext<DocContextProps>({
-  addElements: () => {},
-  getElements: () => [],
+  backBehaviorElements: {
+    add: () => {},
+    get: () => [],
+    remove: () => {},
+  },
   getState: () => {
     return {};
   },
-  removeElements: () => {},
   setState: () => {},
 });

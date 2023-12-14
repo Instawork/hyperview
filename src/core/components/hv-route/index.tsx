@@ -25,7 +25,6 @@ import type {
   NavigationRouteParams,
   ScreenState,
 } from 'hyperview/src/types';
-import { LOCAL_NAME, TRIGGERS } from 'hyperview/src/types';
 import React, {
   JSXElementConstructor,
   PureComponent,
@@ -35,6 +34,7 @@ import React, {
 import HvDoc from 'hyperview/src/core/components/hv-doc';
 import HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
+import { LOCAL_NAME } from 'hyperview/src/types';
 import LoadError from 'hyperview/src/core/components/load-error';
 import Loading from 'hyperview/src/core/components/loading';
 // eslint-disable-next-line instawork/import-services
@@ -514,7 +514,7 @@ function RouteFC(props: Types.FCProps) {
         'beforeRemove',
         (event: { preventDefault: () => void }) => {
           // Check for elements registered to interupt back action via a trigger of BACK
-          const elements: Element[] = docContext.getElements(TRIGGERS.BACK);
+          const elements: Element[] = docContext.backBehaviorElements.get();
           if (elements.length > 0) {
             // Process the elements
             event.preventDefault();

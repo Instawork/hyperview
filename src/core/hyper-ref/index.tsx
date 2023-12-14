@@ -86,7 +86,7 @@ export default class HyperRef extends PureComponent<Props, State> {
     Events.subscribe(this.onEventDispatch);
 
     // Register behavior elements for back triggers
-    this.addElements(TRIGGERS.BACK);
+    this.addBackBehaviors();
   }
 
   componentDidUpdate(prevProps: Props) {
@@ -95,14 +95,14 @@ export default class HyperRef extends PureComponent<Props, State> {
     }
 
     // Deregister event listener for on-event triggers
-    this.removeElements(TRIGGERS.BACK);
+    this.removeBackBehaviors();
 
     this.updateBehaviorElements();
     this.updateStyle();
     this.triggerLoadBehaviors();
 
     // Register behavior elements for back triggers
-    this.addElements(TRIGGERS.BACK);
+    this.addBackBehaviors();
   }
 
   componentWillUnmount() {
@@ -110,7 +110,7 @@ export default class HyperRef extends PureComponent<Props, State> {
     Events.unsubscribe(this.onEventDispatch);
 
     // Deregister event listener for on-event triggers
-    this.removeElements(TRIGGERS.BACK);
+    this.removeBackBehaviors();
   }
 
   updateBehaviorElements = () => {
@@ -118,11 +118,15 @@ export default class HyperRef extends PureComponent<Props, State> {
     this.behaviorElements = Dom.getBehaviorElements(this.props.element);
   };
 
-  addElements = (trigger: Trigger) =>
-    this.context.addElements(trigger, this.getBehaviorElements(trigger));
+  addBackBehaviors = () =>
+    this.context.backBehaviorElements.add(
+      this.getBehaviorElements(TRIGGERS.BACK),
+    );
 
-  removeElements = (trigger: Trigger) =>
-    this.context.removeElements(trigger, this.getBehaviorElements(trigger));
+  removeBackBehaviors = () =>
+    this.context.backBehaviorElements.remove(
+      this.getBehaviorElements(TRIGGERS.BACK),
+    );
 
   updateStyle = () => {
     // Retrieve and cache style
