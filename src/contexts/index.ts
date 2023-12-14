@@ -6,7 +6,11 @@
  *
  */
 
-import type { HvComponentOnUpdate, ScreenState } from 'hyperview/src/types';
+import type {
+  HvComponentOnUpdate,
+  ScreenState,
+  Trigger,
+} from 'hyperview/src/types';
 import type { ComponentType } from 'react';
 import React from 'react';
 import type { RefreshControlProps } from 'react-native';
@@ -50,3 +54,20 @@ export const DocStateContext = React.createContext<DocStateContextProps>({
   },
   setState: () => {},
 });
+
+export type ElementRegistryContextProps = {
+  addElements: (trigger: Trigger, elements: Element[]) => void;
+  getElements: (trigger: Trigger) => Element[];
+  removeElements: (trigger: Trigger, elements: Element[]) => void;
+};
+
+/**
+ * Allows caching and retrieving elements by trigger
+ */
+export const ElementRegistryContext = React.createContext<ElementRegistryContextProps>(
+  {
+    addElements: () => {},
+    getElements: () => [],
+    removeElements: () => {},
+  },
+);
