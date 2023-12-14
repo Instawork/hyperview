@@ -15,10 +15,7 @@ import { ScreenState, Trigger } from 'hyperview/src/types';
  * Provides a state context for hv-route and hv-screen components.
  * Provides a behavior element cache for hv-route and hyper-ref components.
  */
-export default class HvDocState extends PureComponent<
-  Types.Props,
-  ScreenState
-> {
+export default class HvDoc extends PureComponent<Types.Props, ScreenState> {
   // <HACK>
   // In addition to storing the document on the react state, we keep a reference to it
   // on the instance. When performing batched updates on the DOM, we need to ensure every

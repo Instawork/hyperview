@@ -32,7 +32,7 @@ import React, {
   useCallback,
   useContext,
 } from 'react';
-import HvDocState from 'hyperview/src/core/components/hv-doc-state';
+import HvDoc from 'hyperview/src/core/components/hv-doc';
 import HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
 import LoadError from 'hyperview/src/core/components/load-error';
@@ -611,7 +611,7 @@ export default function HvRoute(props: Types.Props) {
   // When an element is present, or the route is being processed as a modal
   // this route is not a document owner and does not need a state context or element registry
   const needsContext = element === undefined && !props.route?.params?.isModal;
-  return needsContext ? <HvDocState>{Component}</HvDocState> : Component;
+  return needsContext ? <HvDoc>{Component}</HvDoc> : Component;
 }
 
 export type { Props } from './types';
