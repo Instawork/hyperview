@@ -25,7 +25,12 @@ import type {
   NavigationRouteParams,
   ScreenState,
 } from 'hyperview/src/types';
-import React, { JSXElementConstructor, PureComponent, useContext } from 'react';
+import React, {
+  JSXElementConstructor,
+  PureComponent,
+  useCallback,
+  useContext,
+} from 'react';
 import HvDocState from 'hyperview/src/core/components/hv-doc-state';
 import HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
@@ -445,38 +450,36 @@ function RouteFC(props: Types.FCProps) {
     }),
   );
 
-  /**
-   * Implement the callbacks from this class
-   */
-  const updateCallbacks = {
-    clearElementError: () => {
-      // Noop
+  const onUpdate = useCallback(
+    (
+      href: DOMString | null | undefined,
+      action: DOMString | null | undefined,
+      element: Element,
+      options: HvComponentOptions,
+    ) => {
+      props.onUpdate(href, action, element, {
+        ...options,
+        onUpdateCallbacks: {
+          clearElementError: () => {
+            // Noop
+          },
+          getDoc: () => stateContext.getState().doc || null,
+          getNavigation: () => navigationService.current,
+          getOnUpdate: () => onUpdate,
+          getState: () => stateContext.getState(),
+          registerPreload: (id: number, el: Element) =>
+            props.setPreload(id, el),
+          setNeedsLoad: () => {
+            needsLoad.current = true;
+          },
+          setState: (state: ScreenState) => {
+            stateContext.setState(state);
+          },
+        },
+      });
     },
-    getDoc: () => stateContext.getState().doc || null,
-    getNavigation: () => navigationService.current,
-    getOnUpdate: () => onUpdate,
-    getState: () => stateContext.getState(),
-    registerPreload: (id: number, element: Element) =>
-      props.setPreload(id, element),
-    setNeedsLoad: () => {
-      needsLoad.current = true;
-    },
-    setState: (state: ScreenState) => {
-      stateContext.setState(state);
-    },
-  };
-
-  const onUpdate = (
-    href: DOMString | null | undefined,
-    action: DOMString | null | undefined,
-    element: Element,
-    options: HvComponentOptions,
-  ) => {
-    props.onUpdate(href, action, element, {
-      ...options,
-      onUpdateCallbacks: updateCallbacks,
-    });
-  };
+    [props, stateContext],
+  );
 
   React.useEffect(() => {
     if (navigation) {
