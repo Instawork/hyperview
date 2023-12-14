@@ -25,16 +25,17 @@ import type {
   NavigationRouteParams,
   ScreenState,
 } from 'hyperview/src/types';
+import { LOCAL_NAME, TRIGGERS } from 'hyperview/src/types';
 import React, {
   JSXElementConstructor,
   PureComponent,
   useCallback,
   useContext,
 } from 'react';
+import ElementRegistry from 'hyperview/src/core/components/element-registry';
 import HvDocState from 'hyperview/src/core/components/hv-doc-state';
 import HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
-import { LOCAL_NAME } from 'hyperview/src/types';
 import LoadError from 'hyperview/src/core/components/load-error';
 import Loading from 'hyperview/src/core/components/loading';
 // eslint-disable-next-line instawork/import-services
@@ -434,6 +435,7 @@ function RouteFC(props: Types.FCProps) {
 
   // This is the context provided by either this route or a parent component
   const stateContext = useContext(Contexts.DocStateContext);
+  const elementRegistryContext = useContext(Contexts.ElementRegistryContext);
 
   // These are provided as a ref instead of a state to avoid re-rendering
   const needsLoad = React.useRef<boolean>(false);
@@ -512,12 +514,33 @@ function RouteFC(props: Types.FCProps) {
       // Use the beforeRemove event to remove the route from the stack
       const unsubscribeRemove: () => void = navigation.addListener(
         'beforeRemove',
-        () => {
-          NavigatorService.removeStackRoute(
-            stateContext.getState().doc || undefined,
-            route?.params?.url,
-            entrypointUrl,
+        (event: { preventDefault: () => void }) => {
+          // Check for elements registered to interupt back action via a trigger of BACK
+          const elements: Element[] = elementRegistryContext.getElements(
+            TRIGGERS.BACK,
           );
+          if (elements.length > 0) {
+            // Process the elements
+            event.preventDefault();
+            elements.forEach(behaviorElement => {
+              const href = behaviorElement.getAttribute('href');
+              const action = behaviorElement.getAttribute('action');
+              onUpdate(href, action, behaviorElement, {
+                behaviorElement,
+                showIndicatorId: behaviorElement.getAttribute(
+                  'show-during-load',
+                ),
+                targetId: behaviorElement.getAttribute('target'),
+              });
+            });
+          } else {
+            // Perform cleanup
+            NavigatorService.removeStackRoute(
+              stateContext.getState().doc || undefined,
+              route?.params?.url,
+              entrypointUrl,
+            );
+          }
         },
       );
 
@@ -529,12 +552,14 @@ function RouteFC(props: Types.FCProps) {
     }
     return undefined;
   }, [
+    elementRegistryContext,
     entrypointUrl,
     stateContext,
     route,
     navigation,
     onRouteBlur,
     onRouteFocus,
+    onUpdate,
   ]);
 
   return (
