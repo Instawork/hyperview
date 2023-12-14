@@ -32,7 +32,6 @@ import React, {
   useCallback,
   useContext,
 } from 'react';
-import ElementRegistry from 'hyperview/src/core/components/element-registry';
 import HvDocState from 'hyperview/src/core/components/hv-doc-state';
 import HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
@@ -49,7 +48,7 @@ import Navigation from 'hyperview/src/services/navigation';
  * - Handles errors
  */
 class HvRouteInner extends PureComponent<Types.InnerRouteProps> {
-  static contextType = Contexts.DocStateContext;
+  static contextType = Contexts.DocContext;
 
   parser?: DomService.Parser;
 
@@ -434,8 +433,7 @@ function RouteFC(props: Types.FCProps) {
   const { entrypointUrl, route, navigation, onRouteBlur, onRouteFocus } = props;
 
   // This is the context provided by either this route or a parent component
-  const stateContext = useContext(Contexts.DocStateContext);
-  const elementRegistryContext = useContext(Contexts.ElementRegistryContext);
+  const docContext = useContext(Contexts.DocContext);
 
   // These are provided as a ref instead of a state to avoid re-rendering
   const needsLoad = React.useRef<boolean>(false);
@@ -465,22 +463,22 @@ function RouteFC(props: Types.FCProps) {
           clearElementError: () => {
             // Noop
           },
-          getDoc: () => stateContext.getState().doc || null,
+          getDoc: () => docContext.getState().doc || null,
           getNavigation: () => navigationService.current,
           getOnUpdate: () => onUpdate,
-          getState: () => stateContext.getState(),
+          getState: () => docContext.getState(),
           registerPreload: (id: number, el: Element) =>
             props.setPreload(id, el),
           setNeedsLoad: () => {
             needsLoad.current = true;
           },
           setState: (state: ScreenState) => {
-            stateContext.setState(state);
+            docContext.setState(state);
           },
         },
       });
     },
-    [props, stateContext],
+    [props, docContext],
   );
 
   React.useEffect(() => {
@@ -495,7 +493,7 @@ function RouteFC(props: Types.FCProps) {
       const unsubscribeFocus: () => void = navigation.addListener(
         'focus',
         () => {
-          const doc = stateContext.getState().doc || undefined;
+          const doc = docContext.getState().doc || undefined;
           const id = route?.params?.id || route?.key;
           NavigatorService.setSelected(doc, id);
           NavigatorService.addStackRoute(
@@ -516,9 +514,7 @@ function RouteFC(props: Types.FCProps) {
         'beforeRemove',
         (event: { preventDefault: () => void }) => {
           // Check for elements registered to interupt back action via a trigger of BACK
-          const elements: Element[] = elementRegistryContext.getElements(
-            TRIGGERS.BACK,
-          );
+          const elements: Element[] = docContext.getElements(TRIGGERS.BACK);
           if (elements.length > 0) {
             // Process the elements
             event.preventDefault();
@@ -536,7 +532,7 @@ function RouteFC(props: Types.FCProps) {
           } else {
             // Perform cleanup
             NavigatorService.removeStackRoute(
-              stateContext.getState().doc || undefined,
+              docContext.getState().doc || undefined,
               route?.params?.url,
               entrypointUrl,
             );
@@ -552,9 +548,8 @@ function RouteFC(props: Types.FCProps) {
     }
     return undefined;
   }, [
-    elementRegistryContext,
+    docContext,
     entrypointUrl,
-    stateContext,
     route,
     navigation,
     onRouteBlur,
@@ -590,12 +585,12 @@ export default function HvRoute(props: Types.Props) {
     throw new NavigatorService.HvRouteError('No context found');
   }
   // This is the context provided by a parent component
-  const stateContext = useContext(Contexts.DocStateContext);
+  const docContext = useContext(Contexts.DocContext);
 
   // Get the navigator element from the context or the parent context
   const element: Element | undefined = getNestedNavigator(
     props.route?.params?.id,
-    stateContext?.getState().doc || undefined,
+    docContext?.getState().doc || undefined,
   );
   const url = getRouteUrl(props, navigationContext);
 
@@ -606,7 +601,7 @@ export default function HvRoute(props: Types.Props) {
         ...props,
         ...navigationContext,
         ...navigatorMapContext,
-        ...stateContext,
+        ...docContext,
         element,
         url,
       }}
@@ -616,13 +611,7 @@ export default function HvRoute(props: Types.Props) {
   // When an element is present, or the route is being processed as a modal
   // this route is not a document owner and does not need a state context or element registry
   const needsContext = element === undefined && !props.route?.params?.isModal;
-  return needsContext ? (
-    <HvDocState>
-      <ElementRegistry>{Component}</ElementRegistry>
-    </HvDocState>
-  ) : (
-    Component
-  );
+  return needsContext ? <HvDocState>{Component}</HvDocState> : Component;
 }
 
 export type { Props } from './types';

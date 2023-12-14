@@ -9,10 +9,11 @@
 import * as Contexts from 'hyperview/src/contexts';
 import * as Types from './types';
 import React, { PureComponent } from 'react';
-import { ScreenState } from 'hyperview/src/types';
+import { ScreenState, Trigger } from 'hyperview/src/types';
 
 /**
  * Provides a state context for hv-route and hv-screen components.
+ * Provides a behavior element cache for hv-route and hyper-ref components.
  */
 export default class HvDocState extends PureComponent<
   Types.Props,
@@ -29,6 +30,9 @@ export default class HvDocState extends PureComponent<
   // </HACK>
   localDoc: Document | null = null;
 
+  // Cache elements by trigger
+  elementCache: { [trigger: string]: Element[] };
+
   constructor(props: Types.Props) {
     super(props);
     this.state = {
@@ -39,14 +43,37 @@ export default class HvDocState extends PureComponent<
       styles: null,
       url: null,
     };
+    this.elementCache = {};
   }
 
   render(): React.ReactNode {
     return (
-      <Contexts.DocStateContext.Provider
+      <Contexts.DocContext.Provider
         value={{
+          addElements: (t: Trigger, elements: Element[]): void => {
+            const registry = this.elementCache[t.toString()] || [];
+            if (elements?.length > 0) {
+              elements.forEach(e => {
+                registry.push(e);
+              });
+            }
+            this.elementCache[t.toString()] = registry;
+          },
+          getElements: (t: Trigger): Element[] =>
+            this.elementCache[t.toString()] || [],
           getState: (): ScreenState => {
             return { ...this.state, doc: this.localDoc };
+          },
+          removeElements: (t: Trigger, elements: Element[]): void => {
+            const registry = this.elementCache[t.toString()] || [];
+            if (elements?.length > 0 && registry.length > 0) {
+              elements.forEach(e => {
+                const ind = registry.indexOf(e);
+                if (ind > -1) {
+                  registry.splice(ind, 1);
+                }
+              });
+            }
           },
           setState: (s): void => {
             if (typeof s === 'object') {
@@ -67,7 +94,7 @@ export default class HvDocState extends PureComponent<
         }}
       >
         {this.props.children}
-      </Contexts.DocStateContext.Provider>
+      </Contexts.DocContext.Provider>
     );
   }
 }

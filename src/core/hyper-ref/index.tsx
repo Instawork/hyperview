@@ -7,6 +7,7 @@
  */
 
 import * as Behaviors from 'hyperview/src/services/behaviors';
+import * as Contexts from 'hyperview/src/contexts';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Events from 'hyperview/src/services/events';
 import * as Namespaces from 'hyperview/src/services/namespaces';
@@ -33,7 +34,6 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-import { ElementRegistryContext } from 'hyperview/src/contexts/';
 import { PRESS_TRIGGERS_PROP_NAMES } from './types';
 import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
 import { XMLSerializer } from '@instawork/xmldom';
@@ -62,7 +62,7 @@ export const createEventHandler = (
  * triggers.
  */
 export default class HyperRef extends PureComponent<Props, State> {
-  static contextType = ElementRegistryContext;
+  static contextType = Contexts.DocContext;
 
   state: State = {
     pressed: false,

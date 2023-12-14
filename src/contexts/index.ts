@@ -43,31 +43,20 @@ export type SetState = (
   callback?: () => void,
 ) => void;
 
-export type DocStateContextProps = {
+export type DocContextProps = {
+  addElements: (trigger: Trigger, elements: Element[]) => void;
+  getElements: (trigger: Trigger) => Element[];
   getState: () => ScreenState;
+  removeElements: (trigger: Trigger, elements: Element[]) => void;
   setState: SetState;
 };
 
-export const DocStateContext = React.createContext<DocStateContextProps>({
+export const DocContext = React.createContext<DocContextProps>({
+  addElements: () => {},
+  getElements: () => [],
   getState: () => {
     return {};
   },
+  removeElements: () => {},
   setState: () => {},
 });
-
-export type ElementRegistryContextProps = {
-  addElements: (trigger: Trigger, elements: Element[]) => void;
-  getElements: (trigger: Trigger) => Element[];
-  removeElements: (trigger: Trigger, elements: Element[]) => void;
-};
-
-/**
- * Allows caching and retrieving elements by trigger
- */
-export const ElementRegistryContext = React.createContext<ElementRegistryContextProps>(
-  {
-    addElements: () => {},
-    getElements: () => [],
-    removeElements: () => {},
-  },
-);

@@ -26,7 +26,7 @@ import React from 'react';
 // eslint-disable-next-line instawork/pure-components
 export default class HvScreen extends React.Component {
   // eslint-disable-next-line react/static-property-placement
-  static contextType = Contexts.DocStateContext;
+  static contextType = Contexts.DocContext;
 
   static createProps = createProps;
 
