@@ -33,6 +33,7 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
+import { ElementRegistryContext } from 'hyperview/src/contexts/';
 import { PRESS_TRIGGERS_PROP_NAMES } from './types';
 import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
 import { XMLSerializer } from '@instawork/xmldom';
@@ -61,6 +62,8 @@ export const createEventHandler = (
  * triggers.
  */
 export default class HyperRef extends PureComponent<Props, State> {
+  static contextType = ElementRegistryContext;
+
   state: State = {
     pressed: false,
     refreshing: false,
@@ -81,6 +84,9 @@ export default class HyperRef extends PureComponent<Props, State> {
 
     // Register event listener for on-event triggers
     Events.subscribe(this.onEventDispatch);
+
+    // Register behavior elements for back triggers
+    this.addElements(TRIGGERS.BACK);
   }
 
   componentDidUpdate(prevProps: Props) {
@@ -88,20 +94,35 @@ export default class HyperRef extends PureComponent<Props, State> {
       return;
     }
 
+    // Deregister event listener for on-event triggers
+    this.removeElements(TRIGGERS.BACK);
+
     this.updateBehaviorElements();
     this.updateStyle();
     this.triggerLoadBehaviors();
+
+    // Register behavior elements for back triggers
+    this.addElements(TRIGGERS.BACK);
   }
 
   componentWillUnmount() {
     // Remove event listener for on-event triggers to avoid memory leaks
     Events.unsubscribe(this.onEventDispatch);
+
+    // Deregister event listener for on-event triggers
+    this.removeElements(TRIGGERS.BACK);
   }
 
   updateBehaviorElements = () => {
     // Retrieve and cache behavior elements when element is updated
     this.behaviorElements = Dom.getBehaviorElements(this.props.element);
   };
+
+  addElements = (trigger: Trigger) =>
+    this.context.addElements(trigger, this.getBehaviorElements(trigger));
+
+  removeElements = (trigger: Trigger) =>
+    this.context.removeElements(trigger, this.getBehaviorElements(trigger));
 
   updateStyle = () => {
     // Retrieve and cache style

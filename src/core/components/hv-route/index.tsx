@@ -586,9 +586,15 @@ export default function HvRoute(props: Types.Props) {
   );
 
   // When an element is present, or the route is being processed as a modal
-  // this route is not a document owner and does not need a state context
+  // this route is not a document owner and does not need a state context or element registry
   const needsContext = element === undefined && !props.route?.params?.isModal;
-  return needsContext ? <HvDocState>{Component}</HvDocState> : Component;
+  return needsContext ? (
+    <HvDocState>
+      <ElementRegistry>{Component}</ElementRegistry>
+    </HvDocState>
+  ) : (
+    Component
+  );
 }
 
 export type { Props } from './types';
