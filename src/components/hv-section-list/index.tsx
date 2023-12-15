@@ -75,7 +75,7 @@ export default class HvSectionList extends PureComponent<
 
   static localNameAliases = [];
 
-  static contextType = Contexts.DocStateContext;
+  static contextType = Contexts.DocContext;
 
   parser: DOMParser = new DOMParser();
 

@@ -7,6 +7,7 @@
  */
 
 import * as Behaviors from 'hyperview/src/services/behaviors';
+import * as Contexts from 'hyperview/src/contexts';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Events from 'hyperview/src/services/events';
 import * as Namespaces from 'hyperview/src/services/namespaces';
@@ -61,6 +62,8 @@ export const createEventHandler = (
  * triggers.
  */
 export default class HyperRef extends PureComponent<Props, State> {
+  static contextType = Contexts.DocContext;
+
   state: State = {
     pressed: false,
     refreshing: false,
@@ -81,6 +84,9 @@ export default class HyperRef extends PureComponent<Props, State> {
 
     // Register event listener for on-event triggers
     Events.subscribe(this.onEventDispatch);
+
+    // Register behavior elements for back triggers
+    this.addBackBehaviors();
   }
 
   componentDidUpdate(prevProps: Props) {
@@ -88,20 +94,39 @@ export default class HyperRef extends PureComponent<Props, State> {
       return;
     }
 
+    // Deregister event listener for on-event triggers
+    this.removeBackBehaviors();
+
     this.updateBehaviorElements();
     this.updateStyle();
     this.triggerLoadBehaviors();
+
+    // Register behavior elements for back triggers
+    this.addBackBehaviors();
   }
 
   componentWillUnmount() {
     // Remove event listener for on-event triggers to avoid memory leaks
     Events.unsubscribe(this.onEventDispatch);
+
+    // Deregister event listener for on-event triggers
+    this.removeBackBehaviors();
   }
 
   updateBehaviorElements = () => {
     // Retrieve and cache behavior elements when element is updated
     this.behaviorElements = Dom.getBehaviorElements(this.props.element);
   };
+
+  addBackBehaviors = () =>
+    this.context.backBehaviorElements.add(
+      this.getBehaviorElements(TRIGGERS.BACK),
+    );
+
+  removeBackBehaviors = () =>
+    this.context.backBehaviorElements.remove(
+      this.getBehaviorElements(TRIGGERS.BACK),
+    );
 
   updateStyle = () => {
     // Retrieve and cache style

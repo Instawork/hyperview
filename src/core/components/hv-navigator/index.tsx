@@ -368,7 +368,7 @@ export default class HvNavigator extends PureComponent<Props> {
     return (
       <NavigationContext.Context.Consumer>
         {() => (
-          <Contexts.DocStateContext.Consumer>
+          <Contexts.DocContext.Consumer>
             {stateProvider => (
               <NavigatorMapContext.NavigatorMapProvider>
                 {this.props.params && this.props.params.isModal ? (
@@ -380,7 +380,7 @@ export default class HvNavigator extends PureComponent<Props> {
                 )}
               </NavigatorMapContext.NavigatorMapProvider>
             )}
-          </Contexts.DocStateContext.Consumer>
+          </Contexts.DocContext.Consumer>
         )}
       </NavigationContext.Context.Consumer>
     );

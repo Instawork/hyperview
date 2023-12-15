@@ -9,15 +9,14 @@
 import * as Contexts from 'hyperview/src/contexts';
 import * as Types from './types';
 import React, { PureComponent } from 'react';
+import { BackBehaviorElements } from 'hyperview/src/contexts';
 import { ScreenState } from 'hyperview/src/types';
 
 /**
  * Provides a state context for hv-route and hv-screen components.
+ * Provides a behavior element cache for hv-route and hyper-ref components.
  */
-export default class HvDocState extends PureComponent<
-  Types.Props,
-  ScreenState
-> {
+export default class HvDoc extends PureComponent<Types.Props, ScreenState> {
   // <HACK>
   // In addition to storing the document on the react state, we keep a reference to it
   // on the instance. When performing batched updates on the DOM, we need to ensure every
@@ -29,6 +28,8 @@ export default class HvDocState extends PureComponent<
   // </HACK>
   localDoc: Document | null = null;
 
+  backBehaviorElements: BackBehaviorElements;
+
   constructor(props: Types.Props) {
     super(props);
     this.state = {
@@ -39,12 +40,14 @@ export default class HvDocState extends PureComponent<
       styles: null,
       url: null,
     };
+    this.backBehaviorElements = new BackBehaviorElements();
   }
 
   render(): React.ReactNode {
     return (
-      <Contexts.DocStateContext.Provider
+      <Contexts.DocContext.Provider
         value={{
+          backBehaviorElements: this.backBehaviorElements,
           getState: (): ScreenState => {
             return { ...this.state, doc: this.localDoc };
           },
@@ -67,7 +70,7 @@ export default class HvDocState extends PureComponent<
         }}
       >
         {this.props.children}
-      </Contexts.DocStateContext.Provider>
+      </Contexts.DocContext.Provider>
     );
   }
 }

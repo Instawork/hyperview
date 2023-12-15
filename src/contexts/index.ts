@@ -39,12 +39,31 @@ export type SetState = (
   callback?: () => void,
 ) => void;
 
-export type DocStateContextProps = {
+export class BackBehaviorElements {
+  backBehaviorElements: Element[] = [];
+
+  add = (elements: Element[]): void => {
+    this.backBehaviorElements.push(...elements);
+  };
+
+  get = (): Element[] => this.backBehaviorElements;
+
+  remove = (elements: Element[]): void => {
+    this.backBehaviorElements = elements.reduce((acc, e) => {
+      const i = acc.indexOf(e);
+      return i > -1 ? [...acc.slice(0, i), ...acc.slice(i + 1)] : acc;
+    }, this.backBehaviorElements);
+  };
+}
+
+export type DocContextProps = {
+  backBehaviorElements: BackBehaviorElements;
   getState: () => ScreenState;
   setState: SetState;
 };
 
-export const DocStateContext = React.createContext<DocStateContextProps>({
+export const DocContext = React.createContext<DocContextProps>({
+  backBehaviorElements: new BackBehaviorElements(),
   getState: () => {
     return {};
   },
