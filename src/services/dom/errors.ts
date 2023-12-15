@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 /**
  * Copyright (c) Garuda Labs, Inc.
  *
@@ -6,7 +7,9 @@
  *
  */
 
+import * as ErrorService from 'hyperview/src/services/error';
 import type { LocalName } from 'hyperview/src/types';
+import { XMLSerializer } from '@instawork/xmldom';
 
 export class UnsupportedContentTypeError extends Error {
   name = 'UnsupportedContentTypeError';
@@ -68,5 +71,19 @@ export class ServerError extends Error {
     this.responseText = responseText;
     this.responseHeaders = responseHeaders;
     this.status = status;
+  }
+}
+
+export class DocumentGetElementByIdError extends ErrorService.HvBaseError {
+  name = 'DocumentGetElementByIdError';
+
+  constructor(id: string, doc: Document, error: Error) {
+    super(
+      `Document.getElementById failed for id: ${id} on doc: ${new XMLSerializer().serializeToString(
+        doc,
+      )} and error: ${error.message}`,
+    );
+    this.stack = error.stack;
+    this.setExtraContext('error', error);
   }
 }

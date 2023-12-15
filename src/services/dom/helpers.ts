@@ -8,6 +8,7 @@
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type { LocalName, NamespaceURI, NodeType } from 'hyperview/src/types';
+import { DocumentGetElementByIdError } from './errors';
 import { NODE_TYPE } from 'hyperview/src/types';
 
 export const getBehaviorElements = (element: Element) => {
@@ -102,21 +103,17 @@ export const getElementById = (
   if (!doc) {
     return doc;
   }
+
   try {
-    return doc.getElementById(id);
-  } catch {
-    let found = null;
-    try {
-      if (!isDoc(doc)) {
-        const element = doc as Element;
-        found = element.ownerDocument
-          ? element.ownerDocument.getElementById(id)
-          : null;
-      }
-    } catch (e) {
-      throw new Error(`getElementById failed for id: ${id} and error: ${e}`);
+    if (isDoc(doc)) {
+      return doc.getElementById(id);
     }
-    return found;
+    const element = doc as Element;
+    return element.ownerDocument
+      ? element.ownerDocument.getElementById(id)
+      : null;
+  } catch (e) {
+    throw new DocumentGetElementByIdError(id, doc, e as Error);
   }
 };
 
