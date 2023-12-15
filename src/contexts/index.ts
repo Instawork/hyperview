@@ -39,11 +39,32 @@ export type SetState = (
   callback?: () => void,
 ) => void;
 
-export type BackBehaviorElements = {
-  add: (elements: Element[]) => void;
-  get: () => Element[];
-  remove: (elements: Element[]) => void;
-};
+export class BackBehaviorElements {
+  backBehaviorElements: Element[] = [];
+
+  add = (elements: Element[]): void => {
+    this.backBehaviorElements.push(...elements);
+  };
+
+  get = (): Element[] => this.backBehaviorElements;
+
+  remove = (elements: Element[]): void => {
+    if (elements.length > 0) {
+      console.log(
+        `Removing ${elements.length} elements from backBehaviorElements cur length: ${this.backBehaviorElements.length}`,
+      );
+    }
+    this.backBehaviorElements = elements.reduce((acc, e) => {
+      const i = acc.indexOf(e);
+      return i > -1 ? [...acc.slice(0, i), ...acc.slice(i + 1)] : acc;
+    }, this.backBehaviorElements);
+    if (elements.length > 0) {
+      console.log(
+        `backBehaviorElements now has ${this.backBehaviorElements.length} elements`,
+      );
+    }
+  };
+}
 
 export type DocContextProps = {
   backBehaviorElements: BackBehaviorElements;
@@ -52,11 +73,7 @@ export type DocContextProps = {
 };
 
 export const DocContext = React.createContext<DocContextProps>({
-  backBehaviorElements: {
-    add: () => {},
-    get: () => [],
-    remove: () => {},
-  },
+  backBehaviorElements: new BackBehaviorElements(),
   getState: () => {
     return {};
   },

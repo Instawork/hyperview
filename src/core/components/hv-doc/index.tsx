@@ -9,6 +9,7 @@
 import * as Contexts from 'hyperview/src/contexts';
 import * as Types from './types';
 import React, { PureComponent } from 'react';
+import { BackBehaviorElements } from 'hyperview/src/contexts';
 import { ScreenState } from 'hyperview/src/types';
 
 /**
@@ -27,8 +28,7 @@ export default class HvDoc extends PureComponent<Types.Props, ScreenState> {
   // </HACK>
   localDoc: Document | null = null;
 
-  // Cache elements
-  backBehaviorElementCache: Element[];
+  backBehaviorElements: BackBehaviorElements;
 
   constructor(props: Types.Props) {
     super(props);
@@ -40,36 +40,14 @@ export default class HvDoc extends PureComponent<Types.Props, ScreenState> {
       styles: null,
       url: null,
     };
-    this.backBehaviorElementCache = [];
+    this.backBehaviorElements = new BackBehaviorElements();
   }
 
   render(): React.ReactNode {
     return (
       <Contexts.DocContext.Provider
         value={{
-          backBehaviorElements: {
-            add: (elements: Element[]): void => {
-              if (elements?.length > 0) {
-                elements.forEach(e => {
-                  this.backBehaviorElementCache.push(e);
-                });
-              }
-            },
-            get: (): Element[] => this.backBehaviorElementCache,
-            remove: (elements: Element[]): void => {
-              if (
-                elements?.length > 0 &&
-                this.backBehaviorElementCache.length > 0
-              ) {
-                elements.forEach(e => {
-                  const ind = this.backBehaviorElementCache.indexOf(e);
-                  if (ind > -1) {
-                    this.backBehaviorElementCache.splice(ind, 1);
-                  }
-                });
-              }
-            },
-          },
+          backBehaviorElements: this.backBehaviorElements,
           getState: (): ScreenState => {
             return { ...this.state, doc: this.localDoc };
           },
