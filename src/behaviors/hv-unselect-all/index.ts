@@ -7,6 +7,7 @@
  */
 
 import * as Behaviors from 'hyperview/src/services/behaviors';
+import * as Dom from 'hyperview/src/services/dom';
 import * as Xml from 'hyperview/src/services/xml';
 import type {
   DOMString,
@@ -46,7 +47,8 @@ export default {
 
     const unselectAll = () => {
       const doc: Document | null = getRoot();
-      const targetElement: Element | null | undefined = doc?.getElementById(
+      const targetElement: Element | null | undefined = Dom.getElementById(
+        doc,
         targetId,
       );
       if (!targetElement) {
