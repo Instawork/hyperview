@@ -79,7 +79,7 @@ export class DocumentGetElementByIdError extends ErrorService.HvBaseError {
 
   constructor(id: string, doc: Document, error: Error) {
     super(
-      `Document.getElementById failed for id: ${id} on doc: ${new XMLSerializer().serializeToString(
+      `Document.getElementById failed for id: ${id} on doc: ${docToString(
         doc,
       )} and error: ${error.message}`,
     );
@@ -87,3 +87,12 @@ export class DocumentGetElementByIdError extends ErrorService.HvBaseError {
     this.setExtraContext('error', error);
   }
 }
+
+const docToString = (doc: Document): string => {
+  try {
+    const serializer = new XMLSerializer();
+    return serializer.serializeToString(doc);
+  } catch {
+    return 'serializing error';
+  }
+};
