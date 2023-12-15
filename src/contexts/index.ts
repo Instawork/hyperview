@@ -49,20 +49,10 @@ export class BackBehaviorElements {
   get = (): Element[] => this.backBehaviorElements;
 
   remove = (elements: Element[]): void => {
-    if (elements.length > 0) {
-      console.log(
-        `Removing ${elements.length} elements from backBehaviorElements cur length: ${this.backBehaviorElements.length}`,
-      );
-    }
     this.backBehaviorElements = elements.reduce((acc, e) => {
       const i = acc.indexOf(e);
       return i > -1 ? [...acc.slice(0, i), ...acc.slice(i + 1)] : acc;
     }, this.backBehaviorElements);
-    if (elements.length > 0) {
-      console.log(
-        `backBehaviorElements now has ${this.backBehaviorElements.length} elements`,
-      );
-    }
   };
 }
 
