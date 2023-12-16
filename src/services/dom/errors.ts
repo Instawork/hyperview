@@ -92,7 +92,7 @@ const docToString = (doc: Document): string => {
   try {
     const serializer = new XMLSerializer();
     return serializer.serializeToString(doc);
-  } catch {
-    return 'serializing error';
+  } catch (e) {
+    return `serializing error: ${e.message}`;
   }
 };
