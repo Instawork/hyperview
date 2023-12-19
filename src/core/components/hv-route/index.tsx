@@ -319,16 +319,12 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps> {
 
     if (isModal || renderElement?.localName === LOCAL_NAME.NAVIGATOR) {
       return (
-        <Contexts.OnUpdateContext.Consumer>
-          {updater => (
-            <HvNavigator
-              element={renderElement}
-              onUpdate={updater.onUpdate}
-              params={this.props.route?.params}
-              routeComponent={HvRoute}
-            />
-          )}
-        </Contexts.OnUpdateContext.Consumer>
+        <HvNavigator
+          element={renderElement}
+          onUpdate={this.props.onUpdate}
+          params={this.props.route?.params}
+          routeComponent={HvRoute}
+        />
       );
     }
 
@@ -560,7 +556,7 @@ function RouteFC(props: Types.FCProps) {
   return (
     <HvRouteInner
       // eslint-disable-next-line react/jsx-props-no-spreading
-      {...{ ...props, navigationService, navigator, needsLoad }}
+      {...{ ...props, navigationService, navigator, needsLoad, onUpdate }}
     />
   );
 }

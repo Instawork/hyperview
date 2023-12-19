@@ -6,10 +6,10 @@
  *
  */
 
-import type { HvComponentOnUpdate, ScreenState } from 'hyperview/src/types';
 import type { ComponentType } from 'react';
 import React from 'react';
 import type { RefreshControlProps } from 'react-native';
+import type { ScreenState } from 'hyperview/src/types';
 
 // Provides the date format function to use in date fields
 // in the screen. Default to ISO string format.
@@ -23,11 +23,6 @@ export const DateFormatContext = React.createContext<
 export const RefreshControlComponentContext = React.createContext<
   ComponentType<RefreshControlProps> | undefined
 >(undefined);
-
-export const OnUpdateContext = React.createContext<{
-  onUpdate: HvComponentOnUpdate;
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-}>({ onUpdate: () => {} });
 
 export type SetState = (
   state:
