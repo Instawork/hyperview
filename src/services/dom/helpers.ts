@@ -8,6 +8,7 @@
 
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type { LocalName, NamespaceURI, NodeType } from 'hyperview/src/types';
+import { DocumentGetElementByIdError } from './errors';
 import { NODE_TYPE } from 'hyperview/src/types';
 
 export const getBehaviorElements = (element: Element) => {
@@ -90,3 +91,32 @@ export const preorder = (
   }
   return acc;
 };
+
+/**
+ * Attempt to find an element by id in the given node
+ * Handle cases where an element is passed in instead of a document
+ */
+export const getElementById = (
+  doc: Document | null | undefined,
+  id: string,
+): Element | null | undefined => {
+  if (!doc) {
+    return doc;
+  }
+
+  try {
+    if (isDoc(doc)) {
+      return doc.getElementById(id);
+    }
+    const element = doc as Element;
+    return element.ownerDocument
+      ? element.ownerDocument.getElementById(id)
+      : null;
+  } catch (e) {
+    throw new DocumentGetElementByIdError(id, doc, e as Error);
+  }
+};
+
+function isDoc(object: Element | Document): object is Element | Document {
+  return 'getElementById' in object;
+}

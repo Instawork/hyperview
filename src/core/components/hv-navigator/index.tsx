@@ -334,9 +334,8 @@ export default class HvNavigator extends PureComponent<Props> {
 
     // Mutate the dom to match
     if (props.doc) {
-      const route: Element | null = props.doc.getElementById(
-        this.props.params.id,
-      );
+      const route: Element | null =
+        Dom.getElementById(props.doc, this.props.params.id) || null;
       if (route && !NavigatorService.getNavigatorById(props.doc, navigatorId)) {
         const navigator = props.doc.createElementNS(
           Namespaces.HYPERVIEW,

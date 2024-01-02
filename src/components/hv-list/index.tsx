@@ -74,7 +74,8 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
     }
     const doc: Document | null | undefined =
       typeof this.context === 'function' ? this.context() : null;
-    const targetElement: Element | null | undefined = doc?.getElementById(
+    const targetElement: Element | null | undefined = Dom.getElementById(
+      doc,
       targetId,
     );
     if (!targetElement) {
