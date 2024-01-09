@@ -164,7 +164,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
     }
 
     if (href[0] === '#') {
-      const element = root.getElementById(href.slice(1));
+      const element = Dom.getElementById(root, href.slice(1));
       if (element) {
         return element.cloneNode(true) as Element;
       }
@@ -389,7 +389,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
           // If a target is specified and exists, use it. Otherwise, the action target defaults
           // to the element triggering the action.
           let targetElement = targetId
-            ? onUpdateCallbacks.getDoc()?.getElementById(targetId)
+            ? Dom.getElementById(onUpdateCallbacks.getDoc(), targetId)
             : element;
           if (!targetElement) {
             targetElement = element;

@@ -112,7 +112,8 @@ export default class HvSectionList extends PureComponent<
       return;
     }
     const { doc } = this.context.getState();
-    const targetElement: Element | null | undefined = doc?.getElementById(
+    const targetElement: Element | null | undefined = Dom.getElementById(
+      doc,
       targetId,
     );
     if (!targetElement) {
