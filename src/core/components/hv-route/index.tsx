@@ -426,7 +426,14 @@ const getNestedNavigator = (
  */
 function RouteFC(props: Types.FCProps) {
   // eslint-disable-next-line react/destructuring-assignment
-  const { entrypointUrl, route, navigation, onRouteBlur, onRouteFocus } = props;
+  const {
+    entrypointUrl,
+    getState: getParentState,
+    route,
+    navigation,
+    onRouteBlur,
+    onRouteFocus,
+  } = props;
 
   // This is the context provided by either this route or a parent component
   const docContext = useContext(Contexts.DocContext);
@@ -489,7 +496,8 @@ function RouteFC(props: Types.FCProps) {
       const unsubscribeFocus: () => void = navigation.addListener(
         'focus',
         () => {
-          const doc = docContext.getState().doc || undefined;
+          // Use the parent document state to set the selected route
+          const doc = getParentState().doc || undefined;
           const id = route?.params?.id || route?.key;
           NavigatorService.setSelected(doc, id);
           NavigatorService.addStackRoute(
@@ -509,7 +517,8 @@ function RouteFC(props: Types.FCProps) {
       const unsubscribeRemove: () => void = navigation.addListener(
         'beforeRemove',
         (event: { preventDefault: () => void }) => {
-          // Check for elements registered to interupt back action via a trigger of BACK
+          // Use the current document state to access behaviors on the document
+          // Check for elements registered to interrupt back action via a trigger of BACK
           const elements: Element[] = docContext.backBehaviorElements.get();
           if (elements.length > 0) {
             // Process the elements
@@ -526,9 +535,9 @@ function RouteFC(props: Types.FCProps) {
               });
             });
           } else {
-            // Perform cleanup
+            // Perform cleanup of the associated route (retrieved from parent document state)
             NavigatorService.removeStackRoute(
-              docContext.getState().doc || undefined,
+              getParentState().doc || undefined,
               route?.params?.url,
               entrypointUrl,
             );
@@ -546,6 +555,7 @@ function RouteFC(props: Types.FCProps) {
   }, [
     docContext,
     entrypointUrl,
+    getParentState,
     route,
     navigation,
     onRouteBlur,
