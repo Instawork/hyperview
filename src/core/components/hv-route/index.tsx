@@ -321,7 +321,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps> {
       return (
         <HvNavigator
           element={renderElement}
-          onUpdate={this.props.onUpdate}
+          onUpdate={this.props.navigatorUpdate}
           params={this.props.route?.params}
           routeComponent={HvRoute}
         />
@@ -566,7 +566,13 @@ function RouteFC(props: Types.FCProps) {
   return (
     <HvRouteInner
       // eslint-disable-next-line react/jsx-props-no-spreading
-      {...{ ...props, navigationService, navigator, needsLoad }}
+      {...{
+        ...props,
+        navigationService,
+        navigator,
+        navigatorUpdate: onUpdate,
+        needsLoad,
+      }}
     />
   );
 }
