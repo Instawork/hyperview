@@ -110,6 +110,7 @@ export type InnerRouteProps = {
   needsLoad: React.MutableRefObject<boolean>;
   navigator: React.MutableRefObject<NavigatorService.Navigator>;
   navigationService: React.MutableRefObject<Navigation.default>;
+  navigatorUpdate: HvComponentOnUpdate;
 };
 
 /**
