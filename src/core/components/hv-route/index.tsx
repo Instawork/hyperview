@@ -556,7 +556,7 @@ function RouteFC(props: Types.FCProps) {
   return (
     <HvRouteInner
       // eslint-disable-next-line react/jsx-props-no-spreading
-      {...{ ...props, navigationService, navigator, needsLoad, onUpdate }}
+      {...{ ...props, navigationService, navigator, needsLoad }}
     />
   );
 }
