@@ -424,6 +424,7 @@ export type OnUpdateCallbacks = {
   setNeedsLoad: () => void;
   getState: () => ScreenState;
   setState: (state: ScreenState) => void;
+  reload: () => void;
 };
 
 export type ScreenState = {

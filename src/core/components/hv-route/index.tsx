@@ -472,6 +472,7 @@ function RouteFC(props: Types.FCProps) {
           getState: () => docContext.getState(),
           registerPreload: (id: number, el: Element) =>
             props.setPreload(id, el),
+          reload: () => {},
           setNeedsLoad: () => {
             needsLoad.current = true;
           },
