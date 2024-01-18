@@ -302,11 +302,12 @@ export default class HvScreen extends React.Component {
     getOnUpdate: () => this.onUpdate,
     getState: () => this.context.getState(),
     registerPreload: (id, element) => this.registerPreload(id, element),
+    reload: this.load,
     setNeedsLoad: () => {
       this.needsLoad = true;
     },
-    setState: state => {
-      this.context.setState(state);
+    setState: (state, callback) => {
+      this.context.setState(state, callback);
     },
   };
 

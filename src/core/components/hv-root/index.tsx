@@ -134,13 +134,18 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
     }
 
     // Re-render the modifications
-    opts.onUpdateCallbacks?.setNeedsLoad();
-    opts.onUpdateCallbacks?.setState({
-      doc: newRoot,
-      elementError: null,
-      error: null,
-      url,
-    });
+    opts.onUpdateCallbacks?.setState(
+      () => {
+        return {
+          doc: newRoot,
+          elementError: null,
+          error: null,
+          url,
+        };
+      },
+      // Force a reload once state is set
+      opts.onUpdateCallbacks?.reload,
+    );
   };
 
   /**
