@@ -74,15 +74,10 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps> {
   }
 
   componentDidUpdate(prevProps: Types.InnerRouteProps) {
-    if (
-      prevProps.url !== this.props.url ||
-      this.props.needsLoad?.current === true
-    ) {
+    if (prevProps.url !== this.props.url || this.props.needsLoad === true) {
       this.load();
     }
-    if (this.props.needsLoad) {
-      this.props.needsLoad.current = false;
-    }
+    this.props.setNeedsLoad(false);
   }
 
   getUrl = (): string => {
@@ -439,7 +434,8 @@ function RouteFC(props: Types.FCProps) {
   const docContext = useContext(Contexts.DocContext);
 
   // These are provided as a ref instead of a state to avoid re-rendering
-  const needsLoad = React.useRef<boolean>(false);
+  const [needsLoad, setNeedsLoad] = React.useState<boolean>(false);
+
   const navigator = React.useRef<NavigatorService.Navigator>(
     new NavigatorService.Navigator(props),
   );
@@ -472,9 +468,9 @@ function RouteFC(props: Types.FCProps) {
           getState: () => docContext.getState(),
           registerPreload: (id: number, el: Element) =>
             props.setPreload(id, el),
-          reload: () => {},
+          reload: () => setNeedsLoad(true),
           setNeedsLoad: () => {
-            needsLoad.current = true;
+            setNeedsLoad(true);
           },
           setState: (state, callback) => docContext.setState(state, callback),
         },
@@ -571,6 +567,7 @@ function RouteFC(props: Types.FCProps) {
         navigator,
         navigatorUpdate: onUpdate,
         needsLoad,
+        setNeedsLoad,
       }}
     />
   );

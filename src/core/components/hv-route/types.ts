@@ -107,7 +107,8 @@ export type InnerRouteProps = {
   setState: SetState;
   onRouteBlur?: (route: Route) => void;
   onRouteFocus?: (route: Route) => void;
-  needsLoad: React.MutableRefObject<boolean>;
+  needsLoad: boolean;
+  setNeedsLoad: React.Dispatch<React.SetStateAction<boolean>>;
   navigator: React.MutableRefObject<NavigatorService.Navigator>;
   navigationService: React.MutableRefObject<Navigation.default>;
   navigatorUpdate: HvComponentOnUpdate;
