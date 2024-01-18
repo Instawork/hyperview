@@ -10,6 +10,7 @@ import * as Stylesheets from './services/stylesheets';
 import Navigation from './services/navigation';
 import type { Route as NavigatorRoute } from './services/navigator';
 import type React from 'react';
+import { SetState } from './contexts';
 import type { XResponseStaleReason } from './services/dom/types';
 
 export type DOMString = string;
@@ -423,7 +424,7 @@ export type OnUpdateCallbacks = {
   registerPreload: (id: number, element: Element) => void;
   setNeedsLoad: () => void;
   getState: () => ScreenState;
-  setState: (state: ScreenState) => void;
+  setState: SetState;
   reload: () => void;
 };
 

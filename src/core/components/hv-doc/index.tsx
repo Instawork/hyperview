@@ -51,7 +51,7 @@ export default class HvDoc extends PureComponent<Types.Props, ScreenState> {
           getState: (): ScreenState => {
             return { ...this.state, doc: this.localDoc };
           },
-          setState: (s): void => {
+          setState: (s, c): void => {
             if (typeof s === 'object') {
               if (s.doc !== undefined) {
                 this.localDoc = s.doc;
@@ -64,7 +64,7 @@ export default class HvDoc extends PureComponent<Types.Props, ScreenState> {
                   this.localDoc = newState.doc;
                 }
                 return newState;
-              });
+              }, c);
             }
           },
         }}

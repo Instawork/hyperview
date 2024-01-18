@@ -476,9 +476,7 @@ function RouteFC(props: Types.FCProps) {
           setNeedsLoad: () => {
             needsLoad.current = true;
           },
-          setState: (state: ScreenState) => {
-            docContext.setState(state);
-          },
+          setState: (state, callback) => docContext.setState(state, callback),
         },
       });
     },

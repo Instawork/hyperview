@@ -306,8 +306,8 @@ export default class HvScreen extends React.Component {
     setNeedsLoad: () => {
       this.needsLoad = true;
     },
-    setState: state => {
-      this.context.setState(state);
+    setState: (state, callback) => {
+      this.context.setState(state, callback);
     },
   };
 
