@@ -278,6 +278,7 @@ export const BEHAVIOR_ATTRIBUTES = {
 
 // https://hyperview.org/docs/reference_behavior_attributes#trigger
 export const TRIGGERS = Object.freeze({
+  BACK: 'back',
   DESELECT: 'deselect',
   LOAD: 'load',
   LOAD_STALE_ERROR: 'load-stale-error',

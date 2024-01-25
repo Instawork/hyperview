@@ -18,6 +18,10 @@ import * as Render from 'hyperview/src/services/render';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as Types from './types';
 import * as UrlService from 'hyperview/src/services/url';
+import {
+  BackBehaviorContext,
+  BackBehaviorProvider,
+} from 'hyperview/src/contexts/back-behaviors';
 import type {
   ComponentRegistry,
   DOMString,
@@ -400,7 +404,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
                 element={renderElement}
                 onUpdate={this.onUpdate}
                 params={this.props.route?.params}
-                routeComponent={HvRoute}
+                routeComponent={HvRouteBehaviorWrapper}
               />
             </Contexts.OnUpdateContext.Provider>
           </Contexts.DocContext.Provider>
@@ -414,7 +418,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
               element={renderElement}
               onUpdate={updater.onUpdate}
               params={this.props.route?.params}
-              routeComponent={HvRoute}
+              routeComponent={HvRouteBehaviorWrapper}
             />
           )}
         </Contexts.OnUpdateContext.Consumer>
@@ -532,7 +536,7 @@ export default function HvRoute(props: Types.Props) {
   if (!navigationContext || !navigatorMapContext) {
     throw new NavigatorService.HvRouteError('No context found');
   }
-
+  const backContext = useContext(BackBehaviorContext);
   const docContext = useContext(Contexts.DocContext);
 
   const url = getRouteUrl(props, navigationContext);
@@ -577,12 +581,40 @@ export default function HvRoute(props: Types.Props) {
       // Use the beforeRemove event to remove the route from the stack
       const unsubscribeRemove: () => void = props.navigation.addListener(
         'beforeRemove',
-        () => {
-          NavigatorService.removeStackRoute(
-            docContext?.getDoc(),
-            props.route?.params?.url,
-            navigationContext.entrypointUrl,
-          );
+        (event: { preventDefault: () => void }) => {
+          // Use the current document state to access behaviors on the document
+          // Check for elements registered to interrupt back action via a trigger of BACK
+          const elements: Element[] | undefined = backContext?.get();
+          if (elements && elements.length > 0 && backContext?.onUpdate) {
+            // Process the elements
+            event.preventDefault();
+            elements.forEach(behaviorElement => {
+              const href = behaviorElement.getAttribute('href');
+              const action = behaviorElement.getAttribute('action');
+              console.log(
+                'onupdate: ',
+                href,
+                action,
+                backContext.onUpdate !== null,
+              );
+              if (backContext.onUpdate) {
+                backContext.onUpdate(href, action, behaviorElement, {
+                  behaviorElement,
+                  showIndicatorId: behaviorElement.getAttribute(
+                    'show-during-load',
+                  ),
+                  targetId: behaviorElement.getAttribute('target'),
+                });
+              }
+            });
+          } else {
+            // Perform cleanup of the associated route (retrieved from parent document state)
+            NavigatorService.removeStackRoute(
+              docContext?.getDoc(),
+              props.route?.params?.url,
+              navigationContext.entrypointUrl,
+            );
+          }
         },
       );
 
@@ -593,7 +625,13 @@ export default function HvRoute(props: Types.Props) {
       };
     }
     return undefined;
-  }, [props.navigation, props.route, docContext, navigationContext]);
+  }, [
+    props.navigation,
+    props.route,
+    backContext,
+    docContext,
+    navigationContext,
+  ]);
 
   return (
     <HvRouteInner
@@ -605,4 +643,14 @@ export default function HvRoute(props: Types.Props) {
   );
 }
 
+function HvRouteBehaviorWrapper(props: Types.Props) {
+  return (
+    <BackBehaviorProvider>
+      <HvRoute
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...props}
+      />
+    </BackBehaviorProvider>
+  );
+}
 export type { Props } from './types';

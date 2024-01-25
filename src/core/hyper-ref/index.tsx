@@ -33,6 +33,7 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
+import { BackBehaviorContext } from 'hyperview/src/contexts/back-behaviors';
 import { PRESS_TRIGGERS_PROP_NAMES } from './types';
 import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
 import { XMLSerializer } from '@instawork/xmldom';
@@ -61,6 +62,8 @@ export const createEventHandler = (
  * triggers.
  */
 export default class HyperRef extends PureComponent<Props, State> {
+  static contextType = BackBehaviorContext;
+
   state: State = {
     pressed: false,
     refreshing: false,
@@ -81,6 +84,9 @@ export default class HyperRef extends PureComponent<Props, State> {
 
     // Register event listener for on-event triggers
     Events.subscribe(this.onEventDispatch);
+
+    // Register behavior elements for back triggers
+    this.addBackBehaviors();
   }
 
   componentDidUpdate(prevProps: Props) {
@@ -88,19 +94,37 @@ export default class HyperRef extends PureComponent<Props, State> {
       return;
     }
 
+    // Deregister event listener for on-event triggers
+    this.removeBackBehaviors();
+
     this.updateBehaviorElements();
     this.updateStyle();
     this.triggerLoadBehaviors();
+    // Register behavior elements for back triggers
+    this.addBackBehaviors();
   }
 
   componentWillUnmount() {
     // Remove event listener for on-event triggers to avoid memory leaks
     Events.unsubscribe(this.onEventDispatch);
+    // Deregister event listener for on-event triggers
+    this.removeBackBehaviors();
   }
 
   updateBehaviorElements = () => {
     // Retrieve and cache behavior elements when element is updated
     this.behaviorElements = Dom.getBehaviorElements(this.props.element);
+  };
+
+  addBackBehaviors = () => {
+    this.context?.add(
+      this.getBehaviorElements(TRIGGERS.BACK),
+      this.props.onUpdate,
+    );
+  };
+
+  removeBackBehaviors = () => {
+    this.context?.remove(this.getBehaviorElements(TRIGGERS.BACK));
   };
 
   updateStyle = () => {

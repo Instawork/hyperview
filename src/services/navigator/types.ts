@@ -43,7 +43,10 @@ export type NavigationProp = {
   goBack: () => void;
   getState: () => NavigationState;
   getParent: (id?: string) => NavigationProp | undefined;
-  addListener: (event: string, callback: () => void) => () => void;
+  addListener: (
+    eventName: string,
+    callback: (event: { preventDefault: () => void }) => void,
+  ) => () => void;
 };
 
 /**
