@@ -11,12 +11,12 @@ import * as Components from 'hyperview/src/services/components';
 import * as Contexts from 'hyperview/src/contexts';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Events from 'hyperview/src/services/events';
-import * as HvScreenProps from 'hyperview/src/core/components/hv-screen/types';
 import * as NavContexts from 'hyperview/src/contexts/navigation';
 import * as Navigation from 'hyperview/src/services/navigation';
 import * as Render from 'hyperview/src/services/render';
 import * as Services from 'hyperview/src/services';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
+import * as Types from './types';
 import * as UrlService from 'hyperview/src/services/url';
 import * as Xml from 'hyperview/src/services/xml';
 import {
@@ -39,7 +39,7 @@ import { Linking } from 'react-native';
 /**
  * Provides routing to the correct path based on the state passed in
  */
-export default class Hyperview extends PureComponent<HvScreenProps.Props> {
+export default class Hyperview extends PureComponent<Types.Props> {
   static createProps = Services.createProps;
 
   static createStyleProp = Services.createStyleProp;
@@ -56,7 +56,7 @@ export default class Hyperview extends PureComponent<HvScreenProps.Props> {
 
   parser: Dom.Parser;
 
-  constructor(props: HvScreenProps.Props) {
+  constructor(props: Types.Props) {
     super(props);
 
     this.parser = new Dom.Parser(
