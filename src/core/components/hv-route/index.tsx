@@ -584,22 +584,21 @@ function HvRouteFC(props: Types.Props) {
         (event: { preventDefault: () => void }) => {
           // Use the current document state to access behaviors on the document
           // Check for elements registered to interrupt back action via a trigger of BACK
-          const elements: Element[] | undefined = backContext?.get();
-          if (elements && elements.length > 0 && backContext?.onUpdate) {
+          const { get, onUpdate } = backContext || {};
+          const elements: Element[] = (get && get()) || [];
+          if (elements.length > 0 && onUpdate) {
             // Process the elements
             event.preventDefault();
             elements.forEach(behaviorElement => {
               const href = behaviorElement.getAttribute('href');
               const action = behaviorElement.getAttribute('action');
-              if (backContext.onUpdate) {
-                backContext.onUpdate(href, action, behaviorElement, {
-                  behaviorElement,
-                  showIndicatorId: behaviorElement.getAttribute(
-                    'show-during-load',
-                  ),
-                  targetId: behaviorElement.getAttribute('target'),
-                });
-              }
+              onUpdate(href, action, behaviorElement, {
+                behaviorElement,
+                showIndicatorId: behaviorElement.getAttribute(
+                  'show-during-load',
+                ),
+                targetId: behaviorElement.getAttribute('target'),
+              });
             });
           } else {
             // Perform cleanup of the associated route (retrieved from parent document state)
@@ -640,10 +639,7 @@ function HvRouteFC(props: Types.Props) {
 export default function HvRoute(props: Types.Props) {
   return (
     <BackBehaviorProvider>
-      <HvRouteFC
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        {...props}
-      />
+      <HvRouteFC navigation={props.navigation} route={props.route} />
     </BackBehaviorProvider>
   );
 }
