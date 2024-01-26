@@ -628,9 +628,23 @@ function HvRouteFC(props: Types.Props) {
 
   return (
     <HvRouteInner
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      {...{ ...props, ...navigationContext, ...navigatorMapContext }}
+      behaviors={navigationContext.behaviors}
+      components={navigationContext.components}
       element={element}
+      elementErrorComponent={navigationContext.elementErrorComponent}
+      entrypointUrl={navigationContext.entrypointUrl}
+      errorScreen={navigationContext.errorScreen}
+      fetch={navigationContext.fetch}
+      getPreload={navigatorMapContext.getPreload}
+      handleBack={navigationContext.handleBack}
+      loadingScreen={navigationContext.loadingScreen}
+      navigation={props.navigation}
+      onParseAfter={navigationContext.onParseAfter}
+      onParseBefore={navigationContext.onParseBefore}
+      onUpdate={navigationContext.onUpdate}
+      reload={navigationContext.reload}
+      route={props.route}
+      setPreload={navigatorMapContext.setPreload}
       url={url}
     />
   );
