@@ -72,8 +72,7 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
       console.warn('[behaviors/scroll]: missing "target" attribute');
       return;
     }
-    const doc: Document | null | undefined =
-      typeof this.context === 'function' ? this.context() : null;
+    const doc: Document | null | undefined = this.context.getDoc();
     const targetElement: Element | null | undefined = Dom.getElementById(
       doc,
       targetId,
