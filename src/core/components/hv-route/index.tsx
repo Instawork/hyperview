@@ -404,7 +404,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
                 element={renderElement}
                 onUpdate={this.onUpdate}
                 params={this.props.route?.params}
-                routeComponent={HvRouteBehaviorWrapper}
+                routeComponent={HvRoute}
               />
             </Contexts.OnUpdateContext.Provider>
           </Contexts.DocContext.Provider>
@@ -418,7 +418,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
               element={renderElement}
               onUpdate={updater.onUpdate}
               params={this.props.route?.params}
-              routeComponent={HvRouteBehaviorWrapper}
+              routeComponent={HvRoute}
             />
           )}
         </Contexts.OnUpdateContext.Consumer>
@@ -526,7 +526,7 @@ const getNestedNavigator = (
  * - Retrieves the navigator element from the context
  * - Passes the props, context, and url to HvRouteInner
  */
-export default function HvRoute(props: Types.Props) {
+function HvRouteFC(props: Types.Props) {
   const navigationContext: Types.NavigationContextProps | null = useContext(
     NavigationContext.Context,
   );
@@ -591,12 +591,6 @@ export default function HvRoute(props: Types.Props) {
             elements.forEach(behaviorElement => {
               const href = behaviorElement.getAttribute('href');
               const action = behaviorElement.getAttribute('action');
-              console.log(
-                'onupdate: ',
-                href,
-                action,
-                backContext.onUpdate !== null,
-              );
               if (backContext.onUpdate) {
                 backContext.onUpdate(href, action, behaviorElement, {
                   behaviorElement,
@@ -643,10 +637,10 @@ export default function HvRoute(props: Types.Props) {
   );
 }
 
-function HvRouteBehaviorWrapper(props: Types.Props) {
+export default function HvRoute(props: Types.Props) {
   return (
     <BackBehaviorProvider>
-      <HvRoute
+      <HvRouteFC
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...props}
       />

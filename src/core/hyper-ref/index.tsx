@@ -94,7 +94,7 @@ export default class HyperRef extends PureComponent<Props, State> {
       return;
     }
 
-    // Deregister event listener for on-event triggers
+    // Deregister event listener for back triggers
     this.removeBackBehaviors();
 
     this.updateBehaviorElements();
@@ -107,7 +107,7 @@ export default class HyperRef extends PureComponent<Props, State> {
   componentWillUnmount() {
     // Remove event listener for on-event triggers to avoid memory leaks
     Events.unsubscribe(this.onEventDispatch);
-    // Deregister event listener for on-event triggers
+    // Deregister event listener for back triggers
     this.removeBackBehaviors();
   }
 
