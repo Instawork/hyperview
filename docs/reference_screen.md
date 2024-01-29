@@ -20,7 +20,7 @@ The `<screen>` element represents the UI that gets rendered on a single screen o
 </doc>
 ```
 
-The example above contains two screens in a Hyperview doc. The first `<screen>` will be rendered on the device. The second `<screen>` can be used on subsequent screens, or as a temporary indicator screen while a subsequent screen loads.
+The example above contains two screens in a Hyperview doc. The first `<screen>` will be rendered on the device. The second `<screen>` can be used as a temporary indicator screen while a subsequent screen loads.
 
 ## Structure
 
