@@ -289,8 +289,6 @@ When the user presses "Hello", content for the next screen will be requested fro
 
 #### Document fragments
 
-> **NOTE**: Document fragments do not currently work with navigation behaviors, just update behaviors. Future versions of the Hyperview client will support document fragments with navigation behaviors.
-
 In the "document fragment" format, `href` is an element id prepended by a `#`. The id must refer to an element in the current document.
 
 For example, assume the following doc is loaded from `https://mysite.com/home`:
@@ -299,30 +297,16 @@ For example, assume the following doc is loaded from `https://mysite.com/home`:
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <body>
-      <text href="#secondScreen">Hello</text>
-    </body>
-  </screen>
-  <screen id="secondScreen">
-    <body>
-      <text>Second screen!</text>
-      <text href="/test">Test</text>
+      <text href="#hello-content" action="replace">Hello</text>
+      <view hide="true">
+        <text id="hello-content">Hi there!</text>
+      </view>
     </body>
   </screen>
 </doc>
 ```
 
-When the user presses "Hello", the content for the next screen will be loaded from the doc:
-
-```xml
-<screen id="secondScreen">
-  <body>
-    <text>Second screen!</text>
-    <text href="/test">Test</text>
-  </body>
-</screen>
-```
-
-Note that on this second screen, if the user presses "Test", the content for the third screen will load from `https://mysite.com/test`. That's because the relative URI will use the host of the current doc, and "#secondScreen" came from the doc loaded from `https://mysite.com/home`.
+When the user presses "Hello", the content of the text element will be replaced with the content of the text element identified as `hello-content`:
 
 > When using document fragment hrefs, form data will be ignored, and the `verb` attribute has no meaning.
 
