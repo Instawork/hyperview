@@ -18,6 +18,10 @@ import * as Render from 'hyperview/src/services/render';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as Types from './types';
 import * as UrlService from 'hyperview/src/services/url';
+import {
+  BackBehaviorContext,
+  BackBehaviorProvider,
+} from 'hyperview/src/contexts/back-behaviors';
 import type {
   ComponentRegistry,
   DOMString,
@@ -522,7 +526,7 @@ const getNestedNavigator = (
  * - Retrieves the navigator element from the context
  * - Passes the props, context, and url to HvRouteInner
  */
-export default function HvRoute(props: Types.Props) {
+function HvRouteFC(props: Types.Props) {
   const navigationContext: Types.NavigationContextProps | null = useContext(
     NavigationContext.Context,
   );
@@ -532,7 +536,7 @@ export default function HvRoute(props: Types.Props) {
   if (!navigationContext || !navigatorMapContext) {
     throw new NavigatorService.HvRouteError('No context found');
   }
-
+  const backContext = useContext(BackBehaviorContext);
   const docContext = useContext(Contexts.DocContext);
 
   const url = getRouteUrl(props, navigationContext);
@@ -577,12 +581,33 @@ export default function HvRoute(props: Types.Props) {
       // Use the beforeRemove event to remove the route from the stack
       const unsubscribeRemove: () => void = props.navigation.addListener(
         'beforeRemove',
-        () => {
-          NavigatorService.removeStackRoute(
-            docContext?.getDoc(),
-            props.route?.params?.url,
-            navigationContext.entrypointUrl,
-          );
+        (event: { preventDefault: () => void }) => {
+          // Use the current document state to access behaviors on the document
+          // Check for elements registered to interrupt back action via a trigger of BACK
+          const { get, onUpdate } = backContext || {};
+          const elements: Element[] = (get && get()) || [];
+          if (elements.length > 0 && onUpdate) {
+            // Process the elements
+            event.preventDefault();
+            elements.forEach(behaviorElement => {
+              const href = behaviorElement.getAttribute('href');
+              const action = behaviorElement.getAttribute('action');
+              onUpdate(href, action, behaviorElement, {
+                behaviorElement,
+                showIndicatorId: behaviorElement.getAttribute(
+                  'show-during-load',
+                ),
+                targetId: behaviorElement.getAttribute('target'),
+              });
+            });
+          } else {
+            // Perform cleanup of the associated route (retrieved from parent document state)
+            NavigatorService.removeStackRoute(
+              docContext?.getDoc(),
+              props.route?.params?.url,
+              navigationContext.entrypointUrl,
+            );
+          }
         },
       );
 
@@ -593,16 +618,43 @@ export default function HvRoute(props: Types.Props) {
       };
     }
     return undefined;
-  }, [props.navigation, props.route, docContext, navigationContext]);
+  }, [
+    props.navigation,
+    props.route,
+    backContext,
+    docContext,
+    navigationContext,
+  ]);
 
   return (
     <HvRouteInner
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      {...{ ...props, ...navigationContext, ...navigatorMapContext }}
+      behaviors={navigationContext.behaviors}
+      components={navigationContext.components}
       element={element}
+      elementErrorComponent={navigationContext.elementErrorComponent}
+      entrypointUrl={navigationContext.entrypointUrl}
+      errorScreen={navigationContext.errorScreen}
+      fetch={navigationContext.fetch}
+      getPreload={navigatorMapContext.getPreload}
+      handleBack={navigationContext.handleBack}
+      loadingScreen={navigationContext.loadingScreen}
+      navigation={props.navigation}
+      onParseAfter={navigationContext.onParseAfter}
+      onParseBefore={navigationContext.onParseBefore}
+      onUpdate={navigationContext.onUpdate}
+      reload={navigationContext.reload}
+      route={props.route}
+      setPreload={navigatorMapContext.setPreload}
       url={url}
     />
   );
 }
 
+export default function HvRoute(props: Types.Props) {
+  return (
+    <BackBehaviorProvider>
+      <HvRouteFC navigation={props.navigation} route={props.route} />
+    </BackBehaviorProvider>
+  );
+}
 export type { Props } from './types';
