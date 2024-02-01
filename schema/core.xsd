@@ -23,6 +23,7 @@
 
   <xs:simpleType name="trigger">
     <xs:restriction base="xs:string">
+      <xs:enumeration value="back" />
       <xs:enumeration value="press" />
       <xs:enumeration value="longPress" />
       <xs:enumeration value="enter-geofence" />
