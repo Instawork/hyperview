@@ -168,6 +168,16 @@ The `on-event` trigger may also be combined with [`once`](#once) and [`delay`](#
 >
 > In `__DEV__` mode, the console will log the element which captures an event
 
+### `back`
+
+Triggers when the screen is being closed by behavior action (`back` or `close`), or by using a swipe gesture or physical back button (Android). As long as there are any visible behaviors with a `back` trigger, the screen can not be closed.
+
+> **NOTE**: Only works when using internal Navigators. See [navigator](reference_hyperview_navigator.md#instantiation).
+
+These elements support the `back` trigger:
+
+- [`<view>`](/docs/reference_view)
+
 ### Supported triggers
 
 Not all elements support behavior attributes or `<behavior>` elements. Those that do may not support every trigger. This list below defines which elements can have behaviors, and which triggers they support.
@@ -184,6 +194,7 @@ Not all elements support behavior attributes or `<behavior>` elements. Those tha
 - [refresh](#refresh)
 - [load](#load)
 - [on-event](#on-event)
+- [back](#back)
 
 #### `<text>`
 
@@ -338,7 +349,7 @@ The navigation actions include:
 
 - [`push`](#push)
 - [`new`](#new)
-- [`back`](#back)
+- [`back`](#action-back)
 - [`close`](#close)
 - [`navigate`](#navigate)
 - [`reload`](#reload)
@@ -375,6 +386,8 @@ The `new` navigation action will open a new screen on top of the current screen,
 When using `new`, the fetched content must be either a full Hyperview XML document (with `<doc>` root), or a `<screen>` element from the current screen's document.
 
 If the element triggering the modal is a [`<form>`](/docs/reference_form) or contained in a `<form>` element, the form's data will be serialized as query parameters and included in the request. The form data has no effect when the href refers to a local `<screen>` element.
+
+<a id="action-back"></a>
 
 ### `back`
 
