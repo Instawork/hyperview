@@ -3,7 +3,17 @@
   <screen>
     <styles>
       {% include 'styles.xml.njk' %}
-      {% block styles %}{% endblock %}
+      {% block styles %}
+        <style
+          id="Header__Switch"
+          alignItems="center"
+          flex="1"
+          flexDirection="row"
+          flexGrow="1"
+          justifyContent="flex-end"
+          columnGap="8"/>
+        <style id="Switch__Label" fontSize="14" fontWeight="bold"/>
+      {% endblock %}
     </styles>
     <body style="Body" safe-area="true">
       <header style="Header">
@@ -11,6 +21,12 @@
           <text action="back" href="#" style="Header__Back">Back</text>
         {% endif %}
         <text style="Header__Title">{{ title }}</text>
+        {% if show_hxml_toggle %}
+          <view style="Header__Switch">
+            <text style="Switch__Label">HXML Navigator</text>
+            <switch id="navigator-switch" xmlns:set-navigator="https://instawork.com/hyperview-set-navigator" trigger="change" action="set-navigator" set-navigator:type={% if hxml_toggle_enabled %} "external" {% else %} "hxml" {% endif %} value={% if hxml_toggle_enabled %} "on" {% else %} "off" {% endif %}/>
+          </view>
+        {% endif %}
       </header>
       {% block container %}{% endblock %}
     </body>

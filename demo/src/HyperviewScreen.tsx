@@ -13,6 +13,7 @@ import Hyperview from 'hyperview';
 import type { NavigationRouteParams } from 'hyperview';
 import React from 'react';
 import { fetchWrapper, formatDate } from './helpers';
+import { NavigatorContext } from './NavigatorContextProvider';
 
 export default (props: Props) => {
   const entrypointUrl = props.route.params?.url;
@@ -52,20 +53,26 @@ export default (props: Props) => {
   }
 
   return (
-    <HandleBack>
-      <Hyperview
-        back={goBack}
-        closeModal={closeModal}
-        entrypointUrl={entrypointUrl as string}
-        fetch={fetchWrapper}
-        formatDate={formatDate}
-        navigate={navigate}
-        navigation={props.navigation}
-        openModal={openModal}
-        push={push}
-        // @ts-ignore
-        route={props.route}
-      />
-    </HandleBack>
+    <NavigatorContext.Consumer>
+      {value => (
+        <HandleBack>
+          <Hyperview
+            back={goBack}
+            behaviors={value?.getCallbacks ? value.getCallbacks : []}
+            closeModal={closeModal}
+            entrypointUrl={entrypointUrl as string}
+            fetch={fetchWrapper}
+            formatDate={formatDate}
+            navigate={navigate}
+            navigation={props.navigation}
+            openModal={openModal}
+            push={push}
+            // @ts-ignore
+            route={props.route}
+          />
+        </HandleBack>
+      )}
+    </NavigatorContext.Consumer>
+
   );
 }
