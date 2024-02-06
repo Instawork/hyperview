@@ -77,8 +77,8 @@ All that remains is to add behaviors to the `<option>` elements that will replac
 ```xml
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
+    <styles>...</styles>
     <body>
-      <styles>...</styles>
       <select-single name="tab" style="Tabs">
         <option
           value="users"
@@ -115,8 +115,8 @@ Due to the delay of a remote request, notice that the appearance of a tab's cont
 ```xml
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
+    <styles>...</styles>
     <body>
-      <styles>...</styles>
       <select-single name="tab" style="Tabs">
         <option
           value="users"
