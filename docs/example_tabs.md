@@ -77,30 +77,32 @@ All that remains is to add behaviors to the `<option>` elements that will replac
 ```xml
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
-    <styles>...</styles>
-    <select-single name="tab" style="Tabs">
-      <option
-        value="users"
-        style="Tab"
-        trigger="select"
-        href="/users"
-        action="replace-inner"
-        target="tabContent"
-      >
-        <text style="Tab__Label">Users</text>
-      </option>
-      <option
-        value="groups"
-        style="Tab"
-        trigger="select"
-        href="/groups"
-        action="replace-inner"
-        target="tabContent"
-      >
-        <text style="Tab__Label">Groups</text>
-      </option>
-    </select-single>
-    <view id="tabContent" style="TabContent" />
+    <body>
+      <styles>...</styles>
+      <select-single name="tab" style="Tabs">
+        <option
+          value="users"
+          style="Tab"
+          trigger="select"
+          href="/users"
+          action="replace-inner"
+          target="tabContent"
+        >
+          <text style="Tab__Label">Users</text>
+        </option>
+        <option
+          value="groups"
+          style="Tab"
+          trigger="select"
+          href="/groups"
+          action="replace-inner"
+          target="tabContent"
+        >
+          <text style="Tab__Label">Groups</text>
+        </option>
+      </select-single>
+      <view id="tabContent" style="TabContent" />
+    </body>
   </screen>
 </doc>
 ```
@@ -113,37 +115,39 @@ Due to the delay of a remote request, notice that the appearance of a tab's cont
 ```xml
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
-    <styles>...</styles>
-    <select-single name="tab" style="Tabs">
-      <option
-        value="users"
-        style="Tab"
-        trigger="select"
-        href="/users"
-        action="replace-inner"
-        target="tabContent"
-        show-during-load="spinner"
-        hide-during-load="tabContent"
-      >
-        <text style="Tab__Label">Users</text>
-      </option>
-      <option
-        value="groups"
-        style="Tab"
-        trigger="select"
-        href="/groups"
-        action="replace-inner"
-        target="tabContent"
-        show-during-load="spinner"
-        hide-during-load="tabContent"
-      >
-        <text style="Tab__Label">Groups</text>
-      </option>
-    </select-single>
-    <view id="tabContent" style="TabContent" />
-    <view id="spinner" hide="true" style="TabContent">
-      <spinner />
-    </view>
+    <body>
+      <styles>...</styles>
+      <select-single name="tab" style="Tabs">
+        <option
+          value="users"
+          style="Tab"
+          trigger="select"
+          href="/users"
+          action="replace-inner"
+          target="tabContent"
+          show-during-load="spinner"
+          hide-during-load="tabContent"
+        >
+          <text style="Tab__Label">Users</text>
+        </option>
+        <option
+          value="groups"
+          style="Tab"
+          trigger="select"
+          href="/groups"
+          action="replace-inner"
+          target="tabContent"
+          show-during-load="spinner"
+          hide-during-load="tabContent"
+        >
+          <text style="Tab__Label">Groups</text>
+        </option>
+      </select-single>
+      <view id="tabContent" style="TabContent" />
+      <view id="spinner" hide="true" style="TabContent">
+        <spinner />
+      </view>
+    </body>
   </screen>
 </doc>
 ```
