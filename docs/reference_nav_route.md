@@ -1,7 +1,7 @@
 ---
-id: reference_navigators
-title: Hyperview navigation
-sidebar_label: Hyperview navigation
+id: reference_nav_route
+title: <nav-route>
+sidebar_label: <nav-route>
 ---
 
 Nav-Routes provide the navigation details for [navigators](/docs/reference_navigator).

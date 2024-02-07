@@ -1,7 +1,7 @@
 ---
-id: reference_navigators
-title: Hyperview navigation
-sidebar_label: Hyperview navigation
+id: reference_navigator
+title: <navigator>
+sidebar_label: <navigator>
 ---
 
 Navigation behaviors (see [behavior attributes/action](reference_behavior_attributes#action)) in Hyperview require a navigator to manage state. Navigators may be passed from an external implementation or may be created within Hyperview.
