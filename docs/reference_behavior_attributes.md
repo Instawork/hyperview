@@ -151,7 +151,7 @@ These elements support the `change` trigger:
 
 - [`<text-field>`](/docs/reference_textfield)
 - [`<text-area>`](/docs/reference_textarea)
-- [`<switch>`](/docs/reference_switch.md)
+- [`<switch>`](/docs/reference_switch)
 
 ### `on-event`
 
@@ -172,7 +172,7 @@ The `on-event` trigger may also be combined with [`once`](#once) and [`delay`](#
 
 Triggers when the screen is being closed by behavior action (`back` or `close`), or by using a swipe gesture or physical back button (Android). As long as there are any visible behaviors with a `back` trigger, the screen can not be closed.
 
-> **NOTE**: Only works when using internal Navigators. See [navigator](reference_navigator.md#instantiation).
+> **NOTE**: Only works when using internal Navigators. See [navigator](reference_navigator#instantiation).
 
 These elements support the `back` trigger:
 

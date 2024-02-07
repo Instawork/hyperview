@@ -100,7 +100,7 @@ return (
 
 ### Example
 
-A common application configuration is to provide users with a tabbed main screen with the ability to open other screens onto a stack. This can be easily setup by creating a nested navigator hierarchy. See [nav-route](reference_nav_route.md) for more information about `<nav-route>` elements.
+A common application configuration is to provide users with a tabbed main screen with the ability to open other screens onto a stack. This can be easily setup by creating a nested navigator hierarchy. See [nav-route](reference_nav_route) for more information about `<nav-route>` elements.
 
 ```xml
 <doc>
