@@ -22,34 +22,29 @@ import { NavigationContainer } from '@react-navigation/native';
 
 const NAMESPACE_URI = 'https://instawork.com/hyperview-set-navigator-source';
 
-/**
- * Define expected values
- */
-enum NavigationSource {
-  HXML = 'hxml',
+enum NavigatorSource {
   EXTERNAL = 'external',
+  HYPERVIEW = 'hyperview',
 }
 
 export default () => {
-  const [useHXML, setUseXML] = useState<boolean>(false);
+  const [navigationSource, setNavigationSource] = useState<NavigatorSource>(
+    NavigatorSource.EXTERNAL,
+  );
 
   /**
    * Create a custom behavior to toggle using HXML to define the navigator hierarchy
    */
-  const setNavigatorSrcBehavior = {
+  const setNavigatorSourceBehavior = {
     action: 'set-navigator-source',
     callback: (element: Element) => {
       const source = element.getAttributeNS(NAMESPACE_URI, 'source');
-      if (source === NavigationSource.HXML) {
-        setUseXML(true);
-      } else if (source === NavigationSource.EXTERNAL) {
-        setUseXML(false);
-      }
+      setNavigationSource(source as NavigatorSource);
     },
   };
 
   // Pass the behavior to the HyperviewScreen
-  HyperviewScreen.Behaviors = [setNavigatorSrcBehavior];
+  HyperviewScreen.Behaviors = [setNavigatorSourceBehavior];
 
   return (
     <SafeAreaProvider>
@@ -66,10 +61,10 @@ export default () => {
             }}
           >
             <NavigationContainer>
-              {useHXML ? (
+              {navigationSource == NavigatorSource.HYPERVIEW ? (
                 // Hyperview will build a Navigator structure from the HXML document
                 <Hyperview
-                  behaviors={[setNavigatorSrcBehavior]}
+                  behaviors={[setNavigatorSourceBehavior]}
                   entrypointUrl={Constants.ENTRY_POINT_NAV_URL}
                   fetch={fetchWrapper}
                   formatDate={formatDate}
