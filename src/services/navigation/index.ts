@@ -14,6 +14,7 @@ import type {
   NavAction,
   NavigationProps,
 } from 'hyperview/src/types';
+import { ID_CARD, ID_MODAL } from 'hyperview/src/services/navigator/types';
 import { NAV_ACTIONS } from 'hyperview/src/types';
 import { getFormData } from 'hyperview/src/services';
 
@@ -109,8 +110,14 @@ export default class Navigation {
         }
       }
     }
-
-    const routeParams = { delay, preloadScreen, targetId, url } as const;
+    const presentation = action === NAV_ACTIONS.NEW ? ID_MODAL : ID_CARD;
+    const routeParams = {
+      delay,
+      preloadScreen,
+      presentation,
+      targetId,
+      url,
+    } as const;
 
     switch (action) {
       case NAV_ACTIONS.PUSH:

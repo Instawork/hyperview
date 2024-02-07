@@ -386,6 +386,7 @@ export type NavigationRouteParams = {
   preloadScreen?: number | null;
   url?: string | null;
   targetId?: string | null;
+  presentation?: string | null;
 };
 
 export type NavigationProps = {
