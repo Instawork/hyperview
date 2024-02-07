@@ -6,7 +6,12 @@
  *
  */
 
-import { useFocusEffect, useNavigation, useNavigationState, useRoute } from '@react-navigation/native';
+import {
+  useFocusEffect,
+  useNavigation,
+  useNavigationState,
+  useRoute,
+} from '@react-navigation/native';
 import { BackHandler } from 'react-native';
 import React from 'react';
 import type { RouteProp } from '@react-navigation/core';
@@ -14,13 +19,16 @@ import type { RouteProp } from '@react-navigation/core';
 export default ({ children }: { children: JSX.Element }) => {
   const route = useRoute<RouteProp<any>>();
   const isFirstRouteInParent = useNavigationState(
-    state => state.routes[0].key === route.key
+    state => state.routes[0].key === route.key,
   );
   const navigation = useNavigation();
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
-        if (!isFirstRouteInParent && route.params?.url?.includes('custom_android_back')) {
+        if (
+          !isFirstRouteInParent &&
+          route.params?.url?.includes('custom_android_back')
+        ) {
           navigation.goBack();
           return true;
         }
@@ -28,7 +36,8 @@ export default ({ children }: { children: JSX.Element }) => {
       };
 
       BackHandler.addEventListener('hardwareBackPress', onBackPress);
-      return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+      return () =>
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
     }, []),
   );
 
