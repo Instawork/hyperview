@@ -76,6 +76,10 @@
       "reference_hyperview_component",
       "reference_custom_elements",
       "reference_custom_behaviors"
+    ],
+    "Hyperview Navigation":[
+      "reference_navigator",
+      "reference_nav_route"
     ]
   }
 }
