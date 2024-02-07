@@ -7,9 +7,6 @@
  */
 
 import * as Constants from './constants';
-import {
-  SafeAreaProvider,
-} from 'react-native-safe-area-context';
 import HyperviewScreen from './HyperviewScreen';
 import React from 'react';
 import type { RootStackParamList } from './types';
@@ -20,7 +17,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 /**
  * Provide an external navigator to Hyperview
  */
-const Navigator = () => {
+export default () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Group>
@@ -37,13 +34,5 @@ const Navigator = () => {
         />
       </Stack.Group>
     </Stack.Navigator>
-  );
-};
-
-export default () => {
-  return (
-    <SafeAreaProvider>
-      <Navigator />
-    </SafeAreaProvider>
   );
 };

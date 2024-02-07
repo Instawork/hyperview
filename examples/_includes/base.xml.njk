@@ -24,7 +24,7 @@
         {% if show_hxml_toggle %}
           <view style="Header__Switch">
             <text style="Switch__Label">HXML Navigator</text>
-            <switch id="navigator-switch" xmlns:set-navigator="https://instawork.com/hyperview-set-navigator" trigger="change" action="set-navigator" set-navigator:type={% if hxml_toggle_enabled %} "external" {% else %} "hxml" {% endif %} value={% if hxml_toggle_enabled %} "on" {% else %} "off" {% endif %}/>
+            <switch id="navigator-switch" xmlns:set-navigator-source="https://instawork.com/hyperview-set-navigator-source" trigger="change" action="set-navigator-source" set-navigator-source:source={% if hxml_toggle_enabled %} "external" {% else %} "hxml" {% endif %} value={% if hxml_toggle_enabled %} "on" {% else %} "off" {% endif %}/>
           </view>
         {% endif %}
       </header>
