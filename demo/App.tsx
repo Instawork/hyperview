@@ -20,7 +20,7 @@ import { View } from 'react-native';
 import Navigator from './src/Navigator';
 import { NavigationContainer } from '@react-navigation/native';
 
-const NAMESPACE_URI = 'https://instawork.com/hyperview-set-navigator-source';
+const NAMESPACE_URI = 'https://hyperview.org/demo';
 
 enum NavigatorSource {
   EXTERNAL = 'external',
@@ -28,7 +28,7 @@ enum NavigatorSource {
 }
 
 export default () => {
-  const [navigationSource, setNavigationSource] = useState<NavigatorSource>(
+  const [navigatorSource, setNavigatorSource] = useState<NavigatorSource>(
     NavigatorSource.EXTERNAL,
   );
 
@@ -39,7 +39,7 @@ export default () => {
     action: 'set-navigator-source',
     callback: (element: Element) => {
       const source = element.getAttributeNS(NAMESPACE_URI, 'source');
-      setNavigationSource(source as NavigatorSource);
+      setNavigatorSource(source as NavigatorSource);
     },
   };
 
@@ -61,7 +61,7 @@ export default () => {
             }}
           >
             <NavigationContainer>
-              {navigationSource == NavigatorSource.HYPERVIEW ? (
+              {navigatorSource == NavigatorSource.HYPERVIEW ? (
                 // Hyperview will build a Navigator structure from the HXML document
                 <Hyperview
                   behaviors={[setNavigatorSourceBehavior]}
