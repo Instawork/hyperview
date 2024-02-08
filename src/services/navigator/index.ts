@@ -58,7 +58,7 @@ export class Navigator {
   sendRequest = (action: NavAction, routeParams?: NavigationRouteParams) => {
     const navAction: NavAction = Helpers.getNavAction(action, routeParams);
 
-    const [navigation, routeId, params] = Helpers.buildRequest(
+    const [requestAction, navigation, routeId, params] = Helpers.buildRequest(
       this.props.navigation,
       navAction,
       routeParams,
@@ -73,7 +73,7 @@ export class Navigator {
       return;
     }
 
-    switch (navAction) {
+    switch (requestAction) {
       case NAV_ACTIONS.BACK:
       case NAV_ACTIONS.CLOSE:
         Navigator.routeBackRequest(navigation, routeParams);
