@@ -138,11 +138,15 @@ In HTML, the `target` attribute on an `<a>` element can be used to determine if 
 
 In HXML, the [`target`](/docs/reference_behavior_attributes#target) attribute is an element id referencing an element on the screen. It's used with the [`action`](/docs/reference_behavior_attributes#action) attribute to determine which element should be affected by the action.
 
-```
+```xml
 <doc xmlns="https://hyperview.org/hyperview">
   <screen id="main">
     <body id="Body">
-      <text href="/fragment" action="append" target="list">Append the response content to the list element</text>
+      <text
+        href="/fragment"
+        action="append"
+        target="list"
+      >Append the response content to the list element</text>
       <view id="list">
       </view>
     </body>

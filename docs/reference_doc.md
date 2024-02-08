@@ -24,7 +24,17 @@ In the example above, the screen with id "main" will be displayed. The screen wi
 
 ## Structure
 
-A `<doc>` element can only appear at the root of a Hyperview XML document. A doc can contain many `<screen>` elements, but only the first one will be rendered in the current screen. The other `<screen>` elements can be used to prefetch subsequent screens or indicators.
+A `<doc>` element can only appear at the root of a Hyperview XML document. A doc can contain many `<screen>` elements, but only the first one will be rendered in the current screen. The other `<screen>` elements can be used to prefetch subsequent screens or indicators. `<doc>` may also contain a single `<navigator>` element but may not contain a combination of `<screen>` and `<navigator>` children.
+
+Example `<doc>` with a `<navigator>` element
+
+```xml
+<doc xmlns="https://hyperview.org/hyperview">
+  <navigator id="root" type="stack">
+    <nav-route id="home" href="/home.xml" />
+  </navigator>
+</doc>
+```
 
 ## Attributes
 
