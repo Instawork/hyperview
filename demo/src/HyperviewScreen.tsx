@@ -10,11 +10,15 @@ import { MAIN_STACK_NAME, MODAL_STACK_NAME } from './constants';
 import type { Props, RouteParams } from './types';
 import HandleBack from './HandleBack';
 import Hyperview from 'hyperview';
-import type { NavigationRouteParams } from 'hyperview';
+import type { HvBehavior, NavigationRouteParams } from 'hyperview';
 import React from 'react';
 import { fetchWrapper, formatDate } from './helpers';
 
-export default (props: Props) => {
+type HyperviewScreenFC<P> = React.FunctionComponent<P> & {
+  Behaviors: HvBehavior[];
+};
+
+const HyperviewScreen: HyperviewScreenFC<Props> = (props: Props) => {
   const entrypointUrl = props.route.params?.url;
 
   if (!entrypointUrl) {
@@ -52,6 +56,7 @@ export default (props: Props) => {
     <HandleBack>
       <Hyperview
         back={goBack}
+        behaviors={HyperviewScreen.Behaviors}
         closeModal={closeModal}
         entrypointUrl={entrypointUrl as string}
         fetch={fetchWrapper}
@@ -66,3 +71,7 @@ export default (props: Props) => {
     </HandleBack>
   );
 };
+
+HyperviewScreen.Behaviors = [];
+
+export default HyperviewScreen;
