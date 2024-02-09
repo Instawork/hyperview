@@ -22,6 +22,10 @@ export const isDynamicRoute = (id: string): boolean => {
   return id === Types.ID_CARD || id === Types.ID_MODAL;
 };
 
+export const isModalRouteName = (name: string): boolean => {
+  return name === Types.ID_MODAL;
+};
+
 /**
  * Get an array of all child elements of a node
  */
@@ -291,10 +295,7 @@ const isRouteModal = (state: Types.NavigationState, index: number): boolean => {
   if (!state || index > state.routes.length - 1) {
     return false;
   }
-  const route = state.routes[index];
-  return (
-    (route.params as NavigationRouteParams).presentation === Types.ID_MODAL
-  );
+  return isModalRouteName(state.routes[index].name);
 };
 
 /**
