@@ -22,6 +22,10 @@ export const isDynamicRoute = (id: string): boolean => {
   return id === Types.ID_CARD || id === Types.ID_MODAL;
 };
 
+export const isModalRouteName = (name: string): boolean => {
+  return name === Types.ID_MODAL;
+};
+
 /**
  * Get an array of all child elements of a node
  */
@@ -287,6 +291,57 @@ export const getNavAction = (
   return action;
 };
 
+const isRouteModal = (state: Types.NavigationState, index: number): boolean => {
+  if (!state || index > state.routes.length - 1) {
+    return false;
+  }
+  return isModalRouteName(state.routes[index].name);
+};
+
+/**
+ * Handle close logic
+ * Search up the hierarchy for the first stack which is presenting a modal screen
+ */
+const buildCloseRequest = (
+  navigation: Types.NavigationProp | undefined,
+  routeParams?: NavigationRouteParams,
+): [
+  NavAction,
+  Types.NavigationProp | undefined,
+  string,
+  Types.NavigationNavigateParams | NavigationRouteParams | undefined,
+] => {
+  if (!navigation) {
+    return [NAV_ACTIONS.CLOSE, navigation, '', routeParams];
+  }
+
+  const state = navigation.getState();
+  if (state.type === Types.NAVIGATOR_TYPE.STACK) {
+    // Check if current route is modal
+    if (isRouteModal(state, state.index)) {
+      return [NAV_ACTIONS.CLOSE, navigation, '', routeParams];
+    }
+    // Check if current stack contains a modal earlier in the stack
+    for (let i = state.index; i > 0; i -= 1) {
+      if (isRouteModal(state, i)) {
+        // Target the route before the modal for navigation
+        const targetRoute = state.routes[i - 1];
+        return [
+          NAV_ACTIONS.NAVIGATE,
+          navigation,
+          targetRoute.name,
+          { ...targetRoute.params, ...routeParams },
+        ];
+      }
+    }
+  }
+  const parent = navigation.getParent();
+  if (!parent) {
+    return [NAV_ACTIONS.CLOSE, navigation, '', routeParams];
+  }
+  return buildCloseRequest(parent, routeParams);
+};
+
 /**
  * Build the request structure including finding the navigation,
  * building params, and determining screen id
@@ -296,20 +351,26 @@ export const buildRequest = (
   action: NavAction,
   routeParams?: NavigationRouteParams,
 ): [
+  NavAction,
   Types.NavigationProp | undefined,
   string,
   Types.NavigationNavigateParams | NavigationRouteParams | undefined,
 ] => {
+  const navAction: NavAction = getNavAction(action, routeParams);
+
   if (!routeParams) {
-    return [nav, '', {}];
+    if (navAction === NAV_ACTIONS.CLOSE) {
+      return buildCloseRequest(nav, {});
+    }
+    return [navAction, nav, '', {}];
   }
 
   // For a back behavior with params, the current navigator is targeted
-  if (action === NAV_ACTIONS.BACK && routeParams.url) {
-    return [nav, '', routeParams];
+  if (navAction === NAV_ACTIONS.BACK && routeParams.url) {
+    return [navAction, nav, '', routeParams];
   }
 
-  validateUrl(action, routeParams);
+  validateUrl(navAction, routeParams);
 
   const [navigation, path] = getNavigatorAndPath(
     routeParams.targetId || '',
@@ -325,13 +386,13 @@ export const buildRequest = (
   }
 
   if (!navigation) {
-    return [undefined, '', cleanedParams];
+    return [navAction, undefined, '', cleanedParams];
   }
 
-  const routeId = getRouteId(action, routeParams.url ?? undefined);
+  const routeId = getRouteId(navAction, routeParams.url ?? undefined);
 
   if (!path || !path.length) {
-    return [navigation, routeId, cleanedParams];
+    return [navAction, navigation, routeId, cleanedParams];
   }
 
   // The first path id the screen which will receive the initial request
@@ -345,7 +406,7 @@ export const buildRequest = (
     | Types.NavigationNavigateParams
     | NavigationRouteParams = buildParams(routeId, path, cleanedParams);
 
-  return [navigation, lastPathId || routeId, params];
+  return [navAction, navigation, lastPathId || routeId, params];
 };
 
 /**

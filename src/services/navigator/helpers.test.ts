@@ -665,6 +665,7 @@ describe('buildRequest', () => {
         const params = { url: 'url' };
         it('should ignore object without params', () => {
           expect(buildRequest(undefined, action, undefined)).toEqual([
+            action,
             undefined,
             '',
             {},
@@ -672,6 +673,7 @@ describe('buildRequest', () => {
         });
         it('should ignore object without navigator', () => {
           expect(buildRequest(undefined, action, params)).toEqual([
+            action,
             undefined,
             '',
             params,
@@ -684,6 +686,7 @@ describe('buildRequest', () => {
     const params = { url: 'url' };
     it('should ignore back actions', () => {
       expect(buildRequest(undefined, NAV_ACTIONS.BACK, params)).toEqual([
+        NAV_ACTIONS.BACK,
         undefined,
         '',
         params,
