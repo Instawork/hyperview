@@ -663,16 +663,14 @@ describe('buildRequest', () => {
     actions.forEach(action => {
       describe(`action:${action}`, () => {
         const params = { url: 'url' };
-        if (action !== NAV_ACTIONS.CLOSE) {
-          it('should ignore object without params', () => {
-            expect(buildRequest(undefined, action, undefined)).toEqual([
-              action,
-              undefined,
-              '',
-              {},
-            ]);
-          });
-        }
+        it('should ignore object without params', () => {
+          expect(buildRequest(undefined, action, undefined)).toEqual([
+            action,
+            undefined,
+            '',
+            {},
+          ]);
+        });
         it('should ignore object without navigator', () => {
           expect(buildRequest(undefined, action, params)).toEqual([
             action,

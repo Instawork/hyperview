@@ -356,19 +356,21 @@ export const buildRequest = (
   string,
   Types.NavigationNavigateParams | NavigationRouteParams | undefined,
 ] => {
+  const navAction: NavAction = getNavAction(action, routeParams);
+
   if (!routeParams) {
-    if (action === NAV_ACTIONS.CLOSE) {
-      return buildCloseRequest(nav, routeParams);
+    if (navAction === NAV_ACTIONS.CLOSE) {
+      return buildCloseRequest(nav, {});
     }
-    return [action, nav, '', {}];
+    return [navAction, nav, '', {}];
   }
 
   // For a back behavior with params, the current navigator is targeted
-  if (action === NAV_ACTIONS.BACK && routeParams.url) {
-    return [action, nav, '', routeParams];
+  if (navAction === NAV_ACTIONS.BACK && routeParams.url) {
+    return [navAction, nav, '', routeParams];
   }
 
-  validateUrl(action, routeParams);
+  validateUrl(navAction, routeParams);
 
   const [navigation, path] = getNavigatorAndPath(
     routeParams.targetId || '',
@@ -384,13 +386,13 @@ export const buildRequest = (
   }
 
   if (!navigation) {
-    return [action, undefined, '', cleanedParams];
+    return [navAction, undefined, '', cleanedParams];
   }
 
-  const routeId = getRouteId(action, routeParams.url ?? undefined);
+  const routeId = getRouteId(navAction, routeParams.url ?? undefined);
 
   if (!path || !path.length) {
-    return [action, navigation, routeId, cleanedParams];
+    return [navAction, navigation, routeId, cleanedParams];
   }
 
   // The first path id the screen which will receive the initial request
@@ -404,7 +406,7 @@ export const buildRequest = (
     | Types.NavigationNavigateParams
     | NavigationRouteParams = buildParams(routeId, path, cleanedParams);
 
-  return [action, navigation, lastPathId || routeId, params];
+  return [navAction, navigation, lastPathId || routeId, params];
 };
 
 /**

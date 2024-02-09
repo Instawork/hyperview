@@ -109,12 +109,8 @@ export default class Navigation {
         }
       }
     }
-    const routeParams = {
-      delay,
-      preloadScreen,
-      targetId,
-      url,
-    } as const;
+
+    const routeParams = { delay, preloadScreen, targetId, url } as const;
 
     switch (action) {
       case NAV_ACTIONS.PUSH:
