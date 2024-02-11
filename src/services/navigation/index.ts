@@ -13,6 +13,7 @@ import type {
   ComponentRegistry,
   NavAction,
   NavigationProps,
+  NavigationRouteParams,
 } from 'hyperview/src/types';
 import { NAV_ACTIONS } from 'hyperview/src/types';
 import { getFormData } from 'hyperview/src/services';
@@ -111,7 +112,21 @@ export default class Navigation {
     }
 
     const routeParams = { delay, preloadScreen, targetId, url } as const;
+    if (delay) {
+      setTimeout(() => {
+        this.executeNavigate(action, routeParams, url, href);
+      }, delay);
+    } else {
+      this.executeNavigate(action, routeParams, url, href);
+    }
+  };
 
+  executeNavigate = (
+    action: NavAction,
+    routeParams: NavigationRouteParams,
+    url: string,
+    href: string,
+  ) => {
     switch (action) {
       case NAV_ACTIONS.PUSH:
         this.navigation.push(routeParams);
