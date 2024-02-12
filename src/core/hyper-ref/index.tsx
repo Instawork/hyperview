@@ -150,12 +150,18 @@ export default class HyperRef extends PureComponent<Props, State> {
           | null
           | undefined = e.getAttribute('action');
         if (currentAttributeAction === 'dispatch-event') {
-          throw new Error(
-            'trigger="on-event" and action="dispatch-event" cannot be used on the same element',
+          console.error(
+            new Error(
+              'trigger="on-event" and action="dispatch-event" cannot be used on the same element',
+            ),
           );
+          return false;
         }
         if (!currentAttributeEventName) {
-          throw new Error('on-event trigger requires an event-name attribute');
+          console.error(
+            new Error('on-event trigger requires an event-name attribute'),
+          );
+          return false;
         }
         return currentAttributeEventName === eventName;
       }

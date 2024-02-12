@@ -159,7 +159,8 @@ export default class Hyperview extends PureComponent<Types.Props> {
     onUpdateCallbacks: OnUpdateCallbacks,
   ): Promise<Element | null> => {
     if (!href) {
-      throw new Error('No href passed to fetchElement');
+      console.error(new Error('No href passed to fetchElement'));
+      return null;
     }
 
     if (href[0] === '#') {
@@ -167,7 +168,8 @@ export default class Hyperview extends PureComponent<Types.Props> {
       if (element) {
         return element.cloneNode(true) as Element;
       }
-      throw new Error(`Element with id ${href} not found in document`);
+      console.error(new Error(`Element with id ${href} not found in document`));
+      return null;
     }
 
     try {
@@ -274,14 +276,20 @@ export default class Hyperview extends PureComponent<Types.Props> {
 
       // Check for event loop formation
       if (trigger === 'on-event') {
-        throw new Error(
-          'trigger="on-event" and action="dispatch-event" cannot be used on the same element',
+        console.error(
+          new Error(
+            'trigger="on-event" and action="dispatch-event" cannot be used on the same element',
+          ),
         );
+        return;
       }
       if (!eventName) {
-        throw new Error(
-          'dispatch-event requires an event-name attribute to be present',
+        console.error(
+          new Error(
+            'dispatch-event requires an event-name attribute to be present',
+          ),
         );
+        return;
       }
 
       const dispatch = () => {

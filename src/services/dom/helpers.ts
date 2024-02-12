@@ -113,7 +113,8 @@ export const getElementById = (
       ? element.ownerDocument.getElementById(id)
       : null;
   } catch (e) {
-    throw new DocumentGetElementByIdError(id, doc, e as Error);
+    console.error(new DocumentGetElementByIdError(id, doc, e as Error));
+    return null;
   }
 };
 
