@@ -15,29 +15,28 @@ tags: advanced_behaviors_scroll
     flexDirection="row"
     height="48"
     paddingLeft="24"
-    paddingRight="24"
-  />
-  <style id="TopItem" backgroundColor="#ffffff" padding="24" borderBottomColor="#eee" borderBottomWidth="1" />
-  <style id="TopItem__Link" color="#4778FF" fontWeight="bold" marginTop="8" marginRight="16" alignSelf="flex-end" />
+    paddingRight="24"/>
+  <style id="TopItem" backgroundColor="#ffffff" padding="24" borderBottomColor="#eee" borderBottomWidth="1"/>
+  <style id="TopItem__Link" color="#4778FF" fontWeight="bold" marginTop="8" marginRight="16" alignSelf="flex-end"/>
 {% endblock %}
 {% block container %}
   <section-list xmlns:scroll="https://hyperview.org/hyperview-scroll">
     <item key="top" style="TopItem">
       <view id="top">
         <view>
-          <behavior action="scroll" target="item-15" />
+          <behavior action="scroll" target="item-15"/>
           <text style="TopItem__Link">Scroll to item 15</text>
         </view>
         <view>
-          <behavior action="scroll" target="item-25" scroll:offset="24" />
+          <behavior action="scroll" target="item-25" scroll:offset="24"/>
           <text style="TopItem__Link">Scroll to item 25 with offset</text>
         </view>
         <view>
-          <behavior action="scroll" target="item-35" scroll:position="0.5" />
+          <behavior action="scroll" target="item-35" scroll:position="0.5"/>
           <text style="TopItem__Link">Scroll to item 35 with position</text>
         </view>
         <view>
-          <behavior action="scroll" target="bottom" scroll:animated="true" />
+          <behavior action="scroll" target="bottom" scroll:animated="true"/>
           <text style="TopItem__Link">Scroll to bottom, animated</text>
         </view>
       </view>
@@ -46,7 +45,7 @@ tags: advanced_behaviors_scroll
       <text style="List__HeaderText">-</text>
     </section-title>
     <item key="1" style="Item">
-      <behavior action="scroll" target="bottom" />
+      <behavior action="scroll" target="bottom"/>
       <text style="Item__Label">Item 1</text>
     </item>
     <item key="2" style="Item">
@@ -94,7 +93,7 @@ tags: advanced_behaviors_scroll
     <item key="15" style="Item" id="item-15">
       <text style="Item__Label">Item 15</text>
       <view>
-        <behavior action="scroll" target="top" scroll:animated="true" />
+        <behavior action="scroll" target="top" scroll:animated="true"/>
         <text style="TopItem__Link">Scroll to top</text>
       </view>
     </item>
@@ -131,7 +130,7 @@ tags: advanced_behaviors_scroll
     <item key="25" style="Item" id="item-25">
       <text style="Item__Label">Item 25</text>
       <view>
-        <behavior action="scroll" target="top" scroll:animated="true" />
+        <behavior action="scroll" target="top" scroll:animated="true"/>
         <text style="TopItem__Link">Scroll to top</text>
       </view>
     </item>
@@ -168,7 +167,7 @@ tags: advanced_behaviors_scroll
     <item key="35" style="Item" id="item-35">
       <text style="Item__Label">Item 35</text>
       <view>
-        <behavior action="scroll" target="top" scroll:animated="true" />
+        <behavior action="scroll" target="top" scroll:animated="true"/>
         <text style="TopItem__Link">Scroll to top</text>
       </view>
     </item>
@@ -221,9 +220,9 @@ tags: advanced_behaviors_scroll
       <text style="Item__Label">Item 50</text>
     </item>
     <item key="bottom" style="Item" id="bottom">
-      <view />
+      <view/>
       <view>
-        <behavior action="scroll" target="top" scroll:animated="true" />
+        <behavior action="scroll" target="top" scroll:animated="true"/>
         <text style="TopItem__Link">Scroll to top</text>
       </view>
     </item>

@@ -215,7 +215,7 @@ The markup for the option element contains an image for both the selected and un
     <modifier selected="true">
       <style width="24" height="24" />
     </modifier>
-  </style> 
+  </style>
 </styles>
 ```
 

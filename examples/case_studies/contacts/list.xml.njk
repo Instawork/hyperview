@@ -5,43 +5,24 @@
   href="?page=1&amp;template=list"
   target="contacts"
   keyboard-dismiss-mode="on-drag"
-  xmlns="https://hyperview.org/hyperview"
->
+  xmlns="https://hyperview.org/hyperview">
   {% set page = 1 %}
   <item key="search" id="top" sticky="true" style="relative mx-24">
-    <text-field
-      placeholder="Search a contact…"
-      placeholderTextColor="#8D9494"
-      name="search"
-      style="input"
-      debounce="200"
-      value="{{ search }}"
-    >
+    <text-field placeholder="Search a contact…" placeholderTextColor="#8D9494" name="search" style="input" debounce="200" value="{{ search }}">
       {# upon the search field changing, we want to: #}
       {# 1- prevent any further load more on scroll with the previous request query to happen #}
       {# 2- scroll back to the top of the list #}
-      {# 3- actually refresh the list with new set of results, including the new "load more" behavior #}
-      <behavior
-        trigger="change"
-        action="hide"
-        target="load-more"
-      />
-      <behavior
-        trigger="change"
-        action="scroll"
-        target="top"
-        xmlns:scroll="https://hyperview.org/hyperview-scroll"
-      />
+      {# 3- actually refresh the list with new set of results, including the new "load more" behavior #} <behavior trigger="change" action="hide" target="load-more"/>
+      <behavior trigger="change" action="scroll" target="top" xmlns:scroll="https://hyperview.org/hyperview-scroll"/>
       <behavior
         trigger="change"
         action="replace"
         target="contacts"
         href="?template=list"
-        show-during-load="loading-indicator"
-      />
+        show-during-load="loading-indicator"/>
     </text-field>
     <view id="loading-indicator" style="absolute r-0 py-8" hide="true">
-      <spinner />
+      <spinner/>
     </view>
   </item>
   {% include "./contacts.xml.njk" %}

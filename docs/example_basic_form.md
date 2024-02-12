@@ -182,7 +182,7 @@ Additionally, a usable form input element should have an error state. We'll add 
       marginTop="16"
     />
     <!-- begin change -->
-    <style id="Input--Error" borderBottomColor="#FF4847" color="#FF4847"> 
+    <style id="Input--Error" borderBottomColor="#FF4847" color="#FF4847">
       <modifier focused="true">
         <style borderBottomColor="#FF4847" />
       </modifier>
@@ -254,7 +254,7 @@ Now that we have styling for form group elements, we can incorporate the [`<form
       lineHeight="24"
       marginTop="16"
     />
-    <style id="Input--Error" borderBottomColor="#FF4847" color="#FF4847"> 
+    <style id="Input--Error" borderBottomColor="#FF4847" color="#FF4847">
       <modifier focused="true">
         <style borderBottomColor="#FF4847" />
       </modifier>
