@@ -1,11 +1,3 @@
-/**
- * Copyright (c) Garuda Labs, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
 import * as ComponentsInternal from './internal';
 import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
