@@ -9,7 +9,6 @@
 import * as Errors from './errors';
 import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Types from './types';
 import * as UrlService from 'hyperview/src/services/url';
 import { ANCHOR_ID_SEPARATOR, Route } from './types';
@@ -596,7 +595,7 @@ export const removeStackRoute = (
     const parentNode = route.parentNode as Element;
     const type = parentNode.getAttribute(Types.KEY_TYPE);
     if (type === Types.NAVIGATOR_TYPE.STACK) {
-      if (NavigatorService.getChildElements(parentNode).length > 1) {
+      if (getChildElements(parentNode).length > 1) {
         parentNode.removeChild(route);
 
         if (setDoc) {
