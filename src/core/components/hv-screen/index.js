@@ -1,11 +1,3 @@
-/**
- * Copyright (c) Garuda Labs, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
 /* eslint instawork/flow-annotate: 0 */
 import * as Behaviors from 'hyperview/src/behaviors';
 import * as Components from 'hyperview/src/services/components';
