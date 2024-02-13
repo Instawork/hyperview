@@ -3,17 +3,18 @@ version: 2
 jobs:
   test:
     docker:
-      - image: cimg/node:20.10.0
+      - image: cimg/python:3.12.1-node
     steps:
       - checkout
       - run: yarn
       - run: yarn test:generators
       - run: yarn test:ts
-      - run: yarn test:lint
-      - run: yarn test:render
       - run: yarn test:unit
+      - run: yarn test:render
       - run: sudo apt-get update && sudo apt-get install libxml2-utils
       - run: yarn test:validate-xml
+      - run: pip install djhtml
+      - run: yarn test:lint
 
 workflows:
   version: 2

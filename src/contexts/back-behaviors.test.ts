@@ -1,11 +1,3 @@
-/**
- * Copyright (c) Garuda Labs, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
 import * as DomErrors from 'hyperview/src/services/dom/errors';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import { DOMParser } from '@instawork/xmldom';

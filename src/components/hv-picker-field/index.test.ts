@@ -1,11 +1,3 @@
-/**
- * Copyright (c) Garuda Labs, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
 import HvPickerField from 'hyperview/src/components/hv-picker-field';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { getElements } from 'hyperview/test/helpers';
