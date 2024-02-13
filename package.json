@@ -37,7 +37,7 @@
     "storybook": "storybook start -p 7007",
     "test:ts": "tsc",
     "test:generators": "yarn generate test && git diff --quiet HEAD",
-    "test:lint": "eslint src && prettier --check '**/*.xsd' '**/*.xml' '**/*.md'",
+    "test:lint": "eslint src && prettier --check '**/*.xsd' '**/*.xml' '**/*.md' && yarn format-njk -c",
     "test:render": "npx patch-package && jest test/render.test.ts --forceExit",
     "test:unit": "jest --testPathPattern src",
     "test:xmlserver": "eleventy --serve --port=8085",
