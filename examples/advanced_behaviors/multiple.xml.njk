@@ -6,53 +6,20 @@ tags: advanced_behaviors
 
 {% extends 'base.xml.njk' %}
 {% block styles %}
-  <style
-    id="Event"
-    fontSize="16"
-    fontWeight="normal"
-    margin="24"
-    marginBottom="0"/>
+  <style id="Event" fontSize="16" fontWeight="normal" margin="24" marginBottom="0"/>
 {% endblock %}
 {% block container %}
   <text style="Event">
     The button below has behaviors for presses, refresh, and load.
   </text>
   <view style="Button">
-    <behavior
-      action="prepend"
-      href="#pressin-fragment"
-      target="container"
-      trigger="pressIn"/>
-    <behavior
-      action="prepend"
-      href="#press-fragment"
-      target="container"
-      trigger="press"/>
-    <behavior
-      action="prepend"
-      href="#longpress-fragment"
-      target="container"
-      trigger="longPress"/>
-    <behavior
-      action="prepend"
-      href="#pressout-fragment"
-      target="container"
-      trigger="pressOut"/>
-    <behavior
-      action="prepend"
-      href="#refresh-fragment"
-      target="container"
-      trigger="refresh"/>
-    <behavior
-      action="prepend"
-      href="#load-fragment"
-      target="container"
-      trigger="load"/>
-    <behavior
-      action="prepend"
-      href="#visible-fragment"
-      target="container"
-      trigger="visible"/>
+    <behavior action="prepend" href="#pressin-fragment" target="container" trigger="pressIn"/>
+    <behavior action="prepend" href="#press-fragment" target="container" trigger="press"/>
+    <behavior action="prepend" href="#longpress-fragment" target="container" trigger="longPress"/>
+    <behavior action="prepend" href="#pressout-fragment" target="container" trigger="pressOut"/>
+    <behavior action="prepend" href="#refresh-fragment" target="container" trigger="refresh"/>
+    <behavior action="prepend" href="#load-fragment" target="container" trigger="load"/>
+    <behavior action="prepend" href="#visible-fragment" target="container" trigger="visible"/>
     <text style="Button__Label">Press me</text>
   </view>
   <view id="container" scroll="true"/>

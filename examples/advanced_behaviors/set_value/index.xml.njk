@@ -17,21 +17,10 @@ tags: advanced_behaviors
         paddingLeft="24"
         paddingRight="24"
         paddingBottom="16"/>
-      <style
-        id="Header__Back"
-        color="blue"
-        fontSize="16"
-        fontWeight="600"
-        paddingRight="16"/>
+      <style id="Header__Back" color="blue" fontSize="16" fontWeight="600" paddingRight="16"/>
       <style id="Header__Title" color="black" fontSize="24" fontWeight="600"/>
       <style id="Body" backgroundColor="white" flex="1"/>
-      <style
-        id="Description"
-        fontSize="16"
-        fontWeight="500"
-        margin="24"
-        marginTop="16"
-        marginBottom="0"/>
+      <style id="Description" fontSize="16" fontWeight="500" margin="24" marginTop="16" marginBottom="0"/>
       <style
         id="Item"
         alignItems="center"
@@ -55,20 +44,9 @@ tags: advanced_behaviors
         padding="24"/>
       <style id="Button__Label" color="white" fontSize="24" fontWeight="bold"/>
       <style id="Main" flex="1"/>
-      <style
-        id="Containers"
-        flex="1"
-        flexDirection="row"
-        marginLeft="24"
-        marginRight="24"/>
+      <style id="Containers" flex="1" flexDirection="row" marginLeft="24" marginRight="24"/>
       <style id="Container" flex="1"/>
-      <style
-        id="FormGroup"
-        flex="1"
-        marginLeft="24"
-        marginRight="24"
-        marginBottom="16"
-        marginTop="8"/>
+      <style id="FormGroup" flex="1" marginLeft="24" marginRight="24" marginBottom="16" marginTop="8"/>
       <style
         id="input"
         borderBottomColor="#E1E1E1"
@@ -80,19 +58,14 @@ tags: advanced_behaviors
         paddingBottom="8"
         paddingTop="8">
         <modifier pressed="true">
-          <style borderBottomColor="green"/>
+        <style borderBottomColor="green"/>
         </modifier>
         <modifier focused="true">
-          <style borderBottomColor="#4778FF"/>
+        <style borderBottomColor="#4778FF"/>
         </modifier>
       </style>
       <style id="input__text" fontSize="16" fontWeight="normal"></style>
-      <style
-        id="section"
-        marginLeft="24"
-        fontSize="18"
-        fontWeight="bold"
-        marginTop="8"/>
+      <style id="section" marginLeft="24" fontSize="18" fontWeight="bold" marginTop="8"/>
       <style
         id="PickerModal"
         backgroundColor="white"
@@ -102,25 +75,16 @@ tags: advanced_behaviors
         shadowOffsetY="-5"
         shadowOpacity="0.2"
         shadowRadius="5"/>
-      <style id="PickerModal__overlay" backgroundColor="#1f1f1fa0"/>
       <style
-        id="PickerModal__text"
-        color="blue"
-        fontSize="16"
-        fontWeight="600"
-        marginBottom="16"
-        padding="24">
+        id="PickerModal__overlay"
+        backgroundColor="#1f1f1fa0"
+      />
+      <style id="PickerModal__text" color="blue" fontSize="16" fontWeight="600" marginBottom="16" padding="24">
         <modifier pressed="true">
-          <style opacity="0.5"/>
+        <style opacity="0.5"/>
         </modifier>
       </style>
-      <style
-        id="Tags"
-        flex="1"
-        flexDirection="row"
-        flexWrap="wrap"
-        justifyContent="flex-start"
-        marginTop="8"/>
+      <style id="Tags" flex="1" flexDirection="row" flexWrap="wrap" justifyContent="flex-start" marginTop="8"/>
       <style
         id="Tag"
         borderColor="#bdc4c4"
@@ -133,26 +97,16 @@ tags: advanced_behaviors
         paddingRight="16"
         paddingTop="8">
         <modifier selected="true">
-          <style backgroundColor="#4778ff" borderColor="white"/>
+        <style backgroundColor="#4778ff" borderColor="white"/>
         </modifier>
       </style>
-      <style
-        id="Tag__Label"
-        color="#4e4d4d"
-        fontSize="16"
-        fontWeight="bold"
-        lineHeight="18">
+      <style id="Tag__Label" color="#4e4d4d" fontSize="16" fontWeight="bold" lineHeight="18">
         <modifier selected="true">
-          <style color="white"/>
+        <style color="white"/>
         </modifier>
       </style>
       <style id="links" flexDirection="row"/>
-      <style
-        id="link"
-        color="#4778FF"
-        fontWeight="bold"
-        marginTop="8"
-        marginRight="16"/>
+      <style id="link" color="#4778FF" fontWeight="bold" marginTop="8" marginRight="16"/>
     </styles>
     <body style="Body" safe-area="true">
       <header style="Header">
@@ -185,13 +139,8 @@ tags: advanced_behaviors
               <behavior action="set-value" new-value="Multi" target="id_ta" delay="1000"/>
               <behavior action="set-value" new-value="Ramen" target="id_ss" delay="1500"/>
               <behavior action="set-value" new-value="2" target="id_pf" delay="2000"/>
-              <behavior
-                action="set-value"
-                new-value="2019-04-02"
-                target="id_df"
-                delay="2500"/>
-              <behavior action="set-value" new-value="on" target="id_s" delay="3000"/> Set all
-              with delay
+              <behavior action="set-value" new-value="2019-04-02" target="id_df" delay="2500"/>
+              <behavior action="set-value" new-value="on" target="id_s" delay="3000"/> Set all with delay
             </text>
             <text style="link">
               <behavior action="set-value" new-value="" target="id_tf" delay="500"/>
@@ -199,100 +148,34 @@ tags: advanced_behaviors
               <behavior action="set-value" new-value="" target="id_ss" delay="1500"/>
               <behavior action="set-value" new-value="" target="id_pf" delay="2000"/>
               <behavior action="set-value" new-value="" target="id_df" delay="2500"/>
-              <behavior action="set-value" new-value="off" target="id_s" delay="3000"/> Clear
-              all with delay
+              <behavior action="set-value" new-value="off" target="id_s" delay="3000"/> Clear all with delay
             </text>
           </view>
           <view style="links">
             <text style="link">
-              <behavior
-                action="set-value"
-                new-value="Multi"
-                target="id_tf"
-                delay="500"
-                show-during-load="id_tf_loading"/>
-              <behavior
-                action="set-value"
-                new-value="Multi"
-                target="id_ta"
-                delay="1000"
-                show-during-load="id_ta_loading"/>
-              <behavior
-                action="set-value"
-                new-value="Ramen"
-                target="id_ss"
-                delay="1500"
-                show-during-load="id_ss_loading"/>
-              <behavior
-                action="set-value"
-                new-value="2"
-                target="id_pf"
-                delay="2000"
-                show-during-load="id_pf_loading"/>
-              <behavior
-                action="set-value"
-                new-value="2019-04-02"
-                target="id_df"
-                delay="2500"
-                show-during-load="id_df_loading"/>
-              <behavior
-                action="set-value"
-                new-value="on"
-                target="id_s"
-                delay="3000"
-                show-during-load="id_s_loading"/> Set all with
-                              indicator
+              <behavior action="set-value" new-value="Multi" target="id_tf" delay="500" show-during-load="id_tf_loading"/>
+              <behavior action="set-value" new-value="Multi" target="id_ta" delay="1000" show-during-load="id_ta_loading"/>
+              <behavior action="set-value" new-value="Ramen" target="id_ss" delay="1500" show-during-load="id_ss_loading"/>
+              <behavior action="set-value" new-value="2" target="id_pf" delay="2000" show-during-load="id_pf_loading"/>
+              <behavior action="set-value" new-value="2019-04-02" target="id_df" delay="2500" show-during-load="id_df_loading"/>
+              <behavior action="set-value" new-value="on" target="id_s" delay="3000" show-during-load="id_s_loading"/> Set all with
+              indicator
             </text>
             <text style="link">
-              <behavior
-                action="set-value"
-                new-value=""
-                target="id_tf"
-                delay="500"
-                show-during-load="id_tf_loading"/>
-              <behavior
-                action="set-value"
-                new-value=""
-                target="id_ta"
-                delay="1000"
-                show-during-load="id_ta_loading"/>
-              <behavior
-                action="set-value"
-                new-value=""
-                target="id_ss"
-                delay="1500"
-                show-during-load="id_ss_loading"/>
-              <behavior
-                action="set-value"
-                new-value=""
-                target="id_pf"
-                delay="2000"
-                show-during-load="id_pf_loading"/>
-              <behavior
-                action="set-value"
-                new-value=""
-                target="id_df"
-                delay="2500"
-                show-during-load="id_df_loading"/>
-              <behavior
-                action="set-value"
-                new-value="off"
-                target="id_s"
-                delay="3000"
-                show-during-load="id_s_loading"/> Clear all with
-                              indicator
+              <behavior action="set-value" new-value="" target="id_tf" delay="500" show-during-load="id_tf_loading"/>
+              <behavior action="set-value" new-value="" target="id_ta" delay="1000" show-during-load="id_ta_loading"/>
+              <behavior action="set-value" new-value="" target="id_ss" delay="1500" show-during-load="id_ss_loading"/>
+              <behavior action="set-value" new-value="" target="id_pf" delay="2000" show-during-load="id_pf_loading"/>
+              <behavior action="set-value" new-value="" target="id_df" delay="2500" show-during-load="id_df_loading"/>
+              <behavior action="set-value" new-value="off" target="id_s" delay="3000" show-during-load="id_s_loading"/> Clear all with
+              indicator
             </text>
           </view>
         </view>
         <text style="section">Text fields</text>
         <view style="FormGroup">
           <text style="label" hide="true" id="id_tf_loading">Loading...</text>
-          <text-field
-            id="id_tf"
-            name="tf"
-            placeholder="Text field"
-            placeholderTextColor="#8D9494"
-            style="input"/>
+          <text-field id="id_tf" name="tf" placeholder="Text field" placeholderTextColor="#8D9494" style="input"/>
           <text style="link" action="set-value" new-value="Test" target="id_tf">
             Set value to "Test"
           </text>
@@ -303,17 +186,8 @@ tags: advanced_behaviors
         <text style="section">Text areas</text>
         <view style="FormGroup">
           <text style="label" hide="true" id="id_ta_loading">Loading...</text>
-          <text-area
-            id="id_ta"
-            name="ta"
-            placeholder="Text area"
-            placeholderTextColor="#8D9494"
-            style="input"/>
-          <text
-            style="link"
-            action="set-value"
-            new-value="Test&#10;Multi&#10;Line"
-            target="id_ta">
+          <text-area id="id_ta" name="ta" placeholder="Text area" placeholderTextColor="#8D9494" style="input"/>
+          <text style="link" action="set-value" new-value="Test&#10;Multi&#10;Line" target="id_ta">
             Set multi-line value
           </text>
           <text style="link" action="set-value" new-value="" target="id_ta">
