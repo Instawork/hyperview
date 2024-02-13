@@ -1,11 +1,13 @@
 {# Standard template for showing a list of links to other screens. List is generated from a collection of screens with the given "list_tag" #}
 <list xmlns="https://hyperview.org/hyperview" trigger="refresh" action="replace" target="directory-list" id="directory-list" href="{% if list_href %}{{ list_href }}{% else %}{{ permalink }}{% endif %}">
-  {% for screen in collections[list_tag]|sortCollection %}
-    <item href="{{ screen.data.permalink }}" key="{{ screen.data.title | slug }}" show-during-load="loadingScreen" style="Item">
-      <view style="Item__Left">
-        <text style="Item__Label">{{ screen.data.title }}</text>
-      </view>
-      <text style="Item__Chevron">&gt;</text>
-    </item>
+  {% for tag in list_tag.split(',') %}
+    {% for screen in collections[tag]|sortCollection %}
+      <item href="{{ screen.data.permalink }}" key="{{ screen.data.title | slug }}" show-during-load="loadingScreen" style="Item">
+        <view style="Item__Left">
+          <text style="Item__Label">{{ screen.data.title }}</text>
+        </view>
+        <text style="Item__Chevron">&gt;</text>
+      </item>
+    {% endfor %}
   {% endfor %}
 </list>
