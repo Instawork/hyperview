@@ -581,7 +581,9 @@ export const removeStackRoute = (
     const parentNode = route.parentNode as Element;
     const type = parentNode.getAttribute(Types.KEY_TYPE);
     if (type === Types.NAVIGATOR_TYPE.STACK) {
-      route.parentNode.removeChild(route);
+      if (NavigatorService.getChildElements(parentNode).length > 1) {
+        parentNode.removeChild(route);
+      }
     }
   }
 };
