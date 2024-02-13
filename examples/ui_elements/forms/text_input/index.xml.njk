@@ -8,11 +8,17 @@ tags: forms
 {% block styles %}
   <style id="input--error" borderBottomColor="#FF4847" color="#FF4847">
     <modifier focused="true">
-    <style borderBottomColor="#FF4847"/>
+      <style borderBottomColor="#FF4847"/>
     </modifier>
   </style>
   <style id="outerInput" flex="1"/>
-  <style id="label" borderColor="#4E4D4D" fontSize="16" fontWeight="bold" lineHeight="24" marginBottom="8"/>
+  <style
+    id="label"
+    borderColor="#4E4D4D"
+    fontSize="16"
+    fontWeight="bold"
+    lineHeight="24"
+    marginBottom="8"/>
   <style id="help--error" color="#FF4847"/>
   <style id="input--noneditable" color="#8D9494"/>
   <style
@@ -26,15 +32,21 @@ tags: forms
     paddingBottom="8"
     paddingTop="8">
     <modifier pressed="true">
-    <style borderBottomColor="green"/>
+      <style borderBottomColor="green"/>
     </modifier>
     <modifier focused="true">
-    <style borderBottomColor="#4778FF"/>
+      <style borderBottomColor="#4778FF"/>
     </modifier>
   </style>
   <style id="FormGroup" flex="1" marginLeft="24" marginRight="24" marginTop="48"/>
   <style id="horizontalFormGroup" flex="1" flexDirection="row"/>
-  <style id="help" borderColor="#FF4847" fontSize="16" fontWeight="normal" lineHeight="24" marginTop="16"/>
+  <style
+    id="help"
+    borderColor="#FF4847"
+    fontSize="16"
+    fontWeight="normal"
+    lineHeight="24"
+    marginTop="16"/>
   <style id="Main" flex="1" marginBottom="40"/>
 {% endblock %}
 {% block content %}
@@ -42,17 +54,30 @@ tags: forms
     <form>
       <view style="FormGroup">
         <text style="label">Default input field</text>
-        <text-field placeholder="First name" placeholderTextColor="#8D9494" name="text" style="input"/>
+        <text-field
+          placeholder="First name"
+          placeholderTextColor="#8D9494"
+          name="text"
+          style="input"/>
         <text style="help">Please enter your full name</text>
       </view>
       <view style="FormGroup">
         <text style="label">Filled input field</text>
-        <text-field placeholder="First name" placeholderTextColor="#8D9494" name="text" style="input" value="Milhouse"/>
+        <text-field
+          placeholder="First name"
+          placeholderTextColor="#8D9494"
+          name="text"
+          style="input"
+          value="Milhouse"/>
         <text style="help">Please enter your full name</text>
       </view>
       <view style="FormGroup">
         <text style="label">Validation error</text>
-        <text-field placeholder="First name" placeholderTextColor="#8D9494" name="text" style="input input--error"/>
+        <text-field
+          placeholder="First name"
+          placeholderTextColor="#8D9494"
+          name="text"
+          style="input input--error"/>
         <text style="help help--error">Please enter your full name</text>
       </view>
       <view style="FormGroup">
@@ -68,8 +93,16 @@ tags: forms
       <view style="FormGroup">
         <text style="label">Horizontal Layout</text>
         <view style="horizontalFormGroup">
-          <text-field placeholder="First" placeholderTextColor="#8D9494" name="text" style="input"/>
-          <text-field placeholder="Last" placeholderTextColor="#8D9494" name="text" style="input"/>
+          <text-field
+            placeholder="First"
+            placeholderTextColor="#8D9494"
+            name="text"
+            style="input"/>
+          <text-field
+            placeholder="Last"
+            placeholderTextColor="#8D9494"
+            name="text"
+            style="input"/>
         </view>
       </view>
       <view style="FormGroup">
@@ -229,7 +262,12 @@ tags: forms
       </view>
       <view style="FormGroup">
         <text style="label">Noneditable Text</text>
-        <text-field placeholderTextColor="#8D9494" name="text" style="input input--noneditable" value="9999" editable="false"/>
+        <text-field
+          placeholderTextColor="#8D9494"
+          name="text"
+          style="input input--noneditable"
+          value="9999"
+          editable="false"/>
       </view>
       <view style="FormGroup">
         <text style="label">Editable Text</text>
@@ -243,7 +281,12 @@ tags: forms
       </view>
       <view style="FormGroup">
         <text style="label">Multi-line</text>
-        <text-field placeholder="Instructions" multiline="true" name="text" placeholderTextColor="#8D9494" style="input"/>
+        <text-field
+          placeholder="Instructions"
+          multiline="true"
+          name="text"
+          placeholderTextColor="#8D9494"
+          style="input"/>
         <text style="help">Please enter your instructions</text>
       </view>
       <view style="FormGroup">

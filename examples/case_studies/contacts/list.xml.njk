@@ -13,7 +13,11 @@
       {# 1- prevent any further load more on scroll with the previous request query to happen #}
       {# 2- scroll back to the top of the list #}
       {# 3- actually refresh the list with new set of results, including the new "load more" behavior #} <behavior trigger="change" action="hide" target="load-more"/>
-      <behavior trigger="change" action="scroll" target="top" xmlns:scroll="https://hyperview.org/hyperview-scroll"/>
+      <behavior
+        trigger="change"
+        action="scroll"
+        target="top"
+        xmlns:scroll="https://hyperview.org/hyperview-scroll"/>
       <behavior
         trigger="change"
         action="replace"

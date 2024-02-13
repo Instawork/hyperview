@@ -8,7 +8,7 @@ tags: forms
 {% block styles %}
   <style id="switch-styled" color="#E1E1E1" backgroundColor="red">
     <modifier selected="true">
-    <style backgroundColor="#550000" color="#ffaaaa"/>
+      <style backgroundColor="#550000" color="#ffaaaa"/>
     </modifier>
   </style>
   <style
@@ -22,28 +22,40 @@ tags: forms
     paddingBottom="8"
     paddingTop="8">
     <modifier pressed="true">
-    <style borderBottomColor="#4778FF"/>
+      <style borderBottomColor="#4778FF"/>
     </modifier>
     <modifier focused="true">
-    <style borderBottomColor="#4778FF"/>
+      <style borderBottomColor="#4778FF"/>
     </modifier>
   </style>
   <style id="help--error" color="#FF4847"/>
-  <style id="label" borderColor="#4E4D4D" fontSize="16" fontWeight="bold" lineHeight="24" marginBottom="8"/>
+  <style
+    id="label"
+    borderColor="#4E4D4D"
+    fontSize="16"
+    fontWeight="bold"
+    lineHeight="24"
+    marginBottom="8"/>
   <style id="Input__Text" fontSize="16" fontWeight="normal"/>
   <style id="switch" backgroundColor="#E1E1E1">
     <modifier selected="true">
-    <style backgroundColor="#4778FF"/>
+      <style backgroundColor="#4778FF"/>
     </modifier>
   </style>
   <style id="FormGroup" flex="1" marginLeft="24" marginRight="24" marginTop="48"/>
   <style id="Input--Error" borderBottomColor="#FF4847">
     <modifier focused="true">
-    <style borderBottomColor="#FF4847"/>
+      <style borderBottomColor="#FF4847"/>
     </modifier>
   </style>
   <style id="Input__Text--Error" color="#FF4847"/>
-  <style id="help" borderColor="#FF4847" fontSize="16" fontWeight="normal" lineHeight="24" marginTop="16"/>
+  <style
+    id="help"
+    borderColor="#FF4847"
+    fontSize="16"
+    fontWeight="normal"
+    lineHeight="24"
+    marginTop="16"/>
 {% endblock %}
 {% block content %}
   <view scroll="true" style="Main">
@@ -65,7 +77,8 @@ tags: forms
       </view>
       <view style="FormGroup">
         <text style="label">
-          Press the button below and see the request in the XML server. It will include the switch values as query params.
+          Press the button below and see the request in the XML server. It will include
+          the switch values as query params.
         </text>
       </view>
       <view style="Button" href="/ui_elements/forms/switch.xml">

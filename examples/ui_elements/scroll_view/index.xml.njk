@@ -6,8 +6,20 @@ tags: ui_elements
 
 {% extends 'scrollview.xml.njk' %}
 {% block styles %}
-  <style id="Border" borderColor="#e1e1e1" borderWidth="1" flex="1" margin="24" padding="8"/>
-  <style id="ScrollContainer" borderColor="#e1e1e1" borderRadius="16" borderWidth="1" height="160" margin="24"/>
+  <style
+    id="Border"
+    borderColor="#e1e1e1"
+    borderWidth="1"
+    flex="1"
+    margin="24"
+    padding="8"/>
+  <style
+    id="ScrollContainer"
+    borderColor="#e1e1e1"
+    borderRadius="16"
+    borderWidth="1"
+    height="160"
+    margin="24"/>
   <style id="ScrollContainer--Vertical" flexDirection="column"/>
   <style id="ScrollContainer--Horizontal" flexDirection="row"/>
   <style
@@ -20,7 +32,12 @@ tags: ui_elements
     justifyContent="center"/>
   <style id="ScrollChild--Vertical" height="40"/>
   <style id="ScrollChild--Horizontal" width="40"/>
-  <style id="Text" color="#ffffff" alignSelf="center" textAlign="center" fontSize="24"/>
+  <style
+    id="Text"
+    color="#ffffff"
+    alignSelf="center"
+    textAlign="center"
+    fontSize="24"/>
   <style
     id="input"
     borderBottomColor="#E1E1E1"
@@ -33,10 +50,10 @@ tags: ui_elements
     paddingBottom="8"
     paddingTop="8">
     <modifier pressed="true">
-    <style borderBottomColor="green"/>
+      <style borderBottomColor="green"/>
     </modifier>
     <modifier focused="true">
-    <style borderBottomColor="#4778FF"/>
+      <style borderBottomColor="#4778FF"/>
     </modifier>
   </style>
 {% endblock %}
@@ -51,7 +68,10 @@ tags: ui_elements
     <view style="ScrollChild ScrollChild--Vertical"/>
   </view>
   <text style="Description">Dismiss Keyboard On Drag</text>
-  <view scroll="true" keyboard-dismiss-mode="on-drag" style="ScrollContainer ScrollContainer--Vertical">
+  <view
+    scroll="true"
+    keyboard-dismiss-mode="on-drag"
+    style="ScrollContainer ScrollContainer--Vertical">
     <text-field name="field" style="input" placeholder="Focus me, then scroll!"/>
     <view style="ScrollChild ScrollChild--Vertical"/>
     <view style="ScrollChild ScrollChild--Vertical"/>
@@ -61,7 +81,10 @@ tags: ui_elements
     <view style="ScrollChild ScrollChild--Vertical"/>
   </view>
   <text style="Description">Vertical Scroll With Hidden Scroll Bar</text>
-  <view scroll="true" shows-scroll-indicator="false" style="ScrollContainer ScrollContainer--Vertical">
+  <view
+    scroll="true"
+    shows-scroll-indicator="false"
+    style="ScrollContainer ScrollContainer--Vertical">
     <view style="ScrollChild ScrollChild--Vertical"/>
     <view style="ScrollChild ScrollChild--Vertical"/>
     <view style="ScrollChild ScrollChild--Vertical"/>
@@ -91,7 +114,10 @@ tags: ui_elements
     </view>
   </view>
   <text style="Description">Horizontal Scroll</text>
-  <view scroll="true" scroll-orientation="horizontal" style="ScrollContainer ScrollContainer--Horizontal">
+  <view
+    scroll="true"
+    scroll-orientation="horizontal"
+    style="ScrollContainer ScrollContainer--Horizontal">
     <view style="ScrollChild ScrollChild--Horizontal"/>
     <view style="ScrollChild ScrollChild--Horizontal"/>
     <view style="ScrollChild ScrollChild--Horizontal"/>

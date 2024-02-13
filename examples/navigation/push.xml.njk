@@ -17,10 +17,20 @@ tags: navigation
         paddingLeft="24"
         paddingRight="24"
         paddingBottom="16"/>
-      <style id="Header__Back" color="blue" fontSize="16" fontWeight="600" paddingRight="16"/>
+      <style
+        id="Header__Back"
+        color="blue"
+        fontSize="16"
+        fontWeight="600"
+        paddingRight="16"/>
       <style id="Header__Title" color="black" fontSize="24" fontWeight="600"/>
       <style id="Body" backgroundColor="white" flex="1"/>
-      <style id="Description" fontSize="16" fontWeight="normal" margin="24" marginBottom="0"/>
+      <style
+        id="Description"
+        fontSize="16"
+        fontWeight="normal"
+        margin="24"
+        marginBottom="0"/>
       <style
         id="Item"
         alignItems="center"
@@ -58,10 +68,10 @@ tags: navigation
         paddingBottom="8"
         paddingTop="8">
         <modifier pressed="true">
-        <style borderBottomColor="green"/>
+          <style borderBottomColor="green"/>
         </modifier>
         <modifier focused="true">
-        <style borderBottomColor="#4778FF"/>
+          <style borderBottomColor="#4778FF"/>
         </modifier>
       </style>
     </styles>
@@ -77,11 +87,21 @@ tags: navigation
         <view action="push" href="/navigation/pushed.xml" style="Button">
           <text style="Button__Label">Push</text>
         </view>
-        <view action="push" delay="1000" href="/navigation/pushed.xml" show-during-load="loadingScreen" style="Button">
+        <view
+          action="push"
+          delay="1000"
+          href="/navigation/pushed.xml"
+          show-during-load="loadingScreen"
+          style="Button">
           <text style="Button__Label">Push with indicator</text>
         </view>
         <form>
-          <view action="push" delay="1000" href="/navigation/pushed.xml" show-during-load="loadingScreen" style="Button">
+          <view
+            action="push"
+            delay="1000"
+            href="/navigation/pushed.xml"
+            show-during-load="loadingScreen"
+            style="Button">
             <text style="Button__Label">Push with params</text>
           </view>
           <text-field style="input" name="param1" value="value1"/>
@@ -101,10 +121,20 @@ tags: navigation
         paddingLeft="24"
         paddingRight="24"
         paddingBottom="16"/>
-      <style id="Header__Back" color="blue" fontSize="16" fontWeight="600" paddingRight="16"/>
+      <style
+        id="Header__Back"
+        color="blue"
+        fontSize="16"
+        fontWeight="600"
+        paddingRight="16"/>
       <style id="Header__Title" color="black" fontSize="24" fontWeight="600"/>
       <style id="Body" backgroundColor="white" flex="1"/>
-      <style id="Description" fontSize="16" fontWeight="normal" margin="24" marginBottom="0"/>
+      <style
+        id="Description"
+        fontSize="16"
+        fontWeight="normal"
+        margin="24"
+        marginBottom="0"/>
       <style id="Loading" alignItems="center" flex="1" justifyContent="center"/>
     </styles>
     <body style="Body" safe-area="true">

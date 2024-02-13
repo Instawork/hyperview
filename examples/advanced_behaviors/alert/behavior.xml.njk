@@ -6,7 +6,13 @@ tags: alert
 
 {% extends 'scrollview.xml.njk' %}
 {% block styles %}
-  <style id="Container" borderColor="#e1e1e1" borderRadius="16" borderWidth="2" margin="24" padding="24"/>
+  <style
+    id="Container"
+    borderColor="#e1e1e1"
+    borderRadius="16"
+    borderWidth="2"
+    margin="24"
+    padding="24"/>
   <style id="Container__Label" color="black" fontSize="16" fontWeight="normal"/>
 {% endblock %}
 {% block content %}
@@ -20,7 +26,11 @@ tags: alert
       alert:title="Navigation"
       trigger="press"
       xmlns:alert="https://hyperview.org/hyperview-alert">
-      <alert:option action="push" alert:label="Push" href="/advanced_behaviors/alert/index.xml" trigger="press"/>
+      <alert:option
+        action="push"
+        alert:label="Push"
+        href="/advanced_behaviors/alert/index.xml"
+        trigger="press"/>
       <alert:option action="back" alert:label="Back" href="#" trigger="press"/>
       <alert:option alert:label="Cancel"/>
     </behavior>
@@ -32,13 +42,29 @@ tags: alert
   <view style="Button">
     <behavior
       action="alert"
-      alert:message="Pressing the options below will change the content in the screen container."
+      alert:message="Pressing the options below will change the content in the screen
+        container."
       alert:title="Updates"
       trigger="press"
       xmlns:alert="https://hyperview.org/hyperview-alert">
-      <alert:option action="append" alert:label="Append" href="#option1" target="alert1Container" trigger="press"/>
-      <alert:option action="prepend" alert:label="Prepend" href="#option2" target="alert1Container" trigger="press"/>
-      <alert:option action="replace-inner" alert:label="Replace" href="#option3" target="alert1Container" trigger="press"/>
+      <alert:option
+        action="append"
+        alert:label="Append"
+        href="#option1"
+        target="alert1Container"
+        trigger="press"/>
+      <alert:option
+        action="prepend"
+        alert:label="Prepend"
+        href="#option2"
+        target="alert1Container"
+        trigger="press"/>
+      <alert:option
+        action="replace-inner"
+        alert:label="Replace"
+        href="#option3"
+        target="alert1Container"
+        trigger="press"/>
     </behavior>
     <text style="Button__Label">Update options</text>
   </view>
@@ -59,7 +85,11 @@ tags: alert
       trigger="press"
       xmlns:alert="https://hyperview.org/hyperview-alert">
       <alert:option alert:label="Open Second Alert">
-        <behavior action="alert" alert:message="Press to close the second alert." alert:title="Second Alert" trigger="press">
+        <behavior
+          action="alert"
+          alert:message="Press to close the second alert."
+          alert:title="Second Alert"
+          trigger="press">
           <alert:option alert:label="Close"/>
         </behavior>
       </alert:option>
@@ -74,7 +104,10 @@ tags: alert
       xmlns:alert="https://hyperview.org/hyperview-alert"
       xmlns:phone="https://instawork.com/hyperview-phone"
       xmlns:sms="https://instawork.com/hyperview-sms">
-      <alert:option action="phone" alert:label="Call phone" phone:number="(555) 555-5555"/>
+      <alert:option
+        action="phone"
+        alert:label="Call phone"
+        phone:number="(555) 555-5555"/>
       <alert:option action="sms" alert:label="Send SMS" sms:number="(555) 555-5555"/>
       <alert:option alert:label="Close"/>
     </behavior>
