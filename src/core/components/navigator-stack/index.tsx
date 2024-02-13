@@ -1,11 +1,3 @@
-/**
- * Copyright (c) Garuda Labs, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
 import * as Contexts from 'hyperview/src/contexts';
 import * as CustomStackRouter from 'hyperview/src/core/components/navigator-stack/router';
 import * as NavigationContext from 'hyperview/src/contexts/navigation';

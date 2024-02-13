@@ -1,11 +1,3 @@
-/**
- * Copyright (c) Garuda Labs, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Contexts from 'hyperview/src/contexts';
 import * as Dom from 'hyperview/src/services/dom';

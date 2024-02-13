@@ -1,13 +1,5 @@
 // @flow
 
-/**
- * Copyright (c) Garuda Labs, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
 import * as Files from './files';
 import glob from 'glob';
 import packageJson from '../../package.json';
@@ -21,8 +13,9 @@ const templates = glob
   .sync(path.join(rootDir, 'src/**/stories/*.xml'))
   .map(templateAbsolutePath => {
     const templatePath = templateAbsolutePath.replace(rootDir, projectName);
-    return `  '${templatePath}':\n  \`${Files.read(templateAbsolutePath) ||
-      ''}\`,`;
+    return `  '${templatePath}':\n  \`${
+      Files.read(templateAbsolutePath) || ''
+    }\`,`;
   })
   .sort();
 
