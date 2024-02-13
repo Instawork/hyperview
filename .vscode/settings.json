@@ -1,4 +1,5 @@
 {
   "flow.pathToFlow": "${workspaceRoot}/node_modules/.bin/flow",
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "html.format.wrapLineLength": 80
 }
