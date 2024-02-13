@@ -9,11 +9,13 @@
 import * as Errors from './errors';
 import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Namespaces from 'hyperview/src/services/namespaces';
+import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Types from './types';
 import * as UrlService from 'hyperview/src/services/url';
 import { ANCHOR_ID_SEPARATOR, Route } from './types';
 import { LOCAL_NAME, NAV_ACTIONS, NODE_TYPE } from 'hyperview/src/types';
 import type { NavAction, NavigationRouteParams } from 'hyperview/src/types';
+import { shallowCloneToRoot } from 'hyperview/src/services';
 
 /**
  * Card and modal routes are not defined in the document
@@ -544,15 +546,22 @@ export const mergeDocument = (
 export const setSelected = (
   doc: Document | undefined,
   id: string | undefined,
+  setDoc?: ((d: Document) => void) | undefined,
 ) => {
   if (!doc || !id) {
     return;
   }
   const route = getRouteById(doc, id);
-  if (route) {
+  if (route && route.parentNode) {
+    const parentNode = route.parentNode as Element;
+    const type = parentNode.getAttribute(Types.KEY_TYPE);
+    if (type !== Types.NAVIGATOR_TYPE.TAB) {
+      return;
+    }
+
     // Reset all siblings
-    if (route.parentNode && route.parentNode.childNodes) {
-      Array.from(route.parentNode.childNodes).forEach((child: Node) => {
+    if (parentNode.childNodes) {
+      Array.from(parentNode.childNodes).forEach((child: Node) => {
         const sibling = child as Element;
         if (sibling && sibling.localName === LOCAL_NAME.NAV_ROUTE) {
           sibling.setAttribute(Types.KEY_SELECTED, 'false');
@@ -563,6 +572,11 @@ export const setSelected = (
     // Set the selected route
     route.setAttribute(Types.KEY_SELECTED, 'true');
   }
+
+  if (setDoc) {
+    const newRoot = shallowCloneToRoot(doc);
+    setDoc(newRoot);
+  }
 };
 
 /**
@@ -572,6 +586,7 @@ export const removeStackRoute = (
   doc: Document | undefined,
   url: string | undefined,
   baseUrl: string,
+  setDoc?: ((d: Document) => void) | undefined,
 ) => {
   if (!doc || !url) {
     return;
@@ -583,6 +598,11 @@ export const removeStackRoute = (
     if (type === Types.NAVIGATOR_TYPE.STACK) {
       if (NavigatorService.getChildElements(parentNode).length > 1) {
         parentNode.removeChild(route);
+
+        if (setDoc) {
+          const newRoot = shallowCloneToRoot(doc);
+          setDoc(newRoot);
+        }
       }
     }
   }
@@ -597,6 +617,7 @@ export const addStackRoute = (
   route: Route<string, NavigationRouteParams> | undefined,
   siblingName: string | undefined,
   baseUrl: string,
+  setDoc?: ((d: Document) => void) | undefined,
 ) => {
   if (
     !doc ||
@@ -622,6 +643,11 @@ export const addStackRoute = (
       element.setAttribute(Types.KEY_ID, id);
       element.setAttribute(Types.KEY_HREF, route.params.url);
       parentElement.appendChild(element);
+
+      if (setDoc) {
+        const newRoot = shallowCloneToRoot(doc);
+        setDoc(newRoot);
+      }
     }
   }
 };

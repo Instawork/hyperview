@@ -576,13 +576,14 @@ function HvRouteFC(props: Types.Props) {
         () => {
           const doc = docContext?.getDoc();
           const id = props.route?.params?.id || props.route?.key;
-          NavigatorService.setSelected(doc, id);
+          NavigatorService.setSelected(doc, id, docContext?.setDoc);
           NavigatorService.addStackRoute(
             doc,
             id,
             props.route,
             props.navigation?.getState().routes[0]?.name,
             navigationContext.entrypointUrl,
+            docContext?.setDoc,
           );
           if (navigationContext.onRouteFocus && props.route) {
             navigationContext.onRouteFocus(props.route);
@@ -618,6 +619,7 @@ function HvRouteFC(props: Types.Props) {
               docContext?.getDoc(),
               props.route?.params?.url,
               navigationContext.entrypointUrl,
+              docContext?.setDoc,
             );
           }
         },
