@@ -1,11 +1,3 @@
-/**
- * Copyright (c) Garuda Labs, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
 import * as Components from 'hyperview/src/services/components';
 import type { HvComponentProps } from 'hyperview/src/types';
 import HvDateField from 'hyperview/src/components/hv-date-field';
