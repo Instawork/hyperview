@@ -9,7 +9,7 @@ export default () => {
       <Hyperview
         behaviors={[]} // Add your custom behaviors here
         components={[]} // Add your custom components here
-        entrypointUrl="https://yourserver.com/index.xml"
+        entrypointUrl={process.env.EXPO_PUBLIC_SERVER_URL || "https://yourserver.com/index.xml"}
         fetch={fetch}
         formatDate={(date: Date, format: string) => {
           moment(date).format(format);
