@@ -6,6 +6,8 @@
   xmlns:hv="https://hyperview.org/hyperview"
   xmlns:alert="https://hyperview.org/hyperview-alert"
   xmlns:scroll="https://hyperview.org/hyperview-scroll"
+  xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+  vc:minVersion="1.1"
 >
 
   <xs:import
