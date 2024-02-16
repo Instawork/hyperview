@@ -363,14 +363,18 @@ export default class HyperRef extends PureComponent<Props, State> {
       Behaviors.createActionHandler(behaviorElement, this.props.onUpdate),
     );
     const onRefresh = () => refreshHandlers.forEach(h => h(this.props.element));
-
     const refreshControl = React.createElement(RefreshControl, {
       onRefresh,
       refreshing: this.state.refreshing,
     });
     return React.createElement(
       ScrollView,
-      { refreshControl, style: this.getStyle() },
+      {
+        refreshControl,
+        showsVerticalScrollIndicator:
+          this.props.element.getAttribute('shows-scroll-indicator') !== 'false',
+        style: this.getStyle(),
+      },
       children,
     );
   };
