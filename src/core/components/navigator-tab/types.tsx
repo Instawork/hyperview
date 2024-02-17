@@ -1,5 +1,8 @@
 import * as React from 'react';
-import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
+import {
+  BottomTabBarProps,
+  BottomTabNavigationOptions,
+} from '@react-navigation/bottom-tabs';
 
 export type Props = {
   id: string;
@@ -7,6 +10,7 @@ export type Props = {
   initialRouteName: string;
   children: React.ReactNode;
   screenOptions: BottomTabNavigationOptions;
+  tabBar?: ((props: BottomTabBarProps) => React.ReactNode) | undefined;
 };
 
 export type ParamListBase = Record<string, object | undefined>;

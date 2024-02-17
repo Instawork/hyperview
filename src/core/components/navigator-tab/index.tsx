@@ -47,6 +47,8 @@ const CustomTabNavigator = (props: Types.Props) => {
   return (
     <NavigationContent>
       <BottomTabView
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...props}
         descriptors={descriptors}
         navigation={navigation}
         state={state}
