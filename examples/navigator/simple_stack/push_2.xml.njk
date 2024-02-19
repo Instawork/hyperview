@@ -1,0 +1,18 @@
+---
+title: "Push Screen 2"
+permalink: "/navigator/simple_stack/push_2.xml"
+---
+
+{% extends 'base.xml.njk' %}
+{% block container %}
+  <view scroll="true">
+    <text style="Description">This screen was dynamically pushed to the stack.</text>
+    <view
+      action="navigate"
+      href="#simple-screen-route"
+      style="Button"
+    >
+      <text style="Button__Label">Back to beginning</text>
+    </view>
+  </view>
+{% endblock %}
