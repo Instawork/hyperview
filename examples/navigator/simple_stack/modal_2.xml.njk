@@ -1,0 +1,17 @@
+---
+title: "Modal Screen 2"
+permalink: "/navigator/simple_stack/modal_2.xml"
+---
+
+{% extends 'base.xml.njk' %}
+{% block container %}
+  <view scroll="true">
+    <text style="Description">This screen was dynamically opened on the stack.</text>
+    <view
+      action="close"
+      style="Button"
+    >
+      <text style="Button__Label">Back to beginning</text>
+    </view>
+  </view>
+{% endblock %}
