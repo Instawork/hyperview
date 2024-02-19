@@ -4,6 +4,8 @@
   elementFormDefault="qualified"
   targetNamespace="https://hyperview.org/hyperview"
   xmlns:hv="https://hyperview.org/hyperview"
+  xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+  vc:minVersion="1.1"
 >
   <xs:redefine schemaLocation="core.xsd">
     <xs:simpleType name="action">

@@ -11,7 +11,7 @@ jobs:
       - run: yarn test:ts
       - run: yarn test:unit
       - run: yarn test:render
-      - run: sudo apt-get update && sudo apt-get install libxml2-utils
+      - run: pip install xmlschema
       - run: yarn test:validate-xml
       - run: pip install djhtml
       - run: yarn test:lint
