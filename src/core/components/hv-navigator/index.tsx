@@ -11,6 +11,10 @@ import {
   RouteParams,
   TRIGGERS,
 } from 'hyperview/src/types';
+import {
+  NavigationElementContext,
+  NavigationElementProvider,
+} from 'hyperview/src/contexts/navigation-elements';
 import type {
   ParamTypes,
   Props,
@@ -26,7 +30,7 @@ import { getFirstChildTag } from 'hyperview/src/services/dom/helpers';
 /**
  * Flag to show the navigator UIs
  */
-const SHOW_NAVIGATION_UI = false;
+const SHOW_NAVIGATION_UI = true;
 
 const Stack = createCustomStackNavigator<ParamTypes>();
 const BottomTab = createCustomTabNavigator<ParamTypes>();
@@ -87,7 +91,7 @@ export default class HvNavigator extends PureComponent<Props> {
    */
   stackScreenOptions = (route: ScreenParams): StackScreenOptions => ({
     headerMode: 'screen',
-    headerShown: SHOW_NAVIGATION_UI,
+    headerShown: false, // SHOW_NAVIGATION_UI,
     title: this.getId(route.params),
   });
 
@@ -95,7 +99,7 @@ export default class HvNavigator extends PureComponent<Props> {
    * Encapsulated options for the tab screenOptions
    */
   tabScreenOptions = (route: ScreenParams): TabScreenOptions => ({
-    headerShown: SHOW_NAVIGATION_UI,
+    headerShown: false, // SHOW_NAVIGATION_UI,
     tabBarStyle: { display: SHOW_NAVIGATION_UI ? 'flex' : 'none' },
     title: this.getId(route.params),
   });
@@ -275,14 +279,21 @@ export default class HvNavigator extends PureComponent<Props> {
         );
       case NavigatorService.NAVIGATOR_TYPE.TAB:
         return (
-          <BottomTab.Navigator
-            backBehavior="none"
-            id={id}
-            initialRouteName={selectedId}
-            screenOptions={({ route }) => this.tabScreenOptions(route)}
-          >
-            {this.buildScreens(this.props.element, type)}
-          </BottomTab.Navigator>
+          <NavigationElementProvider>
+            <NavigationElementContext.Consumer>
+              {elementContext => (
+                <BottomTab.Navigator
+                  backBehavior="none"
+                  id={id}
+                  initialRouteName={selectedId}
+                  screenOptions={({ route }) => this.tabScreenOptions(route)}
+                  tabBar={() => elementContext?.getFooter()}
+                >
+                  {this.buildScreens(this.props.element, type)}
+                </BottomTab.Navigator>
+              )}
+            </NavigationElementContext.Consumer>
+          </NavigationElementProvider>
         );
       default:
     }

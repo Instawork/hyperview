@@ -29,6 +29,7 @@ import LoadError from 'hyperview/src/core/components/load-error';
 import Loading from 'hyperview/src/core/components/loading';
 // eslint-disable-next-line instawork/import-services
 import Navigation from 'hyperview/src/services/navigation';
+import { NavigationElementContext } from 'hyperview/src/contexts/navigation-elements';
 
 /**
  * Implementation of an HvRoute component
@@ -326,35 +327,40 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     };
 
     return (
-      <Contexts.DateFormatContext.Consumer>
-        {formatter => (
-          <HvScreen
-            back={this.navLogic.back}
-            behaviors={this.props.behaviors}
-            closeModal={this.navLogic.closeModal}
-            components={this.props.components}
-            doc={this.localDoc?.cloneNode(true) as Document}
-            elementErrorComponent={this.props.elementErrorComponent}
-            entrypointUrl={this.props.entrypointUrl}
-            errorScreen={this.props.errorScreen}
-            fetch={this.props.fetch}
-            formatDate={formatter}
-            loadingScreen={this.props.loadingScreen}
-            navigate={this.navLogic.navigate}
-            navigation={this.props.navigation}
-            onError={this.props.onError}
-            onParseAfter={this.props.onParseAfter}
-            onParseBefore={this.props.onParseBefore}
-            onUpdate={this.props.onUpdate}
-            openModal={this.navLogic.openModal}
-            push={this.navLogic.push}
-            registerPreload={this.registerPreload}
-            reload={this.props.reload}
-            route={route}
-            url={url || undefined}
-          />
+      <NavigationElementContext.Consumer>
+        {navigationElementContext => (
+          <Contexts.DateFormatContext.Consumer>
+            {formatter => (
+              <HvScreen
+                back={this.navLogic.back}
+                behaviors={this.props.behaviors}
+                closeModal={this.navLogic.closeModal}
+                components={this.props.components}
+                doc={this.localDoc?.cloneNode(true) as Document}
+                elementErrorComponent={this.props.elementErrorComponent}
+                entrypointUrl={this.props.entrypointUrl}
+                errorScreen={this.props.errorScreen}
+                fetch={this.props.fetch}
+                formatDate={formatter}
+                loadingScreen={this.props.loadingScreen}
+                navigate={this.navLogic.navigate}
+                navigation={this.props.navigation}
+                onError={this.props.onError}
+                onParseAfter={this.props.onParseAfter}
+                onParseBefore={this.props.onParseBefore}
+                onUpdate={this.props.onUpdate}
+                openModal={this.navLogic.openModal}
+                push={this.navLogic.push}
+                registerPreload={this.registerPreload}
+                reload={this.props.reload}
+                route={route}
+                setFooter={navigationElementContext?.setFooter || undefined}
+                url={url || undefined}
+              />
+            )}
+          </Contexts.DateFormatContext.Consumer>
         )}
-      </Contexts.DateFormatContext.Consumer>
+      </NavigationElementContext.Consumer>
     );
   };
 
