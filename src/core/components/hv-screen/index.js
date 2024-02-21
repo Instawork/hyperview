@@ -273,6 +273,23 @@ export default class HvScreen extends React.Component {
         staleHeaderType: this.state.staleHeaderType,
       },
     );
+    const [footer] = Array.from(
+      this.state.doc.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'footer'),
+    );
+    if (footer && this.props.setFooter && !this.footerElement) {
+      const footerElement = Render.renderElement(
+        footer,
+        this.state.styles,
+        this.onUpdate,
+        {
+          componentRegistry: this.componentRegistry,
+          screenUrl: this.state.url,
+          staleHeaderType: this.state.staleHeaderType,
+        },
+      );
+      this.footerElement = footerElement;
+      this.props.setFooter(footerElement);
+    }
 
     return (
       <Contexts.DocContext.Provider

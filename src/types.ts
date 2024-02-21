@@ -14,6 +14,7 @@ export const LOCAL_NAME = {
   DATE_FIELD: 'date-field',
   DIALOG_TITLE: 'dialog-title',
   DOC: 'doc',
+  FOOTER: 'footer',
   FORM: 'form',
   HEADER: 'header',
   IMAGE: 'image',
