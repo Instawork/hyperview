@@ -196,8 +196,11 @@ export default class HvNavigator extends PureComponent<Props> {
   /**
    * Build all screens from received routes
    */
-  buildScreens = (element: Element, type: string): React.ReactNode => {
+  buildScreens = (type: string, element?: Element): React.ReactNode => {
     const screens: React.ReactElement[] = [];
+    if (!element) {
+      return screens;
+    }
     const elements: Element[] = NavigatorService.getChildElements(element);
 
     // For tab navigators, the screens are appended
@@ -274,7 +277,7 @@ export default class HvNavigator extends PureComponent<Props> {
             id={id}
             screenOptions={({ route }) => this.stackScreenOptions(route)}
           >
-            {this.buildScreens(this.props.element, type)}
+            {this.buildScreens(type, this.props.element)}
           </Stack.Navigator>
         );
       case NavigatorService.NAVIGATOR_TYPE.TAB:
@@ -289,7 +292,7 @@ export default class HvNavigator extends PureComponent<Props> {
                   screenOptions={({ route }) => this.tabScreenOptions(route)}
                   tabBar={() => elementContext?.getFooter()}
                 >
-                  {this.buildScreens(this.props.element, type)}
+                  {this.buildScreens(type, this.props.element)}
                 </BottomTab.Navigator>
               )}
             </NavigationElementContext.Consumer>
