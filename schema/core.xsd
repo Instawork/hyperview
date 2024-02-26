@@ -1252,9 +1252,10 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="hv:navigator" />
       </xs:sequence>
       <xs:attribute name="id" use="required" type="hv:ID" />
-      <xs:attribute name="href" use="required" type="xs:string" />
+      <xs:attribute name="href" type="hv:nonEmptyString" />
       <xs:attribute name="selected" type="xs:boolean" />
       <xs:attribute name="modal" type="xs:boolean" />
+      <xs:assert test="(@href != '') or (count(hv:navigator) = 1)" />
     </xs:complexType>
   </xs:element>
 
