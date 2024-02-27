@@ -34,7 +34,7 @@
     "release:patch": "yarn version --patch",
     "release:minor": "yarn version --minor",
     "release:major": "yarn version --major",
-    "storybook": "storybook start -p 7007",
+    "storybook": "NODE_OPTIONS=--openssl-legacy-provider storybook start -p 7007",
     "test:ts": "tsc",
     "test:generators": "yarn generate test && git diff --quiet HEAD",
     "test:lint": "eslint src && prettier --check '**/*.xsd' '**/*.xml' '**/*.md' && yarn format-njk -c",
