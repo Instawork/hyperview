@@ -39,6 +39,7 @@ export type NavigationProp = {
     eventName: string,
     callback: (event: { preventDefault: () => void }) => void,
   ) => () => void;
+  isFocused: () => boolean;
 };
 
 /**
