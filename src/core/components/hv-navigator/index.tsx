@@ -28,9 +28,15 @@ import { createCustomTabNavigator } from 'hyperview/src/core/components/navigato
 import { getFirstChildTag } from 'hyperview/src/services/dom/helpers';
 
 /**
- * Flag to show the navigator UIs
+ * Flag to show the default navigator UIs
+ * Example: tab bar
+ * NOTE: This will only be used if no footer element is provided for a tabbar
  */
-const SHOW_NAVIGATION_UI = true;
+const SHOW_DEFAULT_NAVIGATION_UI = false;
+/**
+ * Flag to show the header UIs
+ */
+const SHOW_HEADER_UI = false;
 
 const Stack = createCustomStackNavigator<ParamTypes>();
 const BottomTab = createCustomTabNavigator<ParamTypes>();
@@ -91,16 +97,22 @@ export default class HvNavigator extends PureComponent<Props> {
    */
   stackScreenOptions = (route: ScreenParams): StackScreenOptions => ({
     headerMode: 'screen',
-    headerShown: false, // SHOW_NAVIGATION_UI,
+    headerShown: SHOW_HEADER_UI,
     title: this.getId(route.params),
   });
 
   /**
    * Encapsulated options for the tab screenOptions
    */
-  tabScreenOptions = (route: ScreenParams): TabScreenOptions => ({
-    headerShown: false, // SHOW_NAVIGATION_UI,
-    tabBarStyle: { display: SHOW_NAVIGATION_UI ? 'flex' : 'none' },
+  tabScreenOptions = (
+    route: ScreenParams,
+    usesCustomTabbar: boolean = false,
+  ): TabScreenOptions => ({
+    headerShown: SHOW_HEADER_UI,
+    tabBarStyle: {
+      display:
+        SHOW_DEFAULT_NAVIGATION_UI && !usesCustomTabbar ? 'flex' : 'none',
+    },
     title: this.getId(route.params),
   });
 
@@ -284,17 +296,23 @@ export default class HvNavigator extends PureComponent<Props> {
         return (
           <NavigationElementProvider>
             <NavigationElementContext.Consumer>
-              {elementContext => (
-                <BottomTab.Navigator
-                  backBehavior="none"
-                  id={id}
-                  initialRouteName={selectedId}
-                  screenOptions={({ route }) => this.tabScreenOptions(route)}
-                  tabBar={() => elementContext?.getFooter()}
-                >
-                  {this.buildScreens(type, this.props.element)}
-                </BottomTab.Navigator>
-              )}
+              {elementContext => {
+                const footer = elementContext?.getFooter();
+                const usesCustomTabbar = footer !== undefined;
+                return (
+                  <BottomTab.Navigator
+                    backBehavior="none"
+                    id={id}
+                    initialRouteName={selectedId}
+                    screenOptions={({ route }) =>
+                      this.tabScreenOptions(route, usesCustomTabbar)
+                    }
+                    tabBar={usesCustomTabbar ? () => footer : undefined}
+                  >
+                    {this.buildScreens(type, this.props.element)}
+                  </BottomTab.Navigator>
+                );
+              }}
             </NavigationElementContext.Consumer>
           </NavigationElementProvider>
         );
