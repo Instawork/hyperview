@@ -591,7 +591,11 @@ function HvRouteFC(props: Types.Props) {
           // Check for elements registered to interrupt back action via a trigger of BACK
           const { get, onUpdate } = backContext || {};
           const elements: Element[] = (get && get()) || [];
-          if (elements.length > 0 && onUpdate) {
+          if (
+            elements.length > 0 &&
+            onUpdate &&
+            props.navigation?.isFocused()
+          ) {
             // Process the elements
             event.preventDefault();
             elements.forEach(behaviorElement => {
