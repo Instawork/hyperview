@@ -141,7 +141,15 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
         return null;
       }
       const enabled = ['', 'true', null].includes(item.getAttribute('enabled'));
-      return <Picker.Item key={l + v} enabled={enabled} label={l} value={v} />;
+      return (
+        <Picker.Item
+          key={l + v}
+          enabled={enabled}
+          label={l}
+          style={{ fontSize: 16 }}
+          value={v}
+        />
+      );
     });
 
     // If there are no items, or the first item has a value,
@@ -155,6 +163,7 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
           // fix inspired by https://github.com/react-native-picker/picker/issues/95#issuecomment-935718568
           enabled={this.props.element.getAttribute('focused') !== 'true'}
           label={this.props.element.getAttribute('placeholder') || undefined}
+          style={{ fontSize: 16 }}
           value=""
         />,
       );
