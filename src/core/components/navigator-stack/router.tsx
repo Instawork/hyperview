@@ -1,5 +1,10 @@
 import * as Types from './types';
-import { StackNavigationState, StackRouter } from '@react-navigation/native';
+import {
+  CommonActions,
+  StackActionType,
+  StackNavigationState,
+  StackRouter,
+} from '@react-navigation/native';
 import { buildRoutesFromDom } from './helpers';
 
 /**
@@ -17,6 +22,20 @@ export const Router = (stackOptions: Types.StackOptions) => {
         ...options,
         routeKeyChanges: [],
       });
+    },
+
+    getStateForAction(
+      state: StackNavigationState<Types.ParamListBase>,
+      action: CommonActions.Action | StackActionType,
+      options: Types.RouterConfigOptions,
+    ) {
+      switch (action.type) {
+        case 'GO_BACK':
+          return closeSelf(action, state);
+        default:
+          break;
+      }
+      return router.getStateForAction(state, action, options);
     },
 
     getStateForRouteNamesChange(
@@ -47,6 +66,21 @@ const mutateState = (
     entrypointUrl,
   );
 
+  return {
+    ...state,
+    index: routes.length - 1,
+    routes,
+  };
+};
+
+/**
+ * Close the route which initiated the action
+ */
+const closeSelf = (
+  action: CommonActions.Action | StackActionType,
+  state: StackNavigationState<Types.ParamListBase>,
+) => {
+  const routes = state.routes.filter(route => route.key !== action.source);
   return {
     ...state,
     index: routes.length - 1,
