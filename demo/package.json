@@ -11,7 +11,7 @@
   "dependencies": {
     "@babel/preset-env": "^7.22.20",
     "@react-native-community/datetimepicker": "7.6.2",
-    "@react-native-picker/picker": "2.4.10",
+    "@react-native-picker/picker": "2.6.1",
     "@react-navigation/bottom-tabs": "^6.5.9",
     "@react-navigation/native": "^6.1.8",
     "@react-navigation/stack": "^6.3.18",
