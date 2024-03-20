@@ -210,7 +210,8 @@ export default class HvDateField extends PureComponent<HvComponentProps> {
       );
     }
     const onChange = (evt: DateTimePickerEvent, date?: Date) => {
-      if (date === undefined) {
+      // Covers press on "cancel" and Hardware back button on Android
+      if (evt.type === 'dismissed') {
         this.onCancel();
       } else {
         this.onDone(date);
