@@ -29,11 +29,13 @@ export const Router = (stackOptions: Types.StackOptions) => {
       action: CommonActions.Action | StackActionType,
       options: Types.RouterConfigOptions,
     ) {
-      switch (action.type) {
-        case 'GO_BACK':
-          return closeSelf(action, state);
-        default:
-          break;
+      if (action.source) {
+        switch (action.type) {
+          case 'GO_BACK':
+            return closeSelf(action, state);
+          default:
+            break;
+        }
       }
       return router.getStateForAction(state, action, options);
     },
