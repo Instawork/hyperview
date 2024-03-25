@@ -2324,10 +2324,10 @@
   dependencies:
     invariant "^2.2.4"
 
-"@react-native-picker/picker@2.4.10":
-  version "2.4.10"
-  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.4.10.tgz#339c7bfc6e1d9a5e934122eaaa7767dc1c5fb725"
-  integrity sha512-EvAlHmPEPOwvbP6Pjg/gtDV3XJzIjIxr10fXFNlX5r9HeHw582G1Zt2o8FLyB718nOttgj8HYUTGxvhu4N65sQ==
+"@react-native-picker/picker@2.6.1":
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.6.1.tgz#3b20ddd1385fab0487db103dc6519570f8892e6d"
+  integrity sha512-oJftvmLOj6Y6/bF4kPcK6L83yNBALGmqNYugf94BzP0FQGpHBwimVN2ygqkQ2Sn2ZU3pGUZMs0jV6+Gku2GyYg==
 
 "@react-native/assets-registry@^0.72.0":
   version "0.72.0"
@@ -5462,10 +5462,10 @@ human-signals@^2.1.0:
   resolved "https://registry.yarnpkg.com/human-signals/-/human-signals-2.1.0.tgz#dc91fcba42e4d06e4abaed33b3e7a3c02f514ea0"
   integrity sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==
 
-hyperview@0.77.0:
-  version "0.77.0"
-  resolved "https://registry.yarnpkg.com/hyperview/-/hyperview-0.77.0.tgz#ec47f54d3613c6be7d30fbed72e46627b51cfa88"
-  integrity sha512-w0wmeltkupcn4PRZ3aWRZB9hyb5aOqWKQ7QUglg2QWTikdcGc1zswq3a62M7SfpGbpYYqtjP+W3+D6nY0H1rpQ==
+hyperview@0.78.0:
+  version "0.78.0"
+  resolved "https://registry.yarnpkg.com/hyperview/-/hyperview-0.78.0.tgz#2b7269aaa736ed140d53eef7e22031b569c62f5a"
+  integrity sha512-lelzJdgW4GLEKwk+dkQBasGQtzqC7QqRrazihwb0vG+f6SX4H/57F1Z+j3AFzGUmdBqitkeFHiGQYzJW4hnVlA==
   dependencies:
     "@instawork/xmldom" "0.0.3"
     lodash "4.17.21"
