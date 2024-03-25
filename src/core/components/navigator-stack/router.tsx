@@ -82,7 +82,10 @@ const closeSelf = (
   action: CommonActions.Action | StackActionType,
   state: StackNavigationState<Types.ParamListBase>,
 ) => {
-  const routes = state.routes.filter(route => route.key !== action.source);
+  const routes =
+    state.routes.length < 2
+      ? state.routes
+      : state.routes.filter(route => route.key !== action.source);
   return {
     ...state,
     index: routes.length - 1,
