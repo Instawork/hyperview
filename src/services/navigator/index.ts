@@ -22,26 +22,68 @@ export class Navigator {
    */
   static routeBackRequest(
     navigation: Types.NavigationProp,
+    action: NavAction,
     routeParams?: NavigationRouteParams,
   ) {
-    const state = navigation.getState();
-
-    if (
-      routeParams &&
-      state.type === Types.NAVIGATOR_TYPE.STACK &&
-      state.index > 0
-    ) {
-      const prev = state.routes[state.index - 1];
-
-      navigation.dispatch({
-        ...Imports.CommonActions.setParams({
-          ...routeParams,
-        }),
-        source: prev.key,
-        target: state.key,
-      });
+    if (routeParams) {
+      const state =
+        action === NAV_ACTIONS.BACK
+          ? Navigator.getClosestStackState(navigation)
+          : Navigator.getClosestModalState(navigation) ||
+            Navigator.getClosestStackState(navigation);
+      if (state && state.index > 0) {
+        const { source, target } = Navigator.getFocused(state);
+        navigation.dispatch({
+          ...Imports.CommonActions.setParams({
+            ...routeParams,
+          }),
+          source,
+          target,
+        });
+      }
     }
     navigation.goBack();
+  }
+
+  static getClosestStackState(
+    navigation: Types.NavigationProp,
+  ): Types.NavigationState | undefined {
+    let state: Types.NavigationState | undefined = navigation.getState();
+    while (state?.type !== Types.NAVIGATOR_TYPE.STACK) {
+      state = navigation.getParent()?.getState();
+    }
+    return state;
+  }
+
+  static getClosestModalState(
+    navigation: Types.NavigationProp,
+  ): Types.NavigationState | undefined {
+    const state = Navigator.getClosestStackState(navigation);
+    if (state && state.routes.some(r => r.name === Types.ID_MODAL)) {
+      return state;
+    }
+    const parent = navigation.getParent();
+    if (parent) {
+      return Navigator.getClosestModalState(parent);
+    }
+    return undefined;
+  }
+
+  static getFocused(
+    state: Types.NavigationState,
+  ): { source: string; target: string } {
+    let route = state.routes[state.index - 1];
+    let targetState = state;
+    let sourceRoute = route;
+    while (route?.state) {
+      targetState = route.state;
+      route = targetState.routes[targetState.index];
+      sourceRoute = route;
+    }
+    return {
+      source: sourceRoute.key,
+      target: targetState.key,
+    };
   }
 
   /**
@@ -66,7 +108,7 @@ export class Navigator {
     switch (navAction) {
       case NAV_ACTIONS.BACK:
       case NAV_ACTIONS.CLOSE:
-        Navigator.routeBackRequest(navigation, routeParams);
+        Navigator.routeBackRequest(navigation, navAction, routeParams);
         break;
       case NAV_ACTIONS.NAVIGATE:
       case NAV_ACTIONS.NEW:
