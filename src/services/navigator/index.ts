@@ -31,28 +31,48 @@ export class Navigator {
    * Only the current navigator is targeted
    * If the navigator is not type stack, the back request is bubbled
    */
-  static routeBackRequest(
+  routeBackRequest(
     navigation: Types.NavigationProp,
+    sourceKey: string,
     routeParams?: NavigationRouteParams,
   ) {
-    const state = navigation.getState();
-
-    if (
-      routeParams &&
-      state.type === Types.NAVIGATOR_TYPE.STACK &&
-      state.index > 0
+    // Perform close by state reset
+    let state: Types.NavigationState | undefined = navigation.getState();
+    let targetNavigation: Types.NavigationProp | undefined = navigation;
+    let routes = state?.routes.filter(route => route.key !== sourceKey) || [];
+    // Handle empty stacks
+    while (
+      (targetNavigation?.getParent() && routes.length === 0) ||
+      state?.type === Types.NAVIGATOR_TYPE.TAB
     ) {
-      const prev = state.routes[state.index - 1];
-
-      navigation.dispatch({
-        ...Imports.CommonActions.setParams({
-          ...routeParams,
-        }),
-        source: prev.key,
-        target: state.key,
-      });
+      targetNavigation = navigation.getParent();
+      state = targetNavigation?.getState();
+      routes = state?.routes.slice(0, state.index) || [];
     }
-    navigation.goBack();
+
+    if (state && targetNavigation && routes.length > 0) {
+      // Reset the state
+      targetNavigation?.dispatch({
+        ...Imports.CommonActions.reset({
+          ...state,
+          index: routes.length - 1,
+          routes,
+        }),
+      });
+
+      // Update the params of the new focused route
+      if (routeParams) {
+        const route = this.context?.getCurrentRoute();
+        if (route) {
+          targetNavigation.dispatch({
+            ...Imports.CommonActions.setParams({
+              ...routeParams,
+            }),
+            source: route.key,
+          });
+        }
+      }
+    }
   }
 
   /**
@@ -77,7 +97,11 @@ export class Navigator {
     switch (navAction) {
       case NAV_ACTIONS.BACK:
       case NAV_ACTIONS.CLOSE:
-        Navigator.routeBackRequest(navigation, routeParams);
+        this.routeBackRequest(
+          navigation,
+          this.props.route?.key || 'unknown',
+          routeParams,
+        );
         break;
       case NAV_ACTIONS.NAVIGATE:
       case NAV_ACTIONS.NEW:
