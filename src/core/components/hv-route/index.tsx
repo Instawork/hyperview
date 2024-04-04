@@ -29,6 +29,7 @@ import LoadError from 'hyperview/src/core/components/load-error';
 import Loading from 'hyperview/src/core/components/loading';
 // eslint-disable-next-line instawork/import-services
 import Navigation from 'hyperview/src/services/navigation';
+import { NavigationContainerRefContext } from '@react-navigation/native';
 
 /**
  * Implementation of an HvRoute component
@@ -38,6 +39,8 @@ import Navigation from 'hyperview/src/services/navigation';
  * - Handles errors
  */
 class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
+  static contextType = NavigationContainerRefContext;
+
   parser?: DomService.Parser;
 
   navLogic: NavigatorService.Navigator;
@@ -83,6 +86,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       this.props.onParseBefore || null,
       this.props.onParseAfter || null,
     );
+    this.navLogic.setContext(this.context);
 
     // When a nested navigator is found, the document is not loaded from url
     if (this.props.element === undefined) {
