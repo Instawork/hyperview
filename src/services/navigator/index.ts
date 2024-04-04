@@ -4,6 +4,7 @@ import * as Imports from './imports';
 import * as Types from './types';
 import type { NavAction, NavigationRouteParams } from 'hyperview/src/types';
 import { NAV_ACTIONS } from 'hyperview/src/types';
+import { NavigationContainerRefContext } from '@react-navigation/native';
 
 /**
  * Provide navigation action implementations
@@ -11,9 +12,19 @@ import { NAV_ACTIONS } from 'hyperview/src/types';
 export class Navigator {
   props: HvRoute.Props;
 
+  context:
+    | React.ContextType<typeof NavigationContainerRefContext>
+    | undefined = undefined;
+
   constructor(props: HvRoute.Props) {
     this.props = props;
   }
+
+  setContext = (
+    context: React.ContextType<typeof NavigationContainerRefContext>,
+  ) => {
+    this.context = context;
+  };
 
   /**
    * Process the request by changing params before going back
