@@ -33,6 +33,7 @@ export class Navigator {
    */
   routeBackRequest(
     navigation: Types.NavigationProp,
+    action: NavAction,
     sourceKey: string,
     routeParams?: NavigationRouteParams,
   ) {
@@ -40,14 +41,28 @@ export class Navigator {
     let state: Types.NavigationState | undefined = navigation.getState();
     let targetNavigation: Types.NavigationProp | undefined = navigation;
     let routes = state?.routes.filter(route => route.key !== sourceKey) || [];
-    // Handle empty stacks
-    while (
-      (targetNavigation?.getParent() && routes.length === 0) ||
-      state?.type === Types.NAVIGATOR_TYPE.TAB
-    ) {
-      targetNavigation = navigation.getParent();
-      state = targetNavigation?.getState();
-      routes = state?.routes.slice(0, state.index) || [];
+    if (action === NAV_ACTIONS.CLOSE) {
+      // Close finds the closest stack with a modal
+      while (
+        (targetNavigation?.getParent() &&
+          (routes.length === 0 ||
+            !routes.some(r => r.name === Types.ID_MODAL))) ||
+        state?.type === Types.NAVIGATOR_TYPE.TAB
+      ) {
+        targetNavigation = navigation.getParent();
+        state = targetNavigation?.getState();
+        routes = state?.routes.slice(0, state.index) || [];
+      }
+    } else if (action === NAV_ACTIONS.BACK) {
+      // Back finds the closest stack with more than one route
+      while (
+        (targetNavigation?.getParent() && routes.length === 0) ||
+        state?.type === Types.NAVIGATOR_TYPE.TAB
+      ) {
+        targetNavigation = navigation.getParent();
+        state = targetNavigation?.getState();
+        routes = state?.routes.slice(0, state.index) || [];
+      }
     }
 
     if (state && targetNavigation && routes.length > 0) {
@@ -99,6 +114,7 @@ export class Navigator {
       case NAV_ACTIONS.CLOSE:
         this.routeBackRequest(
           navigation,
+          navAction,
           this.props.route?.key || 'unknown',
           routeParams,
         );
