@@ -16,7 +16,7 @@ export const isDynamicRoute = (id: string): boolean => {
 };
 
 export const isModalRouteName = (name: string): boolean => {
-  return name === Types.ID_MODAL;
+  return name.startsWith(Types.ID_MODAL);
 };
 
 /**

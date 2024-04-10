@@ -46,7 +46,7 @@ export class Navigator {
       while (
         (targetNavigation?.getParent() &&
           (routes.length === 0 ||
-            !routes.some(r => r.name === Types.ID_MODAL))) ||
+            routes.some(r => r.name.startsWith(Types.ID_MODAL)))) ||
         state?.type === Types.NAVIGATOR_TYPE.TAB
       ) {
         targetNavigation = navigation.getParent();
