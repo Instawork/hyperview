@@ -49,7 +49,7 @@ export class Navigator {
             routes.some(r => r.name.startsWith(Types.ID_MODAL)))) ||
         state?.type === Types.NAVIGATOR_TYPE.TAB
       ) {
-        targetNavigation = navigation.getParent();
+        targetNavigation = targetNavigation?.getParent();
         state = targetNavigation?.getState();
         routes = state?.routes.slice(0, state.index) || [];
       }
