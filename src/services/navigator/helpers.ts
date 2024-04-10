@@ -326,6 +326,9 @@ const buildCloseRequest = (
           { ...targetRoute.params, ...routeParams },
         ];
       }
+      if (isRouteModal(state, 0)) {
+        return [NAV_ACTIONS.CLOSE, navigation, '', routeParams];
+      }
     }
   }
   const parent = navigation.getParent();
