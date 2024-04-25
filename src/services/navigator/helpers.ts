@@ -327,6 +327,10 @@ const buildCloseRequest = (
         ];
       }
     }
+    // If the first route is a modal, perform a close action
+    if (isRouteModal(state, 0)) {
+      return [NAV_ACTIONS.CLOSE, navigation, '', routeParams];
+    }
   }
   const parent = navigation.getParent();
   if (!parent) {
