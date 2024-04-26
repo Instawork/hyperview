@@ -24,17 +24,27 @@ This repo contains a React Native implementation of the Hyperview Client. It can
 
 ### Requirements
 
-The Hyperview client only has two required dependencies:
+The Hyperview client only has the following required dependencies:
 
-- url-parse 1.5.10
-- @instawork/xmldom 0.0.3
+- @instawork/xmldom = 0.0.3
+- lodash = 4.17.21
+- tiny-emitter = 2.1.0
+- url-parse = 1.5.10
 
 More importantly, the client is designed to be incorporated into an existing React Native project, and thus has the following peer dependencies:
 
+- @react-native-community/datetimepicker >= 7.6.2
+- @react-native-picker/picker >= 2.6.1
+- @react-navigation/bottom-tabs >= 6.5.7
+- @react-navigation/native >= 6.1.6
+- @react-navigation/stack >= 6.3.16
+- @types/react >= 17.0.67
 - react >= 17.0.2
 - react-native >= 0.67.4
-- react-native-keyboard-aware-scrollview 2.1.0
-- react-native-webview 13.2.2
+- react-native-gesture-handler >= 2.11.0
+- react-native-keyboard-aware-scrollview >= 2.1.0
+- react-native-safe-area-context >= 4.2.4
+- react-native-webview >= 13.2.2
 
 ### Getting Started
 
