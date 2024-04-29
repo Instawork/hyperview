@@ -329,7 +329,12 @@ const buildCloseRequest = (
     }
     // If the first route is a modal, perform a close action
     if (isRouteModal(state, 0)) {
-      return [NAV_ACTIONS.CLOSE, navigation, '', routeParams];
+      return [
+        NAV_ACTIONS.CLOSE,
+        navigation.getParent() || navigation,
+        '',
+        routeParams,
+      ];
     }
   }
   const parent = navigation.getParent();
