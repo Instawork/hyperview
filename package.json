@@ -26,9 +26,9 @@
   "scripts": {
     "sync": "babel-node ./scripts/sync",
     "generate": "babel-node ./scripts/generate",
-    "preversion": "yarn test",
+    "preversion": "yarn test && ./scripts/update-version",
     "prettify": "pretty-quick && prettier --write '**/*.xsd' '**/*.xml' '**/*.md'",
-    "postversion": "yarn publish --new-version $npm_package_version && cd demo && yarn add hyperview@$npm_package_version && git add package.json yarn.lock && git commit -m\"chore(demo): update Hyperview to v$npm_package_version\" && cd .. && git push --follow-tags",
+    "postversion": "yarn publish --new-version $npm_package_version && cd demo && yarn add hyperview@$npm_package_version && git add package.json yarn.lock README.md && git commit -m\"chore(demo): update Hyperview to v$npm_package_version\" && cd .. && git push --follow-tags",
     "format-njk": "./scripts/format-njk.sh",
     "release:patch": "yarn version --patch",
     "release:minor": "yarn version --minor",

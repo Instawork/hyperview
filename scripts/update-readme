@@ -1,0 +1,55 @@
+#!/usr/bin/env sh
+
+# Replace the dependencies in the README.md file with the actual dependencies from the package.json file
+# Requires jq to be installed though will graceully exit if not included
+
+if ! command -v jq &> /dev/null
+then
+    echo "jq is required to run update-readme. This will not block the build process but the README.md file will not be updated."
+    exit 0
+fi
+
+PACKAGE_JSON=$(cat package.json)
+DEPENDENCIES=($(jq -r '.dependencies | to_entries | map("\(.key)=\(.value)")|.[]' <<< $PACKAGE_JSON))
+PEER_DEPENDENCIES=($(jq -r '.peerDependencies | to_entries | map("\(.key)=\(.value)")|.[]' <<< $PACKAGE_JSON))
+
+formatDependency() {
+  dep=$1
+  if [[ $dep == *"^"* ]]; then dep="${dep//[=]/ >= }"; else dep="${dep//[=]/ = }"; fi
+  dep="${dep//[\^]/}"
+  echo $dep
+}
+
+document=""
+replacing=false
+while IFS= read -r line; do
+  # Inject the required dependencies
+  if [[ $line == *"required dependencies:"* ]]; then
+    replacing=true
+    document="$document\n$line\n"
+    for d in "${DEPENDENCIES[@]}"; do
+      document="$document\n- $(formatDependency $d)"
+    done
+    document="$document\n"
+  fi
+
+  # Inject the peer dependencies
+  if [[ $line == *"peer dependencies:"* ]]; then
+    replacing=true
+    document="$document\n$line\n"
+    for d in "${PEER_DEPENDENCIES[@]}"; do
+      document="$document\n- $(formatDependency $d)"
+    done
+    document="$document\n"
+  fi
+
+  if [[ $line == *"### Getting Started"* ]]; then
+    replacing=false
+  fi
+
+  if [[ $replacing == false ]]; then
+    if [[ $document == "" ]]; then document="$line"; else document="$document\n$line"; fi
+  fi
+done < README.md
+
+echo "$document" > README.md
