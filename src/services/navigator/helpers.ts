@@ -339,7 +339,7 @@ const buildCloseRequest = (
   }
   const parent = navigation.getParent();
   if (!parent) {
-    return [NAV_ACTIONS.CLOSE, navigation, '', routeParams];
+    return [NAV_ACTIONS.CLOSE, undefined, '', routeParams];
   }
   return buildCloseRequest(parent, routeParams);
 };
