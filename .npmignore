@@ -14,6 +14,7 @@ _examples_site/
 demo/
 docs/
 examples/
+lib/
 node_modules/
 scripts/
 stories/
