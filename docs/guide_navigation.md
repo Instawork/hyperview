@@ -14,22 +14,20 @@ Navigators are represented in HXML with the &lt;navigator> element and contain t
 
 - **id**: the unique identifier for this navigator.
 - **type**: the type of navigator to use, either _stack_ or _tab._
-- **merge**: an optional¹ boolean controlling state updates when new structures are received.
+- **merge**: an optional boolean controlling state updates when new structures are received.
 
 When constructing HXML navigation documents, the &lt;navigator> elements must always be the child of either a &lt;doc> element or a &lt;nav-route>². Only one &lt;navigator> element can exist at any level of the structure. Each &lt;navigator> must contain at least one &lt;nav-route> child.
 
 Routes are represented with the &lt;nav-route> element and contain the following attributes:
 
 - **id**: the unique identifier for this route.
-- **href**: an optional² designation of the url to load when the route is focused.
-- **selected**: an optional³ assignment of the initial selection state (_tab_ navigator only). When no route is marked as selected, the first route will be selected by default.
+- **href**: an optional¹ designation of the url to load when the route is focused.
+- **selected**: an optional assignment of the initial selection state (_tab_ navigator only). When no route is marked as selected, the first route will be selected by default.
 - **modal**: an optional assignment of the route presentation as a modal (_stack_ navigator only). When set to true, the route will use _modal_ presentation, when false (default), the _card_ presentation will be used.
 
 A &lt;nav-route> must contain either an href attribute with non-empty value or a child &lt;navigator>² element. Only one route is focused at a time. In a _tab_ navigator, this will be the selected tab. In a _stack_ navigator, it will be the most recently added route. The contents of a route are only loaded when the route has focus.
 
-¹ See [_Deep links_](#deep-links) section for more information
-
-² See [_Nested navigators_](#nested-navigators) section for more information
+¹ See [_Nested navigators_](#nested-navigators) section for more information
 
 ### Tab navigator
 
