@@ -162,7 +162,7 @@ class Index extends React.Component {
             align="left"
             background="light"
             title="Update your apps instantly by deploying your backend"
-            content="Say goodbye to slow release cycles and long app store review times. With Hyperview, your backend controls your app&apos;s layout, content, and available actions. The means you can update any aspect of your app with a server-side change. True CI/CD is finally attainable for mobile development."
+            content="Say goodbye to slow release cycles and long app store review times. With Hyperview, your backend controls your app&apos;s layout, content, and available actions. This means you can update any aspect of your app with a server-side change. True CI/CD is finally attainable for mobile development."
             image={imgUrl('home/deploy.svg')}
           />
           <Feature
