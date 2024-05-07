@@ -529,7 +529,7 @@ The following example demonstrates how a _back_ trigger can be implemented and t
 </doc>
 ```
 
-_Example 12_:
+_Example 11_:
 Example HXML showing the implementation of a _back_ trigger which blocks the user’s ability to leave a screen until making a decision.
 
 ### Navigator behaviors
@@ -551,7 +551,7 @@ The &lt;navigator> element supports behaviors with a trigger of _load_. These be
 </doc>
 ```
 
-_Example 13_:
+_Example 12_:
 Example HXML showing a _tab_ navigator with a _load_ behavior.
 
 Imagine we want to trigger a tracking event when the user arrives at the main user interface. There are three different tabs and the user may not always start on the first tab. If we were to put the tracking behavior into the routes, we would have to include it on each route and then would have to create additional logic to avoid sending it again when the user navigates to the other routes. Putting the behavior at the navigator level ensures the behavior is triggered only once regardless of which route is selected.
