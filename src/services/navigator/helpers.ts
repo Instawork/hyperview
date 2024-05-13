@@ -16,7 +16,7 @@ export const isDynamicRoute = (id: string): boolean => {
 };
 
 export const isModalRouteName = (name: string): boolean => {
-  return name === Types.ID_MODAL;
+  return name.startsWith(Types.ID_MODAL);
 };
 
 /**
@@ -327,10 +327,19 @@ const buildCloseRequest = (
         ];
       }
     }
+    // If the first route is a modal, perform a close action
+    if (isRouteModal(state, 0)) {
+      return [
+        NAV_ACTIONS.CLOSE,
+        navigation.getParent() || navigation,
+        '',
+        routeParams,
+      ];
+    }
   }
   const parent = navigation.getParent();
   if (!parent) {
-    return [NAV_ACTIONS.CLOSE, navigation, '', routeParams];
+    return [NAV_ACTIONS.CLOSE, undefined, '', routeParams];
   }
   return buildCloseRequest(parent, routeParams);
 };
