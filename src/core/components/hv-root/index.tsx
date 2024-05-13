@@ -552,6 +552,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
             fetch={this.props.fetch}
             formatDate={this.props.formatDate}
             loadingScreen={this.props.loadingScreen}
+            log={this.props.log}
             navigate={this.props.navigate}
             navigation={this.props.navigation}
             onError={this.props.onError}
@@ -584,6 +585,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
               fetch: this.props.fetch,
               handleBack: this.props.handleBack,
               loadingScreen: this.props.loadingScreen,
+              log: this.props.log,
               onError: this.props.onError,
               onParseAfter: this.props.onParseAfter,
               onParseBefore: this.props.onParseBefore,

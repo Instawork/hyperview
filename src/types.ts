@@ -431,3 +431,22 @@ export type Reload = (
   optHref: DOMString | null | undefined,
   opts: HvComponentOptions,
 ) => void;
+
+export type LogPayload = {
+  data: unknown;
+  message: string;
+  prefix?: string;
+  severity: number;
+  source?: string;
+  timestamp: Date;
+};
+
+export const LOG_SEVERITY = {
+  ERROR: 0,
+  INFO: 30,
+  LOG: 20,
+  WARN: 10,
+};
+Object.freeze(LOG_SEVERITY);
+
+export type Log = (payload: LogPayload) => void;

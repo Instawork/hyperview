@@ -4,6 +4,7 @@ import type {
   Fetch,
   HvBehavior,
   HvComponent,
+  Log,
   NavigationRouteParams,
   Route,
 } from 'hyperview/src/types';
@@ -44,4 +45,5 @@ export type Props = {
   handleBack?: ComponentType<{ children: ReactNode }>;
   doc?: Document;
   registerPreload?: (id: number, element: Element) => void;
+  log?: Log;
 };

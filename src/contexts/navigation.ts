@@ -3,6 +3,7 @@ import type {
   HvBehavior,
   HvComponent,
   HvComponentOnUpdate,
+  Log,
   Reload,
   Route,
 } from 'hyperview/src/types';
@@ -27,6 +28,7 @@ export type NavigationContextProps = {
   errorScreen?: ComponentType<ErrorProps>;
   loadingScreen?: ComponentType<LoadingProps>;
   handleBack?: ComponentType<{ children: ReactNode }>;
+  log?: Log;
 };
 
 /**
