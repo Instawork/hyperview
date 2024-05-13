@@ -2,7 +2,7 @@ import * as Constants from './src/constants';
 import Hyperview from 'hyperview';
 import './src/gesture-handler';
 import React, { useState } from 'react';
-import { fetchWrapper, formatDate } from './src/helpers';
+import { fetchWrapper, formatDate, log } from './src/helpers';
 import {
   SafeAreaInsetsContext,
   SafeAreaProvider,
@@ -60,6 +60,7 @@ export default () => {
                   entrypointUrl={Constants.ENTRY_POINT_NAV_URL}
                   fetch={fetchWrapper}
                   formatDate={formatDate}
+                  log={log}
                 />
               ) : (
                 // Hyperview will rely on an external Navigator

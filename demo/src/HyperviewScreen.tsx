@@ -4,7 +4,7 @@ import HandleBack from './HandleBack';
 import Hyperview from 'hyperview';
 import type { HvBehavior, NavigationRouteParams } from 'hyperview';
 import React from 'react';
-import { fetchWrapper, formatDate } from './helpers';
+import { fetchWrapper, formatDate, log } from './helpers';
 
 type HyperviewScreenFC<P> = React.FunctionComponent<P> & {
   Behaviors: HvBehavior[];
@@ -59,6 +59,7 @@ const HyperviewScreen: HyperviewScreenFC<Props> = (props: Props) => {
         push={push}
         // @ts-ignore
         route={props.route}
+        log={log}
       />
     </HandleBack>
   );
