@@ -556,6 +556,7 @@ function HvRouteFC(props: Types.Props) {
   );
 
   React.useEffect(() => {
+    const id = props.route?.params?.id || props.route?.key;
     if (props.navigation) {
       const unsubscribeBlur: () => void = props.navigation.addListener(
         'blur',
@@ -571,7 +572,6 @@ function HvRouteFC(props: Types.Props) {
         'focus',
         () => {
           const doc = docContext?.getDoc();
-          const id = props.route?.params?.id || props.route?.key;
           NavigatorService.setSelected(doc, id, docContext?.setDoc);
           NavigatorService.addStackRoute(
             doc,
@@ -625,10 +625,24 @@ function HvRouteFC(props: Types.Props) {
         },
       );
 
+      // Update the urls in each route when the state updates the params
+      const unsubscribeState: () => void = props.navigation.addListener(
+        'state',
+        event => {
+          NavigatorService.updateRouteUrlFromState(
+            docContext?.getDoc(),
+            id,
+            event.data?.state,
+            docContext?.setDoc,
+          );
+        },
+      );
+
       return () => {
         unsubscribeBlur();
         unsubscribeFocus();
         unsubscribeRemove();
+        unsubscribeState();
       };
     }
     return undefined;
