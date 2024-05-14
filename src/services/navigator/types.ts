@@ -37,7 +37,10 @@ export type NavigationProp = {
   getParent: (id?: string) => NavigationProp | undefined;
   addListener: (
     eventName: string,
-    callback: (event: { preventDefault: () => void }) => void,
+    callback: (event: {
+      data: { state: NavigationState | undefined } | undefined;
+      preventDefault: () => void;
+    }) => void,
   ) => () => void;
   isFocused: () => boolean;
 };

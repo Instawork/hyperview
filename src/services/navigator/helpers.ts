@@ -5,7 +5,11 @@ import * as Types from './types';
 import * as UrlService from 'hyperview/src/services/url';
 import { ANCHOR_ID_SEPARATOR, Route } from './types';
 import { LOCAL_NAME, NAV_ACTIONS, NODE_TYPE } from 'hyperview/src/types';
-import type { NavAction, NavigationRouteParams } from 'hyperview/src/types';
+import type {
+  NavAction,
+  NavigationRouteParams,
+  RouteParams,
+} from 'hyperview/src/types';
 import { shallowCloneToRoot } from 'hyperview/src/services';
 
 /**
@@ -644,6 +648,55 @@ export const addStackRoute = (
       element.setAttribute(Types.KEY_HREF, route.params.url);
       parentElement.appendChild(element);
 
+      if (setDoc) {
+        const newRoot = shallowCloneToRoot(doc);
+        setDoc(newRoot);
+      }
+    }
+  }
+};
+
+const getUrlFromState = (
+  state: Types.NavigationState,
+  id: string,
+): string | undefined => {
+  if (!state) {
+    return undefined;
+  }
+
+  for (let i: number = 0; i < state.routes.length; i += 1) {
+    const route = state.routes[i];
+    if (route.name === id) {
+      const params = route.params as RouteParams;
+      return params.url || undefined;
+    }
+    const url = getUrlFromState(route.state as Types.NavigationState, id);
+    if (url) {
+      return url;
+    }
+  }
+  return undefined;
+};
+
+/**
+ * Update the route url in the document based on the updated state
+ * If the url has changed, the document is updated
+ */
+export const updateRouteUrlFromState = (
+  doc: Document | undefined,
+  id: string | undefined,
+  state: Types.NavigationState | undefined,
+  setDoc?: ((d: Document) => void) | undefined,
+) => {
+  if (!doc || !id || !state) {
+    return;
+  }
+  const route = getRouteById(doc, id);
+  if (route) {
+    const currentUrl = route.getAttribute(Types.KEY_HREF);
+    const url = getUrlFromState(state, id);
+    if (url && url !== currentUrl) {
+      route.setAttribute(Types.KEY_HREF, url);
       if (setDoc) {
         const newRoot = shallowCloneToRoot(doc);
         setDoc(newRoot);
