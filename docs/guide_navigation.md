@@ -16,18 +16,16 @@ Navigators are represented in HXML with the &lt;navigator> element and contain t
 - **type**: the type of navigator to use, either _stack_ or _tab._
 - **merge**: an optional boolean controlling state updates when new structures are received.
 
-When constructing HXML navigation documents, the &lt;navigator> elements must always be the child of either a &lt;doc> element or a &lt;nav-route>². Only one &lt;navigator> element can exist at any level of the structure. Each &lt;navigator> must contain at least one &lt;nav-route> child.
+When constructing HXML navigation documents, the &lt;navigator> elements must always be the child of either a &lt;doc> element or a &lt;nav-route>. Only one &lt;navigator> element can exist at any level of the structure. Each &lt;navigator> must contain at least one &lt;nav-route> child.
 
 Routes are represented with the &lt;nav-route> element and contain the following attributes:
 
 - **id**: the unique identifier for this route.
-- **href**: an optional¹ designation of the url to load when the route is focused.
+- **href**: an optional designation of the url to load when the route is focused. A &lt;nav-route> must contain either an href attribute with non-empty value or a child &lt;navigator> element. See [_Nested navigators_](#nested-navigators) section for more information.
 - **selected**: an optional assignment of the initial selection state (_tab_ navigator only). When no route is marked as selected, the first route will be selected by default.
 - **modal**: an optional assignment of the route presentation as a modal (_stack_ navigator only). When set to true, the route will use _modal_ presentation, when false (default), the _card_ presentation will be used.
 
-A &lt;nav-route> must contain either an href attribute with non-empty value or a child &lt;navigator>² element. Only one route is focused at a time. In a _tab_ navigator, this will be the selected tab. In a _stack_ navigator, it will be the most recently added route. The contents of a route are only loaded when the route has focus.
-
-¹ See [_Nested navigators_](#nested-navigators) section for more information
+Only one route is focused at a time. In a _tab_ navigator, this will be the selected tab. In a _stack_ navigator, it will be the most recently added route. The contents of a route are only loaded when the route has focus.
 
 ### Tab navigator
 
@@ -531,7 +529,7 @@ The following example demonstrates how a _back_ trigger can be implemented and t
 </doc>
 ```
 
-_Example 12_:
+_Example 11_:
 Example HXML showing the implementation of a _back_ trigger which blocks the user’s ability to leave a screen until making a decision.
 
 ### Navigator behaviors
@@ -553,7 +551,7 @@ The &lt;navigator> element supports behaviors with a trigger of _load_. These be
 </doc>
 ```
 
-_Example 13_:
+_Example 12_:
 Example HXML showing a _tab_ navigator with a _load_ behavior.
 
 Imagine we want to trigger a tracking event when the user arrives at the main user interface. There are three different tabs and the user may not always start on the first tab. If we were to put the tracking behavior into the routes, we would have to include it on each route and then would have to create additional logic to avoid sending it again when the user navigates to the other routes. Putting the behavior at the navigator level ensures the behavior is triggered only once regardless of which route is selected.
@@ -562,6 +560,51 @@ Imagine we want to trigger a tracking event when the user arrives at the main us
 
 _Diagram 13_:
 Visualization of a simple _tab_ navigator.
+
+### Initial state
+
+The HXML schema supports defining an initial state for each navigator type. This allows developers to control which route a user sees when the navigator is created. This feature can be useful to allow a user to resume from their last state or to lead them to a particular area of the application. For _tab_ navigators, the selected attribute is used. By default a _tab_ navigator will select the first route defined, but using the selected attribute allows selecting a different route.
+
+```xml
+<doc xmlns="https://hyperview.org/hyperview">
+  <navigator id="root" type="tab">
+    <nav-route id="home" href="http://myapp.com/home.xml" />
+    <nav-route
+      id="profile"
+      href="http://myapp.com/profile.xml"
+      selected="true"
+    />
+    <nav-route id="feed" href="http://myapp.com/feed.xml" />
+  </navigator>
+</doc>
+```
+
+_Example 13_:
+_tab_ navigator with “profile” route selected.
+
+> If more than one route is marked as selected, the first route found with a value of "true" will be used.
+
+A different approach is required for _stack_ navigators where the most recently added route has focus. When defining a _stack_ navigator, adding routes into the navigator will set the initial state. In the diagram below, a user has navigated from “home” to “help” (as a modal) to a “topic”.
+
+![stack_close_before](/img/guide_navigation/stack_close_before.png 'Stack with modal')
+
+_Diagram 14_:
+A _stack_ navigator with three routes.
+
+This state can be described using the following HXML. Hyperview will create the navigator with this initial state and the user will be able to close or back out of the screens as they would if they had navigated to this location.
+
+```xml
+<doc xmlns="https://hyperview.org/hyperview">
+  <navigator id="root" type="stack">
+    <nav-route id="home" href="http://myapp.com/home.xml" />
+    <nav-route id="help" href="http://myapp.com/help.xml" modal="true" />
+    <nav-route id="topic" href="http://myapp.com/topic.xml" />
+  </navigator>
+</doc>
+```
+
+_Example 14_:
+_stack_ navigator with an initial state defined including three routes, one of which is using a _modal_ presentation.
 
 ### Navigation UI
 
@@ -587,7 +630,7 @@ A navigation header can be created within the &lt;header> element of any route d
 </doc>
 ```
 
-_Example 14_:
+_Example 15_:
 A simple header providing _back_ navigation.
 
 #### Tab bar
@@ -662,7 +705,7 @@ profile.xml
 </doc>
 ```
 
-_Example 15_:
+_Example 16_:
 Example HXML showing the implementation of a tab bar. Each document includes both tabs but applies alternate styling and removes behaviors on the view representing the current selection.
 
 ## Deep links
@@ -703,7 +746,7 @@ deeplink.xml
 </doc>
 ```
 
-_Example 16_:
+_Example 17_:
 Example of an initial navigation document and an updated document passed as a deep link.
 
 ### Complex example
@@ -746,7 +789,7 @@ deeplink.xml
 </doc>
 ```
 
-_Example 17_:
+_Example 18_:
 Example of a nested navigation state and a deep link which alters the user’s state by adding a new tab and popping a modal over it.
 
 ### Merging example
@@ -789,7 +832,7 @@ deeplink.xml
 </doc>
 ```
 
-_Example 18_:
+_Example 19_:
 Example of a nested navigation state and a deep link which merges with the existing state.
 
 ## Best Practices
