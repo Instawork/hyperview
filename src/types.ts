@@ -431,3 +431,15 @@ export type Reload = (
   optHref: DOMString | null | undefined,
   opts: HvComponentOptions,
 ) => void;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type LogFunction = (message?: any, ...optionalParams: any[]) => void;
+
+export type Logger = {
+  debug: LogFunction;
+  error: LogFunction;
+  info: LogFunction;
+  log: LogFunction;
+  trace: LogFunction;
+  warn: LogFunction;
+};

@@ -5,6 +5,7 @@ import {
   HvBehavior,
   HvComponent,
   HvComponentOnUpdate,
+  Logger,
   Reload,
   Route,
   RouteParams,
@@ -28,6 +29,7 @@ export type NavigationContextProps = {
   loadingScreen?: ComponentType<LoadingProps>;
   handleBack?: ComponentType<{ children: ReactNode }>;
   reload: Reload;
+  logger?: Logger;
 };
 
 export type NavigatorMapContextProps = {
@@ -63,6 +65,7 @@ export type InnerRouteProps = {
   getPreload: (key: number) => Element | undefined;
   element?: Element;
   reload: Reload;
+  logger?: Logger;
 };
 
 /**
