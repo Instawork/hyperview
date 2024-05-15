@@ -4,8 +4,6 @@ authorURL: https://github.com/hgray-instawork
 title: Hyperview Navigation Announcement
 ---
 
-## Hyperview navigation
-
 We have been busily testing and integrating Hyperview's navigation solution over the last few months. While we will continue to add more examples to illustrate more complex concepts, we think it's time for a formal introduction!
 
 We have a few resources which will help you get started:
