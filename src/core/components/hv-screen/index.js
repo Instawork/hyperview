@@ -143,6 +143,8 @@ export default class HvScreen extends React.Component {
     // this.navigation.preloadScreens to prevent memory leaks.
 
     if (newUrl && newUrl !== oldUrl) {
+      // Injecting a passed document as a single-use document
+      this.initialDoc = nextProps.doc;
       this.needsLoad = true;
 
       const preloadScreen = newPreloadScreen
