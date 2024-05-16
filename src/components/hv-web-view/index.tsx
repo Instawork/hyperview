@@ -38,10 +38,12 @@ export default class HvWebView extends PureComponent<HvComponentProps> {
       this.props.options,
     );
     const color = props['activity-indicator-color'] || '#8d9494';
+    const allowsInlineMediaPlayback = props['allows-inline-media-playback'];
     const injectedJavaScript = props['injected-java-script'];
     const source = { html: props.html, uri: props.url } as const;
     return (
       <WebView
+        allowsInlineMediaPlayback={allowsInlineMediaPlayback}
         injectedJavaScript={injectedJavaScript}
         onMessage={this.onMessage}
         renderLoading={() => (
