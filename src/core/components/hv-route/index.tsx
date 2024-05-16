@@ -121,6 +121,17 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
   };
 
   /**
+   * Fix for both route and screen loading the document when url changes
+   * The route will not perform a load if a screen has already been rendered
+   */
+  shouldReload = (): boolean => {
+    return (
+      !this.localDoc ||
+      !(this.getRenderElement()?.localName === LOCAL_NAME.SCREEN)
+    );
+  };
+
+  /**
    * Load the url and resolve the xml.
    */
   load = async (): Promise<void> => {
@@ -137,7 +148,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       // When a modal is included, a wrapper stack navigator is created
       // The route which contains the navigator should not load the document
       // The code below prevents the route from loading the document
-      if (this.props.route?.params?.isModal) {
+      if (this.props.route?.params?.isModal || !this.shouldReload()) {
         return;
       }
 
