@@ -1196,6 +1196,7 @@
       <xs:attribute name="url" type="xs:string" />
       <xs:attribute name="html" type="xs:string" />
       <xs:attribute name="activity-indicator-color" type="hv:color" />
+      <xs:attribute name="allows-inline-media-playback" type="xs:boolean" />
       <xs:attribute name="injected-java-script" type="xs:string" />
       <xs:attribute name="id" type="hv:ID" />
       <xs:attribute name="key" type="hv:KEY" />
