@@ -344,7 +344,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
             fetch={this.props.fetch}
             formatDate={formatter}
             loadingScreen={this.props.loadingScreen}
-            logger={this.props.logger}
             navigate={this.navLogic.navigate}
             navigation={this.props.navigation}
             onError={this.props.onError}
@@ -667,7 +666,6 @@ function HvRouteFC(props: Types.Props) {
       getPreload={navigatorMapContext.getPreload}
       handleBack={navigationContext.handleBack}
       loadingScreen={navigationContext.loadingScreen}
-      logger={navigationContext.logger}
       navigation={props.navigation}
       onParseAfter={navigationContext.onParseAfter}
       onParseBefore={navigationContext.onParseBefore}
