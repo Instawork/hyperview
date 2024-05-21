@@ -1,4 +1,5 @@
 import * as InlineContext from 'hyperview/src/services/inline-context';
+import * as Logging from 'hyperview/src/core/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type {
   HvComponentOnUpdate,
@@ -62,11 +63,11 @@ export const renderElement = (
 
   if (element.nodeType === NODE_TYPE.ELEMENT_NODE) {
     if (!element.namespaceURI) {
-      console.warn('`namespaceURI` missing for node:', element.toString());
+      Logging.warn('`namespaceURI` missing for node:', element.toString());
       return null;
     }
     if (!element.localName) {
-      console.warn('`localName` missing for node:', element.toString());
+      Logging.warn('`localName` missing for node:', element.toString());
       return null;
     }
 
@@ -100,7 +101,7 @@ export const renderElement = (
 
     // No component registered for the namespace/local name.
     // Warn in case this was an unintended mistake.
-    console.warn(
+    Logging.warn(
       `No component registered for tag <${element.localName}> (namespace: ${element.namespaceURI})`,
     );
   }
@@ -127,7 +128,7 @@ export const renderElement = (
         // However we raise a warning when the string isn't just composed of whitespaces.
         const trimmedValue = element.nodeValue.trim();
         if (trimmedValue.length > 0) {
-          console.warn(
+          Logging.warn(
             `Text string "${trimmedValue}" must be rendered within a <text> element`,
           );
         }

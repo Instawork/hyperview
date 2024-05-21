@@ -1,3 +1,4 @@
+import * as Logging from 'hyperview/src/core/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type { LocalName, NamespaceURI, NodeType } from 'hyperview/src/types';
 import { DocumentGetElementByIdError } from './errors';
@@ -105,7 +106,7 @@ export const getElementById = (
       ? element.ownerDocument.getElementById(id)
       : null;
   } catch (e) {
-    console.error(new DocumentGetElementByIdError(id, doc, e as Error));
+    Logging.error(new DocumentGetElementByIdError(id, doc, e as Error));
     return null;
   }
 };

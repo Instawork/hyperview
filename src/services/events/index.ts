@@ -1,3 +1,4 @@
+import * as Logging from 'hyperview/src/core/logging';
 import { ON_EVENT_DISPATCH } from 'hyperview/src/types';
 import { TinyEmitter } from 'tiny-emitter';
 
@@ -5,7 +6,7 @@ const tinyEmitter = new TinyEmitter();
 
 export const dispatch = (eventName: string) => {
   if (__DEV__) {
-    console.log(`[dispatch-event] action [${eventName}] emitted.`);
+    Logging.log(`[dispatch-event] action [${eventName}] emitted.`);
   }
   tinyEmitter.emit(ON_EVENT_DISPATCH, eventName);
 };

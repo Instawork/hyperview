@@ -1,5 +1,6 @@
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Dom from 'hyperview/src/services/dom';
+import * as Logging from 'hyperview/src/core/logging';
 import * as Xml from 'hyperview/src/services/xml';
 import type {
   DOMString,
@@ -21,7 +22,7 @@ export default {
       'target',
     );
     if (!targetId) {
-      console.warn('[behaviors/set-value]: missing "target" attribute');
+      Logging.warn('[behaviors/set-value]: missing "target" attribute');
       return;
     }
 

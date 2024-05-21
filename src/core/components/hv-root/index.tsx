@@ -199,7 +199,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
     options: HvComponentOptions,
   ) => {
     if (!options.onUpdateCallbacks) {
-      console.warn('onUpdate requires an onUpdateCallbacks object');
+      Logging.warn('onUpdate requires an onUpdateCallbacks object');
       return;
     }
     const navAction: NavAction = action as NavAction;
@@ -255,7 +255,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
     } else if (action === ACTIONS.DISPATCH_EVENT) {
       const { behaviorElement } = options;
       if (!behaviorElement) {
-        console.warn('dispatch-event requires a behaviorElement');
+        Logging.warn('dispatch-event requires a behaviorElement');
         return;
       }
       const eventName = behaviorElement.getAttribute('event-name');
@@ -270,7 +270,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
 
       // Check for event loop formation
       if (trigger === 'on-event') {
-        console.error(
+        Logging.error(
           new Error(
             'trigger="on-event" and action="dispatch-event" cannot be used on the same element',
           ),
@@ -278,7 +278,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
         return;
       }
       if (!eventName) {
-        console.error(
+        Logging.error(
           new Error(
             'dispatch-event requires an event-name attribute to be present',
           ),
@@ -498,12 +498,12 @@ export default class Hyperview extends PureComponent<Types.Props> {
     onUpdateCallbacks: OnUpdateCallbacks,
   ) => {
     if (!behaviorElement) {
-      console.warn('Custom behavior requires a behaviorElement');
+      Logging.warn('Custom behavior requires a behaviorElement');
       return;
     }
     const action = behaviorElement.getAttribute('action');
     if (!action) {
-      console.warn('Custom behavior requires an action attribute');
+      Logging.warn('Custom behavior requires an action attribute');
       return;
     }
     const behavior = this.behaviorRegistry[action];
@@ -532,7 +532,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
       );
     } else {
       // No behavior detected.
-      console.warn(`No behavior registered for action "${action}"`);
+      Logging.warn(`No behavior registered for action "${action}"`);
     }
   };
 
