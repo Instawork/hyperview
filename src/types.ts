@@ -436,10 +436,8 @@ export type Reload = (
 type LogFunction = (message?: any, ...optionalParams: any[]) => void;
 
 export type Logger = {
-  debug: LogFunction;
   error: LogFunction;
   info: LogFunction;
   log: LogFunction;
-  trace: LogFunction;
   warn: LogFunction;
 };
