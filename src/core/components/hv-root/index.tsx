@@ -3,6 +3,7 @@ import * as Components from 'hyperview/src/services/components';
 import * as Contexts from 'hyperview/src/contexts';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Events from 'hyperview/src/services/events';
+import * as Logging from 'hyperview/src/core/logging';
 import * as NavContexts from 'hyperview/src/contexts/navigation';
 import * as Navigation from 'hyperview/src/services/navigation';
 import * as Render from 'hyperview/src/services/render';
@@ -51,6 +52,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
   constructor(props: Types.Props) {
     super(props);
 
+    Logging.initialize(props.logger);
     this.parser = new Dom.Parser(
       this.props.fetch,
       this.props.onParseBefore,
@@ -151,7 +153,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
     onUpdateCallbacks: OnUpdateCallbacks,
   ): Promise<Element | null> => {
     if (!href) {
-      console.error(new Error('No href passed to fetchElement'));
+      Logging.error(new Error('No href passed to fetchElement'));
       return null;
     }
 
@@ -160,7 +162,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
       if (element) {
         return element.cloneNode(true) as Element;
       }
-      console.error(new Error(`Element with id ${href} not found in document`));
+      Logging.error(new Error(`Element with id ${href} not found in document`));
       return null;
     }
 
