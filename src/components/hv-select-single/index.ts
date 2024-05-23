@@ -72,7 +72,7 @@ export default class HvSelectSingle extends PureComponent<HvComponentProps> {
       if (opt) {
         const value = opt.getAttribute('value');
         const current = value === selectedValue;
-        if (current && allowDeselect) {
+        if (current && allowDeselect === 'true') {
           // when deselection is allowed and user presses the option
           const selected = opt.getAttribute('selected') === 'true';
           opt.setAttribute('selected', selected ? 'false' : 'true');
