@@ -1,10 +1,10 @@
+import * as Logging from 'hyperview/src/services/logging';
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import { ComponentType, ReactNode } from 'react';
 import type {
   Fetch,
   HvBehavior,
   HvComponent,
-  Logger,
   NavigationRouteParams,
   Route,
 } from 'hyperview/src/types';
@@ -45,5 +45,5 @@ export type Props = {
   handleBack?: ComponentType<{ children: ReactNode }>;
   doc?: Document;
   registerPreload?: (id: number, element: Element) => void;
-  logger?: Logger;
+  logger?: Logging.Logger;
 };
