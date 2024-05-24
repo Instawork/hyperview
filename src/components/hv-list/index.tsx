@@ -1,7 +1,6 @@
 import * as Contexts from 'hyperview/src/contexts';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Keyboard from 'hyperview/src/services/keyboard';
-import * as Logging from 'hyperview/src/core/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import type {
@@ -20,6 +19,7 @@ import type { ScrollParams, State } from './types';
 import { DOMParser } from '@instawork/xmldom';
 import type { ElementRef } from 'react';
 import { LOCAL_NAME } from 'hyperview/src/types';
+import Logging from 'hyperview/src/core/logging';
 import { getAncestorByTagName } from 'hyperview/src/services';
 
 export default class HvList extends PureComponent<HvComponentProps, State> {

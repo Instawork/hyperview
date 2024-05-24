@@ -1,7 +1,7 @@
-import * as Logging from 'hyperview/src/core/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type { LocalName, NamespaceURI, NodeType } from 'hyperview/src/types';
 import { DocumentGetElementByIdError } from './errors';
+import Logging from 'hyperview/src/core/logging';
 import { NODE_TYPE } from 'hyperview/src/types';
 
 export const getBehaviorElements = (element: Element) => {

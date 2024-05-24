@@ -1,7 +1,6 @@
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Events from 'hyperview/src/services/events';
-import * as Logging from 'hyperview/src/core/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import {
@@ -27,6 +26,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { BackBehaviorContext } from 'hyperview/src/contexts/back-behaviors';
+import Logging from 'hyperview/src/core/logging';
 import { PRESS_TRIGGERS_PROP_NAMES } from './types';
 import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
 import { XMLSerializer } from '@instawork/xmldom';
