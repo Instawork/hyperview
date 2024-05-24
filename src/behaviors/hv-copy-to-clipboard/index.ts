@@ -1,5 +1,5 @@
 import { Clipboard } from 'react-native';
-import Logging from 'hyperview/src/core/logging';
+import Logging from 'hyperview/src/services/logging';
 
 export default {
   action: 'copy-to-clipboard',

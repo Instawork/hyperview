@@ -26,7 +26,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { BackBehaviorContext } from 'hyperview/src/contexts/back-behaviors';
-import Logging from 'hyperview/src/core/logging';
+import Logging from 'hyperview/src/services/logging';
 import { PRESS_TRIGGERS_PROP_NAMES } from './types';
 import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
 import { XMLSerializer } from '@instawork/xmldom';

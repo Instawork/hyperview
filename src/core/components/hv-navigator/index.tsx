@@ -19,7 +19,7 @@ import type {
   TabScreenOptions,
 } from './types';
 import React, { PureComponent } from 'react';
-import Logging from 'hyperview/src/core/logging';
+import Logging from 'hyperview/src/services/logging';
 import { createCustomStackNavigator } from 'hyperview/src/core/components/navigator-stack';
 import { createCustomTabNavigator } from 'hyperview/src/core/components/navigator-tab';
 import { getFirstChildTag } from 'hyperview/src/services/dom/helpers';

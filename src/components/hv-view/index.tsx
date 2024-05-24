@@ -23,7 +23,7 @@ import React, { PureComponent } from 'react';
 import { ATTRIBUTES } from './types';
 import KeyboardAwareScrollView from 'hyperview/src/core/components/keyboard-aware-scroll-view';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import Logging from 'hyperview/src/core/logging';
+import Logging from 'hyperview/src/services/logging';
 import { addHref } from 'hyperview/src/core/hyper-ref';
 import { createStyleProp } from 'hyperview/src/services';
 

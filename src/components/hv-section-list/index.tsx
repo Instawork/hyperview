@@ -19,7 +19,7 @@ import React, { PureComponent } from 'react';
 import type { ScrollParams, State } from './types';
 import { DOMParser } from '@instawork/xmldom';
 import type { ElementRef } from 'react';
-import Logging from 'hyperview/src/core/logging';
+import Logging from 'hyperview/src/services/logging';
 import { getAncestorByTagName } from 'hyperview/src/services';
 
 const getSectionIndex = (

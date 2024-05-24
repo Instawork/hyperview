@@ -3,7 +3,7 @@ import * as HvRoute from 'hyperview/src/core/components/hv-route';
 import * as Imports from './imports';
 import * as Types from './types';
 import type { NavAction, NavigationRouteParams } from 'hyperview/src/types';
-import Logging from 'hyperview/src/core/logging';
+import Logging from 'hyperview/src/services/logging';
 import { NAV_ACTIONS } from 'hyperview/src/types';
 import { NavigationContainerRefContext } from '@react-navigation/native';
 

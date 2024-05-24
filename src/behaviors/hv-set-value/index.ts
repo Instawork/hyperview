@@ -8,7 +8,7 @@ import type {
   HvUpdateRoot,
 } from 'hyperview/src/types';
 import { later, shallowCloneToRoot } from 'hyperview/src/services';
-import Logging from 'hyperview/src/core/logging';
+import Logging from 'hyperview/src/services/logging';
 
 export default {
   action: 'set-value',

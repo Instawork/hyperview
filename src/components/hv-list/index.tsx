@@ -19,7 +19,7 @@ import type { ScrollParams, State } from './types';
 import { DOMParser } from '@instawork/xmldom';
 import type { ElementRef } from 'react';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import Logging from 'hyperview/src/core/logging';
+import Logging from 'hyperview/src/services/logging';
 import { getAncestorByTagName } from 'hyperview/src/services';
 
 export default class HvList extends PureComponent<HvComponentProps, State> {
