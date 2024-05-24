@@ -1,4 +1,5 @@
 import * as Keyboard from 'hyperview/src/services/keyboard';
+import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import type {
@@ -23,7 +24,6 @@ import React, { PureComponent } from 'react';
 import { ATTRIBUTES } from './types';
 import KeyboardAwareScrollView from 'hyperview/src/core/components/keyboard-aware-scroll-view';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import Logging from 'hyperview/src/services/logging';
 import { addHref } from 'hyperview/src/core/hyper-ref';
 import { createStyleProp } from 'hyperview/src/services';
 

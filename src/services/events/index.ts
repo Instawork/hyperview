@@ -1,4 +1,4 @@
-import Logging from 'hyperview/src/services/logging';
+import * as Logging from 'hyperview/src/services/logging';
 import { ON_EVENT_DISPATCH } from 'hyperview/src/types';
 import { TinyEmitter } from 'tiny-emitter';
 

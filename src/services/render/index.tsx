@@ -1,4 +1,5 @@
 import * as InlineContext from 'hyperview/src/services/inline-context';
+import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type {
   HvComponentOnUpdate,
@@ -6,7 +7,6 @@ import type {
   StyleSheets,
 } from 'hyperview/src/types';
 import { LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
-import Logging from 'hyperview/src/services/logging';
 import React from 'react';
 
 export const renderElement = (

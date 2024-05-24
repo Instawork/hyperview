@@ -3,18 +3,13 @@ import type { Logger } from 'hyperview/src/types';
 
 let logger: Logger = console;
 
-function initialize(loggerInstance: Logger | undefined): void {
+export function initialize(loggerInstance: Logger | undefined): void {
   if (loggerInstance) {
     logger = loggerInstance;
   }
 }
 
-export default {
-  initialize,
-  log: (m?: any, ...p: any[]) => logger.log(m, p),
-  // eslint-disable-next-line sort-keys
-  info: (m?: any, ...p: any[]) => logger.info(m, p),
-  warn: (m?: any, ...p: any[]) => logger.warn(m, p),
-  // eslint-disable-next-line sort-keys
-  error: (m?: any, ...p: any[]) => logger.error(m, p),
-};
+export const log = (m?: any, ...p: any[]): void => logger.log(m, p);
+export const info = (m?: any, ...p: any[]): void => logger.info(m, p);
+export const warn = (m?: any, ...p: any[]): void => logger.warn(m, p);
+export const error = (m?: any, ...p: any[]): void => logger.error(m, p);

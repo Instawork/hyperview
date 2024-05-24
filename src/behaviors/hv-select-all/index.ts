@@ -1,5 +1,6 @@
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Dom from 'hyperview/src/services/dom';
+import * as Logging from 'hyperview/src/services/logging';
 import * as Xml from 'hyperview/src/services/xml';
 import type {
   DOMString,
@@ -9,7 +10,6 @@ import type {
 } from 'hyperview/src/types';
 import { later, shallowCloneToRoot } from 'hyperview/src/services';
 import { ACTIONS } from 'hyperview/src/types';
-import Logging from 'hyperview/src/services/logging';
 
 export default {
   action: ACTIONS.SELECT_ALL,
