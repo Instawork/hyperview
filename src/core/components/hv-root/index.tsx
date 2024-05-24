@@ -3,7 +3,6 @@ import * as Components from 'hyperview/src/services/components';
 import * as Contexts from 'hyperview/src/contexts';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Events from 'hyperview/src/services/events';
-import * as Logging from 'hyperview/src/core/logging';
 import * as NavContexts from 'hyperview/src/contexts/navigation';
 import * as Navigation from 'hyperview/src/services/navigation';
 import * as Render from 'hyperview/src/services/render';
@@ -28,6 +27,7 @@ import React, { PureComponent } from 'react';
 import HvRoute from 'hyperview/src/core/components/hv-route';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
 import { Linking } from 'react-native';
+import Logging from 'hyperview/src/core/logging';
 
 /**
  * Provides routing to the correct path based on the state passed in

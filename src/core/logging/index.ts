@@ -1,30 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Logger } from 'hyperview/src/types';
 
-class LoggerProvider {
-  logger: Logger = console;
-}
+let logger: Logger = console;
 
-const instance: LoggerProvider = new LoggerProvider();
-
-export function initialize(logger: Logger | undefined): void {
-  if (logger) {
-    instance.logger = logger;
+function initialize(loggerInstance: Logger | undefined): void {
+  if (loggerInstance) {
+    logger = loggerInstance;
   }
 }
 
-export function log(message?: any, ...optionalParams: any[]): void {
-  instance.logger.log(message, optionalParams);
-}
-
-export function info(message?: any, ...optionalParams: any[]): void {
-  instance.logger.info(message, optionalParams);
-}
-
-export function warn(message?: any, ...optionalParams: any[]): void {
-  instance.logger.warn(message, optionalParams);
-}
-
-export function error(message?: any, ...optionalParams: any[]): void {
-  instance.logger.error(message, optionalParams);
-}
+export default {
+  initialize,
+  log: (m?: any, ...p: any[]) => logger.log(m, p),
+  // eslint-disable-next-line sort-keys
+  info: (m?: any, ...p: any[]) => logger.info(m, p),
+  warn: (m?: any, ...p: any[]) => logger.warn(m, p),
+  // eslint-disable-next-line sort-keys
+  error: (m?: any, ...p: any[]) => logger.error(m, p),
+};
