@@ -1,5 +1,6 @@
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Dom from 'hyperview/src/services/dom';
+import * as Logging from 'hyperview/src/services/logging';
 import * as Xml from 'hyperview/src/services/xml';
 import type {
   DOMString,
@@ -22,7 +23,7 @@ export default {
       'target',
     );
     if (!targetId) {
-      console.warn('[behaviors/select-all]: missing "target" attribute');
+      Logging.warn('[behaviors/select-all]: missing "target" attribute');
       return;
     }
 

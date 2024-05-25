@@ -1,6 +1,7 @@
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Contexts from 'hyperview/src/contexts';
 import * as Dom from 'hyperview/src/services/dom';
+import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as NavigationContext from 'hyperview/src/contexts/navigation';
 import * as NavigatorMapContext from 'hyperview/src/contexts/navigator-map';
@@ -62,7 +63,7 @@ export default class HvNavigator extends PureComponent<Props> {
       ).filter(e => {
         const triggerAttr = e.getAttribute(BEHAVIOR_ATTRIBUTES.TRIGGER);
         if (triggerAttr !== TRIGGERS.LOAD) {
-          console.warn(
+          Logging.warn(
             `Unsupported trigger '${triggerAttr}'. Only "load" is supported`,
           );
           return false;

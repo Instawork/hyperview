@@ -1,3 +1,4 @@
+import * as Logging from 'hyperview/src/services/logging';
 import { Clipboard } from 'react-native';
 
 export default {
@@ -8,7 +9,7 @@ export default {
       attributeName,
     );
     if (!value) {
-      console.warn(
+      Logging.warn(
         `[behaviors/copy-to-clipboard]: missing "${attributeName}" attribute`,
       );
       return;

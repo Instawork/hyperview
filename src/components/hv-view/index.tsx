@@ -1,4 +1,5 @@
 import * as Keyboard from 'hyperview/src/services/keyboard';
+import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import type {
@@ -166,7 +167,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
     const safeArea = this.attributes[ATTRIBUTES.SAFE_AREA] === 'true';
     if (safeArea) {
       if (keyboardAvoiding || scrollable) {
-        console.warn('safe-area is incompatible with scroll or avoid-keyboard');
+        Logging.warn('safe-area is incompatible with scroll or avoid-keyboard');
       }
     }
 

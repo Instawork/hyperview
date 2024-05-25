@@ -1,4 +1,5 @@
 import * as Behaviors from 'hyperview/src/services/behaviors';
+import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type { HvComponentProps, TextContextType } from 'hyperview/src/types';
 import React, { MutableRefObject, useCallback, useRef } from 'react';
@@ -15,7 +16,7 @@ import debounce from 'lodash/debounce';
 
 const HvTextField = (props: HvComponentProps) => {
   if (props.element.localName === LOCAL_NAME.TEXT_AREA) {
-    console.warn(
+    Logging.warn(
       'Deprecation notice: <text-area> tag is deprecated and will be removed in a future version. See https://hyperview.org/docs/reference_textarea for details.',
     );
   }

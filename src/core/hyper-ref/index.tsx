@@ -1,6 +1,7 @@
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Events from 'hyperview/src/services/events';
+import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import {
@@ -142,7 +143,7 @@ export default class HyperRef extends PureComponent<Props, State> {
           | null
           | undefined = e.getAttribute('action');
         if (currentAttributeAction === 'dispatch-event') {
-          console.error(
+          Logging.error(
             new Error(
               'trigger="on-event" and action="dispatch-event" cannot be used on the same element',
             ),
@@ -150,7 +151,7 @@ export default class HyperRef extends PureComponent<Props, State> {
           return false;
         }
         if (!currentAttributeEventName) {
-          console.error(
+          Logging.error(
             new Error('on-event trigger requires an event-name attribute'),
           );
           return false;
@@ -174,7 +175,7 @@ export default class HyperRef extends PureComponent<Props, State> {
           | undefined
           | null = behaviorElement.getAttribute('event-name');
         const serializer = new XMLSerializer();
-        console.log(
+        Logging.log(
           `[on-event] trigger [${caughtEvent}] caught by:`,
           serializer.serializeToString(listenerElement),
         );

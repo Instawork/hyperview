@@ -3,6 +3,7 @@ import * as Components from 'hyperview/src/services/components';
 import * as Contexts from 'hyperview/src/contexts';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Events from 'hyperview/src/services/events';
+import * as Logging from 'hyperview/src/services/logging';
 import * as NavContexts from 'hyperview/src/contexts/navigation';
 import * as Navigation from 'hyperview/src/services/navigation';
 import * as Render from 'hyperview/src/services/render';
@@ -51,6 +52,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
   constructor(props: Types.Props) {
     super(props);
 
+    Logging.initialize(props.logger);
     this.parser = new Dom.Parser(
       this.props.fetch,
       this.props.onParseBefore,
@@ -151,7 +153,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
     onUpdateCallbacks: OnUpdateCallbacks,
   ): Promise<Element | null> => {
     if (!href) {
-      console.error(new Error('No href passed to fetchElement'));
+      Logging.error(new Error('No href passed to fetchElement'));
       return null;
     }
 
@@ -160,7 +162,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
       if (element) {
         return element.cloneNode(true) as Element;
       }
-      console.error(new Error(`Element with id ${href} not found in document`));
+      Logging.error(new Error(`Element with id ${href} not found in document`));
       return null;
     }
 
@@ -197,7 +199,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
     options: HvComponentOptions,
   ) => {
     if (!options.onUpdateCallbacks) {
-      console.warn('onUpdate requires an onUpdateCallbacks object');
+      Logging.warn('onUpdate requires an onUpdateCallbacks object');
       return;
     }
     const navAction: NavAction = action as NavAction;
@@ -253,7 +255,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
     } else if (action === ACTIONS.DISPATCH_EVENT) {
       const { behaviorElement } = options;
       if (!behaviorElement) {
-        console.warn('dispatch-event requires a behaviorElement');
+        Logging.warn('dispatch-event requires a behaviorElement');
         return;
       }
       const eventName = behaviorElement.getAttribute('event-name');
@@ -268,7 +270,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
 
       // Check for event loop formation
       if (trigger === 'on-event') {
-        console.error(
+        Logging.error(
           new Error(
             'trigger="on-event" and action="dispatch-event" cannot be used on the same element',
           ),
@@ -276,7 +278,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
         return;
       }
       if (!eventName) {
-        console.error(
+        Logging.error(
           new Error(
             'dispatch-event requires an event-name attribute to be present',
           ),
@@ -496,12 +498,12 @@ export default class Hyperview extends PureComponent<Types.Props> {
     onUpdateCallbacks: OnUpdateCallbacks,
   ) => {
     if (!behaviorElement) {
-      console.warn('Custom behavior requires a behaviorElement');
+      Logging.warn('Custom behavior requires a behaviorElement');
       return;
     }
     const action = behaviorElement.getAttribute('action');
     if (!action) {
-      console.warn('Custom behavior requires an action attribute');
+      Logging.warn('Custom behavior requires an action attribute');
       return;
     }
     const behavior = this.behaviorRegistry[action];
@@ -530,7 +532,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
       );
     } else {
       // No behavior detected.
-      console.warn(`No behavior registered for action "${action}"`);
+      Logging.warn(`No behavior registered for action "${action}"`);
     }
   };
 
