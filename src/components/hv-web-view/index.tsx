@@ -14,8 +14,12 @@ export default class HvWebView extends PureComponent<HvComponentProps> {
 
   static localNameAliases = [];
 
+  behaviorMapping: { [key: string]: string } = {
+    stopLoader: 'window.ReactNativeWebView.postMessage("stopLoader");',
+  }
+
   state = {
-    loading: true,
+    renderLoading: true,
   };
 
   onMessage = (
@@ -33,17 +37,9 @@ export default class HvWebView extends PureComponent<HvComponentProps> {
     if (matches) {
       Events.dispatch(matches[1]);
     } else if (stopLoaderEvent) {
-      this.setState({loading: false});
+      this.setState({renderLoading: false});
     }
   };
-
-  renderLoading = (color:string) => {
-    return this.state.loading ? 
-    <ActivityIndicator
-      color={color}
-      style={StyleSheet.absoluteFillObject}
-    /> : <View/>
-  }
 
   render() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -56,15 +52,19 @@ export default class HvWebView extends PureComponent<HvComponentProps> {
       ? props['allows-inline-media-playback'] === 'true'
       : undefined;
     const color = props['activity-indicator-color'] || '#8d9494';
-    const domContentBehavior = props['dom-content-behavior'] || "";
-    const injectedJavaScript = props['injected-java-script'] + domContentBehavior;
+    const documentLoadBehavior = props['document-load-behavior'];
+    const injectedJavaScript = props['injected-java-script'] + (this.behaviorMapping[documentLoadBehavior] || "");
     const source = { html: props.html, uri: props.url } as const;
     return (
       <WebView
         allowsInlineMediaPlayback={allowsInlineMediaPlayback}
         injectedJavaScript={injectedJavaScript}
         onMessage={this.onMessage}
-        renderLoading={() => this.renderLoading(color)}
+        renderLoading={() => this.state.renderLoading ? 
+          <ActivityIndicator
+            color={color}
+            style={StyleSheet.absoluteFillObject}
+          /> : <View/>}
         source={source}
         startInLoadingState
       />
