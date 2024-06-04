@@ -564,10 +564,7 @@ function HvRouteFC(props: Types.Props) {
   const url = getRouteUrl(props, navigationContext);
   const rootNavigation = useNavigation();
   const nav =
-    props.navigation ||
-    (rootNavigation.getState()
-      ? (rootNavigation as NavigatorService.NavigationProp)
-      : undefined);
+    props.navigation || (rootNavigation as NavigatorService.NavigationProp);
 
   // Get the navigator element from the context
   const element: Element | undefined = getNestedNavigator(
