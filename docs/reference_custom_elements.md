@@ -70,7 +70,7 @@ export default class HyperviewMap extends PureComponent<Props> {
 
 #### Configuring the client
 
-Once you've defined a RN component with the required static properties, you can pass the class to the `Hyperview` component. This will register the component as an element available to be used during rendering of the screen. Custom components are passed in using the `cmoponents` prop, which takes an array of component classes.
+Once you've defined a RN component with the required static properties, you can pass the class to the `Hyperview` component. This will register the component as an element available to be used during rendering of the screen. Custom components are passed in using the `components` prop, which takes an array of component classes.
 
 ```es6
 function Screen({ url }) {
