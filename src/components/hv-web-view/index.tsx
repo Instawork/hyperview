@@ -16,7 +16,7 @@ export default class HvWebView extends PureComponent<HvComponentProps> {
 
   behaviorMapping: { [key: string]: string } = {
     stopLoader: 'window.ReactNativeWebView.postMessage("stopLoader");',
-  }
+  };
 
   state = {
     renderLoading: true,
@@ -37,7 +37,7 @@ export default class HvWebView extends PureComponent<HvComponentProps> {
     if (matches) {
       Events.dispatch(matches[1]);
     } else if (stopLoaderEvent) {
-      this.setState({renderLoading: false});
+      this.setState({ renderLoading: false });
     }
   };
 
@@ -53,18 +53,25 @@ export default class HvWebView extends PureComponent<HvComponentProps> {
       : undefined;
     const color = props['activity-indicator-color'] || '#8d9494';
     const documentLoadBehavior = props['document-load-behavior'];
-    const injectedJavaScript = props['injected-java-script'] + (this.behaviorMapping[documentLoadBehavior] || "");
+    const injectedJavaScript =
+      props['injected-java-script'] +
+      (this.behaviorMapping[documentLoadBehavior] || '');
     const source = { html: props.html, uri: props.url } as const;
     return (
       <WebView
         allowsInlineMediaPlayback={allowsInlineMediaPlayback}
         injectedJavaScript={injectedJavaScript}
         onMessage={this.onMessage}
-        renderLoading={() => this.state.renderLoading ? 
-          <ActivityIndicator
-            color={color}
-            style={StyleSheet.absoluteFillObject}
-          /> : <View/>}
+        renderLoading={() => {
+          return this.state.renderLoading ? (
+            <ActivityIndicator
+              color={color}
+              style={StyleSheet.absoluteFillObject}
+            />
+          ) : (
+            <View />
+          );
+        }}
         source={source}
         startInLoadingState
       />
