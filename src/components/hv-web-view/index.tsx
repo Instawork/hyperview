@@ -69,7 +69,7 @@ export default class HvWebView extends PureComponent<HvComponentProps> {
               style={StyleSheet.absoluteFillObject}
             />
           ) : (
-            <View />
+            <></>
           );
         }}
         source={source}
