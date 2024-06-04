@@ -21,6 +21,10 @@ import type {
   NavigationRouteParams,
   ScreenState,
 } from 'hyperview/src/types';
+import {
+  NavigationContainerRefContext,
+  useNavigation,
+} from '@react-navigation/native';
 import React, { JSXElementConstructor, PureComponent, useContext } from 'react';
 import HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
@@ -29,7 +33,6 @@ import LoadError from 'hyperview/src/core/components/load-error';
 import Loading from 'hyperview/src/core/components/loading';
 // eslint-disable-next-line instawork/import-services
 import Navigation from 'hyperview/src/services/navigation';
-import { NavigationContainerRefContext } from '@react-navigation/native';
 
 /**
  * Implementation of an HvRoute component
@@ -559,6 +562,9 @@ function HvRouteFC(props: Types.Props) {
   const docContext = useContext(Contexts.DocContext);
 
   const url = getRouteUrl(props, navigationContext);
+  const rootNavigation = useNavigation();
+  const nav =
+    props.navigation || (rootNavigation as NavigatorService.NavigationProp);
 
   // Get the navigator element from the context
   const element: Element | undefined = getNestedNavigator(
@@ -568,49 +574,39 @@ function HvRouteFC(props: Types.Props) {
 
   React.useEffect(() => {
     const id = props.route?.params?.id || props.route?.key;
-    if (props.navigation) {
-      const unsubscribeBlur: () => void = props.navigation.addListener(
-        'blur',
-        () => {
-          if (navigationContext.onRouteBlur && props.route) {
-            navigationContext.onRouteBlur(props.route);
-          }
-        },
-      );
+    if (nav) {
+      const unsubscribeBlur: () => void = nav.addListener('blur', () => {
+        if (navigationContext.onRouteBlur && props.route) {
+          navigationContext.onRouteBlur(props.route);
+        }
+      });
 
       // Use the focus event to set the selected route
-      const unsubscribeFocus: () => void = props.navigation.addListener(
-        'focus',
-        () => {
-          const doc = docContext?.getDoc();
-          NavigatorService.setSelected(doc, id, docContext?.setDoc);
-          NavigatorService.addStackRoute(
-            doc,
-            id,
-            props.route,
-            props.navigation?.getState().routes[0]?.name,
-            navigationContext.entrypointUrl,
-            docContext?.setDoc,
-          );
-          if (navigationContext.onRouteFocus && props.route) {
-            navigationContext.onRouteFocus(props.route);
-          }
-        },
-      );
+      const unsubscribeFocus: () => void = nav.addListener('focus', () => {
+        const doc = docContext?.getDoc();
+        NavigatorService.setSelected(doc, id, docContext?.setDoc);
+        NavigatorService.addStackRoute(
+          doc,
+          id,
+          props.route,
+          nav.getState().routes[0]?.name,
+          navigationContext.entrypointUrl,
+          docContext?.setDoc,
+        );
+        if (navigationContext.onRouteFocus && props.route) {
+          navigationContext.onRouteFocus(props.route);
+        }
+      });
 
       // Use the beforeRemove event to remove the route from the stack
-      const unsubscribeRemove: () => void = props.navigation.addListener(
+      const unsubscribeRemove: () => void = nav.addListener(
         'beforeRemove',
         (event: { preventDefault: () => void }) => {
           // Use the current document state to access behaviors on the document
           // Check for elements registered to interrupt back action via a trigger of BACK
           const { get, onUpdate } = backContext || {};
           const elements: Element[] = (get && get()) || [];
-          if (
-            elements.length > 0 &&
-            onUpdate &&
-            props.navigation?.isFocused()
-          ) {
+          if (elements.length > 0 && onUpdate && nav.isFocused()) {
             // Process the elements
             event.preventDefault();
             elements.forEach(behaviorElement => {
@@ -637,17 +633,14 @@ function HvRouteFC(props: Types.Props) {
       );
 
       // Update the urls in each route when the state updates the params
-      const unsubscribeState: () => void = props.navigation.addListener(
-        'state',
-        event => {
-          NavigatorService.updateRouteUrlFromState(
-            docContext?.getDoc(),
-            id,
-            event.data?.state,
-            docContext?.setDoc,
-          );
-        },
-      );
+      const unsubscribeState: () => void = nav.addListener('state', event => {
+        NavigatorService.updateRouteUrlFromState(
+          docContext?.getDoc(),
+          id,
+          event.data?.state,
+          docContext?.setDoc,
+        );
+      });
 
       return () => {
         unsubscribeBlur();
@@ -657,13 +650,7 @@ function HvRouteFC(props: Types.Props) {
       };
     }
     return undefined;
-  }, [
-    props.navigation,
-    props.route,
-    backContext,
-    docContext,
-    navigationContext,
-  ]);
+  }, [nav, props.route, backContext, docContext, navigationContext]);
 
   return (
     <HvRouteInner
@@ -677,7 +664,7 @@ function HvRouteFC(props: Types.Props) {
       getPreload={navigatorMapContext.getPreload}
       handleBack={navigationContext.handleBack}
       loadingScreen={navigationContext.loadingScreen}
-      navigation={props.navigation}
+      navigation={nav}
       onParseAfter={navigationContext.onParseAfter}
       onParseBefore={navigationContext.onParseBefore}
       onUpdate={navigationContext.onUpdate}
