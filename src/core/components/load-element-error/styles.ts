@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   btnWrapper: {
     paddingLeft: 8,
-    paddingTop: 8,
+    paddingTop: 2,
   },
   button: {
     alignSelf: 'center',
@@ -14,16 +14,17 @@ export default StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    paddingBottom: 8,
+    paddingBottom: 2,
     paddingHorizontal: 8,
   },
   safeArea: {
+    backgroundColor: '#ffffff',
     bottom: 0,
-    position: 'absolute',
+    position: 'relative',
     width: '100%',
   },
   textWrapper: {
-    paddingTop: 8,
+    paddingTop: 2,
   },
   title: {
     color: 'black',
