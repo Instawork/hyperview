@@ -1201,8 +1201,8 @@
       <xs:attribute name="show-loading-indicator">
         <xs:simpleType>
           <xs:restriction base="xs:string">
-            <xs:enumeration value="all"/>
-            <xs:enumeration value="document-only"/>
+            <xs:enumeration value="all" />
+            <xs:enumeration value="document-only" />
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>
