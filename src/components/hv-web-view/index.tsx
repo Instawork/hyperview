@@ -28,14 +28,14 @@ export default class HvWebView extends PureComponent<HvComponentProps> {
     if (!event) {
       return;
     }
+
+
+    if (event.nativeEvent.data === "hv-web-view:render-loading:false") {
+      this.setState({ renderLoading: false });
+    }
     const matches = event.nativeEvent.data.match(/^hyperview:(.*)$/);
-    const stopLoaderEvent = event.nativeEvent.data.match(
-      /^hv-web-view:stopLoader$/,
-    );
     if (matches) {
       Events.dispatch(matches[1]);
-    } else if (stopLoaderEvent) {
-      this.setState({ renderLoading: false });
     }
   };
 
@@ -50,11 +50,11 @@ export default class HvWebView extends PureComponent<HvComponentProps> {
       ? props['allows-inline-media-playback'] === 'true'
       : undefined;
     const color = props['activity-indicator-color'] || '#8d9494';
-    const loadBehavior = props['show-load-indicator'];
+    const loadBehavior = props['show-loading-indicator'];
     let injectedJavaScript = props['injected-java-script'];
     if (loadBehavior === 'document-only') {
       injectedJavaScript +=
-        'window.ReactNativeWebView.postMessage("hv-web-view:stopLoader");';
+        'window.ReactNativeWebView.postMessage("hv-web-view:render-loading:false");';
     }
     const source = { html: props.html, uri: props.url } as const;
     return (
