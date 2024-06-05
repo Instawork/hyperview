@@ -5462,10 +5462,10 @@ human-signals@^2.1.0:
   resolved "https://registry.yarnpkg.com/human-signals/-/human-signals-2.1.0.tgz#dc91fcba42e4d06e4abaed33b3e7a3c02f514ea0"
   integrity sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==
 
-hyperview@0.80.0:
-  version "0.80.0"
-  resolved "https://registry.yarnpkg.com/hyperview/-/hyperview-0.80.0.tgz#67c020989857ca67d6ee85a2ddb7e9446bb47df5"
-  integrity sha512-/HyzbnP9+bWSEfBeTeBYRlCD/MYLxIxjprn8Ub3TEfmslMyjuiYsy+2i6YKxk4wB4DM/y8JIx6L8UhFDXiLW9w==
+hyperview@0.81.0:
+  version "0.81.0"
+  resolved "https://registry.yarnpkg.com/hyperview/-/hyperview-0.81.0.tgz#f6a02d7385d786e7d4fb1b3cea7b4ea74d004338"
+  integrity sha512-br26dNQhMy3XkyJwMFiisbcb4ZJwpGxRO1xXmP/UrBZN5pow3FxzKA3zZoZn5TiH7f4dlUeodSWQXlSEUXdRGQ==
   dependencies:
     "@instawork/xmldom" "0.0.3"
     lodash "4.17.21"
