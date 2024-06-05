@@ -29,8 +29,7 @@ export default class HvWebView extends PureComponent<HvComponentProps> {
       return;
     }
 
-
-    if (event.nativeEvent.data === "hv-web-view:render-loading:false") {
+    if (event.nativeEvent.data === 'hv-web-view:render-loading:false') {
       this.setState({ renderLoading: false });
     }
     const matches = event.nativeEvent.data.match(/^hyperview:(.*)$/);
