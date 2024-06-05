@@ -1198,6 +1198,14 @@
       <xs:attribute name="activity-indicator-color" type="hv:color" />
       <xs:attribute name="allows-inline-media-playback" type="xs:boolean" />
       <xs:attribute name="injected-java-script" type="xs:string" />
+      <xs:attribute name="show-loading-indicator">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="all" />
+            <xs:enumeration value="document-only" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
       <xs:attribute name="id" type="hv:ID" />
       <xs:attribute name="key" type="hv:KEY" />
     </xs:complexType>
