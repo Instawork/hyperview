@@ -14,10 +14,6 @@ export default class HvWebView extends PureComponent<HvComponentProps> {
 
   static localNameAliases = [];
 
-  behaviorMapping: { [key: string]: string } = {
-    stopLoader: 'window.ReactNativeWebView.postMessage("stopLoader");',
-  };
-
   state = {
     renderLoading: true,
   };
@@ -33,7 +29,9 @@ export default class HvWebView extends PureComponent<HvComponentProps> {
       return;
     }
     const matches = event.nativeEvent.data.match(/^hyperview:(.*)$/);
-    const stopLoaderEvent = event.nativeEvent.data.match(/^stopLoader$/);
+    const stopLoaderEvent = event.nativeEvent.data.match(
+      /^hv-web-view:stopLoader$/,
+    );
     if (matches) {
       Events.dispatch(matches[1]);
     } else if (stopLoaderEvent) {
@@ -52,10 +50,12 @@ export default class HvWebView extends PureComponent<HvComponentProps> {
       ? props['allows-inline-media-playback'] === 'true'
       : undefined;
     const color = props['activity-indicator-color'] || '#8d9494';
-    const documentLoadBehavior = props['document-load-behavior'];
-    const injectedJavaScript =
-      props['injected-java-script'] +
-      (this.behaviorMapping[documentLoadBehavior] || '');
+    const loadBehavior = props['show-load-indicator'];
+    let injectedJavaScript = props['injected-java-script'];
+    if (loadBehavior === 'document-only') {
+      injectedJavaScript +=
+        'window.ReactNativeWebView.postMessage("hv-web-view:stopLoader");';
+    }
     const source = { html: props.html, uri: props.url } as const;
     return (
       <WebView
