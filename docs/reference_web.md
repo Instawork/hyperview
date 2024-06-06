@@ -14,6 +14,7 @@ The `<web-view>` element shows a web view with HTML content loaded via a URL.
         url="https://hyperview.org"
         activity-indicator-color="blue"
         injected-java-script="alert('Hello Hyperview user!')"
+        show-loading-indicator="document-only"
       />
     </body>
   </screen>
@@ -30,6 +31,7 @@ A `<web-view>` element can appear anywhere within a `<body>` element.
 - [`html`](#html)
 - [`activity-indicator-color`](#activity-indicator-color)
 - [`injected-java-script`](#injected-java-script)
+- [`show-loading-indicator`](#show-loading-indicator)
 - [`id`](#id)
 
 #### `url`
@@ -63,6 +65,14 @@ A hexadecimal string or supported color name indicating the color of the spinner
 | string | No       |
 
 A string of Javascript that gets injected into the loaded web view. Can be used to customize the loaded website.
+
+#### `show-loading-indicator`
+
+| Type   | Required |
+| ------ | -------- |
+| string | No       |
+
+A string specifying when to stop showing the web-view's loader. `document-only` specifies to stop loading after the document renders but before other subresources load. By default shows loader until the whole page loads.
 
 #### `id`
 
