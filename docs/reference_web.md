@@ -68,8 +68,8 @@ A string of Javascript that gets injected into the loaded web view. Can be used 
 
 #### `show-loading-indicator`
 
-| Type   | Required |
-| ------ | -------- |
+| Type                             | Required |
+| -------------------------------- | -------- |
 | **all** (default), document-only | No       |
 
 An attribute specifying when to stop showing the web-view's loader. `document-only` specifies to stop loading after the document renders but before other subresources load. By default (`all`), shows loader until the whole page loads.
