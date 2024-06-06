@@ -70,9 +70,9 @@ A string of Javascript that gets injected into the loaded web view. Can be used 
 
 | Type   | Required |
 | ------ | -------- |
-| string | No       |
+| string `all` (default), `document-only` | No       |
 
-A string specifying when to stop showing the web-view's loader. `document-only` specifies to stop loading after the document renders but before other subresources load. By default shows loader until the whole page loads.
+A string attribute specifying when to stop showing the web-view's loader. `document-only` specifies to stop loading after the document renders but before other subresources load. By default (`all`), shows loader until the whole page loads.
 
 #### `id`
 
