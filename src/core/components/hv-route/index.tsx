@@ -21,10 +21,6 @@ import type {
   NavigationRouteParams,
   ScreenState,
 } from 'hyperview/src/types';
-import {
-  NavigationContainerRefContext,
-  useNavigation,
-} from '@react-navigation/native';
 import React, { JSXElementConstructor, PureComponent, useContext } from 'react';
 import HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
@@ -33,6 +29,7 @@ import LoadError from 'hyperview/src/core/components/load-error';
 import Loading from 'hyperview/src/core/components/loading';
 // eslint-disable-next-line instawork/import-services
 import Navigation from 'hyperview/src/services/navigation';
+import { NavigationContainerRefContext } from '@react-navigation/native';
 
 /**
  * Implementation of an HvRoute component
@@ -562,7 +559,7 @@ function HvRouteFC(props: Types.Props) {
   const docContext = useContext(Contexts.DocContext);
 
   const url = getRouteUrl(props, navigationContext);
-  const rootNavigation = useNavigation();
+  const rootNavigation = useContext(NavigationContainerRefContext);
   const nav =
     props.navigation || (rootNavigation as NavigatorService.NavigationProp);
 
