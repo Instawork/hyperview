@@ -14,8 +14,10 @@ import HvText from 'hyperview/src/components/hv-text';
 import HvTextField from 'hyperview/src/components/hv-text-field';
 import HvView from 'hyperview/src/components/hv-view';
 import HvWebView from 'hyperview/src/components/hv-web-view';
+import FilterContainer from 'hyperview/src/components/hv-filter';
 
 const HYPERVIEW_COMPONENTS = [
+  FilterContainer,
   HvDateField,
   HvList,
   HvOption,
