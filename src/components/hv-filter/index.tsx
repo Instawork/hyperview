@@ -39,15 +39,22 @@ export default class FilterContainer extends PureComponent<HvComponentProps> {
       return;
     }
 
-    const formData = Services.getFormData(this.props.element, this.formComponentRegistry);
+    const transformFlags: string[] = (this.props.element.getAttribute('transform') || '').split(',');
+    const forceLowerCase: bool = transformFlags.includes('lowercase');
+
+    const formData: FormData | null | undefined = Services.getFormData(this.props.element, this.formComponentRegistry);
     const filterTerm = formData["_parts"][0][1];
+    const transformedFilterTerm = forceLowerCase ? filterTerm.toLowerCase() : filterTerm;
 
     // Hide/show each element with filter terms. Modify attributes in-place
     const filterElements: Element[] = this.findFilterElements(this.props.element);
     filterElements.forEach((element: Element) => {
       const terms: string = element.getAttributeNS(FILTER_NS, 'terms') || '';
-      const termsArray: string[] = terms.split(',');
-      const showElement: bool = termsArray.some((term: string) => term.startsWith(filterTerm));
+      const termsArray: string[] = terms
+        .split(',')
+        .map((term: string) => forceLowerCase ? term.toLowerCase() : term);
+      const showElement: bool = termsArray
+        .some((term: string) => term.startsWith(transformedFilterTerm));
       element.setAttribute("hide", showElement ? "false" : "true");
     });
 

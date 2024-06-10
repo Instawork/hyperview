@@ -26,7 +26,7 @@ tags: search
 {% endblock %}
 {% block container %}
   <form>
-    <filter:container on-event="search" on-param="search-term" xmlns:filter="https://hyperview.org/filter">
+    <filter:container on-event="search" on-param="search-term" transform="lowercase" xmlns:filter="https://hyperview.org/filter">
       <list>
         <item key="field" style="Item">
           <text-field name="search-term" style="input" auto-focus="true" placeholder="Search">
@@ -34,14 +34,17 @@ tags: search
           </text-field>
         </item>
 
-        <item key="1" style="Item" filter:terms="Reagan,Bennett">
+        <item key="1" style="Item" filter:terms="Reagan Bennett,Reagan,Bennett,San Francisco,San,Francisco">
           <text style="Item__Label">Reagan Bennett</text>
+          <text>San Francisco</text>
         </item>
-        <item key="2" style="Item" filter:terms="Vicente,Savage">
+        <item key="2" style="Item" filter:terms="Vicente Savage,Vicente,Savage,San,Jose,San Jose">
           <text style="Item__Label">Vicente Savage</text>
+          <text>San Jose</text>
         </item>
-        <item key="3" style="Item" filter:terms="Alanna,Powers">
+        <item key="3" style="Item" filter:terms="Alanna,Powers,Burlingame">
           <text style="Item__Label">Alanna Powers</text>
+          <text>Burlingame</text>
         </item>
         <item key="4" style="Item" filter:terms="Pablo,Hester">
           <text style="Item__Label">Pablo Hester</text>
