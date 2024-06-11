@@ -284,8 +284,8 @@ export default class HvScreen extends React.Component {
           {elementErrorComponent
             ? React.createElement(elementErrorComponent, {
                 error: this.state.elementError,
-                onPressReload: () => this.reload(),
                 onPressClose: () => this.setState({ elementError: null }),
+                onPressReload: () => this.reload(),
               })
             : null}
           {screenElement}
