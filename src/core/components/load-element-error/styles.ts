@@ -9,12 +9,6 @@ export default StyleSheet.create({
     alignSelf: 'center',
     color: '#4778FF',
   },
-  closeButton: {
-    color: '#4778FF',
-    fontSize: 24,
-    fontWeight: 'bold',
-    top: 2,
-  },
   container: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -29,7 +23,6 @@ export default StyleSheet.create({
     justifyContent: 'center',
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     position: 'absolute',
-    top: 0,
     width: '100%',
     zIndex: 99,
   },

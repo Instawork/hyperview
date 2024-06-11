@@ -19,11 +19,6 @@ const LoadElementError = (props: Props) => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <TouchableOpacity onPress={props.onPressClose}>
-        <View style={styles.container}>
-          <Text style={styles.closeButton}>X</Text>
-        </View>
-      </TouchableOpacity>
       <TouchableOpacity onPress={props.onPressReload}>
         <View style={styles.container}>
           <View style={styles.textWrapper}>
@@ -31,6 +26,13 @@ const LoadElementError = (props: Props) => {
           </View>
           <View style={styles.btnWrapper}>
             <Text style={styles.button}>Reload</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={props.onPressClose}>
+        <View style={styles.container}>
+          <View style={styles.textWrapper}>
+            <Text style={styles.button}>Close</Text>
           </View>
         </View>
       </TouchableOpacity>
