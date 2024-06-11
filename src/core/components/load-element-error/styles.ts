@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StatusBar, StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   btnWrapper: {
@@ -9,8 +9,13 @@ export default StyleSheet.create({
     alignSelf: 'center',
     color: '#4778FF',
   },
+  closeButton: {
+    color: '#4778FF',
+    fontSize: 24,
+    fontWeight: 'bold',
+    top: 2,
+  },
   container: {
-    backgroundColor: '#ffffff',
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
@@ -18,9 +23,15 @@ export default StyleSheet.create({
     paddingHorizontal: 8,
   },
   safeArea: {
-    bottom: 0,
+    backgroundColor: '#ffffff',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     position: 'absolute',
+    top: 0,
     width: '100%',
+    zIndex: 99,
   },
   textWrapper: {
     paddingTop: 8,
