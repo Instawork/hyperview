@@ -1,8 +1,8 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StatusBar, StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   btnWrapper: {
-    paddingLeft: 8,
+    paddingHorizontal: 4,
     paddingTop: 8,
   },
   button: {
@@ -10,23 +10,26 @@ export default StyleSheet.create({
     color: '#4778FF',
   },
   container: {
-    backgroundColor: '#ffffff',
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
     paddingBottom: 8,
-    paddingHorizontal: 8,
+    paddingHorizontal: 4,
   },
   safeArea: {
-    bottom: 0,
+    backgroundColor: '#ffffff',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     position: 'absolute',
     width: '100%',
+    zIndex: 99,
   },
   textWrapper: {
     paddingTop: 8,
   },
   title: {
     color: 'black',
-    textAlign: 'center',
   },
 });
