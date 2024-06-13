@@ -5,6 +5,7 @@ import Hyperview from 'hyperview';
 import type { HvBehavior, NavigationRouteParams } from 'hyperview';
 import React from 'react';
 import { fetchWrapper, formatDate } from './helpers';
+import HyperviewSvg from './Components/HyperviewSvg';
 
 type HyperviewScreenFC<P> = React.FunctionComponent<P> & {
   Behaviors: HvBehavior[];
@@ -50,6 +51,7 @@ const HyperviewScreen: HyperviewScreenFC<Props> = (props: Props) => {
         back={goBack}
         behaviors={HyperviewScreen.Behaviors}
         closeModal={closeModal}
+        components={[HyperviewSvg]}
         entrypointUrl={entrypointUrl as string}
         fetch={fetchWrapper}
         formatDate={formatDate}
