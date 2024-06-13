@@ -2,11 +2,10 @@ import React, { PureComponent } from 'react';
 import type { Node } from 'react';
 import { SvgXml } from 'react-native-svg';
 
-
 import type { Element } from 'hyperview';
 
 export type Props = {
-  element: Element,
+  element: Element;
 };
 
 const DEFAULT_HEIGHT = '100%';
@@ -16,7 +15,10 @@ function inRange(num: number, start: number, end: number): boolean {
   return start <= num && num >= end;
 }
 
-function parseDimension(dimension: string, defaultDimension: number | string): number | string {
+function parseDimension(
+  dimension: string,
+  defaultDimension: number | string,
+): number | string {
   if (!dimension) {
     return defaultDimension;
   }
@@ -32,10 +34,18 @@ function parseDimension(dimension: string, defaultDimension: number | string): n
 }
 
 const HyperviewSvg = (props: Props) => {
-  const width = parseDimension(props.element.getAttribute('width'), DEFAULT_WIDTH);
-  const height = parseDimension(props.element.getAttribute('height'), DEFAULT_HEIGHT);
-  return <SvgXml height={height} width={width} xml={props.element.toString()} />;
-}
+  const width = parseDimension(
+    props.element.getAttribute('width'),
+    DEFAULT_WIDTH,
+  );
+  const height = parseDimension(
+    props.element.getAttribute('height'),
+    DEFAULT_HEIGHT,
+  );
+  return (
+    <SvgXml height={height} width={width} xml={props.element.toString()} />
+  );
+};
 HyperviewSvg.namespaceURI = 'http://www.w3.org/2000/svg';
 HyperviewSvg.localName = 'svg';
 export default HyperviewSvg;
