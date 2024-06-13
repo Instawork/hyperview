@@ -1,12 +1,6 @@
-import React, { PureComponent } from 'react';
-import type { Node } from 'react';
+import React from 'react';
 import { SvgXml } from 'react-native-svg';
-
-import type { Element } from 'hyperview';
-
-export type Props = {
-  element: Element;
-};
+import type { HvComponentProps, LocalName } from 'hyperview';
 
 const DEFAULT_HEIGHT = '100%';
 const DEFAULT_WIDTH = '100%';
@@ -16,8 +10,8 @@ function inRange(num: number, start: number, end: number): boolean {
 }
 
 function parseDimension(
-  dimension: string,
-  defaultDimension: number | string,
+  dimension: string | null | undefined,
+  defaultDimension: string,
 ): number | string {
   if (!dimension) {
     return defaultDimension;
@@ -33,7 +27,7 @@ function parseDimension(
   return Number.isNaN(parsedDimension) ? defaultDimension : parsedDimension;
 }
 
-const HyperviewSvg = (props: Props) => {
+const HyperviewSvg = (props: HvComponentProps) => {
   const width = parseDimension(
     props.element.getAttribute('width'),
     DEFAULT_WIDTH,
@@ -46,6 +40,8 @@ const HyperviewSvg = (props: Props) => {
     <SvgXml height={height} width={width} xml={props.element.toString()} />
   );
 };
+
 HyperviewSvg.namespaceURI = 'http://www.w3.org/2000/svg';
-HyperviewSvg.localName = 'svg';
+HyperviewSvg.localName = 'svg' as LocalName;
+HyperviewSvg.localNameAliases = [] as LocalName[];
 export default HyperviewSvg;
