@@ -11,6 +11,7 @@ import HyperviewScreen from './src/HyperviewScreen';
 import { View } from 'react-native';
 import Navigator from './src/Navigator';
 import { NavigationContainer } from '@react-navigation/native';
+import HyperviewSvg from './src/Components/HyperviewSvg';
 
 const NAMESPACE_URI = 'https://hyperview.org/demo';
 
@@ -56,6 +57,7 @@ export default () => {
               {navigatorSource == NavigatorSource.HYPERVIEW ? (
                 // Hyperview will build a Navigator structure from the HXML document
                 <Hyperview
+                  components={[HyperviewSvg]}
                   behaviors={[setNavigatorSourceBehavior]}
                   entrypointUrl={Constants.ENTRY_POINT_NAV_URL}
                   fetch={fetchWrapper}
