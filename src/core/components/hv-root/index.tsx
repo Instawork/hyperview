@@ -15,7 +15,6 @@ import * as Xml from 'hyperview/src/services/xml';
 import {
   ACTIONS,
   BehaviorRegistry,
-  ComponentRegistry,
   DOMString,
   HvComponentOptions,
   NAV_ACTIONS,
@@ -43,9 +42,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
 
   behaviorRegistry: BehaviorRegistry;
 
-  componentRegistry: ComponentRegistry;
-
-  formComponentRegistry: ComponentRegistry;
+  componentRegistry: Components.ComponentRegistry;
 
   parser: Dom.Parser;
 
@@ -60,8 +57,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
     );
 
     this.behaviorRegistry = Behaviors.getRegistry(this.props.behaviors);
-    this.componentRegistry = Components.getRegistry(this.props.components);
-    this.formComponentRegistry = Components.getFormRegistry(
+    this.componentRegistry = new Components.ComponentRegistry(
       this.props.components,
     );
   }
@@ -228,7 +224,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
           href || Navigation.ANCHOR_ID_SEPARATOR,
           navAction,
           element,
-          this.formComponentRegistry,
+          this.componentRegistry,
           {
             behaviorElement: behaviorElement || undefined,
             delay: delayVal,
@@ -350,7 +346,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
       ? Xml.splitAttributeList(hideIndicatorIds)
       : [];
 
-    const formData = Services.getFormData(element, this.formComponentRegistry);
+    const formData = this.componentRegistry.getFormData(element);
 
     if (once && behaviorElement) {
       if (behaviorElement.getAttribute('ran-once')) {

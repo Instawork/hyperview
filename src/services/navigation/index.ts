@@ -1,14 +1,13 @@
+import * as Components from 'hyperview/src/services/components';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as UrlService from 'hyperview/src/services/url';
 import type {
   BehaviorOptions,
-  ComponentRegistry,
   NavAction,
   NavigationProps,
   NavigationRouteParams,
 } from 'hyperview/src/types';
 import { NAV_ACTIONS } from 'hyperview/src/types';
-import { getFormData } from 'hyperview/src/services';
 
 export const ANCHOR_ID_SEPARATOR = '#';
 const QUERY_SEPARATOR = '?';
@@ -68,14 +67,13 @@ export default class Navigation {
     href: string,
     action: NavAction,
     element: Element,
-    formComponents: ComponentRegistry,
+    componentRegistry: Components.ComponentRegistry,
     opts: BehaviorOptions,
     registerPreload?: (id: number, e: Element) => void,
   ): void => {
     const { showIndicatorId, delay, targetId } = opts;
-    const formData: FormData | null | undefined = getFormData(
+    const formData: FormData | null | undefined = componentRegistry.getFormData(
       element,
-      formComponents,
     );
 
     let url = href;

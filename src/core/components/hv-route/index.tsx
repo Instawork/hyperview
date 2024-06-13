@@ -15,7 +15,6 @@ import {
   BackBehaviorProvider,
 } from 'hyperview/src/contexts/back-behaviors';
 import type {
-  ComponentRegistry,
   DOMString,
   HvComponentOptions,
   NavigationRouteParams,
@@ -45,7 +44,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
 
   navLogic: NavigatorService.Navigator;
 
-  componentRegistry: ComponentRegistry;
+  componentRegistry: Components.ComponentRegistry;
 
   needsLoad = false;
 
@@ -62,7 +61,9 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       error: null,
     };
     this.navLogic = new NavigatorService.Navigator(this.props);
-    this.componentRegistry = Components.getRegistry(this.props.components);
+    this.componentRegistry = new Components.ComponentRegistry(
+      this.props.components,
+    );
     this.needsLoad = false;
     this.navigation = new Navigation(props.entrypointUrl, this.getNavigation());
   }
