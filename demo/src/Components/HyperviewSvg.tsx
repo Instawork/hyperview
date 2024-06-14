@@ -44,4 +44,5 @@ const HyperviewSvg = (props: HvComponentProps) => {
 HyperviewSvg.namespaceURI = 'http://www.w3.org/2000/svg';
 HyperviewSvg.localName = 'svg' as LocalName;
 HyperviewSvg.localNameAliases = [] as LocalName[];
+
 export default HyperviewSvg;
