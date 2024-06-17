@@ -7,12 +7,12 @@
     <body style="body" safe-area="true">
       <header style="header">
         {% if button_behavior == 'close' %}
-          <text action="back" href="#" style="header-back">Close</text>
+          <text action="close" href="#" style="header-btn">Close</text>
         {% elif button_behavior == 'none' %}
           {# No button is shown #}
         {% else %}
           {# defaulting to back button #}
-          <text action="back" href="#" style="header-back">Back</text>
+          <text action="back" href="#" style="header-btn">Back</text>
         {% endif %}
         <text style="header-title">{{ title }}</text>
       </header>
