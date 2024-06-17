@@ -48,7 +48,7 @@ module.exports = function (eleventyConfig) {
   return {
     trailingSlash: false,
     dir: {
-      input: 'examples',
+      input: 'examples_old',
       output: '_examples_site',
     },
   };
