@@ -1,0 +1,40 @@
+---
+title: "Shadows"
+permalink: "/styling/shadows.xml"
+tags: styling
+---
+
+{% extends 'scrollview.xml.njk' %}
+{% block styles %}
+  <style
+    id="button-shadow"
+    shadowColor="black"
+    shadowOffsetX="0"
+    shadowOffsetY="4"
+    shadowOpacity="0.5"
+    shadowRadius="4"/>
+  <style id="button-blue-shadow" shadowColor="blue"/>
+  <style id="button-big-radius" shadowRadius="10"/>
+  <style id="button-offset" shadowOffsetX="5" shadowOffsetY="-5"/>
+{% endblock %}
+{% block content %}
+  <text style="description">
+    Shadow styling only works on iOS. For Android, use the elevation prop.
+  </text>
+  <text style="description">Regular</text>
+  <view style="button button-shadow">
+    <text style="bottom-label">Hello</text>
+  </view>
+  <text style="description">Shadow color</text>
+  <view style="button button-shadow button-blue-shadow">
+    <text style="bottom-label">Hello</text>
+  </view>
+  <text style="description">Radius</text>
+  <view style="button button-shadow button-big-radius">
+    <text style="bottom-label">Hello</text>
+  </view>
+  <text style="description">Offset</text>
+  <view style="button button-shadow button-offset">
+    <text style="bottom-label">Hello</text>
+  </view>
+{% endblock %}

@@ -1,0 +1,17 @@
+---
+title: "Image"
+permalink: "/ui/elements/image/index.xml"
+tags: elements
+---
+
+{% extends 'scrollview.xml.njk' %}
+{% block styles %}
+  <style id="image" flex="1" height="128" margin="24" width="128"/>
+  <style id="image-styled" borderColor="#e1e1e1" borderRadius="64" borderWidth="4"/>
+{% endblock %}
+{% block content %}
+  <text style="description">Image</text>
+  <image source="/ui/elements/image/image.jpg" style="image"/>
+  <text style="description">Styled</text>
+  <image source="/ui/elements/image.jpg" style="image image-styled"/>
+{% endblock %}

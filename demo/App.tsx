@@ -21,7 +21,7 @@ enum NavigatorSource {
 
 export default () => {
   const [navigatorSource, setNavigatorSource] = useState<NavigatorSource>(
-    NavigatorSource.EXTERNAL,
+    NavigatorSource.HYPERVIEW,
   );
 
   /**

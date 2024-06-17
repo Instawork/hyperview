@@ -1,0 +1,117 @@
+---
+title: "Scroll View"
+permalink: "/ui/elements/scroll_view/index.xml"
+tags: elements
+---
+
+{% extends 'scrollview.xml.njk' %}
+{% block styles %}
+  <style id="border" borderColor="#e1e1e1" borderWidth="1" flex="1" margin="24" padding="8"/>
+  <style id="scroll-container" borderColor="#e1e1e1" borderRadius="16" borderWidth="1" height="160" margin="24"/>
+  <style id="scroll-container-vertical" flexDirection="column"/>
+  <style id="scroll-container-horizontal" flexDirection="row"/>
+  <style
+    id="scroll-child"
+    backgroundColor="#63CB76"
+    borderRadius="16"
+    height="40"
+    margin="8"
+    alignItems="center"
+    justifyContent="center"/>
+  <style id="scroll-child-vertical" height="40"/>
+  <style id="scroll-child-horizontal" width="40"/>
+  <style id="Text" color="#ffffff" alignSelf="center" textAlign="center" fontSize="24"/>
+  <style
+    id="input"
+    borderBottomColor="#E1E1E1"
+    borderBottomWidth="1"
+    borderColor="#4E4D4D"
+    flex="1"
+    fontSize="16"
+    fontWeight="normal"
+    margin="8"
+    paddingBottom="8"
+    paddingTop="8">
+    <modifier pressed="true">
+    <style borderBottomColor="green"/>
+    </modifier>
+    <modifier focused="true">
+    <style borderBottomColor="#4778FF"/>
+    </modifier>
+  </style>
+{% endblock %}
+{% block content %}
+  <text style="description">Vertical Scroll</text>
+  <view scroll="true" style="scroll-container scroll-container-vertical">
+    <view style="scroll-child scroll-child-vertical"/>
+    <view style="scroll-child scroll-child-vertical"/>
+    <view style="scroll-child scroll-child-vertical"/>
+    <view style="scroll-child scroll-child-vertical"/>
+    <view style="scroll-child scroll-child-vertical"/>
+    <view style="scroll-child scroll-child-vertical"/>
+  </view>
+  <text style="description">Dismiss Keyboard On Drag</text>
+  <view scroll="true" keyboard-dismiss-mode="on-drag" style="scroll-container scroll-container-vertical">
+    <text-field name="field" style="input" placeholder="Focus me, then scroll!"/>
+    <view style="scroll-child scroll-child-vertical"/>
+    <view style="scroll-child scroll-child-vertical"/>
+    <view style="scroll-child scroll-child-vertical"/>
+    <view style="scroll-child scroll-child-vertical"/>
+    <view style="scroll-child scroll-child-vertical"/>
+    <view style="scroll-child scroll-child-vertical"/>
+  </view>
+  <text style="description">Vertical Scroll With Hidden Scroll Bar</text>
+  <view scroll="true" shows-scroll-indicator="false" style="scroll-container scroll-container-vertical">
+    <view style="scroll-child scroll-child-vertical"/>
+    <view style="scroll-child scroll-child-vertical"/>
+    <view style="scroll-child scroll-child-vertical"/>
+    <view style="scroll-child scroll-child-vertical"/>
+    <view style="scroll-child scroll-child-vertical"/>
+    <view style="scroll-child scroll-child-vertical"/>
+  </view>
+  <text style="description">Vertical Scroll With Sticky Header</text>
+  <view scroll="true" style="scroll-container scroll-container-vertical">
+    <view id="view-0" style="scroll-child scroll-child-vertical">
+      <text style="Text">Non Sticky</text>
+    </view>
+    <view id="view-1" sticky="true" style="scroll-child scroll-child-vertical">
+      <text style="Text">Sticky</text>
+    </view>
+    <view id="view-2" style="scroll-child scroll-child-vertical">
+      <text style="Text">Non Sticky</text>
+    </view>
+    <view id="view-3" style="scroll-child scroll-child-vertical">
+      <text style="Text">Non Sticky</text>
+    </view>
+    <view id="view-4" style="scroll-child scroll-child-vertical">
+      <text style="Text">Non Sticky</text>
+    </view>
+    <view id="view-5" style="scroll-child scroll-child-vertical">
+      <text style="Text">Non Sticky</text>
+    </view>
+  </view>
+  <text style="description">Horizontal Scroll</text>
+  <view scroll="true" scroll-orientation="horizontal" style="scroll-container scroll-container-horizontal">
+    <view style="scroll-child scroll-child-horizontal"/>
+    <view style="scroll-child scroll-child-horizontal"/>
+    <view style="scroll-child scroll-child-horizontal"/>
+    <view style="scroll-child scroll-child-horizontal"/>
+    <view style="scroll-child scroll-child-horizontal"/>
+    <view style="scroll-child scroll-child-horizontal"/>
+    <view style="scroll-child scroll-child-horizontal"/>
+  </view>
+  <text style="description">Horizontal Scroll With Hidden Scroll Bar</text>
+  <view
+    scroll="true"
+    scroll-orientation="horizontal"
+    shows-scroll-indicator="false"
+    style="scroll-container scroll-container-horizontal">
+    <view style="scroll-child scroll-child-horizontal"/>
+    <view style="scroll-child scroll-child-horizontal"/>
+    <view style="scroll-child scroll-child-horizontal"/>
+    <view style="scroll-child scroll-child-horizontal"/>
+    <view style="scroll-child scroll-child-horizontal"/>
+    <view style="scroll-child scroll-child-horizontal"/>
+    <view style="scroll-child scroll-child-horizontal"/>
+  </view>
+{% endblock %}

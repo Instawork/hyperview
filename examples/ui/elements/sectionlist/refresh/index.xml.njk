@@ -1,0 +1,40 @@
+---
+title: "Section List with Refresh"
+permalink: "/ui/elements/sectionlist/refresh/index.xml"
+tags: sectionlist
+---
+
+{% extends 'base.xml.njk' %}
+{% block styles %}
+  <style id="item-label-special" color="red"/>
+  <style id="list-header-text" fontSize="18" fontWeight="bold"/>
+  <style
+    id="list-header"
+    alignItems="center"
+    backgroundColor="#eee"
+    flex="1"
+    flexDirection="row"
+    height="48"
+    paddingLeft="24"
+    paddingRight="24"
+    marginHorizontal="24"/>
+{% endblock %}
+{% block container %}
+  <text style="description">
+    Try multiple pull-to-refresh gestures on the section list below.
+  </text>
+  <section-list action="replace" delay="700" href="/ui/elements/sectionlist/refresh/refresh-load.xml" trigger="refresh">
+    <section-title style="list-header">
+      <text style="list-header-text">Section 1</text>
+    </section-title>
+    <item key="1" style="item">
+      <text style="item-label">List 1</text>
+    </item>
+    <item key="2" style="item">
+      <text style="item-label">List 2</text>
+    </item>
+    <item key="3" style="item">
+      <text style="item-label">List 3</text>
+    </item>
+  </section-list>
+{% endblock %}

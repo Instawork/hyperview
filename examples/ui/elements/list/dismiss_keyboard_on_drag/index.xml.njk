@@ -1,0 +1,38 @@
+---
+title: "Dimiss keyboard on drag"
+permalink: "/ui/elements/list/dismiss_keyboard_on_drag/index.xml"
+tags: list
+---
+
+{% extends 'base.xml.njk' %}
+{% block styles %}
+  <style
+    id="input"
+    borderBottomColor="#E1E1E1"
+    borderBottomWidth="1"
+    borderColor="#4E4D4D"
+    flex="1"
+    fontSize="16"
+    fontWeight="normal"
+    paddingBottom="8"
+    paddingTop="8">
+    <modifier pressed="true">
+    <style borderBottomColor="green"/>
+    </modifier>
+    <modifier focused="true">
+    <style borderBottomColor="#4778FF"/>
+    </modifier>
+  </style>
+{% endblock %}
+{% block container %}
+  <list keyboard-dismiss-mode="on-drag">
+    <item key="field" style="item">
+      <text-field name="field" style="input" auto-focus="true" placeholder="Scroll!" />
+    </item>
+    {% for i in range(1, 21) %}
+      <item key="{{ i }}" style="item">
+        <text style="item-label">Item {{ i }}</text>
+      </item>
+    {% endfor %}
+  </list>
+{% endblock %}
