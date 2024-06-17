@@ -4,9 +4,10 @@
     {% for screen in collections[tag]|sortCollection %}
       {% set item_style = "item" %}
       {% if loop.first %}
-        {% set item_style = "item item-first" %}
-      {% elif loop.last %}
-        {% set item_style = "item item-last" %}
+        {% set item_style = item_style ~ " item-first" %}
+      {% endif %}
+      {% if loop.last %}
+        {% set item_style = item_style ~ " item-last" %}
       {% endif %}
       <item href="{{ screen.data.permalink }}" key="{{ screen.data.title | slug }}" show-during-load="loadingScreen" style="{{ item_style }}">
         <view style="item-left">
