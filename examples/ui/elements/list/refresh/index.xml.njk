@@ -1,0 +1,33 @@
+---
+title: "List With Refresh"
+permalink: "/ui/elements/list/refresh/index.xml"
+tags: list
+---
+
+{% extends 'base.xml.njk' %}
+{% block styles %}
+  <style id="List" flex="1"/>
+  <style id="item-label-special" color="red"/>
+{% endblock %}
+{% block container %}
+  <text style="description">
+    Try multiple pull-to-refresh gestures on the list below.
+  </text>
+  <list action="replace" delay="1000" href="/ui/elements/list/refresh/refresh-load.xml" style="List" trigger="refresh">
+    <item key="1" style="item">
+      <text style="item-label">List 1</text>
+    </item>
+    <item key="2" style="item">
+      <text style="item-label">List 2</text>
+    </item>
+    <item key="3" style="item">
+      <text style="item-label">List 3</text>
+    </item>
+    <item key="4" style="item">
+      <text style="item-label">List 4</text>
+    </item>
+    <item key="5" style="item">
+      <text style="item-label">List 5</text>
+    </item>
+  </list>
+{% endblock %}

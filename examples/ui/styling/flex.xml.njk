@@ -1,0 +1,95 @@
+---
+title: "Flex"
+permalink: "/styling/flex.xml"
+tags: styling
+---
+
+{% extends 'scrollview.xml.njk' %}
+{% block styles %}
+  <style
+    id="flex-container"
+    borderColor="#e1e1e1"
+    borderRadius="8"
+    borderWidth="2"
+    flex="1"
+    marginLeft="24"
+    marginRight="24"
+    padding="8"/>
+  <style id="flex-child" backgroundColor="#63CB76" borderRadius="8" height="32" width="32" />
+  <style id="flex-horizontal" flexDirection="row" height="64" columnGap="8" />
+  <style id="flex-horizontal--Large" height="128"/>
+  <style id="flex-vertical" flexDirection="column" height="300" width="64" rowGap="8" />
+  <style id="flex-vertical--Large" width="128"/>
+  <style id="flex-justify-end" justifyContent="flex-end"/>
+  <style id="flex-justify-center" justifyContent="center"/>
+  <style id="flex-align-end" alignItems="flex-end"/>
+  <style id="flex-align-center" alignItems="center"/>
+{% endblock %}
+{% block content %}
+  <text style="description">Flex Horizontal</text>
+  <view style="flex-container flex-horizontal">
+    <view style="flex-child"/>
+    <view style="flex-child"/>
+    <view style="flex-child"/>
+  </view>
+  <text style="description">Flex Horizontal Justify End</text>
+  <view style="flex-container flex-horizontal flex-justify-end">
+    <view style="flex-child"/>
+    <view style="flex-child"/>
+    <view style="flex-child"/>
+  </view>
+  <text style="description">Flex Horizontal Justify Center</text>
+  <view style="flex-container flex-horizontal flex-justify-center">
+    <view style="flex-child"/>
+    <view style="flex-child"/>
+    <view style="flex-child"/>
+  </view>
+  <text style="description">
+    Flex Horizontal Justify Center Align End
+  </text>
+  <view style="flex-container flex-horizontal flex-horizontal--Large flex-justify-center flex-align-end">
+    <view style="flex-child"/>
+    <view style="flex-child"/>
+    <view style="flex-child"/>
+  </view>
+  <text style="description">
+    Flex Horizontal Justify Center Align Center
+  </text>
+  <view style="flex-container flex-horizontal flex-horizontal--Large flex-justify-center flex-align-center">
+    <view style="flex-child"/>
+    <view style="flex-child"/>
+    <view style="flex-child"/>
+  </view>
+  <text style="description">Flex Vertical</text>
+  <view style="flex-container flex-vertical">
+    <view style="flex-child"/>
+    <view style="flex-child"/>
+    <view style="flex-child"/>
+  </view>
+  <text style="description">Flex Vertical Justify End</text>
+  <view style="flex-container flex-vertical flex-justify-end">
+    <view style="flex-child"/>
+    <view style="flex-child"/>
+    <view style="flex-child"/>
+  </view>
+  <text style="description">Flex Vertical Justify Center</text>
+  <view style="flex-container flex-vertical flex-justify-center">
+    <view style="flex-child"/>
+    <view style="flex-child"/>
+    <view style="flex-child"/>
+  </view>
+  <text style="description">Flex Vertical Justify Center Align End</text>
+  <view style="flex-container flex-vertical flex-vertical--Large flex-justify-center flex-align-end">
+    <view style="flex-child"/>
+    <view style="flex-child"/>
+    <view style="flex-child"/>
+  </view>
+  <text style="description">
+    Flex Vertical Justify Center Align Center
+  </text>
+  <view style="flex-container flex-vertical flex-vertical--Large flex-justify-center flex-align-center">
+    <view style="flex-child"/>
+    <view style="flex-child"/>
+    <view style="flex-child"/>
+  </view>
+{% endblock %}

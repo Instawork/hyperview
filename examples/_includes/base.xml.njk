@@ -1,0 +1,35 @@
+{# Base template that should be used for all screens. Shows the Header + back button #}
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      {% include 'styles.xml.njk' %}
+      {% block styles %}
+        <style
+          id="Header__Switch"
+          alignItems="center"
+          flex="1"
+          flexDirection="row"
+          flexGrow="1"
+          justifyContent="flex-end"
+          columnGap="8"/>
+        <style id="Switch__Label" fontSize="12" fontWeight="bold"/>
+      {% endblock %}
+    </styles>
+    <body style="body" safe-area="true">
+      <header style="header">
+        {% if not hide_back_button %}
+          <text action="back" href="#" style="header-back">Back</text>
+        {% endif %}
+        <text style="header-title">{{ title }}</text>
+        {% if hyperview_toggle_enabled !== undefined %}
+          <view style="Header__Switch">
+            <text style="Switch__Label">Hyperview Navigator</text>
+            <switch id="navigator-switch" trigger="change" action="set-navigator-source" xmlns:demo="https://hyperview.org/demo" demo:source={% if hyperview_toggle_enabled %} "external" {% else %} "hyperview" {% endif %} value={% if hyperview_toggle_enabled %} "on" {% else %} "off" {% endif %}/>
+          </view>
+        {% endif %}
+      </header>
+      {% block container %}{% endblock %}
+    </body>
+  </screen>
+  {% include 'loading-screen.xml.njk' %}
+</doc>
