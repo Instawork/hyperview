@@ -67,7 +67,7 @@ export default class Navigation {
     href: string,
     action: NavAction,
     element: Element,
-    componentRegistry: Components.ComponentRegistry,
+    componentRegistry: Components.Registry,
     opts: BehaviorOptions,
     registerPreload?: (id: number, e: Element) => void,
   ): void => {

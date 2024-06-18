@@ -44,7 +44,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
 
   navLogic: NavigatorService.Navigator;
 
-  componentRegistry: Components.ComponentRegistry;
+  componentRegistry: Components.Registry;
 
   needsLoad = false;
 
@@ -61,9 +61,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       error: null,
     };
     this.navLogic = new NavigatorService.Navigator(this.props);
-    this.componentRegistry = new Components.ComponentRegistry(
-      this.props.components,
-    );
+    this.componentRegistry = new Components.Registry(this.props.components);
     this.needsLoad = false;
     this.navigation = new Navigation(props.entrypointUrl, this.getNavigation());
   }

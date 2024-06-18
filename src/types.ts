@@ -165,7 +165,7 @@ export type StyleSheets = {
 
 export type HvComponentOptions = {
   behaviorElement?: Element | null | undefined;
-  componentRegistry?: Components.ComponentRegistry;
+  componentRegistry?: Components.Registry;
   delay?: DOMString | null | undefined;
   focused?: boolean | null | undefined;
   hideIndicatorIds?: DOMString | null | undefined;

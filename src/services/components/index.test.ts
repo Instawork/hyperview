@@ -22,7 +22,7 @@ class MockFormData {
   }
 }
 
-describe('ComponentRegistry', () => {
+describe('Registry', () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   global.FormData = MockFormData as any;
 
@@ -57,7 +57,7 @@ describe('ComponentRegistry', () => {
       return [['c', 'd']];
     }
   }
-  const registry = new Components.ComponentRegistry([Foo, Bar, Baz]);
+  const registry = new Components.Registry([Foo, Bar, Baz]);
 
   describe('hasComponent', () => {
     it('returns true for existing component using local name', () => {

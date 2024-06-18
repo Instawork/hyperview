@@ -30,5 +30,5 @@ export const stories = (
 };
 
 export const getOptions = () => ({
-  componentRegistry: new Components.ComponentRegistry([]),
+  componentRegistry: new Components.Registry([]),
 });

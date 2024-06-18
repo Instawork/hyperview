@@ -53,7 +53,7 @@ export const render = (
       element={element}
       onUpdate={action('action')}
       options={{
-        componentRegistry: new Components.ComponentRegistry(
+        componentRegistry: new Components.Registry(
           ComponentsRegistry || [Component],
         ),
       }}

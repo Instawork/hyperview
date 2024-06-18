@@ -42,7 +42,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
 
   behaviorRegistry: BehaviorRegistry;
 
-  componentRegistry: Components.ComponentRegistry;
+  componentRegistry: Components.Registry;
 
   parser: Dom.Parser;
 
@@ -57,9 +57,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
     );
 
     this.behaviorRegistry = Behaviors.getRegistry(this.props.behaviors);
-    this.componentRegistry = new Components.ComponentRegistry(
-      this.props.components,
-    );
+    this.componentRegistry = new Components.Registry(this.props.components);
   }
 
   /**

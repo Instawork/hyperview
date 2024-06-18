@@ -32,7 +32,7 @@ const HYPERVIEW_COMPONENTS = [
   HvWebView,
 ];
 
-export class ComponentRegistry {
+export class Registry {
   components: HvComponent[];
 
   constructor(components: HvComponent[] | null | undefined = null) {
