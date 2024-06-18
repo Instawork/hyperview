@@ -72,12 +72,10 @@ export const renderElement = (
       return null;
     }
 
-    const Component: HvComponent | undefined = options.componentRegistry
-      ? options.componentRegistry.getComponent(
-          element.namespaceURI,
-          element.localName,
-        )
-      : undefined;
+    const Component: HvComponent | undefined = options.componentRegistry?.getComponent(
+        element.namespaceURI,
+        element.localName,
+      );
 
     if (Component) {
       /* eslint-disable max-len */
