@@ -10,7 +10,7 @@
       target="tab-ui"
       style="bottom-tab bottom-tab-selected"
     >
-      <text style="bottom-tab-label {% if tab_id === 'tab-ui' %} bottom-tab-label-selected{% endif %}">UI</text>
+      <text style="bottom-tab-label {% if hv_tab_id === 'tab-ui' %} bottom-tab-label-selected{% endif %}">UI</text>
     </view>
     <view
       style="bottom-tab"
@@ -18,7 +18,7 @@
       action="navigate"
       target="tab-behaviors"
     >
-      <text style="bottom-tab-label {% if tab_id === 'tab-behaviors' %} bottom-tab-label-selected{% endif %}">Behaviors</text>
+      <text style="bottom-tab-label {% if hv_tab_id === 'tab-behaviors' %} bottom-tab-label-selected{% endif %}">Behaviors</text>
     </view>
     <view
       style="bottom-tab"
@@ -26,7 +26,7 @@
       action="navigate"
       target="tab-navigation"
     >
-      <text style="bottom-tab-label {% if tab_id === 'tab-navigation' %} bottom-tab-label-selected{% endif %}">Navigation</text>
+      <text style="bottom-tab-label {% if hv_tab_id === 'tab-navigation' %} bottom-tab-label-selected{% endif %}">Navigation</text>
     </view>
     <view
       style="bottom-tab"
@@ -34,7 +34,7 @@
       action="navigate"
       target="tab-case-studies"
     >
-      <text style="bottom-tab-label {% if tab_id === 'tab-case-studies' %} bottom-tab-label-selected{% endif %}">Case Studies</text>
+      <text style="bottom-tab-label {% if hv_tab_id === 'tab-case-studies' %} bottom-tab-label-selected{% endif %}">Case Studies</text>
     </view>
   </view>
 {% endblock %}
