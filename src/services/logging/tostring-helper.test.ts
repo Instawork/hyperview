@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DefaultLogger } from '.';
+
+import { DefaultLogger } from './default-logger';
 import { deferredToString } from './tostring-helper';
 
 const logger = new DefaultLogger();
