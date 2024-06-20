@@ -9,14 +9,26 @@ export class DefaultLogger {
   };
 
   log = (m?: any, ...p: any[]): void =>
-    console.log(this.asString(m), this.asString(p));
+    console.log(
+      this.asString(m),
+      p.map(param => this.asString(param)),
+    );
 
   info = (m?: any, ...p: any[]): void =>
-    console.info(this.asString(m), this.asString(p));
+    console.info(
+      this.asString(m),
+      p.map(param => this.asString(param)),
+    );
 
   warn = (m?: any, ...p: any[]): void =>
-    console.warn(this.asString(m), this.asString(p));
+    console.warn(
+      this.asString(m),
+      p.map(param => this.asString(param)),
+    );
 
   error = (m?: any, ...p: any[]): void =>
-    console.error(this.asString(m), this.asString(p));
+    console.error(
+      this.asString(m),
+      p.map(param => this.asString(param)),
+    );
 }
