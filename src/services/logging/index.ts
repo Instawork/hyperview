@@ -15,3 +15,4 @@ export const warn = (m?: any, ...p: any[]): void => logger.warn(m, p);
 export const error = (m?: any, ...p: any[]): void => logger.error(m, p);
 
 export type { Logger } from './types';
+export { deferredToString } from './tostring-helper';
