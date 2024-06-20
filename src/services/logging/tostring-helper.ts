@@ -4,11 +4,12 @@
  * A helper class for working with expensive string conversions
  * The toString() is deferred until the class is stringified
  * If a function is passed in, the function will be called during stringification
+ * The implementation of the logger will need to call the toString on each param
  * Example:
  *  import { deferredToString } from 'hyperview/src/services/logging';
  *  const stringData = deferredToString('foo');
  *  const expensiveData = deferredToString(()=>{return 'expensive string process'});
- *  console.log(`string: ${stringData} expensive: ${expensiveData}`);
+ *  logger.log('string:', stringData, 'expensive:', expensiveData);
  */
 class ToStringHelper {
   obj: any;
