@@ -14,7 +14,7 @@ hv_list_tag: "root"
       {% if loop.last %}
         {% set item_style = item_style ~ " item-last" %}
       {% endif %}
-      <item href="{{ screen.data.permalink }}" key="{{ screen.data.hv_title | slug }}" show-during-load="loadingScreen" style="{{ item_style }}">
+      <item href="{{ screen.data.permalink }}" key="{{ screen.data.hv_title | slug }}" show-during-load="loading-screen" style="{{ item_style }}">
         <view style="item-left">
           <text style="item-label">{{ screen.data.hv_title }}</text>
         </view>
