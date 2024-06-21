@@ -166,20 +166,20 @@ export default class HyperRef extends PureComponent<Props, State> {
         this.props.onUpdate,
       );
       handler(this.props.element);
-      if (__DEV__) {
-        const listenerElement: Element = behaviorElement.cloneNode(
-          false,
-        ) as Element;
-        const caughtEvent:
-          | string
-          | undefined
-          | null = behaviorElement.getAttribute('event-name');
-        const serializer = new XMLSerializer();
-        Logging.log(
-          `[on-event] trigger [${caughtEvent}] caught by:`,
-          serializer.serializeToString(listenerElement),
-        );
-      }
+
+      Logging.info(
+        '[on-event] trigger [',
+        Logging.deferredToString(() => {
+          return behaviorElement.getAttribute('event-name');
+        }),
+        '] caught by: ',
+        Logging.deferredToString(() => {
+          const listenerElement: Element = behaviorElement.cloneNode(
+            false,
+          ) as Element;
+          return new XMLSerializer().serializeToString(listenerElement);
+        }),
+      );
     });
   };
 
