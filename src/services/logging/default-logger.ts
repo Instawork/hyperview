@@ -3,10 +3,10 @@
 import { ToStringHelper } from './tostring-helper';
 
 /**
- * The default logger performs toString() operations on each param passed to the logging actions
+ * Handles deferredToString objects by calling toString() prior to forwarding to console
  */
 export class DefaultLogger {
-  toString = (m?: any): any => {
+  convertDeferred = (m?: any): any => {
     if (m instanceof ToStringHelper) {
       return m.toString();
     }
@@ -15,25 +15,25 @@ export class DefaultLogger {
 
   log = (m?: any, ...p: any[]): void =>
     console.log(
-      this.toString(m),
-      p.map(param => this.toString(param)),
+      this.convertDeferred(m),
+      p.map(param => this.convertDeferred(param)),
     );
 
   info = (m?: any, ...p: any[]): void =>
     console.info(
-      this.toString(m),
-      p.map(param => this.toString(param)),
+      this.convertDeferred(m),
+      p.map(param => this.convertDeferred(param)),
     );
 
   warn = (m?: any, ...p: any[]): void =>
     console.warn(
-      this.toString(m),
-      p.map(param => this.toString(param)),
+      this.convertDeferred(m),
+      p.map(param => this.convertDeferred(param)),
     );
 
   error = (m?: any, ...p: any[]): void =>
     console.error(
-      this.toString(m),
-      p.map(param => this.toString(param)),
+      this.convertDeferred(m),
+      p.map(param => this.convertDeferred(param)),
     );
 }
