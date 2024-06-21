@@ -1,29 +1,39 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { ToStringHelper } from './tostring-helper';
+
 /**
- * The default logger performs toString() operations on each param passed to the logging actions
+ * Handles deferredToString objects by calling toString() prior to forwarding to console
  */
 export class DefaultLogger {
+  convertDeferred = (m?: any): any => {
+    if (m instanceof ToStringHelper) {
+      return m.toString();
+    }
+    return m;
+  };
+
   log = (m?: any, ...p: any[]): void =>
     console.log(
-      String(m),
-      p.map(param => String(param)),
+      this.convertDeferred(m),
+      p.map(param => this.convertDeferred(param)),
     );
 
   info = (m?: any, ...p: any[]): void =>
     console.info(
-      String(m),
-      p.map(param => String(param)),
+      this.convertDeferred(m),
+      p.map(param => this.convertDeferred(param)),
     );
 
   warn = (m?: any, ...p: any[]): void =>
     console.warn(
-      String(m),
-      p.map(param => String(param)),
+      this.convertDeferred(m),
+      p.map(param => this.convertDeferred(param)),
     );
 
   error = (m?: any, ...p: any[]): void =>
     console.error(
-      String(m),
-      p.map(param => String(param)),
+      this.convertDeferred(m),
+      p.map(param => this.convertDeferred(param)),
     );
 }

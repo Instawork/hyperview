@@ -11,7 +11,7 @@
  *  const expensiveData = deferredToString(()=>{return 'expensive string process'});
  *  logger.log('string:', stringData, 'expensive:', expensiveData);
  */
-class ToStringHelper {
+export class ToStringHelper {
   obj: any;
 
   constructor(obj: any) {
