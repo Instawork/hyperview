@@ -330,6 +330,7 @@ export const ACTIONS = {
   DISPATCH_EVENT: 'dispatch-event',
   NAVIGATE: 'navigate',
   NEW: 'new',
+  PREFETCH: 'prefetch',
   PREPEND: 'prepend',
   PUSH: 'push',
   RELOAD: 'reload',

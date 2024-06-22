@@ -130,6 +130,25 @@ export default class Hyperview extends PureComponent<Types.Props> {
     });
   };
 
+  prefetch = async (
+    href: DOMString | null | undefined,
+    opts: HvComponentOptions,
+  ) => {
+    const { onUpdateCallbacks } = opts;
+    if (!href) {
+      Logging.warn('Prefetch requires an href');
+      return;
+    }
+    const url = UrlService.getUrlFromHref(
+      href,
+      onUpdateCallbacks?.getState().url || '',
+    );
+    // Wait for the current event loop to finish before prefetching the next screen
+    setTimeout(async () => {
+      await this.parser.load(url);
+    }, 0);
+  };
+
   /**
    * Fetches the provided reference.
    * - If the references is an id reference (starting with #),
@@ -289,6 +308,8 @@ export default class Hyperview extends PureComponent<Types.Props> {
       } else {
         dispatch();
       }
+    } else if (action === ACTIONS.PREFETCH) {
+      this.prefetch(href, options);
     } else {
       const { behaviorElement } = options;
       this.onCustomUpdate(behaviorElement, options.onUpdateCallbacks);
