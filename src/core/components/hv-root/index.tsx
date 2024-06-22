@@ -130,10 +130,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
     });
   };
 
-  prefetch = async (
-    href: DOMString | null | undefined,
-    opts: HvComponentOptions,
-  ) => {
+  prefetch = (href: DOMString | null | undefined, opts: HvComponentOptions) => {
     const { onUpdateCallbacks } = opts;
     if (!href) {
       Logging.warn('Prefetch requires an href');
