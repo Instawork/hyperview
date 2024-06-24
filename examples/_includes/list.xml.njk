@@ -4,7 +4,15 @@ hv_list_tag: "root"
 ---
 
 {# Standard template for showing a list of links to other screens. List is generated from a collection of screens with the given "hv_list_tag" #}
-<list style="list-container" xmlns="https://hyperview.org/hyperview" trigger="refresh" action="replace" target="directory-list" id="directory-list" href="{% if list_href %}{{ list_href }}{% else %}{{ permalink }}{% endif %}">
+<list 
+  action="replace"
+  href="{% if list_href %}{{ list_href }}{% else %}{{ permalink }}{% endif %}"
+  id="directory-list"
+  style="list-container"
+  target="directory-list"
+  trigger="refresh"
+  xmlns="https://hyperview.org/hyperview"
+>
   {% for tag in hv_list_tag.split(',') %}
     {% for screen in collections[tag]|sortCollection %}
       {% set item_style = "item" %}
@@ -14,7 +22,12 @@ hv_list_tag: "root"
       {% if loop.last %}
         {% set item_style = item_style ~ " item-last" %}
       {% endif %}
-      <item href="{{ screen.data.permalink }}" key="{{ screen.data.hv_title | slug }}" show-during-load="loading-screen" style="{{ item_style }}">
+      <item 
+        href="{{ screen.data.permalink }}"
+        key="{{ screen.data.hv_title | slug }}"
+        show-during-load="loading-screen"
+        style="{{ item_style }}"
+      >
         <view style="item-left">
           <text style="item-label">{{ screen.data.hv_title }}</text>
         </view>
