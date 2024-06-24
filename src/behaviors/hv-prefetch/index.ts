@@ -31,10 +31,10 @@ export default {
     }
 
     Behaviors.setRanOnce(element);
-    const url = UrlService.getUrlFromHref(href, screenState.url || '');
+    const url = UrlService.getUrlFromHref(href, screenState?.url || '');
     // Wait for the current event loop to finish before prefetching the next screen
     setTimeout(async () => {
-      await parser.load(url);
+      await parser?.load(url);
     }, 0);
   },
 };
