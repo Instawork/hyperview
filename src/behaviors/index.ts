@@ -3,6 +3,7 @@ import HvAlert from 'hyperview/src/behaviors/hv-alert';
 import HvCopyToClipboard from 'hyperview/src/behaviors/hv-copy-to-clipboard';
 import HvHide from 'hyperview/src/behaviors/hv-hide';
 import HvOpenSettings from 'hyperview/src/behaviors/hv-open-settings';
+import HvPrefetch from 'hyperview/src/behaviors/hv-prefetch';
 import HvSelectAll from 'hyperview/src/behaviors/hv-select-all';
 import HvSetValue from 'hyperview/src/behaviors/hv-set-value';
 import HvShare from 'hyperview/src/behaviors/hv-share';
@@ -15,6 +16,7 @@ const HYPERVIEW_BEHAVIORS = [
   HvCopyToClipboard,
   HvHide,
   HvOpenSettings,
+  HvPrefetch,
   HvSelectAll,
   HvSetValue,
   HvShare,

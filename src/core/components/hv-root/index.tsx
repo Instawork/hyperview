@@ -130,20 +130,25 @@ export default class Hyperview extends PureComponent<Types.Props> {
     });
   };
 
-  prefetch = (href: DOMString | null | undefined, opts: HvComponentOptions) => {
-    const { onUpdateCallbacks } = opts;
-    if (!href) {
-      Logging.warn('Prefetch requires an href');
+  prefetch = (
+    behaviorElement: Element | null | undefined,
+    onUpdateCallbacks: OnUpdateCallbacks,
+  ) => {
+    if (!behaviorElement) {
+      Logging.warn('Custom behavior requires a behaviorElement');
       return;
     }
-    const url = UrlService.getUrlFromHref(
-      href,
-      onUpdateCallbacks?.getState().url || '',
+
+    const behavior = this.behaviorRegistry[ACTIONS.PREFETCH];
+    const updateRoot = () => ({});
+    behavior.callback(
+      behaviorElement,
+      onUpdateCallbacks.getOnUpdate(),
+      onUpdateCallbacks.getDoc,
+      updateRoot,
+      onUpdateCallbacks.getState(),
+      this.parser,
     );
-    // Wait for the current event loop to finish before prefetching the next screen
-    setTimeout(async () => {
-      await this.parser.load(url);
-    }, 0);
   };
 
   /**
@@ -306,7 +311,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
         dispatch();
       }
     } else if (action === ACTIONS.PREFETCH) {
-      this.prefetch(href, options);
+      this.prefetch(options.behaviorElement, options.onUpdateCallbacks);
     } else {
       const { behaviorElement } = options;
       this.onCustomUpdate(behaviorElement, options.onUpdateCallbacks);

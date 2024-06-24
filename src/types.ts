@@ -1,4 +1,5 @@
 import * as Components from 'hyperview/src/services/components';
+import * as Dom from 'hyperview/src/services/dom';
 import * as Stylesheets from './services/stylesheets';
 import Navigation from './services/navigation';
 import type { Route as NavigatorRoute } from './services/navigator';
@@ -239,6 +240,8 @@ export type HvBehavior = {
     onUpdate: HvComponentOnUpdate,
     getRoot: HvGetRoot,
     updateRoot: HvUpdateRoot,
+    screenState?: ScreenState,
+    parser?: Dom.Parser,
   ) => void;
 };
 
