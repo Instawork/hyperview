@@ -1,0 +1,8 @@
+<header style="header">
+  {% if hv_button_behavior == 'close' %}
+    <text action="close" href="#" style="header-btn">Close</text>
+  {% elif hv_button_behavior == 'back' %}
+    <text action="back" href="#" style="header-btn">Back</text>
+  {% endif %}
+  <text style="header-title">{{ hv_title }}</text>
+</header>
