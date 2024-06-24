@@ -68,10 +68,7 @@ export default class HvScreen extends React.Component {
     // </HACK>
 
     this.behaviorRegistry = Behaviors.getRegistry(this.props.behaviors);
-    this.componentRegistry = Components.getRegistry(this.props.components);
-    this.formComponentRegistry = Components.getFormRegistry(
-      this.props.components,
-    );
+    this.componentRegistry = new Components.Registry(this.props.components);
     this.navigation = new Navigation(props.entrypointUrl, this.getNavigation());
   }
 

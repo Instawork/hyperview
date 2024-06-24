@@ -1,5 +1,5 @@
-import * as ComponentsInternal from './internal';
-import type { ComponentRegistry, HvComponent } from 'hyperview/src/types';
+import * as Services from 'hyperview/src/services';
+import type { HvComponent, HvFormValues, LocalName } from 'hyperview/src/types';
 import HvDateField from 'hyperview/src/components/hv-date-field';
 import HvImage from 'hyperview/src/components/hv-image';
 import HvList from 'hyperview/src/components/hv-list';
@@ -32,27 +32,76 @@ const HYPERVIEW_COMPONENTS = [
   HvWebView,
 ];
 
-const reducer = (registry: ComponentRegistry, component: HvComponent) => ({
-  ...registry,
-  [component.namespaceURI]: {
-    ...registry[component.namespaceURI],
-    ...ComponentsInternal.registerComponent(component),
-  },
-});
+export class Registry {
+  components: HvComponent[];
 
-export const getRegistry = (
-  components: HvComponent[] = [],
-): ComponentRegistry =>
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [...HYPERVIEW_COMPONENTS, ...components].reduce<Record<string, any>>(
-    reducer,
-    {},
-  );
+  constructor(components: HvComponent[] | null | undefined = null) {
+    this.components = [...HYPERVIEW_COMPONENTS, ...(components || [])];
+  }
 
-export const getFormRegistry = (
-  components: HvComponent[] = [],
-): ComponentRegistry =>
-  [...HYPERVIEW_COMPONENTS, ...components]
-    .filter(c => Object.prototype.hasOwnProperty.call(c, 'getFormInputValues'))
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    .reduce<Record<string, any>>(reducer, {});
+  getComponent(
+    namespaceURI: string,
+    localName: string,
+  ): HvComponent | undefined {
+    return this.components.find(
+      component =>
+        component.namespaceURI === namespaceURI &&
+        (component.localName === localName ||
+          (component.localNameAliases || []).includes(localName)),
+    );
+  }
+
+  hasComponent(namespaceURI: string, localName: string): boolean {
+    return this.getComponent(namespaceURI, localName) !== undefined;
+  }
+
+  /**
+   * Creates a FormData object for the given element. Finds the closest form element ancestor
+   * and adds data for all inputs contained in the form. Returns null if the element has no
+   * form ancestor, or if there is no form data to send.
+   * If the given element is a form element, its form data will be returned.
+   */
+  getFormData(element: Element): FormData | null {
+    const formElement: Element | null | undefined =
+      element.tagName === 'form'
+        ? element
+        : Services.getAncestorByTagName(element, 'form');
+    if (!formElement) {
+      return null;
+    }
+
+    const formData: FormData = new FormData();
+    let formHasData: boolean = false;
+
+    this.components
+      .filter(c =>
+        Object.prototype.hasOwnProperty.call(c, 'getFormInputValues'),
+      )
+      .forEach((c: HvComponent) => {
+        const ns = c.namespaceURI;
+        const localNames = [c.localName, ...(c.localNameAliases || [])];
+        localNames.forEach(tag => {
+          const inputElements = formElement.getElementsByTagNameNS(
+            ns,
+            tag as LocalName,
+          );
+          for (let i = 0; i < inputElements.length; i += 1) {
+            const inputElement = inputElements.item(i);
+            if (inputElement) {
+              const formComponent = c as HvComponent & HvFormValues;
+              formComponent
+                .getFormInputValues(inputElement)
+                // eslint-disable-next-line no-loop-func
+                .forEach(([name, value]: [string, string]) => {
+                  formData.append(name, value);
+                  formHasData = true;
+                });
+            }
+          }
+        });
+      });
+
+    // Ensure that we only return form data with content in it. Otherwise, it will crash on Android
+    return formHasData ? formData : null;
+  }
+}

@@ -1,3 +1,4 @@
+import * as Components from 'hyperview/src/services/components';
 import * as Stylesheets from './services/stylesheets';
 import Navigation from './services/navigation';
 import type { Route as NavigatorRoute } from './services/navigator';
@@ -162,15 +163,9 @@ export type StyleSheets = {
   pressedSelected: StyleSheet;
 };
 
-export type ComponentRegistry = {
-  [key: string]: {
-    [key: string]: HvComponent;
-  };
-};
-
 export type HvComponentOptions = {
   behaviorElement?: Element | null | undefined;
-  componentRegistry?: ComponentRegistry;
+  componentRegistry?: Components.Registry;
   delay?: DOMString | null | undefined;
   focused?: boolean | null | undefined;
   hideIndicatorIds?: DOMString | null | undefined;

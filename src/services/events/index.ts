@@ -5,9 +5,8 @@ import { TinyEmitter } from 'tiny-emitter';
 const tinyEmitter = new TinyEmitter();
 
 export const dispatch = (eventName: string) => {
-  if (__DEV__) {
-    Logging.log(`[dispatch-event] action [${eventName}] emitted.`);
-  }
+  Logging.info(`[dispatch-event] action [${eventName}] emitted.`);
+
   tinyEmitter.emit(ON_EVENT_DISPATCH, eventName);
 };
 

@@ -1,15 +1,11 @@
 import * as Xml from 'hyperview/src/services/xml';
+import { DEFAULT_PRESS_OPACITY, HV_TIMEOUT_ID_ATTR } from './types';
 import type {
-  ComponentRegistry,
   DOMString,
-  HvComponent,
   HvComponentOptions,
-  HvFormValues,
-  LocalName,
   StyleSheet,
   StyleSheets,
 } from 'hyperview/src/types';
-import { DEFAULT_PRESS_OPACITY, HV_TIMEOUT_ID_ATTR } from './types';
 import { NODE_TYPE } from 'hyperview/src/types';
 import { Platform } from 'react-native';
 
@@ -242,71 +238,6 @@ export const getAncestorByTagName = (
     }
   }
   return parentNode as Element;
-};
-
-export const flattenRegistry = (
-  registry: ComponentRegistry,
-): Array<[string, string, HvComponent]> => {
-  const entries: Array<[string, string, HvComponent]> = [];
-
-  Object.keys(registry).forEach((ns: string) => {
-    const nameRegistry: {
-      [key: string]: HvComponent;
-    } = registry[ns];
-    Object.keys(nameRegistry).forEach((name: string) => {
-      const component: HvComponent = nameRegistry[name];
-      entries.push([ns, name, component]);
-    });
-  });
-  return entries;
-};
-
-/**
- * Creates a FormData object for the given element. Finds the closest form element ancestor
- * and adds data for all inputs contained in the form. Returns null if the element has no
- * form ancestor, or if there is no form data to send.
- * If the given element is a form element, its form data will be returned.
- */
-export const getFormData = (
-  element: Element,
-  formComponents: ComponentRegistry,
-): FormData | null | undefined => {
-  const formElement: Element | null | undefined =
-    element.tagName === 'form'
-      ? element
-      : getAncestorByTagName(element, 'form');
-  if (!formElement) {
-    return null;
-  }
-
-  const formData: FormData = new FormData();
-
-  let formHasData = false;
-  flattenRegistry(formComponents)
-    // Get all inputs in the form
-    .forEach((data: [string, string, HvComponent]) => {
-      const [ns, tag, component] = data;
-      const inputElements = formElement.getElementsByTagNameNS(
-        ns,
-        tag as LocalName,
-      );
-      for (let i = 0; i < inputElements.length; i += 1) {
-        const inputElement = inputElements.item(i);
-        if (inputElement) {
-          const formComponent = component as HvComponent & HvFormValues;
-          formComponent
-            .getFormInputValues(inputElement)
-            // eslint-disable-next-line no-loop-func
-            .forEach(([name, value]: [string, string]) => {
-              formData.append(name, value);
-              formHasData = true;
-            });
-        }
-      }
-    });
-
-  // Ensure that we only return form data with content in it. Otherwise, it will crash on Android
-  return formHasData ? formData : null;
 };
 
 export const getNameValueFormInputValues = (

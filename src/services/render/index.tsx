@@ -2,6 +2,7 @@ import * as InlineContext from 'hyperview/src/services/inline-context';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type {
+  HvComponent,
   HvComponentOnUpdate,
   HvComponentOptions,
   StyleSheets,
@@ -71,14 +72,14 @@ export const renderElement = (
       return null;
     }
 
-    if (
-      options.componentRegistry &&
-      options.componentRegistry[element.namespaceURI] &&
-      options.componentRegistry[element.namespaceURI][element.localName]
-    ) {
-      const Component =
-        options.componentRegistry[element.namespaceURI][element.localName];
+    const Component:
+      | HvComponent
+      | undefined = options.componentRegistry?.getComponent(
+      element.namespaceURI,
+      element.localName,
+    );
 
+    if (Component) {
       /* eslint-disable max-len */
       // Use object spreading instead of explicitly setting the key (to potentially undefined values)
       // Explicitly setting the key causes collision when several components render with `undefined` value for `key`
