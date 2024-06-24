@@ -1,3 +1,4 @@
+import * as Behaviors from 'hyperview/src/behaviors';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Logging from 'hyperview/src/services/logging';
 import * as UrlService from 'hyperview/src/services/url';
@@ -16,14 +17,20 @@ export default {
     onUpdate: HvComponentOnUpdate,
     getRoot: HvGetRoot,
     updateRoot: HvUpdateRoot,
-    screenState: ScreenState,
-    parser: Dom.Parser,
+    screenState?: ScreenState,
+    parser?: Dom.Parser,
   ) => {
     const href = element.getAttribute('href');
     if (!href) {
       Logging.warn('[behaviors/prefetch] requires an "href" attribute');
       return;
     }
+
+    if (Behaviors.isOncePreviouslyApplied(element)) {
+      return;
+    }
+
+    Behaviors.setRanOnce(element);
     const url = UrlService.getUrlFromHref(href, screenState.url || '');
     // Wait for the current event loop to finish before prefetching the next screen
     setTimeout(async () => {
