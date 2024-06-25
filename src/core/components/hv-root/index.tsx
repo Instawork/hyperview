@@ -135,7 +135,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
     onUpdateCallbacks: OnUpdateCallbacks,
   ) => {
     if (!behaviorElement) {
-      Logging.warn('Custom behavior requires a behaviorElement');
+      Logging.warn('Prefetch behavior requires a behaviorElement');
       return;
     }
 
