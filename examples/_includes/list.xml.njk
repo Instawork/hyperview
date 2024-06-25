@@ -31,7 +31,9 @@ hv_list_tag: "root"
         <view style="item-left">
           <text style="item-label">{{ screen.data.hv_title }}</text>
         </view>
-        <text style="item-chevron">&gt;</text>
+        <view style="item-chevron">
+          {% include './icons/chevron-right.svg' %}
+        </view>
       </item>
     {% endfor %}
   {% endfor %}
