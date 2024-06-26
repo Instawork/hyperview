@@ -1,0 +1,13 @@
+{# Base template that should be used for all screens. Shows the Header + back button #}
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      {% include 'styles.xml.njk' %}
+    </styles>
+    <body style="body" safe-area="true">
+      {% include 'header.xml.njk' %}
+      {% block container %}{% endblock %}
+    </body>
+  </screen>
+  {% include 'loading-screen.xml.njk' %}
+</doc>
