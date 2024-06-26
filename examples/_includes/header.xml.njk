@@ -1,0 +1,12 @@
+<header style="header">
+  {% if hv_button_behavior == 'close' %}
+    <view action="close" href="#" style="header-btn">
+      {% include './icons/close.svg' %}
+    </view>
+  {% elif hv_button_behavior == 'back' %}
+    <view action="back" href="#" style="header-btn">
+      {% include './icons/back.svg' %}
+    </view>
+  {% endif %}
+  <text style="header-title">{{ hv_title }}</text>
+</header>
