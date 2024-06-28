@@ -1,4 +1,4 @@
-<text style="description">Disabled</text>
-<view style="button button-disabled">
-  <text style="bottom-label">Disabled</text>
-</view>
+{% import 'macros.nj' as macros %}
+
+{{ macros.description('Disabled') }}
+{{ macros.button('Disabled', buttonProps={style:"button button-disabled"}) }}

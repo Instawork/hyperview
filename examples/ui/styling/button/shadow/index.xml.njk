@@ -1,4 +1,4 @@
-<text style="description">Shadow</text>
-<view action="reload" href="/styling/button.xml" style="button button-shadow">
-  <text style="bottom-label">Shadow</text>
-</view>
+{% import 'macros.nj' as macros %}
+
+{{ macros.description('Shadow') }}
+{{ macros.button('Shadow', buttonProps={action:"reload", href:"/styling/button/index.xml", style:"button button-shadow"}) }}

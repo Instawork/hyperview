@@ -1,3 +1,13 @@
 {% macro description(x) %}
 <text style="description">{{ x }}</text>
 {% endmacro %}
+
+{% macro button(text, buttonProps) %}
+<view
+  {% for attr, val in buttonProps %}
+    {{ attr }} = "{{ val }}"
+  {% endfor %}
+>
+  <text style="button-label">{{ text }}</text>
+</view>
+{% endmacro %}

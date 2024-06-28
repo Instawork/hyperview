@@ -9,18 +9,13 @@ hv_button_behavior: "back"
 
 
 {% block styles %}
-  {% include './elevation-3.xml.njk' %}
-  {% include './elevation-10.xml.njk' %}
+  {% include './elevation-3/style.xml.njk' %}
+  {% include './elevation-10/style.xml.njk' %}
 {% endblock %}
 
 {% block content %}
   {{ macros.description('Elevation styling only works on Android. For iOS, use shadow styles.') }}
-  <text style="description">Elevation: 3</text>
-  <view style="button button-elevation-3">
-    <text style="Button__Label">Hello</text>
-  </view>
-  <text style="description">Elevation: 10</text>
-  <view style="button button-elevation-10">
-    <text style="Button__Label">Hello</text>
-  </view>
+  {% include './elevation-3/index.xml.njk' %}
+  {% include './elevation-10/index.xml.njk' %}
+
 {% endblock %}
