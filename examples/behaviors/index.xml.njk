@@ -3,9 +3,11 @@ permalink: "/behaviors/index.xml"
 hv_title: "Behaviors"
 hv_tab_id: "tab-behaviors"
 hv_button_behavior: "none"
+hv_list_tag: "behavior_root"
 ---
 {% extends 'tab.xml.njk' %}
 
 {% block tab_content %}
   <text style="description">This is the content for Behaviors tab.</text>
+  {% include "list.xml.njk" %}
 {% endblock %}

@@ -1,0 +1,8 @@
+{% import 'macros.nj' as macros %}
+
+{{ macros.description('Tapping the button below will toggle the visibility of the element below.') }}
+
+{% call macros.button('Toggle', buttonProps={style:"button"}) -%}
+<behavior action="toggle" target="toggle1-content" />
+{%- endcall %}
+<text id="toggle1-content" style="toggle">Content to be toggled</text>

@@ -2,12 +2,15 @@
 <text style="description">{{ x }}</text>
 {% endmacro %}
 
-{% macro button(text, buttonProps) %}
+{% macro button(text, buttonProps={}) %}
 <view
   {% for attr, val in buttonProps %}
-    {{ attr }} = "{{ val }}"
+    {{ attr }}="{{ val }}"
   {% endfor %}
 >
+{% if caller %}
+  {{ caller() }}
+{% endif %}
   <text style="button-label">{{ text }}</text>
 </view>
 {% endmacro %}
