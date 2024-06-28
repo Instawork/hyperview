@@ -1,0 +1,3 @@
+{% macro description(x) %}
+<text style="description">{{ x }}</text>
+{% endmacro %}
