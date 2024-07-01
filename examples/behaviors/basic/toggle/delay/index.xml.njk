@@ -1,0 +1,12 @@
+{% import 'macros.nj' as macros %}
+
+{{ macros.description('Toggle can work with the delay attribute. In this example, the toggle will be delayed 1 second.') }}
+
+{% call macros.button('Toggle with Delay', buttonProps={style:"button"}) -%}
+  <behavior
+    action="toggle"
+    delay="1000"
+    target="toggle2-content"
+  />
+{%- endcall %}
+<text id="toggle2-content" style="toggle">Content to be toggled</text>
