@@ -1,0 +1,25 @@
+{% for i in range(1, 51) %}
+  {% set item_style = "item" %}
+  {% if loop.first %}
+    {% set item_style = item_style ~ " item-first" %}
+  {% endif %}
+  {% if loop.last %}
+    {% set item_style = item_style ~ " item-last" %}
+  {% endif %}
+  <item key="{{ i }}" style="{{ item_style }}" id="item-{{ i }}">
+    <text style="item-label">Item {{ i }}</text>
+    {% if i == 15 or i == 25 or i == 35 %}
+      <view>
+        <behavior action="scroll" target="top" scroll:animated="true" />
+        <text style="link">Scroll to top</text>
+      </view>
+    {% endif %}
+  </item>
+{% endfor %}
+<item key="bottom" id="bottom">
+  <view />
+  <view>
+    <behavior action="scroll" target="top" scroll:animated="true" />
+    <text style="link">Scroll to top</text>
+  </view>
+</item>

@@ -14,3 +14,16 @@
   <text style="button-label">{{ text }}</text>
 </view>
 {% endmacro %}
+
+{% macro link(text, linkProps={}) %}
+<view
+  {% for attr, val in buttonProps %}
+    {{ attr }}="{{ val }}"
+  {% endfor %}
+>
+{% if caller %}
+  {{ caller() }}
+{% endif %}
+  <text style="link">{{ text }}</text>
+</view>
+{% endmacro %}

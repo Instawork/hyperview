@@ -1,0 +1,11 @@
+{% import 'macros.nj' as macros %}
+
+{{ macros.description('Tapping the button below will copy the value "Hello World" to the clipboard.') }}
+
+{% call macros.button('Copy to clipboard', buttonProps={style:"button"}) -%}
+  <behavior
+    action="copy-to-clipboard"
+    trigger="press"
+    copy-to-clipboard-value="Hello World"
+  />
+{%- endcall %}
