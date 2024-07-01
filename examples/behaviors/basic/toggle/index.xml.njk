@@ -8,9 +8,15 @@ hv_button_behavior: "back"
 
 {% block styles %}
 {% include './tap/style.xml.njk' %}
+{% include './delay/style.xml.njk' %}
+{% include './spinner/style.xml.njk' %}
+{% include './multiple/style.xml.njk' %}
 {% endblock %}
 
 
 {% block content %}
   {% include './tap/index.xml.njk' %}
+  {% include './delay/index.xml.njk' %}
+  {% include './spinner/index.xml.njk' %}
+  {% include './multiple/index.xml.njk' %}
 {% endblock %}
