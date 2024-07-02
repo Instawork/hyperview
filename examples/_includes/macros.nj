@@ -1,29 +1,36 @@
 {% macro description(x) %}
-<text style="description">{{ x }}</text>
+  {% if caller %}
+    {{ caller() }}
+  {% else %}
+    <text style="description">{{ x }}</text>
+  {% endif %}
 {% endmacro %}
 
-{% macro button(text, buttonProps={}) %}
-<view
-  {% for attr, val in buttonProps %}
-    {{ attr }}="{{ val }}"
-  {% endfor %}
->
-{% if caller %}
-  {{ caller() }}
-{% endif %}
-  <text style="button-label">{{ text }}</text>
-</view>
+{% macro button(text, attributes={}) %}
+  <view
+    {% for attr, val in attributes %}
+      {{ attr }}="{{ val }}"
+    {% endfor %}
+    {% if "style" not in attributes %}
+      style="button"
+    {% endif %}
+  >
+  {% if caller %}
+    {{ caller() }}
+  {% endif %}
+    <text style="button-label">{{ text }}</text>
+  </view>
 {% endmacro %}
 
-{% macro link(text, linkProps={}) %}
-<view
-  {% for attr, val in buttonProps %}
-    {{ attr }}="{{ val }}"
-  {% endfor %}
->
-{% if caller %}
-  {{ caller() }}
-{% endif %}
-  <text style="link">{{ text }}</text>
-</view>
+{% macro link(text, attributes={}) %}
+  <view
+    {% for attr, val in attributes %}
+      {{ attr }}="{{ val }}"
+    {% endfor %}
+  >
+  {% if caller %}
+    {{ caller() }}
+  {% endif %}
+    <text style="link">{{ text }}</text>
+  </view>
 {% endmacro %}

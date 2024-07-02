@@ -2,7 +2,7 @@
 
 {{ macros.description('Tapping the button below will copy the value "Hello World" to the clipboard.') }}
 
-{% call macros.button('Copy to clipboard', buttonProps={style:"button"}) -%}
+{% call macros.button('Copy to clipboard') -%}
   <behavior
     action="copy-to-clipboard"
     trigger="press"
