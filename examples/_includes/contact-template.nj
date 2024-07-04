@@ -1,0 +1,15 @@
+{% macro contact(name, phone) %}
+  <behavior action="back" trigger="on-event" event-name="go-back" />
+  <text style="description">
+    Pressing add will dispatch two events, one to update the status and
+    another to go back to the previous screen
+  </text>
+  <view>
+    <text style="name">{{ name }}</text>
+    <text style="phone">Ph: {{ phone }}</text>
+    <view style="button">
+      {{ caller() }}
+      <text style="button-label">Add to network</text>
+    </view>
+  </view>
+{% endmacro %}

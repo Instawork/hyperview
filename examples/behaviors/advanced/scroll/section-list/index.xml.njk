@@ -1,14 +1,29 @@
 ---
-permalink: "/behaviors/advanced/scroll/list/index.xml"
+permalink: "/behaviors/advanced/scroll/section-list/index.xml"
 tags: "list"
-hv_title: "List"
+hv_title: "Section List"
 hv_button_behavior: "back"
 ---
 {% extends 'base.xml.njk' %}
 {% import 'macros.nj' as macros %}
 
+{% block styles %}
+  <style
+    id="list-header"
+    alignItems="center"
+    backgroundColor="#eee"
+    flex="1"
+    flexDirection="row"
+    height="48"
+    marginHorizontal="24"
+    paddingLeft="24"
+    paddingRight="24"
+  />
+  <style id="list-header-text" fontSize="18" fontWeight="bold"/>
+{% endblock %}
+
 {% block container %}
-  <list xmlns:scroll="https://hyperview.org/hyperview-scroll">
+  <section-list xmlns:scroll="https://hyperview.org/hyperview-scroll">
     <item key="top">
       <view id="top">
         {% call macros.link('Scroll to item 15') -%}
@@ -25,6 +40,6 @@ hv_button_behavior: "back"
         {%- endcall %}
       </view>
     </item>
-    {% include './list-content.xml.njk' %}
-  </list>
+    {% include './section-list-content.xml.njk' %}
+  </section-list>
 {% endblock %}

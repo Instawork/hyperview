@@ -1,0 +1,23 @@
+---
+permalink: "/behaviors/advanced/dispatch-multiple/item-1.xml"
+hv_title: "Contact Info"
+hv_button_behavior: "back"
+---
+{% extends 'scrollview.xml.njk' %}
+{% import 'contact-template.nj' as contact %}
+{% import 'macros.nj' as macros %}
+
+{% block content %}
+  {% call contact.contact("Jeeves", "(555) 555 5555") -%}
+      <behavior
+        action="dispatch-event"
+        event-name="added-item1"
+        trigger="press"
+      />
+      <behavior
+        action="dispatch-event"
+        event-name="go-back"
+        trigger="press"
+      />
+  {%- endcall %}
+{% endblock %}

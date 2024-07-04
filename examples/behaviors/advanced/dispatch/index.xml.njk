@@ -1,0 +1,31 @@
+---
+permalink: "/behaviors/advanced/dispatch/index.xml"
+tags: "advanced"
+hv_title: "Dispatch Event"
+hv_button_behavior: "back"
+---
+{% extends 'scrollview.xml.njk' %}
+{% import 'macros.nj' as macros %}
+
+{% block styles %}
+  <style id="append" color="hotpink" fontSize="16" marginLeft="24"/>
+{% endblock %}
+
+{% block content %}
+  <view
+    action="append"
+    event-name="test-event"
+    href="/behaviors/advanced/dispatch/append-screen.xml"
+    scroll="true"
+    style="main"
+    trigger="on-event">
+    {{ macros.description('Dispatch events to load screens') }}
+    {% call macros.button('Open new screen', attributes={href:"/behaviors/advanced/dispatch/source-screen.xml"}) -%}
+      <behavior
+        action="dispatch-event"
+        event-name="test-event"
+        trigger="press"
+      />
+    {%- endcall %}
+  </view>
+{% endblock %}
