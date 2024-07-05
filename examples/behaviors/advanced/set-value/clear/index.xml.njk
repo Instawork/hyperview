@@ -1,0 +1,10 @@
+{% import 'macros.nj' as macros %}
+
+{% call macros.link('Clear all') -%}
+  <behavior action="set-value" new-value="" target="id_tf"/>
+  <behavior action="set-value" new-value="" target="id_ta"/>
+  <behavior action="set-value" new-value="" target="id_pf"/>
+  <behavior action="set-value" new-value="" target="id_ss"/>
+  <behavior action="set-value" new-value="" target="id_df"/>
+  <behavior action="set-value" new-value="off" target="id_s"/>
+{%- endcall %}
