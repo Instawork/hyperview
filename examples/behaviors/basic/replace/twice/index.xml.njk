@@ -1,0 +1,4 @@
+{% import 'macros.nj' as macros %}
+
+{{ macros.description('In this example, the replaced element also has an href, which now requests a different XML fragment.') }}
+{{ macros.button('Press me', {action: "replace", href:"/behaviors/basic/replace/twice/_replace_fragment2.xml"}) }}
