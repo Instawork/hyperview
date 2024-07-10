@@ -57,11 +57,6 @@ export const renderElement = (
     inlineFormattingContext = InlineContext.formatter(element);
   }
 
-  const componentOptions = {
-    ...options,
-    inlineFormattingContext,
-  } as const;
-
   if (element.nodeType === NODE_TYPE.ELEMENT_NODE) {
     if (!element.namespaceURI) {
       Logging.warn('`namespaceURI` missing for node:', element.toString());
@@ -80,24 +75,27 @@ export const renderElement = (
     );
 
     if (Component) {
-      /* eslint-disable max-len */
-      // Use object spreading instead of explicitly setting the key (to potentially undefined values)
-      // Explicitly setting the key causes collision when several components render with `undefined` value for `key`
-      // Object spreading will define the prop only when its value is truthy
-      /* eslint-enable max-len */
-      const extraProps: Partial<{ [key: string]: string | null }> = {};
-      if (element.getAttribute('key')) {
-        extraProps.key = element.getAttribute('key');
+      // Prepare props for the component
+      const props = {
+        element,
+        onUpdate,
+        options: {
+          ...options,
+          inlineFormattingContext,
+        },
+        stylesheets,
+      };
+
+      // Conditionally render the component with a key if it exists, to avoid
+      // warnings with current React versions, when the key attribute is set
+      // using the spread operator.
+      const key = element.getAttribute('key');
+
+      if (key) {
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        return <Component {...props} key={key} />;
       }
-      return (
-        <Component
-          element={element}
-          onUpdate={onUpdate}
-          options={componentOptions}
-          stylesheets={stylesheets}
-          {...extraProps} // eslint-disable-line react/jsx-props-no-spreading
-        />
-      );
+      return <Component {...props} />; // eslint-disable-line react/jsx-props-no-spreading
     }
 
     // No component registered for the namespace/local name.
