@@ -1,0 +1,8 @@
+{% import 'macros.nj' as macros %}
+
+{{ macros.description('Hide can work with the delay attribute. In this example, the hide will be delayed 1 second.') }}
+
+{% call macros.button('Hide with Delay') -%}
+  <behavior action="hide" target="hide2-content" delay="1000" />
+{%- endcall %}
+<text id="hide2-content" style="hide">Content to be hidden</text>

@@ -1,0 +1,31 @@
+---
+permalink: "/behaviors/basic/back/index.xml"
+tags: "basic"
+hv_title: "Back"
+hv_button_behavior: "back"
+---
+{% extends 'scrollview.xml.njk' %}
+{% import 'macros.nj' as macros %}
+
+{% block content %}
+  {{ macros.description('Block the back button to prevent the user from leaving the screen.') }}
+
+  {% call macros.button('Back') -%}
+    <behavior action="back"/>
+  {%- endcall %}
+  <view id="back_behaviors">
+    <behavior
+        trigger="back"
+        action="alert"
+        alert:message="Are you sure you want to go back?"
+        alert:title="Back confirmation"
+        xmlns:alert="https://hyperview.org/hyperview-alert"
+      >
+      <alert:option alert:label="OK">
+        <behavior action="hide" target="back_behaviors" />
+        <behavior action="back" />
+      </alert:option>
+      <alert:option alert:label="Cancel" />
+    </behavior>
+  </view>
+{% endblock %}

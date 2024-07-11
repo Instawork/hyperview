@@ -1,0 +1,8 @@
+{% import 'macros.nj' as macros %}
+
+{{ macros.description('Tapping the button below will hide the element below.') }}
+
+{% call macros.button('Hide') -%}
+  <behavior action="hide" target="hide1-content" />
+{%- endcall %}
+<text id="hide1-content" style="hide">Content to be hidden</text>
