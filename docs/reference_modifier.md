@@ -58,7 +58,7 @@ The modifier state applies to all child elements of the parent:
       </style>
     </styles>
     <body>
-      <view style="Button">
+      <view style="Button" href="/next-screen">
         <text style="Button__Label">Press me</text>
       </view>
     </body>
@@ -67,6 +67,8 @@ The modifier state applies to all child elements of the parent:
 ```
 
 In the example above, when touching the button, the `<view>` element will get the "pressed" state. The "pressed" style modifier will kick in, changing the color of the `<view>` to "#AAA". However, the "pressed" state will also apply to the child `<text>` element. Since the text element's style rule also has a "pressed" modifier, then the text color will change to red.
+
+Keep in mind that `pressed` styles will only have any effect when an element is actually pressable, that is, when the element has some kind of behavior attached to it via an `href` and other behavior attributes.
 
 ## Structure
 
