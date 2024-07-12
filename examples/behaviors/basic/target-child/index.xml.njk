@@ -1,0 +1,55 @@
+---
+permalink: "/behaviors/basic/target-child/index.xml"
+tags: "basic"
+hv_title: "Target Child"
+hv_button_behavior: "back"
+---
+{% extends 'scrollview.xml.njk' %}
+{% import 'macros.nj' as macros %}
+
+{% block styles %}
+  <style
+    id="button"
+    backgroundColor="#63CB76"
+    borderRadius="16"
+    flex="1"
+    flexDirection="column"
+    justifyContent="center"
+    alignItems="center"
+    margin="24"
+    padding="24"
+  />
+{% endblock %}
+
+{# TDB rohanbayya : To fix this #}
+{% block content %}
+  {{ macros.description('Tapping the button below will request an XML fragment and replace the child element in the button.') }}
+  {% call macros.button('Press me') -%}
+    <behavior
+      action="swap"
+      href="/behaviors/basic/target-child/_target_sibling_fragment.xml"
+      target="container"
+    />
+    <view id="container" style="container">
+      <text style="container-label">Waiting...</text>
+    </view>
+  {%- endcall %}
+
+{% endblock %}
+<view scroll="1" style="Main">
+        <text style="Description">
+          Tapping the button below will request an XML fragment and replace the
+          child element in the button.
+        </text>
+        <view
+          action="replace"
+          href="/behaviors/_target_sibling_fragment.xml"
+          style="Button"
+          target="container"
+        >
+          <text style="Button__Label">Press me</text>
+          <view id="container" style="Container">
+            <text style="Container__Label">Waiting...</text>
+          </view>
+        </view>
+      </view>
