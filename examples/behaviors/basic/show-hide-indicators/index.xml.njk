@@ -1,0 +1,29 @@
+---
+permalink: "/behaviors/basic/show-hide-indicators/index.xml"
+tags: "basic"
+hv_title: "Show/Hide Indicators"
+hv_button_behavior: "back"
+---
+{% extends 'scrollview.xml.njk' %}
+{% import 'macros.nj' as macros %}
+
+{% block content %}
+  {% call macros.description() -%}
+    Tapping the button below will request an XML fragment and replace the
+    container. A spinner appears, and another disappears
+    during loading.
+  {%- endcall %}
+  {% call macros.button('Press me') -%}
+    <behavior
+      action="replace"
+      href="/behaviors/basic/_target_sibling_fragment.xml"
+      target="container"
+      delay="300"
+      hide-during-load="myIndicator1"
+      show-during-load="myIndicator2"
+    />
+  {%- endcall %}
+  <text id="myIndicator1" style="description">Loaded!</text>
+  <spinner id="myIndicator2" hide="true" />
+  {{ macros.container('', attributes={id:"container"}) }}
+{% endblock %}

@@ -10,25 +10,3 @@ hv_button_behavior: "back"
   {% include './button/index.xml.njk' %}
   {% include './link/index.xml.njk' %}
 {% endblock %}
-<view scroll="true" style="Main">
-        <text style="Description">
-          Long-pressing the button will replace the content.
-        </text>
-        <view
-          action="replace"
-          href="_replace_fragment.xml"
-          style="Button"
-          trigger="longPress"
-        >
-          <text style="Button__Label">Press me</text>
-        </view>
-        <text style="Description" id="link-to-replace">
-          Long-pressing on <text
-            action="replace"
-            href="/behaviors/_replace_link_fragment.xml"
-            trigger="longPress"
-            style="Link"
-            target="link-to-replace"
-          >this link</text> will replace the content.
-        </text>
-      </view>

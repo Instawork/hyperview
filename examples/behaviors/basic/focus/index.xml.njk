@@ -45,7 +45,7 @@ hv_button_behavior: "back"
   <style id="tip" color="#FF4847" fontSize="16" />
   <style id="input-text" fontSize="16" fontWeight="normal" />
   <style
-    id="PickerModal"
+    id="picker-modal"
     backgroundColor="white"
     borderTopColor="#E1E1E1"
     borderTopWidth="1"
@@ -70,8 +70,7 @@ hv_button_behavior: "back"
 {% endblock %}
 
 {% block content %}
-  <view id="container1" style="container" />
-  {% include './text-field/index.xml.njk' %}
+  <view id="container1" style="container-style" />
   {% include './text-area/index.xml.njk' %}
   {% include './picker-field/index.xml.njk' %}
   {% include './date-field/index.xml.njk' %}

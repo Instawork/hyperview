@@ -9,7 +9,7 @@ hv_button_behavior: "back"
 
 {% block styles %}
   <style id="containers" flex="1" flexDirection="row" marginLeft="24" marginRight="24"/>
-  <style id="container" flex="1"/>
+  <style id="container-style" flex="1"/>
   <style id="Event" fontSize="16" fontWeight="normal" margin="24" marginBottom="0"/>
 {% endblock %}
 
@@ -36,7 +36,7 @@ hv_button_behavior: "back"
     <text id="load-fragment" style="Event">Load</text>
   </view>
   <view style="containers">
-    <view id="right-container" style="container"/>
-    <view id="left-container" style="container"/>
+    <view id="right-container" style="container-style"/>
+    <view id="left-container" style="container-style"/>
   </view>
 {% endblock %}

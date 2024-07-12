@@ -45,7 +45,7 @@ hv_button_behavior: "back"
   <style id="tip" color="#FF4847" fontSize="16" />
   <style id="input-text" fontSize="16" fontWeight="normal" />
   <style
-    id="PickerModal"
+    id="picker-modal"
     backgroundColor="white"
     borderTopColor="#E1E1E1"
     borderTopWidth="1"
@@ -70,138 +70,9 @@ hv_button_behavior: "back"
 {% endblock %}
 
 {% block content %}
-  <view id="container1" style="container" />
+  <view id="container1" style="container-style" />
   {% include './text-field/index.xml.njk' %}
   {% include './text-area/index.xml.njk' %}
   {% include './picker-field/index.xml.njk' %}
   {% include './date-field/index.xml.njk' %}
 {% endblock %}
-<view scroll="true" style="Main">
-        <text style="Description">
-          When a text field loses focus, the content in the container
-          will be replaced.
-        </text>
-        <view id="container1" style="Container" />
-        <view style="FormGroup">
-          <text style="Label">Input field 1</text>
-          <text-field
-            action="replace-inner"
-            href="#field1Blured"
-            name="text"
-            placeholder="First name"
-            placeholderTextColor="#8D9494"
-            style="Input"
-            target="container1"
-            trigger="blur"
-          />
-        </view>
-        <view style="FormGroup">
-          <text style="Label">Input field 2</text>
-          <text-field
-            action="replace-inner"
-            href="#field2Blured"
-            name="text"
-            placeholder="Last name"
-            placeholderTextColor="#8D9494"
-            style="Input"
-            target="container1"
-            trigger="blur"
-          />
-        </view>
-        <text style="Description">
-          When a text area loses focus, the content in the container
-          will be replaced.
-        </text>
-        <view style="FormGroup">
-          <text style="Label">Input area 1</text>
-          <text-area
-            action="replace-inner"
-            href="#area1Blured"
-            name="feedback"
-            placeholder="Please leave your feedback"
-            placeholderTextColor="#8D9494"
-            style="Input"
-            target="container1"
-            trigger="blur"
-          />
-        </view>
-        <view style="FormGroup">
-          <text style="Label">Input area 2</text>
-          <text-area
-            action="replace-inner"
-            href="#area2Blured"
-            name="feedback"
-            placeholder="Please leave your feedback"
-            placeholderTextColor="#8D9494"
-            style="Input"
-            target="container1"
-            trigger="blur"
-          />
-        </view>
-        <view style="FormGroup">
-          <text style="Label">Picker field</text>
-          <picker-field
-            field-style="Input"
-            field-text-style="Input__Text"
-            modal-style="PickerModal"
-            modal-text-style="PickerModal__text"
-            name="picker1"
-            placeholder="Select choice"
-            placeholderTextColor="#8D9494"
-            trigger="blur"
-            action="replace-inner"
-            target="container1"
-            href="#pickerBlured"
-          >
-            <behavior
-              trigger="blur"
-              action="append"
-              target="container1"
-              href="#pickerBlured2"
-            />
-            <picker-item label="Choice 0" value="0" />
-            <picker-item label="Choice 1" value="1" />
-            <picker-item label="Choice 2" value="2" />
-            <picker-item label="Choice 3" value="3" />
-            <picker-item label="Choice 4" value="4" />
-            <picker-item label="Choice 5" value="5" />
-            <picker-item label="Choice 6" value="6" />
-          </picker-field>
-        </view>
-        <view style="FormGroup">
-          <text style="Label">Date field</text>
-          <date-field
-            field-style="Input"
-            field-text-style="Input__Text"
-            label-format="MMMM D, YYYY"
-            modal-style="PickerModal"
-            modal-overlay-style="PickerModal__overlay"
-            modal-text-style="PickerModal__text"
-            name="date1"
-            mode="spinner"
-            placeholder="Select date"
-            placeholderTextColor="#8D9494"
-            trigger="blur"
-            action="replace-inner"
-            target="container1"
-            href="#dateFieldBlured"
-          >
-            <behavior
-              trigger="blur"
-              action="append"
-              target="container1"
-              href="#dateFieldBlured2"
-            />
-          </date-field>
-        </view>
-      </view>
-      <view hide="true">
-        <text id="field1Blured" style="Tip">Field 1 blured</text>
-        <text id="field2Blured" style="Tip">Field 2 blured</text>
-        <text id="area1Blured" style="Tip">Area 1 blured</text>
-        <text id="area2Blured" style="Tip">Area 2 blured</text>
-        <text id="pickerBlured" style="Tip">Picker field blured</text>
-        <text id="pickerBlured2" style="Tip">!</text>
-        <text id="dateFieldBlured" style="Tip">Date field blured</text>
-        <text id="dateFieldBlured2" style="Tip">!</text>
-      </view>

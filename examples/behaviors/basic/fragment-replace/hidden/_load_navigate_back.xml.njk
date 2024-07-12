@@ -1,0 +1,9 @@
+{% import 'macros.nj' as macros %}
+{% call macros.button('Gonna go back', attributes={xmlns:"https://hyperview.org/hyperview"}) -%}
+  <behavior
+    action="back"
+    delay="300"
+    href="/behaviors/index.xml"
+    trigger="load"
+  />
+{%- endcall %}
