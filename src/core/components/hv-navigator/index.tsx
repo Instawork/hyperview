@@ -119,13 +119,14 @@ export default class HvNavigator extends PureComponent<Props> {
   };
 
   /**
-   * Build an individual tab screen
+   * Build an individual screen
    */
   buildScreen = (
     id: string,
     type: string,
     href: string | undefined,
     isModal: boolean,
+    isFirstScreen: boolean = false,
   ): React.ReactElement => {
     const initialParams = NavigatorService.isDynamicRoute(id)
       ? {}
@@ -149,6 +150,7 @@ export default class HvNavigator extends PureComponent<Props> {
           initialParams={initialParams}
           name={id}
           options={{
+            animationEnabled: !isFirstScreen,
             cardStyleInterpolator: isModal
               ? NavigatorService.CardStyleInterpolators.forVerticalIOS
               : undefined,
@@ -205,7 +207,7 @@ export default class HvNavigator extends PureComponent<Props> {
     // the dynamic screens are added later
     // This iteration will also process nested navigators
     //    and retrieve additional urls from child routes
-    elements.forEach((navRoute: Element) => {
+    elements.forEach((navRoute: Element, index: number) => {
       if (navRoute.localName === LOCAL_NAME.NAV_ROUTE) {
         const id: string | null | undefined = navRoute.getAttribute('id');
         if (!id) {
@@ -228,7 +230,13 @@ export default class HvNavigator extends PureComponent<Props> {
             `No href provided for route '${id}'`,
           );
         }
-        screens.push(this.buildScreen(id, type, href || undefined, isModal));
+        // The first screen in each stack will omit the animation
+        // This is to prevent the initial screen from animating in,
+        //  including when the navigation hierarchy is reset
+        // This relies on the schema requirement that each <navigator> has at least one <nav-route>
+        screens.push(
+          this.buildScreen(id, type, href || undefined, isModal, index === 0),
+        );
       }
     });
 
