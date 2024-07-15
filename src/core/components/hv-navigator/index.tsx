@@ -119,7 +119,7 @@ export default class HvNavigator extends PureComponent<Props> {
   };
 
   /**
-   * Build an individual tab screen
+   * Build an individual screen
    */
   buildScreen = (
     id: string,
@@ -230,6 +230,10 @@ export default class HvNavigator extends PureComponent<Props> {
             `No href provided for route '${id}'`,
           );
         }
+        // The first screen in each stack will omit the animation
+        // This is to prevent the initial screen from animating in,
+        //  including when the navigation hierarchy is reset
+        // This relies on the schema requirement that each <navigator> has at least one <nav-route>
         screens.push(
           this.buildScreen(id, type, href || undefined, isModal, index === 0),
         );
