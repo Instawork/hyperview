@@ -1,0 +1,29 @@
+---
+permalink: "/behaviors/basic/once/index.xml"
+tags: "basic"
+hv_title: "Once"
+hv_button_behavior: "back"
+---
+{% extends 'scrollview.xml.njk' %}
+{% import 'macros.nj' as macros %}
+
+{% block content %}
+  {% call macros.description() -%}
+    Tapping the button below will request two XML fragments and append them to the container below.
+    One fragment will be added each time, the other will be added only once
+  {%- endcall %}
+  {% call macros.button('Press me') -%}
+    <behavior
+      action="append"
+      href="/behaviors/basic/once/_once_1.xml"
+      target="container"
+    />
+    <behavior
+      action="append"
+      href="/behaviors/basic/once/_once_2.xml"
+      once="true"
+      target="container"
+    />
+  {%- endcall %}
+  <view id="container" style="container-style" />
+{% endblock %}

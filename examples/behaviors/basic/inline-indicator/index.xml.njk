@@ -1,51 +1,44 @@
 ---
-permalink: "/behaviors/basic/show-indicator/index.xml"
+permalink: "/behaviors/basic/inline-indicator/index.xml"
 tags: "basic"
-hv_title: "Show Indicator"
+hv_title: "Inline Indicator"
 hv_button_behavior: "back"
 ---
 {% extends 'scrollview.xml.njk' %}
 {% import 'macros.nj' as macros %}
+
+{# TBD: rohanbayya to fix this #}
+{% block styles %}
+  <style
+    id="button-indicator"
+    alignItems="center"
+    flex="1"
+    flexDirection="row"
+    justifyContent="center"
+  />
+  <style id="button-spinner" marginLeft="8" />
+{% endblock %}
 
 {% block content %}
   {% call macros.description() -%}
     Tapping the button below will request an XML fragment and replace the container.
     The button shows a spinner and alternate text during the loading.
   {%- endcall %}
-  {% call macros.button('Press me') -%}
-    <behavior
-      action="replace"
-      href="/behaviors/basic/_target_sibling_fragment.xml"
-      target="container"
-      delay="300"
-      show-during-load="myIndicator"
-    />
-  {%- endcall %}
-  <spinner id="myIndicator" hide="true" />
-  {{ macros.container('Waiting...', attributes={id:"container"}) }}
-{% endblock %}
-<view scroll="1" style="Main">
-        <text style="Description">
-          Tapping the button below will request an XML fragment and replace the
-          child element below. The button shows a spinner and alternate text
-          during the loading.
-        </text>
-        <view
-          action="replace"
-          delay="300"
-          hide-during-load="normalLabel"
-          href="/behaviors/_target_sibling_fragment.xml"
-          show-during-load="loadingLabel"
-          style="Button"
-          target="container"
-        >
-          <text id="normalLabel" style="Button__Label">Press me</text>
-          <view id="loadingLabel" hide="true" style="Button__Indicator">
-            <text style="Button__Label">Loading</text>
-            <view style="Button__Spinner">
-              <spinner color="white" />
-            </view>
-          </view>
-        </view>
-        <view id="container" style="Container" />
+  {% call macros.button('', attributes = {
+    "action": "replace",
+    "href": "/behaviors/basic/_target_sibling_fragment.xml",
+    "hide-during-load": "normalLabel",
+    "target": "container",
+    "delay": "300",
+    "show-during-load": "loadingLabel"
+    }) -%}
+    <text style="button-label" id="normalLabel">Press me</text>
+    <view id="loadingLabel" hide="true" style="button-indicator">
+      <text style="button-label">Loading</text>
+      <view style="button-spinner">
+        <spinner color="white" />
       </view>
+    </view>
+  {%- endcall %}
+  <view id="container" style="container-style" />
+{% endblock %}

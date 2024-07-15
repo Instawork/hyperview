@@ -1,0 +1,36 @@
+---
+permalink: "/behaviors/basic/fragment-replace/index.xml"
+tags: "basic"
+hv_title: "Fragment Replace"
+hv_button_behavior: "back"
+---
+{% extends 'scrollview.xml.njk' %}
+
+{% block content %}
+  {% include './visible/index.xml.njk' %}
+  {% include './hidden/index.xml.njk' %}
+{% endblock %}
+      <view scroll="1" style="Main">
+        <text style="Description">
+          Tapping the button below will replace the content with a copy of the
+          fragment below.
+        </text>
+        <view action="replace" href="#fragment" style="Button">
+          <text style="Button__Label">Press me</text>
+        </view>
+        <view id="fragment" style="Button">
+          <text style="Button__Label">Fragment for Replace</text>
+        </view>
+        <text style="Description">
+          Tapping the button below will replace the content with a copy of a
+          hidden fragment below.
+        </text>
+        <view action="replace" href="#hidden-fragment" style="Button">
+          <text style="Button__Label">Press me</text>
+        </view>
+        <view hide="true">
+          <view id="hidden-fragment" style="Button">
+            <text style="Button__Label">From hidden fragment</text>
+          </view>
+        </view>
+      </view>
