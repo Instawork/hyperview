@@ -1,3 +1,7 @@
-<view id="container" style="container-style" xmlns="https://hyperview.org/hyperview">
+<view
+  id="container"
+  style="container-style"
+  xmlns="https://hyperview.org/hyperview"
+>
   <text style="container-label">Replaced!</text>
 </view>
