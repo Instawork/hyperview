@@ -1,0 +1,10 @@
+{% import 'macros.nj' as macros %}
+
+{{ macros.description('Press-out the button will replace the content.') }}
+{% call macros.button('Press me') -%}
+  <behavior
+    action="replace"
+    href="/behaviors/basic/triggers/press-out/button-press-out/_replace_fragment.xml"
+    trigger="pressOut"
+  />
+{%- endcall %}

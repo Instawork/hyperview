@@ -1,9 +1,0 @@
-{% import 'macros.nj' as macros %}
-
-{{ macros.description('Tapping the button below will request an XML fragment and append it to the button.') }}
-{% call macros.button('Press me') -%}
-  <behavior
-    action="append"
-    href="/behaviors/basic/append/once/_append_fragment.xml"
-  />
-{%- endcall %}

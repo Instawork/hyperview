@@ -1,0 +1,9 @@
+{% import 'macros.nj' as macros %}
+
+{{ macros.description(' Tapping the button below will request an XML fragment and prepend it to the button.') }}
+{% call macros.button('Press me') -%}
+  <behavior
+    action="prepend"
+    href="/behaviors/basic/actions/prepend/prepend-once/_prepend_fragment.xml"
+  />
+{%- endcall %}
