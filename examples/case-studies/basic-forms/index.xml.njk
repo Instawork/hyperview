@@ -1,0 +1,88 @@
+---
+permalink: "/case-studies/basic-forms/index.xml"
+tags: "case_studies"
+hv_title: "Basic Forms"
+hv_button_behavior: "back"
+---
+{% extends 'base.xml.njk' %}
+
+{% block styles %}
+  <style
+    id="form-group"
+    flex="1"
+    marginLeft="24"
+    marginRight="24"
+    marginTop="24"
+  />
+  <style
+    id="input"
+    borderBottomColor="#E1E1E1"
+    borderBottomWidth="1"
+    borderColor="#4E4D4D"
+    flex="1"
+    fontSize="16"
+    fontWeight="normal"
+    paddingBottom="8"
+    paddingTop="8"
+  >
+    <modifier focused="true">
+      <style borderBottomColor="#4778FF" />
+    </modifier>
+  </style>
+  <style id="input-error" borderBottomColor="#FF4847" color="#FF4847">
+    <modifier focused="true">
+      <style borderBottomColor="#FF4847" />
+    </modifier>
+  </style>
+  <style
+    id="label"
+    borderColor="#4E4D4D"
+    fontSize="16"
+    fontWeight="bold"
+    lineHeight="24"
+    marginBottom="8"
+  />
+  <style
+    id="help"
+    borderColor="#FF4847"
+    fontSize="16"
+    fontWeight="normal"
+    lineHeight="24"
+    marginTop="16"
+  />
+  <style id="help-error" color="#FF4847" />
+  <style
+    id="submit"
+    color="#4778FF"
+    fontSize="16"
+    fontWeight="bold"
+    lineHeight="24"
+    marginLeft="24"
+    marginTop="16"
+  />
+{% endblock %}
+
+{% block container %}
+  <form id="myForm" scroll="true">
+    <view style="form-group">
+      <text style="label">Label line</text>
+      <text-field
+        name="data"
+        placeholder="Placeholder"
+        placeholderTextColor="#8D9494"
+        style="input"
+      />
+    </view>
+    <text
+      action="replace"
+      delay="500"
+      href="/case-studies/basic-forms/submit.xml"
+      show-during-load="mySpinner"
+      style="submit"
+      target="myForm"
+    >
+      Submit
+    </text>
+  </form>
+  <spinner id="mySpinner" hide="true" />
+{% endblock %}

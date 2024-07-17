@@ -1,0 +1,16 @@
+---
+permalink: "/case-studies/delayed-navigation/screen2.xml"
+hv_title: "Delayed Navigation"
+hv_button_behavior: "back"
+---
+{% extends 'base.xml.njk' %}
+
+{% block styles %}
+  <style id="label" fontSize="18" lineHeight="24" />
+  <style id="label-link" color="blue" fontSize="18" />
+{% endblock %}
+
+{% block container %}
+  <text style="label">This is screen 2.</text>
+  <text action="back" href="#" style="label label-link">Go back</text>
+{% endblock %}

@@ -3,6 +3,8 @@
   <screen>
     <styles>
       {% include 'styles.xml.njk' %}
+      {% block styles %}
+      {% endblock %}
     </styles>
     <body style="body" safe-area="true">
       {% include 'header.xml.njk' %}
