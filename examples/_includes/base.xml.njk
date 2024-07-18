@@ -1,5 +1,5 @@
 {# Base template that should be used for all screens. Shows the Header + back button #}
-<doc xmlns="https://hyperview.org/hyperview">
+<doc xmlns="https://hyperview.org/hyperview" {% block custom_ns %}{% endblock %}>
   <screen>
     <styles>
       {% include 'styles.xml.njk' %}
@@ -12,4 +12,5 @@
     </body>
   </screen>
   {% include 'loading-screen.xml.njk' %}
+  {% block custom_screen %}{% endblock %}
 </doc>

@@ -1,0 +1,134 @@
+---
+permalink: "/case-studies/business-rating/feedback-widget/index.xml"
+hv_title: "Feedback Widget"
+hv_button_behavior: "back"
+---
+{% extends 'scrollview.xml.njk' %}
+
+{% block styles %}
+  {% include './styles.xml.njk' %}
+{% endblock %}
+
+{% block custom_ns %}
+  xmlns:ns1="https://instawork.com/hyperview-intercom"
+{% endblock %}
+
+{% block custom_screen %}
+  <body>
+    <view id="more-feedback" style="feedback-container-extra">
+      <view style="feedback">
+        <text style="Feedback__Label">Something else was added :)</text>
+      </view>
+      <view style="feedback">
+        <text style="Feedback__Label">Something else was added :)</text>
+      </view>
+      <view style="feedback">
+        <text style="Feedback__Label">Something else was added :)</text>
+      </view>
+    </view>
+  </body>
+{% endblock %}
+
+{% block content %}
+  <view style="compliments">
+    <view style="compliment compliment-good">
+      <text style="compliment-label">Punctual</text>
+      <view style="compliment-badge">
+        <text style="compliment-badge-label">2</text>
+      </view>
+    </view>
+    <view style="compliment compliment-good">
+      <text style="compliment-label">Professional</text>
+      <view style="compliment-badge">
+        <text style="compliment-badge-label">10</text>
+      </view>
+    </view>
+    <view style="compliment compliment-good">
+      <text style="compliment-label">Tidy</text>
+      <view style="compliment-badge">
+        <text style="compliment-badge-label">4</text>
+      </view>
+    </view>
+    <view style="compliment compliment-good">
+      <text style="compliment-label">Correct Attire</text>
+      <view style="compliment-badge">
+        <text style="compliment-badge-label">6</text>
+      </view>
+    </view>
+    <view style="compliment compliment-good">
+      <text style="compliment-label">Stayed Late</text>
+      <view style="compliment-badge">
+        <text style="compliment-badge-label">1</text>
+      </view>
+    </view>
+  </view>
+  <view
+    id="feedback"
+    scroll="true"
+    scroll-orientation="horizontal"
+    style="feedback-container"
+  >
+    <view style="feedback">
+      <text style="Feedback__Label">
+        Bill did a great job! Good attitude, worked hard, would love to
+        have him back.
+      </text>
+    </view>
+    <view style="feedback">
+      <text style="Feedback__Label">
+        Bill did a great job! Good attitude, worked hard, would love to
+        have him back.
+      </text>
+    </view>
+    <view
+      action="append"
+      delay="1000"
+      href="#more-feedback"
+      once="true"
+      show-during-load="indicator"
+      style="feedback"
+      target="feedback"
+      trigger="visible"
+    >
+      <text style="Feedback__Label">
+        Bill did a great job! Good attitude, worked hard, would love to
+        have him back.
+      </text>
+    </view>
+    <view id="indicator" hide="true" style="spinner">
+      <spinner />
+    </view>
+  </view>
+  <view style="compliments">
+    <view style="compliment compliment-bad">
+      <text style="compliment-label">Punctual</text>
+      <view style="compliment-badge">
+        <text style="compliment-badge-label">2</text>
+      </view>
+    </view>
+    <view style="compliment compliment-bad">
+      <text style="compliment-label">Professional</text>
+      <view style="compliment-badge">
+        <text style="compliment-badge-label">10</text>
+      </view>
+    </view>
+    <view style="compliment compliment-bad">
+      <text style="compliment-label">Tidy</text>
+      <view style="compliment-badge">
+        <text style="compliment-badge-label">4</text>
+      </view>
+    </view>
+    <view style="compliment compliment-bad">
+      <text style="compliment-label">Correct Attire</text>
+      <view style="compliment-badge">
+        <text style="compliment-badge-label">6</text>
+      </view>
+    </view>
+    <view style="compliment compliment-bad">
+      <text style="compliment-label">Stayed Late</text>
+      <view style="compliment-badge">
+        <text style="compliment-badge-label">1</text>
+      </view>
+    </view>
+  </view>
+{% endblock %}
