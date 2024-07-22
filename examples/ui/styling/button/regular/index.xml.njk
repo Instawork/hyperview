@@ -1,4 +1,4 @@
-{% import 'macros.nj' as macros %}
+{% from 'macros.nj' import button, description, link, container %}
 
-{{ macros.description('Regular') }}
-{{ macros.button('Hello', attributes={action:"reload", href:"/styling/button/index.xml"}) }}
+{{ description('Regular') }}
+{{ button('Hello', attributes={action:"reload", href:"/styling/button/index.xml"}) }}

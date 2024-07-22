@@ -1,6 +1,6 @@
-{% import 'macros.nj' as macros %}
+{% from 'macros.nj' import button, description, link, container %}
 
-{{ macros.description('In this example, the replaced element also has an href with an prepend action, demonstrating loading of a nested structure.') }}
+{{ description('In this example, the replaced element also has an href with an prepend action, demonstrating loading of a nested structure.') }}
 <view
   action="prepend"
   href="/behaviors/basic/actions/prepend/prepend-nested/_prepend_fragment2.xml"

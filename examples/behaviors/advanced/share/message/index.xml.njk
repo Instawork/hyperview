@@ -1,6 +1,6 @@
-{% import 'macros.nj' as macros %}
+{% from 'macros.nj' import button, description, link, container %}
 
-{% call macros.button('Message-only') -%}
+{% call button('Message-only') -%}
   <behavior
     xmlns:share="https://instawork.com/hyperview-share"
     action="share"

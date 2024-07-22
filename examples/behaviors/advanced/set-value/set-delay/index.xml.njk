@@ -1,6 +1,6 @@
-{% import 'macros.nj' as macros %}
+{% from 'macros.nj' import button, description, link, container %}
 
-{% call macros.link("Set all with delay") -%}
+{% call link("Set all with delay") -%}
   <behavior action="set-value" new-value="Multi" target="id_tf" delay="500"/>
   <behavior action="set-value" new-value="Multi" target="id_ta" delay="1000"/>
   <behavior action="set-value" new-value="Ramen" target="id_ss" delay="1500"/>

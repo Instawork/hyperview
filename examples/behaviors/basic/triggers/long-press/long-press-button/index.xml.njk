@@ -1,7 +1,7 @@
-{% import 'macros.nj' as macros %}
+{% from 'macros.nj' import button, description, link, container %}
 
-{{ macros.description('Long-pressing the button will replace the content.') }}
-{% call macros.button('Press me') -%}
+{{ description('Long-pressing the button will replace the content.') }}
+{% call button('Press me') -%}
   <behavior
     action="replace"
     href="/behaviors/basic/triggers/long-press/long-press-button/_replace_fragment.xml"

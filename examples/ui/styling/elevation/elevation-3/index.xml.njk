@@ -1,4 +1,4 @@
-{% import 'macros.nj' as macros %}
+{% from 'macros.nj' import button, description, link, container %}
 
-{{ macros.description('Elevation: 3') }}
-{{ macros.button('Hello', attributes={style:"button button-elevation-3"}) }}
+{{ description('Elevation: 3') }}
+{{ button('Hello', attributes={style:"button button-elevation-3"}) }}

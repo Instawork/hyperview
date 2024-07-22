@@ -1,3 +1,3 @@
-{% import 'macros.nj' as macros %}
+{% from 'macros.nj' import button, description, link, container %}
 
-{{ macros.button('Replaced! Again...', {"action": "replace", "href":"/behaviors/basic/actions/replace/twice/_replace_fragment2.xml", "xmlns":"https://hyperview.org/hyperview"}) }}
+{{ button('Replaced! Again...', {"action": "replace", "href":"/behaviors/basic/actions/replace/twice/_replace_fragment2.xml", "xmlns":"https://hyperview.org/hyperview"}) }}

@@ -5,7 +5,7 @@ hv_title: "Dispatch Event"
 hv_button_behavior: "back"
 ---
 {% extends 'scrollview.xml.njk' %}
-{% import 'macros.nj' as macros %}
+{% from 'macros.nj' import button, description, link, container %}
 
 {% block styles %}
   <style id="append" color="hotpink" fontSize="16" marginLeft="24"/>
@@ -19,8 +19,8 @@ hv_button_behavior: "back"
     scroll="true"
     style="main"
     trigger="on-event">
-    {{ macros.description('Dispatch events to load screens') }}
-    {% call macros.button('Open new screen', attributes={href:"/behaviors/advanced/dispatch/source-screen.xml"}) -%}
+    {{ description('Dispatch events to load screens') }}
+    {% call button('Open new screen', attributes={href:"/behaviors/advanced/dispatch/source-screen.xml"}) -%}
       <behavior
         action="dispatch-event"
         event-name="test-event"

@@ -1,7 +1,7 @@
-{% import 'macros.nj' as macros %}
+{% from 'macros.nj' import button, description, link, container %}
 
 {# TDB (rohanbayya): Fix URL share #}
-{% call macros.button('URL-only') -%}
+{% call button('URL-only') -%}
   <behavior
     xmlns:share="https://instawork.com/hyperview-share"
     action="share"

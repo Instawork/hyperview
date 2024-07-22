@@ -1,6 +1,6 @@
-{% import 'macros.nj' as macros %}
+{% from 'macros.nj' import button, description, link, container %}
 
-{% call macros.link('Clear all') -%}
+{% call link('Clear all') -%}
   <behavior action="set-value" new-value="" target="id_tf"/>
   <behavior action="set-value" new-value="" target="id_ta"/>
   <behavior action="set-value" new-value="" target="id_pf"/>

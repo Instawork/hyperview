@@ -5,15 +5,15 @@ hv_title: "Multiple Different Behaviors"
 hv_button_behavior: "back"
 ---
 {% extends 'base.xml.njk' %}
-{% import 'macros.nj' as macros %}
+{% from 'macros.nj' import button, description, link, container %}
 
 {% block styles %}
   <style id="event" fontSize="16" fontWeight="normal" margin="24" marginBottom="0"/>
 {% endblock %}
 
 {% block container %}
-  {{ macros.description('The button below has behaviors for presses, refresh, and load.') }}
-  {% call macros.button("Press me") -%}
+  {{ description('The button below has behaviors for presses, refresh, and load.') }}
+  {% call button("Press me") -%}
     <behavior action="prepend" href="#pressin-fragment" target="container" trigger="pressIn"/>
     <behavior action="prepend" href="#press-fragment" target="container" trigger="press"/>
     <behavior action="prepend" href="#longpress-fragment" target="container" trigger="longPress"/>

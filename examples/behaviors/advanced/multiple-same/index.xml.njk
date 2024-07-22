@@ -5,7 +5,7 @@ hv_title: "Multiple Same Behaviors"
 hv_button_behavior: "back"
 ---
 {% extends 'scrollview.xml.njk' %}
-{% import 'macros.nj' as macros %}
+{% from 'macros.nj' import button, description, link, container %}
 
 {% block styles %}
   <style id="containers" flex="1" flexDirection="row" marginLeft="24" marginRight="24"/>
@@ -14,8 +14,8 @@ hv_button_behavior: "back"
 {% endblock %}
 
 {% block content %}
-  {{ macros.description('The button below has behaviors for presses that prepend events in two places.') }}
-  {% call macros.button("Press me") -%}
+  {{ description('The button below has behaviors for presses that prepend events in two places.') }}
+  {% call button("Press me") -%}
     <behavior action="prepend" href="#pressin-fragment" target="left-container" trigger="pressIn"/>
     <behavior action="prepend" href="#pressin-fragment" target="right-container" trigger="pressIn"/>
     <behavior action="prepend" href="#press-fragment" target="left-container" trigger="press"/>

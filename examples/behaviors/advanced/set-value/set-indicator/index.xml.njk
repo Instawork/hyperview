@@ -1,6 +1,6 @@
-{% import 'macros.nj' as macros %}
+{% from 'macros.nj' import button, description, link, container %}
 
-{% call macros.link("Set all with indicator") -%}
+{% call link("Set all with indicator") -%}
   <behavior action="set-value" new-value="Multi" target="id_tf" delay="500" show-during-load="id_tf_loading"/>
   <behavior action="set-value" new-value="Multi" target="id_ta" delay="1000" show-during-load="id_ta_loading"/>
   <behavior action="set-value" new-value="Ramen" target="id_ss" delay="1500" show-during-load="id_ss_loading"/>

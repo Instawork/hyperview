@@ -1,4 +1,4 @@
-{% import 'macros.nj' as macros %}
+{% from 'macros.nj' import button, description, link, container %}
 
 <section-title style="list-header">
   <text style="list-header-text">-</text>
@@ -14,7 +14,7 @@
     {% endif %}
     <text style="item-label">Item {{i}}</text>
     {% if i in [15, 25, 35] %}
-      {% call macros.link('Scroll to top') -%}
+      {% call link('Scroll to top') -%}
         <behavior action="scroll" target="top" scroll:animated="true" />
       {%- endcall %}
     {% endif %}
@@ -27,7 +27,7 @@
 {% endfor %}
 <item key="bottom" id="bottom">
   <view />
-  {% call macros.link('Scroll to top') -%}
+  {% call link('Scroll to top') -%}
     <behavior action="scroll" target="top" scroll:animated="true" />
   {%- endcall %}
 </item>

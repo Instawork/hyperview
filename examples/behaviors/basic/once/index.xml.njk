@@ -5,14 +5,14 @@ hv_title: "Once"
 hv_button_behavior: "back"
 ---
 {% extends 'scrollview.xml.njk' %}
-{% import 'macros.nj' as macros %}
+{% from 'macros.nj' import button, description, link, container %}
 
 {% block content %}
-  {% call macros.description() -%}
+  {% call description() -%}
     Tapping the button below will request two XML fragments and append them to the container below.
     One fragment will be added each time, the other will be added only once
   {%- endcall %}
-  {% call macros.button('Press me') -%}
+  {% call button('Press me') -%}
     <behavior
       action="append"
       href="/behaviors/basic/once/_once_1.xml"
