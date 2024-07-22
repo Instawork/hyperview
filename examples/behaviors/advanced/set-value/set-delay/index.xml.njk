@@ -1,4 +1,4 @@
-{% from 'macros.nj' import button, description, link, container %}
+{% from 'macros/link/index.xml.njk' import link %}
 
 {% call link("Set all with delay") -%}
   <behavior action="set-value" new-value="Multi" target="id_tf" delay="500"/>

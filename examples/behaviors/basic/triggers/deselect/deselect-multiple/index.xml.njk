@@ -1,6 +1,6 @@
-{% import 'macros.nj' as macros %}
+{% from 'macros/description/index.xml.njk' import description %}
 
-{{ macros.description('Deselecting an option prepends content below the container.') }}
+{{ description('Deselecting an option prepends content below the container.') }}
 
 
 <select-multiple name="choice" style="select">

@@ -1,6 +1,8 @@
-{% import 'macros.nj' as macros %}
 
-{{ macros.description('Select All can work with the delay attribute. In this example, the selection will be delayed 1 second.') }}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{{ description('Select All can work with the delay attribute. In this example, the selection will be delayed 1 second.') }}
 
 <select-multiple id="id_sm_delay" name="sm" style="select">
   <view style="select-separator" />
@@ -27,6 +29,6 @@
   <view style="select-separator" />
 </select-multiple>
 
-{% call macros.button('Select All with Delay') -%}
+{% call button('Select All with Delay') -%}
   <behavior action="select-all" target="id_sm_delay" delay="1000" />
 {%- endcall %}

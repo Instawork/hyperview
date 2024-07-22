@@ -5,7 +5,8 @@ hv_title: "Multiple Same Behaviors"
 hv_button_behavior: "back"
 ---
 {% extends 'scrollview.xml.njk' %}
-{% from 'macros.nj' import button, description, link, container %}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
 
 {% block styles %}
   <style id="containers" flex="1" flexDirection="row" marginLeft="24" marginRight="24"/>

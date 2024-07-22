@@ -1,8 +1,10 @@
-{% import 'macros.nj' as macros %}
 
-{{ macros.description('When toggling with delay, you can use indicators.') }}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
 
-{% call macros.button('Toggle with Spinner') -%}
+{{ description('When toggling with delay, you can use indicators.') }}
+
+{% call button('Toggle with Spinner') -%}
   <behavior
     action="toggle"
     delay="1000"

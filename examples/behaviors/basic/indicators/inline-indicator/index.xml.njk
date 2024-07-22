@@ -5,7 +5,8 @@ hv_title: "Inline Indicator"
 hv_button_behavior: "back"
 ---
 {% extends 'scrollview.xml.njk' %}
-{% import 'macros.nj' as macros %}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
 
 {# TBD: rohanbayya to fix this #}
 {% block styles %}
@@ -20,11 +21,11 @@ hv_button_behavior: "back"
 {% endblock %}
 
 {% block content %}
-  {% call macros.description() -%}
+  {% call description() -%}
     Tapping the button below will request an XML fragment and replace the container.
     The button shows a spinner and alternate text during the loading.
   {%- endcall %}
-  {% call macros.button('', attributes = {
+  {% call button('', attributes = {
     "action": "replace",
     "href": "/behaviors/basic/_target_sibling_fragment.xml",
     "hide-during-load": "normalLabel",

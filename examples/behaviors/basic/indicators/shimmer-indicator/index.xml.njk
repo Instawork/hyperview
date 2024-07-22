@@ -5,7 +5,9 @@ hv_title: "Shimmer Indicator"
 hv_button_behavior: "back"
 ---
 {% extends 'scrollview.xml.njk' %}
-{% import 'macros.nj' as macros %}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/container/index.xml.njk' import container %}
 
 {% block styles %}
   <style
@@ -47,11 +49,11 @@ hv_button_behavior: "back"
 {% endblock %}
 
 {% block content %}
-  {% call macros.description() -%}
+  {% call description() -%}
     Tapping the button below will request an XML fragment and replace the
     child element in the button. An indicator appears during loading.
   {%- endcall %}
-  {% call macros.button('Press me') -%}
+  {% call button('Press me') -%}
     <behavior
      action="append"
       delay="700"
@@ -68,5 +70,5 @@ hv_button_behavior: "back"
       <view style="container-label-load" />
     </view>
   </view>
-  {{ macros.container('', attributes={id:"container"}) }}
+  {{ container('', attributes={id:"container"}) }}
 {% endblock %}

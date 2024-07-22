@@ -1,6 +1,6 @@
-{% import 'macros.nj' as macros %}
+{% from 'macros/description/index.xml.njk' import description %}
 
-{% call macros.description() -%}
+{% call description() -%}
   When a text field loses focus, the content in the container
   will be replaced.
 {%- endcall %}

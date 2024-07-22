@@ -5,7 +5,8 @@ hv_title: "Visible Once"
 hv_button_behavior: "back"
 ---
 {% extends 'scrollview.xml.njk' %}
-{% import 'macros.nj' as macros %}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
 
 {% block styles %}
   <style id="spacer" flex="1" height="1024" />
@@ -23,9 +24,9 @@ hv_button_behavior: "back"
 {% endblock %}
 
 {% block content %}
-  {{ macros.description('Scrolling down to the button will append to the button content. Subsequent views will not trigger another append.') }}
+  {{ description('Scrolling down to the button will append to the button content. Subsequent views will not trigger another append.') }}
   <view style="spacer" />
-  {% call macros.button('Scroll to me') -%}
+  {% call button('Scroll to me') -%}
     <behavior
       action="append"
       once="true"

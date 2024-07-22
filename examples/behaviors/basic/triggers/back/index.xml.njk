@@ -5,12 +5,13 @@ hv_title: "Back"
 hv_button_behavior: "back"
 ---
 {% extends 'scrollview.xml.njk' %}
-{% import 'macros.nj' as macros %}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
 
 {% block content %}
-  {{ macros.description('Block the back button to prevent the user from leaving the screen.') }}
+  {{description('Block the back button to prevent the user from leaving the screen.') }}
 
-  {% call macros.button('Back') -%}
+  {% call button('Back') -%}
     <behavior action="back"/>
   {%- endcall %}
   <view id="back_behaviors">

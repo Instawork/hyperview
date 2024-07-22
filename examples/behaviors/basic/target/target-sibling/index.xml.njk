@@ -5,16 +5,18 @@ hv_title: "Target Sibling"
 hv_button_behavior: "back"
 ---
 {% extends 'scrollview.xml.njk' %}
-{% import 'macros.nj' as macros %}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/container/index.xml.njk' import container %}
 
 {% block content %}
-  {{ macros.description('Tapping the button below will request an XML fragment and replace the sibling element below.') }}
-  {% call macros.button('Press me') -%}
+  {{ description('Tapping the button below will request an XML fragment and replace the sibling element below.') }}
+  {% call button('Press me') -%}
     <behavior
       action="replace"
       href="/behaviors/basic/_target_sibling_fragment.xml"
       target="container"
     />
   {%- endcall %}
-  {{ macros.container('Waiting...', attributes={id:"container"}) }}
+  {{ container('Waiting...', attributes={id:"container"}) }}
 {% endblock %}

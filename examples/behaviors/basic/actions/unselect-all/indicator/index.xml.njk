@@ -1,6 +1,8 @@
-{% import 'macros.nj' as macros %}
 
-{{ macros.description('When selecting with delay, you can use indicators.') }}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{{ description('When selecting with delay, you can use indicators.') }}
 
 <select-multiple id="id_sm_indicator" name="sm" style="select">
   <view style="select-separator" />
@@ -27,7 +29,7 @@
   <view style="select-separator" />
 </select-multiple>
 
-{% call macros.button('Unselect All with Spinner') -%}
+{% call button('Unselect All with Spinner') -%}
   <behavior action="unselect-all"
     delay="1000"
     show-during-load="show3-spinner"

@@ -1,8 +1,9 @@
-{% import 'macros.nj' as macros %}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
 
-{{ macros.description('You can toggle multiple elements at once. The button below will toggle content A and B with one press') }}
+{{ description('You can toggle multiple elements at once. The button below will toggle content A and B with one press') }}
 
-{% call macros.button('Toggle Multiple') -%}
+{% call button('Toggle Multiple') -%}
   <behavior action="toggle" target="toggle4-content" />
   <behavior action="toggle" target="toggle5-content" />
 {%- endcall %}

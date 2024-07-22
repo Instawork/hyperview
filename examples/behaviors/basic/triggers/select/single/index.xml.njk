@@ -1,6 +1,6 @@
-{% import 'macros.nj' as macros %}
+{% from 'macros/description/index.xml.njk' import description %}
 
-{% call macros.description() -%}
+{% call description() -%}
   Selecting an option prepends content below the container. Notice that
   clicking a selected option does nothing, select only triggers when an
   unselected option is selected.

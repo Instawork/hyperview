@@ -1,7 +1,8 @@
-{% import 'macros.nj' as macros %}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
 
-{{ macros.description('Press-in the button will replace the content.') }}
-{% call macros.button('Press me') -%}
+{{ description('Press-in the button will replace the content.') }}
+{% call button('Press me') -%}
   <behavior
     action="replace"
     href="/behaviors/basic/triggers/press-in/button-press-in/_replace_fragment.xml"

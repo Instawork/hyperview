@@ -1,4 +1,4 @@
-{% from 'macros.nj' import button, description, link, container %}
+{% from 'macros/link/index.xml.njk' import link %}
 
 {% call link("Clear all with delay") -%}
   <behavior action="set-value" new-value="" target="id_tf" delay="500"/>

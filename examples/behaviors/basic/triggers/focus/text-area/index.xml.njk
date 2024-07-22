@@ -1,6 +1,6 @@
-{% import 'macros.nj' as macros %}
+{% from 'macros/description/index.xml.njk' import description %}
 
-{{ macros.description('Clicking a text area will replace the content in the container.') }}
+{{ description('Clicking a text area will replace the content in the container.') }}
 <view style="form-group">
   <text style="label">Input area 1</text>
   <text-area

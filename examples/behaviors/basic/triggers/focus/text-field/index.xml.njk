@@ -1,6 +1,6 @@
-{% import 'macros.nj' as macros %}
+{% from 'macros/description/index.xml.njk' import description %}
 
-{% call macros.description() -%}
+{% call description() -%}
   Clicking a text field will replace the content in the container.
   Notice that clicking a focused text field does nothing, focus only
   triggers when an unfocused text field is focused.

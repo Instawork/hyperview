@@ -5,7 +5,7 @@ hv_title: "Rating"
 hv_button_behavior: "back"
 ---
 {% extends 'scrollview.xml.njk' %}
-{% import 'macros.nj' as macros %}
+{% from 'macros/description/index.xml.njk' import description %}
 
 {% block styles %}
   <style id="rating-container" flex="1" flexDirection="row" margin="24" />
@@ -21,7 +21,7 @@ hv_button_behavior: "back"
 {% endblock %}
 
 {% block content %}
-  {% call macros.description() -%}
+  {% call description() -%}
     Tapping the circles below will activate the previous circles. This is
     done with fragment replacements from a hidden view.
   {%- endcall %}

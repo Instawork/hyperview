@@ -1,6 +1,7 @@
-{% import 'macros.nj' as macros %}
 
-{{ macros.description('A hidden view below will automatically trigger a request and load the content into the container.') }}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{{ description('A hidden view below will automatically trigger a request and load the content into the container.') }}
 <view
   action="replace"
   delay="300"

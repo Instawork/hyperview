@@ -5,15 +5,16 @@ hv_title: "Target Parent"
 hv_button_behavior: "back"
 ---
 {% extends 'scrollview.xml.njk' %}
-{% import 'macros.nj' as macros %}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
 
 {% block content %}
-  {% call macros.description() -%}
+  {% call description() -%}
     Tapping the button below will request an XML fragment and replace the
     parent element, including the button itself.
   {%- endcall %}
   <view id="container" style="container-style">
-    {% call macros.button('Press me') -%}
+    {% call button('Press me') -%}
       <behavior
         action="replace"
         href="/behaviors/basic/_target_sibling_fragment.xml"

@@ -1,8 +1,10 @@
-{% import 'macros.nj' as macros %}
 
-{{ macros.description('Toggle can work with the delay attribute. In this example, the toggle will be delayed 1 second.') }}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
 
-{% call macros.button('Toggle with Delay') -%}
+{{ description('Toggle can work with the delay attribute. In this example, the toggle will be delayed 1 second.') }}
+
+{% call button('Toggle with Delay') -%}
   <behavior
     action="toggle"
     delay="1000"

@@ -1,4 +1,6 @@
-{% from 'macros.nj' import button, description, link, container %}
+
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
 
 {{ description('Shadow') }}
 {{ button('Shadow', attributes={action:"reload", href:"/styling/button/index.xml", style:"button button-shadow"}) }}

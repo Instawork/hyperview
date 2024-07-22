@@ -1,8 +1,10 @@
-{% import 'macros.nj' as macros %}
 
-{{ macros.description('When showing with delay, you can use indicators.') }}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
 
-{% call macros.button('Show with Spinner') -%}
+{{ description('When showing with delay, you can use indicators.') }}
+
+{% call button('Show with Spinner') -%}
   <behavior action="show" target="show3-content" delay="1000" show-during-load="show3-spinner" />
   <view id="show3-spinner" hide="true" style="spinner">
     <spinner color="white" />

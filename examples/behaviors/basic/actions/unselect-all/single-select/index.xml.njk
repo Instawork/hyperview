@@ -1,6 +1,8 @@
-{% import 'macros.nj' as macros %}
 
-{{ macros.description('Tapping the button below will unselect all the options of a Select Single element.') }}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{{ description('Tapping the button below will unselect all the options of a Select Single element.') }}
 
 <select-single id="id_ss" name="ss" style="select">
   <view style="select-separator" />
@@ -33,6 +35,6 @@
   <view style="select-separator" />
 </select-single>
 
-{% call macros.button('Unselect All') -%}
+{% call button('Unselect All') -%}
   <behavior action="unselect-all" target="id_ss" />
 {%- endcall %}

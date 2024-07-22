@@ -5,12 +5,13 @@ hv_title: "Refresh"
 hv_button_behavior: "back"
 ---
 {% extends 'base.xml.njk' %}
-{% import 'macros.nj' as macros %}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
 
 
 {% block container %}
-  {{ macros.description('Pull to refresh on the button will replace the content.') }}
-  {{ macros.button('Refresh me!', attributes={
+  {{ description('Pull to refresh on the button will replace the content.') }}
+  {{ button('Refresh me!', attributes={
     action: "replace-inner",
     href: "/behaviors/basic/triggers/refresh/_replace_inner_fragment.xml",
     trigger: "refresh"

@@ -5,7 +5,7 @@ hv_title: "Custom: Share"
 hv_button_behavior: "back"
 ---
 {% extends 'scrollview.xml.njk' %}
-{% from 'macros.nj' import button, description, link, container %}
+{% from 'macros/description/index.xml.njk' import description %}
 
 {% block content %}
   {{ description('Examples of using custom behaviors to trigger system sharing.') }}

@@ -5,7 +5,8 @@ hv_title: "Multiple Different Behaviors"
 hv_button_behavior: "back"
 ---
 {% extends 'base.xml.njk' %}
-{% from 'macros.nj' import button, description, link, container %}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
 
 {% block styles %}
   <style id="event" fontSize="16" fontWeight="normal" margin="24" marginBottom="0"/>

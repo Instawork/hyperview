@@ -1,8 +1,9 @@
-{% import 'macros.nj' as macros %}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
 
-{{ macros.description('You can show multiple elements at once. The button below will show content A and B with one press') }}
+{{ description('You can show multiple elements at once. The button below will show content A and B with one press') }}
 
-{% call macros.button('Show Multiple') -%}
+{% call button('Show Multiple') -%}
   <behavior action="show" target="show4-content" />
   <behavior action="show" target="show5-content" />
 {%- endcall %}

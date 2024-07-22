@@ -1,3 +1,7 @@
+{% include 'macros/button/styles.xml.njk' %}
+{% include 'macros/description/styles.xml.njk' %}
+{% include 'macros/link/styles.xml.njk' %}
+{% include 'macros/container/styles.xml.njk' %}
 <style
   id="header"
   alignItems="center"
@@ -55,37 +59,6 @@
   padding="24"
 />
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
-<style id="button-disabled" opacity="0.5" />
-<style
-  id="button-shadow"
-  elevation="4"
-  shadowColor="black"
-  shadowOffsetX="0"
-  shadowOffsetY="4"
-  shadowOpacity="0.5"
-  shadowRadius="4">
-  <modifier pressed="true">
-  <style elevation="1" shadowOffsetY="1" shadowRadius="1" />
-  </modifier>
-</style>
-<style
-  id="button-elevation3"
-  elevation="3"
-  shadowColor="black"
-  shadowOffsetX="0"
-  shadowOffsetY="3"
-  shadowOpacity="0.5"
-  shadowRadius="3"
-/>
-<style
-  id="button-elevation10"
-  elevation="10"
-  shadowColor="black"
-  shadowOffsetX="0"
-  shadowOffsetY="10"
-  shadowOpacity="0.5"
-  shadowRadius="10"
-/>
 <style
   id="bottom-tab"
   alignItems="center"
@@ -130,7 +103,6 @@
 />
 <style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" />
 <style id="loading" alignItems="center" flex="1" justifyContent="center" />
-<style id="custom-image-wrapper" paddingRight="12" />
 <style
   id="link"
   color="#4778FF"

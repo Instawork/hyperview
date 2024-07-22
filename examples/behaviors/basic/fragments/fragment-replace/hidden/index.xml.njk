@@ -1,8 +1,10 @@
-{% import 'macros.nj' as macros %}
 
-{{ macros.description('Tapping the button below will replace the content with a copy of a hidden fragment below.') }}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{{ description('Tapping the button below will replace the content with a copy of a hidden fragment below.') }}
 {# behavior attributes can be attached to a view too #}
-{{ macros.button('Press me', attributes={"action": "replace", "href":"#hidden-fragment"}) }}
+{{ button('Press me', attributes={"action": "replace", "href":"#hidden-fragment"}) }}
 <view hide="true">
-  {{ macros.button('From hidden fragment', attributes={id:"hidden-fragment"}) }}
+  {{ button('From hidden fragment', attributes={id:"hidden-fragment"}) }}
 </view>

@@ -1,4 +1,6 @@
-{% from 'macros.nj' import button, description, link, container %}
+
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
 
 {{ description('Elevation: 3') }}
 {{ button('Hello', attributes={style:"button button-elevation-3"}) }}
