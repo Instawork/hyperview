@@ -1,0 +1,15 @@
+{% macro button(text, attributes={}) %}
+  <view
+    {% for attr, val in attributes %}
+      {{ attr }}="{{ val }}"
+    {% endfor %}
+    {% if "style" not in attributes %}
+      style="button"
+    {% endif %}
+  >
+  {% if caller %}
+    {{ caller() }}
+  {% endif %}
+    <text style="button-label">{{ text }}</text>
+  </view>
+{% endmacro %}
