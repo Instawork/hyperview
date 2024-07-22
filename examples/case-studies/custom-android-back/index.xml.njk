@@ -1,0 +1,48 @@
+---
+permalink: "/case-studies/custom-android-back/index.xml"
+tags: "case_studies"
+hv_title: "Custom Android Back"
+hv_button_behavior: "back"
+---
+{% extends 'base.xml.njk' %}
+
+{% block styles %}
+  <style id="basic" fontSize="16" fontWeight="700" marginVertical="8" />
+  <style id="container" backgroundColor="white" flex="1" margin="24" />
+  <style
+    id="description"
+    fontSize="16"
+    fontWeight="normal"
+    marginBottom="16"
+  />
+  <style id="link" color="blue" fontSize="16" fontWeight="normal" />
+{% endblock %}
+
+{# TDB rohanbayya : to use macros #}
+{% block container %}
+  <view style="container">
+    <text style="basic">
+      Custom handling for Android back button press.
+    </text>
+    <text style="description">
+      Goes back to the home page when the hardware back button is pressed on this page on Android.
+    </text>
+    <text style="description">
+      This can be achieved by using the BackHandler provided by react-native at the App level.
+    </text>
+
+    <view>
+      <text style="basic">References:</text>
+      <text style="link" href="https://reactnative.dev/docs/backhandler" action="deep-link">
+        BackHandler
+      </text>
+      <text
+        style="link"
+        href="https://github.com/Instawork/hyperview/pull/272"
+        action="deep-link"
+      >
+        Demo implementation PR
+      </text>
+    </view>
+  </view>
+{% endblock %}
