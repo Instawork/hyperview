@@ -4,10 +4,10 @@ hv_title: "Contact Info"
 hv_button_behavior: "back"
 ---
 {% extends 'scrollview.xml.njk' %}
-{% import 'contact-template.njk' as contact %}
+{% from 'macros/contact-template/index.xml.njk' import contact %}
 
 {% block content %}
-  {% call contact.contact("Jeeves", "(555) 555 5555") -%}
+  {% call contact("Jeeves", "(555) 555 5555") -%}
     <behavior
       action="dispatch-event"
       event-name="added-item1"
