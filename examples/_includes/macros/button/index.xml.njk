@@ -7,9 +7,9 @@
       style="button"
     {% endif %}
   >
-  {% if caller %}
-    {{ caller() }}
-  {% endif %}
+    {% if caller %}
+      {{ caller() }}
+    {% endif %}
     <text style="button-label">{{ text }}</text>
   </view>
 {% endmacro %}

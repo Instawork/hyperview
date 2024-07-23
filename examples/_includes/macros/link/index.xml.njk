@@ -4,9 +4,9 @@
       {{ attr }}="{{ val }}"
     {% endfor %}
   >
-  {% if caller %}
-    {{ caller() }}
-  {% endif %}
+    {% if caller %}
+      {{ caller() }}
+    {% endif %}
     <text style="link">{{ text }}</text>
   </view>
 {% endmacro %}

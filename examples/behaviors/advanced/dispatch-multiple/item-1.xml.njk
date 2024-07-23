@@ -8,15 +8,15 @@ hv_button_behavior: "back"
 
 {% block content %}
   {% call contact.contact("Jeeves", "(555) 555 5555") -%}
-      <behavior
-        action="dispatch-event"
-        event-name="added-item1"
-        trigger="press"
-      />
-      <behavior
-        action="dispatch-event"
-        event-name="go-back"
-        trigger="press"
-      />
+    <behavior
+      action="dispatch-event"
+      event-name="added-item1"
+      trigger="press"
+    />
+    <behavior
+      action="dispatch-event"
+      event-name="go-back"
+      trigger="press"
+    />
   {%- endcall %}
 {% endblock %}

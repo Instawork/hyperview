@@ -16,12 +16,12 @@ hv_button_behavior: "back"
   {%- endcall %}
   <view id="back_behaviors">
     <behavior
-        trigger="back"
-        action="alert"
-        alert:message="Are you sure you want to go back?"
-        alert:title="Back confirmation"
-        xmlns:alert="https://hyperview.org/hyperview-alert"
-      >
+      trigger="back"
+      action="alert"
+      alert:message="Are you sure you want to go back?"
+      alert:title="Back confirmation"
+      xmlns:alert="https://hyperview.org/hyperview-alert"
+    >
       <alert:option alert:label="OK">
         <behavior action="hide" target="back_behaviors" />
         <behavior action="back" />
