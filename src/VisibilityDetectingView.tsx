@@ -111,7 +111,7 @@ export default class VisibilityDetectingView extends PureComponent<Props> {
         ref={this.onRef}
         // collapsable has to be false for view.measure to work on Android
         collapsable={false}
-        style={this.props.style}
+        style={this.props.style || { flex: 1 }}
       >
         {this.props.children}
       </View>
