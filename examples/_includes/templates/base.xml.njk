@@ -2,14 +2,14 @@
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
-      {% include 'styles.xml.njk' %}
+      {% include 'templates/styles.xml.njk' %}
       {% block styles %}
       {% endblock %}
     </styles>
     <body style="body" safe-area="true">
-      {% include 'header.xml.njk' %}
+      {% include 'templates/header.xml.njk' %}
       {% block container %}{% endblock %}
     </body>
   </screen>
-  {% include 'loading-screen.xml.njk' %}
+  {% include 'templates/loading-screen.xml.njk' %}
 </doc>
