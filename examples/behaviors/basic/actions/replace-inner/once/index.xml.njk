@@ -1,0 +1,7 @@
+
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{{ description('Tapping the button below will request an XML fragment and replace the children of the element with the response.') }}
+{# behavior attributes can be attached to a view too #}
+{{ button('Press me', attributes={"action": "replace-inner", "href":"/behaviors/basic/actions/replace-inner/once/_replace_fragment_inner.xml"}) }}

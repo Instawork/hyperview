@@ -1,0 +1,74 @@
+---
+permalink: "/behaviors/basic/shimmer-indicator/index.xml"
+tags: "Indicators"
+hv_title: "Shimmer Indicator"
+hv_button_behavior: "back"
+---
+{% extends 'scrollview.xml.njk' %}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/container/index.xml.njk' import container %}
+
+{% block styles %}
+  <style
+    id="container-element"
+    borderBottomWidth="1"
+    borderColor="#e1e1e1"
+    flex="1"
+    flexDirection="row"
+    marginLeft="24"
+    marginRight="24"
+    paddingBottom="24"
+    paddingTop="24"
+  />
+  <style
+    id="container-label"
+    color="black"
+    flex="1"
+    fontSize="16"
+    fontWeight="normal"
+    marginLeft="8"
+  />
+  <style id="container-labels-load" flex="1" />
+  <style
+    id="container-label-load"
+    backgroundColor="#e1e1e1"
+    flex="1"
+    height="14"
+    marginLeft="8"
+    marginTop="4"
+  />
+  <style id="container-image" borderRadius="32" height="64" width="64" />
+  <style
+    id="container-image-load"
+    backgroundColor="#e1e1e1"
+    borderRadius="32"
+    height="64"
+    width="64"
+  />
+{% endblock %}
+
+{% block content %}
+  {% call description() -%}
+    Tapping the button below will request an XML fragment and replace the
+    child element in the button. An indicator appears during loading.
+  {%- endcall %}
+  {% call button('Press me') -%}
+    <behavior
+      action="append"
+      delay="700"
+      href="/behaviors/basic/indicators/shimmer-indicator/_shimmer_fragment.xml"
+      show-during-load="myIndicator"
+      target="container"
+    />
+  {%- endcall %}
+  <view id="myIndicator" hide="true" style="container-element">
+    <view style="container-image-load" />
+    <view style="container-labels-load">
+      <view style="container-label-load" />
+      <view style="container-label-load" />
+      <view style="container-label-load" />
+    </view>
+  </view>
+  {{ container('', attributes={id:"container"}) }}
+{% endblock %}

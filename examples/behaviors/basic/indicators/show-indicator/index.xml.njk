@@ -1,0 +1,28 @@
+---
+permalink: "/behaviors/basic/show-indicator/index.xml"
+tags: "Indicators"
+hv_title: "Show Indicator"
+hv_button_behavior: "back"
+---
+{% extends 'scrollview.xml.njk' %}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/container/index.xml.njk' import container %}
+
+{% block content %}
+  {% call description() -%}
+    Tapping the button below will request an XML fragment and replace the container.
+    An indicator appears during loading.
+  {%- endcall %}
+  {% call button('Press me') -%}
+    <behavior
+      action="replace"
+      href="/behaviors/basic/_target_sibling_fragment.xml"
+      target="container"
+      delay="300"
+      show-during-load="myIndicator"
+    />
+  {%- endcall %}
+  <spinner id="myIndicator" hide="true" />
+  {{ container('Waiting...', attributes={id:"container"}) }}
+{% endblock %}

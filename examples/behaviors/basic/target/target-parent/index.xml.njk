@@ -1,0 +1,26 @@
+---
+permalink: "/behaviors/basic/target-parent/index.xml"
+tags: "Target"
+hv_title: "Target Parent"
+hv_button_behavior: "back"
+---
+{% extends 'scrollview.xml.njk' %}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block content %}
+  {% call description() -%}
+    Tapping the button below will request an XML fragment and replace the
+    parent element, including the button itself.
+  {%- endcall %}
+  <view id="container" style="container-style">
+    {% call button('Press me') -%}
+      <behavior
+        action="replace"
+        href="/behaviors/basic/_target_sibling_fragment.xml"
+        target="container"
+      />
+    {%- endcall %}
+    <text style="container-label">Waiting...</text>
+  </view>
+{% endblock %}

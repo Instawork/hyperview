@@ -1,0 +1,22 @@
+---
+permalink: "/behaviors/basic/target-sibling-append/index.xml"
+tags: "Target"
+hv_title: "Target Sibling Append"
+hv_button_behavior: "back"
+---
+{% extends 'scrollview.xml.njk' %}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/container/index.xml.njk' import container %}
+
+{% block content %}
+  {{ description('Tapping the button below will request an XML fragment and append to the sibling area.') }}
+  {% call button('Press me') -%}
+    <behavior
+      action="append"
+      href="/behaviors/basic/target/target-sibling-append/_target_sibling_append_fragment.xml"
+      target="container"
+    />
+  {%- endcall %}
+  {{ container('Items:', attributes={id:"container"}) }}
+{% endblock %}

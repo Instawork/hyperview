@@ -1,0 +1,45 @@
+---
+permalink: "/behaviors/basic/inline-indicator/index.xml"
+tags: "Indicators"
+hv_title: "Inline Indicator"
+hv_button_behavior: "back"
+---
+{% extends 'scrollview.xml.njk' %}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{# TBD: rohanbayya to fix this #}
+{% block styles %}
+  <style
+    id="button-indicator"
+    alignItems="center"
+    flex="1"
+    flexDirection="row"
+    justifyContent="center"
+  />
+  <style id="button-spinner" marginLeft="8" />
+{% endblock %}
+
+{% block content %}
+  {% call description() -%}
+    Tapping the button below will request an XML fragment and replace the container.
+    The button shows a spinner and alternate text during the loading.
+  {%- endcall %}
+  {% call button('', attributes = {
+  "action": "replace",
+  "href": "/behaviors/basic/_target_sibling_fragment.xml",
+  "hide-during-load": "normalLabel",
+  "target": "container",
+  "delay": "300",
+  "show-during-load": "loadingLabel"
+  }) -%}
+  <text style="button-label" id="normalLabel">Press me</text>
+  <view id="loadingLabel" hide="true" style="button-indicator">
+    <text style="button-label">Loading</text>
+    <view style="button-spinner">
+      <spinner color="white" />
+    </view>
+  </view>
+{%- endcall %}
+<view id="container" style="container-style" />
+{% endblock %}

@@ -1,0 +1,11 @@
+{% from 'macros/description/index.xml.njk' import description %}
+
+{{ description('In this example, the replaced element also has an href with an prepend action, demonstrating loading of a nested structure.') }}
+<view
+  action="prepend"
+  href="/behaviors/basic/actions/prepend/prepend-nested/_prepend_fragment2.xml"
+  style="tree tree-root"
+>
+  <text style="tree-label">1. Lorem</text>
+  <text style="tree-label">2. Ipsum</text>
+</view>

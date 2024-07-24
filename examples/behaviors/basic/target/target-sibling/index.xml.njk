@@ -1,0 +1,22 @@
+---
+permalink: "/behaviors/basic/target-sibling/index.xml"
+tags: "Target"
+hv_title: "Target Sibling"
+hv_button_behavior: "back"
+---
+{% extends 'scrollview.xml.njk' %}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/container/index.xml.njk' import container %}
+
+{% block content %}
+  {{ description('Tapping the button below will request an XML fragment and replace the sibling element below.') }}
+  {% call button('Press me') -%}
+    <behavior
+      action="replace"
+      href="/behaviors/basic/_target_sibling_fragment.xml"
+      target="container"
+    />
+  {%- endcall %}
+  {{ container('Waiting...', attributes={id:"container"}) }}
+{% endblock %}

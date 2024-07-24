@@ -1,0 +1,11 @@
+
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% call button('Gonna go back', attributes={xmlns:"https://hyperview.org/hyperview"}) -%}
+  <behavior
+    action="back"
+    delay="300"
+    href="/behaviors/index.xml"
+    trigger="load"
+  />
+{%- endcall %}

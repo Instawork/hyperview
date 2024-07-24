@@ -1,0 +1,36 @@
+---
+permalink: "/behaviors/basic/visible/index.xml"
+tags: "Triggers"
+hv_title: "Visible"
+hv_button_behavior: "back"
+---
+{% extends 'scrollview.xml.njk' %}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block styles %}
+  <style id="spacer" flex="1" height="1024" />
+  <style
+    id="button"
+    backgroundColor="#63CB76"
+    borderRadius="16"
+    flex="1"
+    flexDirection="column"
+    justifyContent="center"
+    alignItems="center"
+    margin="24"
+    padding="24"
+  />
+{% endblock %}
+
+{% block content %}
+  {{ description('Scrolling down to the button will append to the button content.') }}
+  <view style="spacer" />
+  {% call button('Scroll to me') -%}
+    <behavior
+      action="append"
+      href="/behaviors/basic/triggers/visible/_append_fragment.xml"
+      trigger="visible"
+    />
+  {%- endcall %}
+{% endblock %}

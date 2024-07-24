@@ -1,0 +1,58 @@
+---
+permalink: "/behaviors/basic/rating/index.xml"
+tags: "Fragments"
+hv_title: "Rating"
+hv_button_behavior: "back"
+---
+{% extends 'scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block styles %}
+  <style id="rating-container" flex="1" flexDirection="row" margin="24" />
+  <style
+    id="rating-star"
+    backgroundColor="#e1e1e1"
+    borderRadius="24"
+    height="48"
+    margin="8"
+    width="48"
+  />
+  <style id="rating-star-filled" backgroundColor="#63CB76" />
+{% endblock %}
+
+{% block content %}
+  {% call description() -%}
+    Tapping the circles below will activate the previous circles. This is
+    done with fragment replacements from a hidden view.
+  {%- endcall %}
+  <view id="rating">
+    <view id="star0" style="rating-container">
+      {% for i in range(1, 6) %}
+        <view
+          action="replace-inner"
+          href="#star{{ i }}"
+          style="rating-star"
+          target="rating"
+        />
+      {% endfor %}
+    </view>
+  </view>
+  <view hide="true">
+    {% for i in range(1, 6) %}
+      <view id="star{{ i }}" style="rating-container">
+        {% for j in range(1, 6) %}
+          {% set star_style = "rating-star" %}
+          {% if j <= i %}
+            {% set star_style = star_style ~ " rating-star-filled" %}
+          {% endif %}
+          <view
+            action="replace-inner"
+            href="#star{{ j }}"
+            style="{{ star_style }}"
+            target="rating"
+          />
+        {% endfor %}
+      </view>
+    {% endfor %}
+  </view>
+{% endblock %}

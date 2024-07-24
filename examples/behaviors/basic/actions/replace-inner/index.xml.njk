@@ -1,0 +1,12 @@
+---
+permalink: "/behaviors/basic/replace-inner/index.xml"
+tags: "Actions"
+hv_title: "Replace Inner"
+hv_button_behavior: "back"
+---
+{% extends 'scrollview.xml.njk' %}
+
+{% block content %}
+  {% include './once/index.xml.njk' %}
+  {% include './nested/index.xml.njk' %}
+{% endblock %}

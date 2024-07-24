@@ -1,0 +1,14 @@
+
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{{ description('Toggle can work with the delay attribute. In this example, the toggle will be delayed 1 second.') }}
+
+{% call button('Toggle with Delay') -%}
+  <behavior
+    action="toggle"
+    delay="1000"
+    target="toggle2-content"
+  />
+{%- endcall %}
+<text id="toggle2-content" style="toggle">Content to be toggled</text>
