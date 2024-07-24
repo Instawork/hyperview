@@ -1,3 +1,8 @@
+{% include 'macros/button/styles.xml.njk' %}
+{% include 'macros/description/styles.xml.njk' %}
+{% include 'macros/link/styles.xml.njk' %}
+{% include 'macros/container/styles.xml.njk' %}
+{% include 'macros/contact-template/styles.xml.njk' %}
 <style
   id="header"
   alignItems="center"
@@ -18,7 +23,7 @@
 />
 <style id="header-title" color="black" fontSize="24" fontWeight="600" />
 <style id="body" backgroundColor="white" flex="1" />
-<style id="description" fontSize="16" fontWeight="600" margin="24" />
+<style id="description" fontSize="16" margin="24" />
 <style
   id="item"
   alignItems="center"
@@ -35,7 +40,12 @@
   paddingRight="24"
 />
 <style id="item-first" borderTopLeftRadius="24" borderTopRightRadius="24" />
-<style id="item-last" borderBottomLeftRadius="24" borderBottomRightRadius="24" />
+<style
+  id="item-last"
+  borderBottomLeftRadius="24"
+  borderBottomRightRadius="24"
+  marginBottom="24"
+/>
 <style id="item-left" flex="1" flexDirection="row" />
 <style id="item-label" fontSize="18" fontWeight="normal" />
 <style id="item-chevron" fontSize="18" fontWeight="bold" />
@@ -49,38 +59,7 @@
   margin="24"
   padding="24"
 />
-<style id="bottom-label" color="white" fontSize="24" fontWeight="bold" />
-<style id="button-disabled" opacity="0.5" />
-<style
-  id="button-shadow"
-  elevation="4"
-  shadowColor="black"
-  shadowOffsetX="0"
-  shadowOffsetY="4"
-  shadowOpacity="0.5"
-  shadowRadius="4">
-  <modifier pressed="true">
-  <style elevation="1" shadowOffsetY="1" shadowRadius="1" />
-  </modifier>
-</style>
-<style
-  id="button-elevation3"
-  elevation="3"
-  shadowColor="black"
-  shadowOffsetX="0"
-  shadowOffsetY="3"
-  shadowOpacity="0.5"
-  shadowRadius="3"
-/>
-<style
-  id="button-elevation10"
-  elevation="10"
-  shadowColor="black"
-  shadowOffsetX="0"
-  shadowOffsetY="10"
-  shadowOpacity="0.5"
-  shadowRadius="10"
-/>
+<style id="button-label" color="white" fontSize="24" fontWeight="bold" />
 <style
   id="bottom-tab"
   alignItems="center"
@@ -125,4 +104,36 @@
 />
 <style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" />
 <style id="loading" alignItems="center" flex="1" justifyContent="center" />
-<style id="custom-image-wrapper" paddingRight="12" />
+<style
+  id="link"
+  color="#4778FF"
+  fontWeight="bold"
+  marginTop="8"
+  marginRight="16"
+/>
+<style
+  id="container-style"
+  borderColor="#e1e1e1"
+  borderRadius="16"
+  borderWidth="2"
+  margin="24"
+  padding="24"
+/>
+<style
+  id="container-label"
+  color="black"
+  fontSize="16"
+  fontWeight="normal"
+/>
+<style
+  id="list-header"
+  alignItems="center"
+  backgroundColor="#eee"
+  flex="1"
+  flexDirection="row"
+  height="48"
+  marginHorizontal="24"
+  paddingLeft="24"
+  paddingRight="24"
+/>
+<style id="list-header-text" fontSize="18" fontWeight="bold"/>
