@@ -1,0 +1,12 @@
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{{ description('Tapping the button below will copy the value "Hello World" to the clipboard.') }}
+
+{% call button('Copy to clipboard') -%}
+  <behavior
+    action="copy-to-clipboard"
+    trigger="press"
+    copy-to-clipboard-value="Hello World"
+  />
+{%- endcall %}

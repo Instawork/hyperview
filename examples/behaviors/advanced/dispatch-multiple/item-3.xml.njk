@@ -1,0 +1,22 @@
+---
+permalink: "/behaviors/advanced/dispatch-multiple/item-3.xml"
+hv_title: "Contact Info"
+hv_button_behavior: "back"
+---
+{% extends 'scrollview.xml.njk' %}
+{% from 'macros/contact-template/index.xml.njk' import contact %}
+
+{% block content %}
+  {% call contact("Emsworth", "(777) 777 7777") -%}
+    <behavior
+      action="dispatch-event"
+      event-name="added-item3"
+      trigger="press"
+    />
+    <behavior
+      action="dispatch-event"
+      event-name="go-back"
+      trigger="press"
+    />
+  {%- endcall %}
+{% endblock %}

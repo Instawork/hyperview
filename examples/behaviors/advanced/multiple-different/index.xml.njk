@@ -1,0 +1,36 @@
+---
+permalink: "/behaviors/advanced/multiple-different/index.xml"
+tags: "advanced"
+hv_title: "Multiple Different Behaviors"
+hv_button_behavior: "back"
+---
+{% extends 'base.xml.njk' %}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block styles %}
+  <style id="event" fontSize="16" fontWeight="normal" margin="24" marginBottom="0"/>
+{% endblock %}
+
+{% block container %}
+  {{ description('The button below has behaviors for presses, refresh, and load.') }}
+  {% call button("Press me") -%}
+    <behavior action="prepend" href="#pressin-fragment" target="container" trigger="pressIn"/>
+    <behavior action="prepend" href="#press-fragment" target="container" trigger="press"/>
+    <behavior action="prepend" href="#longpress-fragment" target="container" trigger="longPress"/>
+    <behavior action="prepend" href="#pressout-fragment" target="container" trigger="pressOut"/>
+    <behavior action="prepend" href="#refresh-fragment" target="container" trigger="refresh"/>
+    <behavior action="prepend" href="#load-fragment" target="container" trigger="load"/>
+    <behavior action="prepend" href="#visible-fragment" target="container" trigger="visible"/>
+  {%- endcall %}
+  <view id="container" scroll="true"/>
+  <view hide="true">
+    <text id="pressin-fragment" style="event">Press-in</text>
+    <text id="press-fragment" style="event">Press</text>
+    <text id="pressout-fragment" style="event">Press-out</text>
+    <text id="longpress-fragment" style="event">Long-press</text>
+    <text id="refresh-fragment" style="event">Refresh</text>
+    <text id="load-fragment" style="event">Load</text>
+    <text id="visible-fragment" style="event">Visible</text>
+  </view>
+{% endblock %}

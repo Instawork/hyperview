@@ -1,0 +1,16 @@
+---
+permalink: "/behaviors/advanced/share/index.xml"
+tags: "advanced"
+hv_title: "Custom: Share"
+hv_button_behavior: "back"
+---
+{% extends 'scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block content %}
+  {{ description('Examples of using custom behaviors to trigger system sharing.') }}
+  {% include './message/index.xml.njk' %}
+  {% include './url/index.xml.njk' %}
+  {% include './message-url/index.xml.njk' %}
+  {% include './all/index.xml.njk' %}
+{% endblock %}

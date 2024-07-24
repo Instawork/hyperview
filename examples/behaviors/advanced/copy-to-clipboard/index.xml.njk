@@ -1,0 +1,15 @@
+---
+permalink: "/behaviors/advanced/copy-to-clipboard/index.xml"
+tags: "advanced"
+hv_title: "Copy To Clipboard"
+hv_button_behavior: "back"
+---
+{% extends 'scrollview.xml.njk' %}
+
+{% block styles %}
+  {% include './copy/style.xml.njk' %}
+{% endblock %}
+
+{% block content %}
+  {% include './copy/index.xml.njk' %}
+{% endblock %}

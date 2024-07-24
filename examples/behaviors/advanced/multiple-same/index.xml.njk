@@ -1,0 +1,43 @@
+---
+permalink: "/behaviors/advanced/multiple-same/index.xml"
+tags: "advanced"
+hv_title: "Multiple Same Behaviors"
+hv_button_behavior: "back"
+---
+{% extends 'scrollview.xml.njk' %}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block styles %}
+  <style id="containers" flex="1" flexDirection="row" marginLeft="24" marginRight="24"/>
+  <style id="container-style" flex="1"/>
+  <style id="Event" fontSize="16" fontWeight="normal" margin="24" marginBottom="0"/>
+{% endblock %}
+
+{% block content %}
+  {{ description('The button below has behaviors for presses that prepend events in two places.') }}
+  {% call button("Press me") -%}
+    <behavior action="prepend" href="#pressin-fragment" target="left-container" trigger="pressIn"/>
+    <behavior action="prepend" href="#pressin-fragment" target="right-container" trigger="pressIn"/>
+    <behavior action="prepend" href="#press-fragment" target="left-container" trigger="press"/>
+    <behavior action="prepend" href="#press-fragment" target="right-container" trigger="press"/>
+    <behavior action="prepend" href="#longpress-fragment" target="left-container" trigger="longPress"/>
+    <behavior action="prepend" href="#longpress-fragment" target="right-container" trigger="longPress"/>
+    <behavior action="prepend" href="#pressout-fragment" target="left-container" trigger="pressOut"/>
+    <behavior action="prepend" href="#pressout-fragment" target="right-container" trigger="pressOut"/>
+    <behavior action="prepend" href="#load-fragment" target="left-container" trigger="load"/>
+    <behavior action="prepend" href="#load-fragment" target="right-container" trigger="load"/>
+  {%- endcall %}
+  <view hide="true">
+    <text id="pressin-fragment" style="Event">Press-in</text>
+    <text id="press-fragment" style="Event">Press</text>
+    <text id="pressout-fragment" style="Event">Press-out</text>
+    <text id="longpress-fragment" style="Event">Long-press</text>
+    <text id="refresh-fragment" style="Event">Refresh</text>
+    <text id="load-fragment" style="Event">Load</text>
+  </view>
+  <view style="containers">
+    <view id="right-container" style="container-style"/>
+    <view id="left-container" style="container-style"/>
+  </view>
+{% endblock %}

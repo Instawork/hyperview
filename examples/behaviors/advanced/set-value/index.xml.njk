@@ -1,0 +1,136 @@
+---
+permalink: "/behaviors/advanced/set-value/index.xml"
+tags: "advanced"
+hv_title: "Set Value"
+hv_button_behavior: "back"
+---
+{% extends 'scrollview.xml.njk' %}
+
+{% block styles %}
+  <style id="form-group" flex="1" marginLeft="24" marginRight="24" marginBottom="16" marginTop="8"/>
+  <style
+    id="input"
+    borderBottomColor="#E1E1E1"
+    borderBottomWidth="1"
+    borderColor="#4E4D4D"
+    flex="1"
+    fontSize="16"
+    fontWeight="normal"
+    paddingBottom="8"
+    paddingTop="8">
+    <modifier pressed="true">
+    <style borderBottomColor="green"/>
+    </modifier>
+    <modifier focused="true">
+    <style borderBottomColor="#4778FF"/>
+    </modifier>
+  </style>
+  <style
+    id="tag"
+    borderColor="#bdc4c4"
+    borderRadius="32"
+    borderWidth="1"
+    marginBottom="8"
+    marginRight="8"
+    paddingBottom="8"
+    paddingLeft="16"
+    paddingRight="16"
+    paddingTop="8">
+    <modifier selected="true">
+    <style backgroundColor="#4778ff" borderColor="white"/>
+    </modifier>
+  </style>
+  <style id="input-text" fontSize="16" fontWeight="normal"></style>
+  <style id="section" marginLeft="24" fontSize="18" fontWeight="bold" marginTop="8"/>
+  <style
+    id="picker-modal"
+    backgroundColor="white"
+    borderTopColor="#E1E1E1"
+    borderTopWidth="1"
+    shadowOffsetX="0"
+    shadowOffsetY="-5"
+    shadowOpacity="0.2"
+    shadowRadius="5"/>
+  <style
+    id="picker-modal-overlay"
+    backgroundColor="#1f1f1fa0"
+  />
+  <style
+    id="picker-modal-text"
+    color="blue"
+    fontSize="16"
+    fontWeight="600"
+    marginBottom="16"
+    padding="24">
+    <modifier pressed="true">
+    <style opacity="0.5"/>
+    </modifier>
+  </style>
+  <style
+    id="tags"
+    flex="1"
+    flexDirection="row"
+    flexWrap="wrap"
+    justifyContent="flex-start"
+    marginTop="8"
+  />
+  <style
+    id="tag"
+    borderColor="#bdc4c4"
+    borderRadius="32"
+    borderWidth="1"
+    marginBottom="8"
+    marginRight="8"
+    paddingBottom="8"
+    paddingLeft="16"
+    paddingRight="16"
+    paddingTop="8">
+    <modifier selected="true">
+    <style backgroundColor="#4778ff" borderColor="white"/>
+    </modifier>
+  </style>
+  <style
+    id="form-group"
+    flex="1"
+    marginLeft="24"
+    marginRight="24"
+    marginBottom="16"
+    marginTop="8"
+  />
+  <style
+    id="tag-label"
+    color="#4e4d4d"
+    fontSize="16"
+    fontWeight="bold"
+    lineHeight="18">
+    <modifier selected="true">
+    <style color="white"/>
+    </modifier>
+  </style>
+  <style
+    id="links"
+    alignItems="flex-start"
+    flexDirection="column"
+    marginLeft="24"
+    marginRight="24"
+    marginBottom="16"
+    marginTop="8"
+  />
+{% endblock %}
+
+{% block content %}
+  <view style="links">
+    {% include './set/index.xml.njk' %}
+    {% include './clear/index.xml.njk' %}
+    {% include './set-delay/index.xml.njk' %}
+    {% include './clear-delay/index.xml.njk' %}
+    {% include './set-indicator/index.xml.njk' %}
+    {% include './clear-indicator/index.xml.njk' %}
+  </view>
+  {% include './text-field/index.xml.njk' %}
+  {% include './text-area/index.xml.njk' %}
+  {% include './select-single/index.xml.njk' %}
+  {% include './picker-field/index.xml.njk' %}
+  {% include './date-field/index.xml.njk' %}
+  {% include './switch/index.xml.njk' %}
+{% endblock %}

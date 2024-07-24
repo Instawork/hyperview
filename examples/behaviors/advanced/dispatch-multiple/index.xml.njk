@@ -1,0 +1,44 @@
+---
+permalink: "/behaviors/advanced/dispatch-multiple/index.xml"
+tags: "advanced"
+hv_title: "Dispatch Events Multiple"
+hv_button_behavior: "back"
+---
+{% extends 'base.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block styles %}
+  <style id="item-added" color="green" fontSize="18" fontWeight="normal"/>
+  <style id="item-add" color="blue" fontSize="18" fontWeight="normal"/>
+{% endblock %}
+
+{% block container %}
+  {{ description("The items below will respond to different events for independent status updates.") }}
+  {{ description("Contacts:") }}
+  <list>
+    {% for i, name in [["1", "Jeeves"], ["2", "Wooster"], ["3", "Emsworth"]] %}
+      {% set item_style = "item" %}
+      {% if loop.first %}
+        {% set item_style = item_style ~ " item-first" %}
+      {% endif %}
+      {% if loop.last %}
+        {% set item_style = item_style ~ " item-last" %}
+      {% endif %}
+      <item key="{{i}}" style="{{item_style}}" href="/behaviors/advanced/dispatch-multiple/item-{{i}}.xml">
+        <text style="item-label">{{name}}</text>
+        <text
+          action="replace"
+          event-name="added-item{{i}}"
+          trigger="on-event"
+          href="#added"
+          style="item-add"
+        >
+          Add
+        </text>
+        <view xmlns="https://hyperview.org/hyperview" hide="true">
+          <text id="added" style="item-added">Added</text>
+        </view>
+      </item>
+    {% endfor %}
+  </list>
+{% endblock %}

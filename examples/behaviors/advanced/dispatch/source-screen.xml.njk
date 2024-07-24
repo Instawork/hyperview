@@ -1,0 +1,19 @@
+---
+permalink: "/behaviors/advanced/dispatch/source-screen.xml"
+hv_title: "Dispatch Event Source"
+hv_button_behavior: "back"
+---
+{% extends 'scrollview.xml.njk' %}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block content %}
+  {{ description('Dispatch events to load previous screen') }}
+  {% call button('Reload previous') -%}
+    <behavior
+      action="dispatch-event"
+      event-name="test-event"
+      trigger="press"
+    />
+  {%- endcall %}
+{% endblock %}

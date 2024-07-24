@@ -1,0 +1,30 @@
+---
+permalink: "/behaviors/advanced/scroll/list/index.xml"
+tags: "list"
+hv_title: "List"
+hv_button_behavior: "back"
+---
+{% extends 'base.xml.njk' %}
+{% from 'macros/link/index.xml.njk' import link %}
+
+{% block container %}
+  <list xmlns:scroll="https://hyperview.org/hyperview-scroll">
+    <item key="top">
+      <view id="top">
+        {% call link('Scroll to item 15') -%}
+          <behavior action="scroll" target="item-15" />
+        {%- endcall %}
+        {% call link('Scroll to item 25 with offset') -%}
+          <behavior action="scroll" target="item-25" scroll:offset="24" />
+        {%- endcall %}
+        {% call link('Scroll to item 35 with position') -%}
+          <behavior action="scroll" target="item-35" scroll:position="0.5" />
+        {%- endcall %}
+        {% call link('Scroll to bottom, animated') -%}
+          <behavior action="scroll" target="bottom" scroll:animated="true" />
+        {%- endcall %}
+      </view>
+    </item>
+    {% include './list-content.xml.njk' %}
+  </list>
+{% endblock %}

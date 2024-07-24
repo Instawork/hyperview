@@ -1,0 +1,33 @@
+{% from 'macros/link/index.xml.njk' import link %}
+
+<section-title style="list-header">
+  <text style="list-header-text">-</text>
+</section-title>
+{% for i in range(1, 51) %}
+  <item key="{{i}}" style="item">
+    {% set item_style = "item" %}
+    {% if loop.first %}
+      {% set item_style = item_style ~ " item-first" %}
+    {% endif %}
+    {% if loop.last %}
+      {% set item_style = item_style ~ " item-last" %}
+    {% endif %}
+    <text style="item-label">Item {{i}}</text>
+    {% if i in [15, 25, 35] %}
+      {% call link('Scroll to top') -%}
+        <behavior action="scroll" target="top" scroll:animated="true" />
+      {%- endcall %}
+    {% endif %}
+  </item>
+  {% if i % 10 == 0 %}
+    <section-title style="list-header">
+      <text style="list-header-text">-</text>
+    </section-title>
+  {% endif %}
+{% endfor %}
+<item key="bottom" id="bottom">
+  <view />
+  {% call link('Scroll to top') -%}
+    <behavior action="scroll" target="top" scroll:animated="true" />
+  {%- endcall %}
+</item>
