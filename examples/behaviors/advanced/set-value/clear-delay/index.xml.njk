@@ -1,0 +1,10 @@
+{% from 'macros/link/index.xml.njk' import link %}
+
+{% call link("Clear all with delay") -%}
+  <behavior action="set-value" new-value="" target="id_tf" delay="500"/>
+  <behavior action="set-value" new-value="" target="id_ta" delay="1000"/>
+  <behavior action="set-value" new-value="" target="id_ss" delay="1500"/>
+  <behavior action="set-value" new-value="" target="id_pf" delay="2000"/>
+  <behavior action="set-value" new-value="" target="id_df" delay="2500"/>
+  <behavior action="set-value" new-value="off" target="id_s" delay="3000"/>
+{%- endcall %}

@@ -1,0 +1,26 @@
+<text style="section">Picker fields</text>
+<view style="form-group">
+  <text style="label" hide="true" id="id_pf_loading">Loading...</text>
+  <picker-field
+    field-style="input"
+    field-text-style="input-text"
+    name="pf"
+    id="id_pf"
+    modal-style="picker-modal"
+    modal-text-style="picker-modal-text"
+    placeholder="Select choice"
+    placeholderTextColor="#8D9494">
+    <picker-item label="No choice" value=""/>
+    <picker-item label="Choice 0" value="0"/>
+    <picker-item label="Choice 1" value="1"/>
+    <picker-item label="Choice 2" value="2"/>
+    <picker-item label="Choice 3" value="3"/>
+    <picker-item label="Choice 4" value="4"/>
+  </picker-field>
+  <text style="link" action="set-value" new-value="4" target="id_pf">
+    Select 4
+  </text>
+  <text style="link" action="set-value" new-value="" target="id_pf">
+    Clear
+  </text>
+</view>
