@@ -1,0 +1,56 @@
+{% from 'macros/description/index.xml.njk' import description %}
+
+{{ description('Deselecting an option prepends content below the container.') }}
+
+
+<select-multiple name="choice" style="select">
+  <view style="select-separator" />
+  <option
+    action="prepend"
+    href="#option1Selected"
+    style="select-option"
+    target="container2"
+    trigger="deselect"
+    value="option1"
+  >
+    <text style="select-label">Option 1</text>
+    <view style="select-radio-outer">
+      <view style="select-radio-inner" />
+    </view>
+  </option>
+  <view style="select-separator" />
+  <option
+    action="prepend"
+    href="#option2Selected"
+    style="select-option"
+    target="container2"
+    trigger="deselect"
+    value="option2"
+  >
+    <text style="select-label">Option 2</text>
+    <view style="select-radio-outer">
+      <view style="select-radio-inner" />
+    </view>
+  </option>
+  <view style="select-separator" />
+  <option
+    action="prepend"
+    href="#option3Selected"
+    style="select-option"
+    target="container2"
+    trigger="deselect"
+    value="option3"
+  >
+    <text style="select-label">Option 3</text>
+    <view style="select-radio-outer">
+      <view style="select-radio-inner" />
+    </view>
+  </option>
+  <view style="select-separator" />
+</select-multiple>
+<view id="container2" style="container-style" />
+<view hide="true">
+  <text id="option1Selected">Option 1 deselected</text>
+  <text id="option2Selected">Option 2 deselected</text>
+  <text id="option3Selected">Option 3 deselected</text>
+</view>

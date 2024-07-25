@@ -1,0 +1,18 @@
+
+{% from 'macros/description/index.xml.njk' import description %}
+
+{{ description('A hidden view below will automatically trigger a request and load the content into the container.') }}
+<view
+  action="replace"
+  delay="300"
+  href="/behaviors/basic/_target_sibling_fragment.xml"
+  show-during-load="myIndicator"
+  target="container"
+  trigger="load"
+>
+  <text style="button-label">Auto</text>
+</view>
+<spinner id="myIndicator" hide="true" />
+<view id="container" style="container-style">
+  <text style="container-label">to be replaced!</text>
+</view>

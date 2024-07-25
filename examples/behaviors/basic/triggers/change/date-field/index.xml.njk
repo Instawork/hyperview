@@ -1,0 +1,31 @@
+
+<view style="form-group">
+  <text style="label">Date field</text>
+  <date-field
+    field-style="input"
+    field-text-style="Input__Text"
+    label-format="MMMM D, YYYY"
+    modal-style="picker-modal"
+    modal-overlay-style="picker-modal-overlay"
+    modal-text-style="picker-modal-text"
+    name="date1"
+    mode="spinner"
+    placeholder="Select date"
+    placeholderTextColor="#8D9494"
+    trigger="change"
+    action="replace-inner"
+    target="container1"
+    href="#dateFieldChanged"
+  >
+    <behavior
+      trigger="change"
+      action="append"
+      target="container1"
+      href="#dateFieldChanged2"
+    />
+  </date-field>
+</view>
+<view hide="true">
+  <text id="dateFieldChanged" style="tip">Date field changed</text>
+  <text id="dateFieldChanged2" style="tip">!</text>
+</view>

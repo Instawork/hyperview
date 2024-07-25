@@ -1,0 +1,60 @@
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% call description() -%}
+  Selecting an option prepends content below the container. Notice that
+  clicking a selected option does nothing, select only triggers when an
+  unselected option is selected.
+{%- endcall %}
+
+
+<select-single name="choice" style="select">
+  <view style="select-separator" />
+  <option
+    action="prepend"
+    href="#option1Selected"
+    style="select-option"
+    target="container1"
+    trigger="select"
+    value="option1"
+  >
+    <text style="select-label">Option 1</text>
+    <view style="select-radio-outer">
+      <view style="select-radio-inner" />
+    </view>
+  </option>
+  <view style="select-separator" />
+  <option
+    action="prepend"
+    href="#option2Selected"
+    style="select-option"
+    target="container1"
+    trigger="select"
+    value="option2"
+  >
+    <text style="select-label">Option 2</text>
+    <view style="select-radio-outer">
+      <view style="select-radio-inner" />
+    </view>
+  </option>
+  <view style="select-separator" />
+  <option
+    action="prepend"
+    href="#option3Selected"
+    style="select-option"
+    target="container1"
+    trigger="select"
+    value="option3"
+  >
+    <text style="select-label">Option 3</text>
+    <view style="select-radio-outer">
+      <view style="select-radio-inner" />
+    </view>
+  </option>
+  <view style="select-separator" />
+</select-single>
+<view id="container1" style="container-style" />
+<view hide="true">
+  <text id="option1Selected">Option 1 selected</text>
+  <text id="option2Selected">Option 2 selected</text>
+  <text id="option3Selected">Option 3 selected</text>
+</view>
