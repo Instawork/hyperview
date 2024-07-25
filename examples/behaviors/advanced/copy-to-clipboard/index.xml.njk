@@ -5,11 +5,17 @@ hv_title: "Copy To Clipboard"
 hv_button_behavior: "back"
 ---
 {% extends 'scrollview.xml.njk' %}
-
-{% block styles %}
-  {% include './copy/style.xml.njk' %}
-{% endblock %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
 
 {% block content %}
-  {% include './copy/index.xml.njk' %}
+  {{ description('Tapping the button below will copy the value "Hello World" to the clipboard.') }}
+
+  {% call button('Copy to clipboard') -%}
+    <behavior
+      action="copy-to-clipboard"
+      trigger="press"
+      copy-to-clipboard-value="Hello World"
+    />
+  {%- endcall %}
 {% endblock %}
