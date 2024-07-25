@@ -4,7 +4,7 @@ tags: "advanced"
 hv_title: "Dispatch Events Multiple"
 hv_button_behavior: "back"
 ---
-{% extends 'base.xml.njk' %}
+{% extends 'templates/base.xml.njk' %}
 {% from 'macros/description/index.xml.njk' import description %}
 
 {% block styles %}
@@ -16,7 +16,7 @@ hv_button_behavior: "back"
   {{ description("The items below will respond to different events for independent status updates.") }}
   {{ description("Contacts:") }}
   {% macro item(item_style, name, index) %}
-    <item key="{{i}}" style="{{item_style}}" href="/behaviors/advanced/dispatch-multiple/item-{{i}}.xml">
+    <item key="{{index}}" style="{{item_style}}" href="/behaviors/advanced/dispatch-multiple/item-{{index}}.xml">
       <text style="item-label">{{name}}</text>
       {{ caller() }}
       <view hide="true">
@@ -29,7 +29,7 @@ hv_button_behavior: "back"
     {% call item("item item-first", "Jeeves", "1") -%}
       <text
         action="replace"
-        event-name="added-item{{i}}"
+        event-name="added-item1"
         trigger="on-event"
         href="#added"
         style="item-add"
@@ -41,7 +41,7 @@ hv_button_behavior: "back"
     {% call item("item", "Wooster", "2") -%}
       <text
         action="replace"
-        event-name="added-item{{i}}"
+        event-name="added-item2"
         trigger="on-event"
         href="#added"
         style="item-add"
@@ -53,7 +53,7 @@ hv_button_behavior: "back"
     {% call item("item item-last", "Wooster", "3") -%}
       <text
         action="replace"
-        event-name="added-item{{i}}"
+        event-name="added-item3"
         trigger="on-event"
         href="#added"
         style="item-add"

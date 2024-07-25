@@ -4,11 +4,11 @@
   <text style="list-header-text">-</text>
 </section-title>
 {% for i in range(1, 51) %}
-  <item key="{{i}}" style="item">
+  <item key="{{ i }}" style="item" id="item-{{ i }}">
     <text style="item-label">Item {{i}}</text>
     {% if i in [15, 25, 35] %}
       {% call link('Scroll to top') -%}
-        <behavior action="scroll" target="top" scroll:animated="true" />
+        <behavior action="scroll" target="#top" scroll:animated="true" />
       {%- endcall %}
     {% endif %}
   </item>
