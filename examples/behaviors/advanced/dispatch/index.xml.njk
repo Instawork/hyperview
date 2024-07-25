@@ -19,7 +19,8 @@ hv_button_behavior: "back"
     href="/behaviors/advanced/dispatch/append-screen.xml"
     scroll="true"
     style="main"
-    trigger="on-event">
+    trigger="on-event"
+  >
     {{ description('Dispatch events to load screens') }}
     {% call button('Open new screen', attributes={href:"/behaviors/advanced/dispatch/source-screen.xml"}) -%}
       <behavior
