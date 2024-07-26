@@ -1,0 +1,20 @@
+---
+permalink: "/styling/button/index.xml"
+tags: "styling"
+hv_title: "Button"
+hv_button_behavior: "back"
+---
+{% extends 'scrollview.xml.njk' %}
+
+{% block styles %}
+  {% include './regular/style.xml.njk' %}
+  {% include './disabled/style.xml.njk' %}
+  {% include './shadow/style.xml.njk' %}
+{% endblock %}
+
+
+{% block content %}
+  {% include './regular/index.xml.njk' %}
+  {% include './disabled/index.xml.njk' %}
+  {% include './shadow/index.xml.njk' %}
+{% endblock %}

@@ -1,0 +1,21 @@
+---
+permalink: "/styling/elevation/index.xml"
+tags: styling
+hv_title: "Elevation"
+hv_button_behavior: "back"
+---
+{% from 'macros/description/index.xml.njk' import description %}
+{% extends 'scrollview.xml.njk' %}
+
+
+{% block styles %}
+  {% include './elevation-3/style.xml.njk' %}
+  {% include './elevation-10/style.xml.njk' %}
+{% endblock %}
+
+{% block content %}
+  {{ description('Elevation styling only works on Android. For iOS, use shadow styles.') }}
+  {% include './elevation-3/index.xml.njk' %}
+  {% include './elevation-10/index.xml.njk' %}
+
+{% endblock %}
