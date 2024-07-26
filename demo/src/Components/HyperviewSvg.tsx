@@ -1,6 +1,7 @@
+import type { HvComponentProps, LocalName } from 'hyperview';
+import { Platform } from 'react-native';
 import React from 'react';
 import { SvgXml } from 'react-native-svg';
-import type { HvComponentProps, LocalName } from 'hyperview';
 
 const DEFAULT_HEIGHT = '100%';
 const DEFAULT_WIDTH = '100%';
@@ -36,6 +37,14 @@ const HyperviewSvg = (props: HvComponentProps) => {
     props.element.getAttribute('height'),
     DEFAULT_HEIGHT,
   );
+  if (Platform.OS === 'web') {
+    return (
+      <div
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: props.element.toString() }}
+      />
+    );
+  }
   return (
     <SvgXml height={height} width={width} xml={props.element.toString()} />
   );
