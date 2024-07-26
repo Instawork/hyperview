@@ -2,4 +2,9 @@
 {% from 'macros/description/index.xml.njk' import description %}
 
 {{ description('In this example, the replaced element also has an href, which now requests a different XML fragment.') }}
-{{ button('Press me', {action: "replace", href:"/behaviors/basic/actions/replace/twice/_replace_fragment2.xml"}) }}
+{% call button('Press me') -%}
+  <behavior
+    action="replace"
+    href="/behaviors/basic/actions/replace/twice/_replace_fragment2.xmll"
+  />
+{%- endcall %}
