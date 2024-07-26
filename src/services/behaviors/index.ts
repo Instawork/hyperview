@@ -117,7 +117,9 @@ const logBehavior = (behaviorElement: Element, action: string | null) => {
   Logging.info(
     `[behavior] | action: ${action} |`,
     Logging.deferredToString(() => {
-      return new XMLSerializer().serializeToString(behaviorElement);
+      const be = behaviorElement.cloneNode(true) as Element;
+      be.textContent = '';
+      return new XMLSerializer().serializeToString(be);
     }),
   );
 };

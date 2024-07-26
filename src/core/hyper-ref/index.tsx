@@ -177,6 +177,7 @@ export default class HyperRef extends PureComponent<Props, State> {
           const listenerElement: Element = behaviorElement.cloneNode(
             false,
           ) as Element;
+          listenerElement.textContent = '';
           return new XMLSerializer().serializeToString(listenerElement);
         }),
       );
