@@ -5,7 +5,6 @@ import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import type { HvComponent, LocalName } from 'hyperview/src/types';
 import { DOMParser } from '@instawork/xmldom';
 import React from 'react';
-import { action } from '@storybook/addon-actions';
 
 const parser = new DOMParser();
 
@@ -37,6 +36,7 @@ export const render = (
   Component: HvComponent,
   template: string,
   ComponentsRegistry: HvComponent[] | null = null,
+  onUpdate: () => void = () => undefined,
 ): JSX.Element | null => {
   const document = parse(template);
   const element = Dom.getFirstTag(
@@ -51,7 +51,7 @@ export const render = (
   return (
     <Component
       element={element}
-      onUpdate={action('action')}
+      onUpdate={onUpdate}
       options={{
         componentRegistry: new Components.Registry(
           ComponentsRegistry || [Component],
