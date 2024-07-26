@@ -1,32 +1,10 @@
 {% from 'macros/button/index.xml.njk' import button %}
 {% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/select-multiple/index.xml.njk' import select_multiple %}
 
-{{ description('When selecting with delay, you can use indicators.') }}
+{{ description('When un-selecting with delay, you can use indicators.') }}
 
-<select-multiple id="id_sm_indicator" name="sm" style="select">
-  <view style="select-separator" />
-  <option style="select-option" value="option1" selected="true">
-    <text style="select-label">Option 1</text>
-    <view style="select-radio-outer">
-      <view style="select-radio-inner" />
-    </view>
-  </option>
-  <view style="select-separator" />
-  <option style="select-option" value="option2" selected="true">
-    <text style="select-label">Option 2</text>
-    <view style="select-radio-outer">
-      <view style="select-radio-inner" />
-    </view>
-  </option>
-  <view style="select-separator" />
-  <option style="select-option" value="option3" selected="true">
-    <text style="select-label">Option 3</text>
-    <view style="select-radio-outer">
-      <view style="select-radio-inner" />
-    </view>
-  </option>
-  <view style="select-separator" />
-</select-multiple>
+{{ select_multiple("id_sm_indicator", unselect="true") }}
 
 {% call button('Unselect All with Spinner') -%}
   <behavior
