@@ -1,0 +1,282 @@
+---
+permalink: "/case-studies/business-rating/rating-modal/index.xml"
+hv_title: "Rate the Instaworker"
+hv_button_behavior: "close"
+---
+{% extends 'templates/base.xml.njk' %}
+
+{% block styles %}
+  {% include './styles.xml.njk' %}
+{% endblock %}
+
+{% block container %}
+  <view scroll="true" style="main">
+    <text style="title">Rate the Instaworker</text>
+    <view style="worker-info">
+      <image source="/case-studies/business-rating/image.jpg" style="worker-info-avatar" />
+      <text style="worker-info-name">Jake Tepperman</text>
+      <text style="worker-info-details">
+        Event Server, Private Residence
+      </text>
+      <text style="worker-info-time">Fri Aug 3, 7:00 PM - 1:00 AM</text>
+      <view id="rating" style="rating-container">
+        <view id="star0" style="rating-style">
+          <image
+            action="replace-inner"
+            href="#star1"
+            source="/case-studies/business-rating/star_empty@2x.png"
+            style="rating-star"
+            target="rating"
+          />
+          <image
+            action="replace-inner"
+            href="#star2"
+            source="/case-studies/business-rating/star_empty@2x.png"
+            style="rating-star"
+            target="rating"
+          />
+          <image
+            action="replace-inner"
+            href="#star3"
+            source="/case-studies/business-rating/star_empty@2x.png"
+            style="rating-star"
+            target="rating"
+          />
+          <image
+            action="replace-inner"
+            href="#star4"
+            source="/case-studies/business-rating/star_empty@2x.png"
+            style="rating-star"
+            target="rating"
+          />
+          <image
+            action="replace-inner"
+            href="#star5"
+            source="/case-studies/business-rating/star_empty@2x.png"
+            style="rating-star"
+            target="rating"
+          />
+        </view>
+      </view>
+    </view>
+    <view style="form-group">
+      <text-area
+        placeholder="Any other feedback?"
+        placeholderTextColor="#8D9494"
+        name="other_feedback"
+        style="input"
+      />
+    </view>
+  </view>
+  <view style="bottomsheet">
+    <view
+      id="saveButtonContainer"
+      action="replace"
+      delay="500"
+      hide-during-load="saveButton"
+      href="/case-studies/business-rating/_rating_save.xml"
+      show-during-load="savingButton"
+      target="saveButtonContainer"
+    >
+      <view id="saveButton" style="bottomsheet-button">
+        <text id="saveLabel" style="bottomsheet-button-label">Done</text>
+      </view>
+      <view
+        id="savingButton"
+        hide="true"
+        style="bottomsheet-button bottomsheet-button-disabled"
+      >
+        <text id="savingLabel" style="bottomsheet-button-label">
+          Saving...
+        </text>
+      </view>
+    </view>
+  </view>
+  <view hide="true">
+    <view id="star1" style="rating-style">
+      <image
+        action="replace-inner"
+        href="#star1"
+        source="star_filled@2x.png"
+        style="rating-star rating-star-filled"
+        target="rating"
+      />
+      <image
+        action="replace-inner"
+        href="#star2"
+        source="/case-studies/business-rating/star_empty@2x.png"
+        style="rating-star"
+        target="rating"
+      />
+      <image
+        action="replace-inner"
+        href="#star3"
+        source="/case-studies/business-rating/star_empty@2x.png"
+        style="rating-star"
+        target="rating"
+      />
+      <image
+        action="replace-inner"
+        href="#star4"
+        source="/case-studies/business-rating/star_empty@2x.png"
+        style="rating-star"
+        target="rating"
+      />
+      <image
+        action="replace-inner"
+        href="#star5"
+        source="/case-studies/business-rating/star_empty@2x.png"
+        style="rating-star"
+        target="rating"
+      />
+    </view>
+    <view id="star2" style="rating-style">
+      <image
+        action="replace-inner"
+        href="#star1"
+        source="/case-studies/business-rating/star_filled@2x.png"
+        style="rating-star rating-star-filled"
+        target="rating"
+      />
+      <image
+        action="replace-inner"
+        href="#star2"
+        source="/case-studies/business-rating/star_filled@2x.png"
+        style="rating-star rating-star-filled"
+        target="rating"
+      />
+      <image
+        action="replace-inner"
+        href="#star3"
+        source="/case-studies/business-rating/star_empty@2x.png"
+        style="rating-star"
+        target="rating"
+      />
+      <image
+        action="replace-inner"
+        href="#star4"
+        source="/case-studies/business-rating/star_empty@2x.png"
+        style="rating-star"
+        target="rating"
+      />
+      <image
+        action="replace-inner"
+        href="#star5"
+        source="/case-studies/business-rating/star_empty@2x.png"
+        style="rating-star"
+        target="rating"
+      />
+    </view>
+    <view id="star3" style="rating-style">
+      <image
+        action="replace-inner"
+        href="#star1"
+        source="/case-studies/business-rating/star_filled@2x.png"
+        style="rating-star rating-star-filled"
+        target="rating"
+      />
+      <image
+        action="replace-inner"
+        href="#star2"
+        source="/case-studies/business-rating/star_filled@2x.png"
+        style="rating-star rating-star-filled"
+        target="rating"
+      />
+      <image
+        action="replace-inner"
+        href="#star3"
+        source="/case-studies/business-rating/star_filled@2x.png"
+        style="rating-star rating-star-filled"
+        target="rating"
+      />
+      <image
+        action="replace-inner"
+        href="#star4"
+        source="/case-studies/business-rating/star_empty@2x.png"
+        style="rating-star"
+        target="rating"
+      />
+      <image
+        action="replace-inner"
+        href="#star5"
+        source="/case-studies/business-rating/star_empty@2x.png"
+        style="rating-star"
+        target="rating"
+      />
+    </view>
+    <view id="star4" style="rating-style">
+      <image
+        action="replace-inner"
+        href="#star1"
+        source="/case-studies/business-rating/star_filled@2x.png"
+        style="rating-star rating-star-filled"
+        target="rating"
+      />
+      <image
+        action="replace-inner"
+        href="#star2"
+        source="/case-studies/business-rating/star_filled@2x.png"
+        style="rating-star rating-star-filled"
+        target="rating"
+      />
+      <image
+        action="replace-inner"
+        href="#star3"
+        source="/case-studies/business-rating/star_filled@2x.png"
+        style="rating-star rating-star-filled"
+        target="rating"
+      />
+      <image
+        action="replace-inner"
+        href="#star4"
+        source="/case-studies/business-rating/star_filled@2x.png"
+        style="rating-star rating-star-filled"
+        target="rating"
+      />
+      <image
+        action="replace-inner"
+        href="#star5"
+        source="/case-studies/business-rating/star_empty@2x.png"
+        style="rating-star"
+        target="rating"
+      />
+    </view>
+    <view id="star5" style="rating-style">
+      <image
+        action="replace-inner"
+        href="#star1"
+        source="/case-studies/business-rating/star_filled@2x.png"
+        style="rating-star rating-star-filled"
+        target="rating"
+      />
+      <image
+        action="replace-inner"
+        href="#star2"
+        source="/case-studies/business-rating/star_filled@2x.png"
+        style="rating-star rating-star-filled"
+        target="rating"
+      />
+      <image
+        action="replace-inner"
+        href="#star3"
+        source="/case-studies/business-rating/star_filled@2x.png"
+        style="rating-star rating-star-filled"
+        target="rating"
+      />
+      <image
+        action="replace-inner"
+        href="#star4"
+        source="/case-studies/business-rating/star_filled@2x.png"
+        style="rating-star rating-star-filled"
+        target="rating"
+      />
+      <image
+        action="replace-inner"
+        href="#star5"
+        source="/case-studies/business-rating/star_filled@2x.png"
+        style="rating-star rating-star-filled"
+        target="rating"
+      />
+    </view>
+  </view>
+{% endblock %}
