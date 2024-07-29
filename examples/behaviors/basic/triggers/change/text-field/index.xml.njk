@@ -1,0 +1,87 @@
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% call description() -%}
+  When a text field changes its value, the content in the container
+  will be replaced.
+{%- endcall %}
+<view style="form-group">
+  <text style="label">Input field 1</text>
+  <text-field
+    action="replace-inner"
+    href="#field1Changed"
+    name="text"
+    placeholder="First name"
+    placeholderTextColor="#8D9494"
+    style="input"
+    target="container1"
+    trigger="change"
+  />
+</view>
+<view style="form-group">
+  <text style="label">Input field 2</text>
+  <text-field
+    action="replace-inner"
+    href="#field2Changed"
+    name="text"
+    placeholder="Last name"
+    placeholderTextColor="#8D9494"
+    style="input"
+    target="container1"
+    trigger="change"
+  />
+</view>
+<view style="form-group">
+  <text style="label">Input field with auto-focus</text>
+  <text-field
+    action="replace-inner"
+    href="#fieldAutoFocusChanged"
+    name="text"
+    placeholder="Auto focused"
+    placeholderTextColor="#8D9494"
+    style="input"
+    target="container1"
+    trigger="change"
+    auto-focus="true"
+  />
+</view>
+<view style="form-group">
+  <text style="label">Input field with mask</text>
+  <text-field
+    action="replace-inner"
+    href="#fieldMaskChanged"
+    name="text"
+    placeholder="Phone number"
+    placeholderTextColor="#8D9494"
+    style="input"
+    target="container1"
+    trigger="change"
+    mask="(999) 999-9999"
+  />
+</view>
+<view style="form-group">
+  <text style="label">Input field with secure-text</text>
+  <text-field
+    action="replace-inner"
+    href="#fieldSecureTextChanged"
+    name="text"
+    placeholder="Password"
+    placeholderTextColor="#8D9494"
+    style="input"
+    target="container1"
+    trigger="change"
+    secure-text="true"
+  />
+</view>
+<view hide="true">
+  <text id="field1Changed" style="tip">Field 1 changed</text>
+  <text id="field2Changed" style="tip">Field 2 changed</text>
+  <text
+    id="fieldAutoFocusChanged"
+    style="tip"
+  >Field with auto-focus changed</text>
+  <text id="fieldMaskChanged" style="tip">Field with mask changed</text>
+  <text
+    id="fieldSecureTextChanged"
+    style="tip"
+  >Field with secure-text changed</text>
+</view>
