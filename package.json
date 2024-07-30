@@ -40,7 +40,7 @@
     "test:render": "npx patch-package && jest test/render.test.ts --forceExit",
     "test:unit": "jest --testPathPattern src",
     "test:xmlserver": "eleventy --serve --port=8085",
-    "test:validate-xml": "eleventy; find _examples_site test/schema -name '*.xml' -not -path '*/advanced_behaviors/instawork.xml' -not -path '*/advanced_behaviors/custom_share.xml' -not -path '*/advanced_behaviors/alert/behavior.xml' -not -path '*/case_studies/business_rating.xml' -not -path '*/case_studies/_rating_save.xml' -not -path '*/index.xml' -not -path '*/index_hyperview.xml' | xargs xmlschema-validate --schema schema/hyperview.xsd --version 1.1",
+    "test:validate-xml": "eleventy; find _examples_site test/schema -name '*.xml' -not -path '*/advanced_behaviors/instawork.xml' -not -path '*/advanced_behaviors/custom_share.xml' -not -path '*/advanced_behaviors/alert/behavior.xml' -not -path '*/case_studies/business_rating.xml' -not -path */case-studies/business-rating/index.xml -not -path */case-studies/business-rating/_rating_save.xml  -not -path '*/case_studies/_rating_save.xml' -not -path '*/index.xml' -not -path '*/index_hyperview.xml' | xargs xmlschema-validate --schema schema/hyperview.xsd --version 1.1",
     "test": "yarn generate test && yarn test:ts && yarn test:lint && yarn test:render && yarn test:unit && yarn test:validate-xml"
   },
   "dependencies": {
