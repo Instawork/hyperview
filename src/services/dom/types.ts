@@ -3,6 +3,7 @@ export const HTTP_HEADERS = {
   CONTENT_TYPE: 'Content-Type',
   X_HYPERVIEW_DIMENSIONS: 'X-Hyperview-Dimensions',
   X_HYPERVIEW_VERSION: 'X-Hyperview-Version',
+  X_NETWORK_RETRY_ACTION: 'X-Network-Retry-Action',
   X_RESPONSE_STALE_REASON: 'X-Response-Stale-Reason',
 } as const;
 
