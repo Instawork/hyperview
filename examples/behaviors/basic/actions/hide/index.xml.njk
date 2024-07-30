@@ -1,0 +1,33 @@
+---
+permalink: "/behaviors/basic/hide/index.xml"
+tags: "Actions"
+hv_title: "Hide"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+
+{% block styles %}
+  <style
+    id="hide"
+    color="red"
+    fontSize="18"
+    fontWeight="bold"
+    textAlign="center"
+  />
+  <style id="spacer" height="40" />
+  <style
+    id="spinner"
+    justifyContent="center"
+    alignItems="center"
+    paddingRight="12"
+  />
+
+{% endblock %}
+
+{% block content %}
+  {% include './tap/index.xml.njk' %}
+  {% include './delay/index.xml.njk' %}
+  {% include './indicator/index.xml.njk' %}
+  {% include './multiple/index.xml.njk' %}
+  <view style="spacer" />
+{% endblock %}

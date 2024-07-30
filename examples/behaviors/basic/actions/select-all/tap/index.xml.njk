@@ -1,0 +1,11 @@
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/select-multiple/index.xml.njk' import select_multiple %}
+
+{{ description('Tapping the button below will select all the options.') }}
+
+{{ select_multiple("id_sm") }}
+
+{% call button('Select All') -%}
+  <behavior action="select-all" target="id_sm" />
+{%- endcall %}

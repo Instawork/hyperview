@@ -1,0 +1,20 @@
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/select-multiple/index.xml.njk' import select_multiple %}
+
+{{ description('When un-selecting with delay, you can use indicators.') }}
+
+{{ select_multiple("id_sm_indicator", unselect="true") }}
+
+{% call button('Unselect All with Spinner') -%}
+  <behavior
+    action="unselect-all"
+    delay="1000"
+    show-during-load="show3-spinner"
+    style="Button"
+    target="id_sm_indicator"
+  />
+  <view id="show3-spinner" hide="true">
+    <spinner color="white" />
+  </view>
+{%- endcall %}

@@ -1,0 +1,11 @@
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/select-multiple/index.xml.njk' import select_multiple %}
+
+{{ description('Unselect All can work with the delay attribute. In this example, the un-selection will be delayed 1 second.') }}
+
+{{ select_multiple("id_sm_delay", unselect="true") }}
+
+{% call button('Unselect All with Delay') -%}
+  <behavior action="unselect-all" target="id_sm_delay" delay="1000" />
+{%- endcall %}

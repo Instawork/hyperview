@@ -1,0 +1,10 @@
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{{ description(' Tapping the button below will request an XML fragment and prepend it to the button.') }}
+{% call button('Press me') -%}
+  <behavior
+    action="prepend"
+    href="/behaviors/basic/actions/prepend/prepend-once/_prepend_fragment.xml"
+  />
+{%- endcall %}
