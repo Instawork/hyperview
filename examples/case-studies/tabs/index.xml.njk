@@ -1,0 +1,81 @@
+---
+permalink: "/case-studies/tabs/index.xml"
+tags: "case_studies"
+hv_title: "Tabs"
+hv_button_behavior: "back"
+---
+{% extends 'templates/base.xml.njk' %}
+{% from './tab.xml.njk' import tab %}
+
+{% block styles %}
+  <style id="row" flexDirection="row" justifyContent="space-between" />
+  <style
+    id="tab"
+    flex="1"
+    height="48"
+    alignItems="center"
+    justifyContent="center"
+    borderColor="red"
+    borderWidth="1"
+  >
+    <modifier pressed="true">
+    <style backgroundColor="pink" />
+    </modifier>
+    <modifier selected="true">
+    <style backgroundColor="red" />
+    </modifier>
+  </style>
+  <style id="green" backgroundColor="lightgreen" />
+  <style id="blue" backgroundColor="lightblue" />
+  <style id="yellow" backgroundColor="lightyellow" />
+  <style id="flex" flex="1" />
+  <style id="centered" alignItems="center" justifyContent="center" />
+{% endblock %}
+
+{% block container %}
+  <select-single id="tabs" name="tabs" style="row">
+    <option value="1" style="tab">
+      <behavior trigger="deselect" action="hide" target="tab-1" />
+      <behavior trigger="select" action="show" target="tab-1" />
+      <text>Tab 1</text>
+    </option>
+    <option value="2" style="tab">
+      <behavior trigger="deselect" action="hide" target="tab-2" />
+      <behavior trigger="select" action="show" target="tab-2" />
+      <text>Tab 2</text>
+    </option>
+    <option value="3" style="tab">
+      <behavior trigger="deselect" action="hide" target="tab-3" />
+      <behavior trigger="select" action="show" target="tab-3" />
+      <text>Tab 3</text>
+    </option>
+  </select-single>
+  {% call tab("tab-1", "green", "TAB 1 CONTENT") -%}
+    <view
+      trigger="visible"
+      action="dispatch-event"
+      event-name="tab-1-visible"
+    />
+  {%- endcall %}
+  {% call tab("tab-2", "blue", "TAB 2 CONTENT") -%}
+    <view
+      trigger="visible"
+      action="dispatch-event"
+      event-name="tab-2-visible"
+    />
+  {%- endcall %}
+  {% call tab("tab-3", "yellow", "TAB 3 CONTENT") -%}
+    <view
+      trigger="visible"
+      action="dispatch-event"
+      event-name="tab-3-visible"
+    />
+  {%- endcall %}
+  <behavior
+    once="true"
+    trigger="load"
+    action="set-value"
+    target="tabs"
+    new-value="2"
+  />
+{% endblock %}

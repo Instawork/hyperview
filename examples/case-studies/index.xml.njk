@@ -3,9 +3,10 @@ permalink: "/case-studies/index.xml"
 hv_title: "Case Studies"
 hv_tab_id: "tab-case-studies"
 hv_button_behavior: "none"
+hv_list_tag: "case_studies"
 ---
 {% extends 'templates/tab.xml.njk' %}
 
 {% block tab_content %}
-  <text style="description">This is the content for Case Studies tab.</text>
+  {% include "templates/list.xml.njk" %}
 {% endblock %}

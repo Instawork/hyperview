@@ -1,0 +1,88 @@
+---
+permalink: "/case-studies/feedback-widget/index.xml"
+tags: "case_studies"
+hv_title: "Feedback Widget"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from './compliment.xml.njk' import compliment %}
+
+{% block styles %}
+  {% include './styles.xml.njk' %}
+{% endblock %}
+
+{% block custom_ns %}
+  xmlns:ns1="https://instawork.com/hyperview-intercom"
+{% endblock %}
+
+{% block custom_screen %}
+  <screen>
+    <body>
+      <view id="more-feedback" style="feedback-container-extra">
+        <view style="feedback-style">
+          <text style="feedback-label">Something else was added :)</text>
+        </view>
+        <view style="feedback-style">
+          <text style="feedback-label">Something else was added :)</text>
+        </view>
+        <view style="feedback-style">
+          <text style="feedback-label">Something else was added :)</text>
+        </view>
+      </view>
+    </body>
+  </screen>
+{% endblock %}
+
+{% block content %}
+  <view style="compliments">
+    {{ compliment("Punctual", "2") }}
+    {{ compliment("Professional", "10") }}
+    {{ compliment("Tidy", "4") }}
+    {{ compliment("Correct Attire", "6") }}
+    {{ compliment("Stayed Late", "1") }}
+  </view>
+  <view
+    id="feedback"
+    scroll="true"
+    scroll-orientation="horizontal"
+    style="feedback-container"
+  >
+    <view style="feedback-style">
+      <text style="feedback-label">
+        Bill did a great job! Good attitude, worked hard, would love to
+        have him back.
+      </text>
+    </view>
+    <view style="feedback-style">
+      <text style="feedback-label">
+        Bill did a great job! Good attitude, worked hard, would love to
+        have him back.
+      </text>
+    </view>
+    <view
+      action="append"
+      delay="1000"
+      href="#more-feedback"
+      once="true"
+      show-during-load="indicator"
+      style="feedback-style"
+      target="feedback"
+      trigger="visible"
+    >
+      <text style="feedback-label">
+        Bill did a great job! Good attitude, worked hard, would love to
+        have him back.
+      </text>
+    </view>
+    <view id="indicator" hide="true" style="spinner">
+      <spinner />
+    </view>
+  </view>
+  <view style="compliments">
+    {{ compliment("Punctual", "2", good="false") }}
+    {{ compliment("Professional", "10", good="false") }}
+    {{ compliment("Tidy", "4", good="false") }}
+    {{ compliment("Correct Attire", "6", good="false") }}
+    {{ compliment("Stayed Late", "1", good="false") }}
+  </view>
+{% endblock %}
