@@ -5,7 +5,7 @@
       source="/case-studies/photos/avatars/riker.jpg"
       style="image-header-avatar"
     />
-    <view style="ImageHeader__LeftLabels">
+    <view style="image-header-left-labels">
       <text
         href="/case-studies/photos/user/index.xml"
         style="image-header-username"
@@ -16,7 +16,7 @@
     </view>
   </view>
   <view style="image-header-right">
-    <text style="ImageHeader__More">...</text>
+    <text style="image-header-more">...</text>
   </view>
 </section-title>
 <item key="image1">
@@ -64,44 +64,5 @@
     <view style="actionbar-right" />
   </view>
   <text style="caption">Best night of my life!</text>
-  <view style="comments">
-    <text id="image1-num-likes" style="comments-likes">7 likes</text>
-    <text
-      action="prepend"
-      href="/case-studies/photos/more_comments.xml"
-      style="comments-more"
-      target="comments-image1"
-    >
-      View all 140 comments
-    </text>
-    <view id="comments-image1">
-      <view style="comment">
-        <text
-          href="/case-studies/photos/user/index.xml"
-          style="comment-author"
-        >
-          og_worf
-        </text>
-        <text style="comment-content">hello!</text>
-      </view>
-      <view style="comment">
-        <text
-          href="/case-studies/photos/user/index.xml"
-          style="comment-author"
-        >
-          riker007
-        </text>
-        <text style="comment-content">hello!</text>
-      </view>
-      <view style="comment">
-        <text
-          href="/case-studies/photos/user/index.xml"
-          style="comment-author"
-        >
-          jean.luc.p
-        </text>
-        <text style="comment-content">hello!</text>
-      </view>
-    </view>
-  </view>
+  {% include '../comments.xml.njk' %}
 </item>

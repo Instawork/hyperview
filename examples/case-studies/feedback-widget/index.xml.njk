@@ -5,6 +5,7 @@ hv_title: "Feedback Widget"
 hv_button_behavior: "back"
 ---
 {% extends 'templates/scrollview.xml.njk' %}
+{% from './compliment.xml.njk' import compliment %}
 
 {% block styles %}
   {% include './styles.xml.njk' %}
@@ -34,36 +35,11 @@ hv_button_behavior: "back"
 
 {% block content %}
   <view style="compliments">
-    <view style="compliment compliment-good">
-      <text style="compliment-label">Punctual</text>
-      <view style="compliment-badge">
-        <text style="compliment-badge-label">2</text>
-      </view>
-    </view>
-    <view style="compliment compliment-good">
-      <text style="compliment-label">Professional</text>
-      <view style="compliment-badge">
-        <text style="compliment-badge-label">10</text>
-      </view>
-    </view>
-    <view style="compliment compliment-good">
-      <text style="compliment-label">Tidy</text>
-      <view style="compliment-badge">
-        <text style="compliment-badge-label">4</text>
-      </view>
-    </view>
-    <view style="compliment compliment-good">
-      <text style="compliment-label">Correct Attire</text>
-      <view style="compliment-badge">
-        <text style="compliment-badge-label">6</text>
-      </view>
-    </view>
-    <view style="compliment compliment-good">
-      <text style="compliment-label">Stayed Late</text>
-      <view style="compliment-badge">
-        <text style="compliment-badge-label">1</text>
-      </view>
-    </view>
+    {{ compliment("Punctual", "2") }}
+    {{ compliment("Professional", "10") }}
+    {{ compliment("Tidy", "4") }}
+    {{ compliment("Correct Attire", "6") }}
+    {{ compliment("Stayed Late", "1") }}
   </view>
   <view
     id="feedback"
@@ -103,35 +79,10 @@ hv_button_behavior: "back"
     </view>
   </view>
   <view style="compliments">
-    <view style="compliment compliment-bad">
-      <text style="compliment-label">Punctual</text>
-      <view style="compliment-badge">
-        <text style="compliment-badge-label">2</text>
-      </view>
-    </view>
-    <view style="compliment compliment-bad">
-      <text style="compliment-label">Professional</text>
-      <view style="compliment-badge">
-        <text style="compliment-badge-label">10</text>
-      </view>
-    </view>
-    <view style="compliment compliment-bad">
-      <text style="compliment-label">Tidy</text>
-      <view style="compliment-badge">
-        <text style="compliment-badge-label">4</text>
-      </view>
-    </view>
-    <view style="compliment compliment-bad">
-      <text style="compliment-label">Correct Attire</text>
-      <view style="compliment-badge">
-        <text style="compliment-badge-label">6</text>
-      </view>
-    </view>
-    <view style="compliment compliment-bad">
-      <text style="compliment-label">Stayed Late</text>
-      <view style="compliment-badge">
-        <text style="compliment-badge-label">1</text>
-      </view>
-    </view>
+    {{ compliment("Punctual", "2", good="false") }}
+    {{ compliment("Professional", "10", good="false") }}
+    {{ compliment("Tidy", "4", good="false") }}
+    {{ compliment("Correct Attire", "6", good="false") }}
+    {{ compliment("Stayed Late", "1", good="false") }}
   </view>
 {% endblock %}

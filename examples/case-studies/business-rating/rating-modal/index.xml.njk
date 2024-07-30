@@ -4,6 +4,7 @@ hv_title: "Rate the Instaworker"
 hv_button_behavior: "close"
 ---
 {% extends 'templates/base.xml.njk' %}
+{% from './rating.xml.njk' import rating %}
 
 {% block styles %}
   {% include './styles.xml.njk' %}
@@ -21,41 +22,7 @@ hv_button_behavior: "close"
       <text style="worker-info-time">Fri Aug 3, 7:00 PM - 1:00 AM</text>
       <view id="rating" style="rating-container">
         <view id="star0" style="rating-style">
-          <image
-            action="replace-inner"
-            href="#star1"
-            source="/case-studies/business-rating/star_empty@2x.png"
-            style="rating-star"
-            target="rating"
-          />
-          <image
-            action="replace-inner"
-            href="#star2"
-            source="/case-studies/business-rating/star_empty@2x.png"
-            style="rating-star"
-            target="rating"
-          />
-          <image
-            action="replace-inner"
-            href="#star3"
-            source="/case-studies/business-rating/star_empty@2x.png"
-            style="rating-star"
-            target="rating"
-          />
-          <image
-            action="replace-inner"
-            href="#star4"
-            source="/case-studies/business-rating/star_empty@2x.png"
-            style="rating-star"
-            target="rating"
-          />
-          <image
-            action="replace-inner"
-            href="#star5"
-            source="/case-studies/business-rating/star_empty@2x.png"
-            style="rating-star"
-            target="rating"
-          />
+          {{ rating(0) }}
         </view>
       </view>
     </view>
@@ -94,189 +61,19 @@ hv_button_behavior: "close"
   </view>
   <view hide="true">
     <view id="star1" style="rating-style">
-      <image
-        action="replace-inner"
-        href="#star1"
-        source="star_filled@2x.png"
-        style="rating-star rating-star-filled"
-        target="rating"
-      />
-      <image
-        action="replace-inner"
-        href="#star2"
-        source="/case-studies/business-rating/star_empty@2x.png"
-        style="rating-star"
-        target="rating"
-      />
-      <image
-        action="replace-inner"
-        href="#star3"
-        source="/case-studies/business-rating/star_empty@2x.png"
-        style="rating-star"
-        target="rating"
-      />
-      <image
-        action="replace-inner"
-        href="#star4"
-        source="/case-studies/business-rating/star_empty@2x.png"
-        style="rating-star"
-        target="rating"
-      />
-      <image
-        action="replace-inner"
-        href="#star5"
-        source="/case-studies/business-rating/star_empty@2x.png"
-        style="rating-star"
-        target="rating"
-      />
+      {{ rating(1) }}
     </view>
     <view id="star2" style="rating-style">
-      <image
-        action="replace-inner"
-        href="#star1"
-        source="/case-studies/business-rating/star_filled@2x.png"
-        style="rating-star rating-star-filled"
-        target="rating"
-      />
-      <image
-        action="replace-inner"
-        href="#star2"
-        source="/case-studies/business-rating/star_filled@2x.png"
-        style="rating-star rating-star-filled"
-        target="rating"
-      />
-      <image
-        action="replace-inner"
-        href="#star3"
-        source="/case-studies/business-rating/star_empty@2x.png"
-        style="rating-star"
-        target="rating"
-      />
-      <image
-        action="replace-inner"
-        href="#star4"
-        source="/case-studies/business-rating/star_empty@2x.png"
-        style="rating-star"
-        target="rating"
-      />
-      <image
-        action="replace-inner"
-        href="#star5"
-        source="/case-studies/business-rating/star_empty@2x.png"
-        style="rating-star"
-        target="rating"
-      />
+      {{ rating(2) }}
     </view>
     <view id="star3" style="rating-style">
-      <image
-        action="replace-inner"
-        href="#star1"
-        source="/case-studies/business-rating/star_filled@2x.png"
-        style="rating-star rating-star-filled"
-        target="rating"
-      />
-      <image
-        action="replace-inner"
-        href="#star2"
-        source="/case-studies/business-rating/star_filled@2x.png"
-        style="rating-star rating-star-filled"
-        target="rating"
-      />
-      <image
-        action="replace-inner"
-        href="#star3"
-        source="/case-studies/business-rating/star_filled@2x.png"
-        style="rating-star rating-star-filled"
-        target="rating"
-      />
-      <image
-        action="replace-inner"
-        href="#star4"
-        source="/case-studies/business-rating/star_empty@2x.png"
-        style="rating-star"
-        target="rating"
-      />
-      <image
-        action="replace-inner"
-        href="#star5"
-        source="/case-studies/business-rating/star_empty@2x.png"
-        style="rating-star"
-        target="rating"
-      />
+      {{ rating(3) }}
     </view>
     <view id="star4" style="rating-style">
-      <image
-        action="replace-inner"
-        href="#star1"
-        source="/case-studies/business-rating/star_filled@2x.png"
-        style="rating-star rating-star-filled"
-        target="rating"
-      />
-      <image
-        action="replace-inner"
-        href="#star2"
-        source="/case-studies/business-rating/star_filled@2x.png"
-        style="rating-star rating-star-filled"
-        target="rating"
-      />
-      <image
-        action="replace-inner"
-        href="#star3"
-        source="/case-studies/business-rating/star_filled@2x.png"
-        style="rating-star rating-star-filled"
-        target="rating"
-      />
-      <image
-        action="replace-inner"
-        href="#star4"
-        source="/case-studies/business-rating/star_filled@2x.png"
-        style="rating-star rating-star-filled"
-        target="rating"
-      />
-      <image
-        action="replace-inner"
-        href="#star5"
-        source="/case-studies/business-rating/star_empty@2x.png"
-        style="rating-star"
-        target="rating"
-      />
+      {{ rating(4) }}
     </view>
     <view id="star5" style="rating-style">
-      <image
-        action="replace-inner"
-        href="#star1"
-        source="/case-studies/business-rating/star_filled@2x.png"
-        style="rating-star rating-star-filled"
-        target="rating"
-      />
-      <image
-        action="replace-inner"
-        href="#star2"
-        source="/case-studies/business-rating/star_filled@2x.png"
-        style="rating-star rating-star-filled"
-        target="rating"
-      />
-      <image
-        action="replace-inner"
-        href="#star3"
-        source="/case-studies/business-rating/star_filled@2x.png"
-        style="rating-star rating-star-filled"
-        target="rating"
-      />
-      <image
-        action="replace-inner"
-        href="#star4"
-        source="/case-studies/business-rating/star_filled@2x.png"
-        style="rating-star rating-star-filled"
-        target="rating"
-      />
-      <image
-        action="replace-inner"
-        href="#star5"
-        source="/case-studies/business-rating/star_filled@2x.png"
-        style="rating-star rating-star-filled"
-        target="rating"
-      />
+      {{ rating(5) }}
     </view>
   </view>
 {% endblock %}

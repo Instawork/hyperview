@@ -5,6 +5,7 @@ hv_title: "Tabs"
 hv_button_behavior: "back"
 ---
 {% extends 'templates/base.xml.njk' %}
+{% from './tab.xml.njk' import tab %}
 
 {% block styles %}
   <style id="row" flexDirection="row" justifyContent="space-between" />
@@ -49,30 +50,27 @@ hv_button_behavior: "back"
       <text>Tab 3</text>
     </option>
   </select-single>
-  <view id="tab-1" style="flex centered green" hide="true">
+  {% call tab("tab-1", "green", "TAB 1 CONTENT") -%}
     <view
       trigger="visible"
       action="dispatch-event"
       event-name="tab-1-visible"
     />
-    <text>TAB 1 CONTENT</text>
-  </view>
-  <view id="tab-2" style="flex centered blue" hide="true">
+  {%- endcall %}
+  {% call tab("tab-2", "blue", "TAB 2 CONTENT") -%}
     <view
       trigger="visible"
       action="dispatch-event"
       event-name="tab-2-visible"
     />
-    <text>TAB 2 CONTENT</text>
-  </view>
-  <view id="tab-3" style="flex centered yellow" hide="true">
+  {%- endcall %}
+  {% call tab("tab-3", "yellow", "TAB 3 CONTENT") -%}
     <view
       trigger="visible"
       action="dispatch-event"
       event-name="tab-3-visible"
     />
-    <text>TAB 3 CONTENT</text>
-  </view>
+  {%- endcall %}
   <behavior
     once="true"
     trigger="load"
