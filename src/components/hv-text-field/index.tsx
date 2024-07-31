@@ -64,26 +64,30 @@ const HvTextField = (props: HvComponentProps) => {
   );
 
   // This handler takes care of handling the state, so it shouldn't be debounced
-  const onChangeText = (value: string) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const onChangeText = useCallback((value: string) => {
     const formattedValue = HvTextField.getFormattedValue(props.element, value);
     const newElement = props.element.cloneNode(true) as Element;
     newElement.setAttribute('value', formattedValue);
     props.onUpdate(null, 'swap', props.element, { newElement });
     triggerChangeBehaviors(newElement);
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const textInputRef: MutableRefObject<TextInput | null> = useRef(
     null as TextInput | null,
   );
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const prevDefaultValue = useRef<string | undefined>(defaultValue);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     if (prevDefaultValue.current !== defaultValue) {
       onChangeText(defaultValue || '');
     }
     prevDefaultValue.current = defaultValue;
-  }, [defaultValue]);
+  }, [defaultValue, onChangeText]);
 
   const p = {
     ...createProps(props.element, props.stylesheets, {
