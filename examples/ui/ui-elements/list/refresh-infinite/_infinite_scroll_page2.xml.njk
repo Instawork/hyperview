@@ -1,0 +1,19 @@
+<items xmlns="https://hyperview.org/hyperview">
+  {% for i in range(21, 31) %}
+    <item key="{{ i }}" style="item">
+      <text style="item-label">Added: List {{ i }}</text>
+    </item>
+  {% endfor %}
+  <item key="page-3-loader" style="item">
+    <behavior
+      delay="300"
+      trigger="visible"
+      action="replace"
+      once="true"
+      href="/ui/ui-elements/list/refresh-infinite/_infinite_scroll_page3.xml"
+    />
+    <view id="list-loading-indicator" style="spinner">
+      <spinner />
+    </view>
+  </item>
+</items>
