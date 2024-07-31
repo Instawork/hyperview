@@ -2,7 +2,7 @@ import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type { HvComponentProps, TextContextType } from 'hyperview/src/types';
-import React, { MutableRefObject, useCallback, useRef } from 'react';
+import React, { MutableRefObject, useCallback, useEffect, useRef } from 'react';
 import {
   createProps,
   getNameValueFormInputValues,
@@ -76,6 +76,14 @@ const HvTextField = (props: HvComponentProps) => {
   const textInputRef: MutableRefObject<TextInput | null> = useRef(
     null as TextInput | null,
   );
+
+  const prevDefaultValue = useRef<string | undefined>(defaultValue);
+  useEffect(() => {
+    if (prevDefaultValue.current !== defaultValue) {
+      onChangeText(defaultValue || '');
+    }
+    prevDefaultValue.current = defaultValue;
+  }, [defaultValue]);
 
   const p = {
     ...createProps(props.element, props.stylesheets, {
