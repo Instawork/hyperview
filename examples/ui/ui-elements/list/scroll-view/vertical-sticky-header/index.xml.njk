@@ -1,0 +1,23 @@
+{% from 'macros/description/index.xml.njk' import description %}
+
+{{ description('Vertical Scroll With Sticky Header') }}
+<view scroll="true" style="ScrollContainer ScrollContainer--Vertical">
+  <view id="view-0" style="ScrollChild ScrollChild--Vertical">
+    <text style="Text">Non Sticky</text>
+  </view>
+  <view id="view-1" sticky="true" style="ScrollChild ScrollChild--Vertical">
+    <text style="Text">Sticky</text>
+  </view>
+  <view id="view-2" style="ScrollChild ScrollChild--Vertical">
+    <text style="Text">Non Sticky</text>
+  </view>
+  <view id="view-3" style="ScrollChild ScrollChild--Vertical">
+    <text style="Text">Non Sticky</text>
+  </view>
+  <view id="view-4" style="ScrollChild ScrollChild--Vertical">
+    <text style="Text">Non Sticky</text>
+  </view>
+  <view id="view-5" style="ScrollChild ScrollChild--Vertical">
+    <text style="Text">Non Sticky</text>
+  </view>
+</view>

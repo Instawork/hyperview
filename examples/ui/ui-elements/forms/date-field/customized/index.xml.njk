@@ -1,0 +1,18 @@
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+<view style="form-group">
+  <text style="label">Customized</text>
+  <date-field
+    field-style="InputCustom"
+    field-text-style="input-custom-text"
+    label-format="MMMM D, YYYY"
+    modal-overlay-style="picker-modal-custom-overlay"
+    modal-style="picker-modal-custom"
+    modal-text-style="picker-modal-custom-text"
+    name="date"
+    placeholder="Select date"
+    placeholderTextColor="#8D9494"
+    value="2018-03-07"
+  />
+</view>

@@ -1,0 +1,52 @@
+---
+permalink: "/ui/ui-elements/list/scroll-view/index.xml"
+tags: "List"
+hv_title: "Scroll View"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+
+{% block styles %}
+  <style id="Border" borderColor="#e1e1e1" borderWidth="1" flex="1" margin="24" padding="8"/>
+  <style id="ScrollContainer" borderColor="#e1e1e1" borderRadius="16" borderWidth="1" height="160" margin="24"/>
+  <style id="ScrollContainer--Vertical" flexDirection="column"/>
+  <style id="ScrollContainer--Horizontal" flexDirection="row"/>
+  <style
+    id="ScrollChild"
+    backgroundColor="#63CB76"
+    borderRadius="16"
+    height="40"
+    margin="8"
+    alignItems="center"
+    justifyContent="center"/>
+  <style id="ScrollChild--Vertical" height="40"/>
+  <style id="ScrollChild--Horizontal" width="40"/>
+  <style id="Text" color="#ffffff" alignSelf="center" textAlign="center" fontSize="24"/>
+  <style
+    id="input"
+    borderBottomColor="#E1E1E1"
+    borderBottomWidth="1"
+    borderColor="#4E4D4D"
+    flex="1"
+    fontSize="16"
+    fontWeight="normal"
+    margin="8"
+    paddingBottom="8"
+    paddingTop="8">
+    <modifier pressed="true">
+    <style borderBottomColor="green"/>
+    </modifier>
+    <modifier focused="true">
+    <style borderBottomColor="#4778FF"/>
+    </modifier>
+  </style>
+{% endblock %}
+
+{% block content %}
+  {% include './vertical/index.xml.njk' %}
+  {% include './dismiss-keyboard/index.xml.njk' %}
+  {% include './vertical-hidden-scroll/index.xml.njk' %}
+  {% include './vertical-sticky-header/index.xml.njk' %}
+  {% include './horizontal/index.xml.njk' %}
+  {% include './horizontal-hidden-scroll/index.xml.njk' %}
+{% endblock %}

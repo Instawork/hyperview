@@ -1,0 +1,26 @@
+---
+permalink: "/ui/ui-elements/web-view/dispatch-event/index.xml"
+tags: "Web View"
+hv_title: "Event Dispatch"
+hv_button_behavior: "back"
+---
+{% extends 'templates/base.xml.njk' %}
+
+{% block styles %}
+  <style id="flex" flex="1" flexDirection="row" justifyContent="space-between"/>
+{% endblock %}
+
+{% block container %}
+  <view style="flex">
+    <web-view html="&lt;button style=&quot;font-size: 80px&quot;
+                    onClick=&quot;window.ReactNativeWebView.postMessage('hyperview:helloworld')&quot;&gt;Post message&lt;/button&gt;"/>
+    <view
+      action="append"
+      event-name="helloworld"
+      href="/ui/ui-elements/web-view/dispatch-event/append.xml"
+      scroll="true"
+      style="Main"
+      trigger="on-event"
+    />
+  </view>
+{% endblock %}
