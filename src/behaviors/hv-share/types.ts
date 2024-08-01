@@ -1,5 +1,5 @@
 export type Content = {
-  message: string;
+  message?: string;
   title?: string;
   url?: string;
 };
