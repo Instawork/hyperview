@@ -35,5 +35,13 @@
     >
       <text style="bottom-tab-label {% if hv_tab_id === 'tab-case-studies' %} bottom-tab-label-selected{% endif %}">Case Studies</text>
     </view>
+    <view
+      style="bottom-tab"
+      href-style="bottom-tab"
+      action="navigate"
+      target="tab-navigator"
+    >
+      <text style="bottom-tab-label {% if hv_tab_id === 'tab-navigator' %} bottom-tab-label-selected{% endif %}">Navigator</text>
+    </view>
   </view>
 {% endblock %}

@@ -1,0 +1,25 @@
+---
+permalink: "/navigator/simple-stack/screen.xml"
+hv_title: "Simple Stack"
+hv_button_behavior: "back"
+---
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% extends 'templates/scrollview.xml.njk' %}
+
+{% block content %}
+  {{ description('Tapping the button below will push a screen onto this stack.') }}
+  {% call button('Push') -%}
+    <behavior
+      action="push"
+      href="/navigator/simple-stack/push-1.xml"
+    />
+  {%- endcall %}
+  {{ description('Tapping the button below will create a modal screen on this stack.') }}
+  {% call button('Push') -%}
+    <behavior
+      action="new"
+      href="/navigator/simple-stack/modal-1.xml"
+    />
+  {%- endcall %}
+{% endblock %}

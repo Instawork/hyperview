@@ -1,0 +1,32 @@
+---
+permalink: "/navigator/simple-tab/tab-2.xml"
+hv_title: "Tab Navigator - Tab 2"
+hv_button_behavior: "back"
+---
+{% from 'macros/description/index.xml.njk' import description %}
+{% extends 'templates/base.xml.njk' %}
+
+{% block container %}
+  {{ description('This is the content for tab 2.') }}
+  <view id="Footer" style="footer">
+    <view
+      style="bottom-tab"
+      href-style="bottom-tab"
+      action="navigate"
+      target="tab-1"
+    >
+      <image
+        source="/navigator/simple-tab/heart2.png"
+        style="bottom-tab-icon "
+      />
+      <text style="bottom-tab-label">Tab 1</text>
+    </view>
+    <view style="bottom-tab bottom-tab-selected">
+      <image
+        source="/navigator/simple-tab/list2.png"
+        style="bottom-tab-icon bottom-tab-selected"
+      />
+      <text style="bottom-tab-label bottom-tab-label-selected">Tab 2</text>
+    </view>
+  </view>
+{% endblock %}
