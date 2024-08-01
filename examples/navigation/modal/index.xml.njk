@@ -9,16 +9,13 @@ hv_button_behavior: "back"
 {% from 'macros/button/index.xml.njk' import button %}
 
 {% block content %}
-  {{ description('Tapping the buttons below will open their urls in default apps') }}
-  {% call button('applenews://') -%}
-    <behavior action="deep-link" href="applenews://" />
+  {{ description('Open a new modal screen!') }}
+
+  {% call button('Open another modal') -%}
+    <behavior action="new" delay="1000" href="/navigation/modal/index.xml" show-during-load="loadingScreen" />
   {%- endcall %}
 
-  {% call button('calshow://') -%}
-    <behavior action="deep-link" href="calshow://" />
-  {%- endcall %}
-
-  {% call button('https://www.hyperview.org') -%}
-    <behavior action="deep-link" href="https://www.hyperview.org" />
+  {% call button('Push on the stack') -%}
+    <behavior action="push" href="/navigation/modal/index.xml" />
   {%- endcall %}
 {% endblock %}
