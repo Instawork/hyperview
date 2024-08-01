@@ -1,0 +1,30 @@
+---
+permalink: "/case-studies/photos/index.xml"
+tags: "case_studies"
+hv_title: "Photo Sharing App"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+
+{% block styles %}
+  {% include './styles.xml.njk' %}
+{% endblock %}
+
+{% block content %}
+  <view hide="true">
+    <view id="empty-overlay" />
+    <view id="liked-overlay" style="image-message">
+      <text style="image-message-label">Liked!</text>
+    </view>
+    <view id="unliked-overlay" style="image-message">
+      <text style="image-message-label">Unliked</text>
+    </view>
+  </view>
+  <section-list>
+    {% include './section-1/index.xml.njk' %}
+    {% include './section-2/index.xml.njk' %}
+    {% include './section-3/index.xml.njk' %}
+    {% include './section-4/index.xml.njk' %}
+    {% include './section-5/index.xml.njk' %}
+  </section-list>
+{% endblock %}

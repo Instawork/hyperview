@@ -1,0 +1,17 @@
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% macro contact(name, phone) %}
+  <behavior action="back" trigger="on-event" event-name="go-back" />
+  {% call description() -%}
+    Pressing add will dispatch two events, one to update the status and
+    another to go back to the previous screen
+  {%- endcall %}
+  <view>
+    <text style="name">{{ name }}</text>
+    <text style="phone">Ph: {{ phone }}</text>
+    {% call button('Add to network') -%}
+      {{ caller() }}
+    {%- endcall %}
+  </view>
+{% endmacro %}

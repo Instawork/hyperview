@@ -1,0 +1,33 @@
+{% from 'macros/description/index.xml.njk' import description %}
+
+{{ description(' When a text area loses focus, the content in the container will be replaced.') }}
+<view style="form-group">
+  <text style="label">Input area 1</text>
+  <text-area
+    action="replace-inner"
+    href="#area1Blurred"
+    name="feedback"
+    placeholder="Please leave your feedback"
+    placeholderTextColor="#8D9494"
+    style="input"
+    target="container1"
+    trigger="blur"
+  />
+</view>
+<view style="form-group">
+  <text style="label">Input area 2</text>
+  <text-area
+    action="replace-inner"
+    href="#area2Blurred"
+    name="feedback"
+    placeholder="Please leave your feedback"
+    placeholderTextColor="#8D9494"
+    style="input"
+    target="container1"
+    trigger="blur"
+  />
+</view>
+<view hide="true">
+  <text id="area1Blurred" style="tip">Area 1 blured</text>
+  <text id="area2Blurred" style="tip">Area 2 blured</text>
+</view>

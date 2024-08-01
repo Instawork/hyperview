@@ -1,0 +1,6 @@
+
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{{ description('Shadow color') }}
+{{ button('Hello', attributes={style:"button button-shadow button-blue-shadow"}) }}

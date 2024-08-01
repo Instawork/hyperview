@@ -1,0 +1,8 @@
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% call button('Press me again...', {"xmlns":"https://hyperview.org/hyperview"}) -%}
+  <behavior
+    action="replace-inner"
+    href="/behaviors/basic/actions/replace-inner/nested/_replace_fragment_inner2.xml"
+  />
+{%- endcall %}

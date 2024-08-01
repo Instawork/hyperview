@@ -1,0 +1,33 @@
+{% from 'macros/description/index.xml.njk' import description %}
+
+{{ description('Clicking a text area will replace the content in the container.') }}
+<view style="form-group">
+  <text style="label">Input area 1</text>
+  <text-area
+    action="replace-inner"
+    href="#area1Focused"
+    name="feedback"
+    placeholder="Please leave your feedback"
+    placeholderTextColor="#8D9494"
+    style="input"
+    target="container1"
+    trigger="focus"
+  />
+</view>
+<view style="form-group">
+  <text style="label">Input area 2</text>
+  <text-area
+    action="replace-inner"
+    href="#area2Focused"
+    name="feedback"
+    placeholder="Please leave your feedback"
+    placeholderTextColor="#8D9494"
+    style="input"
+    target="container1"
+    trigger="focus"
+  />
+</view>
+<view hide="true">
+  <text id="area1Focused" style="tip">Area 1 focused</text>
+  <text id="area2Focused" style="tip">Area 2 focused</text>
+</view>

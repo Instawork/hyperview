@@ -1,0 +1,108 @@
+---
+permalink: "/ui/ui-elements/forms/date-field/index.xml"
+tags: "Forms"
+hv_title: "Date Field"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{# TBD rohanbayya: To fix serialize button #}
+{% block styles %}
+  <style id="form-group" flex="1" marginLeft="24" marginRight="24" marginTop="48"/>
+  <style id="input-text-error" color="#FF4847"/>
+  <style id="picker-modal-text" color="blue" fontSize="16" fontWeight="600" marginBottom="16" padding="24">
+    <modifier pressed="true">
+    <style opacity="0.5"/>
+    </modifier>
+  </style>
+  <style
+    id="InputCustom"
+    borderColor="#4E4D4D"
+    borderRadius="4"
+    borderWidth="2"
+    flex="1"
+    fontWeight="normal"
+    marginBottom="40"
+    paddingBottom="8"
+    paddingLeft="8"
+    paddingRight="8"
+    paddingTop="8">
+    <modifier pressed="true">
+    <style borderColor="#4778FF"/>
+    </modifier>
+    <modifier focused="true">
+    <style borderColor="#4778FF"/>
+    </modifier>
+  </style>
+  <style
+    id="picker-modal"
+    backgroundColor="white"
+    borderTopColor="#E1E1E1"
+    borderTopWidth="1"
+    shadowOffsetX="0"
+    shadowOffsetY="-5"
+    shadowOpacity="0.2"
+    shadowRadius="5"/>
+  <style
+    id="picker-modal-overlay"
+    backgroundColor="#1f1f1fa0"
+  />
+  <style id="help-error" color="#FF4847"/>
+  <style
+    id="input"
+    borderBottomColor="#E1E1E1"
+    borderBottomWidth="1"
+    borderColor="#4E4D4D"
+    flex="1"
+    fontSize="16"
+    fontWeight="normal"
+    paddingBottom="8"
+    paddingTop="8">
+    <modifier pressed="true">
+    <style borderBottomColor="#4778FF"/>
+    </modifier>
+    <modifier focused="true">
+    <style borderBottomColor="#4778FF"/>
+    </modifier>
+  </style>
+  <style id="input-custom-text" color="purple" fontSize="18" fontWeight="600"/>
+  <style id="input-error" borderBottomColor="#FF4847">
+    <modifier focused="true">
+    <style borderBottomColor="#FF4847"/>
+    </modifier>
+  </style>
+  <style id="picker-modal-custom" backgroundColor="purple" borderTopColor="#E1E1E1" borderTopWidth="1"/>
+  <style id="picker-modal-custom-overlay" backgroundColor="purple" opacity="0.4" />
+  <style id="picker-modal-custom-text" color="white" fontSize="20" fontWeight="600" padding="24" paddingBottom="0">
+    <modifier pressed="true">
+    <style color="yellow"/>
+    </modifier>
+  </style>
+  <style id="label" borderColor="#4E4D4D" fontSize="16" fontWeight="bold" lineHeight="24" marginBottom="8"/>
+  <style id="help" borderColor="#FF4847" fontSize="16" fontWeight="normal" lineHeight="24" marginTop="16"/>
+  <style id="input-text" color="black" fontSize="16" fontWeight="normal"/>
+{% endblock %}
+
+{% block content %}
+  {% call description() -%}
+    Date fields open a system-appropriate modal to choose a date value. On iOS, styles can be applied to the modal and
+    save/cancel labels.
+  {%- endcall %}
+  {% call description() -%}
+    Label formatting is determined by the client. In these examples, wer're using moment.js for the formatting.
+  {%- endcall %}
+  {% include './default/index.xml.njk' %}
+  {% include './spinner/index.xml.njk' %}
+  {% include './filled/index.xml.njk' %}
+  {% include './label-format/index.xml.njk' %}
+  {% include './min-date/index.xml.njk' %}
+  {% include './max-date/index.xml.njk' %}
+  {% include './min-max-date/index.xml.njk' %}
+  {% include './validation-error/index.xml.njk' %}
+  {% include './filled-validation-error/index.xml.njk' %}
+  {% include './animations/index.xml.njk' %}
+  {% include './customized/index.xml.njk' %}
+  {{ button('Serialize', {href:"/ui/ui-elements/forms/date-field/index.xml"}) }}
+{% endblock %}

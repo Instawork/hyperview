@@ -1,0 +1,78 @@
+---
+permalink: "/case-studies/lazy-load/index.xml"
+tags: "case_studies"
+hv_title: "Lazy Load"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+
+{% block styles %}
+  <style
+    id="section1"
+    backgroundColor="#4778FF"
+    flex="1"
+    height="640"
+    padding="48"
+  />
+  <style
+    id="section2"
+    backgroundColor="#63CB76"
+    flex="1"
+    height="640"
+    padding="48"
+  />
+  <style
+    id="section3"
+    backgroundColor="#C56BFF"
+    flex="1"
+    height="640"
+    padding="48"
+  />
+  <style
+    id="label"
+    color="white"
+    fontSize="48"
+    fontWeight="bold"
+    textAlign="center"
+  />
+  <style
+    id="content"
+    color="white"
+    fontSize="18"
+    fontWeight="normal"
+    marginTop="32"
+    textAlign="center"
+  />
+{% endblock %}
+
+{% block content %}
+  <view style="section1">
+    <text style="label">Section 1</text>
+    <text style="content">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+      eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    </text>
+  </view>
+  <view
+    action="replace"
+    delay="500"
+    href="/case-studies/lazy-load/section2.xml"
+    once="true"
+    style="section2"
+    trigger="visible"
+  >
+    <spinner color="white" />
+    <text style="content">Loading...</text>
+  </view>
+  <view
+    action="replace"
+    delay="500"
+    href="/case-studies/lazy-load/section3.xml"
+    once="true"
+    style="section3"
+    trigger="visible"
+  >
+    <spinner color="white" />
+    <text style="content">Loading...</text>
+  </view>
+{% endblock %}

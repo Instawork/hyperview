@@ -1,0 +1,9 @@
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{{ description('Tapping the button below will hide the element below.') }}
+
+{% call button('Hide') -%}
+  <behavior action="hide" target="hide1-content" />
+{%- endcall %}
+<text id="hide1-content" style="hide">Content to be hidden</text>

@@ -1,0 +1,11 @@
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/select-multiple/index.xml.njk' import select_multiple %}
+
+{{description('Tapping the button below will un-select all the options.') }}
+
+{{ select_multiple("id_sm", unselect="true") }}
+
+{% call button('Unselect All') -%}
+  <behavior action="unselect-all" target="id_sm" />
+{%- endcall %}

@@ -1,0 +1,30 @@
+---
+permalink: "/styling/shadow/index.xml"
+tags: styling
+hv_title: "Shadow"
+hv_button_behavior: "back"
+---
+{% from 'macros/description/index.xml.njk' import description %}
+{% extends 'templates/scrollview.xml.njk' %}
+
+
+{% block styles %}
+  <style
+    id="button-shadow"
+    shadowColor="black"
+    shadowOffsetX="0"
+    shadowOffsetY="4"
+    shadowOpacity="0.5"
+    shadowRadius="4"/>
+  <style id="button-blue-shadow" shadowColor="blue"/>
+  <style id="button-big-radius" shadowRadius="10"/>
+  <style id="button-offset" shadowOffsetX="5" shadowOffsetY="-5"/>
+{% endblock %}
+
+{% block content %}
+  {{ description('Shadow styling only works on iOS. For Android, use shadow elevation.') }}
+  {% include './regular/index.xml.njk' %}
+  {% include './shadow-color/index.xml.njk' %}
+  {% include './radius/index.xml.njk' %}
+  {% include './offset/index.xml.njk' %}
+{% endblock %}

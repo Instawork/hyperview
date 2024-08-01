@@ -1,0 +1,105 @@
+---
+permalink: "/case-studies/cascader/index.xml"
+tags: "case_studies"
+hv_title: "Cascader"
+hv_button_behavior: "back"
+---
+{% extends 'templates/base.xml.njk' %}
+
+{% block styles %}
+  {% include './styles.xml.njk' %}
+{% endblock %}
+
+{% block container %}
+  <view
+    action="reload"
+    href="#"
+    scroll="true"
+    style="main"
+    trigger="refresh"
+  >
+    <select-single name="level1" style="select">
+      <view style="select-separator" />
+      <option style="select-option" value="1">
+        <behavior action="show" target="section1" trigger="select" />
+        <behavior action="hide" target="section1" trigger="deselect" />
+        <text style="select-label">Option 1</text>
+        <view style="select-radio-outer">
+          <view style="select-radio-inner" />
+        </view>
+      </option>
+      <view style="select-separator" />
+      <option style="select-option" value="2">
+        <behavior action="show" target="section2" trigger="select" />
+        <behavior action="hide" target="section2" trigger="deselect" />
+        <text style="select-label">Option 2</text>
+        <view style="select-radio-outer">
+          <view style="select-radio-inner" />
+        </view>
+      </option>
+      <view style="select-separator" />
+      <option style="select-option" value="3">
+        <behavior action="show" target="section3" trigger="select" />
+        <behavior action="hide" target="section3" trigger="deselect" />
+        <text style="select-label">Option 3</text>
+        <view style="select-radio-outer">
+          <view style="select-radio-inner" />
+        </view>
+      </option>
+      <view style="select-separator" />
+    </select-single>
+    <select-single name="level2" style="select">
+      <view hide="true" id="section1">
+        <view style="select-separator" />
+        <option style="select-option" value="1:1">
+          <text style="select-label">1: 1</text>
+          <view style="select-radio-outer">
+            <view style="select-radio-inner" />
+          </view>
+        </option>
+        <view style="select-separator" />
+        <option style="select-option" value="1:2">
+          <text style="select-label">1: 2</text>
+          <view style="select-radio-outer">
+            <view style="select-radio-inner" />
+          </view>
+        </option>
+        <view style="select-separator" />
+        <option style="select-option" value="1:3">
+          <text style="select-label">1: 3</text>
+          <view style="select-radio-outer">
+            <view style="select-radio-inner" />
+          </view>
+        </option>
+        <view style="select-separator" />
+      </view>
+      <view hide="true" id="section2">
+        <view style="select-separator" />
+        <option style="select-option" value="2:1">
+          <text style="select-label">2: 1</text>
+          <view style="select-radio-outer">
+            <view style="select-radio-inner" />
+          </view>
+        </option>
+        <view style="select-separator" />
+        <option style="select-option" value="2:2">
+          <text style="select-label">2: 2</text>
+          <view style="select-radio-outer">
+            <view style="select-radio-inner" />
+          </view>
+        </option>
+        <view style="select-separator" />
+      </view>
+      <view hide="true" id="section3">
+        <view style="select-separator" />
+        <option style="select-option" value="3:3">
+          <text style="select-label">3: 1</text>
+          <view style="select-radio-outer">
+            <view style="select-radio-inner" />
+          </view>
+        </option>
+        <view style="select-separator" />
+      </view>
+    </select-single>
+  </view>
+{% endblock %}

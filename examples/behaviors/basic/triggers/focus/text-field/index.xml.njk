@@ -1,0 +1,37 @@
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% call description() -%}
+  Clicking a text field will replace the content in the container.
+  Notice that clicking a focused text field does nothing, focus only
+  triggers when an unfocused text field is focused.
+{%- endcall %}
+<view style="form-group">
+  <text style="label">Input field 1</text>
+  <text-field
+    action="replace-inner"
+    href="#field1Focused"
+    name="text"
+    placeholder="First name"
+    placeholderTextColor="#8D9494"
+    style="input"
+    target="container1"
+    trigger="focus"
+  />
+</view>
+<view style="form-group">
+  <text style="label">Input field 2</text>
+  <text-field
+    action="replace-inner"
+    href="#field2Focused"
+    name="text"
+    placeholder="Last name"
+    placeholderTextColor="#8D9494"
+    style="input"
+    target="container1"
+    trigger="focus"
+  />
+</view>
+<view hide="true">
+  <text id="field1Focused" style="tip">Field 1 focused</text>
+  <text id="field2Focused" style="tip">Field 2 focused</text>
+</view>

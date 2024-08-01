@@ -1,0 +1,9 @@
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{{ description('Show can work with the delay attribute. In this example, the show will be delayed 1 second.') }}
+
+{% call button('Show with Delay') -%}
+  <behavior action="show" target="show2-content" delay="1000" />
+{%- endcall %}
+<text id="show2-content" hide="true" style="show">Content to be shown</text>

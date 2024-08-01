@@ -1,0 +1,19 @@
+
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{{ description('When toggling with delay, you can use indicators.') }}
+
+{% call button('Toggle with Spinner') -%}
+  <behavior
+    action="toggle"
+    delay="1000"
+    show-during-load="toggle3-spinner"
+    target="toggle3-content"
+  />
+  <view id="toggle3-spinner" hide="true" style="spinner">
+    <spinner color="white" />
+  </view>
+{%- endcall %}
+
+<text id="toggle3-content" style="toggle">Content to be toggled</text>

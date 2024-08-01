@@ -1,0 +1,19 @@
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+<view style="form-group">
+  <text style="label">Filled validation error</text>
+  <date-field
+    field-style="input input-error"
+    field-text-style="input-text input-text-error"
+    label-format="MMMM D, YYYY"
+    modal-overlay-style="picker-modal-overlay"
+    modal-style="picker-modal"
+    modal-text-style="picker-modal-text"
+    name="date"
+    placeholder="Select date"
+    placeholderTextColor="#8D9494"
+    value="2018-03-07"
+  />
+  <text style="help help-error">Please select a different date</text>
+</view>

@@ -1,0 +1,33 @@
+{% from 'macros/description/index.xml.njk' import description %}
+
+{{ description('When a text area value changes, the content in the container will be replaced.') }}
+<view style="form-group">
+  <text style="label">Input area 1</text>
+  <text-area
+    action="replace-inner"
+    href="#area1Changed"
+    name="feedback"
+    placeholder="Please leave your feedback"
+    placeholderTextColor="#8D9494"
+    style="input"
+    target="container1"
+    trigger="change"
+  />
+</view>
+<view style="form-group">
+  <text style="label">Input area 2</text>
+  <text-area
+    action="replace-inner"
+    href="#area2Changed"
+    name="feedback"
+    placeholder="Please leave your feedback"
+    placeholderTextColor="#8D9494"
+    style="input"
+    target="container1"
+    trigger="change"
+  />
+</view>
+<view hide="true">
+  <text id="area1Changed" style="tip">Area 1 changed</text>
+  <text id="area2Changed" style="tip">Area 2 changed</text>
+</view>

@@ -1,0 +1,12 @@
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/select-multiple/index.xml.njk' import select_multiple %}
+
+
+{{ description('Select All can work with the delay attribute. In this example, the selection will be delayed 1 second.') }}
+
+{{ select_multiple("id_sm_delay") }}
+
+{% call button('Select All with Delay') -%}
+  <behavior action="select-all" target="id_sm_delay" delay="1000" />
+{%- endcall %}

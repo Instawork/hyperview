@@ -1,0 +1,11 @@
+<text style="section">Text areas</text>
+<view style="form-group">
+  <text style="label" hide="true" id="id_ta_loading">Loading...</text>
+  <text-area id="id_ta" name="ta" placeholder="Text area" placeholderTextColor="#8D9494" style="input"/>
+  <text style="link" action="set-value" new-value="Test&#10;Multi&#10;Line" target="id_ta">
+    Set multi-line value
+  </text>
+  <text style="link" action="set-value" new-value="" target="id_ta">
+    Clear value
+  </text>
+</view>

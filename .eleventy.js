@@ -47,7 +47,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addNunjucksFilter('pageCount', pageCountFilter);
   return {
     dir: {
-      input: 'examples',
+      input: 'examples_old',
       output: '_examples_site',
     },
   };

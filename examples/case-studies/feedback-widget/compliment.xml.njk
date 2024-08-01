@@ -1,0 +1,12 @@
+{% macro compliment(label, badge, good="true") %}
+  {% set compliment_type = "compliment-bad" %}
+  {% if good == "true" %}
+    {% set compliment_type = "compliment-good" %}
+  {% endif %}
+  <view style="compliment {{ compliment_type }}">
+    <text style="compliment-label">{{ label }}</text>
+    <view style="compliment-badge">
+      <text style="compliment-badge-label">{{ badge }}</text>
+    </view>
+  </view>
+{% endmacro %}

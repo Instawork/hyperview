@@ -1,0 +1,9 @@
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{{ description('Tapping the button below will show the visibility of the element below.') }}
+
+{% call button('Show') -%}
+  <behavior action="show" target="show1-content" />
+{%- endcall %}
+<text id="show1-content" hide="true" style="show">Content to be shown</text>

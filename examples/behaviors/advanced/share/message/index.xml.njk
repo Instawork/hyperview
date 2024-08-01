@@ -1,0 +1,10 @@
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% call button('Message-only') -%}
+  <behavior
+    xmlns:share="https://instawork.com/hyperview-share"
+    action="share"
+    share:message="Test message"
+    trigger="press"
+  />
+{%- endcall %}

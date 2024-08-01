@@ -1,0 +1,26 @@
+{% macro select_multiple(id, unselect="false") %}
+  <select-multiple id="{{ id }}" name="sm" style="select">
+    <view style="select-separator" />
+    <option style="select-option" value="option1" {% if unselect=="true" %}selected="true"{% endif %}>
+      <text style="select-label">Option 1</text>
+      <view style="select-radio-outer">
+        <view style="select-radio-inner" />
+      </view>
+    </option>
+    <view style="select-separator" />
+    <option style="select-option" value="option2" {% if unselect=="true" %}selected="true"{% endif %}>
+      <text style="select-label">Option 2</text>
+      <view style="select-radio-outer">
+        <view style="select-radio-inner" />
+      </view>
+    </option>
+    <view style="select-separator" />
+    <option style="select-option" value="option3" selected="true">
+      <text style="select-label">Option 3</text>
+      <view style="select-radio-outer">
+        <view style="select-radio-inner" />
+      </view>
+    </option>
+    <view style="select-separator" />
+  </select-multiple>
+{% endmacro %}

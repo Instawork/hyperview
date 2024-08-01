@@ -1,0 +1,17 @@
+{% macro container(text, attributes={}) %}
+  <view
+    style="container-style"
+    xmlns="https://hyperview.org/hyperview"
+    {% for attr, val in attributes %}
+      {{ attr }}="{{ val }}"
+    {% endfor %}
+    {% if "id" not in attributes %}
+      id="container"
+    {% endif %}
+  >
+    {% if caller %}
+      {{ caller() }}
+    {% endif %}
+    <text style="container-label">{{ text }}</text>
+  </view>
+{% endmacro %}

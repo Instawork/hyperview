@@ -1,0 +1,10 @@
+{% from 'macros/link/index.xml.njk' import link %}
+
+{% call link("Set all") -%}
+  <behavior action="set-value" new-value="Multi" target="id_tf"/>
+  <behavior action="set-value" new-value="Multi" target="id_ta"/>
+  <behavior action="set-value" new-value="Ramen" target="id_ss"/>
+  <behavior action="set-value" new-value="2" target="id_pf"/>
+  <behavior action="set-value" new-value="2019-04-02" target="id_df"/>
+  <behavior action="set-value" new-value="on" target="id_s"/>
+{%- endcall %}

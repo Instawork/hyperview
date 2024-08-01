@@ -1,0 +1,9 @@
+<view
+  action="append"
+  href="/behaviors/basic/actions/append/nested/_append_fragment3.xml"
+  style="tree"
+  xmlns="https://hyperview.org/hyperview"
+>
+  <text style="tree-label">a) dolor</text>
+  <text style="tree-label">b) sit</text>
+</view>

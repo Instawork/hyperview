@@ -1,0 +1,14 @@
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% call button('Title, subject, message, and URL') -%}
+  <behavior
+    xmlns:share="https://instawork.com/hyperview-share"
+    action="share"
+    share:dialogTitle="This is the dialog title"
+    share:message="Test message"
+    share:subject="This is the subject"
+    share:title="This is the title"
+    share:url="https://www.xkcd.com"
+    trigger="press"
+  />
+{%- endcall %}

@@ -1,0 +1,34 @@
+<view style="form-group">
+  <text style="label">Picker field</text>
+  <picker-field
+    field-style="input"
+    field-text-style="input-text"
+    modal-style="picker-modal"
+    modal-text-style="picker-modal-text"
+    name="picker1"
+    placeholder="Select choice"
+    placeholderTextColor="#8D9494"
+    trigger="change"
+    action="replace-inner"
+    target="container1"
+    href="#pickerChanged"
+  >
+    <behavior
+      trigger="change"
+      action="append"
+      target="container1"
+      href="#pickerChanged2"
+    />
+    <picker-item label="Choice 0" value="0" />
+    <picker-item label="Choice 1" value="1" />
+    <picker-item label="Choice 2" value="2" />
+    <picker-item label="Choice 3" value="3" />
+    <picker-item label="Choice 4" value="4" />
+    <picker-item label="Choice 5" value="5" />
+    <picker-item label="Choice 6" value="6" />
+  </picker-field>
+</view>
+<view hide="true">
+  <text id="pickerChanged" style="tip">Picker changed</text>
+  <text id="pickerChanged2" style="tip">!</text>
+</view>

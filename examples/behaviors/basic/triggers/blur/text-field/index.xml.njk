@@ -1,0 +1,36 @@
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% call description() -%}
+  When a text field loses focus, the content in the container
+  will be replaced.
+{%- endcall %}
+<view style="form-group">
+  <text style="label">Input field 1</text>
+  <text-field
+    action="replace-inner"
+    href="#field1Blurred"
+    name="text"
+    placeholder="First name"
+    placeholderTextColor="#8D9494"
+    style="input"
+    target="container1"
+    trigger="blur"
+  />
+</view>
+<view style="form-group">
+  <text style="label">Input field 2</text>
+  <text-field
+    action="replace-inner"
+    href="#field2Blurred"
+    name="text"
+    placeholder="Last name"
+    placeholderTextColor="#8D9494"
+    style="input"
+    target="container1"
+    trigger="blur"
+  />
+</view>
+<view hide="true">
+  <text id="field1Blurred" style="tip">Field 1 blured</text>
+  <text id="field2Blurred" style="tip">Field 2 blured</text>
+</view>

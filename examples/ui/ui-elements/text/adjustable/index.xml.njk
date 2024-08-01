@@ -1,0 +1,16 @@
+---
+permalink: "/ui/ui-elements/text/adjustable/index.xml"
+tags: "Text"
+hv_title: "Adjustable Font Size"
+hv_button_behavior: "back"
+---
+{% extends 'templates/base.xml.njk' %}
+
+{% block styles %}
+  <style id="text" fontSize="24" margin="24"/>
+{% endblock %}
+
+{% block container %}
+  <text style="text" adjustsFontSizeToFit="true" numberOfLines="1">The font of this text will be adjusted to fit the
+    specified number of lines</text>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{{ description('Tapping the button below will toggle the visibility of the element below.') }}
+
+{% call button('Toggle') -%}
+  <behavior action="toggle" target="toggle1-content" />
+{%- endcall %}
+<text id="toggle1-content" style="toggle">Content to be toggled</text>
