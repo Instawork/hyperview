@@ -3,9 +3,10 @@ permalink: "/navigation/index.xml"
 hv_title: "Navigation"
 hv_tab_id: "tab-navigation"
 hv_button_behavior: "none"
+hv_list_tag: "navigation"
 ---
 {% extends 'templates/tab.xml.njk' %}
 
 {% block tab_content %}
-  <text style="description">This is the content for Navigation tab.</text>
+  {% include "templates/list.xml.njk" %}
 {% endblock %}

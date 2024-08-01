@@ -1,0 +1,11 @@
+---
+permalink: "/navigation/changed.xml"
+hv_title: "Changed"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block content %}
+  {{ description("This wasn't here before...") }}
+{% endblock %}

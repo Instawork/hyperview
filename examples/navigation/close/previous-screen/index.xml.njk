@@ -1,0 +1,10 @@
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  {{ description('Tapping the button below will navigate back to the previous screen.') }}
+
+  {% call button('Close') -%}
+    <behavior action="close" href="#" />
+  {%- endcall %}
+{% endblock %}
