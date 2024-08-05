@@ -34,16 +34,16 @@ hv_button_behavior: "back"
   {{ description('Tapping the button below will request an XML screen and show it in a new modal.') }}
 
   {% call button('New') -%}
-    <behavior action="new" href="/navigation/modal.xml" />
+    <behavior action="new" href="/navigation/modal/index.xml" />
   {%- endcall %}
 
   {% call button('New with indicator') -%}
-    <behavior action="new" delay="1000" href="/navigation/modal.xml" show-during-load="loadingScreen" />
+    <behavior action="new" delay="1000" href="/navigation/modal/index.xml" show-during-load="loadingScreen" />
   {%- endcall %}
 
   <form>
     {% call button('New with params') -%}
-      <behavior action="new" delay="1000" href="/navigation/modal.xml" show-during-load="loadingScreen" />
+      <behavior action="new" delay="1000" href="/navigation/modal/index.xml" show-during-load="loading-screen" />
     {%- endcall %}
     <text-field style="input" name="param1" value="value1"/>
   </form>

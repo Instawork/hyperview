@@ -9,10 +9,10 @@ hv_button_behavior: "back"
 {% from 'macros/button/index.xml.njk' import button %}
 
 {% block content %}
-  {{ description('Open a new modal screen!') }}
+  {{ description('Open a new modal screen') }}
 
   {% call button('Open another modal') -%}
-    <behavior action="new" delay="1000" href="/navigation/modal/index.xml" show-during-load="loadingScreen" />
+    <behavior action="new" delay="1000" href="/navigation/modal/index.xml" show-during-load="loading-screen" />
   {%- endcall %}
 
   {% call button('Push on the stack') -%}
