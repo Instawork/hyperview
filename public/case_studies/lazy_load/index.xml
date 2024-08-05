@@ -1,0 +1,74 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style id="Body" backgroundColor="white" flex="1" />
+      <style
+        id="Section1"
+        backgroundColor="#4778FF"
+        flex="1"
+        height="640"
+        padding="48"
+      />
+      <style
+        id="Section2"
+        backgroundColor="#63CB76"
+        flex="1"
+        height="640"
+        padding="48"
+      />
+      <style
+        id="Section3"
+        backgroundColor="#C56BFF"
+        flex="1"
+        height="640"
+        padding="48"
+      />
+      <style
+        id="Label"
+        color="white"
+        fontSize="48"
+        fontWeight="bold"
+        textAlign="center"
+      />
+      <style
+        id="Content"
+        color="white"
+        fontSize="18"
+        fontWeight="normal"
+        marginTop="32"
+        textAlign="center"
+      />
+    </styles>
+    <body scroll="true" style="Body">
+      <view style="Section1">
+        <text style="Label">Section 1</text>
+        <text style="Content">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </text>
+      </view>
+      <view
+        action="replace"
+        delay="500"
+        href="/case_studies/lazy_load/section2.xml"
+        once="true"
+        style="Section2"
+        trigger="visible"
+      >
+        <spinner color="white" />
+        <text style="Content">Loading...</text>
+      </view>
+      <view
+        action="replace"
+        delay="500"
+        href="/case_studies/lazy_load/section3.xml"
+        once="true"
+        style="Section3"
+        trigger="visible"
+      >
+        <spinner color="white" />
+        <text style="Content">Loading...</text>
+      </view>
+    </body>
+  </screen>
+</doc>

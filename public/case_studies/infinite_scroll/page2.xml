@@ -1,0 +1,32 @@
+<items xmlns="https://hyperview.org/hyperview">
+  <item key="21" style="Item">
+    <text style="Item__Label">Added: Item 21</text>
+  </item>
+  <item key="22" style="Item">
+    <text style="Item__Label">Added: Item 22</text>
+  </item>
+  <item key="23" style="Item">
+    <text style="Item__Label">Added: Item 23</text>
+  </item>
+  <item key="24" style="Item">
+    <text style="Item__Label">Added: Item 24</text>
+  </item>
+  <item key="25" style="Item">
+    <text style="Item__Label">Added: Item 25</text>
+  </item>
+  <item key="26" style="Item">
+    <text style="Item__Label">Added: Item 26</text>
+  </item>
+  <item key="27" style="Item">
+    <text style="Item__Label">Added: Item 27</text>
+  </item>
+  <item key="28" style="Item">
+    <text style="Item__Label">Added: Item 28</text>
+  </item>
+  <item key="29" style="Item">
+    <text style="Item__Label">Added: Item 29</text>
+  </item>
+  <item key="30" style="Item">
+    <text style="Item__Label">Added: Item 30</text>
+  </item>
+</items>

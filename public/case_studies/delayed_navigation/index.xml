@@ -1,0 +1,24 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style id="Body" backgroundColor="white" flex="1" padding="48" />
+      <style id="Label" fontSize="18" lineHeight="24" />
+      <style id="Label--Link" color="blue" fontSize="18" />
+    </styles>
+    <body style="Body" safe-area="true">
+      <text style="Label">This is screen 1.</text>
+      <text
+        action="replace-inner"
+        delay="800"
+        href="/case_studies/delayed_navigation/redirect.xml"
+        show-during-load="loadingSpinner"
+        style="Label Label--Link"
+        target="redirectContainer"
+      >
+        Click me
+      </text>
+      <spinner id="loadingSpinner" hide="true" />
+      <view id="redirectContainer" />
+    </body>
+  </screen>
+</doc>

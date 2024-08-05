@@ -1,0 +1,80 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style
+        id="Header"
+        alignItems="center"
+        backgroundColor="white"
+        borderBottomColor="#eee"
+        borderBottomWidth="1"
+        flexDirection="row"
+        paddingLeft="24"
+        paddingRight="24"
+        paddingBottom="16"
+      />
+      <style
+        id="Header__Back"
+        color="blue"
+        fontSize="16"
+        fontWeight="600"
+        paddingRight="16"
+      />
+      <style id="Header__Title" color="black" fontSize="24" fontWeight="600" />
+      <style id="Body" backgroundColor="white" flex="1" />
+      <style id="Description" fontSize="16" fontWeight="600" margin="24" />
+      <style
+        id="Name"
+        fontSize="18"
+        fontWeight="600"
+        margin="24"
+        marginBottom="0"
+      />
+      <style
+        id="Phone"
+        fontSize="18"
+        fontWeight="normal"
+        margin="24"
+        marginBottom="0"
+      />
+      <style
+        id="Button"
+        backgroundColor="#63CB76"
+        borderRadius="8"
+        flexDirection="row"
+        justifyContent="center"
+        margin="24"
+        padding="16"
+      />
+      <style id="Button__Label" color="white" fontSize="18" fontWeight="bold" />
+      <style id="Main" flex="1" alignItems="center" margin="24" />
+    </styles>
+    <body style="Body" safe-area="true">
+      <header style="Header">
+        <behavior action="back" trigger="on-event" event-name="go-back" />
+        <text action="back" href="#" style="Header__Back">Back</text>
+        <text style="Header__Title">Contact Info</text>
+      </header>
+      <text style="Description">
+        Pressing add will dispatch two events, one to update the status and
+        another to go back to the previous screen
+      </text>
+      <view style="Main">
+        <text style="Name">Jeeves</text>
+        <text style="Phone">Ph: (555) 555 5555</text>
+        <view style="Button">
+          <behavior
+            action="dispatch-event"
+            event-name="added-item1"
+            trigger="press"
+          />
+          <behavior
+            action="dispatch-event"
+            event-name="go-back"
+            trigger="press"
+          />
+          <text style="Button__Label">Add to network</text>
+        </view>
+      </view>
+    </body>
+  </screen>
+</doc>

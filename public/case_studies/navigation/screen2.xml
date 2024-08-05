@@ -1,0 +1,13 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style id="Body" backgroundColor="white" flex="1" padding="48" />
+      <style id="Label" fontSize="18" lineHeight="24" />
+      <style id="Label--Link" color="blue" fontSize="18" />
+    </styles>
+    <body style="Body" safe-area="true">
+      <text style="Label">This is screen 2.</text>
+      <text action="back" href="#" style="Label Label--Link">Go back</text>
+    </body>
+  </screen>
+</doc>

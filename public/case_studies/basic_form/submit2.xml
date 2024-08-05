@@ -1,0 +1,14 @@
+<form id="myForm" xmlns="https://hyperview.org/hyperview">
+  <view style="FormGroup">
+    <text style="Label">Label line</text>
+    <text-field
+      name="data"
+      placeholder="Placeholder"
+      placeholderTextColor="#8D9494"
+      style="Input"
+      value=""
+    />
+  </view>
+  <text style="Submit">Saved!</text>
+  <behavior href="/case_studies/basic_form/next.xml" trigger="load" />
+</form>

@@ -1,0 +1,101 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style id="Body" backgroundColor="white" flex="1" paddingTop="48" />
+      <style
+        id="Item"
+        alignItems="center"
+        borderBottomColor="#eee"
+        borderBottomWidth="1"
+        flex="1"
+        flexDirection="row"
+        height="48"
+        justifyContent="space-between"
+        paddingLeft="24"
+        paddingRight="24"
+      />
+      <style id="Item__Label" fontSize="18" />
+      <style
+        id="Spinner"
+        alignItems="center"
+        flex="1"
+        height="48"
+        justifyContent="center"
+      />
+    </styles>
+    <body style="Body" safe-area="true">
+      <list>
+        <item key="1" style="Item">
+          <text style="Item__Label">Item 1</text>
+        </item>
+        <item key="2" style="Item">
+          <text style="Item__Label">Item 2</text>
+        </item>
+        <item key="3" style="Item">
+          <text style="Item__Label">Item 3</text>
+        </item>
+        <item key="4" style="Item">
+          <text style="Item__Label">Item 4</text>
+        </item>
+        <item key="5" style="Item">
+          <text style="Item__Label">Item 5</text>
+        </item>
+        <item key="6" style="Item">
+          <text style="Item__Label">Item 6</text>
+        </item>
+        <item key="7" style="Item">
+          <text style="Item__Label">Item 7</text>
+        </item>
+        <item key="8" style="Item">
+          <text style="Item__Label">Item 8</text>
+        </item>
+        <item key="9" style="Item">
+          <text style="Item__Label">Item 9</text>
+        </item>
+        <item key="10" style="Item">
+          <text style="Item__Label">Item 10</text>
+        </item>
+        <item key="11" style="Item">
+          <text style="Item__Label">Item 11</text>
+        </item>
+        <item key="12" style="Item">
+          <text style="Item__Label">Item 12</text>
+        </item>
+        <item key="13" style="Item">
+          <text style="Item__Label">Item 13</text>
+        </item>
+        <item key="14" style="Item">
+          <text style="Item__Label">Item 14</text>
+        </item>
+        <item key="15" style="Item">
+          <text style="Item__Label">Item 15</text>
+        </item>
+        <item key="16" style="Item">
+          <text style="Item__Label">Item 16</text>
+        </item>
+        <item key="17" style="Item">
+          <text style="Item__Label">Item 17</text>
+        </item>
+        <item key="18" style="Item">
+          <text style="Item__Label">Item 18</text>
+        </item>
+        <item key="19" style="Item">
+          <text style="Item__Label">Item 19</text>
+        </item>
+        <item key="20" style="Item">
+          <text style="Item__Label">Item 20</text>
+        </item>
+        <item
+          action="replace"
+          href="/case_studies/infinite_scroll/page2.xml"
+          key="loadMore"
+          once="true"
+          style="Spinner"
+          trigger="visible"
+        >
+          <spinner />
+        </item>
+      </list>
+    </body>
+  </screen>
+</doc>

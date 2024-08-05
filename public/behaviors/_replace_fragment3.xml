@@ -1,0 +1,8 @@
+<view
+  action="replace"
+  href="/behaviors/_replace_fragment2.xml"
+  style="Button"
+  xmlns="https://hyperview.org/hyperview"
+>
+  <text style="Button__Label">Replaced! Again...</text>
+</view>

@@ -1,0 +1,125 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style
+        id="Header"
+        alignItems="center"
+        backgroundColor="white"
+        borderBottomColor="#eee"
+        borderBottomWidth="1"
+        flexDirection="row"
+        paddingLeft="24"
+        paddingRight="24"
+        paddingBottom="16"
+      />
+      <style
+        id="Header__Back"
+        color="blue"
+        fontSize="16"
+        fontWeight="600"
+        paddingRight="16"
+      />
+      <style id="Header__Title" color="black" fontSize="24" fontWeight="600" />
+      <style id="Body" backgroundColor="white" flex="1" />
+      <style
+        id="Description"
+        fontSize="16"
+        fontWeight="normal"
+        margin="24"
+        marginBottom="0"
+      />
+      <style
+        id="Item"
+        alignItems="center"
+        borderBottomColor="#eee"
+        borderBottomWidth="1"
+        flex="1"
+        flexDirection="row"
+        height="48"
+        justifyContent="space-between"
+        paddingLeft="24"
+        paddingRight="24"
+      />
+      <style id="Item__Label" fontSize="18" fontWeight="normal" />
+      <style id="Item__Chevron" fontSize="18" fontWeight="bold" />
+      <style
+        id="Button"
+        alignItems="center"
+        backgroundColor="#63CB76"
+        borderRadius="16"
+        flex="1"
+        flexDirection="column"
+        margin="24"
+        padding="24"
+      />
+      <style id="Button__Label" color="white" fontSize="24" fontWeight="bold" />
+      <style
+        id="Show"
+        color="red"
+        fontSize="18"
+        fontWeight="bold"
+        textAlign="center"
+      />
+      <style id="Main" flex="1" />
+      <style id="Spacer" height="40" />
+    </styles>
+    <body style="Body" safe-area="true">
+      <header style="Header">
+        <text action="back" href="#" style="Header__Back">Back</text>
+        <text style="Header__Title">Show</text>
+      </header>
+      <view scroll="true" style="Main">
+        <text style="Description">
+          Tapping the button below will show the visibility of the element
+          below.
+        </text>
+        <view action="show" style="Button" target="show1-content">
+          <text style="Button__Label">Show</text>
+        </view>
+        <text id="show1-content" hide="true" style="Show">
+          Content to be shown
+        </text>
+        <text style="Description">
+          Show can work with the delay attribute. In this example, the show will
+          be delayed 1 second.
+        </text>
+        <view action="show" delay="1000" style="Button" target="show2-content">
+          <text style="Button__Label">Show with Delay</text>
+        </view>
+        <text id="show2-content" hide="true" style="Show">
+          Content to be shown
+        </text>
+        <text style="Description">
+          When showing with delay, you can use indicators.
+        </text>
+        <view
+          action="show"
+          delay="1000"
+          show-during-load="show3-spinner"
+          style="Button"
+          target="show3-content"
+        >
+          <text style="Button__Label">Show with Spinner</text>
+          <view id="show3-spinner" hide="true">
+            <spinner color="white" />
+          </view>
+        </view>
+        <text id="show3-content" hide="true" style="Show">
+          Content to be shown
+        </text>
+        <text style="Description">
+          You can show multiple elements at once. The button below will show
+          content A and B with one press
+        </text>
+        <view style="Button">
+          <behavior action="show" target="show4-content" />
+          <behavior action="show" target="show5-content" />
+          <text style="Button__Label">Show Multiple</text>
+        </view>
+        <text id="show4-content" hide="true" style="Show">Content A</text>
+        <text id="show5-content" hide="true" style="Show">Content B</text>
+        <view style="Spacer" />
+      </view>
+    </body>
+  </screen>
+</doc>

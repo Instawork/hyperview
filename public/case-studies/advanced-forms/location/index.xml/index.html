@@ -1,0 +1,46 @@
+<select-single name="location" style="select">
+  <option style="select-option" value="alameda">
+    <text style="select-label">Bobs's Diner - Alameda</text>
+    <view style="select-radio-outer">
+      <view style="select-radio-inner" />
+    </view>
+  </option>
+  <view style="select-separator" />
+  <option style="select-option" value="main">
+    <text style="select-label">Bobs's on Main</text>
+    <view style="select-radio-outer">
+      <view style="select-radio-inner" />
+    </view>
+  </option>
+  <view style="select-separator" />
+  <option style="select-option" value="other">
+    <behavior
+      action="replace-inner"
+      href="#otherLocationInput"
+      target="otherLocation"
+      trigger="select"
+    />
+    <behavior
+      action="replace-inner"
+      href="#null"
+      target="otherLocation"
+      trigger="deselect"
+    />
+    <text style="select-label">Other Location...</text>
+    <view style="select-radio-outer">
+      <view style="select-radio-inner" />
+    </view>
+  </option>
+</select-single>
+<view id="otherLocation" />
+<view hide="true">
+  <view id="null" />
+  <view id="otherLocationInput" style="form-group">
+    <text-field
+      name="location_other"
+      placeholder="Location Name"
+      placeholderTextColor="#8D9494"
+      style="Input"
+    />
+  </view>
+</view>

@@ -1,0 +1,24 @@
+<text style="section">Select Single</text>
+<view style="form-group">
+  <text style="label" hide="true" id="id_ss_loading">Loading...</text>
+  <select-single id="id_ss" name="ss" style="tags">
+    <option style="tag" value="Ramen">
+      <text style="tag-label">Ramen</text>
+    </option>
+    <option style="tag" value="Sushi">
+      <text style="tag-label">Sushi</text>
+    </option>
+    <option style="tag" value="Pizza">
+      <text style="tag-label">Pizza</text>
+    </option>
+    <option style="tag" value="Chinese">
+      <text style="tag-label">Chinese</text>
+    </option>
+  </select-single>
+  <text style="link" action="set-value" new-value="Sushi" target="id_ss">
+    Select "Sushi"
+  </text>
+  <text style="link" action="set-value" new-value="bogus" target="id_ss">
+    Clear
+  </text>
+</view>

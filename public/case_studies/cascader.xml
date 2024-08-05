@@ -1,0 +1,215 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style backgroundColor="white" flex="1" id="Body" paddingTop="24" />
+      <style flex="1" id="Main" marginBottom="40" />
+      <style
+        flex="1"
+        id="FormGroup"
+        marginLeft="24"
+        marginRight="24"
+        marginTop="24"
+      />
+      <style
+        borderBottomColor="#E1E1E1"
+        borderBottomWidth="1"
+        borderColor="#4E4D4D"
+        flex="1"
+        fontSize="16"
+        fontWeight="normal"
+        id="Input"
+        paddingBottom="8"
+        paddingTop="8"
+      >
+        <modifier focused="true">
+          <style borderBottomColor="#4778FF" />
+        </modifier>
+      </style>
+      <style borderBottomColor="#FF4847" color="#FF4847" id="Input--Error">
+        <modifier focused="true">
+          <style borderBottomColor="#FF4847" />
+        </modifier>
+      </style>
+      <style
+        borderColor="#4E4D4D"
+        fontSize="16"
+        fontWeight="bold"
+        id="Label"
+        lineHeight="24"
+        marginBottom="8"
+      />
+      <style
+        borderColor="#FF4847"
+        fontSize="16"
+        fontWeight="normal"
+        id="Help"
+        lineHeight="24"
+        marginTop="16"
+      />
+      <style color="#FF4847" id="Help--Error" />
+      <style
+        color="#4778FF"
+        fontSize="16"
+        fontWeight="bold"
+        id="Submit"
+        lineHeight="24"
+        marginLeft="24"
+        marginTop="16"
+      />
+      <style id="Select" marginTop="24" />
+      <style
+        borderTopColor="#e1e3e3"
+        borderTopWidth="1"
+        id="Select__Separator"
+        marginLeft="24"
+        marginRight="24"
+      />
+      <style
+        alignItems="center"
+        flex="1"
+        flexDirection="row"
+        id="Select__Option"
+        justifyContent="space-between"
+        paddingBottom="16"
+        paddingLeft="24"
+        paddingRight="24"
+        paddingTop="16"
+      />
+      <style
+        borderColor="#bdc4c4"
+        borderRadius="10"
+        borderWidth="1"
+        height="20"
+        id="Select__RadioOuter"
+        width="20"
+      >
+        <modifier pressed="true">
+          <style borderColor="#8d9494" borderWidth="1" />
+        </modifier>
+        <modifier selected="true">
+          <style borderColor="#4778ff" borderWidth="2" />
+        </modifier>
+      </style>
+      <style
+        borderRadius="5"
+        height="10"
+        id="Select__RadioInner"
+        marginLeft="3"
+        marginTop="3"
+        opacity="0"
+        width="10"
+      >
+        <modifier selected="true">
+          <style backgroundColor="#4778ff" opacity="1" />
+        </modifier>
+      </style>
+      <style
+        color="black"
+        fontSize="16"
+        fontWeight="normal"
+        id="Select__Label"
+        lineHeight="18"
+      >
+        <modifier selected="true">
+          <style color="#312f2f" />
+        </modifier>
+        <modifier pressed="true">
+          <style color="#312f2f" />
+        </modifier>
+      </style>
+    </styles>
+    <body safe-area="true" style="Body">
+      <view
+        action="reload"
+        href="#"
+        scroll="true"
+        style="Main"
+        trigger="refresh"
+      >
+        <select-single name="level1" style="Select">
+          <view style="Select__Separator" />
+          <option style="Select__Option" value="1">
+            <behavior action="show" target="section1" trigger="select" />
+            <behavior action="hide" target="section1" trigger="deselect" />
+            <text style="Select__Label">Option 1</text>
+            <view style="Select__RadioOuter">
+              <view style="Select__RadioInner" />
+            </view>
+          </option>
+          <view style="Select__Separator" />
+          <option style="Select__Option" value="2">
+            <behavior action="show" target="section2" trigger="select" />
+            <behavior action="hide" target="section2" trigger="deselect" />
+            <text style="Select__Label">Option 2</text>
+            <view style="Select__RadioOuter">
+              <view style="Select__RadioInner" />
+            </view>
+          </option>
+          <view style="Select__Separator" />
+          <option style="Select__Option" value="3">
+            <behavior action="show" target="section3" trigger="select" />
+            <behavior action="hide" target="section3" trigger="deselect" />
+            <text style="Select__Label">Option 3</text>
+            <view style="Select__RadioOuter">
+              <view style="Select__RadioInner" />
+            </view>
+          </option>
+          <view style="Select__Separator" />
+        </select-single>
+        <select-single name="level2" style="Select">
+          <view hide="true" id="section1">
+            <view style="Select__Separator" />
+            <option style="Select__Option" value="1:1">
+              <text style="Select__Label">1: 1</text>
+              <view style="Select__RadioOuter">
+                <view style="Select__RadioInner" />
+              </view>
+            </option>
+            <view style="Select__Separator" />
+            <option style="Select__Option" value="1:2">
+              <text style="Select__Label">1: 2</text>
+              <view style="Select__RadioOuter">
+                <view style="Select__RadioInner" />
+              </view>
+            </option>
+            <view style="Select__Separator" />
+            <option style="Select__Option" value="1:3">
+              <text style="Select__Label">1: 3</text>
+              <view style="Select__RadioOuter">
+                <view style="Select__RadioInner" />
+              </view>
+            </option>
+            <view style="Select__Separator" />
+          </view>
+          <view hide="true" id="section2">
+            <view style="Select__Separator" />
+            <option style="Select__Option" value="2:1">
+              <text style="Select__Label">2: 1</text>
+              <view style="Select__RadioOuter">
+                <view style="Select__RadioInner" />
+              </view>
+            </option>
+            <view style="Select__Separator" />
+            <option style="Select__Option" value="2:2">
+              <text style="Select__Label">2: 2</text>
+              <view style="Select__RadioOuter">
+                <view style="Select__RadioInner" />
+              </view>
+            </option>
+            <view style="Select__Separator" />
+          </view>
+          <view hide="true" id="section3">
+            <view style="Select__Separator" />
+            <option style="Select__Option" value="3:3">
+              <text style="Select__Label">3: 1</text>
+              <view style="Select__RadioOuter">
+                <view style="Select__RadioInner" />
+              </view>
+            </option>
+            <view style="Select__Separator" />
+          </view>
+        </select-single>
+      </view>
+    </body>
+  </screen>
+</doc>

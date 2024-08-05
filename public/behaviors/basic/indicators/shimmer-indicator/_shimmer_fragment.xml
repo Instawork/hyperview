@@ -1,0 +1,10 @@
+<view style="container-element" xmlns="https://hyperview.org/hyperview">
+  <image
+    source="/behaviors/basic/indicators/shimmer-indicator/image.jpg"
+    style="container-image"
+  />
+  <text style="container-label">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+    tempor incididunt ut
+  </text>
+</view>
