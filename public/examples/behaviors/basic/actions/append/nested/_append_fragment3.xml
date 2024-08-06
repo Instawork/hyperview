@@ -1,0 +1,10 @@
+<view
+  action="append"
+  href="/behaviors/basic/actions/append/nested/_append_fragment2.xml"
+  style="tree"
+  xmlns="https://hyperview.org/hyperview"
+>
+  <text style="tree-label">i) amet</text>
+  <text style="tree-label">ii) consectetur</text>
+  <text style="tree-label">iii) adipiscing</text>
+</view>

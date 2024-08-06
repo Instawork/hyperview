@@ -1,0 +1,98 @@
+<doc
+  xmlns="https://hyperview.org/hyperview"
+  xmlns:amplitude="https://instawork.com/hyperview-amplitude"
+  xmlns:intercom="https://instawork.com/hyperview-intercom"
+  xmlns:phone="https://instawork.com/hyperview-phone"
+  xmlns:redux="https://instawork.com/hyperview-redux"
+  xmlns:sms="https://instawork.com/hyperview-sms"
+>
+  <screen>
+    <styles>
+      <style
+        id="Header"
+        alignItems="center"
+        backgroundColor="white"
+        borderBottomColor="#eee"
+        borderBottomWidth="1"
+        flexDirection="row"
+        paddingLeft="24"
+        paddingRight="24"
+        paddingBottom="16"
+      />
+      <style
+        id="Header__Back"
+        color="blue"
+        fontSize="16"
+        fontWeight="600"
+        paddingRight="16"
+      />
+      <style id="Header__Title" color="black" fontSize="24" fontWeight="600" />
+      <style id="Body" backgroundColor="white" flex="1" />
+      <style id="Description" fontSize="16" fontWeight="600" margin="24" />
+      <style
+        id="Button"
+        backgroundColor="#63CB76"
+        borderRadius="16"
+        flex="1"
+        flexDirection="row"
+        justifyContent="center"
+        margin="24"
+        padding="24"
+      />
+      <style id="Button__Label" color="white" fontSize="24" fontWeight="bold" />
+      <style id="Main" flex="1" />
+    </styles>
+    <body style="Body" safe-area="true">
+      <header style="Header">
+        <text action="back" href="#" style="Header__Back">Back</text>
+        <text style="Header__Title">Custom: Instawork</text>
+      </header>
+      <view scroll="true" style="Main">
+        <text style="Description">Instawork custom behaviors</text>
+        <view style="Button">
+          <behavior
+            action="amplitude"
+            amplitude:event="foo"
+            amplitude:event-props="{&quot;bar&quot;: &quot;baz&quot;}"
+            trigger="press"
+          />
+          <text style="Button__Label">Log amplitude event</text>
+        </view>
+        <view style="Button">
+          <behavior action="ask-rating" trigger="press" />
+          <text style="Button__Label">Ask ratings</text>
+        </view>
+        <view style="Button">
+          <behavior
+            action="intercom"
+            intercom:action="open"
+            intercom:topic="testing"
+            trigger="press"
+          />
+          <text style="Button__Label">Intercom</text>
+        </view>
+        <view style="Button">
+          <behavior
+            action="phone"
+            phone:number="555-123-4567"
+            trigger="press"
+          />
+          <text style="Button__Label">Phone</text>
+        </view>
+        <view style="Button">
+          <behavior
+            action="redux"
+            redux:action="FOO"
+            redux:extra="{&quot;bar&quot;: &quot;baz&quot;}"
+            trigger="press"
+          />
+          <text style="Button__Label">Redux</text>
+        </view>
+        <view style="Button">
+          <behavior action="sms" phone:number="555-123-4567" trigger="press" />
+          <text style="Button__Label">SMS</text>
+        </view>
+      </view>
+    </body>
+  </screen>
+</doc>

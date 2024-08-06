@@ -1,0 +1,477 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style
+        id="Header"
+        alignItems="center"
+        backgroundColor="white"
+        flexDirection="row"
+        height="72"
+        paddingLeft="24"
+        paddingRight="24"
+        paddingTop="24"
+      />
+      <style id="Header__Close" height="32" marginRight="16" width="32" />
+      <style id="Header__Title" color="black" fontSize="24" fontWeight="600" />
+      <style id="Body" backgroundColor="white" flex="1" />
+      <style id="Main" backgroundColor="white" flex="1" />
+      <style
+        id="Title"
+        color="black"
+        fontSize="32"
+        fontWeight="bold"
+        lineHeight="40"
+        marginLeft="24"
+        marginRight="24"
+        marginTop="24"
+      />
+      <style
+        id="Section"
+        borderBottomColor="#E1E3E3"
+        borderBottomWidth="1"
+        marginBottom="24"
+        marginTop="24"
+      />
+      <style
+        id="Section__Header"
+        fontSize="20"
+        fontWeight="bold"
+        lineHeight="24"
+        marginBottom="16"
+        marginLeft="24"
+        marginRight="24"
+      />
+      <style
+        id="ShiftItem"
+        flex="1"
+        flexDirection="row"
+        justifyContent="flex-start"
+        paddingLeft="24"
+        paddingRight="24"
+      />
+      <style
+        id="ShiftItem__Avatar"
+        backgroundColor="#E1E3E3"
+        borderRadius="36"
+        height="72"
+        marginBottom="24"
+        width="72"
+      />
+      <style
+        id="ShiftItem__Info"
+        flex="1"
+        flexDirection="column"
+        marginLeft="16"
+      />
+      <style
+        id="ShiftItem__WorkerName"
+        color="#4E4D4D"
+        fontSize="16"
+        fontWeight="normal"
+        lineHeight="24"
+      />
+      <style
+        id="ShiftItem__Details"
+        color="#8D9494"
+        fontSize="16"
+        fontWeight="normal"
+        lineHeight="24"
+      />
+      <style id="RatingContainer" flex="1" />
+      <style
+        id="Rating"
+        flex="1"
+        flexDirection="row"
+        margin="0"
+        marginTop="24"
+      />
+      <style id="Rating__Star" height="40" marginRight="10" width="40" />
+      <style id="Rating__Star--Filled" />
+      <style
+        id="BottomSheet"
+        borderTopColor="#e1e1e1"
+        borderTopWidth="1"
+        bottom="0"
+        flex="1"
+        flexGrow="1"
+        height="80"
+        left="0"
+        paddingBottom="16"
+        paddingLeft="24"
+        paddingRight="24"
+        paddingTop="16"
+        position="absolute"
+        right="0"
+      />
+      <style
+        id="BottomSheet__Button"
+        alignItems="center"
+        backgroundColor="#4778FF"
+        height="48"
+        justifyContent="center"
+      />
+      <style id="BottomSheet__Button--Disabled" backgroundColor="#80AAFF" />
+      <style
+        id="BottomSheet__ButtonLabel"
+        color="white"
+        fontSize="16"
+        fontWeight="500"
+        lineHeight="24"
+      />
+      <style
+        id="WorkerInfo"
+        alignItems="center"
+        flex="1"
+        marginLeft="24"
+        marginRight="24"
+        marginTop="32"
+      />
+      <style
+        id="WorkerInfo__Avatar"
+        backgroundColor="#E1E3E3"
+        borderRadius="36"
+        height="72"
+        width="72"
+      />
+      <style
+        id="WorkerInfo__Name"
+        color="#4E4D4D"
+        fontSize="16"
+        fontWeight="bold"
+        lineHeight="24"
+        marginTop="16"
+      />
+      <style
+        id="WorkerInfo__Details"
+        color="#4E4D4D"
+        fontSize="16"
+        fontWeight="normal"
+        lineHeight="24"
+      />
+      <style
+        id="WorkerInfo__Time"
+        color="#8D9494"
+        fontSize="16"
+        fontWeight="normal"
+        lineHeight="24"
+      />
+      <style
+        id="FormGroup"
+        flex="1"
+        marginLeft="24"
+        marginRight="24"
+        marginTop="48"
+      />
+      <style id="outerInput" flex="1" />
+      <style
+        id="input"
+        borderBottomColor="#E1E1E1"
+        borderBottomWidth="1"
+        borderColor="#4E4D4D"
+        flex="1"
+        fontSize="16"
+        fontWeight="normal"
+        paddingBottom="8"
+        paddingTop="8"
+      />
+      <style id="input--focused" borderBottomColor="#4778FF" />
+      <style id="input--error" borderBottomColor="#FF4847" color="#FF4847" />
+      <style
+        id="label"
+        borderColor="#4E4D4D"
+        fontSize="16"
+        fontWeight="bold"
+        lineHeight="24"
+        marginBottom="8"
+      />
+      <style
+        id="help"
+        borderColor="#FF4847"
+        fontSize="16"
+        fontWeight="normal"
+        lineHeight="24"
+        marginTop="16"
+      />
+      <style id="help--error" color="#FF4847" />
+    </styles>
+    <body style="Body" safe-area="true">
+      <header style="Header">
+        <image
+          action="close"
+          href="/index.xml"
+          source="/case_studies/close@2x.png"
+          style="Header__Close"
+        />
+      </header>
+      <view scroll="true" style="Main">
+        <text style="Title">Rate the Instaworker</text>
+        <view style="WorkerInfo">
+          <image source="/case_studies/image.jpg" style="WorkerInfo__Avatar" />
+          <text style="WorkerInfo__Name">Jake Tepperman</text>
+          <text style="WorkerInfo__Details">
+            Event Server, Private Residence
+          </text>
+          <text style="WorkerInfo__Time">Fri Aug 3, 7:00 PM - 1:00 AM</text>
+          <view id="rating" style="RatingContainer">
+            <view id="star0" style="Rating">
+              <image
+                action="replace-inner"
+                href="#star1"
+                source="/case_studies/star_empty@2x.png"
+                style="Rating__Star"
+                target="rating"
+              />
+              <image
+                action="replace-inner"
+                href="#star2"
+                source="/case_studies/star_empty@2x.png"
+                style="Rating__Star"
+                target="rating"
+              />
+              <image
+                action="replace-inner"
+                href="#star3"
+                source="/case_studies/star_empty@2x.png"
+                style="Rating__Star"
+                target="rating"
+              />
+              <image
+                action="replace-inner"
+                href="#star4"
+                source="/case_studies/star_empty@2x.png"
+                style="Rating__Star"
+                target="rating"
+              />
+              <image
+                action="replace-inner"
+                href="#star5"
+                source="/case_studies/star_empty@2x.png"
+                style="Rating__Star"
+                target="rating"
+              />
+            </view>
+          </view>
+        </view>
+        <view style="FormGroup">
+          <text-area
+            placeholder="Any other feedback?"
+            placeholderTextColor="#8D9494"
+            name="other_feedback"
+            style="input"
+          />
+        </view>
+      </view>
+      <view style="BottomSheet">
+        <view
+          id="saveButtonContainer"
+          action="replace"
+          delay="500"
+          hide-during-load="saveButton"
+          href="/case_studies/_rating_save.xml"
+          show-during-load="savingButton"
+          target="saveButtonContainer"
+        >
+          <view id="saveButton" style="BottomSheet__Button">
+            <text id="saveLabel" style="BottomSheet__ButtonLabel">Done</text>
+          </view>
+          <view
+            id="savingButton"
+            hide="true"
+            style="BottomSheet__Button BottomSheet__Button--Disabled"
+          >
+            <text id="savingLabel" style="BottomSheet__ButtonLabel">
+              Saving...
+            </text>
+          </view>
+        </view>
+      </view>
+      <view hide="true">
+        <view id="star1" style="Rating">
+          <image
+            action="replace-inner"
+            href="#star1"
+            source="star_filled@2x.png"
+            style="Rating__Star Rating__Star--Filled"
+            target="rating"
+          />
+          <image
+            action="replace-inner"
+            href="#star2"
+            source="/case_studies/star_empty@2x.png"
+            style="Rating__Star"
+            target="rating"
+          />
+          <image
+            action="replace-inner"
+            href="#star3"
+            source="/case_studies/star_empty@2x.png"
+            style="Rating__Star"
+            target="rating"
+          />
+          <image
+            action="replace-inner"
+            href="#star4"
+            source="/case_studies/star_empty@2x.png"
+            style="Rating__Star"
+            target="rating"
+          />
+          <image
+            action="replace-inner"
+            href="#star5"
+            source="/case_studies/star_empty@2x.png"
+            style="Rating__Star"
+            target="rating"
+          />
+        </view>
+        <view id="star2" style="Rating">
+          <image
+            action="replace-inner"
+            href="#star1"
+            source="/case_studies/star_filled@2x.png"
+            style="Rating__Star Rating__Star--Filled"
+            target="rating"
+          />
+          <image
+            action="replace-inner"
+            href="#star2"
+            source="/case_studies/star_filled@2x.png"
+            style="Rating__Star Rating__Star--Filled"
+            target="rating"
+          />
+          <image
+            action="replace-inner"
+            href="#star3"
+            source="/case_studies/star_empty@2x.png"
+            style="Rating__Star"
+            target="rating"
+          />
+          <image
+            action="replace-inner"
+            href="#star4"
+            source="/case_studies/star_empty@2x.png"
+            style="Rating__Star"
+            target="rating"
+          />
+          <image
+            action="replace-inner"
+            href="#star5"
+            source="/case_studies/star_empty@2x.png"
+            style="Rating__Star"
+            target="rating"
+          />
+        </view>
+        <view id="star3" style="Rating">
+          <image
+            action="replace-inner"
+            href="#star1"
+            source="/case_studies/star_filled@2x.png"
+            style="Rating__Star Rating__Star--Filled"
+            target="rating"
+          />
+          <image
+            action="replace-inner"
+            href="#star2"
+            source="/case_studies/star_filled@2x.png"
+            style="Rating__Star Rating__Star--Filled"
+            target="rating"
+          />
+          <image
+            action="replace-inner"
+            href="#star3"
+            source="/case_studies/star_filled@2x.png"
+            style="Rating__Star Rating__Star--Filled"
+            target="rating"
+          />
+          <image
+            action="replace-inner"
+            href="#star4"
+            source="/case_studies/star_empty@2x.png"
+            style="Rating__Star"
+            target="rating"
+          />
+          <image
+            action="replace-inner"
+            href="#star5"
+            source="/case_studies/star_empty@2x.png"
+            style="Rating__Star"
+            target="rating"
+          />
+        </view>
+        <view id="star4" style="Rating">
+          <image
+            action="replace-inner"
+            href="#star1"
+            source="/case_studies/star_filled@2x.png"
+            style="Rating__Star Rating__Star--Filled"
+            target="rating"
+          />
+          <image
+            action="replace-inner"
+            href="#star2"
+            source="/case_studies/star_filled@2x.png"
+            style="Rating__Star Rating__Star--Filled"
+            target="rating"
+          />
+          <image
+            action="replace-inner"
+            href="#star3"
+            source="/case_studies/star_filled@2x.png"
+            style="Rating__Star Rating__Star--Filled"
+            target="rating"
+          />
+          <image
+            action="replace-inner"
+            href="#star4"
+            source="/case_studies/star_filled@2x.png"
+            style="Rating__Star Rating__Star--Filled"
+            target="rating"
+          />
+          <image
+            action="replace-inner"
+            href="#star5"
+            source="/case_studies/star_empty@2x.png"
+            style="Rating__Star"
+            target="rating"
+          />
+        </view>
+        <view id="star5" style="Rating">
+          <image
+            action="replace-inner"
+            href="#star1"
+            source="/case_studies/star_filled@2x.png"
+            style="Rating__Star Rating__Star--Filled"
+            target="rating"
+          />
+          <image
+            action="replace-inner"
+            href="#star2"
+            source="/case_studies/star_filled@2x.png"
+            style="Rating__Star Rating__Star--Filled"
+            target="rating"
+          />
+          <image
+            action="replace-inner"
+            href="#star3"
+            source="/case_studies/star_filled@2x.png"
+            style="Rating__Star Rating__Star--Filled"
+            target="rating"
+          />
+          <image
+            action="replace-inner"
+            href="#star4"
+            source="/case_studies/star_filled@2x.png"
+            style="Rating__Star Rating__Star--Filled"
+            target="rating"
+          />
+          <image
+            action="replace-inner"
+            href="#star5"
+            source="/case_studies/star_filled@2x.png"
+            style="Rating__Star Rating__Star--Filled"
+            target="rating"
+          />
+        </view>
+      </view>
+    </body>
+  </screen>
+</doc>

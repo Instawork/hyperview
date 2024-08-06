@@ -1,0 +1,3 @@
+<view id="container" style="Container" xmlns="https://hyperview.org/hyperview">
+  <text style="Container__Label">Replaced!</text>
+</view>

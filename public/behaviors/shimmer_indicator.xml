@@ -1,0 +1,127 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style
+        id="Header"
+        alignItems="center"
+        backgroundColor="white"
+        borderBottomColor="#eee"
+        borderBottomWidth="1"
+        flexDirection="row"
+        paddingLeft="24"
+        paddingRight="24"
+        paddingBottom="16"
+      />
+      <style
+        id="Header__Back"
+        color="blue"
+        fontSize="16"
+        fontWeight="600"
+        paddingRight="16"
+      />
+      <style id="Header__Title" color="black" fontSize="24" fontWeight="600" />
+      <style id="Body" backgroundColor="white" flex="1" />
+      <style
+        id="Description"
+        fontSize="16"
+        fontWeight="normal"
+        margin="24"
+        marginBottom="0"
+      />
+      <style
+        id="Item"
+        alignItems="center"
+        borderBottomColor="#eee"
+        borderBottomWidth="1"
+        flex="1"
+        flexDirection="row"
+        height="48"
+        justifyContent="space-between"
+        paddingLeft="24"
+        paddingRight="24"
+      />
+      <style id="Item__Label" fontSize="18" fontWeight="normal" />
+      <style id="Item__Chevron" fontSize="18" fontWeight="bold" />
+      <style
+        id="Button"
+        alignItems="center"
+        backgroundColor="#63CB76"
+        borderRadius="16"
+        flex="1"
+        flexDirection="column"
+        justifyContent="center"
+        margin="24"
+        padding="24"
+      />
+      <style id="Button__Label" color="white" fontSize="24" fontWeight="bold" />
+      <style
+        id="Container__Element"
+        borderBottomWidth="1"
+        borderColor="#e1e1e1"
+        flex="1"
+        flexDirection="row"
+        marginLeft="24"
+        marginRight="24"
+        paddingBottom="24"
+        paddingTop="24"
+      />
+      <style
+        id="Container__Label"
+        color="black"
+        flex="1"
+        fontSize="16"
+        fontWeight="normal"
+        marginLeft="8"
+      />
+      <style id="Container__Labels--Load" flex="1" />
+      <style
+        id="Container__Label--Load"
+        backgroundColor="#e1e1e1"
+        flex="1"
+        height="14"
+        marginLeft="8"
+        marginTop="4"
+      />
+      <style id="Container__Image" borderRadius="32" height="64" width="64" />
+      <style
+        id="Container__Image--Load"
+        backgroundColor="#e1e1e1"
+        borderRadius="32"
+        height="64"
+        width="64"
+      />
+      <style id="Main" flex="1" />
+    </styles>
+    <body style="Body" safe-area="true">
+      <header style="Header">
+        <text action="back" href="#" style="Header__Back">Back</text>
+        <text style="Header__Title">Shimmer Indicator</text>
+      </header>
+      <view scroll="1" style="Main">
+        <text style="Description">
+          Tapping the button below will request an XML fragment and replace the
+          child element in the button. An indicator appears during loading.
+        </text>
+        <view
+          action="append"
+          delay="700"
+          href="/behaviors/_shimmer_fragment.xml"
+          show-during-load="myIndicator"
+          style="Button"
+          target="container"
+        >
+          <text style="Button__Label">Press me</text>
+        </view>
+        <view id="myIndicator" hide="true" style="Container__Element">
+          <view style="Container__Image--Load" />
+          <view style="Container__Labels--Load">
+            <view style="Container__Label--Load" />
+            <view style="Container__Label--Load" />
+            <view style="Container__Label--Load" />
+          </view>
+        </view>
+        <view id="container" style="Container" />
+      </view>
+    </body>
+  </screen>
+</doc>
