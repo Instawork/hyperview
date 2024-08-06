@@ -9,7 +9,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "deploy": "gh-pages -d web-build",
-    "predeploy": "BASE_URL=https://instawork.github.io/hyperview expo export:web && cp -R ../_examples_site web-build/public/",
+    "predeploy": "BASE_URL=https://instawork.github.io/hyperview/public expo export:web && cp -R ../_examples_site web-build/public/",
     "eject": "expo eject"
   },
   "dependencies": {

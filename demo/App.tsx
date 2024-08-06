@@ -54,7 +54,7 @@ export default () => {
             }}
           >
             <NavigationContainer>
-              {navigatorSource == NavigatorSource.HYPERVIEW ? (
+              {navigatorSource == NavigatorSource.EXTERNAL ? (
                 // Hyperview will build a Navigator structure from the HXML document
                 <Hyperview
                   components={[HyperviewSvg]}

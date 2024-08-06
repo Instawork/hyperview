@@ -24,6 +24,6 @@ export default {
     favicon: './assets/favicon.png',
   },
   extra: {
-    entry_point_url: process.env.BASE_URL,
+    base_url: process.env.BASE_URL,
   },
 };
