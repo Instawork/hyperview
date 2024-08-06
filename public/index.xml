@@ -1,13 +1,205 @@
 
 <doc xmlns="https://hyperview.org/hyperview">
-  <navigator id="stack-navigator" type="stack">
-    <nav-route id="tabs">
-      <navigator id="tabs-navigator" type="tab">
-        <nav-route id="tab-ui" href="/ui/index.xml"/>
-        <nav-route id="tab-navigation" href="/navigation/index.xml"/>
-        <nav-route id="tab-behaviors" href="/behaviors/index.xml"/>
-        <nav-route id="tab-case-studies" href="/case-studies/index.xml"/>
-      </navigator>
-    </nav-route>
-  </navigator>
+  <screen>
+    <styles>
+      <style
+  id="Header"
+  alignItems="center"
+  backgroundColor="white"
+  borderBottomColor="#eee"
+  borderBottomWidth="1"
+  flexDirection="row"
+  paddingLeft="24"
+  paddingRight="24"
+  paddingBottom="16"/>
+<style id="Header__Back" color="blue" fontSize="16" fontWeight="600" paddingRight="16"/>
+<style id="Header__Title" color="black" fontSize="24" fontWeight="600"/>
+<style id="Body" backgroundColor="white" flex="1"/>
+<style id="Description" fontSize="16" fontWeight="600" margin="24"/>
+<style
+  id="Item"
+  alignItems="center"
+  backgroundColor="#FFFFFF"
+  borderBottomColor="#eee"
+  borderBottomWidth="1"
+  flex="1"
+  flexDirection="row"
+  height="48"
+  justifyContent="space-between"
+  paddingLeft="24"
+  paddingRight="24"/>
+<style id="Item__Left" flex="1" flexDirection="row"/>
+<style id="Item__Label" fontSize="18" fontWeight="normal"/>
+<style id="Item__Chevron" fontSize="18" fontWeight="bold"/>
+<style
+  id="Button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"/>
+<style id="Button__Label" color="white" fontSize="24" fontWeight="bold"/>
+<style id="Button--Disabled" opacity="0.5"/>
+<style
+  id="Button--Shadow"
+  elevation="4"
+  shadowColor="black"
+  shadowOffsetX="0"
+  shadowOffsetY="4"
+  shadowOpacity="0.5"
+  shadowRadius="4">
+  <modifier pressed="true">
+  <style elevation="1" shadowOffsetY="1" shadowRadius="1"/>
+  </modifier>
+</style>
+<style id="Button--Elevation3" elevation="3"/>
+<style id="Button--Elevation10" elevation="10"/>
+<style
+  id="Bottom_Tab"
+  flex="1"
+  height="48"
+  justifyContent="center"
+  alignItems="center"
+/>
+<style
+  id="Bottom_Tab__Label"
+  fontSize="20"
+  fontWeight="bold"
+  color="#cccccc"
+/>
+<style id="Bottom_Tab__Label__Selected" color="#4778FF"/>
+<style id="Bottom_Tab__Selected"/>
+<style
+  id="Bottom_Tab__Icon"
+  flex="0"
+  justifyContent="center"
+  alignItems="center"
+  padding="10"
+/>
+<style
+  id="Footer"
+  flex="1"
+  flexDirection="row"
+  flexShrink="1"
+  flexGrow="0"
+  bottom="45"
+  alignItems="stretch"
+  justifyContent="space-around"
+/>
+
+      
+        <style
+          id="Header__Switch"
+          alignItems="center"
+          flex="1"
+          flexDirection="row"
+          flexGrow="1"
+          justifyContent="flex-end"
+          columnGap="8"/>
+        <style id="Switch__Label" fontSize="12" fontWeight="bold"/>
+      
+    </styles>
+    <body style="Body" safe-area="true">
+      <header style="Header">
+        
+        <text style="Header__Title">Hyperview</text>
+        
+          <view style="Header__Switch">
+            <text style="Switch__Label">Hyperview Navigator</text>
+            <switch id="navigator-switch" trigger="change" action="set-navigator-source" xmlns:demo="https://hyperview.org/demo" demo:source= "hyperview"  value= "off" />
+          </view>
+        
+      </header>
+      
+  
+<list xmlns="https://hyperview.org/hyperview" trigger="refresh" action="replace" target="directory-list" id="directory-list" href="list.xml">
+  
+    
+      <item href="/advanced_behaviors/index.xml" key="advanced-behaviors" show-during-load="loadingScreen" style="Item">
+        <view style="Item__Left">
+          <text style="Item__Label">Advanced Behaviors</text>
+        </view>
+        <text style="Item__Chevron">&gt;</text>
+      </item>
+    
+      <item href="/behaviors/index.xml" key="behaviors" show-during-load="loadingScreen" style="Item">
+        <view style="Item__Left">
+          <text style="Item__Label">Behaviors</text>
+        </view>
+        <text style="Item__Chevron">&gt;</text>
+      </item>
+    
+      <item href="/case_studies/index.xml" key="case-studies" show-during-load="loadingScreen" style="Item">
+        <view style="Item__Left">
+          <text style="Item__Label">Case Studies</text>
+        </view>
+        <text style="Item__Chevron">&gt;</text>
+      </item>
+    
+      <item href="/custom_components/index.xml" key="custom-components" show-during-load="loadingScreen" style="Item">
+        <view style="Item__Left">
+          <text style="Item__Label">Custom Components</text>
+        </view>
+        <text style="Item__Chevron">&gt;</text>
+      </item>
+    
+      <item href="/navigation/index.xml" key="navigation" show-during-load="loadingScreen" style="Item">
+        <view style="Item__Left">
+          <text style="Item__Label">Navigation</text>
+        </view>
+        <text style="Item__Chevron">&gt;</text>
+      </item>
+    
+      <item href="/styling/index.xml" key="styling" show-during-load="loadingScreen" style="Item">
+        <view style="Item__Left">
+          <text style="Item__Label">Styling</text>
+        </view>
+        <text style="Item__Chevron">&gt;</text>
+      </item>
+    
+      <item href="/ui_elements/index.xml" key="ui-elements" show-during-load="loadingScreen" style="Item">
+        <view style="Item__Left">
+          <text style="Item__Label">UI Elements</text>
+        </view>
+        <text style="Item__Chevron">&gt;</text>
+      </item>
+    
+  
+</list>
+
+
+    </body>
+  </screen>
+  
+<screen id="loadingScreen">
+  <styles>
+    <style
+      id="Header"
+      alignItems="center"
+      backgroundColor="white"
+      borderBottomColor="#eee"
+      borderBottomWidth="1"
+      flexDirection="row"
+      paddingLeft="24"
+      paddingRight="24"
+      paddingBottom="16"/>
+    <style id="Header__Back" color="blue" fontSize="16" fontWeight="600" paddingRight="16"/>
+    <style id="Header__Title" color="black" fontSize="24" fontWeight="600"/>
+    <style id="Body" backgroundColor="white" flex="1"/>
+    <style id="LoadingText" fontSize="14" fontWeight="normal" marginBottom="16"/>
+    <style id="Loading" alignItems="center" flex="1" justifyContent="center"/>
+  </styles>
+  <body style="Body" safe-area="true">
+    <header style="Header">
+      <text action="back" href="#" style="Header__Back">Back</text>
+    </header>
+    <view style="Loading">
+      <text style="LoadingText">Loading…</text>
+      <spinner/>
+    </view>
+  </body>
+</screen>
+
 </doc>
