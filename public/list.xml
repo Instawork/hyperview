@@ -1,0 +1,55 @@
+
+<list xmlns="https://hyperview.org/hyperview" trigger="refresh" action="replace" target="directory-list" id="directory-list" href="list.xml">
+  
+    
+      <item href="/advanced_behaviors/index.xml" key="advanced-behaviors" show-during-load="loadingScreen" style="Item">
+        <view style="Item__Left">
+          <text style="Item__Label">Advanced Behaviors</text>
+        </view>
+        <text style="Item__Chevron">&gt;</text>
+      </item>
+    
+      <item href="/behaviors/index.xml" key="behaviors" show-during-load="loadingScreen" style="Item">
+        <view style="Item__Left">
+          <text style="Item__Label">Behaviors</text>
+        </view>
+        <text style="Item__Chevron">&gt;</text>
+      </item>
+    
+      <item href="/case_studies/index.xml" key="case-studies" show-during-load="loadingScreen" style="Item">
+        <view style="Item__Left">
+          <text style="Item__Label">Case Studies</text>
+        </view>
+        <text style="Item__Chevron">&gt;</text>
+      </item>
+    
+      <item href="/custom_components/index.xml" key="custom-components" show-during-load="loadingScreen" style="Item">
+        <view style="Item__Left">
+          <text style="Item__Label">Custom Components</text>
+        </view>
+        <text style="Item__Chevron">&gt;</text>
+      </item>
+    
+      <item href="/navigation/index.xml" key="navigation" show-during-load="loadingScreen" style="Item">
+        <view style="Item__Left">
+          <text style="Item__Label">Navigation</text>
+        </view>
+        <text style="Item__Chevron">&gt;</text>
+      </item>
+    
+      <item href="/styling/index.xml" key="styling" show-during-load="loadingScreen" style="Item">
+        <view style="Item__Left">
+          <text style="Item__Label">Styling</text>
+        </view>
+        <text style="Item__Chevron">&gt;</text>
+      </item>
+    
+      <item href="/ui_elements/index.xml" key="ui-elements" show-during-load="loadingScreen" style="Item">
+        <view style="Item__Left">
+          <text style="Item__Label">UI Elements</text>
+        </view>
+        <text style="Item__Chevron">&gt;</text>
+      </item>
+    
+  
+</list>

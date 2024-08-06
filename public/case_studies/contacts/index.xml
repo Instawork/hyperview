@@ -1,0 +1,347 @@
+
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style
+  id="Header"
+  alignItems="center"
+  backgroundColor="white"
+  borderBottomColor="#eee"
+  borderBottomWidth="1"
+  flexDirection="row"
+  paddingLeft="24"
+  paddingRight="24"
+  paddingBottom="16"/>
+<style id="Header__Back" color="blue" fontSize="16" fontWeight="600" paddingRight="16"/>
+<style id="Header__Title" color="black" fontSize="24" fontWeight="600"/>
+<style id="Body" backgroundColor="white" flex="1"/>
+<style id="Description" fontSize="16" fontWeight="600" margin="24"/>
+<style
+  id="Item"
+  alignItems="center"
+  backgroundColor="#FFFFFF"
+  borderBottomColor="#eee"
+  borderBottomWidth="1"
+  flex="1"
+  flexDirection="row"
+  height="48"
+  justifyContent="space-between"
+  paddingLeft="24"
+  paddingRight="24"/>
+<style id="Item__Left" flex="1" flexDirection="row"/>
+<style id="Item__Label" fontSize="18" fontWeight="normal"/>
+<style id="Item__Chevron" fontSize="18" fontWeight="bold"/>
+<style
+  id="Button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"/>
+<style id="Button__Label" color="white" fontSize="24" fontWeight="bold"/>
+<style id="Button--Disabled" opacity="0.5"/>
+<style
+  id="Button--Shadow"
+  elevation="4"
+  shadowColor="black"
+  shadowOffsetX="0"
+  shadowOffsetY="4"
+  shadowOpacity="0.5"
+  shadowRadius="4">
+  <modifier pressed="true">
+  <style elevation="1" shadowOffsetY="1" shadowRadius="1"/>
+  </modifier>
+</style>
+<style id="Button--Elevation3" elevation="3"/>
+<style id="Button--Elevation10" elevation="10"/>
+<style
+  id="Bottom_Tab"
+  flex="1"
+  height="48"
+  justifyContent="center"
+  alignItems="center"
+/>
+<style
+  id="Bottom_Tab__Label"
+  fontSize="20"
+  fontWeight="bold"
+  color="#cccccc"
+/>
+<style id="Bottom_Tab__Label__Selected" color="#4778FF"/>
+<style id="Bottom_Tab__Selected"/>
+<style
+  id="Bottom_Tab__Icon"
+  flex="0"
+  justifyContent="center"
+  alignItems="center"
+  padding="10"
+/>
+<style
+  id="Footer"
+  flex="1"
+  flexDirection="row"
+  flexShrink="1"
+  flexGrow="0"
+  bottom="45"
+  alignItems="stretch"
+  justifyContent="space-around"
+/>
+
+      
+  <style id="flex" flex="1" />
+  <style
+    id="input"
+    backgroundColor="#FFFFFF"
+    borderBottomColor="#E1E1E1"
+    borderBottomWidth="1"
+    borderColor="#4E4D4D"
+    fontSize="16"
+    fontWeight="normal"
+    paddingBottom="8"
+    paddingTop="8">
+    <modifier pressed="true">
+    <style borderBottomColor="green"/>
+    </modifier>
+    <modifier focused="true">
+    <style borderBottomColor="#4778FF"/>
+    </modifier>
+  </style>
+  <style id="relative" position="relative" />
+  <style id="absolute" position="absolute" />
+  <style id="r-0" right="0" />
+  <style id="mx-24" marginHorizontal="24" />
+  <style id="py-8" paddingVertical="8" />
+  <style id="border-bottom" borderBottomWidth="1" borderBottomColor="lightgray" />
+  <style id="highlight" fontWeight="bold" color="blue" />
+
+    </styles>
+    <body style="Body" safe-area="true">
+      <header style="Header">
+        
+          <text action="back" href="#" style="Header__Back">Back</text>
+        
+        <text style="Header__Title">Contacts</text>
+        
+      </header>
+      
+  <form>
+    <list
+  id="contacts"
+  trigger="refresh"
+  action="replace"
+  href="?page=1&amp;template=list"
+  target="contacts"
+  keyboard-dismiss-mode="on-drag"
+  xmlns="https://hyperview.org/hyperview"
+>
+  
+  <item key="search" id="top" sticky="true" style="relative mx-24">
+    <text-field
+      placeholder="Search a contact…"
+      placeholderTextColor="#8D9494"
+      name="search"
+      style="input"
+      debounce="200"
+      value=""
+    >
+      
+      
+      
+      
+      <behavior
+        trigger="change"
+        action="hide"
+        target="load-more"
+      />
+      <behavior
+        trigger="change"
+        action="scroll"
+        target="top"
+        xmlns:scroll="https://hyperview.org/hyperview-scroll"
+      />
+      <behavior
+        trigger="change"
+        action="replace"
+        target="contacts"
+        href="?template=list"
+        show-during-load="loading-indicator"
+      />
+    </text-field>
+    <view id="loading-indicator" style="absolute r-0 py-8" hide="true">
+      <spinner />
+    </view>
+  </item>
+  <items xmlns="https://hyperview.org/hyperview">
+  
+    <item key="ec85b359-b81f-4e15-a2d7-546fdae40018" style="mx-24 py-8 border-bottom">
+      <text>Aaron Barrows</text>
+      <text>Mathias_Sporer3@yahoo.com</text>
+      <text>(163) 555-8659</text>
+    </item>
+  
+    <item key="d3e3bd69-995f-4282-a4e2-580e7586ccd5" style="mx-24 py-8 border-bottom">
+      <text>Aaron Berge</text>
+      <text>Oleta_Wiegand7@yahoo.com</text>
+      <text>(471) 555-5025</text>
+    </item>
+  
+    <item key="256495c7-3b4e-432f-8020-b059a6e586ef" style="mx-24 py-8 border-bottom">
+      <text>Aaron Blanda</text>
+      <text>Heath_Fritsch97@hotmail.com</text>
+      <text>(242) 555-1068</text>
+    </item>
+  
+    <item key="837457d7-0c15-4096-bc43-9e20d7146486" style="mx-24 py-8 border-bottom">
+      <text>Aaron Greenfelder</text>
+      <text>Ayana68@gmail.com</text>
+      <text>(268) 555-7406</text>
+    </item>
+  
+    <item key="ee531987-dee2-4c9f-9943-0f8de1854474" style="mx-24 py-8 border-bottom">
+      <text>Aaron Harris</text>
+      <text>Geraldine5@hotmail.com</text>
+      <text>(442) 555-6463</text>
+    </item>
+  
+    <item key="6a2f8e03-c4dc-45be-8b01-109fe9ecee42" style="mx-24 py-8 border-bottom">
+      <text>Aaron Huel</text>
+      <text>Ben_Gleichner@gmail.com</text>
+      <text>(956) 555-9953</text>
+    </item>
+  
+    <item key="0c976303-a5c0-4730-8f14-2909635c29d7" style="mx-24 py-8 border-bottom">
+      <text>Aaron Kerluke</text>
+      <text>Clementina.Torp@yahoo.com</text>
+      <text>(457) 555-9682</text>
+    </item>
+  
+    <item key="47f81863-39e1-4d03-9f9e-03e21257572a" style="mx-24 py-8 border-bottom">
+      <text>Aaron Kessler PhD</text>
+      <text>Xavier.Legros40@hotmail.com</text>
+      <text>(979) 555-1707</text>
+    </item>
+  
+    <item key="3cc6787e-c9ad-426e-8294-e482054c9cb4" style="mx-24 py-8 border-bottom">
+      <text>Aaron Kiehn</text>
+      <text>Lawson.Moore@gmail.com</text>
+      <text>(201) 555-9018</text>
+    </item>
+  
+    <item key="5c0f1f1d-94a5-4acb-ad27-d96c399ce624" style="mx-24 py-8 border-bottom">
+      <text>Aaron Kovacek</text>
+      <text>Courtney52@hotmail.com</text>
+      <text>(469) 555-1214</text>
+    </item>
+  
+    <item key="7da8c344-e3b3-4dc5-b5d7-ad4f1881a350" style="mx-24 py-8 border-bottom">
+      <text>Aaron Lesch</text>
+      <text>Maryjane.Monahan43@gmail.com</text>
+      <text>(012) 555-9063</text>
+    </item>
+  
+    <item key="8281674c-c473-49aa-88e6-be398b71f0c1" style="mx-24 py-8 border-bottom">
+      <text>Aaron McKenzie</text>
+      <text>Alexandre.Powlowski67@yahoo.com</text>
+      <text>(987) 555-2001</text>
+    </item>
+  
+    <item key="046c0bb9-1738-499b-9fd3-ae132398869d" style="mx-24 py-8 border-bottom">
+      <text>Aaron Osinski</text>
+      <text>Tiara.Parker69@hotmail.com</text>
+      <text>(018) 555-3786</text>
+    </item>
+  
+    <item key="54367de1-8109-4730-b671-fe70c4ece5a2" style="mx-24 py-8 border-bottom">
+      <text>Aaron Parker</text>
+      <text>Maximilian.OConner33@gmail.com</text>
+      <text>(189) 555-4441</text>
+    </item>
+  
+    <item key="17a5eef8-6e4d-48c6-af07-14a62bc100c5" style="mx-24 py-8 border-bottom">
+      <text>Aaron Rolfson</text>
+      <text>Joey14@yahoo.com</text>
+      <text>(175) 555-5500</text>
+    </item>
+  
+    <item key="92332410-1370-4449-a16c-dafb24782d9b" style="mx-24 py-8 border-bottom">
+      <text>Aaron Schiller</text>
+      <text>Loma_Barrows@yahoo.com</text>
+      <text>(107) 555-6331</text>
+    </item>
+  
+    <item key="7ce9ee40-4a71-4bee-af10-20a8b4abb405" style="mx-24 py-8 border-bottom">
+      <text>Aaron Stiedemann</text>
+      <text>Martine.Kerluke@gmail.com</text>
+      <text>(734) 555-8633</text>
+    </item>
+  
+    <item key="afb653b0-133a-4821-85b2-8f336e264379" style="mx-24 py-8 border-bottom">
+      <text>Aaron Wilkinson IV</text>
+      <text>Otis.Gibson@yahoo.com</text>
+      <text>(463) 555-2718</text>
+    </item>
+  
+    <item key="6cb60b21-26e9-4baf-b788-ffa243b54888" style="mx-24 py-8 border-bottom">
+      <text>Aaron Wyman I</text>
+      <text>Katharina.Mosciski@gmail.com</text>
+      <text>(449) 555-4647</text>
+    </item>
+  
+    <item key="887ecc6d-61bc-4f9a-bc9b-a8bfcf6e9165" style="mx-24 py-8 border-bottom">
+      <text>Aaron Zulauf</text>
+      <text>Angelina90@yahoo.com</text>
+      <text>(715) 555-0225</text>
+    </item>
+  
+  
+    <item
+      key="load-more"
+      id="load-more"
+      trigger="visible"
+      action="replace"
+      href="?page=2"
+    >
+      <spinner />
+    </item>
+  
+</items>
+
+</list>
+
+  </form>
+
+    </body>
+  </screen>
+  
+<screen id="loadingScreen">
+  <styles>
+    <style
+      id="Header"
+      alignItems="center"
+      backgroundColor="white"
+      borderBottomColor="#eee"
+      borderBottomWidth="1"
+      flexDirection="row"
+      paddingLeft="24"
+      paddingRight="24"
+      paddingBottom="16"/>
+    <style id="Header__Back" color="blue" fontSize="16" fontWeight="600" paddingRight="16"/>
+    <style id="Header__Title" color="black" fontSize="24" fontWeight="600"/>
+    <style id="Body" backgroundColor="white" flex="1"/>
+    <style id="LoadingText" fontSize="14" fontWeight="normal" marginBottom="16"/>
+    <style id="Loading" alignItems="center" flex="1" justifyContent="center"/>
+  </styles>
+  <body style="Body" safe-area="true">
+    <header style="Header">
+      <text action="back" href="#" style="Header__Back">Back</text>
+    </header>
+    <view style="Loading">
+      <text style="LoadingText">Loading…</text>
+      <spinner/>
+    </view>
+  </body>
+</screen>
+
+</doc>
