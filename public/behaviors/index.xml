@@ -3,280 +3,534 @@
   <screen>
     <styles>
       <style
-        id="Header"
-        alignItems="center"
-        backgroundColor="white"
-        borderBottomColor="#eee"
-        borderBottomWidth="1"
-        flexDirection="row"
-        paddingLeft="24"
-        paddingRight="24"
-        paddingBottom="16"/>
-      <style id="Header__Back" color="blue" fontSize="16" fontWeight="600" paddingRight="16"/>
-      <style id="Header__Title" color="black" fontSize="24" fontWeight="600"/>
-      <style id="Body" backgroundColor="white" flex="1"/>
-      <style
-        id="Description"
-        borderColor="red"
-        borderRadius="4"
-        borderWidth="2"
-        fontSize="16"
-        fontWeight="600"
-        margin="24"
-        padding="16"/>
-      <style
-        id="Item"
-        alignItems="center"
-        borderBottomColor="#eee"
-        borderBottomWidth="1"
-        flex="1"
-        flexDirection="row"
-        height="48"
-        justifyContent="space-between"
-        paddingLeft="24"
-        paddingRight="24"/>
-      <style id="Item__Label" fontSize="18" fontWeight="normal"/>
-      <style id="Item__Chevron" fontSize="18" fontWeight="bold"/>
-      <style
-        id="List__Header"
-        alignItems="center"
-        backgroundColor="#eee"
-        flex="1"
-        flexDirection="row"
-        height="48"
-        paddingLeft="24"
-        paddingRight="24"/>
-      <style id="List__HeaderText" fontSize="18" fontWeight="bold"/>
+  id="button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"
+/>
+<style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+
+<style id="description" fontSize="16" margin="24" />
+
+<style
+  id="link"
+  color="#4778FF"
+  fontWeight="bold"
+  marginTop="8"
+  marginRight="16"
+/>
+
+<style
+  id="container-style"
+  borderColor="#e1e1e1"
+  borderRadius="16"
+  borderWidth="2"
+  margin="24"
+  padding="24"
+/>
+<style
+  id="container-label"
+  color="black"
+  fontSize="16"
+  fontWeight="normal"
+/>
+
+<style
+  id="name"
+  fontSize="18"
+  fontWeight="600"
+  margin="24"
+  marginBottom="0"
+/>
+<style
+  id="phone"
+  fontSize="18"
+  fontWeight="normal"
+  margin="24"
+  marginBottom="0"
+/>
+
+
+<style
+  id="header"
+  alignItems="center"
+  backgroundColor="white"
+  borderBottomColor="#eee"
+  borderBottomWidth="1"
+  flexDirection="row"
+  paddingBottom="16"
+  paddingLeft="24"
+  paddingRight="24"
+/>
+<style
+  id="header-btn"
+  color="blue"
+  fontSize="16"
+  fontWeight="600"
+  paddingRight="16"
+/>
+<style id="header-title" color="black" fontSize="24" fontWeight="600" />
+<style id="body" backgroundColor="white" flex="1" />
+<style id="description" fontSize="16" margin="24" />
+<style
+  id="item"
+  alignItems="center"
+  backgroundColor="#FFFFFF"
+  borderColor="#eee"
+  borderBottomWidth="1"
+  borderWidth="1"
+  flex="1"
+  flexDirection="row"
+  height="48"
+  justifyContent="space-between"
+  marginHorizontal="24"
+  paddingLeft="24"
+  paddingRight="24"
+/>
+<style id="item-first" borderTopLeftRadius="24" borderTopRightRadius="24" />
+<style
+  id="item-last"
+  borderBottomLeftRadius="24"
+  borderBottomRightRadius="24"
+  marginBottom="24"
+/>
+<style id="item-left" flex="1" flexDirection="row" />
+<style id="item-label" fontSize="18" fontWeight="normal" />
+<style id="item-chevron" fontSize="18" fontWeight="bold" />
+<style
+  id="button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"
+/>
+<style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style
+  id="bottom-tab"
+  alignItems="center"
+  flex="1"
+  height="48"
+  justifyContent="center"
+/>
+<style
+  id="bottom-tab-label"
+  color="#cccccc"
+  fontSize="12"
+  fontWeight="bold"
+/>
+<style id="bottom-tab-label-selected" color="#4778FF" />
+<style id="bottom-tab-selected" />
+<style
+  id="back-image"
+  alignItems="center"
+  flex="0"
+  height="10"
+  justifyContent="center"
+  padding="10"
+  width="10"
+/>
+<style
+  id="footer"
+  alignItems="stretch"
+  borderTopColor="#eee"
+  borderTopWidth="1"
+  bottom="0"
+  flexDirection="row"
+  flexShrink="1"
+  flexGrow="0"
+  justifyContent="space-around"
+  position="absolute"
+  width="100%"
+/>
+<style
+  id="list-container"
+  flex="0"
+  flexGrow="1"
+  marginTop="24"
+  marginBottom="48"
+/>
+<style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" />
+<style id="loading" alignItems="center" flex="1" justifyContent="center" />
+<style
+  id="link"
+  color="#4778FF"
+  fontWeight="bold"
+  marginTop="8"
+  marginRight="16"
+/>
+<style
+  id="container-style"
+  borderColor="#e1e1e1"
+  borderRadius="16"
+  borderWidth="2"
+  margin="24"
+  padding="24"
+/>
+<style
+  id="container-label"
+  color="black"
+  fontSize="16"
+  fontWeight="normal"
+/>
+<style
+  id="list-header"
+  alignItems="center"
+  backgroundColor="#eee"
+  flex="1"
+  flexDirection="row"
+  height="48"
+  marginHorizontal="24"
+  paddingLeft="24"
+  paddingRight="24"
+/>
+<style id="list-header-text" fontSize="18" fontWeight="bold"/>
+
+      
+      
     </styles>
-    <body style="Body" safe-area="true">
-      <header style="Header">
-        <text action="back" href="#" style="Header__Back">Back</text>
-        <text style="Header__Title">Behaviors</text>
-      </header>
-      <section-list>
-        <!-- Section 1 -->
-        <section-title style="List__Header">
-          <text style="List__HeaderText">Actions</text>
-        </section-title>
-        <item href="/behaviors/replace.xml" key="replace" show-during-load="loadingScreen" style="Item">
-          <text style="Item__Label">Replace</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/behaviors/replace_inner.xml" key="replace_inner" show-during-load="loadingScreen" style="Item">
-          <text style="Item__Label">Replace Inner</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/behaviors/append.xml" key="append" show-during-load="loadingScreen" style="Item">
-          <text style="Item__Label">Append</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/behaviors/prepend.xml" key="prepend" show-during-load="loadingScreen" style="Item">
-          <text style="Item__Label">Prepend</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/behaviors/hide.xml" key="hide" show-during-load="loadingScreen" style="Item">
-          <text style="Item__Label">Hide</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/behaviors/show.xml" key="show" show-during-load="loadingScreen" style="Item">
-          <text style="Item__Label">Show</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/behaviors/toggle.xml" key="toggle" show-during-load="loadingScreen" style="Item">
-          <text style="Item__Label">Toggle</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/behaviors/select_all.xml" key="select_all" show-during-load="loadingScreen" style="Item">
-          <text style="Item__Label">Select All</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/behaviors/unselect_all.xml" key="unselect_all" show-during-load="loadingScreen" style="Item">
-          <text style="Item__Label">Unselect All</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <!-- Section 2 -->
-        <section-title style="List__Header">
-          <text style="List__HeaderText">Triggers</text>
-        </section-title>
-        <item href="/behaviors/back.xml" key="back" show-during-load="loadingScreen" style="Item">
-          <text style="Item__Label">Back</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/behaviors/press.xml" key="press" show-during-load="loadingScreen" style="Item">
-          <text style="Item__Label">Press</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/behaviors/long_press.xml" key="long_press" show-during-load="loadingScreen" style="Item">
-          <text style="Item__Label">Long press</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/behaviors/press_in.xml" key="press_in" show-during-load="loadingScreen" style="Item">
-          <text style="Item__Label">Press In</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/behaviors/press_out.xml" key="press_out" show-during-load="loadingScreen" style="Item">
-          <text style="Item__Label">Press Out</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/behaviors/visible.xml" key="visible" show-during-load="loadingScreen" style="Item">
-          <text style="Item__Label">Visible</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/behaviors/visible_once.xml" key="visible_once" show-during-load="loadingScreen" style="Item">
-          <text style="Item__Label">Visible Once</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/behaviors/refresh.xml" key="refresh" show-during-load="loadingScreen" style="Item">
-          <text style="Item__Label">Refresh</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/behaviors/load.xml" key="load" show-during-load="loadingScreen" style="Item">
-          <text style="Item__Label">Load</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/behaviors/select.xml" key="select" show-during-load="loadingScreen" style="Item">
-          <text style="Item__Label">Select</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/behaviors/deselect.xml" key="deselect" show-during-load="loadingScreen" style="Item">
-          <text style="Item__Label">Deselect</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/behaviors/focus.xml" key="focus" show-during-load="loadingScreen" style="Item">
-          <text style="Item__Label">Focus</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/behaviors/blur.xml" key="blur" show-during-load="loadingScreen" style="Item">
-          <text style="Item__Label">Blur</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/behaviors/change.xml" key="change" show-during-load="loadingScreen" style="Item">
-          <text style="Item__Label">Change</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <!-- Section 3 -->
-        <section-title style="List__Header">
-          <text style="List__HeaderText">Target</text>
-        </section-title>
-        <item href="/behaviors/target_sibling.xml" key="target_sibling" show-during-load="loadingScreen" style="Item">
-          <text style="Item__Label">Sibling</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/behaviors/target_child.xml" key="target_child" show-during-load="loadingScreen" style="Item">
-          <text style="Item__Label">Child</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/behaviors/target_parent.xml" key="target_parent" show-during-load="loadingScreen" style="Item">
-          <text style="Item__Label">Parent</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item
-          href="/behaviors/target_parent_element.xml"
-          key="target_parent_element"
-          show-during-load="loadingScreen"
-          style="Item">
-          <text style="Item__Label">Parent Element</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item
-          href="/behaviors/target_sibling_append.xml"
-          key="target_sibling_append"
-          show-during-load="loadingScreen"
-          style="Item">
-          <text style="Item__Label">Sibling Append</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <!-- Section 4 -->
-        <section-title style="List__Header">
-          <text style="List__HeaderText">Indicators</text>
-        </section-title>
-        <item href="/behaviors/show_indicator.xml" key="show_indicator" show-during-load="loadingScreen" style="Item">
-          <text style="Item__Label">Show Indicator</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item
-          href="/behaviors/show_multiple_indicators.xml"
-          key="show_multiple_indicators"
-          show-during-load="loadingScreen"
-          style="Item">
-          <text style="Item__Label">Show Multiple Indicators</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/behaviors/hide_indicator.xml" key="hide_indicator" show-during-load="loadingScreen" style="Item">
-          <text style="Item__Label">Hide Indicator</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item
-          href="/behaviors/hide_multiple_indicators.xml"
-          key="hide_multiple_indicators"
-          show-during-load="loadingScreen"
-          style="Item">
-          <text style="Item__Label">Hide Multiple Indicators</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item
-          href="/behaviors/show_hide_multiple_indicators.xml"
-          key="show_hide_multiple_indicators"
-          show-during-load="loadingScreen"
-          style="Item">
-          <text style="Item__Label">Show/Hide Multiple Indicators</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item
-          href="/behaviors/inline_button_indicator.xml"
-          key="inline_button_indicator"
-          show-during-load="loadingScreen"
-          style="Item">
-          <text style="Item__Label">Inline Button Indicator</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/behaviors/shimmer_indicator.xml" key="shimmer_indicator" show-during-load="loadingScreen" style="Item">
-          <text style="Item__Label">Shimmer Indicator</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <!-- Section 5 -->
-        <section-title style="List__Header">
-          <text style="List__HeaderText">Fragments</text>
-        </section-title>
-        <item href="/behaviors/fragment_replace.xml" key="fragment_replace" show-during-load="loadingScreen" style="Item">
-          <text style="Item__Label">Replace</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <item href="/behaviors/rating.xml" key="rating" show-during-load="loadingScreen" style="Item">
-          <text style="Item__Label">Rating</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-        <!-- Section 6 -->
-        <section-title style="List__Header">
-          <text style="List__HeaderText">Once</text>
-        </section-title>
-        <item href="/behaviors/once.xml" key="once" show-during-load="loadingScreen" style="Item">
-          <text style="Item__Label">Once</text>
-          <text style="Item__Chevron">&gt;</text>
-        </item>
-      </section-list>
+    <body style="body" safe-area="true">
+      <header style="header">
+  
+  <text style="header-title">Behaviors</text>
+</header>
+
+      
+  
+  <text style="description">This is the content for Behaviors tab.</text>
+  ---
+permalink: "list.xml"
+hv_list_tag: "root"
+---
+
+
+<list
+  action="replace"
+  href="/behaviors/index.xml"
+  id="directory-list"
+  style="list-container"
+  target="directory-list"
+  trigger="refresh"
+  xmlns="https://hyperview.org/hyperview"
+>
+  
+    
+      
+      
+        
+      
+      
+      <item
+        href="/behaviors/advanced/index.xml"
+        key="advanced"
+        show-during-load="loading-screen"
+        style="item item-first"
+      >
+        <view style="item-left">
+          <text style="item-label">Advanced</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+      
+      
+      
+        
+      
+      <item
+        href="/behaviors/basic/index.xml"
+        key="basic"
+        show-during-load="loading-screen"
+        style="item item-last"
+      >
+        <view style="item-left">
+          <text style="item-label">Basic</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+  
+</list>
+
+
+  <view id="footer" style="footer">
+    <view
+      href-style="bottom-tab"
+      action="navigate"
+      target="tab-ui"
+      style="bottom-tab bottom-tab-selected"
+    >
+      <text style="bottom-tab-label ">UI</text>
+    </view>
+    <view
+      style="bottom-tab"
+      href-style="bottom-tab"
+      action="navigate"
+      target="tab-behaviors"
+    >
+      <text style="bottom-tab-label  bottom-tab-label-selected">Behaviors</text>
+    </view>
+    <view
+      style="bottom-tab"
+      href-style="bottom-tab"
+      action="navigate"
+      target="tab-navigation"
+    >
+      <text style="bottom-tab-label ">Navigation</text>
+    </view>
+    <view
+      style="bottom-tab"
+      href-style="bottom-tab"
+      action="navigate"
+      target="tab-case-studies"
+    >
+      <text style="bottom-tab-label ">Case Studies</text>
+    </view>
+  </view>
+
     </body>
   </screen>
-  <screen id="loadingScreen">
-    <styles>
-      <style
-        id="Header"
-        alignItems="center"
-        backgroundColor="white"
-        borderBottomColor="#eee"
-        borderBottomWidth="1"
-        flexDirection="row"
-        paddingLeft="24"
-        paddingRight="24"
-        paddingBottom="16"/>
-      <style id="Header__Back" color="blue" fontSize="16" fontWeight="600" paddingRight="16"/>
-      <style id="Header__Title" color="black" fontSize="24" fontWeight="600"/>
-      <style id="Body" backgroundColor="white" flex="1"/>
-    </styles>
-    <body style="Body" safe-area="true">
-      <header style="Header">
-        <text action="back" href="#" style="Header__Back">Back</text>
-      </header>
-    </body>
-  </screen>
+  
+<screen id="loading-screen">
+  <style
+  id="button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"
+/>
+<style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+
+<style id="description" fontSize="16" margin="24" />
+
+<style
+  id="link"
+  color="#4778FF"
+  fontWeight="bold"
+  marginTop="8"
+  marginRight="16"
+/>
+
+<style
+  id="container-style"
+  borderColor="#e1e1e1"
+  borderRadius="16"
+  borderWidth="2"
+  margin="24"
+  padding="24"
+/>
+<style
+  id="container-label"
+  color="black"
+  fontSize="16"
+  fontWeight="normal"
+/>
+
+<style
+  id="name"
+  fontSize="18"
+  fontWeight="600"
+  margin="24"
+  marginBottom="0"
+/>
+<style
+  id="phone"
+  fontSize="18"
+  fontWeight="normal"
+  margin="24"
+  marginBottom="0"
+/>
+
+
+<style
+  id="header"
+  alignItems="center"
+  backgroundColor="white"
+  borderBottomColor="#eee"
+  borderBottomWidth="1"
+  flexDirection="row"
+  paddingBottom="16"
+  paddingLeft="24"
+  paddingRight="24"
+/>
+<style
+  id="header-btn"
+  color="blue"
+  fontSize="16"
+  fontWeight="600"
+  paddingRight="16"
+/>
+<style id="header-title" color="black" fontSize="24" fontWeight="600" />
+<style id="body" backgroundColor="white" flex="1" />
+<style id="description" fontSize="16" margin="24" />
+<style
+  id="item"
+  alignItems="center"
+  backgroundColor="#FFFFFF"
+  borderColor="#eee"
+  borderBottomWidth="1"
+  borderWidth="1"
+  flex="1"
+  flexDirection="row"
+  height="48"
+  justifyContent="space-between"
+  marginHorizontal="24"
+  paddingLeft="24"
+  paddingRight="24"
+/>
+<style id="item-first" borderTopLeftRadius="24" borderTopRightRadius="24" />
+<style
+  id="item-last"
+  borderBottomLeftRadius="24"
+  borderBottomRightRadius="24"
+  marginBottom="24"
+/>
+<style id="item-left" flex="1" flexDirection="row" />
+<style id="item-label" fontSize="18" fontWeight="normal" />
+<style id="item-chevron" fontSize="18" fontWeight="bold" />
+<style
+  id="button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"
+/>
+<style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style
+  id="bottom-tab"
+  alignItems="center"
+  flex="1"
+  height="48"
+  justifyContent="center"
+/>
+<style
+  id="bottom-tab-label"
+  color="#cccccc"
+  fontSize="12"
+  fontWeight="bold"
+/>
+<style id="bottom-tab-label-selected" color="#4778FF" />
+<style id="bottom-tab-selected" />
+<style
+  id="back-image"
+  alignItems="center"
+  flex="0"
+  height="10"
+  justifyContent="center"
+  padding="10"
+  width="10"
+/>
+<style
+  id="footer"
+  alignItems="stretch"
+  borderTopColor="#eee"
+  borderTopWidth="1"
+  bottom="0"
+  flexDirection="row"
+  flexShrink="1"
+  flexGrow="0"
+  justifyContent="space-around"
+  position="absolute"
+  width="100%"
+/>
+<style
+  id="list-container"
+  flex="0"
+  flexGrow="1"
+  marginTop="24"
+  marginBottom="48"
+/>
+<style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" />
+<style id="loading" alignItems="center" flex="1" justifyContent="center" />
+<style
+  id="link"
+  color="#4778FF"
+  fontWeight="bold"
+  marginTop="8"
+  marginRight="16"
+/>
+<style
+  id="container-style"
+  borderColor="#e1e1e1"
+  borderRadius="16"
+  borderWidth="2"
+  margin="24"
+  padding="24"
+/>
+<style
+  id="container-label"
+  color="black"
+  fontSize="16"
+  fontWeight="normal"
+/>
+<style
+  id="list-header"
+  alignItems="center"
+  backgroundColor="#eee"
+  flex="1"
+  flexDirection="row"
+  height="48"
+  marginHorizontal="24"
+  paddingLeft="24"
+  paddingRight="24"
+/>
+<style id="list-header-text" fontSize="18" fontWeight="bold"/>
+
+  <body style="body" safe-area="true">
+    <header style="header">
+  
+  <text style="header-title">Behaviors</text>
+</header>
+
+    <view style="loading">
+      <text style="loading-text">Loading…</text>
+      <spinner/>
+    </view>
+  </body>
+</screen>
+
 </doc>

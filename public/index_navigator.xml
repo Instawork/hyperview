@@ -1,7 +1,0 @@
-
-
-<doc xmlns="https://hyperview.org/hyperview">
-  <navigator id="root-navigator" type="stack">
-    <nav-route id="tab-route" href="/index_hyperview.xml"/>
-  </navigator>
-</doc>
