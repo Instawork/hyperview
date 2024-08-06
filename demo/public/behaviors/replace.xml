@@ -1,0 +1,89 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style
+        id="Header"
+        alignItems="center"
+        backgroundColor="white"
+        borderBottomColor="#eee"
+        borderBottomWidth="1"
+        flexDirection="row"
+        paddingLeft="24"
+        paddingRight="24"
+        paddingBottom="16"
+      />
+      <style
+        id="Header__Back"
+        color="blue"
+        fontSize="16"
+        fontWeight="600"
+        paddingRight="16"
+      />
+      <style id="Header__Title" color="black" fontSize="24" fontWeight="600" />
+      <style id="Body" backgroundColor="white" flex="1" />
+      <style
+        id="Description"
+        fontSize="16"
+        fontWeight="normal"
+        margin="24"
+        marginBottom="0"
+      />
+      <style
+        id="Item"
+        alignItems="center"
+        borderBottomColor="#eee"
+        borderBottomWidth="1"
+        flex="1"
+        flexDirection="row"
+        height="48"
+        justifyContent="space-between"
+        paddingLeft="24"
+        paddingRight="24"
+      />
+      <style id="Item__Label" fontSize="18" fontWeight="normal" />
+      <style id="Item__Chevron" fontSize="18" fontWeight="bold" />
+      <style
+        id="Button"
+        backgroundColor="#63CB76"
+        borderRadius="16"
+        flex="1"
+        flexDirection="row"
+        justifyContent="center"
+        margin="24"
+        padding="24"
+      />
+      <style id="Button__Label" color="white" fontSize="24" fontWeight="bold" />
+      <style id="Main" flex="1" />
+    </styles>
+    <body style="Body" safe-area="true">
+      <header style="Header">
+        <text action="back" href="#" style="Header__Back">Back</text>
+        <text style="Header__Title">Replace</text>
+      </header>
+      <view scroll="true" style="Main">
+        <text style="Description">
+          Tapping the button below will request an XML fragment and replace the
+          element with the response.
+        </text>
+        <view
+          action="replace"
+          href="/behaviors/_replace_fragment.xml"
+          style="Button"
+        >
+          <text style="Button__Label">Press me</text>
+        </view>
+        <text style="Description">
+          In this example, the replaced element also has an href, which now
+          requests a different XML fragment.
+        </text>
+        <view
+          action="replace"
+          href="/behaviors/_replace_fragment2.xml"
+          style="Button"
+        >
+          <text style="Button__Label">Press me</text>
+        </view>
+      </view>
+    </body>
+  </screen>
+</doc>

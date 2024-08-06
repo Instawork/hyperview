@@ -1,0 +1,7 @@
+<view style="section3" xmlns="https://hyperview.org/hyperview">
+  <text style="label">Section 3</text>
+  <text style="content">
+    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+    deserunt mollit anim id est laborum
+  </text>
+</view>

@@ -1,0 +1,279 @@
+<doc
+  xmlns="https://hyperview.org/hyperview"
+  xmlns:ns1="https://instawork.com/hyperview-intercom"
+>
+  <screen>
+    <styles>
+      <style
+        id="Header"
+        alignItems="center"
+        backgroundColor="white"
+        flexDirection="row"
+        paddingLeft="24"
+        paddingRight="24"
+        paddingBottom="16"
+      />
+      <style id="Header__Back" height="19" marginRight="16" width="24" />
+      <style id="Header__Title" color="black" fontSize="24" fontWeight="600" />
+      <style id="Body" backgroundColor="white" flex="1" />
+      <style id="Main" backgroundColor="white" flex="1" />
+      <style
+        id="Section"
+        borderBottomColor="#E1E3E3"
+        borderBottomWidth="1"
+        marginBottom="24"
+        marginTop="24"
+      />
+      <style
+        id="Section__Top"
+        flexDirection="row"
+        justifyContent="space-between"
+      />
+      <style
+        id="Section__Header"
+        fontSize="20"
+        fontWeight="bold"
+        lineHeight="24"
+        marginBottom="16"
+        marginLeft="24"
+        marginRight="24"
+      />
+      <style
+        id="Section__Action"
+        color="#4778FF"
+        fontSize="16"
+        fontWeight="600"
+        lineHeight="24"
+        marginBottom="16"
+        marginLeft="24"
+        marginRight="24"
+      />
+      <style
+        id="ShiftItem"
+        flex="1"
+        flexDirection="row"
+        justifyContent="flex-start"
+        marginBottom="32"
+        paddingLeft="24"
+        paddingRight="24"
+      />
+      <style id="ShiftItem__Avatar" borderRadius="24" height="48" width="48" />
+      <style
+        id="ShiftItem__Info"
+        flex="1"
+        flexDirection="column"
+        marginLeft="16"
+      />
+      <style
+        id="ShiftItem__WorkerName"
+        color="#4E4D4D"
+        fontSize="16"
+        fontWeight="normal"
+        lineHeight="24"
+      />
+      <style
+        id="ShiftItem__Details"
+        color="#8D9494"
+        fontSize="16"
+        fontWeight="normal"
+        lineHeight="24"
+      />
+      <style id="Rating" flex="1" flexDirection="row" margin="0" />
+      <style id="Rating__Star" height="24" marginRight="8" width="24" />
+      <style id="Rating__Star--Filled" backgroundColor="#FBB90E" />
+    </styles>
+    <body style="Body" safe-area="true">
+      <header style="Header">
+        <image
+          action="back"
+          href="/case_studies/index.xml"
+          source="/case_studies/back@2x.png"
+          style="Header__Back"
+        />
+      </header>
+      <view scroll="true" style="Main">
+        <view style="Section">
+          <view style="Section__Top">
+            <text style="Section__Header">Instaworkers</text>
+            <text style="Section__Action">
+              <behavior action="intercom" ns1:action="open" trigger="press" />
+              Report Issue
+            </text>
+          </view>
+          <list>
+            <item
+              action="new"
+              delay="500"
+              href="/case_studies/rating_modal.xml"
+              key="a"
+              show-during-load="loadingScreen"
+              style="ShiftItem"
+            >
+              <image
+                source="/case_studies/image.jpg"
+                style="ShiftItem__Avatar"
+              />
+              <view style="ShiftItem__Info">
+                <text style="ShiftItem__WorkerName">Jake Tepperman</text>
+                <text style="ShiftItem__Details">
+                  7:00 PM - 1:00 AM - $116.80
+                </text>
+                <view style="Rating">
+                  <image
+                    action="new"
+                    delay="500"
+                    href="/case_studies/rating_modal.xml?rating=1"
+                    show-during-load="loadingScreen"
+                    source="/case_studies/star_empty.png"
+                    style="Rating__Star"
+                  />
+                  <image
+                    action="new"
+                    delay="500"
+                    href="/case_studies/rating_modal.xml?rating=2"
+                    show-during-load="loadingScreen"
+                    source="/case_studies/star_empty.png"
+                    style="Rating__Star"
+                  />
+                  <image
+                    action="new"
+                    delay="500"
+                    href="/case_studies/rating_modal.xml?rating=3"
+                    show-during-load="loadingScreen"
+                    source="/case_studies/star_empty.png"
+                    style="Rating__Star"
+                  />
+                  <image
+                    action="new"
+                    delay="500"
+                    href="/case_studies/rating_modal.xml?rating=4"
+                    show-during-load="loadingScreen"
+                    source="/case_studies/star_empty.png"
+                    style="Rating__Star"
+                  />
+                  <image
+                    action="new"
+                    delay="500"
+                    href="/case_studies/rating_modal.xml?rating=5"
+                    show-during-load="loadingScreen"
+                    source="/case_studies/star_empty.png"
+                    style="Rating__Star"
+                  />
+                </view>
+              </view>
+            </item>
+            <item
+              action="new"
+              delay="500"
+              href="/case_studies/rating_modal.xml"
+              key="b"
+              show-during-load="loadingScreen"
+              style="ShiftItem"
+            >
+              <image
+                source="/case_studies/image.jpg"
+                style="ShiftItem__Avatar"
+              />
+              <view style="ShiftItem__Info">
+                <text style="ShiftItem__WorkerName">Jake Tepperman</text>
+                <text style="ShiftItem__Details">
+                  7:00 PM - 1:00 AM - $116.80
+                </text>
+                <view style="Rating">
+                  <image
+                    action="new"
+                    delay="500"
+                    href="/case_studies/rating_modal.xml?rating=1"
+                    show-during-load="loadingScreen"
+                    source="/case_studies/star_empty.png"
+                    style="Rating__Star"
+                  />
+                  <image
+                    action="new"
+                    delay="500"
+                    href="/case_studies/rating_modal.xml?rating=2"
+                    show-during-load="loadingScreen"
+                    source="/case_studies/star_empty.png"
+                    style="Rating__Star"
+                  />
+                  <image
+                    action="new"
+                    delay="500"
+                    href="/case_studies/rating_modal.xml?rating=3"
+                    show-during-load="loadingScreen"
+                    source="/case_studies/star_empty.png"
+                    style="Rating__Star"
+                  />
+                  <image
+                    action="new"
+                    delay="500"
+                    href="/case_studies/rating_modal.xml?rating=4"
+                    show-during-load="loadingScreen"
+                    source="/case_studies/star_empty.png"
+                    style="Rating__Star"
+                  />
+                  <image
+                    action="new"
+                    delay="500"
+                    href="/case_studies/rating_modal.xml?rating=5"
+                    show-during-load="loadingScreen"
+                    source="/case_studies/star_empty.png"
+                    style="Rating__Star"
+                  />
+                </view>
+              </view>
+            </item>
+          </list>
+        </view>
+      </view>
+    </body>
+  </screen>
+  <screen id="loadingScreen">
+    <styles>
+      <style
+        id="Header"
+        alignItems="center"
+        backgroundColor="white"
+        borderBottomColor="#eee"
+        borderBottomWidth="1"
+        flexDirection="row"
+        height="72"
+        paddingLeft="24"
+        paddingRight="24"
+        paddingTop="24"
+      />
+      <style id="Header__Close" height="32" marginRight="16" width="32" />
+      <style id="Body" backgroundColor="white" flex="1" />
+      <style
+        id="Title"
+        color="black"
+        fontSize="32"
+        fontWeight="bold"
+        lineHeight="40"
+        marginLeft="24"
+        marginRight="24"
+        marginTop="24"
+      />
+      <style
+        id="Loading"
+        alignItems="center"
+        flex="1"
+        justifyContent="center"
+      />
+    </styles>
+    <body style="Body" safe-area="true">
+      <header style="Header">
+        <image
+          action="close"
+          href="/index.xml"
+          source="/case_studies/close@2x.png"
+          style="Header__Close"
+        />
+      </header>
+      <text style="Title">Rate the Instaworker</text>
+      <view style="Loading">
+        <spinner />
+      </view>
+    </body>
+  </screen>
+</doc>

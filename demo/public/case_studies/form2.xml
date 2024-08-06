@@ -1,0 +1,50 @@
+<view style="FormGroup" xmlns="https://hyperview.org/hyperview">
+  <text style="label">Location Information</text>
+  <select-single name="parking" style="SelectCustom">
+    <option style="SelectCustom__Option" value="paid_parking">
+      <view style="SelectCustom__ImageWrapper">
+        <image
+          source="/forms/unselected.png"
+          style="SelectCustom__Image SelectCustom__Image--Unselected"
+        />
+        <image
+          source="/forms/selected.png"
+          style="SelectCustom__Image SelectCustom__Image--Selected"
+        />
+      </view>
+      <text style="SelectCustom__Label">Paid parking</text>
+    </option>
+    <option selected="true" style="SelectCustom__Option" value="free_parking">
+      <view style="SelectCustom__ImageWrapper">
+        <image
+          source="/forms/unselected.png"
+          style="SelectCustom__Image SelectCustom__Image--Unselected"
+        />
+        <image
+          source="/forms/selected.png"
+          style="SelectCustom__Image SelectCustom__Image--Selected"
+        />
+      </view>
+      <text style="SelectCustom__Label">Free parking</text>
+    </option>
+    <option style="SelectCustom__Option" value="unknown_parking">
+      <view style="SelectCustom__ImageWrapper">
+        <image
+          source="/forms/unselected.png"
+          style="SelectCustom__Image SelectCustom__Image--Unselected"
+        />
+        <image
+          source="/forms/selected.png"
+          style="SelectCustom__Image SelectCustom__Image--Selected"
+        />
+      </view>
+      <text style="SelectCustom__Label">Unknown</text>
+    </option>
+  </select-single>
+  <text-area
+    name="location_instructions"
+    placeholder="Any extra instructions?"
+    placeholderTextColor="#8D9494"
+    style="input"
+  />
+</view>

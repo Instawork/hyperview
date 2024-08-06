@@ -1,0 +1,21 @@
+<text style="section">Date field</text>
+<view style="form-group">
+  <text style="label" hide="true" id="id_df_loading">Loading...</text>
+  <date-field
+    field-style="input"
+    field-text-style="input-text"
+    id="id_df"
+    label-format="MMMM D, YYYY"
+    modal-style="picker-modal"
+    modal-overlay-style="picker-modal-overlay"
+    modal-text-style="picker-modal-text"
+    name="df"
+    placeholder="Select date"
+    placeholderTextColor="#8D9494"/>
+  <text style="link" action="set-value" new-value="2019-10-06" target="id_df">
+    Select "2019-10-06"
+  </text>
+  <text style="link" action="set-value" new-value="" target="id_df">
+    Clear
+  </text>
+</view>

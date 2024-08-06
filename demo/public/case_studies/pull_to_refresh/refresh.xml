@@ -1,0 +1,16 @@
+<list
+  action="replace"
+  href="/case_studies/pull_to_refresh/refresh.xml"
+  trigger="refresh"
+  xmlns="https://hyperview.org/hyperview"
+>
+  <item key="4" style="Item">
+    <text style="Item__Label">New Item!</text>
+  </item>
+  <item key="1" style="Item">
+    <text style="Item__Label">List 1</text>
+  </item>
+  <item key="2" style="Item">
+    <text style="Item__Label">List 2</text>
+  </item>
+</list>

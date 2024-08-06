@@ -1,0 +1,85 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style id="Body" backgroundColor="white" flex="1" paddingTop="24" />
+      <style id="Main" flex="1" marginBottom="40" />
+      <style
+        id="FormGroup"
+        flex="1"
+        marginLeft="24"
+        marginRight="24"
+        marginTop="24"
+      />
+      <style
+        id="Input"
+        borderBottomColor="#E1E1E1"
+        borderBottomWidth="1"
+        borderColor="#4E4D4D"
+        flex="1"
+        fontSize="16"
+        fontWeight="normal"
+        paddingBottom="8"
+        paddingTop="8"
+      >
+        <modifier focused="true">
+          <style borderBottomColor="#4778FF" />
+        </modifier>
+      </style>
+      <style id="Input--Error" borderBottomColor="#FF4847" color="#FF4847">
+        <modifier focused="true">
+          <style borderBottomColor="#FF4847" />
+        </modifier>
+      </style>
+      <style
+        id="Label"
+        borderColor="#4E4D4D"
+        fontSize="16"
+        fontWeight="bold"
+        lineHeight="24"
+        marginBottom="8"
+      />
+      <style
+        id="Help"
+        borderColor="#FF4847"
+        fontSize="16"
+        fontWeight="normal"
+        lineHeight="24"
+        marginTop="16"
+      />
+      <style id="Help--Error" color="#FF4847" />
+      <style
+        id="Submit"
+        color="#4778FF"
+        fontSize="16"
+        fontWeight="bold"
+        lineHeight="24"
+        marginLeft="24"
+        marginTop="16"
+      />
+    </styles>
+    <body style="Body" safe-area="true">
+      <form id="myForm" scroll="true">
+        <view style="FormGroup">
+          <text style="Label">Label line</text>
+          <text-field
+            name="data"
+            placeholder="Placeholder"
+            placeholderTextColor="#8D9494"
+            style="Input"
+          />
+        </view>
+        <text
+          action="replace"
+          delay="500"
+          href="/case_studies/basic_form/submit.xml"
+          show-during-load="mySpinner"
+          style="Submit"
+          target="myForm"
+        >
+          Submit
+        </text>
+      </form>
+      <spinner id="mySpinner" hide="true" />
+    </body>
+  </screen>
+</doc>

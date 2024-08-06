@@ -1,0 +1,46 @@
+<section-list
+  action="replace"
+  delay="700"
+  href="/ui/ui-elements/section-list/refresh/_refresh_load.xml"
+  trigger="refresh"
+  xmlns="https://hyperview.org/hyperview"
+>
+  <!-- Section 1 -->
+  <section-title style="list-header">
+    <text style="list-header-text">Section 1</text>
+  </section-title>
+  <item key="1" style="item">
+    <text style="item-label">List 1</text>
+  </item>
+  <item key="2" style="item">
+    <text style="item-label">List 2 Changed!</text>
+  </item>
+  <item key="3" style="item">
+    <text style="item-label">List 3</text>
+  </item>
+  <item key="4" style="item">
+    <text style="item-label">List 4</text>
+  </item>
+  <item key="5" style="item">
+    <text style="item-label">List 5 Added!</text>
+  </item>
+  <!-- Section 2 -->
+  <section-title style="list-header">
+    <text style="list-header-text">Section 2</text>
+  </section-title>
+  <item key="6" style="item">
+    <text style="item-label">List 6</text>
+  </item>
+  <item key="7" style="item">
+    <text style="item-label">List 7</text>
+  </item>
+  <item key="8" style="item">
+    <text style="item-label">List 8</text>
+  </item>
+  <item key="9" style="item">
+    <text style="item-label">List 9</text>
+  </item>
+  <item key="10" style="item">
+    <text style="item-label">List 10</text>
+  </item>
+</section-list>

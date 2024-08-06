@@ -1,5 +1,7 @@
 import moment from 'moment';
 
+const parseUrl = require('url-parse');
+
 export const formatDate = (
   date: Date | null | undefined,
   format: string | undefined,
@@ -9,6 +11,12 @@ export const fetchWrapper = (
   input: RequestInfo | URL,
   init: RequestInit | undefined = { headers: {} },
 ): Promise<Response> => {
+  if (process.env.BASE_URL) {
+    const currUrl = parseUrl(input.toString());
+    const baseUrl = parseUrl(process.env.BASE_URL);
+    currUrl.pathname = baseUrl.pathname + currUrl.pathname;
+    input = currUrl.toString();
+  }
   return fetch(input, {
     ...init,
     mode: 'cors',

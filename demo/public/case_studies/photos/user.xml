@@ -1,0 +1,198 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style id="Main" backgroundColor="white" flex="1" paddingTop="24" />
+      <style
+        id="Header"
+        alignItems="center"
+        backgroundColor="white"
+        borderBottomColor="#BDC4C4"
+        borderBottomWidth="1"
+        flex="0"
+        flexDirection="row"
+        justifyContent="space-between"
+        paddingBottom="16"
+        paddingLeft="16"
+        paddingRight="16"
+        paddingTop="16"
+      />
+      <style id="Header__Section" flex="1" />
+      <style
+        id="Header__Back"
+        color="#4E4D4D"
+        fontSize="16"
+        lineHeight="20"
+        textAlign="left"
+      />
+      <style
+        id="Header__Title"
+        color="#4E4D4D"
+        fontSize="24"
+        fontWeight="bold"
+        lineHeight="32"
+        textAlign="center"
+      />
+      <style id="Content" flex="1" />
+      <style id="Profile" flexDirection="row" padding="16" />
+      <style
+        id="Profile__Image"
+        borderRadius="32"
+        height="64"
+        marginRight="16"
+        width="64"
+      />
+      <style id="Stats" flex="1" flexDirection="row" />
+      <style
+        id="Stat"
+        alignItems="center"
+        flexDirection="column"
+        marginLeft="16"
+        marginRight="16"
+      />
+      <style
+        id="Stat__Number"
+        color="#4E4D4D"
+        fontSize="18"
+        fontWeight="bold"
+        lineHeight="24"
+      />
+      <style
+        id="Stat__Label"
+        color="#BDC4C4"
+        fontSize="14"
+        fontWeight="normal"
+      />
+      <style id="Bio" paddingBottom="16" paddingLeft="16" paddingRight="16" />
+      <style
+        id="Bio__Paragraph"
+        color="#4E4D4D"
+        fontSize="14"
+        fontWeight="600"
+        lineHeight="18"
+      />
+      <style
+        id="Tabs"
+        flex="1"
+        flexDirection="row"
+        justifyContent="space-between"
+        marginBottom="8"
+      />
+      <style
+        id="Tab"
+        alignItems="center"
+        flex="1"
+        flexDirection="row"
+        justifyContent="center"
+        padding="8"
+      />
+      <style id="Tab__Image" height="24" width="24" />
+      <style
+        id="Images"
+        borderColor="white"
+        borderWidth="1"
+        flex="1"
+        flexDirection="row"
+        flexWrap="wrap"
+      />
+      <style
+        id="Image"
+        borderColor="white"
+        borderWidth="1"
+        height="124"
+        width="124"
+      />
+    </styles>
+    <body style="Main">
+      <header style="Header">
+        <view style="Header__Section">
+          <text action="back" href="#" style="Header__Back">Back</text>
+        </view>
+        <view style="Header__Section">
+          <text style="Header__Title">data</text>
+        </view>
+        <view style="Header__Section" />
+      </header>
+      <view scroll="true" style="Content">
+        <view style="Profile">
+          <image
+            source="/case_studies/photos/avatars/data.jpg"
+            style="Profile__Image"
+          />
+          <view style="Stats">
+            <view style="Stat">
+              <text style="Stat__Number">3431</text>
+              <text style="Stat__Label">posts</text>
+            </view>
+            <view style="Stat">
+              <text style="Stat__Number">6530</text>
+              <text style="Stat__Label">followers</text>
+            </view>
+            <view style="Stat">
+              <text style="Stat__Number">217</text>
+              <text style="Stat__Label">following</text>
+            </view>
+          </view>
+        </view>
+        <view style="Bio">
+          <text style="Bio__Paragraph">Data</text>
+          <text style="Bio__Paragraph">
+            I'm a synthetic life form with artificial intelligence. Love long
+            walks on the beach and pumpkin spice everything!
+          </text>
+        </view>
+        <view style="Tabs">
+          <view style="Tab">
+            <image
+              source="/case_studies/photos/icons/grid2.png"
+              style="Tab__Image"
+            />
+          </view>
+          <view style="Tab">
+            <image
+              source="/case_studies/photos/icons/list2.png"
+              style="Tab__Image"
+            />
+          </view>
+          <view style="Tab">
+            <image
+              source="/case_studies/photos/icons/location2.png"
+              style="Tab__Image"
+            />
+          </view>
+          <view style="Tab">
+            <image
+              source="/case_studies/photos/icons/tag2.png"
+              style="Tab__Image"
+            />
+          </view>
+        </view>
+        <view style="Images">
+          <image
+            source="/case_studies/photos/photos/coffee.jpeg"
+            style="Image"
+          />
+          <image
+            source="/case_studies/photos/photos/concert.jpeg"
+            style="Image"
+          />
+          <image
+            source="/case_studies/photos/photos/dinner.jpeg"
+            style="Image"
+          />
+          <image source="/case_studies/photos/photos/feet.jpeg" style="Image" />
+          <image
+            source="/case_studies/photos/photos/inspiration1.jpeg"
+            style="Image"
+          />
+          <image source="/case_studies/photos/photos/salad.jpg" style="Image" />
+          <image source="/case_studies/photos/photos/sign.jpeg" style="Image" />
+          <image source="/case_studies/photos/photos/trev.jpeg" style="Image" />
+          <image
+            source="/case_studies/photos/photos/water.jpeg"
+            style="Image"
+          />
+        </view>
+      </view>
+    </body>
+  </screen>
+</doc>

@@ -1,0 +1,44 @@
+<items xmlns="https://hyperview.org/hyperview">
+  <item key="21" style="Item">
+    <text style="Item__Label">Added: List 21</text>
+  </item>
+  <item key="22" style="Item">
+    <text style="Item__Label">Added: List 22</text>
+  </item>
+  <item key="23" style="Item">
+    <text style="Item__Label">Added: List 23</text>
+  </item>
+  <item key="24" style="Item">
+    <text style="Item__Label">Added: List 24</text>
+  </item>
+  <item key="25" style="Item">
+    <text style="Item__Label">Added: List 25</text>
+  </item>
+  <item key="26" style="Item">
+    <text style="Item__Label">Added: List 26</text>
+  </item>
+  <item key="27" style="Item">
+    <text style="Item__Label">Added: List 27</text>
+  </item>
+  <item key="28" style="Item">
+    <text style="Item__Label">Added: List 28</text>
+  </item>
+  <item key="29" style="Item">
+    <text style="Item__Label">Added: List 29</text>
+  </item>
+  <item key="30" style="Item">
+    <text style="Item__Label">Added: List 30</text>
+  </item>
+  <item key="page-3-loader" style="Item">
+    <behavior
+      delay="300"
+      trigger="visible"
+      action="replace"
+      once="true"
+      href="/ui_elements/list/refresh_infinite_scroll/_infinite_scroll_page3.xml"
+    />
+    <view id="list-loading-indicator" style="Spinner">
+      <spinner />
+    </view>
+  </item>
+</items>

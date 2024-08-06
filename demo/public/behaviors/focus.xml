@@ -1,0 +1,236 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style
+        id="Header"
+        alignItems="center"
+        backgroundColor="white"
+        borderBottomColor="#eee"
+        borderBottomWidth="1"
+        flexDirection="row"
+        paddingLeft="24"
+        paddingRight="24"
+        paddingBottom="16"
+      />
+      <style
+        id="Header__Back"
+        color="blue"
+        fontSize="16"
+        fontWeight="600"
+        paddingRight="16"
+      />
+      <style id="Header__Title" color="black" fontSize="24" fontWeight="600" />
+      <style id="Body" backgroundColor="white" flex="1" />
+      <style id="Main" flex="1" />
+      <style
+        id="Description"
+        fontSize="16"
+        fontWeight="normal"
+        margin="24"
+        marginBottom="0"
+      />
+      <style
+        id="Container"
+        flexDirection="row"
+        borderColor="#e1e1e1"
+        borderRadius="16"
+        borderWidth="2"
+        margin="24"
+        padding="24"
+      />
+      <style
+        id="FormGroup"
+        flex="1"
+        marginLeft="24"
+        marginRight="24"
+        marginTop="24"
+      />
+      <style
+        id="Label"
+        borderColor="#4E4D4D"
+        fontSize="16"
+        fontWeight="bold"
+        lineHeight="24"
+        marginBottom="8"
+      />
+      <style
+        id="Input"
+        borderBottomColor="#E1E1E1"
+        borderBottomWidth="1"
+        borderColor="#4E4D4D"
+        flex="1"
+        fontSize="16"
+        fontWeight="normal"
+        paddingBottom="8"
+        paddingTop="8"
+      >
+        <modifier pressed="true">
+          <style borderBottomColor="green" />
+        </modifier>
+        <modifier focused="true">
+          <style borderBottomColor="#4778FF" />
+        </modifier>
+      </style>
+      <style id="Tip" color="#FF4847" fontSize="16" />
+      <style id="Input__Text" fontSize="16" fontWeight="normal" />
+      <style
+        id="PickerModal"
+        backgroundColor="white"
+        borderTopColor="#E1E1E1"
+        borderTopWidth="1"
+        shadowOffsetX="0"
+        shadowOffsetY="-5"
+        shadowOpacity="0.2"
+        shadowRadius="5"
+      />
+      <style id="PickerModal__overlay" backgroundColor="#1f1f1fa0" />
+      <style
+        id="PickerModal__text"
+        color="blue"
+        fontSize="16"
+        fontWeight="600"
+        marginBottom="16"
+        padding="24"
+      >
+        <modifier pressed="true">
+          <style opacity="0.5" />
+        </modifier>
+      </style>
+    </styles>
+    <body style="Body" safe-area="true">
+      <header style="Header">
+        <text action="back" href="#" style="Header__Back">Back</text>
+        <text style="Header__Title">Focus</text>
+      </header>
+      <view scroll="true" style="Main">
+        <text style="Description">
+          Clicking a text field will replace the content in the container.
+          Notice that clicking a focused text field does nothing, focus only
+          triggers when an unfocused text field is focused.
+        </text>
+        <view id="container1" style="Container" />
+        <view style="FormGroup">
+          <text style="Label">Input field 1</text>
+          <text-field
+            action="replace-inner"
+            href="#field1Focused"
+            name="text"
+            placeholder="First name"
+            placeholderTextColor="#8D9494"
+            style="Input"
+            target="container1"
+            trigger="focus"
+          />
+        </view>
+        <view style="FormGroup">
+          <text style="Label">Input field 2</text>
+          <text-field
+            action="replace-inner"
+            href="#field2Focused"
+            name="text"
+            placeholder="Last name"
+            placeholderTextColor="#8D9494"
+            style="Input"
+            target="container1"
+            trigger="focus"
+          />
+        </view>
+        <text style="Description">
+          Clicking a text area will replace the content in the container.
+        </text>
+        <view style="FormGroup">
+          <text style="Label">Input area 1</text>
+          <text-area
+            action="replace-inner"
+            href="#area1Focused"
+            name="feedback"
+            placeholder="Please leave your feedback"
+            placeholderTextColor="#8D9494"
+            style="Input"
+            target="container1"
+            trigger="focus"
+          />
+        </view>
+        <view style="FormGroup">
+          <text style="Label">Input area 2</text>
+          <text-area
+            action="replace-inner"
+            href="#area2Focused"
+            name="feedback"
+            placeholder="Please leave your feedback"
+            placeholderTextColor="#8D9494"
+            style="Input"
+            target="container1"
+            trigger="focus"
+          />
+        </view>
+        <view style="FormGroup">
+          <text style="Label">Picker field</text>
+          <picker-field
+            field-style="Input"
+            field-text-style="Input__Text"
+            modal-style="PickerModal"
+            modal-text-style="PickerModal__text"
+            name="picker1"
+            placeholder="Select choice"
+            placeholderTextColor="#8D9494"
+            trigger="focus"
+            action="replace-inner"
+            target="container1"
+            href="#pickerFocused"
+          >
+            <behavior
+              trigger="focus"
+              action="append"
+              target="container1"
+              href="#pickerFocused2"
+            />
+            <picker-item label="Choice 0" value="0" />
+            <picker-item label="Choice 1" value="1" />
+            <picker-item label="Choice 2" value="2" />
+            <picker-item label="Choice 3" value="3" />
+            <picker-item label="Choice 4" value="4" />
+            <picker-item label="Choice 5" value="5" />
+            <picker-item label="Choice 6" value="6" />
+          </picker-field>
+        </view>
+        <view style="FormGroup">
+          <text style="Label">Date field</text>
+          <date-field
+            field-style="Input"
+            field-text-style="Input__Text"
+            label-format="MMMM D, YYYY"
+            modal-style="PickerModal"
+            modal-overlay-style="PickerModal__overlay"
+            modal-text-style="PickerModal__text"
+            name="date1"
+            mode="spinner"
+            placeholder="Select date"
+            placeholderTextColor="#8D9494"
+            trigger="focus"
+            action="replace-inner"
+            target="container1"
+            href="#dateFieldFocused"
+          >
+            <behavior
+              trigger="focus"
+              action="append"
+              target="container1"
+              href="#dateFieldFocused2"
+            />
+          </date-field>
+        </view>
+      </view>
+      <view hide="true">
+        <text id="field1Focused" style="Tip">Field 1 focused</text>
+        <text id="field2Focused" style="Tip">Field 2 focused</text>
+        <text id="area1Focused" style="Tip">Area 1 focused</text>
+        <text id="area2Focused" style="Tip">Area 2 focused</text>
+        <text id="pickerFocused" style="Tip">Picker field focused</text>
+        <text id="pickerFocused2" style="Tip">!</text>
+        <text id="dateFieldFocused" style="Tip">Date field focused</text>
+        <text id="dateFieldFocused2" style="Tip">!</text>
+      </view>
+    </body>
+  </screen>
+</doc>

@@ -1,0 +1,9 @@
+<view
+  action="append"
+  href="/behaviors/_append_fragment3.xml"
+  style="Tree"
+  xmlns="https://hyperview.org/hyperview"
+>
+  <text style="Tree__Label">a) dolor</text>
+  <text style="Tree__Label">b) sit</text>
+</view>
