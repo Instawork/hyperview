@@ -1,5 +1,5 @@
 
-<doc xmlns="https://hyperview.org/hyperview">
+<doc xmlns="https://hyperview.org/hyperview" >
   <screen>
     <styles>
       <style
@@ -247,6 +247,7 @@ hv_list_tag: "root"
         key="button"
         show-during-load="loading-screen"
         style="item item-first"
+        
       >
         <view style="item-left">
           <text style="item-label">Button</text>
@@ -278,6 +279,7 @@ hv_list_tag: "root"
         key="elevation"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Elevation</text>
@@ -309,6 +311,7 @@ hv_list_tag: "root"
         key="shadow"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Shadow</text>
@@ -340,6 +343,7 @@ hv_list_tag: "root"
         key="text"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Text</text>
@@ -373,6 +377,7 @@ hv_list_tag: "root"
         key="flex"
         show-during-load="loading-screen"
         style="item item-last"
+        
       >
         <view style="item-left">
           <text style="item-label">Flex</text>
@@ -403,8 +408,11 @@ hv_list_tag: "root"
     </body>
   </screen>
   
+  
+  
 <screen id="loading-screen">
-  <style
+  <styles>
+    <style
   id="button"
   backgroundColor="#63CB76"
   borderRadius="16"
@@ -594,6 +602,7 @@ hv_list_tag: "root"
 />
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
 
+  </styles>
   <body style="body" safe-area="true">
     <header style="header">
   

@@ -1,5 +1,7 @@
 
-<doc xmlns="https://hyperview.org/hyperview">
+<doc xmlns="https://hyperview.org/hyperview" 
+  xmlns:ns1="https://instawork.com/hyperview-intercom"
+>
   <screen>
     <styles>
       <style
@@ -436,8 +438,11 @@
     </body>
   </screen>
   
+  
+  
 <screen id="loading-screen">
-  <style
+  <styles>
+    <style
   id="button"
   backgroundColor="#63CB76"
   borderRadius="16"
@@ -627,6 +632,7 @@
 />
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
 
+  </styles>
   <body style="body" safe-area="true">
     <header style="header">
   

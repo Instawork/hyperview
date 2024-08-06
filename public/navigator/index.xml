@@ -1,171 +1,578 @@
 
-<doc xmlns="https://hyperview.org/hyperview">
+<doc xmlns="https://hyperview.org/hyperview" >
   <screen>
     <styles>
       <style
-  id="Header"
-  alignItems="center"
-  backgroundColor="white"
-  borderBottomColor="#eee"
-  borderBottomWidth="1"
-  flexDirection="row"
-  paddingLeft="24"
-  paddingRight="24"
-  paddingBottom="16"/>
-<style id="Header__Back" color="blue" fontSize="16" fontWeight="600" paddingRight="16"/>
-<style id="Header__Title" color="black" fontSize="24" fontWeight="600"/>
-<style id="Body" backgroundColor="white" flex="1"/>
-<style id="Description" fontSize="16" fontWeight="600" margin="24"/>
-<style
-  id="Item"
-  alignItems="center"
-  backgroundColor="#FFFFFF"
-  borderBottomColor="#eee"
-  borderBottomWidth="1"
-  flex="1"
-  flexDirection="row"
-  height="48"
-  justifyContent="space-between"
-  paddingLeft="24"
-  paddingRight="24"/>
-<style id="Item__Left" flex="1" flexDirection="row"/>
-<style id="Item__Label" fontSize="18" fontWeight="normal"/>
-<style id="Item__Chevron" fontSize="18" fontWeight="bold"/>
-<style
-  id="Button"
+  id="button"
   backgroundColor="#63CB76"
   borderRadius="16"
   flex="1"
   flexDirection="row"
   justifyContent="center"
   margin="24"
-  padding="24"/>
-<style id="Button__Label" color="white" fontSize="24" fontWeight="bold"/>
-<style id="Button--Disabled" opacity="0.5"/>
+  padding="24"
+/>
+<style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+
+<style id="description" fontSize="16" margin="24" />
+
 <style
-  id="Button--Shadow"
-  elevation="4"
-  shadowColor="black"
-  shadowOffsetX="0"
-  shadowOffsetY="4"
-  shadowOpacity="0.5"
-  shadowRadius="4">
-  <modifier pressed="true">
-  <style elevation="1" shadowOffsetY="1" shadowRadius="1"/>
-  </modifier>
-</style>
-<style id="Button--Elevation3" elevation="3"/>
-<style id="Button--Elevation10" elevation="10"/>
+  id="link"
+  color="#4778FF"
+  fontWeight="bold"
+  marginTop="8"
+  marginRight="16"
+/>
+
 <style
-  id="Bottom_Tab"
+  id="container-style"
+  borderColor="#e1e1e1"
+  borderRadius="16"
+  borderWidth="2"
+  margin="24"
+  padding="24"
+/>
+<style
+  id="container-label"
+  color="black"
+  fontSize="16"
+  fontWeight="normal"
+/>
+
+<style
+  id="name"
+  fontSize="18"
+  fontWeight="600"
+  margin="24"
+  marginBottom="0"
+/>
+<style
+  id="phone"
+  fontSize="18"
+  fontWeight="normal"
+  margin="24"
+  marginBottom="0"
+/>
+
+
+<style
+  id="header"
+  alignItems="center"
+  backgroundColor="white"
+  borderBottomColor="#eee"
+  borderBottomWidth="1"
+  flexDirection="row"
+  paddingBottom="16"
+  paddingLeft="24"
+  paddingRight="24"
+/>
+<style
+  id="header-btn"
+  color="blue"
+  fontSize="16"
+  fontWeight="600"
+  paddingRight="16"
+/>
+<style id="header-title" color="black" fontSize="24" fontWeight="600" />
+<style id="body" backgroundColor="white" flex="1" />
+<style id="description" fontSize="16" margin="24" />
+<style
+  id="item"
+  alignItems="center"
+  backgroundColor="#FFFFFF"
+  borderColor="#eee"
+  borderBottomWidth="1"
+  borderWidth="1"
+  flex="1"
+  flexDirection="row"
+  height="48"
+  justifyContent="space-between"
+  marginHorizontal="24"
+  paddingLeft="24"
+  paddingRight="24"
+/>
+<style id="item-first" borderTopLeftRadius="24" borderTopRightRadius="24" />
+<style
+  id="item-last"
+  borderBottomLeftRadius="24"
+  borderBottomRightRadius="24"
+  marginBottom="24"
+/>
+<style id="item-left" flex="1" flexDirection="row" />
+<style id="item-label" fontSize="18" fontWeight="normal" />
+<style id="item-chevron" fontSize="18" fontWeight="bold" />
+<style
+  id="button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"
+/>
+<style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style
+  id="bottom-tab"
+  alignItems="center"
   flex="1"
   height="48"
   justifyContent="center"
-  alignItems="center"
 />
 <style
-  id="Bottom_Tab__Label"
-  fontSize="20"
-  fontWeight="bold"
+  id="bottom-tab-label"
   color="#cccccc"
+  fontSize="12"
+  fontWeight="bold"
 />
-<style id="Bottom_Tab__Label__Selected" color="#4778FF"/>
-<style id="Bottom_Tab__Selected"/>
+<style id="bottom-tab-label-selected" color="#4778FF" />
+<style id="bottom-tab-selected" />
 <style
-  id="Bottom_Tab__Icon"
-  flex="0"
-  justifyContent="center"
+  id="back-image"
   alignItems="center"
+  flex="0"
+  height="10"
+  justifyContent="center"
   padding="10"
+  width="10"
 />
 <style
-  id="Footer"
-  flex="1"
+  id="footer"
+  alignItems="stretch"
+  borderTopColor="#eee"
+  borderTopWidth="1"
+  bottom="0"
   flexDirection="row"
   flexShrink="1"
   flexGrow="0"
-  bottom="45"
-  alignItems="stretch"
   justifyContent="space-around"
+  position="absolute"
+  width="100%"
 />
+<style
+  id="list-container"
+  flex="0"
+  flexGrow="1"
+  marginTop="24"
+  marginBottom="48"
+/>
+<style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" />
+<style id="loading" alignItems="center" flex="1" justifyContent="center" />
+<style
+  id="link"
+  color="#4778FF"
+  fontWeight="bold"
+  marginTop="8"
+  marginRight="16"
+/>
+<style
+  id="container-style"
+  borderColor="#e1e1e1"
+  borderRadius="16"
+  borderWidth="2"
+  margin="24"
+  padding="24"
+/>
+<style
+  id="container-label"
+  color="black"
+  fontSize="16"
+  fontWeight="normal"
+/>
+<style
+  id="list-header"
+  alignItems="center"
+  backgroundColor="#eee"
+  flex="1"
+  flexDirection="row"
+  height="48"
+  marginHorizontal="24"
+  paddingLeft="24"
+  paddingRight="24"
+/>
+<style id="list-header-text" fontSize="18" fontWeight="bold"/>
 
       
-        <style
-          id="Header__Switch"
-          alignItems="center"
-          flex="1"
-          flexDirection="row"
-          flexGrow="1"
-          justifyContent="flex-end"
-          columnGap="8"/>
-        <style id="Switch__Label" fontSize="12" fontWeight="bold"/>
       
     </styles>
-    <body style="Body" safe-area="true">
-      <header style="Header">
-        
-          <text action="back" href="#" style="Header__Back">Back</text>
-        
-        <text style="Header__Title">Navigator</text>
-        
-      </header>
+    <body style="body" safe-area="true">
+      <header style="header">
+  
+  <text style="header-title">Navigator</text>
+</header>
+
       
   
-<list xmlns="https://hyperview.org/hyperview" trigger="refresh" action="replace" target="directory-list" id="directory-list" href="/navigator/list.xml">
+  ---
+permalink: "list.xml"
+hv_list_tag: "root"
+---
+
+
+<list
+  action="replace"
+  href="/navigator/index.xml"
+  id="directory-list"
+  style="list-container"
+  target="directory-list"
+  trigger="refresh"
+  xmlns="https://hyperview.org/hyperview"
+>
   
     
-      <item href="/navigator/back/index.xml" key="back-trigger" show-during-load="loadingScreen" style="Item">
-        <view style="Item__Left">
-          <text style="Item__Label">Back trigger</text>
+      
+      
+        
+      
+      
+      <item
+        href="/navigator/back-trigger/index.xml"
+        key="back-trigger"
+        show-during-load="loading-screen"
+        style="item item-first"
+        
+      >
+        <view style="item-left">
+          <text style="item-label">Back Trigger</text>
         </view>
-        <text style="Item__Chevron">&gt;</text>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
       </item>
     
-      <item href="/navigator/simple_stack/index.xml" key="simple-stack-navigator" show-during-load="loadingScreen" style="Item">
-        <view style="Item__Left">
-          <text style="Item__Label">Simple Stack Navigator</text>
+      
+      
+      
+      <item
+        href="/navigator/simple-stack/index.xml"
+        key="simple-stack-navigator"
+        show-during-load="loading-screen"
+        style="item"
+        
+      >
+        <view style="item-left">
+          <text style="item-label">Simple Stack Navigator</text>
         </view>
-        <text style="Item__Chevron">&gt;</text>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
       </item>
     
-      <item href="/navigator/simple_tab/index.xml" key="simple-tab-navigator" show-during-load="loadingScreen" style="Item">
-        <view style="Item__Left">
-          <text style="Item__Label">Simple Tab Navigator</text>
+      
+      
+      
+        
+      
+      <item
+        href="/navigator/simple-tab/index.xml"
+        key="simple-tab-navigator"
+        show-during-load="loading-screen"
+        style="item item-last"
+        
+      >
+        <view style="item-left">
+          <text style="item-label">Simple Tab Navigator</text>
         </view>
-        <text style="Item__Chevron">&gt;</text>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
       </item>
     
   
 </list>
 
 
+  <view id="footer" style="footer">
+    <view
+      href-style="bottom-tab"
+      action="navigate"
+      target="tab-ui"
+      style="bottom-tab bottom-tab-selected"
+    >
+      <text style="bottom-tab-label ">UI</text>
+    </view>
+    <view
+      style="bottom-tab"
+      href-style="bottom-tab"
+      action="navigate"
+      target="tab-behaviors"
+    >
+      <text style="bottom-tab-label ">Behaviors</text>
+    </view>
+    <view
+      style="bottom-tab"
+      href-style="bottom-tab"
+      action="navigate"
+      target="tab-navigation"
+    >
+      <text style="bottom-tab-label ">Navigation</text>
+    </view>
+    <view
+      style="bottom-tab"
+      href-style="bottom-tab"
+      action="navigate"
+      target="tab-case-studies"
+    >
+      <text style="bottom-tab-label ">Case Studies</text>
+    </view>
+    <view
+      style="bottom-tab"
+      href-style="bottom-tab"
+      action="navigate"
+      target="tab-navigator"
+    >
+      <text style="bottom-tab-label  bottom-tab-label-selected">Navigator</text>
+    </view>
+  </view>
+
     </body>
   </screen>
   
-<screen id="loadingScreen">
+  
+  
+<screen id="loading-screen">
   <styles>
     <style
-      id="Header"
-      alignItems="center"
-      backgroundColor="white"
-      borderBottomColor="#eee"
-      borderBottomWidth="1"
-      flexDirection="row"
-      paddingLeft="24"
-      paddingRight="24"
-      paddingBottom="16"/>
-    <style id="Header__Back" color="blue" fontSize="16" fontWeight="600" paddingRight="16"/>
-    <style id="Header__Title" color="black" fontSize="24" fontWeight="600"/>
-    <style id="Body" backgroundColor="white" flex="1"/>
-    <style id="LoadingText" fontSize="14" fontWeight="normal" marginBottom="16"/>
-    <style id="Loading" alignItems="center" flex="1" justifyContent="center"/>
+  id="button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"
+/>
+<style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+
+<style id="description" fontSize="16" margin="24" />
+
+<style
+  id="link"
+  color="#4778FF"
+  fontWeight="bold"
+  marginTop="8"
+  marginRight="16"
+/>
+
+<style
+  id="container-style"
+  borderColor="#e1e1e1"
+  borderRadius="16"
+  borderWidth="2"
+  margin="24"
+  padding="24"
+/>
+<style
+  id="container-label"
+  color="black"
+  fontSize="16"
+  fontWeight="normal"
+/>
+
+<style
+  id="name"
+  fontSize="18"
+  fontWeight="600"
+  margin="24"
+  marginBottom="0"
+/>
+<style
+  id="phone"
+  fontSize="18"
+  fontWeight="normal"
+  margin="24"
+  marginBottom="0"
+/>
+
+
+<style
+  id="header"
+  alignItems="center"
+  backgroundColor="white"
+  borderBottomColor="#eee"
+  borderBottomWidth="1"
+  flexDirection="row"
+  paddingBottom="16"
+  paddingLeft="24"
+  paddingRight="24"
+/>
+<style
+  id="header-btn"
+  color="blue"
+  fontSize="16"
+  fontWeight="600"
+  paddingRight="16"
+/>
+<style id="header-title" color="black" fontSize="24" fontWeight="600" />
+<style id="body" backgroundColor="white" flex="1" />
+<style id="description" fontSize="16" margin="24" />
+<style
+  id="item"
+  alignItems="center"
+  backgroundColor="#FFFFFF"
+  borderColor="#eee"
+  borderBottomWidth="1"
+  borderWidth="1"
+  flex="1"
+  flexDirection="row"
+  height="48"
+  justifyContent="space-between"
+  marginHorizontal="24"
+  paddingLeft="24"
+  paddingRight="24"
+/>
+<style id="item-first" borderTopLeftRadius="24" borderTopRightRadius="24" />
+<style
+  id="item-last"
+  borderBottomLeftRadius="24"
+  borderBottomRightRadius="24"
+  marginBottom="24"
+/>
+<style id="item-left" flex="1" flexDirection="row" />
+<style id="item-label" fontSize="18" fontWeight="normal" />
+<style id="item-chevron" fontSize="18" fontWeight="bold" />
+<style
+  id="button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"
+/>
+<style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style
+  id="bottom-tab"
+  alignItems="center"
+  flex="1"
+  height="48"
+  justifyContent="center"
+/>
+<style
+  id="bottom-tab-label"
+  color="#cccccc"
+  fontSize="12"
+  fontWeight="bold"
+/>
+<style id="bottom-tab-label-selected" color="#4778FF" />
+<style id="bottom-tab-selected" />
+<style
+  id="back-image"
+  alignItems="center"
+  flex="0"
+  height="10"
+  justifyContent="center"
+  padding="10"
+  width="10"
+/>
+<style
+  id="footer"
+  alignItems="stretch"
+  borderTopColor="#eee"
+  borderTopWidth="1"
+  bottom="0"
+  flexDirection="row"
+  flexShrink="1"
+  flexGrow="0"
+  justifyContent="space-around"
+  position="absolute"
+  width="100%"
+/>
+<style
+  id="list-container"
+  flex="0"
+  flexGrow="1"
+  marginTop="24"
+  marginBottom="48"
+/>
+<style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" />
+<style id="loading" alignItems="center" flex="1" justifyContent="center" />
+<style
+  id="link"
+  color="#4778FF"
+  fontWeight="bold"
+  marginTop="8"
+  marginRight="16"
+/>
+<style
+  id="container-style"
+  borderColor="#e1e1e1"
+  borderRadius="16"
+  borderWidth="2"
+  margin="24"
+  padding="24"
+/>
+<style
+  id="container-label"
+  color="black"
+  fontSize="16"
+  fontWeight="normal"
+/>
+<style
+  id="list-header"
+  alignItems="center"
+  backgroundColor="#eee"
+  flex="1"
+  flexDirection="row"
+  height="48"
+  marginHorizontal="24"
+  paddingLeft="24"
+  paddingRight="24"
+/>
+<style id="list-header-text" fontSize="18" fontWeight="bold"/>
+
   </styles>
-  <body style="Body" safe-area="true">
-    <header style="Header">
-      <text action="back" href="#" style="Header__Back">Back</text>
-    </header>
-    <view style="Loading">
-      <text style="LoadingText">Loading…</text>
+  <body style="body" safe-area="true">
+    <header style="header">
+  
+  <text style="header-title">Navigator</text>
+</header>
+
+    <view style="loading">
+      <text style="loading-text">Loading…</text>
       <spinner/>
     </view>
   </body>
