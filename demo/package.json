@@ -8,8 +8,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "deploy": "BASE_URL=https://instawork.github.io/hyperview gh-pages -d web-build",
-    "predeploy": "expo export:web && cp -R public web-build/",
+    "deploy": "gh-pages -d web-build",
+    "predeploy": "BASE_URL=https://instawork.github.io/hyperview expo export:web && cp -R ../_examples_site web-build/public/",
     "eject": "expo eject"
   },
   "dependencies": {
@@ -20,6 +20,7 @@
     "@react-navigation/native": "^6.1.8",
     "@react-navigation/stack": "^6.3.18",
     "expo": "~49.0.13",
+    "expo-constants": "~14.2.1",
     "expo-status-bar": "~1.6.0",
     "hyperview": "0.82.2",
     "moment": "^2.29.4",

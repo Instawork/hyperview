@@ -1,4 +1,5 @@
 import moment from 'moment';
+import Constants from 'expo-constants';
 
 const parseUrl = require('url-parse');
 
@@ -11,9 +12,9 @@ export const fetchWrapper = (
   input: RequestInfo | URL,
   init: RequestInit | undefined = { headers: {} },
 ): Promise<Response> => {
-  if (process.env.BASE_URL) {
+  if (Constants.manifest?.extra?.base_url) {
     const currUrl = parseUrl(input.toString());
-    const baseUrl = parseUrl(process.env.BASE_URL);
+    const baseUrl = parseUrl(Constants.manifest?.extra?.base_url);
     currUrl.pathname = baseUrl.pathname + currUrl.pathname;
     input = currUrl.toString();
   }
