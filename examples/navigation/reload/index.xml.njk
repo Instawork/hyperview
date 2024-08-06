@@ -1,0 +1,25 @@
+---
+permalink: "/navigation/reload/index.xml"
+tags: "navigation"
+hv_title: "Reload"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  {{ description('Tapping the button below will reload this entire screen. Modifications to the file will appear without navigation.') }}
+  {% call button('Reload!') -%}
+    <behavior action="reload" href="#" show-during-load="loadingElement" />
+  {%- endcall %}
+  <view id="loadingElement" hide="true">
+    <spinner id="myIndicator"/>
+    <text style="item">Loading...</text>
+  </view>
+
+  {{ description('Tapping the button below will reload this screen with a new URL') }}
+  {% call button('Reload different screen') -%}
+    <behavior action="reload" href="/navigation/index.xml" show-during-load="loading-screen" />
+  {%- endcall %}
+{% endblock %}

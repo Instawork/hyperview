@@ -1,0 +1,50 @@
+---
+permalink: "/navigation/new/index.xml"
+tags: "navigation"
+hv_title: "New"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block styles %}
+  <style
+    id="input"
+    borderBottomColor="#E1E1E1"
+    borderBottomWidth="1"
+    borderColor="#4E4D4D"
+    flex="1"
+    fontSize="16"
+    fontWeight="normal"
+    marginLeft="24"
+    marginRight="24"
+    paddingBottom="8"
+    paddingTop="8">
+    <modifier pressed="true">
+    <style borderBottomColor="green"/>
+    </modifier>
+    <modifier focused="true">
+    <style borderBottomColor="#4778FF"/>
+    </modifier>
+  </style>
+{% endblock %}
+
+{% block content %}
+  {{ description('Tapping the button below will request an XML screen and show it in a new modal.') }}
+
+  {% call button('New') -%}
+    <behavior action="new" href="/navigation/modal/index.xml" />
+  {%- endcall %}
+
+  {% call button('New with indicator') -%}
+    <behavior action="new" delay="1000" href="/navigation/modal/index.xml" show-during-load="loadingScreen" />
+  {%- endcall %}
+
+  <form>
+    {% call button('New with params') -%}
+      <behavior action="new" delay="1000" href="/navigation/modal/index.xml" show-during-load="loading-screen" />
+    {%- endcall %}
+    <text-field style="input" name="param1" value="value1"/>
+  </form>
+{% endblock %}
