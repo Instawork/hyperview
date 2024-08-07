@@ -335,7 +335,7 @@
     <item
       action="append"
       delay="1000"
-      href="/ui/ui-elements/section-list/infinite/_infinite_scroll_page2.xml"
+      href="/ui/ui-elements/section-list/infinite/infinite_scroll_page2.xml"
       key="21"
       once="true"
       show-during-load="myIndicator"

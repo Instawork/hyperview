@@ -230,7 +230,7 @@
     
       action="replace-inner"
     
-      href="/behaviors/basic/triggers/refresh/_replace_inner_fragment.xml"
+      href="/behaviors/basic/triggers/refresh/replace_inner_fragment.xml"
     
       trigger="refresh"
     

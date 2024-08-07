@@ -222,7 +222,7 @@
       
   <view
     action="replace"
-    href="/ui/ui-elements/list/refresh-infinite/_refresh_infinite_scroll_fragment.xml"
+    href="/ui/ui-elements/list/refresh-infinite/refresh_infinite_scroll_fragment.xml"
     target="myList"
     trigger="refresh"
   >
@@ -314,7 +314,7 @@
           trigger="visible"
           action="replace"
           once="true"
-          href="/ui/ui-elements/list/refresh-infinite/_infinite_scroll_page2.xml"
+          href="/ui/ui-elements/list/refresh-infinite/infinite_scroll_page2.xml"
         />
         <view id="list-loading-indicator" style="spinner">
           <spinner/>

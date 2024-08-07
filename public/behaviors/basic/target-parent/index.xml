@@ -241,7 +241,7 @@
     
       <behavior
         action="replace"
-        href="/behaviors/basic/_target_sibling_fragment.xml"
+        href="/behaviors/basic/target_sibling_fragment.xml"
         target="container"
       />
     
