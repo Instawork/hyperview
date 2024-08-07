@@ -821,13 +821,13 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/behaviors/basic/refresh/index.xml"
-        key="refresh"
+        href="/behaviors/basic/select/index.xml"
+        key="select"
         show-during-load="loading-screen"
         style="item"
       >
         <view style="item-left">
-          <text style="item-label">Refresh</text>
+          <text style="item-label">Select</text>
         </view>
         <view style="item-chevron">
           <svg
@@ -851,13 +851,13 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/behaviors/basic/select/index.xml"
-        key="select"
+        href="/behaviors/basic/refresh/index.xml"
+        key="refresh"
         show-during-load="loading-screen"
         style="item"
       >
         <view style="item-left">
-          <text style="item-label">Select</text>
+          <text style="item-label">Refresh</text>
         </view>
         <view style="item-chevron">
           <svg
