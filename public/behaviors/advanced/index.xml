@@ -243,7 +243,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/behaviors/advanced/copy-to-clipboard/index.xml"
+        href="/hyperview/public//behaviors/advanced/copy-to-clipboard/index.xml"
         key="copy-to-clipboard"
         show-during-load="loading-screen"
         style="item item-first"
@@ -275,7 +275,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/behaviors/advanced/dispatch-multiple/index.xml"
+        href="/hyperview/public//behaviors/advanced/dispatch-multiple/index.xml"
         key="dispatch-events-multiple"
         show-during-load="loading-screen"
         style="item"
@@ -307,7 +307,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/behaviors/advanced/dispatch/index.xml"
+        href="/hyperview/public//behaviors/advanced/dispatch/index.xml"
         key="dispatch-event"
         show-during-load="loading-screen"
         style="item"
@@ -339,7 +339,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/behaviors/advanced/multiple-different/index.xml"
+        href="/hyperview/public//behaviors/advanced/multiple-different/index.xml"
         key="multiple-different-behaviors"
         show-during-load="loading-screen"
         style="item"
@@ -371,7 +371,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/behaviors/advanced/multiple-same/index.xml"
+        href="/hyperview/public//behaviors/advanced/multiple-same/index.xml"
         key="multiple-same-behaviors"
         show-during-load="loading-screen"
         style="item"
@@ -403,7 +403,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/behaviors/advanced/scroll/index.xml"
+        href="/hyperview/public//behaviors/advanced/scroll/index.xml"
         key="scroll"
         show-during-load="loading-screen"
         style="item"
@@ -435,7 +435,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/behaviors/advanced/set-value/index.xml"
+        href="/hyperview/public//behaviors/advanced/set-value/index.xml"
         key="set-value"
         show-during-load="loading-screen"
         style="item"
@@ -469,7 +469,7 @@ hv_list_tag: "root"
         
       
       <item
-        href="/behaviors/advanced/share/index.xml"
+        href="/hyperview/public//behaviors/advanced/share/index.xml"
         key="custom:-share"
         show-during-load="loading-screen"
         style="item item-last"
