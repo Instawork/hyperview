@@ -255,7 +255,7 @@
     
       <behavior
     action="append"
-    href="/hyperview/public/behaviors/basic/actions/append/once/_append_fragment.xml"
+    href="/hyperview/public/behaviors/basic/actions/append/once/append_fragment.xml"
   />
     
     <text style="button-label">Press me</text>
@@ -270,7 +270,7 @@
 
 <view
   action="append"
-  href="/hyperview/public/behaviors/basic/actions/append/nested/_append_fragment2.xml"
+  href="/hyperview/public/behaviors/basic/actions/append/nested/append_fragment2.xml"
   style="tree tree-root"
 >
   <text style="tree-label">1. Lorem</text>

@@ -488,7 +488,7 @@
       action="replace"
       delay="500"
       hide-during-load="saveButton"
-      href="/hyperview/public/case-studies/business-rating/_rating_save.xml"
+      href="/hyperview/public/case-studies/business-rating/rating_save.xml"
       show-during-load="savingButton"
       target="saveButtonContainer"
     >

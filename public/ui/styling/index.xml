@@ -243,7 +243,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//styling/button/index.xml"
+        href="/styling/button/index.xml"
         key="button"
         show-during-load="loading-screen"
         style="item item-first"
@@ -275,7 +275,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//styling/elevation/index.xml"
+        href="/styling/elevation/index.xml"
         key="elevation"
         show-during-load="loading-screen"
         style="item"
@@ -307,7 +307,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//styling/flex/index.xml"
+        href="/styling/flex/index.xml"
         key="flex"
         show-during-load="loading-screen"
         style="item"
@@ -339,7 +339,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//styling/shadow/index.xml"
+        href="/styling/shadow/index.xml"
         key="shadow"
         show-during-load="loading-screen"
         style="item"
@@ -373,7 +373,7 @@ hv_list_tag: "root"
         
       
       <item
-        href="/hyperview/public//styling/text/index.xml"
+        href="/styling/text/index.xml"
         key="text"
         show-during-load="loading-screen"
         style="item item-last"

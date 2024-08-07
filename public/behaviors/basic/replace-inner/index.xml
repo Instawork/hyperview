@@ -241,7 +241,7 @@
     
       <behavior
     action="replace-inner"
-    href="/hyperview/public/behaviors/basic/actions/replace-inner/once/_replace_fragment_inner.xml"
+    href="/hyperview/public/behaviors/basic/actions/replace-inner/once/replace_fragment_inner.xml"
   />
     
     <text style="button-label">Press me</text>
@@ -266,7 +266,7 @@
     
       <behavior
     action="replace-inner"
-    href="/hyperview/public/behaviors/basic/actions/replace-inner/nested/_replace_fragment_inner2.xml"
+    href="/hyperview/public/behaviors/basic/actions/replace-inner/nested/replace_fragment_inner2.xml"
   />
     
     <text style="button-label">Press me</text>

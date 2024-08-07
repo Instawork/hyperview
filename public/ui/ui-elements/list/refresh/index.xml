@@ -225,7 +225,7 @@
     <text style="description">Try multiple pull-to-refresh gestures on the list below.</text>
   
 
-  <list action="replace" delay="1000" href="/hyperview/public/ui/ui-elements/list/refresh/_refresh_load.xml" style="list" trigger="refresh">
+  <list action="replace" delay="1000" href="/hyperview/public/ui/ui-elements/list/refresh/refresh_load.xml" style="list" trigger="refresh">
     
       <item key="1" style="item">
         <text style="item-label">List 1</text>

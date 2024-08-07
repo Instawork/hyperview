@@ -226,7 +226,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//navigation/back/index.xml"
+        href="/navigation/back/index.xml"
         key="back"
         show-during-load="loading-screen"
         style="item item-first"
@@ -258,7 +258,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//navigation/close/index.xml"
+        href="/navigation/close/index.xml"
         key="close"
         show-during-load="loading-screen"
         style="item"
@@ -292,7 +292,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//navigation/deep-links/index.xml"
+        href="/navigation/deep-links/index.xml"
         key="deep-links"
         show-during-load="loading-screen"
         style="item"
@@ -324,7 +324,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//navigation/modal/index.xml"
+        href="/navigation/modal/index.xml"
         key="modal"
         show-during-load="loading-screen"
         style="item"
@@ -356,7 +356,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//navigation/navigate/index.xml"
+        href="/navigation/navigate/index.xml"
         key="navigate"
         show-during-load="loading-screen"
         style="item"
@@ -388,7 +388,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//navigation/new/index.xml"
+        href="/navigation/new/index.xml"
         key="new"
         show-during-load="loading-screen"
         style="item"
@@ -420,7 +420,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//navigation/push/index.xml"
+        href="/navigation/push/index.xml"
         key="push"
         show-during-load="loading-screen"
         style="item"
@@ -454,7 +454,7 @@ hv_list_tag: "root"
         
       
       <item
-        href="/hyperview/public//navigation/reload/index.xml"
+        href="/navigation/reload/index.xml"
         key="reload"
         show-during-load="loading-screen"
         style="item item-last"

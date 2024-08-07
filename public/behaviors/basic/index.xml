@@ -244,7 +244,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//behaviors/basic/append/index.xml"
+        href="/behaviors/basic/append/index.xml"
         key="append"
         show-during-load="loading-screen"
         style="item"
@@ -274,7 +274,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//behaviors/basic/hide/index.xml"
+        href="/behaviors/basic/hide/index.xml"
         key="hide"
         show-during-load="loading-screen"
         style="item"
@@ -304,7 +304,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//behaviors/basic/prepend/index.xml"
+        href="/behaviors/basic/prepend/index.xml"
         key="prepend"
         show-during-load="loading-screen"
         style="item"
@@ -334,7 +334,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//behaviors/basic/replace-inner/index.xml"
+        href="/behaviors/basic/replace-inner/index.xml"
         key="replace-inner"
         show-during-load="loading-screen"
         style="item"
@@ -364,7 +364,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//behaviors/basic/replace/index.xml"
+        href="/behaviors/basic/replace/index.xml"
         key="replace"
         show-during-load="loading-screen"
         style="item"
@@ -394,7 +394,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//behaviors/basic/select-all/index.xml"
+        href="/behaviors/basic/select-all/index.xml"
         key="select-all"
         show-during-load="loading-screen"
         style="item"
@@ -424,7 +424,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//behaviors/basic/show/index.xml"
+        href="/behaviors/basic/show/index.xml"
         key="show"
         show-during-load="loading-screen"
         style="item"
@@ -454,7 +454,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//behaviors/basic/toggle/index.xml"
+        href="/behaviors/basic/toggle/index.xml"
         key="toggle"
         show-during-load="loading-screen"
         style="item"
@@ -486,7 +486,7 @@ hv_section_list_tag: "root"
         
       
       <item
-        href="/hyperview/public//behaviors/basic/unselect-all/index.xml"
+        href="/behaviors/basic/unselect-all/index.xml"
         key="unselect-all"
         show-during-load="loading-screen"
         style="item item-last"
@@ -521,7 +521,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//behaviors/basic/back/index.xml"
+        href="/behaviors/basic/back/index.xml"
         key="back"
         show-during-load="loading-screen"
         style="item"
@@ -551,7 +551,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//behaviors/basic/blur/index.xml"
+        href="/behaviors/basic/blur/index.xml"
         key="blur"
         show-during-load="loading-screen"
         style="item"
@@ -581,7 +581,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//behaviors/basic/change/index.xml"
+        href="/behaviors/basic/change/index.xml"
         key="change"
         show-during-load="loading-screen"
         style="item"
@@ -611,7 +611,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//behaviors/basic/deselect/index.xml"
+        href="/behaviors/basic/deselect/index.xml"
         key="deselect"
         show-during-load="loading-screen"
         style="item"
@@ -641,7 +641,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//behaviors/basic/focus/index.xml"
+        href="/behaviors/basic/focus/index.xml"
         key="focus"
         show-during-load="loading-screen"
         style="item"
@@ -671,7 +671,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//behaviors/basic/load/index.xml"
+        href="/behaviors/basic/load/index.xml"
         key="load"
         show-during-load="loading-screen"
         style="item"
@@ -701,7 +701,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//behaviors/basic/long-press/index.xml"
+        href="/behaviors/basic/long-press/index.xml"
         key="long-press"
         show-during-load="loading-screen"
         style="item"
@@ -731,7 +731,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//behaviors/basic/press-in/index.xml"
+        href="/behaviors/basic/press-in/index.xml"
         key="press-in"
         show-during-load="loading-screen"
         style="item"
@@ -761,7 +761,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//behaviors/basic/press-out/index.xml"
+        href="/behaviors/basic/press-out/index.xml"
         key="press-out"
         show-during-load="loading-screen"
         style="item"
@@ -791,7 +791,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//behaviors/basic/press/index.xml"
+        href="/behaviors/basic/press/index.xml"
         key="press"
         show-during-load="loading-screen"
         style="item"
@@ -821,7 +821,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//behaviors/basic/select/index.xml"
+        href="/behaviors/basic/select/index.xml"
         key="select"
         show-during-load="loading-screen"
         style="item"
@@ -851,7 +851,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//behaviors/basic/refresh/index.xml"
+        href="/behaviors/basic/refresh/index.xml"
         key="refresh"
         show-during-load="loading-screen"
         style="item"
@@ -881,7 +881,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//behaviors/basic/visible-once/index.xml"
+        href="/behaviors/basic/visible-once/index.xml"
         key="visible-once"
         show-during-load="loading-screen"
         style="item"
@@ -913,7 +913,7 @@ hv_section_list_tag: "root"
         
       
       <item
-        href="/hyperview/public//behaviors/basic/visible/index.xml"
+        href="/behaviors/basic/visible/index.xml"
         key="visible"
         show-during-load="loading-screen"
         style="item item-last"
@@ -948,7 +948,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//behaviors/basic/target-child/index.xml"
+        href="/behaviors/basic/target-child/index.xml"
         key="target-child"
         show-during-load="loading-screen"
         style="item"
@@ -978,7 +978,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//behaviors/basic/target-parent-element/index.xml"
+        href="/behaviors/basic/target-parent-element/index.xml"
         key="target-parent-element"
         show-during-load="loading-screen"
         style="item"
@@ -1008,7 +1008,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//behaviors/basic/target-parent/index.xml"
+        href="/behaviors/basic/target-parent/index.xml"
         key="target-parent"
         show-during-load="loading-screen"
         style="item"
@@ -1038,7 +1038,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//behaviors/basic/target-sibling-append/index.xml"
+        href="/behaviors/basic/target-sibling-append/index.xml"
         key="target-sibling-append"
         show-during-load="loading-screen"
         style="item"
@@ -1070,7 +1070,7 @@ hv_section_list_tag: "root"
         
       
       <item
-        href="/hyperview/public//behaviors/basic/target-sibling/index.xml"
+        href="/behaviors/basic/target-sibling/index.xml"
         key="target-sibling"
         show-during-load="loading-screen"
         style="item item-last"
@@ -1105,67 +1105,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//behaviors/basic/hide-indicator-multiple/index.xml"
-        key="hide-multiple-indicators"
-        show-during-load="loading-screen"
-        style="item"
-      >
-        <view style="item-left">
-          <text style="item-label">Hide Multiple Indicators</text>
-        </view>
-        <view style="item-chevron">
-          <svg
-  width="16"
-  height="16"
-  viewBox="0 0 16 16"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <path
-    fill-rule="evenodd"
-    clip-rule="evenodd"
-    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
-    fill="#4E4D4D"
-  />
-</svg>
-
-        </view>
-      </item>
-    
-      
-      
-      <item
-        href="/hyperview/public//behaviors/basic/hide-indicator/index.xml"
-        key="hide-indicator"
-        show-during-load="loading-screen"
-        style="item"
-      >
-        <view style="item-left">
-          <text style="item-label">Hide Indicator</text>
-        </view>
-        <view style="item-chevron">
-          <svg
-  width="16"
-  height="16"
-  viewBox="0 0 16 16"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <path
-    fill-rule="evenodd"
-    clip-rule="evenodd"
-    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
-    fill="#4E4D4D"
-  />
-</svg>
-
-        </view>
-      </item>
-    
-      
-      
-      <item
-        href="/hyperview/public//behaviors/basic/inline-indicator/index.xml"
+        href="/behaviors/basic/inline-indicator/index.xml"
         key="inline-indicator"
         show-during-load="loading-screen"
         style="item"
@@ -1195,7 +1135,67 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//behaviors/basic/shimmer-indicator/index.xml"
+        href="/behaviors/basic/hide-indicator-multiple/index.xml"
+        key="hide-multiple-indicators"
+        show-during-load="loading-screen"
+        style="item"
+      >
+        <view style="item-left">
+          <text style="item-label">Hide Multiple Indicators</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+      
+      
+      <item
+        href="/behaviors/basic/hide-indicator/index.xml"
+        key="hide-indicator"
+        show-during-load="loading-screen"
+        style="item"
+      >
+        <view style="item-left">
+          <text style="item-label">Hide Indicator</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+      
+      
+      <item
+        href="/behaviors/basic/shimmer-indicator/index.xml"
         key="shimmer-indicator"
         show-during-load="loading-screen"
         style="item"
@@ -1225,7 +1225,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//behaviors/basic/show-hide-indicators/index.xml"
+        href="/behaviors/basic/show-hide-indicators/index.xml"
         key="showhide-indicators"
         show-during-load="loading-screen"
         style="item"
@@ -1255,7 +1255,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//behaviors/basic/show-indicator/index.xml"
+        href="/behaviors/basic/show-indicator/index.xml"
         key="show-indicator"
         show-during-load="loading-screen"
         style="item"
@@ -1287,7 +1287,7 @@ hv_section_list_tag: "root"
         
       
       <item
-        href="/hyperview/public//behaviors/basic/show-multiple-indicators/index.xml"
+        href="/behaviors/basic/show-multiple-indicators/index.xml"
         key="show-multiple-indicators"
         show-during-load="loading-screen"
         style="item item-last"
@@ -1324,7 +1324,7 @@ hv_section_list_tag: "root"
         
       
       <item
-        href="/hyperview/public//behaviors/basic/rating/index.xml"
+        href="/behaviors/basic/rating/index.xml"
         key="rating"
         show-during-load="loading-screen"
         style="item item-last"
@@ -1361,7 +1361,7 @@ hv_section_list_tag: "root"
         
       
       <item
-        href="/hyperview/public//behaviors/basic/once/index.xml"
+        href="/behaviors/basic/once/index.xml"
         key="once"
         show-during-load="loading-screen"
         style="item item-last"

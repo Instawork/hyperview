@@ -244,7 +244,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/forms/date-field/index.xml"
+        href="/ui/ui-elements/forms/date-field/index.xml"
         key="date-field"
         show-during-load="loading-screen"
         style="item"
@@ -274,7 +274,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/forms/picker/index.xml"
+        href="/ui/ui-elements/forms/picker/index.xml"
         key="picker"
         show-during-load="loading-screen"
         style="item"
@@ -304,7 +304,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/forms/select-multiple/index.xml"
+        href="/ui/ui-elements/forms/select-multiple/index.xml"
         key="select-multiple"
         show-during-load="loading-screen"
         style="item"
@@ -334,7 +334,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/forms/select-single/index.xml"
+        href="/ui/ui-elements/forms/select-single/index.xml"
         key="select-single"
         show-during-load="loading-screen"
         style="item"
@@ -366,7 +366,7 @@ hv_section_list_tag: "root"
         
       
       <item
-        href="/hyperview/public//ui/ui-elements/forms/switch/index.xml"
+        href="/ui/ui-elements/forms/switch/index.xml"
         key="switch"
         show-during-load="loading-screen"
         style="item item-last"
@@ -403,7 +403,7 @@ hv_section_list_tag: "root"
         
       
       <item
-        href="/hyperview/public//ui/ui-elements/image/index.xml"
+        href="/ui/ui-elements/image/index.xml"
         key="image"
         show-during-load="loading-screen"
         style="item item-last"
@@ -440,7 +440,7 @@ hv_section_list_tag: "root"
         
       
       <item
-        href="/hyperview/public//ui/ui-elements/keyboard-avoiding-view/index.xml"
+        href="/ui/ui-elements/keyboard-avoiding-view/index.xml"
         key="keyboard-avoiding-view"
         show-during-load="loading-screen"
         style="item item-last"
@@ -475,7 +475,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/list/basic/index.xml"
+        href="/ui/ui-elements/list/basic/index.xml"
         key="basic-list"
         show-during-load="loading-screen"
         style="item"
@@ -505,7 +505,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/list/hidden-scroll/index.xml"
+        href="/ui/ui-elements/list/hidden-scroll/index.xml"
         key="hidden-scrollbar"
         show-during-load="loading-screen"
         style="item"
@@ -535,7 +535,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/list/horizontal/index.xml"
+        href="/ui/ui-elements/list/horizontal/index.xml"
         key="horizontal-list"
         show-during-load="loading-screen"
         style="item"
@@ -565,7 +565,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/list/keyboard-dismiss/index.xml"
+        href="/ui/ui-elements/list/keyboard-dismiss/index.xml"
         key="dismiss-keyboard-on-drag"
         show-during-load="loading-screen"
         style="item"
@@ -595,7 +595,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/list/scroll-view/index.xml"
+        href="/ui/ui-elements/list/scroll-view/index.xml"
         key="scroll-view"
         show-during-load="loading-screen"
         style="item"
@@ -625,7 +625,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/list/sticky/index.xml"
+        href="/ui/ui-elements/list/sticky/index.xml"
         key="list-with-sticky-items"
         show-during-load="loading-screen"
         style="item"
@@ -655,7 +655,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/list/infinite/index.xml"
+        href="/ui/ui-elements/list/infinite/index.xml"
         key="infinite-scroll"
         show-during-load="loading-screen"
         style="item"
@@ -685,7 +685,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/list/refresh-infinite/index.xml"
+        href="/ui/ui-elements/list/refresh-infinite/index.xml"
         key="refresh-and-infinite-scroll"
         show-during-load="loading-screen"
         style="item"
@@ -717,7 +717,7 @@ hv_section_list_tag: "root"
         
       
       <item
-        href="/hyperview/public//ui/ui-elements/list/refresh/index.xml"
+        href="/ui/ui-elements/list/refresh/index.xml"
         key="list-with-refresh"
         show-during-load="loading-screen"
         style="item item-last"
@@ -752,7 +752,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/section-list/basic/index.xml"
+        href="/ui/ui-elements/section-list/basic/index.xml"
         key="basic-section-list"
         show-during-load="loading-screen"
         style="item"
@@ -782,7 +782,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/section-list/dismiss-keyboard/index.xml"
+        href="/ui/ui-elements/section-list/dismiss-keyboard/index.xml"
         key="dismiss-keyboard-on-drag"
         show-during-load="loading-screen"
         style="item"
@@ -812,7 +812,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/section-list/non-sticky/index.xml"
+        href="/ui/ui-elements/section-list/non-sticky/index.xml"
         key="non-sticky-titles"
         show-during-load="loading-screen"
         style="item"
@@ -842,7 +842,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/section-list/deprecated/index.xml"
+        href="/ui/ui-elements/section-list/deprecated/index.xml"
         key="deprecated-section-list"
         show-during-load="loading-screen"
         style="item"
@@ -872,7 +872,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/section-list/infinite/index.xml"
+        href="/ui/ui-elements/section-list/infinite/index.xml"
         key="section-list-infinite-scroll"
         show-during-load="loading-screen"
         style="item"
@@ -904,7 +904,7 @@ hv_section_list_tag: "root"
         
       
       <item
-        href="/hyperview/public//ui/ui-elements/section-list/refresh/index.xml"
+        href="/ui/ui-elements/section-list/refresh/index.xml"
         key="section-list-with-refresh"
         show-during-load="loading-screen"
         style="item item-last"
@@ -939,7 +939,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/text/adjustable/index.xml"
+        href="/ui/ui-elements/text/adjustable/index.xml"
         key="adjustable-font-size"
         show-during-load="loading-screen"
         style="item"
@@ -969,7 +969,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/text/basic/index.xml"
+        href="/ui/ui-elements/text/basic/index.xml"
         key="basic"
         show-during-load="loading-screen"
         style="item"
@@ -999,7 +999,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/text/escaped/index.xml"
+        href="/ui/ui-elements/text/escaped/index.xml"
         key="escaped"
         show-during-load="loading-screen"
         style="item"
@@ -1029,7 +1029,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/text/nested/index.xml"
+        href="/ui/ui-elements/text/nested/index.xml"
         key="nested"
         show-during-load="loading-screen"
         style="item"
@@ -1059,7 +1059,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/text/number-of-lines/index.xml"
+        href="/ui/ui-elements/text/number-of-lines/index.xml"
         key="number-of-lines"
         show-during-load="loading-screen"
         style="item"
@@ -1089,7 +1089,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/text/preformatted/index.xml"
+        href="/ui/ui-elements/text/preformatted/index.xml"
         key="preformatted"
         show-during-load="loading-screen"
         style="item"
@@ -1121,7 +1121,7 @@ hv_section_list_tag: "root"
         
       
       <item
-        href="/hyperview/public//ui/ui-elements/text/selectable/index.xml"
+        href="/ui/ui-elements/text/selectable/index.xml"
         key="selectable"
         show-during-load="loading-screen"
         style="item item-last"
@@ -1158,7 +1158,7 @@ hv_section_list_tag: "root"
         
       
       <item
-        href="/hyperview/public//ui/ui-elements/view/index.xml"
+        href="/ui/ui-elements/view/index.xml"
         key="view"
         show-during-load="loading-screen"
         style="item item-last"
@@ -1193,37 +1193,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/web-view/dispatch-event/index.xml"
-        key="event-dispatch"
-        show-during-load="loading-screen"
-        style="item"
-      >
-        <view style="item-left">
-          <text style="item-label">Event Dispatch</text>
-        </view>
-        <view style="item-chevron">
-          <svg
-  width="16"
-  height="16"
-  viewBox="0 0 16 16"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <path
-    fill-rule="evenodd"
-    clip-rule="evenodd"
-    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
-    fill="#4E4D4D"
-  />
-</svg>
-
-        </view>
-      </item>
-    
-      
-      
-      <item
-        href="/hyperview/public//ui/ui-elements/web-view/html/index.xml"
+        href="/ui/ui-elements/web-view/html/index.xml"
         key="html"
         show-during-load="loading-screen"
         style="item"
@@ -1253,7 +1223,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/web-view/injected-js/index.xml"
+        href="/ui/ui-elements/web-view/injected-js/index.xml"
         key="injected-javascript"
         show-during-load="loading-screen"
         style="item"
@@ -1283,7 +1253,7 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/web-view/loading/index.xml"
+        href="/ui/ui-elements/web-view/loading/index.xml"
         key="show-loading-indicator"
         show-during-load="loading-screen"
         style="item"
@@ -1312,16 +1282,46 @@ hv_section_list_tag: "root"
     
       
       
+      <item
+        href="/ui/ui-elements/web-view/url/index.xml"
+        key="url"
+        show-during-load="loading-screen"
+        style="item"
+      >
+        <view style="item-left">
+          <text style="item-label">URL</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+      
+      
         
       
       <item
-        href="/hyperview/public//ui/ui-elements/web-view/url/index.xml"
-        key="url"
+        href="/ui/ui-elements/web-view/dispatch-event/index.xml"
+        key="event-dispatch"
         show-during-load="loading-screen"
         style="item item-last"
       >
         <view style="item-left">
-          <text style="item-label">URL</text>
+          <text style="item-label">Event Dispatch</text>
         </view>
         <view style="item-chevron">
           <svg

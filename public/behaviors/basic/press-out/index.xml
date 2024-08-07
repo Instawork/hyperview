@@ -240,7 +240,7 @@
     
       <behavior
     action="replace"
-    href="/hyperview/public/behaviors/basic/triggers/press-out/button-press-out/_replace_fragment.xml"
+    href="/hyperview/public/behaviors/basic/triggers/press-out/button-press-out/replace_fragment.xml"
     trigger="pressOut"
   />
     
@@ -251,7 +251,7 @@
   <text style="description" id="link-to-replace">
   Press-out <text
     action="replace"
-    href="/hyperview/public/behaviors/basic/triggers/press-out/link/_replace_link_fragment.xml"
+    href="/hyperview/public/behaviors/basic/triggers/press-out/link/replace_link_fragment.xml"
     trigger="pressOut"
     style="link"
     target="link-to-replace"

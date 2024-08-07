@@ -237,7 +237,7 @@
     
       <behavior
       action="append"
-      href="/hyperview/public/behaviors/basic/target/target-sibling-append/_target_sibling_append_fragment.xml"
+      href="/hyperview/public/behaviors/basic/target/target-sibling-append/target_sibling_append_fragment.xml"
       target="container"
     />
     

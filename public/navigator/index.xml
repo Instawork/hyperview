@@ -226,7 +226,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//navigator/back-trigger/index.xml"
+        href="/navigator/back-trigger/index.xml"
         key="back-trigger"
         show-during-load="loading-screen"
         style="item item-first"
@@ -258,7 +258,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//navigator/simple-stack/index.xml"
+        href="/navigator/simple-stack/index.xml"
         key="simple-stack-navigator"
         show-during-load="loading-screen"
         style="item"
@@ -292,7 +292,7 @@ hv_list_tag: "root"
         
       
       <item
-        href="/hyperview/public//navigator/simple-tab/index.xml"
+        href="/navigator/simple-tab/index.xml"
         key="simple-tab-navigator"
         show-during-load="loading-screen"
         style="item item-last"

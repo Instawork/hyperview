@@ -230,7 +230,7 @@
 </header>
 
       
-  <section-list action="replace" delay="700" href="/hyperview/public/ui/ui-elements/section-list/refresh/_refresh_load.xml" trigger="refresh">
+  <section-list action="replace" delay="700" href="/hyperview/public/ui/ui-elements/section-list/refresh/refresh_load.xml" trigger="refresh">
     <section-title style="list-header">
       <text style="list-header-text">Section 1</text>
     </section-title>

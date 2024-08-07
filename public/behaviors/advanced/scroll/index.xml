@@ -243,7 +243,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//behaviors/advanced/scroll/list/index.xml"
+        href="/behaviors/advanced/scroll/list/index.xml"
         key="list"
         show-during-load="loading-screen"
         style="item item-first"
@@ -277,7 +277,7 @@ hv_list_tag: "root"
         
       
       <item
-        href="/hyperview/public//behaviors/advanced/scroll/section-list/index.xml"
+        href="/behaviors/advanced/scroll/section-list/index.xml"
         key="section-list"
         show-during-load="loading-screen"
         style="item item-last"

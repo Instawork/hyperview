@@ -233,7 +233,7 @@
 <view
   action="replace"
   delay="300"
-  href="/hyperview/public/behaviors/basic/_target_sibling_fragment.xml"
+  href="/hyperview/public/behaviors/basic/target_sibling_fragment.xml"
   show-during-load="myIndicator"
   target="container"
   trigger="load"
@@ -265,7 +265,7 @@
       <behavior
     action="replace"
     delay="300"
-    href="/hyperview/public/behaviors/basic/triggers/load/press/_load_navigate_back.xml"
+    href="/hyperview/public/behaviors/basic/triggers/load/press/load_navigate_back.xml"
     show-during-load="saving"
   />
     

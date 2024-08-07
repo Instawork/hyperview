@@ -250,7 +250,7 @@
     
       <behavior
       action="append"
-      href="/hyperview/public/behaviors/basic/triggers/visible/_append_fragment.xml"
+      href="/hyperview/public/behaviors/basic/triggers/visible/append_fragment.xml"
       trigger="visible"
     />
     
