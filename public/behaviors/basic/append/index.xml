@@ -193,10 +193,7 @@
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
 
       
-  ---
-permalink: "/behaviors/basic/actions/append/once/style.xml"
----
-<style
+  <style
   id="button"
   alignItems="center"
   backgroundColor="#63CB76"
@@ -240,10 +237,7 @@ permalink: "/behaviors/basic/actions/append/once/style.xml"
       
   <view scroll="true" style="main">
     
-  ---
-permalink: "/behaviors/basic/actions/append/once/index.xml"
----
-
+  
 
 
 
