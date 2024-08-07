@@ -1,29 +1,31 @@
 export default {
-  name: 'demo',
-  slug: 'demo',
-  version: '1.0.0',
-  orientation: 'portrait',
-  icon: './assets/icon.png',
-  userInterfaceStyle: 'light',
-  splash: {
-    image: './assets/splash.png',
-    resizeMode: 'contain',
-    backgroundColor: '#ffffff',
+  android: {
+    adaptiveIcon: {
+      backgroundColor: '#ffffff',
+      foregroundImage: './assets/adaptive-icon.png',
+    },
   },
   assetBundlePatterns: ['**/*'],
+  extra: {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    baseUrl: process.env.BASE_URL,
+  },
+  icon: './assets/icon.png',
   ios: {
     supportsTablet: true,
   },
-  android: {
-    adaptiveIcon: {
-      foregroundImage: './assets/adaptive-icon.png',
-      backgroundColor: '#ffffff',
-    },
+  name: 'demo',
+  orientation: 'portrait',
+  slug: 'demo',
+  splash: {
+    backgroundColor: '#ffffff',
+    image: './assets/splash.png',
+    resizeMode: 'contain',
   },
+  userInterfaceStyle: 'light',
+  version: '1.0.0',
   web: {
     favicon: './assets/favicon.png',
-  },
-  extra: {
-    base_url: process.env.BASE_URL,
   },
 };
