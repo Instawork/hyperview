@@ -1,6 +1,6 @@
 <view
   action="append"
-  href="/behaviors/basic/actions/append/nested/_append_fragment2.xml"
+  href="/behaviors/basic/actions/append/nested/append_fragment2.xml"
   style="tree"
   xmlns="https://hyperview.org/hyperview"
 >
