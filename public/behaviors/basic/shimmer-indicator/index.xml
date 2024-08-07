@@ -277,7 +277,7 @@
       <behavior
       action="append"
       delay="700"
-      href="/behaviors/basic/indicators/shimmer-indicator/shimmer_fragment.xml"
+      href="/hyperview/public/behaviors/basic/indicators/shimmer-indicator/_shimmer_fragment.xml"
       show-during-load="myIndicator"
       target="container"
     />

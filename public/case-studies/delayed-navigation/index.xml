@@ -226,7 +226,7 @@
   <text
     action="replace-inner"
     delay="800"
-    href="/case-studies/delayed-navigation/redirect.xml"
+    href="/hyperview/public/case-studies/delayed-navigation/redirect.xml"
     show-during-load="loadingSpinner"
     style="label label-link"
     target="redirectContainer"

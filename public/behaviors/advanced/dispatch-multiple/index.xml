@@ -236,7 +236,7 @@
 
   <list>
     
-    <item key="1" style="item item-first" href="/behaviors/advanced/dispatch-multiple/item-1.xml">
+    <item key="1" style="item item-first" href="/hyperview/public/behaviors/advanced/dispatch-multiple/item-1.xml">
       <text style="item-label">Jeeves</text>
       <text
         action="replace"
@@ -254,7 +254,7 @@
   
 
     
-    <item key="2" style="item" href="/behaviors/advanced/dispatch-multiple/item-2.xml">
+    <item key="2" style="item" href="/hyperview/public/behaviors/advanced/dispatch-multiple/item-2.xml">
       <text style="item-label">Wooster</text>
       <text
         action="replace"
@@ -272,7 +272,7 @@
   
 
     
-    <item key="3" style="item item-last" href="/behaviors/advanced/dispatch-multiple/item-3.xml">
+    <item key="3" style="item item-last" href="/hyperview/public/behaviors/advanced/dispatch-multiple/item-3.xml">
       <text style="item-label">Wooster</text>
       <text
         action="replace"

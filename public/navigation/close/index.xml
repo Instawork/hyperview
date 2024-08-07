@@ -267,7 +267,7 @@
     
   >
     
-      <behavior action="close" href="/navigation/index.xml?test=1" />
+      <behavior action="close" href="/hyperview/public/navigation/index.xml?test=1" />
     
     <text style="button-label">Close</text>
   </view>
@@ -293,7 +293,7 @@
     
   >
     
-      <behavior action="close" delay="200" href="/navigation/changed.xml" />
+      <behavior action="close" delay="200" href="/hyperview/public/navigation/changed.xml" />
     
     <text style="button-label">Close to other screen</text>
   </view>
@@ -318,7 +318,7 @@
     
   >
     
-      <behavior action="close" delay="5000" href="/navigation/changed.xml" show-during-load="loading-screen" />
+      <behavior action="close" delay="5000" href="/hyperview/public/navigation/changed.xml" show-during-load="loading-screen" />
     
     <text style="button-label">Close with loading</text>
   </view>

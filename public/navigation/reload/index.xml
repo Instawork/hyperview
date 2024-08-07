@@ -258,7 +258,7 @@
     
   >
     
-      <behavior action="reload" href="/navigation/index.xml" show-during-load="loading-screen" />
+      <behavior action="reload" href="/hyperview/public/navigation/index.xml" show-during-load="loading-screen" />
     
     <text style="button-label">Reload different screen</text>
   </view>

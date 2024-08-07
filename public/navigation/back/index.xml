@@ -240,7 +240,7 @@
     
   >
     
-      <behavior action="back" href="/navigation/index.xml" />
+      <behavior action="back" href="/hyperview/public/navigation/index.xml" />
     
     <text style="button-label">Back</text>
   </view>
@@ -265,7 +265,7 @@
     
   >
     
-      <behavior action="back" delay="200" href="/navigation/changed.xml" />
+      <behavior action="back" delay="200" href="/hyperview/public/navigation/changed.xml" />
     
     <text style="button-label">Back to other screen</text>
   </view>
@@ -290,7 +290,7 @@
     
   >
     
-      <behavior action="back" delay="500" href="/navigation/changed.xml" show-during-load="loading-screen" />
+      <behavior action="back" delay="500" href="/hyperview/public/navigation/changed.xml" show-during-load="loading-screen" />
     
     <text style="button-label">Back with loading</text>
   </view>

@@ -218,7 +218,7 @@
     
   >
     
-      <behavior href="/navigation/index.xml" />
+      <behavior href="/hyperview/public/navigation/index.xml" />
     
     <text style="button-label">Go back to original screen</text>
   </view>

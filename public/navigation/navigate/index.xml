@@ -236,7 +236,7 @@
     
   >
     
-      <behavior action="navigate" href="/index.xml" />
+      <behavior action="navigate" href="/hyperview/public/index.xml" />
     
     <text style="button-label">Navigate to home</text>
   </view>
@@ -250,7 +250,7 @@
     
   >
     
-      <behavior action="navigate" delay="1000" href="/navigation/pushed.xml" show-during-load="loading-screen" />
+      <behavior action="navigate" delay="1000" href="/hyperview/public/navigation/pushed.xml" show-during-load="loading-screen" />
     
     <text style="button-label">Navigate with indicator</text>
   </view>

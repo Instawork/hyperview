@@ -237,7 +237,7 @@
     
       <behavior
       action="push"
-      href="/navigator/simple-stack/push-1.xml"
+      href="/hyperview/public/navigator/simple-stack/push-1.xml"
     />
     
     <text style="button-label">Push</text>
@@ -258,7 +258,7 @@
     
       <behavior
       action="new"
-      href="/navigator/simple-stack/modal-1.xml"
+      href="/hyperview/public/navigator/simple-stack/modal-1.xml"
     />
     
     <text style="button-label">Push</text>

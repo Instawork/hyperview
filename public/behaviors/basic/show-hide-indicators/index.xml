@@ -241,7 +241,7 @@
     
       <behavior
       action="replace"
-      href="/behaviors/basic/target_sibling_fragment.xml"
+      href="/hyperview/public/behaviors/basic/_target_sibling_fragment.xml"
       target="container"
       delay="300"
       hide-during-load="myIndicator1"

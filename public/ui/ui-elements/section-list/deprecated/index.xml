@@ -249,7 +249,7 @@
       <item
         action="append"
         delay="1000"
-        href="/ui/ui-elements/section-list/deprecated/deprecated_scroll_page2.xml"
+        href="/hyperview/public/ui/ui-elements/section-list/deprecated/_deprecated_scroll_page2.xml"
         key="20"
         once="true"
         show-during-load="myIndicator"

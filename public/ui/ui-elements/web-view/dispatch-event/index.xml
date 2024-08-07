@@ -227,7 +227,7 @@
     <view
       action="append"
       event-name="helloworld"
-      href="/ui/ui-elements/web-view/dispatch-event/append.xml"
+      href="/hyperview/public/ui/ui-elements/web-view/dispatch-event/append.xml"
       scroll="true"
       style="Main"
       trigger="on-event"

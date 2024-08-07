@@ -242,7 +242,7 @@
     
       <behavior
       action="push"
-      href="/navigator/simple-stack/push-2.xml"
+      href="/hyperview/public/navigator/simple-stack/push-2.xml"
     />
     
     <text style="button-label">Push on stack</text>

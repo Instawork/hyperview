@@ -236,7 +236,7 @@
     
   >
     
-      <behavior action="new" delay="1000" href="/navigation/modal/index.xml" show-during-load="loading-screen" />
+      <behavior action="new" delay="1000" href="/hyperview/public/navigation/modal/index.xml" show-during-load="loading-screen" />
     
     <text style="button-label">Open another modal</text>
   </view>
@@ -250,7 +250,7 @@
     
   >
     
-      <behavior action="push" href="/navigation/modal/index.xml" />
+      <behavior action="push" href="/hyperview/public/navigation/modal/index.xml" />
     
     <text style="button-label">Push on the stack</text>
   </view>

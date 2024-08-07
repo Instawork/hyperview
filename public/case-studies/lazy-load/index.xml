@@ -268,7 +268,7 @@
   <view
     action="replace"
     delay="500"
-    href="/case-studies/lazy-load/section2.xml"
+    href="/hyperview/public/case-studies/lazy-load/section2.xml"
     once="true"
     style="section2"
     trigger="visible"
@@ -279,7 +279,7 @@
   <view
     action="replace"
     delay="500"
-    href="/case-studies/lazy-load/section3.xml"
+    href="/hyperview/public/case-studies/lazy-load/section3.xml"
     once="true"
     style="section3"
     trigger="visible"
