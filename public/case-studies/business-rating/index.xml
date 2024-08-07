@@ -305,7 +305,7 @@
         style="shift-item"
       >
         <image
-          source="/case-studies/business-rating/image.jpg"
+          source="/hyperview/public/case-studies/business-rating/image.jpg"
           style="shift-item-avatar"
         />
         <view style="shift-item-info">
@@ -320,7 +320,7 @@
                 delay="500"
                 href="/hyperview/public/case-studies/business-rating/rating-modal/index.xml?rating=1"
                 show-during-load="loading-screen"
-                source="/case-studies/business-rating/star_empty.png"
+                source="/hyperview/public/case-studies/business-rating/star_empty.png"
                 style="rating-star"
               />
             
@@ -329,7 +329,7 @@
                 delay="500"
                 href="/hyperview/public/case-studies/business-rating/rating-modal/index.xml?rating=2"
                 show-during-load="loading-screen"
-                source="/case-studies/business-rating/star_empty.png"
+                source="/hyperview/public/case-studies/business-rating/star_empty.png"
                 style="rating-star"
               />
             
@@ -338,7 +338,7 @@
                 delay="500"
                 href="/hyperview/public/case-studies/business-rating/rating-modal/index.xml?rating=3"
                 show-during-load="loading-screen"
-                source="/case-studies/business-rating/star_empty.png"
+                source="/hyperview/public/case-studies/business-rating/star_empty.png"
                 style="rating-star"
               />
             
@@ -347,7 +347,7 @@
                 delay="500"
                 href="/hyperview/public/case-studies/business-rating/rating-modal/index.xml?rating=4"
                 show-during-load="loading-screen"
-                source="/case-studies/business-rating/star_empty.png"
+                source="/hyperview/public/case-studies/business-rating/star_empty.png"
                 style="rating-star"
               />
             
@@ -356,7 +356,7 @@
                 delay="500"
                 href="/hyperview/public/case-studies/business-rating/rating-modal/index.xml?rating=5"
                 show-during-load="loading-screen"
-                source="/case-studies/business-rating/star_empty.png"
+                source="/hyperview/public/case-studies/business-rating/star_empty.png"
                 style="rating-star"
               />
             
@@ -372,7 +372,7 @@
         style="shift-item"
       >
         <image
-          source="/case-studies/business-rating/image.jpg"
+          source="/hyperview/public/case-studies/business-rating/image.jpg"
           style="shift-item-avatar"
         />
         <view style="shift-item-info">
@@ -388,7 +388,7 @@
                   delay="500"
                   href="/hyperview/public/case-studies/business-rating/rating-modal/index.xml?rating=1"
                   show-during-load="loading-screen"
-                  source="/case-studies/business-rating/star_empty.png"
+                  source="/hyperview/public/case-studies/business-rating/star_empty.png"
                   style="rating-star"
                 />
               
@@ -397,7 +397,7 @@
                   delay="500"
                   href="/hyperview/public/case-studies/business-rating/rating-modal/index.xml?rating=2"
                   show-during-load="loading-screen"
-                  source="/case-studies/business-rating/star_empty.png"
+                  source="/hyperview/public/case-studies/business-rating/star_empty.png"
                   style="rating-star"
                 />
               
@@ -406,7 +406,7 @@
                   delay="500"
                   href="/hyperview/public/case-studies/business-rating/rating-modal/index.xml?rating=3"
                   show-during-load="loading-screen"
-                  source="/case-studies/business-rating/star_empty.png"
+                  source="/hyperview/public/case-studies/business-rating/star_empty.png"
                   style="rating-star"
                 />
               
@@ -415,7 +415,7 @@
                   delay="500"
                   href="/hyperview/public/case-studies/business-rating/rating-modal/index.xml?rating=4"
                   show-during-load="loading-screen"
-                  source="/case-studies/business-rating/star_empty.png"
+                  source="/hyperview/public/case-studies/business-rating/star_empty.png"
                   style="rating-star"
                 />
               
@@ -424,7 +424,7 @@
                   delay="500"
                   href="/hyperview/public/case-studies/business-rating/rating-modal/index.xml?rating=5"
                   show-during-load="loading-screen"
-                  source="/case-studies/business-rating/star_empty.png"
+                  source="/hyperview/public/case-studies/business-rating/star_empty.png"
                   style="rating-star"
                 />
               

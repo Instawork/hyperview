@@ -229,13 +229,13 @@
     <text style="description">Image</text>
   
 
-  <image source="/ui/ui-elements/image/image.jpg" style="Image"/>
+  <image source="/hyperview/public/ui/ui-elements/image/image.jpg" style="Image"/>
   
   
     <text style="description">Styled</text>
   
 
-  <image source="/ui/ui-elements/image/image.jpg" style="Image Image__Styled"/>
+  <image source="/hyperview/public/ui/ui-elements/image/image.jpg" style="Image Image__Styled"/>
 
   </view>
 

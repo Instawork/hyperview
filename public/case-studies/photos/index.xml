@@ -411,7 +411,7 @@
     
   <view href="/hyperview/public/case-studies/photos/user/index.xml" style="story">
     <image
-      source="/case-studies/photos/avatars/geordi.jpg"
+      source="/hyperview/public//case-studies/photos/avatars/geordi.jpg"
       style="story-avatar"
     />
     <text numberOfLines="1" style="story-username">geordi</text>
@@ -420,7 +420,7 @@
     
   <view href="/hyperview/public/case-studies/photos/user/index.xml" style="story">
     <image
-      source="/case-studies/photos/avatars/data.jpg"
+      source="/hyperview/public//case-studies/photos/avatars/data.jpg"
       style="story-avatar"
     />
     <text numberOfLines="1" style="story-username">data</text>
@@ -429,7 +429,7 @@
     
   <view href="/hyperview/public/case-studies/photos/user/index.xml" style="story">
     <image
-      source="/case-studies/photos/avatars/deanna.png"
+      source="/hyperview/public//case-studies/photos/avatars/deanna.png"
       style="story-avatar"
     />
     <text numberOfLines="1" style="story-username">deanna.troi</text>
@@ -438,7 +438,7 @@
     
   <view href="/hyperview/public/case-studies/photos/user/index.xml" style="story">
     <image
-      source="/case-studies/photos/avatars/picard.jpg"
+      source="/hyperview/public//case-studies/photos/avatars/picard.jpg"
       style="story-avatar"
     />
     <text numberOfLines="1" style="story-username">jean.luc.p</text>
@@ -447,7 +447,7 @@
     
   <view href="/hyperview/public/case-studies/photos/user/index.xml" style="story">
     <image
-      source="/case-studies/photos/avatars/worf.jpg"
+      source="/hyperview/public//case-studies/photos/avatars/worf.jpg"
       style="story-avatar"
     />
     <text numberOfLines="1" style="story-username">og_worf</text>
@@ -460,7 +460,7 @@
   <view style="image-header-left">
     <image
       href="/hyperview/public/case-studies/photos/index.xml"
-      source="/case-studies/photos/avatars/riker.jpg"
+      source="/hyperview/public/case-studies/photos/avatars/riker.jpg"
       style="image-header-avatar"
     />
     <view style="image-header-left-labels">
@@ -480,7 +480,7 @@
 <item key="image1">
   <view style="image-container">
     <image
-      source="/case-studies/photos/photos/concert.jpeg"
+      source="/hyperview/public/case-studies/photos/photos/concert.jpeg"
       style="image"
     />
     <view id="image1-overlay" style="image-container-overlay" />
@@ -505,17 +505,17 @@
             trigger="deselect"
           />
           <image
-            source="/case-studies/photos/icons/heart2.png"
+            source="/hyperview/public/case-studies/photos/icons/heart2.png"
             style="actionbar-icon-image"
           />
           <image
-            source="/case-studies/photos/icons/heart_liked2.png"
+            source="/hyperview/public/case-studies/photos/icons/heart_liked2.png"
             style="actionbar-icon-image-selected"
           />
         </option>
       </select-multiple>
       <image
-        source="/case-studies/photos/icons/chat2.png"
+        source="/hyperview/public/case-studies/photos/icons/chat2.png"
         style="actionbar-icon"
       />
     </view>
@@ -568,7 +568,7 @@
     <section-title style="image-header">
   <view style="image-header-left">
     <image
-      source="/case-studies/photos/avatars/picard.jpg"
+      source="/hyperview/public/case-studies/photos/avatars/picard.jpg"
       style="image-header-avatar"
     />
     <view style="image-header-left-labels">
@@ -587,7 +587,7 @@
 </section-title>
 <item key="image2">
   <image
-    source="/case-studies/photos/photos/dinner.jpeg"
+    source="/hyperview/public/case-studies/photos/photos/dinner.jpeg"
     style="image"
   />
   <view style="actionbar">
@@ -599,17 +599,17 @@
           value="like"
         >
           <image
-            source="/case-studies/photos/icons/heart2.png"
+            source="/hyperview/public/case-studies/photos/icons/heart2.png"
             style="actionbar-icon-image"
           />
           <image
-            source="/case-studies/photos/icons/heart_liked2.png"
+            source="/hyperview/public/case-studies/photos/icons/heart_liked2.png"
             style="actionbar-icon-image-selected"
           />
         </option>
       </select-multiple>
       <image
-        source="/case-studies/photos/icons/chat2.png"
+        source="/hyperview/public/case-studies/photos/icons/chat2.png"
         style="actionbar-icon"
       />
     </view>
@@ -662,7 +662,7 @@
     <section-title style="image-header">
   <view style="image-header-left">
     <image
-      source="/case-studies/photos/avatars/worf.jpg"
+      source="/hyperview/public/case-studies/photos/avatars/worf.jpg"
       style="image-header-avatar"
     />
     <view style="image-header-left-labels">
@@ -681,17 +681,17 @@
 </section-title>
 <item key="image3">
   <image
-    source="/case-studies/photos/photos/inspiration1.jpeg"
+    source="/hyperview/public/case-studies/photos/photos/inspiration1.jpeg"
     style="image"
   />
   <view style="actionbar">
     <view style="actionbar-left">
       <image
-        source="/case-studies/photos/icons/heart2.png"
+        source="/hyperview/public/case-studies/photos/icons/heart2.png"
         style="actionbar-icon actionbar-icon-first"
       />
       <image
-        source="/case-studies/photos/icons/chat2.png"
+        source="/hyperview/public/case-studies/photos/icons/chat2.png"
         style="actionbar-icon"
       />
     </view>
@@ -746,7 +746,7 @@
     <section-title style="image-header">
   <view style="image-header-left">
     <image
-      source="/case-studies/photos/avatars/deanna.png"
+      source="/hyperview/public/case-studies/photos/avatars/deanna.png"
       style="image-header-avatar"
     />
     <view style="image-header-left-labels">
@@ -765,17 +765,17 @@
 </section-title>
 <item key="image4">
   <image
-    source="/case-studies/photos/photos/coffee.jpeg"
+    source="/hyperview/public/case-studies/photos/photos/coffee.jpeg"
     style="image"
   />
   <view style="actionbar">
     <view style="actionbar-left">
       <image
-        source="/case-studies/photos/icons/heart2.png"
+        source="/hyperview/public/case-studies/photos/icons/heart2.png"
         style="actionbar-icon actionbar-icon-first"
       />
       <image
-        source="/case-studies/photos/icons/chat2.png"
+        source="/hyperview/public/case-studies/photos/icons/chat2.png"
         style="actionbar-icon"
       />
     </view>

@@ -404,7 +404,7 @@
   <view scroll="true" style="main">
     <text style="title">Rate the Instaworker</text>
     <view style="worker-info">
-      <image source="/case-studies/business-rating/image.jpg" style="worker-info-avatar" />
+      <image source="/hyperview/public/case-studies/business-rating/image.jpg" style="worker-info-avatar" />
       <text style="worker-info-name">Jake Tepperman</text>
       <text style="worker-info-details">
         Event Server, Private Residence
@@ -420,7 +420,7 @@
     <image
       action="replace-inner"
       href="#star1"
-      source="/case-studies/business-rating/star_empty@2x.png"
+      source="/hyperview/public//case-studies/business-rating/star_empty@2x.png"
       style="rating-star"
       target="rating"
     />
@@ -431,7 +431,7 @@
     <image
       action="replace-inner"
       href="#star2"
-      source="/case-studies/business-rating/star_empty@2x.png"
+      source="/hyperview/public//case-studies/business-rating/star_empty@2x.png"
       style="rating-star"
       target="rating"
     />
@@ -442,7 +442,7 @@
     <image
       action="replace-inner"
       href="#star3"
-      source="/case-studies/business-rating/star_empty@2x.png"
+      source="/hyperview/public//case-studies/business-rating/star_empty@2x.png"
       style="rating-star"
       target="rating"
     />
@@ -453,7 +453,7 @@
     <image
       action="replace-inner"
       href="#star4"
-      source="/case-studies/business-rating/star_empty@2x.png"
+      source="/hyperview/public//case-studies/business-rating/star_empty@2x.png"
       style="rating-star"
       target="rating"
     />
@@ -464,7 +464,7 @@
     <image
       action="replace-inner"
       href="#star5"
-      source="/case-studies/business-rating/star_empty@2x.png"
+      source="/hyperview/public//case-studies/business-rating/star_empty@2x.png"
       style="rating-star"
       target="rating"
     />
@@ -519,7 +519,7 @@
     <image
       action="replace-inner"
       href="#star1"
-      source="/case-studies/business-rating/star_filled@2x.png"
+      source="/hyperview/public//case-studies/business-rating/star_filled@2x.png"
       style="rating-star rating-star-filled"
       target="rating"
     />
@@ -530,7 +530,7 @@
     <image
       action="replace-inner"
       href="#star2"
-      source="/case-studies/business-rating/star_empty@2x.png"
+      source="/hyperview/public//case-studies/business-rating/star_empty@2x.png"
       style="rating-star"
       target="rating"
     />
@@ -541,7 +541,7 @@
     <image
       action="replace-inner"
       href="#star3"
-      source="/case-studies/business-rating/star_empty@2x.png"
+      source="/hyperview/public//case-studies/business-rating/star_empty@2x.png"
       style="rating-star"
       target="rating"
     />
@@ -552,7 +552,7 @@
     <image
       action="replace-inner"
       href="#star4"
-      source="/case-studies/business-rating/star_empty@2x.png"
+      source="/hyperview/public//case-studies/business-rating/star_empty@2x.png"
       style="rating-star"
       target="rating"
     />
@@ -563,7 +563,7 @@
     <image
       action="replace-inner"
       href="#star5"
-      source="/case-studies/business-rating/star_empty@2x.png"
+      source="/hyperview/public//case-studies/business-rating/star_empty@2x.png"
       style="rating-star"
       target="rating"
     />
@@ -582,7 +582,7 @@
     <image
       action="replace-inner"
       href="#star1"
-      source="/case-studies/business-rating/star_filled@2x.png"
+      source="/hyperview/public//case-studies/business-rating/star_filled@2x.png"
       style="rating-star rating-star-filled"
       target="rating"
     />
@@ -596,7 +596,7 @@
     <image
       action="replace-inner"
       href="#star2"
-      source="/case-studies/business-rating/star_filled@2x.png"
+      source="/hyperview/public//case-studies/business-rating/star_filled@2x.png"
       style="rating-star rating-star-filled"
       target="rating"
     />
@@ -607,7 +607,7 @@
     <image
       action="replace-inner"
       href="#star3"
-      source="/case-studies/business-rating/star_empty@2x.png"
+      source="/hyperview/public//case-studies/business-rating/star_empty@2x.png"
       style="rating-star"
       target="rating"
     />
@@ -618,7 +618,7 @@
     <image
       action="replace-inner"
       href="#star4"
-      source="/case-studies/business-rating/star_empty@2x.png"
+      source="/hyperview/public//case-studies/business-rating/star_empty@2x.png"
       style="rating-star"
       target="rating"
     />
@@ -629,7 +629,7 @@
     <image
       action="replace-inner"
       href="#star5"
-      source="/case-studies/business-rating/star_empty@2x.png"
+      source="/hyperview/public//case-studies/business-rating/star_empty@2x.png"
       style="rating-star"
       target="rating"
     />
@@ -648,7 +648,7 @@
     <image
       action="replace-inner"
       href="#star1"
-      source="/case-studies/business-rating/star_filled@2x.png"
+      source="/hyperview/public//case-studies/business-rating/star_filled@2x.png"
       style="rating-star rating-star-filled"
       target="rating"
     />
@@ -662,7 +662,7 @@
     <image
       action="replace-inner"
       href="#star2"
-      source="/case-studies/business-rating/star_filled@2x.png"
+      source="/hyperview/public//case-studies/business-rating/star_filled@2x.png"
       style="rating-star rating-star-filled"
       target="rating"
     />
@@ -676,7 +676,7 @@
     <image
       action="replace-inner"
       href="#star3"
-      source="/case-studies/business-rating/star_filled@2x.png"
+      source="/hyperview/public//case-studies/business-rating/star_filled@2x.png"
       style="rating-star rating-star-filled"
       target="rating"
     />
@@ -687,7 +687,7 @@
     <image
       action="replace-inner"
       href="#star4"
-      source="/case-studies/business-rating/star_empty@2x.png"
+      source="/hyperview/public//case-studies/business-rating/star_empty@2x.png"
       style="rating-star"
       target="rating"
     />
@@ -698,7 +698,7 @@
     <image
       action="replace-inner"
       href="#star5"
-      source="/case-studies/business-rating/star_empty@2x.png"
+      source="/hyperview/public//case-studies/business-rating/star_empty@2x.png"
       style="rating-star"
       target="rating"
     />
@@ -717,7 +717,7 @@
     <image
       action="replace-inner"
       href="#star1"
-      source="/case-studies/business-rating/star_filled@2x.png"
+      source="/hyperview/public//case-studies/business-rating/star_filled@2x.png"
       style="rating-star rating-star-filled"
       target="rating"
     />
@@ -731,7 +731,7 @@
     <image
       action="replace-inner"
       href="#star2"
-      source="/case-studies/business-rating/star_filled@2x.png"
+      source="/hyperview/public//case-studies/business-rating/star_filled@2x.png"
       style="rating-star rating-star-filled"
       target="rating"
     />
@@ -745,7 +745,7 @@
     <image
       action="replace-inner"
       href="#star3"
-      source="/case-studies/business-rating/star_filled@2x.png"
+      source="/hyperview/public//case-studies/business-rating/star_filled@2x.png"
       style="rating-star rating-star-filled"
       target="rating"
     />
@@ -759,7 +759,7 @@
     <image
       action="replace-inner"
       href="#star4"
-      source="/case-studies/business-rating/star_filled@2x.png"
+      source="/hyperview/public//case-studies/business-rating/star_filled@2x.png"
       style="rating-star rating-star-filled"
       target="rating"
     />
@@ -770,7 +770,7 @@
     <image
       action="replace-inner"
       href="#star5"
-      source="/case-studies/business-rating/star_empty@2x.png"
+      source="/hyperview/public//case-studies/business-rating/star_empty@2x.png"
       style="rating-star"
       target="rating"
     />
@@ -789,7 +789,7 @@
     <image
       action="replace-inner"
       href="#star1"
-      source="/case-studies/business-rating/star_filled@2x.png"
+      source="/hyperview/public//case-studies/business-rating/star_filled@2x.png"
       style="rating-star rating-star-filled"
       target="rating"
     />
@@ -803,7 +803,7 @@
     <image
       action="replace-inner"
       href="#star2"
-      source="/case-studies/business-rating/star_filled@2x.png"
+      source="/hyperview/public//case-studies/business-rating/star_filled@2x.png"
       style="rating-star rating-star-filled"
       target="rating"
     />
@@ -817,7 +817,7 @@
     <image
       action="replace-inner"
       href="#star3"
-      source="/case-studies/business-rating/star_filled@2x.png"
+      source="/hyperview/public//case-studies/business-rating/star_filled@2x.png"
       style="rating-star rating-star-filled"
       target="rating"
     />
@@ -831,7 +831,7 @@
     <image
       action="replace-inner"
       href="#star4"
-      source="/case-studies/business-rating/star_filled@2x.png"
+      source="/hyperview/public//case-studies/business-rating/star_filled@2x.png"
       style="rating-star rating-star-filled"
       target="rating"
     />
@@ -845,7 +845,7 @@
     <image
       action="replace-inner"
       href="#star5"
-      source="/case-studies/business-rating/star_filled@2x.png"
+      source="/hyperview/public//case-studies/business-rating/star_filled@2x.png"
       style="rating-star rating-star-filled"
       target="rating"
     />
