@@ -226,7 +226,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/case-studies/advanced-forms/index.xml"
+        href="/hyperview/public//case-studies/advanced-forms/index.xml"
         key="advanced-forms"
         show-during-load="loading-screen"
         style="item item-first"
@@ -258,7 +258,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/case-studies/cascader/index.xml"
+        href="/hyperview/public//case-studies/cascader/index.xml"
         key="cascader"
         show-during-load="loading-screen"
         style="item"
@@ -290,7 +290,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/case-studies/contacts/index.xml"
+        href="/hyperview/public//case-studies/contacts/index.xml"
         key="contacts"
         show-during-load="loading-screen"
         style="item"
@@ -322,7 +322,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/case-studies/custom-android-back/index.xml"
+        href="/hyperview/public//case-studies/custom-android-back/index.xml"
         key="custom-android-back"
         show-during-load="loading-screen"
         style="item"
@@ -354,7 +354,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/case-studies/feedback-widget/index.xml"
+        href="/hyperview/public//case-studies/feedback-widget/index.xml"
         key="feedback-widget"
         show-during-load="loading-screen"
         style="item"
@@ -386,7 +386,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/case-studies/photos/index.xml"
+        href="/hyperview/public//case-studies/photos/index.xml"
         key="photo-sharing-app"
         show-during-load="loading-screen"
         style="item"
@@ -418,7 +418,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/case-studies/tabs/index.xml"
+        href="/hyperview/public//case-studies/tabs/index.xml"
         key="tabs"
         show-during-load="loading-screen"
         style="item"
@@ -450,7 +450,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/case-studies/basic-forms/index.xml"
+        href="/hyperview/public//case-studies/basic-forms/index.xml"
         key="basic-forms"
         show-during-load="loading-screen"
         style="item"
@@ -482,7 +482,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/case-studies/business-rating/index.xml"
+        href="/hyperview/public//case-studies/business-rating/index.xml"
         key="rate-by-business"
         show-during-load="loading-screen"
         style="item"
@@ -514,7 +514,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/case-studies/delayed-navigation/index.xml"
+        href="/hyperview/public//case-studies/delayed-navigation/index.xml"
         key="delayed-navigation"
         show-during-load="loading-screen"
         style="item"
@@ -546,7 +546,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/case-studies/infinite-scroll/index.xml"
+        href="/hyperview/public//case-studies/infinite-scroll/index.xml"
         key="infinite-scroll"
         show-during-load="loading-screen"
         style="item"
@@ -578,7 +578,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/case-studies/lazy-load/index.xml"
+        href="/hyperview/public//case-studies/lazy-load/index.xml"
         key="lazy-load"
         show-during-load="loading-screen"
         style="item"
@@ -610,7 +610,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/case-studies/navigation/index.xml"
+        href="/hyperview/public//case-studies/navigation/index.xml"
         key="navigation"
         show-during-load="loading-screen"
         style="item"
@@ -644,7 +644,7 @@ hv_list_tag: "root"
         
       
       <item
-        href="/case-studies/pull-to-refresh/index.xml"
+        href="/hyperview/public//case-studies/pull-to-refresh/index.xml"
         key="pull-to-refresh"
         show-during-load="loading-screen"
         style="item item-last"

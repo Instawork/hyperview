@@ -227,7 +227,7 @@ hv_list_tag: "root"
       
       
       <item
-        href="/ui/styling/index.xml"
+        href="/hyperview/public//ui/styling/index.xml"
         key="styling"
         show-during-load="loading-screen"
         style="item item-first"
@@ -261,7 +261,7 @@ hv_list_tag: "root"
         
       
       <item
-        href="/ui/ui-elements/index.xml"
+        href="/hyperview/public//ui/ui-elements/index.xml"
         key="ui-elements"
         show-during-load="loading-screen"
         style="item item-last"
