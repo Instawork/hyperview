@@ -1,10 +1,13 @@
 import './src/gesture-handler';
+import * as Constants from './src/constants';
 import {
   SafeAreaInsetsContext,
   SafeAreaProvider,
 } from 'react-native-safe-area-context';
+import { fetchWrapper, formatDate } from './src/helpers';
+import Hyperview from 'hyperview';
+import HyperviewSvg from './src/Components/HyperviewSvg';
 import { NavigationContainer } from '@react-navigation/native';
-import Navigator from './src/Navigator';
 import React from 'react';
 import { View } from 'react-native';
 
@@ -23,7 +26,13 @@ export default () => (
           }}
         >
           <NavigationContainer>
-            <Navigator />
+            <Hyperview
+              behaviors={[]}
+              components={[HyperviewSvg]}
+              entrypointUrl={Constants.ENTRY_POINT_NAV_URL}
+              fetch={fetchWrapper}
+              formatDate={formatDate}
+            />
           </NavigationContainer>
         </View>
       )}
