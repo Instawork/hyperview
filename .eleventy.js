@@ -49,6 +49,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addNunjucksFilter('highlight', highlightFilter);
   eleventyConfig.addNunjucksFilter('paginate', paginateFilter);
   eleventyConfig.addNunjucksFilter('pageCount', pageCountFilter);
+  // Output into demo folder for serving both github pages and local development
   return {
     dir: {
       input: 'examples',
