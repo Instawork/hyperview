@@ -1,4 +1,4 @@
-.babelrc
+.npmignore.babelrc
 .circleci/
 .DS_Store
 .editorconfig
@@ -9,6 +9,7 @@
 .prettierignore
 .prettierrc.js
 .vscode/
+_examples_site/
 demo/hyperview/public/
 **/stories/
 demo/
