@@ -32,6 +32,10 @@ module.exports = function (eleventyConfig) {
         }
       }
     },
+    server: {
+      baseDir: 'demo',
+      directory: true,
+    },
   });
   // Pass through any XML files that haven't been ported yet.
   // Once everything is ported, we can remove this.
@@ -48,7 +52,7 @@ module.exports = function (eleventyConfig) {
   return {
     dir: {
       input: 'examples',
-      output: '_examples_site',
+      output: 'demo/hyperview/public',
     },
   };
 };

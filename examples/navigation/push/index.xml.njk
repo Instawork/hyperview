@@ -34,16 +34,16 @@ hv_button_behavior: "back"
   {{ description('Tapping the button below will request an XML screen and push it onto the stack.') }}
 
   {% call button('Push') -%}
-    <behavior action="push" href="/navigation/pushed.xml" />
+    <behavior action="push" href="/hyperview/public/navigation/pushed.xml" />
   {%- endcall %}
 
   {% call button('Push with indicator') -%}
-    <behavior action="push" delay="1000" href="/navigation/pushed.xml" show-during-load="loading-screen" />
+    <behavior action="push" delay="1000" href="/hyperview/public/navigation/pushed.xml" show-during-load="loading-screen" />
   {%- endcall %}
 
   <form>
     {% call button('Push with params') -%}
-      <behavior action="push" delay="1000" href="/navigation/pushed.xml" show-during-load="loading-screen" />
+      <behavior action="push" delay="1000" href="/hyperview/public/navigation/pushed.xml" show-during-load="loading-screen" />
     {%- endcall %}
     <text-field style="input" name="param1" value="value1"/>
   </form>
