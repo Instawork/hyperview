@@ -1,0 +1,182 @@
+<list
+  id="contacts"
+  trigger="refresh"
+  action="replace"
+  href="?page=1&amp;template=list"
+  target="contacts"
+  keyboard-dismiss-mode="on-drag"
+  xmlns="https://hyperview.org/hyperview"
+>
+  
+  <item key="search" id="top" sticky="true" style="relative mx-24">
+    <text-field
+      placeholder="Search a contact…"
+      placeholderTextColor="#8D9494"
+      name="search"
+      style="input"
+      debounce="200"
+      value=""
+    >
+      
+      
+      
+      
+      <behavior
+        trigger="change"
+        action="hide"
+        target="load-more"
+      />
+      <behavior
+        trigger="change"
+        action="scroll"
+        target="top"
+        xmlns:scroll="https://hyperview.org/hyperview-scroll"
+      />
+      <behavior
+        trigger="change"
+        action="replace"
+        target="contacts"
+        href="?template=list"
+        show-during-load="loading-indicator"
+      />
+    </text-field>
+    <view id="loading-indicator" style="absolute r-0 py-8" hide="true">
+      <spinner />
+    </view>
+  </item>
+  <items xmlns="https://hyperview.org/hyperview">
+  
+    <item key="5b5f89a0-aa13-40d8-a2ad-3636a13b1bdc" style="mx-24 py-8 border-bottom">
+      <text>Aaron Armstrong</text>
+      <text>Casimer_Klocko@hotmail.com</text>
+      <text>(021) 555-0662</text>
+    </item>
+  
+    <item key="f2b587fb-a4dc-4ddf-a507-209e7e174f64" style="mx-24 py-8 border-bottom">
+      <text>Aaron Collins</text>
+      <text>Fanny_Nicolas99@yahoo.com</text>
+      <text>(257) 555-3392</text>
+    </item>
+  
+    <item key="88755b68-66f3-4db8-84cf-bdee1a309c49" style="mx-24 py-8 border-bottom">
+      <text>Aaron Crist</text>
+      <text>Syble.Sawayn74@hotmail.com</text>
+      <text>(816) 555-5655</text>
+    </item>
+  
+    <item key="44f47263-be00-4f18-b960-e086d8a1f5f3" style="mx-24 py-8 border-bottom">
+      <text>Aaron Dare II</text>
+      <text>Eulalia.Schowalter39@gmail.com</text>
+      <text>(714) 555-0818</text>
+    </item>
+  
+    <item key="a4d1c24f-f0f6-44fa-bac8-57e221827ae6" style="mx-24 py-8 border-bottom">
+      <text>Aaron Hahn</text>
+      <text>Jude_Gerlach@gmail.com</text>
+      <text>(314) 555-8774</text>
+    </item>
+  
+    <item key="459ff6da-b951-4882-9af2-0b8636c17ef5" style="mx-24 py-8 border-bottom">
+      <text>Aaron Hoeger</text>
+      <text>Ayana_Powlowski@hotmail.com</text>
+      <text>(487) 555-8769</text>
+    </item>
+  
+    <item key="8f47b3cb-f256-4976-ae0b-17bc3153b1fb" style="mx-24 py-8 border-bottom">
+      <text>Aaron Jakubowski</text>
+      <text>Abbigail82@hotmail.com</text>
+      <text>(958) 555-5134</text>
+    </item>
+  
+    <item key="c46014f2-2203-4a33-8422-2cc2da403023" style="mx-24 py-8 border-bottom">
+      <text>Aaron Johnson</text>
+      <text>Katelyn8@hotmail.com</text>
+      <text>(737) 555-3307</text>
+    </item>
+  
+    <item key="55ee88d1-ea90-4ff0-9a81-0d741702fa6a" style="mx-24 py-8 border-bottom">
+      <text>Aaron Kuhic</text>
+      <text>Tobin.Dietrich81@gmail.com</text>
+      <text>(543) 555-6096</text>
+    </item>
+  
+    <item key="ba2fe7ec-347b-4e3a-9bb1-653011d2ad98" style="mx-24 py-8 border-bottom">
+      <text>Aaron Lowe</text>
+      <text>Burnice85@yahoo.com</text>
+      <text>(197) 555-4279</text>
+    </item>
+  
+    <item key="29697826-b6ee-4319-80bd-ab12db042370" style="mx-24 py-8 border-bottom">
+      <text>Aaron Mitchell</text>
+      <text>Letha38@gmail.com</text>
+      <text>(282) 555-6221</text>
+    </item>
+  
+    <item key="be339508-a265-4f23-a3b6-ea47aef02650" style="mx-24 py-8 border-bottom">
+      <text>Aaron Mueller</text>
+      <text>Aron_Hermiston@hotmail.com</text>
+      <text>(305) 555-0875</text>
+    </item>
+  
+    <item key="eca6f7de-5e5d-41bb-a88c-9b5aa1587cd7" style="mx-24 py-8 border-bottom">
+      <text>Aaron Swaniawski-Koss</text>
+      <text>Bettye_Abshire22@hotmail.com</text>
+      <text>(269) 555-1468</text>
+    </item>
+  
+    <item key="9458f756-5fac-452f-8d8d-e7e76e8bf1e6" style="mx-24 py-8 border-bottom">
+      <text>Aaron Terry DVM</text>
+      <text>Jeffry75@gmail.com</text>
+      <text>(545) 555-8116</text>
+    </item>
+  
+    <item key="d17accea-b265-4ba5-9c77-8a0ce8cdbed4" style="mx-24 py-8 border-bottom">
+      <text>Aaron Thompson</text>
+      <text>Sasha_Bailey89@gmail.com</text>
+      <text>(415) 555-7038</text>
+    </item>
+  
+    <item key="527e18c6-fe69-4d99-97c9-b1fa47d8f997" style="mx-24 py-8 border-bottom">
+      <text>Aaron Volkman</text>
+      <text>Francisco_Gerhold@gmail.com</text>
+      <text>(849) 555-2106</text>
+    </item>
+  
+    <item key="14ee4ab9-231f-45bf-9244-0699f5f18a09" style="mx-24 py-8 border-bottom">
+      <text>Abel Abshire</text>
+      <text>Payton_Rohan39@gmail.com</text>
+      <text>(582) 555-6461</text>
+    </item>
+  
+    <item key="b3e28782-aa49-4ff6-8569-e174ae79e318" style="mx-24 py-8 border-bottom">
+      <text>Abel Borer</text>
+      <text>Abbigail.Wehner63@hotmail.com</text>
+      <text>(292) 555-7848</text>
+    </item>
+  
+    <item key="9221a545-593e-4720-b248-702986dc619f" style="mx-24 py-8 border-bottom">
+      <text>Abel Bosco</text>
+      <text>Graciela99@gmail.com</text>
+      <text>(067) 555-9875</text>
+    </item>
+  
+    <item key="5610369a-746e-496b-b3b1-f1cdc2f7d054" style="mx-24 py-8 border-bottom">
+      <text>Abel Conn</text>
+      <text>Thomas_Stokes54@hotmail.com</text>
+      <text>(248) 555-6082</text>
+    </item>
+  
+  
+    <item
+      key="load-more"
+      id="load-more"
+      trigger="visible"
+      action="replace"
+      href="?page=2"
+    >
+      <spinner />
+    </item>
+  
+</items>
+
+</list>

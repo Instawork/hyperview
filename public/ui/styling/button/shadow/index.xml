@@ -1,0 +1,24 @@
+
+
+
+
+
+  
+    <text style="description">Shadow</text>
+  
+
+
+  <view
+    
+      action="reload"
+    
+      href="/hyperview/public/ui/styling/button/index.xml"
+    
+      style="button button-shadow"
+    
+    
+  >
+    
+    <text style="button-label">Shadow</text>
+  </view>
+
