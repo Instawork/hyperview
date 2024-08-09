@@ -5,7 +5,7 @@ hv_title: "Tabs"
 hv_button_behavior: "back"
 ---
 {% extends 'templates/base.xml.njk' %}
-{% from './tab.xml.njk' import tab %}
+{% from 'macros/tab/index.xml.njk' import tab %}
 
 {% block styles %}
   <style id="row" flexDirection="row" justifyContent="space-between" />

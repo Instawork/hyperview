@@ -3,11 +3,61 @@ permalink: "/ui/index.xml"
 hv_title: "UI"
 hv_tab_id: "tab-ui"
 hv_button_behavior: "none"
-hv_list_tag: "ui_root"
 ---
 {% extends 'templates/tab.xml.njk' %}
+{% from 'macros/tab/index.xml.njk' import tab %}
+
+{% block styles %}
+  <style id="row" backgroundColor="#eee" borderRadius="12" flexDirection="row" justifyContent="space-between" marginBottom="24" marginHorizontal="24" padding="2"  />
+  <style
+    id="tab"
+    alignItems="center"
+    borderColor="transparent"
+    borderRadius="12"
+    borderWidth="1"
+    flex="1"
+    height="40"
+    justifyContent="center"
+  >
+    <modifier selected="true">
+    <style backgroundColor="white"
+      elevation="2"
+      shadowColor="black"
+      shadowOffsetX="0"
+      shadowOffsetY="2"
+      shadowOpacity="0.1"
+      shadowRadius="2"
+    />
+    </modifier>
+  </style>
+  <style id="tab-label" fontSize="18" />
+  <style id="tab-content" marginBottom="140" />
+{% endblock %}
 
 {% block tab_content %}
-  <text style="description">This is the content for UI tab.</text>
-  {% include "templates/list.xml.njk" %}
+  <select-single id="tabs" name="tabs" style="row">
+    <option value="1" style="tab">
+      <behavior trigger="deselect" action="hide" target="tab-styling" />
+      <behavior trigger="select" action="show" target="tab-styling" />
+      <text style="tab-label">Styling</text>
+    </option>
+    <option value="2" style="tab">
+      <behavior trigger="deselect" action="hide" target="tab-ui-elements" />
+      <behavior trigger="select" action="show" target="tab-ui-elements" />
+      <text style="tab-label">UI Elements</text>
+    </option>
+  </select-single>
+  {% call tab("tab-styling") -%}
+    {% include "./styling/index.xml.njk" %}
+  {%- endcall %}
+  {% call tab("tab-ui-elements") -%}
+    {% include "./ui-elements/index.xml.njk" %}
+  {%- endcall %}
+  <behavior
+    once="true"
+    trigger="load"
+    action="set-value"
+    target="tabs"
+    new-value="1"
+  />
 {% endblock %}

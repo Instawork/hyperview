@@ -3,11 +3,70 @@ permalink: "/behaviors/index.xml"
 hv_title: "Behaviors"
 hv_tab_id: "tab-behaviors"
 hv_button_behavior: "none"
-hv_list_tag: "behavior_root"
 ---
 {% extends 'templates/tab.xml.njk' %}
+{% from 'macros/tab/index.xml.njk' import tab %}
+
+{% block styles %}
+  <style
+    id="row"
+    backgroundColor="#eee"
+    borderRadius="12"
+    flexDirection="row"
+    justifyContent="space-between"
+    marginBottom="24"
+    marginHorizontal="24"
+    padding="2"
+  />
+  <style
+    id="tab"
+    alignItems="center"
+    borderColor="transparent"
+    borderRadius="12"
+    borderWidth="1"
+    flex="1"
+    height="40"
+    justifyContent="center"
+  >
+    <modifier selected="true">
+    <style backgroundColor="white"
+      elevation="2"
+      shadowColor="black"
+      shadowOffsetX="0"
+      shadowOffsetY="2"
+      shadowOpacity="0.1"
+      shadowRadius="2"
+    />
+    </modifier>
+  </style>
+  <style id="tab-label" fontSize="18" />
+  <style id="tab-content" marginBottom="140" />
+{% endblock %}
 
 {% block tab_content %}
-  <text style="description">This is the content for Behaviors tab.</text>
-  {% include "templates/list.xml.njk" %}
+  <select-single id="tabs" name="tabs" style="row">
+    <option value="1" style="tab">
+      <behavior trigger="deselect" action="hide" target="tab-advanced" />
+      <behavior trigger="select" action="show" target="tab-advanced" />
+      <text style="tab-label">Advanced</text>
+    </option>
+    <option value="2" style="tab">
+      <behavior trigger="deselect" action="hide" target="tab-basic" />
+      <behavior trigger="select" action="show" target="tab-basic" />
+      <text style="tab-label">Basic</text>
+    </option>
+  </select-single>
+  {% call tab("tab-advanced") -%}
+    {% include "./advanced/index.xml.njk" %}
+  {%- endcall %}
+  {% call tab("tab-basic") -%}
+    {% include "./basic/index.xml.njk" %}
+  {%- endcall %}
+  <behavior
+    once="true"
+    trigger="load"
+    action="set-value"
+    target="tabs"
+    new-value="1"
+  />
 {% endblock %}

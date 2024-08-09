@@ -9,7 +9,13 @@
       target="tab-ui"
       style="bottom-tab bottom-tab-selected"
     >
-      <text style="bottom-tab-label {% if hv_tab_id === 'tab-ui' %} bottom-tab-label-selected{% endif %}">UI</text>
+      {% if hv_tab_id === 'tab-ui' %}
+        {% include 'icons/ui-selected.svg' %}
+        <text style="bottom-tab-label bottom-tab-label-selected">UI</text>
+      {% else %}
+        {% include 'icons/ui.svg' %}
+        <text style="bottom-tab-label">UI</text>
+      {% endif %}
     </view>
     <view
       style="bottom-tab"
@@ -17,7 +23,13 @@
       action="navigate"
       target="tab-behaviors"
     >
-      <text style="bottom-tab-label {% if hv_tab_id === 'tab-behaviors' %} bottom-tab-label-selected{% endif %}">Behaviors</text>
+      {% if hv_tab_id === 'tab-behaviors' %}
+        {% include 'icons/behaviors-selected.svg' %}
+        <text style="bottom-tab-label bottom-tab-label-selected">Behaviors</text>
+      {% else %}
+        {% include 'icons/behaviors.svg' %}
+        <text style="bottom-tab-label">Behaviors</text>
+      {% endif %}
     </view>
     <view
       style="bottom-tab"
@@ -25,7 +37,13 @@
       action="navigate"
       target="tab-navigation"
     >
-      <text style="bottom-tab-label {% if hv_tab_id === 'tab-navigation' %} bottom-tab-label-selected{% endif %}">Navigation</text>
+      {% if hv_tab_id === 'tab-navigation' %}
+        {% include 'icons/navigation-selected.svg' %}
+        <text style="bottom-tab-label bottom-tab-label-selected">Navigation</text>
+      {% else %}
+        {% include 'icons/navigation.svg' %}
+        <text style="bottom-tab-label">Navigation</text>
+      {% endif %}
     </view>
     <view
       style="bottom-tab"
@@ -33,7 +51,13 @@
       action="navigate"
       target="tab-case-studies"
     >
-      <text style="bottom-tab-label {% if hv_tab_id === 'tab-case-studies' %} bottom-tab-label-selected{% endif %}">Case Studies</text>
+      {% if hv_tab_id === 'tab-case-studies' %}
+        {% include 'icons/case-studies-selected.svg' %}
+        <text style="bottom-tab-label bottom-tab-label-selected">Case Studies</text>
+      {% else %}
+        {% include 'icons/case-studies.svg' %}
+        <text style="bottom-tab-label">Case Studies</text>
+      {% endif %}
     </view>
     <view
       style="bottom-tab"
@@ -41,7 +65,13 @@
       action="navigate"
       target="tab-navigator"
     >
-      <text style="bottom-tab-label {% if hv_tab_id === 'tab-navigator' %} bottom-tab-label-selected{% endif %}">Navigator</text>
+      {% if hv_tab_id === 'tab-navigator' %}
+        {% include 'icons/navigator-selected.svg' %}
+        <text style="bottom-tab-label bottom-tab-label-selected">Navigator</text>
+      {% else %}
+        {% include 'icons/navigator.svg' %}
+        <text style="bottom-tab-label">Navigator</text>
+      {% endif %}
     </view>
   </view>
 {% endblock %}

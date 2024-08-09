@@ -1,12 +1,8 @@
 ---
 permalink: "/ui/ui-elements/index.xml"
-tags: "ui_root"
 hv_title: "UI Elements"
-hv_section_list_tag: "Forms,Image,Keyboard Avoiding View,List,Section List,Text,View,Web View"
 hv_button_behavior: "back"
 ---
-{% extends 'templates/base.xml.njk' %}
 
-{% block container %}
-  {% include "templates/section-list.xml.njk" %}
-{% endblock %}
+{% set hv_section_list_tag = "Forms,Image,Keyboard Avoiding View,List,Section List,Text,View,Web View" %}
+{% include "templates/section-list.xml.njk" %}

@@ -1,12 +1,8 @@
 ---
 permalink: "/ui/styling/index.xml"
-tags: "ui_root"
 hv_title: "Styling"
-hv_list_tag: "styling"
 hv_button_behavior: "back"
 ---
-{% extends 'templates/base.xml.njk' %}
 
-{% block container %}
-  {% include "templates/list.xml.njk" %}
-{% endblock %}
+{% set hv_list_tag = "styling" %}
+{% include "templates/list.xml.njk" %}
