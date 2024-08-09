@@ -3,6 +3,7 @@
 {% include 'macros/link/styles.xml.njk' %}
 {% include 'macros/container/styles.xml.njk' %}
 {% include 'macros/contact/styles.xml.njk' %}
+{% include 'macros/tab/styles.xml.njk' %}
 
 <style
   id="header"
@@ -62,11 +63,11 @@
   padding="24"
 />
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style id="tab-route-content" flex="1" />
 <style
   id="bottom-tab"
   alignItems="center"
   flex="1"
-  height="48"
   justifyContent="center"
 />
 <style
@@ -95,13 +96,15 @@
   flexDirection="row"
   flexShrink="1"
   flexGrow="0"
+  height="48"
   justifyContent="space-around"
+  backgroundColor="white"
   position="absolute"
   width="100%"
 />
 <style
   id="list-container"
-  flex="0"
+  flex="1"
   flexGrow="1"
   marginBottom="48"
 />

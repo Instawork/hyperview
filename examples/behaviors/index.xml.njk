@@ -4,7 +4,7 @@ hv_title: "Behaviors"
 hv_tab_id: "tab-behaviors"
 hv_button_behavior: "none"
 ---
-{% extends 'templates/tab.xml.njk' %}
+{% extends 'templates/tab-route.xml.njk' %}
 {% from 'macros/tab/index.xml.njk' import tab %}
 
 {% block styles %}
@@ -40,10 +40,9 @@ hv_button_behavior: "none"
     </modifier>
   </style>
   <style id="tab-label" fontSize="18" />
-  <style id="tab-content" marginBottom="140" />
 {% endblock %}
 
-{% block tab_content %}
+{% block tab_route_content %}
   <select-single id="tabs" name="tabs" style="row">
     <option value="1" style="tab">
       <behavior trigger="deselect" action="hide" target="tab-advanced" />
