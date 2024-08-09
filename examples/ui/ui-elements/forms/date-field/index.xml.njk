@@ -5,6 +5,7 @@ hv_title: "Date Field"
 hv_button_behavior: "back"
 ---
 {% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/about/index.xml.njk' import about %}
 {% from 'macros/description/index.xml.njk' import description %}
 {% from 'macros/button/index.xml.njk' import button %}
 
@@ -86,7 +87,7 @@ hv_button_behavior: "back"
 {% endblock %}
 
 {% block content %}
-  {% call description() -%}
+  {% call about() -%}
     Date fields open a system-appropriate modal to choose a date value. On iOS, styles can be applied to the modal and
     save/cancel labels.
   {%- endcall %}
