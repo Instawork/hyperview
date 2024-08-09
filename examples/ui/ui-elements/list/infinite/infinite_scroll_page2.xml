@@ -35,7 +35,7 @@
       trigger="visible"
       action="replace"
       once="true"
-      href="/ui/ui-elements/list/infinite/infinite_scroll_page3.xml"
+      href="/hyperview/public/ui/ui-elements/list/infinite/infinite_scroll_page3.xml"
     />
     <view id="list-loading-indicator" style="spinner">
       <spinner />

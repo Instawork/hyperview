@@ -1,7 +1,7 @@
 {% macro user(image_source, name) %}
-  <view href="/case-studies/photos/user/index.xml" style="story">
+  <view href="/hyperview/public/case-studies/photos/user/index.xml" style="story">
     <image
-      source="{{ image_source }}"
+      source="/hyperview/public/{{ image_source }}"
       style="story-avatar"
     />
     <text numberOfLines="1" style="story-username">{{ name }}</text>

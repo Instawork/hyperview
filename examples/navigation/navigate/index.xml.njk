@@ -12,10 +12,10 @@ hv_button_behavior: "back"
   {{ description('Tapping the button below will request an XML screen and push it onto the stack.') }}
 
   {% call button('Navigate to home') -%}
-    <behavior action="navigate" href="/index.xml" />
+    <behavior action="navigate" href="/hyperview/public/index.xml" />
   {%- endcall %}
 
   {% call button('Navigate with indicator') -%}
-    <behavior action="navigate" delay="1000" href="/navigation/pushed.xml" show-during-load="loading-screen" />
+    <behavior action="navigate" delay="1000" href="/hyperview/public/navigation/pushed.xml" show-during-load="loading-screen" />
   {%- endcall %}
 {% endblock %}

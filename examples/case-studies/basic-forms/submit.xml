@@ -13,7 +13,7 @@
   <text
     action="replace"
     delay="500"
-    href="/case-studies/basic-forms/submit2.xml"
+    href="/hyperview/public/case-studies/basic-forms/submit2.xml"
     show-during-load="mySpinner"
     style="submit"
     target="myForm"

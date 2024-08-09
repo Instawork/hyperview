@@ -1,7 +1,7 @@
 <list
   action="replace"
   delay="1000"
-  href="/ui/ui-elements/list/refresh-infinite/refresh_load2.xml"
+  href="/hyperview/public/ui/ui-elements/list/refresh-infinite/refresh_load2.xml"
   style="list"
   trigger="refresh"
   xmlns="https://hyperview.org/hyperview"

@@ -10,6 +10,7 @@
 .prettierrc.js
 .vscode/
 _examples_site/
+demo/hyperview/public/
 **/stories/
 demo/
 docs/

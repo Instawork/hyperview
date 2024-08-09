@@ -12,10 +12,10 @@ hv_button_behavior: "back"
   {{ description('Open a new modal screen') }}
 
   {% call button('Open another modal') -%}
-    <behavior action="new" delay="1000" href="/navigation/modal/index.xml" show-during-load="loading-screen" />
+    <behavior action="new" delay="1000" href="/hyperview/public/navigation/modal/index.xml" show-during-load="loading-screen" />
   {%- endcall %}
 
   {% call button('Push on the stack') -%}
-    <behavior action="push" href="/navigation/modal/index.xml" />
+    <behavior action="push" href="/hyperview/public/navigation/modal/index.xml" />
   {%- endcall %}
 {% endblock %}

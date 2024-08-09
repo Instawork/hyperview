@@ -1,6 +1,6 @@
 <view
   action="prepend"
-  href="/behaviors/basic/actions/prepend/prepend-nested/prepend_fragment3.xml"
+  href="/hyperview/public/behaviors/basic/actions/prepend/prepend-nested/prepend_fragment3.xml"
   style="tree"
   xmlns="https://hyperview.org/hyperview"
 >

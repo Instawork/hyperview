@@ -7,7 +7,7 @@
   <behavior
     action="close"
     delay="300"
-    href="/case-studies/business-rating/index.xml"
+    href="/hyperview/public/case-studies/business-rating/index.xml"
     trigger="load"
   />
   <behavior
