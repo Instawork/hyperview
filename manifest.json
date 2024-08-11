@@ -1,9 +1,0 @@
-{
-  "background_color": "#ffffff",
-  "display": "standalone",
-  "lang": "en",
-  "name": "demo",
-  "short_name": "demo",
-  "start_url": "/?utm_source=web_app_manifest",
-  "orientation": "portrait"
-}
