@@ -7,7 +7,18 @@ hv_button_behavior: "back"
 {% extends 'templates/scrollview.xml.njk' %}
 
 {% block styles %}
-  <style id="form-group" flex="1" marginLeft="24" marginRight="24" marginBottom="16" marginTop="8"/>
+  <style
+    id="form-group"
+    flex="1"
+    borderColor="#8D9494"
+    borderRadius="12"
+    borderWidth="1"
+    marginLeft="24"
+    marginRight="24"
+    marginBottom="16"
+    marginTop="8"
+    padding="24"
+  />
   <style
     id="input"
     borderBottomColor="#E1E1E1"
@@ -90,14 +101,6 @@ hv_button_behavior: "back"
     </modifier>
   </style>
   <style
-    id="form-group"
-    flex="1"
-    marginLeft="24"
-    marginRight="24"
-    marginBottom="16"
-    marginTop="8"
-  />
-  <style
     id="tag-label"
     color="#4e4d4d"
     fontSize="16"
@@ -108,18 +111,15 @@ hv_button_behavior: "back"
     </modifier>
   </style>
   <style
-    id="links"
-    alignItems="flex-start"
-    flexDirection="column"
-    marginLeft="24"
-    marginRight="24"
-    marginBottom="16"
-    marginTop="8"
+    id="select-container"
+    flexDirection="row"
+    flexWrap="wrap"
+    marginTop="12"
   />
 {% endblock %}
 
 {% block content %}
-  <view style="links">
+  <view style="top-links-container">
     {% include './set/index.xml.njk' %}
     {% include './clear/index.xml.njk' %}
     {% include './set-delay/index.xml.njk' %}

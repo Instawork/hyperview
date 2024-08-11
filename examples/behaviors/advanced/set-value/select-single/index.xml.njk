@@ -1,3 +1,5 @@
+{% from 'macros/link/index.xml.njk' import link %}
+
 <text style="section">Select Single</text>
 <view style="form-group">
   <text style="label" hide="true" id="id_ss_loading">Loading...</text>
@@ -15,10 +17,12 @@
       <text style="tag-label">Chinese</text>
     </option>
   </select-single>
-  <text style="link" action="set-value" new-value="Sushi" target="id_ss">
-    Select "Sushi"
-  </text>
-  <text style="link" action="set-value" new-value="bogus" target="id_ss">
-    Clear
-  </text>
+  <view style="select-container">
+    {% call link('Select "Sushi"') -%}
+      <behavior action="set-value" new-value="Sushi" target="id_ss" />
+    {%- endcall %}
+    {% call link('Clear') -%}
+      <behavior action="set-value" new-value="bogus" target="id_ss" />
+    {%- endcall %}
+  </view>
 </view>
