@@ -114,22 +114,21 @@
   borderWidth="1"
   flex="1"
   flexDirection="row"
-  height="48"
+  paddingVertical="12"
   justifyContent="space-between"
   marginHorizontal="24"
-  paddingLeft="24"
-  paddingRight="24"
+  paddingHorizontal="16"
 />
-<style id="item-first" borderTopLeftRadius="18" borderTopRightRadius="18" />
+<style id="item-first" borderTopLeftRadius="16" borderTopRightRadius="16" />
 <style
   id="item-last"
-  borderBottomLeftRadius="18"
-  borderBottomRightRadius="18"
+  borderBottomLeftRadius="16"
+  borderBottomRightRadius="16"
   marginBottom="24"
 />
 <style id="item-left" flex="1" flexDirection="row" />
 <style id="item-label" fontSize="18" fontWeight="normal" />
-<style id="item-chevron" fontSize="18" fontWeight="bold" />
+<style id="item-chevron" />
 <style
   id="button"
   backgroundColor="#63CB76"
@@ -215,10 +214,9 @@
   backgroundColor="#eee"
   flex="1"
   flexDirection="row"
-  height="48"
+  paddingVertical="12"
   marginHorizontal="24"
-  paddingLeft="24"
-  paddingRight="24"
+  paddingHorizontal="16"
 />
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
 <style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
@@ -325,124 +323,124 @@
   </item>
   <items xmlns="https://hyperview.org/hyperview">
   
-    <item key="a982775c-75de-4547-bdc9-31552f1f8016" style="mx-24 py-8 border-bottom">
+    <item key="0197187b-4702-4913-a7dc-f643add66ffa" style="mx-24 py-8 border-bottom">
       <text>Aaron Baumbach</text>
-      <text>Darron_Thompson20@yahoo.com</text>
-      <text>(696) 555-5693</text>
+      <text>Whitney_Corkery@hotmail.com</text>
+      <text>(776) 555-1493</text>
     </item>
   
-    <item key="b9b5efd9-e225-4bbf-9335-c0343f815eab" style="mx-24 py-8 border-bottom">
-      <text>Aaron Cartwright</text>
-      <text>Boris85@gmail.com</text>
-      <text>(545) 555-7805</text>
+    <item key="8fd90374-c86f-497d-ac61-05d5b58437f4" style="mx-24 py-8 border-bottom">
+      <text>Aaron Beier</text>
+      <text>Maverick_Zieme@gmail.com</text>
+      <text>(571) 555-8227</text>
     </item>
   
-    <item key="df48fe7a-ec6f-421b-b73c-e7a23db6e4cd" style="mx-24 py-8 border-bottom">
+    <item key="895b5fce-c01b-401b-ba84-4e66ac66a397" style="mx-24 py-8 border-bottom">
+      <text>Aaron Bernhard</text>
+      <text>Maverick_Hegmann@yahoo.com</text>
+      <text>(473) 555-0740</text>
+    </item>
+  
+    <item key="33cab292-81f2-458b-b7b3-dc7f8bb7b5d4" style="mx-24 py-8 border-bottom">
+      <text>Aaron Block</text>
+      <text>Sean.Schroeder@hotmail.com</text>
+      <text>(372) 555-2986</text>
+    </item>
+  
+    <item key="1678177e-10c8-47a3-8239-31e14b5a3b8d" style="mx-24 py-8 border-bottom">
+      <text>Aaron Bogan</text>
+      <text>Ed.Weimann49@gmail.com</text>
+      <text>(308) 555-3212</text>
+    </item>
+  
+    <item key="c4469e74-e574-4e61-850e-ba9d7fe9f9f4" style="mx-24 py-8 border-bottom">
       <text>Aaron Cummerata</text>
-      <text>Dewitt40@gmail.com</text>
-      <text>(500) 555-3627</text>
+      <text>Edythe6@gmail.com</text>
+      <text>(159) 555-8834</text>
     </item>
   
-    <item key="420625b5-8ac6-412c-a428-ae8e4fa3305c" style="mx-24 py-8 border-bottom">
-      <text>Aaron Emmerich</text>
-      <text>Austyn.Beatty@hotmail.com</text>
-      <text>(207) 555-5513</text>
+    <item key="386a3064-5e5e-443d-99a7-02ccb19cbbf3" style="mx-24 py-8 border-bottom">
+      <text>Aaron Daugherty-Bradtke</text>
+      <text>Karli55@yahoo.com</text>
+      <text>(443) 555-0975</text>
     </item>
   
-    <item key="fea59a3e-79e6-4e97-8bb6-116ec6257de4" style="mx-24 py-8 border-bottom">
-      <text>Aaron Gerlach</text>
-      <text>Randy_Senger45@hotmail.com</text>
-      <text>(157) 555-4050</text>
+    <item key="c7b802fb-7dba-422c-bb62-9beb5d5eb359" style="mx-24 py-8 border-bottom">
+      <text>Aaron Hickle</text>
+      <text>Felicita.Mayert@yahoo.com</text>
+      <text>(390) 555-0706</text>
     </item>
   
-    <item key="b8453f92-c21c-4655-8500-50d5933e01f9" style="mx-24 py-8 border-bottom">
-      <text>Aaron Hartmann</text>
-      <text>Llewellyn27@gmail.com</text>
-      <text>(236) 555-6946</text>
+    <item key="e9b2b544-66b4-4f79-becb-4d2458834a9e" style="mx-24 py-8 border-bottom">
+      <text>Aaron Hudson MD</text>
+      <text>Leone5@gmail.com</text>
+      <text>(151) 555-6276</text>
     </item>
   
-    <item key="43642a65-03d2-4cc9-8c50-35deda0a5cf9" style="mx-24 py-8 border-bottom">
-      <text>Aaron Jacobson</text>
-      <text>Libbie.Ortiz54@gmail.com</text>
-      <text>(896) 555-7609</text>
+    <item key="fe0f1cbb-b4eb-43dc-afb1-3f641812f564" style="mx-24 py-8 border-bottom">
+      <text>Aaron Jacobi</text>
+      <text>Alisa.Weimann59@hotmail.com</text>
+      <text>(780) 555-8892</text>
     </item>
   
-    <item key="1268b163-8c69-4155-8816-b9c7ebd0b970" style="mx-24 py-8 border-bottom">
-      <text>Aaron Jerde</text>
-      <text>Leon_Konopelski94@hotmail.com</text>
-      <text>(983) 555-4326</text>
+    <item key="102abe77-f7af-41ac-a160-bae2cb111ca8" style="mx-24 py-8 border-bottom">
+      <text>Aaron Johnson</text>
+      <text>Cody34@hotmail.com</text>
+      <text>(934) 555-2247</text>
     </item>
   
-    <item key="b66a14d5-3aa5-4bf1-b184-fe7009510256" style="mx-24 py-8 border-bottom">
-      <text>Aaron Kuphal</text>
-      <text>Dock25@hotmail.com</text>
-      <text>(890) 555-1046</text>
+    <item key="709611a7-6cd3-4695-bf62-7e3169d41125" style="mx-24 py-8 border-bottom">
+      <text>Aaron Lindgren I</text>
+      <text>Edna.Zulauf@yahoo.com</text>
+      <text>(560) 555-2799</text>
     </item>
   
-    <item key="68b0e92c-be03-468f-92bb-c0950bd83b42" style="mx-24 py-8 border-bottom">
-      <text>Aaron Romaguera</text>
-      <text>Sydnee_Thiel89@gmail.com</text>
-      <text>(508) 555-5670</text>
+    <item key="a64bed48-201d-4f3b-913c-79e16a579391" style="mx-24 py-8 border-bottom">
+      <text>Aaron Mraz-Zemlak</text>
+      <text>Donald_Corwin@gmail.com</text>
+      <text>(728) 555-2208</text>
     </item>
   
-    <item key="40dd8625-ac59-483f-96b4-ec221a7fb2f1" style="mx-24 py-8 border-bottom">
-      <text>Aaron Rowe</text>
-      <text>Ibrahim_Hills87@gmail.com</text>
-      <text>(248) 555-5228</text>
+    <item key="5eff37ec-767d-49d8-b626-f4f5519b1df8" style="mx-24 py-8 border-bottom">
+      <text>Aaron Orn</text>
+      <text>Donna.Wunsch@yahoo.com</text>
+      <text>(897) 555-5862</text>
     </item>
   
-    <item key="04a7e7d0-33f9-4c26-b16f-f4cfb2eeaf74" style="mx-24 py-8 border-bottom">
-      <text>Aaron Stiedemann</text>
-      <text>Roslyn_Bradtke8@yahoo.com</text>
-      <text>(994) 555-0102</text>
+    <item key="3a108455-10aa-4dc0-b001-403f02353134" style="mx-24 py-8 border-bottom">
+      <text>Aaron Sporer</text>
+      <text>Yolanda.Armstrong@hotmail.com</text>
+      <text>(084) 555-7505</text>
     </item>
   
-    <item key="1d13d361-8e30-4e26-9991-f4e108f7ae72" style="mx-24 py-8 border-bottom">
-      <text>Aaron Watsica</text>
-      <text>Bennett.Herman@yahoo.com</text>
-      <text>(795) 555-3227</text>
+    <item key="5f8b00e0-a863-47a6-83a1-191075e76bdc" style="mx-24 py-8 border-bottom">
+      <text>Aaron Tillman</text>
+      <text>Cyril.Torp@yahoo.com</text>
+      <text>(823) 555-7328</text>
     </item>
   
-    <item key="4307f275-a8d1-46f6-9245-2c7212b1e37d" style="mx-24 py-8 border-bottom">
-      <text>Aaron Williamson-Schimmel</text>
-      <text>Marlee_OConnell63@gmail.com</text>
-      <text>(488) 555-2205</text>
+    <item key="fa215303-5e52-4b55-b58c-6104cc3ff264" style="mx-24 py-8 border-bottom">
+      <text>Aaron Toy</text>
+      <text>Kallie_Bayer93@hotmail.com</text>
+      <text>(529) 555-0357</text>
     </item>
   
-    <item key="43f519ea-45d0-4d23-97be-d31cb45894fb" style="mx-24 py-8 border-bottom">
-      <text>Abel Batz</text>
-      <text>Christine.Weimann@yahoo.com</text>
-      <text>(356) 555-3117</text>
+    <item key="375f7865-0359-4850-836d-e16c715f3d4f" style="mx-24 py-8 border-bottom">
+      <text>Aaron Treutel</text>
+      <text>Audrey.Pacocha41@yahoo.com</text>
+      <text>(559) 555-0891</text>
     </item>
   
-    <item key="c3c082fe-8005-4b2e-90d5-ec4f3b43486f" style="mx-24 py-8 border-bottom">
-      <text>Abel Beatty-Kling</text>
-      <text>Tad_Senger@hotmail.com</text>
-      <text>(239) 555-4589</text>
+    <item key="a6dad564-993f-4b6e-a36f-77590a9d37a6" style="mx-24 py-8 border-bottom">
+      <text>Aaron Ziemann</text>
+      <text>Ludwig_Rohan@yahoo.com</text>
+      <text>(032) 555-0403</text>
     </item>
   
-    <item key="da4ea89c-527b-4cdc-b670-8d2886e4ba27" style="mx-24 py-8 border-bottom">
-      <text>Abel Beier</text>
-      <text>Chester61@gmail.com</text>
-      <text>(833) 555-6612</text>
-    </item>
-  
-    <item key="9dfd871b-fc6b-4930-b966-ab4507e831c2" style="mx-24 py-8 border-bottom">
-      <text>Abel Daugherty</text>
-      <text>Kasandra_Ullrich@gmail.com</text>
-      <text>(841) 555-5575</text>
-    </item>
-  
-    <item key="1fe42072-c239-47d7-b600-8a4e20ef1309" style="mx-24 py-8 border-bottom">
-      <text>Abel Funk I</text>
-      <text>Margie.Yundt@hotmail.com</text>
-      <text>(789) 555-6114</text>
-    </item>
-  
-    <item key="319a1996-eccb-451c-a092-6e9dedbb0c79" style="mx-24 py-8 border-bottom">
-      <text>Abel Haag</text>
-      <text>Jason67@hotmail.com</text>
-      <text>(578) 555-7915</text>
+    <item key="45e43f68-6adf-4f31-b049-074db5b7fcb6" style="mx-24 py-8 border-bottom">
+      <text>Abel Bahringer I</text>
+      <text>Emmitt.Abbott6@hotmail.com</text>
+      <text>(412) 555-9385</text>
     </item>
   
   
@@ -581,22 +579,21 @@
   borderWidth="1"
   flex="1"
   flexDirection="row"
-  height="48"
+  paddingVertical="12"
   justifyContent="space-between"
   marginHorizontal="24"
-  paddingLeft="24"
-  paddingRight="24"
+  paddingHorizontal="16"
 />
-<style id="item-first" borderTopLeftRadius="18" borderTopRightRadius="18" />
+<style id="item-first" borderTopLeftRadius="16" borderTopRightRadius="16" />
 <style
   id="item-last"
-  borderBottomLeftRadius="18"
-  borderBottomRightRadius="18"
+  borderBottomLeftRadius="16"
+  borderBottomRightRadius="16"
   marginBottom="24"
 />
 <style id="item-left" flex="1" flexDirection="row" />
 <style id="item-label" fontSize="18" fontWeight="normal" />
-<style id="item-chevron" fontSize="18" fontWeight="bold" />
+<style id="item-chevron" />
 <style
   id="button"
   backgroundColor="#63CB76"
@@ -682,10 +679,9 @@
   backgroundColor="#eee"
   flex="1"
   flexDirection="row"
-  height="48"
+  paddingVertical="12"
   marginHorizontal="24"
-  paddingLeft="24"
-  paddingRight="24"
+  paddingHorizontal="16"
 />
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
 <style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />

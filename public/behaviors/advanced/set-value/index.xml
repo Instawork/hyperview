@@ -114,22 +114,21 @@
   borderWidth="1"
   flex="1"
   flexDirection="row"
-  height="48"
+  paddingVertical="12"
   justifyContent="space-between"
   marginHorizontal="24"
-  paddingLeft="24"
-  paddingRight="24"
+  paddingHorizontal="16"
 />
-<style id="item-first" borderTopLeftRadius="18" borderTopRightRadius="18" />
+<style id="item-first" borderTopLeftRadius="16" borderTopRightRadius="16" />
 <style
   id="item-last"
-  borderBottomLeftRadius="18"
-  borderBottomRightRadius="18"
+  borderBottomLeftRadius="16"
+  borderBottomRightRadius="16"
   marginBottom="24"
 />
 <style id="item-left" flex="1" flexDirection="row" />
 <style id="item-label" fontSize="18" fontWeight="normal" />
-<style id="item-chevron" fontSize="18" fontWeight="bold" />
+<style id="item-chevron" />
 <style
   id="button"
   backgroundColor="#63CB76"
@@ -215,10 +214,9 @@
   backgroundColor="#eee"
   flex="1"
   flexDirection="row"
-  height="48"
+  paddingVertical="12"
   marginHorizontal="24"
-  paddingLeft="24"
-  paddingRight="24"
+  paddingHorizontal="16"
 />
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
 <style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
@@ -332,6 +330,14 @@
     flexDirection="row"
     flexWrap="wrap"
     marginTop="12"
+  />
+  <style
+    id="field-changed"
+    color="green"
+    fontWeight="bold"
+    position="absolute"
+    right="0"
+    top="12"
   />
 
     </styles>
@@ -483,7 +489,13 @@
 <text style="section">Text fields</text>
 <view style="form-group">
   <text style="label" hide="true" id="id_tf_loading">Loading...</text>
-  <text-field id="id_tf" name="tf" placeholder="Text field" placeholderTextColor="#8D9494" style="input"/>
+  <view style="field">
+    <text-field id="id_tf" name="tf" placeholder="Text field" placeholderTextColor="#8D9494" style="input">
+      <behavior trigger="change" action="show" target="id_tf_changed" />
+      <behavior trigger="change" action="hide" delay="1000" target="id_tf_changed" />
+    </text-field>
+    <text style="field-changed" id="id_tf_changed" hide="true">Changed!</text>
+  </view>
   <view style="select-container">
     
   <view
@@ -515,6 +527,11 @@
 <text style="section">Text areas</text>
 <view style="form-group">
   <text style="label" hide="true" id="id_ta_loading">Loading...</text>
+  <text-area id="id_ta" name="ta" placeholder="Text area" placeholderTextColor="#8D9494" style="input">
+    <behavior trigger="change" action="show" target="id_ta_changed" />
+    <behavior trigger="change" action="hide" delay="1000" target="id_ta_changed" />
+  </text-area>
+  <text style="field-changed" id="id_ta_changed" hide="true">Changed!</text>
   <text-area id="id_ta" name="ta" placeholder="Text area" placeholderTextColor="#8D9494" style="input"/>
   <view style="select-container">
     
@@ -830,22 +847,21 @@
   borderWidth="1"
   flex="1"
   flexDirection="row"
-  height="48"
+  paddingVertical="12"
   justifyContent="space-between"
   marginHorizontal="24"
-  paddingLeft="24"
-  paddingRight="24"
+  paddingHorizontal="16"
 />
-<style id="item-first" borderTopLeftRadius="18" borderTopRightRadius="18" />
+<style id="item-first" borderTopLeftRadius="16" borderTopRightRadius="16" />
 <style
   id="item-last"
-  borderBottomLeftRadius="18"
-  borderBottomRightRadius="18"
+  borderBottomLeftRadius="16"
+  borderBottomRightRadius="16"
   marginBottom="24"
 />
 <style id="item-left" flex="1" flexDirection="row" />
 <style id="item-label" fontSize="18" fontWeight="normal" />
-<style id="item-chevron" fontSize="18" fontWeight="bold" />
+<style id="item-chevron" />
 <style
   id="button"
   backgroundColor="#63CB76"
@@ -931,10 +947,9 @@
   backgroundColor="#eee"
   flex="1"
   flexDirection="row"
-  height="48"
+  paddingVertical="12"
   marginHorizontal="24"
-  paddingLeft="24"
-  paddingRight="24"
+  paddingHorizontal="16"
 />
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
 <style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />

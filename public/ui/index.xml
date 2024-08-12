@@ -114,22 +114,21 @@
   borderWidth="1"
   flex="1"
   flexDirection="row"
-  height="48"
+  paddingVertical="12"
   justifyContent="space-between"
   marginHorizontal="24"
-  paddingLeft="24"
-  paddingRight="24"
+  paddingHorizontal="16"
 />
-<style id="item-first" borderTopLeftRadius="18" borderTopRightRadius="18" />
+<style id="item-first" borderTopLeftRadius="16" borderTopRightRadius="16" />
 <style
   id="item-last"
-  borderBottomLeftRadius="18"
-  borderBottomRightRadius="18"
+  borderBottomLeftRadius="16"
+  borderBottomRightRadius="16"
   marginBottom="24"
 />
 <style id="item-left" flex="1" flexDirection="row" />
 <style id="item-label" fontSize="18" fontWeight="normal" />
-<style id="item-chevron" fontSize="18" fontWeight="bold" />
+<style id="item-chevron" />
 <style
   id="button"
   backgroundColor="#63CB76"
@@ -215,10 +214,9 @@
   backgroundColor="#eee"
   flex="1"
   flexDirection="row"
-  height="48"
+  paddingVertical="12"
   marginHorizontal="24"
-  paddingLeft="24"
-  paddingRight="24"
+  paddingHorizontal="16"
 />
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
 <style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
@@ -238,25 +236,25 @@
     id="tab"
     alignItems="center"
     borderColor="transparent"
-    borderRadius="12"
+    borderRadius="8"
     borderWidth="1"
     flex="1"
-    height="40"
+    padding="8"
     justifyContent="center"
   >
     <modifier selected="true">
     <style
-      backgroundColor="white"
-      elevation="2"
-      shadowColor="black"
-      shadowOffsetX="0"
-      shadowOffsetY="2"
-      shadowOpacity="0.1"
-      shadowRadius="2"
+    backgroundColor="white"
+    elevation="2"
+    shadowColor="black"
+    shadowOffsetX="0"
+    shadowOffsetY="2"
+    shadowOpacity="0.1"
+    shadowRadius="2"
     />
     </modifier>
   </style>
-  <style id="tab-label" fontSize="18" />
+  <style id="tab-label" fontSize="16" fontWeight="500" lineHeight="24" />
 
     </styles>
     <body style="body" safe-area="true">
@@ -313,10 +311,74 @@ hv_list_tag: "root"
       
       
       <item
+        href="/hyperview/public//ui/styling/button/index.xml"
+        key="button"
+        show-during-load="loading-screen"
+        style="item item-first"
+        
+      >
+        <view style="item-left">
+          <text style="item-label">Button</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+      
+      
+      
+      <item
+        href="/hyperview/public//ui/styling/elevation/index.xml"
+        key="elevation"
+        show-during-load="loading-screen"
+        style="item"
+        
+      >
+        <view style="item-left">
+          <text style="item-label">Elevation</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+      
+      
+      
+      <item
         href="/hyperview/public//ui/styling/flex/index.xml"
         key="flex"
         show-during-load="loading-screen"
-        style="item item-first"
+        style="item"
         
       >
         <view style="item-left">
@@ -376,81 +438,17 @@ hv_list_tag: "root"
       
       
       
+        
+      
       <item
         href="/hyperview/public//ui/styling/text/index.xml"
         key="text"
-        show-during-load="loading-screen"
-        style="item"
-        
-      >
-        <view style="item-left">
-          <text style="item-label">Text</text>
-        </view>
-        <view style="item-chevron">
-          <svg
-  width="16"
-  height="16"
-  viewBox="0 0 16 16"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <path
-    fill-rule="evenodd"
-    clip-rule="evenodd"
-    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
-    fill="#4E4D4D"
-  />
-</svg>
-
-        </view>
-      </item>
-    
-      
-      
-      
-      <item
-        href="/hyperview/public//ui/styling/button/index.xml"
-        key="button"
-        show-during-load="loading-screen"
-        style="item"
-        
-      >
-        <view style="item-left">
-          <text style="item-label">Button</text>
-        </view>
-        <view style="item-chevron">
-          <svg
-  width="16"
-  height="16"
-  viewBox="0 0 16 16"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <path
-    fill-rule="evenodd"
-    clip-rule="evenodd"
-    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
-    fill="#4E4D4D"
-  />
-</svg>
-
-        </view>
-      </item>
-    
-      
-      
-      
-        
-      
-      <item
-        href="/hyperview/public//ui/styling/elevation/index.xml"
-        key="elevation"
         show-during-load="loading-screen"
         style="item item-last"
         
       >
         <view style="item-left">
-          <text style="item-label">Elevation</text>
+          <text style="item-label">Text</text>
         </view>
         <view style="item-chevron">
           <svg
@@ -835,96 +833,6 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/list/keyboard-dismiss/index.xml"
-        key="dismiss-keyboard-on-drag"
-        show-during-load="loading-screen"
-        style="item"
-      >
-        <view style="item-left">
-          <text style="item-label">Dismiss Keyboard on Drag</text>
-        </view>
-        <view style="item-chevron">
-          <svg
-  width="16"
-  height="16"
-  viewBox="0 0 16 16"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <path
-    fill-rule="evenodd"
-    clip-rule="evenodd"
-    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
-    fill="#4E4D4D"
-  />
-</svg>
-
-        </view>
-      </item>
-    
-      
-      
-      <item
-        href="/hyperview/public//ui/ui-elements/list/scroll-view/index.xml"
-        key="scroll-view"
-        show-during-load="loading-screen"
-        style="item"
-      >
-        <view style="item-left">
-          <text style="item-label">Scroll View</text>
-        </view>
-        <view style="item-chevron">
-          <svg
-  width="16"
-  height="16"
-  viewBox="0 0 16 16"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <path
-    fill-rule="evenodd"
-    clip-rule="evenodd"
-    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
-    fill="#4E4D4D"
-  />
-</svg>
-
-        </view>
-      </item>
-    
-      
-      
-      <item
-        href="/hyperview/public//ui/ui-elements/list/sticky/index.xml"
-        key="list-with-sticky-items"
-        show-during-load="loading-screen"
-        style="item"
-      >
-        <view style="item-left">
-          <text style="item-label">List with Sticky items</text>
-        </view>
-        <view style="item-chevron">
-          <svg
-  width="16"
-  height="16"
-  viewBox="0 0 16 16"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <path
-    fill-rule="evenodd"
-    clip-rule="evenodd"
-    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
-    fill="#4E4D4D"
-  />
-</svg>
-
-        </view>
-      </item>
-    
-      
-      
-      <item
         href="/hyperview/public//ui/ui-elements/list/infinite/index.xml"
         key="infinite-scroll"
         show-during-load="loading-screen"
@@ -932,6 +840,36 @@ hv_section_list_tag: "root"
       >
         <view style="item-left">
           <text style="item-label">Infinite Scroll</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+      
+      
+      <item
+        href="/hyperview/public//ui/ui-elements/list/keyboard-dismiss/index.xml"
+        key="dismiss-keyboard-on-drag"
+        show-during-load="loading-screen"
+        style="item"
+      >
+        <view style="item-left">
+          <text style="item-label">Dismiss Keyboard on Drag</text>
         </view>
         <view style="item-chevron">
           <svg
@@ -984,16 +922,76 @@ hv_section_list_tag: "root"
     
       
       
-        
-      
       <item
         href="/hyperview/public//ui/ui-elements/list/refresh/index.xml"
         key="list-with-refresh"
         show-during-load="loading-screen"
-        style="item item-last"
+        style="item"
       >
         <view style="item-left">
           <text style="item-label">List with Refresh</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+      
+      
+      <item
+        href="/hyperview/public//ui/ui-elements/list/scroll-view/index.xml"
+        key="scroll-view"
+        show-during-load="loading-screen"
+        style="item"
+      >
+        <view style="item-left">
+          <text style="item-label">Scroll View</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+      
+      
+        
+      
+      <item
+        href="/hyperview/public//ui/ui-elements/list/sticky/index.xml"
+        key="list-with-sticky-items"
+        show-during-load="loading-screen"
+        style="item item-last"
+      >
+        <view style="item-left">
+          <text style="item-label">List with Sticky items</text>
         </view>
         <view style="item-chevron">
           <svg
@@ -1052,66 +1050,6 @@ hv_section_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/section-list/dismiss-keyboard/index.xml"
-        key="dismiss-keyboard-on-drag"
-        show-during-load="loading-screen"
-        style="item"
-      >
-        <view style="item-left">
-          <text style="item-label">Dismiss Keyboard on Drag</text>
-        </view>
-        <view style="item-chevron">
-          <svg
-  width="16"
-  height="16"
-  viewBox="0 0 16 16"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <path
-    fill-rule="evenodd"
-    clip-rule="evenodd"
-    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
-    fill="#4E4D4D"
-  />
-</svg>
-
-        </view>
-      </item>
-    
-      
-      
-      <item
-        href="/hyperview/public//ui/ui-elements/section-list/non-sticky/index.xml"
-        key="non-sticky-titles"
-        show-during-load="loading-screen"
-        style="item"
-      >
-        <view style="item-left">
-          <text style="item-label">Non-sticky Titles</text>
-        </view>
-        <view style="item-chevron">
-          <svg
-  width="16"
-  height="16"
-  viewBox="0 0 16 16"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <path
-    fill-rule="evenodd"
-    clip-rule="evenodd"
-    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
-    fill="#4E4D4D"
-  />
-</svg>
-
-        </view>
-      </item>
-    
-      
-      
-      <item
         href="/hyperview/public//ui/ui-elements/section-list/deprecated/index.xml"
         key="deprecated-section-list"
         show-during-load="loading-screen"
@@ -1142,6 +1080,36 @@ hv_section_list_tag: "root"
       
       
       <item
+        href="/hyperview/public//ui/ui-elements/section-list/dismiss-keyboard/index.xml"
+        key="dismiss-keyboard-on-drag"
+        show-during-load="loading-screen"
+        style="item"
+      >
+        <view style="item-left">
+          <text style="item-label">Dismiss Keyboard on Drag</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+      
+      
+      <item
         href="/hyperview/public//ui/ui-elements/section-list/infinite/index.xml"
         key="section-list-infinite-scroll"
         show-during-load="loading-screen"
@@ -1149,6 +1117,36 @@ hv_section_list_tag: "root"
       >
         <view style="item-left">
           <text style="item-label">Section List Infinite Scroll</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+      
+      
+      <item
+        href="/hyperview/public//ui/ui-elements/section-list/non-sticky/index.xml"
+        key="non-sticky-titles"
+        show-during-load="loading-screen"
+        style="item"
+      >
+        <view style="item-left">
+          <text style="item-label">Non-sticky Titles</text>
         </view>
         <view style="item-chevron">
           <svg
@@ -1463,6 +1461,36 @@ hv_section_list_tag: "root"
       
       
       <item
+        href="/hyperview/public//ui/ui-elements/web-view/dispatch-event/index.xml"
+        key="event-dispatch"
+        show-during-load="loading-screen"
+        style="item"
+      >
+        <view style="item-left">
+          <text style="item-label">Event Dispatch</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+      
+      
+      <item
         href="/hyperview/public//ui/ui-elements/web-view/html/index.xml"
         key="html"
         show-during-load="loading-screen"
@@ -1552,46 +1580,16 @@ hv_section_list_tag: "root"
     
       
       
+        
+      
       <item
         href="/hyperview/public//ui/ui-elements/web-view/url/index.xml"
         key="url"
         show-during-load="loading-screen"
-        style="item"
-      >
-        <view style="item-left">
-          <text style="item-label">URL</text>
-        </view>
-        <view style="item-chevron">
-          <svg
-  width="16"
-  height="16"
-  viewBox="0 0 16 16"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <path
-    fill-rule="evenodd"
-    clip-rule="evenodd"
-    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
-    fill="#4E4D4D"
-  />
-</svg>
-
-        </view>
-      </item>
-    
-      
-      
-        
-      
-      <item
-        href="/hyperview/public//ui/ui-elements/web-view/dispatch-event/index.xml"
-        key="event-dispatch"
-        show-during-load="loading-screen"
         style="item item-last"
       >
         <view style="item-left">
-          <text style="item-label">Event Dispatch</text>
+          <text style="item-label">URL</text>
         </view>
         <view style="item-chevron">
           <svg
@@ -1621,11 +1619,11 @@ hv_section_list_tag: "root"
   </view>
 
   <behavior
+    action="set-value"
+    new-value="1"
     once="true"
     trigger="load"
-    action="set-value"
     target="tabs"
-    new-value="1"
   />
 
   </view>
@@ -1835,22 +1833,21 @@ hv_section_list_tag: "root"
   borderWidth="1"
   flex="1"
   flexDirection="row"
-  height="48"
+  paddingVertical="12"
   justifyContent="space-between"
   marginHorizontal="24"
-  paddingLeft="24"
-  paddingRight="24"
+  paddingHorizontal="16"
 />
-<style id="item-first" borderTopLeftRadius="18" borderTopRightRadius="18" />
+<style id="item-first" borderTopLeftRadius="16" borderTopRightRadius="16" />
 <style
   id="item-last"
-  borderBottomLeftRadius="18"
-  borderBottomRightRadius="18"
+  borderBottomLeftRadius="16"
+  borderBottomRightRadius="16"
   marginBottom="24"
 />
 <style id="item-left" flex="1" flexDirection="row" />
 <style id="item-label" fontSize="18" fontWeight="normal" />
-<style id="item-chevron" fontSize="18" fontWeight="bold" />
+<style id="item-chevron" />
 <style
   id="button"
   backgroundColor="#63CB76"
@@ -1936,10 +1933,9 @@ hv_section_list_tag: "root"
   backgroundColor="#eee"
   flex="1"
   flexDirection="row"
-  height="48"
+  paddingVertical="12"
   marginHorizontal="24"
-  paddingLeft="24"
-  paddingRight="24"
+  paddingHorizontal="16"
 />
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
 <style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />

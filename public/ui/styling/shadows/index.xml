@@ -114,22 +114,21 @@
   borderWidth="1"
   flex="1"
   flexDirection="row"
-  height="48"
+  paddingVertical="12"
   justifyContent="space-between"
   marginHorizontal="24"
-  paddingLeft="24"
-  paddingRight="24"
+  paddingHorizontal="16"
 />
-<style id="item-first" borderTopLeftRadius="18" borderTopRightRadius="18" />
+<style id="item-first" borderTopLeftRadius="16" borderTopRightRadius="16" />
 <style
   id="item-last"
-  borderBottomLeftRadius="18"
-  borderBottomRightRadius="18"
+  borderBottomLeftRadius="16"
+  borderBottomRightRadius="16"
   marginBottom="24"
 />
 <style id="item-left" flex="1" flexDirection="row" />
 <style id="item-label" fontSize="18" fontWeight="normal" />
-<style id="item-chevron" fontSize="18" fontWeight="bold" />
+<style id="item-chevron" />
 <style
   id="button"
   backgroundColor="#63CB76"
@@ -215,10 +214,9 @@
   backgroundColor="#eee"
   flex="1"
   flexDirection="row"
-  height="48"
+  paddingVertical="12"
   marginHorizontal="24"
-  paddingLeft="24"
-  paddingRight="24"
+  paddingHorizontal="16"
 />
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
 <style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
@@ -474,22 +472,21 @@
   borderWidth="1"
   flex="1"
   flexDirection="row"
-  height="48"
+  paddingVertical="12"
   justifyContent="space-between"
   marginHorizontal="24"
-  paddingLeft="24"
-  paddingRight="24"
+  paddingHorizontal="16"
 />
-<style id="item-first" borderTopLeftRadius="18" borderTopRightRadius="18" />
+<style id="item-first" borderTopLeftRadius="16" borderTopRightRadius="16" />
 <style
   id="item-last"
-  borderBottomLeftRadius="18"
-  borderBottomRightRadius="18"
+  borderBottomLeftRadius="16"
+  borderBottomRightRadius="16"
   marginBottom="24"
 />
 <style id="item-left" flex="1" flexDirection="row" />
 <style id="item-label" fontSize="18" fontWeight="normal" />
-<style id="item-chevron" fontSize="18" fontWeight="bold" />
+<style id="item-chevron" />
 <style
   id="button"
   backgroundColor="#63CB76"
@@ -575,10 +572,9 @@
   backgroundColor="#eee"
   flex="1"
   flexDirection="row"
-  height="48"
+  paddingVertical="12"
   marginHorizontal="24"
-  paddingLeft="24"
-  paddingRight="24"
+  paddingHorizontal="16"
 />
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
 <style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
