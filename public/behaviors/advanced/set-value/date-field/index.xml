@@ -1,3 +1,5 @@
+
+
 <text style="section">Date field</text>
 <view style="form-group">
   <text style="label" hide="true" id="id_df_loading">Loading...</text>
@@ -12,10 +14,28 @@
     name="df"
     placeholder="Select date"
     placeholderTextColor="#8D9494"/>
-  <text style="link" action="set-value" new-value="2019-10-06" target="id_df">
-    Select "2019-10-06"
-  </text>
-  <text style="link" action="set-value" new-value="" target="id_df">
-    Clear
-  </text>
+  <view style="select-container">
+    
+  <view
+    style="link-container"
+    
+  >
+    
+      <behavior action="set-value" new-value="2019-10-06" target="id_df" />
+    
+    <text style="link-text">Select &quot;2019-10-06&quot;</text>
+  </view>
+
+    
+  <view
+    style="link-container"
+    
+  >
+    
+      <behavior action="set-value" new-value="" target="id_df" />
+    
+    <text style="link-text">Clear</text>
+  </view>
+
+  </view>
 </view>

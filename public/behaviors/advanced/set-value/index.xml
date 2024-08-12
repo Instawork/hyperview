@@ -14,14 +14,39 @@
 />
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
 
+<style
+  id="about-title"
+  flex="1"
+  alignItems="center"
+  flexDirection="row"
+  justifyContent="space-between"
+  paddingTop="24"
+  paddingHorizontal="24"
+/>
+<style
+  id="about-container"
+  backgroundColor="#FEF1CF"
+  borderRadius="18"
+  margin="24"
+/>
+<style id="about-text" fontSize="20" fontWeight="700" />
+
 <style id="description" fontSize="16" margin="24" />
 
 <style
-  id="link"
+  id="link-text"
   color="#4778FF"
-  fontWeight="bold"
-  marginTop="8"
-  marginRight="16"
+/>
+<style
+  id="link-container"
+  borderColor="#4778FF"
+  paddingHorizontal="8"
+  paddingVertical="4"
+  borderRadius="24"
+  borderWidth="1"
+  marginVertical="6"
+  marginRight="6"
+  justifyContent="center"
 />
 
 <style
@@ -54,6 +79,9 @@
   marginBottom="0"
 />
 
+<style id="tab-content" flex="1" />
+<style id="centered" alignItems="center" justifyContent="center" />
+
 
 <style
   id="header"
@@ -62,6 +90,7 @@
   borderBottomColor="#eee"
   borderBottomWidth="1"
   flexDirection="row"
+  marginBottom="12"
   paddingBottom="16"
   paddingLeft="24"
   paddingRight="24"
@@ -91,11 +120,11 @@
   paddingLeft="24"
   paddingRight="24"
 />
-<style id="item-first" borderTopLeftRadius="24" borderTopRightRadius="24" />
+<style id="item-first" borderTopLeftRadius="18" borderTopRightRadius="18" />
 <style
   id="item-last"
-  borderBottomLeftRadius="24"
-  borderBottomRightRadius="24"
+  borderBottomLeftRadius="18"
+  borderBottomRightRadius="18"
   marginBottom="24"
 />
 <style id="item-left" flex="1" flexDirection="row" />
@@ -112,17 +141,17 @@
   padding="24"
 />
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style id="tab-route-content" flex="1" />
 <style
   id="bottom-tab"
   alignItems="center"
   flex="1"
-  height="48"
   justifyContent="center"
 />
 <style
   id="bottom-tab-label"
   color="#cccccc"
-  fontSize="12"
+  fontSize="8"
   fontWeight="bold"
 />
 <style id="bottom-tab-label-selected" color="#4778FF" />
@@ -145,15 +174,16 @@
   flexDirection="row"
   flexShrink="1"
   flexGrow="0"
+  height="48"
   justifyContent="space-around"
+  backgroundColor="white"
   position="absolute"
   width="100%"
 />
 <style
   id="list-container"
-  flex="0"
+  flex="1"
   flexGrow="1"
-  marginTop="24"
   marginBottom="48"
 />
 <style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" />
@@ -191,9 +221,21 @@
   paddingRight="24"
 />
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
+<style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
 
       
-  <style id="form-group" flex="1" marginLeft="24" marginRight="24" marginBottom="16" marginTop="8"/>
+  <style
+    id="form-group"
+    flex="1"
+    borderColor="#8D9494"
+    borderRadius="12"
+    borderWidth="1"
+    marginLeft="24"
+    marginRight="24"
+    marginBottom="16"
+    marginTop="8"
+    padding="24"
+  />
   <style
     id="input"
     borderBottomColor="#E1E1E1"
@@ -276,14 +318,6 @@
     </modifier>
   </style>
   <style
-    id="form-group"
-    flex="1"
-    marginLeft="24"
-    marginRight="24"
-    marginBottom="16"
-    marginTop="8"
-  />
-  <style
     id="tag-label"
     color="#4e4d4d"
     fontSize="16"
@@ -294,13 +328,10 @@
     </modifier>
   </style>
   <style
-    id="links"
-    alignItems="flex-start"
-    flexDirection="column"
-    marginLeft="24"
-    marginRight="24"
-    marginBottom="16"
-    marginTop="8"
+    id="select-container"
+    flexDirection="row"
+    flexWrap="wrap"
+    marginTop="12"
   />
 
     </styles>
@@ -331,11 +362,12 @@
       
   <view scroll="true" style="main">
     
-  <view style="links">
+  <view style="top-links-container">
     
 
 
   <view
+    style="link-container"
     
   >
     
@@ -346,7 +378,7 @@
   <behavior action="set-value" new-value="2019-04-02" target="id_df"/>
   <behavior action="set-value" new-value="on" target="id_s"/>
     
-    <text style="link">Set all</text>
+    <text style="link-text">Set all</text>
   </view>
 
 
@@ -354,6 +386,7 @@
 
 
   <view
+    style="link-container"
     
   >
     
@@ -364,7 +397,7 @@
   <behavior action="set-value" new-value="" target="id_df"/>
   <behavior action="set-value" new-value="off" target="id_s"/>
     
-    <text style="link">Clear all</text>
+    <text style="link-text">Clear all</text>
   </view>
 
 
@@ -372,6 +405,7 @@
 
 
   <view
+    style="link-container"
     
   >
     
@@ -382,7 +416,7 @@
   <behavior action="set-value" new-value="2019-04-02" target="id_df" delay="2500"/>
   <behavior action="set-value" new-value="on" target="id_s" delay="3000"/>
     
-    <text style="link">Set all with delay</text>
+    <text style="link-text">Set all with delay</text>
   </view>
 
 
@@ -390,6 +424,7 @@
 
 
   <view
+    style="link-container"
     
   >
     
@@ -400,7 +435,7 @@
   <behavior action="set-value" new-value="" target="id_df" delay="2500"/>
   <behavior action="set-value" new-value="off" target="id_s" delay="3000"/>
     
-    <text style="link">Clear all with delay</text>
+    <text style="link-text">Clear all with delay</text>
   </view>
 
 
@@ -408,6 +443,7 @@
 
 
   <view
+    style="link-container"
     
   >
     
@@ -418,7 +454,7 @@
   <behavior action="set-value" new-value="2019-04-02" target="id_df" delay="2500" show-during-load="id_df_loading"/>
   <behavior action="set-value" new-value="on" target="id_s" delay="3000" show-during-load="id_s_loading"/>
     
-    <text style="link">Set all with indicator</text>
+    <text style="link-text">Set all with indicator</text>
   </view>
 
 
@@ -426,6 +462,7 @@
 
 
   <view
+    style="link-container"
     
   >
     
@@ -436,36 +473,78 @@
   <behavior action="set-value" new-value="" target="id_df" delay="2500" show-during-load="id_df_loading"/>
   <behavior action="set-value" new-value="off" target="id_s" delay="3000" show-during-load="id_s_loading"/>
     
-    <text style="link">Clear all with indicator</text>
+    <text style="link-text">Clear all with indicator</text>
   </view>
 
 
   </view>
-  <text style="section">Text fields</text>
+  
+
+<text style="section">Text fields</text>
 <view style="form-group">
   <text style="label" hide="true" id="id_tf_loading">Loading...</text>
   <text-field id="id_tf" name="tf" placeholder="Text field" placeholderTextColor="#8D9494" style="input"/>
-  <text style="link" action="set-value" new-value="Test" target="id_tf">
-    Set value to "Test"
-  </text>
-  <text style="link" action="set-value" new-value="" target="id_tf">
-    Clear value
-  </text>
+  <view style="select-container">
+    
+  <view
+    style="link-container"
+    
+  >
+    
+      <behavior action="set-value" new-value="Test" target="id_tf" />
+    
+    <text style="link-text">Set value to &quot;Test&quot;</text>
+  </view>
+
+    
+  <view
+    style="link-container"
+    
+  >
+    
+      <behavior action="set-value" new-value="" target="id_tf" />
+    
+    <text style="link-text">Clear value</text>
+  </view>
+
+  </view>
 </view>
 
-  <text style="section">Text areas</text>
+  
+
+<text style="section">Text areas</text>
 <view style="form-group">
   <text style="label" hide="true" id="id_ta_loading">Loading...</text>
   <text-area id="id_ta" name="ta" placeholder="Text area" placeholderTextColor="#8D9494" style="input"/>
-  <text style="link" action="set-value" new-value="Test&#10;Multi&#10;Line" target="id_ta">
-    Set multi-line value
-  </text>
-  <text style="link" action="set-value" new-value="" target="id_ta">
-    Clear value
-  </text>
+  <view style="select-container">
+    
+  <view
+    style="link-container"
+    
+  >
+    
+      <behavior action="set-value" new-value="Test&#10;Multi&#10;Line" target="id_ta" />
+    
+    <text style="link-text">Set multi-line value</text>
+  </view>
+
+    
+  <view
+    style="link-container"
+    
+  >
+    
+      <behavior action="set-value" new-value="" target="id_ta" />
+    
+    <text style="link-text">Clear value</text>
+  </view>
+
+  </view>
 </view>
 
-  <text style="section">Select Single</text>
+  
+
+<text style="section">Select Single</text>
 <view style="form-group">
   <text style="label" hide="true" id="id_ss_loading">Loading...</text>
   <select-single id="id_ss" name="ss" style="tags">
@@ -482,15 +561,35 @@
       <text style="tag-label">Chinese</text>
     </option>
   </select-single>
-  <text style="link" action="set-value" new-value="Sushi" target="id_ss">
-    Select "Sushi"
-  </text>
-  <text style="link" action="set-value" new-value="bogus" target="id_ss">
-    Clear
-  </text>
+  <view style="select-container">
+    
+  <view
+    style="link-container"
+    
+  >
+    
+      <behavior action="set-value" new-value="Sushi" target="id_ss" />
+    
+    <text style="link-text">Select &quot;Sushi&quot;</text>
+  </view>
+
+    
+  <view
+    style="link-container"
+    
+  >
+    
+      <behavior action="set-value" new-value="bogus" target="id_ss" />
+    
+    <text style="link-text">Clear</text>
+  </view>
+
+  </view>
 </view>
 
-  <text style="section">Picker fields</text>
+  
+
+<text style="section">Picker fields</text>
 <view style="form-group">
   <text style="label" hide="true" id="id_pf_loading">Loading...</text>
   <picker-field
@@ -509,15 +608,35 @@
     <picker-item label="Choice 3" value="3"/>
     <picker-item label="Choice 4" value="4"/>
   </picker-field>
-  <text style="link" action="set-value" new-value="4" target="id_pf">
-    Select 4
-  </text>
-  <text style="link" action="set-value" new-value="" target="id_pf">
-    Clear
-  </text>
+  <view style="select-container">
+    
+  <view
+    style="link-container"
+    
+  >
+    
+      <behavior action="set-value" new-value="4" target="id_pf" />
+    
+    <text style="link-text">Select 4</text>
+  </view>
+
+    
+  <view
+    style="link-container"
+    
+  >
+    
+      <behavior action="set-value" new-value="" target="id_pf" />
+    
+    <text style="link-text">Clear</text>
+  </view>
+
+  </view>
 </view>
 
-  <text style="section">Date field</text>
+  
+
+<text style="section">Date field</text>
 <view style="form-group">
   <text style="label" hide="true" id="id_df_loading">Loading...</text>
   <date-field
@@ -531,24 +650,62 @@
     name="df"
     placeholder="Select date"
     placeholderTextColor="#8D9494"/>
-  <text style="link" action="set-value" new-value="2019-10-06" target="id_df">
-    Select "2019-10-06"
-  </text>
-  <text style="link" action="set-value" new-value="" target="id_df">
-    Clear
-  </text>
+  <view style="select-container">
+    
+  <view
+    style="link-container"
+    
+  >
+    
+      <behavior action="set-value" new-value="2019-10-06" target="id_df" />
+    
+    <text style="link-text">Select &quot;2019-10-06&quot;</text>
+  </view>
+
+    
+  <view
+    style="link-container"
+    
+  >
+    
+      <behavior action="set-value" new-value="" target="id_df" />
+    
+    <text style="link-text">Clear</text>
+  </view>
+
+  </view>
 </view>
 
-  <text style="section">Switch</text>
+  
+
+<text style="section">Switch</text>
 <view style="form-group">
   <text style="label" hide="true" id="id_s_loading">Loading...</text>
   <switch id="id_s" name="s" value="off"/>
-  <text style="link" action="set-value" new-value="on" target="id_s">
-    Turn on
-  </text>
-  <text style="link" action="set-value" new-value="off" target="id_s">
-    Turn off
-  </text>
+  <view style="select-container">
+    
+  <view
+    style="link-container"
+    
+  >
+    
+      <behavior action="set-value" new-value="on" target="id_s" />
+    
+    <text style="link-text">Turn on</text>
+  </view>
+
+    
+  <view
+    style="link-container"
+    
+  >
+    
+      <behavior action="set-value" new-value="off" target="id_s" />
+    
+    <text style="link-text">Turn off</text>
+  </view>
+
+  </view>
 </view>
 
 
@@ -573,14 +730,39 @@
 />
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
 
+<style
+  id="about-title"
+  flex="1"
+  alignItems="center"
+  flexDirection="row"
+  justifyContent="space-between"
+  paddingTop="24"
+  paddingHorizontal="24"
+/>
+<style
+  id="about-container"
+  backgroundColor="#FEF1CF"
+  borderRadius="18"
+  margin="24"
+/>
+<style id="about-text" fontSize="20" fontWeight="700" />
+
 <style id="description" fontSize="16" margin="24" />
 
 <style
-  id="link"
+  id="link-text"
   color="#4778FF"
-  fontWeight="bold"
-  marginTop="8"
-  marginRight="16"
+/>
+<style
+  id="link-container"
+  borderColor="#4778FF"
+  paddingHorizontal="8"
+  paddingVertical="4"
+  borderRadius="24"
+  borderWidth="1"
+  marginVertical="6"
+  marginRight="6"
+  justifyContent="center"
 />
 
 <style
@@ -613,6 +795,9 @@
   marginBottom="0"
 />
 
+<style id="tab-content" flex="1" />
+<style id="centered" alignItems="center" justifyContent="center" />
+
 
 <style
   id="header"
@@ -621,6 +806,7 @@
   borderBottomColor="#eee"
   borderBottomWidth="1"
   flexDirection="row"
+  marginBottom="12"
   paddingBottom="16"
   paddingLeft="24"
   paddingRight="24"
@@ -650,11 +836,11 @@
   paddingLeft="24"
   paddingRight="24"
 />
-<style id="item-first" borderTopLeftRadius="24" borderTopRightRadius="24" />
+<style id="item-first" borderTopLeftRadius="18" borderTopRightRadius="18" />
 <style
   id="item-last"
-  borderBottomLeftRadius="24"
-  borderBottomRightRadius="24"
+  borderBottomLeftRadius="18"
+  borderBottomRightRadius="18"
   marginBottom="24"
 />
 <style id="item-left" flex="1" flexDirection="row" />
@@ -671,17 +857,17 @@
   padding="24"
 />
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style id="tab-route-content" flex="1" />
 <style
   id="bottom-tab"
   alignItems="center"
   flex="1"
-  height="48"
   justifyContent="center"
 />
 <style
   id="bottom-tab-label"
   color="#cccccc"
-  fontSize="12"
+  fontSize="8"
   fontWeight="bold"
 />
 <style id="bottom-tab-label-selected" color="#4778FF" />
@@ -704,15 +890,16 @@
   flexDirection="row"
   flexShrink="1"
   flexGrow="0"
+  height="48"
   justifyContent="space-around"
+  backgroundColor="white"
   position="absolute"
   width="100%"
 />
 <style
   id="list-container"
-  flex="0"
+  flex="1"
   flexGrow="1"
-  marginTop="24"
   marginBottom="48"
 />
 <style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" />
@@ -750,6 +937,7 @@
   paddingRight="24"
 />
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
+<style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
 
   </styles>
   <body style="body" safe-area="true">

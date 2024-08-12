@@ -2,6 +2,7 @@
 
 
   <view
+    style="link-container"
     
   >
     
@@ -12,6 +13,6 @@
   <behavior action="set-value" new-value="" target="id_df" delay="2500"/>
   <behavior action="set-value" new-value="off" target="id_s" delay="3000"/>
     
-    <text style="link">Clear all with delay</text>
+    <text style="link-text">Clear all with delay</text>
   </view>
 

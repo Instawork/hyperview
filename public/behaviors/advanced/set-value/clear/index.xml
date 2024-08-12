@@ -2,6 +2,7 @@
 
 
   <view
+    style="link-container"
     
   >
     
@@ -12,6 +13,6 @@
   <behavior action="set-value" new-value="" target="id_df"/>
   <behavior action="set-value" new-value="off" target="id_s"/>
     
-    <text style="link">Clear all</text>
+    <text style="link-text">Clear all</text>
   </view>
 

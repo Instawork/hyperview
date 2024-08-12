@@ -2,6 +2,7 @@
 
 
   <view
+    style="link-container"
     
   >
     
@@ -12,6 +13,6 @@
   <behavior action="set-value" new-value="" target="id_df" delay="2500" show-during-load="id_df_loading"/>
   <behavior action="set-value" new-value="off" target="id_s" delay="3000" show-during-load="id_s_loading"/>
     
-    <text style="link">Clear all with indicator</text>
+    <text style="link-text">Clear all with indicator</text>
   </view>
 

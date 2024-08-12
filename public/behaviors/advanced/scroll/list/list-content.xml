@@ -76,12 +76,13 @@
     
       
   <view
+    style="link-container"
     
   >
     
       <behavior action="scroll" target="top" scroll:animated="true" />
     
-    <text style="link">Scroll to top</text>
+    <text style="link-text">Scroll to top</text>
   </view>
 
     
@@ -137,12 +138,13 @@
     
       
   <view
+    style="link-container"
     
   >
     
       <behavior action="scroll" target="top" scroll:animated="true" />
     
-    <text style="link">Scroll to top</text>
+    <text style="link-text">Scroll to top</text>
   </view>
 
     
@@ -198,12 +200,13 @@
     
       
   <view
+    style="link-container"
     
   >
     
       <behavior action="scroll" target="top" scroll:animated="true" />
     
-    <text style="link">Scroll to top</text>
+    <text style="link-text">Scroll to top</text>
   </view>
 
     
@@ -289,12 +292,13 @@
   <view />
   
   <view
+    style="link-container"
     
   >
     
       <behavior action="scroll" target="top" scroll:animated="true" />
     
-    <text style="link">Scroll to top</text>
+    <text style="link-text">Scroll to top</text>
   </view>
 
 </item>

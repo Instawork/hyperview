@@ -14,14 +14,39 @@
 />
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
 
+<style
+  id="about-title"
+  flex="1"
+  alignItems="center"
+  flexDirection="row"
+  justifyContent="space-between"
+  paddingTop="24"
+  paddingHorizontal="24"
+/>
+<style
+  id="about-container"
+  backgroundColor="#FEF1CF"
+  borderRadius="18"
+  margin="24"
+/>
+<style id="about-text" fontSize="20" fontWeight="700" />
+
 <style id="description" fontSize="16" margin="24" />
 
 <style
-  id="link"
+  id="link-text"
   color="#4778FF"
-  fontWeight="bold"
-  marginTop="8"
-  marginRight="16"
+/>
+<style
+  id="link-container"
+  borderColor="#4778FF"
+  paddingHorizontal="8"
+  paddingVertical="4"
+  borderRadius="24"
+  borderWidth="1"
+  marginVertical="6"
+  marginRight="6"
+  justifyContent="center"
 />
 
 <style
@@ -54,6 +79,9 @@
   marginBottom="0"
 />
 
+<style id="tab-content" flex="1" />
+<style id="centered" alignItems="center" justifyContent="center" />
+
 
 <style
   id="header"
@@ -62,6 +90,7 @@
   borderBottomColor="#eee"
   borderBottomWidth="1"
   flexDirection="row"
+  marginBottom="12"
   paddingBottom="16"
   paddingLeft="24"
   paddingRight="24"
@@ -91,11 +120,11 @@
   paddingLeft="24"
   paddingRight="24"
 />
-<style id="item-first" borderTopLeftRadius="24" borderTopRightRadius="24" />
+<style id="item-first" borderTopLeftRadius="18" borderTopRightRadius="18" />
 <style
   id="item-last"
-  borderBottomLeftRadius="24"
-  borderBottomRightRadius="24"
+  borderBottomLeftRadius="18"
+  borderBottomRightRadius="18"
   marginBottom="24"
 />
 <style id="item-left" flex="1" flexDirection="row" />
@@ -112,17 +141,17 @@
   padding="24"
 />
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style id="tab-route-content" flex="1" />
 <style
   id="bottom-tab"
   alignItems="center"
   flex="1"
-  height="48"
   justifyContent="center"
 />
 <style
   id="bottom-tab-label"
   color="#cccccc"
-  fontSize="12"
+  fontSize="8"
   fontWeight="bold"
 />
 <style id="bottom-tab-label-selected" color="#4778FF" />
@@ -145,15 +174,16 @@
   flexDirection="row"
   flexShrink="1"
   flexGrow="0"
+  height="48"
   justifyContent="space-around"
+  backgroundColor="white"
   position="absolute"
   width="100%"
 />
 <style
   id="list-container"
-  flex="0"
+  flex="1"
   flexGrow="1"
-  marginTop="24"
   marginBottom="48"
 />
 <style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" />
@@ -191,6 +221,7 @@
   paddingRight="24"
 />
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
+<style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
 
       
   <style id="switch-styled" color="#E1E1E1" backgroundColor="red">
@@ -261,9 +292,36 @@
   <view scroll="true" style="main">
     
   
+  <view style="about-container">
+    <view style="about-title">
+      <text style="about-text">About</text>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_12_1961)">
+<path d="M15 17.25V21.75C15 22.5784 14.3284 23.25 13.5 23.25H10.5C9.67157 23.25 9 22.5784 9 21.75V17.25" stroke="#D99000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M9 20.25H15" stroke="#D99000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12 0.75V2.25" stroke="#D99000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M1.5 11.25H3" stroke="#D99000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M3.75 3.75L4.85 4.807" stroke="#D99000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M22.5 11.25H21" stroke="#D99000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M20.2499 3.75L19.1499 4.807" stroke="#D99000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M8.91505 17.25H15.0851C17.359 16.1213 18.784 13.7884 18.7501 11.25C18.6844 7.54961 15.7004 4.56565 12.0001 4.5C8.29814 4.56572 5.31357 7.55205 5.25005 11.254C5.21767 13.791 6.64244 16.1219 8.91505 17.25V17.25Z" stroke="#D99000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<clipPath id="clip0_12_1961">
+<rect width="24" height="24" fill="white"/>
+</clipPath>
+</defs>
+</svg>
+
+    </view>
+    
+      
   
     <text style="description">Switches allow users to select a boolean input</text>
   
+
+    
+  </view>
 
   <form>
     <view style="FormGroup">
@@ -322,14 +380,39 @@
 />
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
 
+<style
+  id="about-title"
+  flex="1"
+  alignItems="center"
+  flexDirection="row"
+  justifyContent="space-between"
+  paddingTop="24"
+  paddingHorizontal="24"
+/>
+<style
+  id="about-container"
+  backgroundColor="#FEF1CF"
+  borderRadius="18"
+  margin="24"
+/>
+<style id="about-text" fontSize="20" fontWeight="700" />
+
 <style id="description" fontSize="16" margin="24" />
 
 <style
-  id="link"
+  id="link-text"
   color="#4778FF"
-  fontWeight="bold"
-  marginTop="8"
-  marginRight="16"
+/>
+<style
+  id="link-container"
+  borderColor="#4778FF"
+  paddingHorizontal="8"
+  paddingVertical="4"
+  borderRadius="24"
+  borderWidth="1"
+  marginVertical="6"
+  marginRight="6"
+  justifyContent="center"
 />
 
 <style
@@ -362,6 +445,9 @@
   marginBottom="0"
 />
 
+<style id="tab-content" flex="1" />
+<style id="centered" alignItems="center" justifyContent="center" />
+
 
 <style
   id="header"
@@ -370,6 +456,7 @@
   borderBottomColor="#eee"
   borderBottomWidth="1"
   flexDirection="row"
+  marginBottom="12"
   paddingBottom="16"
   paddingLeft="24"
   paddingRight="24"
@@ -399,11 +486,11 @@
   paddingLeft="24"
   paddingRight="24"
 />
-<style id="item-first" borderTopLeftRadius="24" borderTopRightRadius="24" />
+<style id="item-first" borderTopLeftRadius="18" borderTopRightRadius="18" />
 <style
   id="item-last"
-  borderBottomLeftRadius="24"
-  borderBottomRightRadius="24"
+  borderBottomLeftRadius="18"
+  borderBottomRightRadius="18"
   marginBottom="24"
 />
 <style id="item-left" flex="1" flexDirection="row" />
@@ -420,17 +507,17 @@
   padding="24"
 />
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style id="tab-route-content" flex="1" />
 <style
   id="bottom-tab"
   alignItems="center"
   flex="1"
-  height="48"
   justifyContent="center"
 />
 <style
   id="bottom-tab-label"
   color="#cccccc"
-  fontSize="12"
+  fontSize="8"
   fontWeight="bold"
 />
 <style id="bottom-tab-label-selected" color="#4778FF" />
@@ -453,15 +540,16 @@
   flexDirection="row"
   flexShrink="1"
   flexGrow="0"
+  height="48"
   justifyContent="space-around"
+  backgroundColor="white"
   position="absolute"
   width="100%"
 />
 <style
   id="list-container"
-  flex="0"
+  flex="1"
   flexGrow="1"
-  marginTop="24"
   marginBottom="48"
 />
 <style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" />
@@ -499,6 +587,7 @@
   paddingRight="24"
 />
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
+<style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
 
   </styles>
   <body style="body" safe-area="true">

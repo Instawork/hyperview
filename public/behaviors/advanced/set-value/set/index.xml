@@ -2,6 +2,7 @@
 
 
   <view
+    style="link-container"
     
   >
     
@@ -12,6 +13,6 @@
   <behavior action="set-value" new-value="2019-04-02" target="id_df"/>
   <behavior action="set-value" new-value="on" target="id_s"/>
     
-    <text style="link">Set all</text>
+    <text style="link-text">Set all</text>
   </view>
 

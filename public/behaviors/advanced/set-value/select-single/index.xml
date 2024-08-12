@@ -1,3 +1,5 @@
+
+
 <text style="section">Select Single</text>
 <view style="form-group">
   <text style="label" hide="true" id="id_ss_loading">Loading...</text>
@@ -15,10 +17,28 @@
       <text style="tag-label">Chinese</text>
     </option>
   </select-single>
-  <text style="link" action="set-value" new-value="Sushi" target="id_ss">
-    Select "Sushi"
-  </text>
-  <text style="link" action="set-value" new-value="bogus" target="id_ss">
-    Clear
-  </text>
+  <view style="select-container">
+    
+  <view
+    style="link-container"
+    
+  >
+    
+      <behavior action="set-value" new-value="Sushi" target="id_ss" />
+    
+    <text style="link-text">Select &quot;Sushi&quot;</text>
+  </view>
+
+    
+  <view
+    style="link-container"
+    
+  >
+    
+      <behavior action="set-value" new-value="bogus" target="id_ss" />
+    
+    <text style="link-text">Clear</text>
+  </view>
+
+  </view>
 </view>
