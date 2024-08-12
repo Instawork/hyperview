@@ -20,6 +20,12 @@ const getContent = (
     }
     return { message };
   }
+  if (url) {
+    if (title) {
+      return { title, url };
+    }
+    return { url };
+  }
   return null;
 };
 

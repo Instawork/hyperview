@@ -71,7 +71,7 @@ The title that appears as part of the Share UI on Android devices.
 | ------ | -------- |
 | string | **No**   |
 
-If the user chooses to share the content via email, this attribute pre-populate the subject of the email.
+If the user chooses to share the content via email, this attribute will pre-populate the subject of the email.
 
 ### message
 

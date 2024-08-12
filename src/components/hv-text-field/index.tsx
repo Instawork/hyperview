@@ -2,7 +2,7 @@ import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type { HvComponentProps, TextContextType } from 'hyperview/src/types';
-import React, { MutableRefObject, useCallback, useRef } from 'react';
+import React, { MutableRefObject, useCallback, useEffect, useRef } from 'react';
 import {
   createProps,
   getNameValueFormInputValues,
@@ -64,6 +64,7 @@ const HvTextField = (props: HvComponentProps) => {
   );
 
   // This handler takes care of handling the state, so it shouldn't be debounced
+  // eslint-disable-next-line react-hooks/rules-of-hooks, react-hooks/exhaustive-deps
   const onChangeText = (value: string) => {
     const formattedValue = HvTextField.getFormattedValue(props.element, value);
     const newElement = props.element.cloneNode(true) as Element;
@@ -76,6 +77,16 @@ const HvTextField = (props: HvComponentProps) => {
   const textInputRef: MutableRefObject<TextInput | null> = useRef(
     null as TextInput | null,
   );
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const prevDefaultValue = useRef<string | undefined>(defaultValue);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    if (prevDefaultValue.current !== defaultValue) {
+      onChangeText(defaultValue || '');
+    }
+    prevDefaultValue.current = defaultValue;
+  }, [defaultValue, onChangeText]);
 
   const p = {
     ...createProps(props.element, props.stylesheets, {
