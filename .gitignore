@@ -11,6 +11,7 @@ lib/
 storybook/app-key.gen.js
 
 _examples_site/
+demo/hyperview/public/
 
 website/translated_docs
 website/build/

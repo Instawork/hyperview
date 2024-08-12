@@ -12,14 +12,14 @@ hv_button_behavior: "back"
   {% call button('Push') -%}
     <behavior
       action="push"
-      href="/navigator/simple-stack/push-1.xml"
+      href="/hyperview/public/navigator/simple-stack/push-1.xml"
     />
   {%- endcall %}
   {{ description('Tapping the button below will create a modal screen on this stack.') }}
   {% call button('Push') -%}
     <behavior
       action="new"
-      href="/navigator/simple-stack/modal-1.xml"
+      href="/hyperview/public/navigator/simple-stack/modal-1.xml"
     />
   {%- endcall %}
 {% endblock %}
