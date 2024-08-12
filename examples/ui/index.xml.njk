@@ -30,13 +30,13 @@ hv_button_behavior: "none"
   >
     <modifier selected="true">
     <style
-      backgroundColor="white"
-      elevation="2"
-      shadowColor="black"
-      shadowOffsetX="0"
-      shadowOffsetY="2"
-      shadowOpacity="0.1"
-      shadowRadius="2"
+    backgroundColor="white"
+    elevation="2"
+    shadowColor="black"
+    shadowOffsetX="0"
+    shadowOffsetY="2"
+    shadowOpacity="0.1"
+    shadowRadius="2"
     />
     </modifier>
   </style>
@@ -63,10 +63,10 @@ hv_button_behavior: "none"
     {% include "./ui-elements/index.xml.njk" %}
   {%- endcall %}
   <behavior
+    action="set-value"
+    new-value="1"
     once="true"
     trigger="load"
-    action="set-value"
     target="tabs"
-    new-value="1"
   />
 {% endblock %}
