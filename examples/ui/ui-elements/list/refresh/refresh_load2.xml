@@ -1,6 +1,6 @@
 <list
   action="replace"
-  href="/ui/ui-elements/list/refresh/refresh_load.xml"
+  href="/hyperview/public/ui/ui-elements/list/refresh/refresh_load.xml"
   style="list"
   trigger="refresh"
   xmlns="https://hyperview.org/hyperview"

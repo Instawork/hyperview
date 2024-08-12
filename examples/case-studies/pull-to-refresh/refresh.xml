@@ -1,6 +1,6 @@
 <list
   action="replace"
-  href="/case-studies/pull-to-refresh/refresh.xml"
+  href="/hyperview/public/case-studies/pull-to-refresh/refresh.xml"
   trigger="refresh"
   xmlns="https://hyperview.org/hyperview"
 >

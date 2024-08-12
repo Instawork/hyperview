@@ -32,6 +32,10 @@ module.exports = function (eleventyConfig) {
         }
       }
     },
+    server: {
+      baseDir: 'demo',
+      directory: true,
+    },
   });
   // Pass through any XML files that haven't been ported yet.
   // Once everything is ported, we can remove this.
@@ -45,10 +49,11 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addNunjucksFilter('highlight', highlightFilter);
   eleventyConfig.addNunjucksFilter('paginate', paginateFilter);
   eleventyConfig.addNunjucksFilter('pageCount', pageCountFilter);
+  // Output into demo folder for serving both github pages and local development
   return {
     dir: {
-      input: 'examples_old',
-      output: '_examples_site',
+      input: 'examples',
+      output: 'demo/hyperview/public',
     },
   };
 };

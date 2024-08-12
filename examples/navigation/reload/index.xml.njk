@@ -20,6 +20,6 @@ hv_button_behavior: "back"
 
   {{ description('Tapping the button below will reload this screen with a new URL') }}
   {% call button('Reload different screen') -%}
-    <behavior action="reload" href="/navigation/index.xml" show-during-load="loading-screen" />
+    <behavior action="reload" href="/hyperview/public/navigation/index.xml" show-during-load="loading-screen" />
   {%- endcall %}
 {% endblock %}
