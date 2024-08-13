@@ -1,0 +1,8 @@
+{% macro tab(id, style, content) %}
+  <view id="{{ id }}" style="tab-content {{ style }}" hide="true">
+    {% if caller %}
+      {{ caller() }}
+    {% endif %}
+    <text>{{ content }}</text>
+  </view>
+{% endmacro %}

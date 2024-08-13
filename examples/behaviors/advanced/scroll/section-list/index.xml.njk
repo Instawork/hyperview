@@ -20,13 +20,13 @@ hv_button_behavior: "back"
     paddingLeft="24"
     paddingRight="24"
   />
-  <style id="list-header-text" fontSize="18" fontWeight="bold"/>
+  <style id="list-header-text" fontSize="18" fontWeight="bold" />
 {% endblock %}
 
 {% block container %}
   <section-list xmlns:scroll="https://hyperview.org/hyperview-scroll">
     <item key="top">
-      <view id="top">
+      <view id="top" style="top-links-container">
         {% call link('Scroll to item 15') -%}
           <behavior action="scroll" target="item-15" />
         {%- endcall %}

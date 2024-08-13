@@ -5,7 +5,7 @@ hv_title: "Tabs"
 hv_button_behavior: "back"
 ---
 {% extends 'templates/base.xml.njk' %}
-{% from './tab.xml.njk' import tab %}
+{% from 'macros/tab/index.xml.njk' import tab %}
 
 {% block styles %}
   <style id="row" flexDirection="row" justifyContent="space-between" />
@@ -28,7 +28,6 @@ hv_button_behavior: "back"
   <style id="green" backgroundColor="lightgreen" />
   <style id="blue" backgroundColor="lightblue" />
   <style id="yellow" backgroundColor="lightyellow" />
-  <style id="flex" flex="1" />
   <style id="centered" alignItems="center" justifyContent="center" />
 {% endblock %}
 
@@ -50,21 +49,21 @@ hv_button_behavior: "back"
       <text>Tab 3</text>
     </option>
   </select-single>
-  {% call tab("tab-1", "green", "TAB 1 CONTENT") -%}
+  {% call tab("tab-1", "green centered", "TAB 1 CONTENT") -%}
     <view
       trigger="visible"
       action="dispatch-event"
       event-name="tab-1-visible"
     />
   {%- endcall %}
-  {% call tab("tab-2", "blue", "TAB 2 CONTENT") -%}
+  {% call tab("tab-2", "blue centered", "TAB 2 CONTENT") -%}
     <view
       trigger="visible"
       action="dispatch-event"
       event-name="tab-2-visible"
     />
   {%- endcall %}
-  {% call tab("tab-3", "yellow", "TAB 3 CONTENT") -%}
+  {% call tab("tab-3", "yellow centered", "TAB 3 CONTENT") -%}
     <view
       trigger="visible"
       action="dispatch-event"

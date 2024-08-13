@@ -5,14 +5,32 @@ hv_title: "Date Field"
 hv_button_behavior: "back"
 ---
 {% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/about/index.xml.njk' import about %}
 {% from 'macros/description/index.xml.njk' import description %}
 {% from 'macros/button/index.xml.njk' import button %}
 
 {# TBD rohanbayya: To fix serialize button #}
 {% block styles %}
-  <style id="form-group" flex="1" marginLeft="24" marginRight="24" marginTop="48"/>
+  <style
+    id="form-group"
+    borderColor="#8D9494"
+    borderRadius="12"
+    borderWidth="1"
+    flex="1"
+    marginLeft="24"
+    marginRight="24"
+    marginTop="48"
+    padding="24"
+  />
   <style id="input-text-error" color="#FF4847"/>
-  <style id="picker-modal-text" color="blue" fontSize="16" fontWeight="600" marginBottom="16" padding="24">
+  <style
+    id="picker-modal-text"
+    color="blue"
+    fontSize="16"
+    fontWeight="600"
+    marginBottom="16"
+    padding="24"
+  >
     <modifier pressed="true">
     <style opacity="0.5"/>
     </modifier>
@@ -86,7 +104,7 @@ hv_button_behavior: "back"
 {% endblock %}
 
 {% block content %}
-  {% call description() -%}
+  {% call about() -%}
     Date fields open a system-appropriate modal to choose a date value. On iOS, styles can be applied to the modal and
     save/cancel labels.
   {%- endcall %}

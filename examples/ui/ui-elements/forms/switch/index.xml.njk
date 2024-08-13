@@ -5,6 +5,7 @@ hv_title: "Switch"
 hv_button_behavior: "back"
 ---
 {% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/about/index.xml.njk' import about %}
 {% from 'macros/description/index.xml.njk' import description %}
 {% from 'macros/button/index.xml.njk' import button %}
 
@@ -51,7 +52,7 @@ hv_button_behavior: "back"
 {% endblock %}
 
 {% block content %}
-  {{ description('Switches allow users to select a boolean input') }}
+  {{ about('Switches allow users to select a boolean input') }}
   <form>
     {% include './on/index.xml.njk' %}
     {% include './off/index.xml.njk' %}

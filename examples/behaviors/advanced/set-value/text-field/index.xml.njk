@@ -1,3 +1,5 @@
+{% from 'macros/link/index.xml.njk' import link %}
+
 <text style="section">Text fields</text>
 <view style="form-group">
   <text style="label" hide="true" id="id_tf_loading">Loading...</text>
@@ -8,10 +10,12 @@
     </text-field>
     <text style="field-changed" id="id_tf_changed" hide="true">Changed!</text>
   </view>
-  <text style="link" action="set-value" new-value="Test" target="id_tf">
-    Set value to "Test"
-  </text>
-  <text style="link" action="set-value" new-value="" target="id_tf">
-    Clear value
-  </text>
+  <view style="select-container">
+    {% call link('Set value to "Test"') -%}
+      <behavior action="set-value" new-value="Test" target="id_tf" />
+    {%- endcall %}
+    {% call link('Clear value') -%}
+      <behavior action="set-value" new-value="" target="id_tf" />
+    {%- endcall %}
+  </view>
 </view>

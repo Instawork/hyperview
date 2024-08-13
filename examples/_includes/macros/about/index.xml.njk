@@ -1,0 +1,18 @@
+
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% macro about(x) %}
+  <view style="about-container">
+    <view style="about-title">
+      <text style="about-text">About</text>
+      {% include 'icons/lightbulb.svg' %}
+    </view>
+    {% if caller %}
+      {% call description() -%}
+        {{caller()}}
+      {%- endcall %}
+    {% else %}
+      {{ description(x) }}
+    {% endif %}
+  </view>
+{% endmacro %}
