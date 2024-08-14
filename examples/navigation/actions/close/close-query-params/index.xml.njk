@@ -1,0 +1,13 @@
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  {{ description('Tapping the button below will navigate back to the previous screen, but with query params from the form.') }}
+  <form>
+    <text-field name="param1" value="value1"/>
+    <text-field name="param2" value="value2"/>
+    {% call button('Close') -%}
+      <behavior action="close" href="/hyperview/public/navigation/actions/index.xml?test=1" />
+    {%- endcall %}
+  </form>
+{% endblock %}

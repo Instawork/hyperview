@@ -1,0 +1,21 @@
+---
+permalink: "/navigation/actions/navigate/index.xml"
+tags: "navigation"
+hv_title: "Navigate"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  {{ description('Tapping the button below will request an XML screen and push it onto the stack.') }}
+
+  {% call button('Navigate to home') -%}
+    <behavior action="navigate" href="/hyperview/public/index.xml" />
+  {%- endcall %}
+
+  {% call button('Navigate with indicator') -%}
+    <behavior action="navigate" delay="1000" href="/hyperview/public/navigation/actions/pushed.xml" show-during-load="loading-screen" />
+  {%- endcall %}
+{% endblock %}

@@ -1,0 +1,17 @@
+---
+permalink: "/navigation/actions/changed.xml"
+hv_title: "Changed"
+hv_tab_id: "tab-navigation"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+
+{% block content %}
+  {{ description('Changed Screen') }}
+
+  {% call button('Go back to original screen') -%}
+    <behavior href="/hyperview/public/navigation/actions/index.xml" />
+  {%- endcall %}
+{% endblock %}

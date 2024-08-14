@@ -1,0 +1,21 @@
+---
+permalink: "/navigation/actions/modal/index.xml"
+tags: "navigation"
+hv_title: "Modal"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  {{ description('Open a new modal screen') }}
+
+  {% call button('Open another modal') -%}
+    <behavior action="new" delay="1000" href="/hyperview/public/navigation/actions/modal/index.xml" show-during-load="loading-screen" />
+  {%- endcall %}
+
+  {% call button('Push on the stack') -%}
+    <behavior action="push" href="/hyperview/public/navigation/actions/modal/index.xml" />
+  {%- endcall %}
+{% endblock %}
