@@ -1,0 +1,17 @@
+---
+permalink: "/advanced/case-studies/advanced-forms/index.xml"
+tags: "case_studies"
+hv_title: "Advanced Forms"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+
+{% block styles %}
+  {% include './styles.xml.njk' %}
+{% endblock %}
+
+{% block content %}
+  {% include './parking/index.xml.njk' %}
+  {% include './location/index.xml.njk' %}
+  {% include './food/index.xml.njk' %}
+{% endblock %}

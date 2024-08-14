@@ -1,7 +1,7 @@
 ---
-permalink: "/navigation/index.xml"
-hv_title: "Navigation"
-hv_tab_id: "tab-navigation"
+permalink: "/advanced/index.xml"
+hv_title: "Advanced"
+hv_tab_id: "tab-advanced"
 hv_button_behavior: "none"
 ---
 {% extends 'templates/tab-route.xml.njk' %}
@@ -46,21 +46,21 @@ hv_button_behavior: "none"
 {% block tab_route_content %}
   <select-single id="tabs" name="tabs" style="row">
     <option value="1" style="tab">
-      <behavior trigger="deselect" action="hide" target="tab-actions" />
-      <behavior trigger="select" action="show" target="tab-actions" />
-      <text style="tab-label">Actions</text>
+      <behavior trigger="deselect" action="hide" target="tab-case-studies" />
+      <behavior trigger="select" action="show" target="tab-case-studies" />
+      <text style="tab-label">Case Studies</text>
     </option>
     <option value="2" style="tab">
-      <behavior trigger="deselect" action="hide" target="tab-navigator" />
-      <behavior trigger="select" action="show" target="tab-navigator" />
-      <text style="tab-label">Navigator</text>
+      <behavior trigger="deselect" action="hide" target="tab-custom-components" />
+      <behavior trigger="select" action="show" target="tab-custom-components" />
+      <text style="tab-label">Custom Components</text>
     </option>
   </select-single>
-  {% call tab("tab-actions") -%}
-    {% include "./actions/index.xml.njk" %}
+  {% call tab("tab-case-studies") -%}
+    {% include "./case-studies/index.xml.njk" %}
   {%- endcall %}
-  {% call tab("tab-navigator") -%}
-    {% include "./navigator/index.xml.njk" %}
+  {% call tab("tab-custom-components") -%}
+    {% include "./custom-components/index.xml.njk" %}
   {%- endcall %}
   <behavior
     action="set-value"

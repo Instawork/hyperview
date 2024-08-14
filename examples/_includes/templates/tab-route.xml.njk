@@ -51,28 +51,14 @@
       style="bottom-tab"
       href-style="bottom-tab"
       action="navigate"
-      target="tab-case-studies"
+      target="tab-advanced"
     >
-      {% if hv_tab_id === 'tab-case-studies' %}
-        {% include 'icons/case-studies-selected.svg' %}
+      {% if hv_tab_id === 'tab-advanced' %}
+        {% include 'icons/advanced-selected.svg' %}
         <text style="bottom-tab-label bottom-tab-label-selected">Case Studies</text>
       {% else %}
-        {% include 'icons/case-studies.svg' %}
-        <text style="bottom-tab-label">Case Studies</text>
-      {% endif %}
-    </view>
-    <view
-      style="bottom-tab"
-      href-style="bottom-tab"
-      action="navigate"
-      target="tab-navigator"
-    >
-      {% if hv_tab_id === 'tab-navigator' %}
-        {% include 'icons/navigator-selected.svg' %}
-        <text style="bottom-tab-label bottom-tab-label-selected">Navigator</text>
-      {% else %}
-        {% include 'icons/navigator.svg' %}
-        <text style="bottom-tab-label">Navigator</text>
+        {% include 'icons/advanced.svg' %}
+        <text style="bottom-tab-label">Advanced</text>
       {% endif %}
     </view>
   </view>

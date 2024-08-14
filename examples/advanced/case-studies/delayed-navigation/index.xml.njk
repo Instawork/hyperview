@@ -1,0 +1,28 @@
+---
+permalink: "/advanced/case-studies/delayed-navigation/index.xml"
+tags: "case_studies"
+hv_title: "Delayed Navigation"
+hv_button_behavior: "back"
+---
+{% extends 'templates/base.xml.njk' %}
+
+{% block styles %}
+  <style id="label" fontSize="18" lineHeight="24" />
+  <style id="label-link" color="blue" fontSize="18" />
+{% endblock %}
+
+{% block container %}
+  <text style="label">This is screen 1.</text>
+  <text
+    action="replace-inner"
+    delay="800"
+    href="/hyperview/public/advanced/case-studies/delayed-navigation/redirect.xml"
+    show-during-load="loadingSpinner"
+    style="label label-link"
+    target="redirectContainer"
+  >
+    Click me
+  </text>
+  <spinner id="loadingSpinner" hide="true" />
+  <view id="redirectContainer" />
+{% endblock %}

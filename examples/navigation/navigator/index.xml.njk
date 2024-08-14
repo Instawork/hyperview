@@ -1,12 +1,6 @@
 ---
 permalink: "/navigation/navigator/index.xml"
-hv_title: "Navigator"
-hv_tab_id: "tab-navigator"
-hv_button_behavior: "none"
-hv_list_tag: "navigator"
 ---
-{% extends 'templates/tab-route.xml.njk' %}
 
-{% block tab_route_content %}
-  {% include "templates/list.xml.njk" %}
-{% endblock %}
+{% set hv_list_tag = "navigator" %}
+{% include "templates/list.xml.njk" %}
