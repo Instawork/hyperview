@@ -10,7 +10,8 @@
 
   "examples": {
     "Examples": [
-       "example_index"
+       "example_index",
+       "example_live"
     ],
     "Interactions": [
        "example_navigation",
