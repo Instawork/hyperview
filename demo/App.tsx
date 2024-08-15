@@ -6,6 +6,7 @@ import {
 } from 'react-native-safe-area-context';
 import { fetchWrapper, formatDate } from './src/helpers';
 import Hyperview from 'hyperview';
+import HyperviewFilter from './src/Components/hyperview-filter';
 import HyperviewSvg from './src/Components/HyperviewSvg';
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
@@ -28,7 +29,7 @@ export default () => (
           <NavigationContainer>
             <Hyperview
               behaviors={[]}
-              components={[HyperviewSvg]}
+              components={[HyperviewFilter, HyperviewSvg]}
               entrypointUrl={Constants.ENTRY_POINT_NAV_URL}
               fetch={fetchWrapper}
               formatDate={formatDate}
