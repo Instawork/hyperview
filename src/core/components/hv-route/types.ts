@@ -15,6 +15,7 @@ import type { Props as LoadingProps } from 'hyperview/src/core/components/loadin
 export type NavigationContextProps = {
   entrypointUrl: string;
   fetch: Fetch;
+  onError?: (error: Error) => void;
   onParseAfter?: (url: string) => void;
   onParseBefore?: (url: string) => void;
   onRouteBlur?: (route: Route) => void;

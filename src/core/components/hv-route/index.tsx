@@ -661,6 +661,7 @@ function HvRouteFC(props: Types.Props) {
       handleBack={navigationContext.handleBack}
       loadingScreen={navigationContext.loadingScreen}
       navigation={nav}
+      onError={navigationContext.onError}
       onParseAfter={navigationContext.onParseAfter}
       onParseBefore={navigationContext.onParseBefore}
       onUpdate={navigationContext.onUpdate}
