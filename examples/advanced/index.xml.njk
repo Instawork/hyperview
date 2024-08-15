@@ -8,10 +8,13 @@ hv_button_behavior: "none"
 {% from 'macros/tab/index.xml.njk' import tab, tab_bar %}
 
 {% block tab_route_content %}
-  {{ tab_bar([
-    {label: "Case Studies", id: "tab-case-studies"},
-    {label: "Custom Components", id: "tab-custom-components"}
-  ]) }}
+  {{ tab_bar(
+  [
+  {label: "Case Studies", id: "tab-case-studies"},
+  {label: "Custom Components", id: "tab-custom-components"}
+  ]
+  )
+  }}
   {% call tab("tab-case-studies") -%}
     {% include "./case-studies/index.xml.njk" %}
   {%- endcall %}

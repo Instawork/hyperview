@@ -9,8 +9,8 @@ hv_button_behavior: "none"
 
 {% block tab_route_content %}
   {{ tab_bar([
-    {label: "Actions", id: "tab-actions"},
-    {label: "Navigator", id: "tab-navigator"}
+  {label: "Actions", id: "tab-actions"},
+  {label: "Navigator", id: "tab-navigator"}
   ]) }}
   {% call tab("tab-actions") -%}
     {% include "./actions/index.xml.njk" %}

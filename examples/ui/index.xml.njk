@@ -9,8 +9,8 @@ hv_button_behavior: "none"
 
 {% block tab_route_content %}
   {{ tab_bar([
-    {label: "Styling", id: "tab-styling"},
-    {label: "UI Elements", id: "tab-ui-elements"}
+  {label: "Styling", id: "tab-styling"},
+  {label: "UI Elements", id: "tab-ui-elements"}
   ]) }}
   {% call tab("tab-styling") -%}
     {% include "./styling/index.xml.njk" %}

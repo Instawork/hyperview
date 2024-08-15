@@ -9,8 +9,8 @@ hv_button_behavior: "none"
 
 {% block tab_route_content %}
   {{ tab_bar([
-    {label: "Advanced", id: "tab-advanced"},
-    {label: "Basic", id: "tab-basic"}
+  {label: "Advanced", id: "tab-advanced"},
+  {label: "Basic", id: "tab-basic"}
   ]) }}
   {% call tab("tab-advanced") -%}
     {% include "./advanced/index.xml.njk" %}
