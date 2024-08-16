@@ -15,9 +15,24 @@ jobs:
       - run: yarn test:validate-xml
       - run: pip install djhtml
       - run: yarn test:lint
-
+  deploy:
+    docker:
+      - image: cimg/python:3.12.1-node
+    steps:
+      - checkout
+      - run:
+          working_directory: demo
+          name: Deploy
+          command: yarn deploy
 workflows:
   version: 2
   test-pr:
     jobs:
       - test
+  deploy:
+    jobs:
+      - deploy:
+          filters:
+            branches:
+              only:
+                - rbayya/ci-integrate-demo-app-deploy
