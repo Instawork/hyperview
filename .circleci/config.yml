@@ -20,7 +20,10 @@ jobs:
       - image: cimg/python:3.12.1-node
     steps:
       - checkout
-      - run: yarn
+      - run:
+          working_directory: demo
+          name: Install
+          command: yarn
       - run:
           working_directory: demo
           name: Deploy
