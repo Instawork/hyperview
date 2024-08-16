@@ -9,8 +9,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "deploy": "gh-pages -d hyperview",
-    "predeploy": "BASE_URL=https://instawork.github.io/hyperview/public expo export:web ; mv web-build hyperview; cd .. ; npx eleventy",
-    "eject": "expo eject"
+    "predeploy": "BASE_URL=https://instawork.github.io/hyperview/public expo export:web ; mv web-build hyperview; cd .. ; npx eleventy"
   },
   "dependencies": {
     "@babel/preset-env": "^7.22.20",
