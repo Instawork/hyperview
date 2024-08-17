@@ -20,6 +20,7 @@ jobs:
       - image: cimg/python:3.12.1-node
     steps:
       - checkout
+      - run: yarn
       - run:
           working_directory: demo
           name: Install
@@ -27,7 +28,10 @@ jobs:
       - run:
           working_directory: demo
           name: Deploy
-          command: yarn deploy
+          command: |
+            git config --global user.email "circleci@instawork.com"
+            git config --global user.name "CircleCI"
+            (yes || true) | yarn deploy
 workflows:
   version: 2
   test-pr:
