@@ -29,8 +29,8 @@ jobs:
           working_directory: demo
           name: Deploy
           command: |
-            git config --global user.email "circleci@instawork.com"
-            git config --global user.name "CircleCI"
+            git config user.email "circleci@instawork.com"
+            git config user.name "CircleCI"
             (yes || true) | yarn deploy
 workflows:
   version: 2
