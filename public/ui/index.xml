@@ -81,6 +81,39 @@
 
 <style id="tab-content" flex="1" />
 <style id="centered" alignItems="center" justifyContent="center" />
+<style
+  id="tab-bar-select"
+  backgroundColor="#eee"
+  borderRadius="12"
+  flexDirection="row"
+  justifyContent="space-between"
+  marginBottom="24"
+  marginHorizontal="24"
+  padding="2"
+/>
+<style
+  id="tab-bar-item"
+  alignItems="center"
+  borderColor="transparent"
+  borderRadius="8"
+  borderWidth="1"
+  flex="1"
+  padding="8"
+  justifyContent="center"
+>
+  <modifier selected="true">
+  <style
+  backgroundColor="white"
+  elevation="2"
+  shadowColor="black"
+  shadowOffsetX="0"
+  shadowOffsetY="2"
+  shadowOpacity="0.1"
+  shadowRadius="2"
+  />
+  </modifier>
+</style>
+<style id="tab-label" fontSize="16" fontWeight="500" lineHeight="24" />
 
 
 <style
@@ -222,40 +255,7 @@
 <style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
 
       
-  <style
-    id="row"
-    backgroundColor="#eee"
-    borderRadius="12"
-    flexDirection="row"
-    justifyContent="space-between"
-    marginBottom="24"
-    marginHorizontal="24"
-    padding="2"
-  />
-  <style
-    id="tab"
-    alignItems="center"
-    borderColor="transparent"
-    borderRadius="8"
-    borderWidth="1"
-    flex="1"
-    padding="8"
-    justifyContent="center"
-  >
-    <modifier selected="true">
-    <style
-    backgroundColor="white"
-    elevation="2"
-    shadowColor="black"
-    shadowOffsetX="0"
-    shadowOffsetY="2"
-    shadowOpacity="0.1"
-    shadowRadius="2"
-    />
-    </modifier>
-  </style>
-  <style id="tab-label" fontSize="16" fontWeight="500" lineHeight="24" />
-
+      
     </styles>
     <body style="body" safe-area="true">
       <header style="header">
@@ -266,18 +266,19 @@
       
   <view style="tab-route-content">
     
-  <select-single id="tabs" name="tabs" style="row">
-    <option value="1" style="tab">
-      <behavior trigger="deselect" action="hide" target="tab-styling" />
-      <behavior trigger="select" action="show" target="tab-styling" />
-      <text style="tab-label">Styling</text>
-    </option>
-    <option value="2" style="tab">
-      <behavior trigger="deselect" action="hide" target="tab-ui-elements" />
-      <behavior trigger="select" action="show" target="tab-ui-elements" />
-      <text style="tab-label">UI Elements</text>
-    </option>
+  
+  <select-single id="tab-bar" name="tab-bar" style="tab-bar-select">
+    <option value="tab-styling" style="tab-bar-item">
+        <behavior trigger="deselect" action="hide" target="tab-styling" />
+        <behavior trigger="select" action="show" target="tab-styling" />
+        <text style="tab-label">Styling</text>
+      </option><option value="tab-ui-elements" style="tab-bar-item">
+        <behavior trigger="deselect" action="hide" target="tab-ui-elements" />
+        <behavior trigger="select" action="show" target="tab-ui-elements" />
+        <text style="tab-label">UI Elements</text>
+      </option>
   </select-single>
+
   
   <view id="tab-styling" style="tab-content " hide="true">
     
@@ -1620,10 +1621,10 @@ hv_section_list_tag: "root"
 
   <behavior
     action="set-value"
-    new-value="1"
+    new-value="tab-styling"
     once="true"
     trigger="load"
-    target="tabs"
+    target="tab-bar"
   />
 
   </view>
@@ -1682,7 +1683,7 @@ hv_section_list_tag: "root"
       style="bottom-tab"
       href-style="bottom-tab"
       action="navigate"
-      target="tab-case-studies"
+      target="tab-advanced"
     >
       
         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1691,25 +1692,7 @@ hv_section_list_tag: "root"
 <path fill-rule="evenodd" clip-rule="evenodd" d="M22.064 9.931C21.3192 9.85093 20.5679 9.85093 19.823 9.931L17.823 13.111L16.592 10.823C12.133 13.012 10.392 18.301 12.041 19.953C14.255 22.167 23.013 18.286 22.064 9.931Z" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 
-        <text style="bottom-tab-label">Case Studies</text>
-      
-    </view>
-    <view
-      style="bottom-tab"
-      href-style="bottom-tab"
-      action="navigate"
-      target="tab-navigator"
-    >
-      
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M9.25 26.5C11.7353 26.5 13.75 24.4853 13.75 22C13.75 19.5147 11.7353 17.5 9.25 17.5C6.76472 17.5 4.75 19.5147 4.75 22C4.75 24.4853 6.76472 26.5 9.25 26.5Z" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M13.75 22V8.125C13.7519 6.81027 12.7809 5.6969 11.4782 5.52003C10.1754 5.34316 8.94269 6.15735 8.59401 7.425L4.91101 20.805" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M22.75 26.5C25.2353 26.5 27.25 24.4853 27.25 22C27.25 19.5147 25.2353 17.5 22.75 17.5C20.2647 17.5 18.25 19.5147 18.25 22C18.25 24.4853 20.2647 26.5 22.75 26.5Z" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M18.25 22V8.125C18.2481 6.81027 19.2191 5.6969 20.5219 5.52003C21.8246 5.34316 23.0573 6.15735 23.406 7.425L27.089 20.802" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M13.75 13H18.25V16H13.75V13Z" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-
-        <text style="bottom-tab-label">Navigator</text>
+        <text style="bottom-tab-label">Advanced</text>
       
     </view>
   </view>
@@ -1800,6 +1783,39 @@ hv_section_list_tag: "root"
 
 <style id="tab-content" flex="1" />
 <style id="centered" alignItems="center" justifyContent="center" />
+<style
+  id="tab-bar-select"
+  backgroundColor="#eee"
+  borderRadius="12"
+  flexDirection="row"
+  justifyContent="space-between"
+  marginBottom="24"
+  marginHorizontal="24"
+  padding="2"
+/>
+<style
+  id="tab-bar-item"
+  alignItems="center"
+  borderColor="transparent"
+  borderRadius="8"
+  borderWidth="1"
+  flex="1"
+  padding="8"
+  justifyContent="center"
+>
+  <modifier selected="true">
+  <style
+  backgroundColor="white"
+  elevation="2"
+  shadowColor="black"
+  shadowOffsetX="0"
+  shadowOffsetY="2"
+  shadowOpacity="0.1"
+  shadowRadius="2"
+  />
+  </modifier>
+</style>
+<style id="tab-label" fontSize="16" fontWeight="500" lineHeight="24" />
 
 
 <style

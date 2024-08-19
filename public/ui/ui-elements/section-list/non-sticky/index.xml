@@ -81,6 +81,39 @@
 
 <style id="tab-content" flex="1" />
 <style id="centered" alignItems="center" justifyContent="center" />
+<style
+  id="tab-bar-select"
+  backgroundColor="#eee"
+  borderRadius="12"
+  flexDirection="row"
+  justifyContent="space-between"
+  marginBottom="24"
+  marginHorizontal="24"
+  padding="2"
+/>
+<style
+  id="tab-bar-item"
+  alignItems="center"
+  borderColor="transparent"
+  borderRadius="8"
+  borderWidth="1"
+  flex="1"
+  padding="8"
+  justifyContent="center"
+>
+  <modifier selected="true">
+  <style
+  backgroundColor="white"
+  elevation="2"
+  shadowColor="black"
+  shadowOffsetX="0"
+  shadowOffsetY="2"
+  shadowOpacity="0.1"
+  shadowRadius="2"
+  />
+  </modifier>
+</style>
+<style id="tab-label" fontSize="16" fontWeight="500" lineHeight="24" />
 
 
 <style
@@ -437,6 +470,39 @@
 
 <style id="tab-content" flex="1" />
 <style id="centered" alignItems="center" justifyContent="center" />
+<style
+  id="tab-bar-select"
+  backgroundColor="#eee"
+  borderRadius="12"
+  flexDirection="row"
+  justifyContent="space-between"
+  marginBottom="24"
+  marginHorizontal="24"
+  padding="2"
+/>
+<style
+  id="tab-bar-item"
+  alignItems="center"
+  borderColor="transparent"
+  borderRadius="8"
+  borderWidth="1"
+  flex="1"
+  padding="8"
+  justifyContent="center"
+>
+  <modifier selected="true">
+  <style
+  backgroundColor="white"
+  elevation="2"
+  shadowColor="black"
+  shadowOffsetX="0"
+  shadowOffsetY="2"
+  shadowOpacity="0.1"
+  shadowRadius="2"
+  />
+  </modifier>
+</style>
+<style id="tab-label" fontSize="16" fontWeight="500" lineHeight="24" />
 
 
 <style

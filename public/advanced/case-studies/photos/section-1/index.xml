@@ -1,0 +1,52 @@
+
+
+<section-title />
+<item key="stories">
+  <view scroll-orientation="horizontal" style="stories">
+    
+  <view href="/hyperview/public/advanced/case-studies/photos/user/index.xml" style="story">
+    <image
+      source="/hyperview/public//advanced/case-studies/photos/avatars/geordi.jpg"
+      style="story-avatar"
+    />
+    <text numberOfLines="1" style="story-username">geordi</text>
+  </view>
+
+    
+  <view href="/hyperview/public/advanced/case-studies/photos/user/index.xml" style="story">
+    <image
+      source="/hyperview/public//advanced/case-studies/photos/avatars/data.jpg"
+      style="story-avatar"
+    />
+    <text numberOfLines="1" style="story-username">data</text>
+  </view>
+
+    
+  <view href="/hyperview/public/advanced/case-studies/photos/user/index.xml" style="story">
+    <image
+      source="/hyperview/public//advanced/case-studies/photos/avatars/deanna.png"
+      style="story-avatar"
+    />
+    <text numberOfLines="1" style="story-username">deanna.troi</text>
+  </view>
+
+    
+  <view href="/hyperview/public/advanced/case-studies/photos/user/index.xml" style="story">
+    <image
+      source="/hyperview/public//advanced/case-studies/photos/avatars/picard.jpg"
+      style="story-avatar"
+    />
+    <text numberOfLines="1" style="story-username">jean.luc.p</text>
+  </view>
+
+    
+  <view href="/hyperview/public/advanced/case-studies/photos/user/index.xml" style="story">
+    <image
+      source="/hyperview/public//advanced/case-studies/photos/avatars/worf.jpg"
+      style="story-avatar"
+    />
+    <text numberOfLines="1" style="story-username">og_worf</text>
+  </view>
+
+  </view>
+</item>

@@ -1,0 +1,1210 @@
+
+<doc xmlns="https://hyperview.org/hyperview" >
+  <screen>
+    <styles>
+      <style
+  id="button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"
+/>
+<style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+
+<style
+  id="about-title"
+  flex="1"
+  alignItems="center"
+  flexDirection="row"
+  justifyContent="space-between"
+  paddingTop="24"
+  paddingHorizontal="24"
+/>
+<style
+  id="about-container"
+  backgroundColor="#FEF1CF"
+  borderRadius="18"
+  margin="24"
+/>
+<style id="about-text" fontSize="20" fontWeight="700" />
+
+<style id="description" fontSize="16" margin="24" />
+
+<style
+  id="link-text"
+  color="#4778FF"
+/>
+<style
+  id="link-container"
+  borderColor="#4778FF"
+  paddingHorizontal="8"
+  paddingVertical="4"
+  borderRadius="24"
+  borderWidth="1"
+  marginVertical="6"
+  marginRight="6"
+  justifyContent="center"
+/>
+
+<style
+  id="container-style"
+  borderColor="#e1e1e1"
+  borderRadius="16"
+  borderWidth="2"
+  margin="24"
+  padding="24"
+/>
+<style
+  id="container-label"
+  color="black"
+  fontSize="16"
+  fontWeight="normal"
+/>
+
+<style
+  id="name"
+  fontSize="18"
+  fontWeight="600"
+  margin="24"
+  marginBottom="0"
+/>
+<style
+  id="phone"
+  fontSize="18"
+  fontWeight="normal"
+  margin="24"
+  marginBottom="0"
+/>
+
+<style id="tab-content" flex="1" />
+<style id="centered" alignItems="center" justifyContent="center" />
+<style
+  id="tab-bar-select"
+  backgroundColor="#eee"
+  borderRadius="12"
+  flexDirection="row"
+  justifyContent="space-between"
+  marginBottom="24"
+  marginHorizontal="24"
+  padding="2"
+/>
+<style
+  id="tab-bar-item"
+  alignItems="center"
+  borderColor="transparent"
+  borderRadius="8"
+  borderWidth="1"
+  flex="1"
+  padding="8"
+  justifyContent="center"
+>
+  <modifier selected="true">
+  <style
+  backgroundColor="white"
+  elevation="2"
+  shadowColor="black"
+  shadowOffsetX="0"
+  shadowOffsetY="2"
+  shadowOpacity="0.1"
+  shadowRadius="2"
+  />
+  </modifier>
+</style>
+<style id="tab-label" fontSize="16" fontWeight="500" lineHeight="24" />
+
+
+<style
+  id="header"
+  alignItems="center"
+  backgroundColor="white"
+  borderBottomColor="#eee"
+  borderBottomWidth="1"
+  flexDirection="row"
+  marginBottom="12"
+  paddingBottom="16"
+  paddingLeft="24"
+  paddingRight="24"
+/>
+<style
+  id="header-btn"
+  color="blue"
+  fontSize="16"
+  fontWeight="600"
+  paddingRight="16"
+/>
+<style id="header-title" color="black" fontSize="24" fontWeight="600" />
+<style id="body" backgroundColor="white" flex="1" />
+<style id="description" fontSize="16" margin="24" />
+<style
+  id="item"
+  alignItems="center"
+  backgroundColor="#FFFFFF"
+  borderColor="#eee"
+  borderBottomWidth="1"
+  borderWidth="1"
+  flex="1"
+  flexDirection="row"
+  paddingVertical="12"
+  justifyContent="space-between"
+  marginHorizontal="24"
+  paddingHorizontal="16"
+/>
+<style id="item-first" borderTopLeftRadius="16" borderTopRightRadius="16" />
+<style
+  id="item-last"
+  borderBottomLeftRadius="16"
+  borderBottomRightRadius="16"
+  marginBottom="24"
+/>
+<style id="item-left" flex="1" flexDirection="row" />
+<style id="item-label" fontSize="18" fontWeight="normal" />
+<style id="item-chevron" />
+<style
+  id="button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"
+/>
+<style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style id="tab-route-content" flex="1" />
+<style
+  id="bottom-tab"
+  alignItems="center"
+  flex="1"
+  justifyContent="center"
+/>
+<style
+  id="bottom-tab-label"
+  color="#cccccc"
+  fontSize="8"
+  fontWeight="bold"
+/>
+<style id="bottom-tab-label-selected" color="#4778FF" />
+<style id="bottom-tab-selected" />
+<style
+  id="back-image"
+  alignItems="center"
+  flex="0"
+  height="10"
+  justifyContent="center"
+  padding="10"
+  width="10"
+/>
+<style
+  id="footer"
+  alignItems="stretch"
+  borderTopColor="#eee"
+  borderTopWidth="1"
+  bottom="0"
+  flexDirection="row"
+  flexShrink="1"
+  flexGrow="0"
+  height="48"
+  justifyContent="space-around"
+  backgroundColor="white"
+  position="absolute"
+  width="100%"
+/>
+<style
+  id="list-container"
+  flex="1"
+  flexGrow="1"
+  marginBottom="48"
+/>
+<style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" />
+<style id="loading" alignItems="center" flex="1" justifyContent="center" />
+<style
+  id="link"
+  color="#4778FF"
+  fontWeight="bold"
+  marginTop="8"
+  marginRight="16"
+/>
+<style
+  id="container-style"
+  borderColor="#e1e1e1"
+  borderRadius="16"
+  borderWidth="2"
+  margin="24"
+  padding="24"
+/>
+<style
+  id="container-label"
+  color="black"
+  fontSize="16"
+  fontWeight="normal"
+/>
+<style
+  id="list-header"
+  alignItems="center"
+  backgroundColor="#eee"
+  flex="1"
+  flexDirection="row"
+  paddingVertical="12"
+  marginHorizontal="24"
+  paddingHorizontal="16"
+/>
+<style id="list-header-text" fontSize="18" fontWeight="bold"/>
+<style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
+
+      
+  <style id="main" backgroundColor="white" flex="1" />
+<style
+  id="title"
+  color="black"
+  fontSize="32"
+  fontWeight="bold"
+  lineHeight="40"
+  marginLeft="24"
+  marginRight="24"
+  marginTop="24"
+/>
+<style
+  id="section"
+  borderBottomColor="#E1E3E3"
+  borderBottomWidth="1"
+  marginBottom="24"
+  marginTop="24"
+/>
+<style
+  id="section-header"
+  fontSize="20"
+  fontWeight="bold"
+  lineHeight="24"
+  marginBottom="16"
+  marginLeft="24"
+  marginRight="24"
+/>
+<style
+  id="shift-item"
+  flex="1"
+  flexDirection="row"
+  justifyContent="flex-start"
+  paddingLeft="24"
+  paddingRight="24"
+/>
+<style
+  id="shift-item-avatar"
+  backgroundColor="#E1E3E3"
+  borderRadius="36"
+  height="72"
+  marginBottom="24"
+  width="72"
+/>
+<style
+  id="shift-item-info"
+  flex="1"
+  flexDirection="column"
+  marginLeft="16"
+/>
+<style
+  id="shift-item-worker-name"
+  color="#4E4D4D"
+  fontSize="16"
+  fontWeight="normal"
+  lineHeight="24"
+/>
+<style
+  id="shift-item-details"
+  color="#8D9494"
+  fontSize="16"
+  fontWeight="normal"
+  lineHeight="24"
+/>
+<style id="rating-container" flex="1" />
+<style
+  id="Rating"
+  flex="1"
+  flexDirection="row"
+  margin="0"
+  marginTop="24"
+/>
+<style id="rating-star" height="40" marginRight="10" width="40" />
+<style id="rating-style" flex="1" flexDirection="row" margin="0" />
+<style id="rating-star-filled" />
+<style
+  id="bottomsheet"
+  borderTopColor="#e1e1e1"
+  borderTopWidth="1"
+  bottom="0"
+  flex="1"
+  flexGrow="1"
+  height="80"
+  left="0"
+  paddingBottom="16"
+  paddingLeft="24"
+  paddingRight="24"
+  paddingTop="16"
+  position="absolute"
+  right="0"
+/>
+<style
+  id="bottomsheet-button"
+  alignItems="center"
+  backgroundColor="#4778FF"
+  height="48"
+  justifyContent="center"
+/>
+<style id="bottomsheet-button-disabled" backgroundColor="#80AAFF" />
+<style
+  id="bottomsheet-button-label"
+  color="white"
+  fontSize="16"
+  fontWeight="500"
+  lineHeight="24"
+/>
+<style
+  id="worker-info"
+  alignItems="center"
+  flex="1"
+  marginLeft="24"
+  marginRight="24"
+  marginTop="32"
+/>
+<style
+  id="worker-info-avatar"
+  backgroundColor="#E1E3E3"
+  borderRadius="36"
+  height="72"
+  width="72"
+/>
+<style
+  id="worker-info-name"
+  color="#4E4D4D"
+  fontSize="16"
+  fontWeight="bold"
+  lineHeight="24"
+  marginTop="16"
+/>
+<style
+  id="worker-info-details"
+  color="#4E4D4D"
+  fontSize="16"
+  fontWeight="normal"
+  lineHeight="24"
+/>
+<style
+  id="worker-info-time"
+  color="#8D9494"
+  fontSize="16"
+  fontWeight="normal"
+  lineHeight="24"
+/>
+<style
+  id="form-group"
+  flex="1"
+  marginLeft="24"
+  marginRight="24"
+  marginTop="48"
+/>
+<style id="outer-input" flex="1" />
+<style
+  id="input"
+  borderBottomColor="#E1E1E1"
+  borderBottomWidth="1"
+  borderColor="#4E4D4D"
+  flex="1"
+  fontSize="16"
+  fontWeight="normal"
+  paddingBottom="8"
+  paddingTop="8"
+/>
+<style id="input-focused" borderBottomColor="#4778FF" />
+<style id="input-error" borderBottomColor="#FF4847" color="#FF4847" />
+<style
+  id="label"
+  borderColor="#4E4D4D"
+  fontSize="16"
+  fontWeight="bold"
+  lineHeight="24"
+  marginBottom="8"
+/>
+<style
+  id="help"
+  borderColor="#FF4847"
+  fontSize="16"
+  fontWeight="normal"
+  lineHeight="24"
+  marginTop="16"
+/>
+<style id="help-error" color="#FF4847" />
+
+
+    </styles>
+    <body style="body" safe-area="true">
+      <header style="header">
+  
+    <view action="close" href="#" style="header-btn">
+      <svg
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M21.7803 3.28033C22.0732 2.98744 22.0732 2.51256 21.7803 2.21967C21.4874 1.92678 21.0126 1.92678 20.7197 2.21967L12 10.9393L3.28033 2.21967C2.98744 1.92678 2.51256 1.92678 2.21967 2.21967C1.92678 2.51256 1.92678 2.98744 2.21967 3.28033L10.9393 12L2.21967 20.7197C1.92678 21.0126 1.92678 21.4874 2.21967 21.7803C2.51256 22.0732 2.98744 22.0732 3.28033 21.7803L12 13.0607L20.7197 21.7803C21.0126 22.0732 21.4874 22.0732 21.7803 21.7803C22.0732 21.4874 22.0732 21.0126 21.7803 20.7197L13.0607 12L21.7803 3.28033Z"
+    fill="#4778FF"
+  />
+</svg>
+
+    </view>
+  
+  <text style="header-title">Rate the Instaworker</text>
+</header>
+
+      
+  <view scroll="true" style="main">
+    <text style="title">Rate the Instaworker</text>
+    <view style="worker-info">
+      <image source="/hyperview/public/advanced/case-studies/business-rating/image.jpg" style="worker-info-avatar" />
+      <text style="worker-info-name">Jake Tepperman</text>
+      <text style="worker-info-details">
+        Event Server, Private Residence
+      </text>
+      <text style="worker-info-time">Fri Aug 3, 7:00 PM - 1:00 AM</text>
+      <view id="rating" style="rating-container">
+        <view id="star0" style="rating-style">
+          
+  
+    
+    
+    
+    <image
+      action="replace-inner"
+      href="#star1"
+      source="/hyperview/public//advanced/case-studies/business-rating/star_empty@2x.png"
+      style="rating-star"
+      target="rating"
+    />
+  
+    
+    
+    
+    <image
+      action="replace-inner"
+      href="#star2"
+      source="/hyperview/public//advanced/case-studies/business-rating/star_empty@2x.png"
+      style="rating-star"
+      target="rating"
+    />
+  
+    
+    
+    
+    <image
+      action="replace-inner"
+      href="#star3"
+      source="/hyperview/public//advanced/case-studies/business-rating/star_empty@2x.png"
+      style="rating-star"
+      target="rating"
+    />
+  
+    
+    
+    
+    <image
+      action="replace-inner"
+      href="#star4"
+      source="/hyperview/public//advanced/case-studies/business-rating/star_empty@2x.png"
+      style="rating-star"
+      target="rating"
+    />
+  
+    
+    
+    
+    <image
+      action="replace-inner"
+      href="#star5"
+      source="/hyperview/public//advanced/case-studies/business-rating/star_empty@2x.png"
+      style="rating-star"
+      target="rating"
+    />
+  
+
+        </view>
+      </view>
+    </view>
+    <view style="form-group">
+      <text-area
+        placeholder="Any other feedback?"
+        placeholderTextColor="#8D9494"
+        name="other_feedback"
+        style="input"
+      />
+    </view>
+  </view>
+  <view style="bottomsheet">
+    <view
+      id="saveButtonContainer"
+      action="replace"
+      delay="500"
+      hide-during-load="saveButton"
+      href="/hyperview/public/advanced/case-studies/business-rating/rating_save.xml"
+      show-during-load="savingButton"
+      target="saveButtonContainer"
+    >
+      <view id="saveButton" style="bottomsheet-button">
+        <text id="saveLabel" style="bottomsheet-button-label">Done</text>
+      </view>
+      <view
+        id="savingButton"
+        hide="true"
+        style="bottomsheet-button bottomsheet-button-disabled"
+      >
+        <text id="savingLabel" style="bottomsheet-button-label">
+          Saving...
+        </text>
+      </view>
+    </view>
+  </view>
+  <view hide="true">
+    <view id="star1" style="rating-style">
+      
+  
+    
+    
+    
+      
+      
+    
+    <image
+      action="replace-inner"
+      href="#star1"
+      source="/hyperview/public//advanced/case-studies/business-rating/star_filled@2x.png"
+      style="rating-star rating-star-filled"
+      target="rating"
+    />
+  
+    
+    
+    
+    <image
+      action="replace-inner"
+      href="#star2"
+      source="/hyperview/public//advanced/case-studies/business-rating/star_empty@2x.png"
+      style="rating-star"
+      target="rating"
+    />
+  
+    
+    
+    
+    <image
+      action="replace-inner"
+      href="#star3"
+      source="/hyperview/public//advanced/case-studies/business-rating/star_empty@2x.png"
+      style="rating-star"
+      target="rating"
+    />
+  
+    
+    
+    
+    <image
+      action="replace-inner"
+      href="#star4"
+      source="/hyperview/public//advanced/case-studies/business-rating/star_empty@2x.png"
+      style="rating-star"
+      target="rating"
+    />
+  
+    
+    
+    
+    <image
+      action="replace-inner"
+      href="#star5"
+      source="/hyperview/public//advanced/case-studies/business-rating/star_empty@2x.png"
+      style="rating-star"
+      target="rating"
+    />
+  
+
+    </view>
+    <view id="star2" style="rating-style">
+      
+  
+    
+    
+    
+      
+      
+    
+    <image
+      action="replace-inner"
+      href="#star1"
+      source="/hyperview/public//advanced/case-studies/business-rating/star_filled@2x.png"
+      style="rating-star rating-star-filled"
+      target="rating"
+    />
+  
+    
+    
+    
+      
+      
+    
+    <image
+      action="replace-inner"
+      href="#star2"
+      source="/hyperview/public//advanced/case-studies/business-rating/star_filled@2x.png"
+      style="rating-star rating-star-filled"
+      target="rating"
+    />
+  
+    
+    
+    
+    <image
+      action="replace-inner"
+      href="#star3"
+      source="/hyperview/public//advanced/case-studies/business-rating/star_empty@2x.png"
+      style="rating-star"
+      target="rating"
+    />
+  
+    
+    
+    
+    <image
+      action="replace-inner"
+      href="#star4"
+      source="/hyperview/public//advanced/case-studies/business-rating/star_empty@2x.png"
+      style="rating-star"
+      target="rating"
+    />
+  
+    
+    
+    
+    <image
+      action="replace-inner"
+      href="#star5"
+      source="/hyperview/public//advanced/case-studies/business-rating/star_empty@2x.png"
+      style="rating-star"
+      target="rating"
+    />
+  
+
+    </view>
+    <view id="star3" style="rating-style">
+      
+  
+    
+    
+    
+      
+      
+    
+    <image
+      action="replace-inner"
+      href="#star1"
+      source="/hyperview/public//advanced/case-studies/business-rating/star_filled@2x.png"
+      style="rating-star rating-star-filled"
+      target="rating"
+    />
+  
+    
+    
+    
+      
+      
+    
+    <image
+      action="replace-inner"
+      href="#star2"
+      source="/hyperview/public//advanced/case-studies/business-rating/star_filled@2x.png"
+      style="rating-star rating-star-filled"
+      target="rating"
+    />
+  
+    
+    
+    
+      
+      
+    
+    <image
+      action="replace-inner"
+      href="#star3"
+      source="/hyperview/public//advanced/case-studies/business-rating/star_filled@2x.png"
+      style="rating-star rating-star-filled"
+      target="rating"
+    />
+  
+    
+    
+    
+    <image
+      action="replace-inner"
+      href="#star4"
+      source="/hyperview/public//advanced/case-studies/business-rating/star_empty@2x.png"
+      style="rating-star"
+      target="rating"
+    />
+  
+    
+    
+    
+    <image
+      action="replace-inner"
+      href="#star5"
+      source="/hyperview/public//advanced/case-studies/business-rating/star_empty@2x.png"
+      style="rating-star"
+      target="rating"
+    />
+  
+
+    </view>
+    <view id="star4" style="rating-style">
+      
+  
+    
+    
+    
+      
+      
+    
+    <image
+      action="replace-inner"
+      href="#star1"
+      source="/hyperview/public//advanced/case-studies/business-rating/star_filled@2x.png"
+      style="rating-star rating-star-filled"
+      target="rating"
+    />
+  
+    
+    
+    
+      
+      
+    
+    <image
+      action="replace-inner"
+      href="#star2"
+      source="/hyperview/public//advanced/case-studies/business-rating/star_filled@2x.png"
+      style="rating-star rating-star-filled"
+      target="rating"
+    />
+  
+    
+    
+    
+      
+      
+    
+    <image
+      action="replace-inner"
+      href="#star3"
+      source="/hyperview/public//advanced/case-studies/business-rating/star_filled@2x.png"
+      style="rating-star rating-star-filled"
+      target="rating"
+    />
+  
+    
+    
+    
+      
+      
+    
+    <image
+      action="replace-inner"
+      href="#star4"
+      source="/hyperview/public//advanced/case-studies/business-rating/star_filled@2x.png"
+      style="rating-star rating-star-filled"
+      target="rating"
+    />
+  
+    
+    
+    
+    <image
+      action="replace-inner"
+      href="#star5"
+      source="/hyperview/public//advanced/case-studies/business-rating/star_empty@2x.png"
+      style="rating-star"
+      target="rating"
+    />
+  
+
+    </view>
+    <view id="star5" style="rating-style">
+      
+  
+    
+    
+    
+      
+      
+    
+    <image
+      action="replace-inner"
+      href="#star1"
+      source="/hyperview/public//advanced/case-studies/business-rating/star_filled@2x.png"
+      style="rating-star rating-star-filled"
+      target="rating"
+    />
+  
+    
+    
+    
+      
+      
+    
+    <image
+      action="replace-inner"
+      href="#star2"
+      source="/hyperview/public//advanced/case-studies/business-rating/star_filled@2x.png"
+      style="rating-star rating-star-filled"
+      target="rating"
+    />
+  
+    
+    
+    
+      
+      
+    
+    <image
+      action="replace-inner"
+      href="#star3"
+      source="/hyperview/public//advanced/case-studies/business-rating/star_filled@2x.png"
+      style="rating-star rating-star-filled"
+      target="rating"
+    />
+  
+    
+    
+    
+      
+      
+    
+    <image
+      action="replace-inner"
+      href="#star4"
+      source="/hyperview/public//advanced/case-studies/business-rating/star_filled@2x.png"
+      style="rating-star rating-star-filled"
+      target="rating"
+    />
+  
+    
+    
+    
+      
+      
+    
+    <image
+      action="replace-inner"
+      href="#star5"
+      source="/hyperview/public//advanced/case-studies/business-rating/star_filled@2x.png"
+      style="rating-star rating-star-filled"
+      target="rating"
+    />
+  
+
+    </view>
+  </view>
+
+    </body>
+  </screen>
+  
+  
+  
+<screen id="loading-screen">
+  <styles>
+    <style
+  id="button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"
+/>
+<style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+
+<style
+  id="about-title"
+  flex="1"
+  alignItems="center"
+  flexDirection="row"
+  justifyContent="space-between"
+  paddingTop="24"
+  paddingHorizontal="24"
+/>
+<style
+  id="about-container"
+  backgroundColor="#FEF1CF"
+  borderRadius="18"
+  margin="24"
+/>
+<style id="about-text" fontSize="20" fontWeight="700" />
+
+<style id="description" fontSize="16" margin="24" />
+
+<style
+  id="link-text"
+  color="#4778FF"
+/>
+<style
+  id="link-container"
+  borderColor="#4778FF"
+  paddingHorizontal="8"
+  paddingVertical="4"
+  borderRadius="24"
+  borderWidth="1"
+  marginVertical="6"
+  marginRight="6"
+  justifyContent="center"
+/>
+
+<style
+  id="container-style"
+  borderColor="#e1e1e1"
+  borderRadius="16"
+  borderWidth="2"
+  margin="24"
+  padding="24"
+/>
+<style
+  id="container-label"
+  color="black"
+  fontSize="16"
+  fontWeight="normal"
+/>
+
+<style
+  id="name"
+  fontSize="18"
+  fontWeight="600"
+  margin="24"
+  marginBottom="0"
+/>
+<style
+  id="phone"
+  fontSize="18"
+  fontWeight="normal"
+  margin="24"
+  marginBottom="0"
+/>
+
+<style id="tab-content" flex="1" />
+<style id="centered" alignItems="center" justifyContent="center" />
+<style
+  id="tab-bar-select"
+  backgroundColor="#eee"
+  borderRadius="12"
+  flexDirection="row"
+  justifyContent="space-between"
+  marginBottom="24"
+  marginHorizontal="24"
+  padding="2"
+/>
+<style
+  id="tab-bar-item"
+  alignItems="center"
+  borderColor="transparent"
+  borderRadius="8"
+  borderWidth="1"
+  flex="1"
+  padding="8"
+  justifyContent="center"
+>
+  <modifier selected="true">
+  <style
+  backgroundColor="white"
+  elevation="2"
+  shadowColor="black"
+  shadowOffsetX="0"
+  shadowOffsetY="2"
+  shadowOpacity="0.1"
+  shadowRadius="2"
+  />
+  </modifier>
+</style>
+<style id="tab-label" fontSize="16" fontWeight="500" lineHeight="24" />
+
+
+<style
+  id="header"
+  alignItems="center"
+  backgroundColor="white"
+  borderBottomColor="#eee"
+  borderBottomWidth="1"
+  flexDirection="row"
+  marginBottom="12"
+  paddingBottom="16"
+  paddingLeft="24"
+  paddingRight="24"
+/>
+<style
+  id="header-btn"
+  color="blue"
+  fontSize="16"
+  fontWeight="600"
+  paddingRight="16"
+/>
+<style id="header-title" color="black" fontSize="24" fontWeight="600" />
+<style id="body" backgroundColor="white" flex="1" />
+<style id="description" fontSize="16" margin="24" />
+<style
+  id="item"
+  alignItems="center"
+  backgroundColor="#FFFFFF"
+  borderColor="#eee"
+  borderBottomWidth="1"
+  borderWidth="1"
+  flex="1"
+  flexDirection="row"
+  paddingVertical="12"
+  justifyContent="space-between"
+  marginHorizontal="24"
+  paddingHorizontal="16"
+/>
+<style id="item-first" borderTopLeftRadius="16" borderTopRightRadius="16" />
+<style
+  id="item-last"
+  borderBottomLeftRadius="16"
+  borderBottomRightRadius="16"
+  marginBottom="24"
+/>
+<style id="item-left" flex="1" flexDirection="row" />
+<style id="item-label" fontSize="18" fontWeight="normal" />
+<style id="item-chevron" />
+<style
+  id="button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"
+/>
+<style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style id="tab-route-content" flex="1" />
+<style
+  id="bottom-tab"
+  alignItems="center"
+  flex="1"
+  justifyContent="center"
+/>
+<style
+  id="bottom-tab-label"
+  color="#cccccc"
+  fontSize="8"
+  fontWeight="bold"
+/>
+<style id="bottom-tab-label-selected" color="#4778FF" />
+<style id="bottom-tab-selected" />
+<style
+  id="back-image"
+  alignItems="center"
+  flex="0"
+  height="10"
+  justifyContent="center"
+  padding="10"
+  width="10"
+/>
+<style
+  id="footer"
+  alignItems="stretch"
+  borderTopColor="#eee"
+  borderTopWidth="1"
+  bottom="0"
+  flexDirection="row"
+  flexShrink="1"
+  flexGrow="0"
+  height="48"
+  justifyContent="space-around"
+  backgroundColor="white"
+  position="absolute"
+  width="100%"
+/>
+<style
+  id="list-container"
+  flex="1"
+  flexGrow="1"
+  marginBottom="48"
+/>
+<style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" />
+<style id="loading" alignItems="center" flex="1" justifyContent="center" />
+<style
+  id="link"
+  color="#4778FF"
+  fontWeight="bold"
+  marginTop="8"
+  marginRight="16"
+/>
+<style
+  id="container-style"
+  borderColor="#e1e1e1"
+  borderRadius="16"
+  borderWidth="2"
+  margin="24"
+  padding="24"
+/>
+<style
+  id="container-label"
+  color="black"
+  fontSize="16"
+  fontWeight="normal"
+/>
+<style
+  id="list-header"
+  alignItems="center"
+  backgroundColor="#eee"
+  flex="1"
+  flexDirection="row"
+  paddingVertical="12"
+  marginHorizontal="24"
+  paddingHorizontal="16"
+/>
+<style id="list-header-text" fontSize="18" fontWeight="bold"/>
+<style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
+
+  </styles>
+  <body style="body" safe-area="true">
+    <header style="header">
+  
+    <view action="close" href="#" style="header-btn">
+      <svg
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M21.7803 3.28033C22.0732 2.98744 22.0732 2.51256 21.7803 2.21967C21.4874 1.92678 21.0126 1.92678 20.7197 2.21967L12 10.9393L3.28033 2.21967C2.98744 1.92678 2.51256 1.92678 2.21967 2.21967C1.92678 2.51256 1.92678 2.98744 2.21967 3.28033L10.9393 12L2.21967 20.7197C1.92678 21.0126 1.92678 21.4874 2.21967 21.7803C2.51256 22.0732 2.98744 22.0732 3.28033 21.7803L12 13.0607L20.7197 21.7803C21.0126 22.0732 21.4874 22.0732 21.7803 21.7803C22.0732 21.4874 22.0732 21.0126 21.7803 20.7197L13.0607 12L21.7803 3.28033Z"
+    fill="#4778FF"
+  />
+</svg>
+
+    </view>
+  
+  <text style="header-title">Rate the Instaworker</text>
+</header>
+
+    <view style="loading">
+      <text style="loading-text">Loading…</text>
+      <spinner/>
+    </view>
+  </body>
+</screen>
+
+</doc>

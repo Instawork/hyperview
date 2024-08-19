@@ -1,0 +1,1203 @@
+
+<doc xmlns="https://hyperview.org/hyperview" >
+  <screen>
+    <styles>
+      <style
+  id="button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"
+/>
+<style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+
+<style
+  id="about-title"
+  flex="1"
+  alignItems="center"
+  flexDirection="row"
+  justifyContent="space-between"
+  paddingTop="24"
+  paddingHorizontal="24"
+/>
+<style
+  id="about-container"
+  backgroundColor="#FEF1CF"
+  borderRadius="18"
+  margin="24"
+/>
+<style id="about-text" fontSize="20" fontWeight="700" />
+
+<style id="description" fontSize="16" margin="24" />
+
+<style
+  id="link-text"
+  color="#4778FF"
+/>
+<style
+  id="link-container"
+  borderColor="#4778FF"
+  paddingHorizontal="8"
+  paddingVertical="4"
+  borderRadius="24"
+  borderWidth="1"
+  marginVertical="6"
+  marginRight="6"
+  justifyContent="center"
+/>
+
+<style
+  id="container-style"
+  borderColor="#e1e1e1"
+  borderRadius="16"
+  borderWidth="2"
+  margin="24"
+  padding="24"
+/>
+<style
+  id="container-label"
+  color="black"
+  fontSize="16"
+  fontWeight="normal"
+/>
+
+<style
+  id="name"
+  fontSize="18"
+  fontWeight="600"
+  margin="24"
+  marginBottom="0"
+/>
+<style
+  id="phone"
+  fontSize="18"
+  fontWeight="normal"
+  margin="24"
+  marginBottom="0"
+/>
+
+<style id="tab-content" flex="1" />
+<style id="centered" alignItems="center" justifyContent="center" />
+<style
+  id="tab-bar-select"
+  backgroundColor="#eee"
+  borderRadius="12"
+  flexDirection="row"
+  justifyContent="space-between"
+  marginBottom="24"
+  marginHorizontal="24"
+  padding="2"
+/>
+<style
+  id="tab-bar-item"
+  alignItems="center"
+  borderColor="transparent"
+  borderRadius="8"
+  borderWidth="1"
+  flex="1"
+  padding="8"
+  justifyContent="center"
+>
+  <modifier selected="true">
+  <style
+  backgroundColor="white"
+  elevation="2"
+  shadowColor="black"
+  shadowOffsetX="0"
+  shadowOffsetY="2"
+  shadowOpacity="0.1"
+  shadowRadius="2"
+  />
+  </modifier>
+</style>
+<style id="tab-label" fontSize="16" fontWeight="500" lineHeight="24" />
+
+
+<style
+  id="header"
+  alignItems="center"
+  backgroundColor="white"
+  borderBottomColor="#eee"
+  borderBottomWidth="1"
+  flexDirection="row"
+  marginBottom="12"
+  paddingBottom="16"
+  paddingLeft="24"
+  paddingRight="24"
+/>
+<style
+  id="header-btn"
+  color="blue"
+  fontSize="16"
+  fontWeight="600"
+  paddingRight="16"
+/>
+<style id="header-title" color="black" fontSize="24" fontWeight="600" />
+<style id="body" backgroundColor="white" flex="1" />
+<style id="description" fontSize="16" margin="24" />
+<style
+  id="item"
+  alignItems="center"
+  backgroundColor="#FFFFFF"
+  borderColor="#eee"
+  borderBottomWidth="1"
+  borderWidth="1"
+  flex="1"
+  flexDirection="row"
+  paddingVertical="12"
+  justifyContent="space-between"
+  marginHorizontal="24"
+  paddingHorizontal="16"
+/>
+<style id="item-first" borderTopLeftRadius="16" borderTopRightRadius="16" />
+<style
+  id="item-last"
+  borderBottomLeftRadius="16"
+  borderBottomRightRadius="16"
+  marginBottom="24"
+/>
+<style id="item-left" flex="1" flexDirection="row" />
+<style id="item-label" fontSize="18" fontWeight="normal" />
+<style id="item-chevron" />
+<style
+  id="button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"
+/>
+<style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style id="tab-route-content" flex="1" />
+<style
+  id="bottom-tab"
+  alignItems="center"
+  flex="1"
+  justifyContent="center"
+/>
+<style
+  id="bottom-tab-label"
+  color="#cccccc"
+  fontSize="8"
+  fontWeight="bold"
+/>
+<style id="bottom-tab-label-selected" color="#4778FF" />
+<style id="bottom-tab-selected" />
+<style
+  id="back-image"
+  alignItems="center"
+  flex="0"
+  height="10"
+  justifyContent="center"
+  padding="10"
+  width="10"
+/>
+<style
+  id="footer"
+  alignItems="stretch"
+  borderTopColor="#eee"
+  borderTopWidth="1"
+  bottom="0"
+  flexDirection="row"
+  flexShrink="1"
+  flexGrow="0"
+  height="48"
+  justifyContent="space-around"
+  backgroundColor="white"
+  position="absolute"
+  width="100%"
+/>
+<style
+  id="list-container"
+  flex="1"
+  flexGrow="1"
+  marginBottom="48"
+/>
+<style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" />
+<style id="loading" alignItems="center" flex="1" justifyContent="center" />
+<style
+  id="link"
+  color="#4778FF"
+  fontWeight="bold"
+  marginTop="8"
+  marginRight="16"
+/>
+<style
+  id="container-style"
+  borderColor="#e1e1e1"
+  borderRadius="16"
+  borderWidth="2"
+  margin="24"
+  padding="24"
+/>
+<style
+  id="container-label"
+  color="black"
+  fontSize="16"
+  fontWeight="normal"
+/>
+<style
+  id="list-header"
+  alignItems="center"
+  backgroundColor="#eee"
+  flex="1"
+  flexDirection="row"
+  paddingVertical="12"
+  marginHorizontal="24"
+  paddingHorizontal="16"
+/>
+<style id="list-header-text" fontSize="18" fontWeight="bold"/>
+<style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
+
+      
+  <style
+  id="stories"
+  backgroundColor="#F4F4F4"
+  flex="1"
+  flexDirection="row"
+  paddingLeft="8"
+/>
+<style
+  id="story"
+  alignItems="center"
+  flex="1"
+  marginBottom="8"
+  marginLeft="8"
+  marginRight="8"
+  marginTop="8"
+/>
+<style
+  id="story-avatar"
+  backgroundColor="#F4F4F4"
+  borderRadius="32"
+  height="64"
+  width="64"
+/>
+<style
+  id="story-username"
+  fontSize="14"
+  fontWeight="bold"
+  marginTop="4"
+/>
+<style
+  id="image-header"
+  alignItems="center"
+  backgroundColor="white"
+  flex="1"
+  flexDirection="row"
+  justifyContent="space-between"
+  paddingBottom="16"
+  paddingLeft="16"
+  paddingRight="16"
+  paddingTop="16"
+/>
+<style
+  id="image-header-avatar"
+  backgroundColor="#F4F4F4"
+  borderRadius="24"
+  height="40"
+  width="40"
+/>
+<style id="image-header-left" flexDirection="row" />
+<style
+  id="image-header-left-labels"
+  justifyContent="center"
+  marginLeft="8"
+/>
+<style
+  id="image-header-username"
+  color="#4E4D4D"
+  fontSize="14"
+  fontWeight="bold"
+/>
+<style
+  id="image-header-location"
+  color="#BDC4C4"
+  fontSize="14"
+  fontWeight="normal"
+/>
+<style id="image-header-right" flexDirection="row" />
+<style
+  id="ImageHeader__more"
+  color="#BDC4C4"
+  fontSize="14"
+  fontWeight="bold"
+/>
+<style id="image-container" />
+<style
+  id="image-container-overlay"
+  alignItems="center"
+  flex="1"
+  height="375"
+  justifyContent="center"
+  left="0"
+  position="absolute"
+  top="0"
+  width="375"
+/>
+<style id="image" backgroundColor="#F4F4F4" height="375" width="375" />
+<style
+  id="image-message"
+  backgroundColor="black"
+  borderRadius="16"
+  paddingBottom="8"
+  paddingLeft="24"
+  paddingRight="24"
+  paddingTop="8"
+/>
+<style
+  id="image-message-label"
+  color="white"
+  fontSize="14"
+  fontWeight="bold"
+/>
+<style
+  id="actionbar"
+  flexDirection="row"
+  justifyContent="space-between"
+  marginLeft="16"
+  marginRight="16"
+  marginTop="8"
+/>
+<style id="actionbar-left" flexDirection="row" />
+<style id="actionbar-right" flexDirection="row" />
+<style
+  id="actionbar-icon"
+  height="24"
+  marginLeft="4"
+  marginRight="4"
+  width="24"
+/>
+<style id="actionbar-icon-image" height="24" width="24">
+  <modifier selected="true">
+  <style height="0" width="0" />
+  </modifier>
+</style>
+<style id="actionbar-icon-image-selected" height="0" width="0">
+  <modifier selected="true">
+  <style height="24" width="24" />
+  </modifier>
+</style>
+<style id="actionbar-icon-first" marginLeft="0" />
+<style id="actionbar-icon-last" marginRight="0" />
+<style
+  id="caption"
+  color="#4E4D4D"
+  fontSize="14"
+  lineHeight="24"
+  marginLeft="16"
+  marginRight="16"
+  marginTop="8"
+/>
+<style id="comments" marginLeft="16" marginRight="16" />
+<style
+  id="comments-likes"
+  color="#4E4D4D"
+  fontSize="14"
+  fontWeight="bold"
+  lineHeight="24"
+/>
+<style
+  id="comments-more"
+  color="#BDC4C4"
+  fontSize="14"
+  fontWeight="normal"
+  lineHeight="24"
+/>
+<style id="comment" flexDirection="row" marginTop="4" />
+<style
+  id="comment-author"
+  color="#4E4D4D"
+  fontSize="14"
+  fontWeight="bold"
+  lineHeight="18"
+  marginRight="4"
+/>
+<style
+  id="comment-content"
+  color="#4E4D4D"
+  fontSize="14"
+  fontWeight="normal"
+  lineHeight="18"
+/>
+
+
+    </styles>
+    <body style="body" safe-area="true">
+      <header style="header">
+  
+    <view action="back" href="#" style="header-btn">
+      <svg
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M11.7803 0.96967C12.0732 1.26256 12.0732 1.73744 11.7803 2.03033L2.56066 11.25H23.25C23.6642 11.25 24 11.5858 24 12C24 12.4142 23.6642 12.75 23.25 12.75H2.56066L11.7803 21.9697C12.0732 22.2626 12.0732 22.7374 11.7803 23.0303C11.4874 23.3232 11.0126 23.3232 10.7197 23.0303L0.21967 12.5303C-0.0732233 12.2374 -0.0732233 11.7626 0.21967 11.4697L10.7197 0.96967C11.0126 0.676777 11.4874 0.676777 11.7803 0.96967Z"
+    fill="#4778FF"
+  />
+</svg>
+
+    </view>
+  
+  <text style="header-title">Photo Sharing App</text>
+</header>
+
+      
+  <view scroll="true" style="main">
+    
+  <view hide="true">
+    <view id="empty-overlay" />
+    <view id="liked-overlay" style="image-message">
+      <text style="image-message-label">Liked!</text>
+    </view>
+    <view id="unliked-overlay" style="image-message">
+      <text style="image-message-label">Unliked</text>
+    </view>
+  </view>
+  <section-list>
+    
+
+<section-title />
+<item key="stories">
+  <view scroll-orientation="horizontal" style="stories">
+    
+  <view href="/hyperview/public/advanced/case-studies/photos/user/index.xml" style="story">
+    <image
+      source="/hyperview/public//advanced/case-studies/photos/avatars/geordi.jpg"
+      style="story-avatar"
+    />
+    <text numberOfLines="1" style="story-username">geordi</text>
+  </view>
+
+    
+  <view href="/hyperview/public/advanced/case-studies/photos/user/index.xml" style="story">
+    <image
+      source="/hyperview/public//advanced/case-studies/photos/avatars/data.jpg"
+      style="story-avatar"
+    />
+    <text numberOfLines="1" style="story-username">data</text>
+  </view>
+
+    
+  <view href="/hyperview/public/advanced/case-studies/photos/user/index.xml" style="story">
+    <image
+      source="/hyperview/public//advanced/case-studies/photos/avatars/deanna.png"
+      style="story-avatar"
+    />
+    <text numberOfLines="1" style="story-username">deanna.troi</text>
+  </view>
+
+    
+  <view href="/hyperview/public/advanced/case-studies/photos/user/index.xml" style="story">
+    <image
+      source="/hyperview/public//advanced/case-studies/photos/avatars/picard.jpg"
+      style="story-avatar"
+    />
+    <text numberOfLines="1" style="story-username">jean.luc.p</text>
+  </view>
+
+    
+  <view href="/hyperview/public/advanced/case-studies/photos/user/index.xml" style="story">
+    <image
+      source="/hyperview/public//advanced/case-studies/photos/avatars/worf.jpg"
+      style="story-avatar"
+    />
+    <text numberOfLines="1" style="story-username">og_worf</text>
+  </view>
+
+  </view>
+</item>
+
+    <section-title style="image-header">
+  <view style="image-header-left">
+    <image
+      href="/hyperview/public/advanced/case-studies/photos/index.xml"
+      source="/hyperview/public/advanced/case-studies/photos/avatars/riker.jpg"
+      style="image-header-avatar"
+    />
+    <view style="image-header-left-labels">
+      <text
+        href="/hyperview/public/advanced/case-studies/photos/user/index.xml"
+        style="image-header-username"
+      >
+        riker007
+      </text>
+      <text style="image-header-location">Las Vegas, CA</text>
+    </view>
+  </view>
+  <view style="image-header-right">
+    <text style="image-header-more">...</text>
+  </view>
+</section-title>
+<item key="image1">
+  <view style="image-container">
+    <image
+      source="/hyperview/public/advanced/case-studies/photos/photos/concert.jpeg"
+      style="image"
+    />
+    <view id="image1-overlay" style="image-container-overlay" />
+  </view>
+  <view style="actionbar">
+    <view style="actionbar-left">
+      <select-multiple name="image1-like">
+        <option
+          style="actionbar-icon actionbar-icon-first"
+          value="like"
+        >
+          <behavior
+            action="replace"
+            href="/hyperview/public/advanced/case-studies/photos/num_likes_increase.xml"
+            target="image1-num-likes"
+            trigger="select"
+          />
+          <behavior
+            action="replace"
+            href="/hyperview/public/advanced/case-studies/photos/num_likes_decrease.xml"
+            target="image1-num-likes"
+            trigger="deselect"
+          />
+          <image
+            source="/hyperview/public/advanced/case-studies/photos/icons/heart2.png"
+            style="actionbar-icon-image"
+          />
+          <image
+            source="/hyperview/public/advanced/case-studies/photos/icons/heart_liked2.png"
+            style="actionbar-icon-image-selected"
+          />
+        </option>
+      </select-multiple>
+      <image
+        source="/hyperview/public/advanced/case-studies/photos/icons/chat2.png"
+        style="actionbar-icon"
+      />
+    </view>
+    <view style="actionbar-right" />
+  </view>
+  <text style="caption">Best night of my life!</text>
+  ---
+permalink: "/advanced/case-studies/photos/comments.xml"
+---
+
+<view style="comments">
+  <text id="image1-num-likes" style="comments-likes">7 likes</text>
+  <text
+    action="prepend"
+    href="/hyperview/public/advanced/case-studies/photos/more_comments.xml"
+    style="comments-more"
+    target="comments-image1"
+  >
+    View all 140 comments
+  </text>
+  <view id="comments-image1">
+    <view style="comment">
+      <text
+        href="/hyperview/public/advanced/case-studies/photos/user/index.xml"
+        style="comment-author"
+      >
+        og_worf
+      </text>
+      <text style="comment-content">hello!</text>
+    </view>
+    <view style="comment">
+      <text
+        href="/hyperview/public/advanced/case-studies/photos/user/index.xml"
+        style="comment-author"
+      >
+        riker007
+      </text>
+      <text style="comment-content">hello!</text>
+    </view>
+    <view style="comment">
+      <text
+        href="/hyperview/public/advanced/case-studies/photos/user/index.xml"
+        style="comment-author"
+      >
+        jean.luc.p
+      </text>
+      <text style="comment-content">hello!</text>
+    </view>
+  </view>
+</view>
+
+</item>
+
+    <section-title style="image-header">
+  <view style="image-header-left">
+    <image
+      source="/hyperview/public/advanced/case-studies/photos/avatars/picard.jpg"
+      style="image-header-avatar"
+    />
+    <view style="image-header-left-labels">
+      <text
+        href="/hyperview/public/advanced/case-studies/photos/user/index.xml"
+        style="image-header-username"
+      >
+        jean.luc.p
+      </text>
+      <text style="image-header-location">San Francisco, CA</text>
+    </view>
+  </view>
+  <view style="image-header-right">
+    <text style="image-header-more">...</text>
+  </view>
+</section-title>
+<item key="image2">
+  <image
+    source="/hyperview/public/advanced/case-studies/photos/photos/dinner.jpeg"
+    style="image"
+  />
+  <view style="actionbar">
+    <view style="actionbar-left">
+      <select-multiple name="image2-like">
+        <option
+          selected="true"
+          style="actionbar-icon actionbar-icon-first"
+          value="like"
+        >
+          <image
+            source="/hyperview/public/advanced/case-studies/photos/icons/heart2.png"
+            style="actionbar-icon-image"
+          />
+          <image
+            source="/hyperview/public/advanced/case-studies/photos/icons/heart_liked2.png"
+            style="actionbar-icon-image-selected"
+          />
+        </option>
+      </select-multiple>
+      <image
+        source="/hyperview/public/advanced/case-studies/photos/icons/chat2.png"
+        style="actionbar-icon"
+      />
+    </view>
+    <view style="actionbar-right" />
+  </view>
+  <text style="caption">Hottest rez in town, cheers!</text>
+  ---
+permalink: "/advanced/case-studies/photos/comments.xml"
+---
+
+<view style="comments">
+  <text id="image1-num-likes" style="comments-likes">7 likes</text>
+  <text
+    action="prepend"
+    href="/hyperview/public/advanced/case-studies/photos/more_comments.xml"
+    style="comments-more"
+    target="comments-image1"
+  >
+    View all 140 comments
+  </text>
+  <view id="comments-image1">
+    <view style="comment">
+      <text
+        href="/hyperview/public/advanced/case-studies/photos/user/index.xml"
+        style="comment-author"
+      >
+        og_worf
+      </text>
+      <text style="comment-content">hello!</text>
+    </view>
+    <view style="comment">
+      <text
+        href="/hyperview/public/advanced/case-studies/photos/user/index.xml"
+        style="comment-author"
+      >
+        riker007
+      </text>
+      <text style="comment-content">hello!</text>
+    </view>
+    <view style="comment">
+      <text
+        href="/hyperview/public/advanced/case-studies/photos/user/index.xml"
+        style="comment-author"
+      >
+        jean.luc.p
+      </text>
+      <text style="comment-content">hello!</text>
+    </view>
+  </view>
+</view>
+
+</item>
+
+    <section-title style="image-header">
+  <view style="image-header-left">
+    <image
+      source="/hyperview/public/advanced/case-studies/photos/avatars/worf.jpg"
+      style="image-header-avatar"
+    />
+    <view style="image-header-left-labels">
+      <text
+        href="/hyperview/public/advanced/case-studies/photos/user/index.xml"
+        style="image-header-username"
+      >
+        og_worf
+      </text>
+      <text style="image-header-location">Williamsburg, NY</text>
+    </view>
+  </view>
+  <view style="image-header-right">
+    <text style="image-header-more">...</text>
+  </view>
+</section-title>
+<item key="image3">
+  <image
+    source="/hyperview/public/advanced/case-studies/photos/photos/inspiration1.jpeg"
+    style="image"
+  />
+  <view style="actionbar">
+    <view style="actionbar-left">
+      <image
+        source="/hyperview/public/advanced/case-studies/photos/icons/heart2.png"
+        style="actionbar-icon actionbar-icon-first"
+      />
+      <image
+        source="/hyperview/public/advanced/case-studies/photos/icons/chat2.png"
+        style="actionbar-icon"
+      />
+    </view>
+    <view style="actionbar-right" />
+  </view>
+  <text style="caption">
+    True words to live by... living every day to its fullest!!
+  </text>
+  ---
+permalink: "/advanced/case-studies/photos/comments.xml"
+---
+
+<view style="comments">
+  <text id="image1-num-likes" style="comments-likes">7 likes</text>
+  <text
+    action="prepend"
+    href="/hyperview/public/advanced/case-studies/photos/more_comments.xml"
+    style="comments-more"
+    target="comments-image1"
+  >
+    View all 140 comments
+  </text>
+  <view id="comments-image1">
+    <view style="comment">
+      <text
+        href="/hyperview/public/advanced/case-studies/photos/user/index.xml"
+        style="comment-author"
+      >
+        og_worf
+      </text>
+      <text style="comment-content">hello!</text>
+    </view>
+    <view style="comment">
+      <text
+        href="/hyperview/public/advanced/case-studies/photos/user/index.xml"
+        style="comment-author"
+      >
+        riker007
+      </text>
+      <text style="comment-content">hello!</text>
+    </view>
+    <view style="comment">
+      <text
+        href="/hyperview/public/advanced/case-studies/photos/user/index.xml"
+        style="comment-author"
+      >
+        jean.luc.p
+      </text>
+      <text style="comment-content">hello!</text>
+    </view>
+  </view>
+</view>
+
+</item>
+
+    <section-title style="image-header">
+  <view style="image-header-left">
+    <image
+      source="/hyperview/public/advanced/case-studies/photos/avatars/deanna.png"
+      style="image-header-avatar"
+    />
+    <view style="image-header-left-labels">
+      <text
+        href="/hyperview/public/advanced/case-studies/photos/user/index.xml"
+        style="image-header-username"
+      >
+        deanna.troi
+      </text>
+      <text style="image-header-location">Portland, WA</text>
+    </view>
+  </view>
+  <view style="image-header-right">
+    <text style="image-header-more">...</text>
+  </view>
+</section-title>
+<item key="image4">
+  <image
+    source="/hyperview/public/advanced/case-studies/photos/photos/coffee.jpeg"
+    style="image"
+  />
+  <view style="actionbar">
+    <view style="actionbar-left">
+      <image
+        source="/hyperview/public/advanced/case-studies/photos/icons/heart2.png"
+        style="actionbar-icon actionbar-icon-first"
+      />
+      <image
+        source="/hyperview/public/advanced/case-studies/photos/icons/chat2.png"
+        style="actionbar-icon"
+      />
+    </view>
+    <view style="actionbar-right" />
+  </view>
+  <text style="caption">
+    Can't start the day without my 10 artisinal cups of coffee!
+  </text>
+  ---
+permalink: "/advanced/case-studies/photos/comments.xml"
+---
+
+<view style="comments">
+  <text id="image1-num-likes" style="comments-likes">7 likes</text>
+  <text
+    action="prepend"
+    href="/hyperview/public/advanced/case-studies/photos/more_comments.xml"
+    style="comments-more"
+    target="comments-image1"
+  >
+    View all 140 comments
+  </text>
+  <view id="comments-image1">
+    <view style="comment">
+      <text
+        href="/hyperview/public/advanced/case-studies/photos/user/index.xml"
+        style="comment-author"
+      >
+        og_worf
+      </text>
+      <text style="comment-content">hello!</text>
+    </view>
+    <view style="comment">
+      <text
+        href="/hyperview/public/advanced/case-studies/photos/user/index.xml"
+        style="comment-author"
+      >
+        riker007
+      </text>
+      <text style="comment-content">hello!</text>
+    </view>
+    <view style="comment">
+      <text
+        href="/hyperview/public/advanced/case-studies/photos/user/index.xml"
+        style="comment-author"
+      >
+        jean.luc.p
+      </text>
+      <text style="comment-content">hello!</text>
+    </view>
+  </view>
+</view>
+
+</item>
+
+  </section-list>
+
+  </view>
+
+    </body>
+  </screen>
+  
+  
+  
+<screen id="loading-screen">
+  <styles>
+    <style
+  id="button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"
+/>
+<style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+
+<style
+  id="about-title"
+  flex="1"
+  alignItems="center"
+  flexDirection="row"
+  justifyContent="space-between"
+  paddingTop="24"
+  paddingHorizontal="24"
+/>
+<style
+  id="about-container"
+  backgroundColor="#FEF1CF"
+  borderRadius="18"
+  margin="24"
+/>
+<style id="about-text" fontSize="20" fontWeight="700" />
+
+<style id="description" fontSize="16" margin="24" />
+
+<style
+  id="link-text"
+  color="#4778FF"
+/>
+<style
+  id="link-container"
+  borderColor="#4778FF"
+  paddingHorizontal="8"
+  paddingVertical="4"
+  borderRadius="24"
+  borderWidth="1"
+  marginVertical="6"
+  marginRight="6"
+  justifyContent="center"
+/>
+
+<style
+  id="container-style"
+  borderColor="#e1e1e1"
+  borderRadius="16"
+  borderWidth="2"
+  margin="24"
+  padding="24"
+/>
+<style
+  id="container-label"
+  color="black"
+  fontSize="16"
+  fontWeight="normal"
+/>
+
+<style
+  id="name"
+  fontSize="18"
+  fontWeight="600"
+  margin="24"
+  marginBottom="0"
+/>
+<style
+  id="phone"
+  fontSize="18"
+  fontWeight="normal"
+  margin="24"
+  marginBottom="0"
+/>
+
+<style id="tab-content" flex="1" />
+<style id="centered" alignItems="center" justifyContent="center" />
+<style
+  id="tab-bar-select"
+  backgroundColor="#eee"
+  borderRadius="12"
+  flexDirection="row"
+  justifyContent="space-between"
+  marginBottom="24"
+  marginHorizontal="24"
+  padding="2"
+/>
+<style
+  id="tab-bar-item"
+  alignItems="center"
+  borderColor="transparent"
+  borderRadius="8"
+  borderWidth="1"
+  flex="1"
+  padding="8"
+  justifyContent="center"
+>
+  <modifier selected="true">
+  <style
+  backgroundColor="white"
+  elevation="2"
+  shadowColor="black"
+  shadowOffsetX="0"
+  shadowOffsetY="2"
+  shadowOpacity="0.1"
+  shadowRadius="2"
+  />
+  </modifier>
+</style>
+<style id="tab-label" fontSize="16" fontWeight="500" lineHeight="24" />
+
+
+<style
+  id="header"
+  alignItems="center"
+  backgroundColor="white"
+  borderBottomColor="#eee"
+  borderBottomWidth="1"
+  flexDirection="row"
+  marginBottom="12"
+  paddingBottom="16"
+  paddingLeft="24"
+  paddingRight="24"
+/>
+<style
+  id="header-btn"
+  color="blue"
+  fontSize="16"
+  fontWeight="600"
+  paddingRight="16"
+/>
+<style id="header-title" color="black" fontSize="24" fontWeight="600" />
+<style id="body" backgroundColor="white" flex="1" />
+<style id="description" fontSize="16" margin="24" />
+<style
+  id="item"
+  alignItems="center"
+  backgroundColor="#FFFFFF"
+  borderColor="#eee"
+  borderBottomWidth="1"
+  borderWidth="1"
+  flex="1"
+  flexDirection="row"
+  paddingVertical="12"
+  justifyContent="space-between"
+  marginHorizontal="24"
+  paddingHorizontal="16"
+/>
+<style id="item-first" borderTopLeftRadius="16" borderTopRightRadius="16" />
+<style
+  id="item-last"
+  borderBottomLeftRadius="16"
+  borderBottomRightRadius="16"
+  marginBottom="24"
+/>
+<style id="item-left" flex="1" flexDirection="row" />
+<style id="item-label" fontSize="18" fontWeight="normal" />
+<style id="item-chevron" />
+<style
+  id="button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"
+/>
+<style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style id="tab-route-content" flex="1" />
+<style
+  id="bottom-tab"
+  alignItems="center"
+  flex="1"
+  justifyContent="center"
+/>
+<style
+  id="bottom-tab-label"
+  color="#cccccc"
+  fontSize="8"
+  fontWeight="bold"
+/>
+<style id="bottom-tab-label-selected" color="#4778FF" />
+<style id="bottom-tab-selected" />
+<style
+  id="back-image"
+  alignItems="center"
+  flex="0"
+  height="10"
+  justifyContent="center"
+  padding="10"
+  width="10"
+/>
+<style
+  id="footer"
+  alignItems="stretch"
+  borderTopColor="#eee"
+  borderTopWidth="1"
+  bottom="0"
+  flexDirection="row"
+  flexShrink="1"
+  flexGrow="0"
+  height="48"
+  justifyContent="space-around"
+  backgroundColor="white"
+  position="absolute"
+  width="100%"
+/>
+<style
+  id="list-container"
+  flex="1"
+  flexGrow="1"
+  marginBottom="48"
+/>
+<style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" />
+<style id="loading" alignItems="center" flex="1" justifyContent="center" />
+<style
+  id="link"
+  color="#4778FF"
+  fontWeight="bold"
+  marginTop="8"
+  marginRight="16"
+/>
+<style
+  id="container-style"
+  borderColor="#e1e1e1"
+  borderRadius="16"
+  borderWidth="2"
+  margin="24"
+  padding="24"
+/>
+<style
+  id="container-label"
+  color="black"
+  fontSize="16"
+  fontWeight="normal"
+/>
+<style
+  id="list-header"
+  alignItems="center"
+  backgroundColor="#eee"
+  flex="1"
+  flexDirection="row"
+  paddingVertical="12"
+  marginHorizontal="24"
+  paddingHorizontal="16"
+/>
+<style id="list-header-text" fontSize="18" fontWeight="bold"/>
+<style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
+
+  </styles>
+  <body style="body" safe-area="true">
+    <header style="header">
+  
+    <view action="back" href="#" style="header-btn">
+      <svg
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M11.7803 0.96967C12.0732 1.26256 12.0732 1.73744 11.7803 2.03033L2.56066 11.25H23.25C23.6642 11.25 24 11.5858 24 12C24 12.4142 23.6642 12.75 23.25 12.75H2.56066L11.7803 21.9697C12.0732 22.2626 12.0732 22.7374 11.7803 23.0303C11.4874 23.3232 11.0126 23.3232 10.7197 23.0303L0.21967 12.5303C-0.0732233 12.2374 -0.0732233 11.7626 0.21967 11.4697L10.7197 0.96967C11.0126 0.676777 11.4874 0.676777 11.7803 0.96967Z"
+    fill="#4778FF"
+  />
+</svg>
+
+    </view>
+  
+  <text style="header-title">Photo Sharing App</text>
+</header>
+
+    <view style="loading">
+      <text style="loading-text">Loading…</text>
+      <spinner/>
+    </view>
+  </body>
+</screen>
+
+</doc>

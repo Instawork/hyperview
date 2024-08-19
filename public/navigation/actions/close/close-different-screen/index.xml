@@ -1,0 +1,24 @@
+
+
+
+
+  
+  
+    <text style="description">Tapping the button below will navigate back to a different screen</text>
+  
+
+
+  
+  <view
+    
+    
+      style="button"
+    
+  >
+    
+      <behavior action="close" delay="200" href="/hyperview/public/navigation/actions/changed.xml" />
+    
+    <text style="button-label">Close to other screen</text>
+  </view>
+
+
