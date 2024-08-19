@@ -8,7 +8,7 @@
 {% endmacro %}
 
 {% macro tab_bar(tabs) %}
-  <select-single id="tabs" name="tabs" style="row">
+  <select-single id="tab-bar" name="tab-bar" style="tab-bar-select">
     {% for tab in tabs -%}
       <option value="{{ tab.id }}" style="tab">
         <behavior trigger="deselect" action="hide" target="{{ tab.id }}" />
