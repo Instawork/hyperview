@@ -1,0 +1,11 @@
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{{ description('Press on the button will replace the content.') }}
+{% call button('Press me') -%}
+  <behavior
+    action="replace"
+    href="/hyperview/public/behaviors/basic/triggers/press/button/replace_fragment.xml"
+    trigger="press"
+  />
+{%- endcall %}

@@ -1,0 +1,13 @@
+{# Included as a loading screen in other templates #}
+<screen id="loading-screen">
+  <styles>
+    {% include 'templates/styles.xml.njk' %}
+  </styles>
+  <body style="body" safe-area="true">
+    {% include 'templates/header.xml.njk' %}
+    <view style="loading">
+      <text style="loading-text">Loading…</text>
+      <spinner/>
+    </view>
+  </body>
+</screen>

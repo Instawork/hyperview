@@ -1,0 +1,65 @@
+{% extends 'templates/base.xml.njk' %}
+
+{% block container %}
+  <view style="tab-route-content">
+    {% block tab_route_content %}{% endblock %}
+  </view>
+  <view id="footer" style="footer">
+    <view
+      href-style="bottom-tab"
+      action="navigate"
+      target="tab-ui"
+      style="bottom-tab bottom-tab-selected"
+    >
+      {% if hv_tab_id === 'tab-ui' %}
+        {% include 'icons/ui-selected.svg' %}
+        <text style="bottom-tab-label bottom-tab-label-selected">UI</text>
+      {% else %}
+        {% include 'icons/ui.svg' %}
+        <text style="bottom-tab-label">UI</text>
+      {% endif %}
+    </view>
+    <view
+      style="bottom-tab"
+      href-style="bottom-tab"
+      action="navigate"
+      target="tab-behaviors"
+    >
+      {% if hv_tab_id === 'tab-behaviors' %}
+        {% include 'icons/behaviors-selected.svg' %}
+        <text style="bottom-tab-label bottom-tab-label-selected">Behaviors</text>
+      {% else %}
+        {% include 'icons/behaviors.svg' %}
+        <text style="bottom-tab-label">Behaviors</text>
+      {% endif %}
+    </view>
+    <view
+      style="bottom-tab"
+      href-style="bottom-tab"
+      action="navigate"
+      target="tab-navigation"
+    >
+      {% if hv_tab_id === 'tab-navigation' %}
+        {% include 'icons/navigation-selected.svg' %}
+        <text style="bottom-tab-label bottom-tab-label-selected">Navigation</text>
+      {% else %}
+        {% include 'icons/navigation.svg' %}
+        <text style="bottom-tab-label">Navigation</text>
+      {% endif %}
+    </view>
+    <view
+      style="bottom-tab"
+      href-style="bottom-tab"
+      action="navigate"
+      target="tab-advanced"
+    >
+      {% if hv_tab_id === 'tab-advanced' %}
+        {% include 'icons/advanced-selected.svg' %}
+        <text style="bottom-tab-label bottom-tab-label-selected">Advanced</text>
+      {% else %}
+        {% include 'icons/advanced.svg' %}
+        <text style="bottom-tab-label">Advanced</text>
+      {% endif %}
+    </view>
+  </view>
+{% endblock %}

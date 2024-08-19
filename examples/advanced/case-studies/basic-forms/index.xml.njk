@@ -1,0 +1,37 @@
+---
+permalink: "/advanced/case-studies/basic-forms/index.xml"
+tags: "case_studies"
+hv_title: "Basic Forms"
+hv_button_behavior: "back"
+---
+{% extends 'templates/base.xml.njk' %}
+
+{# TBD rohanbayya: To fix this #}
+{% block styles %}
+  {% include './styles.xml.njk' %}
+{% endblock %}
+
+{% block container %}
+  <form id="myForm" scroll="true">
+    <view style="form-group">
+      <text style="label">Label line</text>
+      <text-field
+        name="data"
+        placeholder="Placeholder"
+        placeholderTextColor="#8D9494"
+        style="input"
+      />
+    </view>
+    <text
+      action="replace"
+      delay="500"
+      href="/hyperview/public/advanced/case-studies/basic-forms/submit.xml"
+      show-during-load="mySpinner"
+      style="submit"
+      target="myForm"
+    >
+      Submit
+    </text>
+  </form>
+  <spinner id="mySpinner" hide="true" />
+{% endblock %}

@@ -1,0 +1,13 @@
+{% macro link(text, attributes={}) %}
+  <view
+    style="link-container"
+    {% for attr, val in attributes %}
+      {{ attr }}="{{ val }}"
+    {% endfor %}
+  >
+    {% if caller %}
+      {{ caller() }}
+    {% endif %}
+    <text style="link-text">{{ text }}</text>
+  </view>
+{% endmacro %}

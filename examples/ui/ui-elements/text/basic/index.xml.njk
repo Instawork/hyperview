@@ -1,0 +1,15 @@
+---
+permalink: "/ui/ui-elements/text/basic/index.xml"
+tags: "Text"
+hv_title: "Basic"
+hv_button_behavior: "back"
+---
+{% extends 'templates/base.xml.njk' %}
+
+{% block styles %}
+  <style id="text" fontSize="24" margin="24"/>
+{% endblock %}
+
+{% block container %}
+  <text style="text">Hello, world!</text>
+{% endblock %}

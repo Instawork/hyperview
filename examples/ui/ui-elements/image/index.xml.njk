@@ -1,0 +1,21 @@
+---
+permalink: "/ui/ui-elements/image/index.xml"
+tags: "Image"
+hv_title: "Image"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block styles %}
+  <style id="Image" flex="1" height="128" margin="24" width="128"/>
+  <style id="Image__Styled" borderColor="#e1e1e1" borderRadius="64" borderWidth="4"/>
+{% endblock %}
+
+{% block content %}
+  {{ description("Image") }}
+  <image source="/hyperview/public/ui/ui-elements/image/image.jpg" style="Image"/>
+  {{ description("Styled") }}
+  <image source="/hyperview/public/ui/ui-elements/image/image.jpg" style="Image Image__Styled"/>
+{% endblock %}

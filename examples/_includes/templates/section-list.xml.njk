@@ -1,0 +1,42 @@
+---
+permalink: "section-list.xml"
+hv_section_list_tag: "root"
+---
+
+{# Standard template for showing a section list of links to other screens. List is generated from a collection of screens with the given "hv_section_list_tag" #}
+<section-list
+  action="replace"
+  href="{% if list_href %}{{ list_href }}{% else %}{{ permalink }}{% endif %}"
+  id="directory-list"
+  sticky-section-titles="false"
+  style="list-container"
+  target="directory-list"
+  trigger="refresh"
+  xmlns="https://hyperview.org/hyperview"
+>
+  <text>{{hv_section_list_tag}}</text>
+  {% for section_tag in hv_section_list_tag.split(',') %}
+    <section-title style="list-header item-first">
+      <text style="list-header-text">{{section_tag}}</text>
+    </section-title>
+    {% for screen in collections[section_tag]|sortCollection %}
+      {% set item_style = "item" %}
+      {% if loop.last %}
+        {% set item_style = item_style ~ " item-last" %}
+      {% endif %}
+      <item
+        href="/hyperview/public/{{ screen.data.permalink }}"
+        key="{{ screen.data.hv_title | slug }}"
+        show-during-load="loading-screen"
+        style="{{ item_style }}"
+      >
+        <view style="item-left">
+          <text style="item-label">{{ screen.data.hv_title }}</text>
+        </view>
+        <view style="item-chevron">
+          {% include 'icons/chevron-right.svg' %}
+        </view>
+      </item>
+    {% endfor %}
+  {% endfor %}
+</section-list>

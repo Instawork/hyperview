@@ -1,0 +1,42 @@
+---
+permalink: "/ui/ui-elements/view/index.xml"
+tags: "View"
+hv_title: "View"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block styles %}
+  <style id="description" fontSize="16" fontWeight="600" margin="24"/>
+  <style
+    id="border"
+    borderColor="#e1e1e1"
+    borderWidth="1"
+    flex="1"
+    margin="24"
+    padding="8"
+  />
+  <style id="styled" backgroundColor="#63CB76" borderRadius="16" height="40"/>
+  <style id="flex" flex="1" flexDirection="row" justifyContent="space-between"/>
+  <style id="flex-child" width="40"/>
+{% endblock %}
+
+{% block content %}
+  {{ description('View') }}
+  <view style="border"/>
+  {{ description('Nested Views') }}
+  <view style="border">
+    <view style="border">
+      <view style="border"/>
+    </view>
+  </view>
+  {{ description('Styled') }}
+  <view style="border styled"/>
+  {{ description('Flex') }}
+  <view style="border flex">
+    <view style="flex-child styled"/>
+    <view style="flex-child styled"/>
+    <view style="flex-child styled"/>
+  </view>
+{% endblock %}

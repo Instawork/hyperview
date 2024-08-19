@@ -1,0 +1,20 @@
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/select-multiple/index.xml.njk' import select_multiple %}
+
+{{ description('When selecting with delay, you can use indicators.') }}
+
+{{ select_multiple("id_sm_indicator") }}
+
+{% call button('Select All with Spinner') -%}
+  <behavior
+    action="select-all"
+    delay="1000"
+    show-during-load="show3-spinner"
+    style="Button"
+    target="id_sm_indicator"
+  />
+  <view id="show3-spinner" hide="true">
+    <spinner color="white" />
+  </view>
+{%- endcall %}

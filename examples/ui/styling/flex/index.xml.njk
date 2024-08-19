@@ -1,0 +1,41 @@
+---
+permalink: "/ui/styling/flex/index.xml"
+tags: "styling"
+hv_title: "Flex"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+
+{% block styles %}
+  <style
+    id="flex-container"
+    borderColor="#e1e1e1"
+    borderRadius="8"
+    borderWidth="2"
+    flex="1"
+    marginLeft="24"
+    marginRight="24"
+    padding="8"/>
+  <style id="flex-child" backgroundColor="#63CB76" borderRadius="8" height="32" width="32" />
+  <style id="flex-horizontal" flexDirection="row" height="64" columnGap="8" />
+  <style id="flex-horizontal-large" height="128"/>
+  <style id="flex-vertical" flexDirection="column" minHeight="300" width="64" rowGap="8" />
+  <style id="flex-vertical-large" width="128"/>
+  <style id="flex-justify-end" justifyContent="flex-end"/>
+  <style id="flex-justify-center" justifyContent="center"/>
+  <style id="flex-align-end" alignItems="flex-end"/>
+  <style id="flex-align-center" alignItems="center"/>
+{% endblock %}
+
+
+{% block content %}
+  {% include './flex-horizontal/index.xml.njk' %}
+  {% include './flex-horizontal-justify-center/index.xml.njk' %}
+  {% include './flex-horizontal-justify-center-align-center/index.xml.njk' %}
+  {% include './flex-horizontal-justify-center-align-end/index.xml.njk' %}
+  {% include './flex-horizontal-justify-end/index.xml.njk' %}
+  {% include './flex-vertical/index.xml.njk' %}
+  {% include './flex-vertical-justify-center-align-center/index.xml.njk' %}
+  {% include './flex-vertical-justify-center-align-end/index.xml.njk' %}
+  {% include './flex-vertical-justify-end/index.xml.njk' %}
+{% endblock %}

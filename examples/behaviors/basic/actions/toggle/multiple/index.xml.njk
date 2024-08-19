@@ -1,0 +1,13 @@
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{{ description('You can toggle multiple elements at once. The button below will toggle content A and B with one press') }}
+
+{% call button('Toggle Multiple') -%}
+  <behavior action="toggle" target="toggle4-content" />
+  <behavior action="toggle" target="toggle5-content" />
+{%- endcall %}
+
+<text id="toggle4-content" style="toggle">Content A</text>
+<text id="toggle5-content" hide="true" style="toggle">Content B</text>
+<view style="Spacer" />

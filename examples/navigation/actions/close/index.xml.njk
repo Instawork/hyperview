@@ -1,0 +1,15 @@
+---
+permalink: "/navigation/actions/close/index.xml"
+tags: "actions"
+hv_title: "Close"
+hv_button_behavior: "close"
+hv_open_modal: "true"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+
+{% block content %}
+  {% include './close-previous-screen/index.xml.njk' %}
+  {% include './close-query-params/index.xml.njk' %}
+  {% include './close-different-screen/index.xml.njk' %}
+  {% include './close-loading/index.xml.njk' %}
+{% endblock %}

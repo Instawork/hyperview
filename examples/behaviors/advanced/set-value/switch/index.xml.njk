@@ -1,0 +1,15 @@
+{% from 'macros/link/index.xml.njk' import link %}
+
+<text style="section">Switch</text>
+<view style="form-group">
+  <text style="label" hide="true" id="id_s_loading">Loading...</text>
+  <switch id="id_s" name="s" value="off"/>
+  <view style="select-container">
+    {% call link('Turn on') -%}
+      <behavior action="set-value" new-value="on" target="id_s" />
+    {%- endcall %}
+    {% call link('Turn off') -%}
+      <behavior action="set-value" new-value="off" target="id_s" />
+    {%- endcall %}
+  </view>
+</view>

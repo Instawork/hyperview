@@ -1,0 +1,11 @@
+---
+permalink: "/behaviors/basic/actions/replace/twice/replace_fragment3.xml"
+---
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% call button('Replaced! Again...', {"xmlns":"https://hyperview.org/hyperview"}) -%}
+  <behavior
+    action="replace"
+    href="/hyperview/public/behaviors/basic/actions/replace/twice/replace_fragment2.xml"
+  />
+{%- endcall %}

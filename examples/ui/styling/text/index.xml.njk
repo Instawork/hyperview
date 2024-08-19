@@ -1,0 +1,51 @@
+---
+permalink: "/ui/styling/text/index.xml"
+tags: "styling"
+hv_title: "Text"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+
+{% block styles %}
+  <style id="text" fontWeight="normal" marginBottom="8" marginLeft="24" marginRight="24" marginTop="8"/>
+  <style id="text-small" fontSize="8"/>
+  <style id="text-medium" fontSize="32"/>
+  <style id="text-large" fontSize="72"/>
+  <style id="text-lightweight" fontWeight="300"/>
+  <style id="text-regular-weight" fontWeight="normal"/>
+  <style id="text-medium-weight" fontWeight="500"/>
+  <style id="text-semi-bold-weight" fontWeight="600"/>
+  <style id="text-bold-weight" fontWeight="bold"/>
+  <style id="text-green" color="#63CB76"/>
+  <style id="text-RGB" color="rgb(255, 0, 255)"/>
+  <style id="text-RGBA" color="rgba(255, 0, 255, 0.5)"/>
+  <style id="text-HSL" color="hsl(230, 100%, 80%)"/>
+  <style id="text-HSLA" color="hsla(230, 100%, 80%, 0.5)"/>
+{% endblock %}
+
+
+{% block content %}
+  <text style="text text-small">Small</text>
+  <text style="text text-medium">Medium</text>
+  <text style="text text-large">large</text>
+  <text style="text text-medium text-lightweight">Light</text>
+  <text style="text text-medium text-regular-weight">Regular</text>
+  <text style="text text-medium text-medium-weight">Medium</text>
+  <text style="text text-medium text-semi-bold-weight">Semi-Bold</text>
+  <text style="text text-medium text-bold-weight">Bold</text>
+  <text style="text text-medium text-bold-weight text-green">
+    Color
+  </text>
+  <text style="text text-medium text-bold-weight text-HSL">
+    HSL Color
+  </text>
+  <text style="text text-medium text-bold-weight text-HSLA">
+    HSLA Color
+  </text>
+  <text style="text text-medium text-bold-weight text-RGB">
+    RGB Color
+  </text>
+  <text style="text text-medium text-bold-weight text-RGBA">
+    RGBA Color
+  </text>
+{% endblock %}

@@ -1,0 +1,13 @@
+---
+permalink: "/behaviors/basic/triggers/load/press/load_navigate_back.xml"
+---
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% call button('Gonna go back', attributes={xmlns:"https://hyperview.org/hyperview"}) -%}
+  <behavior
+    action="back"
+    delay="300"
+    href="/hyperview/public/behaviors/index.xml"
+    trigger="load"
+  />
+{%- endcall %}

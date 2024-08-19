@@ -1,0 +1,8 @@
+<select-multiple name="tag" style="tags">
+  {% set options = ["Ramen", "Sushi", "Pizza", "Chinese", "Burgers", "Tacos", "New American"] %}
+  {% for option in options %}
+    <option style="tag" value="{{ option }}">
+      <text style="tag-label">{{ option }}</text>
+    </option>
+  {% endfor %}
+</select-multiple>

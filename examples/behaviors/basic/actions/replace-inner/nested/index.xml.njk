@@ -1,0 +1,10 @@
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{{ description('In this example, the replaced element also has a replace-inner action, allowing for a nested interaction.') }}
+{% call button('Press me') -%}
+  <behavior
+    action="replace-inner"
+    href="/hyperview/public/behaviors/basic/actions/replace-inner/nested/replace_fragment_inner2.xml"
+  />
+{%- endcall %}

@@ -1,13 +1,19 @@
 ---
-title: "Hyperview"
 permalink: "index.xml"
-list_tag: "root"
-hide_back_button: true
-list_href: "list.xml"
-hyperview_toggle_enabled: false
+hv_button_behavior: "none"
+hv_title: "Hyperview"
+hv_list_tag: "root"
 ---
 
-{% extends 'base.xml.njk' %}
-{% block container %}
-  {% include "./list.xml.njk" %}
-{% endblock %}
+<doc xmlns="https://hyperview.org/hyperview">
+  <navigator id="stack-navigator" type="stack">
+    <nav-route id="tabs">
+      <navigator id="tabs-navigator" type="tab">
+        <nav-route id="tab-ui" href="/hyperview/public/ui/index.xml"/>
+        <nav-route id="tab-navigation" href="/hyperview/public/navigation/index.xml"/>
+        <nav-route id="tab-behaviors" href="/hyperview/public/behaviors/index.xml"/>
+        <nav-route id="tab-advanced" href="/hyperview/public/advanced/index.xml"/>
+      </navigator>
+    </nav-route>
+  </navigator>
+</doc>

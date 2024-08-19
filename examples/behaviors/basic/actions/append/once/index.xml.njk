@@ -1,0 +1,10 @@
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{{ description('Tapping the button below will request an XML fragment and append it to the button.') }}
+{% call button('Press me') -%}
+  <behavior
+    action="append"
+    href="/hyperview/public/behaviors/basic/actions/append/once/append_fragment.xml"
+  />
+{%- endcall %}

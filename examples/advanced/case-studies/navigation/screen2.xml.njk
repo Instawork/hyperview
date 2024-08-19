@@ -1,0 +1,21 @@
+---
+permalink: "/advanced/case-studies/navigation/actions/screen2.xml"
+hv_title: "Navigation"
+hv_button_behavior: "back"
+---
+
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      {% include 'templates/styles.xml.njk' %}
+      <style id="body" backgroundColor="white" flex="1" padding="48" />
+      <style id="label" fontSize="18" lineHeight="24" />
+      <style id="label-link" color="blue" fontSize="18" />
+    </styles>
+    <body style="body" safe-area="true">
+      {% include 'templates/header.xml.njk' %}
+      <text style="label">This is screen 2.</text>
+      <text action="back" href="#" style="label label-link">Go back</text>
+    </body>
+  </screen>
+</doc>

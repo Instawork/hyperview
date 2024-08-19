@@ -1,0 +1,20 @@
+{% from 'macros/link/index.xml.njk' import link %}
+
+<text style="section">Text areas</text>
+<view style="form-group">
+  <text style="label" hide="true" id="id_ta_loading">Loading...</text>
+  <text-area id="id_ta" name="ta" placeholder="Text area" placeholderTextColor="#8D9494" style="input">
+    <behavior trigger="change" action="show" target="id_ta_changed" />
+    <behavior trigger="change" action="hide" delay="1000" target="id_ta_changed" />
+  </text-area>
+  <text style="field-changed" id="id_ta_changed" hide="true">Changed!</text>
+  <text-area id="id_ta" name="ta" placeholder="Text area" placeholderTextColor="#8D9494" style="input"/>
+  <view style="select-container">
+    {% call link('Set multi-line value') -%}
+      <behavior action="set-value" new-value="Test&#10;Multi&#10;Line" target="id_ta" />
+    {%- endcall %}
+    {% call link('Clear value') -%}
+      <behavior action="set-value" new-value="" target="id_ta" />
+    {%- endcall %}
+  </view>
+</view>

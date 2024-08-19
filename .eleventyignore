@@ -1,2 +1,7 @@
-examples/case_studies/contacts/list.xml.njk
-examples/case_studies/contacts/contacts.xml.njk
+examples/**/styles.xml.njk
+examples/**/style.xml.njk
+examples/**/rating.xml.njk
+examples/**/compliment.xml.njk
+examples/**/user.xml.njk
+examples/**/select-multiple-content.xml.njk
+examples/**/tab.xml.njk

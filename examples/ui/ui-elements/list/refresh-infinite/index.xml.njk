@@ -1,0 +1,37 @@
+---
+permalink: "/ui/ui-elements/list/refresh-infinite/index.xml"
+tags: "List"
+hv_title: "Refresh and Infinite Scroll"
+hv_button_behavior: "back"
+---
+{% extends 'templates/base.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block container %}
+  <view
+    action="replace"
+    href="/hyperview/public/ui/ui-elements/list/refresh-infinite/refresh_infinite_scroll_fragment.xml"
+    target="myList"
+    trigger="refresh"
+  >
+    <list id="myList">
+      {% for i in range(1, 21) %}
+        <item key="{{ i }}" style="item">
+          <text style="item-label">List {{ i }}</text>
+        </item>
+      {% endfor %}
+      <item key="page-2-loader" style="item">
+        <behavior
+          delay="300"
+          trigger="visible"
+          action="replace"
+          once="true"
+          href="/hyperview/public/ui/ui-elements/list/refresh-infinite/infinite_scroll_page2.xml"
+        />
+        <view id="list-loading-indicator" style="spinner">
+          <spinner/>
+        </view>
+      </item>
+    </list>
+  </view>
+{% endblock %}

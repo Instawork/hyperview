@@ -1,12 +1,28 @@
 ---
-title: "Navigation"
 permalink: "/navigation/index.xml"
-tags: root
-list_tag: "navigation"
-list_href: "/navigation/list.xml"
+hv_title: "Navigation"
+hv_tab_id: "tab-navigation"
+hv_button_behavior: "none"
 ---
+{% extends 'templates/tab-route.xml.njk' %}
+{% from 'macros/tab/index.xml.njk' import tab, tab_bar %}
 
-{% extends 'base.xml.njk' %}
-{% block container %}
-  {% include "./list.xml.njk" %}
+{% block tab_route_content %}
+  {{ tab_bar([
+  {label: "Actions", id: "tab-actions"},
+  {label: "Navigator", id: "tab-navigator"}
+  ]) }}
+  {% call tab("tab-actions") -%}
+    {% include "./actions/index.xml.njk" %}
+  {%- endcall %}
+  {% call tab("tab-navigator") -%}
+    {% include "./navigator/index.xml.njk" %}
+  {%- endcall %}
+  <behavior
+    action="set-value"
+    new-value="tab-actions"
+    once="true"
+    trigger="load"
+    target="tab-bar"
+  />
 {% endblock %}

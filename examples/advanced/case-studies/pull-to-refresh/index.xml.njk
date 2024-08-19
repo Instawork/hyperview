@@ -1,0 +1,26 @@
+---
+permalink: "/advanced/case-studies/pull-to-refresh/index.xml"
+tags: "case_studies"
+hv_title: "Pull To Refresh"
+hv_button_behavior: "back"
+---
+{% extends 'templates/base.xml.njk' %}
+
+{% block container %}
+  <list
+    action="replace"
+    delay="800"
+    href="/hyperview/public/advanced/case-studies/pull-to-refresh/refresh.xml"
+    trigger="refresh"
+  >
+    <item key="1" style="item">
+      <text style="item-label">Item 1</text>
+    </item>
+    <item key="2" style="item">
+      <text style="item-label">Item 2</text>
+    </item>
+    <item key="3" style="item">
+      <text style="item-label">Item 3</text>
+    </item>
+  </list>
+{% endblock %}

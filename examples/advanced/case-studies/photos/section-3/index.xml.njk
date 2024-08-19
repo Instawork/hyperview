@@ -1,0 +1,53 @@
+<section-title style="image-header">
+  <view style="image-header-left">
+    <image
+      source="/hyperview/public/advanced/case-studies/photos/avatars/picard.jpg"
+      style="image-header-avatar"
+    />
+    <view style="image-header-left-labels">
+      <text
+        href="/hyperview/public/advanced/case-studies/photos/user/index.xml"
+        style="image-header-username"
+      >
+        jean.luc.p
+      </text>
+      <text style="image-header-location">San Francisco, CA</text>
+    </view>
+  </view>
+  <view style="image-header-right">
+    <text style="image-header-more">...</text>
+  </view>
+</section-title>
+<item key="image2">
+  <image
+    source="/hyperview/public/advanced/case-studies/photos/photos/dinner.jpeg"
+    style="image"
+  />
+  <view style="actionbar">
+    <view style="actionbar-left">
+      <select-multiple name="image2-like">
+        <option
+          selected="true"
+          style="actionbar-icon actionbar-icon-first"
+          value="like"
+        >
+          <image
+            source="/hyperview/public/advanced/case-studies/photos/icons/heart2.png"
+            style="actionbar-icon-image"
+          />
+          <image
+            source="/hyperview/public/advanced/case-studies/photos/icons/heart_liked2.png"
+            style="actionbar-icon-image-selected"
+          />
+        </option>
+      </select-multiple>
+      <image
+        source="/hyperview/public/advanced/case-studies/photos/icons/chat2.png"
+        style="actionbar-icon"
+      />
+    </view>
+    <view style="actionbar-right" />
+  </view>
+  <text style="caption">Hottest rez in town, cheers!</text>
+  {% include '../comments.xml.njk' %}
+</item>
