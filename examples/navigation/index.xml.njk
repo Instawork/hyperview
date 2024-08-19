@@ -3,10 +3,26 @@ permalink: "/navigation/index.xml"
 hv_title: "Navigation"
 hv_tab_id: "tab-navigation"
 hv_button_behavior: "none"
-hv_list_tag: "navigation"
 ---
 {% extends 'templates/tab-route.xml.njk' %}
+{% from 'macros/tab/index.xml.njk' import tab, tab_bar %}
 
 {% block tab_route_content %}
-  {% include "templates/list.xml.njk" %}
+  {{ tab_bar([
+  {label: "Actions", id: "tab-actions"},
+  {label: "Navigator", id: "tab-navigator"}
+  ]) }}
+  {% call tab("tab-actions") -%}
+    {% include "./actions/index.xml.njk" %}
+  {%- endcall %}
+  {% call tab("tab-navigator") -%}
+    {% include "./navigator/index.xml.njk" %}
+  {%- endcall %}
+  <behavior
+    action="set-value"
+    new-value="tab-actions"
+    once="true"
+    trigger="load"
+    target="tab-bar"
+  />
 {% endblock %}

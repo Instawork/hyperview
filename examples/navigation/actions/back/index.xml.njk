@@ -1,0 +1,13 @@
+---
+permalink: "/navigation/actions/back/index.xml"
+tags: "actions"
+hv_title: "Back"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+
+{% block content %}
+  {% include './previous-screen/index.xml.njk' %}
+  {% include './different-screen/index.xml.njk' %}
+  {% include './loading/index.xml.njk' %}
+{% endblock %}
