@@ -19,6 +19,9 @@ jobs:
     docker:
       - image: cimg/python:3.12.1-node
     steps:
+      - add_ssh_keys:
+            fingerprints:
+              - 'f1:c0:5d:7c:8b:cc:1b:21:56:bc:57:58:db:bd:12:04'
       - checkout
       - run: yarn
       - run:
