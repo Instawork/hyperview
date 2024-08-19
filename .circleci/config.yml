@@ -15,9 +15,35 @@ jobs:
       - run: yarn test:validate-xml
       - run: pip install djhtml
       - run: yarn test:lint
-
+  deploy:
+    docker:
+      - image: cimg/python:3.12.1-node
+    steps:
+      - add_ssh_keys:
+            fingerprints:
+              - 'SHA256:efIwcAYspXfEF3arKOxCPis7fOPJ1SRlYKCx7AC+HoE'
+      - checkout
+      - run: yarn
+      - run:
+          working_directory: demo
+          name: Install
+          command: yarn
+      - run:
+          working_directory: demo
+          name: Deploy
+          command: |
+            git config user.email "circleci@instawork.com"
+            git config user.name "CircleCI"
+            (yes || true) | yarn deploy
 workflows:
   version: 2
   test-pr:
     jobs:
       - test
+  deploy:
+    jobs:
+      - deploy:
+          filters:
+            branches:
+              only:
+                - master
