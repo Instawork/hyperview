@@ -1,0 +1,17 @@
+{% macro rating(num_stars) %}
+  {% for i in range(1, 6) %}
+    {% set image_source = "/advanced/case-studies/business-rating/star_empty@2x.png" %}
+    {% set image_style = "rating-star" %}
+    {% if i <= num_stars %}
+      {% set image_source = "/advanced/case-studies/business-rating/star_filled@2x.png" %}
+      {% set image_style = image_style ~ " rating-star-filled" %}
+    {% endif %}
+    <image
+      action="replace-inner"
+      href="#star{{ i }}"
+      source="/hyperview/public/{{ image_source }}"
+      style="{{ image_style }}"
+      target="rating"
+    />
+  {% endfor %}
+{% endmacro %}

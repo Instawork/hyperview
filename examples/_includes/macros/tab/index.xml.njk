@@ -6,3 +6,15 @@
     <text>{{ content }}</text>
   </view>
 {% endmacro %}
+
+{% macro tab_bar(tabs) %}
+  <select-single id="tab-bar" name="tab-bar" style="tab-bar-select">
+    {% for tab in tabs -%}
+      <option value="{{ tab.id }}" style="tab-bar-item">
+        <behavior trigger="deselect" action="hide" target="{{ tab.id }}" />
+        <behavior trigger="select" action="show" target="{{ tab.id }}" />
+        <text style="tab-label">{{ tab.label }}</text>
+      </option>
+    {%- endfor %}
+  </select-single>
+{% endmacro %}

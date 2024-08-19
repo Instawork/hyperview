@@ -1,0 +1,12 @@
+{% from './user.xml.njk' import user %}
+
+<section-title />
+<item key="stories">
+  <view scroll-orientation="horizontal" style="stories">
+    {{ user("/advanced/case-studies/photos/avatars/geordi.jpg", "geordi") }}
+    {{ user("/advanced/case-studies/photos/avatars/data.jpg", "data") }}
+    {{ user("/advanced/case-studies/photos/avatars/deanna.png", "deanna.troi") }}
+    {{ user("/advanced/case-studies/photos/avatars/picard.jpg", "jean.luc.p") }}
+    {{ user("/advanced/case-studies/photos/avatars/worf.jpg", "og_worf") }}
+  </view>
+</item>
