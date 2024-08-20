@@ -1,4 +1,8 @@
-# **Demo App Contributor Guide**
+---
+id: guide_demo_app_contribution
+title: Demo App Contributor Guide
+sidebar_label: Demo App Contributor Guide
+---
 [Getting Started with Demo App](#demoappcontributorguide-gettingstartedwithdemoapp)
 
 [Folder Structure](#demoappcontributorguide-folderstructure)
@@ -39,7 +43,7 @@
 Every page (or tab) in the app is represented as a folder and will have an associated index file. Any partial/fragment called by an example should reside in the same directory.
 ```ui/``` , ```case-studies/``` , ```navigation/``` , ```advanced/``` are self contained folders for each tab on the home screen. We follow the same structure for any pages inside.
 ### <a name="demoappcontributorguide-includes"></a>**Includes**
-All included files go under ```\_includes/``` folder to contain reusable files across the app. Eleventy surfaces its contents in the root
+All included files go under ```_includes/``` folder to contain reusable files across the app. Eleventy surfaces its contents in the root
 
 1. templates/
    1. ```list.xml.njk```: Renders a list of items , each linking to a different screen
@@ -53,7 +57,7 @@ All included files go under ```\_includes/``` folder to contain reusable files a
 1. ```icons/``` : All icons used across the app go into this folder.
 1. ```macros/``` : Folder that includes all reusable macros. Each macro should have a separate folder with ```index.xml.njk``` containing the definition along with ```styles.xml.njk``` containing the styles
 ### <a name="demoappcontributorguide-exampleswithmultipledemonstrations"></a>**Examples with multiple demonstrations**
-![options_example.png](/img/options_example.png)
+<img src="/img/options_example.png" width="300" />
 
 For screens with single demonstration, ```index.xml.njk``` to include the logic
 
@@ -86,7 +90,7 @@ Metadata used to define variables or settings that are used by eleventy while pr
 - ```hv\_title```: The title of the page. This could be used in a ```<title>``` tag in the HTML head, or as a heading in the body of the page.
 - ```hv\_open\_modal```: Opens the example in a new modal instead of a screen if set to ```true```
 ## <a name="demoappcontributorguide-renderinglistitems"></a>**Rendering List Items**
-![rendering_list_items.png](/img/rendering_list_items.png)
+<img src="/img/rendering_list_items.png" width="300" />
 
 To render a list view as shown above:
 
@@ -119,7 +123,7 @@ Renders item similar to list but also has sub titles to further group them
 
 Uses ```hv\_section\_list\_tag``` to group items.
 
-![rendering_section_list_items.png](/img/rendering_section_list_items.png)
+<img src="/img/rendering_section_list_items.png" width="300" />
 ## <a name="demoappcontributorguide-conventions"></a>**Conventions**
 ### <a name="demoappcontributorguide-href"></a>**Href**
 All the href paths should start with ```“/hyperview/public/”``` . This ensures that requested resource on both github pages and local setup is consistent.
@@ -144,6 +148,7 @@ When rendering one attribute per line, the element delimiter should be rendered 
 
 i.e:
 
+Do's
 ```xml
   <text id="foo"></text>
   <behavior href="/" />
@@ -152,7 +157,7 @@ i.e:
     action="new"
   />
 ```
-
+Dont's
 ```xml
   <text id="foo" ></text>
   <behavior href="/"/>
