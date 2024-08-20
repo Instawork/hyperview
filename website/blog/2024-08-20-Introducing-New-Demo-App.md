@@ -36,7 +36,7 @@ A web version of our demo app is just a link away rather than going through the 
 
 Now save your time by skipping the whole installation process of a mobile app!
 
-Check it out now: Live examples (https://hyperview.org/docs/example_live)
+Check it out now: Live examples (https://hyperview.org/docs/guide_demo_app_contribution)
 
 <img src="/img/web_version.png" />
 
