@@ -6,7 +6,7 @@ sidebar_label: Demo App Contributor Guide
 
 ## Getting Started with Demo App
 
-<https://github.com/Instawork/hyperview?tab=readme-ov-file#2-start-the-demo-app>
+Refer to this guide to setup demo app locally: [link](https://github.com/Instawork/hyperview?tab=readme-ov-file#2-start-the-demo-app)
 
 ## Folder Structure
 
