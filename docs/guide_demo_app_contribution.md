@@ -3,32 +3,41 @@ id: guide_demo_app_contribution
 title: Demo App Contributor Guide
 sidebar_label: Demo App Contributor Guide
 ---
+
 ## Getting Started with Demo App
+
 <https://github.com/Instawork/hyperview?tab=readme-ov-file#2-start-the-demo-app>
+
 ## Folder Structure
+
 ### Index
+
 Every page (or tab) in the app is represented as a folder and will have an associated index file. Any partial/fragment called by an example should reside in the same directory.
-```ui/``` , ```case-studies/``` , ```navigation/``` , ```advanced/``` are self contained folders for each tab on the home screen. We follow the same structure for any pages inside.
+`ui/` , `case-studies/` , `navigation/` , `advanced/` are self contained folders for each tab on the home screen. We follow the same structure for any pages inside.
+
 ### Includes
-All included files go under ```_includes/``` folder to contain reusable files across the app. Eleventy surfaces its contents in the root
+
+All included files go under `_includes/` folder to contain reusable files across the app. Eleventy surfaces its contents in the root
 
 1. templates/
-   1. ```list.xml.njk```: Renders a list of items , each linking to a different screen
-   1. ```section-list.xml.njk```: Renders a section list of items with subtitles
-   1. ```tab.xml.njk``` : Basic tab structure for tabs on home screen
-   1. ```styles.xml.njk``` : Contains re-usable styles across the app.
-   1. ```base.xml.njk```: Base template for all the screens. Can be extended by providing custom styles and content
-   1. ```scrollview.xml.njk```: Extends ```base.xml.njk``` to provide a scroll view for any screen that extends it.
-   1. ```loading-screen.xml.njk``` : Included as a loading screen in other templates
-   1. ```header.xml.njk``` : Used to render the header button logic
-1. ```icons/``` : All icons used across the app go into this folder.
-1. ```macros/``` : Folder that includes all reusable macros. Each macro should have a separate folder with ```index.xml.njk``` containing the definition along with ```styles.xml.njk``` containing the styles
+   1. `list.xml.njk`: Renders a list of items , each linking to a different screen
+   1. `section-list.xml.njk`: Renders a section list of items with subtitles
+   1. `tab.xml.njk` : Basic tab structure for tabs on home screen
+   1. `styles.xml.njk` : Contains re-usable styles across the app.
+   1. `base.xml.njk`: Base template for all the screens. Can be extended by providing custom styles and content
+   1. `scrollview.xml.njk`: Extends `base.xml.njk` to provide a scroll view for any screen that extends it.
+   1. `loading-screen.xml.njk` : Included as a loading screen in other templates
+   1. `header.xml.njk` : Used to render the header button logic
+1. `icons/` : All icons used across the app go into this folder.
+1. `macros/` : Folder that includes all reusable macros. Each macro should have a separate folder with `index.xml.njk` containing the definition along with `styles.xml.njk` containing the styles
+
 ### Examples with multiple demonstrations
+
 <img src="/img/options_example.png" width="300" />
 
-For screens with single demonstration, ```index.xml.njk``` to include the logic
+For screens with single demonstration, `index.xml.njk` to include the logic
 
-For screens with multiple demonstrations, each demonstration to be added through a separate file. The root ```index.xml.njk``` of the example to include styles and index file inside each demonstration folder. Any style common to multiple demonstrations of an example can be included in the example’s ```index.xml.njk```. For example:
+For screens with multiple demonstrations, each demonstration to be added through a separate file. The root `index.xml.njk` of the example to include styles and index file inside each demonstration folder. Any style common to multiple demonstrations of an example can be included in the example’s `index.xml.njk`. For example:
 
 ```xml
 options/
@@ -44,27 +53,34 @@ options/
   index.xml.njk (includes all styles.xml.njk and index.xml.njk files)
 ```
 
-Path to lookup a style declaration: style.xml.njk of the demonstration → styles block in example’s ```index.xml.njk``` → ```\_includes/styles.xml.njk```
+Path to lookup a style declaration: style.xml.njk of the demonstration → styles block in example’s `index.xml.njk` → `\_includes/styles.xml.njk`
+
 ## Eleventy’s Front Matter
+
 [Reference.](https://www.11ty.dev/docs/data-frontmatter/)
 <br>
 Metadata used to define variables or settings that are used by eleventy while processing a .njk file.
+
 ### Built-in Properties
-- ```permalink```: The URL where the page will be available. In our case, the .xml file output.```/\_data/eleventyComputed.js``` computes this automatically.
-- ```tags```: List of tags associated with the file. These tags can be used to categorize or filter files. For example, you might have a blog post with the tags ["programming", "python", "tutorial"]. These tags could be used to find all blog posts about programming, or all blog posts about Python.
+
+- `permalink`: The URL where the page will be available. In our case, the .xml file output.`/\_data/eleventyComputed.js` computes this automatically.
+- `tags`: List of tags associated with the file. These tags can be used to categorize or filter files. For example, you might have a blog post with the tags ["programming", "python", "tutorial"]. These tags could be used to find all blog posts about programming, or all blog posts about Python.
+
 ### Custom Properties
-- ```hv\_tab\_id```: An identifier for a tab on the home screen. Used inside tab.xml.njk for selecting the tab in tab bar
-- ```hv\_button\_behavior```: A variable that controls the behavior of the header button on the page. In this case, can have values ```"close"```, ```"none"``` and ```default "back"```
-- ```hv\_list\_tags```: Used to specify a list of ```tags``` that should be displayed on the page. All files specifying a certain ```hv\_list\_tags``` as their ```tags``` are included in the list.
-- ```hv\_title```: The title of the page. This could be used in a ```<title>``` tag in the HTML head, or as a heading in the body of the page.
-- ```hv\_open\_modal```: Opens the example in a new modal instead of a screen if set to ```true```
+
+- `hv\_tab\_id`: An identifier for a tab on the home screen. Used inside tab.xml.njk for selecting the tab in tab bar
+- `hv\_button\_behavior`: A variable that controls the behavior of the header button on the page. In this case, can have values `"close"`, `"none"` and `default "back"`
+- `hv\_list\_tags`: Used to specify a list of `tags` that should be displayed on the page. All files specifying a certain `hv\_list\_tags` as their `tags` are included in the list.
+- `hv\_title`: The title of the page. This could be used in a `<title>` tag in the HTML head, or as a heading in the body of the page.
+- `hv\_open\_modal`: Opens the example in a new modal instead of a screen if set to `true`
 
 ## Rendering List Items
+
 <img src="/img/rendering_list_items.png" width="300" />
 
 To render a list view as shown above:
 
-1. In ```ui/index.xml.njk```, include ```templates/list.xml.njk``` and define ```hv\_list\_tag```: "styling" inside the metadata:
+1. In `ui/index.xml.njk`, include `templates/list.xml.njk` and define `hv\_list\_tag`: "styling" inside the metadata:
 
 ```xml
 ---
@@ -88,32 +104,40 @@ hv_button_behavior: "back"
 {% extends 'templates/scrollview.xml.njk' %}
 {# Custom logic for showing content after clicking UI Elements list item #}
 ```
+
 ## Rendering Section List of Items
+
 Renders item similar to list but also has sub titles to further group them
 
-Uses ```hv\_section\_list\_tag``` to group items.
+Uses `hv\_section\_list\_tag` to group items.
 <img src="/img/rendering_section_list_items.png" width="300" />
 
 ## Conventions
 
 ### Href
-All the href paths should start with ```“/hyperview/public/”``` . This ensures that requested resource on both github pages and local setup is consistent.
+
+All the href paths should start with `“/hyperview/public/”` . This ensures that requested resource on both github pages and local setup is consistent.
 
 ### Case
+
 1. File names, style ids are to follow kebab case, i.e. custom-select, custom-select-bold
-1. style ids and element ids should not overlap. i.e., ```<style id="container" />``` and ```<view id="container" />```
+1. style ids and element ids should not overlap. i.e., `<style id="container" />` and `<view id="container" />`
 
 ### Files
+
 1. Every file ends with a line break
 
 ### Front matter
-1. All custom front matter attributes start with prefix ```hv\_``` . example: ```hv\_button\_behavior```
+
+1. All custom front matter attributes start with prefix `hv\_` . example: `hv\_button\_behavior`
 1. Built-in Properties come first followed by custom properties
 
 ### Styles
-1. Include styles re-used across multiple screens inside ```\_includes/styles.xml.njk```
+
+1. Include styles re-used across multiple screens inside `\_includes/styles.xml.njk`
 
 ### XML attributes
+
 We accept two formats to render attributes of an XML element:
 
 1. inline (provided that the total number of characters does not exceed 80)
@@ -125,6 +149,7 @@ When rendering one attribute per line, the element delimiter should be rendered 
 i.e:
 
 Do's
+
 ```xml
   <text id="foo"></text>
   <behavior href="/" />
@@ -133,7 +158,9 @@ Do's
     action="new"
   />
 ```
+
 Dont's
+
 ```xml
   <text id="foo" ></text>
   <behavior href="/"/>
