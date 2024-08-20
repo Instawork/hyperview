@@ -1,5 +1,4 @@
 import * as Logging from 'hyperview/src/services/logging';
-import type { FormData, FormDataPart } from './types';
 import type { HvComponentProps, LocalName } from 'hyperview';
 import Hyperview, {
   Events,
@@ -9,6 +8,14 @@ import Hyperview, {
 } from 'hyperview';
 import { useEffect } from 'react';
 
+type FormDataPart = {
+  fieldName: string;
+  string: string;
+};
+
+declare class FormData {
+  getParts(): Array<FormDataPart>;
+}
 const FILTER_NS = 'https://instawork.com/hyperview-filter';
 
 export const findElements = (node: Element, attributeNames: string[]) => {
@@ -132,4 +139,4 @@ HyperviewFilter.namespaceURI = FILTER_NS;
 HyperviewFilter.localName = 'container' as LocalName;
 HyperviewFilter.localNameAliases = [] as LocalName[];
 
-export default HyperviewFilter;
+export { HyperviewFilter };
