@@ -103,13 +103,11 @@ On your physical mobile device, install the Expo client
 
 Make sure your mobile device and development machine are connected to the same network.
 
-Open [/demo/src/constants.js](/demo/src/constants.js) in a text editor. In `ENTRY_POINT_URL`, replace the host in the url (`http://0.0.0.0:8085/index.xml`) with the IP of your machine. This is needed in order for your physical device to be able to request the example XML files from your development machine.
-
-From the `demo/` directory on your development machine:
+From the `demo/` directory on your development machine (replace X.X.X.X with the IP of your machine. This is needed in order for your physical device to be able to request the example XML files from your development machine.)
 
 ```sh
 cd demo
-yarn start
+BASE_URL="http://X.X.X.X:8085" yarn start
 ```
 
 This command will start an Expo development server and open a webpage (http://localhost:19002). This webpage will display a QR code.

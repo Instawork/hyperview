@@ -9,7 +9,7 @@ export default {
   extra: {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    baseUrl: process.env.BASE_URL,
+    baseUrl: process.env.BASE_URL || 'http://0.0.0.0:8085',
   },
   icon: './assets/icon.png',
   ios: {
