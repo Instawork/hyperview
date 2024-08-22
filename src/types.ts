@@ -427,11 +427,3 @@ export type Reload = (
   optHref: DOMString | null | undefined,
   opts: HvComponentOptions,
 ) => void;
-
-export const NETWORK_RETRY_ACTIONS = {
-  DROP: 'drop',
-  QUEUE: 'queue',
-  REPLACE: 'replace',
-} as const;
-
-export type NetworkRetryAction = typeof NETWORK_RETRY_ACTIONS[keyof typeof NETWORK_RETRY_ACTIONS];

@@ -29,6 +29,13 @@ export const X_RESPONSE_STALE_REASON = {
 // eslint-disable-next-line max-len
 export type XResponseStaleReason = typeof X_RESPONSE_STALE_REASON[keyof typeof X_RESPONSE_STALE_REASON];
 
+export const X_NETWORK_RETRY_ACTION = {
+  QUEUE: 'queue',
+} as const;
+
+// eslint-disable-next-line max-len
+export type XNetworkRetryAction = typeof X_NETWORK_RETRY_ACTION[keyof typeof X_NETWORK_RETRY_ACTION];
+
 export type Fetch = (
   url: string,
   options: {

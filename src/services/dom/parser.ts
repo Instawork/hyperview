@@ -4,6 +4,7 @@ import type {
   BeforeAfterParseHandler,
   Fetch,
   HttpMethod,
+  XNetworkRetryAction,
   XResponseStaleReason,
 } from './types';
 import {
@@ -14,7 +15,7 @@ import {
 } from './types';
 import { DOMParser } from '@instawork/xmldom';
 import { Dimensions } from 'react-native';
-import { LOCAL_NAME, NETWORK_RETRY_ACTIONS } from 'hyperview/src/types';
+import { LOCAL_NAME } from 'hyperview/src/types';
 import type { LocalName } from 'hyperview/src/types';
 import { getFirstTag } from './helpers';
 import { version } from 'hyperview/package.json';
@@ -58,8 +59,7 @@ export class Parser {
     data: FormData | null | undefined = undefined,
     httpMethod: HttpMethod | null | undefined = undefined,
     acceptContentType: string = CONTENT_TYPE.APPLICATION_VND_HYPERVIEW_XML,
-    // todo: fix type
-    networkRetryAction: string | null | undefined = undefined,
+    networkRetryAction: XNetworkRetryAction | null | undefined = undefined,
   ): Promise<{
     doc: Document;
     staleHeaderType: XResponseStaleReason | null | undefined;
@@ -169,8 +169,7 @@ export class Parser {
     baseUrl: string,
     data: FormData | null,
     method: HttpMethod | null = HTTP_METHODS.GET,
-    // todo: fix type
-    networkRetryAction: string | null | undefined,
+    networkRetryAction: XNetworkRetryAction | null | undefined,
   ): Promise<{
     doc: Document;
     staleHeaderType: XResponseStaleReason | null | undefined;

@@ -19,7 +19,6 @@ import {
   HvComponentOptions,
   NAV_ACTIONS,
   NavAction,
-  NetworkRetryAction,
   OnUpdateCallbacks,
   UPDATE_ACTIONS,
   UpdateAction,
@@ -28,6 +27,7 @@ import React, { PureComponent } from 'react';
 import HvRoute from 'hyperview/src/core/components/hv-route';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
 import { Linking } from 'react-native';
+import { XNetworkRetryAction } from 'hyperview/src/services/dom/types';
 
 /**
  * Provides routing to the correct path based on the state passed in
@@ -146,7 +146,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
     root: Document,
     formData: FormData | null | undefined,
     onUpdateCallbacks: OnUpdateCallbacks,
-    networkRetryAction: NetworkRetryAction | null | undefined,
+    networkRetryAction: XNetworkRetryAction | null | undefined,
   ): Promise<Element | null> => {
     if (!href) {
       Logging.error(new Error('No href passed to fetchElement'));
