@@ -341,7 +341,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
     } = opts;
     const networkRetryAction = behaviorElement?.getAttribute(
       'network-retry-action',
-    ) as XNetworkRetryAction;
+    ) as XNetworkRetryAction | null | undefined;
 
     const showIndicatorIdList = showIndicatorIds
       ? Xml.splitAttributeList(showIndicatorIds)
