@@ -89,7 +89,6 @@ export class Parser {
       },
       method,
     } as const;
-    console.log('HV HEADERS', options.headers, networkRetryAction);
 
     const response: Response = await this.fetch(url, options);
     const responseText: string = await response.text();
