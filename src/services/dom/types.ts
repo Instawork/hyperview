@@ -30,7 +30,9 @@ export const X_RESPONSE_STALE_REASON = {
 export type XResponseStaleReason = typeof X_RESPONSE_STALE_REASON[keyof typeof X_RESPONSE_STALE_REASON];
 
 export const X_NETWORK_RETRY_ACTION = {
+  DROP: 'drop',
   QUEUE: 'queue',
+  REPLACE: 'replace',
 } as const;
 
 // eslint-disable-next-line max-len
