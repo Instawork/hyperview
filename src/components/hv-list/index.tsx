@@ -245,6 +245,9 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
               keyboardDismissMode={Keyboard.getKeyboardDismissMode(
                 this.props.element,
               )}
+              keyboardShouldPersistTaps={Keyboard.getKeyboardShouldPersistTaps(
+                this.props.element,
+              )}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               keyExtractor={(item: any) => item && item.getAttribute('key')}
               refreshControl={

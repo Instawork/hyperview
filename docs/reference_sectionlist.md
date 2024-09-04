@@ -38,6 +38,7 @@ A `<section-list>` element will only render `<section-title>` and `<item>` child
 - [`hide`](#hide)
 - [`sticky-section-titles`](#sticky-section-titles)
 - [`keyboard-dismiss-mode`](#keyboard-dismiss-mode)
+- [`keyboard-should-persist-taps`](#keyboard-should-persist-taps)
 
 #### Behavior attributes
 
@@ -82,3 +83,11 @@ When set to `"true"`, the section titles will remain sticky at the top of their 
 | **none** (default), `on-drag`, `interactive` | No       |
 
 An attribute that controls the virtual keyboard behavior when the scrollable view is interacted with. Note: `interactive` value is only supported on iOS. When set to this value, the keyboard is dismissed interactively with the drag and moves in synchrony with the touch, dragging upwards cancels the dismissal. On Android this is not supported and it will have the same behavior as `none`.
+
+#### `keyboard-should-persist-taps`
+
+| Type                                     | Required |
+| ---------------------------------------- | -------- |
+| **never** (default), `always`, `handled` | No       |
+
+An attribute that controls the virtual keyboard behavior when the scrollable view is tapped.

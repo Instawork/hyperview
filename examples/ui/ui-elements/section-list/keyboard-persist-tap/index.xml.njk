@@ -1,0 +1,60 @@
+---
+permalink: "/ui/ui-elements/section-list/keyboard-persist-tap/index.xml"
+tags: "Section List"
+hv_title: "Keyboard Persist Tap"
+hv_button_behavior: "back"
+---
+{% extends 'templates/base.xml.njk' %}
+
+{% block styles %}
+  <style
+    id="input"
+    borderBottomColor="#E1E1E1"
+    borderBottomWidth="1"
+    borderColor="#4E4D4D"
+    flex="1"
+    fontSize="16"
+    fontWeight="normal"
+    paddingBottom="8"
+    paddingTop="8">
+    <modifier pressed="true">
+    <style borderBottomColor="green"/>
+    </modifier>
+    <modifier focused="true">
+    <style borderBottomColor="#4778FF"/>
+    </modifier>
+  </style>
+{% endblock %}
+
+{% block container %}
+  <section-list keyboard-should-persist-taps="handled">
+    <item key="field" style="item">
+      <text-field name="field" style="input" auto-focus="true" placeholder="Tap!" />
+    </item>
+    <section-title style="list-header">
+      <text style="list-header-text">Section 1</text>
+    </section-title>
+    {% for item in range(1, 11) %}
+      <item key="{{ item }}" style="item">
+        <text style="item-label">List {{ item }}</text>
+        <behavior
+          xmlns:alert="https://hyperview.org/hyperview-alert"
+          trigger="press"
+          action="alert"
+          alert:title="List {{ item }} selected"
+        >
+          <alert:option alert:label="Cancel" />
+        </behavior>
+      </item>
+    {% endfor %}
+
+    <section-title style="list-header">
+      <text style="list-header-text">Section 2</text>
+    </section-title>
+    {% for item in range(11, 21) %}
+      <item key="{{ item }}" style="item">
+        <text style="item-label">List {{ item }}</text>
+      </item>
+    {% endfor %}
+  </section-list>
+{% endblock %}
