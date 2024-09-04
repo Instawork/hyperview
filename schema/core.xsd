@@ -973,6 +973,11 @@
       <xs:attribute name="id" type="hv:ID" />
       <xs:attribute name="key" type="hv:KEY" />
       <xs:attribute name="hide" type="xs:boolean" />
+      <xs:attribute name="avoid-keyboard" type="xs:boolean" />
+      <xs:attribute name="safe-area" type="xs:boolean" />
+      <xs:attribute name="value" type="xs:string" />
+      <xs:attribute name="sticky" type="xs:boolean" />
+      <xs:attributeGroup ref="hv:behaviorAttributes" />
       <xs:attributeGroup ref="hv:scrollAttributes" />
     </xs:complexType>
   </xs:element>
