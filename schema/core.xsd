@@ -434,6 +434,19 @@
     </xs:attribute>
   </xs:attributeGroup>
 
+  <xs:attributeGroup name="viewAttributes">
+    <xs:attribute name="style" type="hv:styleList" />
+    <xs:attribute name="id" type="hv:ID" />
+    <xs:attribute name="key" type="hv:KEY" />
+    <xs:attribute name="hide" type="xs:boolean" />
+    <xs:attribute name="avoid-keyboard" type="xs:boolean" />
+    <xs:attribute name="safe-area" type="xs:boolean" />
+    <xs:attribute name="value" type="xs:string" />
+    <xs:attribute name="sticky" type="xs:boolean" />
+    <xs:attributeGroup ref="hv:behaviorAttributes" />
+    <xs:attributeGroup ref="hv:scrollAttributes" />
+  </xs:attributeGroup>
+
   <xs:element name="doc">
     <xs:complexType>
       <xs:choice>
@@ -777,38 +790,21 @@
   <xs:element name="body">
     <xs:complexType>
       <xs:group ref="hv:viewChildren" />
-      <xs:attribute name="id" type="hv:ID" />
-      <xs:attribute name="key" type="hv:KEY" />
-      <xs:attribute name="style" type="hv:styleList" />
-      <xs:attribute name="safe-area" type="xs:boolean" />
-      <xs:attributeGroup ref="hv:scrollAttributes" />
+      <xs:attributeGroup ref="hv:viewAttributes" />
     </xs:complexType>
   </xs:element>
 
   <xs:element name="header">
     <xs:complexType>
       <xs:group ref="hv:viewChildren" />
-      <xs:attribute name="safe-area" type="xs:boolean" />
-      <xs:attribute name="style" type="hv:styleList" />
-      <xs:attribute name="id" type="hv:ID" />
-      <xs:attribute name="key" type="hv:KEY" />
-      <xs:attribute name="hide" type="xs:boolean" />
+      <xs:attributeGroup ref="hv:viewAttributes" />
     </xs:complexType>
   </xs:element>
 
   <xs:element name="view">
     <xs:complexType>
       <xs:group ref="hv:viewChildren" />
-      <xs:attribute name="style" type="hv:styleList" />
-      <xs:attribute name="id" type="hv:ID" />
-      <xs:attribute name="key" type="hv:KEY" />
-      <xs:attribute name="hide" type="xs:boolean" />
-      <xs:attribute name="avoid-keyboard" type="xs:boolean" />
-      <xs:attribute name="safe-area" type="xs:boolean" />
-      <xs:attribute name="value" type="xs:string" />
-      <xs:attribute name="sticky" type="xs:boolean" />
-      <xs:attributeGroup ref="hv:behaviorAttributes" />
-      <xs:attributeGroup ref="hv:scrollAttributes" />
+      <xs:attributeGroup ref="hv:viewAttributes" />
     </xs:complexType>
   </xs:element>
 
@@ -922,12 +918,7 @@
   <xs:element name="section-title">
     <xs:complexType>
       <xs:group ref="hv:nonListViewChildren" />
-      <xs:attribute name="style" type="hv:styleList" />
-      <xs:attribute name="id" type="hv:ID" />
-      <xs:attribute name="key" type="hv:KEY" />
-      <xs:attribute name="hide" type="xs:boolean" />
-      <xs:attribute name="value" type="xs:string" />
-      <xs:attributeGroup ref="hv:behaviorAttributes" />
+      <xs:attributeGroup ref="hv:viewAttributes" />
     </xs:complexType>
   </xs:element>
 
@@ -940,20 +931,14 @@
           <xs:element ref="hv:section" />
         </xs:choice>
       </xs:sequence>
-      <xs:attribute name="id" type="hv:ID" />
+      <xs:attributeGroup ref="hv:viewAttributes" />
     </xs:complexType>
   </xs:element>
 
   <xs:element name="item">
     <xs:complexType>
       <xs:group ref="hv:nonListViewChildren" />
-      <xs:attribute name="style" type="hv:styleList" />
-      <xs:attribute name="id" type="hv:ID" />
-      <xs:attribute name="key" type="hv:KEY" use="required" />
-      <xs:attribute name="hide" type="xs:boolean" />
-      <xs:attribute name="value" type="xs:string" />
-      <xs:attribute name="sticky" type="xs:boolean" />
-      <xs:attributeGroup ref="hv:behaviorAttributes" />
+      <xs:attributeGroup ref="hv:viewAttributes" />
     </xs:complexType>
   </xs:element>
 
@@ -969,11 +954,7 @@
   <xs:element name="form">
     <xs:complexType>
       <xs:group ref="hv:viewChildren" />
-      <xs:attribute name="style" type="hv:styleList" />
-      <xs:attribute name="id" type="hv:ID" />
-      <xs:attribute name="key" type="hv:KEY" />
-      <xs:attribute name="hide" type="xs:boolean" />
-      <xs:attributeGroup ref="hv:scrollAttributes" />
+      <xs:attributeGroup ref="hv:viewAttributes" />
     </xs:complexType>
   </xs:element>
 
