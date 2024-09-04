@@ -90,9 +90,8 @@ export class Navigator {
 
     if (!navigation) {
       if (routeParams?.targetId) {
-        Logging.warn(
-          `No navigation found for target '${routeParams.targetId}'`,
-        );
+        Logging.info(`sendRequest action ${action} routeParams ${routeParams}`);
+        Logging.warn('No navigation found for provided target');
       }
       return;
     }
