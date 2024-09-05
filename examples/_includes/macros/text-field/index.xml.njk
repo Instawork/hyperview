@@ -1,0 +1,11 @@
+{% macro text_field(name, attributes={}) %}
+  <text-field
+    name="{{ name }}"
+    {% for attr, val in attributes %}
+      {{ attr }}="{{ val }}"
+    {% endfor %}
+    {% if "style" not in attributes %}
+      style="input"
+    {% endif %}
+  />
+{% endmacro %}

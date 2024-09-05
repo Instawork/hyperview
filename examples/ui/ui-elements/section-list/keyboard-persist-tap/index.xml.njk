@@ -1,16 +1,16 @@
 ---
-permalink: "/ui/ui-elements/section-list/dismiss-keyboard/index.xml"
+permalink: "/ui/ui-elements/section-list/keyboard-persist-tap/index.xml"
 tags: "Section List"
-hv_title: "Dismiss Keyboard on Drag"
+hv_title: "Keyboard Persist Tap"
 hv_button_behavior: "back"
 ---
 {% extends 'templates/base.xml.njk' %}
 {% from 'macros/text-field/index.xml.njk' import text_field %}
 
 {% block container %}
-  <section-list keyboard-dismiss-mode="on-drag">
+  <section-list keyboard-should-persist-taps="handled">
     <item key="field" style="item">
-      {{ text_field("field", {"auto-focus":"true", "placeholder":"Scroll!"}) }}
+      {{ text_field("field", {"auto-focus":"true", "placeholder":"Tap!"}) }}
     </item>
     <section-title style="list-header">
       <text style="list-header-text">Section 1</text>
@@ -18,6 +18,14 @@ hv_button_behavior: "back"
     {% for item in range(1, 11) %}
       <item key="{{ item }}" style="item">
         <text style="item-label">List {{ item }}</text>
+        <behavior
+          xmlns:alert="https://hyperview.org/hyperview-alert"
+          trigger="press"
+          action="alert"
+          alert:title="List {{ item }} selected"
+        >
+          <alert:option alert:label="Cancel" />
+        </behavior>
       </item>
     {% endfor %}
 

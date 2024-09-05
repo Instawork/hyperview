@@ -357,6 +357,9 @@ export default class HvSectionList extends PureComponent<
               keyboardDismissMode={Keyboard.getKeyboardDismissMode(
                 this.props.element,
               )}
+              keyboardShouldPersistTaps={Keyboard.getKeyboardShouldPersistTaps(
+                this.props.element,
+              )}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               keyExtractor={(item: any) => item.getAttribute('key')}
               refreshControl={
