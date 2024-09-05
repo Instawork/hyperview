@@ -296,64 +296,196 @@
 
     </view>
   
-  <text style="header-title">Replace</text>
+  <text style="header-title">Keyboard Persist Tap</text>
 </header>
 
       
-  <view scroll="true" style="main">
+  <section-list keyboard-should-persist-taps="handled">
+    <item key="field" style="item">
+      
+  <text-field
+    name="field"
     
-  
-
-
-
-  
-    <text style="description">Tapping the button below will request an XML fragment and replace the element with the response.</text>
-  
-
-
-  <view
+      auto-focus="true"
+    
+      placeholder="Tap!"
     
     
-      style="button"
+      style="input"
     
-  >
-    
-      <behavior
-    action="replace"
-    href="/hyperview/public/behaviors/basic/actions/replace/once/replace_fragment.xml"
   />
+
+    </item>
+    <section-title style="list-header">
+      <text style="list-header-text">Section 1</text>
+    </section-title>
     
-    <text style="button-label">Press me</text>
-  </view>
-
-
-  
-
-
-
-  
-    <text style="description">In this example, the replaced element also has an href, which now requests a different XML fragment.</text>
-  
-
-
-  <view
+      <item key="1" style="item">
+        <text style="item-label">List 1</text>
+        <behavior
+          xmlns:alert="https://hyperview.org/hyperview-alert"
+          trigger="press"
+          action="alert"
+          alert:title="List 1 selected"
+        >
+          <alert:option alert:label="Cancel" />
+        </behavior>
+      </item>
     
+      <item key="2" style="item">
+        <text style="item-label">List 2</text>
+        <behavior
+          xmlns:alert="https://hyperview.org/hyperview-alert"
+          trigger="press"
+          action="alert"
+          alert:title="List 2 selected"
+        >
+          <alert:option alert:label="Cancel" />
+        </behavior>
+      </item>
     
-      style="button"
+      <item key="3" style="item">
+        <text style="item-label">List 3</text>
+        <behavior
+          xmlns:alert="https://hyperview.org/hyperview-alert"
+          trigger="press"
+          action="alert"
+          alert:title="List 3 selected"
+        >
+          <alert:option alert:label="Cancel" />
+        </behavior>
+      </item>
     
-  >
+      <item key="4" style="item">
+        <text style="item-label">List 4</text>
+        <behavior
+          xmlns:alert="https://hyperview.org/hyperview-alert"
+          trigger="press"
+          action="alert"
+          alert:title="List 4 selected"
+        >
+          <alert:option alert:label="Cancel" />
+        </behavior>
+      </item>
     
-      <behavior
-    action="replace"
-    href="/hyperview/public/behaviors/basic/actions/replace/twice/replace_fragment2.xml"
-  />
+      <item key="5" style="item">
+        <text style="item-label">List 5</text>
+        <behavior
+          xmlns:alert="https://hyperview.org/hyperview-alert"
+          trigger="press"
+          action="alert"
+          alert:title="List 5 selected"
+        >
+          <alert:option alert:label="Cancel" />
+        </behavior>
+      </item>
     
-    <text style="button-label">Press me</text>
-  </view>
+      <item key="6" style="item">
+        <text style="item-label">List 6</text>
+        <behavior
+          xmlns:alert="https://hyperview.org/hyperview-alert"
+          trigger="press"
+          action="alert"
+          alert:title="List 6 selected"
+        >
+          <alert:option alert:label="Cancel" />
+        </behavior>
+      </item>
+    
+      <item key="7" style="item">
+        <text style="item-label">List 7</text>
+        <behavior
+          xmlns:alert="https://hyperview.org/hyperview-alert"
+          trigger="press"
+          action="alert"
+          alert:title="List 7 selected"
+        >
+          <alert:option alert:label="Cancel" />
+        </behavior>
+      </item>
+    
+      <item key="8" style="item">
+        <text style="item-label">List 8</text>
+        <behavior
+          xmlns:alert="https://hyperview.org/hyperview-alert"
+          trigger="press"
+          action="alert"
+          alert:title="List 8 selected"
+        >
+          <alert:option alert:label="Cancel" />
+        </behavior>
+      </item>
+    
+      <item key="9" style="item">
+        <text style="item-label">List 9</text>
+        <behavior
+          xmlns:alert="https://hyperview.org/hyperview-alert"
+          trigger="press"
+          action="alert"
+          alert:title="List 9 selected"
+        >
+          <alert:option alert:label="Cancel" />
+        </behavior>
+      </item>
+    
+      <item key="10" style="item">
+        <text style="item-label">List 10</text>
+        <behavior
+          xmlns:alert="https://hyperview.org/hyperview-alert"
+          trigger="press"
+          action="alert"
+          alert:title="List 10 selected"
+        >
+          <alert:option alert:label="Cancel" />
+        </behavior>
+      </item>
+    
 
-
-
-  </view>
+    <section-title style="list-header">
+      <text style="list-header-text">Section 2</text>
+    </section-title>
+    
+      <item key="11" style="item">
+        <text style="item-label">List 11</text>
+      </item>
+    
+      <item key="12" style="item">
+        <text style="item-label">List 12</text>
+      </item>
+    
+      <item key="13" style="item">
+        <text style="item-label">List 13</text>
+      </item>
+    
+      <item key="14" style="item">
+        <text style="item-label">List 14</text>
+      </item>
+    
+      <item key="15" style="item">
+        <text style="item-label">List 15</text>
+      </item>
+    
+      <item key="16" style="item">
+        <text style="item-label">List 16</text>
+      </item>
+    
+      <item key="17" style="item">
+        <text style="item-label">List 17</text>
+      </item>
+    
+      <item key="18" style="item">
+        <text style="item-label">List 18</text>
+      </item>
+    
+      <item key="19" style="item">
+        <text style="item-label">List 19</text>
+      </item>
+    
+      <item key="20" style="item">
+        <text style="item-label">List 20</text>
+      </item>
+    
+  </section-list>
 
     </body>
   </screen>
@@ -654,7 +786,7 @@
 
     </view>
   
-  <text style="header-title">Replace</text>
+  <text style="header-title">Keyboard Persist Tap</text>
 </header>
 
     <view style="loading">
