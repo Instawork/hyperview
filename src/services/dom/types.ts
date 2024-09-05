@@ -3,6 +3,7 @@ export const HTTP_HEADERS = {
   CONTENT_TYPE: 'Content-Type',
   X_HYPERVIEW_DIMENSIONS: 'X-Hyperview-Dimensions',
   X_HYPERVIEW_VERSION: 'X-Hyperview-Version',
+  X_NETWORK_RETRY_ACTION: 'X-Network-Retry-Action',
   X_RESPONSE_STALE_REASON: 'X-Response-Stale-Reason',
 } as const;
 
@@ -27,6 +28,15 @@ export const X_RESPONSE_STALE_REASON = {
 
 // eslint-disable-next-line max-len
 export type XResponseStaleReason = typeof X_RESPONSE_STALE_REASON[keyof typeof X_RESPONSE_STALE_REASON];
+
+export const X_NETWORK_RETRY_ACTION = {
+  DROP: 'drop',
+  QUEUE: 'queue',
+  REPLACE: 'replace',
+} as const;
+
+// eslint-disable-next-line max-len
+export type XNetworkRetryAction = typeof X_NETWORK_RETRY_ACTION[keyof typeof X_NETWORK_RETRY_ACTION];
 
 export type Fetch = (
   url: string,

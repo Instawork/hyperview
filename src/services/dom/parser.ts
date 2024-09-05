@@ -4,6 +4,7 @@ import type {
   BeforeAfterParseHandler,
   Fetch,
   HttpMethod,
+  XNetworkRetryAction,
   XResponseStaleReason,
 } from './types';
 import {
@@ -58,6 +59,7 @@ export class Parser {
     data: FormData | null | undefined = undefined,
     httpMethod: HttpMethod | null | undefined = undefined,
     acceptContentType: string = CONTENT_TYPE.APPLICATION_VND_HYPERVIEW_XML,
+    networkRetryAction: XNetworkRetryAction | null | undefined = undefined,
   ): Promise<{
     doc: Document;
     staleHeaderType: XResponseStaleReason | null | undefined;
@@ -81,6 +83,9 @@ export class Parser {
         [HTTP_HEADERS.ACCEPT]: `${CONTENT_TYPE.APPLICATION_XML}, ${acceptContentType}`,
         [HTTP_HEADERS.X_HYPERVIEW_VERSION]: version,
         [HTTP_HEADERS.X_HYPERVIEW_DIMENSIONS]: `${width}w ${height}h`,
+        ...(networkRetryAction && {
+          [HTTP_HEADERS.X_NETWORK_RETRY_ACTION]: networkRetryAction,
+        }),
       },
       method,
     } as const;
@@ -163,6 +168,7 @@ export class Parser {
     baseUrl: string,
     data: FormData | null,
     method: HttpMethod | null = HTTP_METHODS.GET,
+    networkRetryAction: XNetworkRetryAction | null | undefined,
   ): Promise<{
     doc: Document;
     staleHeaderType: XResponseStaleReason | null | undefined;
@@ -172,6 +178,7 @@ export class Parser {
       data,
       method,
       CONTENT_TYPE.APPLICATION_VND_HYPERVIEW_FRAGMENT_XML,
+      networkRetryAction,
     );
     const docElement = getFirstTag(doc, LOCAL_NAME.DOC);
     if (docElement) {

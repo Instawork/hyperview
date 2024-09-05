@@ -27,6 +27,7 @@ import React, { PureComponent } from 'react';
 import HvRoute from 'hyperview/src/core/components/hv-route';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
 import { Linking } from 'react-native';
+import { XNetworkRetryAction } from 'hyperview/src/services/dom/types';
 
 /**
  * Provides routing to the correct path based on the state passed in
@@ -145,6 +146,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
     root: Document,
     formData: FormData | null | undefined,
     onUpdateCallbacks: OnUpdateCallbacks,
+    networkRetryAction: XNetworkRetryAction | null | undefined,
   ): Promise<Element | null> => {
     if (!href) {
       Logging.error(new Error('No href passed to fetchElement'));
@@ -170,6 +172,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
         url,
         formData || null,
         httpMethod,
+        networkRetryAction,
       );
       if (staleHeaderType) {
         // We are doing this to ensure that we keep the screen stale until a `reload` happens
@@ -336,6 +339,9 @@ export default class Hyperview extends PureComponent<Types.Props> {
       once,
       onEnd,
     } = opts;
+    const networkRetryAction = behaviorElement?.getAttribute(
+      'network-retry-action',
+    ) as XNetworkRetryAction | null | undefined;
 
     const showIndicatorIdList = showIndicatorIds
       ? Xml.splitAttributeList(showIndicatorIds)
@@ -380,6 +386,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
           newRoot,
           formData,
           onUpdateCallbacks,
+          networkRetryAction,
         ).then(newElement => {
           // If a target is specified and exists, use it. Otherwise, the action target defaults
           // to the element triggering the action.
