@@ -530,6 +530,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
         onUpdateCallbacks.getOnUpdate(),
         getRoot,
         updateRoot,
+        this.componentRegistry,
       );
     } else {
       // No behavior detected.

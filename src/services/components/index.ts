@@ -55,6 +55,11 @@ export class Registry {
     return this.getComponent(namespaceURI, localName) !== undefined;
   }
 
+  hasFormComponent(namespaceURI: string, localName: string): boolean {
+    const c: HvComponent | undefined = this.getComponent(namespaceURI, localName);
+    return (c === undefined) ? false : Object.prototype.hasOwnProperty.call(c, 'getFormInputValues');
+  }
+
   /**
    * Creates a FormData object for the given element. Finds the closest form element ancestor
    * and adds data for all inputs contained in the form. Returns null if the element has no

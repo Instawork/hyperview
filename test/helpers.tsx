@@ -27,6 +27,8 @@ export const getDummyHvProps = () => ({
     pressedSelected: [],
     regular: [],
     selected: [],
+    valid: [],
+    invalid: [],
   },
 });
 

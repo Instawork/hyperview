@@ -9,6 +9,7 @@ import HvShare from 'hyperview/src/behaviors/hv-share';
 import HvShow from 'hyperview/src/behaviors/hv-show';
 import HvToggle from 'hyperview/src/behaviors/hv-toggle';
 import HvUnselectAll from 'hyperview/src/behaviors/hv-unselect-all';
+import HvValidate from 'hyperview/src/behaviors/hv-validate';
 
 const HYPERVIEW_BEHAVIORS = [
   HvAlert,
@@ -21,6 +22,7 @@ const HYPERVIEW_BEHAVIORS = [
   HvShow,
   HvToggle,
   HvUnselectAll,
+  HvValidate,
 ];
 
 export const getRegistry = (behaviors: HvBehavior[] = []): BehaviorRegistry =>

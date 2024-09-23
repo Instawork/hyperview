@@ -1,0 +1,137 @@
+---
+permalink: "/behaviors/advanced/validation/index.xml"
+tags: "advanced"
+hv_title: "Validation"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block styles %}
+  <style
+    id="form-group"
+    flex="1"
+    marginLeft="24"
+    marginRight="24"
+    marginTop="48"
+  />
+{% endblock %}
+
+{% block content %}
+  <view xmlns:v="https://hyperview.org/hyperview-validation">
+    {{ description('Validate!') }}
+
+    <form>
+      <view style="form-group">
+        <text
+          style="label"
+          v:role="style"
+          v:source="input-1"
+        >Validate with button press</text>
+        <text-field
+          placeholder="First name"
+          placeholderTextColor="#8D9494"
+          name="text"
+          style="input"
+          id="input-1"
+        >
+          <v:required message="First name required" />
+          <v:length
+            min-length="2"
+            max-length="5"
+            message="Length must be between 2 and 5"
+          />
+        </text-field>
+        <text style="help" v:role="message style" v:source="input-1" />
+      </view>
+      {% call button('Validate') -%}
+        <behavior
+          trigger="press"
+          action="validate"
+          target="input-1"
+        />
+      {%- endcall %}
+
+      <view style="form-group">
+        <text
+          style="label"
+          v:role="style"
+          v:source="input-2"
+        >Validate on change</text>
+        <text-field
+          placeholder="First name"
+          placeholderTextColor="#8D9494"
+          name="text"
+          style="input"
+          id="input-2"
+        >
+          <behavior trigger="change" action="validate" target="input-2" />
+          <v:required message="First name required" />
+          <v:length
+            min-length="2"
+            max-length="5"
+            message="Length must be between 2 and 5"
+          />
+        </text-field>
+        <text style="help" v:role="message style" v:source="input-2" />
+      </view>
+
+
+      <view style="form-group">
+        <text
+          style="label"
+          v:role="style"
+          v:source="input-3"
+        >Validate on blur</text>
+        <text-field
+          placeholder="First name"
+          placeholderTextColor="#8D9494"
+          name="text"
+          style="input"
+          id="input-3"
+        >
+          <behavior trigger="blur" action="validate" target="input-3" />
+          <v:required message="First name required" />
+          <v:length
+            min-length="2"
+            max-length="5"
+            message="Length must be between 2 and 5"
+          />
+        </text-field>
+        <text style="help" v:role="message style" v:source="input-3" />
+      </view>
+
+      <view style="form-group">
+        <text
+          style="label"
+          v:role="style"
+          v:source="input-4"
+        >Error from server</text>
+        <text-field
+          placeholder="First name"
+          placeholderTextColor="#8D9494"
+          name="text"
+          style="input"
+          id="input-4"
+          v:state="invalid"
+          value="1234567"
+        >
+          <behavior trigger="change" action="validate" target="input-4" />
+          <v:required message="First name required" />
+          <v:length
+            min-length="2"
+            max-length="5"
+            message="Length must be between 2 and 5"
+          />
+        </text-field>
+        <text style="help" v:role="message style" v:source="input-4">
+          Length must be between 2 and 5
+        </text>
+      </view>
+
+
+    </form>
+
+  </view>
+{% endblock %}

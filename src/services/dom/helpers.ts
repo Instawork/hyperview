@@ -16,6 +16,17 @@ export const getBehaviorElements = (element: Element) => {
   return behaviorElements;
 };
 
+export const getDocument = (node: Node | null | undefined): Document | null => {
+  if (node === null || node === undefined) {
+    return null;
+  }
+
+  if (node.nodeType === NODE_TYPE.DOCUMENT_NODE) {
+    return node;
+  }
+  return getDocument(node.parentNode);
+};
+
 export const getFirstTag = (
   document: Document | Element,
   localName: LocalName,

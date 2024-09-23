@@ -7,11 +7,50 @@
   fontSize="16"
   fontWeight="normal"
   paddingBottom="8"
-  paddingTop="8">
+  paddingTop="8"
+>
+
   <modifier pressed="true">
-  <style borderBottomColor="green"/>
+    <style borderBottomColor="green"/>
   </modifier>
   <modifier focused="true">
-  <style borderBottomColor="#4778FF"/>
+    <style borderBottomColor="#4778FF" color="black" />
+  </modifier>
+  <modifier invalid="true">
+    <style color="#FF4847" borderBottomColor="#FF4847" />
+  </modifier>
+</style>
+
+<style id="input--error" borderBottomColor="#FF4847" color="#FF4847">
+  <modifier focused="true">
+    <style borderBottomColor="#FF4847" />
+  </modifier>
+</style>
+
+<style
+  id="label"
+  borderColor="#4E4D4D"
+  fontSize="16"
+  fontWeight="bold"
+  lineHeight="24"
+  marginBottom="8"
+>
+  <modifier invalid="true">
+    <style color="#FF4847" />
+  </modifier>
+  <modifier valid="true">
+    <style color="#63CB76" />
+  </modifier>
+</style>
+<style
+  id="help"
+  borderColor="#FF4847"
+  fontSize="16"
+  fontWeight="normal"
+  lineHeight="24"
+  marginTop="16"
+>
+  <modifier invalid="true">
+    <style color="#FF4847" />
   </modifier>
 </style>

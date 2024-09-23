@@ -252,6 +252,9 @@ export function createStylesheets(document: Document): StyleSheets {
       pressed: false,
       selected: false,
     }),
+    invalid: createStylesheet(document, {
+      invalid: true,
+    }),
     pressed: createStylesheet(document, {
       focused: false,
       pressed: true,
@@ -259,18 +262,27 @@ export function createStylesheets(document: Document): StyleSheets {
     }),
     pressedSelected: createStylesheet(document, {
       focused: false,
+      invalid: false,
       pressed: true,
       selected: true,
+      valid: false,
     }),
     regular: createStylesheet(document, {
       focused: false,
+      invalid: false,
       pressed: false,
       selected: false,
+      valid: false,
     }),
     selected: createStylesheet(document, {
       focused: false,
+      invalid: false,
       pressed: false,
       selected: true,
+      valid: false,
+    }),
+    valid: createStylesheet(document, {
+      valid: true,
     }),
   } as const;
   return styles;

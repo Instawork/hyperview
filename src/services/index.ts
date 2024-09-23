@@ -8,6 +8,7 @@ import type {
 } from 'hyperview/src/types';
 import { NODE_TYPE } from 'hyperview/src/types';
 import { Platform } from 'react-native';
+import * as ValidationService from 'hyperview/src/services/validation';
 
 /**
  * This file is currently a dumping place for every functions used accross
@@ -38,6 +39,24 @@ export const createStyleProp = (
       pressedRules = [{ opacity: DEFAULT_PRESS_OPACITY }];
     }
     styleRules = styleRules.concat(pressedRules);
+  }
+
+  const hasStyleRole: boolean = ValidationService.hasValidationRole(
+    element,
+    'style',
+  );
+  const validationState: string | null = hasStyleRole
+    ? ValidationService.getValidationState(element)
+    : null;
+
+  if (validationState === 'invalid') {
+    const invalidRules = styleIds
+      .map(s => stylesheets.invalid[s])
+      .filter(Boolean);
+    styleRules = styleRules.concat(invalidRules);
+  } else if (validationState === 'valid') {
+    const validRules = styleIds.map(s => stylesheets.valid[s]).filter(Boolean);
+    styleRules = styleRules.concat(validRules);
   }
 
   if (options.focused) {

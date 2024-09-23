@@ -239,6 +239,7 @@ export type HvBehavior = {
     onUpdate: HvComponentOnUpdate,
     getRoot: HvGetRoot,
     updateRoot: HvUpdateRoot,
+    componentRegistry: Components.Registry
   ) => void;
 };
 
@@ -427,3 +428,19 @@ export type Reload = (
   optHref: DOMString | null | undefined,
   opts: HvComponentOptions,
 ) => void;
+
+
+export type Validation = {
+  valid: boolean,
+  message?: string,
+};
+
+export type Validator = {
+  namespace: string,
+  name: string,
+  check: (value: string | null, element: Element) => Validation,
+};
+
+export type ValidatorRegistry = {
+  [string]: { [string]: Validator },
+};
