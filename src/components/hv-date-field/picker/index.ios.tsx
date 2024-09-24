@@ -15,7 +15,7 @@ export default (props: Props): JSX.Element | null => {
   return (
     <Modal
       element={props.element}
-      isFocused={() => props.focused}
+      focused={props.focused}
       onModalCancel={props.onCancel}
       onModalDone={props.onDone}
       onUpdate={props.onUpdate}

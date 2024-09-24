@@ -8,7 +8,7 @@ import type { ReactNode } from 'react';
 export type Props = {
   children: ReactNode;
   element: Element;
-  isFocused: () => boolean;
+  focused: boolean;
   onModalCancel: () => void;
   onModalDone: () => void;
   onUpdate: HvComponentOnUpdate;
