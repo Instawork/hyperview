@@ -20,6 +20,7 @@ import type {
   TabScreenOptions,
 } from './types';
 import React, { PureComponent } from 'react';
+import { Platform } from 'react-native';
 import { createCustomStackNavigator } from 'hyperview/src/core/components/navigator-stack';
 import { createCustomTabNavigator } from 'hyperview/src/core/components/navigator-tab';
 import { getFirstChildTag } from 'hyperview/src/services/dom/helpers';
@@ -142,6 +143,7 @@ export default class HvNavigator extends PureComponent<Props> {
       );
     }
     if (type === NavigatorService.NAVIGATOR_TYPE.STACK) {
+      const gestureEnabled = Platform.OS === 'ios' ? !isModal : false;
       return (
         <Stack.Screen
           key={id}
@@ -154,6 +156,7 @@ export default class HvNavigator extends PureComponent<Props> {
             cardStyleInterpolator: isModal
               ? NavigatorService.CardStyleInterpolators.forVerticalIOS
               : undefined,
+            gestureEnabled,
             presentation: isModal
               ? NavigatorService.ID_MODAL
               : NavigatorService.ID_CARD,
