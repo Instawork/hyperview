@@ -5,7 +5,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ModalButton from './modal-button';
 import Overlay from './overlay';
 import type { Props } from './types';
@@ -19,11 +19,16 @@ import styles from './styles';
  * This is used on iOS only.
  */
 export default (props: Props): JSX.Element => {
-  const [visible, setVisible] = useState(props.isFocused());
+  const [visible, setVisible] = useState(props.focused);
   const [height, setHeight] = useState(0);
 
+  useEffect(() => {
+    setVisible(props.focused);
+  }, [props.focused]);
+
   const translateY = useRef(new Animated.Value(0)).current;
-  const opacity = useRef(new Animated.Value(0)).current;
+  const overlayOpacity = useRef(new Animated.Value(0)).current;
+  const contentOpacity = useRef(new Animated.Value(0)).current;
 
   const style: Array<StyleSheetType> = createStyleProp(
     props.element,
@@ -80,21 +85,29 @@ export default (props: Props): JSX.Element => {
 
   const targetOpacity: number = overlayStyle?.opacity ?? 1;
 
-  const openModal = () => () => {
+  const animateOpen = () => () => {
     translateY.setValue(height);
     Animated.timing(translateY, {
       duration: animationDuration,
       toValue: 0,
       useNativeDriver: true,
     }).start();
-    Animated.timing(opacity, {
+    Animated.timing(overlayOpacity, {
       duration: overlayAnimationDuration,
       toValue: targetOpacity,
       useNativeDriver: true,
     }).start();
+    // We start with a 0 opacity to avoid a flash of the content
+    // before the animation starts, that occurs because `onLayout`
+    // is called before `onShow`
+    Animated.timing(contentOpacity, {
+      duration: 1,
+      toValue: 1,
+      useNativeDriver: true,
+    }).start();
   };
 
-  const dismissModal = (callback: () => void) => () => {
+  const animateClose = (callback: () => void) => () => {
     Animated.timing(translateY, {
       duration: dismissAnimationDuration,
       toValue: height,
@@ -105,16 +118,16 @@ export default (props: Props): JSX.Element => {
         callback();
       }
     });
-    Animated.timing(opacity, {
+    Animated.timing(overlayOpacity, {
       duration: dismissOverlayAnimationDuration,
       toValue: 0,
       useNativeDriver: true,
     }).start();
   };
 
-  const onShow = openModal();
-  const onDismiss = dismissModal(props.onModalCancel);
-  const onDone = dismissModal(props.onModalDone);
+  const onShow = animateOpen();
+  const onDismiss = animateClose(props.onModalCancel);
+  const onDone = animateClose(props.onModalDone);
 
   return (
     <Modal
@@ -123,10 +136,16 @@ export default (props: Props): JSX.Element => {
       transparent
       visible={visible}
     >
-      <Overlay onPress={onDismiss} style={[overlayStyle, { opacity }]} />
+      <Overlay
+        onPress={onDismiss}
+        style={[overlayStyle, { opacity: overlayOpacity }]}
+      />
       <Animated.View
         onLayout={onLayout}
-        style={[styles.wrapper, { transform: [{ translateY }] }]}
+        style={[
+          styles.wrapper,
+          { opacity: contentOpacity, transform: [{ translateY }] },
+        ]}
       >
         <View style={style}>
           <View style={styles.actions}>

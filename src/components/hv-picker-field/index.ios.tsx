@@ -186,19 +186,21 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
         return <Picker.Item key={l + v} label={l} value={v} />;
       });
 
+    const focused = this.props.element.getAttribute('focused') === 'true';
+
     return (
       <Field
         element={this.props.element}
-        focused={this.isFocused()}
+        focused={focused}
         onPress={this.onFieldPress}
         options={this.props.options}
         stylesheets={this.props.stylesheets}
         value={this.getLabelForValue(this.getValue())}
       >
-        {this.isFocused() ? (
+        {focused ? (
           <Modal
             element={this.props.element}
-            isFocused={this.isFocused}
+            focused={focused}
             onModalCancel={this.onCancel}
             onModalDone={this.onDone}
             onUpdate={this.props.onUpdate}
