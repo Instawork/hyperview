@@ -151,12 +151,14 @@ export const renderChildren = (
   if (element.childNodes) {
     const { childNodes } = element;
     for (let i = 0; i < childNodes.length; i += 1) {
-      const e = renderElement(
-        element.childNodes.item(i) as Element,
-        stylesheets,
-        onUpdate,
-        { ...options, skipHref: false },
-      );
+      const el = element.childNodes.item(i) as Element | null;
+      if (el?.nodeType === NODE_TYPE.ELEMENT_NODE && !el.getAttribute('key')) {
+        el.setAttribute('key', String(i));
+      }
+      const e = renderElement(el, stylesheets, onUpdate, {
+        ...options,
+        skipHref: false,
+      });
       if (e) {
         children.push(e);
       }
