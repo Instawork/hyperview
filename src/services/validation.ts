@@ -49,7 +49,49 @@ const LengthValidator: Validator = {
   namespace: V_NS,
 };
 
-const VALIDATORS = [RequiredValidator, LengthValidator];
+const MinValueValidator: Validator = {
+  check: (value: string | null | undefined, element: Element): Validation => {
+    const min = parseFloat(element.getAttribute('min'));
+
+    const parsedValue = parseFloat(value);
+    if (!isNaN(parsedValue)) {
+      if (parsedValue < min) {
+        return {
+          message:
+            element.getAttribute('message') || 'This field has bad value',
+          valid: false,
+        };
+      }
+    }
+
+    return { valid: true };
+  },
+  name: 'min-value',
+  namespace: V_NS,
+};
+
+const MaxValueValidator: Validator = {
+  check: (value: string | null | undefined, element: Element): Validation => {
+    const max = parseFloat(element.getAttribute('max'));
+
+    const parsedValue = parseFloat(value);
+    if (!isNaN(parsedValue)) {
+      if (parsedValue > max) {
+        return {
+          message:
+            element.getAttribute('message') || 'This field has bad value',
+          valid: false,
+        };
+      }
+    }
+
+    return { valid: true };
+  },
+  name: 'max-value',
+  namespace: V_NS,
+};
+
+const VALIDATORS = [RequiredValidator, LengthValidator, MinValueValidator, MaxValueValidator];
 
 export const REGISTRY: ValidatorRegistry = {};
 
