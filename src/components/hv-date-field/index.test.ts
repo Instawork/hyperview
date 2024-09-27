@@ -1,3 +1,4 @@
+import { createDateFromString, createStringFromDate } from './helpers';
 import HvDateField from 'hyperview/src/components/hv-date-field';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { getElements } from 'hyperview/test/helpers';
@@ -38,37 +39,33 @@ describe('HvDateField', () => {
 
   describe('createStringFromDate', () => {
     it('returns empty string if no date', () => {
-      expect(HvDateField.createStringFromDate(null)).toEqual('');
+      expect(createStringFromDate(null)).toEqual('');
     });
 
     it('returns correct string for double digit month', () => {
-      expect(HvDateField.createStringFromDate(new Date(2023, 10, 12))).toEqual(
+      expect(createStringFromDate(new Date(2023, 10, 12))).toEqual(
         '2023-11-12',
       );
     });
 
     it('returns correct string for single digit month', () => {
-      expect(HvDateField.createStringFromDate(new Date(2023, 6, 12))).toEqual(
-        '2023-07-12',
-      );
+      expect(createStringFromDate(new Date(2023, 6, 12))).toEqual('2023-07-12');
     });
   });
 
   describe('createDateFromString', () => {
     it('returns null if no date', () => {
-      expect(HvDateField.createDateFromString(null)).toBeNull();
+      expect(createDateFromString(null)).toBeNull();
     });
 
     it('returns correct date for double digit month', () => {
-      expect(HvDateField.createDateFromString('2023-11-12')).toEqual(
+      expect(createDateFromString('2023-11-12')).toEqual(
         new Date(2023, 10, 12),
       );
     });
 
     it('returns correct date for single digit month', () => {
-      expect(HvDateField.createDateFromString('2023-07-12')).toEqual(
-        new Date(2023, 6, 12),
-      );
+      expect(createDateFromString('2023-07-12')).toEqual(new Date(2023, 6, 12));
     });
   });
 });
