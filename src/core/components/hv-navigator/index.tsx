@@ -1,6 +1,7 @@
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Contexts from 'hyperview/src/contexts';
 import * as Dom from 'hyperview/src/services/dom';
+import * as Events from 'hyperview/src/services/events';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as NavigationContext from 'hyperview/src/contexts/navigation';
@@ -42,7 +43,12 @@ export default class HvNavigator extends PureComponent<Props> {
 
   componentDidMount() {
     this.triggerLoadBehaviors();
+    Events.subscribe(this.onEventDispatch);
   }
+
+  componentWillUnmout = () => {
+    Events.unsubscribe(this.onEventDispatch);
+  };
 
   componentDidUpdate(prevProps: Props) {
     if (prevProps.element === this.props.element) {
@@ -53,18 +59,63 @@ export default class HvNavigator extends PureComponent<Props> {
     this.triggerLoadBehaviors();
   }
 
+  onEventDispatch = (eventName: string) => {
+    const onEventBehaviors = this.behaviorElements.filter(e => {
+      if (e.getAttribute(BEHAVIOR_ATTRIBUTES.TRIGGER) === TRIGGERS.ON_EVENT) {
+        const currentAttributeEventName:
+          | string
+          | null
+          | undefined = e.getAttribute('event-name');
+        const currentAttributeAction:
+          | string
+          | null
+          | undefined = e.getAttribute('action');
+        if (currentAttributeAction === 'dispatch-event') {
+          Logging.error(
+            new Error(
+              'trigger="on-event" and action="dispatch-event" cannot be used on the same element',
+            ),
+          );
+          return false;
+        }
+        if (!currentAttributeEventName) {
+          Logging.error(
+            new Error('on-event trigger requires an event-name attribute'),
+          );
+          return false;
+        }
+        return currentAttributeEventName === eventName;
+      }
+      return false;
+    });
+    onEventBehaviors.forEach(behaviorElement => {
+      const handler = Behaviors.createActionHandler(
+        behaviorElement,
+        this.props.onUpdate,
+      );
+      if (!this.props.element) {
+        return;
+      }
+      handler(this.props.element);
+    });
+  };
+
   /**
    * Cache all behaviors with a `load` trigger
    */
   updateBehaviorElements = () => {
+    const supportedTriggers: string[] = [TRIGGERS.LOAD, TRIGGERS.ON_EVENT];
     if (this.props.element) {
       this.behaviorElements = Dom.getBehaviorElements(
         this.props.element,
       ).filter(e => {
-        const triggerAttr = e.getAttribute(BEHAVIOR_ATTRIBUTES.TRIGGER);
-        if (triggerAttr !== TRIGGERS.LOAD) {
+        const triggerAttr =
+          e.getAttribute(BEHAVIOR_ATTRIBUTES.TRIGGER) || 'press';
+        if (!supportedTriggers.includes(triggerAttr)) {
           Logging.warn(
-            `Unsupported trigger '${triggerAttr}'. Only "load" is supported`,
+            `Unsupported trigger '${triggerAttr}'. Only "${supportedTriggers.join(
+              ',',
+            )}" are supported`,
           );
           return false;
         }
@@ -74,10 +125,13 @@ export default class HvNavigator extends PureComponent<Props> {
   };
 
   triggerLoadBehaviors = () => {
-    if (this.behaviorElements.length > 0 && this.props.element) {
+    const loadBehaviors = this.behaviorElements.filter(
+      e => e.getAttribute(BEHAVIOR_ATTRIBUTES.TRIGGER) === TRIGGERS.LOAD,
+    );
+    if (loadBehaviors.length > 0 && this.props.element) {
       Behaviors.triggerBehaviors(
         this.props.element,
-        this.behaviorElements,
+        loadBehaviors,
         this.props.onUpdate,
       );
     }

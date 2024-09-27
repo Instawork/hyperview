@@ -19,7 +19,7 @@ export default (props: any) => {
     );
   }
   if (props.source.html) {
-    return props.source.html;
+    return <div dangerouslySetInnerHTML={{ __html: props.source.html }} />;
   }
   return '';
 };

@@ -294,7 +294,7 @@ export default class HyperRef extends PureComponent<Props, State> {
         const onPressHandler = pressHandlers.onPress;
         pressHandlers.onPress = createEventHandler(() => {
           setTimeout(onPressHandler, time);
-        });
+        }, true);
       }
     }
 

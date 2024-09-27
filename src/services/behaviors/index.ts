@@ -154,7 +154,7 @@ export const trigger = (
       targetId,
       verb,
     });
-    logBehavior(behaviorElement, action);
+    // logBehavior(behaviorElement, action);
   });
 };
 
@@ -194,7 +194,7 @@ export const createActionHandler = (
       );
       const delay = behaviorElement.getAttribute(BEHAVIOR_ATTRIBUTES.DELAY);
       onUpdate(href, action, element, { delay, showIndicatorId, targetId });
-      logBehavior(behaviorElement, action);
+      // logBehavior(behaviorElement, action);
     };
   }
   if (
@@ -222,13 +222,13 @@ export const createActionHandler = (
         targetId,
         verb,
       });
-      logBehavior(behaviorElement, action);
+      // logBehavior(behaviorElement, action);
     };
   }
   // Custom behavior
   return (element: Element) => {
     onUpdate(null, action, element, { behaviorElement, custom: true });
-    logBehavior(behaviorElement, action);
+    // logBehavior(behaviorElement, action);
   };
 };
 
