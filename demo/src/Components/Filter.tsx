@@ -42,7 +42,7 @@ export const findElements = (node: Element, attributeNames: string[]) => {
     }, []);
 };
 
-const HyperviewFilter = (props: HvComponentProps) => {
+const Filter = (props: HvComponentProps) => {
   const onEventDispatch = (eventName: string) => {
     const filterEvent =
       props.element.getAttributeNS(FILTER_NS, 'on-event') || '';
@@ -135,8 +135,7 @@ const HyperviewFilter = (props: HvComponentProps) => {
   ) as unknown) as JSX.Element;
 };
 
-HyperviewFilter.namespaceURI = FILTER_NS;
-HyperviewFilter.localName = 'container' as LocalName;
-HyperviewFilter.localNameAliases = [] as LocalName[];
+Filter.namespaceURI = FILTER_NS;
+Filter.localName = 'container' as LocalName;
 
-export { HyperviewFilter };
+export { Filter };
