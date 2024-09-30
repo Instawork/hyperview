@@ -1,4 +1,6 @@
+import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import type { NavigationRouteParams } from 'hyperview/src/types';
+import type { StackHeaderProps } from '@react-navigation/stack';
 
 export const ANCHOR_ID_SEPARATOR = '#';
 export const ID_CARD = 'card';
@@ -56,6 +58,28 @@ export type Route<
   name: RouteName;
   params: Params;
   state?: NavigationState;
+};
+
+export type HeaderProps = StackHeaderProps & {
+  id: string;
+};
+
+export type HeaderComponent = (props: HeaderProps) => JSX.Element | null;
+
+export type TabBarProps = BottomTabBarProps & {
+  id: string;
+};
+
+export type TabBarComponent = (props: TabBarProps) => JSX.Element | null;
+
+export type NavigationComponents = {
+  Header?: HeaderComponent;
+  TabBar?: TabBarComponent;
+};
+
+/* List of props available to navigators */
+export type NavigatorProps = NavigationComponents & {
+  doc: Document | undefined;
 };
 
 /**

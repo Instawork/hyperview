@@ -1,0 +1,45 @@
+---
+permalink: "/navigation/navigator/bottom-tabs/tab-2.xml"
+hv_title: "Tab Navigator - Tab 2"
+hv_button_behavior: "back"
+---
+{% from 'macros/description/index.xml.njk' import description %}
+{% extends 'templates/base.xml.njk' %}
+
+{% block container %}
+  {{ description('This is the content for tab 2.') }}
+  <navigation:tabbar
+    xmlns:navigation="https://instawork.com/hyperview-navigation"
+    navigation:navigator="custom-bottom-tabs-navigator"
+  >
+    <select-single style="tabbar-bottom">
+      <option
+        style="tab-bottom"
+        value="custom-tab-1"
+      >
+        <behavior trigger="select" action="navigate" target="custom-bottom-tabs-tab-1" />
+        <view style="tab-bottom-icon-selected">
+          {% include 'icons/behaviors-selected.svg' %}
+        </view>
+        <view style="tab-bottom-icon">
+          {% include 'icons/behaviors.svg' %}
+        </view>
+        <text style="tab-bottom-label">Tab 1</text>
+      </option>
+      <option
+        selected="true"
+        style="tab-bottom"
+        value="custom-tab-2"
+      >
+        <behavior trigger="select" action="navigate" target="custom-bottom-tabs-tab-2" />
+        <view style="tab-bottom-icon-selected">
+          {% include 'icons/advanced-selected.svg' %}
+        </view>
+        <view style="tab-bottom-icon">
+          {% include 'icons/advanced.svg' %}
+        </view>
+        <text style="tab-bottom-label">Tab 2</text>
+      </option>
+    </select-single>
+  </navigation:tabbar>
+{% endblock %}

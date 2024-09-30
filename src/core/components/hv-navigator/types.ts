@@ -27,7 +27,6 @@ export type Props = {
  */
 export type StackScreenOptions = {
   headerMode: 'float' | 'screen' | undefined;
-  headerShown: boolean;
   title: string | undefined;
 };
 

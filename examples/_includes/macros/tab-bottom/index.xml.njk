@@ -1,0 +1,18 @@
+{% macro tab_bottom(id, label, selected) %}
+  <option
+    {% if selected %}
+      selected="true"
+    {% endif %}
+    style="tab-bottom"
+    value="tab-{{ id }}"
+  >
+    <behavior trigger="select" action="navigate" target="tab-{{ id }}" />
+    <view style="tab-bottom-icon-selected">
+      {% include 'icons/' +  id + '-selected.svg' %}
+    </view>
+    <view style="tab-bottom-icon">
+      {% include 'icons/' + id + '.svg' %}
+    </view>
+    <text style="tab-bottom-label">{{ label }}</text>
+  </option>
+{% endmacro %}

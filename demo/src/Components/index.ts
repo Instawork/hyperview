@@ -1,4 +1,6 @@
-import { HyperviewFilter } from './HyperviewFilter';
-import { HyperviewSvg } from './HyperviewSvg';
+import { Filter } from './Filter';
+import { Header } from './Header';
+import { Svg } from './Svg';
+import { TabBar } from './TabBar';
 
-export default [HyperviewSvg, HyperviewFilter];
+export default [Filter, Header, Svg, TabBar];

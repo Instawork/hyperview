@@ -1,13 +1,17 @@
 import * as Contexts from 'hyperview/src/contexts';
 import * as NavigationContext from 'hyperview/src/contexts/navigation';
 import * as React from 'react';
-import { StackNavigationOptions } from '@react-navigation/stack';
+import {
+  StackHeaderProps,
+  StackNavigationOptions,
+} from '@react-navigation/stack';
 
 export type Props = {
   id: string;
   children?: React.ReactNode;
   initialRouteName?: string;
   screenOptions?: StackNavigationOptions;
+  header?: (props: StackHeaderProps) => React.ReactNode;
 };
 
 export type ParamListBase = Record<string, object | undefined>;
