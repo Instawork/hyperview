@@ -27,9 +27,16 @@ import { createCustomTabNavigator } from 'hyperview/src/core/components/navigato
 import { getFirstChildTag } from 'hyperview/src/services/dom/helpers';
 
 /**
- * Flag to show the navigator UIs
+ * Flag to show the default navigator UIs
+ * Example: tab bar
+ * NOTE: This will only be used if no footer element is provided for a tabbar
  */
-const SHOW_NAVIGATION_UI = false;
+const SHOW_DEFAULT_FOOTER_UI = false;
+
+/**
+ * Flag to show the header UIs
+ */
+const SHOW_DEFAULT_HEADER_UI = false;
 
 const Stack = createCustomStackNavigator<ParamTypes>();
 const BottomTab = createCustomTabNavigator<ParamTypes>();
@@ -143,7 +150,7 @@ export default class HvNavigator extends PureComponent<Props> {
    */
   stackScreenOptions = (route: ScreenParams): StackScreenOptions => ({
     headerMode: 'screen',
-    headerShown: SHOW_NAVIGATION_UI,
+    headerShown: SHOW_DEFAULT_HEADER_UI,
     title: this.getId(route.params),
   });
 
@@ -151,8 +158,10 @@ export default class HvNavigator extends PureComponent<Props> {
    * Encapsulated options for the tab screenOptions
    */
   tabScreenOptions = (route: ScreenParams): TabScreenOptions => ({
-    headerShown: SHOW_NAVIGATION_UI,
-    tabBarStyle: { display: SHOW_NAVIGATION_UI ? 'flex' : 'none' },
+    headerShown: SHOW_DEFAULT_HEADER_UI,
+    tabBarStyle: {
+      display: SHOW_DEFAULT_FOOTER_UI ? 'flex' : 'none',
+    },
     title: this.getId(route.params),
   });
 
@@ -307,7 +316,7 @@ export default class HvNavigator extends PureComponent<Props> {
   /**
    * Build the required navigator from the xml element
    */
-  Navigator = (): React.ReactElement => {
+  Navigator = (props: NavigatorService.NavigatorProps): React.ReactElement => {
     if (!this.props.element) {
       throw new NavigatorService.HvNavigatorError(
         'No element found for navigator',
@@ -332,6 +341,8 @@ export default class HvNavigator extends PureComponent<Props> {
       ? selected.getAttribute('id')?.toString()
       : undefined;
 
+    const { BottomTabBar } = props;
+
     switch (type) {
       case NavigatorService.NAVIGATOR_TYPE.STACK:
         return (
@@ -349,6 +360,18 @@ export default class HvNavigator extends PureComponent<Props> {
             id={id}
             initialRouteName={selectedId}
             screenOptions={({ route }) => this.tabScreenOptions(route)}
+            tabBar={
+              BottomTabBar &&
+              (p => (
+                <BottomTabBar
+                  descriptors={p.descriptors}
+                  id={id}
+                  insets={p.insets}
+                  navigation={p.navigation}
+                  state={p.state}
+                />
+              ))
+            }
           >
             {this.buildScreens(type, this.props.element)}
           </BottomTab.Navigator>
@@ -363,9 +386,9 @@ export default class HvNavigator extends PureComponent<Props> {
   /**
    * Build a stack navigator for a modal
    */
-  ModalNavigator = (props: {
-    doc: Document | undefined;
-  }): React.ReactElement => {
+  ModalNavigator = (
+    props: NavigatorService.NavigatorProps,
+  ): React.ReactElement => {
     if (!this.props.params) {
       throw new NavigatorService.HvNavigatorError(
         'No params found for modal screen',
@@ -425,17 +448,19 @@ export default class HvNavigator extends PureComponent<Props> {
   };
 
   render() {
+    const Navigator = this.props.params?.isModal
+      ? this.ModalNavigator
+      : this.Navigator;
     return (
       <NavigationContext.Context.Consumer>
-        {() => (
+        {navContext => (
           <Contexts.DocContext.Consumer>
             {docProvider => (
               <NavigatorMapContext.NavigatorMapProvider>
-                {this.props.params && this.props.params.isModal ? (
-                  <this.ModalNavigator doc={docProvider?.getDoc()} />
-                ) : (
-                  <this.Navigator />
-                )}
+                <Navigator
+                  BottomTabBar={navContext?.navigationComponents?.BottomTabBar}
+                  doc={docProvider?.getDoc()}
+                />
               </NavigatorMapContext.NavigatorMapProvider>
             )}
           </Contexts.DocContext.Consumer>
