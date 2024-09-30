@@ -137,5 +137,6 @@ const Filter = (props: HvComponentProps) => {
 
 Filter.namespaceURI = FILTER_NS;
 Filter.localName = 'container' as LocalName;
+Filter.localNameAliases = [] as LocalName[];
 
 export { Filter };

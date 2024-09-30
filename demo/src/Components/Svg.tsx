@@ -52,5 +52,6 @@ const Svg = (props: HvComponentProps) => {
 
 Svg.namespaceURI = 'http://www.w3.org/2000/svg';
 Svg.localName = 'svg' as LocalName;
+Svg.localNameAliases = [] as LocalName[];
 
 export { Svg };
