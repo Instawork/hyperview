@@ -5,6 +5,8 @@
 {% include 'macros/container/styles.xml.njk' %}
 {% include 'macros/contact/styles.xml.njk' %}
 {% include 'macros/tab/styles.xml.njk' %}
+{% include 'macros/tabbar-bottom-tab/styles.xml.njk' %}
+{% include 'macros/tabbar-bottom/styles.xml.njk' %}
 {% include 'macros/text-field/styles.xml.njk' %}
 
 <style
@@ -66,20 +68,6 @@
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
 <style id="tab-route-content" flex="1" />
 <style
-  id="bottom-tab"
-  alignItems="center"
-  flex="1"
-  justifyContent="center"
-/>
-<style
-  id="bottom-tab-label"
-  color="#cccccc"
-  fontSize="8"
-  fontWeight="bold"
-/>
-<style id="bottom-tab-label-selected" color="#4778FF" />
-<style id="bottom-tab-selected" />
-<style
   id="back-image"
   alignItems="center"
   flex="0"
@@ -87,21 +75,6 @@
   justifyContent="center"
   padding="10"
   width="10"
-/>
-<style
-  id="footer"
-  alignItems="stretch"
-  borderTopColor="#eee"
-  borderTopWidth="1"
-  bottom="0"
-  flexDirection="row"
-  flexShrink="1"
-  flexGrow="0"
-  height="48"
-  justifyContent="space-around"
-  backgroundColor="white"
-  position="absolute"
-  width="100%"
 />
 <style
   id="list-container"
