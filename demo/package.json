@@ -15,7 +15,7 @@
     "server": "eleventy --serve --port=8085",
     "test:lint": "eslint src && prettier --check '**/*.md' && yarn format-njk -c",
     "test:ts": "tsc",
-    "test:validate-xml": "eleventy; find hyperview/public ../test/schema -name '*.xml' -not -path '*/advanced/scroll/*.xml' -not -path '*/case-studies/business-rating/index.xml' -not -path '*/case-studies/business-rating/rating_save.xml' -not -path '*/case-studies/photos/comments.xml' -not -path '*/index.xml' | xargs xmlschema-validate --schema ../schema/hyperview.xsd --version 1.1",
+    "test:validate-xml": "rm -rf hyperview/public; eleventy; find hyperview/public -name '*.xml' -not -path '*/advanced/scroll/*.xml' -not -path '*/case-studies/business-rating/index.xml' -not -path '*/case-studies/business-rating/rating_save.xml' -not -path '*/case-studies/photos/comments.xml' -not -path '*/index.xml' | xargs xmlschema-validate --schema schema/hyperview.xsd --version 1.1",
     "test": "yarn test:ts && yarn test:lint && yarn test:validate-xml"
   },
   "dependencies": {
