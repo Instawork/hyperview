@@ -1,7 +1,0 @@
-examples/**/styles.xml.njk
-examples/**/style.xml.njk
-examples/**/rating.xml.njk
-examples/**/compliment.xml.njk
-examples/**/user.xml.njk
-examples/**/select-multiple-content.xml.njk
-examples/**/tab.xml.njk

@@ -19,7 +19,7 @@ module.exports = function (eleventyConfig) {
         res.end();
       } else {
         try {
-          const handler = require(`./examples${req._parsedUrl.pathname}.js`);
+          const handler = require(`./backend${req._parsedUrl.pathname}.js`);
           if (handler) {
             handler(req, res, next);
           } else {
@@ -33,17 +33,17 @@ module.exports = function (eleventyConfig) {
       }
     },
     server: {
-      baseDir: 'demo',
+      baseDir: '.',
       directory: true,
     },
   });
   // Pass through any XML files that haven't been ported yet.
   // Once everything is ported, we can remove this.
-  eleventyConfig.addPassthroughCopy('examples/**/*.xml');
+  eleventyConfig.addPassthroughCopy('backend/**/*.xml');
   // Pass through images used by different screens.
-  eleventyConfig.addPassthroughCopy('examples/**/*.jpg');
-  eleventyConfig.addPassthroughCopy('examples/**/*.jpeg');
-  eleventyConfig.addPassthroughCopy('examples/**/*.png');
+  eleventyConfig.addPassthroughCopy('backend/**/*.jpg');
+  eleventyConfig.addPassthroughCopy('backend/**/*.jpeg');
+  eleventyConfig.addPassthroughCopy('backend/**/*.png');
   // Add filters
   eleventyConfig.addNunjucksFilter('sortCollection', sortCollectionFilter);
   eleventyConfig.addNunjucksFilter('highlight', highlightFilter);
@@ -52,8 +52,8 @@ module.exports = function (eleventyConfig) {
   // Output into demo folder for serving both github pages and local development
   return {
     dir: {
-      input: 'examples',
-      output: 'demo/hyperview/public',
+      input: 'backend',
+      output: 'hyperview/public',
     },
   };
 };
