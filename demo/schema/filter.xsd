@@ -1,0 +1,41 @@
+<xs:schema
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  attributeFormDefault="qualified"
+  elementFormDefault="qualified"
+  targetNamespace="https://hyperview.org/filter"
+  xmlns:filter="https://hyperview.org/filter"
+  xmlns:hv="https://hyperview.org/hyperview"
+>
+  <xs:import
+    namespace="https://hyperview.org/hyperview"
+    schemaLocation="hyperview.xsd"
+  />
+  <xs:simpleType name="transform">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="lowercase" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="role">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="filter-terms" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:element name="container">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:any minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+      <xs:attribute name="id" type="hv:ID" form="unqualified" />
+      <xs:attribute name="on-event" type="xs:string" use="required" />
+      <xs:attribute name="on-param" type="xs:string" use="required" />
+      <xs:attribute name="transform" type="filter:transform" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:attributeGroup name="filterAttributes">
+    <xs:attribute name="regex" type="xs:string" />
+    <xs:attribute name="role" type="filter:role" />
+    <xs:attribute name="terms" type="xs:string" />
+  </xs:attributeGroup>
+</xs:schema>

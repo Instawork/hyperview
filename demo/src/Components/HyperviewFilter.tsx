@@ -16,7 +16,7 @@ type FormDataPart = {
 declare class FormData {
   getParts(): Array<FormDataPart>;
 }
-const FILTER_NS = 'https://instawork.com/hyperview-filter';
+const FILTER_NS = 'https://hyperview.org/filter';
 
 export const findElements = (node: Element, attributeNames: string[]) => {
   if (node.nodeType !== NODE_TYPE.ELEMENT_NODE) {

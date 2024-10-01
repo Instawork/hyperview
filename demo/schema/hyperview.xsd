@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  elementFormDefault="qualified"
+  targetNamespace="https://hyperview.org/hyperview"
+  xmlns:hv="https://hyperview.org/hyperview"
+  xmlns:alert="https://hyperview.org/hyperview-alert"
+>
+  <xs:import
+    namespace="https://hyperview.org/hyperview-alert"
+    schemaLocation="../../schema/alert.xsd"
+  />
+  <xs:import
+    namespace="https://hyperview.org/filter"
+    schemaLocation="filter.xsd"
+  />
+
+  <xs:redefine schemaLocation="../../schema/core.xsd">
+    <xs:simpleType name="action">
+      <xs:restriction base="hv:action">
+        <!-- Hyperview core -->
+        <xs:enumeration value="push" />
+        <xs:enumeration value="new" />
+        <xs:enumeration value="back" />
+        <xs:enumeration value="close" />
+        <xs:enumeration value="navigate" />
+        <xs:enumeration value="reload" />
+        <xs:enumeration value="deep-link" />
+        <xs:enumeration value="open-settings" />
+        <xs:enumeration value="dispatch-event" />
+        <xs:enumeration value="replace" />
+        <xs:enumeration value="replace-inner" />
+        <xs:enumeration value="append" />
+        <xs:enumeration value="prepend" />
+        <xs:enumeration value="show" />
+        <xs:enumeration value="hide" />
+        <xs:enumeration value="toggle" />
+        <xs:enumeration value="set-value" />
+        <xs:enumeration value="alert" />
+        <xs:enumeration value="select-all" />
+        <xs:enumeration value="unselect-all" />
+        <xs:enumeration value="scroll" />
+
+        <!-- Hyperview demo extensions -->
+        <!-- None yet, add future custom behavior actions here -->
+      </xs:restriction>
+    </xs:simpleType>
+
+    <xs:attributeGroup name="behaviorAttributes">
+      <!-- Hyperview core -->
+      <xs:attributeGroup ref="hv:behaviorAttributes" />
+
+      <!-- Hyperview demo extensions -->
+      <!-- None yet, add future custom behavior attributes here -->
+    </xs:attributeGroup>
+
+    <!-- This redefines the behavior element with our custom actions / attributes -->
+    <xs:complexType name="behavior">
+      <xs:complexContent>
+        <xs:restriction base="hv:behavior">
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" ref="alert:option" />
+            <xs:element minOccurs="0" maxOccurs="unbounded" ref="hv:styles" />
+          </xs:sequence>
+          <xs:attributeGroup ref="hv:behaviorAttributes" />
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+
+  </xs:redefine>
+  <xs:element name="behavior" type="hv:behavior" />
+</xs:schema>
