@@ -1,4 +1,4 @@
-import { HyperviewFilter } from './HyperviewFilter';
-import { HyperviewSvg } from './HyperviewSvg';
+import { Filter } from './Filter';
+import { Svg } from './Svg';
 
-export default [HyperviewSvg, HyperviewFilter];
+export default [Filter, Svg];

@@ -28,7 +28,7 @@ function parseDimension(
   return Number.isNaN(parsedDimension) ? defaultDimension : parsedDimension;
 }
 
-const HyperviewSvg = (props: HvComponentProps) => {
+const Svg = (props: HvComponentProps) => {
   const width = parseDimension(
     props.element.getAttribute('width'),
     DEFAULT_WIDTH,
@@ -50,8 +50,8 @@ const HyperviewSvg = (props: HvComponentProps) => {
   );
 };
 
-HyperviewSvg.namespaceURI = 'http://www.w3.org/2000/svg';
-HyperviewSvg.localName = 'svg' as LocalName;
-HyperviewSvg.localNameAliases = [] as LocalName[];
+Svg.namespaceURI = 'http://www.w3.org/2000/svg';
+Svg.localName = 'svg' as LocalName;
+Svg.localNameAliases = [] as LocalName[];
 
-export { HyperviewSvg };
+export { Svg };
