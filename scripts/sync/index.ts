@@ -1,8 +1,6 @@
-// @flow
-
-const childProcess = require('child_process');
-const chokidar = require('chokidar');
-const path = require('path');
+import childProcess from 'child_process';
+import chokidar from 'chokidar';
+import path from 'path';
 
 const PROJECT_DIR = path.join(__dirname, '../..');
 const SRC_DIRNAME = process.argv[3] || 'src';
@@ -21,7 +19,7 @@ const updatePackageJson = () => {
   childProcess.execSync(cmd);
 };
 
-const syncFiles = (event, originPath) => {
+const syncFiles = (event: unknown, originPath: string) => {
   const relativeOriginPath = originPath.replace(SRC_DIR, '');
   const destinationPath = path.dirname(
     path.join(HYPERVIEW_SRC_DIR, relativeOriginPath),

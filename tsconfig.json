@@ -24,7 +24,8 @@
     "paths": {
       "hyperview/*": ["./*"]
     },
-    "types": ["react-native", "jest", "node"]
+    "types": ["react-native", "jest", "node"],
+    "typeRoots": ["./node_modules/@types", "./@types"]
   },
   "exclude": ["**/*.js", "**/*.jsx", "demo/**/*"]
 }

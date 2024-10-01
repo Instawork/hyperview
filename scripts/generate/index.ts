@@ -1,5 +1,3 @@
-// @flow
-
 // Run all auto-generate scripts
 
 import './app-key';
