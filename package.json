@@ -24,8 +24,8 @@
     }
   },
   "scripts": {
-    "sync": "babel-node ./scripts/sync",
-    "generate": "babel-node ./scripts/generate",
+    "sync": "ts-node ./scripts/sync",
+    "generate": "ts-node ./scripts/generate",
     "preversion": "yarn test",
     "prettify": "pretty-quick && prettier --write '**/*.xsd' '**/*.xml' '**/*.md'",
     "postversion": "yarn publish --new-version $npm_package_version && cd demo && yarn add hyperview@$npm_package_version && git add package.json yarn.lock && git commit -m\"chore(demo): update Hyperview to v$npm_package_version\" && cd .. && git push --follow-tags",
@@ -36,11 +36,10 @@
     "storybook": "NODE_OPTIONS=--openssl-legacy-provider storybook start -p 7007",
     "test:ts": "tsc",
     "test:generators": "yarn generate test && git diff --quiet HEAD",
-    "test:lint": "eslint src && prettier --check '**/*.xsd' '**/*.xml' '**/*.md' && yarn format-njk -c",
+    "test:lint": "eslint src && prettier --check 'schema/**/*.xsd' 'test/**/*.xml' '**/*.md' && yarn format-njk -c",
     "test:render": "npx patch-package && jest test/render.test.ts --forceExit",
     "test:unit": "jest --testPathPattern src",
-    "test:xmlserver": "eleventy --serve --port=8085",
-    "test:validate-xml": "eleventy; find demo/hyperview/public test/schema -name '*.xml' -not -path '*/advanced/scroll/*.xml' -not -path '*/case-studies/business-rating/index.xml' -not -path '*/case-studies/business-rating/rating_save.xml' -not -path '*/case-studies/photos/comments.xml' -not -path '*/index.xml' | xargs xmlschema-validate --schema schema/hyperview.xsd --version 1.1",
+    "test:validate-xml": "find test/schema -name '*.xml' | xargs xmlschema-validate --schema schema/hyperview.xsd --version 1.1",
     "test": "yarn generate test && yarn test:ts && yarn test:lint && yarn test:render && yarn test:unit && yarn test:validate-xml"
   },
   "dependencies": {
@@ -64,7 +63,6 @@
     "react-native-webview": "^13.2.2"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^1.0.0",
     "@babel/cli": "7.13.0",
     "@babel/core": "7.13.1",
     "@babel/eslint-parser": "7.13.4",
@@ -81,6 +79,7 @@
     "@storybook/addon-storyshots": "4.1.18",
     "@storybook/react-native": "4.1.18",
     "@tsconfig/react-native": "3.0.2",
+    "@types/glob": "8.1.0",
     "@types/jest": "29.4.0",
     "@types/lodash": "4.14.198",
     "@types/node": "20.8.2",
@@ -95,7 +94,6 @@
     "chokidar": "3.5.1",
     "eslint": "7.20.0",
     "eslint-plugin-instawork": "0.12.0",
-    "flow-bin": "0.122.0",
     "glob": "7.1.6",
     "humps": "2.0.1",
     "husky": "5.1.1",
@@ -113,6 +111,7 @@
     "react-native-keyboard-aware-scrollview": "2.1.0",
     "react-native-webview": "13.2.2",
     "react-test-renderer": "16.13.1",
+    "ts-node": "10.9.2",
     "typescript": "5.2.2"
   },
   "resolutions": {

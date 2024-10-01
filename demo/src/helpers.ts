@@ -11,7 +11,6 @@ export const fetchWrapper = (
 ): Promise<Response> => {
   return fetch(input, {
     ...init,
-    mode: 'cors',
     headers: {
       // Don't cache requests for the demo
       'Cache-Control': 'no-cache, no-store, must-revalidate',
@@ -19,5 +18,6 @@ export const fetchWrapper = (
       Pragma: 'no-cache',
       ...init.headers,
     },
+    mode: 'cors',
   });
 };
