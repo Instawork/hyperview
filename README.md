@@ -51,25 +51,25 @@ More importantly, the client is designed to be incorporated into an existing Rea
 This repo contains an example XML server that serves Hyperview XML to showcase the available features.
 It also contains a demo Expo project that can connect to the example XML server, or any other Hyperview endpoint.
 
-#### 1. Run the example server
+#### 1. Install dependencies
 
-From the repo root directory:
+From the `demo/` directory:
 
 ```sh
 yarn
-yarn test:xmlserver
+```
+
+Note: you only need to run this step once.
+
+#### 2. Run the demo server
+
+From the `demo/` directory:
+
+```sh
+yarn server
 ```
 
 This will start an HTTP server listening on port 8085.
-
-#### 2. Start the demo app
-
-In a separate shell, install the demo dependencies and start the development server. From the repo root directory:
-
-```sh
-cd demo
-yarn
-```
 
 The next step depends on whether you want to run the demo app in the iOS simulator, on an Android Virtual Device, or on a physical mobile device.
 
