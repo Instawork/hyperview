@@ -6,22 +6,50 @@ jobs:
       - image: cimg/python:3.12.1-node
     steps:
       - checkout
-      - run: yarn
-      - run: yarn test:generators
-      - run: yarn test:ts
-      - run: yarn test:unit
-      - run: yarn test:render
-      - run: pip install xmlschema
-      - run: yarn test:validate-xml
-      - run: pip install djhtml
-      - run: yarn test:lint
+      - run:
+          name: Install dependencies
+          command: yarn
+      - run:
+          name: Install dependencies
+          command: yarn test:generators
+      - run:
+          name: Check types
+          command: yarn test:ts
+      - run:
+          name: Unit tests
+          command: yarn test:unit
+      - run:
+          name: Render tests
+          command: yarn test:render
+      - run:
+          name: Validate XML
+          command: pip install xmlschema; yarn test:validate-xml
+      - run:
+          name: Lint
+          command: pip install djhtml; yarn test:lint
+      - run:
+          working_directory: demo
+          name: Demo - Install dependencies
+          command: yarn
+      - run:
+          working_directory: demo
+          name: Demo - Check types
+          command: yarn test:ts
+      - run:
+          working_directory: demo
+          name: Demo - Lint
+          command: yarn test:lint
+      - run:
+          working_directory: demo
+          name: Demo - Validate XML
+          command: yarn test:validate-xml
   deploy:
     docker:
       - image: cimg/python:3.12.1-node
     steps:
       - add_ssh_keys:
-            fingerprints:
-              - 'SHA256:efIwcAYspXfEF3arKOxCPis7fOPJ1SRlYKCx7AC+HoE'
+          fingerprints:
+            - 'SHA256:efIwcAYspXfEF3arKOxCPis7fOPJ1SRlYKCx7AC+HoE'
       - checkout
       - run: yarn
       - run:

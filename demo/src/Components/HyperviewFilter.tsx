@@ -127,12 +127,12 @@ const HyperviewFilter = (props: HvComponentProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.element]);
 
-  return Hyperview.renderChildren(
+  return (Hyperview.renderChildren(
     props.element,
     props.stylesheets,
     props.onUpdate,
     props.options,
-  );
+  ) as unknown) as JSX.Element;
 };
 
 HyperviewFilter.namespaceURI = FILTER_NS;

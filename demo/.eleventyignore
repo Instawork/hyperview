@@ -1,0 +1,7 @@
+backend/**/styles.xml.njk
+backend/**/style.xml.njk
+backend/**/rating.xml.njk
+backend/**/compliment.xml.njk
+backend/**/user.xml.njk
+backend/**/select-multiple-content.xml.njk
+backend/**/tab.xml.njk

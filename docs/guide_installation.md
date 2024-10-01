@@ -21,25 +21,25 @@ This repository contains:
 - A demo Expo project that can connect to the example XML server, or any other Hyperview endpoint.
 - all of the reference docs on this website
 
-## 2. Run the example server
+## 2. Install dependencies
 
-From the repo root directory:
+From the `demo/` directory:
 
 ```
 > yarn
-> yarn test:xmlserver
 ```
 
-This will start an HTTP server listening on port 8085. You cen verify that the server works by visiting [http://0.0.0.0:8085/index.xml](http://0.0.0.0:8085/index.xml) in a web browser.
+Note: you only need to run this step once.
 
-## 3. Start the demo app
+## 3. Run the demo server
 
-In a separate shell, install the demo dependencies and start the development server. From the repo root directory:
+From the `demo/` directory:
 
 ```
-> cd demo
-> yarn
+> yarn server
 ```
+
+This will start an HTTP server listening on port 8085. You can verify that the server works by visiting [http://0.0.0.0:8085/index.xml](http://0.0.0.0:8085/index.xml) in a web browser.
 
 The next step depends on whether you want to run the demo app in the iOS simulator, on an Android Virtual Device, or on a physical mobile device.
 

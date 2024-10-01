@@ -1,9 +1,6 @@
-// @flow
-//
-
-const fs = require('fs');
-const mkdirp = require('mkdirp');
-const path = require('path');
+import fs from 'fs';
+import mkdirp from 'mkdirp';
+import path from 'path';
 
 const FILE_ENCODING = 'utf8';
 
@@ -28,4 +25,4 @@ const writeIfChanged = (filePath: string, contents: string) => {
   console.log(`Updated ${filePath}`);
 };
 
-module.exports = { read, writeIfChanged };
+export { read, writeIfChanged };

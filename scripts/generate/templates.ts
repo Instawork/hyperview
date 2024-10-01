@@ -1,12 +1,10 @@
-// @flow
-
 import * as Files from './files';
 import glob from 'glob';
 import packageJson from '../../package.json';
 import path from 'path';
 
 const rootDir = path.join(__dirname, '../..');
-const targetFilePath = path.join(rootDir, 'storybook/templates.gen.js');
+const targetFilePath = path.join(rootDir, 'storybook/templates.gen.ts');
 const projectName = packageJson.name;
 
 const templates = glob
@@ -27,6 +25,4 @@ const lines = [
   '',
 ].join('\n');
 
-if (Files.writeIfChanged(targetFilePath, lines)) {
-  console.log(`Updated ${targetFilePath}`);
-}
+Files.writeIfChanged(targetFilePath, lines);

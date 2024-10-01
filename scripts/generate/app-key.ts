@@ -1,16 +1,14 @@
-// @flow
-
 import * as Files from './files';
 import path from 'path';
 
-const targetFilePath = path.join(__dirname, '../../storybook/app-key.gen.js');
+const targetFilePath = path.join(__dirname, '../../storybook/app-key.gen.ts');
 
 if (!process.argv[2]) {
   console.log(`
     Usage: yarn generate <application_key>
-    
+
     <application_key>: string passed as a first argument to the method 'AppRegistry.registerComponent' in your root react-native component.
-    
+
   `);
   process.exit();
 }
@@ -21,6 +19,4 @@ const lines = [
   '',
 ].join('\n');
 
-if (Files.writeIfChanged(targetFilePath, lines)) {
-  console.log(`Updated ${targetFilePath}`);
-}
+Files.writeIfChanged(targetFilePath, lines);

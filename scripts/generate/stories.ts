@@ -1,10 +1,8 @@
-// @flow
-
 import * as Files from './files';
 import glob from 'glob';
 import path from 'path';
 
-const targetFilePath = path.join(__dirname, '../../storybook/stories.gen.js');
+const targetFilePath = path.join(__dirname, '../../storybook/stories.gen.ts');
 const projectPath = path.join(__dirname, '../..');
 
 const stories = glob
@@ -23,6 +21,4 @@ const lines = [
   '',
 ].join('\n');
 
-if (Files.writeIfChanged(targetFilePath, lines)) {
-  console.log(`Updated ${targetFilePath}`);
-}
+Files.writeIfChanged(targetFilePath, lines);

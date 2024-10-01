@@ -19,7 +19,7 @@ module.exports = function handler(req, res, next) {
   const { search, page = 1, template = 'contacts' } = query;
 
   // Configure Nunjucks env, and add a custom filters
-  const env = nunjucks.configure('examples/advanced/case-studies/contacts');
+  const env = nunjucks.configure('backend/advanced/case-studies/contacts');
   env.addFilter('highlight', highlightFilter);
   env.addFilter('paginate', paginateFilter);
   env.addFilter('pageCount', pageCountFilter);

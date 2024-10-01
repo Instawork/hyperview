@@ -1,8 +1,7 @@
 flow-typed
-*.gen.js
+*.gen.ts
 demo/hyperview/public/
 website/
-/src/VisibilityDetectingView.js
 /src/mask.js
 .idea
 demo/.expo/README.md
