@@ -1,6 +1,6 @@
 
 <doc xmlns="https://hyperview.org/hyperview" 
-  xmlns:filter="https://instawork.com/hyperview-filter"
+  xmlns:filter="https://hyperview.org/filter"
 >
   <screen>
     <styles>

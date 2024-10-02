@@ -55,14 +55,14 @@ hv_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//navigation/navigator/simple-stack/index.xml"
-        key="simple-stack-navigator"
+        href="/hyperview/public//navigation/navigator/simple-tab/index.xml"
+        key="simple-tab-navigator"
         show-during-load="loading-screen"
         style="item"
         
       >
         <view style="item-left">
-          <text style="item-label">Simple Stack Navigator</text>
+          <text style="item-label">Simple Tab Navigator</text>
         </view>
         <view style="item-chevron">
           <svg
@@ -89,14 +89,14 @@ hv_list_tag: "root"
         
       
       <item
-        href="/hyperview/public//navigation/navigator/simple-tab/index.xml"
-        key="simple-tab-navigator"
+        href="/hyperview/public//navigation/navigator/stack/index.xml"
+        key="stack-navigator"
         show-during-load="loading-screen"
         style="item item-last"
         
       >
         <view style="item-left">
-          <text style="item-label">Simple Tab Navigator</text>
+          <text style="item-label">Stack Navigator</text>
         </view>
         <view style="item-chevron">
           <svg
