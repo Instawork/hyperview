@@ -142,7 +142,12 @@ export class Navigator {
   };
 }
 
-export type { NavigationProp, Route } from './types';
+export type {
+  NavigationComponents,
+  NavigationProp,
+  NavigatorProps,
+  Route,
+} from './types';
 export {
   CardStyleInterpolators,
   createStackNavigator,

@@ -10,6 +10,7 @@ import type {
 } from 'hyperview/src/types';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
+import type { NavigationComponents } from 'hyperview/src/services/navigator';
 import type { RefreshControlProps } from 'react-native';
 
 /**
@@ -21,6 +22,7 @@ export type Props = {
     format: string | undefined,
   ) => string | undefined;
   refreshControl?: ComponentType<RefreshControlProps>;
+  navigationComponents?: NavigationComponents;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   navigation?: any;
   route?: NavigatorService.Route<string, { url?: string }>;
