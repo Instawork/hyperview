@@ -23,14 +23,14 @@ hv_list_tag: "root"
       
       
       <item
-        href="/hyperview/public//advanced/custom-components/svg-image/index.xml"
-        key="svg-image"
+        href="/hyperview/public//advanced/custom-components/filter/index.xml"
+        key="filter"
         show-during-load="loading-screen"
         style="item item-first"
         
       >
         <view style="item-left">
-          <text style="item-label">SVG Image</text>
+          <text style="item-label">Filter</text>
         </view>
         <view style="item-chevron">
           <svg
@@ -57,14 +57,14 @@ hv_list_tag: "root"
         
       
       <item
-        href="/hyperview/public//advanced/custom-components/filter/index.xml"
-        key="filter"
+        href="/hyperview/public//advanced/custom-components/svg-image/index.xml"
+        key="svg-image"
         show-during-load="loading-screen"
         style="item item-last"
         
       >
         <view style="item-left">
-          <text style="item-label">Filter</text>
+          <text style="item-label">SVG Image</text>
         </view>
         <view style="item-chevron">
           <svg

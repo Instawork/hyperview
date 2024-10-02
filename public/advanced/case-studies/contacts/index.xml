@@ -116,6 +116,58 @@
 <style id="tab-label" fontSize="16" fontWeight="500" lineHeight="24" />
 
 <style
+  id="tabbar-bottom-tab"
+  alignItems="center"
+  flex="1"
+  justifyContent="center"
+/>
+<style
+  id="tabbar-bottom-tab-label"
+  color="#cccccc"
+  fontSize="8"
+  fontWeight="bold"
+>
+  <modifier selected="true">
+    <style color="#4778FF" />
+  </modifier>
+  <modifier pressed="true">
+    <style color="#4778FF" />
+  </modifier>
+</style>
+<style id="tabbar-bottom-tab-icon">
+  <modifier selected="true">
+    <style display="none" />
+  </modifier>
+  <modifier pressed="true">
+    <style display="none" />
+  </modifier>
+</style>
+<style id="tabbar-bottom-tab-icon-selected" display="none">
+  <modifier selected="true">
+    <style display="flex" />
+  </modifier>
+  <modifier pressed="true">
+    <style display="flex" />
+  </modifier>
+</style>
+
+<style
+  id="tabbar-bottom"
+  alignItems="stretch"
+  borderTopColor="#eee"
+  borderTopWidth="1"
+  bottom="0"
+  flexDirection="row"
+  flexShrink="1"
+  flexGrow="0"
+  height="48"
+  justifyContent="space-around"
+  backgroundColor="white"
+  position="absolute"
+  width="100%"
+/>
+
+<style
   id="input"
   borderBottomColor="#E1E1E1"
   borderBottomWidth="1"
@@ -193,20 +245,6 @@
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
 <style id="tab-route-content" flex="1" />
 <style
-  id="bottom-tab"
-  alignItems="center"
-  flex="1"
-  justifyContent="center"
-/>
-<style
-  id="bottom-tab-label"
-  color="#cccccc"
-  fontSize="8"
-  fontWeight="bold"
-/>
-<style id="bottom-tab-label-selected" color="#4778FF" />
-<style id="bottom-tab-selected" />
-<style
   id="back-image"
   alignItems="center"
   flex="0"
@@ -214,21 +252,6 @@
   justifyContent="center"
   padding="10"
   width="10"
-/>
-<style
-  id="footer"
-  alignItems="stretch"
-  borderTopColor="#eee"
-  borderTopWidth="1"
-  bottom="0"
-  flexDirection="row"
-  flexShrink="1"
-  flexGrow="0"
-  height="48"
-  justifyContent="space-around"
-  backgroundColor="white"
-  position="absolute"
-  width="100%"
 />
 <style
   id="list-container"
@@ -374,124 +397,124 @@
   </item>
   <items xmlns="https://hyperview.org/hyperview">
   
-    <item key="7f586391-2420-4d22-8b0a-5c2097d8544f" style="mx-24 py-8 border-bottom">
-      <text>Aaron Bahringer</text>
-      <text>Eladio66@yahoo.com</text>
-      <text>(583) 555-2364</text>
+    <item key="bb5626ce-509f-475c-9762-eb61933f365f" style="mx-24 py-8 border-bottom">
+      <text>Aaron Armstrong</text>
+      <text>Virginia10@gmail.com</text>
+      <text>(776) 555-9991</text>
     </item>
   
-    <item key="408e90fd-19ac-4de9-a8a6-390ce0ea5be5" style="mx-24 py-8 border-bottom">
-      <text>Aaron Bosco</text>
-      <text>Gisselle.Williamson60@hotmail.com</text>
-      <text>(199) 555-9526</text>
+    <item key="9db90518-bdd4-49a3-a22e-f182893c0bda" style="mx-24 py-8 border-bottom">
+      <text>Aaron Balistreri</text>
+      <text>Jaquelin86@yahoo.com</text>
+      <text>(439) 555-6686</text>
     </item>
   
-    <item key="4ed8e053-4dc9-4803-85c7-4071bf4596d1" style="mx-24 py-8 border-bottom">
-      <text>Aaron Ferry</text>
-      <text>Barney_Dooley17@yahoo.com</text>
-      <text>(669) 555-4183</text>
+    <item key="be556956-68af-4fcf-9bcf-8ba941af4791" style="mx-24 py-8 border-bottom">
+      <text>Aaron Becker</text>
+      <text>Cordie_Morissette47@yahoo.com</text>
+      <text>(011) 555-8717</text>
     </item>
   
-    <item key="9dd6547d-74af-4fb5-bb06-fe8c45989dad" style="mx-24 py-8 border-bottom">
-      <text>Aaron Hirthe</text>
-      <text>Carter_Schmeler84@gmail.com</text>
-      <text>(721) 555-5117</text>
+    <item key="fa8f9d94-631a-489b-8326-8e376173885b" style="mx-24 py-8 border-bottom">
+      <text>Aaron Boyer</text>
+      <text>Aimee_Witting80@gmail.com</text>
+      <text>(649) 555-8797</text>
     </item>
   
-    <item key="127483b3-5789-466d-a7a5-ac356f51e2ea" style="mx-24 py-8 border-bottom">
-      <text>Aaron Jenkins</text>
-      <text>Vanessa.Kozey@gmail.com</text>
-      <text>(898) 555-5246</text>
+    <item key="8d0c2539-355d-4a4d-a793-ce266c043e83" style="mx-24 py-8 border-bottom">
+      <text>Aaron Brown</text>
+      <text>Clarissa_Paucek43@hotmail.com</text>
+      <text>(508) 555-5486</text>
     </item>
   
-    <item key="893f0ef5-a836-4cbf-bb24-f167bf26afd4" style="mx-24 py-8 border-bottom">
-      <text>Aaron Jerde</text>
-      <text>Royal.Parker42@gmail.com</text>
-      <text>(575) 555-3193</text>
+    <item key="ed33f1f2-2bcf-4d93-96a2-bf5d40cc23c3" style="mx-24 py-8 border-bottom">
+      <text>Aaron Corkery</text>
+      <text>Oleta_Jakubowski78@yahoo.com</text>
+      <text>(060) 555-4955</text>
     </item>
   
-    <item key="c021b437-5bcb-43c1-97fb-7b1b6d9c74f4" style="mx-24 py-8 border-bottom">
-      <text>Aaron Kunze</text>
-      <text>Roel42@hotmail.com</text>
-      <text>(201) 555-6435</text>
+    <item key="d6331768-c1ab-4281-a2df-c83612ea8eb3" style="mx-24 py-8 border-bottom">
+      <text>Aaron Feil Jr.</text>
+      <text>Sibyl_Gleason1@yahoo.com</text>
+      <text>(933) 555-7123</text>
     </item>
   
-    <item key="3bd84be5-ea9c-4213-b21d-74b86d6cfe8f" style="mx-24 py-8 border-bottom">
-      <text>Aaron Mante IV</text>
-      <text>Kiana_Vandervort@yahoo.com</text>
-      <text>(716) 555-1160</text>
+    <item key="c7c16e86-3e3a-4103-b45e-f7a5b1d3b6a6" style="mx-24 py-8 border-bottom">
+      <text>Aaron Hayes</text>
+      <text>Viviane_Marvin32@yahoo.com</text>
+      <text>(080) 555-4688</text>
     </item>
   
-    <item key="20b175c1-073d-42c4-9f70-87589ff83616" style="mx-24 py-8 border-bottom">
-      <text>Aaron Morissette</text>
-      <text>Ahmad.Beier45@hotmail.com</text>
-      <text>(266) 555-9853</text>
+    <item key="89830006-2e6a-4f35-a39b-4338dfed89d9" style="mx-24 py-8 border-bottom">
+      <text>Aaron Hessel</text>
+      <text>Ines29@hotmail.com</text>
+      <text>(968) 555-5472</text>
     </item>
   
-    <item key="dbade8bf-7a0b-4428-b01e-3016e0a42102" style="mx-24 py-8 border-bottom">
-      <text>Aaron Olson</text>
-      <text>Tre.Parker-Beer2@yahoo.com</text>
-      <text>(079) 555-1747</text>
+    <item key="1f5a91c4-01f1-4971-b0f7-563565d84519" style="mx-24 py-8 border-bottom">
+      <text>Aaron Huels PhD</text>
+      <text>Paris_Murray73@yahoo.com</text>
+      <text>(848) 555-6887</text>
     </item>
   
-    <item key="8a2079da-58cb-4f17-a76d-6a8b25427378" style="mx-24 py-8 border-bottom">
-      <text>Aaron Russel</text>
-      <text>Isabel81@yahoo.com</text>
-      <text>(793) 555-7221</text>
+    <item key="5566c2a7-fab3-4980-a667-bfce4dde0b57" style="mx-24 py-8 border-bottom">
+      <text>Aaron Kohler</text>
+      <text>Reanna.Mante20@yahoo.com</text>
+      <text>(452) 555-4535</text>
     </item>
   
-    <item key="31d455c7-42ea-45cb-a375-76746895b190" style="mx-24 py-8 border-bottom">
-      <text>Aaron Satterfield</text>
-      <text>Gerard_Rice@hotmail.com</text>
-      <text>(746) 555-1441</text>
+    <item key="6b7be160-43cb-44fc-83ee-c2a7e781ba72" style="mx-24 py-8 border-bottom">
+      <text>Aaron Kub</text>
+      <text>Billie_Hamill@gmail.com</text>
+      <text>(872) 555-3911</text>
     </item>
   
-    <item key="5e376758-6778-4a7f-8540-776167a70581" style="mx-24 py-8 border-bottom">
-      <text>Aaron Schamberger</text>
-      <text>Terence.Kulas@yahoo.com</text>
-      <text>(806) 555-1002</text>
+    <item key="577b96dd-498c-438d-a503-8a55bd8f34ed" style="mx-24 py-8 border-bottom">
+      <text>Aaron Kunze Sr.</text>
+      <text>Ursula.Ruecker-Gerhold@hotmail.com</text>
+      <text>(610) 555-1027</text>
     </item>
   
-    <item key="99be6139-9070-4650-a732-054a2a4cad94" style="mx-24 py-8 border-bottom">
-      <text>Aaron Stanton</text>
-      <text>Torrance_Armstrong@hotmail.com</text>
-      <text>(499) 555-4626</text>
+    <item key="24526bd6-060f-4b82-857f-4a895cef9038" style="mx-24 py-8 border-bottom">
+      <text>Aaron Raynor</text>
+      <text>Braden.Abernathy@gmail.com</text>
+      <text>(511) 555-3709</text>
     </item>
   
-    <item key="cf0faf8a-bb33-4bfa-b7d2-e77df0e3a83a" style="mx-24 py-8 border-bottom">
-      <text>Aaron Stiedemann</text>
-      <text>Paxton.Cormier@hotmail.com</text>
-      <text>(794) 555-1580</text>
+    <item key="355acf3f-3315-40a6-b81f-7ae9394a402c" style="mx-24 py-8 border-bottom">
+      <text>Aaron Willms</text>
+      <text>Margarita95@gmail.com</text>
+      <text>(931) 555-6094</text>
     </item>
   
-    <item key="471eebab-ed01-4e40-986b-7da5d85efabb" style="mx-24 py-8 border-bottom">
-      <text>Aaron Streich</text>
-      <text>Jacklyn_Kovacek@hotmail.com</text>
-      <text>(872) 555-4132</text>
+    <item key="d6aec733-a70b-4184-a501-92493724f15b" style="mx-24 py-8 border-bottom">
+      <text>Aaron Zboncak</text>
+      <text>Pietro_Balistreri@yahoo.com</text>
+      <text>(108) 555-8488</text>
     </item>
   
-    <item key="d972dcd0-4c58-4aab-9515-76a1ebd61b7c" style="mx-24 py-8 border-bottom">
-      <text>Aaron White</text>
-      <text>Lawson1@hotmail.com</text>
-      <text>(227) 555-3495</text>
+    <item key="30f95fd5-3500-4fb5-a578-435da6a465b9" style="mx-24 py-8 border-bottom">
+      <text>Aaron Zulauf</text>
+      <text>Aditya44@hotmail.com</text>
+      <text>(437) 555-0063</text>
     </item>
   
-    <item key="07805b17-c2c3-4178-94b0-594de493f110" style="mx-24 py-8 border-bottom">
-      <text>Abel Abshire</text>
-      <text>Mona70@gmail.com</text>
-      <text>(705) 555-4999</text>
+    <item key="02407226-5155-49e7-8d93-67c3eed07fbc" style="mx-24 py-8 border-bottom">
+      <text>Abel Beer</text>
+      <text>Delta44@hotmail.com</text>
+      <text>(770) 555-4859</text>
     </item>
   
-    <item key="50222416-4dd1-41be-a603-2dcade3ef040" style="mx-24 py-8 border-bottom">
-      <text>Abel Bailey</text>
-      <text>Lucie_McCullough-Grimes21@hotmail.com</text>
-      <text>(673) 555-7804</text>
+    <item key="af4b25c6-6fa1-42d0-8bae-3317819c2df1" style="mx-24 py-8 border-bottom">
+      <text>Abel Brown</text>
+      <text>Akeem.Runolfsson@hotmail.com</text>
+      <text>(821) 555-8487</text>
     </item>
   
-    <item key="ef5b1e8e-4b47-43d0-8eca-a02ae1d0f9c4" style="mx-24 py-8 border-bottom">
-      <text>Abel Bayer</text>
-      <text>Ora50@gmail.com</text>
-      <text>(090) 555-1007</text>
+    <item key="872d2887-eca5-49c5-a8ef-f7e365c896e6" style="mx-24 py-8 border-bottom">
+      <text>Abel Conroy</text>
+      <text>Beau.Green38@hotmail.com</text>
+      <text>(583) 555-5914</text>
     </item>
   
   
@@ -632,6 +655,58 @@
 <style id="tab-label" fontSize="16" fontWeight="500" lineHeight="24" />
 
 <style
+  id="tabbar-bottom-tab"
+  alignItems="center"
+  flex="1"
+  justifyContent="center"
+/>
+<style
+  id="tabbar-bottom-tab-label"
+  color="#cccccc"
+  fontSize="8"
+  fontWeight="bold"
+>
+  <modifier selected="true">
+    <style color="#4778FF" />
+  </modifier>
+  <modifier pressed="true">
+    <style color="#4778FF" />
+  </modifier>
+</style>
+<style id="tabbar-bottom-tab-icon">
+  <modifier selected="true">
+    <style display="none" />
+  </modifier>
+  <modifier pressed="true">
+    <style display="none" />
+  </modifier>
+</style>
+<style id="tabbar-bottom-tab-icon-selected" display="none">
+  <modifier selected="true">
+    <style display="flex" />
+  </modifier>
+  <modifier pressed="true">
+    <style display="flex" />
+  </modifier>
+</style>
+
+<style
+  id="tabbar-bottom"
+  alignItems="stretch"
+  borderTopColor="#eee"
+  borderTopWidth="1"
+  bottom="0"
+  flexDirection="row"
+  flexShrink="1"
+  flexGrow="0"
+  height="48"
+  justifyContent="space-around"
+  backgroundColor="white"
+  position="absolute"
+  width="100%"
+/>
+
+<style
   id="input"
   borderBottomColor="#E1E1E1"
   borderBottomWidth="1"
@@ -709,20 +784,6 @@
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
 <style id="tab-route-content" flex="1" />
 <style
-  id="bottom-tab"
-  alignItems="center"
-  flex="1"
-  justifyContent="center"
-/>
-<style
-  id="bottom-tab-label"
-  color="#cccccc"
-  fontSize="8"
-  fontWeight="bold"
-/>
-<style id="bottom-tab-label-selected" color="#4778FF" />
-<style id="bottom-tab-selected" />
-<style
   id="back-image"
   alignItems="center"
   flex="0"
@@ -730,21 +791,6 @@
   justifyContent="center"
   padding="10"
   width="10"
-/>
-<style
-  id="footer"
-  alignItems="stretch"
-  borderTopColor="#eee"
-  borderTopWidth="1"
-  bottom="0"
-  flexDirection="row"
-  flexShrink="1"
-  flexGrow="0"
-  height="48"
-  justifyContent="space-around"
-  backgroundColor="white"
-  position="absolute"
-  width="100%"
 />
 <style
   id="list-container"

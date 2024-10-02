@@ -116,6 +116,58 @@
 <style id="tab-label" fontSize="16" fontWeight="500" lineHeight="24" />
 
 <style
+  id="tabbar-bottom-tab"
+  alignItems="center"
+  flex="1"
+  justifyContent="center"
+/>
+<style
+  id="tabbar-bottom-tab-label"
+  color="#cccccc"
+  fontSize="8"
+  fontWeight="bold"
+>
+  <modifier selected="true">
+    <style color="#4778FF" />
+  </modifier>
+  <modifier pressed="true">
+    <style color="#4778FF" />
+  </modifier>
+</style>
+<style id="tabbar-bottom-tab-icon">
+  <modifier selected="true">
+    <style display="none" />
+  </modifier>
+  <modifier pressed="true">
+    <style display="none" />
+  </modifier>
+</style>
+<style id="tabbar-bottom-tab-icon-selected" display="none">
+  <modifier selected="true">
+    <style display="flex" />
+  </modifier>
+  <modifier pressed="true">
+    <style display="flex" />
+  </modifier>
+</style>
+
+<style
+  id="tabbar-bottom"
+  alignItems="stretch"
+  borderTopColor="#eee"
+  borderTopWidth="1"
+  bottom="0"
+  flexDirection="row"
+  flexShrink="1"
+  flexGrow="0"
+  height="48"
+  justifyContent="space-around"
+  backgroundColor="white"
+  position="absolute"
+  width="100%"
+/>
+
+<style
   id="input"
   borderBottomColor="#E1E1E1"
   borderBottomWidth="1"
@@ -193,20 +245,6 @@
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
 <style id="tab-route-content" flex="1" />
 <style
-  id="bottom-tab"
-  alignItems="center"
-  flex="1"
-  justifyContent="center"
-/>
-<style
-  id="bottom-tab-label"
-  color="#cccccc"
-  fontSize="8"
-  fontWeight="bold"
-/>
-<style id="bottom-tab-label-selected" color="#4778FF" />
-<style id="bottom-tab-selected" />
-<style
   id="back-image"
   alignItems="center"
   flex="0"
@@ -214,21 +252,6 @@
   justifyContent="center"
   padding="10"
   width="10"
-/>
-<style
-  id="footer"
-  alignItems="stretch"
-  borderTopColor="#eee"
-  borderTopWidth="1"
-  bottom="0"
-  flexDirection="row"
-  flexShrink="1"
-  flexGrow="0"
-  height="48"
-  justifyContent="space-around"
-  backgroundColor="white"
-  position="absolute"
-  width="100%"
 />
 <style
   id="list-container"
@@ -1818,47 +1841,86 @@ hv_section_list_tag: "root"
   />
 
   </view>
-  <view id="footer" style="footer">
-    <view
-      href-style="bottom-tab"
-      action="navigate"
-      target="tab-ui"
-      style="bottom-tab bottom-tab-selected"
-    >
+  
+  <navigation:bottom-tab-bar
+    xmlns:navigation="https://instawork.com/hyperview-navigation"
+    navigation:navigator="tabs-navigator"
+  >
+    <select-single style="tabbar-bottom" name="tabbar-bottom">
       
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        
+  <option
+    
+    style="tabbar-bottom-tab"
+    value="tab-ui"
+  >
+    <behavior trigger="select" action="navigate" target="tab-ui" />
+    <view style="tabbar-bottom-tab-icon-selected">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 7C5.5 6.17157 6.17157 5.5 7 5.5H25C25.8284 5.5 26.5 6.17157 26.5 7V25C26.5 25.8284 25.8284 26.5 25 26.5H7C6.17157 26.5 5.5 25.8284 5.5 25V7Z" stroke="#4778FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M5.5 11.5H26.5" stroke="#4778FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M20.5 11.5V26.5" stroke="#4778FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+    </view>
+    <view style="tabbar-bottom-tab-icon">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 7C5.5 6.17157 6.17157 5.5 7 5.5H25C25.8284 5.5 26.5 6.17157 26.5 7V25C26.5 25.8284 25.8284 26.5 25 26.5H7C6.17157 26.5 5.5 25.8284 5.5 25V7Z" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M5.5 11.5H26.5" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M20.5 11.5V26.5" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 
-        <text style="bottom-tab-label">UI</text>
-      
     </view>
-    <view
-      style="bottom-tab"
-      href-style="bottom-tab"
-      action="navigate"
-      target="tab-behaviors"
-    >
-      
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <text style="tabbar-bottom-tab-label">UI</text>
+  </option>
+
+    
+  <option
+    
+      selected="true"
+    
+    style="tabbar-bottom-tab"
+    value="tab-behaviors"
+  >
+    <behavior trigger="select" action="navigate" target="tab-behaviors" />
+    <view style="tabbar-bottom-tab-icon-selected">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path fill-rule="evenodd" clip-rule="evenodd" d="M14.561 15.492L19.777 26.885C19.9071 27.1276 20.1702 27.2682 20.4442 27.2415C20.7181 27.2149 20.9492 27.0261 21.03 26.763L22.557 22.554L26.766 21.028C27.029 20.9467 27.2175 20.7155 27.2441 20.4416C27.2708 20.1676 27.1304 19.9044 26.888 19.774L15.5 14.558C15.2324 14.4455 14.9234 14.5057 14.7176 14.7104C14.5118 14.9151 14.4499 15.2238 14.561 15.492Z" stroke="#4778FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M25.723 16C25.741 15.7533 25.75 15.5033 25.75 15.25C25.75 9.45101 21.049 4.75 15.25 4.75C9.45101 4.75 4.75 9.45101 4.75 15.25C4.75 21.049 9.45101 25.75 15.25 25.75C15.503 25.75 15.75 25.741 16 25.724" stroke="#4778FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M21.061 13.747C20.3287 10.9151 17.6612 9.02397 14.7466 9.27039C11.832 9.5168 9.5198 11.829 9.27339 14.7436C9.02697 17.6582 10.9181 20.3257 13.75 21.058" stroke="#4778FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 
-        <text style="bottom-tab-label bottom-tab-label-selected">Behaviors</text>
-      
     </view>
-    <view
-      style="bottom-tab"
-      href-style="bottom-tab"
-      action="navigate"
-      target="tab-navigation"
-    >
-      
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <view style="tabbar-bottom-tab-icon">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M14.561 15.492L19.777 26.885C19.9071 27.1276 20.1702 27.2682 20.4442 27.2415C20.7181 27.2149 20.9492 27.0261 21.03 26.763L22.557 22.554L26.766 21.028C27.029 20.9467 27.2175 20.7155 27.2441 20.4416C27.2708 20.1676 27.1304 19.9044 26.888 19.774L15.5 14.558C15.2324 14.4455 14.9234 14.5057 14.7176 14.7104C14.5118 14.9151 14.4499 15.2238 14.561 15.492Z" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M25.723 16C25.741 15.7533 25.75 15.5033 25.75 15.25C25.75 9.45101 21.049 4.75 15.25 4.75C9.45101 4.75 4.75 9.45101 4.75 15.25C4.75 21.049 9.45101 25.75 15.25 25.75C15.503 25.75 15.75 25.741 16 25.724" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M21.061 13.747C20.3287 10.9151 17.6612 9.02397 14.7466 9.27039C11.832 9.5168 9.5198 11.829 9.27339 14.7436C9.02697 17.6582 10.9181 20.3257 13.75 21.058" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+    </view>
+    <text style="tabbar-bottom-tab-label">Behaviors</text>
+  </option>
+
+    
+  <option
+    
+    style="tabbar-bottom-tab"
+    value="tab-navigation"
+  >
+    <behavior trigger="select" action="navigate" target="tab-navigation" />
+    <view style="tabbar-bottom-tab-icon-selected">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M4.75 23.498C4.75 23.0838 5.08579 22.748 5.5 22.748H17.5C17.9142 22.748 18.25 23.0838 18.25 23.498V26.498C18.25 26.9122 17.9142 27.248 17.5 27.248H5.5C5.08579 27.248 4.75 26.9122 4.75 26.498V23.498Z" stroke="#4778FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M13.75 15.998C13.75 15.5838 14.0858 15.248 14.5 15.248H26.5C26.9142 15.248 27.25 15.5838 27.25 15.998V18.998C27.25 19.4122 26.9142 19.748 26.5 19.748H14.5C14.0858 19.748 13.75 19.4122 13.75 18.998V15.998Z" stroke="#4778FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M4.75 5.498C4.75 5.08379 5.08579 4.748 5.5 4.748H17.5C17.9142 4.748 18.25 5.08379 18.25 5.498V8.498C18.25 8.91221 17.9142 9.248 17.5 9.248H5.5C5.08579 9.248 4.75 8.91221 4.75 8.498V5.498Z" stroke="#4778FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M10.75 9.248V10.748C10.75 11.5764 11.4216 12.248 12.25 12.248H16.75C17.5784 12.248 18.25 12.9196 18.25 13.748V15.248" stroke="#4778FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M22.75 19.748V24.248C22.75 25.0764 22.0784 25.748 21.25 25.748H18.25" stroke="#4778FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+    </view>
+    <view style="tabbar-bottom-tab-icon">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path fill-rule="evenodd" clip-rule="evenodd" d="M4.75 23.498C4.75 23.0838 5.08579 22.748 5.5 22.748H17.5C17.9142 22.748 18.25 23.0838 18.25 23.498V26.498C18.25 26.9122 17.9142 27.248 17.5 27.248H5.5C5.08579 27.248 4.75 26.9122 4.75 26.498V23.498Z" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M13.75 15.998C13.75 15.5838 14.0858 15.248 14.5 15.248H26.5C26.9142 15.248 27.25 15.5838 27.25 15.998V18.998C27.25 19.4122 26.9142 19.748 26.5 19.748H14.5C14.0858 19.748 13.75 19.4122 13.75 18.998V15.998Z" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M4.75 5.498C4.75 5.08379 5.08579 4.748 5.5 4.748H17.5C17.9142 4.748 18.25 5.08379 18.25 5.498V8.498C18.25 8.91221 17.9142 9.248 17.5 9.248H5.5C5.08579 9.248 4.75 8.91221 4.75 8.498V5.498Z" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1866,26 +1928,40 @@ hv_section_list_tag: "root"
 <path d="M22.75 19.748V24.248C22.75 25.0764 22.0784 25.748 21.25 25.748H18.25" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 
-        <text style="bottom-tab-label">Navigation</text>
-      
     </view>
-    <view
-      style="bottom-tab"
-      href-style="bottom-tab"
-      action="navigate"
-      target="tab-advanced"
-    >
-      
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <text style="tabbar-bottom-tab-label">Navigation</text>
+  </option>
+
+    
+  <option
+    
+    style="tabbar-bottom-tab"
+    value="tab-advanced"
+  >
+    <behavior trigger="select" action="navigate" target="tab-advanced" />
+    <view style="tabbar-bottom-tab-icon-selected">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M16.001 27.25C22.2142 27.25 27.251 22.2132 27.251 16C27.251 9.7868 22.2142 4.75 16.001 4.75C9.7878 4.75 4.75101 9.7868 4.75101 16C4.75101 22.2132 9.7878 27.25 16.001 27.25Z" stroke="#4778FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M10.001 22L15.699 16.295" stroke="#4778FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M22.064 9.931C21.3192 9.85092 20.5679 9.85092 19.823 9.931L17.823 13.111L16.592 10.823C12.133 13.012 10.392 18.301 12.041 19.953C14.255 22.167 23.013 18.286 22.064 9.931Z" stroke="#4778FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+    </view>
+    <view style="tabbar-bottom-tab-icon">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path fill-rule="evenodd" clip-rule="evenodd" d="M16.001 27.25C22.2142 27.25 27.251 22.2132 27.251 16C27.251 9.7868 22.2142 4.75 16.001 4.75C9.7878 4.75 4.75101 9.7868 4.75101 16C4.75101 22.2132 9.7878 27.25 16.001 27.25Z" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M10.001 22L15.699 16.295" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M22.064 9.931C21.3192 9.85093 20.5679 9.85093 19.823 9.931L17.823 13.111L16.592 10.823C12.133 13.012 10.392 18.301 12.041 19.953C14.255 22.167 23.013 18.286 22.064 9.931Z" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 
-        <text style="bottom-tab-label">Advanced</text>
-      
     </view>
-  </view>
+    <text style="tabbar-bottom-tab-label">Advanced</text>
+  </option>
+
+      
+    </select-single>
+  </navigation:bottom-tab-bar>
+
 
     </body>
   </screen>
@@ -2008,6 +2084,58 @@ hv_section_list_tag: "root"
 <style id="tab-label" fontSize="16" fontWeight="500" lineHeight="24" />
 
 <style
+  id="tabbar-bottom-tab"
+  alignItems="center"
+  flex="1"
+  justifyContent="center"
+/>
+<style
+  id="tabbar-bottom-tab-label"
+  color="#cccccc"
+  fontSize="8"
+  fontWeight="bold"
+>
+  <modifier selected="true">
+    <style color="#4778FF" />
+  </modifier>
+  <modifier pressed="true">
+    <style color="#4778FF" />
+  </modifier>
+</style>
+<style id="tabbar-bottom-tab-icon">
+  <modifier selected="true">
+    <style display="none" />
+  </modifier>
+  <modifier pressed="true">
+    <style display="none" />
+  </modifier>
+</style>
+<style id="tabbar-bottom-tab-icon-selected" display="none">
+  <modifier selected="true">
+    <style display="flex" />
+  </modifier>
+  <modifier pressed="true">
+    <style display="flex" />
+  </modifier>
+</style>
+
+<style
+  id="tabbar-bottom"
+  alignItems="stretch"
+  borderTopColor="#eee"
+  borderTopWidth="1"
+  bottom="0"
+  flexDirection="row"
+  flexShrink="1"
+  flexGrow="0"
+  height="48"
+  justifyContent="space-around"
+  backgroundColor="white"
+  position="absolute"
+  width="100%"
+/>
+
+<style
   id="input"
   borderBottomColor="#E1E1E1"
   borderBottomWidth="1"
@@ -2085,20 +2213,6 @@ hv_section_list_tag: "root"
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
 <style id="tab-route-content" flex="1" />
 <style
-  id="bottom-tab"
-  alignItems="center"
-  flex="1"
-  justifyContent="center"
-/>
-<style
-  id="bottom-tab-label"
-  color="#cccccc"
-  fontSize="8"
-  fontWeight="bold"
-/>
-<style id="bottom-tab-label-selected" color="#4778FF" />
-<style id="bottom-tab-selected" />
-<style
   id="back-image"
   alignItems="center"
   flex="0"
@@ -2106,21 +2220,6 @@ hv_section_list_tag: "root"
   justifyContent="center"
   padding="10"
   width="10"
-/>
-<style
-  id="footer"
-  alignItems="stretch"
-  borderTopColor="#eee"
-  borderTopWidth="1"
-  bottom="0"
-  flexDirection="row"
-  flexShrink="1"
-  flexGrow="0"
-  height="48"
-  justifyContent="space-around"
-  backgroundColor="white"
-  position="absolute"
-  width="100%"
 />
 <style
   id="list-container"

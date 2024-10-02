@@ -116,6 +116,58 @@
 <style id="tab-label" fontSize="16" fontWeight="500" lineHeight="24" />
 
 <style
+  id="tabbar-bottom-tab"
+  alignItems="center"
+  flex="1"
+  justifyContent="center"
+/>
+<style
+  id="tabbar-bottom-tab-label"
+  color="#cccccc"
+  fontSize="8"
+  fontWeight="bold"
+>
+  <modifier selected="true">
+    <style color="#4778FF" />
+  </modifier>
+  <modifier pressed="true">
+    <style color="#4778FF" />
+  </modifier>
+</style>
+<style id="tabbar-bottom-tab-icon">
+  <modifier selected="true">
+    <style display="none" />
+  </modifier>
+  <modifier pressed="true">
+    <style display="none" />
+  </modifier>
+</style>
+<style id="tabbar-bottom-tab-icon-selected" display="none">
+  <modifier selected="true">
+    <style display="flex" />
+  </modifier>
+  <modifier pressed="true">
+    <style display="flex" />
+  </modifier>
+</style>
+
+<style
+  id="tabbar-bottom"
+  alignItems="stretch"
+  borderTopColor="#eee"
+  borderTopWidth="1"
+  bottom="0"
+  flexDirection="row"
+  flexShrink="1"
+  flexGrow="0"
+  height="48"
+  justifyContent="space-around"
+  backgroundColor="white"
+  position="absolute"
+  width="100%"
+/>
+
+<style
   id="input"
   borderBottomColor="#E1E1E1"
   borderBottomWidth="1"
@@ -193,20 +245,6 @@
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
 <style id="tab-route-content" flex="1" />
 <style
-  id="bottom-tab"
-  alignItems="center"
-  flex="1"
-  justifyContent="center"
-/>
-<style
-  id="bottom-tab-label"
-  color="#cccccc"
-  fontSize="8"
-  fontWeight="bold"
-/>
-<style id="bottom-tab-label-selected" color="#4778FF" />
-<style id="bottom-tab-selected" />
-<style
   id="back-image"
   alignItems="center"
   flex="0"
@@ -214,21 +252,6 @@
   justifyContent="center"
   padding="10"
   width="10"
-/>
-<style
-  id="footer"
-  alignItems="stretch"
-  borderTopColor="#eee"
-  borderTopWidth="1"
-  bottom="0"
-  flexDirection="row"
-  flexShrink="1"
-  flexGrow="0"
-  height="48"
-  justifyContent="space-around"
-  backgroundColor="white"
-  position="absolute"
-  width="100%"
 />
 <style
   id="list-container"
@@ -446,6 +469,58 @@
 <style id="tab-label" fontSize="16" fontWeight="500" lineHeight="24" />
 
 <style
+  id="tabbar-bottom-tab"
+  alignItems="center"
+  flex="1"
+  justifyContent="center"
+/>
+<style
+  id="tabbar-bottom-tab-label"
+  color="#cccccc"
+  fontSize="8"
+  fontWeight="bold"
+>
+  <modifier selected="true">
+    <style color="#4778FF" />
+  </modifier>
+  <modifier pressed="true">
+    <style color="#4778FF" />
+  </modifier>
+</style>
+<style id="tabbar-bottom-tab-icon">
+  <modifier selected="true">
+    <style display="none" />
+  </modifier>
+  <modifier pressed="true">
+    <style display="none" />
+  </modifier>
+</style>
+<style id="tabbar-bottom-tab-icon-selected" display="none">
+  <modifier selected="true">
+    <style display="flex" />
+  </modifier>
+  <modifier pressed="true">
+    <style display="flex" />
+  </modifier>
+</style>
+
+<style
+  id="tabbar-bottom"
+  alignItems="stretch"
+  borderTopColor="#eee"
+  borderTopWidth="1"
+  bottom="0"
+  flexDirection="row"
+  flexShrink="1"
+  flexGrow="0"
+  height="48"
+  justifyContent="space-around"
+  backgroundColor="white"
+  position="absolute"
+  width="100%"
+/>
+
+<style
   id="input"
   borderBottomColor="#E1E1E1"
   borderBottomWidth="1"
@@ -523,20 +598,6 @@
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
 <style id="tab-route-content" flex="1" />
 <style
-  id="bottom-tab"
-  alignItems="center"
-  flex="1"
-  justifyContent="center"
-/>
-<style
-  id="bottom-tab-label"
-  color="#cccccc"
-  fontSize="8"
-  fontWeight="bold"
-/>
-<style id="bottom-tab-label-selected" color="#4778FF" />
-<style id="bottom-tab-selected" />
-<style
   id="back-image"
   alignItems="center"
   flex="0"
@@ -544,21 +605,6 @@
   justifyContent="center"
   padding="10"
   width="10"
-/>
-<style
-  id="footer"
-  alignItems="stretch"
-  borderTopColor="#eee"
-  borderTopWidth="1"
-  bottom="0"
-  flexDirection="row"
-  flexShrink="1"
-  flexGrow="0"
-  height="48"
-  justifyContent="space-around"
-  backgroundColor="white"
-  position="absolute"
-  width="100%"
 />
 <style
   id="list-container"
