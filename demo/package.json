@@ -10,7 +10,7 @@
     "web": "expo start --web",
     "deploy": "gh-pages -d hyperview",
     "format-njk": "./scripts/format-njk.sh",
-    "predeploy": "BASE_URL=https://instawork.github.io expo export:web ; mv web-build hyperview; cd .. ; npx eleventy",
+    "predeploy": "BASE_URL=https://instawork.github.io expo export:web; rm -rf hyperview; mv -f web-build/ hyperview; eleventy",
     "prettify": "pretty-quick && prettier --write '**/*.md'",
     "server": "eleventy --serve --port=8085",
     "test:lint": "eslint src && prettier --check '**/*.md' && yarn format-njk -c",
