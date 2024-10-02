@@ -5,6 +5,8 @@ import {
 } from 'react-native-safe-area-context';
 import { fetchWrapper, formatDate } from './src/helpers';
 import Behaviors from './src/Behaviors';
+import { BottomTabBar } from './src/Core';
+import { BottomTabBarContextProvider } from './src/Contexts';
 import Components from './src/Components';
 import Constants from 'expo-constants';
 import Hyperview from 'hyperview';
@@ -27,13 +29,18 @@ export default () => (
           }}
         >
           <NavigationContainer>
-            <Hyperview
-              behaviors={Behaviors}
-              components={Components}
-              entrypointUrl={`${Constants.expoConfig?.extra?.baseUrl}/hyperview/public/index.xml`}
-              fetch={fetchWrapper}
-              formatDate={formatDate}
-            />
+            <BottomTabBarContextProvider>
+              <Hyperview
+                behaviors={Behaviors}
+                components={Components}
+                entrypointUrl={`${Constants.expoConfig?.extra?.baseUrl}/hyperview/public/index.xml`}
+                fetch={fetchWrapper}
+                formatDate={formatDate}
+                navigationComponents={{
+                  BottomTabBar,
+                }}
+              />
+            </BottomTabBarContextProvider>
           </NavigationContainer>
         </View>
       )}

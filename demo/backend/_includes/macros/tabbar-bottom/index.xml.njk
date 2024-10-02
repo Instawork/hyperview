@@ -1,0 +1,12 @@
+{% macro tabbar_bottom(target) %}
+  <navigation:bottom-tab-bar
+    xmlns:navigation="https://instawork.com/hyperview-navigation"
+    navigation:navigator="{{ target }}"
+  >
+    <select-single style="tabbar-bottom" name="tabbar-bottom">
+      {% if caller %}
+        {{ caller() }}
+      {% endif %}
+    </select-single>
+  </navigation:bottom-tab-bar>
+{% endmacro %}
