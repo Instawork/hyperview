@@ -29,7 +29,8 @@ const BottomTabBar = (props: HvComponentProps) => {
       return;
     }
     ctx.setElementProps?.(navigator, props);
-  }, [navigator, props, ctx]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigator, props]); // Exclude setElementProps from dependencies to avoid infinite loop
   return null;
 };
 
