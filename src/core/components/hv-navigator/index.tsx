@@ -54,7 +54,7 @@ export default class HvNavigator extends PureComponent<Props> {
     Events.subscribe(this.onEventDispatch);
   }
 
-  componentWillUnmout = () => {
+  componentWillUnmount = () => {
     Events.unsubscribe(this.onEventDispatch);
   };
 
