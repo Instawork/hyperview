@@ -266,6 +266,7 @@ export default class HvScreen extends React.Component {
       this.onUpdate,
       {
         componentRegistry: this.componentRegistry,
+        onUpdateCallbacks: this.updateCallbacks,
         screenUrl: this.state.url,
         staleHeaderType: this.state.staleHeaderType,
       },
