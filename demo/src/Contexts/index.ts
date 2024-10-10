@@ -1,4 +1,4 @@
 export {
-  BottomTabBarContext,
+  useBottomTabBarContext,
   BottomTabBarContextProvider,
 } from './BottomTabBar';
