@@ -6,7 +6,7 @@
   <view style="tab-route-content">
     {% block tab_route_content %}{% endblock %}
   </view>
-  {% call tabbar_bottom("tabs-navigator") -%}
+  {% call tabbar_bottom("tabs-navigator", hv_tab_id) -%}
     {{ tabbar_bottom_tab("ui", "UI", hv_tab_id == "ui") }}
     {{ tabbar_bottom_tab("behaviors", "Behaviors", hv_tab_id == "behaviors") }}
     {{ tabbar_bottom_tab("navigation", "Navigation", hv_tab_id == "navigation") }}

@@ -7,22 +7,4 @@ hv_button_behavior: "none"
 {% extends 'templates/tab-route.xml.njk' %}
 {% from 'macros/tab/index.xml.njk' import tab, tab_bar %}
 
-{% block tab_route_content %}
-  {{ tab_bar([
-  {label: "Advanced", id: "tab-advanced"},
-  {label: "Basic", id: "tab-basic"}
-  ]) }}
-  {% call tab("tab-advanced") -%}
-    {% include "./advanced/index.xml.njk" %}
-  {%- endcall %}
-  {% call tab("tab-basic") -%}
-    {% include "./basic/index.xml.njk" %}
-  {%- endcall %}
-  <behavior
-    action="set-value"
-    new-value="tab-advanced"
-    once="true"
-    trigger="load"
-    target="tab-bar"
-  />
-{% endblock %}
+{% block tab_route_content %}{% endblock %}

@@ -7,25 +7,4 @@ hv_button_behavior: "none"
 {% extends 'templates/tab-route.xml.njk' %}
 {% from 'macros/tab/index.xml.njk' import tab, tab_bar %}
 
-{% block tab_route_content %}
-  {{ tab_bar(
-  [
-  {label: "Case Studies", id: "tab-case-studies"},
-  {label: "Custom Components", id: "tab-custom-components"}
-  ]
-  )
-  }}
-  {% call tab("tab-case-studies") -%}
-    {% include "./case-studies/index.xml.njk" %}
-  {%- endcall %}
-  {% call tab("tab-custom-components") -%}
-    {% include "./custom-components/index.xml.njk" %}
-  {%- endcall %}
-  <behavior
-    action="set-value"
-    new-value="tab-case-studies"
-    once="true"
-    trigger="load"
-    target="tab-bar"
-  />
-{% endblock %}
+{% block tab_route_content %}{% endblock %}
