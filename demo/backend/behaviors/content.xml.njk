@@ -1,0 +1,22 @@
+{% extends 'templates/tab-route.xml.njk' %}
+{% from 'macros/tab/index.xml.njk' import tab, tab_bar %}
+
+{% block tab_route_content %}
+  {{ tab_bar([
+  {label: "Advanced", id: "tab-advanced"},
+  {label: "Basic", id: "tab-basic"}
+  ]) }}
+  {% call tab("tab-advanced") -%}
+    {% include "./advanced/content.xml.njk" %}
+  {%- endcall %}
+  {% call tab("tab-basic") -%}
+    {% include "./basic/content.xml.njk" %}
+  {%- endcall %}
+  <behavior
+    action="set-value"
+    new-value="tab-advanced"
+    once="true"
+    trigger="load"
+    target="tab-bar"
+  />
+{% endblock %}
