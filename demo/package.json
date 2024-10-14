@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@babel/preset-env": "^7.22.20",
+    "@faker-js/faker": "^9.0.3",
     "@react-native-community/datetimepicker": "7.6.2",
     "@react-native-picker/picker": "2.6.1",
     "@react-navigation/bottom-tabs": "^6.5.9",
