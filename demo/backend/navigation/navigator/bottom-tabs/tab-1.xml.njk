@@ -7,39 +7,9 @@ hv_button_behavior: "back"
 {% extends 'templates/base.xml.njk' %}
 
 {% block container %}
-  {{ description('This is the content for tab 1.') }}
-  <navigation:bottom-tab-bar
-    xmlns:navigation="https://hyperview.org/navigation"
-    navigation:navigator="custom-bottom-tabs-navigator"
-  >
-    <select-single style="tabbar-bottom" name="custom-tab-bar">
-      <option
-        selected="true"
-        style="tabbar-bottom-tab"
-        value="custom-tab-1"
-      >
-        <behavior trigger="select" action="navigate" target="custom-bottom-tabs-tab-1" />
-        <view style="tabbar-bottom-tab-icon-selected">
-          {% include 'icons/behaviors-selected.svg' %}
-        </view>
-        <view style="tabbar-bottom-tab-icon">
-          {% include 'icons/behaviors.svg' %}
-        </view>
-        <text style="tabbar-bottom-tab-label">Tab 1</text>
-      </option>
-      <option
-        style="tabbar-bottom-tab"
-        value="custom-tab-2"
-      >
-        <behavior trigger="select" action="navigate" target="custom-bottom-tabs-tab-2" />
-        <view style="tabbar-bottom-tab-icon-selected">
-          {% include 'icons/advanced-selected.svg' %}
-        </view>
-        <view style="tabbar-bottom-tab-icon">
-          {% include 'icons/advanced.svg' %}
-        </view>
-        <text style="tabbar-bottom-tab-label">Tab 2</text>
-      </option>
-    </select-single>
-  </navigation:bottom-tab-bar>
+  <view scroll="true">
+    {{ description('This is the content for tab 1.') }}
+  </view>
+  {% set selected_tab = 1 %}
+  {% include "./tab-bar.xml.njk" %}
 {% endblock %}
