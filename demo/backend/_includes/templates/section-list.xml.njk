@@ -9,7 +9,6 @@
   trigger="refresh"
   xmlns="https://hyperview.org/hyperview"
 >
-  <text>{{hv_section_list_tag}}</text>
   {% for section_tag in hv_section_list_tag.split(',') %}
     <section-title style="list-header item-first">
       <text style="list-header-text">{{section_tag}}</text>

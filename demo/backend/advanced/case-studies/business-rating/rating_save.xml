@@ -2,18 +2,11 @@
   id="savedButton"
   style="bottomsheet-button"
   xmlns="https://hyperview.org/hyperview"
-  xmlns:ns1="https://instawork.com/hyperview-redux"
 >
   <behavior
     action="close"
     delay="300"
     href="/hyperview/public/advanced/case-studies/business-rating/index.xml"
-    trigger="load"
-  />
-  <behavior
-    action="redux"
-    ns1:action="TOAST/SHOW_TOAST"
-    ns1:extra="{&quot;payload&quot;:{&quot;toast&quot;:{&quot;colorScheme&quot;:&quot;positive&quot;,&quot;message&quot;:&quot;Thank you for your rating&quot;}}}"
     trigger="load"
   />
   <text style="bottomsheet-button-label">Saved!!!</text>
