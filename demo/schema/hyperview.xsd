@@ -5,6 +5,7 @@
   targetNamespace="https://hyperview.org/hyperview"
   xmlns:hv="https://hyperview.org/hyperview"
   xmlns:alert="https://hyperview.org/hyperview-alert"
+  xmlns:filter="https://hyperview.org/filter"
 >
   <xs:import
     namespace="https://hyperview.org/hyperview-alert"
@@ -55,7 +56,7 @@
       <xs:attributeGroup ref="hv:behaviorAttributes" />
 
       <!-- Hyperview demo extensions -->
-      <!-- None yet, add future custom behavior attributes here -->
+      <xs:attributeGroup ref="filter:filterAttributes" />
     </xs:attributeGroup>
 
     <!-- This redefines the behavior element with our custom actions / attributes -->
