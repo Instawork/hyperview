@@ -9,7 +9,7 @@ import { useCallback } from 'react';
  * from BottomTabBarContext. This works in tandem with the custom Hyperview
  * element <navigation:bottom-tab-bar>
  */
-export const BottomTabBar = ({ id }: Props) => {
+export const BottomTabBar = ({ id }: Props): JSX.Element | null => {
   // id is provided by Hyperview, and represents a tab navigator id
   const { getElementProps, setElement } = useBottomTabBarContext();
 
@@ -34,10 +34,10 @@ export const BottomTabBar = ({ id }: Props) => {
     return null;
   }
 
-  return Render.renderChildren(
+  return (Render.renderChildren(
     props.element,
     props.stylesheets,
     onUpdateCustom,
     props.options,
-  );
+  ) as unknown) as JSX.Element;
 };
