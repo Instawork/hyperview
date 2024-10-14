@@ -1,7 +1,6 @@
 import type { HvComponentProps, LocalName } from 'hyperview';
 import { useBottomTabBarContext } from '../Contexts';
-import { useCallback } from 'react';
-import { useFocusEffect } from '@react-navigation/native';
+import { useEffect } from 'react';
 
 const namespaceURI = 'https://hyperview.org/navigation';
 
@@ -22,22 +21,19 @@ const namespaceURI = 'https://hyperview.org/navigation';
 const BottomTabBar = (props: HvComponentProps) => {
   const { setElementProps } = useBottomTabBarContext();
   const navigator = props.element.getAttributeNS(namespaceURI, 'navigator');
-
-  useFocusEffect(
-    useCallback(() => {
-      if (!navigator) {
-        console.warn(
-          '<navigation:bottom-tab-bar> element is missing `navigator` attribute',
-        );
-        return;
-      }
-      // To avoid rendering loops, we only set the element props once
-      if (props.element.getAttribute('registered') !== 'true') {
-        props.element.setAttribute('registered', 'true');
-        setElementProps?.(navigator, props);
-      }
-    }, [navigator, props, setElementProps]),
-  );
+  useEffect(() => {
+    if (!navigator) {
+      console.warn(
+        '<navigation:bottom-tab-bar> element is missing `navigator` attribute',
+      );
+      return;
+    }
+    // To avoid rendering loops, we only set the element props once
+    if (props.element.getAttribute('registered') !== 'true') {
+      props.element.setAttribute('registered', 'true');
+      setElementProps?.(navigator, props);
+    }
+  }, [navigator, props, setElementProps]);
   return null;
 };
 
