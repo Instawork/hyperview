@@ -20,10 +20,14 @@ export const BottomTabBar = ({ id }: Props): JSX.Element | null => {
 
   const onUpdateCustom = useCallback(
     (href, action, currentElement, opts) => {
-      if (action === 'swap' && opts.newElement) {
-        const newElement = currentElement.parentNode as Element;
-        newElement.replaceChild(opts.newElement, currentElement);
-        setElement?.(id, newElement);
+      if (action === 'swap' && opts?.newElement) {
+        if (currentElement.parentNode) {
+          const newElement = currentElement.parentNode as Element;
+          newElement.replaceChild(opts.newElement, currentElement);
+          setElement?.(id, newElement);
+        } else {
+          console.warn('Parent node is null. Cannot replace child element.');
+        }
       } else {
         onUpdate?.(href, action, currentElement, opts);
       }

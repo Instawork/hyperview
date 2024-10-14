@@ -62,7 +62,7 @@ const reducer: Reducer<State, Action> = (
       return {
         ...state,
         [navigator]: {
-          ...state[navigator],
+          ...(state[navigator] || {}),
           element,
         },
       };
