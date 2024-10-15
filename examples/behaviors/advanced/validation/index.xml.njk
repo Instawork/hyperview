@@ -37,11 +37,8 @@ hv_button_behavior: "back"
           id="input-1"
         >
           <v:required message="First name required" />
-          <v:length
-            min-length="2"
-            max-length="5"
-            message="Length must be between 2 and 5"
-          />
+          <v:min-length min="2" message="Length must be between 2 and 5" />
+          <v:max-length max="5" message="Length must be between 2 and 5" />
         </text-field>
         <text style="help" v:role="message style" v:source="input-1" />
       </view>
@@ -68,11 +65,8 @@ hv_button_behavior: "back"
         >
           <behavior trigger="change" action="validate" target="input-2" />
           <v:required message="First name required" />
-          <v:length
-            min-length="2"
-            max-length="5"
-            message="Length must be between 2 and 5"
-          />
+          <v:min-length min="2" message="Length must be between 2 and 5" />
+          <v:max-length max="5" message="Length must be between 2 and 5" />
         </text-field>
         <text style="help" v:role="message style" v:source="input-2" />
       </view>
@@ -93,11 +87,8 @@ hv_button_behavior: "back"
         >
           <behavior trigger="blur" action="validate" target="input-3" />
           <v:required message="First name required" />
-          <v:length
-            min-length="2"
-            max-length="5"
-            message="Length must be between 2 and 5"
-          />
+          <v:min-length min="2" message="Length must be between 2 and 5" />
+          <v:max-length max="5" message="Length must be between 2 and 5" />
         </text-field>
         <text style="help" v:role="message style" v:source="input-3" />
       </view>
@@ -119,11 +110,8 @@ hv_button_behavior: "back"
         >
           <behavior trigger="change" action="validate" target="input-4" />
           <v:required message="First name required" />
-          <v:length
-            min-length="2"
-            max-length="5"
-            message="Length must be between 2 and 5"
-          />
+          <v:min-length min="2" message="Length must be between 2 and 5" />
+          <v:max-length max="5" message="Length must be between 2 and 5" />
         </text-field>
         <text style="help" v:role="message style" v:source="input-4">
           Length must be between 2 and 5

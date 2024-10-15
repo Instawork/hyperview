@@ -7,91 +7,22 @@ import type {
   Validator,
   ValidatorRegistry,
 } from 'hyperview/src/types';
+import * as Namespaces from 'hyperview/src/services/namespaces';
 import { NODE_TYPE } from 'hyperview/src/types';
 
-export const V_NS = 'https://hyperview.org/hyperview-validation';
+import MaxLengthValidator from 'hyperview/src/validators/max-length';
+import MaxValueValidator from 'hyperview/src/validators/max-length';
+import MinLengthValidator from 'hyperview/src/validators/min-length';
+import MinValueValidator from 'hyperview/src/validators/max-length';
+import RequiredValidator from 'hyperview/src/validators/required';
 
-const RequiredValidator: Validator = {
-  check: (value: string | null | undefined, element: Element): Validation => {
-    if (value) {
-      return {
-        valid: true,
-      };
-    }
-    return {
-      message: element.getAttribute('message') || 'This field is required',
-      valid: false,
-    };
-  },
-  name: 'required',
-  namespace: V_NS,
-};
-
-const LengthValidator: Validator = {
-  check: (value: string | null | undefined, element: Element): Validation => {
-    const minLength = parseInt(element.getAttribute('min-length'), 10);
-    const maxLength = parseInt(element.getAttribute('max-length'), 10);
-
-    if (value !== null) {
-      const valueLength: number = value ? value.length : 0;
-      if (valueLength < minLength || valueLength > maxLength) {
-        return {
-          message:
-            element.getAttribute('message') || 'This field has bad length',
-          valid: false,
-        };
-      }
-    }
-
-    return { valid: true };
-  },
-  name: 'length',
-  namespace: V_NS,
-};
-
-const MinValueValidator: Validator = {
-  check: (value: string | null | undefined, element: Element): Validation => {
-    const min = parseFloat(element.getAttribute('min'));
-
-    const parsedValue = parseFloat(value);
-    if (!isNaN(parsedValue)) {
-      if (parsedValue < min) {
-        return {
-          message:
-            element.getAttribute('message') || 'This field has bad value',
-          valid: false,
-        };
-      }
-    }
-
-    return { valid: true };
-  },
-  name: 'min-value',
-  namespace: V_NS,
-};
-
-const MaxValueValidator: Validator = {
-  check: (value: string | null | undefined, element: Element): Validation => {
-    const max = parseFloat(element.getAttribute('max'));
-
-    const parsedValue = parseFloat(value);
-    if (!isNaN(parsedValue)) {
-      if (parsedValue > max) {
-        return {
-          message:
-            element.getAttribute('message') || 'This field has bad value',
-          valid: false,
-        };
-      }
-    }
-
-    return { valid: true };
-  },
-  name: 'max-value',
-  namespace: V_NS,
-};
-
-const VALIDATORS = [RequiredValidator, LengthValidator, MinValueValidator, MaxValueValidator];
+const VALIDATORS = [
+  MaxLengthValidator,
+  MaxValueValidator,
+  MinLengthValidator,
+  MinValueValidator,
+  RequiredValidator,
+];
 
 export const REGISTRY: ValidatorRegistry = {};
 
@@ -131,17 +62,17 @@ export const getValidatorElementsWithInvalidState = (
       // eslint-disable-next-line no-unused-vars
       .map(([v, e]) => e)
       .filter((e: Element) => {
-        return e.getAttributeNS(V_NS, 'state') === 'invalid';
+        return e.getAttributeNS(Namespaces.HYPERVIEW_VALIDATION, 'state') === 'invalid';
       })
   );
 };
 
 export const getValidationSource = (element: Element): string | null => {
-  return element.getAttributeNS(V_NS, 'source');
+  return element.getAttributeNS(Namespaces.HYPERVIEW_VALIDATION, 'source');
 };
 
 export const getValidationState = (element: Element): string | null => {
-  const state: string | null = element.getAttributeNS(V_NS, 'state');
+  const state: string | null = element.getAttributeNS(Namespaces.HYPERVIEW_VALIDATION, 'state');
   if (state) {
     // Explicit state defined on the element
     return state;
@@ -152,14 +83,14 @@ export const getValidationState = (element: Element): string | null => {
   if (sourceId !== null && sourceId !== undefined) {
     const doc: Document | null = DomService.getDocument(element);
     const sourceElement: Element | null = doc ? doc.getElementById(sourceId) : null;
-    return sourceElement ? sourceElement.getAttributeNS(V_NS, 'state') : null;
+    return sourceElement ? sourceElement.getAttributeNS(Namespaces.HYPERVIEW_VALIDATION, 'state') : null;
   }
 
   return null;
 };
 
 export const getValidationRoles = (element: Element): Array<string> => {
-  const role: string = element.getAttributeNS(V_NS, 'role') || '';
+  const role: string = element.getAttributeNS(Namespaces.HYPERVIEW_VALIDATION, 'role') || '';
   return Xml.splitAttributeList(role);
 };
 

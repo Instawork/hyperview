@@ -24,7 +24,7 @@ const setValidationMessages = (
   elements
     .filter((e: Element) => {
       const source: string | null = e.getAttributeNS(
-        ValidationService.V_NS,
+        Namespaces.HYPERVIEW_VALIDATION,
         'source',
       );
       return (
@@ -90,7 +90,7 @@ export default {
             const result: Validation = v.check(value, e);
 
             e.setAttributeNS(
-              ValidationService.V_NS,
+              Namespaces.HYPERVIEW_VALIDATION,
               'state',
               result.valid ? 'valid' : 'invalid',
             );
@@ -119,7 +119,7 @@ export default {
     setValidationMessages(inputElementId, message, onUpdate, getRoot());
 
     inputElement.setAttributeNS(
-      ValidationService.V_NS,
+      Namespaces.HYPERVIEW_VALIDATION,
       'state',
       invalid ? 'invalid' : 'valid',
     );
