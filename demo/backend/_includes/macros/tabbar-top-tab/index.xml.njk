@@ -1,0 +1,13 @@
+{% macro tabbar_top_tab(tab_id, selected) %}
+  <view
+    id="{{ tab_id }}"
+    {% if not selected %}
+      hide="true"
+    {% endif %}
+    style="tabbar-top-tab-content"
+  >
+    {% if caller %}
+      {{ caller() }}
+    {% endif %}
+  </view>
+{% endmacro %}

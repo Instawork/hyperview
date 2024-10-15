@@ -5,10 +5,18 @@ hv_title: "Tabs"
 hv_button_behavior: "back"
 ---
 {% extends 'templates/base.xml.njk' %}
-{% from 'macros/tab/index.xml.njk' import tab %}
 
 {% block styles %}
-  <style id="row" flexDirection="row" justifyContent="space-between" />
+  <style
+    id="tab-bar-select"
+    backgroundColor="#eee"
+    borderRadius="12"
+    flexDirection="row"
+    justifyContent="space-between"
+    marginBottom="24"
+    marginHorizontal="24"
+    padding="2"
+  />
   <style
     id="tab"
     flex="1"
@@ -25,6 +33,7 @@ hv_button_behavior: "back"
     <style backgroundColor="red" />
     </modifier>
   </style>
+  <style id="tab-content" flex="1" />
   <style id="green" backgroundColor="lightgreen" />
   <style id="blue" backgroundColor="lightblue" />
   <style id="yellow" backgroundColor="lightyellow" />
@@ -38,7 +47,7 @@ hv_button_behavior: "back"
       <behavior trigger="select" action="show" target="tab-1" />
       <text>Tab 1</text>
     </option>
-    <option value="2" style="tab">
+    <option value="2" style="tab" selected="true">
       <behavior trigger="deselect" action="hide" target="tab-2" />
       <behavior trigger="select" action="show" target="tab-2" />
       <text>Tab 2</text>
@@ -49,32 +58,28 @@ hv_button_behavior: "back"
       <text>Tab 3</text>
     </option>
   </select-single>
-  {% call tab("tab-1", "green centered", "TAB 1 CONTENT") -%}
+  <view id="tab-1" style="tab-content green centered" hide="true">
     <view
       trigger="visible"
       action="dispatch-event"
       event-name="tab-1-visible"
     />
-  {%- endcall %}
-  {% call tab("tab-2", "blue centered", "TAB 2 CONTENT") -%}
+    <text>TAB 1 CONTENT</text>
+  </view>
+  <view id="tab-2" style="tab-content blue centered">
     <view
       trigger="visible"
       action="dispatch-event"
       event-name="tab-2-visible"
     />
-  {%- endcall %}
-  {% call tab("tab-3", "yellow centered", "TAB 3 CONTENT") -%}
+    <text>TAB 2 CONTENT</text>
+  </view>
+  <view id="tab-3" style="tab-content yellow centered" hide="true">
     <view
       trigger="visible"
       action="dispatch-event"
       event-name="tab-3-visible"
     />
-  {%- endcall %}
-  <behavior
-    once="true"
-    trigger="load"
-    action="set-value"
-    target="tabs"
-    new-value="2"
-  />
+    <text>TAB 3 CONTENT</text>
+  </view>
 {% endblock %}

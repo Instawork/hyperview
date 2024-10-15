@@ -1,22 +1,17 @@
 {% extends 'templates/tab-route.xml.njk' %}
-{% from 'macros/tab/index.xml.njk' import tab, tab_bar %}
+
+{% from 'macros/tabbar-top/index.xml.njk' import tabbar_top %}
+{% from 'macros/tabbar-top-tab/index.xml.njk' import tabbar_top_tab %}
 
 {% block tab_route_content %}
-  {{ tab_bar([
-  {label: "Advanced", id: "tab-advanced"},
-  {label: "Basic", id: "tab-basic"}
+  {{ tabbar_top([
+    {id: "tab-advanced", label: "Advanced", selected: true},
+    {id: "tab-basic", label: "Basic"}
   ]) }}
-  {% call tab("tab-advanced") -%}
+  {% call tabbar_top_tab("tab-advanced", true) -%}
     {% include "./advanced/content.xml.njk" %}
-  {%- endcall %}
-  {% call tab("tab-basic") -%}
+  {%- endcall -%}
+  {% call tabbar_top_tab("tab-basic") -%}
     {% include "./basic/content.xml.njk" %}
-  {%- endcall %}
-  <behavior
-    action="set-value"
-    new-value="tab-advanced"
-    once="true"
-    trigger="load"
-    target="tab-bar"
-  />
+  {%- endcall -%}
 {% endblock %}

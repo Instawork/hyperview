@@ -1,0 +1,17 @@
+{% macro tabbar_top(tabs) %}
+  <select-single id="tab-bar" name="tab-bar" style="tabbar-top-select">
+    {% for tab in tabs -%}
+      <option
+        value="{{ tab.id }}"
+        style="tabbar-top-item"
+        {% if tab.selected %}
+          selected="true"
+        {% endif %}
+      >
+        <behavior trigger="deselect" action="hide" target="{{ tab.id }}" />
+        <behavior trigger="select" action="show" target="{{ tab.id }}" />
+        <text style="tabbar-top-label">{{ tab.label }}</text>
+      </option>
+    {%- endfor %}
+  </select-single>
+  {% endmacro %}
