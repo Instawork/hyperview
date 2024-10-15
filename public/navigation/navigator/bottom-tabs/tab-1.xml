@@ -329,7 +329,7 @@
   
 
   <navigation:bottom-tab-bar
-    xmlns:navigation="https://instawork.com/hyperview-navigation"
+    xmlns:navigation="https://hyperview.org/navigation"
     navigation:navigator="custom-bottom-tabs-navigator"
   >
     <select-single style="tabbar-bottom" name="custom-tab-bar">

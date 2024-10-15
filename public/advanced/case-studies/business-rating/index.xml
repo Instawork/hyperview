@@ -1,7 +1,5 @@
 
-<doc xmlns="https://hyperview.org/hyperview" 
-  xmlns:ns1="https://instawork.com/hyperview-intercom"
->
+<doc xmlns="https://hyperview.org/hyperview" >
   <screen>
     <styles>
       <style
@@ -394,7 +392,6 @@
     <view style="section-top">
       <text style="section-header">Instaworkers</text>
       <text style="section-action">
-        <behavior action="intercom" ns1:action="open" trigger="press" />
         Report Issue
       </text>
     </view>

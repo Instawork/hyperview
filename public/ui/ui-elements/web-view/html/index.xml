@@ -326,6 +326,7 @@
       
   <view style="flex">
     <web-view html="&lt;h1&gt;Hello world!&lt;/h1&gt;" activity-indicator-color="red"/>
+  </view>
 
     </body>
   </screen>

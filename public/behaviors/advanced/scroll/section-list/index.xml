@@ -384,11 +384,7 @@
 
       </view>
     </item>
-    ---
-permalink: "/behaviors/advanced/scroll/section-list/section-list-content.xml"
----
-
-
+    
 
 <section-title style="list-header">
   <text style="list-header-text">-</text>

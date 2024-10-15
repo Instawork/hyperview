@@ -323,16 +323,7 @@
   
   <view id="tab-case-studies" style="tab-content " hide="true">
     
-      ---
-permalink: "/advanced/case-studies/index.xml"
----
-
-
----
-permalink: "list.xml"
-hv_list_tag: "root"
----
-
+      
 
 <list
   action="replace"
@@ -808,16 +799,7 @@ hv_list_tag: "root"
   
   <view id="tab-custom-components" style="tab-content " hide="true">
     
-      ---
-permalink: "/custom_components/index.xml"
----
-
-
----
-permalink: "list.xml"
-hv_list_tag: "root"
----
-
+      
 
 <list
   action="replace"
@@ -917,7 +899,7 @@ hv_list_tag: "root"
   </view>
   
   <navigation:bottom-tab-bar
-    xmlns:navigation="https://instawork.com/hyperview-navigation"
+    xmlns:navigation="https://hyperview.org/navigation"
     navigation:navigator="tabs-navigator"
   >
     <select-single style="tabbar-bottom" name="tabbar-bottom">

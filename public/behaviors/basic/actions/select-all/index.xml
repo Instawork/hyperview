@@ -538,7 +538,6 @@
     action="select-all"
     delay="1000"
     show-during-load="show3-spinner"
-    style="Button"
     target="id_sm_indicator"
   />
   <view id="show3-spinner" hide="true">

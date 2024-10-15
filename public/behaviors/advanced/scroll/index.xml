@@ -323,12 +323,7 @@
 </header>
 
       
-  ---
-permalink: "list.xml"
-hv_list_tag: "root"
----
-
-
+  
 <list
   action="replace"
   href="/behaviors/advanced/scroll/index.xml"

@@ -1,9 +1,8 @@
 
 
-
 <list
   action="replace"
-  href="/behaviors/advanced/index.xml"
+  href="/ui/styling/content.xml"
   id="directory-list"
   style="list-container"
   target="directory-list"
@@ -178,5 +177,4 @@
     
   
 </list>
-
 

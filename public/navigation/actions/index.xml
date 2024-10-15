@@ -1,9 +1,5 @@
 
 
----
-permalink: "list.xml"
-hv_list_tag: "root"
----
 
 
 <list
@@ -281,4 +277,5 @@ hv_list_tag: "root"
     
   
 </list>
+
 

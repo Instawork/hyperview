@@ -625,11 +625,7 @@
     <view style="actionbar-right" />
   </view>
   <text style="caption">Best night of my life!</text>
-  ---
-permalink: "/advanced/case-studies/photos/comments.xml"
----
-
-<view style="comments">
+  <view style="comments">
   <text id="image1-num-likes" style="comments-likes">7 likes</text>
   <text
     action="prepend"
@@ -723,11 +719,7 @@ permalink: "/advanced/case-studies/photos/comments.xml"
     <view style="actionbar-right" />
   </view>
   <text style="caption">Hottest rez in town, cheers!</text>
-  ---
-permalink: "/advanced/case-studies/photos/comments.xml"
----
-
-<view style="comments">
+  <view style="comments">
   <text id="image1-num-likes" style="comments-likes">7 likes</text>
   <text
     action="prepend"
@@ -811,11 +803,7 @@ permalink: "/advanced/case-studies/photos/comments.xml"
   <text style="caption">
     True words to live by... living every day to its fullest!!
   </text>
-  ---
-permalink: "/advanced/case-studies/photos/comments.xml"
----
-
-<view style="comments">
+  <view style="comments">
   <text id="image1-num-likes" style="comments-likes">7 likes</text>
   <text
     action="prepend"
@@ -899,11 +887,7 @@ permalink: "/advanced/case-studies/photos/comments.xml"
   <text style="caption">
     Can't start the day without my 10 artisinal cups of coffee!
   </text>
-  ---
-permalink: "/advanced/case-studies/photos/comments.xml"
----
-
-<view style="comments">
+  <view style="comments">
   <text id="image1-num-likes" style="comments-likes">7 likes</text>
   <text
     action="prepend"
