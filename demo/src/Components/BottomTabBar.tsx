@@ -2,7 +2,7 @@ import type { HvComponentProps, LocalName } from 'hyperview';
 import { useContext, useEffect } from 'react';
 import { BottomTabBarContext } from '../Contexts';
 
-const namespaceURI = 'https://instawork.com/hyperview-navigation';
+const namespaceURI = 'https://hyperview.org/navigation';
 
 /**
  * This component's only job is to associate its own props with a
@@ -12,7 +12,7 @@ const namespaceURI = 'https://instawork.com/hyperview-navigation';
  *
  * Usage:
  * <navigation:bottom-tab-bar
- *   xmlns:navigation="https://instawork.com/hyperview-navigation"
+ *   xmlns:navigation="https://hyperview.org/navigation"
  *   navigation:navigator="some-tab-navigator-id"
  * >
  *   ...

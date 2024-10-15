@@ -13,10 +13,10 @@ hv_button_behavior: "none"
   {label: "Navigator", id: "tab-navigator"}
   ]) }}
   {% call tab("tab-actions") -%}
-    {% include "./actions/index.xml.njk" %}
+    {% include "./actions/content.xml.njk" %}
   {%- endcall %}
   {% call tab("tab-navigator") -%}
-    {% include "./navigator/index.xml.njk" %}
+    {% include "./navigator/content.xml.njk" %}
   {%- endcall %}
   <behavior
     action="set-value"
