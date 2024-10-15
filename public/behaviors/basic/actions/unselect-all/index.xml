@@ -150,20 +150,35 @@
     <style display="flex" />
   </modifier>
 </style>
+<style
+  id="tabbar-bottom-tab-content"
+  alignItems="center"
+  position="relative"
+/>
+<style
+  id="tabbar-bottom-tab-notify"
+  backgroundColor="#d92b2b"
+  position="absolute"
+  top="0"
+  right="0"
+  height="6"
+  width="6"
+  borderWidth="2"
+  borderColor="#d92b2b"
+  borderRadius="6"
+/>
 
 <style
   id="tabbar-bottom"
   alignItems="stretch"
   borderTopColor="#eee"
   borderTopWidth="1"
-  bottom="0"
   flexDirection="row"
   flexShrink="1"
   flexGrow="0"
   height="48"
   justifyContent="space-around"
   backgroundColor="white"
-  position="absolute"
   width="100%"
 />
 
@@ -759,20 +774,35 @@
     <style display="flex" />
   </modifier>
 </style>
+<style
+  id="tabbar-bottom-tab-content"
+  alignItems="center"
+  position="relative"
+/>
+<style
+  id="tabbar-bottom-tab-notify"
+  backgroundColor="#d92b2b"
+  position="absolute"
+  top="0"
+  right="0"
+  height="6"
+  width="6"
+  borderWidth="2"
+  borderColor="#d92b2b"
+  borderRadius="6"
+/>
 
 <style
   id="tabbar-bottom"
   alignItems="stretch"
   borderTopColor="#eee"
   borderTopWidth="1"
-  bottom="0"
   flexDirection="row"
   flexShrink="1"
   flexGrow="0"
   height="48"
   justifyContent="space-around"
   backgroundColor="white"
-  position="absolute"
   width="100%"
 />
 
