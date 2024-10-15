@@ -1,9 +1,8 @@
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type {
-  Element,
+  SingleValueValidator,
   Validation,
-  Validator,
-} from 'hyperview/src/services/types';
+} from 'hyperview/src/types';
 
 export default {
   check: (value: string | null | undefined, element: Element): Validation => {
@@ -19,4 +18,4 @@ export default {
   },
   name: 'required',
   namespace: Namespaces.HYPERVIEW_VALIDATION,
-};
+} as SingleValueValidator;

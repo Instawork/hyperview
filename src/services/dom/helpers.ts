@@ -22,7 +22,7 @@ export const getDocument = (node: Node | null | undefined): Document | null => {
   }
 
   if (node.nodeType === NODE_TYPE.DOCUMENT_NODE) {
-    return node;
+    return node as Document;
   }
   return getDocument(node.parentNode);
 };

@@ -161,6 +161,8 @@ export type StyleSheets = {
   pressed: StyleSheet;
   focused: StyleSheet;
   pressedSelected: StyleSheet;
+  invalid: StyleSheet;
+  valid: StyleSheet;
 };
 
 export type HvComponentOptions = {
@@ -435,12 +437,20 @@ export type Validation = {
   message?: string,
 };
 
-export type Validator = {
+export type SingleValueValidator = {
+  kind: "single",
   namespace: string,
   name: string,
-  check: (value: string | null, element: Element) => Validation,
+  check: (value: string | null | undefined, element: Element) => Validation,
 };
 
-export type ValidatorRegistry = {
-  [string]: { [string]: Validator },
+export type MultipleValueValidator = {
+  kind: "multiple",
+  namespace: string,
+  name: string,
+  checkMultiple: (values: Array<[string, string]>, element: Element) => Validation,
 };
+
+export type Validator = SingleValueValidator;
+
+export type ValidatorRegistry = Record<string, Record<string, Validator>>;

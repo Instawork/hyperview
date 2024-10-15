@@ -1,8 +1,6 @@
 import * as DomService from 'hyperview/src/services/dom';
 import * as Xml from 'hyperview/src/services/xml';
 import type {
-  Document,
-  Element,
   Validation,
   Validator,
   ValidatorRegistry,
@@ -45,8 +43,10 @@ export const getValidators = (
       const namespace = e.namespaceURI ? REGISTRY[e.namespaceURI] || {} : {};
       const validator: Validator | null = e.localName ? namespace[e.localName] : null;
       if (validator) {
-        const tuple = [validator, e];
+        const tuple: [Validator, Element] = [validator, e];
         return [...validators, tuple];
+      } else {
+
       }
       return validators;
     },

@@ -1,13 +1,17 @@
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type {
-  Element,
+  SingleValueValidator,
   Validation,
-  Validator,
-} from 'hyperview/src/services/types';
+} from 'hyperview/src/types';
+import * as Logging from 'hyperview/src/services/logging';
 
 export default {
   check: (value: string | null | undefined, element: Element): Validation => {
-    const maxLength = parseInt(element.getAttribute('max'), 10);
+    const maxLengthStr: string | null = element.getAttribute('max');
+    const maxLength = parseInt(maxLengthStr || '', 10);
+    if (isNaN(maxLength)) {
+      Logging.warn(`[validators/max-length]: invalid length attribute of ${maxLengthStr}`);
+    }
 
     if (value !== null) {
       const valueLength: number = value ? value.length : 0;
@@ -24,4 +28,4 @@ export default {
   },
   name: 'max-length',
   namespace: Namespaces.HYPERVIEW_VALIDATION,
-};
+} as SingleValueValidator;

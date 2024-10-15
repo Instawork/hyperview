@@ -1,13 +1,17 @@
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type {
-  Element,
+  SingleValueValidator,
   Validation,
-  Validator,
-} from 'hyperview/src/services/types';
+} from 'hyperview/src/types';
+import * as Logging from 'hyperview/src/services/logging';
 
 export default {
   check: (value: string | null | undefined, element: Element): Validation => {
-    const minLength = parseInt(element.getAttribute('min'), 10);
+    const minLengthStr: string | null = element.getAttribute('min');
+    const minLength = parseInt(minLengthStr || '', 10);
+    if (isNaN(minLength)) {
+      Logging.warn(`[validators/min-length]: invalid length attribute of ${minLengthStr}`);
+    }
 
     if (value !== null) {
       const valueLength: number = value ? value.length : 0;
@@ -24,4 +28,4 @@ export default {
   },
   name: 'min-length',
   namespace: Namespaces.HYPERVIEW_VALIDATION,
-};
+} as SingleValueValidator;

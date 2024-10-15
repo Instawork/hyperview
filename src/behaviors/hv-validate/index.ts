@@ -2,19 +2,20 @@ import * as Components from 'hyperview/src/services/components';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as ValidationService from 'hyperview/src/services/validation';
 import type {
-  Document,
-  Element,
-  HvBehaviorOptions,
+  HvComponent,
   HvComponentOnUpdate,
   HvFormValues,
+  HvGetRoot,
+  HvUpdateRoot,
   NamespaceURI,
   Validation,
   Validator,
 } from 'hyperview/src/types';
+import * as Logging from 'hyperview/src/services/logging';
 
 const setValidationMessages = (
   sourceId: string,
-  message: string | null,
+  message: string | null | undefined,
   onUpdate: HvComponentOnUpdate,
   root: Document,
 ) => {
@@ -32,7 +33,7 @@ const setValidationMessages = (
       );
     })
     .forEach((e: Element) => {
-      const newElement: Element = e.cloneNode(false);
+      const newElement: Element = e.cloneNode(false) as Element;
       newElement.appendChild(root.createTextNode(message || ''));
       onUpdate(null, 'swap', e, { newElement });
     });
@@ -44,7 +45,7 @@ export default {
 
     const inputId: string | null = element.getAttribute('target');
     const inputElement: Element | null | undefined = inputId
-      ? getRoot().getElementById(inputId)
+      ? getRoot()?.getElementById(inputId)
       : element;
     if (!inputElement) {
       // The target of the behavior does not exist, nothing to do.
@@ -69,7 +70,7 @@ export default {
     }
 
     // Get form input values from the element.
-    const formComponent: HvFormValues = registry.getComponent(namespaceURI, localName);
+    const formComponent: HvFormValues = registry.getComponent(namespaceURI, localName) as HvComponent & HvFormValues;
     const values: Array<string> = formComponent
       .getFormInputValues(inputElement)
       // eslint-disable-next-line no-unused-vars
@@ -77,7 +78,7 @@ export default {
 
     // Find validators for the element
     const validators: Array<
-      [Validator, Element],
+      [Validator, Element]
     > = ValidationService.getValidators(inputElement);
 
     // For each validator, collect the results on each value.
@@ -116,7 +117,12 @@ export default {
     // Find first invalid result.
     const invalid: Validation | null | undefined = validationResults.find(v => !v.valid);
     const message: string | null | undefined = invalid ? invalid.message : null;
-    setValidationMessages(inputElementId, message, onUpdate, getRoot());
+    const root: Document | null = getRoot();
+    if (root) {
+      setValidationMessages(inputElementId, message, onUpdate, root);
+    } else {
+      Logging.warn('[behaviors/validate]: root document not found to set validation messages.');
+    }
 
     inputElement.setAttributeNS(
       Namespaces.HYPERVIEW_VALIDATION,
@@ -124,7 +130,7 @@ export default {
       invalid ? 'invalid' : 'valid',
     );
     onUpdate(null, 'swap', inputElement, {
-      newElement: inputElement.cloneNode(true),
+      newElement: inputElement.cloneNode(true) as Element,
     });
   },
 };

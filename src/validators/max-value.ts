@@ -1,17 +1,21 @@
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type {
-  Element,
+  SingleValueValidator,
   Validation,
-  Validator,
-} from 'hyperview/src/services/types';
+} from 'hyperview/src/types';
+import * as Logging from 'hyperview/src/services/logging';
 
-const MaxValueValidator: Validator = {
+const MaxValueValidator = {
   check: (value: string | null | undefined, element: Element): Validation => {
-    const max = parseFloat(element.getAttribute('max'));
+    const maxValueStr: string | null = element.getAttribute('max');
+    const maxValue = parseFloat(maxValueStr || '');
+    if (isNaN(maxValue)) {
+      Logging.warn(`[validators/max-value]: invalid value attribute of ${maxValueStr}`);
+    }
 
-    const parsedValue = parseFloat(value);
+    const parsedValue = parseFloat(value || '');
     if (!isNaN(parsedValue)) {
-      if (parsedValue > max) {
+      if (parsedValue > maxValue) {
         return {
           message:
             element.getAttribute('message') || 'This field has bad value',
@@ -24,4 +28,4 @@ const MaxValueValidator: Validator = {
   },
   name: 'max-value',
   namespace: Namespaces.HYPERVIEW_VALIDATION,
-};
+} as SingleValueValidator;
