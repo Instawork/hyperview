@@ -11,13 +11,13 @@ hv_button_behavior: "none"
 
 {% block tab_route_content %}
   {{ tabbar_top([
-    {id: "tab-styling", label: "Styling", selected: true},
-    {id: "tab-ui-elements", label: "UI Elements"}
+    {id: "tab-ui-elements", label: "UI Elements", selected: true},
+    {id: "tab-styling", label: "Styling"}
   ]) }}
-  {% call tabbar_top_tab("tab-styling", true) -%}
-    {% include "./styling/content.xml.njk" %}
-  {%- endcall -%}
-  {% call tabbar_top_tab("tab-ui-elements") -%}
+  {% call tabbar_top_tab("tab-ui-elements", true) -%}
     {% include "./ui-elements/content.xml.njk" %}
+  {%- endcall -%}
+  {% call tabbar_top_tab("tab-styling") -%}
+    {% include "./styling/content.xml.njk" %}
   {%- endcall -%}
 {% endblock %}

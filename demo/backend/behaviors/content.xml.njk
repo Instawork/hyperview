@@ -5,13 +5,13 @@
 
 {% block tab_route_content %}
   {{ tabbar_top([
-    {id: "tab-advanced", label: "Advanced", selected: true},
-    {id: "tab-basic", label: "Basic"}
+    {id: "tab-basic", label: "Basic", selected: true},
+    {id: "tab-advanced", label: "Advanced"}
   ]) }}
-  {% call tabbar_top_tab("tab-advanced", true) -%}
-    {% include "./advanced/content.xml.njk" %}
-  {%- endcall -%}
-  {% call tabbar_top_tab("tab-basic") -%}
+  {% call tabbar_top_tab("tab-basic", true) -%}
     {% include "./basic/content.xml.njk" %}
+  {%- endcall -%}
+  {% call tabbar_top_tab("tab-advanced") -%}
+    {% include "./advanced/content.xml.njk" %}
   {%- endcall -%}
 {% endblock %}
