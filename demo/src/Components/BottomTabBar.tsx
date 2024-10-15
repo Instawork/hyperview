@@ -1,6 +1,6 @@
 import type { HvComponentProps, LocalName } from 'hyperview';
-import { useContext, useEffect } from 'react';
-import { BottomTabBarContext } from '../Contexts';
+import { useBottomTabBarContext } from '../Contexts';
+import { useEffect } from 'react';
 
 const namespaceURI = 'https://hyperview.org/navigation';
 
@@ -19,7 +19,7 @@ const namespaceURI = 'https://hyperview.org/navigation';
  * </navigation:bottom-tab-bar>
  */
 const BottomTabBar = (props: HvComponentProps) => {
-  const ctx = useContext(BottomTabBarContext);
+  const { setElementProps } = useBottomTabBarContext();
   const navigator = props.element.getAttributeNS(namespaceURI, 'navigator');
   useEffect(() => {
     if (!navigator) {
@@ -28,9 +28,12 @@ const BottomTabBar = (props: HvComponentProps) => {
       );
       return;
     }
-    ctx.setElementProps?.(navigator, props);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [navigator, props]); // Exclude ctx from dependencies to avoid infinite loop
+    // To avoid rendering loops, we only set the element props once
+    if (props.element.getAttribute('registered') !== 'true') {
+      props.element.setAttribute('registered', 'true');
+      setElementProps?.(navigator, props);
+    }
+  }, [navigator, props, setElementProps]);
   return null;
 };
 

@@ -4,42 +4,21 @@ hv_title: "Tab Navigator - Tab 2"
 hv_button_behavior: "back"
 ---
 {% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
 {% extends 'templates/base.xml.njk' %}
 
 {% block container %}
-  {{ description('This is the content for tab 2.') }}
-  <navigation:bottom-tab-bar
-    xmlns:navigation="https://hyperview.org/navigation"
-    navigation:navigator="custom-bottom-tabs-navigator"
-  >
-    <select-single style="tabbar-bottom" name="custom-tab-bar">
-      <option
-        style="tabbar-bottom-tab"
-        value="custom-tab-1"
-      >
-        <behavior trigger="select" action="navigate" target="custom-bottom-tabs-tab-1" />
-        <view style="tabbar-bottom-tab-icon-selected">
-          {% include 'icons/behaviors-selected.svg' %}
-        </view>
-        <view style="tabbar-bottom-tab-icon">
-          {% include 'icons/behaviors.svg' %}
-        </view>
-        <text style="tabbar-bottom-tab-label">Tab 1</text>
-      </option>
-      <option
-        selected="true"
-        style="tabbar-bottom-tab"
-        value="custom-tab-2"
-      >
-        <behavior trigger="select" action="navigate" target="custom-bottom-tabs-tab-2" />
-        <view style="tabbar-bottom-tab-icon-selected">
-          {% include 'icons/advanced-selected.svg' %}
-        </view>
-        <view style="tabbar-bottom-tab-icon">
-          {% include 'icons/advanced.svg' %}
-        </view>
-        <text style="tabbar-bottom-tab-label">Tab 2</text>
-      </option>
-    </select-single>
-  </navigation:bottom-tab-bar>
+  <view scroll="true">
+    {{ description('This is the content for tab 2.') }}
+    {% call button("Add notification to tab 2", attributes={id:"add-notification"}) -%}
+      <behavior action="hide" target="add-notification" />
+      <behavior action="show" target="remove-notification" />
+      <behavior action="replace" target="bottom-tab-bar" href="/hyperview/public/navigation/navigator/bottom-tabs/tab-bar-notify-tab-2.xml" />
+    {%- endcall %}
+    {% call button("Remove notification from tab 2", attributes={id:"remove-notification", hide:"true"}) -%}
+      <behavior action="reload" href="#" />
+    {%- endcall %}
+  </view>
+  {% set selected_tab = 2 %}
+  {% include "./tab-bar.xml.njk" %}
 {% endblock %}

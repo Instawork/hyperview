@@ -12,8 +12,9 @@
   <xs:element name="bottom-tab-bar">
     <xs:complexType>
       <xs:sequence>
-        <xs:any minOccurs="1" maxOccurs="1" />
+        <xs:any minOccurs="0" maxOccurs="unbounded" />
       </xs:sequence>
+      <xs:attribute name="id" type="hv:ID" form="unqualified" />
       <xs:attribute name="navigator" type="xs:string" />
     </xs:complexType>
   </xs:element>

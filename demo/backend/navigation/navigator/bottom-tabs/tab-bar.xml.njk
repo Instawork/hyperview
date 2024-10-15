@@ -1,0 +1,51 @@
+<navigation:bottom-tab-bar
+  xmlns="https://hyperview.org/hyperview"
+  xmlns:navigation="https://hyperview.org/navigation"
+  navigation:navigator="custom-bottom-tabs-navigator"
+  id="bottom-tab-bar"
+>
+  <select-single style="tabbar-bottom" name="custom-tab-bar" key="custom-tab-bar">
+    <option
+      {% if selected_tab == 1 %}
+        selected="true"
+      {% endif %}
+      style="tabbar-bottom-tab"
+      value="custom-tab-1"
+    >
+      <behavior trigger="select" action="navigate" target="custom-bottom-tabs-tab-1" />
+      <view style="tabbar-bottom-tab-content">
+        <view style="tabbar-bottom-tab-icon-selected">
+          {% include 'icons/behaviors-selected.svg' %}
+        </view>
+        <view style="tabbar-bottom-tab-icon">
+          {% include 'icons/behaviors.svg' %}
+        </view>
+        <text style="tabbar-bottom-tab-label">Tab 1</text>
+        {% if notify_tab == 1 %}
+          <view style="tabbar-bottom-tab-notify" />
+        {% endif %}
+      </view>
+    </option>
+    <option
+      {% if selected_tab == 2 %}
+        selected="true"
+      {% endif %}
+      style="tabbar-bottom-tab"
+      value="custom-tab-2"
+    >
+      <behavior trigger="select" action="navigate" target="custom-bottom-tabs-tab-2" />
+      <view style="tabbar-bottom-tab-content">
+        <view style="tabbar-bottom-tab-icon-selected">
+          {% include 'icons/advanced-selected.svg' %}
+        </view>
+        <view style="tabbar-bottom-tab-icon">
+          {% include 'icons/advanced.svg' %}
+        </view>
+        <text style="tabbar-bottom-tab-label">Tab 2</text>
+        {% if notify_tab == 2 %}
+          <view style="tabbar-bottom-tab-notify" />
+        {% endif %}
+      </view>
+    </option>
+  </select-single>
+</navigation:bottom-tab-bar>
