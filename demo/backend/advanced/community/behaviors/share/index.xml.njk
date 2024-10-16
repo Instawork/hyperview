@@ -1,18 +1,16 @@
 ---
-permalink: "/backend/advanced/community/filter.xml"
+permalink: "/advanced/community/behaviors/share/index.xml"
 tags: "Behaviors"
-hv_button_behavior: "back"
 hv_title: "Share"
+hv_button_behavior: "back"
 ---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
 
-{% extends 'templates/base.xml.njk' %}
-
-{% block custom_ns %}
-{% endblock %}
-
-{% block styles %}
-{% endblock %}
-
-{% block container %}
-  <text>Temporary placeholder</text>
+{% block content %}
+  {{ description('Examples of using custom behaviors to trigger system sharing.') }}
+  {% include './message/index.xml.njk' %}
+  {% include './url/index.xml.njk' %}
+  {% include './message-url/index.xml.njk' %}
+  {% include './all/index.xml.njk' %}
 {% endblock %}
