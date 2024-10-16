@@ -17,15 +17,15 @@ All included files go under `_includes/` folder to contain reusable files across
 
 1. `templates/`
    1. `list.xml.njk`: Renders a list of items, each linking to a different screen.
-   1. `section-list.xml.njk`: Renders a section list of items with subtitles.
-   1. `tab.xml.njk`: Basic tab structure for tabs on home screen.
-   1. `styles.xml.njk`: Contains re-usable styles across the app.
-   1. `base.xml.njk`: Base template for all the screens. Can be extended by providing custom styles and content.
-   1. `scrollview.xml.njk`: Extends `base.xml.njk` to provide a scroll view for any screen that extends it.
-   1. `loading-screen.xml.njk`: Included as a loading screen in other templates.
-   1. `header.xml.njk`: Used to render the header button logic.
-1. `icons/` : All icons used across the app go into this folder.
-1. `macros/` : Folder that includes all reusable macros. Each macro should have a separate folder with `index.xml.njk` containing the definition along with `styles.xml.njk` containing the styles.
+   2. `section-list.xml.njk`: Renders a section list of items with subtitles.
+   3. `tab.xml.njk`: Basic tab structure for tabs on home screen.
+   4. `styles.xml.njk`: Contains re-usable styles across the app.
+   5. `base.xml.njk`: Base template for all the screens. Can be extended by providing custom styles and content.
+   6. `scrollview.xml.njk`: Extends `base.xml.njk` to provide a scroll view for any screen that extends it.
+   7. `loading-screen.xml.njk`: Included as a loading screen in other templates.
+   8. `header.xml.njk`: Used to render the header button logic.
+2. `icons/` : All icons used across the app go into this folder.
+3. `macros/` : Folder that includes all reusable macros. Each macro should have a separate folder with `index.xml.njk` containing the definition along with `styles.xml.njk` containing the styles.
 
 ### Examples with multiple demonstrations
 
@@ -74,7 +74,7 @@ Metadata used to define variables or settings that are used by eleventy while pr
 
 To render a list view as shown above:
 
-1. In `ui/index.xml.njk`, include `templates/list.xml.njk` and define `hv_list_tag`: "Styling" inside the metadata:
+1. In `ui/index.xml.njk`, include `templates/list.xml.njk` and define `hv_list_tag`: "UI/Styling" inside the metadata:
 
 ```xml
 ---
@@ -82,16 +82,16 @@ permalink: "/ui/styling/index.xml"
 hv_title: "Styling"
 hv_button_behavior: "back"
 ---
-{% set hv_list_tag = "styling" %}
+{% set hv_list_tag = "UI/Styling" %}
 {% include "templates/list.xml.njk" %}
 ```
 
-2. In `ui/styling/button/index.xml.njk`, define the tag which this item links to (in our case styling):
+2. In `ui/styling/button/index.xml.njk`, define the tag which this item links to (in our case UI/Styling):
 
 ```xml
 ---
 permalink: "/ui/styling/button/index.xml"
-tags: "styling"
+tags: "UI/Styling"
 hv_title: "Button"
 hv_button_behavior: "back"
 ---
@@ -115,7 +115,8 @@ All the href paths should start with `/hyperview/public/` . This ensures that re
 ### Case
 
 1. File names, style ids are to follow kebab case, i.e. custom-select, custom-select-bold
-1. style ids and element ids should not overlap. i.e., `<style id="container" />` and `<view id="container" />`
+2. style ids and element ids should not overlap. i.e., `<style id="container" />` and `<view id="container" />`
+3. Tags should be capitalized and named after the parent directory of the file they represent. i.e. `Advanced/Case Studies` for the items under `advanced/case-studies`.
 
 ### Files
 
@@ -124,7 +125,7 @@ All the href paths should start with `/hyperview/public/` . This ensures that re
 ### Front matter
 
 1. All custom front matter attributes start with prefix `hv_` . example: `hv_button_behavior`
-1. Built-in Properties come first followed by custom properties
+2. Built-in Properties come first followed by custom properties
 
 ### Styles
 
@@ -135,7 +136,7 @@ All the href paths should start with `/hyperview/public/` . This ensures that re
 We accept two formats to render attributes of an XML element:
 
 1. inline (provided that the total number of characters does not exceed 80)
-1. one attribute per line
+2. one attribute per line
 
 When rendering the attributes inline, the element closing delimiter and the element closing tag should be on the same line. If the element is a self closing tag, there should be a single space between the last attribute's value and the self closing tag. If the element is not a self closing tag, there should be no leading space before the element delimiter.
 When rendering one attribute per line, the element delimiter should be rendered on a new line, and the indentation level should match the element opening tag. Use alphabetical order for XML element attributes, exception made for id which should be first attribute of the element.
