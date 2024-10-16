@@ -2,6 +2,6 @@
 
 <doc xmlns="https://hyperview.org/hyperview">
   <navigator id="simple-stack-navigator" type="stack">
-    <nav-route id="simple-screen-route" href="/hyperview/public/navigation/navigator/simple-stack/screen.xml"/>
+    <nav-route id="simple-screen-route" href="/hyperview/public/navigation/navigator/stack/screen.xml"/>
   </navigator>
 </doc>

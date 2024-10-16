@@ -316,7 +316,44 @@
 <style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
 
       
-      
+  <style
+  id="footer"
+  alignItems="stretch"
+  borderTopColor="#eee"
+  borderTopWidth="1"
+  bottom="0"
+  flexDirection="row"
+  flexShrink="1"
+  flexGrow="0"
+  height="48"
+  justifyContent="space-around"
+  backgroundColor="white"
+  position="absolute"
+  width="100%"
+/>
+<style
+  id="bottom-tab"
+  alignItems="center"
+  flex="1"
+  justifyContent="center"
+/>
+<style
+  id="bottom-tab-label"
+  color="#cccccc"
+  fontSize="8"
+  fontWeight="bold"
+/>
+<style
+  id="bottom-tab-label-selected"
+  color="#4778FF"
+/>
+<style
+  id="bottom-tab-icon"
+  height="24"
+  width="24"
+/>
+
+
     </styles>
     <body style="body" safe-area="true">
       <header style="header">
@@ -339,36 +376,34 @@
 
     </view>
   
-  <text style="header-title">Tab Navigator - Tab 1</text>
+  <text style="header-title">Bottom Tab - Tab 2</text>
 </header>
 
       
   
   
-    <text style="description">This is the content for tab 1.</text>
+    <text style="description">This is the content for tab 2.</text>
   
 
   <view id="Footer" style="footer">
     <view
-      style="bottom-tab bottom-tab-selected"
-    >
-      <image
-        source="/hyperview/public/navigation/navigator/simple-tab/heart2.png"
-        style="bottom-tab-icon bottom-tab-selected"
-      />
-      <text style="bottom-tabbar-top-label bottom-tabbar-top-label-selected">Tab 1</text>
-    </view>
-    <view
       style="bottom-tab"
       href-style="bottom-tab"
       action="navigate"
-      target="tab-2"
+      href="#tab-1"
     >
       <image
-        source="/hyperview/public/navigation/navigator/simple-tab/list2.png"
-        style="bottom-tab-icon "
+        source="/hyperview/public/navigation/navigator/bottom-tab/heart2.png"
+        style="bottom-tab-icon"
       />
-      <text style="bottom-tabbar-top-label">Tab 2</text>
+      <text style="bottom-tab-label">Tab 1</text>
+    </view>
+    <view style="bottom-tab bottom-tab-selected">
+      <image
+        source="/hyperview/public/navigation/navigator/bottom-tab/list2.png"
+        style="bottom-tab-icon bottom-tab-selected"
+      />
+      <text style="bottom-tab-label bottom-tab-label-selected">Tab 2</text>
     </view>
   </view>
 
@@ -714,7 +749,7 @@
 
     </view>
   
-  <text style="header-title">Tab Navigator - Tab 1</text>
+  <text style="header-title">Bottom Tab - Tab 2</text>
 </header>
 
     <view style="loading">

@@ -3,8 +3,8 @@
   <navigator id="custom-stack" type="stack">
     <nav-route id="custom-bottom-tabs-route">
       <navigator id="custom-bottom-tabs-navigator" type="tab">
-        <nav-route id="custom-bottom-tabs-tab-1" href="/hyperview/public/navigation/navigator/bottom-tabs/tab-1.xml"/>
-        <nav-route id="custom-bottom-tabs-tab-2" href="/hyperview/public/navigation/navigator/bottom-tabs/tab-2.xml"/>
+        <nav-route id="custom-bottom-tabs-tab-1" href="/hyperview/public/advanced/community/elements/bottom-tabbar/tab-1.xml"/>
+        <nav-route id="custom-bottom-tabs-tab-2" href="/hyperview/public/advanced/community/elements/bottom-tabbar/tab-2.xml"/>
       </navigator>
     </nav-route>
   </navigator>

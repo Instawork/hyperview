@@ -361,7 +361,7 @@
     
       <behavior action="hide" target="add-notification" />
       <behavior action="show" target="remove-notification" />
-      <behavior action="replace" target="bottom-tab-bar" href="/hyperview/public/navigation/navigator/bottom-tabs/tab-bar-notify-tab-2.xml" />
+      <behavior action="replace" target="bottom-tab-bar" href="/hyperview/public/advanced/community/elements/bottom-tabbar/tab-bar-notify-tab-2.xml" />
     
     <text style="button-label">Add notification to tab 2</text>
   </view>
@@ -397,7 +397,7 @@
       style="tabbar-bottom-tab"
       value="custom-tab-1"
     >
-      <behavior trigger="select" action="navigate" target="custom-bottom-tabs-tab-1" />
+      <behavior trigger="select" action="navigate" href="#custom-bottom-tabs-tab-1" />
       <view style="tabbar-bottom-tab-content">
         <view style="tabbar-bottom-tab-icon-selected">
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -426,7 +426,7 @@
       style="tabbar-bottom-tab"
       value="custom-tab-2"
     >
-      <behavior trigger="select" action="navigate" target="custom-bottom-tabs-tab-2" />
+      <behavior trigger="select" action="navigate" href="#custom-bottom-tabs-tab-2" />
       <view style="tabbar-bottom-tab-content">
         <view style="tabbar-bottom-tab-icon-selected">
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -365,7 +365,7 @@
     
       <behavior
       action="push"
-      href="/hyperview/public/navigation/navigator/simple-stack/modal-2.xml"
+      href="/hyperview/public/navigation/navigator/stack/modal-2.xml"
     />
     
     <text style="button-label">Push on stack</text>

@@ -3,8 +3,8 @@
   <navigator id="top-stack" type="stack">
     <nav-route id="tabs-route">
       <navigator id="simple-tab-navigator" type="tab">
-        <nav-route id="tab-1" href="/hyperview/public/navigation/navigator/simple-tab/tab-1.xml"/>
-        <nav-route id="tab-2" href="/hyperview/public/navigation/navigator/simple-tab/tab-2.xml"/>
+        <nav-route id="tab-1" href="/hyperview/public/navigation/navigator/bottom-tab/tab-1.xml"/>
+        <nav-route id="tab-2" href="/hyperview/public/navigation/navigator/bottom-tab/tab-2.xml"/>
       </navigator>
     </nav-route>
   </navigator>

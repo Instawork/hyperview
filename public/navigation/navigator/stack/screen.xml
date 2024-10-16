@@ -360,7 +360,7 @@
     
       <behavior
       action="push"
-      href="/hyperview/public/navigation/navigator/simple-stack/push-1.xml"
+      href="/hyperview/public/navigation/navigator/stack/push-1.xml"
     />
     
     <text style="button-label">Push</text>
@@ -381,7 +381,7 @@
     
       <behavior
       action="new"
-      href="/hyperview/public/navigation/navigator/simple-stack/modal-1.xml"
+      href="/hyperview/public/navigation/navigator/stack/modal-1.xml"
     />
     
     <text style="button-label">Push</text>
