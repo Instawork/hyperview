@@ -396,13 +396,13 @@
       
       <item
         href="/hyperview/public//behaviors/advanced/scroll/section-list/index.xml"
-        key="section-list"
+        key="uiui-elementssection-list"
         show-during-load="loading-screen"
         style="item item-last"
         
       >
         <view style="item-left">
-          <text style="item-label">Section List</text>
+          <text style="item-label">UI/UI Elements/Section List</text>
         </view>
         <view style="item-chevron">
           <svg
