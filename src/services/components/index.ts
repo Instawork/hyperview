@@ -56,8 +56,13 @@ export class Registry {
   }
 
   hasFormComponent(namespaceURI: string, localName: string): boolean {
-    const c: HvComponent | undefined = this.getComponent(namespaceURI, localName);
-    return (c === undefined) ? false : Object.prototype.hasOwnProperty.call(c, 'getFormInputValues');
+    const c: HvComponent | undefined = this.getComponent(
+      namespaceURI,
+      localName,
+    );
+    return c === undefined
+      ? false
+      : Object.prototype.hasOwnProperty.call(c, 'getFormInputValues');
   }
 
   /**

@@ -1,4 +1,5 @@
 import * as Components from 'hyperview/src/services/components';
+import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as ValidationService from 'hyperview/src/services/validation';
 import type {
@@ -11,7 +12,6 @@ import type {
   Validation,
   Validator,
 } from 'hyperview/src/types';
-import * as Logging from 'hyperview/src/services/logging';
 
 const setValidationMessages = (
   sourceId: string,
@@ -19,7 +19,7 @@ const setValidationMessages = (
   onUpdate: HvComponentOnUpdate,
   root: Document,
 ) => {
-  const elements: Array<any> = Array.from(
+  const elements: Array<Element> = Array.from(
     root.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'text'),
   );
   elements
@@ -41,8 +41,13 @@ const setValidationMessages = (
 
 export default {
   action: 'validate',
-  callback: (element: Element, onUpdate: HvComponentOnUpdate, getRoot: HvGetRoot, updateRoot: HvUpdateRoot, registry: Components.Registry) => {
-
+  callback: (
+    element: Element,
+    onUpdate: HvComponentOnUpdate,
+    getRoot: HvGetRoot,
+    updateRoot: HvUpdateRoot,
+    registry: Components.Registry,
+  ) => {
     const inputId: string | null = element.getAttribute('target');
     const inputElement: Element | null | undefined = inputId
       ? getRoot()?.getElementById(inputId)
@@ -55,7 +60,10 @@ export default {
     const {
       namespaceURI,
       localName,
-    }: { namespaceURI: NamespaceURI | null | undefined, localName: string | null } = inputElement;
+    }: {
+      namespaceURI: NamespaceURI | null | undefined;
+      localName: string | null;
+    } = inputElement;
     if (namespaceURI === undefined || namespaceURI === null) {
       return;
     }
@@ -70,11 +78,14 @@ export default {
     }
 
     // Get form input values from the element.
-    const formComponent: HvFormValues = registry.getComponent(namespaceURI, localName) as HvComponent & HvFormValues;
+    const formComponent: HvFormValues = registry.getComponent(
+      namespaceURI,
+      localName,
+    ) as HvComponent & HvFormValues;
     const values: Array<string> = formComponent
       .getFormInputValues(inputElement)
       // eslint-disable-next-line no-unused-vars
-      .map(([name, value]) => value);
+      .map(([, value]) => value);
 
     // Find validators for the element
     const validators: Array<
@@ -109,19 +120,24 @@ export default {
 
     const inputElementId: string | null = inputElement.getAttribute('id');
     if (!inputElementId) {
-      // If the input being validated does not have an ID, then there's no reference from text elements
-      // displaying the validation message. So we can short-circuit and return early.
+      // If the input being validated does not have an ID,
+      // then there's no reference from text elements displaying the validation message.
+      // So we can short-circuit and return early.
       return;
     }
 
     // Find first invalid result.
-    const invalid: Validation | null | undefined = validationResults.find(v => !v.valid);
+    const invalid: Validation | null | undefined = validationResults.find(
+      v => !v.valid,
+    );
     const message: string | null | undefined = invalid ? invalid.message : null;
     const root: Document | null = getRoot();
     if (root) {
       setValidationMessages(inputElementId, message, onUpdate, root);
     } else {
-      Logging.warn('[behaviors/validate]: root document not found to set validation messages.');
+      Logging.warn(
+        '[behaviors/validate]: root document not found to set validation messages.',
+      );
     }
 
     inputElement.setAttributeNS(

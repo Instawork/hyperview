@@ -241,7 +241,7 @@ export type HvBehavior = {
     onUpdate: HvComponentOnUpdate,
     getRoot: HvGetRoot,
     updateRoot: HvUpdateRoot,
-    componentRegistry: Components.Registry
+    componentRegistry: Components.Registry,
   ) => void;
 };
 
@@ -431,24 +431,26 @@ export type Reload = (
   opts: HvComponentOptions,
 ) => void;
 
-
 export type Validation = {
-  valid: boolean,
-  message?: string,
+  valid: boolean;
+  message?: string;
 };
 
 export type SingleValueValidator = {
-  kind: "single",
-  namespace: string,
-  name: string,
-  check: (value: string | null | undefined, element: Element) => Validation,
+  kind: 'single';
+  namespace: string;
+  name: string;
+  check: (value: string | null | undefined, element: Element) => Validation;
 };
 
 export type MultipleValueValidator = {
-  kind: "multiple",
-  namespace: string,
-  name: string,
-  checkMultiple: (values: Array<[string, string]>, element: Element) => Validation,
+  kind: 'multiple';
+  namespace: string;
+  name: string;
+  checkMultiple: (
+    values: Array<[string, string]>,
+    element: Element,
+  ) => Validation;
 };
 
 export type Validator = SingleValueValidator;

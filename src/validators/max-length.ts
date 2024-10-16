@@ -1,16 +1,15 @@
-import * as Namespaces from 'hyperview/src/services/namespaces';
-import type {
-  SingleValueValidator,
-  Validation,
-} from 'hyperview/src/types';
 import * as Logging from 'hyperview/src/services/logging';
+import * as Namespaces from 'hyperview/src/services/namespaces';
+import type { SingleValueValidator, Validation } from 'hyperview/src/types';
 
 export default {
   check: (value: string | null | undefined, element: Element): Validation => {
     const maxLengthStr: string | null = element.getAttribute('max');
     const maxLength = parseInt(maxLengthStr || '', 10);
-    if (isNaN(maxLength)) {
-      Logging.warn(`[validators/max-length]: invalid length attribute of ${maxLengthStr}`);
+    if (Number.isNaN(maxLength)) {
+      Logging.warn(
+        `[validators/max-length]: invalid length attribute of ${maxLengthStr}`,
+      );
     }
 
     if (value !== null) {

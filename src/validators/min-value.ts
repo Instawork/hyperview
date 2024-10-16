@@ -1,20 +1,19 @@
-import * as Namespaces from 'hyperview/src/services/namespaces';
-import type {
-  SingleValueValidator,
-  Validation,
-} from 'hyperview/src/types';
 import * as Logging from 'hyperview/src/services/logging';
+import * as Namespaces from 'hyperview/src/services/namespaces';
+import type { SingleValueValidator, Validation } from 'hyperview/src/types';
 
-const MinValueValidator = {
+export default {
   check: (value: string | null | undefined, element: Element): Validation => {
     const minValueStr: string | null = element.getAttribute('min');
     const minValue = parseFloat(minValueStr || '');
-    if (isNaN(minValue)) {
-      Logging.warn(`[validators/min-value]: invalid value attribute of ${minValueStr}`);
+    if (Number.isNaN(minValue)) {
+      Logging.warn(
+        `[validators/min-value]: invalid value attribute of ${minValueStr}`,
+      );
     }
 
     const parsedValue = parseFloat(value || '');
-    if (!isNaN(parsedValue)) {
+    if (!Number.isNaN(parsedValue)) {
       if (parsedValue < minValue) {
         return {
           message:

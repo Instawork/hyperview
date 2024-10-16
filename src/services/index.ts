@@ -1,3 +1,4 @@
+import * as ValidationService from 'hyperview/src/services/validation';
 import * as Xml from 'hyperview/src/services/xml';
 import { DEFAULT_PRESS_OPACITY, HV_TIMEOUT_ID_ATTR } from './types';
 import type {
@@ -8,7 +9,6 @@ import type {
 } from 'hyperview/src/types';
 import { NODE_TYPE } from 'hyperview/src/types';
 import { Platform } from 'react-native';
-import * as ValidationService from 'hyperview/src/services/validation';
 
 /**
  * This file is currently a dumping place for every functions used accross
