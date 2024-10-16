@@ -340,13 +340,13 @@
         <behavior trigger="select" action="show" target="tab-case-studies" />
         <text style="tabbar-top-label">Case Studies</text>
       </option><option
-        value="tab-custom-components"
+        value="tab-community"
         style="tabbar-top-item"
         
       >
-        <behavior trigger="deselect" action="hide" target="tab-custom-components" />
-        <behavior trigger="select" action="show" target="tab-custom-components" />
-        <text style="tabbar-top-label">Custom Components</text>
+        <behavior trigger="deselect" action="hide" target="tab-community" />
+        <behavior trigger="select" action="show" target="tab-community" />
+        <text style="tabbar-top-label">Community</text>
       </option>
   </select-single>
   
@@ -830,7 +830,7 @@
   </view>
 
   <view
-    id="tab-custom-components"
+    id="tab-community"
     
       hide="true"
     
@@ -839,28 +839,28 @@
     
       
 
-<list
+<section-list
   action="replace"
   href="/advanced/index.xml"
   id="directory-list"
+  sticky-section-titles="false"
   style="list-container"
   target="directory-list"
   trigger="refresh"
   xmlns="https://hyperview.org/hyperview"
 >
   
+    <section-title style="list-header item-first">
+      <text style="list-header-text">Elements</text>
+    </section-title>
     
       
       
-        
-      
-      
       <item
-        href="/hyperview/public//advanced/custom-components/filter/index.xml"
+        href="/hyperview/public//advanced/community/elements/filter/index.xml"
         key="filter"
         show-during-load="loading-screen"
-        style="item item-first"
-        
+        style="item"
       >
         <view style="item-left">
           <text style="item-label">Filter</text>
@@ -886,15 +886,13 @@
     
       
       
-      
         
       
       <item
-        href="/hyperview/public//advanced/custom-components/svg-image/index.xml"
+        href="/hyperview/public//advanced/community/elements/svg-image/index.xml"
         key="svg-image"
         show-during-load="loading-screen"
         style="item item-last"
-        
       >
         <view style="item-left">
           <text style="item-label">SVG Image</text>
@@ -919,7 +917,44 @@
       </item>
     
   
-</list>
+    <section-title style="list-header item-first">
+      <text style="list-header-text">Behaviors</text>
+    </section-title>
+    
+      
+      
+        
+      
+      <item
+        href="/hyperview/public//advanced/community/behaviors/share/index.xml"
+        key="share"
+        show-during-load="loading-screen"
+        style="item item-last"
+      >
+        <view style="item-left">
+          <text style="item-label">Share</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+  
+</section-list>
 
 
     

@@ -316,32 +316,7 @@
 <style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
 
       
-  <style id="flex" flex="1" />
-  <style
-    id="input"
-    backgroundColor="#FFFFFF"
-    borderBottomColor="#E1E1E1"
-    borderBottomWidth="1"
-    borderColor="#4E4D4D"
-    fontSize="16"
-    fontWeight="normal"
-    paddingBottom="8"
-    paddingTop="8">
-    <modifier pressed="true">
-    <style borderBottomColor="green"/>
-    </modifier>
-    <modifier focused="true">
-    <style borderBottomColor="#4778FF"/>
-    </modifier>
-  </style>
-  <style id="relative" position="relative" />
-  <style id="absolute" position="absolute" />
-  <style id="r-0" right="0" />
-  <style id="mx-24" marginHorizontal="24" />
-  <style id="py-8" paddingVertical="8" />
-  <style id="border-bottom" borderBottomWidth="1" borderBottomColor="lightgray" />
-  <style id="highlight" fontWeight="bold" color="blue" />
-
+      
     </styles>
     <body style="body" safe-area="true">
       <header style="header">
@@ -364,195 +339,17 @@
 
     </view>
   
-  <text style="header-title">Contacts</text>
+  <text style="header-title">SVG Image</text>
 </header>
 
       
-  <form>
-    <list
-  id="contacts"
-  trigger="refresh"
-  action="replace"
-  href="?page=1&amp;template=list"
-  target="contacts"
-  keyboard-dismiss-mode="on-drag"
-  xmlns="https://hyperview.org/hyperview"
->
-  
-  <item key="search" id="top" sticky="true" style="relative mx-24">
-    <text-field
-      placeholder="Search a contact…"
-      placeholderTextColor="#8D9494"
-      name="search"
-      style="input"
-      debounce="200"
-      value=""
-    >
-      
-      
-      
-      
-      <behavior
-        trigger="change"
-        action="hide"
-        target="load-more"
-      />
-      <behavior
-        trigger="change"
-        action="scroll"
-        target="top"
-        xmlns:scroll="https://hyperview.org/hyperview-scroll"
-      />
-      <behavior
-        trigger="change"
-        action="replace"
-        target="contacts"
-        href="?template=list"
-        show-during-load="loading-indicator"
-      />
-    </text-field>
-    <view id="loading-indicator" style="absolute r-0 py-8" hide="true">
-      <spinner />
-    </view>
-  </item>
-  <items xmlns="https://hyperview.org/hyperview">
-  
-    <item key="c6bd309f-526f-4ccd-bfd8-5d7c130828bf" style="mx-24 py-8 border-bottom">
-      <text>Aaron Bartoletti Sr.</text>
-      <text>Alex_Altenwerth@gmail.com</text>
-      <text>(738) 555-7005</text>
-    </item>
-  
-    <item key="4a45e828-84e1-4492-9f14-ad87ed73a55d" style="mx-24 py-8 border-bottom">
-      <text>Aaron Bradtke</text>
-      <text>Gerson.Lynch@yahoo.com</text>
-      <text>(454) 555-2477</text>
-    </item>
-  
-    <item key="baccfc2a-9773-456c-aedb-fc2a0f6e66dd" style="mx-24 py-8 border-bottom">
-      <text>Aaron Casper</text>
-      <text>Harmony99@yahoo.com</text>
-      <text>(354) 555-3108</text>
-    </item>
-  
-    <item key="6b5143c2-5152-4c8e-91b3-69df08ebe23a" style="mx-24 py-8 border-bottom">
-      <text>Aaron Conn</text>
-      <text>Oma_Moore1@yahoo.com</text>
-      <text>(860) 555-4396</text>
-    </item>
-  
-    <item key="faa28bb2-6ac7-4ce1-84a3-6ec6d77b2365" style="mx-24 py-8 border-bottom">
-      <text>Aaron D'Amore</text>
-      <text>Lorenzo29@yahoo.com</text>
-      <text>(018) 555-1824</text>
-    </item>
-  
-    <item key="38613d1f-1163-4ac3-85da-b5166ccd59d6" style="mx-24 py-8 border-bottom">
-      <text>Aaron Heller</text>
-      <text>Clair.Waelchi@gmail.com</text>
-      <text>(720) 555-9296</text>
-    </item>
-  
-    <item key="67e953e7-74d9-4704-b09d-a466a34bb9eb" style="mx-24 py-8 border-bottom">
-      <text>Aaron Kuhic</text>
-      <text>Celestine.Beer91@hotmail.com</text>
-      <text>(314) 555-0060</text>
-    </item>
-  
-    <item key="491e3707-d6c2-417f-baf8-10937f4eef91" style="mx-24 py-8 border-bottom">
-      <text>Aaron Larkin</text>
-      <text>Emmie_Dietrich@gmail.com</text>
-      <text>(241) 555-4632</text>
-    </item>
-  
-    <item key="d0d9c6b9-521d-4728-b72d-bf74afe29a02" style="mx-24 py-8 border-bottom">
-      <text>Aaron Mosciski</text>
-      <text>Delia.Metz56@yahoo.com</text>
-      <text>(501) 555-3901</text>
-    </item>
-  
-    <item key="3232147c-f968-49e6-9aaa-c0c19a20e237" style="mx-24 py-8 border-bottom">
-      <text>Aaron Nienow</text>
-      <text>Alisa_Reichel77@yahoo.com</text>
-      <text>(789) 555-4288</text>
-    </item>
-  
-    <item key="29633b9d-73b6-4956-a73d-a6a19230d560" style="mx-24 py-8 border-bottom">
-      <text>Aaron Parker DDS</text>
-      <text>Arlo_Heidenreich@gmail.com</text>
-      <text>(877) 555-5552</text>
-    </item>
-  
-    <item key="c783d4b1-e2e7-4c04-9110-794462aff83a" style="mx-24 py-8 border-bottom">
-      <text>Aaron Schamberger</text>
-      <text>Jefferey.Turner-Mohr50@yahoo.com</text>
-      <text>(858) 555-2875</text>
-    </item>
-  
-    <item key="cd036c3b-8c62-4e62-9136-5ef90abc0d7b" style="mx-24 py-8 border-bottom">
-      <text>Aaron Schiller</text>
-      <text>Murray0@yahoo.com</text>
-      <text>(913) 555-6929</text>
-    </item>
-  
-    <item key="2d12c73a-d1b5-4181-9636-618890874851" style="mx-24 py-8 border-bottom">
-      <text>Aaron Tromp</text>
-      <text>Arvel.Keeling@yahoo.com</text>
-      <text>(270) 555-7480</text>
-    </item>
-  
-    <item key="e9b5e9ad-ac68-47e6-bf1e-50b665441cdf" style="mx-24 py-8 border-bottom">
-      <text>Aaron Watsica</text>
-      <text>Samir53@hotmail.com</text>
-      <text>(025) 555-9885</text>
-    </item>
-  
-    <item key="66b79a79-2642-4560-a4bf-529dfae580de" style="mx-24 py-8 border-bottom">
-      <text>Aaron Welch</text>
-      <text>Dell.Brown@yahoo.com</text>
-      <text>(746) 555-9592</text>
-    </item>
-  
-    <item key="73b89f0d-ca46-4229-80a0-a20f4007485d" style="mx-24 py-8 border-bottom">
-      <text>Aaron Will</text>
-      <text>Kristin.Hilll74@gmail.com</text>
-      <text>(490) 555-1617</text>
-    </item>
-  
-    <item key="a58fd4a4-c3cd-4e28-870b-ee03f1db48a2" style="mx-24 py-8 border-bottom">
-      <text>Aaron Wunsch PhD</text>
-      <text>Kelsi_Flatley@gmail.com</text>
-      <text>(844) 555-1860</text>
-    </item>
-  
-    <item key="91df64df-9afd-4438-9035-3e2ab1a8120b" style="mx-24 py-8 border-bottom">
-      <text>Abel Ankunding</text>
-      <text>Lauryn_Bernier@gmail.com</text>
-      <text>(051) 555-8583</text>
-    </item>
-  
-    <item key="739a9fcd-2764-4890-90b9-c129ab4c24a6" style="mx-24 py-8 border-bottom">
-      <text>Abel Bogan</text>
-      <text>Santina_Volkman@hotmail.com</text>
-      <text>(097) 555-2452</text>
-    </item>
-  
-  
-    <item
-      key="load-more"
-      id="load-more"
-      trigger="visible"
-      action="replace"
-      href="?page=2"
-    >
-      <spinner />
-    </item>
-  
-</items>
+  <view scroll="true" style="main">
+    
+  <svg xmlns="http://www.w3.org/2000/svg" width="392" height="128" viewBox="0 0 196 128" fill="none">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0h24v52h52V0h24v84.292l-24 37.464V76H24v52H0V0zm94 128h20L193.352 0h-19.5l-80 128z" fill="#4778ff" />
+  </svg>
 
-</list>
-
-  </form>
+  </view>
 
     </body>
   </screen>
@@ -896,7 +693,7 @@
 
     </view>
   
-  <text style="header-title">Contacts</text>
+  <text style="header-title">SVG Image</text>
 </header>
 
     <view style="loading">

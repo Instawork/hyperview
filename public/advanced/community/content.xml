@@ -1,9 +1,8 @@
 
 
-
 <section-list
   action="replace"
-  href="/behaviors/basic/index.xml"
+  href="/advanced/community/content.xml"
   id="directory-list"
   sticky-section-titles="false"
   style="list-container"
@@ -117,5 +116,4 @@
     
   
 </section-list>
-
 
