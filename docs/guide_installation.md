@@ -39,7 +39,7 @@ From the `demo/` directory:
 > yarn server
 ```
 
-This will start an HTTP server listening on port 8085. You can verify that the server works by visiting [http://0.0.0.0:8085/index.xml](http://0.0.0.0:8085/index.xml) in a web browser.
+This will start an HTTP server listening on port 8085. You can verify that the server works by visiting [http://0.0.0.0:8085/hyperview/public/index.xml](http://0.0.0.0:8085/hyperview/public/index.xml) in a web browser.
 
 The next step depends on whether you want to run the demo app in the iOS simulator, on an Android Virtual Device, or on a physical mobile device.
 
@@ -72,7 +72,7 @@ On your physical mobile device, install the Expo client
 
 Make sure your mobile device and development machine are connected to the same network.
 
-Open [/demo/src/constants.js](/demo/src/constants.js) in a text editor. In `ENTRY_POINT_URL`, replace the host in the url (`http://0.0.0.0:8085/index.xml`) with the IP of your machine. This is needed in order for your physical device to be able to request the example XML files from your development machine.
+Open [/demo/src/constants.js](/demo/src/constants.js) in a text editor. In `ENTRY_POINT_URL`, replace the host in the url (`http://0.0.0.0:8085/hyperview/public/index.xml`) with the IP of your machine. This is needed in order for your physical device to be able to request the example XML files from your development machine.
 
 From the `demo/` directory on your development machine:
 
