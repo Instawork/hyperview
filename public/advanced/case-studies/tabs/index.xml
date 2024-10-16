@@ -79,10 +79,8 @@
   marginBottom="0"
 />
 
-<style id="tab-content" flex="1" />
-<style id="centered" alignItems="center" justifyContent="center" />
 <style
-  id="tab-bar-select"
+  id="tabbar-top-select"
   backgroundColor="#eee"
   borderRadius="12"
   flexDirection="row"
@@ -92,7 +90,7 @@
   padding="2"
 />
 <style
-  id="tab-bar-item"
+  id="tabbar-top-item"
   alignItems="center"
   borderColor="transparent"
   borderRadius="8"
@@ -113,7 +111,14 @@
   />
   </modifier>
 </style>
-<style id="tab-label" fontSize="16" fontWeight="500" lineHeight="24" />
+<style
+  id="tabbar-top-label"
+  fontSize="16"
+  fontWeight="500"
+  lineHeight="24"
+/>
+
+<style id="tabbar-top-tab-content" flex="1" />
 
 <style
   id="tabbar-bottom-tab"
@@ -122,7 +127,7 @@
   justifyContent="center"
 />
 <style
-  id="tabbar-bottom-tab-label"
+  id="tabbar-bottom-tabbar-top-label"
   color="#cccccc"
   fontSize="8"
   fontWeight="bold"
@@ -208,7 +213,7 @@
   borderBottomColor="#eee"
   borderBottomWidth="1"
   flexDirection="row"
-  marginBottom="12"
+  marginBottom="24"
   paddingBottom="16"
   paddingLeft="24"
   paddingRight="24"
@@ -228,7 +233,7 @@
   alignItems="center"
   backgroundColor="#FFFFFF"
   borderColor="#eee"
-  borderBottomWidth="1"
+  borderBottomWidth="0"
   borderWidth="1"
   flex="1"
   flexDirection="row"
@@ -240,6 +245,7 @@
 <style id="item-first" borderTopLeftRadius="16" borderTopRightRadius="16" />
 <style
   id="item-last"
+  borderBottomWidth="1"
   borderBottomLeftRadius="16"
   borderBottomRightRadius="16"
   marginBottom="24"
@@ -272,7 +278,6 @@
   id="list-container"
   flex="1"
   flexGrow="1"
-  marginBottom="48"
 />
 <style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" />
 <style id="loading" alignItems="center" flex="1" justifyContent="center" />
@@ -311,7 +316,16 @@
 <style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
 
       
-  <style id="row" flexDirection="row" justifyContent="space-between" />
+  <style
+    id="tab-bar-select"
+    backgroundColor="#eee"
+    borderRadius="12"
+    flexDirection="row"
+    justifyContent="space-between"
+    marginBottom="24"
+    marginHorizontal="24"
+    padding="2"
+  />
   <style
     id="tab"
     flex="1"
@@ -328,6 +342,7 @@
     <style backgroundColor="red" />
     </modifier>
   </style>
+  <style id="tab-content" flex="1" />
   <style id="green" backgroundColor="lightgreen" />
   <style id="blue" backgroundColor="lightblue" />
   <style id="yellow" backgroundColor="lightyellow" />
@@ -365,7 +380,7 @@
       <behavior trigger="select" action="show" target="tab-1" />
       <text>Tab 1</text>
     </option>
-    <option value="2" style="tab">
+    <option value="2" style="tab" selected="true">
       <behavior trigger="deselect" action="hide" target="tab-2" />
       <behavior trigger="select" action="show" target="tab-2" />
       <text>Tab 2</text>
@@ -376,49 +391,30 @@
       <text>Tab 3</text>
     </option>
   </select-single>
-  
   <view id="tab-1" style="tab-content green centered" hide="true">
-    
-      <view
+    <view
       trigger="visible"
       action="dispatch-event"
       event-name="tab-1-visible"
     />
-    
     <text>TAB 1 CONTENT</text>
   </view>
-
-  
-  <view id="tab-2" style="tab-content blue centered" hide="true">
-    
-      <view
+  <view id="tab-2" style="tab-content blue centered">
+    <view
       trigger="visible"
       action="dispatch-event"
       event-name="tab-2-visible"
     />
-    
     <text>TAB 2 CONTENT</text>
   </view>
-
-  
   <view id="tab-3" style="tab-content yellow centered" hide="true">
-    
-      <view
+    <view
       trigger="visible"
       action="dispatch-event"
       event-name="tab-3-visible"
     />
-    
     <text>TAB 3 CONTENT</text>
   </view>
-
-  <behavior
-    once="true"
-    trigger="load"
-    action="set-value"
-    target="tabs"
-    new-value="2"
-  />
 
     </body>
   </screen>
@@ -504,10 +500,8 @@
   marginBottom="0"
 />
 
-<style id="tab-content" flex="1" />
-<style id="centered" alignItems="center" justifyContent="center" />
 <style
-  id="tab-bar-select"
+  id="tabbar-top-select"
   backgroundColor="#eee"
   borderRadius="12"
   flexDirection="row"
@@ -517,7 +511,7 @@
   padding="2"
 />
 <style
-  id="tab-bar-item"
+  id="tabbar-top-item"
   alignItems="center"
   borderColor="transparent"
   borderRadius="8"
@@ -538,7 +532,14 @@
   />
   </modifier>
 </style>
-<style id="tab-label" fontSize="16" fontWeight="500" lineHeight="24" />
+<style
+  id="tabbar-top-label"
+  fontSize="16"
+  fontWeight="500"
+  lineHeight="24"
+/>
+
+<style id="tabbar-top-tab-content" flex="1" />
 
 <style
   id="tabbar-bottom-tab"
@@ -547,7 +548,7 @@
   justifyContent="center"
 />
 <style
-  id="tabbar-bottom-tab-label"
+  id="tabbar-bottom-tabbar-top-label"
   color="#cccccc"
   fontSize="8"
   fontWeight="bold"
@@ -633,7 +634,7 @@
   borderBottomColor="#eee"
   borderBottomWidth="1"
   flexDirection="row"
-  marginBottom="12"
+  marginBottom="24"
   paddingBottom="16"
   paddingLeft="24"
   paddingRight="24"
@@ -653,7 +654,7 @@
   alignItems="center"
   backgroundColor="#FFFFFF"
   borderColor="#eee"
-  borderBottomWidth="1"
+  borderBottomWidth="0"
   borderWidth="1"
   flex="1"
   flexDirection="row"
@@ -665,6 +666,7 @@
 <style id="item-first" borderTopLeftRadius="16" borderTopRightRadius="16" />
 <style
   id="item-last"
+  borderBottomWidth="1"
   borderBottomLeftRadius="16"
   borderBottomRightRadius="16"
   marginBottom="24"
@@ -697,7 +699,6 @@
   id="list-container"
   flex="1"
   flexGrow="1"
-  marginBottom="48"
 />
 <style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" />
 <style id="loading" alignItems="center" flex="1" justifyContent="center" />

@@ -79,10 +79,8 @@
   marginBottom="0"
 />
 
-<style id="tab-content" flex="1" />
-<style id="centered" alignItems="center" justifyContent="center" />
 <style
-  id="tab-bar-select"
+  id="tabbar-top-select"
   backgroundColor="#eee"
   borderRadius="12"
   flexDirection="row"
@@ -92,7 +90,7 @@
   padding="2"
 />
 <style
-  id="tab-bar-item"
+  id="tabbar-top-item"
   alignItems="center"
   borderColor="transparent"
   borderRadius="8"
@@ -113,7 +111,14 @@
   />
   </modifier>
 </style>
-<style id="tab-label" fontSize="16" fontWeight="500" lineHeight="24" />
+<style
+  id="tabbar-top-label"
+  fontSize="16"
+  fontWeight="500"
+  lineHeight="24"
+/>
+
+<style id="tabbar-top-tab-content" flex="1" />
 
 <style
   id="tabbar-bottom-tab"
@@ -122,7 +127,7 @@
   justifyContent="center"
 />
 <style
-  id="tabbar-bottom-tab-label"
+  id="tabbar-bottom-tabbar-top-label"
   color="#cccccc"
   fontSize="8"
   fontWeight="bold"
@@ -208,7 +213,7 @@
   borderBottomColor="#eee"
   borderBottomWidth="1"
   flexDirection="row"
-  marginBottom="12"
+  marginBottom="24"
   paddingBottom="16"
   paddingLeft="24"
   paddingRight="24"
@@ -228,7 +233,7 @@
   alignItems="center"
   backgroundColor="#FFFFFF"
   borderColor="#eee"
-  borderBottomWidth="1"
+  borderBottomWidth="0"
   borderWidth="1"
   flex="1"
   flexDirection="row"
@@ -240,6 +245,7 @@
 <style id="item-first" borderTopLeftRadius="16" borderTopRightRadius="16" />
 <style
   id="item-last"
+  borderBottomWidth="1"
   borderBottomLeftRadius="16"
   borderBottomRightRadius="16"
   marginBottom="24"
@@ -272,7 +278,6 @@
   id="list-container"
   flex="1"
   flexGrow="1"
-  marginBottom="48"
 />
 <style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" />
 <style id="loading" alignItems="center" flex="1" justifyContent="center" />
@@ -323,20 +328,34 @@
   <view style="tab-route-content">
     
   
-  <select-single id="tab-bar" name="tab-bar" style="tab-bar-select">
-    <option value="tab-actions" style="tab-bar-item">
+  <select-single id="tab-bar" name="tab-bar" style="tabbar-top-select">
+    <option
+        value="tab-actions"
+        style="tabbar-top-item"
+        
+          selected="true"
+        
+      >
         <behavior trigger="deselect" action="hide" target="tab-actions" />
         <behavior trigger="select" action="show" target="tab-actions" />
-        <text style="tab-label">Actions</text>
-      </option><option value="tab-navigator" style="tab-bar-item">
+        <text style="tabbar-top-label">Actions</text>
+      </option><option
+        value="tab-navigator"
+        style="tabbar-top-item"
+        
+      >
         <behavior trigger="deselect" action="hide" target="tab-navigator" />
         <behavior trigger="select" action="show" target="tab-navigator" />
-        <text style="tab-label">Navigator</text>
+        <text style="tabbar-top-label">Navigator</text>
       </option>
   </select-single>
-
   
-  <view id="tab-actions" style="tab-content " hide="true">
+  
+  <view
+    id="tab-actions"
+    
+    style="tabbar-top-tab-content"
+  >
     
       
 
@@ -618,11 +637,15 @@
 
 
     
-    <text></text>
   </view>
 
-  
-  <view id="tab-navigator" style="tab-content " hide="true">
+  <view
+    id="tab-navigator"
+    
+      hide="true"
+    
+    style="tabbar-top-tab-content"
+  >
     
       
 
@@ -774,16 +797,7 @@
 
 
     
-    <text></text>
   </view>
-
-  <behavior
-    action="set-value"
-    new-value="tab-actions"
-    once="true"
-    trigger="load"
-    target="tab-bar"
-  />
 
   </view>
   
@@ -816,7 +830,7 @@
 </svg>
 
     </view>
-    <text style="tabbar-bottom-tab-label">UI</text>
+    <text style="tabbar-bottom-tabbar-top-label">UI</text>
   </option>
 
     
@@ -842,7 +856,7 @@
 </svg>
 
     </view>
-    <text style="tabbar-bottom-tab-label">Behaviors</text>
+    <text style="tabbar-bottom-tabbar-top-label">Behaviors</text>
   </option>
 
     
@@ -874,7 +888,7 @@
 </svg>
 
     </view>
-    <text style="tabbar-bottom-tab-label">Navigation</text>
+    <text style="tabbar-bottom-tabbar-top-label">Navigation</text>
   </option>
 
     
@@ -900,7 +914,7 @@
 </svg>
 
     </view>
-    <text style="tabbar-bottom-tab-label">Advanced</text>
+    <text style="tabbar-bottom-tabbar-top-label">Advanced</text>
   </option>
 
       
@@ -992,10 +1006,8 @@
   marginBottom="0"
 />
 
-<style id="tab-content" flex="1" />
-<style id="centered" alignItems="center" justifyContent="center" />
 <style
-  id="tab-bar-select"
+  id="tabbar-top-select"
   backgroundColor="#eee"
   borderRadius="12"
   flexDirection="row"
@@ -1005,7 +1017,7 @@
   padding="2"
 />
 <style
-  id="tab-bar-item"
+  id="tabbar-top-item"
   alignItems="center"
   borderColor="transparent"
   borderRadius="8"
@@ -1026,7 +1038,14 @@
   />
   </modifier>
 </style>
-<style id="tab-label" fontSize="16" fontWeight="500" lineHeight="24" />
+<style
+  id="tabbar-top-label"
+  fontSize="16"
+  fontWeight="500"
+  lineHeight="24"
+/>
+
+<style id="tabbar-top-tab-content" flex="1" />
 
 <style
   id="tabbar-bottom-tab"
@@ -1035,7 +1054,7 @@
   justifyContent="center"
 />
 <style
-  id="tabbar-bottom-tab-label"
+  id="tabbar-bottom-tabbar-top-label"
   color="#cccccc"
   fontSize="8"
   fontWeight="bold"
@@ -1121,7 +1140,7 @@
   borderBottomColor="#eee"
   borderBottomWidth="1"
   flexDirection="row"
-  marginBottom="12"
+  marginBottom="24"
   paddingBottom="16"
   paddingLeft="24"
   paddingRight="24"
@@ -1141,7 +1160,7 @@
   alignItems="center"
   backgroundColor="#FFFFFF"
   borderColor="#eee"
-  borderBottomWidth="1"
+  borderBottomWidth="0"
   borderWidth="1"
   flex="1"
   flexDirection="row"
@@ -1153,6 +1172,7 @@
 <style id="item-first" borderTopLeftRadius="16" borderTopRightRadius="16" />
 <style
   id="item-last"
+  borderBottomWidth="1"
   borderBottomLeftRadius="16"
   borderBottomRightRadius="16"
   marginBottom="24"
@@ -1185,7 +1205,6 @@
   id="list-container"
   flex="1"
   flexGrow="1"
-  marginBottom="48"
 />
 <style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" />
 <style id="loading" alignItems="center" flex="1" justifyContent="center" />

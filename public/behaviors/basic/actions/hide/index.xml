@@ -79,10 +79,8 @@
   marginBottom="0"
 />
 
-<style id="tab-content" flex="1" />
-<style id="centered" alignItems="center" justifyContent="center" />
 <style
-  id="tab-bar-select"
+  id="tabbar-top-select"
   backgroundColor="#eee"
   borderRadius="12"
   flexDirection="row"
@@ -92,7 +90,7 @@
   padding="2"
 />
 <style
-  id="tab-bar-item"
+  id="tabbar-top-item"
   alignItems="center"
   borderColor="transparent"
   borderRadius="8"
@@ -113,7 +111,14 @@
   />
   </modifier>
 </style>
-<style id="tab-label" fontSize="16" fontWeight="500" lineHeight="24" />
+<style
+  id="tabbar-top-label"
+  fontSize="16"
+  fontWeight="500"
+  lineHeight="24"
+/>
+
+<style id="tabbar-top-tab-content" flex="1" />
 
 <style
   id="tabbar-bottom-tab"
@@ -122,7 +127,7 @@
   justifyContent="center"
 />
 <style
-  id="tabbar-bottom-tab-label"
+  id="tabbar-bottom-tabbar-top-label"
   color="#cccccc"
   fontSize="8"
   fontWeight="bold"
@@ -208,7 +213,7 @@
   borderBottomColor="#eee"
   borderBottomWidth="1"
   flexDirection="row"
-  marginBottom="12"
+  marginBottom="24"
   paddingBottom="16"
   paddingLeft="24"
   paddingRight="24"
@@ -228,7 +233,7 @@
   alignItems="center"
   backgroundColor="#FFFFFF"
   borderColor="#eee"
-  borderBottomWidth="1"
+  borderBottomWidth="0"
   borderWidth="1"
   flex="1"
   flexDirection="row"
@@ -240,6 +245,7 @@
 <style id="item-first" borderTopLeftRadius="16" borderTopRightRadius="16" />
 <style
   id="item-last"
+  borderBottomWidth="1"
   borderBottomLeftRadius="16"
   borderBottomRightRadius="16"
   marginBottom="24"
@@ -272,7 +278,6 @@
   id="list-container"
   flex="1"
   flexGrow="1"
-  marginBottom="48"
 />
 <style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" />
 <style id="loading" alignItems="center" flex="1" justifyContent="center" />
@@ -543,10 +548,8 @@
   marginBottom="0"
 />
 
-<style id="tab-content" flex="1" />
-<style id="centered" alignItems="center" justifyContent="center" />
 <style
-  id="tab-bar-select"
+  id="tabbar-top-select"
   backgroundColor="#eee"
   borderRadius="12"
   flexDirection="row"
@@ -556,7 +559,7 @@
   padding="2"
 />
 <style
-  id="tab-bar-item"
+  id="tabbar-top-item"
   alignItems="center"
   borderColor="transparent"
   borderRadius="8"
@@ -577,7 +580,14 @@
   />
   </modifier>
 </style>
-<style id="tab-label" fontSize="16" fontWeight="500" lineHeight="24" />
+<style
+  id="tabbar-top-label"
+  fontSize="16"
+  fontWeight="500"
+  lineHeight="24"
+/>
+
+<style id="tabbar-top-tab-content" flex="1" />
 
 <style
   id="tabbar-bottom-tab"
@@ -586,7 +596,7 @@
   justifyContent="center"
 />
 <style
-  id="tabbar-bottom-tab-label"
+  id="tabbar-bottom-tabbar-top-label"
   color="#cccccc"
   fontSize="8"
   fontWeight="bold"
@@ -672,7 +682,7 @@
   borderBottomColor="#eee"
   borderBottomWidth="1"
   flexDirection="row"
-  marginBottom="12"
+  marginBottom="24"
   paddingBottom="16"
   paddingLeft="24"
   paddingRight="24"
@@ -692,7 +702,7 @@
   alignItems="center"
   backgroundColor="#FFFFFF"
   borderColor="#eee"
-  borderBottomWidth="1"
+  borderBottomWidth="0"
   borderWidth="1"
   flex="1"
   flexDirection="row"
@@ -704,6 +714,7 @@
 <style id="item-first" borderTopLeftRadius="16" borderTopRightRadius="16" />
 <style
   id="item-last"
+  borderBottomWidth="1"
   borderBottomLeftRadius="16"
   borderBottomRightRadius="16"
   marginBottom="24"
@@ -736,7 +747,6 @@
   id="list-container"
   flex="1"
   flexGrow="1"
-  marginBottom="48"
 />
 <style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" />
 <style id="loading" alignItems="center" flex="1" justifyContent="center" />

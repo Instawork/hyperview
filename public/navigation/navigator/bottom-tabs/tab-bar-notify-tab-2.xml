@@ -30,7 +30,7 @@
 </svg>
 
         </view>
-        <text style="tabbar-bottom-tab-label">Tab 1</text>
+        <text style="tabbar-bottom-tabbar-top-label">Tab 1</text>
         
       </view>
     </option>
@@ -59,7 +59,7 @@
 </svg>
 
         </view>
-        <text style="tabbar-bottom-tab-label">Tab 2</text>
+        <text style="tabbar-bottom-tabbar-top-label">Tab 2</text>
         
           <view style="tabbar-bottom-tab-notify" />
         

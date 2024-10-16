@@ -79,10 +79,8 @@
   marginBottom="0"
 />
 
-<style id="tab-content" flex="1" />
-<style id="centered" alignItems="center" justifyContent="center" />
 <style
-  id="tab-bar-select"
+  id="tabbar-top-select"
   backgroundColor="#eee"
   borderRadius="12"
   flexDirection="row"
@@ -92,7 +90,7 @@
   padding="2"
 />
 <style
-  id="tab-bar-item"
+  id="tabbar-top-item"
   alignItems="center"
   borderColor="transparent"
   borderRadius="8"
@@ -113,7 +111,14 @@
   />
   </modifier>
 </style>
-<style id="tab-label" fontSize="16" fontWeight="500" lineHeight="24" />
+<style
+  id="tabbar-top-label"
+  fontSize="16"
+  fontWeight="500"
+  lineHeight="24"
+/>
+
+<style id="tabbar-top-tab-content" flex="1" />
 
 <style
   id="tabbar-bottom-tab"
@@ -122,7 +127,7 @@
   justifyContent="center"
 />
 <style
-  id="tabbar-bottom-tab-label"
+  id="tabbar-bottom-tabbar-top-label"
   color="#cccccc"
   fontSize="8"
   fontWeight="bold"
@@ -208,7 +213,7 @@
   borderBottomColor="#eee"
   borderBottomWidth="1"
   flexDirection="row"
-  marginBottom="12"
+  marginBottom="24"
   paddingBottom="16"
   paddingLeft="24"
   paddingRight="24"
@@ -228,7 +233,7 @@
   alignItems="center"
   backgroundColor="#FFFFFF"
   borderColor="#eee"
-  borderBottomWidth="1"
+  borderBottomWidth="0"
   borderWidth="1"
   flex="1"
   flexDirection="row"
@@ -240,6 +245,7 @@
 <style id="item-first" borderTopLeftRadius="16" borderTopRightRadius="16" />
 <style
   id="item-last"
+  borderBottomWidth="1"
   borderBottomLeftRadius="16"
   borderBottomRightRadius="16"
   marginBottom="24"
@@ -272,7 +278,6 @@
   id="list-container"
   flex="1"
   flexGrow="1"
-  marginBottom="48"
 />
 <style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" />
 <style id="loading" alignItems="center" flex="1" justifyContent="center" />
@@ -311,39 +316,20 @@
 <style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
 
       
-  <style id="Border" borderColor="#e1e1e1" borderWidth="1" flex="1" margin="24" padding="8"/>
-  <style id="ScrollContainer" borderColor="#e1e1e1" borderRadius="16" borderWidth="1" height="160" margin="24"/>
-  <style id="ScrollContainer--Vertical" flexDirection="column"/>
-  <style id="ScrollContainer--Horizontal" flexDirection="row"/>
-  <style
-    id="scroll-child"
-    backgroundColor="#63CB76"
-    borderRadius="16"
-    height="40"
-    margin="8"
-    alignItems="center"
-    justifyContent="center"/>
-  <style id="scroll-child-vertical" height="40"/>
-  <style id="scroll-child-horizontal" width="40"/>
-  <style id="Text" color="#ffffff" alignSelf="center" textAlign="center" fontSize="24"/>
+  <style id="form-group" flex="0" flexGrow="1" margin="24"/>
+  <style id="label" borderColor="#4E4D4D" fontSize="16" fontWeight="bold" lineHeight="24" marginBottom="8"/>
   <style
     id="input"
     borderBottomColor="#E1E1E1"
     borderBottomWidth="1"
     borderColor="#4E4D4D"
-    flex="1"
     fontSize="16"
     fontWeight="normal"
-    margin="8"
     paddingBottom="8"
-    paddingTop="8">
-    <modifier pressed="true">
-    <style borderBottomColor="green"/>
-    </modifier>
-    <modifier focused="true">
-    <style borderBottomColor="#4778FF"/>
-    </modifier>
-  </style>
+    paddingTop="8"
+    marginBottom="24"/>
+  <style id="footer-style" backgroundColor="#63CB76" width="100%" padding="24"/>
+  <style id="footer-description" color="white" fontSize="24" fontWeight="bold" textAlign="center"/>
 
     </styles>
     <body style="body" safe-area="true">
@@ -367,128 +353,30 @@
 
     </view>
   
-  <text style="header-title">Scroll View</text>
+  <text style="header-title">Keyboard Avoiding View</text>
 </header>
 
       
-  <view scroll="true" style="main">
-    
+  
+  
+    <text style="description">
+      View with text inputs that open the keyboard. Keyboard awareness is applied on both the scrollable 'Form' view and the
+    non-scrollable 'footer-style' view
+    </text>
   
 
-
-  
-    <text style="description">Vertical Scroll</text>
-  
-
-<view scroll="true" style="ScrollContainer ScrollContainer--Vertical">
-  <view style="scroll-child scroll-child-vertical"/>
-  <view style="scroll-child scroll-child-vertical"/>
-  <view style="scroll-child scroll-child-vertical"/>
-  <view style="scroll-child scroll-child-vertical"/>
-  <view style="scroll-child scroll-child-vertical"/>
-  <view style="scroll-child scroll-child-vertical"/>
-</view>
-
-  
-
-
-  
-    <text style="description">Dismiss Keyboard On Drag</text>
-  
-
-<view scroll="true" keyboard-dismiss-mode="on-drag" style="ScrollContainer ScrollContainer--Vertical">
-  <text-field name="field" style="input" placeholder="Focus me, then scroll!"/>
-  <view style="scroll-child scroll-child-vertical"/>
-  <view style="scroll-child scroll-child-vertical"/>
-  <view style="scroll-child scroll-child-vertical"/>
-  <view style="scroll-child scroll-child-vertical"/>
-  <view style="scroll-child scroll-child-vertical"/>
-  <view style="scroll-child scroll-child-vertical"/>
-</view>
-
-  
-
-
-  
-    <text style="description">Vertical Scroll With Hidden Scroll Bar</text>
-  
-
-<view scroll="true" shows-scroll-indicator="false" style="ScrollContainer ScrollContainer--Vertical">
-  <view style="scroll-child scroll-child-vertical"/>
-  <view style="scroll-child scroll-child-vertical"/>
-  <view style="scroll-child scroll-child-vertical"/>
-  <view style="scroll-child scroll-child-vertical"/>
-  <view style="scroll-child scroll-child-vertical"/>
-  <view style="scroll-child scroll-child-vertical"/>
-</view>
-
-  
-
-
-  
-    <text style="description">Vertical Scroll With Sticky Header</text>
-  
-
-<view scroll="true" style="ScrollContainer ScrollContainer--Vertical">
-  <view id="view-0" style="scroll-child scroll-child-vertical">
-    <text style="Text">Non Sticky</text>
+  <view id="form" style="form-group" scroll="true">
+    <text style="label">Input field 1</text>
+    <text-field placeholder="First name" placeholderTextColor="#8D9494" name="text" style="input"/>
+    <text style="label">Input field 2</text>
+    <text-field placeholder="Last name" placeholderTextColor="#8D9494" name="text" style="input"/>
+    <text style="label">Input field 3</text>
+    <text-field placeholder="Address" placeholderTextColor="#8D9494" name="text" style="input"/>
   </view>
-  <view id="view-1" sticky="true" style="scroll-child scroll-child-vertical">
-    <text style="Text">Sticky</text>
-  </view>
-  <view id="view-2" style="scroll-child scroll-child-vertical">
-    <text style="Text">Non Sticky</text>
-  </view>
-  <view id="view-3" style="scroll-child scroll-child-vertical">
-    <text style="Text">Non Sticky</text>
-  </view>
-  <view id="view-4" style="scroll-child scroll-child-vertical">
-    <text style="Text">Non Sticky</text>
-  </view>
-  <view id="view-5" style="scroll-child scroll-child-vertical">
-    <text style="Text">Non Sticky</text>
-  </view>
-</view>
-
-  
-
-
-  
-    <text style="description">Horizontal Scroll</text>
-  
-
-<view scroll="true" scroll-orientation="horizontal" style="ScrollContainer ScrollContainer--Horizontal">
-  <view style="scroll-child scroll-child-horizontal"/>
-  <view style="scroll-child scroll-child-horizontal"/>
-  <view style="scroll-child scroll-child-horizontal"/>
-  <view style="scroll-child scroll-child-horizontal"/>
-  <view style="scroll-child scroll-child-horizontal"/>
-  <view style="scroll-child scroll-child-horizontal"/>
-  <view style="scroll-child scroll-child-horizontal"/>
-</view>
-
-  
-
-
-  
-    <text style="description">Horizontal Scroll With Hidden Scroll Bar</text>
-  
-
-<view
-  scroll="true"
-  scroll-orientation="horizontal"
-  shows-scroll-indicator="false"
-  style="ScrollContainer ScrollContainer--Horizontal">
-  <view style="scroll-child scroll-child-horizontal"/>
-  <view style="scroll-child scroll-child-horizontal"/>
-  <view style="scroll-child scroll-child-horizontal"/>
-  <view style="scroll-child scroll-child-horizontal"/>
-  <view style="scroll-child scroll-child-horizontal"/>
-  <view style="scroll-child scroll-child-horizontal"/>
-  <view style="scroll-child scroll-child-horizontal"/>
-</view>
-
-
+  <view id="footer" avoid-keyboard="true">
+    <view style="footer-style">
+      <text style="footer-description">Keyboard Avoiding View</text>
+    </view>
   </view>
 
     </body>
@@ -575,10 +463,8 @@
   marginBottom="0"
 />
 
-<style id="tab-content" flex="1" />
-<style id="centered" alignItems="center" justifyContent="center" />
 <style
-  id="tab-bar-select"
+  id="tabbar-top-select"
   backgroundColor="#eee"
   borderRadius="12"
   flexDirection="row"
@@ -588,7 +474,7 @@
   padding="2"
 />
 <style
-  id="tab-bar-item"
+  id="tabbar-top-item"
   alignItems="center"
   borderColor="transparent"
   borderRadius="8"
@@ -609,7 +495,14 @@
   />
   </modifier>
 </style>
-<style id="tab-label" fontSize="16" fontWeight="500" lineHeight="24" />
+<style
+  id="tabbar-top-label"
+  fontSize="16"
+  fontWeight="500"
+  lineHeight="24"
+/>
+
+<style id="tabbar-top-tab-content" flex="1" />
 
 <style
   id="tabbar-bottom-tab"
@@ -618,7 +511,7 @@
   justifyContent="center"
 />
 <style
-  id="tabbar-bottom-tab-label"
+  id="tabbar-bottom-tabbar-top-label"
   color="#cccccc"
   fontSize="8"
   fontWeight="bold"
@@ -704,7 +597,7 @@
   borderBottomColor="#eee"
   borderBottomWidth="1"
   flexDirection="row"
-  marginBottom="12"
+  marginBottom="24"
   paddingBottom="16"
   paddingLeft="24"
   paddingRight="24"
@@ -724,7 +617,7 @@
   alignItems="center"
   backgroundColor="#FFFFFF"
   borderColor="#eee"
-  borderBottomWidth="1"
+  borderBottomWidth="0"
   borderWidth="1"
   flex="1"
   flexDirection="row"
@@ -736,6 +629,7 @@
 <style id="item-first" borderTopLeftRadius="16" borderTopRightRadius="16" />
 <style
   id="item-last"
+  borderBottomWidth="1"
   borderBottomLeftRadius="16"
   borderBottomRightRadius="16"
   marginBottom="24"
@@ -768,7 +662,6 @@
   id="list-container"
   flex="1"
   flexGrow="1"
-  marginBottom="48"
 />
 <style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" />
 <style id="loading" alignItems="center" flex="1" justifyContent="center" />
@@ -828,7 +721,7 @@
 
     </view>
   
-  <text style="header-title">Scroll View</text>
+  <text style="header-title">Keyboard Avoiding View</text>
 </header>
 
     <view style="loading">
