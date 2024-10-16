@@ -1,5 +1,5 @@
 ---
-permalink: "/navigation/navigator/bottom-tabs/tab-2.xml"
+permalink: "/advanced/community/elements/bottom-tabbar/tab-2.xml"
 hv_title: "Tab Navigator - Tab 2"
 hv_button_behavior: "back"
 ---
@@ -13,7 +13,7 @@ hv_button_behavior: "back"
     {% call button("Add notification to tab 2", attributes={id:"add-notification"}) -%}
       <behavior action="hide" target="add-notification" />
       <behavior action="show" target="remove-notification" />
-      <behavior action="replace" target="bottom-tab-bar" href="/hyperview/public/navigation/navigator/bottom-tabs/tab-bar-notify-tab-2.xml" />
+      <behavior action="replace" target="bottom-tab-bar" href="/hyperview/public/advanced/community/elements/bottom-tabbar/tab-bar-notify-tab-2.xml" />
     {%- endcall %}
     {% call button("Remove notification from tab 2", attributes={id:"remove-notification", hide:"true"}) -%}
       <behavior action="reload" href="#" />
