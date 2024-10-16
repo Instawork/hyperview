@@ -12,12 +12,12 @@ hv_button_behavior: "none"
 {% block tab_route_content %}
   {{ tabbar_top([
     {id: "tab-case-studies", label: "Case Studies", selected: true},
-    {id: "tab-custom-components", label: "Custom Components"}
+    {id: "tab-community", label: "Community"}
   ]) }}
   {% call tabbar_top_tab("tab-case-studies", true) -%}
     {% include "./case-studies/content.xml.njk" %}
   {%- endcall -%}
-  {% call tabbar_top_tab("tab-custom-components") -%}
-    {% include "./custom-components/content.xml.njk" %}
+  {% call tabbar_top_tab("tab-community") -%}
+    {% include "./community/content.xml.njk" %}
   {%- endcall -%}
 {% endblock %}
