@@ -11,7 +11,7 @@
 >
   {% for section_tag in hv_section_list_tag.split(',') %}
     <section-title style="list-header item-first">
-      <text style="list-header-text">{{section_tag}}</text>
+      <text style="list-header-text">{{ section_tag | sectionTitle }}</text>
     </section-title>
     {% for screen in collections[section_tag]|sortCollection %}
       {% set item_style = "item" %}

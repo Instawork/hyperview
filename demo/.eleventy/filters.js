@@ -33,9 +33,15 @@ const paginateFilter = (list, pageNumber, itemsPerPage = 20) =>
 const pageCountFilter = (list, itemsPerPage = 20) =>
   Math.ceil(list.length / itemsPerPage);
 
+const sectionTitleFilter = tag => {
+  const segments = tag.split('/');
+  return segments[segments.length - 1];
+};
+
 module.exports = {
   sortCollectionFilter,
   highlightFilter,
   paginateFilter,
   pageCountFilter,
+  sectionTitleFilter,
 };
