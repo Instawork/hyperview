@@ -5,27 +5,19 @@ hv_tab_id: "advanced"
 hv_button_behavior: "none"
 ---
 {% extends 'templates/tab-route.xml.njk' %}
-{% from 'macros/tab/index.xml.njk' import tab, tab_bar %}
+
+{% from 'macros/tabbar-top/index.xml.njk' import tabbar_top %}
+{% from 'macros/tabbar-top-tab/index.xml.njk' import tabbar_top_tab %}
 
 {% block tab_route_content %}
-  {{ tab_bar(
-  [
-  {label: "Case Studies", id: "tab-case-studies"},
-  {label: "Custom Components", id: "tab-custom-components"}
-  ]
-  )
-  }}
-  {% call tab("tab-case-studies") -%}
+  {{ tabbar_top([
+    {id: "tab-case-studies", label: "Case Studies", selected: true},
+    {id: "tab-custom-components", label: "Custom Components"}
+  ]) }}
+  {% call tabbar_top_tab("tab-case-studies", true) -%}
     {% include "./case-studies/content.xml.njk" %}
-  {%- endcall %}
-  {% call tab("tab-custom-components") -%}
+  {%- endcall -%}
+  {% call tabbar_top_tab("tab-custom-components") -%}
     {% include "./custom-components/content.xml.njk" %}
-  {%- endcall %}
-  <behavior
-    action="set-value"
-    new-value="tab-case-studies"
-    once="true"
-    trigger="load"
-    target="tab-bar"
-  />
+  {%- endcall -%}
 {% endblock %}

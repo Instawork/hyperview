@@ -4,7 +4,8 @@
 {% include 'macros/link/styles.xml.njk' %}
 {% include 'macros/container/styles.xml.njk' %}
 {% include 'macros/contact/styles.xml.njk' %}
-{% include 'macros/tab/styles.xml.njk' %}
+{% include 'macros/tabbar-top/styles.xml.njk' %}
+{% include 'macros/tabbar-top-tab/styles.xml.njk' %}
 {% include 'macros/tabbar-bottom-tab/styles.xml.njk' %}
 {% include 'macros/tabbar-bottom/styles.xml.njk' %}
 {% include 'macros/text-field/styles.xml.njk' %}
@@ -16,7 +17,7 @@
   borderBottomColor="#eee"
   borderBottomWidth="1"
   flexDirection="row"
-  marginBottom="12"
+  marginBottom="24"
   paddingBottom="16"
   paddingLeft="24"
   paddingRight="24"
@@ -36,7 +37,7 @@
   alignItems="center"
   backgroundColor="#FFFFFF"
   borderColor="#eee"
-  borderBottomWidth="1"
+  borderBottomWidth="0"
   borderWidth="1"
   flex="1"
   flexDirection="row"
@@ -48,6 +49,7 @@
 <style id="item-first" borderTopLeftRadius="16" borderTopRightRadius="16" />
 <style
   id="item-last"
+  borderBottomWidth="1"
   borderBottomLeftRadius="16"
   borderBottomRightRadius="16"
   marginBottom="24"
@@ -80,7 +82,6 @@
   id="list-container"
   flex="1"
   flexGrow="1"
-  marginBottom="48"
 />
 <style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" />
 <style id="loading" alignItems="center" flex="1" justifyContent="center" />
