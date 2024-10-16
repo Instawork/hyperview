@@ -1,0 +1,24 @@
+---
+permalink: "/navigation/behaviors/actions/deep-links/index.xml"
+tags: "Navigation/Behaviors/Actions"
+hv_title: "Deep Links"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  {{ description('Tapping the buttons below will open their urls in default apps') }}
+  {% call button('applenews://') -%}
+    <behavior action="deep-link" href="applenews://" />
+  {%- endcall %}
+
+  {% call button('calshow://') -%}
+    <behavior action="deep-link" href="calshow://" />
+  {%- endcall %}
+
+  {% call button('https://www.hyperview.org') -%}
+    <behavior action="deep-link" href="https://www.hyperview.org" />
+  {%- endcall %}
+{% endblock %}

@@ -1,0 +1,39 @@
+---
+hv_title: "Back"
+permalink: "/navigation/behaviors/triggers/back/index.xml"
+tags: "Navigation/Behaviors/Triggers"
+hv_button_behavior: "back"
+---
+{# Todo rohanbayya: Back trigger does not work on web browser #}
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block content %}
+  {% call description() -%}
+    When behaviors with a "trigger" of "back" are
+    included, standard back and close functionality is blocked. Remove or hide the
+    behaviors to restore functionality.
+  {%- endcall %}
+  {% call description() -%}
+    Note: this will only work when using the Hyperview Navigator.
+  {%- endcall %}
+  {% call button('Go back') -%}
+    <behavior action="back" />
+  {%- endcall %}
+  <view id="back_behaviors">
+    <behavior
+      trigger="back"
+      action="alert"
+      alert:message="Are you sure you want to go back?"
+      alert:title="Back confirmation"
+      xmlns:alert="https://hyperview.org/hyperview-alert">
+      <alert:option alert:label="OK">
+        <behavior action="hide" target="back_behaviors"/>
+        <!-- the "delay" attribute is used to ensure the hide completes before 'back' is performed -->
+        <behavior action="back" delay="1"/>
+      </alert:option>
+      <alert:option alert:label="Cancel"/>
+    </behavior>
+  </view>
+{% endblock %}

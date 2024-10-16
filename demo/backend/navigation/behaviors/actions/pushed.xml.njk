@@ -1,0 +1,11 @@
+---
+permalink: "/navigation/behaviors/actions/pushed.xml"
+hv_title: "Pushed"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block content %}
+  {{ description("Pushed a new screen!") }}
+{% endblock %}
