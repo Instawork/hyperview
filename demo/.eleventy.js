@@ -3,6 +3,7 @@ const {
   highlightFilter,
   paginateFilter,
   pageCountFilter,
+  sectionTitleFilter,
 } = require('./.eleventy/filters.js');
 
 module.exports = function (eleventyConfig) {
@@ -49,6 +50,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addNunjucksFilter('highlight', highlightFilter);
   eleventyConfig.addNunjucksFilter('paginate', paginateFilter);
   eleventyConfig.addNunjucksFilter('pageCount', pageCountFilter);
+  eleventyConfig.addNunjucksFilter('sectionTitle', sectionTitleFilter);
   // Output into demo folder for serving both github pages and local development
   return {
     dir: {
