@@ -378,7 +378,7 @@
     
   >
     
-      <behavior action="new" href="/hyperview/public/navigation/actions/modal/index.xml" />
+      <behavior action="new" href="/hyperview/public/navigation/behaviors/actions/modal/index.xml" />
     
     <text style="button-label">New</text>
   </view>
@@ -392,7 +392,7 @@
     
   >
     
-      <behavior action="new" delay="1000" href="/hyperview/public/navigation/actions/modal/index.xml" show-during-load="loadingScreen" />
+      <behavior action="new" delay="1000" href="/hyperview/public/navigation/behaviors/actions/modal/index.xml" show-during-load="loadingScreen" />
     
     <text style="button-label">New with indicator</text>
   </view>
@@ -407,7 +407,7 @@
     
   >
     
-      <behavior action="new" delay="1000" href="/hyperview/public/navigation/actions/modal/index.xml" show-during-load="loading-screen" />
+      <behavior action="new" delay="1000" href="/hyperview/public/navigation/behaviors/actions/modal/index.xml" show-during-load="loading-screen" />
     
     <text style="button-label">New with params</text>
   </view>

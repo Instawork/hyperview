@@ -339,7 +339,7 @@
 
     </view>
   
-  <text style="header-title">Back Trigger</text>
+  <text style="header-title">Modal</text>
 </header>
 
       
@@ -347,19 +347,9 @@
     
   
   
-    <text style="description">
-      When behaviors with a "trigger" of "back" are
-    included, standard back and close functionality is blocked. Remove or hide the
-    behaviors to restore functionality.
-    </text>
+    <text style="description">Open a new modal screen</text>
   
 
-  
-  
-    <text style="description">
-      Note: this will only work when using the Hyperview Navigator.
-    </text>
-  
 
   
   <view
@@ -369,26 +359,25 @@
     
   >
     
-      <behavior action="back" />
+      <behavior action="new" delay="1000" href="/hyperview/public/navigation/behaviors/actions/modal/index.xml" show-during-load="loading-screen" />
     
-    <text style="button-label">Go back</text>
+    <text style="button-label">Open another modal</text>
   </view>
 
-  <view id="back_behaviors">
-    <behavior
-      trigger="back"
-      action="alert"
-      alert:message="Are you sure you want to go back?"
-      alert:title="Back confirmation"
-      xmlns:alert="https://hyperview.org/hyperview-alert">
-      <alert:option alert:label="OK">
-        <behavior action="hide" target="back_behaviors"/>
-        <!-- the "delay" attribute is used to ensure the hide completes before 'back' is performed -->
-        <behavior action="back" delay="1"/>
-      </alert:option>
-      <alert:option alert:label="Cancel"/>
-    </behavior>
+
+  
+  <view
+    
+    
+      style="button"
+    
+  >
+    
+      <behavior action="push" href="/hyperview/public/navigation/behaviors/actions/modal/index.xml" />
+    
+    <text style="button-label">Push on the stack</text>
   </view>
+
 
   </view>
 
@@ -734,7 +723,7 @@
 
     </view>
   
-  <text style="header-title">Back Trigger</text>
+  <text style="header-title">Modal</text>
 </header>
 
     <view style="loading">

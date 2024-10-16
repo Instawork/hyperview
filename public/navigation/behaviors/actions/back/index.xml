@@ -339,15 +339,19 @@
 
     </view>
   
-  <text style="header-title">Modal</text>
+  <text style="header-title">Back</text>
 </header>
 
       
   <view scroll="true" style="main">
     
   
+
+
+
   
-    <text style="description">Open a new modal screen</text>
+  
+    <text style="description">Tapping the button below will navigate back to the previous screen.</text>
   
 
 
@@ -359,10 +363,21 @@
     
   >
     
-      <behavior action="new" delay="1000" href="/hyperview/public/navigation/actions/modal/index.xml" show-during-load="loading-screen" />
+      <behavior action="back" href="/hyperview/public/navigation/index.xml" />
     
-    <text style="button-label">Open another modal</text>
+    <text style="button-label">Back</text>
   </view>
+
+
+
+  
+
+
+
+  
+  
+    <text style="description">Tapping the button below will navigate back to a different screen</text>
+  
 
 
   
@@ -373,10 +388,37 @@
     
   >
     
-      <behavior action="push" href="/hyperview/public/navigation/actions/modal/index.xml" />
+      <behavior action="back" delay="200" href="/hyperview/public/navigation/behaviors/actions/changed.xml" />
     
-    <text style="button-label">Push on the stack</text>
+    <text style="button-label">Back to other screen</text>
   </view>
+
+
+
+  
+
+
+
+  
+  
+    <text style="description">Tapping the button below will navigate back to a different screen, with a loading screen</text>
+  
+
+
+  
+  <view
+    
+    
+      style="button"
+    
+  >
+    
+      <behavior action="back" delay="500" href="/hyperview/public/navigation/behaviors/actions/changed.xml" show-during-load="loading-screen" />
+    
+    <text style="button-label">Back with loading</text>
+  </view>
+
+
 
 
   </view>
@@ -723,7 +765,7 @@
 
     </view>
   
-  <text style="header-title">Modal</text>
+  <text style="header-title">Back</text>
 </header>
 
     <view style="loading">

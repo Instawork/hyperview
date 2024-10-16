@@ -316,31 +316,12 @@
 <style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
 
       
-  <style
-    id="input"
-    borderBottomColor="#E1E1E1"
-    borderBottomWidth="1"
-    borderColor="#4E4D4D"
-    flex="1"
-    fontSize="16"
-    fontWeight="normal"
-    marginLeft="24"
-    marginRight="24"
-    paddingBottom="8"
-    paddingTop="8">
-    <modifier pressed="true">
-    <style borderBottomColor="green"/>
-    </modifier>
-    <modifier focused="true">
-    <style borderBottomColor="#4778FF"/>
-    </modifier>
-  </style>
-
+      
     </styles>
     <body style="body" safe-area="true">
       <header style="header">
   
-    <view action="back" href="#" style="header-btn">
+    <view action="close" href="#" style="header-btn">
       <svg
   width="24"
   height="24"
@@ -351,37 +332,27 @@
   <path
     fill-rule="evenodd"
     clip-rule="evenodd"
-    d="M11.7803 0.96967C12.0732 1.26256 12.0732 1.73744 11.7803 2.03033L2.56066 11.25H23.25C23.6642 11.25 24 11.5858 24 12C24 12.4142 23.6642 12.75 23.25 12.75H2.56066L11.7803 21.9697C12.0732 22.2626 12.0732 22.7374 11.7803 23.0303C11.4874 23.3232 11.0126 23.3232 10.7197 23.0303L0.21967 12.5303C-0.0732233 12.2374 -0.0732233 11.7626 0.21967 11.4697L10.7197 0.96967C11.0126 0.676777 11.4874 0.676777 11.7803 0.96967Z"
+    d="M21.7803 3.28033C22.0732 2.98744 22.0732 2.51256 21.7803 2.21967C21.4874 1.92678 21.0126 1.92678 20.7197 2.21967L12 10.9393L3.28033 2.21967C2.98744 1.92678 2.51256 1.92678 2.21967 2.21967C1.92678 2.51256 1.92678 2.98744 2.21967 3.28033L10.9393 12L2.21967 20.7197C1.92678 21.0126 1.92678 21.4874 2.21967 21.7803C2.51256 22.0732 2.98744 22.0732 3.28033 21.7803L12 13.0607L20.7197 21.7803C21.0126 22.0732 21.4874 22.0732 21.7803 21.7803C22.0732 21.4874 22.0732 21.0126 21.7803 20.7197L13.0607 12L21.7803 3.28033Z"
     fill="#4778FF"
   />
 </svg>
 
     </view>
   
-  <text style="header-title">Push</text>
+  <text style="header-title">Close</text>
 </header>
 
       
   <view scroll="true" style="main">
     
   
-  
-    <text style="description">Tapping the button below will request an XML screen and push it onto the stack.</text>
-  
+
 
 
   
-  <view
-    
-    
-      style="button"
-    
-  >
-    
-      <behavior action="push" href="/hyperview/public/navigation/actions/pushed.xml" />
-    
-    <text style="button-label">Push</text>
-  </view>
+  
+    <text style="description">Tapping the button below will navigate back to the previous screen.</text>
+  
 
 
   
@@ -392,13 +363,25 @@
     
   >
     
-      <behavior action="push" delay="1000" href="/hyperview/public/navigation/actions/pushed.xml" show-during-load="loading-screen" />
+      <behavior action="close" href="#" />
     
-    <text style="button-label">Push with indicator</text>
+    <text style="button-label">Close</text>
   </view>
 
+
+
+  
+
+
+
+  
+  
+    <text style="description">Tapping the button below will navigate back to the previous screen, but with query params from the form.</text>
+  
 
   <form>
+    <text-field name="param1" value="value1"/>
+    <text-field name="param2" value="value2"/>
     
   <view
     
@@ -407,13 +390,64 @@
     
   >
     
-      <behavior action="push" delay="1000" href="/hyperview/public/navigation/actions/pushed.xml" show-during-load="loading-screen" />
+      <behavior action="close" href="/hyperview/public/navigation/index.xml?test=1" />
     
-    <text style="button-label">Push with params</text>
+    <text style="button-label">Close</text>
   </view>
 
-    <text-field style="input" name="param1" value="value1"/>
   </form>
+
+
+  
+
+
+
+  
+  
+    <text style="description">Tapping the button below will navigate back to a different screen</text>
+  
+
+
+  
+  <view
+    
+    
+      style="button"
+    
+  >
+    
+      <behavior action="close" delay="200" href="/hyperview/public/navigation/behaviors/actions/changed.xml" />
+    
+    <text style="button-label">Close to other screen</text>
+  </view>
+
+
+
+  
+
+
+
+  
+  
+    <text style="description">Tapping the button below will navigate back to a different screen, with a loading screen</text>
+  
+
+
+  
+  <view
+    
+    
+      style="button"
+    
+  >
+    
+      <behavior action="close" delay="5000" href="/hyperview/public/navigation/behaviors/actions/changed.xml" show-during-load="loading-screen" />
+    
+    <text style="button-label">Close with loading</text>
+  </view>
+
+
+
 
   </view>
 
@@ -741,7 +775,7 @@
   <body style="body" safe-area="true">
     <header style="header">
   
-    <view action="back" href="#" style="header-btn">
+    <view action="close" href="#" style="header-btn">
       <svg
   width="24"
   height="24"
@@ -752,14 +786,14 @@
   <path
     fill-rule="evenodd"
     clip-rule="evenodd"
-    d="M11.7803 0.96967C12.0732 1.26256 12.0732 1.73744 11.7803 2.03033L2.56066 11.25H23.25C23.6642 11.25 24 11.5858 24 12C24 12.4142 23.6642 12.75 23.25 12.75H2.56066L11.7803 21.9697C12.0732 22.2626 12.0732 22.7374 11.7803 23.0303C11.4874 23.3232 11.0126 23.3232 10.7197 23.0303L0.21967 12.5303C-0.0732233 12.2374 -0.0732233 11.7626 0.21967 11.4697L10.7197 0.96967C11.0126 0.676777 11.4874 0.676777 11.7803 0.96967Z"
+    d="M21.7803 3.28033C22.0732 2.98744 22.0732 2.51256 21.7803 2.21967C21.4874 1.92678 21.0126 1.92678 20.7197 2.21967L12 10.9393L3.28033 2.21967C2.98744 1.92678 2.51256 1.92678 2.21967 2.21967C1.92678 2.51256 1.92678 2.98744 2.21967 3.28033L10.9393 12L2.21967 20.7197C1.92678 21.0126 1.92678 21.4874 2.21967 21.7803C2.51256 22.0732 2.98744 22.0732 3.28033 21.7803L12 13.0607L20.7197 21.7803C21.0126 22.0732 21.4874 22.0732 21.7803 21.7803C22.0732 21.4874 22.0732 21.0126 21.7803 20.7197L13.0607 12L21.7803 3.28033Z"
     fill="#4778FF"
   />
 </svg>
 
     </view>
   
-  <text style="header-title">Push</text>
+  <text style="header-title">Close</text>
 </header>
 
     <view style="loading">

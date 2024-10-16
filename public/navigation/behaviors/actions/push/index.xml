@@ -316,7 +316,26 @@
 <style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
 
       
-      
+  <style
+    id="input"
+    borderBottomColor="#E1E1E1"
+    borderBottomWidth="1"
+    borderColor="#4E4D4D"
+    flex="1"
+    fontSize="16"
+    fontWeight="normal"
+    marginLeft="24"
+    marginRight="24"
+    paddingBottom="8"
+    paddingTop="8">
+    <modifier pressed="true">
+    <style borderBottomColor="green"/>
+    </modifier>
+    <modifier focused="true">
+    <style borderBottomColor="#4778FF"/>
+    </modifier>
+  </style>
+
     </styles>
     <body style="body" safe-area="true">
       <header style="header">
@@ -339,7 +358,7 @@
 
     </view>
   
-  <text style="header-title">Navigate</text>
+  <text style="header-title">Push</text>
 </header>
 
       
@@ -359,9 +378,9 @@
     
   >
     
-      <behavior action="navigate" href="/hyperview/public/index.xml" />
+      <behavior action="push" href="/hyperview/public/navigation/behaviors/actions/pushed.xml" />
     
-    <text style="button-label">Navigate to home</text>
+    <text style="button-label">Push</text>
   </view>
 
 
@@ -373,11 +392,28 @@
     
   >
     
-      <behavior action="navigate" delay="1000" href="/hyperview/public/navigation/actions/pushed.xml" show-during-load="loading-screen" />
+      <behavior action="push" delay="1000" href="/hyperview/public/navigation/behaviors/actions/pushed.xml" show-during-load="loading-screen" />
     
-    <text style="button-label">Navigate with indicator</text>
+    <text style="button-label">Push with indicator</text>
   </view>
 
+
+  <form>
+    
+  <view
+    
+    
+      style="button"
+    
+  >
+    
+      <behavior action="push" delay="1000" href="/hyperview/public/navigation/behaviors/actions/pushed.xml" show-during-load="loading-screen" />
+    
+    <text style="button-label">Push with params</text>
+  </view>
+
+    <text-field style="input" name="param1" value="value1"/>
+  </form>
 
   </view>
 
@@ -723,7 +759,7 @@
 
     </view>
   
-  <text style="header-title">Navigate</text>
+  <text style="header-title">Push</text>
 </header>
 
     <view style="loading">
