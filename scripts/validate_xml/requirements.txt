@@ -1,0 +1,2 @@
+lxml==5.0.2
+xmlschema==2.4.0
