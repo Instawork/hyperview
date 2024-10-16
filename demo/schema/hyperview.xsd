@@ -6,6 +6,7 @@
   xmlns:hv="https://hyperview.org/hyperview"
   xmlns:alert="https://hyperview.org/hyperview-alert"
   xmlns:filter="https://hyperview.org/filter"
+  xmlns:share="https://instawork.com/hyperview-share"
 >
   <xs:import
     namespace="https://hyperview.org/hyperview-alert"
@@ -18,6 +19,10 @@
   <xs:import
     namespace="https://hyperview.org/navigation"
     schemaLocation="navigation.xsd"
+  />
+  <xs:import
+    namespace="https://instawork.com/hyperview-share"
+    schemaLocation="share.xsd"
   />
 
   <xs:redefine schemaLocation="../../schema/core.xsd">
@@ -48,7 +53,7 @@
         <xs:enumeration value="scroll" />
 
         <!-- Hyperview demo extensions -->
-        <!-- None yet, add future custom behavior actions here -->
+        <xs:enumeration value="share" />
       </xs:restriction>
     </xs:simpleType>
 
@@ -58,6 +63,7 @@
 
       <!-- Hyperview demo extensions -->
       <xs:attributeGroup ref="filter:filterAttributes" />
+      <xs:attributeGroup ref="share:shareAttributes" />
     </xs:attributeGroup>
 
     <!-- This redefines the behavior element with our custom actions / attributes -->

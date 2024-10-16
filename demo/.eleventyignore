@@ -76,6 +76,10 @@ backend/advanced/case-studies/photos/section-2/index.xml.njk
 backend/advanced/case-studies/business-rating/styles.xml.njk
 backend/advanced/case-studies/business-rating/rating-modal/styles.xml.njk
 backend/advanced/case-studies/business-rating/rating-modal/rating.xml.njk
+backend/advanced/community/behaviors/share/message-url/index.xml.njk
+backend/advanced/community/behaviors/share/all/index.xml.njk
+backend/advanced/community/behaviors/share/message/index.xml.njk
+backend/advanced/community/behaviors/share/url/index.xml.njk
 backend/navigation/actions/close/close-previous-screen/index.xml.njk
 backend/navigation/actions/close/close-query-params/index.xml.njk
 backend/navigation/actions/close/close-different-screen/index.xml.njk
@@ -97,10 +101,6 @@ backend/behaviors/advanced/set-value/switch/index.xml.njk
 backend/behaviors/advanced/set-value/text-field/index.xml.njk
 backend/behaviors/advanced/set-value/set/index.xml.njk
 backend/behaviors/advanced/set-value/clear-delay/index.xml.njk
-backend/behaviors/advanced/share/message-url/index.xml.njk
-backend/behaviors/advanced/share/all/index.xml.njk
-backend/behaviors/advanced/share/message/index.xml.njk
-backend/behaviors/advanced/share/url/index.xml.njk
 backend/behaviors/basic/fragments/fragment-replace/visible/index.xml.njk
 backend/behaviors/basic/fragments/fragment-replace/hidden/index.xml.njk
 backend/behaviors/basic/triggers/long-press/long-press-link/index.xml.njk
