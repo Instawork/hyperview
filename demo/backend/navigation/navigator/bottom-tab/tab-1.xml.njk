@@ -1,10 +1,14 @@
 ---
-permalink: "/navigation/navigator/simple-tab/tab-1.xml"
-hv_title: "Tab Navigator - Tab 1"
+permalink: "/navigation/navigator/bottom-tab/tab-1.xml"
+hv_title: "Bottom Tab - Tab 1"
 hv_button_behavior: "back"
 ---
 {% from 'macros/description/index.xml.njk' import description %}
 {% extends 'templates/base.xml.njk' %}
+
+{% block styles %}
+  {% include "./styles.xml.njk" %}
+{% endblock %}
 
 {% block container %}
   {{ description('This is the content for tab 1.') }}
@@ -13,22 +17,22 @@ hv_button_behavior: "back"
       style="bottom-tab bottom-tab-selected"
     >
       <image
-        source="/hyperview/public/navigation/navigator/simple-tab/heart2.png"
+        source="/hyperview/public/navigation/navigator/bottom-tab/heart2.png"
         style="bottom-tab-icon bottom-tab-selected"
       />
-      <text style="bottom-tabbar-top-label bottom-tabbar-top-label-selected">Tab 1</text>
+      <text style="bottom-tab-label bottom-tab-label-selected">Tab 1</text>
     </view>
     <view
       style="bottom-tab"
       href-style="bottom-tab"
       action="navigate"
-      target="tab-2"
+      href="#tab-2"
     >
       <image
-        source="/hyperview/public/navigation/navigator/simple-tab/list2.png"
-        style="bottom-tab-icon "
+        source="/hyperview/public/navigation/navigator/bottom-tab/list2.png"
+        style="bottom-tab-icon"
       />
-      <text style="bottom-tabbar-top-label">Tab 2</text>
+      <text style="bottom-tab-label">Tab 2</text>
     </view>
   </view>
 {% endblock %}

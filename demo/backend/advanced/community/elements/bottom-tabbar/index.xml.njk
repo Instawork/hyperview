@@ -1,0 +1,17 @@
+---
+permalink: "/advanced/community/elements/bottom-tabbar/index.xml"
+tags: "Advanced/Community/Elements"
+hv_title: "Bottom Tab Bar"
+hv_button_behavior: "back"
+---
+{# Example tab navigator inside a stack navigator #}
+<doc xmlns="https://hyperview.org/hyperview">
+  <navigator id="custom-stack" type="stack">
+    <nav-route id="custom-bottom-tabs-route">
+      <navigator id="custom-bottom-tabs-navigator" type="tab">
+        <nav-route id="custom-bottom-tabs-tab-1" href="/hyperview/public/advanced/community/elements/bottom-tabbar/tab-1.xml"/>
+        <nav-route id="custom-bottom-tabs-tab-2" href="/hyperview/public/advanced/community/elements/bottom-tabbar/tab-2.xml"/>
+      </navigator>
+    </nav-route>
+  </navigator>
+</doc>

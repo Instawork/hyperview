@@ -87,6 +87,7 @@ backend/navigation/behaviors/actions/close/close-loading/index.xml.njk
 backend/navigation/behaviors/actions/back/different-screen/index.xml.njk
 backend/navigation/behaviors/actions/back/loading/index.xml.njk
 backend/navigation/behaviors/actions/back/previous-screen/index.xml.njk
+backend/navigation/navigator/bottom-tab/styles.xml.njk
 backend/behaviors/advanced/scroll/section-list/section-list-content.xml.njk
 backend/behaviors/advanced/scroll/list/list-content.xml.njk
 backend/behaviors/advanced/set-value/date-field/index.xml.njk
