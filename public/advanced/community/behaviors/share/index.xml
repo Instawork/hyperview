@@ -1,6 +1,5 @@
 
-<doc xmlns="https://hyperview.org/hyperview" 
->
+<doc xmlns="https://hyperview.org/hyperview" >
   <screen>
     <styles>
       <style
@@ -317,7 +316,7 @@
 <style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
 
       
-
+      
     </styles>
     <body style="body" safe-area="true">
       <header style="header">
@@ -344,7 +343,105 @@
 </header>
 
       
-  <text>Temporary placeholder</text>
+  <view scroll="true" style="main">
+    
+  
+  
+    <text style="description">Examples of using custom behaviors to trigger system sharing.</text>
+  
+
+  
+
+
+  <view
+    
+    
+      style="button"
+    
+  >
+    
+      <behavior
+    xmlns:share="https://instawork.com/hyperview-share"
+    action="share"
+    share:message="Test message"
+    trigger="press"
+  />
+    
+    <text style="button-label">Message-only</text>
+  </view>
+
+
+  
+
+
+
+  <view
+    
+    
+      style="button"
+    
+  >
+    
+      <behavior
+    xmlns:share="https://instawork.com/hyperview-share"
+    action="share"
+    share:url="https://www.xkcd.com"
+    trigger="press"
+  />
+    
+    <text style="button-label">URL-only</text>
+  </view>
+
+
+  
+
+
+  <view
+    
+    
+      style="button"
+    
+  >
+    
+      <behavior
+    xmlns:share="https://instawork.com/hyperview-share"
+    action="share"
+    share:message="Test message"
+    share:url="https://www.xkcd.com"
+    trigger="press"
+  />
+    
+    <text style="button-label">Message and URL</text>
+  </view>
+
+
+  
+
+
+  <view
+    
+    
+      style="button"
+    
+  >
+    
+      <behavior
+    xmlns:share="https://instawork.com/hyperview-share"
+    action="share"
+    share:dialogTitle="This is the dialog title"
+    share:message="Test message"
+    share:subject="This is the subject"
+    share:title="This is the title"
+    share:url="https://www.xkcd.com"
+    trigger="press"
+  />
+    
+    <text style="button-label">Title, subject, message, and URL</text>
+  </view>
+
+
+
+  </view>
 
     </body>
   </screen>
