@@ -11,11 +11,11 @@ hv_button_behavior: "none"
 
 {% block tab_route_content %}
   {{ tabbar_top([
-    {id: "tab-actions", label: "Actions", selected: true},
+    {id: "tab-behaviors", label: "Behaviors", selected: true},
     {id: "tab-navigator", label: "Navigator"}
   ]) }}
-  {% call tabbar_top_tab("tab-actions", true) -%}
-    {% include "./actions/content.xml.njk" %}
+  {% call tabbar_top_tab("tab-behaviors", true) -%}
+    {% include "./behaviors/content.xml.njk" %}
   {%- endcall -%}
   {% call tabbar_top_tab("tab-navigator") -%}
     {% include "./navigator/content.xml.njk" %}

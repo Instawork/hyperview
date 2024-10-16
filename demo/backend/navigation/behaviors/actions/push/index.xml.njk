@@ -1,7 +1,7 @@
 ---
-permalink: "/navigation/actions/new/index.xml"
-tags: "Navigation/Actions"
-hv_title: "New"
+permalink: "/navigation/behaviors/actions/push/index.xml"
+tags: "Navigation/Behaviors/Actions"
+hv_title: "Push"
 hv_button_behavior: "back"
 ---
 {% extends 'templates/scrollview.xml.njk' %}
@@ -31,19 +31,19 @@ hv_button_behavior: "back"
 {% endblock %}
 
 {% block content %}
-  {{ description('Tapping the button below will request an XML screen and show it in a new modal.') }}
+  {{ description('Tapping the button below will request an XML screen and push it onto the stack.') }}
 
-  {% call button('New') -%}
-    <behavior action="new" href="/hyperview/public/navigation/actions/modal/index.xml" />
+  {% call button('Push') -%}
+    <behavior action="push" href="/hyperview/public/navigation/behaviors/actions/pushed.xml" />
   {%- endcall %}
 
-  {% call button('New with indicator') -%}
-    <behavior action="new" delay="1000" href="/hyperview/public/navigation/actions/modal/index.xml" show-during-load="loadingScreen" />
+  {% call button('Push with indicator') -%}
+    <behavior action="push" delay="1000" href="/hyperview/public/navigation/behaviors/actions/pushed.xml" show-during-load="loading-screen" />
   {%- endcall %}
 
   <form>
-    {% call button('New with params') -%}
-      <behavior action="new" delay="1000" href="/hyperview/public/navigation/actions/modal/index.xml" show-during-load="loading-screen" />
+    {% call button('Push with params') -%}
+      <behavior action="push" delay="1000" href="/hyperview/public/navigation/behaviors/actions/pushed.xml" show-during-load="loading-screen" />
     {%- endcall %}
     <text-field style="input" name="param1" value="value1"/>
   </form>
