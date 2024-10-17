@@ -3,6 +3,7 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import type { SingleValueValidator, Validation } from 'hyperview/src/types';
 
 export default {
+  kind: 'single',
   check: (value: string | null | undefined, element: Element): Validation => {
     const maxLengthStr: string | null = element.getAttribute('max');
     const maxLength = parseInt(maxLengthStr || '', 10);

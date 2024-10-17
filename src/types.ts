@@ -453,6 +453,6 @@ export type MultipleValueValidator = {
   ) => Validation;
 };
 
-export type Validator = SingleValueValidator;
+export type Validator = SingleValueValidator | MultipleValueValidator;
 
 export type ValidatorRegistry = Record<string, Record<string, Validator>>;

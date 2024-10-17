@@ -82,36 +82,53 @@ export default {
       namespaceURI,
       localName,
     ) as HvComponent & HvFormValues;
-    const values: Array<string> = formComponent
-      .getFormInputValues(inputElement)
-      // eslint-disable-next-line no-unused-vars
-      .map(([, value]) => value);
+    const values: Array<[string, string]> = formComponent.getFormInputValues(
+      inputElement,
+    );
 
     // Find validators for the element
     const validators: Array<
       [Validator, Element]
     > = ValidationService.getValidators(inputElement);
 
-    // For each validator, collect the results on each value.
     const validationResults: Array<Validation> = validators.reduce(
       (allResults: Array<Validation>, [v, e]) => {
-        // For a single validator, collect the results on each value
-        const validatorResults = values.reduce(
-          (results: Array<Validation>, value: string) => {
-            // Get the results of a single validaor for a single value.
-            const result: Validation = v.check(value, e);
+        let validatorResults: Array<Validation> = [];
 
+        switch (v.kind) {
+          case 'single': {
+            // For a single validator, collect the results on each value
+            validatorResults = values
+              .map(([, value]) => value)
+              .reduce((results: Array<Validation>, value: string) => {
+                // Get the results of a single validaor for a single value.
+                const result: Validation = v.check(value, e);
+                // Update state of the validator element
+                e.setAttributeNS(
+                  Namespaces.HYPERVIEW_VALIDATION,
+                  'state',
+                  result.valid ? 'valid' : 'invalid',
+                );
+                // Combine all results
+                return [...results, result];
+              }, []);
+            break;
+          }
+          case 'multiple': {
+            // A multiple-value validator will be run once on all values.
+            const result: Validation = v.checkMultiple(values, e);
+            // Update state of the validator element
             e.setAttributeNS(
               Namespaces.HYPERVIEW_VALIDATION,
               'state',
               result.valid ? 'valid' : 'invalid',
             );
-
-            // Combine all results
-            return [...results, result];
-          },
-          [],
-        );
+            validatorResults = [result];
+            break;
+          }
+          default:
+            break;
+        }
 
         return [...allResults, ...validatorResults];
       },
