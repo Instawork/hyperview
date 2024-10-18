@@ -1,5 +1,5 @@
 import type { HvComponentProps, LocalName } from 'hyperview';
-import { useBottomTabBarContext } from '../Contexts';
+import { useBottomTabBarContext } from '../../Contexts';
 import { useEffect } from 'react';
 
 const namespaceURI = 'https://hyperview.org/navigation';
