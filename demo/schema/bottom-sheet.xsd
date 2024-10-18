@@ -1,0 +1,24 @@
+<xs:schema
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  attributeFormDefault="qualified"
+  elementFormDefault="qualified"
+  targetNamespace="https://hyperview.org/bottom-sheet"
+  xmlns:bottom-sheet="https://hyperview.org/bottom-sheet"
+  xmlns:hv="https://hyperview.org/hyperview"
+>
+  <xs:import
+    namespace="https://hyperview.org/hyperview"
+    schemaLocation="hyperview.xsd"
+  />
+  <xs:element name="bottom-sheet">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:any minOccurs="1" maxOccurs="1" />
+      </xs:sequence>
+      <xs:attribute name="toggle-event-name" type="xs:string" />
+      <xs:attribute name="dismissible" type="xs:boolean" />
+      <xs:attribute name="visible" type="xs:boolean" />
+      <xs:attribute name="animation-duration" type="xs:nonNegativeInteger" />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
