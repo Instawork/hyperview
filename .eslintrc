@@ -102,6 +102,12 @@
       "rules": {
         "instawork/stories-components": "warn"
       }
+    },
+    {
+      "files": ["demo/**/*"],
+      "rules": {
+        "instawork/stories-components": "off"
+      }
     }
   ]
 }
