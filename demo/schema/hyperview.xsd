@@ -13,6 +13,10 @@
     schemaLocation="../../schema/alert.xsd"
   />
   <xs:import
+    namespace="https://hyperview.org/bottom-sheet"
+    schemaLocation="bottom-sheet.xsd"
+  />
+  <xs:import
     namespace="https://hyperview.org/filter"
     schemaLocation="filter.xsd"
   />
