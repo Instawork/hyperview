@@ -34,21 +34,19 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
     return getNameValueFormInputValues(element);
   };
 
-
   getPickerInitialValue = (): string => {
     const value = this.getValue();
     const pickerItems: Element[] = this.getPickerItems();
-  
-    const valueExists = pickerItems.some(item => item.getAttribute('value') === value);
-    
+    const valueExists = pickerItems.some(
+      item => item.getAttribute('value') === value,
+    );
     if (valueExists) {
       return value;
     }
-    
-    return pickerItems.length > 0 ? 
-      pickerItems[0].getAttribute('value') || '' : '';
+    return pickerItems.length > 0
+      ? pickerItems[0].getAttribute('value') || ''
+      : '';
   };
-  
 
   /**
    * Returns a string representing the value in the field.
