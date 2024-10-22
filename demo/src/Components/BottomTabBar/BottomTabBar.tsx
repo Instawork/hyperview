@@ -1,8 +1,7 @@
 import type { HvComponentProps, LocalName } from 'hyperview';
+import { namespaceURI } from './constants';
 import { useBottomTabBarContext } from '../../Contexts';
 import { useEffect } from 'react';
-
-const namespaceURI = 'https://hyperview.org/navigation';
 
 /**
  * This component's only job is to associate its own props with a
