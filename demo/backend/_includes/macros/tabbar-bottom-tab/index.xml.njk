@@ -1,12 +1,9 @@
 {% macro tabbar_bottom_tab(id, label, selected) %}
-  <option
-    {% if selected %}
-      selected="true"
-    {% endif %}
+  <navigation:bottom-tab-bar-item
+    key="{{ id }}"
+    navigation:route="tab-{{ id }}"
     style="tabbar-bottom-tab"
-    value="tab-{{ id }}"
   >
-    <behavior trigger="select" action="navigate" target="tab-{{ id }}" />
     <view style="tabbar-bottom-tab-icon-selected">
       {% include 'icons/' +  id + '-selected.svg' %}
     </view>
@@ -14,5 +11,5 @@
       {% include 'icons/' + id + '.svg' %}
     </view>
     <text style="tabbar-bottom-tabbar-top-label">{{ label }}</text>
-  </option>
+  </navigation:bottom-tab-bar-item>
 {% endmacro %}

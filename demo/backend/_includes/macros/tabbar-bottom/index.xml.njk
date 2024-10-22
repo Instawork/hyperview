@@ -1,12 +1,12 @@
-{% macro tabbar_bottom(target) %}
+{% macro tabbar_bottom(navigator) %}
   <navigation:bottom-tab-bar
     xmlns:navigation="https://hyperview.org/navigation"
-    navigation:navigator="{{ target }}"
+    navigation:navigator="{{ navigator }}"
   >
-    <select-single style="tabbar-bottom" name="tabbar-bottom" key="tabbar-bottom">
+    <view style="tabbar-bottom" key="tabbar-bottom">
       {% if caller %}
         {{ caller() }}
       {% endif %}
-    </select-single>
+    </view>
   </navigation:bottom-tab-bar>
 {% endmacro %}
