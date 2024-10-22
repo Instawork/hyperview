@@ -18,4 +18,14 @@
       <xs:attribute name="navigator" type="xs:string" />
     </xs:complexType>
   </xs:element>
+  <xs:element name="bottom-tab-bar-item">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:any minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+      <xs:attribute name="route" type="xs:string" use="required" />
+      <xs:attribute name="style" type="hv:styleList" form="unqualified" />
+      <xs:attribute name="key" type="hv:KEY" form="unqualified" />
+    </xs:complexType>
+  </xs:element>
 </xs:schema>
