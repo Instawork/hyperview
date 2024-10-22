@@ -1,0 +1,11 @@
+---
+permalink: "/advanced/community/elements/bottom-tabbar/tab-1-reloaded.xml"
+hv_title: "Tab Navigator - Tab 1"
+hv_button_behavior: "back"
+---
+{% from 'macros/description/index.xml.njk' import description %}
+{% extends './tab-1.xml.njk' %}
+
+{% block content %}
+  {{ description('This is the content for tab 1 after reload.') }}
+{% endblock %}

@@ -8,7 +8,15 @@ hv_button_behavior: "back"
 
 {% block container %}
   <view scroll="true">
-    {{ description('This is the content for tab 2.') }}
+    {% block content %}
+      {{ description('This is the content for tab 1.') }}
+    {% endblock %}
+    <behavior
+      trigger="on-event"
+      event-name="advanced/community/elements/bottom-tabbar/tab-1/reload"
+      action="reload"
+      href="/hyperview/public/advanced/community/elements/bottom-tabbar/tab-1-reloaded.xml"
+    />
   </view>
   {% set selected_tab = 1 %}
   {% include "./tab-bar.xml.njk" %}
