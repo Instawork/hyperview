@@ -1,18 +1,15 @@
 
-
 <navigation:bottom-tab-bar
   xmlns="https://hyperview.org/hyperview"
   xmlns:navigation="https://hyperview.org/navigation"
   navigation:navigator="custom-bottom-tabs-navigator"
   id="bottom-tab-bar"
 >
-  <select-single style="tabbar-bottom" name="custom-tab-bar" key="custom-tab-bar">
-    <option
-      
+  <view style="tabbar-bottom" key="tabbar-bottom">
+    <navigation:bottom-tab-bar-item
+      navigation:route="custom-bottom-tabs-tab-1"
       style="tabbar-bottom-tab"
-      value="custom-tab-1"
     >
-      <behavior trigger="select" action="navigate" href="#custom-bottom-tabs-tab-1" />
       <view style="tabbar-bottom-tab-content">
         <view style="tabbar-bottom-tab-icon-selected">
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -33,15 +30,11 @@
         <text style="tabbar-bottom-tabbar-top-label">Tab 1</text>
         
       </view>
-    </option>
-    <option
-      
-        selected="true"
-      
+    </navigation:bottom-tab-bar-item>
+    <navigation:bottom-tab-bar-item
+      navigation:route="custom-bottom-tabs-tab-2"
       style="tabbar-bottom-tab"
-      value="custom-tab-2"
     >
-      <behavior trigger="select" action="navigate" href="#custom-bottom-tabs-tab-2" />
       <view style="tabbar-bottom-tab-content">
         <view style="tabbar-bottom-tab-icon-selected">
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -64,7 +57,7 @@
           <view style="tabbar-bottom-tab-notify" />
         
       </view>
-    </option>
-  </select-single>
+    </navigation:bottom-tab-bar-item>
+  </view>
 </navigation:bottom-tab-bar>
 
