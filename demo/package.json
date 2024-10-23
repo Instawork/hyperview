@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@babel/preset-env": "^7.22.20",
+    "@googlemaps/js-api-loader": "^1.16.8",
     "@react-native-community/datetimepicker": "7.2.0",
     "@react-native-picker/picker": "2.4.10",
     "@react-navigation/bottom-tabs": "^6.5.9",
@@ -33,6 +34,7 @@
     "moment": "^2.29.4",
     "react": "18.2.0",
     "react-dom": "^18.2.0",
+    "react-google-maps": "^9.4.5",
     "react-native": "0.72.10",
     "react-native-gesture-handler": "~2.12.0",
     "react-native-keyboard-aware-scrollview": "2.1.0",
@@ -41,6 +43,7 @@
     "react-native-screens": "~3.22.0",
     "react-native-svg": "13.9.0",
     "react-native-web": "~0.19.6",
+    "react-native-web-maps": "^0.3.0",
     "react-native-webview": "13.2.2"
   },
   "devDependencies": {
