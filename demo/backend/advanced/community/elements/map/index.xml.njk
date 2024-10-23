@@ -1,0 +1,32 @@
+---
+permalink: "/backend/advanced/community/map.xml"
+tags: "Advanced/Community/Elements"
+hv_button_behavior: "back"
+hv_title: "Map"
+---
+
+{% extends 'templates/scrollview.xml.njk' %}
+
+{% block styles %}
+  {% include "./styles.xml.njk" %}
+{% endblock %}
+
+{% block content %}
+  <map:map
+    xmlns:map="https://hyperview.org/map"
+    style="map"
+    map:latitude="37.782614"
+    map:longitude="-122.395099"
+    map:latitude-delta="0.0922"
+    map:longitude-delta="0.0421"
+    map:auto-zoom-to-markers="true"
+    map:padding="24"
+  >
+    <map:map-marker
+      id="marker-1"
+      key="marker-1"
+      map:latitude="37.782514"
+      map:longitude="-122.395199"
+    />
+  </map:map>
+{% endblock %}

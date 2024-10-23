@@ -12,5 +12,14 @@ module.exports = async (env: Environment, argv: Arguments) => {
     },
     argv,
   );
-  return config;
+  return {
+    ...config,
+    resolve: {
+      ...config.resolve,
+      alias: {
+        ...config?.resolve?.alias,
+        'react-native-maps': 'react-native-web-maps',
+      },
+    },
+  };
 };
