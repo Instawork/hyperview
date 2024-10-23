@@ -1,11 +1,3 @@
-const createExpoWebpackConfigAsync = require('@expo/webpack-config');
-
-module.exports = async function (env, argv) {
-  const config = await createExpoWebpackConfigAsync({
-    ...env,
-    babel: {
-      dangerouslyAddModulePathsToTranspile: ['hyperview'],
-    },
-  }, argv);
-  return config;
-};
+/* eslint-disable import/no-extraneous-dependencies,import/no-internal-modules */
+require('ts-node/register');
+module.exports = require('./webpack.config.ts');
