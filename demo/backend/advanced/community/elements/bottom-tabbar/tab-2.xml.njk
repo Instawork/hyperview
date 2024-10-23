@@ -10,15 +10,20 @@ hv_button_behavior: "back"
 {% block container %}
   <view scroll="true">
     {{ description('This is the content for tab 2.') }}
-    {% call button("Add notification to tab 2", attributes={id:"add-notification"}) -%}
+    {% call button("Notify tab 2", attributes={id:"notify-tab-2"}) -%}
       <behavior action="hide" target="add-notification" />
       <behavior action="show" target="remove-notification" />
       <behavior action="replace" target="bottom-tab-bar" href="/hyperview/public/advanced/community/elements/bottom-tabbar/tab-bar-notify-tab-2.xml" />
     {%- endcall %}
-    {% call button("Remove notification from tab 2", attributes={id:"remove-notification", hide:"true"}) -%}
+    {% call button("Unnotify tab 2", attributes={id:"unnotify-tab-2", hide:"true"}) -%}
       <behavior action="reload" href="#" />
     {%- endcall %}
+    {% call button("Reload tab 1", attributes={id:"reload-tab-1"}) -%}
+      <behavior
+        action="dispatch-event"
+        event-name="advanced/community/elements/bottom-tabbar/tab-1/reload"
+      />
+    {%- endcall %}
   </view>
-  {% set selected_tab = 2 %}
   {% include "./tab-bar.xml.njk" %}
 {% endblock %}
