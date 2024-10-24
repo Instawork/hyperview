@@ -81,6 +81,8 @@ backend/advanced/community/behaviors/share/all/index.xml.njk
 backend/advanced/community/behaviors/share/message/index.xml.njk
 backend/advanced/community/behaviors/share/url/index.xml.njk
 backend/advanced/community/elements/map/styles.xml.njk
+backend/advanced/community/elements/progress-bar/styles.xml.njk
+backend/advanced/community/elements/progress-bar/progress-bar.xml.njk
 backend/navigation/behaviors/actions/close/close-previous-screen/index.xml.njk
 backend/navigation/behaviors/actions/close/close-query-params/index.xml.njk
 backend/navigation/behaviors/actions/close/close-different-screen/index.xml.njk

@@ -1,0 +1,59 @@
+---
+permalink: "/advanced/community/elements/progress-bar/index.xml"
+tags: "Advanced/Community/Elements"
+hv_button_behavior: "back"
+hv_title: "Progress Bar"
+---
+
+{% extends 'templates/scrollview.xml.njk' %}
+
+{% from 'macros/link/index.xml.njk' import link %}
+
+{% block styles %}
+  {% include "./styles.xml.njk" %}
+{% endblock %}
+
+{% block content %}
+  <view style="canvas">
+    {% set value=0.3 %}
+    {% include "./progress-bar.xml.njk" %}
+  </view>
+
+  <view style="actions">
+    {% call link("0%") -%}
+      <behavior
+        action="replace"
+        target="progress-bar"
+        href="/hyperview/public/advanced/community/elements/progress-bar/progress-bar-0.xml"
+      />
+    {%- endcall %}
+    {% call link("25%") -%}
+      <behavior
+        action="replace"
+        target="progress-bar"
+        href="/hyperview/public/advanced/community/elements/progress-bar/progress-bar-25.xml"
+      />
+    {%- endcall %}
+    {% call link("50%") -%}
+      <behavior
+        action="replace"
+        target="progress-bar"
+        href="/hyperview/public/advanced/community/elements/progress-bar/progress-bar-50.xml"
+      />
+    {%- endcall %}
+    {% call link("75%") -%}
+      <behavior
+        action="replace"
+        target="progress-bar"
+        href="/hyperview/public/advanced/community/elements/progress-bar/progress-bar-75.xml"
+      />
+    {%- endcall %}
+    {% call link("100%") -%}
+      <behavior
+        action="replace"
+        target="progress-bar"
+        href="/hyperview/public/advanced/community/elements/progress-bar/progress-bar-100.xml"
+      />
+    {%- endcall %}
+  </view>
+{% endblock %}

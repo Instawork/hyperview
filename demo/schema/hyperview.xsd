@@ -29,6 +29,10 @@
     schemaLocation="map.xsd"
   />
   <xs:import
+    namespace="https://hyperview.org/progress-bar"
+    schemaLocation="progress-bar.xsd"
+  />
+  <xs:import
     namespace="https://instawork.com/hyperview-share"
     schemaLocation="share.xsd"
   />
