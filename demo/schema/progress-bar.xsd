@@ -1,0 +1,25 @@
+<xs:schema
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  attributeFormDefault="qualified"
+  elementFormDefault="qualified"
+  targetNamespace="https://hyperview.org/progress-bar"
+  xmlns:hv="https://hyperview.org/hyperview"
+>
+  <xs:import
+    namespace="https://hyperview.org/hyperview"
+    schemaLocation="hyperview.xsd"
+  />
+  <xs:element name="progress-bar">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:any minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+      <xs:attribute name="id" type="hv:ID" form="unqualified" />
+      <xs:attribute name="style" type="hv:styleList" form="unqualified" />
+      <xs:attribute name="bar-style" type="hv:styleList" />
+      <xs:attribute name="value" type="xs:decimal" />
+      <xs:attribute name="max-value" type="xs:decimal" />
+      <xs:attribute name="duration" type="xs:integer" />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
