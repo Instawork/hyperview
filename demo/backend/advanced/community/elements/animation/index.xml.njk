@@ -1,0 +1,29 @@
+---
+permalink: "/backend/advanced/community/animation/index.xml"
+tags: "Advanced/Community/Elements"
+hv_button_behavior: "back"
+hv_title: "Animation"
+---
+
+{% extends 'templates/scrollview.xml.njk' %}
+
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  <animation:animation
+    xmlns:animation="https://hyperview.org/animation"
+    height="200"
+    width="200"
+    auto-play="true"
+    loop="true"
+    source="https://static.staging2.instawork.com/static/animations/coin.ef884afc8a9b.json"
+    speed="1"
+  >
+    <animation:loading>
+      <spinner />
+    </animation:loading>
+    <animation:fallback>
+      <text>Couldn't load the animation</text>
+    </animation:fallback>
+  </animation:animation>
+{% endblock %}
