@@ -9,59 +9,48 @@ function v(xml: string): Element {
 
 describe('MinLength', () => {
   describe('check', () => {
-    let elements: Element[];
-    beforeEach(() => {
-      elements = getElements(
-        `
-          <doc
-            xmlns="https://hyperview.org/hyperview"
-            xmlns:v="https://hyperview.org/hyperview-validation"
-          >
-            <text-field>
-              <v:min-length min="2" />
-              <v:min-length min="2" message="Length must be minimum 2" />
-            </text-field>
-          </doc>
-        `,
-        'min-length',
-        Namespaces.HYPERVIEW_VALIDATION,
-      );
-    });
-    it('returns valid if value is null', async () => {
+    it('returns valid if value is null', () => {
       const e = v('<v:min-length min="2" />');
       expect(MinLength.check(null, e)).toEqual({ valid: true });
     });
-    it('returns invalid if value length is 0', async () => {
+    it('returns invalid if value length is 0', () => {
       const e = v('<v:min-length min="2" />');
       expect(MinLength.check('', e)).toEqual({
         valid: false,
         message: 'This field has bad length',
       });
     });
-    it('returns invalid if value length is less than min', async () => {
+    it('returns invalid if value length is less than min', () => {
       const e = v('<v:min-length min="2" />');
       expect(MinLength.check('1', e)).toEqual({
         valid: false,
         message: 'This field has bad length',
       });
     });
-    it('returns valid if value length is equal to min', async () => {
+    it('returns valid if value length is equal to min', () => {
       const e = v('<v:min-length min="2" />');
       expect(MinLength.check('12', e)).toEqual({ valid: true });
     });
-    it('returns valid if value length is greater than min', async () => {
+    it('returns valid if value length is greater than min', () => {
       const e = v('<v:min-length min="2" />');
       expect(MinLength.check('123', e)).toEqual({
         valid: true,
       });
     });
-    it('returns error message if invalid', async () => {
+    it('returns error message if invalid', () => {
       const e = v(
         '<v:min-length min="2" message="Length must be minimum 2" />',
       );
       expect(MinLength.check('1', e)).toEqual({
         message: 'Length must be minimum 2',
         valid: false,
+      });
+    });
+    it('returns invalid if min attribute is non-number', () => {
+      const e = v('<v:min-length min="bogus" />');
+      expect(MinLength.check('3', e)).toEqual({
+        valid: false,
+        message: 'This field has bad length',
       });
     });
   });
