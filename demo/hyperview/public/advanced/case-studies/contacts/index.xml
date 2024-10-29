@@ -1,0 +1,901 @@
+
+<doc xmlns="https://hyperview.org/hyperview" >
+  <screen>
+    <styles>
+      <style
+  id="button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"
+/>
+<style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+
+<style
+  id="about-title"
+  flex="1"
+  alignItems="center"
+  flexDirection="row"
+  justifyContent="space-between"
+  paddingTop="24"
+  paddingHorizontal="24"
+/>
+<style
+  id="about-container"
+  backgroundColor="#FEF1CF"
+  borderRadius="18"
+  margin="24"
+/>
+<style id="about-text" fontSize="20" fontWeight="700" />
+
+<style id="description" fontSize="16" margin="24" />
+
+<style
+  id="link-text"
+  color="#4778FF"
+/>
+<style
+  id="link-container"
+  borderColor="#4778FF"
+  paddingHorizontal="8"
+  paddingVertical="4"
+  borderRadius="24"
+  borderWidth="1"
+  marginVertical="6"
+  marginRight="6"
+  justifyContent="center"
+/>
+
+<style
+  id="container-style"
+  borderColor="#e1e1e1"
+  borderRadius="16"
+  borderWidth="2"
+  margin="24"
+  padding="24"
+/>
+<style
+  id="container-label"
+  color="black"
+  fontSize="16"
+  fontWeight="normal"
+/>
+
+<style
+  id="name"
+  fontSize="18"
+  fontWeight="600"
+  margin="24"
+  marginBottom="0"
+/>
+<style
+  id="phone"
+  fontSize="18"
+  fontWeight="normal"
+  margin="24"
+  marginBottom="0"
+/>
+
+<style id="tab-content" flex="1" />
+<style id="centered" alignItems="center" justifyContent="center" />
+<style
+  id="tab-bar-select"
+  backgroundColor="#eee"
+  borderRadius="12"
+  flexDirection="row"
+  justifyContent="space-between"
+  marginBottom="24"
+  marginHorizontal="24"
+  padding="2"
+/>
+<style
+  id="tab-bar-item"
+  alignItems="center"
+  borderColor="transparent"
+  borderRadius="8"
+  borderWidth="1"
+  flex="1"
+  padding="8"
+  justifyContent="center"
+>
+  <modifier selected="true">
+  <style
+  backgroundColor="white"
+  elevation="2"
+  shadowColor="black"
+  shadowOffsetX="0"
+  shadowOffsetY="2"
+  shadowOpacity="0.1"
+  shadowRadius="2"
+  />
+  </modifier>
+</style>
+<style id="tab-label" fontSize="16" fontWeight="500" lineHeight="24" />
+
+<style
+  id="input"
+  borderBottomColor="#E1E1E1"
+  borderBottomWidth="1"
+  borderColor="#4E4D4D"
+  flex="1"
+  fontSize="16"
+  fontWeight="normal"
+  paddingBottom="8"
+  paddingTop="8"
+>
+
+  <modifier pressed="true">
+    <style borderBottomColor="green"/>
+  </modifier>
+  <modifier focused="true">
+    <style borderBottomColor="#4778FF" color="black" />
+  </modifier>
+  <modifier invalid="true">
+    <style color="#FF4847" borderBottomColor="#FF4847" />
+  </modifier>
+</style>
+
+<style id="input--error" borderBottomColor="#FF4847" color="#FF4847">
+  <modifier focused="true">
+    <style borderBottomColor="#FF4847" />
+  </modifier>
+</style>
+
+<style
+  id="label"
+  borderColor="#4E4D4D"
+  fontSize="16"
+  fontWeight="bold"
+  lineHeight="24"
+  marginBottom="8"
+>
+  <modifier invalid="true">
+    <style color="#FF4847" />
+  </modifier>
+  <modifier valid="true">
+    <style color="#63CB76" />
+  </modifier>
+</style>
+<style
+  id="help"
+  borderColor="#FF4847"
+  fontSize="16"
+  fontWeight="normal"
+  lineHeight="24"
+  marginTop="16"
+>
+  <modifier invalid="true">
+    <style color="#FF4847" />
+  </modifier>
+</style>
+
+
+<style
+  id="header"
+  alignItems="center"
+  backgroundColor="white"
+  borderBottomColor="#eee"
+  borderBottomWidth="1"
+  flexDirection="row"
+  marginBottom="12"
+  paddingBottom="16"
+  paddingLeft="24"
+  paddingRight="24"
+/>
+<style
+  id="header-btn"
+  color="blue"
+  fontSize="16"
+  fontWeight="600"
+  paddingRight="16"
+/>
+<style id="header-title" color="black" fontSize="24" fontWeight="600" />
+<style id="body" backgroundColor="white" flex="1" />
+<style id="description" fontSize="16" margin="24" />
+<style
+  id="item"
+  alignItems="center"
+  backgroundColor="#FFFFFF"
+  borderColor="#eee"
+  borderBottomWidth="1"
+  borderWidth="1"
+  flex="1"
+  flexDirection="row"
+  paddingVertical="12"
+  justifyContent="space-between"
+  marginHorizontal="24"
+  paddingHorizontal="16"
+/>
+<style id="item-first" borderTopLeftRadius="16" borderTopRightRadius="16" />
+<style
+  id="item-last"
+  borderBottomLeftRadius="16"
+  borderBottomRightRadius="16"
+  marginBottom="24"
+/>
+<style id="item-left" flex="1" flexDirection="row" />
+<style id="item-label" fontSize="18" fontWeight="normal" />
+<style id="item-chevron" />
+<style
+  id="button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"
+/>
+<style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style id="tab-route-content" flex="1" />
+<style
+  id="bottom-tab"
+  alignItems="center"
+  flex="1"
+  justifyContent="center"
+/>
+<style
+  id="bottom-tab-label"
+  color="#cccccc"
+  fontSize="8"
+  fontWeight="bold"
+/>
+<style id="bottom-tab-label-selected" color="#4778FF" />
+<style id="bottom-tab-selected" />
+<style
+  id="back-image"
+  alignItems="center"
+  flex="0"
+  height="10"
+  justifyContent="center"
+  padding="10"
+  width="10"
+/>
+<style
+  id="footer"
+  alignItems="stretch"
+  borderTopColor="#eee"
+  borderTopWidth="1"
+  bottom="0"
+  flexDirection="row"
+  flexShrink="1"
+  flexGrow="0"
+  height="48"
+  justifyContent="space-around"
+  backgroundColor="white"
+  position="absolute"
+  width="100%"
+/>
+<style
+  id="list-container"
+  flex="1"
+  flexGrow="1"
+  marginBottom="48"
+/>
+<style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" />
+<style id="loading" alignItems="center" flex="1" justifyContent="center" />
+<style
+  id="link"
+  color="#4778FF"
+  fontWeight="bold"
+  marginTop="8"
+  marginRight="16"
+/>
+<style
+  id="container-style"
+  borderColor="#e1e1e1"
+  borderRadius="16"
+  borderWidth="2"
+  margin="24"
+  padding="24"
+/>
+<style
+  id="container-label"
+  color="black"
+  fontSize="16"
+  fontWeight="normal"
+/>
+<style
+  id="list-header"
+  alignItems="center"
+  backgroundColor="#eee"
+  flex="1"
+  flexDirection="row"
+  paddingVertical="12"
+  marginHorizontal="24"
+  paddingHorizontal="16"
+/>
+<style id="list-header-text" fontSize="18" fontWeight="bold"/>
+<style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
+
+      
+  <style id="flex" flex="1" />
+  <style
+    id="input"
+    backgroundColor="#FFFFFF"
+    borderBottomColor="#E1E1E1"
+    borderBottomWidth="1"
+    borderColor="#4E4D4D"
+    fontSize="16"
+    fontWeight="normal"
+    paddingBottom="8"
+    paddingTop="8">
+    <modifier pressed="true">
+    <style borderBottomColor="green"/>
+    </modifier>
+    <modifier focused="true">
+    <style borderBottomColor="#4778FF"/>
+    </modifier>
+  </style>
+  <style id="relative" position="relative" />
+  <style id="absolute" position="absolute" />
+  <style id="r-0" right="0" />
+  <style id="mx-24" marginHorizontal="24" />
+  <style id="py-8" paddingVertical="8" />
+  <style id="border-bottom" borderBottomWidth="1" borderBottomColor="lightgray" />
+  <style id="highlight" fontWeight="bold" color="blue" />
+
+    </styles>
+    <body style="body" safe-area="true">
+      <header style="header">
+  
+    <view action="back" href="#" style="header-btn">
+      <svg
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M11.7803 0.96967C12.0732 1.26256 12.0732 1.73744 11.7803 2.03033L2.56066 11.25H23.25C23.6642 11.25 24 11.5858 24 12C24 12.4142 23.6642 12.75 23.25 12.75H2.56066L11.7803 21.9697C12.0732 22.2626 12.0732 22.7374 11.7803 23.0303C11.4874 23.3232 11.0126 23.3232 10.7197 23.0303L0.21967 12.5303C-0.0732233 12.2374 -0.0732233 11.7626 0.21967 11.4697L10.7197 0.96967C11.0126 0.676777 11.4874 0.676777 11.7803 0.96967Z"
+    fill="#4778FF"
+  />
+</svg>
+
+    </view>
+  
+  <text style="header-title">Contacts</text>
+</header>
+
+      
+  <form>
+    <list
+  id="contacts"
+  trigger="refresh"
+  action="replace"
+  href="?page=1&amp;template=list"
+  target="contacts"
+  keyboard-dismiss-mode="on-drag"
+  xmlns="https://hyperview.org/hyperview"
+>
+  
+  <item key="search" id="top" sticky="true" style="relative mx-24">
+    <text-field
+      placeholder="Search a contact…"
+      placeholderTextColor="#8D9494"
+      name="search"
+      style="input"
+      debounce="200"
+      value=""
+    >
+      
+      
+      
+      
+      <behavior
+        trigger="change"
+        action="hide"
+        target="load-more"
+      />
+      <behavior
+        trigger="change"
+        action="scroll"
+        target="top"
+        xmlns:scroll="https://hyperview.org/hyperview-scroll"
+      />
+      <behavior
+        trigger="change"
+        action="replace"
+        target="contacts"
+        href="?template=list"
+        show-during-load="loading-indicator"
+      />
+    </text-field>
+    <view id="loading-indicator" style="absolute r-0 py-8" hide="true">
+      <spinner />
+    </view>
+  </item>
+  <items xmlns="https://hyperview.org/hyperview">
+  
+    <item key="911cfd0b-920b-478f-a318-123ce58bf134" style="mx-24 py-8 border-bottom">
+      <text>Aaron Breitenberg</text>
+      <text>Gilbert57@yahoo.com</text>
+      <text>(173) 555-3220</text>
+    </item>
+  
+    <item key="dd144ea6-a937-4705-a421-755579821c8a" style="mx-24 py-8 border-bottom">
+      <text>Aaron Carroll</text>
+      <text>Percival13@hotmail.com</text>
+      <text>(235) 555-6003</text>
+    </item>
+  
+    <item key="7117daa6-1f4f-40d1-8f0d-75f477761a31" style="mx-24 py-8 border-bottom">
+      <text>Aaron Dietrich</text>
+      <text>Jaylan1@hotmail.com</text>
+      <text>(103) 555-2250</text>
+    </item>
+  
+    <item key="c4671d0f-d6fc-481b-9a34-5121a2b64a82" style="mx-24 py-8 border-bottom">
+      <text>Aaron Fahey</text>
+      <text>Camylle73@gmail.com</text>
+      <text>(213) 555-1050</text>
+    </item>
+  
+    <item key="96523e11-758c-4323-a7cb-9c97c8b87ad5" style="mx-24 py-8 border-bottom">
+      <text>Aaron Gerlach</text>
+      <text>Dante_OKon16@gmail.com</text>
+      <text>(207) 555-6039</text>
+    </item>
+  
+    <item key="a3c40346-e3f8-4a19-b8c6-2a5d199b1ec6" style="mx-24 py-8 border-bottom">
+      <text>Aaron Greenfelder</text>
+      <text>Haylee_Boyle47@hotmail.com</text>
+      <text>(189) 555-4755</text>
+    </item>
+  
+    <item key="d91c61c8-a495-4c7d-bc46-711a6c732a7b" style="mx-24 py-8 border-bottom">
+      <text>Aaron Lang</text>
+      <text>Samantha.Rutherford@yahoo.com</text>
+      <text>(226) 555-3037</text>
+    </item>
+  
+    <item key="9f3460ac-b77b-4165-b64a-5a9243d4dd66" style="mx-24 py-8 border-bottom">
+      <text>Aaron Little</text>
+      <text>Beaulah_Morar@yahoo.com</text>
+      <text>(365) 555-7864</text>
+    </item>
+  
+    <item key="3d7277c4-ebe0-4581-b60c-9f41893c4d81" style="mx-24 py-8 border-bottom">
+      <text>Aaron Moen</text>
+      <text>Roslyn.Mann@yahoo.com</text>
+      <text>(502) 555-4504</text>
+    </item>
+  
+    <item key="1e4ceda9-cec3-470a-b6bc-a1b553ba1733" style="mx-24 py-8 border-bottom">
+      <text>Aaron Parisian</text>
+      <text>Dina_Carroll@yahoo.com</text>
+      <text>(803) 555-9038</text>
+    </item>
+  
+    <item key="12bcdefc-8397-4f52-936c-46194d599125" style="mx-24 py-8 border-bottom">
+      <text>Aaron Price</text>
+      <text>Aric.Nitzsche@gmail.com</text>
+      <text>(548) 555-4820</text>
+    </item>
+  
+    <item key="0b87ea14-d9b5-4762-951b-634aa4927b2e" style="mx-24 py-8 border-bottom">
+      <text>Aaron Shanahan</text>
+      <text>Devan38@hotmail.com</text>
+      <text>(315) 555-5854</text>
+    </item>
+  
+    <item key="60e9d9fc-99f6-4e6f-ad66-da12420e1d50" style="mx-24 py-8 border-bottom">
+      <text>Aaron Thiel</text>
+      <text>Gillian19@yahoo.com</text>
+      <text>(960) 555-0110</text>
+    </item>
+  
+    <item key="5fb0fa18-f0f0-487e-80a0-3413604657ec" style="mx-24 py-8 border-bottom">
+      <text>Aaron Torp</text>
+      <text>Burdette.Shields21@hotmail.com</text>
+      <text>(054) 555-8924</text>
+    </item>
+  
+    <item key="dd0eecfb-0012-44a5-bea4-f5309a6c4afb" style="mx-24 py-8 border-bottom">
+      <text>Aaron Walsh</text>
+      <text>Alan_West@gmail.com</text>
+      <text>(125) 555-2363</text>
+    </item>
+  
+    <item key="ce244d51-af12-40ee-8221-0ff5eb2e53ba" style="mx-24 py-8 border-bottom">
+      <text>Aaron Walter</text>
+      <text>Callie_Yost-Hansen11@gmail.com</text>
+      <text>(149) 555-3265</text>
+    </item>
+  
+    <item key="5063d4e5-cc60-4b97-9f07-cce4a4beaeb7" style="mx-24 py-8 border-bottom">
+      <text>Aaron Waters</text>
+      <text>Randi99@yahoo.com</text>
+      <text>(511) 555-8032</text>
+    </item>
+  
+    <item key="53ae675d-a8a2-4b9b-85a3-f3c4f4f2ad57" style="mx-24 py-8 border-bottom">
+      <text>Aaron Will</text>
+      <text>Amira61@hotmail.com</text>
+      <text>(007) 555-2331</text>
+    </item>
+  
+    <item key="56f3772f-6de8-46bd-809d-4de60992ca13" style="mx-24 py-8 border-bottom">
+      <text>Aaron Williamson-Jacobi</text>
+      <text>Stephan.Murazik1@yahoo.com</text>
+      <text>(553) 555-5930</text>
+    </item>
+  
+    <item key="f6247c5d-267f-4094-8a1d-ff3b0d02b8d6" style="mx-24 py-8 border-bottom">
+      <text>Aaron Willms</text>
+      <text>Jevon0@gmail.com</text>
+      <text>(937) 555-8141</text>
+    </item>
+  
+  
+    <item
+      key="load-more"
+      id="load-more"
+      trigger="visible"
+      action="replace"
+      href="?page=2"
+    >
+      <spinner />
+    </item>
+  
+</items>
+
+</list>
+
+  </form>
+
+    </body>
+  </screen>
+  
+  
+  
+<screen id="loading-screen">
+  <styles>
+    <style
+  id="button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"
+/>
+<style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+
+<style
+  id="about-title"
+  flex="1"
+  alignItems="center"
+  flexDirection="row"
+  justifyContent="space-between"
+  paddingTop="24"
+  paddingHorizontal="24"
+/>
+<style
+  id="about-container"
+  backgroundColor="#FEF1CF"
+  borderRadius="18"
+  margin="24"
+/>
+<style id="about-text" fontSize="20" fontWeight="700" />
+
+<style id="description" fontSize="16" margin="24" />
+
+<style
+  id="link-text"
+  color="#4778FF"
+/>
+<style
+  id="link-container"
+  borderColor="#4778FF"
+  paddingHorizontal="8"
+  paddingVertical="4"
+  borderRadius="24"
+  borderWidth="1"
+  marginVertical="6"
+  marginRight="6"
+  justifyContent="center"
+/>
+
+<style
+  id="container-style"
+  borderColor="#e1e1e1"
+  borderRadius="16"
+  borderWidth="2"
+  margin="24"
+  padding="24"
+/>
+<style
+  id="container-label"
+  color="black"
+  fontSize="16"
+  fontWeight="normal"
+/>
+
+<style
+  id="name"
+  fontSize="18"
+  fontWeight="600"
+  margin="24"
+  marginBottom="0"
+/>
+<style
+  id="phone"
+  fontSize="18"
+  fontWeight="normal"
+  margin="24"
+  marginBottom="0"
+/>
+
+<style id="tab-content" flex="1" />
+<style id="centered" alignItems="center" justifyContent="center" />
+<style
+  id="tab-bar-select"
+  backgroundColor="#eee"
+  borderRadius="12"
+  flexDirection="row"
+  justifyContent="space-between"
+  marginBottom="24"
+  marginHorizontal="24"
+  padding="2"
+/>
+<style
+  id="tab-bar-item"
+  alignItems="center"
+  borderColor="transparent"
+  borderRadius="8"
+  borderWidth="1"
+  flex="1"
+  padding="8"
+  justifyContent="center"
+>
+  <modifier selected="true">
+  <style
+  backgroundColor="white"
+  elevation="2"
+  shadowColor="black"
+  shadowOffsetX="0"
+  shadowOffsetY="2"
+  shadowOpacity="0.1"
+  shadowRadius="2"
+  />
+  </modifier>
+</style>
+<style id="tab-label" fontSize="16" fontWeight="500" lineHeight="24" />
+
+<style
+  id="input"
+  borderBottomColor="#E1E1E1"
+  borderBottomWidth="1"
+  borderColor="#4E4D4D"
+  flex="1"
+  fontSize="16"
+  fontWeight="normal"
+  paddingBottom="8"
+  paddingTop="8"
+>
+
+  <modifier pressed="true">
+    <style borderBottomColor="green"/>
+  </modifier>
+  <modifier focused="true">
+    <style borderBottomColor="#4778FF" color="black" />
+  </modifier>
+  <modifier invalid="true">
+    <style color="#FF4847" borderBottomColor="#FF4847" />
+  </modifier>
+</style>
+
+<style id="input--error" borderBottomColor="#FF4847" color="#FF4847">
+  <modifier focused="true">
+    <style borderBottomColor="#FF4847" />
+  </modifier>
+</style>
+
+<style
+  id="label"
+  borderColor="#4E4D4D"
+  fontSize="16"
+  fontWeight="bold"
+  lineHeight="24"
+  marginBottom="8"
+>
+  <modifier invalid="true">
+    <style color="#FF4847" />
+  </modifier>
+  <modifier valid="true">
+    <style color="#63CB76" />
+  </modifier>
+</style>
+<style
+  id="help"
+  borderColor="#FF4847"
+  fontSize="16"
+  fontWeight="normal"
+  lineHeight="24"
+  marginTop="16"
+>
+  <modifier invalid="true">
+    <style color="#FF4847" />
+  </modifier>
+</style>
+
+
+<style
+  id="header"
+  alignItems="center"
+  backgroundColor="white"
+  borderBottomColor="#eee"
+  borderBottomWidth="1"
+  flexDirection="row"
+  marginBottom="12"
+  paddingBottom="16"
+  paddingLeft="24"
+  paddingRight="24"
+/>
+<style
+  id="header-btn"
+  color="blue"
+  fontSize="16"
+  fontWeight="600"
+  paddingRight="16"
+/>
+<style id="header-title" color="black" fontSize="24" fontWeight="600" />
+<style id="body" backgroundColor="white" flex="1" />
+<style id="description" fontSize="16" margin="24" />
+<style
+  id="item"
+  alignItems="center"
+  backgroundColor="#FFFFFF"
+  borderColor="#eee"
+  borderBottomWidth="1"
+  borderWidth="1"
+  flex="1"
+  flexDirection="row"
+  paddingVertical="12"
+  justifyContent="space-between"
+  marginHorizontal="24"
+  paddingHorizontal="16"
+/>
+<style id="item-first" borderTopLeftRadius="16" borderTopRightRadius="16" />
+<style
+  id="item-last"
+  borderBottomLeftRadius="16"
+  borderBottomRightRadius="16"
+  marginBottom="24"
+/>
+<style id="item-left" flex="1" flexDirection="row" />
+<style id="item-label" fontSize="18" fontWeight="normal" />
+<style id="item-chevron" />
+<style
+  id="button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"
+/>
+<style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style id="tab-route-content" flex="1" />
+<style
+  id="bottom-tab"
+  alignItems="center"
+  flex="1"
+  justifyContent="center"
+/>
+<style
+  id="bottom-tab-label"
+  color="#cccccc"
+  fontSize="8"
+  fontWeight="bold"
+/>
+<style id="bottom-tab-label-selected" color="#4778FF" />
+<style id="bottom-tab-selected" />
+<style
+  id="back-image"
+  alignItems="center"
+  flex="0"
+  height="10"
+  justifyContent="center"
+  padding="10"
+  width="10"
+/>
+<style
+  id="footer"
+  alignItems="stretch"
+  borderTopColor="#eee"
+  borderTopWidth="1"
+  bottom="0"
+  flexDirection="row"
+  flexShrink="1"
+  flexGrow="0"
+  height="48"
+  justifyContent="space-around"
+  backgroundColor="white"
+  position="absolute"
+  width="100%"
+/>
+<style
+  id="list-container"
+  flex="1"
+  flexGrow="1"
+  marginBottom="48"
+/>
+<style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" />
+<style id="loading" alignItems="center" flex="1" justifyContent="center" />
+<style
+  id="link"
+  color="#4778FF"
+  fontWeight="bold"
+  marginTop="8"
+  marginRight="16"
+/>
+<style
+  id="container-style"
+  borderColor="#e1e1e1"
+  borderRadius="16"
+  borderWidth="2"
+  margin="24"
+  padding="24"
+/>
+<style
+  id="container-label"
+  color="black"
+  fontSize="16"
+  fontWeight="normal"
+/>
+<style
+  id="list-header"
+  alignItems="center"
+  backgroundColor="#eee"
+  flex="1"
+  flexDirection="row"
+  paddingVertical="12"
+  marginHorizontal="24"
+  paddingHorizontal="16"
+/>
+<style id="list-header-text" fontSize="18" fontWeight="bold"/>
+<style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
+
+  </styles>
+  <body style="body" safe-area="true">
+    <header style="header">
+  
+    <view action="back" href="#" style="header-btn">
+      <svg
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M11.7803 0.96967C12.0732 1.26256 12.0732 1.73744 11.7803 2.03033L2.56066 11.25H23.25C23.6642 11.25 24 11.5858 24 12C24 12.4142 23.6642 12.75 23.25 12.75H2.56066L11.7803 21.9697C12.0732 22.2626 12.0732 22.7374 11.7803 23.0303C11.4874 23.3232 11.0126 23.3232 10.7197 23.0303L0.21967 12.5303C-0.0732233 12.2374 -0.0732233 11.7626 0.21967 11.4697L10.7197 0.96967C11.0126 0.676777 11.4874 0.676777 11.7803 0.96967Z"
+    fill="#4778FF"
+  />
+</svg>
+
+    </view>
+  
+  <text style="header-title">Contacts</text>
+</header>
+
+    <view style="loading">
+      <text style="loading-text">Loading…</text>
+      <spinner/>
+    </view>
+  </body>
+</screen>
+
+</doc>

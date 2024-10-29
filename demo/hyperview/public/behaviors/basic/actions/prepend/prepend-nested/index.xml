@@ -1,0 +1,15 @@
+
+
+
+  
+    <text style="description">In this example, the replaced element also has an href with an prepend action, demonstrating loading of a nested structure.</text>
+  
+
+<view
+  action="prepend"
+  href="/hyperview/public/behaviors/basic/actions/prepend/prepend-nested/prepend_fragment2.xml"
+  style="tree tree-root"
+>
+  <text style="tree-label">1. Lorem</text>
+  <text style="tree-label">2. Ipsum</text>
+</view>

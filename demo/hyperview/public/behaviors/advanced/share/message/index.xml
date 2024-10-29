@@ -1,0 +1,20 @@
+
+
+
+  <view
+    
+    
+      style="button"
+    
+  >
+    
+      <behavior
+    xmlns:share="https://instawork.com/hyperview-share"
+    action="share"
+    share:message="Test message"
+    trigger="press"
+  />
+    
+    <text style="button-label">Message-only</text>
+  </view>
+

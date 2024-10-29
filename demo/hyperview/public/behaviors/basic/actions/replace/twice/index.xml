@@ -1,0 +1,24 @@
+
+
+
+
+  
+    <text style="description">In this example, the replaced element also has an href, which now requests a different XML fragment.</text>
+  
+
+
+  <view
+    
+    
+      style="button"
+    
+  >
+    
+      <behavior
+    action="replace"
+    href="/hyperview/public/behaviors/basic/actions/replace/twice/replace_fragment2.xml"
+  />
+    
+    <text style="button-label">Press me</text>
+  </view>
+

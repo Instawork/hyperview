@@ -1,0 +1,1333 @@
+
+<doc xmlns="https://hyperview.org/hyperview" >
+  <screen>
+    <styles>
+      <style
+  id="button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"
+/>
+<style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+
+<style
+  id="about-title"
+  flex="1"
+  alignItems="center"
+  flexDirection="row"
+  justifyContent="space-between"
+  paddingTop="24"
+  paddingHorizontal="24"
+/>
+<style
+  id="about-container"
+  backgroundColor="#FEF1CF"
+  borderRadius="18"
+  margin="24"
+/>
+<style id="about-text" fontSize="20" fontWeight="700" />
+
+<style id="description" fontSize="16" margin="24" />
+
+<style
+  id="link-text"
+  color="#4778FF"
+/>
+<style
+  id="link-container"
+  borderColor="#4778FF"
+  paddingHorizontal="8"
+  paddingVertical="4"
+  borderRadius="24"
+  borderWidth="1"
+  marginVertical="6"
+  marginRight="6"
+  justifyContent="center"
+/>
+
+<style
+  id="container-style"
+  borderColor="#e1e1e1"
+  borderRadius="16"
+  borderWidth="2"
+  margin="24"
+  padding="24"
+/>
+<style
+  id="container-label"
+  color="black"
+  fontSize="16"
+  fontWeight="normal"
+/>
+
+<style
+  id="name"
+  fontSize="18"
+  fontWeight="600"
+  margin="24"
+  marginBottom="0"
+/>
+<style
+  id="phone"
+  fontSize="18"
+  fontWeight="normal"
+  margin="24"
+  marginBottom="0"
+/>
+
+<style id="tab-content" flex="1" />
+<style id="centered" alignItems="center" justifyContent="center" />
+<style
+  id="tab-bar-select"
+  backgroundColor="#eee"
+  borderRadius="12"
+  flexDirection="row"
+  justifyContent="space-between"
+  marginBottom="24"
+  marginHorizontal="24"
+  padding="2"
+/>
+<style
+  id="tab-bar-item"
+  alignItems="center"
+  borderColor="transparent"
+  borderRadius="8"
+  borderWidth="1"
+  flex="1"
+  padding="8"
+  justifyContent="center"
+>
+  <modifier selected="true">
+  <style
+  backgroundColor="white"
+  elevation="2"
+  shadowColor="black"
+  shadowOffsetX="0"
+  shadowOffsetY="2"
+  shadowOpacity="0.1"
+  shadowRadius="2"
+  />
+  </modifier>
+</style>
+<style id="tab-label" fontSize="16" fontWeight="500" lineHeight="24" />
+
+<style
+  id="input"
+  borderBottomColor="#E1E1E1"
+  borderBottomWidth="1"
+  borderColor="#4E4D4D"
+  flex="1"
+  fontSize="16"
+  fontWeight="normal"
+  paddingBottom="8"
+  paddingTop="8"
+>
+
+  <modifier pressed="true">
+    <style borderBottomColor="green"/>
+  </modifier>
+  <modifier focused="true">
+    <style borderBottomColor="#4778FF" color="black" />
+  </modifier>
+  <modifier invalid="true">
+    <style color="#FF4847" borderBottomColor="#FF4847" />
+  </modifier>
+</style>
+
+<style id="input--error" borderBottomColor="#FF4847" color="#FF4847">
+  <modifier focused="true">
+    <style borderBottomColor="#FF4847" />
+  </modifier>
+</style>
+
+<style
+  id="label"
+  borderColor="#4E4D4D"
+  fontSize="16"
+  fontWeight="bold"
+  lineHeight="24"
+  marginBottom="8"
+>
+  <modifier invalid="true">
+    <style color="#FF4847" />
+  </modifier>
+  <modifier valid="true">
+    <style color="#63CB76" />
+  </modifier>
+</style>
+<style
+  id="help"
+  borderColor="#FF4847"
+  fontSize="16"
+  fontWeight="normal"
+  lineHeight="24"
+  marginTop="16"
+>
+  <modifier invalid="true">
+    <style color="#FF4847" />
+  </modifier>
+</style>
+
+
+<style
+  id="header"
+  alignItems="center"
+  backgroundColor="white"
+  borderBottomColor="#eee"
+  borderBottomWidth="1"
+  flexDirection="row"
+  marginBottom="12"
+  paddingBottom="16"
+  paddingLeft="24"
+  paddingRight="24"
+/>
+<style
+  id="header-btn"
+  color="blue"
+  fontSize="16"
+  fontWeight="600"
+  paddingRight="16"
+/>
+<style id="header-title" color="black" fontSize="24" fontWeight="600" />
+<style id="body" backgroundColor="white" flex="1" />
+<style id="description" fontSize="16" margin="24" />
+<style
+  id="item"
+  alignItems="center"
+  backgroundColor="#FFFFFF"
+  borderColor="#eee"
+  borderBottomWidth="1"
+  borderWidth="1"
+  flex="1"
+  flexDirection="row"
+  paddingVertical="12"
+  justifyContent="space-between"
+  marginHorizontal="24"
+  paddingHorizontal="16"
+/>
+<style id="item-first" borderTopLeftRadius="16" borderTopRightRadius="16" />
+<style
+  id="item-last"
+  borderBottomLeftRadius="16"
+  borderBottomRightRadius="16"
+  marginBottom="24"
+/>
+<style id="item-left" flex="1" flexDirection="row" />
+<style id="item-label" fontSize="18" fontWeight="normal" />
+<style id="item-chevron" />
+<style
+  id="button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"
+/>
+<style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style id="tab-route-content" flex="1" />
+<style
+  id="bottom-tab"
+  alignItems="center"
+  flex="1"
+  justifyContent="center"
+/>
+<style
+  id="bottom-tab-label"
+  color="#cccccc"
+  fontSize="8"
+  fontWeight="bold"
+/>
+<style id="bottom-tab-label-selected" color="#4778FF" />
+<style id="bottom-tab-selected" />
+<style
+  id="back-image"
+  alignItems="center"
+  flex="0"
+  height="10"
+  justifyContent="center"
+  padding="10"
+  width="10"
+/>
+<style
+  id="footer"
+  alignItems="stretch"
+  borderTopColor="#eee"
+  borderTopWidth="1"
+  bottom="0"
+  flexDirection="row"
+  flexShrink="1"
+  flexGrow="0"
+  height="48"
+  justifyContent="space-around"
+  backgroundColor="white"
+  position="absolute"
+  width="100%"
+/>
+<style
+  id="list-container"
+  flex="1"
+  flexGrow="1"
+  marginBottom="48"
+/>
+<style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" />
+<style id="loading" alignItems="center" flex="1" justifyContent="center" />
+<style
+  id="link"
+  color="#4778FF"
+  fontWeight="bold"
+  marginTop="8"
+  marginRight="16"
+/>
+<style
+  id="container-style"
+  borderColor="#e1e1e1"
+  borderRadius="16"
+  borderWidth="2"
+  margin="24"
+  padding="24"
+/>
+<style
+  id="container-label"
+  color="black"
+  fontSize="16"
+  fontWeight="normal"
+/>
+<style
+  id="list-header"
+  alignItems="center"
+  backgroundColor="#eee"
+  flex="1"
+  flexDirection="row"
+  paddingVertical="12"
+  marginHorizontal="24"
+  paddingHorizontal="16"
+/>
+<style id="list-header-text" fontSize="18" fontWeight="bold"/>
+<style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
+
+      
+      
+    </styles>
+    <body style="body" safe-area="true">
+      <header style="header">
+  
+  <text style="header-title">Advanced</text>
+</header>
+
+      
+  <view style="tab-route-content">
+    
+  
+  <select-single id="tab-bar" name="tab-bar" style="tab-bar-select">
+    <option value="tab-case-studies" style="tab-bar-item">
+        <behavior trigger="deselect" action="hide" target="tab-case-studies" />
+        <behavior trigger="select" action="show" target="tab-case-studies" />
+        <text style="tab-label">Case Studies</text>
+      </option><option value="tab-custom-components" style="tab-bar-item">
+        <behavior trigger="deselect" action="hide" target="tab-custom-components" />
+        <behavior trigger="select" action="show" target="tab-custom-components" />
+        <text style="tab-label">Custom Components</text>
+      </option>
+  </select-single>
+
+  
+  <view id="tab-case-studies" style="tab-content " hide="true">
+    
+      ---
+permalink: "/advanced/case-studies/index.xml"
+---
+
+
+---
+permalink: "list.xml"
+hv_list_tag: "root"
+---
+
+
+<list
+  action="replace"
+  href="/advanced/index.xml"
+  id="directory-list"
+  style="list-container"
+  target="directory-list"
+  trigger="refresh"
+  xmlns="https://hyperview.org/hyperview"
+>
+  
+    
+      
+      
+        
+      
+      
+      <item
+        href="/hyperview/public//advanced/case-studies/advanced-forms/index.xml"
+        key="advanced-forms"
+        show-during-load="loading-screen"
+        style="item item-first"
+        
+      >
+        <view style="item-left">
+          <text style="item-label">Advanced Forms</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+      
+      
+      
+      <item
+        href="/hyperview/public//advanced/case-studies/basic-forms/index.xml"
+        key="basic-forms"
+        show-during-load="loading-screen"
+        style="item"
+        
+      >
+        <view style="item-left">
+          <text style="item-label">Basic Forms</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+      
+      
+      
+      <item
+        href="/hyperview/public//advanced/case-studies/business-rating/index.xml"
+        key="rate-by-business"
+        show-during-load="loading-screen"
+        style="item"
+        
+      >
+        <view style="item-left">
+          <text style="item-label">Rate by Business</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+      
+      
+      
+      <item
+        href="/hyperview/public//advanced/case-studies/cascader/index.xml"
+        key="cascader"
+        show-during-load="loading-screen"
+        style="item"
+        
+      >
+        <view style="item-left">
+          <text style="item-label">Cascader</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+      
+      
+      
+      <item
+        href="/hyperview/public//advanced/case-studies/contacts/index.xml"
+        key="contacts"
+        show-during-load="loading-screen"
+        style="item"
+        
+      >
+        <view style="item-left">
+          <text style="item-label">Contacts</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+      
+      
+      
+      <item
+        href="/hyperview/public//advanced/case-studies/custom-android-back/index.xml"
+        key="custom-android-back"
+        show-during-load="loading-screen"
+        style="item"
+        
+      >
+        <view style="item-left">
+          <text style="item-label">Custom Android Back</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+      
+      
+      
+      <item
+        href="/hyperview/public//advanced/case-studies/delayed-navigation/index.xml"
+        key="delayed-navigation"
+        show-during-load="loading-screen"
+        style="item"
+        
+      >
+        <view style="item-left">
+          <text style="item-label">Delayed Navigation</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+      
+      
+      
+      <item
+        href="/hyperview/public//advanced/case-studies/feedback-widget/index.xml"
+        key="feedback-widget"
+        show-during-load="loading-screen"
+        style="item"
+        
+      >
+        <view style="item-left">
+          <text style="item-label">Feedback Widget</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+      
+      
+      
+      <item
+        href="/hyperview/public//advanced/case-studies/infinite-scroll/index.xml"
+        key="infinite-scroll"
+        show-during-load="loading-screen"
+        style="item"
+        
+      >
+        <view style="item-left">
+          <text style="item-label">Infinite Scroll</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+      
+      
+      
+      <item
+        href="/hyperview/public//advanced/case-studies/lazy-load/index.xml"
+        key="lazy-load"
+        show-during-load="loading-screen"
+        style="item"
+        
+      >
+        <view style="item-left">
+          <text style="item-label">Lazy Load</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+      
+      
+      
+      <item
+        href="/hyperview/public//advanced/case-studies/navigation/index.xml"
+        key="navigation"
+        show-during-load="loading-screen"
+        style="item"
+        
+      >
+        <view style="item-left">
+          <text style="item-label">Navigation</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+      
+      
+      
+      <item
+        href="/hyperview/public//advanced/case-studies/photos/index.xml"
+        key="photo-sharing-app"
+        show-during-load="loading-screen"
+        style="item"
+        
+      >
+        <view style="item-left">
+          <text style="item-label">Photo Sharing App</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+      
+      
+      
+      <item
+        href="/hyperview/public//advanced/case-studies/pull-to-refresh/index.xml"
+        key="pull-to-refresh"
+        show-during-load="loading-screen"
+        style="item"
+        
+      >
+        <view style="item-left">
+          <text style="item-label">Pull To Refresh</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+      
+      
+      
+        
+      
+      <item
+        href="/hyperview/public//advanced/case-studies/tabs/index.xml"
+        key="tabs"
+        show-during-load="loading-screen"
+        style="item item-last"
+        
+      >
+        <view style="item-left">
+          <text style="item-label">Tabs</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+  
+</list>
+
+
+    
+    <text></text>
+  </view>
+
+  
+  <view id="tab-custom-components" style="tab-content " hide="true">
+    
+      ---
+permalink: "/custom_components/index.xml"
+---
+
+
+---
+permalink: "list.xml"
+hv_list_tag: "root"
+---
+
+
+<list
+  action="replace"
+  href="/advanced/index.xml"
+  id="directory-list"
+  style="list-container"
+  target="directory-list"
+  trigger="refresh"
+  xmlns="https://hyperview.org/hyperview"
+>
+  
+    
+      
+      
+        
+      
+      
+      <item
+        href="/hyperview/public//advanced/custom-components/filter/index.xml"
+        key="filter"
+        show-during-load="loading-screen"
+        style="item item-first"
+        
+      >
+        <view style="item-left">
+          <text style="item-label">Filter</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+      
+      
+      
+        
+      
+      <item
+        href="/hyperview/public//advanced/custom-components/svg-image/index.xml"
+        key="svg-image"
+        show-during-load="loading-screen"
+        style="item item-last"
+        
+      >
+        <view style="item-left">
+          <text style="item-label">SVG Image</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+  
+</list>
+
+
+    
+    <text></text>
+  </view>
+
+  <behavior
+    action="set-value"
+    new-value="tab-case-studies"
+    once="true"
+    trigger="load"
+    target="tab-bar"
+  />
+
+  </view>
+  <view id="footer" style="footer">
+    <view
+      href-style="bottom-tab"
+      action="navigate"
+      target="tab-ui"
+      style="bottom-tab bottom-tab-selected"
+    >
+      
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 7C5.5 6.17157 6.17157 5.5 7 5.5H25C25.8284 5.5 26.5 6.17157 26.5 7V25C26.5 25.8284 25.8284 26.5 25 26.5H7C6.17157 26.5 5.5 25.8284 5.5 25V7Z" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M5.5 11.5H26.5" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M20.5 11.5V26.5" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+        <text style="bottom-tab-label">UI</text>
+      
+    </view>
+    <view
+      style="bottom-tab"
+      href-style="bottom-tab"
+      action="navigate"
+      target="tab-behaviors"
+    >
+      
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M14.561 15.492L19.777 26.885C19.9071 27.1276 20.1702 27.2682 20.4442 27.2415C20.7181 27.2149 20.9492 27.0261 21.03 26.763L22.557 22.554L26.766 21.028C27.029 20.9467 27.2175 20.7155 27.2441 20.4416C27.2708 20.1676 27.1304 19.9044 26.888 19.774L15.5 14.558C15.2324 14.4455 14.9234 14.5057 14.7176 14.7104C14.5118 14.9151 14.4499 15.2238 14.561 15.492Z" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M25.723 16C25.741 15.7533 25.75 15.5033 25.75 15.25C25.75 9.45101 21.049 4.75 15.25 4.75C9.45101 4.75 4.75 9.45101 4.75 15.25C4.75 21.049 9.45101 25.75 15.25 25.75C15.503 25.75 15.75 25.741 16 25.724" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M21.061 13.747C20.3287 10.9151 17.6612 9.02397 14.7466 9.27039C11.832 9.5168 9.5198 11.829 9.27339 14.7436C9.02697 17.6582 10.9181 20.3257 13.75 21.058" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+        <text style="bottom-tab-label">Behaviors</text>
+      
+    </view>
+    <view
+      style="bottom-tab"
+      href-style="bottom-tab"
+      action="navigate"
+      target="tab-navigation"
+    >
+      
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M4.75 23.498C4.75 23.0838 5.08579 22.748 5.5 22.748H17.5C17.9142 22.748 18.25 23.0838 18.25 23.498V26.498C18.25 26.9122 17.9142 27.248 17.5 27.248H5.5C5.08579 27.248 4.75 26.9122 4.75 26.498V23.498Z" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M13.75 15.998C13.75 15.5838 14.0858 15.248 14.5 15.248H26.5C26.9142 15.248 27.25 15.5838 27.25 15.998V18.998C27.25 19.4122 26.9142 19.748 26.5 19.748H14.5C14.0858 19.748 13.75 19.4122 13.75 18.998V15.998Z" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M4.75 5.498C4.75 5.08379 5.08579 4.748 5.5 4.748H17.5C17.9142 4.748 18.25 5.08379 18.25 5.498V8.498C18.25 8.91221 17.9142 9.248 17.5 9.248H5.5C5.08579 9.248 4.75 8.91221 4.75 8.498V5.498Z" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M10.75 9.248V10.748C10.75 11.5764 11.4216 12.248 12.25 12.248H16.75C17.5784 12.248 18.25 12.9196 18.25 13.748V15.248" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M22.75 19.748V24.248C22.75 25.0764 22.0784 25.748 21.25 25.748H18.25" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+        <text style="bottom-tab-label">Navigation</text>
+      
+    </view>
+    <view
+      style="bottom-tab"
+      href-style="bottom-tab"
+      action="navigate"
+      target="tab-advanced"
+    >
+      
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M16.001 27.25C22.2142 27.25 27.251 22.2132 27.251 16C27.251 9.7868 22.2142 4.75 16.001 4.75C9.7878 4.75 4.75101 9.7868 4.75101 16C4.75101 22.2132 9.7878 27.25 16.001 27.25Z" stroke="#4778FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M10.001 22L15.699 16.295" stroke="#4778FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M22.064 9.931C21.3192 9.85092 20.5679 9.85092 19.823 9.931L17.823 13.111L16.592 10.823C12.133 13.012 10.392 18.301 12.041 19.953C14.255 22.167 23.013 18.286 22.064 9.931Z" stroke="#4778FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+        <text style="bottom-tab-label bottom-tab-label-selected">Advanced</text>
+      
+    </view>
+  </view>
+
+    </body>
+  </screen>
+  
+  
+  
+<screen id="loading-screen">
+  <styles>
+    <style
+  id="button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"
+/>
+<style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+
+<style
+  id="about-title"
+  flex="1"
+  alignItems="center"
+  flexDirection="row"
+  justifyContent="space-between"
+  paddingTop="24"
+  paddingHorizontal="24"
+/>
+<style
+  id="about-container"
+  backgroundColor="#FEF1CF"
+  borderRadius="18"
+  margin="24"
+/>
+<style id="about-text" fontSize="20" fontWeight="700" />
+
+<style id="description" fontSize="16" margin="24" />
+
+<style
+  id="link-text"
+  color="#4778FF"
+/>
+<style
+  id="link-container"
+  borderColor="#4778FF"
+  paddingHorizontal="8"
+  paddingVertical="4"
+  borderRadius="24"
+  borderWidth="1"
+  marginVertical="6"
+  marginRight="6"
+  justifyContent="center"
+/>
+
+<style
+  id="container-style"
+  borderColor="#e1e1e1"
+  borderRadius="16"
+  borderWidth="2"
+  margin="24"
+  padding="24"
+/>
+<style
+  id="container-label"
+  color="black"
+  fontSize="16"
+  fontWeight="normal"
+/>
+
+<style
+  id="name"
+  fontSize="18"
+  fontWeight="600"
+  margin="24"
+  marginBottom="0"
+/>
+<style
+  id="phone"
+  fontSize="18"
+  fontWeight="normal"
+  margin="24"
+  marginBottom="0"
+/>
+
+<style id="tab-content" flex="1" />
+<style id="centered" alignItems="center" justifyContent="center" />
+<style
+  id="tab-bar-select"
+  backgroundColor="#eee"
+  borderRadius="12"
+  flexDirection="row"
+  justifyContent="space-between"
+  marginBottom="24"
+  marginHorizontal="24"
+  padding="2"
+/>
+<style
+  id="tab-bar-item"
+  alignItems="center"
+  borderColor="transparent"
+  borderRadius="8"
+  borderWidth="1"
+  flex="1"
+  padding="8"
+  justifyContent="center"
+>
+  <modifier selected="true">
+  <style
+  backgroundColor="white"
+  elevation="2"
+  shadowColor="black"
+  shadowOffsetX="0"
+  shadowOffsetY="2"
+  shadowOpacity="0.1"
+  shadowRadius="2"
+  />
+  </modifier>
+</style>
+<style id="tab-label" fontSize="16" fontWeight="500" lineHeight="24" />
+
+<style
+  id="input"
+  borderBottomColor="#E1E1E1"
+  borderBottomWidth="1"
+  borderColor="#4E4D4D"
+  flex="1"
+  fontSize="16"
+  fontWeight="normal"
+  paddingBottom="8"
+  paddingTop="8"
+>
+
+  <modifier pressed="true">
+    <style borderBottomColor="green"/>
+  </modifier>
+  <modifier focused="true">
+    <style borderBottomColor="#4778FF" color="black" />
+  </modifier>
+  <modifier invalid="true">
+    <style color="#FF4847" borderBottomColor="#FF4847" />
+  </modifier>
+</style>
+
+<style id="input--error" borderBottomColor="#FF4847" color="#FF4847">
+  <modifier focused="true">
+    <style borderBottomColor="#FF4847" />
+  </modifier>
+</style>
+
+<style
+  id="label"
+  borderColor="#4E4D4D"
+  fontSize="16"
+  fontWeight="bold"
+  lineHeight="24"
+  marginBottom="8"
+>
+  <modifier invalid="true">
+    <style color="#FF4847" />
+  </modifier>
+  <modifier valid="true">
+    <style color="#63CB76" />
+  </modifier>
+</style>
+<style
+  id="help"
+  borderColor="#FF4847"
+  fontSize="16"
+  fontWeight="normal"
+  lineHeight="24"
+  marginTop="16"
+>
+  <modifier invalid="true">
+    <style color="#FF4847" />
+  </modifier>
+</style>
+
+
+<style
+  id="header"
+  alignItems="center"
+  backgroundColor="white"
+  borderBottomColor="#eee"
+  borderBottomWidth="1"
+  flexDirection="row"
+  marginBottom="12"
+  paddingBottom="16"
+  paddingLeft="24"
+  paddingRight="24"
+/>
+<style
+  id="header-btn"
+  color="blue"
+  fontSize="16"
+  fontWeight="600"
+  paddingRight="16"
+/>
+<style id="header-title" color="black" fontSize="24" fontWeight="600" />
+<style id="body" backgroundColor="white" flex="1" />
+<style id="description" fontSize="16" margin="24" />
+<style
+  id="item"
+  alignItems="center"
+  backgroundColor="#FFFFFF"
+  borderColor="#eee"
+  borderBottomWidth="1"
+  borderWidth="1"
+  flex="1"
+  flexDirection="row"
+  paddingVertical="12"
+  justifyContent="space-between"
+  marginHorizontal="24"
+  paddingHorizontal="16"
+/>
+<style id="item-first" borderTopLeftRadius="16" borderTopRightRadius="16" />
+<style
+  id="item-last"
+  borderBottomLeftRadius="16"
+  borderBottomRightRadius="16"
+  marginBottom="24"
+/>
+<style id="item-left" flex="1" flexDirection="row" />
+<style id="item-label" fontSize="18" fontWeight="normal" />
+<style id="item-chevron" />
+<style
+  id="button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"
+/>
+<style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style id="tab-route-content" flex="1" />
+<style
+  id="bottom-tab"
+  alignItems="center"
+  flex="1"
+  justifyContent="center"
+/>
+<style
+  id="bottom-tab-label"
+  color="#cccccc"
+  fontSize="8"
+  fontWeight="bold"
+/>
+<style id="bottom-tab-label-selected" color="#4778FF" />
+<style id="bottom-tab-selected" />
+<style
+  id="back-image"
+  alignItems="center"
+  flex="0"
+  height="10"
+  justifyContent="center"
+  padding="10"
+  width="10"
+/>
+<style
+  id="footer"
+  alignItems="stretch"
+  borderTopColor="#eee"
+  borderTopWidth="1"
+  bottom="0"
+  flexDirection="row"
+  flexShrink="1"
+  flexGrow="0"
+  height="48"
+  justifyContent="space-around"
+  backgroundColor="white"
+  position="absolute"
+  width="100%"
+/>
+<style
+  id="list-container"
+  flex="1"
+  flexGrow="1"
+  marginBottom="48"
+/>
+<style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" />
+<style id="loading" alignItems="center" flex="1" justifyContent="center" />
+<style
+  id="link"
+  color="#4778FF"
+  fontWeight="bold"
+  marginTop="8"
+  marginRight="16"
+/>
+<style
+  id="container-style"
+  borderColor="#e1e1e1"
+  borderRadius="16"
+  borderWidth="2"
+  margin="24"
+  padding="24"
+/>
+<style
+  id="container-label"
+  color="black"
+  fontSize="16"
+  fontWeight="normal"
+/>
+<style
+  id="list-header"
+  alignItems="center"
+  backgroundColor="#eee"
+  flex="1"
+  flexDirection="row"
+  paddingVertical="12"
+  marginHorizontal="24"
+  paddingHorizontal="16"
+/>
+<style id="list-header-text" fontSize="18" fontWeight="bold"/>
+<style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
+
+  </styles>
+  <body style="body" safe-area="true">
+    <header style="header">
+  
+  <text style="header-title">Advanced</text>
+</header>
+
+    <view style="loading">
+      <text style="loading-text">Loading…</text>
+      <spinner/>
+    </view>
+  </body>
+</screen>
+
+</doc>

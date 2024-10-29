@@ -1,0 +1,24 @@
+
+
+
+
+  
+    <text style="description">In this example, the replaced element also has a replace-inner action, allowing for a nested interaction.</text>
+  
+
+
+  <view
+    
+    
+      style="button"
+    
+  >
+    
+      <behavior
+    action="replace-inner"
+    href="/hyperview/public/behaviors/basic/actions/replace-inner/nested/replace_fragment_inner2.xml"
+  />
+    
+    <text style="button-label">Press me</text>
+  </view>
+

@@ -1,0 +1,27 @@
+
+
+
+
+  
+  
+    <text style="description">Tapping the button below will navigate back to the previous screen, but with query params from the form.</text>
+  
+
+  <form>
+    <text-field name="param1" value="value1"/>
+    <text-field name="param2" value="value2"/>
+    
+  <view
+    
+    
+      style="button"
+    
+  >
+    
+      <behavior action="close" href="/hyperview/public/navigation/index.xml?test=1" />
+    
+    <text style="button-label">Close</text>
+  </view>
+
+  </form>
+

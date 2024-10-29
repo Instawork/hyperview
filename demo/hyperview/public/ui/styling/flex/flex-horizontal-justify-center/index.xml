@@ -1,0 +1,12 @@
+
+
+
+  
+    <text style="description">Flex Horizontal Justify Center</text>
+  
+
+<view style="flex-container flex-horizontal flex-justify-center">
+  <view style="flex-child"/>
+  <view style="flex-child"/>
+  <view style="flex-child"/>
+</view>

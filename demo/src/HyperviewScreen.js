@@ -9,8 +9,15 @@
 import React, { PureComponent } from 'react';
 import HandleBack from './HandleBack';
 import Hyperview from 'hyperview';
+import ShowMessage from './message';
+import OpenEmail from './email';
+import OpenPhone from './phone';
+import SwipeableRow from './swipeable';
 import moment from 'moment';
 import { MAIN_STACK_NAME, MODAL_STACK_NAME } from './constants';
+import { LogBox } from 'react-native';
+
+LogBox.ignoreAllLogs();
 
 export default class HyperviewScreen extends PureComponent {
   goBack = () => {
@@ -63,6 +70,16 @@ export default class HyperviewScreen extends PureComponent {
     });
   }
 
+  components = [
+    SwipeableRow,
+  ];
+
+  behaviors = [
+    ShowMessage,
+    OpenPhone,
+    OpenEmail,
+  ];
+
   render() {
     const entrypointUrl = this.props.route.params?.url;
 
@@ -70,6 +87,8 @@ export default class HyperviewScreen extends PureComponent {
       <HandleBack>
         <Hyperview
           back={this.goBack}
+          behaviors={this.behaviors}
+          components={this.components}
           closeModal={this.closeModal}
           entrypointUrl={entrypointUrl}
           fetch={this.fetchWrapper}

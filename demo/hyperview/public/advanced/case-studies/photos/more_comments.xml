@@ -1,0 +1,29 @@
+<view xmlns="https://hyperview.org/hyperview">
+  <view style="comment">
+    <text
+      href="/hyperview/public/advanced/case-studies/photos/user/index.xml"
+      style="comment-author"
+    >
+      data
+    </text>
+    <text style="comment-content">love it!</text>
+  </view>
+  <view style="comment">
+    <text
+      href="/hyperview/public/advanced/case-studies/photos/user/index.xml"
+      style="comment-author"
+    >
+      geordi
+    </text>
+    <text style="comment-content">Ahhhh wish I was there...</text>
+  </view>
+  <view style="comment">
+    <text
+      href="/hyperview/public/advanced/case-studies/photos/user/index.xml"
+      style="comment-author"
+    >
+      jean.luc.p
+    </text>
+    <text style="comment-content">Engage!</text>
+  </view>
+</view>

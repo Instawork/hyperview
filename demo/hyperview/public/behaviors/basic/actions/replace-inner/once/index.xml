@@ -1,0 +1,25 @@
+
+
+
+
+  
+    <text style="description">Tapping the button below will request an XML fragment and replace the children of the element with the response.</text>
+  
+
+
+
+  <view
+    
+    
+      style="button"
+    
+  >
+    
+      <behavior
+    action="replace-inner"
+    href="/hyperview/public/behaviors/basic/actions/replace-inner/once/replace_fragment_inner.xml"
+  />
+    
+    <text style="button-label">Press me</text>
+  </view>
+

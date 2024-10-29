@@ -1,0 +1,24 @@
+
+
+
+
+  
+  
+    <text style="description">Tapping the button below will navigate back to the previous screen.</text>
+  
+
+
+  
+  <view
+    
+    
+      style="button"
+    
+  >
+    
+      <behavior action="close" href="#" />
+    
+    <text style="button-label">Close</text>
+  </view>
+
+

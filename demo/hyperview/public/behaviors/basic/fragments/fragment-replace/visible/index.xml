@@ -1,0 +1,37 @@
+
+
+
+
+  
+    <text style="description">Tapping the button below will replace the content with a copy of the fragment below.</text>
+  
+
+
+
+  <view
+    
+      action="replace"
+    
+      href="#fragment"
+    
+    
+      style="button"
+    
+  >
+    
+    <text style="button-label">Press me</text>
+  </view>
+
+
+  <view
+    
+      id="fragment"
+    
+    
+      style="button"
+    
+  >
+    
+    <text style="button-label">Fragment for Replace</text>
+  </view>
+

@@ -1,0 +1,31 @@
+
+
+
+  
+    <text style="description">Optional select</text>
+  
+
+<select-single name="choice" style="select" allow-deselect="true">
+  <view style="select-separator"/>
+  <option style="Select__Option" value="paid_parking">
+    <text style="select-label">Paid parking</text>
+    <view style="select-radio-outer">
+      <view style="select-radio-inner"/>
+    </view>
+  </option>
+  <view style="select-separator"/>
+  <option style="Select__Option" value="free_parking">
+    <text style="select-label">Free parking</text>
+    <view style="select-radio-outer">
+      <view style="select-radio-inner"/>
+    </view>
+  </option>
+  <view style="select-separator"/>
+  <option style="Select__Option" value="unknown_parking">
+    <text style="select-label">Unknown</text>
+    <view style="select-radio-outer">
+      <view style="select-radio-inner"/>
+    </view>
+  </option>
+  <view style="select-separator"/>
+</select-single>

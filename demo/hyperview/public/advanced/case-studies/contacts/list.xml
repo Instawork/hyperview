@@ -1,0 +1,182 @@
+<list
+  id="contacts"
+  trigger="refresh"
+  action="replace"
+  href="?page=1&amp;template=list"
+  target="contacts"
+  keyboard-dismiss-mode="on-drag"
+  xmlns="https://hyperview.org/hyperview"
+>
+  
+  <item key="search" id="top" sticky="true" style="relative mx-24">
+    <text-field
+      placeholder="Search a contact…"
+      placeholderTextColor="#8D9494"
+      name="search"
+      style="input"
+      debounce="200"
+      value=""
+    >
+      
+      
+      
+      
+      <behavior
+        trigger="change"
+        action="hide"
+        target="load-more"
+      />
+      <behavior
+        trigger="change"
+        action="scroll"
+        target="top"
+        xmlns:scroll="https://hyperview.org/hyperview-scroll"
+      />
+      <behavior
+        trigger="change"
+        action="replace"
+        target="contacts"
+        href="?template=list"
+        show-during-load="loading-indicator"
+      />
+    </text-field>
+    <view id="loading-indicator" style="absolute r-0 py-8" hide="true">
+      <spinner />
+    </view>
+  </item>
+  <items xmlns="https://hyperview.org/hyperview">
+  
+    <item key="911cfd0b-920b-478f-a318-123ce58bf134" style="mx-24 py-8 border-bottom">
+      <text>Aaron Breitenberg</text>
+      <text>Gilbert57@yahoo.com</text>
+      <text>(173) 555-3220</text>
+    </item>
+  
+    <item key="dd144ea6-a937-4705-a421-755579821c8a" style="mx-24 py-8 border-bottom">
+      <text>Aaron Carroll</text>
+      <text>Percival13@hotmail.com</text>
+      <text>(235) 555-6003</text>
+    </item>
+  
+    <item key="7117daa6-1f4f-40d1-8f0d-75f477761a31" style="mx-24 py-8 border-bottom">
+      <text>Aaron Dietrich</text>
+      <text>Jaylan1@hotmail.com</text>
+      <text>(103) 555-2250</text>
+    </item>
+  
+    <item key="c4671d0f-d6fc-481b-9a34-5121a2b64a82" style="mx-24 py-8 border-bottom">
+      <text>Aaron Fahey</text>
+      <text>Camylle73@gmail.com</text>
+      <text>(213) 555-1050</text>
+    </item>
+  
+    <item key="96523e11-758c-4323-a7cb-9c97c8b87ad5" style="mx-24 py-8 border-bottom">
+      <text>Aaron Gerlach</text>
+      <text>Dante_OKon16@gmail.com</text>
+      <text>(207) 555-6039</text>
+    </item>
+  
+    <item key="a3c40346-e3f8-4a19-b8c6-2a5d199b1ec6" style="mx-24 py-8 border-bottom">
+      <text>Aaron Greenfelder</text>
+      <text>Haylee_Boyle47@hotmail.com</text>
+      <text>(189) 555-4755</text>
+    </item>
+  
+    <item key="d91c61c8-a495-4c7d-bc46-711a6c732a7b" style="mx-24 py-8 border-bottom">
+      <text>Aaron Lang</text>
+      <text>Samantha.Rutherford@yahoo.com</text>
+      <text>(226) 555-3037</text>
+    </item>
+  
+    <item key="9f3460ac-b77b-4165-b64a-5a9243d4dd66" style="mx-24 py-8 border-bottom">
+      <text>Aaron Little</text>
+      <text>Beaulah_Morar@yahoo.com</text>
+      <text>(365) 555-7864</text>
+    </item>
+  
+    <item key="3d7277c4-ebe0-4581-b60c-9f41893c4d81" style="mx-24 py-8 border-bottom">
+      <text>Aaron Moen</text>
+      <text>Roslyn.Mann@yahoo.com</text>
+      <text>(502) 555-4504</text>
+    </item>
+  
+    <item key="1e4ceda9-cec3-470a-b6bc-a1b553ba1733" style="mx-24 py-8 border-bottom">
+      <text>Aaron Parisian</text>
+      <text>Dina_Carroll@yahoo.com</text>
+      <text>(803) 555-9038</text>
+    </item>
+  
+    <item key="12bcdefc-8397-4f52-936c-46194d599125" style="mx-24 py-8 border-bottom">
+      <text>Aaron Price</text>
+      <text>Aric.Nitzsche@gmail.com</text>
+      <text>(548) 555-4820</text>
+    </item>
+  
+    <item key="0b87ea14-d9b5-4762-951b-634aa4927b2e" style="mx-24 py-8 border-bottom">
+      <text>Aaron Shanahan</text>
+      <text>Devan38@hotmail.com</text>
+      <text>(315) 555-5854</text>
+    </item>
+  
+    <item key="60e9d9fc-99f6-4e6f-ad66-da12420e1d50" style="mx-24 py-8 border-bottom">
+      <text>Aaron Thiel</text>
+      <text>Gillian19@yahoo.com</text>
+      <text>(960) 555-0110</text>
+    </item>
+  
+    <item key="5fb0fa18-f0f0-487e-80a0-3413604657ec" style="mx-24 py-8 border-bottom">
+      <text>Aaron Torp</text>
+      <text>Burdette.Shields21@hotmail.com</text>
+      <text>(054) 555-8924</text>
+    </item>
+  
+    <item key="dd0eecfb-0012-44a5-bea4-f5309a6c4afb" style="mx-24 py-8 border-bottom">
+      <text>Aaron Walsh</text>
+      <text>Alan_West@gmail.com</text>
+      <text>(125) 555-2363</text>
+    </item>
+  
+    <item key="ce244d51-af12-40ee-8221-0ff5eb2e53ba" style="mx-24 py-8 border-bottom">
+      <text>Aaron Walter</text>
+      <text>Callie_Yost-Hansen11@gmail.com</text>
+      <text>(149) 555-3265</text>
+    </item>
+  
+    <item key="5063d4e5-cc60-4b97-9f07-cce4a4beaeb7" style="mx-24 py-8 border-bottom">
+      <text>Aaron Waters</text>
+      <text>Randi99@yahoo.com</text>
+      <text>(511) 555-8032</text>
+    </item>
+  
+    <item key="53ae675d-a8a2-4b9b-85a3-f3c4f4f2ad57" style="mx-24 py-8 border-bottom">
+      <text>Aaron Will</text>
+      <text>Amira61@hotmail.com</text>
+      <text>(007) 555-2331</text>
+    </item>
+  
+    <item key="56f3772f-6de8-46bd-809d-4de60992ca13" style="mx-24 py-8 border-bottom">
+      <text>Aaron Williamson-Jacobi</text>
+      <text>Stephan.Murazik1@yahoo.com</text>
+      <text>(553) 555-5930</text>
+    </item>
+  
+    <item key="f6247c5d-267f-4094-8a1d-ff3b0d02b8d6" style="mx-24 py-8 border-bottom">
+      <text>Aaron Willms</text>
+      <text>Jevon0@gmail.com</text>
+      <text>(937) 555-8141</text>
+    </item>
+  
+  
+    <item
+      key="load-more"
+      id="load-more"
+      trigger="visible"
+      action="replace"
+      href="?page=2"
+    >
+      <spinner />
+    </item>
+  
+</items>
+
+</list>

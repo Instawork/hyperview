@@ -1,0 +1,18 @@
+
+
+
+  <view
+    style="link-container"
+    
+  >
+    
+      <behavior action="set-value" new-value="" target="id_tf"/>
+  <behavior action="set-value" new-value="" target="id_ta"/>
+  <behavior action="set-value" new-value="" target="id_pf"/>
+  <behavior action="set-value" new-value="" target="id_ss"/>
+  <behavior action="set-value" new-value="" target="id_df"/>
+  <behavior action="set-value" new-value="off" target="id_s"/>
+    
+    <text style="link-text">Clear all</text>
+  </view>
+

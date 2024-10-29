@@ -1,0 +1,50 @@
+
+
+
+
+
+  
+    <text style="description">Tapping the button below will select all the options.</text>
+  
+
+
+
+  <select-multiple id="id_sm" name="sm" style="select">
+    <view style="select-separator" />
+    <option style="select-option" value="option1" >
+      <text style="select-label">Option 1</text>
+      <view style="select-radio-outer">
+        <view style="select-radio-inner" />
+      </view>
+    </option>
+    <view style="select-separator" />
+    <option style="select-option" value="option2" >
+      <text style="select-label">Option 2</text>
+      <view style="select-radio-outer">
+        <view style="select-radio-inner" />
+      </view>
+    </option>
+    <view style="select-separator" />
+    <option style="select-option" value="option3" selected="true">
+      <text style="select-label">Option 3</text>
+      <view style="select-radio-outer">
+        <view style="select-radio-inner" />
+      </view>
+    </option>
+    <view style="select-separator" />
+  </select-multiple>
+
+
+
+  <view
+    
+    
+      style="button"
+    
+  >
+    
+      <behavior action="select-all" target="id_sm" />
+    
+    <text style="button-label">Select All</text>
+  </view>
+

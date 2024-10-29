@@ -1,0 +1,12 @@
+
+
+
+  
+    <text style="description">Flex Horizontal</text>
+  
+
+<view style="flex-container flex-horizontal">
+  <view style="flex-child"/>
+  <view style="flex-child"/>
+  <view style="flex-child"/>
+</view>

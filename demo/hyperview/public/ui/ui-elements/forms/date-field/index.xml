@@ -1,0 +1,1118 @@
+
+<doc xmlns="https://hyperview.org/hyperview" >
+  <screen>
+    <styles>
+      <style
+  id="button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"
+/>
+<style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+
+<style
+  id="about-title"
+  flex="1"
+  alignItems="center"
+  flexDirection="row"
+  justifyContent="space-between"
+  paddingTop="24"
+  paddingHorizontal="24"
+/>
+<style
+  id="about-container"
+  backgroundColor="#FEF1CF"
+  borderRadius="18"
+  margin="24"
+/>
+<style id="about-text" fontSize="20" fontWeight="700" />
+
+<style id="description" fontSize="16" margin="24" />
+
+<style
+  id="link-text"
+  color="#4778FF"
+/>
+<style
+  id="link-container"
+  borderColor="#4778FF"
+  paddingHorizontal="8"
+  paddingVertical="4"
+  borderRadius="24"
+  borderWidth="1"
+  marginVertical="6"
+  marginRight="6"
+  justifyContent="center"
+/>
+
+<style
+  id="container-style"
+  borderColor="#e1e1e1"
+  borderRadius="16"
+  borderWidth="2"
+  margin="24"
+  padding="24"
+/>
+<style
+  id="container-label"
+  color="black"
+  fontSize="16"
+  fontWeight="normal"
+/>
+
+<style
+  id="name"
+  fontSize="18"
+  fontWeight="600"
+  margin="24"
+  marginBottom="0"
+/>
+<style
+  id="phone"
+  fontSize="18"
+  fontWeight="normal"
+  margin="24"
+  marginBottom="0"
+/>
+
+<style id="tab-content" flex="1" />
+<style id="centered" alignItems="center" justifyContent="center" />
+<style
+  id="tab-bar-select"
+  backgroundColor="#eee"
+  borderRadius="12"
+  flexDirection="row"
+  justifyContent="space-between"
+  marginBottom="24"
+  marginHorizontal="24"
+  padding="2"
+/>
+<style
+  id="tab-bar-item"
+  alignItems="center"
+  borderColor="transparent"
+  borderRadius="8"
+  borderWidth="1"
+  flex="1"
+  padding="8"
+  justifyContent="center"
+>
+  <modifier selected="true">
+  <style
+  backgroundColor="white"
+  elevation="2"
+  shadowColor="black"
+  shadowOffsetX="0"
+  shadowOffsetY="2"
+  shadowOpacity="0.1"
+  shadowRadius="2"
+  />
+  </modifier>
+</style>
+<style id="tab-label" fontSize="16" fontWeight="500" lineHeight="24" />
+
+<style
+  id="input"
+  borderBottomColor="#E1E1E1"
+  borderBottomWidth="1"
+  borderColor="#4E4D4D"
+  flex="1"
+  fontSize="16"
+  fontWeight="normal"
+  paddingBottom="8"
+  paddingTop="8"
+>
+
+  <modifier pressed="true">
+    <style borderBottomColor="green"/>
+  </modifier>
+  <modifier focused="true">
+    <style borderBottomColor="#4778FF" color="black" />
+  </modifier>
+  <modifier invalid="true">
+    <style color="#FF4847" borderBottomColor="#FF4847" />
+  </modifier>
+</style>
+
+<style id="input--error" borderBottomColor="#FF4847" color="#FF4847">
+  <modifier focused="true">
+    <style borderBottomColor="#FF4847" />
+  </modifier>
+</style>
+
+<style
+  id="label"
+  borderColor="#4E4D4D"
+  fontSize="16"
+  fontWeight="bold"
+  lineHeight="24"
+  marginBottom="8"
+>
+  <modifier invalid="true">
+    <style color="#FF4847" />
+  </modifier>
+  <modifier valid="true">
+    <style color="#63CB76" />
+  </modifier>
+</style>
+<style
+  id="help"
+  borderColor="#FF4847"
+  fontSize="16"
+  fontWeight="normal"
+  lineHeight="24"
+  marginTop="16"
+>
+  <modifier invalid="true">
+    <style color="#FF4847" />
+  </modifier>
+</style>
+
+
+<style
+  id="header"
+  alignItems="center"
+  backgroundColor="white"
+  borderBottomColor="#eee"
+  borderBottomWidth="1"
+  flexDirection="row"
+  marginBottom="12"
+  paddingBottom="16"
+  paddingLeft="24"
+  paddingRight="24"
+/>
+<style
+  id="header-btn"
+  color="blue"
+  fontSize="16"
+  fontWeight="600"
+  paddingRight="16"
+/>
+<style id="header-title" color="black" fontSize="24" fontWeight="600" />
+<style id="body" backgroundColor="white" flex="1" />
+<style id="description" fontSize="16" margin="24" />
+<style
+  id="item"
+  alignItems="center"
+  backgroundColor="#FFFFFF"
+  borderColor="#eee"
+  borderBottomWidth="1"
+  borderWidth="1"
+  flex="1"
+  flexDirection="row"
+  paddingVertical="12"
+  justifyContent="space-between"
+  marginHorizontal="24"
+  paddingHorizontal="16"
+/>
+<style id="item-first" borderTopLeftRadius="16" borderTopRightRadius="16" />
+<style
+  id="item-last"
+  borderBottomLeftRadius="16"
+  borderBottomRightRadius="16"
+  marginBottom="24"
+/>
+<style id="item-left" flex="1" flexDirection="row" />
+<style id="item-label" fontSize="18" fontWeight="normal" />
+<style id="item-chevron" />
+<style
+  id="button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"
+/>
+<style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style id="tab-route-content" flex="1" />
+<style
+  id="bottom-tab"
+  alignItems="center"
+  flex="1"
+  justifyContent="center"
+/>
+<style
+  id="bottom-tab-label"
+  color="#cccccc"
+  fontSize="8"
+  fontWeight="bold"
+/>
+<style id="bottom-tab-label-selected" color="#4778FF" />
+<style id="bottom-tab-selected" />
+<style
+  id="back-image"
+  alignItems="center"
+  flex="0"
+  height="10"
+  justifyContent="center"
+  padding="10"
+  width="10"
+/>
+<style
+  id="footer"
+  alignItems="stretch"
+  borderTopColor="#eee"
+  borderTopWidth="1"
+  bottom="0"
+  flexDirection="row"
+  flexShrink="1"
+  flexGrow="0"
+  height="48"
+  justifyContent="space-around"
+  backgroundColor="white"
+  position="absolute"
+  width="100%"
+/>
+<style
+  id="list-container"
+  flex="1"
+  flexGrow="1"
+  marginBottom="48"
+/>
+<style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" />
+<style id="loading" alignItems="center" flex="1" justifyContent="center" />
+<style
+  id="link"
+  color="#4778FF"
+  fontWeight="bold"
+  marginTop="8"
+  marginRight="16"
+/>
+<style
+  id="container-style"
+  borderColor="#e1e1e1"
+  borderRadius="16"
+  borderWidth="2"
+  margin="24"
+  padding="24"
+/>
+<style
+  id="container-label"
+  color="black"
+  fontSize="16"
+  fontWeight="normal"
+/>
+<style
+  id="list-header"
+  alignItems="center"
+  backgroundColor="#eee"
+  flex="1"
+  flexDirection="row"
+  paddingVertical="12"
+  marginHorizontal="24"
+  paddingHorizontal="16"
+/>
+<style id="list-header-text" fontSize="18" fontWeight="bold"/>
+<style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
+
+      
+  <style
+    id="form-group"
+    borderColor="#8D9494"
+    borderRadius="12"
+    borderWidth="1"
+    flex="1"
+    marginLeft="24"
+    marginRight="24"
+    marginTop="48"
+    padding="24"
+  />
+  <style id="input-text-error" color="#FF4847"/>
+  <style
+    id="picker-modal-text"
+    color="blue"
+    fontSize="16"
+    fontWeight="600"
+    marginBottom="16"
+    padding="24"
+  >
+    <modifier pressed="true">
+    <style opacity="0.5"/>
+    </modifier>
+  </style>
+  <style
+    id="InputCustom"
+    borderColor="#4E4D4D"
+    borderRadius="4"
+    borderWidth="2"
+    flex="1"
+    fontWeight="normal"
+    marginBottom="40"
+    paddingBottom="8"
+    paddingLeft="8"
+    paddingRight="8"
+    paddingTop="8">
+    <modifier pressed="true">
+    <style borderColor="#4778FF"/>
+    </modifier>
+    <modifier focused="true">
+    <style borderColor="#4778FF"/>
+    </modifier>
+  </style>
+  <style
+    id="picker-modal"
+    backgroundColor="white"
+    borderTopColor="#E1E1E1"
+    borderTopWidth="1"
+    shadowOffsetX="0"
+    shadowOffsetY="-5"
+    shadowOpacity="0.2"
+    shadowRadius="5"/>
+  <style
+    id="picker-modal-overlay"
+    backgroundColor="#1f1f1fa0"
+  />
+  <style id="help-error" color="#FF4847"/>
+  <style
+    id="input"
+    borderBottomColor="#E1E1E1"
+    borderBottomWidth="1"
+    borderColor="#4E4D4D"
+    flex="1"
+    fontSize="16"
+    fontWeight="normal"
+    paddingBottom="8"
+    paddingTop="8">
+    <modifier pressed="true">
+    <style borderBottomColor="#4778FF"/>
+    </modifier>
+    <modifier focused="true">
+    <style borderBottomColor="#4778FF"/>
+    </modifier>
+  </style>
+  <style id="input-custom-text" color="purple" fontSize="18" fontWeight="600"/>
+  <style id="input-error" borderBottomColor="#FF4847">
+    <modifier focused="true">
+    <style borderBottomColor="#FF4847"/>
+    </modifier>
+  </style>
+  <style id="picker-modal-custom" backgroundColor="purple" borderTopColor="#E1E1E1" borderTopWidth="1"/>
+  <style id="picker-modal-custom-overlay" backgroundColor="purple" opacity="0.4" />
+  <style id="picker-modal-custom-text" color="white" fontSize="20" fontWeight="600" padding="24" paddingBottom="0">
+    <modifier pressed="true">
+    <style color="yellow"/>
+    </modifier>
+  </style>
+  <style id="label" borderColor="#4E4D4D" fontSize="16" fontWeight="bold" lineHeight="24" marginBottom="8"/>
+  <style id="help" borderColor="#FF4847" fontSize="16" fontWeight="normal" lineHeight="24" marginTop="16"/>
+  <style id="input-text" color="black" fontSize="16" fontWeight="normal"/>
+
+    </styles>
+    <body style="body" safe-area="true">
+      <header style="header">
+  
+    <view action="back" href="#" style="header-btn">
+      <svg
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M11.7803 0.96967C12.0732 1.26256 12.0732 1.73744 11.7803 2.03033L2.56066 11.25H23.25C23.6642 11.25 24 11.5858 24 12C24 12.4142 23.6642 12.75 23.25 12.75H2.56066L11.7803 21.9697C12.0732 22.2626 12.0732 22.7374 11.7803 23.0303C11.4874 23.3232 11.0126 23.3232 10.7197 23.0303L0.21967 12.5303C-0.0732233 12.2374 -0.0732233 11.7626 0.21967 11.4697L10.7197 0.96967C11.0126 0.676777 11.4874 0.676777 11.7803 0.96967Z"
+    fill="#4778FF"
+  />
+</svg>
+
+    </view>
+  
+  <text style="header-title">Date Field</text>
+</header>
+
+      
+  <view scroll="true" style="main">
+    
+  
+  <view style="about-container">
+    <view style="about-title">
+      <text style="about-text">About</text>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_12_1961)">
+<path d="M15 17.25V21.75C15 22.5784 14.3284 23.25 13.5 23.25H10.5C9.67157 23.25 9 22.5784 9 21.75V17.25" stroke="#D99000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M9 20.25H15" stroke="#D99000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12 0.75V2.25" stroke="#D99000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M1.5 11.25H3" stroke="#D99000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M3.75 3.75L4.85 4.807" stroke="#D99000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M22.5 11.25H21" stroke="#D99000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M20.2499 3.75L19.1499 4.807" stroke="#D99000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M8.91505 17.25H15.0851C17.359 16.1213 18.784 13.7884 18.7501 11.25C18.6844 7.54961 15.7004 4.56565 12.0001 4.5C8.29814 4.56572 5.31357 7.55205 5.25005 11.254C5.21767 13.791 6.64244 16.1219 8.91505 17.25V17.25Z" stroke="#D99000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<clipPath id="clip0_12_1961">
+<rect width="24" height="24" fill="white"/>
+</clipPath>
+</defs>
+</svg>
+
+    </view>
+    
+      
+  
+    <text style="description">
+      Date fields open a system-appropriate modal to choose a date value. On iOS, styles can be applied to the modal and
+    save/cancel labels.
+    </text>
+  
+
+    
+  </view>
+
+  
+  
+    <text style="description">
+      Label formatting is determined by the client. In these examples, wer're using moment.js for the formatting.
+    </text>
+  
+
+  
+
+
+<view style="form-group">
+  <text style="label">Default date field</text>
+  <date-field
+    field-style="input"
+    field-text-style="input-text"
+    label-format="MMMM D, YYYY"
+    modal-overlay-style="picker-modal-overlay"
+    modal-style="picker-modal"
+    modal-text-style="picker-modal-text"
+    name="date"
+    placeholder="Select date"
+    placeholderTextColor="#8D9494"
+  />
+</view>
+
+  
+
+
+<view style="form-group">
+  <text style="label">Date field in spinner mode</text>
+  <date-field
+    field-style="input"
+    field-text-style="input-text"
+    label-format="MMMM D, YYYY"
+    modal-style="picker-modal"
+    modal-overlay-style="picker-modal-overlay"
+    modal-text-style="picker-modal-text"
+    mode="spinner"
+    name="date"
+    placeholder="Select date"
+    placeholderTextColor="#8D9494"
+  />
+</view>
+
+  
+
+
+<view style="form-group">
+  <text style="label">Filled date field</text>
+  <date-field
+    field-style="input"
+    field-text-style="input-text"
+    label-format="MMMM D, YYYY"
+    modal-overlay-style="picker-modal-overlay"
+    modal-style="picker-modal"
+    modal-text-style="picker-modal-text"
+    name="date"
+    placeholder="Select date"
+    placeholderTextColor="#8D9494"
+    value="2018-03-07"
+  />
+</view>
+
+  
+
+
+<view style="form-group">
+  <text style="label">Label format examples (using moment.js)</text>
+  <date-field
+    field-style="input"
+    field-text-style="input-text"
+    label-format="MMMM D, YYYY"
+    modal-overlay-style="picker-modal-overlay"
+    modal-style="picker-modal"
+    modal-text-style="picker-modal-text"
+    name="date"
+    placeholder="Select date"
+    placeholderTextColor="#8D9494"
+    value="2018-03-07"
+  />
+  <date-field
+    field-style="input"
+    field-text-style="input-text"
+    label-format="L"
+    modal-overlay-style="picker-modal-overlay"
+    modal-style="picker-modal"
+    modal-text-style="picker-modal-text"
+    name="date"
+    placeholder="Select date"
+    placeholderTextColor="#8D9494"
+    value="2018-03-07"
+  />
+  <date-field
+    field-style="input"
+    field-text-style="input-text"
+    label-format="MMMM [the] Do, [`]YY"
+    modal-overlay-style="picker-modal-overlay"
+    modal-style="picker-modal"
+    modal-text-style="picker-modal-text"
+    name="date"
+    placeholder="Select date"
+    placeholderTextColor="#8D9494"
+    value="2018-03-07"
+  />
+</view>
+
+  
+
+
+<view style="form-group">
+  <text style="label">Min date (May 5, 2018)</text>
+  <date-field
+    field-style="input"
+    field-text-style="input-text"
+    label-format="MMMM D, YYYY"
+    min="2018-05-05"
+    modal-overlay-style="picker-modal-overlay"
+    modal-style="picker-modal"
+    modal-text-style="picker-modal-text"
+    name="date"
+    placeholder="Select date"
+    placeholderTextColor="#8D9494"
+  />
+  <date-field
+    field-style="input"
+    field-text-style="input-text"
+    label-format="MMMM D, YYYY"
+    min="2018-05-05"
+    modal-style="picker-modal"
+    modal-overlay-style="picker-modal-overlay"
+    modal-text-style="picker-modal-text"
+    mode="spinner"
+    name="date"
+    placeholder="Select date (spinner)"
+    placeholderTextColor="#8D9494"
+  />
+</view>
+
+  
+
+
+<view style="form-group">
+  <text style="label">Max date (May 5, 2024)</text>
+  <date-field
+    field-style="input"
+    field-text-style="input-text"
+    label-format="MMMM D, YYYY"
+    max="2024-05-05"
+    modal-overlay-style="picker-modal-overlay"
+    modal-style="picker-modal"
+    modal-text-style="picker-modal-text"
+    name="date"
+    placeholder="Select date"
+    placeholderTextColor="#8D9494"
+  />
+  <date-field
+    field-style="input"
+    field-text-style="input-text"
+    label-format="MMMM D, YYYY"
+    max="2024-05-05"
+    modal-style="picker-modal"
+    modal-overlay-style="picker-modal-overlay"
+    modal-text-style="picker-modal-text"
+    mode="spinner"
+    name="date"
+    placeholder="Select date (spinner)"
+    placeholderTextColor="#8D9494"
+  />
+</view>
+
+  
+
+
+<view style="form-group">
+  <text style="label">Min/Max date (May 5, 2018 - 2024)</text>
+  <date-field
+    field-style="input"
+    field-text-style="input-text"
+    label-format="MMMM D, YYYY"
+    max="2024-05-05"
+    min="2018-05-05"
+    modal-overlay-style="picker-modal-overlay"
+    modal-style="picker-modal"
+    modal-text-style="picker-modal-text"
+    name="date"
+    placeholder="Select date"
+    placeholderTextColor="#8D9494"
+  />
+  <date-field
+    field-style="input"
+    field-text-style="input-text"
+    label-format="MMMM D, YYYY"
+    max="2024-05-05"
+    min="2018-05-05"
+    modal-style="picker-modal"
+    modal-overlay-style="picker-modal-overlay"
+    modal-text-style="picker-modal-text"
+    mode="spinner"
+    name="date"
+    placeholder="Select date (spinner)"
+    placeholderTextColor="#8D9494"
+  />
+</view>
+
+  
+
+
+<view style="form-group">
+  <text style="label">Validation error</text>
+  <date-field
+    field-style="input input-error"
+    field-text-style="input-text input-text-error"
+    label-format="MMMM D, YYYY"
+    modal-overlay-style="picker-modal-overlay"
+    modal-style="picker-modal"
+    modal-text-style="picker-modal-text"
+    name="date"
+    placeholder="Select date"
+    placeholderTextColor="#8D9494"
+  />
+  <text style="help help-error">Please select a date</text>
+</view>
+
+  
+
+
+<view style="form-group">
+  <text style="label">Filled validation error</text>
+  <date-field
+    field-style="input input-error"
+    field-text-style="input-text input-text-error"
+    label-format="MMMM D, YYYY"
+    modal-overlay-style="picker-modal-overlay"
+    modal-style="picker-modal"
+    modal-text-style="picker-modal-text"
+    name="date"
+    placeholder="Select date"
+    placeholderTextColor="#8D9494"
+    value="2018-03-07"
+  />
+  <text style="help help-error">Please select a different date</text>
+</view>
+
+  
+
+
+<view style="form-group">
+  <text style="label">Customized animation durations (iOS only)</text>
+  <date-field
+    field-style="input"
+    field-text-style="input-text"
+    label-format="MMMM D, YYYY"
+    modal-overlay-style="picker-modal-overlay"
+    modal-style="picker-modal"
+    modal-text-style="picker-modal-text"
+    modal-animation-duration="400"
+    modal-overlay-animation-duration="400"
+    modal-dismiss-animation-duration="200"
+    modal-dismiss-overlay-animation-duration="200"
+    name="date"
+    placeholder="Select date"
+    placeholderTextColor="#8D9494"
+    value="2018-03-07"
+  />
+</view>
+
+  
+
+
+<view style="form-group">
+  <text style="label">Customized</text>
+  <date-field
+    field-style="InputCustom"
+    field-text-style="input-custom-text"
+    label-format="MMMM D, YYYY"
+    modal-overlay-style="picker-modal-custom-overlay"
+    modal-style="picker-modal-custom"
+    modal-text-style="picker-modal-custom-text"
+    name="date"
+    placeholder="Select date"
+    placeholderTextColor="#8D9494"
+    value="2018-03-07"
+  />
+</view>
+
+  
+  <view
+    
+      href="/hyperview/public/ui/ui-elements/forms/date-field/index.xml"
+    
+    
+      style="button"
+    
+  >
+    
+    <text style="button-label">Serialize</text>
+  </view>
+
+
+  </view>
+
+    </body>
+  </screen>
+  
+  
+  
+<screen id="loading-screen">
+  <styles>
+    <style
+  id="button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"
+/>
+<style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+
+<style
+  id="about-title"
+  flex="1"
+  alignItems="center"
+  flexDirection="row"
+  justifyContent="space-between"
+  paddingTop="24"
+  paddingHorizontal="24"
+/>
+<style
+  id="about-container"
+  backgroundColor="#FEF1CF"
+  borderRadius="18"
+  margin="24"
+/>
+<style id="about-text" fontSize="20" fontWeight="700" />
+
+<style id="description" fontSize="16" margin="24" />
+
+<style
+  id="link-text"
+  color="#4778FF"
+/>
+<style
+  id="link-container"
+  borderColor="#4778FF"
+  paddingHorizontal="8"
+  paddingVertical="4"
+  borderRadius="24"
+  borderWidth="1"
+  marginVertical="6"
+  marginRight="6"
+  justifyContent="center"
+/>
+
+<style
+  id="container-style"
+  borderColor="#e1e1e1"
+  borderRadius="16"
+  borderWidth="2"
+  margin="24"
+  padding="24"
+/>
+<style
+  id="container-label"
+  color="black"
+  fontSize="16"
+  fontWeight="normal"
+/>
+
+<style
+  id="name"
+  fontSize="18"
+  fontWeight="600"
+  margin="24"
+  marginBottom="0"
+/>
+<style
+  id="phone"
+  fontSize="18"
+  fontWeight="normal"
+  margin="24"
+  marginBottom="0"
+/>
+
+<style id="tab-content" flex="1" />
+<style id="centered" alignItems="center" justifyContent="center" />
+<style
+  id="tab-bar-select"
+  backgroundColor="#eee"
+  borderRadius="12"
+  flexDirection="row"
+  justifyContent="space-between"
+  marginBottom="24"
+  marginHorizontal="24"
+  padding="2"
+/>
+<style
+  id="tab-bar-item"
+  alignItems="center"
+  borderColor="transparent"
+  borderRadius="8"
+  borderWidth="1"
+  flex="1"
+  padding="8"
+  justifyContent="center"
+>
+  <modifier selected="true">
+  <style
+  backgroundColor="white"
+  elevation="2"
+  shadowColor="black"
+  shadowOffsetX="0"
+  shadowOffsetY="2"
+  shadowOpacity="0.1"
+  shadowRadius="2"
+  />
+  </modifier>
+</style>
+<style id="tab-label" fontSize="16" fontWeight="500" lineHeight="24" />
+
+<style
+  id="input"
+  borderBottomColor="#E1E1E1"
+  borderBottomWidth="1"
+  borderColor="#4E4D4D"
+  flex="1"
+  fontSize="16"
+  fontWeight="normal"
+  paddingBottom="8"
+  paddingTop="8"
+>
+
+  <modifier pressed="true">
+    <style borderBottomColor="green"/>
+  </modifier>
+  <modifier focused="true">
+    <style borderBottomColor="#4778FF" color="black" />
+  </modifier>
+  <modifier invalid="true">
+    <style color="#FF4847" borderBottomColor="#FF4847" />
+  </modifier>
+</style>
+
+<style id="input--error" borderBottomColor="#FF4847" color="#FF4847">
+  <modifier focused="true">
+    <style borderBottomColor="#FF4847" />
+  </modifier>
+</style>
+
+<style
+  id="label"
+  borderColor="#4E4D4D"
+  fontSize="16"
+  fontWeight="bold"
+  lineHeight="24"
+  marginBottom="8"
+>
+  <modifier invalid="true">
+    <style color="#FF4847" />
+  </modifier>
+  <modifier valid="true">
+    <style color="#63CB76" />
+  </modifier>
+</style>
+<style
+  id="help"
+  borderColor="#FF4847"
+  fontSize="16"
+  fontWeight="normal"
+  lineHeight="24"
+  marginTop="16"
+>
+  <modifier invalid="true">
+    <style color="#FF4847" />
+  </modifier>
+</style>
+
+
+<style
+  id="header"
+  alignItems="center"
+  backgroundColor="white"
+  borderBottomColor="#eee"
+  borderBottomWidth="1"
+  flexDirection="row"
+  marginBottom="12"
+  paddingBottom="16"
+  paddingLeft="24"
+  paddingRight="24"
+/>
+<style
+  id="header-btn"
+  color="blue"
+  fontSize="16"
+  fontWeight="600"
+  paddingRight="16"
+/>
+<style id="header-title" color="black" fontSize="24" fontWeight="600" />
+<style id="body" backgroundColor="white" flex="1" />
+<style id="description" fontSize="16" margin="24" />
+<style
+  id="item"
+  alignItems="center"
+  backgroundColor="#FFFFFF"
+  borderColor="#eee"
+  borderBottomWidth="1"
+  borderWidth="1"
+  flex="1"
+  flexDirection="row"
+  paddingVertical="12"
+  justifyContent="space-between"
+  marginHorizontal="24"
+  paddingHorizontal="16"
+/>
+<style id="item-first" borderTopLeftRadius="16" borderTopRightRadius="16" />
+<style
+  id="item-last"
+  borderBottomLeftRadius="16"
+  borderBottomRightRadius="16"
+  marginBottom="24"
+/>
+<style id="item-left" flex="1" flexDirection="row" />
+<style id="item-label" fontSize="18" fontWeight="normal" />
+<style id="item-chevron" />
+<style
+  id="button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"
+/>
+<style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style id="tab-route-content" flex="1" />
+<style
+  id="bottom-tab"
+  alignItems="center"
+  flex="1"
+  justifyContent="center"
+/>
+<style
+  id="bottom-tab-label"
+  color="#cccccc"
+  fontSize="8"
+  fontWeight="bold"
+/>
+<style id="bottom-tab-label-selected" color="#4778FF" />
+<style id="bottom-tab-selected" />
+<style
+  id="back-image"
+  alignItems="center"
+  flex="0"
+  height="10"
+  justifyContent="center"
+  padding="10"
+  width="10"
+/>
+<style
+  id="footer"
+  alignItems="stretch"
+  borderTopColor="#eee"
+  borderTopWidth="1"
+  bottom="0"
+  flexDirection="row"
+  flexShrink="1"
+  flexGrow="0"
+  height="48"
+  justifyContent="space-around"
+  backgroundColor="white"
+  position="absolute"
+  width="100%"
+/>
+<style
+  id="list-container"
+  flex="1"
+  flexGrow="1"
+  marginBottom="48"
+/>
+<style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" />
+<style id="loading" alignItems="center" flex="1" justifyContent="center" />
+<style
+  id="link"
+  color="#4778FF"
+  fontWeight="bold"
+  marginTop="8"
+  marginRight="16"
+/>
+<style
+  id="container-style"
+  borderColor="#e1e1e1"
+  borderRadius="16"
+  borderWidth="2"
+  margin="24"
+  padding="24"
+/>
+<style
+  id="container-label"
+  color="black"
+  fontSize="16"
+  fontWeight="normal"
+/>
+<style
+  id="list-header"
+  alignItems="center"
+  backgroundColor="#eee"
+  flex="1"
+  flexDirection="row"
+  paddingVertical="12"
+  marginHorizontal="24"
+  paddingHorizontal="16"
+/>
+<style id="list-header-text" fontSize="18" fontWeight="bold"/>
+<style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
+
+  </styles>
+  <body style="body" safe-area="true">
+    <header style="header">
+  
+    <view action="back" href="#" style="header-btn">
+      <svg
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M11.7803 0.96967C12.0732 1.26256 12.0732 1.73744 11.7803 2.03033L2.56066 11.25H23.25C23.6642 11.25 24 11.5858 24 12C24 12.4142 23.6642 12.75 23.25 12.75H2.56066L11.7803 21.9697C12.0732 22.2626 12.0732 22.7374 11.7803 23.0303C11.4874 23.3232 11.0126 23.3232 10.7197 23.0303L0.21967 12.5303C-0.0732233 12.2374 -0.0732233 11.7626 0.21967 11.4697L10.7197 0.96967C11.0126 0.676777 11.4874 0.676777 11.7803 0.96967Z"
+    fill="#4778FF"
+  />
+</svg>
+
+    </view>
+  
+  <text style="header-title">Date Field</text>
+</header>
+
+    <view style="loading">
+      <text style="loading-text">Loading…</text>
+      <spinner/>
+    </view>
+  </body>
+</screen>
+
+</doc>
