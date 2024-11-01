@@ -147,12 +147,15 @@ export const renderChildren = (
   onUpdate: HvComponentOnUpdate,
   options: HvComponentOptions,
 ) => {
-  return renderChildNodes(
-    Array.from(element.childNodes),
-    stylesheets,
-    onUpdate,
-    options,
-  );
+  if (element.childNodes) {
+    return renderChildNodes(
+      Array.from(element.childNodes),
+      stylesheets,
+      onUpdate,
+      options,
+    );
+  }
+  return [];
 };
 
 /**
