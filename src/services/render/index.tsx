@@ -147,22 +147,12 @@ export const renderChildren = (
   onUpdate: HvComponentOnUpdate,
   options: HvComponentOptions,
 ) => {
-  const children = [];
-  if (element.childNodes) {
-    const { childNodes } = element;
-    for (let i = 0; i < childNodes.length; i += 1) {
-      const e = renderElement(
-        element.childNodes.item(i) as Element,
-        stylesheets,
-        onUpdate,
-        { ...options, skipHref: false },
-      );
-      if (e) {
-        children.push(e);
-      }
-    }
-  }
-  return children;
+  return renderChildNodes(
+    Array.from(element.childNodes),
+    stylesheets,
+    onUpdate,
+    options,
+  );
 };
 
 /**
