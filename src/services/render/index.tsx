@@ -164,3 +164,26 @@ export const renderChildren = (
   }
   return children;
 };
+
+/**
+ * This alternate renderChildren function allows for passing an external
+ * childNodes array, which can be useful when filtering out specific nodes.
+ */
+export const renderChildNodes = (
+  childNodes: ChildNode[],
+  stylesheets: StyleSheets,
+  onUpdate: HvComponentOnUpdate,
+  options: HvComponentOptions,
+) => {
+  const children = [];
+  for (let i = 0; i < childNodes.length; i += 1) {
+    const e = renderElement(childNodes[i] as Element, stylesheets, onUpdate, {
+      ...options,
+      skipHref: false,
+    });
+    if (e) {
+      children.push(e);
+    }
+  }
+  return children;
+};

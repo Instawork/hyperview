@@ -39,6 +39,8 @@ export default class Hyperview extends PureComponent<Types.Props> {
 
   static renderChildren = Render.renderChildren;
 
+  static renderChildNodes = Render.renderChildNodes;
+
   static renderElement = Render.renderElement;
 
   behaviorRegistry: BehaviorRegistry;
