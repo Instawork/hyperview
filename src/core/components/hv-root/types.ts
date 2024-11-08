@@ -46,6 +46,5 @@ export type Props = {
   loadingScreen?: ComponentType<LoadingProps>;
   handleBack?: ComponentType<{ children: ReactNode }>;
   doc?: Document;
-  registerPreload?: (id: number, element: Element) => void;
   logger?: Logging.Logger;
 };
