@@ -695,7 +695,7 @@ Navigation actions immediately show a new screen or modal before requesting the 
 
 #### Update actions
 
-During update actions, the elements referenced in `show-during-load` will be shown on the current screen. The indicator elements is hidden after the href is fetched. This is a no-op for elements doesn't exist on the screen.
+During update actions, the elements referenced in `show-during-load` will be shown on the current screen. The indicator elements is hidden after the href is fetched. This is a no-op for elements which don't exist on the screen.
 
 - If `show-during-load` refers to an element ids not present in the screen, the attribute will have no effect.
 - If the indicator element itself has behavior attributes with `trigger="load"`, that behavior will trigger when the element appears when the request starts.
