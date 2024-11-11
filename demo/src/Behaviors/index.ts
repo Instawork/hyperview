@@ -1,3 +1,3 @@
-import { AddStyles } from './add-styles';
+import { AddStyles } from './AddStyles';
 
 export default [AddStyles];
