@@ -370,6 +370,7 @@ export default class HvSectionList extends PureComponent<
                   />
                 ) : undefined
               }
+              initialNumToRender={sections.length}
               removeClippedSubviews={false}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               renderItem={({ item }: any): any =>
