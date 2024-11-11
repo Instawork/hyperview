@@ -1,0 +1,30 @@
+---
+permalink: "/advanced/community/behaviors/add-styles/index.xml"
+tags: "Advanced/Community/Behaviors"
+hv_title: "Add Styles"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  {{ description("This behavior allows injecting styles into the screen's styles element. It is useful when loading partial Hyperview documents that need their own styles.") }}
+  <view style="custom-container">
+    <text style="custom-text">
+      This text will appear unstyled until the button below is pressed.
+    </text>
+  </view>
+  {% call button('Inject styles') -%}
+    <behavior
+      action="add-styles"
+      trigger="press"
+    >
+      <styles>
+        <style id="custom-container" borderColor="blue" borderWidth="2" margin="24" padding="24" />
+        <style id="custom-text" color="blue" fontSize="16" lineHeight="24" />
+      </styles>
+    </behavior>
+  {%- endcall %}
+{% endblock %}

@@ -65,6 +65,7 @@
         <xs:enumeration value="scroll" />
 
         <!-- Hyperview demo extensions -->
+        <xs:enumeration value="add-styles" />
         <xs:enumeration value="share" />
       </xs:restriction>
     </xs:simpleType>
