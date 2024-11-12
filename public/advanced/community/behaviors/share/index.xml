@@ -361,7 +361,7 @@
   >
     
       <behavior
-    xmlns:share="https://instawork.com/hyperview-share"
+    xmlns:share="https://hyperview.org/share"
     action="share"
     share:message="Test message"
     trigger="press"
@@ -374,7 +374,6 @@
   
 
 
-
   <view
     
     
@@ -383,7 +382,7 @@
   >
     
       <behavior
-    xmlns:share="https://instawork.com/hyperview-share"
+    xmlns:share="https://hyperview.org/share"
     action="share"
     share:url="https://www.xkcd.com"
     trigger="press"
@@ -404,7 +403,7 @@
   >
     
       <behavior
-    xmlns:share="https://instawork.com/hyperview-share"
+    xmlns:share="https://hyperview.org/share"
     action="share"
     share:message="Test message"
     share:url="https://www.xkcd.com"
@@ -426,9 +425,9 @@
   >
     
       <behavior
-    xmlns:share="https://instawork.com/hyperview-share"
+    xmlns:share="https://hyperview.org/share"
     action="share"
-    share:dialogTitle="This is the dialog title"
+    share:dialog-title="This is the dialog title"
     share:message="Test message"
     share:subject="This is the subject"
     share:title="This is the title"
