@@ -1,7 +1,7 @@
 import { Platform, Share as RNShare } from 'react-native';
 import { getContent, getOptions } from './helpers';
 
-const namespace = 'https://instawork.com/hyperview-share';
+const namespace = 'https://hyperview.org/share';
 
 export const Share = {
   action: 'share',
