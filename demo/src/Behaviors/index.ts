@@ -1,3 +1,4 @@
 import { AddStyles } from './AddStyles';
+import { Share } from './Share';
 
-export default [AddStyles];
+export default [AddStyles, Share];

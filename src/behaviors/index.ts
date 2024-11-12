@@ -5,7 +5,6 @@ import HvHide from 'hyperview/src/behaviors/hv-hide';
 import HvOpenSettings from 'hyperview/src/behaviors/hv-open-settings';
 import HvSelectAll from 'hyperview/src/behaviors/hv-select-all';
 import HvSetValue from 'hyperview/src/behaviors/hv-set-value';
-import HvShare from 'hyperview/src/behaviors/hv-share';
 import HvShow from 'hyperview/src/behaviors/hv-show';
 import HvToggle from 'hyperview/src/behaviors/hv-toggle';
 import HvUnselectAll from 'hyperview/src/behaviors/hv-unselect-all';
@@ -17,7 +16,6 @@ const HYPERVIEW_BEHAVIORS = [
   HvOpenSettings,
   HvSelectAll,
   HvSetValue,
-  HvShare,
   HvShow,
   HvToggle,
   HvUnselectAll,
