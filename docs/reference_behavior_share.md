@@ -11,7 +11,7 @@ Here's an example of a sharing a link to a website, with a message. The system s
 ```xml
 <view style="Button">
   <behavior
-    xmlns:share="https://instawork.com/hyperview-share"
+    xmlns:share="https://hyperview.org/share"
     action="share"
     trigger="press"
     share:url="https://www.instawork.com"
@@ -26,14 +26,14 @@ Here's an example of a sharing a link to a website, with a message. The system s
 Share attributes and elements require their own namespace:
 
 ```html
-https://instawork.com/hyperview-share
+https://hyperview.org/share
 ```
 
 Share behaviors are created using the standard [`<behavior>`](/docs/reference_behavior) element. To trigger a share behavior, just set the `action` attribute to `"share"`. It's usually convenient to define the XML namespace on the `<behavior>` element too:
 
 ```xml
 <behavior
-  xmlns:share="https://instawork.com/hyperview-share"
+  xmlns:share="https://hyperview.org/share"
   trigger="longPress"
   action="alert"
 />
@@ -45,7 +45,7 @@ The shared message and url are defined as namespaced attributes on the `<behavio
 
 ```xml
 <behavior
-  xmlns:share="https://instawork.com/hyperview-share"
+  xmlns:share="https://hyperview.org/share"
   trigger="longPress"
   action="share"
   share:url="https://www.xkcd.com"
@@ -55,7 +55,7 @@ The shared message and url are defined as namespaced attributes on the `<behavio
 
 ## Share attributes
 
-The following attributes are part of the `https://instawork.com/hyperview-share` namespace.
+The following attributes are part of the `https://hyperview.org/share` namespace.
 
 ### dialog-title
 

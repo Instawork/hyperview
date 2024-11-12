@@ -2,10 +2,10 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   attributeFormDefault="qualified"
   elementFormDefault="qualified"
-  targetNamespace="https://instawork.com/hyperview-share"
+  targetNamespace="https://hyperview.org/share"
 >
   <xs:attributeGroup name="shareAttributes">
-    <xs:attribute name="dialogTitle" type="xs:string" />
+    <xs:attribute name="dialog-title" type="xs:string" />
     <xs:attribute name="message" type="xs:string" />
     <xs:attribute name="subject" type="xs:string" />
     <xs:attribute name="title" type="xs:string" />

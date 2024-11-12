@@ -6,7 +6,7 @@
   xmlns:hv="https://hyperview.org/hyperview"
   xmlns:alert="https://hyperview.org/hyperview-alert"
   xmlns:filter="https://hyperview.org/filter"
-  xmlns:share="https://instawork.com/hyperview-share"
+  xmlns:share="https://hyperview.org/share"
 >
   <xs:import
     namespace="https://hyperview.org/hyperview-alert"
@@ -33,7 +33,7 @@
     schemaLocation="progress-bar.xsd"
   />
   <xs:import
-    namespace="https://instawork.com/hyperview-share"
+    namespace="https://hyperview.org/share"
     schemaLocation="share.xsd"
   />
 
