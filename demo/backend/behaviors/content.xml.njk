@@ -9,9 +9,9 @@
     {id: "tab-advanced", label: "Advanced"}
   ]) }}
   {% call tabbar_top_tab("tab-basic", true) -%}
-    {% include "./basic/content.xml.njk" %}
+    {% include './basic/content.xml.njk' %}
   {%- endcall -%}
   {% call tabbar_top_tab("tab-advanced") -%}
-    {% include "./advanced/content.xml.njk" %}
+    {% include './advanced/content.xml.njk' %}
   {%- endcall -%}
 {% endblock %}

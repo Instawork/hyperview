@@ -10,13 +10,13 @@ hv_title: "Progress Bar"
 {% from 'macros/link/index.xml.njk' import link %}
 
 {% block styles %}
-  {% include "./styles.xml.njk" %}
+  {% include './styles.xml.njk' %}
 {% endblock %}
 
 {% block content %}
   <view style="canvas">
     {% set value=0.3 %}
-    {% include "./progress-bar.xml.njk" %}
+    {% include './progress-bar.xml.njk' %}
   </view>
 
   <view style="actions">
