@@ -7,11 +7,11 @@ hv_button_behavior: "back"
 {% extends 'templates/scrollview.xml.njk' %}
 
 {% block styles %}
-  {% include './styles.xml.njk' %}
+  {% include './_styles.xml.njk' %}
 {% endblock %}
 
 {% block content %}
-  {% include './parking/index.xml.njk' %}
-  {% include './location/index.xml.njk' %}
-  {% include './food/index.xml.njk' %}
+  {% include './_parking/index.xml.njk' %}
+  {% include './_location/index.xml.njk' %}
+  {% include './_food/index.xml.njk' %}
 {% endblock %}

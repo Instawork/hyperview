@@ -7,7 +7,7 @@ hv_button_behavior: "back"
 {% extends 'templates/scrollview.xml.njk' %}
 
 {% block styles %}
-  {% include './styles.xml.njk' %}
+  {% include './_styles.xml.njk' %}
 {% endblock %}
 
 {% block content %}
@@ -21,10 +21,10 @@ hv_button_behavior: "back"
     </view>
   </view>
   <section-list>
-    {% include './section-1/index.xml.njk' %}
-    {% include './section-2/index.xml.njk' %}
-    {% include './section-3/index.xml.njk' %}
-    {% include './section-4/index.xml.njk' %}
-    {% include './section-5/index.xml.njk' %}
+    {% include './_section-1/index.xml.njk' %}
+    {% include './_section-2/index.xml.njk' %}
+    {% include './_section-3/index.xml.njk' %}
+    {% include './_section-4/index.xml.njk' %}
+    {% include './_section-5/index.xml.njk' %}
   </section-list>
 {% endblock %}

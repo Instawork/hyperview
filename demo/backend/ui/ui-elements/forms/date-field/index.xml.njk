@@ -111,16 +111,16 @@ hv_button_behavior: "back"
   {% call description() -%}
     Label formatting is determined by the client. In these examples, wer're using moment.js for the formatting.
   {%- endcall %}
-  {% include './default/index.xml.njk' %}
-  {% include './spinner/index.xml.njk' %}
-  {% include './filled/index.xml.njk' %}
-  {% include './label-format/index.xml.njk' %}
-  {% include './min-date/index.xml.njk' %}
-  {% include './max-date/index.xml.njk' %}
-  {% include './min-max-date/index.xml.njk' %}
-  {% include './validation-error/index.xml.njk' %}
-  {% include './filled-validation-error/index.xml.njk' %}
-  {% include './animations/index.xml.njk' %}
-  {% include './customized/index.xml.njk' %}
+  {% include './_default/index.xml.njk' %}
+  {% include './_spinner/index.xml.njk' %}
+  {% include './_filled/index.xml.njk' %}
+  {% include './_label-format/index.xml.njk' %}
+  {% include './_min-date/index.xml.njk' %}
+  {% include './_max-date/index.xml.njk' %}
+  {% include './_min-max-date/index.xml.njk' %}
+  {% include './_validation-error/index.xml.njk' %}
+  {% include './_filled-validation-error/index.xml.njk' %}
+  {% include './_animations/index.xml.njk' %}
+  {% include './_customized/index.xml.njk' %}
   {{ button('Serialize', {href:"/hyperview/public/ui/ui-elements/forms/date-field/index.xml"}) }}
 {% endblock %}
