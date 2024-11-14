@@ -84,19 +84,20 @@ export default class Navigation {
     }
 
     let preloadScreen = null;
+    let preloadElement: Element | null | undefined = null;
     if (showIndicatorId && this.document) {
       const screens: HTMLCollectionOf<Element> = this.document.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
         'screen',
       );
-      const loadingScreen: Element | null | undefined = Array.from(
-        screens,
-      ).find(s => s && s.getAttribute('id') === showIndicatorId);
-      if (loadingScreen) {
+      preloadElement = Array.from(screens).find(
+        s => s && s.getAttribute('id') === showIndicatorId,
+      );
+      if (preloadElement) {
         preloadScreen = Date.now(); // Not trully unique but sufficient for our use-case
-        this.setPreloadScreen(preloadScreen, loadingScreen);
+        this.setPreloadScreen(preloadScreen, preloadElement);
         if (registerPreload) {
-          registerPreload(preloadScreen, loadingScreen);
+          registerPreload(preloadScreen, preloadElement);
         }
       }
     }
