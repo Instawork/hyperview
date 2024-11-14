@@ -5,10 +5,10 @@ hv_title: "Feedback Widget"
 hv_button_behavior: "back"
 ---
 {% extends 'templates/scrollview.xml.njk' %}
-{% from './compliment.xml.njk' import compliment %}
+{% from './_compliment.xml.njk' import compliment %}
 
 {% block styles %}
-  {% include './styles.xml.njk' %}
+  {% include './_styles.xml.njk' %}
 {% endblock %}
 
 {% block custom_ns %}

@@ -15,9 +15,9 @@ hv_button_behavior: "none"
     {id: "tab-styling", label: "Styling"}
   ]) }}
   {% call tabbar_top_tab("tab-ui-elements", true) -%}
-    {% include "./ui-elements/content.xml.njk" %}
+    {% include './ui-elements/content.xml.njk' %}
   {%- endcall -%}
   {% call tabbar_top_tab("tab-styling") -%}
-    {% include "./styling/content.xml.njk" %}
+    {% include './styling/content.xml.njk' %}
   {%- endcall -%}
 {% endblock %}

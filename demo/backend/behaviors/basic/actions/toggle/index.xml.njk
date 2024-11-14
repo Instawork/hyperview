@@ -7,13 +7,13 @@ hv_button_behavior: "back"
 {% extends 'templates/scrollview.xml.njk' %}
 
 {% block styles %}
-  {% include './tap/styles.xml.njk' %}
-  {% include './spinner/styles.xml.njk' %}
+  {% include './tap/_styles.xml.njk' %}
+  {% include './spinner/_styles.xml.njk' %}
 {% endblock %}
 
 {% block content %}
-  {% include './tap/index.xml.njk' %}
-  {% include './delay/index.xml.njk' %}
-  {% include './spinner/index.xml.njk' %}
-  {% include './multiple/index.xml.njk' %}
+  {% include './_tap/index.xml.njk' %}
+  {% include './_delay/index.xml.njk' %}
+  {% include './_spinner/index.xml.njk' %}
+  {% include './_multiple/index.xml.njk' %}
 {% endblock %}

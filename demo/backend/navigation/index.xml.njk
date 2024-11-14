@@ -15,9 +15,9 @@ hv_button_behavior: "none"
     {id: "tab-navigator", label: "Navigator"}
   ]) }}
   {% call tabbar_top_tab("tab-behaviors", true) -%}
-    {% include "./behaviors/content.xml.njk" %}
+    {% include './behaviors/content.xml.njk' %}
   {%- endcall -%}
   {% call tabbar_top_tab("tab-navigator") -%}
-    {% include "./navigator/content.xml.njk" %}
+    {% include './navigator/content.xml.njk' %}
   {%- endcall -%}
 {% endblock %}

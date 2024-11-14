@@ -87,9 +87,9 @@ hv_button_behavior: "back"
 
 {% block content %}
   <form>
-    {% include './simple-select/index.xml.njk' %}
-    {% include './pre-select/index.xml.njk' %}
-    {% include './custom/index.xml.njk' %}
+    {% include './_simple-select/index.xml.njk' %}
+    {% include './_pre-select/index.xml.njk' %}
+    {% include './_custom/index.xml.njk' %}
   </form>
   {{ button('Serialize', {href:"/hyperview/public/ui/ui-elements/forms/select-multiple/index.xml"}) }}
 {% endblock %}

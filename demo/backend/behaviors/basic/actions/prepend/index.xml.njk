@@ -7,11 +7,11 @@ hv_button_behavior: "back"
 {% extends 'templates/scrollview.xml.njk' %}
 
 {% block styles %}
-  {% include './prepend-once/styles.xml.njk' %}
-  {% include './prepend-nested/styles.xml.njk' %}
+  {% include './prepend-once/_styles.xml.njk' %}
+  {% include './prepend-nested/_styles.xml.njk' %}
 {% endblock %}
 
 {% block content %}
-  {% include './prepend-once/index.xml.njk' %}
-  {% include './prepend-nested/index.xml.njk' %}
+  {% include './_prepend-once/index.xml.njk' %}
+  {% include './_prepend-nested/index.xml.njk' %}
 {% endblock %}

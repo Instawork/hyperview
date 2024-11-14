@@ -99,12 +99,12 @@ hv_button_behavior: "back"
     Picker fields open a system-appropriate modal to choose a single value from a list of options. On iOS, styles can be
     applied to the modal and save/cancel labels.
   {%- endcall %}
-  {% include './default/index.xml.njk' %}
-  {% include './filled/index.xml.njk' %}
-  {% include './de-selectable/index.xml.njk' %}
-  {% include './validation-error/index.xml.njk' %}
-  {% include './filled-validation-error/index.xml.njk' %}
-  {% include './animations/index.xml.njk' %}
-  {% include './customized/index.xml.njk' %}
+  {% include './_default/index.xml.njk' %}
+  {% include './_filled/index.xml.njk' %}
+  {% include './_de-selectable/index.xml.njk' %}
+  {% include './_validation-error/index.xml.njk' %}
+  {% include './_filled-validation-error/index.xml.njk' %}
+  {% include './_animations/index.xml.njk' %}
+  {% include './_customized/index.xml.njk' %}
   {{ button('Serialize', {href:"/hyperview/public/ui/ui-elements/forms/picker/index.xml"}) }}
 {% endblock %}
