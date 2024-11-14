@@ -23,11 +23,14 @@ import {
   UPDATE_ACTIONS,
   UpdateAction,
 } from 'hyperview/src/types';
+import {
+  LoadingScreenContext,
+  LoadingScreenProvider,
+} from 'hyperview/src/contexts/loading-screen';
 import React, { PureComponent } from 'react';
 import HvRoute from 'hyperview/src/core/components/hv-route';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
 import { Linking } from 'react-native';
-import { LoadingScreenProvider } from 'hyperview/src/contexts/loading-screen';
 import { XNetworkRetryAction } from 'hyperview/src/services/dom/types';
 
 /**
@@ -548,28 +551,33 @@ export default class Hyperview extends PureComponent<Types.Props> {
           value={this.props.refreshControl}
         >
           <LoadingScreenProvider loadingScreen={this.props.loadingScreen}>
-            <HvScreen
-              back={this.props.back}
-              behaviors={this.props.behaviors}
-              closeModal={this.props.closeModal}
-              components={this.props.components}
-              elementErrorComponent={this.props.elementErrorComponent}
-              entrypointUrl={this.props.entrypointUrl}
-              errorScreen={this.props.errorScreen}
-              fetch={this.props.fetch}
-              formatDate={this.props.formatDate}
-              navigate={this.props.navigate}
-              navigation={this.props.navigation}
-              onError={this.props.onError}
-              onParseAfter={this.props.onParseAfter}
-              onParseBefore={this.props.onParseBefore}
-              onUpdate={this.onUpdate}
-              openModal={this.props.openModal}
-              push={this.props.push}
-              refreshControl={this.props.refreshControl}
-              reload={this.reload}
-              route={this.props.route}
-            />
+            <LoadingScreenContext.Consumer>
+              {loadingConsumer => (
+                <HvScreen
+                  back={this.props.back}
+                  behaviors={this.props.behaviors}
+                  closeModal={this.props.closeModal}
+                  components={this.props.components}
+                  elementErrorComponent={this.props.elementErrorComponent}
+                  entrypointUrl={this.props.entrypointUrl}
+                  errorScreen={this.props.errorScreen}
+                  fetch={this.props.fetch}
+                  formatDate={this.props.formatDate}
+                  getLoadingScreen={loadingConsumer.get}
+                  navigate={this.props.navigate}
+                  navigation={this.props.navigation}
+                  onError={this.props.onError}
+                  onParseAfter={this.props.onParseAfter}
+                  onParseBefore={this.props.onParseBefore}
+                  onUpdate={this.onUpdate}
+                  openModal={this.props.openModal}
+                  push={this.props.push}
+                  refreshControl={this.props.refreshControl}
+                  reload={this.reload}
+                  route={this.props.route}
+                />
+              )}
+            </LoadingScreenContext.Consumer>
           </LoadingScreenProvider>
         </Contexts.RefreshControlComponentContext.Provider>
       );

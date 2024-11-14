@@ -62,6 +62,7 @@ export type InnerRouteProps = {
   getPreload: (key: number) => Element | undefined;
   element?: Element;
   reload: Reload;
+  getLoadingScreen: (id?: string) => ComponentType<LoadingProps>;
 };
 
 /**

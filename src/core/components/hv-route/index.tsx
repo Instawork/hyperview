@@ -26,6 +26,7 @@ import HvScreen from 'hyperview/src/core/components/hv-screen';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import LoadError from 'hyperview/src/core/components/load-error';
 import Loading from 'hyperview/src/core/components/loading';
+import { LoadingScreenContext } from 'hyperview/src/contexts/loading-screen';
 // eslint-disable-next-line instawork/import-services
 import Navigation from 'hyperview/src/services/navigation';
 import { NavigationContainerRefContext } from '@react-navigation/native';
@@ -353,6 +354,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
             errorScreen={this.props.errorScreen}
             fetch={this.props.fetch}
             formatDate={formatter}
+            getLoadingScreen={this.props.getLoadingScreen}
             navigate={this.navLogic.navigate}
             navigation={this.props.navigation}
             onError={this.props.onError}
@@ -550,7 +552,9 @@ function HvRouteFC(props: Types.Props) {
   const navigatorMapContext: Types.NavigatorMapContextProps | null = useContext(
     NavigatorMapContext.NavigatorMapContext,
   );
-  if (!navigationContext || !navigatorMapContext) {
+  const loadingScreenContext = useContext(LoadingScreenContext);
+
+  if (!navigationContext || !navigatorMapContext || !loadingScreenContext) {
     throw new NavigatorService.HvRouteError('No context found');
   }
   const backContext = useContext(BackBehaviorContext);
@@ -656,6 +660,7 @@ function HvRouteFC(props: Types.Props) {
       entrypointUrl={navigationContext.entrypointUrl}
       errorScreen={navigationContext.errorScreen}
       fetch={navigationContext.fetch}
+      getLoadingScreen={loadingScreenContext.get}
       getPreload={navigatorMapContext.getPreload}
       handleBack={navigationContext.handleBack}
       navigation={nav}
