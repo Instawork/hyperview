@@ -26,7 +26,6 @@ export type NavigationContextProps = {
   components?: HvComponent[];
   elementErrorComponent?: ComponentType<ErrorProps>;
   errorScreen?: ComponentType<ErrorProps>;
-  loadingScreen?: ComponentType<LoadingProps>;
   handleBack?: ComponentType<{ children: ReactNode }>;
   reload: Reload;
 };
@@ -58,7 +57,6 @@ export type InnerRouteProps = {
   components?: HvComponent[];
   elementErrorComponent?: ComponentType<ErrorProps>;
   errorScreen?: ComponentType<ErrorProps>;
-  loadingScreen?: ComponentType<LoadingProps>;
   handleBack?: ComponentType<{ children: ReactNode }>;
   setPreload: (key: number, element: Element) => void;
   getPreload: (key: number) => Element | undefined;

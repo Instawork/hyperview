@@ -4,7 +4,7 @@ import { Props as HvRootProps } from 'hyperview/src/core/components/hv-root/type
 /**
  * All of the props used by hv-screen
  */
-export type Props = HvRootProps & {
+export type Props = Omit<HvRootProps, 'loadingScreen'> & {
   onUpdate: HvComponentOnUpdate;
   registerPreload?: (id: number, element: Element) => void;
   reload: Reload;
