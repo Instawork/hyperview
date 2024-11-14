@@ -550,7 +550,10 @@ export default class Hyperview extends PureComponent<Types.Props> {
         <Contexts.RefreshControlComponentContext.Provider
           value={this.props.refreshControl}
         >
-          <LoadingScreenProvider loadingScreen={this.props.loadingScreen}>
+          <LoadingScreenProvider
+            loadingScreen={this.props.loadingScreen}
+            loadingScreens={this.props.loadingScreens}
+          >
             <LoadingScreenContext.Consumer>
               {loadingConsumer => (
                 <HvScreen
@@ -608,7 +611,10 @@ export default class Hyperview extends PureComponent<Types.Props> {
               reload: this.reload,
             }}
           >
-            <LoadingScreenProvider loadingScreen={this.props.loadingScreen}>
+            <LoadingScreenProvider
+              loadingScreen={this.props.loadingScreen}
+              loadingScreens={this.props.loadingScreens}
+            >
               <HvRoute />
             </LoadingScreenProvider>
           </NavContexts.Context.Provider>

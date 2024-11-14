@@ -6,7 +6,7 @@ import { Props as LoadingProps } from 'hyperview/src/core/components/loading';
 /**
  * All of the props used by hv-screen
  */
-export type Props = Omit<HvRootProps, 'loadingScreen'> & {
+export type Props = Omit<HvRootProps, 'loadingScreen' | 'loadingScreens'> & {
   getLoadingScreen: (id?: string) => ComponentType<LoadingProps>;
   onUpdate: HvComponentOnUpdate;
   registerPreload?: (id: number, element: Element) => void;
