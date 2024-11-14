@@ -41,6 +41,7 @@ export default class HvScreen extends React.Component {
       doc: null,
       elementError: null,
       error: null,
+      loadingScreen: null,
       staleHeaderType: null,
       styles: null,
       url: null,
@@ -104,6 +105,7 @@ export default class HvScreen extends React.Component {
         doc: preloadScreen,
         elementError: null,
         error: null,
+        loadingScreen: params.loadingScreen,
         styles: preloadStyles,
         url,
       });
@@ -111,6 +113,7 @@ export default class HvScreen extends React.Component {
       this.setState({
         elementError: null,
         error: null,
+        loadingScreen: params.loadingScreen,
         url,
       });
     }
@@ -151,7 +154,12 @@ export default class HvScreen extends React.Component {
         : // eslint-disable-next-line react/no-access-state-in-setstate
           this.state.styles;
 
-      this.setState({ doc, styles, url: newUrl });
+      this.setState({
+        doc,
+        loadingScreen: newNavigationState.params.loadingScreen,
+        styles,
+        url: newUrl,
+      });
     }
   };
 
@@ -211,6 +219,7 @@ export default class HvScreen extends React.Component {
         doc,
         elementError: null,
         error: null,
+        loadingScreen: null,
         staleHeaderType,
         styles: stylesheets,
       });
@@ -222,6 +231,7 @@ export default class HvScreen extends React.Component {
         doc: null,
         elementError: null,
         error: err,
+        loadingScreen: null,
         styles: null,
       });
     }
@@ -250,7 +260,9 @@ export default class HvScreen extends React.Component {
       });
     }
     if (!this.state.doc) {
-      const loadingScreen = this.props.getLoadingScreen();
+      const loadingScreen = this.props.getLoadingScreen(
+        this.state.loadingScreen,
+      );
       return React.createElement(loadingScreen);
     }
     const elementErrorComponent = this.state.elementError

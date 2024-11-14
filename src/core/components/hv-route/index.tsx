@@ -300,7 +300,11 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
         }
       }
     }
-    const LoadingScreen = this.props.getLoadingScreen();
+
+    // Load either the loadingScreen by id or the default loading screen
+    const LoadingScreen = this.props.getLoadingScreen(
+      this.props.route?.params?.loadingScreen,
+    );
     return <LoadingScreen />;
   };
 
