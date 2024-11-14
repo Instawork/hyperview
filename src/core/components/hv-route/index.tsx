@@ -25,7 +25,6 @@ import HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import LoadError from 'hyperview/src/core/components/load-error';
-import Loading from 'hyperview/src/core/components/loading';
 import { LoadingScreenContext } from 'hyperview/src/contexts/loading-screen';
 // eslint-disable-next-line instawork/import-services
 import Navigation from 'hyperview/src/services/navigation';
@@ -301,7 +300,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
         }
       }
     }
-    const LoadingScreen = this.props.loadingScreen || Loading;
+    const LoadingScreen = this.props.getLoadingScreen();
     return <LoadingScreen />;
   };
 
