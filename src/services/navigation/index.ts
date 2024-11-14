@@ -85,6 +85,7 @@ export default class Navigation {
 
     let preloadScreen = null;
     let preloadElement: Element | null | undefined = null;
+    let loadingScreen;
     if (showIndicatorId && this.document) {
       const screens: HTMLCollectionOf<Element> = this.document.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
@@ -101,8 +102,18 @@ export default class Navigation {
         }
       }
     }
+    if (!preloadElement && showIndicatorId) {
+      loadingScreen = showIndicatorId;
+    }
 
-    const routeParams = { delay, preloadScreen, targetId, url } as const;
+    const routeParams = {
+      delay,
+      loadingScreen,
+      preloadScreen,
+      targetId,
+      url,
+    } as const;
+
     if (delay) {
       setTimeout(() => {
         this.executeNavigate(action, routeParams, url, href);

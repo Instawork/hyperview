@@ -392,6 +392,7 @@ export type Route = NavigatorRoute<string, RouteParams>;
 export type RouteParams = {
   id?: string;
   url: string;
+  loadingScreen?: string;
   preloadScreen?: number;
   isModal?: boolean;
 };
