@@ -115,8 +115,11 @@ All the href paths should start with `/hyperview/public/` . This ensures that re
 ### Case
 
 1. File names, style ids are to follow kebab case, i.e. custom-select, custom-select-bold
-2. style ids and element ids should not overlap. i.e., `<style id="container" />` and `<view id="container" />`
-3. Tags should be capitalized and named after the parent directory of the file they represent. i.e. `Advanced/Case Studies` for the items under `advanced/case-studies`.
+2. Private files that are not meant to be directly served as static file by the server:
+   a. should be prefixed with `_` or placed in a directory starting with `_`
+   b. should not define a front matter section
+3. style ids and element ids should not overlap. i.e., `<style id="container" />` and `<view id="container" />`
+4. Tags should be capitalized and named after the parent directory of the file they represent. i.e. `Advanced/Case Studies` for the items under `advanced/case-studies`.
 
 ### Files
 
