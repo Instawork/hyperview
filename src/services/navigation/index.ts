@@ -75,6 +75,7 @@ export default class Navigation {
     const formData: FormData | null | undefined = componentRegistry.getFormData(
       element,
     );
+    const indicatorId = showIndicatorId?.split(' ')[0] || null;
 
     let url = href;
     if (!href.startsWith(ANCHOR_ID_SEPARATOR)) {
@@ -86,13 +87,13 @@ export default class Navigation {
     let preloadScreen = null;
     let preloadElement: Element | null | undefined = null;
     let loadingScreen;
-    if (showIndicatorId && this.document) {
+    if (indicatorId && this.document) {
       const screens: HTMLCollectionOf<Element> = this.document.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
         'screen',
       );
       preloadElement = Array.from(screens).find(
-        s => s && s.getAttribute('id') === showIndicatorId,
+        s => s && s.getAttribute('id') === indicatorId,
       );
       if (preloadElement) {
         preloadScreen = Date.now(); // Not truly unique but sufficient for our use-case
@@ -102,8 +103,8 @@ export default class Navigation {
         }
       }
     }
-    if (!preloadElement && showIndicatorId) {
-      loadingScreen = showIndicatorId;
+    if (!preloadElement && indicatorId) {
+      loadingScreen = indicatorId;
     }
 
     const routeParams = {
