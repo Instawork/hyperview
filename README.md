@@ -110,7 +110,7 @@ cd demo
 BASE_URL="http://X.X.X.X:8085" yarn start
 ```
 
-This command will start an Expo development server and open a webpage (http://localhost:19002). This webpage will display a QR code.
+This command will start an Expo development server and will display a QR code.
 
 - On your iOS device, open the Camera app and point it at the QR code on your screen. The Camera app should show an "Open in Expo" notification. Tap this notification.
 - On your Android device, use the Expo app to scan the QR code on your screen.
