@@ -13,7 +13,7 @@ Every time a person is added, we want the list on the first screen to show the u
 ![final](/img/event_dispatch/final.gif)
 
 <div style="text-align:center;margin-bottom:1em;">
-  <a class="button" href="https://github.com/Instawork/hyperview/tree/master/examples/advanced_behaviors/dispatch_events_multiple">See the full code</a>
+  <a class="button" href="https://github.com/Instawork/hyperview/tree/master/demo/backend/behaviors/advanced/dispatch-multiple">See the full code</a>
 </div>
 
 Let's start with the markup for the list of people and the default status. Clicking on an item will open a new screen with the person's information.

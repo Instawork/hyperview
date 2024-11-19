@@ -9,7 +9,7 @@ You can create an infinite-scroll experience by using [`<list>`](reference_list)
 ![infinite scroll](/img/example_infinite_scroll1.gif)
 
 <div style="text-align:center;margin-bottom:1em;">
-  <a class="button" href="https://github.com/Instawork/hyperview/tree/master/examples/case_studies/infinite_scroll">See the full code</a>
+  <a class="button" href="https://github.com/Instawork/hyperview/tree/master/demo/backend/advanced/case-studies/infinite-scroll">See the full code</a>
 </div>
 
 ```xml

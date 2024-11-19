@@ -7,7 +7,7 @@ sidebar_label: Photo sharing app
 This case study replicates the functionality of a photo-sharing app. It consists of two screens: a feed of shared images, with comments and likes, and a user profile that shows a grid of images shared by a specific user. The feed supports sticky image headers, toggling likes, loading more comments, and tapping user names to load the profile screen.
 
 <div style="text-align:center">
-  <a class="button" href="https://github.com/Instawork/hyperview/tree/master/examples/case_studies/photos">See the full code</a>
+  <a class="button" href="https://github.com/Instawork/hyperview/tree/master/demo/backend/advanced/case-studies/photos">See the full code</a>
 </div>
 
 <div style="display:flex;justify-content:space-around">
@@ -350,4 +350,4 @@ Images require an explicit width and height, but different devices will have dif
 
 ### See the code
 
-For the full example, browse the full code in the [Hyperview Github repo](https://github.com/Instawork/hyperview/tree/master/examples/case_studies/photos).
+For the full example, browse the full code in the [Hyperview Github repo](https://github.com/Instawork/hyperview/tree/master/demo/backend/advanced/case-studies/photos).

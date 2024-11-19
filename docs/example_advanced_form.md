@@ -12,7 +12,7 @@ The standard UI choice for `<option>` elements in a `<select-single>` is the rad
 ![form](/img/advanced_form/standard.gif)
 
 <div style="text-align:center;margin-bottom:1em;">
-  <a class="button" href="https://github.com/Instawork/hyperview/tree/master/examples/case_studies/advanced_form">See the full code</a>
+  <a class="button" href="https://github.com/Instawork/hyperview/tree/master/demo/backend/advanced/case-studies/advanced-forms">See the full code</a>
 </div>
 
 Looking at the anatomy of an option in the example above, we can break down the UI into 3 parts:
