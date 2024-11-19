@@ -62,7 +62,7 @@ Putting it all together, we get the desired delayed navigation behavior:
 ![delayed navigation](/img/example_delayed_navigation1.gif)
 
 <div style="text-align:center;margin-bottom:1em;">
-  <a class="button" href="https://github.com/Instawork/hyperview/tree/master/examples/case_studies/delayed_navigation">See the full code</a>
+  <a class="button" href="https://github.com/Instawork/hyperview/tree/master/demo/backend/advanced/case-studies/delayed-navigation">See the full code</a>
 </div>
 
 This technique is very powerful. In this example, we hard-coded the contents of `redirect.xml`. In a real app, the contents could be dynamically generated. For example, instead of always opening the second screen, server-side logic could've decided to open a modal instead. Or, the server could've sent back an error message instead of a behavior that triggers on load. It could also return a success message and a second link, requiring the user to perform a "double confirm" to proceed to the next screen.

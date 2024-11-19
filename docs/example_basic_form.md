@@ -8,7 +8,7 @@ Hyperview supports sending user input with requests through the [`<form>`](/docs
 ![main](/img/basic_form/main.png)
 
 <div style="text-align:center;margin-bottom:1em;">
-  <a class="button" href="https://github.com/Instawork/hyperview/tree/master/examples/case_studies/basic_form">See the full code</a>
+  <a class="button" href="https://github.com/Instawork/hyperview/tree/master/demo/backend/advanced/case-studies/basic-forms">See the full code</a>
 </div>
 
 ### Styling inputs
