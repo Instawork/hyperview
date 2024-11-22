@@ -75,6 +75,7 @@ export default class Navigation {
     const formData: FormData | null | undefined = componentRegistry.getFormData(
       element,
     );
+    const indicatorId = showIndicatorId?.split(' ')[0] || null;
 
     let url = href;
     if (!href.startsWith(ANCHOR_ID_SEPARATOR)) {
@@ -84,24 +85,36 @@ export default class Navigation {
     }
 
     let preloadScreen = null;
-    if (showIndicatorId && this.document) {
+    let preloadElement: Element | null | undefined = null;
+    let loadingScreen;
+    if (indicatorId && this.document) {
       const screens: HTMLCollectionOf<Element> = this.document.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
         'screen',
       );
-      const loadingScreen: Element | null | undefined = Array.from(
-        screens,
-      ).find(s => s && s.getAttribute('id') === showIndicatorId);
-      if (loadingScreen) {
-        preloadScreen = Date.now(); // Not trully unique but sufficient for our use-case
-        this.setPreloadScreen(preloadScreen, loadingScreen);
+      preloadElement = Array.from(screens).find(
+        s => s && s.getAttribute('id') === indicatorId,
+      );
+      if (preloadElement) {
+        preloadScreen = Date.now(); // Not truly unique but sufficient for our use-case
+        this.setPreloadScreen(preloadScreen, preloadElement);
         if (registerPreload) {
-          registerPreload(preloadScreen, loadingScreen);
+          registerPreload(preloadScreen, preloadElement);
         }
       }
     }
+    if (!preloadElement && indicatorId) {
+      loadingScreen = indicatorId;
+    }
 
-    const routeParams = { delay, preloadScreen, targetId, url } as const;
+    const routeParams = {
+      delay,
+      loadingScreen,
+      preloadScreen,
+      targetId,
+      url,
+    } as const;
+
     if (delay) {
       setTimeout(() => {
         this.executeNavigate(action, routeParams, url, href);

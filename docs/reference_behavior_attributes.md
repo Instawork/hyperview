@@ -685,9 +685,9 @@ A space-separated list of element ids. The elements with the given ids will be s
 
 Navigation actions immediately show a new screen or modal before requesting the new content. Since the request can take a while, using `show-during-load` will copy the referenced element into the new screen. Once the request completes, the requested content will replace the loading state on the new screen. There are a few nuances when using this attribute with navigation actions:
 
-- `show-during-load` should only contain a single element id for a `<screen>` element. This screen must be part of the current doc.
+- `show-during-load` should only contain a single id. This id can be either the id of a `<screen>` element in the current doc, or it can be the id of a `loadingScreen` which was passed into the `<Hyperview>` component's optional `loadingScreens` property. See [Loading Screens](/docs/reference_loading_screens).
 - If `show-during-load` contains multiple space-separated element ids, only the first element will be used.
-- If the element id from `show-during-load` references an element other than a `<screen>`, that element will not be used as the new screen's loading state.
+- If no `<screen>` is found with the id, Hyperview will look for a named loading screen, and will fall back to the default loading screen. See [Loading Screens](/docs/reference_loading_screens).
 
 > Only the first `<screen>` element in `<doc>` will be displayed on a screen. Therefore, be sure to include indicator `<screen>` elements at the end of the `<doc>`.
 

@@ -44,6 +44,7 @@ export type Props = {
   elementErrorComponent?: ComponentType<ErrorProps>;
   errorScreen?: ComponentType<ErrorProps>;
   loadingScreen?: ComponentType<LoadingProps>;
+  loadingScreens?: { [key: string]: ComponentType<LoadingProps> };
   handleBack?: ComponentType<{ children: ReactNode }>;
   doc?: Document;
   logger?: Logging.Logger;
