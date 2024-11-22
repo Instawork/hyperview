@@ -41,7 +41,6 @@
       <xs:attribute name="dismissible" type="xs:boolean" />
       <xs:attribute name="visible" type="xs:boolean" />
       <xs:attribute name="animation-duration" type="xs:nonNegativeInteger" />
-      <xs:attribute name="resizeable" type="xs:boolean" />
       <xs:attribute name="swipe-to-close" type="xs:boolean" />
     </xs:complexType>
   </xs:element>
