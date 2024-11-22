@@ -10,15 +10,39 @@
     namespace="https://hyperview.org/hyperview"
     schemaLocation="hyperview.xsd"
   />
+
+  <xs:element name="stop-point">
+    <xs:attribute name="location">
+      <xs:simpleType>
+        <xs:restriction base="xs:decimal">
+          <xs:minInclusive value="0.0" />
+          <xs:maxInclusive value="1.0" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:element>
+
+
+  <xs:element name="content-section">
+    <xs:complexType>
+      <xs:group ref="hv:viewChildren" />
+      <xs:attributeGroup ref="hv:viewAttributes" />
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="bottom-sheet">
     <xs:complexType>
       <xs:sequence>
-        <xs:any minOccurs="1" maxOccurs="1" />
+        <!-- <xs:any minOccurs="0" maxOccurs="unbounded" /> -->
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="bottom-sheet:stop-point" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="bottom-sheet:content-section" />
       </xs:sequence>
       <xs:attribute name="toggle-event-name" type="xs:string" />
       <xs:attribute name="dismissible" type="xs:boolean" />
       <xs:attribute name="visible" type="xs:boolean" />
       <xs:attribute name="animation-duration" type="xs:nonNegativeInteger" />
+      <xs:attribute name="resizeable" type="xs:boolean" />
+      <xs:attribute name="swipe-to-close" type="xs:boolean" />
     </xs:complexType>
   </xs:element>
 </xs:schema>

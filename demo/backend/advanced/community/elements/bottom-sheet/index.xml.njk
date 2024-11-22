@@ -20,6 +20,7 @@ hv_title: "Bottom Sheet"
     bottom-sheet:animation-duration="250"
     bottom-sheet:dismissible="true"
     bottom-sheet:visible="false"
+    bottom-sheet:resizeable="false"
   >
     <view key="bottom-sheet-content" style="bottom-sheet">
       <text>
@@ -34,6 +35,179 @@ hv_title: "Bottom Sheet"
     <behavior
       action="dispatch-event"
       event-name="bottom-sheet/toggle"
+      trigger="press"
+    />
+  {%- endcall %}
+
+  <bottom-sheet:bottom-sheet
+    xmlns:bottom-sheet="https://hyperview.org/bottom-sheet"
+    bottom-sheet:toggle-event-name="bottom-sheet/toggle2"
+    bottom-sheet:animation-duration="250"
+    bottom-sheet:dismissible="true"
+    bottom-sheet:visible="false"
+    bottom-sheet:resizeable="true"
+  >
+    <bottom-sheet:stop-point location="0.5" />
+    <bottom-sheet:stop-point location="0.75" />
+    <bottom-sheet:stop-point location="0.25" />
+    <view key="bottom-sheet-content" style="bottom-sheet">
+      <text>
+        Section 1. This is only text that should initially be showing. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+        consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+        nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+        ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+      </text>
+      <text></text>
+      <text>
+        Section 2. This is only text that should initially be showing. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+        consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+        nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+        ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+      </text>
+    </view>
+  </bottom-sheet:bottom-sheet>
+  {% call button('Open bottom sheet w/ stop points') -%}
+    <behavior
+      action="dispatch-event"
+      event-name="bottom-sheet/toggle2"
+      trigger="press"
+    />
+  {%- endcall %}
+
+  <bottom-sheet:bottom-sheet
+    xmlns:bottom-sheet="https://hyperview.org/bottom-sheet"
+    xmlns:scroll="https://hyperview.org/hyperview-scroll"
+    bottom-sheet:toggle-event-name="bottom-sheet/toggle3"
+    bottom-sheet:animation-duration="250"
+    bottom-sheet:dismissible="true"
+    bottom-sheet:visible="false"
+    bottom-sheet:resizeable="true"
+  >
+    <bottom-sheet:content-section key="0">
+      <view key="bottom-sheet-content" style="bottom-sheet">
+        <text>
+          Section 1. This is only text that should initially be showing. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+          consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+          nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+          ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+        </text>
+      </view>
+    </bottom-sheet:content-section>
+    <bottom-sheet:content-section key="1">
+      <view key="bottom-sheet-content" style="bottom-sheet">
+        <text>
+          Section 2. This should be hidden from the initial view render. Testing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+          consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+          nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+          ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+        </text>
+        <text></text>
+        <text>
+          Testing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+          consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+          nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+          ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+        </text>
+      </view>
+    </bottom-sheet:content-section>
+  </bottom-sheet:bottom-sheet>
+  {% call button('Open bottom sheet w/ sections') -%}
+    <behavior
+      action="dispatch-event"
+      event-name="bottom-sheet/toggle3"
+      trigger="press"
+    />
+  {%- endcall %}
+
+  <bottom-sheet:bottom-sheet
+    xmlns:bottom-sheet="https://hyperview.org/bottom-sheet"
+    bottom-sheet:toggle-event-name="bottom-sheet/toggle4"
+    bottom-sheet:animation-duration="250"
+    bottom-sheet:dismissible="true"
+    bottom-sheet:visible="false"
+    bottom-sheet:resizeable="true"
+  >
+    <view scroll="true">
+      <bottom-sheet:content-section key="0">
+        <view key="bottom-sheet-content" style="bottom-sheet">
+          <text>
+            Section 1. This is only text that should initially be showing. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+            consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+            nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+            ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+          </text>
+        </view>
+      </bottom-sheet:content-section>
+      <bottom-sheet:content-section key="1">
+        {% call button('Close') -%}
+          <behavior
+            action="dispatch-event"
+            event-name="bottom-sheet/toggle4"
+            trigger="press"
+          />
+        {%- endcall %}
+      </bottom-sheet:content-section>
+      <bottom-sheet:content-section key="2">
+        <view key="bottom-sheet-content" style="bottom-sheet">
+          <text>
+            Section 2. This should be hidden from the initial view render. Testing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+            consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+            nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+            ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+          </text>
+          <text></text>
+          <text>
+            Testing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+            consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+            nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+            ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+          </text>
+        </view>
+      </bottom-sheet:content-section>
+      <bottom-sheet:content-section key="3">
+        <view key="bottom-sheet-content" style="bottom-sheet">
+          <text>
+            Section 3. This should be hidden from the initial view render. Testing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+            consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+            nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+            ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+          </text>
+          <text></text>
+          <text>
+            Testing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+            consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+            nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+            ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+          </text>
+          <text></text>
+          <text>
+            Testing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+            consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+            nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+            ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+          </text>
+          <text></text>
+          <text>
+            Testing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+            consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+            nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+            ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+          </text>
+          <text></text>
+          <text>
+            Testing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+            consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+            nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+            ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+          </text>
+        </view>
+      </bottom-sheet:content-section>
+    </view>
+  </bottom-sheet:bottom-sheet>
+  {% call button('Open bottom sheet w/ scrolling') -%}
+    <behavior
+      action="dispatch-event"
+      event-name="bottom-sheet/toggle4"
       trigger="press"
     />
   {%- endcall %}
