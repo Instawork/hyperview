@@ -241,6 +241,19 @@ const BottomSheet = (props: HvComponentProps) => {
     };
   });
 
+  const innerView = useMemo(() => {
+    return (
+      <View
+        onLayout={onLayout}
+        onStartShouldSetResponder={() => {
+          return translateY.value > MAX_TRANSLATE_Y;
+        }}
+      >
+        {children}
+      </View>
+    );
+  }, [onLayout, translateY, children]);
+
   const content = (
     <GestureDetector gesture={gesture}>
       <Animated.View
@@ -254,7 +267,7 @@ const BottomSheet = (props: HvComponentProps) => {
         ]}
       >
         {gestureEnabled && <View style={styles.line} />}
-        <View onLayout={onLayout}>{children}</View>
+        {innerView}
       </Animated.View>
     </GestureDetector>
   );
