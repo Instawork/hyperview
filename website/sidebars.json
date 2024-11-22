@@ -78,7 +78,8 @@
     "Hyperview Client": [
       "reference_hyperview_component",
       "reference_custom_elements",
-      "reference_custom_behaviors"
+      "reference_custom_behaviors",
+      "reference_loading_screens"
     ],
     "Hyperview Navigation":[
       "reference_navigator",
