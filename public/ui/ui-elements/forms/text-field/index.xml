@@ -316,31 +316,52 @@
 <style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
 
       
-  <style id="flex" flex="1" />
+  <style id="form-group" flex="1" marginLeft="24" marginRight="24" marginTop="48"/>
   <style
-    id="input"
-    backgroundColor="#FFFFFF"
-    borderBottomColor="#E1E1E1"
-    borderBottomWidth="1"
+    id="label"
     borderColor="#4E4D4D"
     fontSize="16"
-    fontWeight="normal"
-    paddingBottom="8"
-    paddingTop="8">
-    <modifier pressed="true">
-    <style borderBottomColor="green"/>
-    </modifier>
-    <modifier focused="true">
+    fontWeight="bold"
+    lineHeight="24"
+    marginBottom="8"
+  />
+  <style
+  id="text-field-basic"
+  borderBottomColor="#E1E1E1"
+  borderBottomWidth="1"
+  flex="1"
+  fontSize="16"
+  fontWeight="normal"
+  paddingVertical="8"
+>
+  <modifier pressed="true">
     <style borderBottomColor="#4778FF"/>
-    </modifier>
-  </style>
-  <style id="relative" position="relative" />
-  <style id="absolute" position="absolute" />
-  <style id="r-0" right="0" />
-  <style id="mx-24" marginHorizontal="24" />
-  <style id="py-8" paddingVertical="8" />
-  <style id="border-bottom" borderBottomWidth="1" borderBottomColor="lightgray" />
-  <style id="highlight" fontWeight="bold" color="blue" />
+  </modifier>
+  <modifier focused="true">
+    <style borderBottomColor="#4778FF"/>
+  </modifier>
+</style>
+
+  <style
+  id="text-field-multiline"
+  borderRadius="6"
+  borderWidth="1"
+  borderColor="#E1E1E1"
+  flex="1"
+  fontSize="16"
+  fontWeight="normal"
+  height="120"
+  padding="8"
+  textAlignVertical="top"
+>
+  <modifier pressed="true">
+    <style borderColor="#4778FF"/>
+  </modifier>
+  <modifier focused="true">
+    <style borderColor="#4778FF"/>
+  </modifier>
+</style>
+
 
     </styles>
     <body style="body" safe-area="true">
@@ -364,195 +385,75 @@
 
     </view>
   
-  <text style="header-title">Contacts</text>
+  <text style="header-title">Text Field</text>
 </header>
 
       
-  <form>
-    <list
-  id="contacts"
-  trigger="refresh"
-  action="replace"
-  href="?page=1&amp;template=list"
-  target="contacts"
-  keyboard-dismiss-mode="on-drag"
-  xmlns="https://hyperview.org/hyperview"
->
+  <view scroll="true" style="main">
+    
   
-  <item key="search" id="top" sticky="true" style="relative mx-24">
-    <text-field
-      placeholder="Search a contact…"
-      placeholderTextColor="#8D9494"
-      name="search"
-      style="input"
-      debounce="200"
-      value=""
-    >
-      
-      
-      
-      
-      <behavior
-        trigger="change"
-        action="hide"
-        target="load-more"
-      />
-      <behavior
-        trigger="change"
-        action="scroll"
-        target="top"
-        xmlns:scroll="https://hyperview.org/hyperview-scroll"
-      />
-      <behavior
-        trigger="change"
-        action="replace"
-        target="contacts"
-        href="?template=list"
-        show-during-load="loading-indicator"
-      />
-    </text-field>
-    <view id="loading-indicator" style="absolute r-0 py-8" hide="true">
-      <spinner />
-    </view>
-  </item>
-  <items xmlns="https://hyperview.org/hyperview">
-  
-    <item key="c0e71e51-da96-4c43-aedc-6ae9620c0f2d" style="mx-24 py-8 border-bottom">
-      <text>Aaron Bahringer</text>
-      <text>Fay.Maggio@hotmail.com</text>
-      <text>(538) 757-6115</text>
-    </item>
-  
-    <item key="ec20ae56-3859-44e2-a11c-fe5f00e1ab66" style="mx-24 py-8 border-bottom">
-      <text>Aaron Bins</text>
-      <text>Grady12@yahoo.com</text>
-      <text>(742) 688-9608 x366</text>
-    </item>
-  
-    <item key="0d909453-bc5f-42e6-b1e9-62dfead81a03" style="mx-24 py-8 border-bottom">
-      <text>Aaron Brekke</text>
-      <text>Mohammed24@yahoo.com</text>
-      <text>(570) 865-6318</text>
-    </item>
-  
-    <item key="569b0073-e60e-4f16-a6f7-524e51886a6d" style="mx-24 py-8 border-bottom">
-      <text>Aaron Cole</text>
-      <text>Isaiah_Veum@hotmail.com</text>
-      <text>336.719.5034 x98032</text>
-    </item>
-  
-    <item key="f6ea58f4-5cac-4952-bed6-ee3130427e17" style="mx-24 py-8 border-bottom">
-      <text>Aaron Daniel</text>
-      <text>Reyes_Hilll44@hotmail.com</text>
-      <text>1-387-986-7293</text>
-    </item>
-  
-    <item key="804affcd-6fbb-4670-9050-5b69fba0f00d" style="mx-24 py-8 border-bottom">
-      <text>Aaron Dietrich</text>
-      <text>Lavinia_Shanahan7@yahoo.com</text>
-      <text>619-904-3985 x096</text>
-    </item>
-  
-    <item key="d5620525-e035-47ed-8361-afa4877d7b00" style="mx-24 py-8 border-bottom">
-      <text>Aaron Douglas</text>
-      <text>Ford_Little@gmail.com</text>
-      <text>(224) 370-5040 x0943</text>
-    </item>
-  
-    <item key="5538b6cf-ca87-4eea-8345-c8e01ea41ef3" style="mx-24 py-8 border-bottom">
-      <text>Aaron Doyle</text>
-      <text>Gracie.Botsford@gmail.com</text>
-      <text>305-682-2910</text>
-    </item>
-  
-    <item key="d3a81238-81f7-4914-8b65-a1d1ad7c9e02" style="mx-24 py-8 border-bottom">
-      <text>Aaron Grady Jr.</text>
-      <text>Dudley.McGlynn35@gmail.com</text>
-      <text>689-344-7420 x746</text>
-    </item>
-  
-    <item key="1cc57538-c038-4a42-a7fa-afb98e8419e4" style="mx-24 py-8 border-bottom">
-      <text>Aaron Huels-Klein</text>
-      <text>Judge95@gmail.com</text>
-      <text>604-576-1273 x091</text>
-    </item>
-  
-    <item key="258740be-8820-485c-a4be-f60ee2d8ed3d" style="mx-24 py-8 border-bottom">
-      <text>Aaron Kassulke</text>
-      <text>Flavie44@gmail.com</text>
-      <text>(349) 910-8837 x322</text>
-    </item>
-  
-    <item key="f1e463ca-6410-4132-a292-72d99a76d2bc" style="mx-24 py-8 border-bottom">
-      <text>Aaron Kerluke</text>
-      <text>Sylvan.Leffler93@yahoo.com</text>
-      <text>504.890.8430</text>
-    </item>
-  
-    <item key="e02a681d-f0d0-4093-8875-77f11e9b9749" style="mx-24 py-8 border-bottom">
-      <text>Aaron Leffler</text>
-      <text>Juliana65@hotmail.com</text>
-      <text>(877) 904-0194</text>
-    </item>
-  
-    <item key="0a81b708-bdde-4c18-8621-92b51dbb8ee0" style="mx-24 py-8 border-bottom">
-      <text>Aaron Mitchell</text>
-      <text>Moriah_Smitham@yahoo.com</text>
-      <text>1-585-787-9657</text>
-    </item>
-  
-    <item key="f322258b-ee78-40da-8917-961caf9dde28" style="mx-24 py-8 border-bottom">
-      <text>Aaron Nolan</text>
-      <text>Taya_Thiel88@yahoo.com</text>
-      <text>(799) 887-1216</text>
-    </item>
-  
-    <item key="ca68db72-8e6a-4641-8464-4f8767a282c5" style="mx-24 py-8 border-bottom">
-      <text>Aaron Pollich</text>
-      <text>Demarco6@gmail.com</text>
-      <text>(648) 680-8835</text>
-    </item>
-  
-    <item key="1631897b-946e-4fb6-bf11-9a44c5677dc5" style="mx-24 py-8 border-bottom">
-      <text>Aaron Ratke</text>
-      <text>August51@hotmail.com</text>
-      <text>686.592.2056</text>
-    </item>
-  
-    <item key="1227b62d-590f-4c63-af4f-639baf87fb83" style="mx-24 py-8 border-bottom">
-      <text>Aaron Rempel</text>
-      <text>Gianni2@hotmail.com</text>
-      <text>701-927-6940 x778</text>
-    </item>
-  
-    <item key="4a08121a-408f-4d97-9959-894c4058bbb6" style="mx-24 py-8 border-bottom">
-      <text>Aaron Rippin</text>
-      <text>Maximo_McClure@yahoo.com</text>
-      <text>1-454-826-0174 x4377</text>
-    </item>
-  
-    <item key="addc327b-79b3-4247-9730-155599754b1a" style="mx-24 py-8 border-bottom">
-      <text>Aaron Runte</text>
-      <text>Rashad_Stiedemann@yahoo.com</text>
-      <text>712.795.9722 x9154</text>
-    </item>
-  
-  
-    <item
-      key="load-more"
-      id="load-more"
-      trigger="visible"
-      action="replace"
-      href="?page=2"
-    >
-      <spinner />
-    </item>
-  
-</items>
+  <view style="about-container">
+    <view style="about-title">
+      <text style="about-text">About</text>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_12_1961)">
+<path d="M15 17.25V21.75C15 22.5784 14.3284 23.25 13.5 23.25H10.5C9.67157 23.25 9 22.5784 9 21.75V17.25" stroke="#D99000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M9 20.25H15" stroke="#D99000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12 0.75V2.25" stroke="#D99000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M1.5 11.25H3" stroke="#D99000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M3.75 3.75L4.85 4.807" stroke="#D99000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M22.5 11.25H21" stroke="#D99000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M20.2499 3.75L19.1499 4.807" stroke="#D99000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M8.91505 17.25H15.0851C17.359 16.1213 18.784 13.7884 18.7501 11.25C18.6844 7.54961 15.7004 4.56565 12.0001 4.5C8.29814 4.56572 5.31357 7.55205 5.25005 11.254C5.21767 13.791 6.64244 16.1219 8.91505 17.25V17.25Z" stroke="#D99000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<clipPath id="clip0_12_1961">
+<rect width="24" height="24" fill="white"/>
+</clipPath>
+</defs>
+</svg>
 
-</list>
+    </view>
+    
+      
+  
+    <text style="description">Text field are used in forms to collect textual data</text>
+  
+
+    
+  </view>
+
+  <form>
+    <view style="form-group">
+  <text style="label">Basic</text>
+  <text-field
+    style="text-field-basic"
+    name="text-field-basic"
+    placeholder="Placeholder"
+    placeholderTextColor="#8D9494"
+    selectionColor="#4778FF"
+    cursorColor="#4778FF"
+    value=""
+  />
+</view>
+
+    <view style="form-group">
+  <text style="label">Multi-line</text>
+  <text-field
+    style="text-field-multiline"
+    multiline="true"
+    name="text-field-multiline"
+    placeholder="Placeholder"
+    placeholderTextColor="#8D9494"
+    selectionColor="#4778FF"
+    cursorColor="#4778FF"
+    value=""
+  />
+</view>
 
   </form>
+
+  </view>
 
     </body>
   </screen>
@@ -896,7 +797,7 @@
 
     </view>
   
-  <text style="header-title">Contacts</text>
+  <text style="header-title">Text Field</text>
 </header>
 
     <view style="loading">
