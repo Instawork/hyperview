@@ -752,6 +752,17 @@
         </xs:simpleType>
       </xs:attribute>
 
+      <xs:attribute name="textAlignVertical">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="auto" />
+            <xs:enumeration value="top" />
+            <xs:enumeration value="bottom" />
+            <xs:enumeration value="center" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+
       <xs:attribute name="textDecorationLine" type="xs:NCName" />
       <xs:attribute name="top" type="hv:pointsOrPercent" />
       <xs:attribute name="width" type="hv:pointsOrPercent" />
@@ -1093,6 +1104,8 @@
       <xs:attribute name="value" type="xs:string" />
       <xs:attribute name="placeholder" type="xs:string" />
       <xs:attribute name="placeholderTextColor" type="hv:color" />
+      <xs:attribute name="selectionColor" type="hv:color" />
+      <xs:attribute name="cursorColor" type="hv:color" />
       <xs:attribute name="keyboard-type">
         <xs:simpleType>
           <xs:restriction base="xs:string">

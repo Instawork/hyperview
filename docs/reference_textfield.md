@@ -27,6 +27,9 @@ A `<text-field>` element can appear anywhere within a `<form>` element.
 - [`name`](#name)
 - [`value`](#value)
 - [`placeholder`](#placeholder)
+- [`placeholderTextColor`](#placeholdertextcolor)
+- [`selectionColor`](#selectioncolor)
+- [`cursorColor`](#cursorcolor)
 - [`multiline`](#multiline)
 - [`keyboard-type`](#keyboard-type)
 - [`mask`](#mask)
@@ -67,6 +70,30 @@ The value of the field. This string gets rendered into the string and can be edi
 | string | No       |
 
 A label that appears within the text field. The placeholder only appears when the field is empty.
+
+#### `placeholderTextColor`
+
+| Type   | Required |
+| ------ | -------- |
+| string | No       |
+
+The text color of the placeholder string.
+
+#### `selectionColor`
+
+| Type   | Required |
+| ------ | -------- |
+| string | No       |
+
+The highlight, selection handle and cursor color of the text input.
+
+#### `cursorColor` (Android)
+
+| Type   | Required |
+| ------ | -------- |
+| string | No       |
+
+When provided it will set the color of the cursor (or "caret") in the component. Unlike the behavior of `selectionColor` the cursor color will be set independently from the color of the text selection box.
 
 #### `multiline`
 
