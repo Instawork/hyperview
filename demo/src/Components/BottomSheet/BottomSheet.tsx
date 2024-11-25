@@ -204,7 +204,7 @@ const BottomSheet = (props: HvComponentProps) => {
       const stopPointDiffs = stopPointLocations
         .filter(stopPoint => stopPoint !== null)
         .map((stopPoint, index) => ({
-          diff: Math.abs(stopPoint + translateY.value / SCREEN_HEIGHT),
+          diff: Math.abs(stopPoint ?? 0 + translateY.value / SCREEN_HEIGHT),
           index,
         }));
       const closestStopPointIndex =
@@ -216,12 +216,10 @@ const BottomSheet = (props: HvComponentProps) => {
           },
         )?.index ?? -1;
       if (closestStopPointIndex !== -1) {
-        if (stopPointLocations[closestStopPointIndex] !== null) {
+        const stopPointLocation = stopPointLocations[closestStopPointIndex];
+        if (stopPointLocation !== null) {
           scrollTo(
-            Math.max(
-              -stopPointLocations[closestStopPointIndex] * SCREEN_HEIGHT,
-              -height - PADDING,
-            ),
+            Math.max(-stopPointLocation * SCREEN_HEIGHT, -height - PADDING),
           );
         }
       }
