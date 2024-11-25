@@ -87,6 +87,14 @@ The text color of the placeholder string.
 
 The highlight, selection handle and cursor color of the text input.
 
+#### `selectionHandleColor` (Android)
+
+| Type   | Required |
+| ------ | -------- |
+| string | No       |
+
+Sets the color of the selection handle. Unlike `selectionColor`, it allows the selection handle color to be customized independently of the selection's color.
+
 #### `cursorColor` (Android)
 
 | Type   | Required |

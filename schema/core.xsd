@@ -1105,6 +1105,7 @@
       <xs:attribute name="placeholder" type="xs:string" />
       <xs:attribute name="placeholderTextColor" type="hv:color" />
       <xs:attribute name="selectionColor" type="hv:color" />
+      <xs:attribute name="selectionHandleColor" type="hv:color" />
       <xs:attribute name="cursorColor" type="hv:color" />
       <xs:attribute name="keyboard-type">
         <xs:simpleType>
