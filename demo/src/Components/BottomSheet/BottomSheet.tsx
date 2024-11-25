@@ -1,24 +1,24 @@
-import { Dimensions, LayoutChangeEvent, Modal, View } from 'react-native';
-import type { HvComponentProps, LocalName } from 'hyperview';
-import Hyperview, { Events } from 'hyperview';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import type { HvProps } from './types';
-import Overlay from './Overlay';
-import styles from './styles';
-import {
-  Gesture,
-  GestureDetector,
-  GestureHandlerRootView,
-} from 'react-native-gesture-handler';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
+import { Dimensions, LayoutChangeEvent, Modal, View } from 'react-native';
+import {
+  Gesture,
+  GestureDetector,
+  GestureHandlerRootView,
+} from 'react-native-gesture-handler';
+import type { HvComponentProps, LocalName } from 'hyperview';
+import Hyperview, { Events } from 'hyperview';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { BottomSheetContentSection } from './BottomSheetContentSection';
-import { BottomSheetStopPoint } from './BottomSheetStopPoint';
 import { Context as BottomSheetContext } from '../../Contexts/BottomSheet';
+import { BottomSheetStopPoint } from './BottomSheetStopPoint';
+import type { HvProps } from './types';
+import Overlay from './Overlay';
+import styles from './styles';
 
 const namespace = 'https://hyperview.org/bottom-sheet';
 
@@ -35,24 +35,23 @@ const BottomSheet = (props: HvComponentProps) => {
     animationDuration: animationDuration
       ? parseInt(animationDuration, 10)
       : 250,
+    contentSections: props.element.getElementsByTagNameNS(
+      namespace,
+      BottomSheetContentSection.localName,
+    ),
     dismissible:
       props.element.getAttributeNS(namespace, 'dismissible') !== 'false',
+    stopPoints: props.element.getElementsByTagNameNS(
+      namespace,
+      BottomSheetStopPoint.localName,
+    ),
+    swipeToClose:
+      props.element.getAttributeNS(namespace, 'swipe-to-close') === 'true',
     toggleEventName: props.element.getAttributeNS(
       namespace,
       'toggle-event-name',
     ),
     visible: props.element.getAttributeNS(namespace, 'visible') === 'true',
-
-    swipeToClose:
-      props.element.getAttributeNS(namespace, 'swipe-to-close') === 'true',
-    contentSections: props.element.getElementsByTagNameNS(
-      namespace,
-      BottomSheetContentSection.localName,
-    ),
-    stopPoints: props.element.getElementsByTagNameNS(
-      namespace,
-      BottomSheetStopPoint.localName,
-    ),
   };
 
   const [contentSectionHeights, setContentSectionHeights] = useState(
@@ -62,12 +61,12 @@ const BottomSheet = (props: HvComponentProps) => {
   const stopPointLocations = React.useMemo(() => {
     return Array.from(hvProps.stopPoints)
       .map<number | null>(element => {
+        const location = element.getAttribute('location');
         return typeof element !== 'string' &&
           element &&
-          element.getAttribute &&
-          element.getAttribute('location') &&
-          typeof element.getAttribute('location') === 'string'
-          ? parseFloat(element.getAttribute('location'))
+          location &&
+          typeof location === 'string'
+          ? parseFloat(location)
           : null;
       }, [])
       .sort((a, b) => {
@@ -95,22 +94,34 @@ const BottomSheet = (props: HvComponentProps) => {
     [translateY],
   );
 
-  const onLayout = (event: LayoutChangeEvent) => {
-    const { height: sheetHeight } = event.nativeEvent.layout;
-    setHeight(sheetHeight);
-    if (hvProps.contentSections.length > 0) {
-      // scroll to height of first content section
-      if (contentSectionHeights[0] !== undefined) {
-        scrollTo(-contentSectionHeights[0] - PADDING);
+  const onLayout = useCallback(
+    (event: LayoutChangeEvent) => {
+      const { height: sheetHeight } = event.nativeEvent.layout;
+      setHeight(sheetHeight);
+      if (hvProps.contentSections.length > 0) {
+        // scroll to height of first content section
+        if (contentSectionHeights[0] !== undefined) {
+          scrollTo(-contentSectionHeights[0] - PADDING);
+        } else {
+          scrollTo(-sheetHeight - PADDING);
+        }
+      } else if (hvProps.stopPoints.length > 0) {
+        const [firstStopPointLocation] = stopPointLocations;
+        if (firstStopPointLocation !== null) {
+          scrollTo(-SCREEN_HEIGHT * firstStopPointLocation);
+        }
       } else {
         scrollTo(-sheetHeight - PADDING);
       }
-    } else if (hvProps.stopPoints.length > 0) {
-      scrollTo(-SCREEN_HEIGHT * stopPointLocations[0]);
-    } else {
-      scrollTo(-sheetHeight - PADDING);
-    }
-  };
+    },
+    [
+      hvProps.contentSections,
+      contentSectionHeights,
+      hvProps.stopPoints,
+      stopPointLocations,
+      scrollTo,
+    ],
+  );
 
   const targetOpacity: number = styles.overlay.opacity ?? 1;
 
@@ -193,25 +204,29 @@ const BottomSheet = (props: HvComponentProps) => {
       scrollToPoint = Math.max(MAX_TRANSLATE_Y, -scrollToPoint - PADDING);
       scrollTo(scrollToPoint);
     } else if (stopPointLocations.length > 0) {
-      const stopPointDiffs = stopPointLocations.map((stopPoint, index) => ({
-        index,
-        diff: Math.abs(stopPoint + translateY.value / SCREEN_HEIGHT),
-      }));
+      const stopPointDiffs = stopPointLocations
+        .filter(stopPoint => stopPoint !== null)
+        .map((stopPoint, index) => ({
+          diff: Math.abs(stopPoint + translateY.value / SCREEN_HEIGHT),
+          index,
+        }));
       const closestStopPointIndex =
         stopPointDiffs.reduce(
           (min, current) => (current.diff < min.diff ? current : min),
           {
-            index: -1,
             diff: Infinity,
+            index: -1,
           },
         )?.index ?? -1;
       if (closestStopPointIndex !== -1) {
-        scrollTo(
-          Math.max(
-            -stopPointLocations[closestStopPointIndex] * SCREEN_HEIGHT,
-            -height - PADDING,
-          ),
-        );
+        if (stopPointLocations[closestStopPointIndex] !== null) {
+          scrollTo(
+            Math.max(
+              -stopPointLocations[closestStopPointIndex] * SCREEN_HEIGHT,
+              -height - PADDING,
+            ),
+          );
+        }
       }
     }
   };
@@ -249,7 +264,7 @@ const BottomSheet = (props: HvComponentProps) => {
           return translateY.value > MAX_TRANSLATE_Y;
         }}
       >
-        {children}
+        <>{children}</>
       </View>
     );
   }, [onLayout, translateY, children]);
