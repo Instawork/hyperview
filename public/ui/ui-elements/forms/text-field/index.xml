@@ -432,6 +432,7 @@
     placeholder="Placeholder"
     placeholderTextColor="#8D9494"
     selectionColor="#4778FF"
+    selectionHandleColor="#4778FF"
     cursorColor="#4778FF"
     value=""
   />
@@ -446,6 +447,7 @@
     placeholder="Placeholder"
     placeholderTextColor="#8D9494"
     selectionColor="#4778FF"
+    selectionHandleColor="#4778FF"
     cursorColor="#4778FF"
     value=""
   />
