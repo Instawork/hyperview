@@ -54,7 +54,7 @@
     "@expo/webpack-config": "^19.0.0",
     "@faker-js/faker": "^9.0.3",
     "@prettier/plugin-xml": "0.13.0",
-    "@types/react": "~18.2.14",
+    "@types/react": "17.0.67",
     "babel-eslint": "10.1.0",
     "eslint": "7.20.0",
     "eslint-plugin-instawork": "0.12.0",

@@ -33,7 +33,7 @@
   <xs:element name="bottom-sheet">
     <xs:complexType>
       <xs:sequence>
-        <!-- <xs:any minOccurs="0" maxOccurs="unbounded" /> -->
+        <xs:any minOccurs="1" maxOccurs="1" />
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="bottom-sheet:stop-point" />
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="bottom-sheet:content-section" />
       </xs:sequence>
