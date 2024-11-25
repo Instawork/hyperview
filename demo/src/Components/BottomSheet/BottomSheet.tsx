@@ -94,39 +94,30 @@ const BottomSheet = (props: HvComponentProps) => {
     [translateY],
   );
 
-  const onLayout = useCallback(
-    (event: LayoutChangeEvent) => {
-      const { height: sheetHeight } = event.nativeEvent.layout;
-      setHeight(sheetHeight);
-      if (hvProps.contentSections.length > 0) {
-        // scroll to height of first content section
-        if (contentSectionHeights[0] !== undefined) {
-          scrollTo(-contentSectionHeights[0] - PADDING);
-        } else {
-          scrollTo(-sheetHeight - PADDING);
-        }
-      } else if (hvProps.stopPoints.length > 0) {
-        const [firstStopPointLocation] = stopPointLocations;
-        if (firstStopPointLocation !== null) {
-          scrollTo(-SCREEN_HEIGHT * firstStopPointLocation);
-        }
-      } else {
-        scrollTo(-sheetHeight - PADDING);
-      }
-    },
-    [
-      hvProps.contentSections,
-      contentSectionHeights,
-      hvProps.stopPoints,
-      stopPointLocations,
-      scrollTo,
-    ],
-  );
+  const onLayout = useCallback((event: LayoutChangeEvent) => {
+    const { height: sheetHeight } = event.nativeEvent.layout;
+    setHeight(sheetHeight);
+  }, []);
 
   const targetOpacity: number = styles.overlay.opacity ?? 1;
 
   const animateOpen = useCallback(() => {
     setVisible(true);
+    if (hvProps.contentSections.length > 0) {
+      // scroll to height of first content section
+      if (contentSectionHeights[0] !== undefined) {
+        scrollTo(-contentSectionHeights[0] - PADDING);
+      } else {
+        scrollTo(-height - PADDING);
+      }
+    } else if (hvProps.stopPoints.length > 0) {
+      const [firstStopPointLocation] = stopPointLocations;
+      if (firstStopPointLocation !== null) {
+        scrollTo(-SCREEN_HEIGHT * firstStopPointLocation);
+      }
+    } else {
+      scrollTo(-height - PADDING);
+    }
     overlayOpacity.value = withTiming(targetOpacity, {
       duration: hvProps.animationDuration,
     });
@@ -135,10 +126,16 @@ const BottomSheet = (props: HvComponentProps) => {
     // is called before `onShow`
     contentOpacity.value = withTiming(1, { duration: 1 });
   }, [
+    height,
+    contentSectionHeights,
+    stopPointLocations,
     hvProps.animationDuration,
     targetOpacity,
     contentOpacity,
     overlayOpacity,
+    hvProps.contentSections.length,
+    hvProps.stopPoints.length,
+    scrollTo,
   ]);
 
   const animateClose = useCallback(() => {
