@@ -9,6 +9,8 @@ import { BottomTabBar } from './src/Core';
 import { BottomTabBarContextProvider } from './src/Contexts';
 import Components from './src/Components';
 import Constants from 'expo-constants';
+import DefaultLoadingScreen from './src/Components/Loaders/DefaultLoader';
+import GreenLoadingScreen from './src/Components/Loaders/GreenLoader';
 import Hyperview from 'hyperview';
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
@@ -36,6 +38,11 @@ export default () => (
                 entrypointUrl={`${Constants.expoConfig?.extra?.baseUrl}/hyperview/public/index.xml`}
                 fetch={fetchWrapper}
                 formatDate={formatDate}
+                loadingScreen={DefaultLoadingScreen}
+                // Provide custom named loading screen(s)
+                loadingScreens={{
+                  'green-loader': GreenLoadingScreen,
+                }}
                 navigationComponents={{
                   BottomTabBar,
                 }}
