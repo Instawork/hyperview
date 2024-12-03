@@ -3,7 +3,7 @@ import {
   SafeAreaInsetsContext,
   SafeAreaProvider,
 } from 'react-native-safe-area-context';
-import { fetchWrapper, formatDate } from './src/helpers';
+import { fetchWrapper, formatDate } from './src/Helpers';
 import Behaviors from './src/Behaviors';
 import { BottomTabBar } from './src/Core';
 import { BottomTabBarContextProvider } from './src/Contexts';
