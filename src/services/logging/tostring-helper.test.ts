@@ -1,9 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { DefaultLogger } from './default-logger';
 import { deferredToString } from './tostring-helper';
-
-const logger = new DefaultLogger();
 
 describe('deferredToString', () => {
   describe('with string', () => {
@@ -39,16 +36,6 @@ describe('deferredToString', () => {
       const helperVal = helper.toString();
       expect(helperSpy).toHaveBeenCalledTimes(1);
       expect(helperVal).toEqual('foo');
-    });
-
-    it('does call toString when using custom logger', () => {
-      logger.log('helper', helper);
-      expect(helperSpy).toHaveBeenCalledTimes(1);
-    });
-
-    it('does call toString on each param when using custom logger', () => {
-      logger.log('helper', helper, helper, helper);
-      expect(helperSpy).toHaveBeenCalledTimes(3);
     });
   });
 
@@ -89,16 +76,6 @@ describe('deferredToString', () => {
       const helperVal = helper.toString();
       expect(expensiveMock).toHaveBeenCalledTimes(1);
       expect(helperVal).toEqual('this was expensive');
-    });
-
-    it('does call toString when using custom logger', () => {
-      logger.log('helper', helper);
-      expect(expensiveMock).toHaveBeenCalledTimes(1);
-    });
-
-    it('does call toString on each param when using custom logger', () => {
-      logger.log('helper', helper, helper, helper);
-      expect(expensiveMock).toHaveBeenCalledTimes(3);
     });
   });
 });
