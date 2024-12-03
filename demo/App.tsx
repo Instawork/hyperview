@@ -1,9 +1,9 @@
 import './src/gesture-handler';
+import { Logger, fetchWrapper, formatDate } from './src/Helpers';
 import {
   SafeAreaInsetsContext,
   SafeAreaProvider,
 } from 'react-native-safe-area-context';
-import { fetchWrapper, formatDate } from './src/Helpers';
 import Behaviors from './src/Behaviors';
 import { BottomTabBar } from './src/Core';
 import { BottomTabBarContextProvider } from './src/Contexts';
@@ -36,6 +36,7 @@ export default () => (
                 entrypointUrl={`${Constants.expoConfig?.extra?.baseUrl}/hyperview/public/index.xml`}
                 fetch={fetchWrapper}
                 formatDate={formatDate}
+                logger={new Logger(Logger.Level.log)}
                 navigationComponents={{
                   BottomTabBar,
                 }}
