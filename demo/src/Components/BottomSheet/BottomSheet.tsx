@@ -1,4 +1,5 @@
 import Animated, {
+  runOnJS,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
@@ -85,11 +86,21 @@ const BottomSheet = (props: HvComponentProps) => {
   const context = useSharedValue({ y: 0 });
   const translateY = useSharedValue(0);
 
+  const hide = () => {
+    setVisible(false);
+  };
+
   const scrollTo = useCallback(
     (destination: number) => {
       'worklet';
 
-      translateY.value = withSpring(destination, { damping: 50 });
+      translateY.value = withSpring(destination, { damping: 50 }, finished => {
+        if (finished) {
+          if (destination === 0) {
+            runOnJS(hide)();
+          }
+        }
+      });
     },
     [translateY],
   );
@@ -143,7 +154,6 @@ const BottomSheet = (props: HvComponentProps) => {
     overlayOpacity.value = withTiming(0, {
       duration: hvProps.animationDuration,
     });
-    setTimeout(() => setVisible(false), hvProps.animationDuration);
   }, [scrollTo, hvProps.animationDuration, overlayOpacity]);
 
   useEffect(() => {
@@ -184,7 +194,9 @@ const BottomSheet = (props: HvComponentProps) => {
   const findBottomSheetEndPoint = () => {
     'worklet';
 
-    if (contentSectionHeights.length > 0) {
+    if (hvProps.swipeToClose && -translateY.value < SCREEN_HEIGHT * 0.1) {
+      scrollTo(0);
+    } else if (contentSectionHeights.length > 0) {
       let scrollToPoint = -1;
       let cumlSectionHeight = 0;
       contentSectionHeights.forEach(contentSectionHeight => {
