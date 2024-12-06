@@ -21,4 +21,23 @@ export default StyleSheet.create({
     position: 'absolute',
     right: 0,
   },
+  bottomSheetContainer: {
+    width: '100%',
+    backgroundColor: 'white',
+    position: 'absolute',
+  },
+  line: {
+    width: 75,
+    height: 4,
+    backgroundColor: 'gray',
+    alignSelf: 'center',
+    marginVertical: 15,
+    borderRadius: 25,
+  },
+  viewOverlay: {
+    backgroundColor: 'red',
+  },
+  overflow: {
+    overflow: 'hidden',
+  },
 });

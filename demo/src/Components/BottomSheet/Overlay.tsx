@@ -1,6 +1,7 @@
-import { Animated, TouchableWithoutFeedback } from 'react-native';
+import Animated from 'react-native-reanimated';
 import type { OverlayProps } from './types';
 import React from 'react';
+import { TouchableWithoutFeedback } from 'react-native';
 import styles from './styles';
 
 export default (props: OverlayProps) => (
