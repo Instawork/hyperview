@@ -220,7 +220,7 @@ const BottomSheet = (props: HvComponentProps) => {
       const stopPointDiffs = stopPointLocations
         .filter(stopPoint => stopPoint !== null)
         .map((stopPoint, index) => ({
-          diff: Math.abs(stopPoint ?? 0 + translateY.value / SCREEN_HEIGHT),
+          diff: Math.abs(stopPoint + translateY.value / SCREEN_HEIGHT),
           index,
         }));
       const closestStopPointIndex =
