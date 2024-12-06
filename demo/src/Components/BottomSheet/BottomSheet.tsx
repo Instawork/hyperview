@@ -94,13 +94,7 @@ const BottomSheet = (props: HvComponentProps) => {
     (destination: number) => {
       'worklet';
 
-      translateY.value = withSpring(destination, { damping: 50 }, finished => {
-        if (finished) {
-          if (destination === 0) {
-            runOnJS(hide)();
-          }
-        }
-      });
+      translateY.value = withSpring(destination, { damping: 50 });
     },
     [translateY],
   );
@@ -150,10 +144,20 @@ const BottomSheet = (props: HvComponentProps) => {
   ]);
 
   const animateClose = useCallback(() => {
+    'worklet';
+
     scrollTo(0);
-    overlayOpacity.value = withTiming(0, {
-      duration: hvProps.animationDuration,
-    });
+    overlayOpacity.value = withTiming(
+      0,
+      {
+        duration: hvProps.animationDuration,
+      },
+      finished => {
+        if (finished) {
+          runOnJS(hide)();
+        }
+      },
+    );
   }, [scrollTo, hvProps.animationDuration, overlayOpacity]);
 
   useEffect(() => {
@@ -195,7 +199,7 @@ const BottomSheet = (props: HvComponentProps) => {
     'worklet';
 
     if (hvProps.swipeToClose && -translateY.value < SCREEN_HEIGHT * 0.1) {
-      scrollTo(0);
+      animateClose();
     } else if (contentSectionHeights.length > 0) {
       let scrollToPoint = -1;
       let cumlSectionHeight = 0;
