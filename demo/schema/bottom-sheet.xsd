@@ -12,14 +12,14 @@
   />
 
   <xs:element name="stop-point">
-    <xs:attribute name="location">
-      <xs:simpleType>
-        <xs:restriction base="xs:decimal">
-          <xs:minInclusive value="0.0" />
-          <xs:maxInclusive value="1.0" />
-        </xs:restriction>
-      </xs:simpleType>
-    </xs:attribute>
+    <xs:simpleType>
+      <xs:attribute name="location">
+          <xs:restriction base="xs:decimal">
+            <xs:minInclusive value="0.0" />
+            <xs:maxInclusive value="1.0" />
+          </xs:restriction>
+      </xs:attribute>
+    </xs:simpleType>
   </xs:element>
 
 
