@@ -217,12 +217,13 @@ const BottomSheet = (props: HvComponentProps) => {
       scrollToPoint = Math.max(MAX_TRANSLATE_Y, -scrollToPoint - PADDING);
       scrollTo(scrollToPoint);
     } else if (stopPointLocations.length > 0) {
-      const stopPointDiffs = stopPointLocations
-        .filter(stopPoint => stopPoint !== null)
-        .map((stopPoint, index) => ({
-          diff: Math.abs(stopPoint + translateY.value / SCREEN_HEIGHT),
-          index,
-        }));
+      const stopPointDiffs = stopPointLocations.map((stopPoint, index) => ({
+        diff: Math.abs(
+          (stopPoint !== null ? stopPoint : 0) +
+            translateY.value / SCREEN_HEIGHT,
+        ),
+        index,
+      }));
       const closestStopPointIndex =
         stopPointDiffs.reduce(
           (min, current) => (current.diff < min.diff ? current : min),
