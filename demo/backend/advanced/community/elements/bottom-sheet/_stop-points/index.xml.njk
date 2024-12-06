@@ -1,0 +1,36 @@
+{% from 'macros/button/index.xml.njk' import button %}
+
+<bottom-sheet:bottom-sheet
+  xmlns:bottom-sheet="https://hyperview.org/bottom-sheet"
+  bottom-sheet:toggle-event-name="bottom-sheet/toggle2"
+  bottom-sheet:animation-duration="250"
+  bottom-sheet:dismissible="true"
+  bottom-sheet:visible="false"
+  bottom-sheet:swipe-to-close="true"
+>
+  <bottom-sheet:stop-point bottom-sheet:location="0.5" />
+  <bottom-sheet:stop-point bottom-sheet:location="0.75" />
+  <bottom-sheet:stop-point bottom-sheet:location="0.25" />
+  <view key="bottom-sheet-content" style="bottom-sheet">
+    <text>
+      Section 1. This is only text that should initially be showing. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+      consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+      nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+      ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+    </text>
+    <text></text>
+    <text>
+      Section 2. This is only text that should initially be showing. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+      consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+      nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+      ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+    </text>
+  </view>
+</bottom-sheet:bottom-sheet>
+{% call button('Open bottom sheet w/ stop points') -%}
+  <behavior
+    action="dispatch-event"
+    event-name="bottom-sheet/toggle2"
+    trigger="press"
+  />
+{%- endcall %}
