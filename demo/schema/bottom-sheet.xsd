@@ -13,7 +13,7 @@
 
   <xs:element name="stop-point">
     <xs:complexType>
-      <xs:attribute name="location">
+      <xs:attribute name="location" use="required" >
         <xs:simpleType>
           <xs:restriction base="xs:decimal">
             <xs:minInclusive value="0.0" />
