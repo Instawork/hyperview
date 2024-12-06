@@ -33,10 +33,12 @@
 
   <xs:element name="bottom-sheet">
     <xs:complexType>
-      <xs:choice minOccurs="1" maxOccurs="unbounded">
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="hv:view" />
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="bottom-sheet:stop-point" />
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="bottom-sheet:content-section" />
+      <xs:choice minOccurs="1" maxOccurs="1">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="10" ref="bottom-sheet:stop-point" />
+          <xs:element minOccurs="1" maxOccurs="unbounded" ref="hv:view" />
+        </xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="unbounded" ref="bottom-sheet:content-section" />
       </xs:choice>
       <xs:attribute name="toggle-event-name" type="xs:string" />
       <xs:attribute name="dismissible" type="xs:boolean" />
