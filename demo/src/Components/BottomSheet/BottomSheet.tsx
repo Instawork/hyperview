@@ -83,8 +83,9 @@ const BottomSheet = (props: HvComponentProps) => {
 
   const overlayOpacity = useSharedValue(0);
   const contentOpacity = useSharedValue(0);
-  const context = useSharedValue({ y: 0 });
+  const context = useSharedValue({ startTime: Date.now(), y: 0 });
   const translateY = useSharedValue(0);
+  const velocity = useSharedValue(0);
 
   const hide = () => {
     setVisible(false);
@@ -198,14 +199,20 @@ const BottomSheet = (props: HvComponentProps) => {
   const findBottomSheetEndPoint = () => {
     'worklet';
 
-    if (hvProps.swipeToClose && -translateY.value < SCREEN_HEIGHT * 0.1) {
+    const SWIPE_TO_CLOSE_THRESHOLD = 0.1;
+    const changeY = translateY.value + velocity.value * SCREEN_HEIGHT;
+
+    if (
+      hvProps.swipeToClose &&
+      -changeY < SCREEN_HEIGHT * SWIPE_TO_CLOSE_THRESHOLD
+    ) {
       animateClose();
     } else if (contentSectionHeights.length > 0) {
       let scrollToPoint = -1;
       let cumlSectionHeight = 0;
       contentSectionHeights.forEach(contentSectionHeight => {
         cumlSectionHeight += contentSectionHeight;
-        if (Math.abs(translateY.value) < cumlSectionHeight) {
+        if (Math.abs(changeY) < cumlSectionHeight) {
           if (scrollToPoint === -1) {
             scrollToPoint = cumlSectionHeight;
           }
@@ -219,8 +226,7 @@ const BottomSheet = (props: HvComponentProps) => {
     } else if (stopPointLocations.length > 0) {
       const stopPointDiffs = stopPointLocations.map((stopPoint, index) => ({
         diff: Math.abs(
-          (stopPoint !== null ? stopPoint : 0) +
-            translateY.value / SCREEN_HEIGHT,
+          (stopPoint !== null ? stopPoint : 0) + changeY / SCREEN_HEIGHT,
         ),
         index,
       }));
@@ -247,9 +253,14 @@ const BottomSheet = (props: HvComponentProps) => {
   const gesture = Gesture.Pan()
     .enabled(gestureEnabled)
     .onStart(() => {
-      context.value = { y: translateY.value };
+      context.value = { startTime: Date.now(), y: translateY.value };
     })
     .onUpdate(event => {
+      const currentTime = Date.now();
+      const timeDiff = currentTime - context.value.startTime;
+      const yDiff = event.translationY + context.value.y - translateY.value;
+      velocity.value = yDiff / timeDiff;
+
       translateY.value = event.translationY + context.value.y;
       translateY.value = Math.max(translateY.value, MAX_TRANSLATE_Y);
     })
