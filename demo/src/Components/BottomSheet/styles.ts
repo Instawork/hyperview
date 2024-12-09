@@ -1,10 +1,26 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
+  bottomSheetContainer: {
+    backgroundColor: '#fff',
+    position: 'absolute',
+    width: '100%',
+  },
   container: {
     left: 0,
     position: 'absolute',
     right: 0,
+  },
+  line: {
+    alignSelf: 'center',
+    backgroundColor: 'gray',
+    borderRadius: 25,
+    height: 4,
+    marginVertical: 15,
+    width: 75,
+  },
+  overflow: {
+    overflow: 'hidden',
   },
   overlay: {
     backgroundColor: '#2f2f2f',
@@ -20,24 +36,5 @@ export default StyleSheet.create({
     left: 0,
     position: 'absolute',
     right: 0,
-  },
-  bottomSheetContainer: {
-    width: '100%',
-    backgroundColor: 'white',
-    position: 'absolute',
-  },
-  line: {
-    width: 75,
-    height: 4,
-    backgroundColor: 'gray',
-    alignSelf: 'center',
-    marginVertical: 15,
-    borderRadius: 25,
-  },
-  viewOverlay: {
-    backgroundColor: 'red',
-  },
-  overflow: {
-    overflow: 'hidden',
   },
 });
