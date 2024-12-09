@@ -62,7 +62,7 @@ const BottomSheet = (props: HvComponentProps) => {
   const stopPointLocations = React.useMemo(() => {
     return Array.from(hvProps.stopPoints)
       .map<number | null>(element => {
-        const location = element.getAttribute('location');
+        const location = element.getAttributeNS(namespace, 'location');
         return typeof element !== 'string' &&
           element &&
           location &&
