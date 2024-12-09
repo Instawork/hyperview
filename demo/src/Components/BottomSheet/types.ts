@@ -11,6 +11,10 @@ export type HvProps = {
   dismissible: boolean;
   toggleEventName: string | null;
   visible: boolean;
+
+  swipeToClose: boolean;
+  contentSections: HTMLCollectionOf<Element>;
+  stopPoints: HTMLCollectionOf<Element>;
 };
 
 export type LayoutEvent = {
