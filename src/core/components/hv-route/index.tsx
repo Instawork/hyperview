@@ -96,8 +96,8 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
   componentDidUpdate(prevProps: Types.InnerRouteProps) {
     if (prevProps.url !== this.props.url || this.needsLoad) {
       this.load();
+      this.needsLoad = false;
     }
-    this.needsLoad = false;
   }
 
   /**
