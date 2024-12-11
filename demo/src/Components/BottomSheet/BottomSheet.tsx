@@ -86,6 +86,7 @@ const BottomSheet = (props: HvComponentProps) => {
   const context = useSharedValue({ startTime: Date.now(), y: 0 });
   const translateY = useSharedValue(0);
   const velocity = useSharedValue(0);
+  const targetOpacity: number = styles.overlay.opacity ?? 1;
 
   const hide = () => {
     setVisible(false);
@@ -100,12 +101,16 @@ const BottomSheet = (props: HvComponentProps) => {
     [translateY],
   );
 
+  useEffect(() => {
+    if (contentSectionHeights[0] !== undefined) {
+      scrollTo(-contentSectionHeights[0] - PADDING);
+    }
+  }, [contentSectionHeights, scrollTo]);
+
   const onLayout = useCallback((event: LayoutChangeEvent) => {
     const { height: sheetHeight } = event.nativeEvent.layout;
     setHeight(sheetHeight);
   }, []);
-
-  const targetOpacity: number = styles.overlay.opacity ?? 1;
 
   const animateOpen = useCallback(() => {
     setVisible(true);
@@ -113,8 +118,6 @@ const BottomSheet = (props: HvComponentProps) => {
       // scroll to height of first content section
       if (contentSectionHeights[0] !== undefined) {
         scrollTo(-contentSectionHeights[0] - PADDING);
-      } else {
-        scrollTo(-height - PADDING);
       }
     } else if (hvProps.stopPoints.length > 0) {
       const [firstStopPointLocation] = stopPointLocations;
