@@ -5,7 +5,13 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import { Dimensions, LayoutChangeEvent, Modal, View } from 'react-native';
+import {
+  Dimensions,
+  LayoutChangeEvent,
+  Modal,
+  Platform,
+  View,
+} from 'react-native';
 import {
   Gesture,
   GestureDetector,
@@ -24,7 +30,7 @@ import styles from './styles';
 const namespace = 'https://hyperview.org/bottom-sheet';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
-const PADDING = 50;
+const PADDING = Platform.OS === 'ios' ? 50 : 0;
 const MAX_TRANSLATE_Y = -(SCREEN_HEIGHT - PADDING);
 
 const BottomSheet = (props: HvComponentProps) => {
