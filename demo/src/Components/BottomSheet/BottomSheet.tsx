@@ -5,13 +5,7 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import {
-  Dimensions,
-  LayoutChangeEvent,
-  Modal,
-  Platform,
-  View,
-} from 'react-native';
+import { Dimensions, LayoutChangeEvent, Modal, View } from 'react-native';
 import {
   Gesture,
   GestureDetector,
@@ -30,7 +24,8 @@ import styles from './styles';
 const namespace = 'https://hyperview.org/bottom-sheet';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
-const PADDING = Platform.OS === 'ios' ? 50 : 0;
+const PADDING = 50;
+const MIN_VELOCITY_FOR_MOVE = 0.01;
 const MAX_TRANSLATE_Y = -(SCREEN_HEIGHT - PADDING);
 
 const BottomSheet = (props: HvComponentProps) => {
@@ -216,44 +211,90 @@ const BottomSheet = (props: HvComponentProps) => {
       -changeY < SCREEN_HEIGHT * SWIPE_TO_CLOSE_THRESHOLD
     ) {
       animateClose();
-    } else if (contentSectionHeights.length > 0) {
-      let scrollToPoint = -1;
-      let cumlSectionHeight = 0;
-      contentSectionHeights.forEach(contentSectionHeight => {
-        cumlSectionHeight += contentSectionHeight;
-        if (Math.abs(changeY) < cumlSectionHeight) {
-          if (scrollToPoint === -1) {
-            scrollToPoint = cumlSectionHeight;
+      return;
+    }
+
+    if (contentSectionHeights.length > 0) {
+      let cumlHeight = 0;
+      contentSectionHeights.forEach((csHeight, index) => {
+        cumlHeight += csHeight;
+        stopPointLocations[index] = Math.min(cumlHeight / SCREEN_HEIGHT, 1.0);
+      });
+      console.log('stopPointLocations', stopPointLocations);
+    }
+
+    if (stopPointLocations.length > 0) {
+      let nextStopPoint = -1;
+
+      if (Math.abs(velocity.value) < MIN_VELOCITY_FOR_MOVE) {
+        const stopPointDiffs = stopPointLocations.map((stopPoint, index) => ({
+          diff: Math.abs(
+            (stopPoint !== null ? stopPoint : 0) + changeY / SCREEN_HEIGHT,
+          ),
+          index,
+        }));
+        const closestStopPointIndex =
+          stopPointDiffs.reduce(
+            (min, current) => (current.diff < min.diff ? current : min),
+            {
+              diff: Infinity,
+              index: -1,
+            },
+          )?.index ?? -1;
+        if (closestStopPointIndex !== -1) {
+          const stopPointLocation = stopPointLocations[closestStopPointIndex];
+          if (stopPointLocation !== null) {
+            scrollTo(
+              Math.max(-stopPointLocation * SCREEN_HEIGHT, -height - PADDING),
+            );
           }
         }
-      });
-      if (scrollToPoint === -1) {
-        scrollToPoint = cumlSectionHeight;
-      }
-      scrollToPoint = Math.max(MAX_TRANSLATE_Y, -scrollToPoint - PADDING);
-      scrollTo(scrollToPoint);
-    } else if (stopPointLocations.length > 0) {
-      const stopPointDiffs = stopPointLocations.map((stopPoint, index) => ({
-        diff: Math.abs(
-          (stopPoint !== null ? stopPoint : 0) + changeY / SCREEN_HEIGHT,
-        ),
-        index,
-      }));
-      const closestStopPointIndex =
-        stopPointDiffs.reduce(
-          (min, current) => (current.diff < min.diff ? current : min),
-          {
-            diff: Infinity,
-            index: -1,
-          },
-        )?.index ?? -1;
-      if (closestStopPointIndex !== -1) {
-        const stopPointLocation = stopPointLocations[closestStopPointIndex];
-        if (stopPointLocation !== null) {
-          scrollTo(
-            Math.max(-stopPointLocation * SCREEN_HEIGHT, -height - PADDING),
-          );
+      } else if (velocity.value < 0) {
+        // Moving upwards, find the next stop point above
+        for (let i = stopPointLocations.length - 1; i >= 0; i -= 1) {
+          const stopPointLocation = stopPointLocations[i];
+          if (stopPointLocation !== null) {
+            const stopPointY = -SCREEN_HEIGHT * stopPointLocation;
+            if (translateY.value > stopPointY) {
+              nextStopPoint = stopPointLocation;
+            }
+          }
         }
+        if (nextStopPoint === -1) {
+          const stopPointLocation =
+            stopPointLocations[stopPointLocations.length - 1];
+          if (stopPointLocation !== null) {
+            nextStopPoint = stopPointLocation;
+          }
+        }
+      } else {
+        // Moving downwards, find the next stop point below
+        for (let i = 0; i < stopPointLocations.length; i += 1) {
+          const stopPointLocation = stopPointLocations[i];
+          if (stopPointLocation !== null) {
+            const stopPoint = -SCREEN_HEIGHT * stopPointLocation;
+            if (translateY.value < stopPoint) {
+              nextStopPoint = stopPointLocation;
+            }
+          }
+        }
+        if (nextStopPoint === -1) {
+          const [stopPointLocation] = stopPointLocations;
+          if (stopPointLocation !== null) {
+            nextStopPoint = stopPointLocation;
+          }
+        }
+      }
+
+      if (nextStopPoint > -1) {
+        console.log('goto:', -nextStopPoint * SCREEN_HEIGHT, -height - PADDING);
+        scrollTo(
+          Math.max(
+            MAX_TRANSLATE_Y,
+            -nextStopPoint * SCREEN_HEIGHT - PADDING,
+            -height - PADDING,
+          ),
+        );
       }
     }
   };
@@ -293,6 +334,11 @@ const BottomSheet = (props: HvComponentProps) => {
       <View
         onLayout={onLayout}
         onStartShouldSetResponder={() => {
+          // console.log(
+          //   translateY.value,
+          //   MAX_TRANSLATE_Y,
+          //   translateY.value > MAX_TRANSLATE_Y,
+          // );
           return translateY.value > MAX_TRANSLATE_Y;
         }}
       >
