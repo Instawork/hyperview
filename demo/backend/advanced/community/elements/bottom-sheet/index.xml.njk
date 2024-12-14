@@ -11,6 +11,7 @@ hv_title: "Bottom Sheet"
 
 {% block styles %}
   <style id="bottom-sheet" backgroundColor="#fff" padding="24" />
+  {%include './_users/styles.xml.njk' %}
 {% endblock %}
 
 {% block content %}
@@ -18,4 +19,5 @@ hv_title: "Bottom Sheet"
   {%include './_stop-points/index.xml.njk' %}
   {%include './_content-sections/index.xml.njk' %}
   {%include './_scrolling/index.xml.njk' %}
+  {%include './_users/index.xml.njk' %}
 {% endblock %}
