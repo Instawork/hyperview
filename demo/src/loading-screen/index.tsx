@@ -14,6 +14,9 @@ const getColor = (showDuringLoad?: string | null): string => {
   if (showDuringLoad === 'red-loader') {
     return 'red';
   }
+  if (showDuringLoad === 'blue-loader') {
+    return 'blue';
+  }
   return defaultColor;
 };
 
