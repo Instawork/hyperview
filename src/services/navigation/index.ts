@@ -95,7 +95,7 @@ export default class Navigation {
         screens,
       ).find(s => s && s.getAttribute('id') === showIndicatorId);
       if (loadingScreen) {
-        preloadScreen = Date.now(); // Not trully unique but sufficient for our use-case
+        preloadScreen = Date.now(); // Not truly unique but sufficient for our use-case
         this.setPreloadScreen(preloadScreen, loadingScreen);
         if (registerPreload) {
           registerPreload(preloadScreen, loadingScreen);
