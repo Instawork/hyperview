@@ -300,12 +300,25 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
         }
       }
     }
-    const loadingScreen = this.props.loadingScreen || Loading;
+
+    // Find the associated behavior element to show the loading screen
     const behaviorElement = this.props.route?.params?.behaviorElementId
       ? this.props.getPreload(this.props.route?.params?.behaviorElementId)
       : undefined;
+    // If no behavior element is found, check for a route element
+    const routeElement =
+      behaviorElement === undefined &&
+      this.props.route?.params?.loaderElementId &&
+      this.props.doc
+        ? NavigatorService.getRouteById(
+            this.props.doc,
+            this.props.route?.params?.loaderElementId,
+          )
+        : undefined;
+
+    const loadingScreen = this.props.loadingScreen || Loading;
     return React.createElement(loadingScreen, {
-      element: behaviorElement,
+      element: behaviorElement || routeElement,
     });
   };
 
@@ -657,6 +670,7 @@ function HvRouteFC(props: Types.Props) {
     <HvRouteInner
       behaviors={navigationContext.behaviors}
       components={navigationContext.components}
+      doc={docContext?.getDoc()}
       element={element}
       elementErrorComponent={navigationContext.elementErrorComponent}
       entrypointUrl={navigationContext.entrypointUrl}

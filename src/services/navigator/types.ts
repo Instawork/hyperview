@@ -10,6 +10,7 @@ export const KEY_MODAL = 'modal';
 export const KEY_ID = 'id';
 export const KEY_TYPE = 'type';
 export const KEY_HREF = 'href';
+export const KEY_SHOW_DURING_LOAD = 'show-during-load';
 
 /**
  * Definition of the available navigator types
