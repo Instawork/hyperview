@@ -76,6 +76,8 @@ export default class Navigation {
       element,
     );
 
+    // Only take the first id if there are multiple
+    const indicatorId = showIndicatorId?.split(' ')[0] || null;
     let url = href;
     if (!href.startsWith(ANCHOR_ID_SEPARATOR)) {
       // Serialize form data as query params, if present.
@@ -84,7 +86,7 @@ export default class Navigation {
     }
 
     let preloadScreen = null;
-    if (showIndicatorId && this.document) {
+    if (indicatorId && this.document) {
       const screens: HTMLCollectionOf<Element> = this.document.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
         'screen',
