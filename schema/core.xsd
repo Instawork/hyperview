@@ -391,7 +391,7 @@
     <xs:attribute name="href-style" type="hv:styleList" />
     <xs:attribute name="once" type="xs:boolean" />
     <xs:attribute name="trigger" type="hv:trigger" />
-    <xs:attribute name="show-during-load" type="hv:IDREFS" />
+    <xs:attribute name="show-during-load" type="hv:nonEmptyString" />
     <xs:attribute name="hide-during-load" type="hv:IDREFS" />
     <xs:attribute name="delay" type="xs:nonNegativeInteger" />
     <xs:attribute name="verb">
@@ -1282,6 +1282,7 @@
       <xs:attribute name="href" type="hv:nonEmptyString" />
       <xs:attribute name="selected" type="xs:boolean" />
       <xs:attribute name="modal" type="xs:boolean" />
+      <xs:attribute name="show-during-load" type="hv:nonEmptyString" />
       <xs:assert test="(@href != '') or (count(hv:navigator) = 1)" />
     </xs:complexType>
   </xs:element>
