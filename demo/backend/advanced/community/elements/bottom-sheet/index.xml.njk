@@ -11,6 +11,16 @@ hv_title: "Bottom Sheet"
 
 {% block styles %}
   <style id="bottom-sheet" backgroundColor="#fff" padding="24" />
+  <style id="bottom-sheet-line"
+    alignSelf='center'
+    backgroundColor='gray'
+    borderRadius="25"
+    height="4"
+    marginVertical="15"
+    width="75"
+  />
+  <style id="bottom-sheet-overlay" backgroundColor='#2f2f2f' opacity="0.6" />
+  <style id="bottom-sheet-header-padding" padding="50" />
   {%include './_users/styles.xml.njk' %}
 {% endblock %}
 

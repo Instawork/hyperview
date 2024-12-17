@@ -12,21 +12,19 @@ import {
   GestureHandlerRootView,
 } from 'react-native-gesture-handler';
 import type { HvComponentProps, LocalName } from 'hyperview';
+import type { HvProps, HvStyles } from './types';
 import Hyperview, { Events } from 'hyperview';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { BottomSheetContentSection } from './BottomSheetContentSection';
 import { Context as BottomSheetContext } from '../../Contexts/BottomSheet';
 import { BottomSheetStopPoint } from './BottomSheetStopPoint';
-import type { HvProps } from './types';
 import Overlay from './Overlay';
 import styles from './styles';
 
 const namespace = 'https://hyperview.org/bottom-sheet';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
-const PADDING = 50;
 const MIN_VELOCITY_FOR_MOVE = 0.01;
-const MAX_TRANSLATE_Y = -(SCREEN_HEIGHT - PADDING);
 
 const BottomSheet = (props: HvComponentProps) => {
   const animationDuration = props.element.getAttributeNS(
@@ -55,6 +53,14 @@ const BottomSheet = (props: HvComponentProps) => {
     ),
     visible: props.element.getAttributeNS(namespace, 'visible') === 'true',
   };
+  const hvStyles: HvStyles = {
+    bottomSheet: props.stylesheets.regular['bottom-sheet'],
+    headerPadding: props.stylesheets.regular['bottom-sheet-header-padding'],
+    line: props.stylesheets.regular['bottom-sheet-line'],
+    overlay: props.stylesheets.regular['bottom-sheet-overlay'],
+  };
+  const PADDING = hvStyles.headerPadding.padding;
+  const MAX_TRANSLATE_Y = -(SCREEN_HEIGHT - PADDING);
 
   const [contentSectionHeights, setContentSectionHeights] = useState(
     new Array(hvProps.contentSections.length),
@@ -88,7 +94,7 @@ const BottomSheet = (props: HvComponentProps) => {
   const translateY = useSharedValue(0);
   const [upcomingTranslateY, setUpcomingTranslateY] = useState(0);
   const velocity = useSharedValue(0);
-  const targetOpacity: number = styles.overlay.opacity ?? 1;
+  const targetOpacity: number = hvStyles.overlay.opacity ?? 1;
 
   const hide = () => {
     setVisible(false);
@@ -111,7 +117,7 @@ const BottomSheet = (props: HvComponentProps) => {
     if (contentSectionHeights[0] !== undefined) {
       scrollTo(-contentSectionHeights[0] - PADDING);
     }
-  }, [contentSectionHeights, scrollTo]);
+  }, [contentSectionHeights, scrollTo, PADDING]);
 
   const onLayout = useCallback((event: LayoutChangeEvent) => {
     const { height: sheetHeight } = event.nativeEvent.layout;
@@ -151,6 +157,7 @@ const BottomSheet = (props: HvComponentProps) => {
     hvProps.contentSections.length,
     hvProps.stopPoints.length,
     scrollTo,
+    PADDING,
   ]);
 
   const animateClose = useCallback(() => {
@@ -339,13 +346,18 @@ const BottomSheet = (props: HvComponentProps) => {
       <View
         onLayout={onLayout}
         onStartShouldSetResponder={() => {
+          console.log(
+            upcomingTranslateY,
+            MAX_TRANSLATE_Y,
+            upcomingTranslateY > MAX_TRANSLATE_Y,
+          );
           return upcomingTranslateY > MAX_TRANSLATE_Y;
         }}
       >
         <>{children}</>
       </View>
     );
-  }, [onLayout, upcomingTranslateY, children]);
+  }, [onLayout, upcomingTranslateY, children, MAX_TRANSLATE_Y]);
 
   const content = (
     <GestureDetector gesture={gesture}>
@@ -354,12 +366,13 @@ const BottomSheet = (props: HvComponentProps) => {
           styles.bottomSheetContainer,
           bottomSheetStyle,
           {
+            backgroundColor: hvStyles.bottomSheet.backgroundColor,
             height: SCREEN_HEIGHT,
             top: SCREEN_HEIGHT,
           },
         ]}
       >
-        {gestureEnabled && <View style={styles.line} />}
+        {gestureEnabled && <View style={hvStyles.line} />}
         {innerView}
       </Animated.View>
     </GestureDetector>
@@ -388,7 +401,7 @@ const BottomSheet = (props: HvComponentProps) => {
             onPress={() => {
               return hvProps.dismissible && animateClose();
             }}
-            style={[styles.overlay, overlayStyle]}
+            style={[styles.overlay, hvStyles.overlay, overlayStyle]}
           />
           {content}
         </GestureHandlerRootView>

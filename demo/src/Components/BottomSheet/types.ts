@@ -17,6 +17,13 @@ export type HvProps = {
   stopPoints: HTMLCollectionOf<Element>;
 };
 
+export type HvStyles = {
+  bottomSheet: StyleSheet;
+  headerPadding: StyleSheet;
+  line: StyleSheet;
+  overlay: StyleSheet;
+};
+
 export type LayoutEvent = {
   nativeEvent: {
     layout: {
