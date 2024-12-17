@@ -86,6 +86,7 @@ const BottomSheet = (props: HvComponentProps) => {
   const contentOpacity = useSharedValue(0);
   const context = useSharedValue({ startTime: Date.now(), y: 0 });
   const translateY = useSharedValue(0);
+  const [upcomingTranslateY, setUpcomingTranslateY] = useState(0);
   const velocity = useSharedValue(0);
   const targetOpacity: number = styles.overlay.opacity ?? 1;
 
@@ -97,6 +98,10 @@ const BottomSheet = (props: HvComponentProps) => {
     (destination: number) => {
       'worklet';
 
+      // reanimated takes time to set translateY value but
+      // we need the new value to calculate whether innerView should scroll
+      // so we use upcomingTranslateY to handle this case
+      runOnJS(setUpcomingTranslateY)(destination);
       translateY.value = withSpring(destination, { damping: 50 });
     },
     [translateY],
@@ -334,18 +339,13 @@ const BottomSheet = (props: HvComponentProps) => {
       <View
         onLayout={onLayout}
         onStartShouldSetResponder={() => {
-          // console.log(
-          //   translateY.value,
-          //   MAX_TRANSLATE_Y,
-          //   translateY.value > MAX_TRANSLATE_Y,
-          // );
-          return translateY.value > MAX_TRANSLATE_Y;
+          return upcomingTranslateY > MAX_TRANSLATE_Y;
         }}
       >
         <>{children}</>
       </View>
     );
-  }, [onLayout, translateY, children]);
+  }, [onLayout, upcomingTranslateY, children]);
 
   const content = (
     <GestureDetector gesture={gesture}>
