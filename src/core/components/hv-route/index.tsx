@@ -114,7 +114,9 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
 
   getUrl = (): string => {
     return UrlService.getUrlFromHref(
-      this.state.url || this.props.url || this.props.entrypointUrl,
+      (this.needsLoad ? this.state.url : undefined) ||
+        this.props.url ||
+        this.props.entrypointUrl,
       this.props.entrypointUrl,
     );
   };
