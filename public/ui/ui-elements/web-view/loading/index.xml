@@ -1,8 +1,10 @@
 
-<doc xmlns="https://hyperview.org/hyperview" >
-  <screen>
-    <styles>
-      <style
+
+
+  <doc xmlns="https://hyperview.org/hyperview" >
+    <screen>
+      <styles>
+        <style
   id="button"
   backgroundColor="#63CB76"
   borderRadius="16"
@@ -315,12 +317,12 @@
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
 <style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
 
-      
+        
   <style id="flex" flex="1" flexDirection="row" justifyContent="space-between"/>
 
-    </styles>
-    <body style="body" safe-area="true">
-      <header style="header">
+      </styles>
+      <body style="body" safe-area="true">
+        <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -343,16 +345,16 @@
   <text style="header-title">Show Loading Indicator</text>
 </header>
 
-      
+        
   <view style="flex">
     <web-view url="https://hyperview.org/" show-loading-indicator="document-only"/>
   </view>
 
-    </body>
-  </screen>
-  
-  
-  
+      </body>
+    </screen>
+    
+    
+    
 <screen id="loading-screen">
   <styles>
     <style
@@ -700,4 +702,5 @@
   </body>
 </screen>
 
-</doc>
+  </doc>
+

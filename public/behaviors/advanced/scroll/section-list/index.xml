@@ -1,8 +1,10 @@
 
-<doc xmlns="https://hyperview.org/hyperview" >
-  <screen>
-    <styles>
-      <style
+
+
+  <doc xmlns="https://hyperview.org/hyperview" >
+    <screen>
+      <styles>
+        <style
   id="button"
   backgroundColor="#63CB76"
   borderRadius="16"
@@ -315,7 +317,7 @@
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
 <style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
 
-      
+        
   <style
     id="list-header"
     alignItems="center"
@@ -329,9 +331,9 @@
   />
   <style id="list-header-text" fontSize="18" fontWeight="bold" />
 
-    </styles>
-    <body style="body" safe-area="true">
-      <header style="header">
+      </styles>
+      <body style="body" safe-area="true">
+        <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -354,7 +356,7 @@
   <text style="header-title">UI/UI Elements/Section List</text>
 </header>
 
-      
+        
   <section-list xmlns:scroll="https://hyperview.org/hyperview-scroll">
     <item key="top">
       <view id="top" style="top-links-container">
@@ -834,11 +836,11 @@
 
   </section-list>
 
-    </body>
-  </screen>
-  
-  
-  
+      </body>
+    </screen>
+    
+    
+    
 <screen id="loading-screen">
   <styles>
     <style
@@ -1186,4 +1188,5 @@
   </body>
 </screen>
 
-</doc>
+  </doc>
+

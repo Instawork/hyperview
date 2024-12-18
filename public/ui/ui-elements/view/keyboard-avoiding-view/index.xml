@@ -1,8 +1,10 @@
 
-<doc xmlns="https://hyperview.org/hyperview" >
-  <screen>
-    <styles>
-      <style
+
+
+  <doc xmlns="https://hyperview.org/hyperview" >
+    <screen>
+      <styles>
+        <style
   id="button"
   backgroundColor="#63CB76"
   borderRadius="16"
@@ -315,7 +317,7 @@
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
 <style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
 
-      
+        
   <style id="form-group" flex="0" flexGrow="1" margin="24"/>
   <style id="label" borderColor="#4E4D4D" fontSize="16" fontWeight="bold" lineHeight="24" marginBottom="8"/>
   <style
@@ -331,9 +333,9 @@
   <style id="footer-style" backgroundColor="#63CB76" width="100%" padding="24"/>
   <style id="footer-description" color="white" fontSize="24" fontWeight="bold" textAlign="center"/>
 
-    </styles>
-    <body style="body" safe-area="true">
-      <header style="header">
+      </styles>
+      <body style="body" safe-area="true">
+        <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -356,7 +358,7 @@
   <text style="header-title">Keyboard Avoiding View</text>
 </header>
 
-      
+        
   
   
     <text style="description">
@@ -379,11 +381,11 @@
     </view>
   </view>
 
-    </body>
-  </screen>
-  
-  
-  
+      </body>
+    </screen>
+    
+    
+    
 <screen id="loading-screen">
   <styles>
     <style
@@ -731,4 +733,5 @@
   </body>
 </screen>
 
-</doc>
+  </doc>
+

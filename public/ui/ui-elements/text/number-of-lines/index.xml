@@ -1,8 +1,10 @@
 
-<doc xmlns="https://hyperview.org/hyperview" >
-  <screen>
-    <styles>
-      <style
+
+
+  <doc xmlns="https://hyperview.org/hyperview" >
+    <screen>
+      <styles>
+        <style
   id="button"
   backgroundColor="#63CB76"
   borderRadius="16"
@@ -315,12 +317,12 @@
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
 <style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
 
-      
+        
   <style id="text" fontSize="24" margin="24"/>
 
-    </styles>
-    <body style="body" safe-area="true">
-      <header style="header">
+      </styles>
+      <body style="body" safe-area="true">
+        <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -343,7 +345,7 @@
   <text style="header-title">Number of Lines</text>
 </header>
 
-      
+        
   <text style="text" numberOfLines="2">Velit voluptas et alias atque provident sapiente consequuntur deserunt. Dolorem et
     non error dolorem voluptate amet accusantium. Corporis rerum sed labore quae sed qui quis quasi. Illo pariatur sint qui.
     Quasi quaerat id molestias. Necessitatibus et ipsa quia asperiores laborum neque. Quisquam dolorem consequatur illum. Ut
@@ -354,11 +356,11 @@
     consectetur minus illum. Quos quaerat omnis aut eius eos dolores velit. Et quia vel ea unde eum repudiandae. Repellat et
     ab sed. Show LessLipsum</text>
 
-    </body>
-  </screen>
-  
-  
-  
+      </body>
+    </screen>
+    
+    
+    
 <screen id="loading-screen">
   <styles>
     <style
@@ -706,4 +708,5 @@
   </body>
 </screen>
 
-</doc>
+  </doc>
+

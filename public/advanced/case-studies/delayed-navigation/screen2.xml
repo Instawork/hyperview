@@ -1,8 +1,10 @@
 
-<doc xmlns="https://hyperview.org/hyperview" >
-  <screen>
-    <styles>
-      <style
+
+
+  <doc xmlns="https://hyperview.org/hyperview" >
+    <screen>
+      <styles>
+        <style
   id="button"
   backgroundColor="#63CB76"
   borderRadius="16"
@@ -315,13 +317,13 @@
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
 <style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
 
-      
+        
   <style id="label" fontSize="18" lineHeight="24" />
   <style id="label-link" color="blue" fontSize="18" />
 
-    </styles>
-    <body style="body" safe-area="true">
-      <header style="header">
+      </styles>
+      <body style="body" safe-area="true">
+        <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -344,15 +346,15 @@
   <text style="header-title">Delayed Navigation</text>
 </header>
 
-      
+        
   <text style="label">This is screen 2.</text>
   <text action="back" href="#" style="label label-link">Go back</text>
 
-    </body>
-  </screen>
-  
-  
-  
+      </body>
+    </screen>
+    
+    
+    
 <screen id="loading-screen">
   <styles>
     <style
@@ -700,4 +702,5 @@
   </body>
 </screen>
 
-</doc>
+  </doc>
+

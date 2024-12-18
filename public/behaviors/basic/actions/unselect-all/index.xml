@@ -1,8 +1,10 @@
 
-<doc xmlns="https://hyperview.org/hyperview" >
-  <screen>
-    <styles>
-      <style
+
+
+  <doc xmlns="https://hyperview.org/hyperview" >
+    <screen>
+      <styles>
+        <style
   id="button"
   backgroundColor="#63CB76"
   borderRadius="16"
@@ -315,7 +317,7 @@
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
 <style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
 
-      
+        
   <style id="select" marginTop="24" />
   <style
     id="select-separator"
@@ -378,9 +380,9 @@
     </modifier>
   </style>
 
-    </styles>
-    <body style="body" safe-area="true">
-      <header style="header">
+      </styles>
+      <body style="body" safe-area="true">
+        <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -403,7 +405,7 @@
   <text style="header-title">Unselect All</text>
 </header>
 
-      
+        
   <view scroll="true" style="main">
     
   
@@ -624,11 +626,11 @@
 
   </view>
 
-    </body>
-  </screen>
-  
-  
-  
+      </body>
+    </screen>
+    
+    
+    
 <screen id="loading-screen">
   <styles>
     <style
@@ -976,4 +978,5 @@
   </body>
 </screen>
 
-</doc>
+  </doc>
+

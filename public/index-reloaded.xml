@@ -16,7 +16,7 @@
           <nav-route id="tab-ui" href="/hyperview/public/ui/index.xml"  />
           <nav-route id="tab-navigation" href="/hyperview/public/navigation/index.xml"  />
           <nav-route id="tab-behaviors" href="/hyperview/public/behaviors/index.xml"  />
-          <nav-route id="tab-advanced" href="/hyperview/public/advanced/index.xml"  />
+          <nav-route id="tab-advanced" href="/hyperview/public/advanced/index.xml" selected="true" />
         </navigator>
       </nav-route>
     </navigator>

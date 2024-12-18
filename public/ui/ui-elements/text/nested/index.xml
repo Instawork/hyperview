@@ -1,8 +1,10 @@
 
-<doc xmlns="https://hyperview.org/hyperview" >
-  <screen>
-    <styles>
-      <style
+
+
+  <doc xmlns="https://hyperview.org/hyperview" >
+    <screen>
+      <styles>
+        <style
   id="button"
   backgroundColor="#63CB76"
   borderRadius="16"
@@ -315,7 +317,7 @@
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
 <style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
 
-      
+        
   <style id="text" fontSize="24" margin="24"/>
   <style id="bold" fontWeight="bold"/>
   <style id="italic" fontStyle="italic"/>
@@ -328,9 +330,9 @@
     </modifier>
   </style>
 
-    </styles>
-    <body style="body" safe-area="true">
-      <header style="header">
+      </styles>
+      <body style="body" safe-area="true">
+        <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -353,7 +355,7 @@
   <text style="header-title">Nested</text>
 </header>
 
-      
+        
   <text style="text">
     Hello,
     <text style="bold">
@@ -389,11 +391,11 @@
     Corporis rerum sed labore quae sed qui quis quasi.
   </text>
 
-    </body>
-  </screen>
-  
-  
-  
+      </body>
+    </screen>
+    
+    
+    
 <screen id="loading-screen">
   <styles>
     <style
@@ -741,4 +743,5 @@
   </body>
 </screen>
 
-</doc>
+  </doc>
+
