@@ -169,4 +169,10 @@ export {
   setSelected,
   updateRouteUrlFromState,
 } from './helpers';
-export { ID_CARD, ID_MODAL, KEY_MODAL, NAVIGATOR_TYPE } from './types';
+export {
+  ID_CARD,
+  ID_MODAL,
+  KEY_MODAL,
+  KEY_SHOW_DURING_LOAD,
+  NAVIGATOR_TYPE,
+} from './types';

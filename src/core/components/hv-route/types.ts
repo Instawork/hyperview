@@ -64,6 +64,7 @@ export type InnerRouteProps = {
   getPreload: (key: number) => Element | undefined;
   element?: Element;
   reload: Reload;
+  doc: Document | undefined;
 };
 
 /**

@@ -9,9 +9,11 @@ import type {
   Route,
 } from 'hyperview/src/types';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
-import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
 import type { NavigationComponents } from 'hyperview/src/services/navigator';
 import type { RefreshControlProps } from 'react-native';
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type LoadingScreenProps = { element?: Element } & Record<any, any>;
 
 /**
  * All of the props used by hv-screen
@@ -43,7 +45,7 @@ export type Props = {
   components?: HvComponent[];
   elementErrorComponent?: ComponentType<ErrorProps>;
   errorScreen?: ComponentType<ErrorProps>;
-  loadingScreen?: ComponentType<LoadingProps>;
+  loadingScreen?: ComponentType<LoadingScreenProps>;
   handleBack?: ComponentType<{ children: ReactNode }>;
   doc?: Document;
   logger?: Logging.Logger;
