@@ -4,16 +4,27 @@ hv_button_behavior: "none"
 hv_title: "Hyperview"
 hv_list_tag: "root"
 ---
+{% extends 'templates/root.xml.njk' %}
 
-<doc xmlns="https://hyperview.org/hyperview">
-  <navigator id="stack-navigator" type="stack">
-    <nav-route id="tabs">
-      <navigator id="tabs-navigator" type="tab">
-        <nav-route id="tab-ui" href="/hyperview/public/ui/index.xml"/>
-        <nav-route id="tab-navigation" href="/hyperview/public/navigation/index.xml"/>
-        <nav-route id="tab-behaviors" href="/hyperview/public/behaviors/index.xml"/>
-        <nav-route id="tab-advanced" href="/hyperview/public/advanced/index.xml"/>
-      </navigator>
-    </nav-route>
-  </navigator>
-</doc>
+{% block root %}
+  <doc xmlns="https://hyperview.org/hyperview">
+    <navigator id="stack-navigator" type="stack">
+      {# invoked from /navigation/behaviors/actions/reload/index.xml #}
+      <behavior
+        trigger="on-event"
+        event-name="reload-root-navigation"
+        action="reload"
+        href="/hyperview/public/index-reloaded.xml"
+      />
+
+      <nav-route id="tabs">
+        <navigator id="tabs-navigator" type="tab">
+          <nav-route id="tab-ui" href="/hyperview/public/ui/index.xml" {% block ui_attributes %}{% endblock %} />
+          <nav-route id="tab-navigation" href="/hyperview/public/navigation/index.xml" {% block navigation_attributes %}{% endblock %} />
+          <nav-route id="tab-behaviors" href="/hyperview/public/behaviors/index.xml" {% block behavior_attributes %}{% endblock %} />
+          <nav-route id="tab-advanced" href="/hyperview/public/advanced/index.xml" {% block advanced_attributes %}{% endblock %} />
+        </navigator>
+      </nav-route>
+    </navigator>
+  </doc>
+{% endblock %}

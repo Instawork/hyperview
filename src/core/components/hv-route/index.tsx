@@ -96,8 +96,8 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
   componentDidUpdate(prevProps: Types.InnerRouteProps) {
     if (prevProps.url !== this.props.url || this.needsLoad) {
       this.load();
+      this.needsLoad = false;
     }
-    this.needsLoad = false;
   }
 
   /**
@@ -114,7 +114,9 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
 
   getUrl = (): string => {
     return UrlService.getUrlFromHref(
-      this.props.url || this.props.entrypointUrl,
+      (this.needsLoad ? this.state.url : undefined) ||
+        this.props.url ||
+        this.props.entrypointUrl,
       this.props.entrypointUrl,
     );
   };
