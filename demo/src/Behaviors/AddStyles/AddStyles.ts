@@ -1,14 +1,10 @@
 import * as Dom from 'hyperview/src/services/dom';
-import type {
-  HvBehavior,
-  HvComponentOnUpdate,
-  HvGetRoot,
-  HvUpdateRoot,
-} from 'hyperview';
+import type { HvComponentOnUpdate, HvGetRoot, HvUpdateRoot } from 'hyperview';
 import {
   getAncestorByTagName,
   shallowCloneToRoot,
 } from 'hyperview/src/services';
+import type { DemoBehavior } from '../types';
 
 /**
  * This behavior allows injecting styles into the screen's styles element.
@@ -20,7 +16,7 @@ import {
  *   </styles>
  * </behavior>
  */
-export const AddStyles: HvBehavior = {
+export const AddStyles: DemoBehavior = () => ({
   action: 'add-styles',
   callback: (
     element: Element,
@@ -56,4 +52,4 @@ export const AddStyles: HvBehavior = {
       console.error(err);
     }
   },
-};
+});

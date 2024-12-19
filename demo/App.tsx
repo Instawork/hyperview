@@ -14,6 +14,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 import { View } from 'react-native';
 
+const entrypointUrl = `${Constants.expoConfig?.extra?.baseUrl}/hyperview/public/index.xml`;
+
 export default () => (
   <SafeAreaProvider>
     <SafeAreaInsetsContext.Consumer>
@@ -31,9 +33,9 @@ export default () => (
           <NavigationContainer>
             <BottomTabBarContextProvider>
               <Hyperview
-                behaviors={Behaviors}
+                behaviors={Behaviors.map(behavior => behavior(entrypointUrl))}
                 components={Components}
-                entrypointUrl={`${Constants.expoConfig?.extra?.baseUrl}/hyperview/public/index.xml`}
+                entrypointUrl={entrypointUrl}
                 fetch={fetchWrapper}
                 formatDate={formatDate}
                 logger={new Logger(Logger.Level.log)}

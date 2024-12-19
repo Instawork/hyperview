@@ -1,9 +1,10 @@
 import { Platform, Share as RNShare } from 'react-native';
 import { getContent, getOptions } from './helpers';
+import type { DemoBehavior } from '../types';
 
 const namespace = 'https://hyperview.org/share';
 
-export const Share = {
+export const Share: DemoBehavior = () => ({
   action: 'share',
   callback: (element: Element) => {
     (async () => {
@@ -28,4 +29,4 @@ export const Share = {
       }
     })();
   },
-};
+});

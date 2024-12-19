@@ -1,0 +1,27 @@
+---
+permalink: "/advanced/community/behaviors/prefetch/index.xml"
+tags: "Advanced/Community/Behaviors"
+hv_title: "Prefetch"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  {{ description("This behavior allows prefetching content. When the response for this content has the appropriate headers, the app will cache it, making it instantly available on the next request. This demo adds an artificial wait time to better showcase the cache is effective.") }}
+  {% call button('Prefetch content') -%}
+    <behavior
+      action="prefetch"
+      trigger="press"
+      href="/hyperview/public/advanced/community/behaviors/prefetch/content.xml?uid={{ uid }}"
+    />
+  {%- endcall %}
+  {% call button('Replace with content') -%}
+    <behavior
+      action="replace"
+      href="/hyperview/public/advanced/community/behaviors/prefetch/content.xml?uid={{ uid }}"
+    />
+  {%- endcall %}
+{% endblock %}
