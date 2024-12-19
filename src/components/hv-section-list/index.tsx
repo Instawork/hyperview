@@ -4,6 +4,7 @@ import * as Keyboard from 'hyperview/src/services/keyboard';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
+import * as ScrollObserver from 'hyperview/src/services/scroll-observer';
 import type {
   DOMString,
   HvComponentOnUpdate,
@@ -21,6 +22,10 @@ import type { ScrollParams, State } from './types';
 import { DOMParser } from '@instawork/xmldom';
 import type { ElementRef } from 'react';
 import { getAncestorByTagName } from 'hyperview/src/services';
+
+const SectionListWithScrollContext = ScrollObserver.withScrollableComponent(
+  SectionList,
+);
 
 const getSectionIndex = (
   sectionTitle: Element,
@@ -352,8 +357,9 @@ export default class HvSectionList extends PureComponent<
           const hasRefreshTrigger =
             this.props.element.getAttribute('trigger') === 'refresh';
           return (
-            <SectionList
+            <SectionListWithScrollContext
               ref={this.onRef}
+              id={this.props.element.getAttribute('id')}
               keyboardDismissMode={Keyboard.getKeyboardDismissMode(
                 this.props.element,
               )}
