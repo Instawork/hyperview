@@ -12,7 +12,7 @@
     "format-njk": "./scripts/format-njk.sh",
     "predeploy": "BASE_URL=https://instawork.github.io expo export:web; rm -rf hyperview; mv -f web-build/ hyperview; eleventy",
     "prettify": "pretty-quick && prettier --write '**/*.md'",
-    "server": "eleventy --serve --port=8085",
+    "server": "eleventy --watch --incremental --serve --port=8085",
     "test:lint": "eslint src && prettier --check '**/*.md' && yarn format-njk -c",
     "test:ts": "tsc",
     "test:validate-xml": "rm -rf hyperview/public; eleventy; find hyperview/public -name '*.xml' | xargs xmlschema-validate --schema schema/hyperview.xsd --version 1.1",
@@ -47,7 +47,8 @@
     "react-native-webview": "13.2.2"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^1.0.0",
+    "@11ty/eleventy": "^3.0.0",
+    "@11ty/eleventy-server-browsersync": "^1.0.2",
     "@babel/core": "^7.20.0",
     "@babel/eslint-parser": "7.13.4",
     "@expo/webpack-config": "^19.0.0",

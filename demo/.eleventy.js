@@ -7,7 +7,8 @@ const {
 } = require('./.eleventy/filters.js');
 
 module.exports = function (eleventyConfig) {
-  eleventyConfig.setBrowserSyncConfig({
+  eleventyConfig.setServerOptions({
+    module: "@11ty/eleventy-server-browsersync",
     middleware: function (req, res, next) {
       res.setHeader('Access-Control-Allow-Origin', '*');
       res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
