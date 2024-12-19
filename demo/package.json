@@ -47,7 +47,8 @@
     "react-native-webview": "13.2.2"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^1.0.0",
+    "@11ty/eleventy": "^2.0.0",
+    "@11ty/eleventy-server-browsersync": "^1.0.2",
     "@babel/core": "^7.20.0",
     "@babel/eslint-parser": "7.13.4",
     "@expo/webpack-config": "^19.0.0",
