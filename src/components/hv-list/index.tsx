@@ -4,6 +4,7 @@ import * as Keyboard from 'hyperview/src/services/keyboard';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
+import * as ScrollObserver from 'hyperview/src/services/scroll-observer';
 import type {
   DOMString,
   HvComponentOnUpdate,
@@ -22,6 +23,9 @@ import type { ElementRef } from 'react';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { getAncestorByTagName } from 'hyperview/src/services';
 
+const FlatListWithScrollContext = ScrollObserver.withScrollableComponent(
+  FlatList,
+);
 export default class HvList extends PureComponent<HvComponentProps, State> {
   static namespaceURI = Namespaces.HYPERVIEW;
 
@@ -238,10 +242,11 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
           const hasRefreshTrigger =
             this.props.element.getAttribute('trigger') === 'refresh';
           return (
-            <FlatList
+            <FlatListWithScrollContext
               ref={this.onRef}
               data={this.getItems()}
               horizontal={horizontal}
+              id={this.props.element.getAttribute('id')}
               keyboardDismissMode={Keyboard.getKeyboardDismissMode(
                 this.props.element,
               )}
