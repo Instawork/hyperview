@@ -12,8 +12,7 @@ import type { Props as ErrorProps } from 'hyperview/src/core/components/load-err
 import type { NavigationComponents } from 'hyperview/src/services/navigator';
 import type { RefreshControlProps } from 'react-native';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type LoadingScreenProps = { element?: Element } & Record<any, any>;
+type LoadingScreenProps = { element?: Element };
 
 /**
  * All of the props used by hv-screen
