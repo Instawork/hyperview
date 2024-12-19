@@ -18,9 +18,9 @@ export type HvProps = {
 };
 
 export type HvStyles = {
-  bottomSheet: StyleSheet;
+  bottomSheetBackgroundColor: string;
+  handle: StyleSheet;
   headerPadding: StyleSheet;
-  line: StyleSheet;
   overlay: StyleSheet;
 };
 

@@ -54,11 +54,22 @@ const BottomSheet = (props: HvComponentProps) => {
     visible: props.element.getAttributeNS(namespace, 'visible') === 'true',
   };
   const hvStyles: HvStyles = {
-    bottomSheet: props.stylesheets.regular['bottom-sheet'],
+    bottomSheetBackgroundColor:
+      Hyperview.createStyleProp(props.element, props.stylesheets, {
+        ...props.options,
+        styleAttr: 'bottom-sheet:container-style',
+      })[0]?.backgroundColor || '#fff',
+    handle: Hyperview.createStyleProp(props.element, props.stylesheets, {
+      ...props.options,
+      styleAttr: 'bottom-sheet:handle-style',
+    }),
     headerPadding: props.stylesheets.regular['bottom-sheet-header-padding'],
-    line: props.stylesheets.regular['bottom-sheet-line'],
-    overlay: props.stylesheets.regular['bottom-sheet-overlay'],
+    overlay: Hyperview.createStyleProp(props.element, props.stylesheets, {
+      ...props.options,
+      styleAttr: 'bottom-sheet:overlay-style',
+    }),
   };
+
   const PADDING = hvStyles.headerPadding.padding;
   const MAX_TRANSLATE_Y = -(SCREEN_HEIGHT - PADDING);
 
@@ -94,7 +105,7 @@ const BottomSheet = (props: HvComponentProps) => {
   const translateY = useSharedValue(0);
   const [upcomingTranslateY, setUpcomingTranslateY] = useState(0);
   const velocity = useSharedValue(0);
-  const targetOpacity: number = hvStyles.overlay.opacity ?? 1;
+  const targetOpacity: number = hvStyles.overlay[0]?.opacity ?? 1;
 
   const hide = () => {
     setVisible(false);
@@ -366,13 +377,13 @@ const BottomSheet = (props: HvComponentProps) => {
           styles.bottomSheetContainer,
           bottomSheetStyle,
           {
-            backgroundColor: hvStyles.bottomSheet.backgroundColor,
+            backgroundColor: hvStyles.bottomSheetBackgroundColor,
             height: SCREEN_HEIGHT,
             top: SCREEN_HEIGHT,
           },
         ]}
       >
-        {gestureEnabled && <View style={hvStyles.line} />}
+        {gestureEnabled && <View style={hvStyles.handle} />}
         {innerView}
       </Animated.View>
     </GestureDetector>
