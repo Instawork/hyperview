@@ -231,6 +231,10 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     this.props.setPreload(id, element);
   };
 
+  removePreload = (id: number): void => {
+    this.props.removePreload(id);
+  };
+
   /**
    * Implement the callbacks from this class
    */
@@ -382,6 +386,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
             push={this.navLogic.push}
             registerPreload={this.registerPreload}
             reload={this.props.reload}
+            removePreload={this.removePreload}
             route={route}
             url={url || undefined}
           />
@@ -685,6 +690,7 @@ function HvRouteFC(props: Types.Props) {
       onParseBefore={navigationContext.onParseBefore}
       onUpdate={navigationContext.onUpdate}
       reload={navigationContext.reload}
+      removePreload={navigatorMapContext.removePreload}
       route={props.route}
       setPreload={navigatorMapContext.setPreload}
       url={url}

@@ -7,5 +7,6 @@ import { Props as HvRootProps } from 'hyperview/src/core/components/hv-root/type
 export type Props = HvRootProps & {
   onUpdate: HvComponentOnUpdate;
   registerPreload?: (id: number, element: Element) => void;
+  removePreload?: (id: number) => void;
   reload: Reload;
 };
