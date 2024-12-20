@@ -1,2 +1,2 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Props = Record<any, any>;
+export type Props = any;
