@@ -20,6 +20,7 @@ import { Context as BottomSheetContext } from '../../Contexts/BottomSheet';
 import { BottomSheetStopPoint } from './BottomSheetStopPoint';
 import Overlay from './Overlay';
 import styles from './styles';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const namespace = 'https://hyperview.org/bottom-sheet';
 
@@ -27,6 +28,10 @@ const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 const MIN_VELOCITY_FOR_MOVE = 0.01;
 
 const BottomSheet = (props: HvComponentProps) => {
+  const insets = useSafeAreaInsets();
+  const PADDING = insets.top;
+  const MAX_TRANSLATE_Y = -(SCREEN_HEIGHT - PADDING);
+
   const animationDuration = props.element.getAttributeNS(
     namespace,
     'animation-duration',
@@ -63,15 +68,11 @@ const BottomSheet = (props: HvComponentProps) => {
       ...props.options,
       styleAttr: 'bottom-sheet:handle-style',
     }),
-    headerPadding: props.stylesheets.regular['bottom-sheet-header-padding'],
     overlay: Hyperview.createStyleProp(props.element, props.stylesheets, {
       ...props.options,
       styleAttr: 'bottom-sheet:overlay-style',
     }),
   };
-
-  const PADDING = hvStyles.headerPadding.padding;
-  const MAX_TRANSLATE_Y = -(SCREEN_HEIGHT - PADDING);
 
   const [contentSectionHeights, setContentSectionHeights] = useState(
     new Array(hvProps.contentSections.length),

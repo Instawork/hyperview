@@ -20,7 +20,6 @@ export type HvProps = {
 export type HvStyles = {
   bottomSheetBackgroundColor: string;
   handle: StyleSheet;
-  headerPadding: StyleSheet;
   overlay: StyleSheet;
 };
 
