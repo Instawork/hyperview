@@ -131,13 +131,18 @@ export default class HvScreen extends React.Component {
     const oldUrl = oldNavigationState.params.url;
     const newPreloadScreen = newNavigationState.params.preloadScreen;
     const oldPreloadScreen = oldNavigationState.params.preloadScreen;
+    const newElementId = newNavigationState.params.behaviorElementId;
+    const oldElementId = oldNavigationState.params.behaviorElementId;
 
     if (newPreloadScreen !== oldPreloadScreen) {
       this.navigation.removePreloadScreen(oldPreloadScreen);
+      this.props.removePreload?.(oldPreloadScreen);
     }
 
-    // TODO: If the preload screen is changing, delete the old one from
-    // this.navigation.preloadScreens to prevent memory leaks.
+    if (newElementId !== oldElementId) {
+      this.navigation.removePreloadScreen(oldElementId);
+      this.props.removePreload?.(oldElementId);
+    }
 
     if (newUrl && newUrl !== oldUrl) {
       this.needsLoad = true;
@@ -161,9 +166,14 @@ export default class HvScreen extends React.Component {
    */
   componentWillUnmount() {
     const { params } = this.getRoute(this.props);
-    const { preloadScreen } = params;
-    if (preloadScreen && this.navigation.getPreloadScreen(preloadScreen)) {
+    const { behaviorElementId, preloadScreen } = params;
+    if (preloadScreen) {
       this.navigation.removePreloadScreen(preloadScreen);
+      this.props.removePreload?.(preloadScreen);
+    }
+    if (behaviorElementId) {
+      this.navigation.removePreloadScreen(behaviorElementId);
+      this.props.removePreload?.(behaviorElementId);
     }
     if (this.state.url) {
       this.navigation.removeRouteKey(this.state.url);
@@ -252,7 +262,14 @@ export default class HvScreen extends React.Component {
     }
     if (!this.state.doc) {
       const loadingScreen = this.props.loadingScreen || Loading;
-      return React.createElement(loadingScreen);
+      const behaviorElement = this.props.route?.params?.behaviorElementId
+        ? this.navigation.getPreloadScreen(
+            this.props.route?.params?.behaviorElementId,
+          )
+        : undefined;
+      return React.createElement(loadingScreen, {
+        element: behaviorElement,
+      });
     }
     const elementErrorComponent = this.state.elementError
       ? this.props.elementErrorComponent || LoadElementError

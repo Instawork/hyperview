@@ -10,6 +10,7 @@ import { BottomTabBarContextProvider } from './src/Contexts';
 import Components from './src/Components';
 import Constants from 'expo-constants';
 import Hyperview from 'hyperview';
+import LoadingScreen from './src/loading-screen';
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 import { View } from 'react-native';
@@ -36,6 +37,7 @@ export default () => (
                 entrypointUrl={`${Constants.expoConfig?.extra?.baseUrl}/hyperview/public/index.xml`}
                 fetch={fetchWrapper}
                 formatDate={formatDate}
+                loadingScreen={LoadingScreen}
                 logger={new Logger(Logger.Level.log)}
                 navigationComponents={{
                   BottomTabBar,
