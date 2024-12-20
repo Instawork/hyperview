@@ -19,19 +19,27 @@ export const NavigatorMapContext = createContext<NavigatorMapContextProps>({
 
 type Props = { children: React.ReactNode };
 
+type PreloadScreen = {
+  element: Element;
+  id: number;
+};
 /**
  * Encapsulated context provider. The maps are intentionally not updating state; their purpose is to
  * store runtime information about the navigator and urls.
  */
 export function NavigatorMapProvider(props: Props) {
-  const [preloadMap] = useState<Map<number, Element>>(new Map());
+  const [preloadScreen, setPreloadScreen] = useState<PreloadScreen | null>(
+    null,
+  );
 
   const setPreload = (key: number, element: Element) => {
-    preloadMap.set(key, element);
+    setPreloadScreen({ element, id: key });
   };
 
   const getPreload = (key: number): Element | undefined => {
-    return preloadMap.get(key);
+    return preloadScreen && preloadScreen.id === key
+      ? preloadScreen.element
+      : undefined;
   };
 
   return (
