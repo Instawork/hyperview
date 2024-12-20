@@ -45,6 +45,10 @@
       <xs:attribute name="visible" type="xs:boolean" />
       <xs:attribute name="animation-duration" type="xs:nonNegativeInteger" />
       <xs:attribute name="swipe-to-close" type="xs:boolean" />
+
+      <xs:attribute name="container-style" type="xs:string" />
+      <xs:attribute name="handle-style" type="xs:string" />
+      <xs:attribute name="overlay-style" type="xs:string" />
     </xs:complexType>
   </xs:element>
 </xs:schema>
