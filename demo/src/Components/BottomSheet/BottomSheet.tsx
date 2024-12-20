@@ -268,7 +268,10 @@ const BottomSheet = (props: HvComponentProps) => {
           const stopPointLocation = stopPointLocations[closestStopPointIndex];
           if (stopPointLocation !== null) {
             scrollTo(
-              Math.max(-stopPointLocation * SCREEN_HEIGHT, -height - PADDING),
+              Math.max(
+                -stopPointLocation * SCREEN_HEIGHT - PADDING,
+                -height - PADDING,
+              ),
             );
           }
         }
@@ -310,7 +313,6 @@ const BottomSheet = (props: HvComponentProps) => {
       }
 
       if (nextStopPoint > -1) {
-        console.log('goto:', -nextStopPoint * SCREEN_HEIGHT, -height - PADDING);
         scrollTo(
           Math.max(
             MAX_TRANSLATE_Y,
