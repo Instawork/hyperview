@@ -1,16 +1,21 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
+  bottomSheetContainer: {
+    position: 'absolute',
+    width: '100%',
+  },
   container: {
     left: 0,
     position: 'absolute',
     right: 0,
   },
+  overflow: {
+    overflow: 'hidden',
+  },
   overlay: {
-    backgroundColor: '#2f2f2f',
     bottom: 0,
     left: 0,
-    opacity: 0.6,
     position: 'absolute',
     right: 0,
     top: 0,
