@@ -17,9 +17,7 @@ const getHrefKey = (href: string): string => href.split(QUERY_SEPARATOR)[0];
 const routeKeys: {
   [key: string]: string;
 } = {};
-const preloadScreens: {
-  [key: number]: Element;
-} = {};
+let cachedPreloadScreen: { element: Element; id: number } | null = null;
 
 export default class Navigation {
   url: string;
@@ -41,15 +39,21 @@ export default class Navigation {
     this.document = document;
   };
 
-  getPreloadScreen = (id: number): Element | null | undefined =>
-    preloadScreens[id];
+  getPreloadScreen = (id: number): Element | null | undefined => {
+    if (cachedPreloadScreen && cachedPreloadScreen.id === id) {
+      return cachedPreloadScreen.element;
+    }
+    return null;
+  };
 
   setPreloadScreen = (id: number, element: Element): void => {
-    preloadScreens[id] = element;
+    cachedPreloadScreen = { element, id };
   };
 
   removePreloadScreen = (id: number): void => {
-    delete preloadScreens[id];
+    if (cachedPreloadScreen && cachedPreloadScreen.id === id) {
+      cachedPreloadScreen = null;
+    }
   };
 
   getRouteKey = (href: string): string | null | undefined =>
