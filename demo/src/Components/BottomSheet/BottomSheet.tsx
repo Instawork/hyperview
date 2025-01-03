@@ -132,11 +132,6 @@ const BottomSheet = (props: HvComponentProps) => {
     }
   }, [contentSectionHeights, scrollTo, PADDING]);
 
-  const onLayout = useCallback((event: LayoutChangeEvent) => {
-    const { height: sheetHeight } = event.nativeEvent.layout;
-    setHeight(sheetHeight);
-  }, []);
-
   const animateOpen = useCallback(() => {
     setVisible(true);
     if (hvProps.contentSections.length > 0) {
@@ -355,6 +350,11 @@ const BottomSheet = (props: HvComponentProps) => {
   });
 
   const innerView = useMemo(() => {
+    const onLayout = (event: LayoutChangeEvent) => {
+      const { height: sheetHeight } = event.nativeEvent.layout;
+      setHeight(sheetHeight);
+    };
+
     return (
       <View
         onLayout={onLayout}
@@ -365,7 +365,7 @@ const BottomSheet = (props: HvComponentProps) => {
         <>{children}</>
       </View>
     );
-  }, [onLayout, upcomingTranslateY, children, MAX_TRANSLATE_Y]);
+  }, [upcomingTranslateY, children, MAX_TRANSLATE_Y]);
 
   const content = (
     <GestureDetector gesture={gesture}>
