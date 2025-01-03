@@ -2,9 +2,8 @@ import type { HvComponentProps, LocalName } from 'hyperview';
 import { LayoutChangeEvent, View } from 'react-native';
 import Hyperview from 'hyperview';
 import React from 'react';
+import { namespace } from './types';
 import { useBottomSheetContext } from '../../Contexts/BottomSheet';
-
-const namespace = 'https://hyperview.org/bottom-sheet';
 
 const BottomSheetContentSection = (props: HvComponentProps) => {
   const key = props.element.getAttribute('key');

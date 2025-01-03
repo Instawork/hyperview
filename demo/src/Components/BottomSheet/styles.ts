@@ -20,10 +20,4 @@ export default StyleSheet.create({
     right: 0,
     top: 0,
   },
-  wrapper: {
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-    right: 0,
-  },
 });

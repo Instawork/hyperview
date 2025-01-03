@@ -1,3 +1,5 @@
+export const namespace = 'https://hyperview.org/bottom-sheet';
+
 import type {
   HvComponentOnUpdate,
   HvComponentOptions,

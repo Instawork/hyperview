@@ -1,9 +1,6 @@
 import type { HvComponentProps, LocalName } from 'hyperview';
 import Hyperview from 'hyperview';
-import React from 'react';
-import { View } from 'react-native';
-
-const namespace = 'https://hyperview.org/bottom-sheet';
+import { namespace } from './types';
 
 const BottomSheetStopPoint = (props: HvComponentProps) => {
   const children = Hyperview.renderChildren(
@@ -12,11 +9,7 @@ const BottomSheetStopPoint = (props: HvComponentProps) => {
     props.onUpdate,
     props.options,
   );
-  return (
-    <View>
-      <>{children}</>
-    </View>
-  );
+  return { children };
 };
 
 BottomSheetStopPoint.namespaceURI = namespace;

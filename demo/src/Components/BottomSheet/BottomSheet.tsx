@@ -19,13 +19,14 @@ import { BottomSheetContentSection } from './BottomSheetContentSection';
 import { Context as BottomSheetContext } from '../../Contexts/BottomSheet';
 import { BottomSheetStopPoint } from './BottomSheetStopPoint';
 import Overlay from './Overlay';
+import { namespace } from './types';
 import styles from './styles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const namespace = 'https://hyperview.org/bottom-sheet';
-
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
+const DEFAULT_DAMPING = 50;
 const MIN_VELOCITY_FOR_MOVE = 0.01;
+const SWIPE_TO_CLOSE_THRESHOLD = 0.1;
 
 const BottomSheet = (props: HvComponentProps) => {
   const insets = useSafeAreaInsets();
@@ -120,7 +121,7 @@ const BottomSheet = (props: HvComponentProps) => {
       // we need the new value to calculate whether innerView should scroll
       // so we use upcomingTranslateY to handle this case
       runOnJS(setUpcomingTranslateY)(destination);
-      translateY.value = withSpring(destination, { damping: 50 });
+      translateY.value = withSpring(destination, { damping: DEFAULT_DAMPING });
     },
     [translateY],
   );
@@ -227,7 +228,6 @@ const BottomSheet = (props: HvComponentProps) => {
   const findBottomSheetEndPoint = () => {
     'worklet';
 
-    const SWIPE_TO_CLOSE_THRESHOLD = 0.1;
     const changeY = translateY.value + velocity.value * SCREEN_HEIGHT;
 
     if (
@@ -244,7 +244,6 @@ const BottomSheet = (props: HvComponentProps) => {
         cumlHeight += csHeight;
         stopPointLocations[index] = Math.min(cumlHeight / SCREEN_HEIGHT, 1.0);
       });
-      console.log('stopPointLocations', stopPointLocations);
     }
 
     if (stopPointLocations.length > 0) {
@@ -360,11 +359,6 @@ const BottomSheet = (props: HvComponentProps) => {
       <View
         onLayout={onLayout}
         onStartShouldSetResponder={() => {
-          console.log(
-            upcomingTranslateY,
-            MAX_TRANSLATE_Y,
-            upcomingTranslateY > MAX_TRANSLATE_Y,
-          );
           return upcomingTranslateY > MAX_TRANSLATE_Y;
         }}
       >
