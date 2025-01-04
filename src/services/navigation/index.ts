@@ -85,7 +85,8 @@ export default class Navigation {
       url = UrlService.addFormDataToUrl(baseUrl, formData);
     }
 
-    let preloadScreen = null;
+    let preloadScreen: number | null = null;
+    let behaviorElementId: number | null = null;
     if (indicatorId && this.document) {
       const screens: HTMLCollectionOf<Element> = this.document.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
@@ -100,10 +101,24 @@ export default class Navigation {
         if (registerPreload) {
           registerPreload(preloadScreen, loadingScreen);
         }
+      } else if (opts.behaviorElement) {
+        // Pass the behavior element to the loading screen
+        behaviorElementId = Date.now();
+        this.setPreloadScreen(behaviorElementId, opts.behaviorElement);
+        if (registerPreload) {
+          registerPreload(behaviorElementId, opts.behaviorElement);
+        }
       }
     }
 
-    const routeParams = { delay, preloadScreen, targetId, url } as const;
+    const routeParams = {
+      behaviorElementId,
+      delay,
+      preloadScreen,
+      targetId,
+      url,
+    } as const;
+
     if (delay) {
       setTimeout(() => {
         this.executeNavigate(action, routeParams, url, href);
