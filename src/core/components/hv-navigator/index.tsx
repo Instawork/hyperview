@@ -5,7 +5,6 @@ import * as Events from 'hyperview/src/services/events';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as NavigationContext from 'hyperview/src/contexts/navigation';
-import * as NavigatorMapContext from 'hyperview/src/contexts/navigator-map';
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import {
   BEHAVIOR_ATTRIBUTES,
@@ -466,12 +465,10 @@ export default class HvNavigator extends PureComponent<Props> {
         {navContext => (
           <Contexts.DocContext.Consumer>
             {docProvider => (
-              <NavigatorMapContext.NavigatorMapProvider>
-                <Navigator
-                  BottomTabBar={navContext?.navigationComponents?.BottomTabBar}
-                  doc={docProvider?.getDoc()}
-                />
-              </NavigatorMapContext.NavigatorMapProvider>
+              <Navigator
+                BottomTabBar={navContext?.navigationComponents?.BottomTabBar}
+                doc={docProvider?.getDoc()}
+              />
             )}
           </Contexts.DocContext.Consumer>
         )}
