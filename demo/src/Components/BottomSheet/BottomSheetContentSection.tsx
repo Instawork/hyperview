@@ -9,10 +9,13 @@ const BottomSheetContentSection = (props: HvComponentProps) => {
   const key = props.element.getAttribute('key');
 
   const { setContentSectionHeight } = useBottomSheetContext();
-  const onLayout = (event: LayoutChangeEvent) => {
-    const { height: sheetHeight } = event.nativeEvent.layout;
-    setContentSectionHeight?.(key ? parseInt(key, 10) : -1, sheetHeight);
-  };
+  const onLayout = React.useCallback(
+    (event: LayoutChangeEvent) => {
+      const { height: sheetHeight } = event.nativeEvent.layout;
+      setContentSectionHeight?.(key ? parseInt(key, 10) : -1, sheetHeight);
+    },
+    [key, setContentSectionHeight],
+  );
 
   const children = Hyperview.renderChildren(
     props.element,
