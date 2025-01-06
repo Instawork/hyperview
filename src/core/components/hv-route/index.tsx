@@ -25,7 +25,7 @@ import HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import LoadError from 'hyperview/src/core/components/load-error';
-import Loading from 'hyperview/src/core/components/loading';
+import { Loading } from 'hyperview/src/core/components/loading';
 // eslint-disable-next-line instawork/import-services
 import Navigation from 'hyperview/src/services/navigation';
 import { NavigationContainerRefContext } from '@react-navigation/native';
@@ -302,8 +302,20 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
         }
       }
     }
-    const LoadingScreen = this.props.loadingScreen || Loading;
-    return <LoadingScreen />;
+
+    return (
+      <Loading
+        behaviorElementId={this.props.route?.params?.behaviorElementId}
+        fallbackElement={() => {
+          return this.props.route?.params?.routeId && this.props.doc
+            ? NavigatorService.getRouteById(
+                this.props.doc,
+                this.props.route?.params?.routeId,
+              )
+            : undefined;
+        }}
+      />
+    );
   };
 
   /**
@@ -355,7 +367,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
             errorScreen={this.props.errorScreen}
             fetch={this.props.fetch}
             formatDate={formatter}
-            loadingScreen={this.props.loadingScreen}
             navigate={this.navLogic.navigate}
             navigation={this.props.navigation}
             onError={this.props.onError}
@@ -654,6 +665,7 @@ function HvRouteFC(props: Types.Props) {
     <HvRouteInner
       behaviors={navigationContext.behaviors}
       components={navigationContext.components}
+      doc={docContext?.getDoc()}
       element={element}
       elementErrorComponent={navigationContext.elementErrorComponent}
       entrypointUrl={navigationContext.entrypointUrl}
@@ -661,7 +673,6 @@ function HvRouteFC(props: Types.Props) {
       fetch={navigationContext.fetch}
       getPreload={navigatorMapContext.getPreload}
       handleBack={navigationContext.handleBack}
-      loadingScreen={navigationContext.loadingScreen}
       navigation={nav}
       onError={navigationContext.onError}
       onParseAfter={navigationContext.onParseAfter}

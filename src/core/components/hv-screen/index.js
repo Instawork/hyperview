@@ -10,7 +10,7 @@ import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import { createProps, createStyleProp, later } from 'hyperview/src/services';
 import LoadElementError from '../load-element-error';
 import LoadError from 'hyperview/src/core/components/load-error';
-import Loading from 'hyperview/src/core/components/loading';
+import { Loading } from 'hyperview/src/core/components/loading';
 // eslint-disable-next-line instawork/import-services
 import Navigation from 'hyperview/src/services/navigation';
 import React from 'react';
@@ -251,8 +251,11 @@ export default class HvScreen extends React.Component {
       });
     }
     if (!this.state.doc) {
-      const loadingScreen = this.props.loadingScreen || Loading;
-      return React.createElement(loadingScreen);
+      return (
+        <Loading
+          behaviorElementId={this.props.route?.params?.behaviorElementId}
+        />
+      );
     }
     const elementErrorComponent = this.state.elementError
       ? this.props.elementErrorComponent || LoadElementError
