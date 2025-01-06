@@ -20,7 +20,12 @@ import type {
   NavigationRouteParams,
   ScreenState,
 } from 'hyperview/src/types';
-import React, { JSXElementConstructor, PureComponent, useContext } from 'react';
+import React, {
+  JSXElementConstructor,
+  PureComponent,
+  useContext,
+  useEffect,
+} from 'react';
 import HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
 import { LOCAL_NAME } from 'hyperview/src/types';
@@ -269,6 +274,25 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     });
   };
 
+  PreloadScreen = (props: {
+    component:
+      | string
+      | React.ReactElement<
+          unknown,
+          string | React.JSXElementConstructor<unknown>
+        >;
+  }): React.ReactElement | null => {
+    const { component } = props;
+    useEffect(() => {
+      return () => {
+        if (this.props.route?.params?.preloadScreen) {
+          this.props.removePreload(this.props.route?.params?.preloadScreen);
+        }
+      };
+    }, []);
+    return <>{component}</>;
+  };
+
   /**
    * View shown while loading
    * Includes preload functionality
@@ -276,7 +300,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
   Load = (): React.ReactElement => {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     const noop = () => {};
-
+    const { PreloadScreen } = this;
     if (this.props.route?.params?.preloadScreen) {
       const preloadElement = this.props.getPreload(
         this.props.route?.params?.preloadScreen,
@@ -298,7 +322,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
           componentRegistry: this.componentRegistry,
         });
         if (component) {
-          return <>{component}</>;
+          return <PreloadScreen component={component} />;
         }
       }
     }
@@ -377,6 +401,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
             push={this.navLogic.push}
             registerPreload={this.registerPreload}
             reload={this.props.reload}
+            removePreload={this.props.removePreload}
             route={route}
             url={url || undefined}
           />
@@ -679,6 +704,7 @@ function HvRouteFC(props: Types.Props) {
       onParseBefore={navigationContext.onParseBefore}
       onUpdate={navigationContext.onUpdate}
       reload={navigationContext.reload}
+      removePreload={navigatorMapContext.removePreload}
       route={props.route}
       setPreload={navigatorMapContext.setPreload}
       url={url}
