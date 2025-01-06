@@ -60,11 +60,10 @@ const BottomSheet = (props: HvComponentProps) => {
     visible: props.element.getAttributeNS(namespace, 'visible') === 'true',
   };
   const hvStyles: HvStyles = {
-    bottomSheetBackgroundColor:
-      Hyperview.createStyleProp(props.element, props.stylesheets, {
-        ...props.options,
-        styleAttr: 'bottom-sheet:container-style',
-      })[0]?.backgroundColor || '#fff',
+    container: Hyperview.createStyleProp(props.element, props.stylesheets, {
+      ...props.options,
+      styleAttr: 'bottom-sheet:container-style',
+    }),
     handle: Hyperview.createStyleProp(props.element, props.stylesheets, {
       ...props.options,
       styleAttr: 'bottom-sheet:handle-style',
@@ -373,8 +372,8 @@ const BottomSheet = (props: HvComponentProps) => {
         style={[
           styles.bottomSheetContainer,
           bottomSheetStyle,
+          hvStyles.container,
           {
-            backgroundColor: hvStyles.bottomSheetBackgroundColor,
             height: SCREEN_HEIGHT,
             top: SCREEN_HEIGHT,
           },
