@@ -256,6 +256,7 @@ export const BEHAVIOR_ATTRIBUTES = {
   HREF_STYLE: 'href-style',
   IMMEDIATE: 'immediate',
   NetworkRetryAction: 'network-retry-action',
+  NetworkRetryEvent: 'network-retry-event',
   NEW_VALUE: 'new-value',
   ONCE: 'once',
   SHOW_DURING_LOAD: 'show-during-load',
