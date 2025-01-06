@@ -1,2 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Props = Record<any, any>;
+/**
+ * Props for the externally provided loading screen
+ */
+export type LoadingScreenProps = {
+  element?: Element;
+};
