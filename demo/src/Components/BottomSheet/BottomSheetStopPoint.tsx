@@ -11,11 +11,7 @@ const BottomSheetStopPoint = (props: HvComponentProps) => {
     props.onUpdate,
     props.options,
   );
-  return (
-    <View>
-      <>{children}</>
-    </View>
-  );
+  return <View>{children}</View>;
 };
 
 BottomSheetStopPoint.namespaceURI = namespace;
