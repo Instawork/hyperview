@@ -1,10 +1,11 @@
 import * as NavigationContext from 'hyperview/src/contexts/navigation';
 import * as NavigatorMapContext from 'hyperview/src/contexts/navigator-map';
+import { ActivityIndicator, View } from 'react-native';
 import React, { useContext, useEffect } from 'react';
-import DefaultLoading from './default';
+import { LoadingProps } from './types';
 import { NavigationContextProps } from 'hyperview/src/contexts/navigation';
 import { NavigatorMapContextProps } from 'hyperview/src/contexts/navigator-map';
-import { Props } from './types';
+import styles from './styles';
 
 /**
  * Renders a loading screen
@@ -12,7 +13,7 @@ import { Props } from './types';
  * Injects the behavior element if it exists
  * Performs cleanup when the component is unmounted
  */
-const Loading = (props: Props): React.ReactElement => {
+const Loading = (props: LoadingProps): React.ReactElement => {
   const navigationContext: NavigationContextProps | null = useContext(
     NavigationContext.Context,
   );
@@ -30,32 +31,32 @@ const Loading = (props: Props): React.ReactElement => {
   }, [props.behaviorElementId, navigatorMapContext]);
 
   // Fall back to default loading screen if the contexts are not available
-  if (!navigationContext || !navigatorMapContext) {
-    return <DefaultLoading />;
+  if (
+    !navigationContext ||
+    !navigatorMapContext ||
+    !navigationContext.loadingScreen
+  ) {
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator />
+      </View>
+    );
   }
 
-  // When a loading screen has been passed in to Hyperview, use it
-  if (navigationContext.loadingScreen) {
-    // The behavior element which triggered the load
-    const behaviorElement = props.behaviorElementId
-      ? navigatorMapContext?.getPreload(props.behaviorElementId)
-      : undefined;
+  // The behavior element which triggered the load
+  const behaviorElement = props.behaviorElementId
+    ? navigatorMapContext?.getPreload(props.behaviorElementId)
+    : undefined;
 
-    // If the behavior element is not found, use the fallback element
-    // which may be a route
-    const element =
-      behaviorElement !== undefined
-        ? behaviorElement
-        : props.fallbackElement?.();
+  // If the behavior element is not found, look for a route element
+  const element =
+    behaviorElement !== undefined ? behaviorElement : props.routeElement?.();
 
-    // Instantiate the loading screen with the triggering element
-    return React.createElement(navigationContext.loadingScreen, {
-      element,
-    });
-  }
-
-  // Fall back to the default loader
-  return <DefaultLoading />;
+  // Instantiate the loading screen with the triggering element
+  return React.createElement(navigationContext.loadingScreen, {
+    element,
+  });
 };
 
+export type { Props } from './types';
 export default Loading;

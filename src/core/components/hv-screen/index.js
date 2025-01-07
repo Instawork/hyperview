@@ -10,7 +10,7 @@ import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import { createProps, createStyleProp, later } from 'hyperview/src/services';
 import LoadElementError from '../load-element-error';
 import LoadError from 'hyperview/src/core/components/load-error';
-import { Loading } from 'hyperview/src/core/components/loading';
+import Loading from 'hyperview/src/core/components/loading';
 // eslint-disable-next-line instawork/import-services
 import Navigation from 'hyperview/src/services/navigation';
 import React from 'react';
@@ -164,11 +164,13 @@ export default class HvScreen extends React.Component {
    */
   componentWillUnmount() {
     const { params } = this.getRoute(this.props);
-    if (params.preloadScreen) {
-      this.props.removePreload?.(params.preloadScreen);
+    const { behaviorElementId, preloadScreen } = params;
+
+    if (preloadScreen) {
+      this.props.removePreload?.(preloadScreen);
     }
-    if (params.behaviorElementId) {
-      this.props.removePreload?.(params.behaviorElementId);
+    if (behaviorElementId) {
+      this.props.removePreload?.(behaviorElementId);
     }
     if (this.state.url) {
       this.navigation.removeRouteKey(this.state.url);

@@ -30,7 +30,7 @@ import HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import LoadError from 'hyperview/src/core/components/load-error';
-import { Loading } from 'hyperview/src/core/components/loading';
+import Loading from 'hyperview/src/core/components/loading';
 // eslint-disable-next-line instawork/import-services
 import Navigation from 'hyperview/src/services/navigation';
 import { NavigationContainerRefContext } from '@react-navigation/native';
@@ -330,11 +330,11 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     return (
       <Loading
         behaviorElementId={this.props.route?.params?.behaviorElementId}
-        fallbackElement={() => {
+        routeElement={() => {
           return this.props.route?.params?.routeId && this.props.doc
             ? NavigatorService.getRouteById(
                 this.props.doc,
-                this.props.route?.params?.routeId,
+                this.props.route.params.routeId,
               )
             : undefined;
         }}

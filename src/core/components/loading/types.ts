@@ -1,14 +1,14 @@
 /**
  * Props for the externally provided loading screen
  */
-export type LoadingScreenProps = {
+export type Props = {
   element?: Element;
 };
 
 /**
  * Props for the loading component
  */
-export type Props = {
+export type LoadingProps = {
   behaviorElementId?: number;
-  fallbackElement?: () => Element | undefined;
+  routeElement?: () => Element | undefined;
 };

@@ -10,7 +10,7 @@ import {
   RouteParams,
 } from 'hyperview/src/types';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
-import type { LoadingScreenProps } from 'hyperview/src/core/components/loading';
+import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
 
 export type NavigationContextProps = {
   entrypointUrl: string;
@@ -26,7 +26,7 @@ export type NavigationContextProps = {
   components?: HvComponent[];
   elementErrorComponent?: ComponentType<ErrorProps>;
   errorScreen?: ComponentType<ErrorProps>;
-  loadingScreen?: ComponentType<LoadingScreenProps>;
+  loadingScreen?: ComponentType<LoadingProps>;
   handleBack?: ComponentType<{ children: ReactNode }>;
   reload: Reload;
 };
