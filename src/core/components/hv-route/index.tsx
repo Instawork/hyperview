@@ -233,6 +233,10 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     this.props.setPreload(id, element);
   };
 
+  removePreload = (id: number): void => {
+    this.props.removePreload(id);
+  };
+
   /**
    * Implement the callbacks from this class
    */
@@ -302,8 +306,26 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
         }
       }
     }
-    const LoadingScreen = this.props.loadingScreen || Loading;
-    return <LoadingScreen />;
+
+    // Find the associated behavior element to show the loading screen
+    const behaviorElement = this.props.route?.params?.behaviorElementId
+      ? this.props.getPreload(this.props.route?.params?.behaviorElementId)
+      : undefined;
+    // If no behavior element is found, check for a route element
+    const routeElement =
+      behaviorElement === undefined &&
+      this.props.route?.params?.loaderElementId &&
+      this.props.doc
+        ? NavigatorService.getRouteById(
+            this.props.doc,
+            this.props.route?.params?.loaderElementId,
+          )
+        : undefined;
+
+    const loadingScreen = this.props.loadingScreen || Loading;
+    return React.createElement(loadingScreen, {
+      element: behaviorElement || routeElement,
+    });
   };
 
   /**
@@ -366,6 +388,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
             push={this.navLogic.push}
             registerPreload={this.registerPreload}
             reload={this.props.reload}
+            removePreload={this.removePreload}
             route={route}
             url={url || undefined}
           />
@@ -654,6 +677,7 @@ function HvRouteFC(props: Types.Props) {
     <HvRouteInner
       behaviors={navigationContext.behaviors}
       components={navigationContext.components}
+      doc={docContext?.getDoc()}
       element={element}
       elementErrorComponent={navigationContext.elementErrorComponent}
       entrypointUrl={navigationContext.entrypointUrl}
@@ -668,6 +692,7 @@ function HvRouteFC(props: Types.Props) {
       onParseBefore={navigationContext.onParseBefore}
       onUpdate={navigationContext.onUpdate}
       reload={navigationContext.reload}
+      removePreload={navigatorMapContext.removePreload}
       route={props.route}
       setPreload={navigatorMapContext.setPreload}
       url={url}
