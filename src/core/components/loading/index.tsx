@@ -33,6 +33,11 @@ const Loading = (props: LoadingProps): React.ReactElement => {
     };
   }, [navigatorMapContext, props.behaviorElementId, props.preloadScreen]);
 
+  // Use the passed preloadScreen component
+  if (props.preloadScreenComponent) {
+    return <>{props.preloadScreenComponent}</>;
+  }
+
   // Fall back to default loading screen if the contexts are not available
   if (
     !navigationContext ||
@@ -44,11 +49,6 @@ const Loading = (props: LoadingProps): React.ReactElement => {
         <ActivityIndicator />
       </View>
     );
-  }
-
-  // Use the passed preloadScreen component
-  if (props.preloadScreenComponent) {
-    return <>{props.preloadScreenComponent}</>;
   }
 
   // The behavior element which triggered the load
