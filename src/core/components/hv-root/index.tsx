@@ -149,6 +149,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
     formData: FormData | null | undefined,
     onUpdateCallbacks: OnUpdateCallbacks,
     networkRetryAction: XNetworkRetryAction | null | undefined,
+    networkRetryEvent: string | null | undefined,
   ): Promise<Element | null> => {
     if (!href) {
       Logging.error(new Error('No href passed to fetchElement'));
@@ -175,6 +176,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
         formData || null,
         httpMethod,
         networkRetryAction,
+        networkRetryEvent,
       );
       if (staleHeaderType) {
         // We are doing this to ensure that we keep the screen stale until a `reload` happens
@@ -344,6 +346,9 @@ export default class Hyperview extends PureComponent<Types.Props> {
     const networkRetryAction = behaviorElement?.getAttribute(
       'network-retry-action',
     ) as XNetworkRetryAction | null | undefined;
+    const networkRetryEvent = behaviorElement?.getAttribute(
+      'network-retry-event',
+    ) as string | null | undefined;
 
     const showIndicatorIdList = showIndicatorIds
       ? Xml.splitAttributeList(showIndicatorIds)
@@ -389,6 +394,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
           formData,
           onUpdateCallbacks,
           networkRetryAction,
+          networkRetryEvent,
         ).then(newElement => {
           // If a target is specified and exists, use it. Otherwise, the action target defaults
           // to the element triggering the action.
