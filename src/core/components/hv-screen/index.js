@@ -187,10 +187,6 @@ export default class HvScreen extends React.Component {
     const { params, key: routeKey } = this.getRoute(this.props);
 
     try {
-      if (params.delay) {
-        await later(parseInt(params.delay, 10));
-      }
-
       // If an initial document was passed, use it once and then remove
       let doc;
       let staleHeaderType;
@@ -198,6 +194,10 @@ export default class HvScreen extends React.Component {
         doc = this.initialDoc;
         this.initialDoc = null;
       } else {
+        if (params.delay) {
+          await later(parseInt(params.delay, 10));
+        }
+
         // eslint-disable-next-line react/no-access-state-in-setstate
         const {
           doc: loadedDoc,
