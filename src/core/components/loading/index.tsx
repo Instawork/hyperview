@@ -27,8 +27,11 @@ const Loading = (props: LoadingProps): React.ReactElement => {
       if (props.behaviorElementId) {
         navigatorMapContext?.removePreload(props.behaviorElementId);
       }
+      if (props.preloadScreen) {
+        navigatorMapContext?.removePreload(props.preloadScreen);
+      }
     };
-  }, [props.behaviorElementId, navigatorMapContext]);
+  }, [navigatorMapContext, props.behaviorElementId, props.preloadScreen]);
 
   // Fall back to default loading screen if the contexts are not available
   if (
@@ -41,6 +44,11 @@ const Loading = (props: LoadingProps): React.ReactElement => {
         <ActivityIndicator />
       </View>
     );
+  }
+
+  // Use the passed preloadScreen component
+  if (props.preloadScreenComponent) {
+    return <>{props.preloadScreenComponent}</>;
   }
 
   // The behavior element which triggered the load

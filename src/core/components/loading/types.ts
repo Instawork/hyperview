@@ -10,5 +10,12 @@ export type Props = {
  */
 export type LoadingProps = {
   behaviorElementId?: number;
+  preloadScreen?: number;
+  preloadScreenComponent?:
+    | string
+    | React.ReactElement<
+        unknown,
+        string | React.JSXElementConstructor<unknown>
+      >;
   routeElement?: () => Element | undefined;
 };
