@@ -265,11 +265,7 @@ export default class HvScreen extends React.Component {
       });
     }
     if (!this.state.doc) {
-      return (
-        <Loading
-          behaviorElementId={this.props.route?.params?.behaviorElementId}
-        />
-      );
+      return <Loading cachedId={this.props.route?.params?.behaviorElementId} />;
     }
     const elementErrorComponent = this.state.elementError
       ? this.props.elementErrorComponent || LoadElementError

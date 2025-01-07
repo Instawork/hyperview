@@ -9,8 +9,7 @@ export type Props = {
  * Props for the loading component
  */
 export type LoadingProps = {
-  behaviorElementId?: number;
-  preloadScreen?: number;
+  cachedId?: number;
   preloadScreenComponent?:
     | string
     | React.ReactElement<

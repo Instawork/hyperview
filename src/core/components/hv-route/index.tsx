@@ -300,7 +300,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
         if (component) {
           return (
             <Loading
-              preloadScreen={this.props.route.params.preloadScreen}
+              cachedId={this.props.route.params.preloadScreen}
               preloadScreenComponent={component}
             />
           );
@@ -310,7 +310,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
 
     return (
       <Loading
-        behaviorElementId={this.props.route?.params?.behaviorElementId}
+        cachedId={this.props.route?.params?.behaviorElementId}
         routeElement={() => {
           return this.props.route?.params?.routeId && this.props.doc
             ? NavigatorService.getRouteById(

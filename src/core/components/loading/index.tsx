@@ -24,14 +24,11 @@ const Loading = (props: LoadingProps): React.ReactElement => {
   // Perform cleanup when the component is unmounted
   useEffect(() => {
     return () => {
-      if (props.behaviorElementId) {
-        navigatorMapContext?.removePreload(props.behaviorElementId);
-      }
-      if (props.preloadScreen) {
-        navigatorMapContext?.removePreload(props.preloadScreen);
+      if (props.cachedId) {
+        navigatorMapContext?.removePreload(props.cachedId);
       }
     };
-  }, [navigatorMapContext, props.behaviorElementId, props.preloadScreen]);
+  }, [navigatorMapContext, props.cachedId]);
 
   // Use the passed preloadScreen component
   if (props.preloadScreenComponent) {
@@ -52,8 +49,8 @@ const Loading = (props: LoadingProps): React.ReactElement => {
   }
 
   // The behavior element which triggered the load
-  const behaviorElement = props.behaviorElementId
-    ? navigatorMapContext?.getPreload(props.behaviorElementId)
+  const behaviorElement = props.cachedId
+    ? navigatorMapContext?.getPreload(props.cachedId)
     : undefined;
 
   // If the behavior element is not found, look for a route element
