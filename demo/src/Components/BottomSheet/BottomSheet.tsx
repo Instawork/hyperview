@@ -15,6 +15,7 @@ import type { HvComponentProps, LocalName } from 'hyperview';
 import type { HvProps, HvStyles } from './types';
 import Hyperview, { Events } from 'hyperview';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { dragDownHelper, dragUpHelper } from './utils';
 import { BottomSheetContentSection } from './BottomSheetContentSection';
 import { Context as BottomSheetContext } from '../../Contexts/BottomSheet';
 import { BottomSheetStopPoint } from './BottomSheetStopPoint';
@@ -244,70 +245,26 @@ const BottomSheet = (props: HvComponentProps) => {
       let nextStopPoint = -1;
 
       if (Math.abs(velocity.value) < MIN_VELOCITY_FOR_MOVE) {
-        const stopPointDiffs = stopPointLocations.map((stopPoint, index) => ({
-          diff: Math.abs(
-            (stopPoint !== null ? stopPoint : 0) + changeY / SCREEN_HEIGHT,
-          ),
-          index,
-        }));
-        const closestStopPointIndex =
-          stopPointDiffs.reduce(
-            (min, current) => (current.diff < min.diff ? current : min),
-            {
-              diff: Infinity,
-              index: -1,
-            },
-          )?.index ?? -1;
-        if (closestStopPointIndex !== -1) {
-          const stopPointLocation = stopPointLocations[closestStopPointIndex];
-          if (stopPointLocation !== null) {
-            scrollTo(
-              Math.max(
-                -stopPointLocation * SCREEN_HEIGHT - PADDING,
-                -height - PADDING,
-              ),
-            );
-          }
-        }
+        scrollTo(context.value.y);
       } else if (velocity.value < 0) {
         // Moving upwards, find the next stop point above
-        for (let i = stopPointLocations.length - 1; i >= 0; i -= 1) {
-          const stopPointLocation = stopPointLocations[i];
-          if (stopPointLocation !== null) {
-            const stopPointY = -SCREEN_HEIGHT * stopPointLocation;
-            if (translateY.value > stopPointY) {
-              nextStopPoint = stopPointLocation;
-            }
-          }
-        }
-        if (nextStopPoint === -1) {
-          const stopPointLocation =
-            stopPointLocations[stopPointLocations.length - 1];
-          if (stopPointLocation !== null) {
-            nextStopPoint = stopPointLocation;
-          }
-        }
+        nextStopPoint = dragUpHelper(
+          stopPointLocations,
+          SCREEN_HEIGHT,
+          translateY.value,
+        );
       } else {
         // Moving downwards, find the next stop point below
-        for (let i = 0; i < stopPointLocations.length; i += 1) {
-          const stopPointLocation = stopPointLocations[i];
-          if (stopPointLocation !== null) {
-            const stopPoint = -SCREEN_HEIGHT * stopPointLocation;
-            if (translateY.value < stopPoint) {
-              nextStopPoint = stopPointLocation;
-            }
-          }
-        }
-        if (nextStopPoint === -1) {
-          const [stopPointLocation] = stopPointLocations;
-          if (stopPointLocation !== null) {
-            nextStopPoint = stopPointLocation;
-          }
-        }
+        nextStopPoint = dragDownHelper(
+          stopPointLocations,
+          SCREEN_HEIGHT,
+          translateY.value,
+        );
       }
 
       if (nextStopPoint > -1) {
         scrollTo(
+          // Make sure to not drag past the max height of the screen
           Math.max(
             MAX_TRANSLATE_Y,
             -nextStopPoint * SCREEN_HEIGHT - PADDING,
@@ -317,6 +274,7 @@ const BottomSheet = (props: HvComponentProps) => {
       }
     }
   };
+
   const gestureEnabled =
     hvProps.stopPoints.length > 0 || hvProps.contentSections.length > 0;
   const gesture = Gesture.Pan()
@@ -379,7 +337,7 @@ const BottomSheet = (props: HvComponentProps) => {
           },
         ]}
       >
-        {gestureEnabled && <View style={hvStyles.handle} />}
+        {gestureEnabled && <View style={[styles.handle, hvStyles.handle]} />}
         {innerView}
       </Animated.View>
     </GestureDetector>
