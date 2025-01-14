@@ -2,6 +2,7 @@ import * as Keyboard from 'hyperview/src/services/keyboard';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
+import * as ScrollObserver from 'hyperview/src/services/scroll-observer';
 import type {
   Attributes,
   CommonProps,
@@ -27,6 +28,12 @@ import { LOCAL_NAME } from 'hyperview/src/types';
 import { addHref } from 'hyperview/src/core/hyper-ref';
 import { createStyleProp } from 'hyperview/src/services';
 
+const ScrollViewWithScrollContext = ScrollObserver.withScrollableComponent(
+  ScrollView,
+);
+const KeyboardAwareScrollViewWithScrollContext = ScrollObserver.withScrollableComponent(
+  KeyboardAwareScrollView,
+);
 export default class HvView extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
 
@@ -193,8 +200,9 @@ export default class HvView extends PureComponent<HvComponentProps> {
     if (scrollable) {
       if (hasInputFields) {
         return React.createElement(
-          KeyboardAwareScrollView,
+          KeyboardAwareScrollViewWithScrollContext,
           {
+            id: this.props.element.getAttribute('id'),
             ...this.getCommonProps(),
             ...this.getScrollViewProps(children),
             ...this.getKeyboardAwareScrollViewProps(inputFieldRefs),
@@ -203,8 +211,9 @@ export default class HvView extends PureComponent<HvComponentProps> {
         );
       }
       return React.createElement(
-        ScrollView,
+        ScrollViewWithScrollContext,
         {
+          id: this.props.element.getAttribute('id'),
           ...this.getCommonProps(),
           ...this.getScrollViewProps(children),
         },

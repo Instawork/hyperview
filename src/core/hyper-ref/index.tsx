@@ -4,6 +4,7 @@ import * as Events from 'hyperview/src/services/events';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
+import * as ScrollObserver from 'hyperview/src/services/scroll-observer';
 import {
   BEHAVIOR_ATTRIBUTES,
   LOCAL_NAME,
@@ -32,6 +33,10 @@ import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
 import { XMLSerializer } from '@instawork/xmldom';
 import { X_RESPONSE_STALE_REASON } from 'hyperview/src/services/dom/types';
 import { createTestProps } from 'hyperview/src/services';
+
+const ScrollViewWithScrollContext = ScrollObserver.withScrollableComponent(
+  ScrollView,
+);
 
 /**
  * Wrapper to handle UI events
@@ -370,8 +375,9 @@ export default class HyperRef extends PureComponent<Props, State> {
       refreshing: this.state.refreshing,
     });
     return React.createElement(
-      ScrollView,
+      ScrollViewWithScrollContext,
       {
+        id: this.props.element.getAttribute('id'),
         refreshControl,
         showsVerticalScrollIndicator:
           this.props.element.getAttribute('shows-scroll-indicator') !== 'false',
