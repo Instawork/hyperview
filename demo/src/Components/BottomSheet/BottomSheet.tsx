@@ -5,11 +5,18 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import { Dimensions, LayoutChangeEvent, Modal, View } from 'react-native';
+import {
+  Dimensions,
+  LayoutChangeEvent,
+  Modal,
+  Platform,
+  View,
+} from 'react-native';
 import {
   Gesture,
   GestureDetector,
   GestureHandlerRootView,
+  ScrollView,
 } from 'react-native-gesture-handler';
 import type { HvComponentProps, LocalName } from 'hyperview';
 import type { HvProps, HvStyles } from './types';
@@ -32,7 +39,11 @@ const SWIPE_TO_CLOSE_THRESHOLD = 0.1;
 const BottomSheet = (props: HvComponentProps) => {
   const insets = useSafeAreaInsets();
   const PADDING = insets.top;
-  const MAX_TRANSLATE_Y = -(SCREEN_HEIGHT - PADDING);
+  const topOffset = Platform.select({
+    default: 0,
+    ios: PADDING,
+  });
+  const MAX_TRANSLATE_Y = -(SCREEN_HEIGHT - topOffset);
 
   const animationDuration = props.element.getAttributeNS(
     namespace,
@@ -312,7 +323,7 @@ const BottomSheet = (props: HvComponentProps) => {
       setHeight(sheetHeight);
     };
 
-    return (
+    return Platform.OS === 'ios' ? (
       <View
         onLayout={onLayout}
         onStartShouldSetResponder={() => {
@@ -320,6 +331,15 @@ const BottomSheet = (props: HvComponentProps) => {
         }}
       >
         <>{children}</>
+      </View>
+    ) : (
+      <View onLayout={onLayout}>
+        <ScrollView
+          nestedScrollEnabled
+          scrollEnabled={upcomingTranslateY <= MAX_TRANSLATE_Y}
+        >
+          {children}
+        </ScrollView>
       </View>
     );
   }, [upcomingTranslateY, children, MAX_TRANSLATE_Y]);
