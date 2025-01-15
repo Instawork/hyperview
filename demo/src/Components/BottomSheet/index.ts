@@ -1,3 +1,3 @@
 export { BottomSheet } from './BottomSheet';
-export { BottomSheetContentSection } from './BottomSheetContentSection';
-export { BottomSheetStopPoint } from './BottomSheetStopPoint';
+export { BottomSheetContentSection } from './ContentSection';
+export { BottomSheetStopPoint } from './StopPoint';
