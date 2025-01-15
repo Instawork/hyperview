@@ -1,8 +1,9 @@
 import type { HvComponentProps, LocalName } from 'hyperview';
+import MapView, { MapMarker as RNMapMarker } from 'react-native-maps';
 import React, { useCallback } from 'react';
 import Hyperview from 'hyperview';
-import MapView from 'react-native-maps';
 import type { MarkerHvProps } from './types';
+import { Platform } from 'react-native';
 import { namespace } from './types';
 
 const MapMarker = (props: HvComponentProps) => {
@@ -21,9 +22,12 @@ const MapMarker = (props: HvComponentProps) => {
     props.onUpdate,
     props.options,
   );
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore: MapView.Marker does exist, and is needed for the map to render on web
-  return <MapView.Marker coordinate={coordinate}>{children}</MapView.Marker>;
+  if (Platform.OS === 'web') {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore: MapView.Marker does exist, and is needed for the map to render on web
+    return <MapView.Marker coordinate={coordinate}>{children}</MapView.Marker>;
+  }
+  return <RNMapMarker coordinate={coordinate}>{children}</RNMapMarker>;
 };
 
 MapMarker.namespaceURI = namespace;
