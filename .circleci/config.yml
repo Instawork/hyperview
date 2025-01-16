@@ -32,6 +32,9 @@ jobs:
           name: Demo - Install dependencies
           command: yarn
       - run:
+          name: Demo - Link Hyperview in demo
+          command: yarn link; cd demo; yarn link hyperview
+      - run:
           working_directory: demo
           name: Demo - Check types
           command: yarn test:ts
