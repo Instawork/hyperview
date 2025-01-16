@@ -319,6 +319,31 @@
 
         
   <style id="bottom-sheet" backgroundColor="#fff" padding="24" />
+  <style id="bottom-sheet-handle"
+    alignSelf='center'
+    backgroundColor='gray'
+    borderRadius="25"
+    height="4"
+    marginVertical="15"
+    width="75"
+  />
+  <style id="bottom-sheet-overlay" backgroundColor='#2f2f2f' opacity="0.6" />
+  <style id="bottom-sheet-container" backgroundColor="#fff" />
+  <style id="heading" flexDirection="row" justifyContent="space-between" marginHorizontal="24" marginBottom="16" />
+<style id="heading-label" fontSize="20" fontWeight="bold" />
+<style id="add-button-label" fontSize="32" lineHeight="30" color="#4778FF" />
+
+<style id="content"  />
+<style id="users-list" marginBottom="200" />
+<style id="user" flex="1" flexDirection="row" marginHorizontal="24" paddingVertical="8" alignItems="center" borderTopWidth="1" borderColor="lightgrey" />
+<style id="user-avatar" height="48" width="48" backgroundColor="#4778FF" opacity="0.3" borderRadius="32" marginRight="16" />
+<style id="user-data" flex="1" flexDirection="row" justifyContent="space-between" />
+<style id="user-data-left" />
+<style id="user-name-label" />
+<style id="user-location-label" color="grey" />
+<style id="user-data-right" alignItems="flex-end" justifyContent="center" />
+<style id="distance-label" color="grey" />
+
 
       </styles>
       <body style="body" safe-area="true">
@@ -348,23 +373,27 @@
         
   <view scroll="true" style="main">
     
-  <bottom-sheet:bottom-sheet
-    xmlns:bottom-sheet="https://hyperview.org/bottom-sheet"
-    bottom-sheet:toggle-event-name="bottom-sheet/toggle"
-    bottom-sheet:animation-duration="250"
-    bottom-sheet:dismissible="true"
-    bottom-sheet:visible="false"
-  >
-    <view key="bottom-sheet-content" style="bottom-sheet">
-      <text>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
-        consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
-        nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
-        ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
-      </text>
-    </view>
-  </bottom-sheet:bottom-sheet>
   
+
+<bottom-sheet:bottom-sheet
+  xmlns:bottom-sheet="https://hyperview.org/bottom-sheet"
+  bottom-sheet:toggle-event-name="bottom-sheet/toggle"
+  bottom-sheet:animation-duration="250"
+  bottom-sheet:dismissible="true"
+  bottom-sheet:visible="false"
+  bottom-sheet:container-style="bottom-sheet-container"
+  bottom-sheet:overlay-style="bottom-sheet-overlay"
+>
+  <view key="bottom-sheet-content" style="bottom-sheet">
+    <text>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+      consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+      nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+      ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+    </text>
+  </view>
+</bottom-sheet:bottom-sheet>
+
   <view
     
     
@@ -373,13 +402,672 @@
   >
     
       <behavior
-      action="dispatch-event"
-      event-name="bottom-sheet/toggle"
-      trigger="press"
-    />
+    action="dispatch-event"
+    event-name="bottom-sheet/toggle"
+    trigger="press"
+  />
     
     <text style="button-label">Open bottom sheet</text>
   </view>
+
+
+  
+
+<bottom-sheet:bottom-sheet
+  xmlns:bottom-sheet="https://hyperview.org/bottom-sheet"
+  bottom-sheet:toggle-event-name="bottom-sheet/toggle2"
+  bottom-sheet:animation-duration="250"
+  bottom-sheet:dismissible="true"
+  bottom-sheet:visible="false"
+  bottom-sheet:swipe-to-close="true"
+  bottom-sheet:container-style="bottom-sheet-container"
+  bottom-sheet:handle-style="bottom-sheet-handle"
+  bottom-sheet:overlay-style="bottom-sheet-overlay"
+>
+  <bottom-sheet:stop-point bottom-sheet:location="0.5" />
+  <bottom-sheet:stop-point bottom-sheet:location="0.75" />
+  <bottom-sheet:stop-point bottom-sheet:location="0.25" />
+  <view key="bottom-sheet-content" style="bottom-sheet">
+    <text>
+      Section 1. This is only text that should initially be showing. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+      consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+      nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+      ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+    </text>
+    <text></text>
+    <text>
+      Section 2. This is only text that should initially be showing. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+      consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+      nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+      ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+    </text>
+    <text></text>
+    <text>
+      Section 3. This is only text that should initially be showing. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+      consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+      nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+      ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+
+      Section 3a. This is only text that should initially be showing. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+      consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+      nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+      ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+    </text>
+  </view>
+</bottom-sheet:bottom-sheet>
+
+  <view
+    
+    
+      style="button"
+    
+  >
+    
+      <behavior
+    action="dispatch-event"
+    event-name="bottom-sheet/toggle2"
+    trigger="press"
+  />
+    
+    <text style="button-label">Open bottom sheet w/ stop points</text>
+  </view>
+
+
+  
+
+<bottom-sheet:bottom-sheet
+  xmlns:bottom-sheet="https://hyperview.org/bottom-sheet"
+  xmlns:scroll="https://hyperview.org/hyperview-scroll"
+  bottom-sheet:toggle-event-name="bottom-sheet/toggle3"
+  bottom-sheet:animation-duration="250"
+  bottom-sheet:dismissible="true"
+  bottom-sheet:visible="false"
+  bottom-sheet:swipe-to-close="true"
+  bottom-sheet:container-style="bottom-sheet-container"
+  bottom-sheet:handle-style="bottom-sheet-handle"
+  bottom-sheet:overlay-style="bottom-sheet-overlay"
+>
+  <bottom-sheet:content-section key="0">
+    <view key="bottom-sheet-content" style="bottom-sheet">
+      <text>
+        Section 1. This is only text that should initially be showing. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+        consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+        nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+        ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+      </text>
+    </view>
+  </bottom-sheet:content-section>
+  <bottom-sheet:content-section key="1">
+    <view key="bottom-sheet-content" style="bottom-sheet">
+      <text>
+        Section 2. This should be hidden from the initial view render. Testing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+        consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+        nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+        ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+      </text>
+      <text></text>
+      <text>
+        Testing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+        consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+        nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+        ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+      </text>
+    </view>
+  </bottom-sheet:content-section>
+</bottom-sheet:bottom-sheet>
+
+  <view
+    
+    
+      style="button"
+    
+  >
+    
+      <behavior
+    action="dispatch-event"
+    event-name="bottom-sheet/toggle3"
+    trigger="press"
+  />
+    
+    <text style="button-label">Open bottom sheet w/ sections</text>
+  </view>
+
+
+  
+
+<bottom-sheet:bottom-sheet
+  xmlns:bottom-sheet="https://hyperview.org/bottom-sheet"
+  bottom-sheet:toggle-event-name="bottom-sheet/toggle4"
+  bottom-sheet:animation-duration="250"
+  bottom-sheet:dismissible="true"
+  bottom-sheet:visible="false"
+  bottom-sheet:swipe-to-close="true"
+  bottom-sheet:container-style="bottom-sheet-container"
+  bottom-sheet:handle-style="bottom-sheet-handle"
+  bottom-sheet:overlay-style="bottom-sheet-overlay"
+>
+  <view scroll="true">
+    <bottom-sheet:content-section key="0">
+      <view key="bottom-sheet-content" style="bottom-sheet">
+        <text>
+          Section 1. This is only text that should initially be showing. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+          consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+          nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+          ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+        </text>
+      </view>
+    </bottom-sheet:content-section>
+    <bottom-sheet:content-section key="1">
+      
+  <view
+    
+    
+      style="button"
+    
+  >
+    
+      <behavior
+          action="dispatch-event"
+          event-name="bottom-sheet/toggle4"
+          trigger="press"
+        />
+    
+    <text style="button-label">Close</text>
+  </view>
+
+    </bottom-sheet:content-section>
+    <bottom-sheet:content-section key="2">
+      <view key="bottom-sheet-content" style="bottom-sheet">
+        <text>
+          Section 2. This should be hidden from the initial view render. Testing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+          consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+          nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+          ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+        </text>
+        <text></text>
+        <text>
+          Testing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+          consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+          nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+          ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+        </text>
+      </view>
+    </bottom-sheet:content-section>
+    <bottom-sheet:content-section key="3">
+      <view key="bottom-sheet-content" style="bottom-sheet">
+        <text>
+          Section 3. This should be hidden from the initial view render. Testing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+          consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+          nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+          ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+        </text>
+        <text></text>
+        <text>
+          Testing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+          consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+          nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+          ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+        </text>
+        <text></text>
+        <text>
+          Testing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+          consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+          nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+          ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+        </text>
+        <text></text>
+        <text>
+          Testing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+          consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+          nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+          ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+        </text>
+        <text></text>
+        <text>
+          Testing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+          consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+          nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+          ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+        </text>
+      </view>
+    </bottom-sheet:content-section>
+  </view>
+</bottom-sheet:bottom-sheet>
+
+  <view
+    
+    
+      style="button"
+    
+  >
+    
+      <behavior
+    action="dispatch-event"
+    event-name="bottom-sheet/toggle4"
+    trigger="press"
+  />
+    
+    <text style="button-label">Open bottom sheet w/ scrolling</text>
+  </view>
+
+
+  <bottom-sheet:bottom-sheet
+  xmlns:bottom-sheet="https://hyperview.org/bottom-sheet"
+  bottom-sheet:toggle-event-name="bottom-sheet/toggle5"
+  bottom-sheet:animation-duration="250"
+  bottom-sheet:dismissible="true"
+  bottom-sheet:visible="false"
+  bottom-sheet:swipe-to-close="true"
+  bottom-sheet:container-style="bottom-sheet-container"
+  bottom-sheet:handle-style="bottom-sheet-handle"
+  bottom-sheet:overlay-style="bottom-sheet-overlay"
+>
+  <bottom-sheet:stop-point bottom-sheet:location="0.5" />
+  <bottom-sheet:stop-point bottom-sheet:location="1" />
+  <view style="content">
+    <view style="heading">
+      <text style="heading-label">People</text>
+      <view style="add-button">
+        <text style="add-button-label">+</text>
+      </view>
+    </view>
+    <view scroll="true" style="users-list">
+            <view style="user">
+        <view style="user-avatar" />
+        <view style="user-data">
+          <view style="user-data-left">
+            <text style="user-name-label">Alice Johnson</text>
+            <text style="user-location-label">San Francisco * Now</text>
+          </view>
+          <view style="user-data-right">
+            <text style="distance-label">0 miles</text>
+          </view>
+        </view>
+      </view>
+
+      <view style="user">
+        <view style="user-avatar" />
+        <view style="user-data">
+          <view style="user-data-left">
+            <text style="user-name-label">Bob Smith</text>
+            <text style="user-location-label">Daly City * 2 min. ago</text>
+          </view>
+          <view style="user-data-right">
+            <text style="distance-label">8 miles</text>
+          </view>
+        </view>
+      </view>
+
+      <view style="user">
+        <view style="user-avatar" />
+        <view style="user-data">
+          <view style="user-data-left">
+            <text style="user-name-label">Carol White</text>
+            <text style="user-location-label">South San Francisco * 5 min. ago</text>
+          </view>
+          <view style="user-data-right">
+            <text style="distance-label">10 miles</text>
+          </view>
+        </view>
+      </view>
+
+      <view style="user">
+        <view style="user-avatar" />
+        <view style="user-data">
+          <view style="user-data-left">
+            <text style="user-name-label">David Brown</text>
+            <text style="user-location-label">Brisbane * 3 min. ago</text>
+          </view>
+          <view style="user-data-right">
+            <text style="distance-label">11 miles</text>
+          </view>
+        </view>
+      </view>
+
+      <view style="user">
+        <view style="user-avatar" />
+        <view style="user-data">
+          <view style="user-data-left">
+            <text style="user-name-label">Eve Davis</text>
+            <text style="user-location-label">San Bruno * 7 min. ago</text>
+          </view>
+          <view style="user-data-right">
+            <text style="distance-label">12 miles</text>
+          </view>
+        </view>
+      </view>
+
+      <view style="user">
+        <view style="user-avatar" />
+        <view style="user-data">
+          <view style="user-data-left">
+            <text style="user-name-label">Frank Wilson</text>
+            <text style="user-location-label">Pacifica * 10 min. ago</text>
+          </view>
+          <view style="user-data-right">
+            <text style="distance-label">15 miles</text>
+          </view>
+        </view>
+      </view>
+
+      <view style="user">
+        <view style="user-avatar" />
+        <view style="user-data">
+          <view style="user-data-left">
+            <text style="user-name-label">Grace Lee</text>
+            <text style="user-location-label">Millbrae * 4 min. ago</text>
+          </view>
+          <view style="user-data-right">
+            <text style="distance-label">16 miles</text>
+          </view>
+        </view>
+      </view>
+
+      <view style="user">
+        <view style="user-avatar" />
+        <view style="user-data">
+          <view style="user-data-left">
+            <text style="user-name-label">Henry Martinez</text>
+            <text style="user-location-label">Burlingame * 6 min. ago</text>
+          </view>
+          <view style="user-data-right">
+            <text style="distance-label">17 miles</text>
+          </view>
+        </view>
+      </view>
+
+      <view style="user">
+        <view style="user-avatar" />
+        <view style="user-data">
+          <view style="user-data-left">
+            <text style="user-name-label">Ivy Clark</text>
+            <text style="user-location-label">San Mateo * 8 min. ago</text>
+          </view>
+          <view style="user-data-right">
+            <text style="distance-label">19 miles</text>
+          </view>
+        </view>
+      </view>
+
+      <view style="user">
+        <view style="user-avatar" />
+        <view style="user-data">
+          <view style="user-data-left">
+            <text style="user-name-label">Jack Lewis</text>
+            <text style="user-location-label">Belmont * 9 min. ago</text>
+          </view>
+          <view style="user-data-right">
+            <text style="distance-label">22 miles</text>
+          </view>
+        </view>
+      </view>
+
+      <view style="user">
+        <view style="user-avatar" />
+        <view style="user-data">
+          <view style="user-data-left">
+            <text style="user-name-label">Karen Walker</text>
+            <text style="user-location-label">Foster City * 11 min. ago</text>
+          </view>
+          <view style="user-data-right">
+            <text style="distance-label">23 miles</text>
+          </view>
+        </view>
+      </view>
+
+      <view style="user">
+        <view style="user-avatar" />
+        <view style="user-data">
+          <view style="user-data-left">
+            <text style="user-name-label">Leo Hall</text>
+            <text style="user-location-label">Redwood City * 12 min. ago</text>
+          </view>
+          <view style="user-data-right">
+            <text style="distance-label">25 miles</text>
+          </view>
+        </view>
+      </view>
+
+      <view style="user">
+        <view style="user-avatar" />
+        <view style="user-data">
+          <view style="user-data-left">
+            <text style="user-name-label">Mia Allen</text>
+            <text style="user-location-label">San Carlos * 13 min. ago</text>
+          </view>
+          <view style="user-data-right">
+            <text style="distance-label">26 miles</text>
+          </view>
+        </view>
+      </view>
+
+      <view style="user">
+        <view style="user-avatar" />
+        <view style="user-data">
+          <view style="user-data-left">
+            <text style="user-name-label">Nina Young</text>
+            <text style="user-location-label">Menlo Park * 14 min. ago</text>
+          </view>
+          <view style="user-data-right">
+            <text style="distance-label">28 miles</text>
+          </view>
+        </view>
+      </view>
+
+      <view style="user">
+        <view style="user-avatar" />
+        <view style="user-data">
+          <view style="user-data-left">
+            <text style="user-name-label">Oscar King</text>
+            <text style="user-location-label">Palo Alto * 15 min. ago</text>
+          </view>
+          <view style="user-data-right">
+            <text style="distance-label">30 miles</text>
+          </view>
+        </view>
+      </view>
+
+      <view style="user">
+        <view style="user-avatar" />
+        <view style="user-data">
+          <view style="user-data-left">
+            <text style="user-name-label">Paul Scott</text>
+            <text style="user-location-label">Mountain View * 16 min. ago</text>
+          </view>
+          <view style="user-data-right">
+            <text style="distance-label">34 miles</text>
+          </view>
+        </view>
+      </view>
+
+      <view style="user">
+        <view style="user-avatar" />
+        <view style="user-data">
+          <view style="user-data-left">
+            <text style="user-name-label">Quinn Adams</text>
+            <text style="user-location-label">Sunnyvale * 17 min. ago</text>
+          </view>
+          <view style="user-data-right">
+            <text style="distance-label">36 miles</text>
+          </view>
+        </view>
+      </view>
+
+      <view style="user">
+        <view style="user-avatar" />
+        <view style="user-data">
+          <view style="user-data-left">
+            <text style="user-name-label">Rachel Baker</text>
+            <text style="user-location-label">Santa Clara * 18 min. ago</text>
+          </view>
+          <view style="user-data-right">
+            <text style="distance-label">39 miles</text>
+          </view>
+        </view>
+      </view>
+
+      <view style="user">
+        <view style="user-avatar" />
+        <view style="user-data">
+          <view style="user-data-left">
+            <text style="user-name-label">Sam Harris</text>
+            <text style="user-location-label">Cupertino * 19 min. ago</text>
+          </view>
+          <view style="user-data-right">
+            <text style="distance-label">41 miles</text>
+          </view>
+        </view>
+      </view>
+
+      <view style="user">
+        <view style="user-avatar" />
+        <view style="user-data">
+          <view style="user-data-left">
+            <text style="user-name-label">Tina Evans</text>
+            <text style="user-location-label">Los Altos * 20 min. ago</text>
+          </view>
+          <view style="user-data-right">
+            <text style="distance-label">42 miles</text>
+          </view>
+        </view>
+      </view>
+
+      <view style="user">
+        <view style="user-avatar" />
+        <view style="user-data">
+          <view style="user-data-left">
+            <text style="user-name-label">Uma Nelson</text>
+            <text style="user-location-label">Los Gatos * 15 min. ago</text>
+          </view>
+          <view style="user-data-right">
+            <text style="distance-label">45 miles</text>
+          </view>
+        </view>
+      </view>
+
+      <view style="user">
+        <view style="user-avatar" />
+        <view style="user-data">
+          <view style="user-data-left">
+            <text style="user-name-label">Victor Moore</text>
+            <text style="user-location-label">Campbell * 14 min. ago</text>
+          </view>
+          <view style="user-data-right">
+            <text style="distance-label">47 miles</text>
+          </view>
+        </view>
+      </view>
+
+      <view style="user">
+        <view style="user-avatar" />
+        <view style="user-data">
+          <view style="user-data-left">
+            <text style="user-name-label">Wendy Perez</text>
+            <text style="user-location-label">San Jose * 13 min. ago</text>
+          </view>
+          <view style="user-data-right">
+            <text style="distance-label">50 miles</text>
+          </view>
+        </view>
+      </view>
+
+      <view style="user">
+        <view style="user-avatar" />
+        <view style="user-data">
+          <view style="user-data-left">
+            <text style="user-name-label">Xander Reed</text>
+            <text style="user-location-label">Milpitas * 12 min. ago</text>
+          </view>
+          <view style="user-data-right">
+            <text style="distance-label">52 miles</text>
+          </view>
+        </view>
+      </view>
+
+      <view style="user">
+        <view style="user-avatar" />
+        <view style="user-data">
+          <view style="user-data-left">
+            <text style="user-name-label">Yara Collins</text>
+            <text style="user-location-label">Fremont * 11 min. ago</text>
+          </view>
+          <view style="user-data-right">
+            <text style="distance-label">55 miles</text>
+          </view>
+        </view>
+      </view>
+
+      <view style="user">
+        <view style="user-avatar" />
+        <view style="user-data">
+          <view style="user-data-left">
+            <text style="user-name-label">Zane Turner</text>
+            <text style="user-location-label">Union City * 10 min. ago</text>
+          </view>
+          <view style="user-data-right">
+            <text style="distance-label">57 miles</text>
+          </view>
+        </view>
+      </view>
+
+      <view style="user">
+        <view style="user-avatar" />
+        <view style="user-data">
+          <view style="user-data-left">
+            <text style="user-name-label">Amy Foster</text>
+            <text style="user-location-label">Hayward * 9 min. ago</text>
+          </view>
+          <view style="user-data-right">
+            <text style="distance-label">60 miles</text>
+          </view>
+        </view>
+      </view>
+
+      <view style="user">
+        <view style="user-avatar" />
+        <view style="user-data">
+          <view style="user-data-left">
+            <text style="user-name-label">Brian Murphy</text>
+            <text style="user-location-label">Castro Valley * 8 min. ago</text>
+          </view>
+          <view style="user-data-right">
+            <text style="distance-label">62 miles</text>
+          </view>
+        </view>
+      </view>
+
+      <view style="user">
+        <view style="user-avatar" />
+        <view style="user-data">
+          <view style="user-data-left">
+            <text style="user-name-label">Chloe Sanders</text>
+            <text style="user-location-label">Pleasanton * 7 min. ago</text>
+          </view>
+          <view style="user-data-right">
+            <text style="distance-label">65 miles</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</bottom-sheet:bottom-sheet>
+
+  <view
+    
+    
+      style="button"
+    
+  >
+    
+      <behavior
+    action="dispatch-event"
+    event-name="bottom-sheet/toggle5"
+    trigger="press"
+  />
+    
+    <text style="button-label">Open People bottom sheet</text>
+  </view>
+
 
 
   </view>
