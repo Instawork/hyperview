@@ -190,7 +190,7 @@ export default class HvNavigator extends PureComponent<Props> {
     type: string,
     href: string | undefined,
     isModal: boolean,
-    isFirstScreen: boolean = false,
+    isFirstScreen = false,
   ): React.ReactElement => {
     const initialParams = NavigatorService.isDynamicRoute(id)
       ? {}

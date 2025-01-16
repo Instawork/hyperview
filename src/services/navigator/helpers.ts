@@ -664,7 +664,7 @@ const getUrlFromState = (
     return undefined;
   }
 
-  for (let i: number = 0; i < state.routes.length; i += 1) {
+  for (let i = 0; i < state.routes.length; i += 1) {
     const route = state.routes[i];
     if (route.name === id) {
       const params = route.params as RouteParams;

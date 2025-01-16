@@ -5,6 +5,7 @@ import type {
   HvComponent,
   HvComponentOnUpdate,
   HvComponentOptions,
+  HvComponentProps,
   StyleSheets,
 } from 'hyperview/src/types';
 import { LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
@@ -15,8 +16,7 @@ export const renderElement = (
   stylesheets: StyleSheets,
   onUpdate: HvComponentOnUpdate,
   options: HvComponentOptions,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): React.ReactElement<any> | null | string => {
+): React.ReactElement<HvComponentProps> | null | string => {
   if (!element) {
     return null;
   }
@@ -146,7 +146,7 @@ export const renderChildren = (
   stylesheets: StyleSheets,
   onUpdate: HvComponentOnUpdate,
   options: HvComponentOptions,
-) => {
+): Array<React.ReactElement<HvComponentProps> | null | string> => {
   if (element.childNodes) {
     return renderChildNodes(
       Array.from(element.childNodes),
@@ -167,7 +167,7 @@ export const renderChildNodes = (
   stylesheets: StyleSheets,
   onUpdate: HvComponentOnUpdate,
   options: HvComponentOptions,
-) => {
+): Array<React.ReactElement<HvComponentProps> | null | string> => {
   const children = [];
   for (let i = 0; i < childNodes.length; i += 1) {
     const e = renderElement(childNodes[i] as Element, stylesheets, onUpdate, {

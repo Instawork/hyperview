@@ -57,6 +57,8 @@ export const createEventHandler = (
 export default class HyperRef extends PureComponent<Props, State> {
   static contextType = BackBehaviorContext;
 
+  context: React.ContextType<typeof BackBehaviorContext> = null;
+
   state: State = {
     pressed: false,
     refreshing: false,
