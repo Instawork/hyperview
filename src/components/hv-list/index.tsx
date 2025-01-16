@@ -29,6 +29,8 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
 
   static localNameAliases = [];
 
+  context: React.ContextType<typeof Contexts.DocContext> = null;
+
   static contextType = Contexts.DocContext;
 
   parser: DOMParser = new DOMParser();
