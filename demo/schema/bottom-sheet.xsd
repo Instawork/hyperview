@@ -10,15 +10,45 @@
     namespace="https://hyperview.org/hyperview"
     schemaLocation="hyperview.xsd"
   />
+
+  <xs:element name="stop-point">
+    <xs:complexType>
+      <xs:attribute name="location" use="required" >
+        <xs:simpleType>
+          <xs:restriction base="xs:decimal">
+            <xs:minInclusive value="0.0" />
+            <xs:maxInclusive value="1.0" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="content-section">
+    <xs:complexType>
+      <xs:group ref="hv:viewChildren" />
+      <xs:attributeGroup ref="hv:viewAttributes" />
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="bottom-sheet">
     <xs:complexType>
-      <xs:sequence>
-        <xs:any minOccurs="1" maxOccurs="1" />
-      </xs:sequence>
+      <xs:choice minOccurs="1" maxOccurs="1">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="10" ref="bottom-sheet:stop-point" />
+          <xs:element minOccurs="1" maxOccurs="unbounded" ref="hv:view" />
+        </xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="unbounded" ref="bottom-sheet:content-section" />
+      </xs:choice>
       <xs:attribute name="toggle-event-name" type="xs:string" />
       <xs:attribute name="dismissible" type="xs:boolean" />
       <xs:attribute name="visible" type="xs:boolean" />
       <xs:attribute name="animation-duration" type="xs:nonNegativeInteger" />
+      <xs:attribute name="swipe-to-close" type="xs:boolean" />
+
+      <xs:attribute name="container-style" type="hv:styleList" />
+      <xs:attribute name="handle-style" type="hv:styleList" />
+      <xs:attribute name="overlay-style" type="hv:styleList" />
     </xs:complexType>
   </xs:element>
 </xs:schema>
