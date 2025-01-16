@@ -2,7 +2,6 @@
   "name": "demo",
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
-  "homepage": ".",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -65,10 +64,6 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.2.2"
   },
-  "resolutions": {
-    "@types/react": "17.0.67",
-    "@typescript-eslint/eslint-plugin": "6.7.4",
-    "@typescript-eslint/parser": "6.7.4"
-  },
-  "private": true
+  "private": true,
+  "homepage": "."
 }
