@@ -38,10 +38,14 @@ const SWIPE_TO_CLOSE_THRESHOLD = 0.1;
 
 const BottomSheet = (props: HvComponentProps) => {
   const insets = useSafeAreaInsets();
-  const PADDING = insets.top;
+  const PADDING = Platform.select({
+    default: insets.top,
+    ios: insets.bottom,
+  });
+
   const topOffset = Platform.select({
     default: 0,
-    ios: PADDING,
+    ios: insets.top,
   });
   const MAX_TRANSLATE_Y = -(SCREEN_HEIGHT - topOffset);
 
@@ -71,18 +75,19 @@ const BottomSheet = (props: HvComponentProps) => {
     ),
     visible: props.element.getAttributeNS(namespace, 'visible') === 'true',
   };
+  const { prefix } = props.element;
   const hvStyles: HvStyles = {
     container: Hyperview.createStyleProp(props.element, props.stylesheets, {
       ...props.options,
-      styleAttr: 'bottom-sheet:container-style',
+      styleAttr: `${prefix}:container-style`,
     }),
     handle: Hyperview.createStyleProp(props.element, props.stylesheets, {
       ...props.options,
-      styleAttr: 'bottom-sheet:handle-style',
+      styleAttr: `${prefix}:handle-style`,
     }),
     overlay: Hyperview.createStyleProp(props.element, props.stylesheets, {
       ...props.options,
-      styleAttr: 'bottom-sheet:overlay-style',
+      styleAttr: `${prefix}:overlay-style`,
     }),
   };
 
