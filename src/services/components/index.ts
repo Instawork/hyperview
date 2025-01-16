@@ -71,7 +71,7 @@ export class Registry {
     }
 
     const formData: FormData = new FormData();
-    let formHasData: boolean = false;
+    let formHasData = false;
 
     this.components
       .filter(c =>
