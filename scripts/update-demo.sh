@@ -99,6 +99,7 @@ mv demo-old/App.tsx demo
 mv demo-old/assets/* demo/assets
 mv demo-old/babel.config.js demo
 mv demo-old/backend demo
+mv demo-old/index.ts demo
 mv demo-old/README.md demo
 mv demo-old/schema demo
 mv demo-old/scripts demo
