@@ -45,16 +45,22 @@ module.exports = function (eleventyConfig) {
   // Pass through any XML files that haven't been ported yet.
   // Once everything is ported, we can remove this.
   eleventyConfig.addPassthroughCopy('backend/**/*.xml');
+
   // Pass through images used by different screens.
   eleventyConfig.addPassthroughCopy('backend/**/*.jpg');
   eleventyConfig.addPassthroughCopy('backend/**/*.jpeg');
   eleventyConfig.addPassthroughCopy('backend/**/*.png');
+
   // Add filters
   eleventyConfig.addNunjucksFilter('sortCollection', sortCollectionFilter);
   eleventyConfig.addNunjucksFilter('highlight', highlightFilter);
   eleventyConfig.addNunjucksFilter('paginate', paginateFilter);
   eleventyConfig.addNunjucksFilter('pageCount', pageCountFilter);
   eleventyConfig.addNunjucksFilter('sectionTitle', sectionTitleFilter);
+
+  // Indicate to the template that JS environment is available
+  eleventyConfig.addNunjucksGlobal('__DEV__', process.env.ENV !== 'production');
+
   // Output into demo folder for serving both github pages and local development
   return {
     dir: {

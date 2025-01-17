@@ -1,5 +1,3 @@
-{% from 'macros/description/index.xml.njk' import description %}
-
 {% macro button(text, attributes={}) %}
   <view
     {% for attr, val in attributes %}
@@ -23,6 +21,11 @@
       <![CDATA[{{ data }}]]>
     </text>
   {% endif %}
-  <text style="button-serialize-title">Press the button below and see the request in the XML server. It will include the fields values as query params.</text>
-  {{ button('Serialize', {href: href, action: "replace", target: target}) }}
+  {% if __DEV__ %}
+    <text style="button-serialize-title">Press the button below and see the request in the XML server. It will include the fields values as query params.</text>
+    {{ button('Serialize', {href: href, action: "replace", target: target}) }}
+  {% else %}
+    <text style="button-serialize-title">To test form serialization, setup the Hyperview demo app on your local environment.</text>
+    {{ button('Serialize', {style: "button button-disabled"}) }}
+  {% endif %}
 {% endmacro %}
