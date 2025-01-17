@@ -19,7 +19,7 @@
         {% set item_style = item_style ~ " item-last" %}
       {% endif %}
       <item
-        href="/hyperview/public/{{ screen.data.permalink }}"
+        href="/hyperview/public{{ screen.data.permalink }}"
         key="{{ screen.data.hv_title | slug }}"
         show-during-load="loading-screen"
         style="{{ item_style }}"

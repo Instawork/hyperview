@@ -1,0 +1,9 @@
+{% from 'macros/button/index.xml.njk' import button_serialize %}
+
+<form id="form" xmlns="https://hyperview.org/hyperview">
+  {% include './_on/index.xml.njk' %}
+  {% include './_off/index.xml.njk' %}
+  {% include './_styled/index.xml.njk' %}
+
+  {{ button_serialize("/hyperview/public/ui/ui-elements/forms/switch/form.xml", formData) }}
+</form>
