@@ -6,9 +6,11 @@ const {
   sectionTitleFilter,
 } = require('./.eleventy/filters.js');
 
+const output = 'hyperview/public';
+
 module.exports = function (eleventyConfig) {
   eleventyConfig.setServerOptions({
-    module: "@11ty/eleventy-server-browsersync",
+    module: '@11ty/eleventy-server-browsersync',
     middleware: function (req, res, next) {
       res.setHeader('Access-Control-Allow-Origin', '*');
       res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
@@ -21,7 +23,8 @@ module.exports = function (eleventyConfig) {
         res.end();
       } else {
         try {
-          const handler = require(`./backend${req._parsedUrl.pathname}.js`);
+          const path = req._parsedUrl.pathname.replace(`${output}/`, '');
+          const handler = require(`./backend${path}.js`);
           if (handler) {
             handler(req, res, next);
           } else {
@@ -56,7 +59,7 @@ module.exports = function (eleventyConfig) {
   return {
     dir: {
       input: 'backend',
-      output: 'hyperview/public',
+      output,
     },
   };
 };
