@@ -6,9 +6,7 @@ hv_button_behavior: "back"
 ---
 {% extends 'templates/scrollview.xml.njk' %}
 {% from 'macros/description/index.xml.njk' import description %}
-{% from 'macros/button/index.xml.njk' import button %}
 
-{# TBD rohanbayya: To fix serialize button #}
 {% block styles %}
   <style id="description" fontSize="16" fontWeight="600" margin="24"/>
   <style id="select-custom-label" color="#4e4d4d" fontSize="16" fontWeight="normal" lineHeight="18" textAlign="center">
@@ -86,10 +84,5 @@ hv_button_behavior: "back"
 {% endblock %}
 
 {% block content %}
-  <form>
-    {% include './_simple-select/index.xml.njk' %}
-    {% include './_pre-select/index.xml.njk' %}
-    {% include './_custom/index.xml.njk' %}
-  </form>
-  {{ button('Serialize', {href:"/hyperview/public/ui/ui-elements/forms/select-multiple/index.xml"}) }}
+  {% include './_form.xml.njk' %}
 {% endblock %}
