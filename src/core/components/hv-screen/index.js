@@ -131,13 +131,16 @@ export default class HvScreen extends React.Component {
     const oldUrl = oldNavigationState.params.url;
     const newPreloadScreen = newNavigationState.params.preloadScreen;
     const oldPreloadScreen = oldNavigationState.params.preloadScreen;
+    const newElementId = newNavigationState.params.behaviorElementId;
+    const oldElementId = oldNavigationState.params.behaviorElementId;
 
-    if (newPreloadScreen !== oldPreloadScreen) {
-      this.navigation.removePreloadScreen(oldPreloadScreen);
+    if (newPreloadScreen !== oldPreloadScreen && oldPreloadScreen) {
+      this.props.removePreload?.(oldPreloadScreen);
     }
 
-    // TODO: If the preload screen is changing, delete the old one from
-    // this.navigation.preloadScreens to prevent memory leaks.
+    if (newElementId !== oldElementId && oldElementId) {
+      this.props.removePreload?.(oldElementId);
+    }
 
     if (newUrl && newUrl !== oldUrl) {
       this.needsLoad = true;
@@ -161,9 +164,13 @@ export default class HvScreen extends React.Component {
    */
   componentWillUnmount() {
     const { params } = this.getRoute(this.props);
-    const { preloadScreen } = params;
-    if (preloadScreen && this.navigation.getPreloadScreen(preloadScreen)) {
-      this.navigation.removePreloadScreen(preloadScreen);
+    const { behaviorElementId, preloadScreen } = params;
+
+    if (preloadScreen) {
+      this.props.removePreload?.(preloadScreen);
+    }
+    if (behaviorElementId) {
+      this.props.removePreload?.(behaviorElementId);
     }
     if (this.state.url) {
       this.navigation.removeRouteKey(this.state.url);
@@ -187,10 +194,6 @@ export default class HvScreen extends React.Component {
     const { params, key: routeKey } = this.getRoute(this.props);
 
     try {
-      if (params.delay) {
-        await later(parseInt(params.delay, 10));
-      }
-
       // If an initial document was passed, use it once and then remove
       let doc;
       let staleHeaderType;
@@ -198,6 +201,10 @@ export default class HvScreen extends React.Component {
         doc = this.initialDoc;
         this.initialDoc = null;
       } else {
+        if (params.delay) {
+          await later(parseInt(params.delay, 10));
+        }
+
         // eslint-disable-next-line react/no-access-state-in-setstate
         const {
           doc: loadedDoc,
@@ -225,6 +232,13 @@ export default class HvScreen extends React.Component {
         error: err,
         styles: null,
       });
+    } finally {
+      if (params.preloadScreen) {
+        this.props.removePreload?.(params.preloadScreen);
+      }
+      if (params.behaviorElementId) {
+        this.props.removePreload?.(params.behaviorElementId);
+      }
     }
   };
 
@@ -251,8 +265,7 @@ export default class HvScreen extends React.Component {
       });
     }
     if (!this.state.doc) {
-      const loadingScreen = this.props.loadingScreen || Loading;
-      return React.createElement(loadingScreen);
+      return <Loading cachedId={this.props.route?.params?.behaviorElementId} />;
     }
     const elementErrorComponent = this.state.elementError
       ? this.props.elementErrorComponent || LoadElementError

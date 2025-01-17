@@ -8,4 +8,5 @@ export type Props = HvRootProps & {
   onUpdate: HvComponentOnUpdate;
   registerPreload?: (id: number, element: Element) => void;
   reload: Reload;
+  removePreload?: (id: number) => void;
 };

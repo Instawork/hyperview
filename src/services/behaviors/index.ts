@@ -193,7 +193,12 @@ export const createActionHandler = (
         BEHAVIOR_ATTRIBUTES.SHOW_DURING_LOAD,
       );
       const delay = behaviorElement.getAttribute(BEHAVIOR_ATTRIBUTES.DELAY);
-      onUpdate(href, action, element, { delay, showIndicatorId, targetId });
+      onUpdate(href, action, element, {
+        behaviorElement,
+        delay,
+        showIndicatorId,
+        targetId,
+      });
       logBehavior(behaviorElement, action);
     };
   }
