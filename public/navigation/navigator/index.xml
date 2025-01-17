@@ -1,9 +1,10 @@
 
 
 
+
 <list
   action="replace"
-  href="/navigation/navigator/index.xml"
+  href="/hyperview/public/navigation/navigator/index.xml"
   id="directory-list"
   style="list-container"
   target="directory-list"

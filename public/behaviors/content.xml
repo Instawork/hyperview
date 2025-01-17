@@ -361,9 +361,10 @@
     
       
 
+
 <section-list
   action="replace"
-  href="/behaviors/content.xml"
+  href="/hyperview/public/behaviors/basic/index.xml"
   id="directory-list"
   sticky-section-titles="false"
   style="list-container"
@@ -1570,9 +1571,10 @@
     
       
 
+
 <list
   action="replace"
-  href="/behaviors/content.xml"
+  href="/hyperview/public/behaviors/advanced/index.xml"
   id="directory-list"
   style="list-container"
   target="directory-list"

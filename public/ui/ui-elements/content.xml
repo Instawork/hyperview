@@ -1,8 +1,9 @@
 
 
+
 <section-list
   action="replace"
-  href="/ui/ui-elements/content.xml"
+  href="/hyperview/public/ui/ui-elements/index.xml"
   id="directory-list"
   sticky-section-titles="false"
   style="list-container"

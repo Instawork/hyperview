@@ -1,8 +1,9 @@
 
 
+
 <section-list
   action="replace"
-  href="/advanced/community/content.xml"
+  href="/hyperview/public/advanced/community/index.xml"
   id="directory-list"
   sticky-section-titles="false"
   style="list-container"

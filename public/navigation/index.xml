@@ -361,9 +361,10 @@
     
       
 
+
 <section-list
   action="replace"
-  href="/navigation/index.xml"
+  href="/hyperview/public/navigation/behaviors/index.xml"
   id="directory-list"
   sticky-section-titles="false"
   style="list-container"
@@ -672,9 +673,10 @@
     
       
 
+
 <list
   action="replace"
-  href="/navigation/index.xml"
+  href="/hyperview/public/navigation/navigator/index.xml"
   id="directory-list"
   style="list-container"
   target="directory-list"

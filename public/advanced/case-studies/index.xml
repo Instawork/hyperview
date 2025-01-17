@@ -1,9 +1,10 @@
 
 
 
+
 <list
   action="replace"
-  href="/advanced/case-studies/index.xml"
+  href="/hyperview/public/advanced/case-studies/index.xml"
   id="directory-list"
   style="list-container"
   target="directory-list"

@@ -1,8 +1,9 @@
 
 
+
 <list
   action="replace"
-  href="/ui/styling/content.xml"
+  href="/hyperview/public/ui/styling/index.xml"
   id="directory-list"
   style="list-container"
   target="directory-list"

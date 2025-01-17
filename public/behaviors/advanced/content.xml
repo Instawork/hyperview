@@ -1,8 +1,9 @@
 
 
+
 <list
   action="replace"
-  href="/behaviors/advanced/content.xml"
+  href="/hyperview/public/behaviors/advanced/index.xml"
   id="directory-list"
   style="list-container"
   target="directory-list"

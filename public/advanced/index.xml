@@ -361,9 +361,10 @@
     
       
 
+
 <list
   action="replace"
-  href="/advanced/index.xml"
+  href="/hyperview/public/advanced/case-studies/index.xml"
   id="directory-list"
   style="list-container"
   target="directory-list"
@@ -841,9 +842,10 @@
     
       
 
+
 <section-list
   action="replace"
-  href="/advanced/index.xml"
+  href="/hyperview/public/advanced/community/index.xml"
   id="directory-list"
   sticky-section-titles="false"
   style="list-container"
