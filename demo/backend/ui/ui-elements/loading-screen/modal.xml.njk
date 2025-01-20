@@ -1,0 +1,13 @@
+---
+permalink: "/ui/ui-elements/loading-screen/modal.xml"
+hv_title: "Modal"
+hv_button_behavior: "close"
+hv_open_modal: "true"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  {{ description('This modal showed a specific loader based on its url') }}
+{% endblock %}

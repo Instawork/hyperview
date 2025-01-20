@@ -1,0 +1,42 @@
+---
+permalink: "/ui/ui-elements/loading-screen/index.xml"
+tags: "UI/UI Elements/Loading Screen"
+hv_title: "Loading Screen"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  {{ description('Clicking each button will open a modal and show a loader until the content is ready.') }}
+  {{ description('Note: the fetch may be too fast on localhost to see the loader.') }}
+
+  {# The behavior element is passed into the `loadingScreen` component passed in App.tsx #}
+  {% call button('New with behavior loader') -%}
+    <behavior action="new" href="/hyperview/public/ui/ui-elements/loading-screen/modal.xml" />
+  {%- endcall %}
+
+  {# `custom-loader` screen is provided below #}
+  {% call button('New with doc loader') -%}
+    <behavior action="new" href="/hyperview/public/navigation/behaviors/actions/modal/index.xml" show-during-load="custom-loader" />
+  {%- endcall %}
+
+  {% call button('New with default loader') -%}
+    <behavior action="new" href="/hyperview/public/navigation/behaviors/actions/modal/index.xml" />
+  {%- endcall %}
+{% endblock %}
+
+{% block custom_screen %}
+  <screen id="custom-loader">
+    <styles>
+      {% include 'templates/styles.xml.njk' %}
+    </styles>
+    <body style="body" safe-area="true">
+      <view style="loading">
+        <text style="loading-text">This may take a while…</text>
+        <spinner/>
+      </view>
+    </body>
+  </screen>
+{% endblock %}
