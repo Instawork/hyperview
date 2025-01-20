@@ -101,13 +101,15 @@ export default class Navigation {
         if (registerPreload) {
           registerPreload(preloadScreen, loadingScreen);
         }
-      } else if (opts.behaviorElement) {
-        // Pass the behavior element to the loading screen
-        behaviorElementId = Date.now();
-        this.setPreloadScreen(behaviorElementId, opts.behaviorElement);
-        if (registerPreload) {
-          registerPreload(behaviorElementId, opts.behaviorElement);
-        }
+      }
+    }
+
+    if (!preloadScreen && opts.behaviorElement) {
+      // Pass the behavior element to the loading screen
+      behaviorElementId = Date.now();
+      this.setPreloadScreen(behaviorElementId, opts.behaviorElement);
+      if (registerPreload) {
+        registerPreload(behaviorElementId, opts.behaviorElement);
       }
     }
 
