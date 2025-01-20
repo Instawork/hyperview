@@ -67,3 +67,5 @@ The href to load when navigating to this route. If the `<nav-route>` has a direc
 | **false** (default), true | No       |
 
 [**stack navigator only**] Open a nav-route as a modal.
+
+See also [Loading Screen](/docs/reference_loading_screen) for more information on customizing loading screens.
