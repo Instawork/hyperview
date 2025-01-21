@@ -1,3 +1,4 @@
+const fs = require('fs');
 const {
   sortCollectionFilter,
   highlightFilter,
@@ -8,7 +9,7 @@ const {
 
 module.exports = function (eleventyConfig) {
   eleventyConfig.setServerOptions({
-    module: "@11ty/eleventy-server-browsersync",
+    module: '@11ty/eleventy-server-browsersync',
     middleware: function (req, res, next) {
       res.setHeader('Access-Control-Allow-Origin', '*');
       res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
@@ -52,6 +53,43 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addNunjucksFilter('paginate', paginateFilter);
   eleventyConfig.addNunjucksFilter('pageCount', pageCountFilter);
   eleventyConfig.addNunjucksFilter('sectionTitle', sectionTitleFilter);
+  eleventyConfig.addCollection('files', function (collectionApi) {
+    const getDirs = path =>
+      fs
+        .readdirSync(path, { withFileTypes: true })
+        .filter(f => f.isDirectory() && !f.name.startsWith('_'))
+        .map(f => f.name);
+
+    // Create collection based on directory structure
+    const root = 'backend';
+
+    // Root level
+    const x = getDirs(root).reduce(
+      (acc, d) => ({
+        ...acc,
+        // Bottom tab level
+        [d]: getDirs(`${root}/${d}`).reduce(
+          (subacc, subd) => ({
+            ...subacc,
+            // Top tab level
+            [subd]: getDirs(`${root}/${d}/${subd}`),
+          }),
+          {},
+        ),
+      }),
+      {},
+    );
+    // collectionApi
+    //       .getFilteredByGlob(`backend/${d.name}/*/*/index*`)
+    //       .map(i => i.url),
+    console.log(x);
+    // collectionApi.addTemplateFile(file, 'backend/' + file);
+    // getFilteredByGlob
+    // console.log(collectionApi.getFilteredByTag('UI/UI Elements/Text').map((i) => [
+    //   i.outputPath, i.template
+    // ]));
+    return [];
+  });
   // Output into demo folder for serving both github pages and local development
   return {
     dir: {
