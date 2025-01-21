@@ -32,4 +32,5 @@ export type Props = Omit<
   reload: Reload;
   removePreload?: (id: number) => void;
   route?: NavigatorService.Route<string, { url?: string }>;
+  url?: string;
 };
