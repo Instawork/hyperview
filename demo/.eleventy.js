@@ -32,6 +32,9 @@ module.exports = function (eleventyConfig) {
             next();
           }
         } catch (err) {
+          if (err.code !== 'MODULE_NOT_FOUND') {
+            console.error(err);
+          }
           // Error loading the handler, pass through to 11ty
           next();
         }
