@@ -6,8 +6,13 @@ hv_button_behavior: "back"
 ---
 {% extends 'templates/scrollview.xml.njk' %}
 
+{% block styles %}
+  <style id="container" marginHorizontal="24" />
+{% endblock %}
+
 {% block content %}
-  {% include './_previous-screen/index.xml.njk' %}
-  {% include './_different-screen/index.xml.njk' %}
-  {% include './_loading/index.xml.njk' %}
+  {% include './_back-previous-screen/index.xml.njk' %}
+  {% include './_back-different-screen/index.xml.njk' %}
+  {% include './_back-query-params/index.xml.njk' %}
+  {% include './_back-loading/index.xml.njk' %}
 {% endblock %}
