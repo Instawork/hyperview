@@ -693,6 +693,8 @@ Navigation actions immediately show a new screen or modal before requesting the 
 
 > When using `action="back"` or `action="navigate"`, the existing screen will be reloaded if the `href` attribute differs from the `href` used to request the content originally. During the request, we can show a loading screen using `show-during-load`.
 
+See also [Loading Screen](/docs/reference_loading_screen) for more information on customizing loading screens.
+
 #### Update actions
 
 During update actions, the elements referenced in `show-during-load` will be shown on the current screen. The indicator elements is hidden after the href is fetched. This is a no-op for elements which don't exist on the screen.
