@@ -25,6 +25,7 @@
         key="back"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Back</text>
@@ -55,6 +56,9 @@
         key="close"
         show-during-load="loading-screen"
         style="item"
+        
+          action="new"
+        
       >
         <view style="item-left">
           <text style="item-label">Close</text>
@@ -85,6 +89,7 @@
         key="deep-links"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Deep Links</text>
@@ -115,6 +120,7 @@
         key="modal"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Modal</text>
@@ -145,6 +151,7 @@
         key="navigate"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Navigate</text>
@@ -175,6 +182,7 @@
         key="new"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">New</text>
@@ -205,6 +213,7 @@
         key="push"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Push</text>
@@ -237,6 +246,7 @@
         key="reload"
         show-during-load="loading-screen"
         style="item item-last"
+        
       >
         <view style="item-left">
           <text style="item-label">Reload</text>
@@ -274,6 +284,7 @@
         key="back"
         show-during-load="loading-screen"
         style="item item-last"
+        
       >
         <view style="item-left">
           <text style="item-label">Back</text>

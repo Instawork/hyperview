@@ -23,6 +23,7 @@
         key="bottom-sheet"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Bottom Sheet</text>
@@ -53,6 +54,7 @@
         key="bottom-tab-bar"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Bottom Tab Bar</text>
@@ -83,6 +85,7 @@
         key="filter"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Filter</text>
@@ -113,6 +116,7 @@
         key="map"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Map</text>
@@ -143,6 +147,7 @@
         key="progress-bar"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Progress Bar</text>
@@ -175,6 +180,7 @@
         key="svg-image"
         show-during-load="loading-screen"
         style="item item-last"
+        
       >
         <view style="item-left">
           <text style="item-label">SVG Image</text>
@@ -210,6 +216,7 @@
         key="add-styles"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Add Styles</text>
@@ -242,6 +249,7 @@
         key="share"
         show-during-load="loading-screen"
         style="item item-last"
+        
       >
         <view style="item-left">
           <text style="item-label">Share</text>

@@ -24,6 +24,7 @@
         key="append"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Append</text>
@@ -54,6 +55,7 @@
         key="hide"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Hide</text>
@@ -84,6 +86,7 @@
         key="prepend"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Prepend</text>
@@ -114,6 +117,7 @@
         key="replace-inner"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Replace Inner</text>
@@ -144,6 +148,7 @@
         key="replace"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Replace</text>
@@ -174,6 +179,7 @@
         key="select-all"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Select All</text>
@@ -204,6 +210,7 @@
         key="show"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Show</text>
@@ -234,6 +241,7 @@
         key="toggle"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Toggle</text>
@@ -266,6 +274,7 @@
         key="unselect-all"
         show-during-load="loading-screen"
         style="item item-last"
+        
       >
         <view style="item-left">
           <text style="item-label">Unselect All</text>
@@ -301,6 +310,7 @@
         key="back"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Back</text>
@@ -331,6 +341,7 @@
         key="blur"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Blur</text>
@@ -361,6 +372,7 @@
         key="change"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Change</text>
@@ -391,6 +403,7 @@
         key="deselect"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Deselect</text>
@@ -421,6 +434,7 @@
         key="focus"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Focus</text>
@@ -451,6 +465,7 @@
         key="load"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Load</text>
@@ -481,6 +496,7 @@
         key="long-press"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Long Press</text>
@@ -511,6 +527,7 @@
         key="press-in"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Press In</text>
@@ -541,6 +558,7 @@
         key="press-out"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Press Out</text>
@@ -571,6 +589,7 @@
         key="press"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Press</text>
@@ -601,6 +620,7 @@
         key="refresh"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Refresh</text>
@@ -631,6 +651,7 @@
         key="select"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Select</text>
@@ -661,6 +682,7 @@
         key="visible-once"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Visible Once</text>
@@ -693,6 +715,7 @@
         key="visible"
         show-during-load="loading-screen"
         style="item item-last"
+        
       >
         <view style="item-left">
           <text style="item-label">Visible</text>
@@ -728,6 +751,7 @@
         key="target-child"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Target Child</text>
@@ -758,6 +782,7 @@
         key="target-parent-element"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Target Parent Element</text>
@@ -788,6 +813,7 @@
         key="target-parent"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Target Parent</text>
@@ -818,6 +844,7 @@
         key="target-sibling-append"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Target Sibling Append</text>
@@ -850,6 +877,7 @@
         key="target-sibling"
         show-during-load="loading-screen"
         style="item item-last"
+        
       >
         <view style="item-left">
           <text style="item-label">Target Sibling</text>
@@ -885,6 +913,7 @@
         key="hide-multiple-indicators"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Hide Multiple Indicators</text>
@@ -915,6 +944,7 @@
         key="hide-indicator"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Hide Indicator</text>
@@ -945,6 +975,7 @@
         key="inline-indicator"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Inline Indicator</text>
@@ -975,6 +1006,7 @@
         key="shimmer-indicator"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Shimmer Indicator</text>
@@ -1005,6 +1037,7 @@
         key="showhide-indicators"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Show/Hide Indicators</text>
@@ -1035,6 +1068,7 @@
         key="show-indicator"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Show Indicator</text>
@@ -1067,6 +1101,7 @@
         key="show-multiple-indicators"
         show-during-load="loading-screen"
         style="item item-last"
+        
       >
         <view style="item-left">
           <text style="item-label">Show Multiple Indicators</text>
@@ -1102,6 +1137,7 @@
         key="fragments"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Fragments</text>
@@ -1134,6 +1170,7 @@
         key="rating"
         show-during-load="loading-screen"
         style="item item-last"
+        
       >
         <view style="item-left">
           <text style="item-label">Rating</text>
@@ -1171,6 +1208,7 @@
         key="once"
         show-during-load="loading-screen"
         style="item item-last"
+        
       >
         <view style="item-left">
           <text style="item-label">Once</text>

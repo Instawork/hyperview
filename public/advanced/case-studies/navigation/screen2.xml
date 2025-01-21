@@ -282,7 +282,7 @@
   flex="1"
   flexGrow="1"
 />
-<style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" />
+<style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" color="#999" />
 <style id="loading" alignItems="center" flex="1" justifyContent="center" />
 <style
   id="link"

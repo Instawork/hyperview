@@ -326,147 +326,33 @@
       <body style="body" safe-area="true">
         <header style="header">
   
-    <view action="back" href="#" style="header-btn">
-      <svg
-  width="24"
-  height="24"
-  viewBox="0 0 24 24"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <path
-    fill-rule="evenodd"
-    clip-rule="evenodd"
-    d="M11.7803 0.96967C12.0732 1.26256 12.0732 1.73744 11.7803 2.03033L2.56066 11.25H23.25C23.6642 11.25 24 11.5858 24 12C24 12.4142 23.6642 12.75 23.25 12.75H2.56066L11.7803 21.9697C12.0732 22.2626 12.0732 22.7374 11.7803 23.0303C11.4874 23.3232 11.0126 23.3232 10.7197 23.0303L0.21967 12.5303C-0.0732233 12.2374 -0.0732233 11.7626 0.21967 11.4697L10.7197 0.96967C11.0126 0.676777 11.4874 0.676777 11.7803 0.96967Z"
-    fill="#4778FF"
-  />
-</svg>
-
-    </view>
-  
-  <text style="header-title">Tab Navigator - Tab 2</text>
+  <text style="header-title">Changed w/ Loading</text>
 </header>
 
         
-  <view scroll="true">
+  <view scroll="true" style="main">
     
   
-    <text style="description">This is the content for tab 2.</text>
+  
+    <text style="description">Changed Screen</text>
   
 
-    
+
+  
   <view
-    
-      id="notify-tab-2"
     
     
       style="button"
     
   >
     
-      <behavior action="hide" target="add-notification" />
-      <behavior action="show" target="remove-notification" />
-      <behavior action="replace" target="bottom-tab-bar" href="/hyperview/public/advanced/community/elements/bottom-tabbar/tab-bar-notify-tab-2.xml" />
+      <behavior action="reload" href="/hyperview/public/navigation/index.xml" />
     
-    <text style="button-label">Notify tab 2</text>
+    <text style="button-label">Reload original screen</text>
   </view>
 
-    
-  <view
-    
-      id="unnotify-tab-2"
-    
-      hide="true"
-    
-    
-      style="button"
-    
-  >
-    
-      <behavior action="reload" href="#" />
-    
-    <text style="button-label">Unnotify tab 2</text>
-  </view>
-
-    
-  <view
-    
-      id="reload-tab-1"
-    
-    
-      style="button"
-    
-  >
-    
-      <behavior
-        action="dispatch-event"
-        event-name="advanced/community/elements/bottom-tabbar/tab-1/reload"
-      />
-    
-    <text style="button-label">Reload tab 1</text>
-  </view>
 
   </view>
-  <navigation:bottom-tab-bar
-  xmlns="https://hyperview.org/hyperview"
-  xmlns:navigation="https://hyperview.org/navigation"
-  navigation:navigator="custom-bottom-tabs-navigator"
-  id="bottom-tab-bar"
->
-  <view style="tabbar-bottom" key="tabbar-bottom">
-    <navigation:bottom-tab-bar-item
-      navigation:route="custom-bottom-tabs-tab-1"
-      style="tabbar-bottom-tab"
-    >
-      <view style="tabbar-bottom-tab-content">
-        <view style="tabbar-bottom-tab-icon-selected">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M14.561 15.492L19.777 26.885C19.9071 27.1276 20.1702 27.2682 20.4442 27.2415C20.7181 27.2149 20.9492 27.0261 21.03 26.763L22.557 22.554L26.766 21.028C27.029 20.9467 27.2175 20.7155 27.2441 20.4416C27.2708 20.1676 27.1304 19.9044 26.888 19.774L15.5 14.558C15.2324 14.4455 14.9234 14.5057 14.7176 14.7104C14.5118 14.9151 14.4499 15.2238 14.561 15.492Z" stroke="#4778FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M25.723 16C25.741 15.7533 25.75 15.5033 25.75 15.25C25.75 9.45101 21.049 4.75 15.25 4.75C9.45101 4.75 4.75 9.45101 4.75 15.25C4.75 21.049 9.45101 25.75 15.25 25.75C15.503 25.75 15.75 25.741 16 25.724" stroke="#4778FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M21.061 13.747C20.3287 10.9151 17.6612 9.02397 14.7466 9.27039C11.832 9.5168 9.5198 11.829 9.27339 14.7436C9.02697 17.6582 10.9181 20.3257 13.75 21.058" stroke="#4778FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-
-        </view>
-        <view style="tabbar-bottom-tab-icon">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M14.561 15.492L19.777 26.885C19.9071 27.1276 20.1702 27.2682 20.4442 27.2415C20.7181 27.2149 20.9492 27.0261 21.03 26.763L22.557 22.554L26.766 21.028C27.029 20.9467 27.2175 20.7155 27.2441 20.4416C27.2708 20.1676 27.1304 19.9044 26.888 19.774L15.5 14.558C15.2324 14.4455 14.9234 14.5057 14.7176 14.7104C14.5118 14.9151 14.4499 15.2238 14.561 15.492Z" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M25.723 16C25.741 15.7533 25.75 15.5033 25.75 15.25C25.75 9.45101 21.049 4.75 15.25 4.75C9.45101 4.75 4.75 9.45101 4.75 15.25C4.75 21.049 9.45101 25.75 15.25 25.75C15.503 25.75 15.75 25.741 16 25.724" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M21.061 13.747C20.3287 10.9151 17.6612 9.02397 14.7466 9.27039C11.832 9.5168 9.5198 11.829 9.27339 14.7436C9.02697 17.6582 10.9181 20.3257 13.75 21.058" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-
-        </view>
-        <text style="tabbar-bottom-tabbar-top-label">Tab 1</text>
-        
-      </view>
-    </navigation:bottom-tab-bar-item>
-    <navigation:bottom-tab-bar-item
-      navigation:route="custom-bottom-tabs-tab-2"
-      style="tabbar-bottom-tab"
-    >
-      <view style="tabbar-bottom-tab-content">
-        <view style="tabbar-bottom-tab-icon-selected">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M16.001 27.25C22.2142 27.25 27.251 22.2132 27.251 16C27.251 9.7868 22.2142 4.75 16.001 4.75C9.7878 4.75 4.75101 9.7868 4.75101 16C4.75101 22.2132 9.7878 27.25 16.001 27.25Z" stroke="#4778FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M10.001 22L15.699 16.295" stroke="#4778FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M22.064 9.931C21.3192 9.85092 20.5679 9.85092 19.823 9.931L17.823 13.111L16.592 10.823C12.133 13.012 10.392 18.301 12.041 19.953C14.255 22.167 23.013 18.286 22.064 9.931Z" stroke="#4778FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-
-        </view>
-        <view style="tabbar-bottom-tab-icon">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M16.001 27.25C22.2142 27.25 27.251 22.2132 27.251 16C27.251 9.7868 22.2142 4.75 16.001 4.75C9.7878 4.75 4.75101 9.7868 4.75101 16C4.75101 22.2132 9.7878 27.25 16.001 27.25Z" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M10.001 22L15.699 16.295" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M22.064 9.931C21.3192 9.85093 20.5679 9.85093 19.823 9.931L17.823 13.111L16.592 10.823C12.133 13.012 10.392 18.301 12.041 19.953C14.255 22.167 23.013 18.286 22.064 9.931Z" stroke="#8D9494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-
-        </view>
-        <text style="tabbar-bottom-tabbar-top-label">Tab 2</text>
-        
-      </view>
-    </navigation:bottom-tab-bar-item>
-  </view>
-</navigation:bottom-tab-bar>
-
 
       </body>
     </screen>
@@ -795,25 +681,7 @@
   <body style="body" safe-area="true">
     <header style="header">
   
-    <view action="back" href="#" style="header-btn">
-      <svg
-  width="24"
-  height="24"
-  viewBox="0 0 24 24"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <path
-    fill-rule="evenodd"
-    clip-rule="evenodd"
-    d="M11.7803 0.96967C12.0732 1.26256 12.0732 1.73744 11.7803 2.03033L2.56066 11.25H23.25C23.6642 11.25 24 11.5858 24 12C24 12.4142 23.6642 12.75 23.25 12.75H2.56066L11.7803 21.9697C12.0732 22.2626 12.0732 22.7374 11.7803 23.0303C11.4874 23.3232 11.0126 23.3232 10.7197 23.0303L0.21967 12.5303C-0.0732233 12.2374 -0.0732233 11.7626 0.21967 11.4697L10.7197 0.96967C11.0126 0.676777 11.4874 0.676777 11.7803 0.96967Z"
-    fill="#4778FF"
-  />
-</svg>
-
-    </view>
-  
-  <text style="header-title">Tab Navigator - Tab 2</text>
+  <text style="header-title">Changed w/ Loading</text>
 </header>
 
     <view style="loading">

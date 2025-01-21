@@ -284,7 +284,7 @@
   flex="1"
   flexGrow="1"
 />
-<style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" />
+<style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" color="#999" />
 <style id="loading" alignItems="center" flex="1" justifyContent="center" />
 <style
   id="link"
@@ -861,7 +861,7 @@
   flex="1"
   flexGrow="1"
 />
-<style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" />
+<style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" color="#999" />
 <style id="loading" alignItems="center" flex="1" justifyContent="center" />
 <style
   id="link"
@@ -922,6 +922,334 @@
   <text style="header-title">Advanced Forms</text>
 </header>
 
+    <view style="loading">
+      <text style="loading-text">Loading…</text>
+      <spinner/>
+    </view>
+  </body>
+</screen>
+
+    
+<screen id="loading-screen-no-header">
+  <styles>
+    <style
+  id="button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"
+/>
+<style id="button-disabled" backgroundColor="#bdc4c4" />
+<style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style id="button-serialize-title" fontSize="16" marginHorizontal="24" marginTop="24" />
+<style id="button-serialize-data" backgroundColor="lightgrey" marginHorizontal="24" marginTop="8" padding="16" />
+
+<style
+  id="about-title"
+  flex="1"
+  alignItems="center"
+  flexDirection="row"
+  justifyContent="space-between"
+  paddingTop="24"
+  paddingHorizontal="24"
+/>
+<style
+  id="about-container"
+  backgroundColor="#FEF1CF"
+  borderRadius="18"
+  margin="24"
+/>
+<style id="about-text" fontSize="20" fontWeight="700" />
+
+<style id="description" fontSize="16" margin="24" />
+
+<style
+  id="link-text"
+  color="#4778FF"
+/>
+<style
+  id="link-container"
+  borderColor="#4778FF"
+  paddingHorizontal="8"
+  paddingVertical="4"
+  borderRadius="24"
+  borderWidth="1"
+  marginVertical="6"
+  marginRight="6"
+  justifyContent="center"
+/>
+
+<style
+  id="container-style"
+  borderColor="#e1e1e1"
+  borderRadius="16"
+  borderWidth="2"
+  margin="24"
+  padding="24"
+/>
+<style
+  id="container-label"
+  color="black"
+  fontSize="16"
+  fontWeight="normal"
+/>
+
+<style
+  id="name"
+  fontSize="18"
+  fontWeight="600"
+  margin="24"
+  marginBottom="0"
+/>
+<style
+  id="phone"
+  fontSize="18"
+  fontWeight="normal"
+  margin="24"
+  marginBottom="0"
+/>
+
+<style
+  id="tabbar-top-select"
+  backgroundColor="#eee"
+  borderRadius="12"
+  flexDirection="row"
+  justifyContent="space-between"
+  marginBottom="24"
+  marginHorizontal="24"
+  padding="2"
+/>
+<style
+  id="tabbar-top-item"
+  alignItems="center"
+  borderColor="transparent"
+  borderRadius="8"
+  borderWidth="1"
+  flex="1"
+  padding="8"
+  justifyContent="center"
+>
+  <modifier selected="true">
+  <style
+  backgroundColor="white"
+  elevation="2"
+  shadowColor="black"
+  shadowOffsetX="0"
+  shadowOffsetY="2"
+  shadowOpacity="0.1"
+  shadowRadius="2"
+  />
+  </modifier>
+</style>
+<style
+  id="tabbar-top-label"
+  fontSize="16"
+  fontWeight="500"
+  lineHeight="24"
+/>
+
+<style id="tabbar-top-tab-content" flex="1" />
+
+<style
+  id="tabbar-bottom-tab"
+  alignItems="center"
+  flex="1"
+  justifyContent="center"
+/>
+<style
+  id="tabbar-bottom-tabbar-top-label"
+  color="#cccccc"
+  fontSize="8"
+  fontWeight="bold"
+>
+  <modifier selected="true">
+    <style color="#4778FF" />
+  </modifier>
+  <modifier pressed="true">
+    <style color="#4778FF" />
+  </modifier>
+</style>
+<style id="tabbar-bottom-tab-icon">
+  <modifier selected="true">
+    <style display="none" />
+  </modifier>
+  <modifier pressed="true">
+    <style display="none" />
+  </modifier>
+</style>
+<style id="tabbar-bottom-tab-icon-selected" display="none">
+  <modifier selected="true">
+    <style display="flex" />
+  </modifier>
+  <modifier pressed="true">
+    <style display="flex" />
+  </modifier>
+</style>
+<style
+  id="tabbar-bottom-tab-content"
+  alignItems="center"
+  position="relative"
+/>
+<style
+  id="tabbar-bottom-tab-notify"
+  backgroundColor="#d92b2b"
+  position="absolute"
+  top="0"
+  right="0"
+  height="6"
+  width="6"
+  borderWidth="2"
+  borderColor="#d92b2b"
+  borderRadius="6"
+/>
+
+<style
+  id="tabbar-bottom"
+  alignItems="stretch"
+  borderTopColor="#eee"
+  borderTopWidth="1"
+  flexDirection="row"
+  flexShrink="1"
+  flexGrow="0"
+  height="48"
+  justifyContent="space-around"
+  backgroundColor="white"
+  width="100%"
+/>
+
+<style
+  id="input"
+  borderBottomColor="#E1E1E1"
+  borderBottomWidth="1"
+  borderColor="#4E4D4D"
+  flex="1"
+  fontSize="16"
+  fontWeight="normal"
+  paddingBottom="8"
+  paddingTop="8">
+  <modifier pressed="true">
+  <style borderBottomColor="green"/>
+  </modifier>
+  <modifier focused="true">
+  <style borderBottomColor="#4778FF"/>
+  </modifier>
+</style>
+
+
+<style
+  id="header"
+  alignItems="center"
+  backgroundColor="white"
+  borderBottomColor="#eee"
+  borderBottomWidth="1"
+  flexDirection="row"
+  marginBottom="24"
+  paddingBottom="16"
+  paddingLeft="24"
+  paddingRight="24"
+/>
+<style
+  id="header-btn"
+  color="blue"
+  fontSize="16"
+  fontWeight="600"
+  paddingRight="16"
+/>
+<style id="header-title" color="black" fontSize="24" fontWeight="600" />
+<style id="body" backgroundColor="white" flex="1" paddingTop="24" />
+<style id="description" fontSize="16" margin="24" />
+<style
+  id="item"
+  alignItems="center"
+  backgroundColor="#FFFFFF"
+  borderColor="#eee"
+  borderBottomWidth="0"
+  borderWidth="1"
+  flex="1"
+  flexDirection="row"
+  paddingVertical="12"
+  justifyContent="space-between"
+  marginHorizontal="24"
+  paddingHorizontal="16"
+/>
+<style id="item-first" borderTopLeftRadius="16" borderTopRightRadius="16" />
+<style
+  id="item-last"
+  borderBottomWidth="1"
+  borderBottomLeftRadius="16"
+  borderBottomRightRadius="16"
+  marginBottom="24"
+/>
+<style id="item-left" flex="1" flexDirection="row" />
+<style id="item-label" fontSize="18" fontWeight="normal" />
+<style id="item-chevron" />
+<style
+  id="button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"
+/>
+<style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style id="tab-route-content" flex="1" />
+<style
+  id="back-image"
+  alignItems="center"
+  flex="0"
+  height="10"
+  justifyContent="center"
+  padding="10"
+  width="10"
+/>
+<style
+  id="list-container"
+  flex="1"
+  flexGrow="1"
+/>
+<style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" color="#999" />
+<style id="loading" alignItems="center" flex="1" justifyContent="center" />
+<style
+  id="link"
+  color="#4778FF"
+  fontWeight="bold"
+  marginTop="8"
+  marginRight="16"
+/>
+<style
+  id="container-style"
+  borderColor="#e1e1e1"
+  borderRadius="16"
+  borderWidth="2"
+  margin="24"
+  padding="24"
+/>
+<style
+  id="container-label"
+  color="black"
+  fontSize="16"
+  fontWeight="normal"
+/>
+<style
+  id="list-header"
+  alignItems="center"
+  backgroundColor="#eee"
+  flex="1"
+  flexDirection="row"
+  paddingVertical="12"
+  marginHorizontal="24"
+  paddingHorizontal="16"
+/>
+<style id="list-header-text" fontSize="18" fontWeight="bold"/>
+<style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
+
+  </styles>
+  <body style="body" safe-area="true">
     <view style="loading">
       <text style="loading-text">Loading…</text>
       <spinner/>

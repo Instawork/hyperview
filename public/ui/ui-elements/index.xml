@@ -24,6 +24,7 @@
         key="adjustable-font-size"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Adjustable Font Size</text>
@@ -54,6 +55,7 @@
         key="basic"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Basic</text>
@@ -84,6 +86,7 @@
         key="escaped"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Escaped</text>
@@ -114,6 +117,7 @@
         key="nested"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Nested</text>
@@ -144,6 +148,7 @@
         key="number-of-lines"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Number of Lines</text>
@@ -174,6 +179,7 @@
         key="preformatted"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Preformatted</text>
@@ -206,6 +212,7 @@
         key="selectable"
         show-during-load="loading-screen"
         style="item item-last"
+        
       >
         <view style="item-left">
           <text style="item-label">Selectable</text>
@@ -241,6 +248,7 @@
         key="keyboard-avoiding-view"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Keyboard Avoiding View</text>
@@ -271,6 +279,7 @@
         key="scroll-view"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Scroll View</text>
@@ -303,6 +312,7 @@
         key="view"
         show-during-load="loading-screen"
         style="item item-last"
+        
       >
         <view style="item-left">
           <text style="item-label">View</text>
@@ -340,6 +350,7 @@
         key="image"
         show-during-load="loading-screen"
         style="item item-last"
+        
       >
         <view style="item-left">
           <text style="item-label">Image</text>
@@ -375,6 +386,7 @@
         key="date-field"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Date Field</text>
@@ -405,6 +417,7 @@
         key="picker"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Picker</text>
@@ -435,6 +448,7 @@
         key="select-multiple"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Select Multiple</text>
@@ -465,6 +479,7 @@
         key="select-single"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Select Single</text>
@@ -495,6 +510,7 @@
         key="switch"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Switch</text>
@@ -527,6 +543,7 @@
         key="text-field"
         show-during-load="loading-screen"
         style="item item-last"
+        
       >
         <view style="item-left">
           <text style="item-label">Text Field</text>
@@ -562,6 +579,7 @@
         key="basic-list"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Basic List</text>
@@ -592,6 +610,7 @@
         key="hidden-scrollbar"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Hidden Scrollbar</text>
@@ -622,6 +641,7 @@
         key="horizontal-list"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Horizontal List</text>
@@ -652,6 +672,7 @@
         key="infinite-scroll"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Infinite Scroll</text>
@@ -682,6 +703,7 @@
         key="dismiss-keyboard-on-drag"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Dismiss Keyboard on Drag</text>
@@ -712,6 +734,7 @@
         key="keyboard-persist-tap"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Keyboard Persist Tap</text>
@@ -742,6 +765,7 @@
         key="refresh-and-infinite-scroll"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Refresh and Infinite Scroll</text>
@@ -772,6 +796,7 @@
         key="list-with-refresh"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">List with Refresh</text>
@@ -804,6 +829,7 @@
         key="list-with-sticky-items"
         show-during-load="loading-screen"
         style="item item-last"
+        
       >
         <view style="item-left">
           <text style="item-label">List with Sticky items</text>
@@ -839,6 +865,7 @@
         key="basic-section-list"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Basic Section List</text>
@@ -869,6 +896,7 @@
         key="deprecated-section-list"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Deprecated Section List</text>
@@ -899,6 +927,7 @@
         key="dismiss-keyboard-on-drag"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Dismiss Keyboard on Drag</text>
@@ -929,6 +958,7 @@
         key="section-list-infinite-scroll"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Section List Infinite Scroll</text>
@@ -959,6 +989,7 @@
         key="keyboard-persist-tap"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Keyboard Persist Tap</text>
@@ -989,6 +1020,7 @@
         key="non-sticky-titles"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Non-sticky Titles</text>
@@ -1021,6 +1053,7 @@
         key="section-list-with-refresh"
         show-during-load="loading-screen"
         style="item item-last"
+        
       >
         <view style="item-left">
           <text style="item-label">Section List with Refresh</text>
@@ -1056,6 +1089,7 @@
         key="event-dispatch"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Event Dispatch</text>
@@ -1086,6 +1120,7 @@
         key="html"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">HTML</text>
@@ -1116,6 +1151,7 @@
         key="injected-javascript"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Injected Javascript</text>
@@ -1146,6 +1182,7 @@
         key="show-loading-indicator"
         show-during-load="loading-screen"
         style="item"
+        
       >
         <view style="item-left">
           <text style="item-label">Show Loading Indicator</text>
@@ -1178,6 +1215,7 @@
         key="url"
         show-during-load="loading-screen"
         style="item item-last"
+        
       >
         <view style="item-left">
           <text style="item-label">URL</text>
