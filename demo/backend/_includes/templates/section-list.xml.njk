@@ -23,6 +23,9 @@
         key="{{ screen.data.hv_title | slug }}"
         show-during-load="loading-screen"
         style="{{ item_style }}"
+        {% if screen.data.hv_open_modal == "true" %}
+          action="new"
+        {% endif %}
       >
         <view style="item-left">
           <text style="item-label">{{ screen.data.hv_title }}</text>
