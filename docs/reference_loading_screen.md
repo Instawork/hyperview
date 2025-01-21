@@ -39,8 +39,7 @@ The optional element which is passed into the loading screen provides a way to m
 
 The following example shows how to use the `id` attribute of the `<behavior>` element to colorize the load indicator.
 
-```es6
-...
+```xml
 <view>
   <behavior id="green-loader" action="new" href="/example.xml">
 </view>
