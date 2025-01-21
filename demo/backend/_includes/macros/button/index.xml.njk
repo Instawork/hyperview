@@ -13,3 +13,19 @@
     <text style="button-label">{{ text }}</text>
   </view>
 {% endmacro %}
+
+{% macro button_serialize(href, data, target="form") %}
+  {% if data %}
+    <text style="button-serialize-title">JSON serialized data from the fields in this screen:</text>
+    <text style="button-serialize-data">
+      <![CDATA[{{ data }}]]>
+    </text>
+  {% endif %}
+  {% if __DEV__ %}
+    <text style="button-serialize-title">Press the button below and see the request in the XML server. It will include the fields values as query params.</text>
+    {{ button('Serialize', {href: href, action: "replace", target: target}) }}
+  {% else %}
+    <text style="button-serialize-title">To test form serialization, setup the Hyperview demo app on your local environment.</text>
+    {{ button('Serialize', {style: "button button-disabled"}) }}
+  {% endif %}
+{% endmacro %}
