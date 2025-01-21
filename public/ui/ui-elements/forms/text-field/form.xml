@@ -1,0 +1,53 @@
+
+
+
+<form id="form" xmlns="https://hyperview.org/hyperview">
+  <view style="form-group">
+  <text style="label">Basic</text>
+  <text-field
+    style="text-field-basic"
+    name="basic-text-field"
+    placeholder="Placeholder"
+    placeholderTextColor="#8D9494"
+    selectionColor="#4778FF"
+    selectionHandleColor="#4778FF"
+    cursorColor="#4778FF"
+    value=""
+  />
+</view>
+
+  <view style="form-group">
+  <text style="label">Multi-line</text>
+  <text-field
+    style="text-field-multiline"
+    multiline="true"
+    name="multiline-text-field"
+    placeholder="Placeholder"
+    placeholderTextColor="#8D9494"
+    selectionColor="#4778FF"
+    selectionHandleColor="#4778FF"
+    cursorColor="#4778FF"
+    value=""
+  />
+</view>
+
+
+  
+  
+  
+    <text style="button-serialize-title">To test form serialization, setup the Hyperview demo app on your local environment.</text>
+    
+  <view
+    
+      style="button button-disabled"
+    
+    
+  >
+    
+    <text style="button-label">Serialize</text>
+  </view>
+
+  
+
+</form>
+

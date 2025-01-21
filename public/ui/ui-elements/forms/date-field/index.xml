@@ -14,7 +14,10 @@
   margin="24"
   padding="24"
 />
+<style id="button-disabled" backgroundColor="#bdc4c4" />
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style id="button-serialize-title" fontSize="16" marginHorizontal="24" marginTop="24" />
+<style id="button-serialize-data" backgroundColor="lightgrey" marginHorizontal="24" marginTop="8" padding="16" />
 
 <style
   id="about-title"
@@ -481,6 +484,9 @@
 
   
 
+<form id="form" xmlns="https://hyperview.org/hyperview">
+  
+
 
 <view style="form-group">
   <text style="label">Default date field</text>
@@ -491,7 +497,7 @@
     modal-overlay-style="picker-modal-overlay"
     modal-style="picker-modal"
     modal-text-style="picker-modal-text"
-    name="date"
+    name="default-date"
     placeholder="Select date"
     placeholderTextColor="#8D9494"
   />
@@ -510,7 +516,7 @@
     modal-overlay-style="picker-modal-overlay"
     modal-text-style="picker-modal-text"
     mode="spinner"
-    name="date"
+    name="spinner-date"
     placeholder="Select date"
     placeholderTextColor="#8D9494"
   />
@@ -528,7 +534,7 @@
     modal-overlay-style="picker-modal-overlay"
     modal-style="picker-modal"
     modal-text-style="picker-modal-text"
-    name="date"
+    name="filled-date"
     placeholder="Select date"
     placeholderTextColor="#8D9494"
     value="2018-03-07"
@@ -547,7 +553,7 @@
     modal-overlay-style="picker-modal-overlay"
     modal-style="picker-modal"
     modal-text-style="picker-modal-text"
-    name="date"
+    name="label-format-date_1"
     placeholder="Select date"
     placeholderTextColor="#8D9494"
     value="2018-03-07"
@@ -559,7 +565,7 @@
     modal-overlay-style="picker-modal-overlay"
     modal-style="picker-modal"
     modal-text-style="picker-modal-text"
-    name="date"
+    name="label-format-date_2"
     placeholder="Select date"
     placeholderTextColor="#8D9494"
     value="2018-03-07"
@@ -571,7 +577,7 @@
     modal-overlay-style="picker-modal-overlay"
     modal-style="picker-modal"
     modal-text-style="picker-modal-text"
-    name="date"
+    name="label-format-date_3"
     placeholder="Select date"
     placeholderTextColor="#8D9494"
     value="2018-03-07"
@@ -591,7 +597,7 @@
     modal-overlay-style="picker-modal-overlay"
     modal-style="picker-modal"
     modal-text-style="picker-modal-text"
-    name="date"
+    name="min-date-1"
     placeholder="Select date"
     placeholderTextColor="#8D9494"
   />
@@ -604,7 +610,7 @@
     modal-overlay-style="picker-modal-overlay"
     modal-text-style="picker-modal-text"
     mode="spinner"
-    name="date"
+    name="min-date-2"
     placeholder="Select date (spinner)"
     placeholderTextColor="#8D9494"
   />
@@ -623,7 +629,7 @@
     modal-overlay-style="picker-modal-overlay"
     modal-style="picker-modal"
     modal-text-style="picker-modal-text"
-    name="date"
+    name="max-date-1"
     placeholder="Select date"
     placeholderTextColor="#8D9494"
   />
@@ -636,7 +642,7 @@
     modal-overlay-style="picker-modal-overlay"
     modal-text-style="picker-modal-text"
     mode="spinner"
-    name="date"
+    name="max-date-2"
     placeholder="Select date (spinner)"
     placeholderTextColor="#8D9494"
   />
@@ -656,7 +662,7 @@
     modal-overlay-style="picker-modal-overlay"
     modal-style="picker-modal"
     modal-text-style="picker-modal-text"
-    name="date"
+    name="min-max-date-1"
     placeholder="Select date"
     placeholderTextColor="#8D9494"
   />
@@ -670,7 +676,7 @@
     modal-overlay-style="picker-modal-overlay"
     modal-text-style="picker-modal-text"
     mode="spinner"
-    name="date"
+    name="min-max-date-2"
     placeholder="Select date (spinner)"
     placeholderTextColor="#8D9494"
   />
@@ -688,7 +694,7 @@
     modal-overlay-style="picker-modal-overlay"
     modal-style="picker-modal"
     modal-text-style="picker-modal-text"
-    name="date"
+    name="validation-error-date"
     placeholder="Select date"
     placeholderTextColor="#8D9494"
   />
@@ -707,7 +713,7 @@
     modal-overlay-style="picker-modal-overlay"
     modal-style="picker-modal"
     modal-text-style="picker-modal-text"
-    name="date"
+    name="filled-validation-error-date"
     placeholder="Select date"
     placeholderTextColor="#8D9494"
     value="2018-03-07"
@@ -731,7 +737,7 @@
     modal-overlay-animation-duration="400"
     modal-dismiss-animation-duration="200"
     modal-dismiss-overlay-animation-duration="200"
-    name="date"
+    name="animations-date"
     placeholder="Select date"
     placeholderTextColor="#8D9494"
     value="2018-03-07"
@@ -750,25 +756,32 @@
     modal-overlay-style="picker-modal-custom-overlay"
     modal-style="picker-modal-custom"
     modal-text-style="picker-modal-custom-text"
-    name="date"
+    name="customized-date"
     placeholder="Select date"
     placeholderTextColor="#8D9494"
     value="2018-03-07"
   />
 </view>
 
+
   
+  
+  
+    <text style="button-serialize-title">To test form serialization, setup the Hyperview demo app on your local environment.</text>
+    
   <view
     
-      href="/hyperview/public/ui/ui-elements/forms/date-field/index.xml"
+      style="button button-disabled"
     
-    
-      style="button"
     
   >
     
     <text style="button-label">Serialize</text>
   </view>
+
+  
+
+</form>
 
 
   </view>
@@ -790,7 +803,10 @@
   margin="24"
   padding="24"
 />
+<style id="button-disabled" backgroundColor="#bdc4c4" />
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style id="button-serialize-title" fontSize="16" marginHorizontal="24" marginTop="24" />
+<style id="button-serialize-data" backgroundColor="lightgrey" marginHorizontal="24" marginTop="8" padding="16" />
 
 <style
   id="about-title"

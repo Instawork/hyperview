@@ -14,7 +14,10 @@
   margin="24"
   padding="24"
 />
+<style id="button-disabled" backgroundColor="#bdc4c4" />
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style id="button-serialize-title" fontSize="16" marginHorizontal="24" marginTop="24" />
+<style id="button-serialize-data" backgroundColor="lightgrey" marginHorizontal="24" marginTop="8" padding="16" />
 
 <style
   id="about-title"
@@ -420,15 +423,17 @@
         
   <view scroll="true" style="main">
     
-  <form>
-    
+  
+
+<form id="form" xmlns="https://hyperview.org/hyperview">
+  
 
 
   
     <text style="description">Simple Select</text>
   
 
-<select-single name="choice" style="select">
+<select-single name="simple-select-single" style="select">
   <view style="select-separator"/>
   <option style="Select__Option" value="paid_parking">
     <text style="select-label">Paid parking</text>
@@ -453,14 +458,14 @@
   <view style="select-separator"/>
 </select-single>
 
-    
+  
 
 
   
     <text style="description">Pre Selected</text>
   
 
-<select-single name="choice" style="select">
+<select-single name="pre-selected-select-single" style="select">
   <view style="select-separator"/>
   <option style="Select__Option" value="paid_parking">
     <text style="select-label">Paid parking</text>
@@ -485,14 +490,14 @@
   <view style="select-separator"/>
 </select-single>
 
-    
+  
 
 
   
     <text style="description">Optional select</text>
   
 
-<select-single name="choice" style="select" allow-deselect="true">
+<select-single name="optional-select-select-single" style="select" allow-deselect="true">
   <view style="select-separator"/>
   <option style="Select__Option" value="paid_parking">
     <text style="select-label">Paid parking</text>
@@ -517,14 +522,14 @@
   <view style="select-separator"/>
 </select-single>
 
-    
+  
 
 
   
     <text style="description">Custom</text>
   
 
-<select-single name="choice" style="select-custom">
+<select-single name="custom-select-single" style="select-custom">
   <option style="select-custom-option" value="paid_parking">
     <view style="select-custom-image-wrapper">
       <image
@@ -560,19 +565,25 @@
   </option>
 </select-single>
 
-  </form>
+
   
+  
+  
+    <text style="button-serialize-title">To test form serialization, setup the Hyperview demo app on your local environment.</text>
+    
   <view
     
-      href="/hyperview/public/ui/ui-elements/forms/select-single/index.xml"
+      style="button button-disabled"
     
-    
-      style="button"
     
   >
     
     <text style="button-label">Serialize</text>
   </view>
+
+  
+
+</form>
 
 
   </view>
@@ -594,7 +605,10 @@
   margin="24"
   padding="24"
 />
+<style id="button-disabled" backgroundColor="#bdc4c4" />
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style id="button-serialize-title" fontSize="16" marginHorizontal="24" marginTop="24" />
+<style id="button-serialize-data" backgroundColor="lightgrey" marginHorizontal="24" marginTop="8" padding="16" />
 
 <style
   id="about-title"

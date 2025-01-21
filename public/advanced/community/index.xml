@@ -20,7 +20,7 @@
       
       
       <item
-        href="/hyperview/public//advanced/community/elements/bottom-sheet/index.xml"
+        href="/hyperview/public/advanced/community/elements/bottom-sheet/index.xml"
         key="bottom-sheet"
         show-during-load="loading-screen"
         style="item"
@@ -50,7 +50,7 @@
       
       
       <item
-        href="/hyperview/public//advanced/community/elements/bottom-tabbar/index.xml"
+        href="/hyperview/public/advanced/community/elements/bottom-tabbar/index.xml"
         key="bottom-tab-bar"
         show-during-load="loading-screen"
         style="item"
@@ -80,7 +80,7 @@
       
       
       <item
-        href="/hyperview/public//advanced/community/elements/filter/index.xml"
+        href="/hyperview/public/advanced/community/elements/filter/index.xml"
         key="filter"
         show-during-load="loading-screen"
         style="item"
@@ -110,7 +110,7 @@
       
       
       <item
-        href="/hyperview/public//advanced/community/elements/map/index.xml"
+        href="/hyperview/public/advanced/community/elements/map/index.xml"
         key="map"
         show-during-load="loading-screen"
         style="item"
@@ -140,7 +140,7 @@
       
       
       <item
-        href="/hyperview/public//advanced/community/elements/progress-bar/index.xml"
+        href="/hyperview/public/advanced/community/elements/progress-bar/index.xml"
         key="progress-bar"
         show-during-load="loading-screen"
         style="item"
@@ -172,7 +172,7 @@
         
       
       <item
-        href="/hyperview/public//advanced/community/elements/svg-image/index.xml"
+        href="/hyperview/public/advanced/community/elements/svg-image/index.xml"
         key="svg-image"
         show-during-load="loading-screen"
         style="item item-last"
@@ -207,7 +207,7 @@
       
       
       <item
-        href="/hyperview/public//advanced/community/behaviors/add-styles/index.xml"
+        href="/hyperview/public/advanced/community/behaviors/add-styles/index.xml"
         key="add-styles"
         show-during-load="loading-screen"
         style="item"
@@ -239,7 +239,7 @@
         
       
       <item
-        href="/hyperview/public//advanced/community/behaviors/share/index.xml"
+        href="/hyperview/public/advanced/community/behaviors/share/index.xml"
         key="share"
         show-during-load="loading-screen"
         style="item item-last"

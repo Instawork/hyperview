@@ -14,7 +14,10 @@
   margin="24"
   padding="24"
 />
+<style id="button-disabled" backgroundColor="#bdc4c4" />
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style id="button-serialize-title" fontSize="16" marginHorizontal="24" marginTop="24" />
+<style id="button-serialize-data" backgroundColor="lightgrey" marginHorizontal="24" marginTop="8" padding="16" />
 
 <style
   id="about-title"
@@ -380,7 +383,7 @@
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/text/adjustable/index.xml"
+        href="/hyperview/public/ui/ui-elements/text/adjustable/index.xml"
         key="adjustable-font-size"
         show-during-load="loading-screen"
         style="item"
@@ -410,7 +413,7 @@
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/text/basic/index.xml"
+        href="/hyperview/public/ui/ui-elements/text/basic/index.xml"
         key="basic"
         show-during-load="loading-screen"
         style="item"
@@ -440,7 +443,7 @@
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/text/escaped/index.xml"
+        href="/hyperview/public/ui/ui-elements/text/escaped/index.xml"
         key="escaped"
         show-during-load="loading-screen"
         style="item"
@@ -470,7 +473,7 @@
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/text/nested/index.xml"
+        href="/hyperview/public/ui/ui-elements/text/nested/index.xml"
         key="nested"
         show-during-load="loading-screen"
         style="item"
@@ -500,7 +503,7 @@
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/text/number-of-lines/index.xml"
+        href="/hyperview/public/ui/ui-elements/text/number-of-lines/index.xml"
         key="number-of-lines"
         show-during-load="loading-screen"
         style="item"
@@ -530,7 +533,7 @@
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/text/preformatted/index.xml"
+        href="/hyperview/public/ui/ui-elements/text/preformatted/index.xml"
         key="preformatted"
         show-during-load="loading-screen"
         style="item"
@@ -562,7 +565,7 @@
         
       
       <item
-        href="/hyperview/public//ui/ui-elements/text/selectable/index.xml"
+        href="/hyperview/public/ui/ui-elements/text/selectable/index.xml"
         key="selectable"
         show-during-load="loading-screen"
         style="item item-last"
@@ -597,7 +600,7 @@
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/view/keyboard-avoiding-view/index.xml"
+        href="/hyperview/public/ui/ui-elements/view/keyboard-avoiding-view/index.xml"
         key="keyboard-avoiding-view"
         show-during-load="loading-screen"
         style="item"
@@ -627,7 +630,7 @@
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/view/scroll-view/index.xml"
+        href="/hyperview/public/ui/ui-elements/view/scroll-view/index.xml"
         key="scroll-view"
         show-during-load="loading-screen"
         style="item"
@@ -659,7 +662,7 @@
         
       
       <item
-        href="/hyperview/public//ui/ui-elements/view/view/index.xml"
+        href="/hyperview/public/ui/ui-elements/view/view/index.xml"
         key="view"
         show-during-load="loading-screen"
         style="item item-last"
@@ -696,7 +699,7 @@
         
       
       <item
-        href="/hyperview/public//ui/ui-elements/image/index.xml"
+        href="/hyperview/public/ui/ui-elements/image/index.xml"
         key="image"
         show-during-load="loading-screen"
         style="item item-last"
@@ -731,7 +734,7 @@
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/forms/date-field/index.xml"
+        href="/hyperview/public/ui/ui-elements/forms/date-field/index.xml"
         key="date-field"
         show-during-load="loading-screen"
         style="item"
@@ -761,7 +764,7 @@
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/forms/picker/index.xml"
+        href="/hyperview/public/ui/ui-elements/forms/picker/index.xml"
         key="picker"
         show-during-load="loading-screen"
         style="item"
@@ -791,7 +794,7 @@
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/forms/select-multiple/index.xml"
+        href="/hyperview/public/ui/ui-elements/forms/select-multiple/index.xml"
         key="select-multiple"
         show-during-load="loading-screen"
         style="item"
@@ -821,7 +824,7 @@
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/forms/select-single/index.xml"
+        href="/hyperview/public/ui/ui-elements/forms/select-single/index.xml"
         key="select-single"
         show-during-load="loading-screen"
         style="item"
@@ -851,7 +854,7 @@
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/forms/switch/index.xml"
+        href="/hyperview/public/ui/ui-elements/forms/switch/index.xml"
         key="switch"
         show-during-load="loading-screen"
         style="item"
@@ -883,7 +886,7 @@
         
       
       <item
-        href="/hyperview/public//ui/ui-elements/forms/text-field/index.xml"
+        href="/hyperview/public/ui/ui-elements/forms/text-field/index.xml"
         key="text-field"
         show-during-load="loading-screen"
         style="item item-last"
@@ -918,7 +921,7 @@
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/list/basic/index.xml"
+        href="/hyperview/public/ui/ui-elements/list/basic/index.xml"
         key="basic-list"
         show-during-load="loading-screen"
         style="item"
@@ -948,7 +951,7 @@
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/list/hidden-scroll/index.xml"
+        href="/hyperview/public/ui/ui-elements/list/hidden-scroll/index.xml"
         key="hidden-scrollbar"
         show-during-load="loading-screen"
         style="item"
@@ -978,7 +981,7 @@
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/list/horizontal/index.xml"
+        href="/hyperview/public/ui/ui-elements/list/horizontal/index.xml"
         key="horizontal-list"
         show-during-load="loading-screen"
         style="item"
@@ -1008,7 +1011,7 @@
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/list/infinite/index.xml"
+        href="/hyperview/public/ui/ui-elements/list/infinite/index.xml"
         key="infinite-scroll"
         show-during-load="loading-screen"
         style="item"
@@ -1038,7 +1041,7 @@
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/list/keyboard-dismiss/index.xml"
+        href="/hyperview/public/ui/ui-elements/list/keyboard-dismiss/index.xml"
         key="dismiss-keyboard-on-drag"
         show-during-load="loading-screen"
         style="item"
@@ -1068,7 +1071,7 @@
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/list/keyboard-persist-tap/index.xml"
+        href="/hyperview/public/ui/ui-elements/list/keyboard-persist-tap/index.xml"
         key="keyboard-persist-tap"
         show-during-load="loading-screen"
         style="item"
@@ -1098,7 +1101,7 @@
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/list/refresh-infinite/index.xml"
+        href="/hyperview/public/ui/ui-elements/list/refresh-infinite/index.xml"
         key="refresh-and-infinite-scroll"
         show-during-load="loading-screen"
         style="item"
@@ -1128,7 +1131,7 @@
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/list/refresh/index.xml"
+        href="/hyperview/public/ui/ui-elements/list/refresh/index.xml"
         key="list-with-refresh"
         show-during-load="loading-screen"
         style="item"
@@ -1160,7 +1163,7 @@
         
       
       <item
-        href="/hyperview/public//ui/ui-elements/list/sticky/index.xml"
+        href="/hyperview/public/ui/ui-elements/list/sticky/index.xml"
         key="list-with-sticky-items"
         show-during-load="loading-screen"
         style="item item-last"
@@ -1195,7 +1198,7 @@
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/section-list/basic/index.xml"
+        href="/hyperview/public/ui/ui-elements/section-list/basic/index.xml"
         key="basic-section-list"
         show-during-load="loading-screen"
         style="item"
@@ -1225,7 +1228,7 @@
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/section-list/deprecated/index.xml"
+        href="/hyperview/public/ui/ui-elements/section-list/deprecated/index.xml"
         key="deprecated-section-list"
         show-during-load="loading-screen"
         style="item"
@@ -1255,7 +1258,7 @@
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/section-list/dismiss-keyboard/index.xml"
+        href="/hyperview/public/ui/ui-elements/section-list/dismiss-keyboard/index.xml"
         key="dismiss-keyboard-on-drag"
         show-during-load="loading-screen"
         style="item"
@@ -1285,7 +1288,7 @@
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/section-list/infinite/index.xml"
+        href="/hyperview/public/ui/ui-elements/section-list/infinite/index.xml"
         key="section-list-infinite-scroll"
         show-during-load="loading-screen"
         style="item"
@@ -1315,7 +1318,7 @@
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/section-list/keyboard-persist-tap/index.xml"
+        href="/hyperview/public/ui/ui-elements/section-list/keyboard-persist-tap/index.xml"
         key="keyboard-persist-tap"
         show-during-load="loading-screen"
         style="item"
@@ -1345,7 +1348,7 @@
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/section-list/non-sticky/index.xml"
+        href="/hyperview/public/ui/ui-elements/section-list/non-sticky/index.xml"
         key="non-sticky-titles"
         show-during-load="loading-screen"
         style="item"
@@ -1377,7 +1380,7 @@
         
       
       <item
-        href="/hyperview/public//ui/ui-elements/section-list/refresh/index.xml"
+        href="/hyperview/public/ui/ui-elements/section-list/refresh/index.xml"
         key="section-list-with-refresh"
         show-during-load="loading-screen"
         style="item item-last"
@@ -1412,7 +1415,7 @@
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/web-view/dispatch-event/index.xml"
+        href="/hyperview/public/ui/ui-elements/web-view/dispatch-event/index.xml"
         key="event-dispatch"
         show-during-load="loading-screen"
         style="item"
@@ -1442,7 +1445,7 @@
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/web-view/html/index.xml"
+        href="/hyperview/public/ui/ui-elements/web-view/html/index.xml"
         key="html"
         show-during-load="loading-screen"
         style="item"
@@ -1472,7 +1475,7 @@
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/web-view/injected-js/index.xml"
+        href="/hyperview/public/ui/ui-elements/web-view/injected-js/index.xml"
         key="injected-javascript"
         show-during-load="loading-screen"
         style="item"
@@ -1502,7 +1505,7 @@
       
       
       <item
-        href="/hyperview/public//ui/ui-elements/web-view/loading/index.xml"
+        href="/hyperview/public/ui/ui-elements/web-view/loading/index.xml"
         key="show-loading-indicator"
         show-during-load="loading-screen"
         style="item"
@@ -1534,7 +1537,7 @@
         
       
       <item
-        href="/hyperview/public//ui/ui-elements/web-view/url/index.xml"
+        href="/hyperview/public/ui/ui-elements/web-view/url/index.xml"
         key="url"
         show-during-load="loading-screen"
         style="item item-last"
@@ -1895,7 +1898,10 @@
   margin="24"
   padding="24"
 />
+<style id="button-disabled" backgroundColor="#bdc4c4" />
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style id="button-serialize-title" fontSize="16" marginHorizontal="24" marginTop="24" />
+<style id="button-serialize-data" backgroundColor="lightgrey" marginHorizontal="24" marginTop="8" padding="16" />
 
 <style
   id="about-title"

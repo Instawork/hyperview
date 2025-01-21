@@ -14,7 +14,10 @@
   margin="24"
   padding="24"
 />
+<style id="button-disabled" backgroundColor="#bdc4c4" />
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style id="button-serialize-title" fontSize="16" marginHorizontal="24" marginTop="24" />
+<style id="button-serialize-data" backgroundColor="lightgrey" marginHorizontal="24" marginTop="8" padding="16" />
 
 <style
   id="about-title"
@@ -380,7 +383,7 @@
       
       
       <item
-        href="/hyperview/public//navigation/behaviors/actions/back/index.xml"
+        href="/hyperview/public/navigation/behaviors/actions/back/index.xml"
         key="back"
         show-during-load="loading-screen"
         style="item"
@@ -410,7 +413,7 @@
       
       
       <item
-        href="/hyperview/public//navigation/behaviors/actions/close/index.xml"
+        href="/hyperview/public/navigation/behaviors/actions/close/index.xml"
         key="close"
         show-during-load="loading-screen"
         style="item"
@@ -440,7 +443,7 @@
       
       
       <item
-        href="/hyperview/public//navigation/behaviors/actions/deep-links/index.xml"
+        href="/hyperview/public/navigation/behaviors/actions/deep-links/index.xml"
         key="deep-links"
         show-during-load="loading-screen"
         style="item"
@@ -470,7 +473,7 @@
       
       
       <item
-        href="/hyperview/public//navigation/behaviors/actions/modal/index.xml"
+        href="/hyperview/public/navigation/behaviors/actions/modal/index.xml"
         key="modal"
         show-during-load="loading-screen"
         style="item"
@@ -500,7 +503,7 @@
       
       
       <item
-        href="/hyperview/public//navigation/behaviors/actions/navigate/index.xml"
+        href="/hyperview/public/navigation/behaviors/actions/navigate/index.xml"
         key="navigate"
         show-during-load="loading-screen"
         style="item"
@@ -530,7 +533,7 @@
       
       
       <item
-        href="/hyperview/public//navigation/behaviors/actions/new/index.xml"
+        href="/hyperview/public/navigation/behaviors/actions/new/index.xml"
         key="new"
         show-during-load="loading-screen"
         style="item"
@@ -560,7 +563,7 @@
       
       
       <item
-        href="/hyperview/public//navigation/behaviors/actions/push/index.xml"
+        href="/hyperview/public/navigation/behaviors/actions/push/index.xml"
         key="push"
         show-during-load="loading-screen"
         style="item"
@@ -592,7 +595,7 @@
         
       
       <item
-        href="/hyperview/public//navigation/behaviors/actions/reload/index.xml"
+        href="/hyperview/public/navigation/behaviors/actions/reload/index.xml"
         key="reload"
         show-during-load="loading-screen"
         style="item item-last"
@@ -629,7 +632,7 @@
         
       
       <item
-        href="/hyperview/public//navigation/behaviors/triggers/back/index.xml"
+        href="/hyperview/public/navigation/behaviors/triggers/back/index.xml"
         key="back"
         show-during-load="loading-screen"
         style="item item-last"
@@ -894,7 +897,10 @@
   margin="24"
   padding="24"
 />
+<style id="button-disabled" backgroundColor="#bdc4c4" />
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style id="button-serialize-title" fontSize="16" marginHorizontal="24" marginTop="24" />
+<style id="button-serialize-data" backgroundColor="lightgrey" marginHorizontal="24" marginTop="8" padding="16" />
 
 <style
   id="about-title"

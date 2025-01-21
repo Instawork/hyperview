@@ -1,0 +1,206 @@
+
+
+
+<form id="form" xmlns="https://hyperview.org/hyperview">
+  
+
+
+<view style="form-group">
+  <text style="label">Default picker field</text>
+  <picker-field
+    field-style="input"
+    field-text-style="input-text"
+    modal-overlay-style="picker-modal-overlay"
+    modal-style="picker-modal"
+    modal-text-style="picker-modal-text"
+    name="default-picker"
+    placeholder="Select choice"
+    placeholderTextColor="#8D9494">
+    <picker-item label="Choice 0" value="0"/>
+    <picker-item label="Choice 1" value="1"/>
+    <picker-item label="Choice 2" value="2"/>
+    <picker-item label="Choice 3" value="3"/>
+    <picker-item label="Choice 4" value="4"/>
+    <picker-item label="Choice 5" value="5"/>
+    <picker-item label="Choice 6" value="6"/>
+  </picker-field>
+</view>
+
+  
+
+
+<view style="form-group">
+  <text style="label">Filled picker field</text>
+  <picker-field
+    field-style="input"
+    field-text-style="input-text"
+    modal-overlay-style="picker-modal-overlay"
+    modal-style="picker-modal"
+    modal-text-style="picker-modal-text"
+    name="filled-picker"
+    placeholder="Select choice"
+    placeholderTextColor="#8D9494"
+    value="3">
+    <picker-item label="Choice 0" value="0"/>
+    <picker-item label="Choice 1" value="1"/>
+    <picker-item label="Choice 2" value="2"/>
+    <picker-item label="Choice 3" value="3"/>
+    <picker-item label="Choice 4" value="4"/>
+    <picker-item label="Choice 5" value="5"/>
+    <picker-item label="Choice 6" value="6"/>
+  </picker-field>
+</view>
+
+  
+
+
+<view style="form-group">
+  <text style="label">De-selectable picker field</text>
+  <picker-field
+    field-style="input"
+    field-text-style="input-text"
+    modal-overlay-style="picker-modal-overlay"
+    modal-style="picker-modal"
+    modal-text-style="picker-modal-text"
+    name="de-selectable-picker"
+    placeholder="Select choice"
+    placeholderTextColor="#8D9494"
+    value="3">
+    <picker-item label="No choice" value=""/>
+    <picker-item label="Choice 0" value="0"/>
+    <picker-item label="Choice 1" value="1"/>
+    <picker-item label="Choice 2" value="2"/>
+    <picker-item label="Choice 3" value="3"/>
+    <picker-item label="Choice 4" value="4"/>
+    <picker-item label="Choice 5" value="5"/>
+    <picker-item label="Choice 6" value="6"/>
+  </picker-field>
+</view>
+
+  
+
+
+<view style="form-group">
+  <text style="label">Validation error</text>
+  <picker-field
+    field-style="input input-error"
+    field-text-style="input-text input-text--Error"
+    modal-overlay-style="picker-modal-overlay"
+    modal-style="picker-modal"
+    modal-text-style="picker-modal-text"
+    name="validation-error-picker"
+    placeholder="Select choice"
+    placeholderTextColor="#8D9494"
+  >
+    <picker-item label="Choice 0" value="0"/>
+    <picker-item label="Choice 1" value="1"/>
+    <picker-item label="Choice 2" value="2"/>
+    <picker-item label="Choice 3" value="3"/>
+    <picker-item label="Choice 4" value="4"/>
+    <picker-item label="Choice 5" value="5"/>
+    <picker-item label="Choice 6" value="6"/>
+  </picker-field>
+  <text style="help help-error">Please select a choice</text>
+</view>
+
+  
+
+
+<view style="form-group">
+  <text style="label">Filled validation error</text>
+  <picker-field
+    field-style="input input-error"
+    field-text-style="input-text input-text--Error"
+    modal-overlay-style="picker-modal-overlay"
+    modal-style="picker-modal"
+    modal-text-style="picker-modal-text"
+    name="filled-validation-picker"
+    placeholder="Select choice"
+    placeholderTextColor="#8D9494"
+    value="3">
+    <picker-item label="Choice 0" value="0"/>
+    <picker-item label="Choice 1" value="1"/>
+    <picker-item label="Choice 2" value="2"/>
+    <picker-item label="Choice 3" value="3"/>
+    <picker-item label="Choice 4" value="4"/>
+    <picker-item label="Choice 5" value="5"/>
+    <picker-item label="Choice 6" value="6"/>
+  </picker-field>
+  <text style="help help-error">Please select a different choice</text>
+</view>
+
+  
+
+
+<view style="form-group">
+  <text style="label">Customized animation durations (iOS only)</text>
+  <picker-field
+    field-style="input"
+    field-text-style="input-text"
+    modal-overlay-style="picker-modal-overlay"
+    modal-style="picker-modal"
+    modal-text-style="picker-modal-text"
+    modal-animation-duration="400"
+    modal-overlay-animation-duration="400"
+    modal-dismiss-animation-duration="200"
+    modal-dismiss-overlay-animation-duration="200"
+    name="animations-picker"
+    placeholder="Select choice"
+    placeholderTextColor="#8D9494"
+    value="3">
+    <picker-item label="Choice 0" value="0"/>
+    <picker-item label="Choice 1" value="1"/>
+    <picker-item label="Choice 2" value="2"/>
+    <picker-item label="Choice 3" value="3"/>
+    <picker-item label="Choice 4" value="4"/>
+    <picker-item label="Choice 5" value="5"/>
+    <picker-item label="Choice 6" value="6"/>
+  </picker-field>
+</view>
+
+  
+
+
+<view style="form-group">
+  <text style="label">Customized</text>
+  <picker-field
+    cancel-label="Nevermind"
+    done-label="Set choice"
+    field-style="input-custom"
+    field-text-style="input-modal-text"
+    modal-overlay-style="picker-modal-overlay"
+    modal-style="picker-modal-custom"
+    modal-text-style="picker-modal-custom-text"
+    name="customized-picker"
+    placeholder="Select choice"
+    placeholderTextColor="#8D9494">
+    <picker-item label="Choice 0" value="0"/>
+    <picker-item label="Choice 1" value="1"/>
+    <picker-item label="Choice 2" value="2"/>
+    <picker-item label="Choice 3" value="3"/>
+    <picker-item label="Choice 4" value="4"/>
+    <picker-item label="Choice 5" value="5"/>
+    <picker-item label="Choice 6" value="6"/>
+  </picker-field>
+</view>
+
+
+  
+  
+  
+    <text style="button-serialize-title">To test form serialization, setup the Hyperview demo app on your local environment.</text>
+    
+  <view
+    
+      style="button button-disabled"
+    
+    
+  >
+    
+    <text style="button-label">Serialize</text>
+  </view>
+
+  
+
+</form>
+

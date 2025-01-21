@@ -19,7 +19,7 @@
       
       
       <item
-        href="/hyperview/public//behaviors/basic/actions/append/index.xml"
+        href="/hyperview/public/behaviors/basic/actions/append/index.xml"
         key="append"
         show-during-load="loading-screen"
         style="item"
@@ -49,7 +49,7 @@
       
       
       <item
-        href="/hyperview/public//behaviors/basic/actions/hide/index.xml"
+        href="/hyperview/public/behaviors/basic/actions/hide/index.xml"
         key="hide"
         show-during-load="loading-screen"
         style="item"
@@ -79,7 +79,7 @@
       
       
       <item
-        href="/hyperview/public//behaviors/basic/actions/prepend/index.xml"
+        href="/hyperview/public/behaviors/basic/actions/prepend/index.xml"
         key="prepend"
         show-during-load="loading-screen"
         style="item"
@@ -109,7 +109,7 @@
       
       
       <item
-        href="/hyperview/public//behaviors/basic/actions/replace-inner/index.xml"
+        href="/hyperview/public/behaviors/basic/actions/replace-inner/index.xml"
         key="replace-inner"
         show-during-load="loading-screen"
         style="item"
@@ -139,7 +139,7 @@
       
       
       <item
-        href="/hyperview/public//behaviors/basic/actions/replace/index.xml"
+        href="/hyperview/public/behaviors/basic/actions/replace/index.xml"
         key="replace"
         show-during-load="loading-screen"
         style="item"
@@ -169,7 +169,7 @@
       
       
       <item
-        href="/hyperview/public//behaviors/basic/actions/select-all/index.xml"
+        href="/hyperview/public/behaviors/basic/actions/select-all/index.xml"
         key="select-all"
         show-during-load="loading-screen"
         style="item"
@@ -199,7 +199,7 @@
       
       
       <item
-        href="/hyperview/public//behaviors/basic/actions/show/index.xml"
+        href="/hyperview/public/behaviors/basic/actions/show/index.xml"
         key="show"
         show-during-load="loading-screen"
         style="item"
@@ -229,7 +229,7 @@
       
       
       <item
-        href="/hyperview/public//behaviors/basic/actions/toggle/index.xml"
+        href="/hyperview/public/behaviors/basic/actions/toggle/index.xml"
         key="toggle"
         show-during-load="loading-screen"
         style="item"
@@ -261,7 +261,7 @@
         
       
       <item
-        href="/hyperview/public//behaviors/basic/actions/unselect-all/index.xml"
+        href="/hyperview/public/behaviors/basic/actions/unselect-all/index.xml"
         key="unselect-all"
         show-during-load="loading-screen"
         style="item item-last"
@@ -296,7 +296,7 @@
       
       
       <item
-        href="/hyperview/public//behaviors/basic/triggers/back/index.xml"
+        href="/hyperview/public/behaviors/basic/triggers/back/index.xml"
         key="back"
         show-during-load="loading-screen"
         style="item"
@@ -326,7 +326,7 @@
       
       
       <item
-        href="/hyperview/public//behaviors/basic/triggers/blur/index.xml"
+        href="/hyperview/public/behaviors/basic/triggers/blur/index.xml"
         key="blur"
         show-during-load="loading-screen"
         style="item"
@@ -356,7 +356,7 @@
       
       
       <item
-        href="/hyperview/public//behaviors/basic/triggers/change/index.xml"
+        href="/hyperview/public/behaviors/basic/triggers/change/index.xml"
         key="change"
         show-during-load="loading-screen"
         style="item"
@@ -386,7 +386,7 @@
       
       
       <item
-        href="/hyperview/public//behaviors/basic/triggers/deselect/index.xml"
+        href="/hyperview/public/behaviors/basic/triggers/deselect/index.xml"
         key="deselect"
         show-during-load="loading-screen"
         style="item"
@@ -416,7 +416,7 @@
       
       
       <item
-        href="/hyperview/public//behaviors/basic/triggers/focus/index.xml"
+        href="/hyperview/public/behaviors/basic/triggers/focus/index.xml"
         key="focus"
         show-during-load="loading-screen"
         style="item"
@@ -446,7 +446,7 @@
       
       
       <item
-        href="/hyperview/public//behaviors/basic/triggers/load/index.xml"
+        href="/hyperview/public/behaviors/basic/triggers/load/index.xml"
         key="load"
         show-during-load="loading-screen"
         style="item"
@@ -476,7 +476,7 @@
       
       
       <item
-        href="/hyperview/public//behaviors/basic/triggers/long-press/index.xml"
+        href="/hyperview/public/behaviors/basic/triggers/long-press/index.xml"
         key="long-press"
         show-during-load="loading-screen"
         style="item"
@@ -506,7 +506,7 @@
       
       
       <item
-        href="/hyperview/public//behaviors/basic/triggers/press-in/index.xml"
+        href="/hyperview/public/behaviors/basic/triggers/press-in/index.xml"
         key="press-in"
         show-during-load="loading-screen"
         style="item"
@@ -536,7 +536,7 @@
       
       
       <item
-        href="/hyperview/public//behaviors/basic/triggers/press-out/index.xml"
+        href="/hyperview/public/behaviors/basic/triggers/press-out/index.xml"
         key="press-out"
         show-during-load="loading-screen"
         style="item"
@@ -566,7 +566,7 @@
       
       
       <item
-        href="/hyperview/public//behaviors/basic/triggers/press/index.xml"
+        href="/hyperview/public/behaviors/basic/triggers/press/index.xml"
         key="press"
         show-during-load="loading-screen"
         style="item"
@@ -596,7 +596,7 @@
       
       
       <item
-        href="/hyperview/public//behaviors/basic/triggers/refresh/index.xml"
+        href="/hyperview/public/behaviors/basic/triggers/refresh/index.xml"
         key="refresh"
         show-during-load="loading-screen"
         style="item"
@@ -626,7 +626,7 @@
       
       
       <item
-        href="/hyperview/public//behaviors/basic/triggers/select/index.xml"
+        href="/hyperview/public/behaviors/basic/triggers/select/index.xml"
         key="select"
         show-during-load="loading-screen"
         style="item"
@@ -656,7 +656,7 @@
       
       
       <item
-        href="/hyperview/public//behaviors/basic/triggers/visible-once/index.xml"
+        href="/hyperview/public/behaviors/basic/triggers/visible-once/index.xml"
         key="visible-once"
         show-during-load="loading-screen"
         style="item"
@@ -688,7 +688,7 @@
         
       
       <item
-        href="/hyperview/public//behaviors/basic/triggers/visible/index.xml"
+        href="/hyperview/public/behaviors/basic/triggers/visible/index.xml"
         key="visible"
         show-during-load="loading-screen"
         style="item item-last"
@@ -723,7 +723,7 @@
       
       
       <item
-        href="/hyperview/public//behaviors/basic/target/target-child/index.xml"
+        href="/hyperview/public/behaviors/basic/target/target-child/index.xml"
         key="target-child"
         show-during-load="loading-screen"
         style="item"
@@ -753,7 +753,7 @@
       
       
       <item
-        href="/hyperview/public//behaviors/basic/target/target-parent-element/index.xml"
+        href="/hyperview/public/behaviors/basic/target/target-parent-element/index.xml"
         key="target-parent-element"
         show-during-load="loading-screen"
         style="item"
@@ -783,7 +783,7 @@
       
       
       <item
-        href="/hyperview/public//behaviors/basic/target/target-parent/index.xml"
+        href="/hyperview/public/behaviors/basic/target/target-parent/index.xml"
         key="target-parent"
         show-during-load="loading-screen"
         style="item"
@@ -813,7 +813,7 @@
       
       
       <item
-        href="/hyperview/public//behaviors/basic/target/target-sibling-append/index.xml"
+        href="/hyperview/public/behaviors/basic/target/target-sibling-append/index.xml"
         key="target-sibling-append"
         show-during-load="loading-screen"
         style="item"
@@ -845,7 +845,7 @@
         
       
       <item
-        href="/hyperview/public//behaviors/basic/target/target-sibling/index.xml"
+        href="/hyperview/public/behaviors/basic/target/target-sibling/index.xml"
         key="target-sibling"
         show-during-load="loading-screen"
         style="item item-last"
@@ -880,7 +880,7 @@
       
       
       <item
-        href="/hyperview/public//behaviors/basic/indicators/hide-indicator-multiple/index.xml"
+        href="/hyperview/public/behaviors/basic/indicators/hide-indicator-multiple/index.xml"
         key="hide-multiple-indicators"
         show-during-load="loading-screen"
         style="item"
@@ -910,7 +910,7 @@
       
       
       <item
-        href="/hyperview/public//behaviors/basic/indicators/hide-indicator/index.xml"
+        href="/hyperview/public/behaviors/basic/indicators/hide-indicator/index.xml"
         key="hide-indicator"
         show-during-load="loading-screen"
         style="item"
@@ -940,7 +940,7 @@
       
       
       <item
-        href="/hyperview/public//behaviors/basic/indicators/inline-indicator/index.xml"
+        href="/hyperview/public/behaviors/basic/indicators/inline-indicator/index.xml"
         key="inline-indicator"
         show-during-load="loading-screen"
         style="item"
@@ -970,7 +970,7 @@
       
       
       <item
-        href="/hyperview/public//behaviors/basic/indicators/shimmer-indicator/index.xml"
+        href="/hyperview/public/behaviors/basic/indicators/shimmer-indicator/index.xml"
         key="shimmer-indicator"
         show-during-load="loading-screen"
         style="item"
@@ -1000,7 +1000,7 @@
       
       
       <item
-        href="/hyperview/public//behaviors/basic/indicators/show-hide-indicators/index.xml"
+        href="/hyperview/public/behaviors/basic/indicators/show-hide-indicators/index.xml"
         key="showhide-indicators"
         show-during-load="loading-screen"
         style="item"
@@ -1030,7 +1030,7 @@
       
       
       <item
-        href="/hyperview/public//behaviors/basic/indicators/show-indicator/index.xml"
+        href="/hyperview/public/behaviors/basic/indicators/show-indicator/index.xml"
         key="show-indicator"
         show-during-load="loading-screen"
         style="item"
@@ -1062,7 +1062,7 @@
         
       
       <item
-        href="/hyperview/public//behaviors/basic/indicators/show-multiple-indicators/index.xml"
+        href="/hyperview/public/behaviors/basic/indicators/show-multiple-indicators/index.xml"
         key="show-multiple-indicators"
         show-during-load="loading-screen"
         style="item item-last"
@@ -1097,7 +1097,7 @@
       
       
       <item
-        href="/hyperview/public//behaviors/basic/fragments/fragment-replace/index.xml"
+        href="/hyperview/public/behaviors/basic/fragments/fragment-replace/index.xml"
         key="fragments"
         show-during-load="loading-screen"
         style="item"
@@ -1129,7 +1129,7 @@
         
       
       <item
-        href="/hyperview/public//behaviors/basic/fragments/rating/index.xml"
+        href="/hyperview/public/behaviors/basic/fragments/rating/index.xml"
         key="rating"
         show-during-load="loading-screen"
         style="item item-last"
@@ -1166,7 +1166,7 @@
         
       
       <item
-        href="/hyperview/public//behaviors/basic/once/index.xml"
+        href="/hyperview/public/behaviors/basic/once/index.xml"
         key="once"
         show-during-load="loading-screen"
         style="item item-last"

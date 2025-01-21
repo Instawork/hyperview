@@ -1,0 +1,302 @@
+
+
+
+<form id="form" xmlns="https://hyperview.org/hyperview">
+  
+
+
+<view style="form-group">
+  <text style="label">Default date field</text>
+  <date-field
+    field-style="input"
+    field-text-style="input-text"
+    label-format="MMMM D, YYYY"
+    modal-overlay-style="picker-modal-overlay"
+    modal-style="picker-modal"
+    modal-text-style="picker-modal-text"
+    name="default-date"
+    placeholder="Select date"
+    placeholderTextColor="#8D9494"
+  />
+</view>
+
+  
+
+
+<view style="form-group">
+  <text style="label">Date field in spinner mode</text>
+  <date-field
+    field-style="input"
+    field-text-style="input-text"
+    label-format="MMMM D, YYYY"
+    modal-style="picker-modal"
+    modal-overlay-style="picker-modal-overlay"
+    modal-text-style="picker-modal-text"
+    mode="spinner"
+    name="spinner-date"
+    placeholder="Select date"
+    placeholderTextColor="#8D9494"
+  />
+</view>
+
+  
+
+
+<view style="form-group">
+  <text style="label">Filled date field</text>
+  <date-field
+    field-style="input"
+    field-text-style="input-text"
+    label-format="MMMM D, YYYY"
+    modal-overlay-style="picker-modal-overlay"
+    modal-style="picker-modal"
+    modal-text-style="picker-modal-text"
+    name="filled-date"
+    placeholder="Select date"
+    placeholderTextColor="#8D9494"
+    value="2018-03-07"
+  />
+</view>
+
+  
+
+
+<view style="form-group">
+  <text style="label">Label format examples (using moment.js)</text>
+  <date-field
+    field-style="input"
+    field-text-style="input-text"
+    label-format="MMMM D, YYYY"
+    modal-overlay-style="picker-modal-overlay"
+    modal-style="picker-modal"
+    modal-text-style="picker-modal-text"
+    name="label-format-date_1"
+    placeholder="Select date"
+    placeholderTextColor="#8D9494"
+    value="2018-03-07"
+  />
+  <date-field
+    field-style="input"
+    field-text-style="input-text"
+    label-format="L"
+    modal-overlay-style="picker-modal-overlay"
+    modal-style="picker-modal"
+    modal-text-style="picker-modal-text"
+    name="label-format-date_2"
+    placeholder="Select date"
+    placeholderTextColor="#8D9494"
+    value="2018-03-07"
+  />
+  <date-field
+    field-style="input"
+    field-text-style="input-text"
+    label-format="MMMM [the] Do, [`]YY"
+    modal-overlay-style="picker-modal-overlay"
+    modal-style="picker-modal"
+    modal-text-style="picker-modal-text"
+    name="label-format-date_3"
+    placeholder="Select date"
+    placeholderTextColor="#8D9494"
+    value="2018-03-07"
+  />
+</view>
+
+  
+
+
+<view style="form-group">
+  <text style="label">Min date (May 5, 2018)</text>
+  <date-field
+    field-style="input"
+    field-text-style="input-text"
+    label-format="MMMM D, YYYY"
+    min="2018-05-05"
+    modal-overlay-style="picker-modal-overlay"
+    modal-style="picker-modal"
+    modal-text-style="picker-modal-text"
+    name="min-date-1"
+    placeholder="Select date"
+    placeholderTextColor="#8D9494"
+  />
+  <date-field
+    field-style="input"
+    field-text-style="input-text"
+    label-format="MMMM D, YYYY"
+    min="2018-05-05"
+    modal-style="picker-modal"
+    modal-overlay-style="picker-modal-overlay"
+    modal-text-style="picker-modal-text"
+    mode="spinner"
+    name="min-date-2"
+    placeholder="Select date (spinner)"
+    placeholderTextColor="#8D9494"
+  />
+</view>
+
+  
+
+
+<view style="form-group">
+  <text style="label">Max date (May 5, 2024)</text>
+  <date-field
+    field-style="input"
+    field-text-style="input-text"
+    label-format="MMMM D, YYYY"
+    max="2024-05-05"
+    modal-overlay-style="picker-modal-overlay"
+    modal-style="picker-modal"
+    modal-text-style="picker-modal-text"
+    name="max-date-1"
+    placeholder="Select date"
+    placeholderTextColor="#8D9494"
+  />
+  <date-field
+    field-style="input"
+    field-text-style="input-text"
+    label-format="MMMM D, YYYY"
+    max="2024-05-05"
+    modal-style="picker-modal"
+    modal-overlay-style="picker-modal-overlay"
+    modal-text-style="picker-modal-text"
+    mode="spinner"
+    name="max-date-2"
+    placeholder="Select date (spinner)"
+    placeholderTextColor="#8D9494"
+  />
+</view>
+
+  
+
+
+<view style="form-group">
+  <text style="label">Min/Max date (May 5, 2018 - 2024)</text>
+  <date-field
+    field-style="input"
+    field-text-style="input-text"
+    label-format="MMMM D, YYYY"
+    max="2024-05-05"
+    min="2018-05-05"
+    modal-overlay-style="picker-modal-overlay"
+    modal-style="picker-modal"
+    modal-text-style="picker-modal-text"
+    name="min-max-date-1"
+    placeholder="Select date"
+    placeholderTextColor="#8D9494"
+  />
+  <date-field
+    field-style="input"
+    field-text-style="input-text"
+    label-format="MMMM D, YYYY"
+    max="2024-05-05"
+    min="2018-05-05"
+    modal-style="picker-modal"
+    modal-overlay-style="picker-modal-overlay"
+    modal-text-style="picker-modal-text"
+    mode="spinner"
+    name="min-max-date-2"
+    placeholder="Select date (spinner)"
+    placeholderTextColor="#8D9494"
+  />
+</view>
+
+  
+
+
+<view style="form-group">
+  <text style="label">Validation error</text>
+  <date-field
+    field-style="input input-error"
+    field-text-style="input-text input-text-error"
+    label-format="MMMM D, YYYY"
+    modal-overlay-style="picker-modal-overlay"
+    modal-style="picker-modal"
+    modal-text-style="picker-modal-text"
+    name="validation-error-date"
+    placeholder="Select date"
+    placeholderTextColor="#8D9494"
+  />
+  <text style="help help-error">Please select a date</text>
+</view>
+
+  
+
+
+<view style="form-group">
+  <text style="label">Filled validation error</text>
+  <date-field
+    field-style="input input-error"
+    field-text-style="input-text input-text-error"
+    label-format="MMMM D, YYYY"
+    modal-overlay-style="picker-modal-overlay"
+    modal-style="picker-modal"
+    modal-text-style="picker-modal-text"
+    name="filled-validation-error-date"
+    placeholder="Select date"
+    placeholderTextColor="#8D9494"
+    value="2018-03-07"
+  />
+  <text style="help help-error">Please select a different date</text>
+</view>
+
+  
+
+
+<view style="form-group">
+  <text style="label">Customized animation durations (iOS only)</text>
+  <date-field
+    field-style="input"
+    field-text-style="input-text"
+    label-format="MMMM D, YYYY"
+    modal-overlay-style="picker-modal-overlay"
+    modal-style="picker-modal"
+    modal-text-style="picker-modal-text"
+    modal-animation-duration="400"
+    modal-overlay-animation-duration="400"
+    modal-dismiss-animation-duration="200"
+    modal-dismiss-overlay-animation-duration="200"
+    name="animations-date"
+    placeholder="Select date"
+    placeholderTextColor="#8D9494"
+    value="2018-03-07"
+  />
+</view>
+
+  
+
+
+<view style="form-group">
+  <text style="label">Customized</text>
+  <date-field
+    field-style="InputCustom"
+    field-text-style="input-custom-text"
+    label-format="MMMM D, YYYY"
+    modal-overlay-style="picker-modal-custom-overlay"
+    modal-style="picker-modal-custom"
+    modal-text-style="picker-modal-custom-text"
+    name="customized-date"
+    placeholder="Select date"
+    placeholderTextColor="#8D9494"
+    value="2018-03-07"
+  />
+</view>
+
+
+  
+  
+  
+    <text style="button-serialize-title">To test form serialization, setup the Hyperview demo app on your local environment.</text>
+    
+  <view
+    
+      style="button button-disabled"
+    
+    
+  >
+    
+    <text style="button-label">Serialize</text>
+  </view>
+
+  
+
+</form>
+

@@ -14,7 +14,10 @@
   margin="24"
   padding="24"
 />
+<style id="button-disabled" backgroundColor="#bdc4c4" />
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style id="button-serialize-title" fontSize="16" marginHorizontal="24" marginTop="24" />
+<style id="button-serialize-data" backgroundColor="lightgrey" marginHorizontal="24" marginTop="8" padding="16" />
 
 <style
   id="about-title"
@@ -425,12 +428,14 @@
     
   </view>
 
-  <form>
-    <view style="form-group">
+  
+
+<form id="form" xmlns="https://hyperview.org/hyperview">
+  <view style="form-group">
   <text style="label">Basic</text>
   <text-field
     style="text-field-basic"
-    name="text-field-basic"
+    name="basic-text-field"
     placeholder="Placeholder"
     placeholderTextColor="#8D9494"
     selectionColor="#4778FF"
@@ -440,12 +445,12 @@
   />
 </view>
 
-    <view style="form-group">
+  <view style="form-group">
   <text style="label">Multi-line</text>
   <text-field
     style="text-field-multiline"
     multiline="true"
-    name="text-field-multiline"
+    name="multiline-text-field"
     placeholder="Placeholder"
     placeholderTextColor="#8D9494"
     selectionColor="#4778FF"
@@ -455,7 +460,26 @@
   />
 </view>
 
-  </form>
+
+  
+  
+  
+    <text style="button-serialize-title">To test form serialization, setup the Hyperview demo app on your local environment.</text>
+    
+  <view
+    
+      style="button button-disabled"
+    
+    
+  >
+    
+    <text style="button-label">Serialize</text>
+  </view>
+
+  
+
+</form>
+
 
   </view>
 
@@ -476,7 +500,10 @@
   margin="24"
   padding="24"
 />
+<style id="button-disabled" backgroundColor="#bdc4c4" />
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style id="button-serialize-title" fontSize="16" marginHorizontal="24" marginTop="24" />
+<style id="button-serialize-data" backgroundColor="lightgrey" marginHorizontal="24" marginTop="8" padding="16" />
 
 <style
   id="about-title"

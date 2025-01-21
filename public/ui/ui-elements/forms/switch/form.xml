@@ -1,0 +1,39 @@
+
+
+
+<form id="form" xmlns="https://hyperview.org/hyperview">
+  <view style="FormGroup">
+  <text style="label">Switch on</text>
+  <switch style="switch" name="on-switch" value="on"/>
+</view>
+
+  <view style="FormGroup">
+  <text style="label">Switch off</text>
+  <switch style="switch" name="off-switch" value="off"/>
+</view>
+
+  <view style="FormGroup">
+  <text style="label">Styled</text>
+  <switch style="switch-styled" name="styled-switch" value="off"/>
+</view>
+
+
+  
+  
+  
+    <text style="button-serialize-title">To test form serialization, setup the Hyperview demo app on your local environment.</text>
+    
+  <view
+    
+      style="button button-disabled"
+    
+    
+  >
+    
+    <text style="button-label">Serialize</text>
+  </view>
+
+  
+
+</form>
+

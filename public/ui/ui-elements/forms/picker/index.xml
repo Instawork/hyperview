@@ -14,7 +14,10 @@
   margin="24"
   padding="24"
 />
+<style id="button-disabled" backgroundColor="#bdc4c4" />
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style id="button-serialize-title" fontSize="16" marginHorizontal="24" marginTop="24" />
+<style id="button-serialize-data" backgroundColor="lightgrey" marginHorizontal="24" marginTop="8" padding="16" />
 
 <style
   id="about-title"
@@ -439,6 +442,9 @@
 
   
 
+<form id="form" xmlns="https://hyperview.org/hyperview">
+  
+
 
 <view style="form-group">
   <text style="label">Default picker field</text>
@@ -448,7 +454,7 @@
     modal-overlay-style="picker-modal-overlay"
     modal-style="picker-modal"
     modal-text-style="picker-modal-text"
-    name="picker1"
+    name="default-picker"
     placeholder="Select choice"
     placeholderTextColor="#8D9494">
     <picker-item label="Choice 0" value="0"/>
@@ -472,7 +478,7 @@
     modal-overlay-style="picker-modal-overlay"
     modal-style="picker-modal"
     modal-text-style="picker-modal-text"
-    name="picker2"
+    name="filled-picker"
     placeholder="Select choice"
     placeholderTextColor="#8D9494"
     value="3">
@@ -497,7 +503,7 @@
     modal-overlay-style="picker-modal-overlay"
     modal-style="picker-modal"
     modal-text-style="picker-modal-text"
-    name="picker3"
+    name="de-selectable-picker"
     placeholder="Select choice"
     placeholderTextColor="#8D9494"
     value="3">
@@ -523,7 +529,7 @@
     modal-overlay-style="picker-modal-overlay"
     modal-style="picker-modal"
     modal-text-style="picker-modal-text"
-    name="picker4"
+    name="validation-error-picker"
     placeholder="Select choice"
     placeholderTextColor="#8D9494"
   >
@@ -549,7 +555,7 @@
     modal-overlay-style="picker-modal-overlay"
     modal-style="picker-modal"
     modal-text-style="picker-modal-text"
-    name="picker5"
+    name="filled-validation-picker"
     placeholder="Select choice"
     placeholderTextColor="#8D9494"
     value="3">
@@ -579,7 +585,7 @@
     modal-overlay-animation-duration="400"
     modal-dismiss-animation-duration="200"
     modal-dismiss-overlay-animation-duration="200"
-    name="picker5"
+    name="animations-picker"
     placeholder="Select choice"
     placeholderTextColor="#8D9494"
     value="3">
@@ -606,7 +612,7 @@
     modal-overlay-style="picker-modal-overlay"
     modal-style="picker-modal-custom"
     modal-text-style="picker-modal-custom-text"
-    name="picker6"
+    name="customized-picker"
     placeholder="Select choice"
     placeholderTextColor="#8D9494">
     <picker-item label="Choice 0" value="0"/>
@@ -619,18 +625,25 @@
   </picker-field>
 </view>
 
+
   
+  
+  
+    <text style="button-serialize-title">To test form serialization, setup the Hyperview demo app on your local environment.</text>
+    
   <view
     
-      href="/hyperview/public/ui/ui-elements/forms/picker/index.xml"
+      style="button button-disabled"
     
-    
-      style="button"
     
   >
     
     <text style="button-label">Serialize</text>
   </view>
+
+  
+
+</form>
 
 
   </view>
@@ -652,7 +665,10 @@
   margin="24"
   padding="24"
 />
+<style id="button-disabled" backgroundColor="#bdc4c4" />
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style id="button-serialize-title" fontSize="16" marginHorizontal="24" marginTop="24" />
+<style id="button-serialize-data" backgroundColor="lightgrey" marginHorizontal="24" marginTop="8" padding="16" />
 
 <style
   id="about-title"

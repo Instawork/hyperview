@@ -14,7 +14,10 @@
   margin="24"
   padding="24"
 />
+<style id="button-disabled" backgroundColor="#bdc4c4" />
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style id="button-serialize-title" fontSize="16" marginHorizontal="24" marginTop="24" />
+<style id="button-serialize-data" backgroundColor="lightgrey" marginHorizontal="24" marginTop="8" padding="16" />
 
 <style
   id="about-title"
@@ -417,40 +420,43 @@
     
   </view>
 
-  <form>
-    <view style="FormGroup">
+  
+
+<form id="form" xmlns="https://hyperview.org/hyperview">
+  <view style="FormGroup">
   <text style="label">Switch on</text>
-  <switch style="switch" name="switch1" value="on"/>
+  <switch style="switch" name="on-switch" value="on"/>
 </view>
 
-    <view style="FormGroup">
+  <view style="FormGroup">
   <text style="label">Switch off</text>
-  <switch style="switch" name="switch2" value="off"/>
+  <switch style="switch" name="off-switch" value="off"/>
 </view>
 
-    <view style="FormGroup">
+  <view style="FormGroup">
   <text style="label">Styled</text>
-  <switch style="switch-styled" name="switch3" value="off"/>
+  <switch style="switch-styled" name="styled-switch" value="off"/>
 </view>
 
-  </form>
-  
-  
-    <text style="description">Press the button below and see the request in the XML server. It will include the switch values as query params.</text>
-  
 
   
+  
+  
+    <text style="button-serialize-title">To test form serialization, setup the Hyperview demo app on your local environment.</text>
+    
   <view
     
-      href="/hyperview/public/ui/ui-elements/forms/select-multiple/index.xml"
+      style="button button-disabled"
     
-    
-      style="button"
     
   >
     
     <text style="button-label">Serialize</text>
   </view>
+
+  
+
+</form>
 
 
   </view>
@@ -472,7 +478,10 @@
   margin="24"
   padding="24"
 />
+<style id="button-disabled" backgroundColor="#bdc4c4" />
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style id="button-serialize-title" fontSize="16" marginHorizontal="24" marginTop="24" />
+<style id="button-serialize-data" backgroundColor="lightgrey" marginHorizontal="24" marginTop="8" padding="16" />
 
 <style
   id="about-title"
