@@ -78,23 +78,16 @@ A declaration of how a new navigator should combine with the existing state. Whe
 
 ### Instantiation
 
-When instantiating the `<Hyperview>` component, passing a value for `navigation` will use an externally provided navigator. Without this value, Hyperview will create a navigator hierarchy based on a declarative HXML syntax. Navigation is handled through a custom implementation of [react-navigation](https://reactnavigation.org).
+When instantiating the `<Hyperview>` component, Hyperview will create a navigator hierarchy based on a declarative HXML syntax. Navigation is handled through a custom implementation of [react-navigation](https://reactnavigation.org).
 
-An example implementation using an external navigator provider.
+An example implementation.
 
 ```xml
 return (
   <Hyperview
-    back={goBack}
-    closeModal={closeModal}
     entrypointUrl={entrypointUrl as string}
     fetch={fetchWrapper}
     formatDate={formatDate}
-    navigate={navigate}
-    navigation={props.navigation}
-    openModal={openModal}
-    push={push}
-    route={props.route}
   />
   );
 ```
