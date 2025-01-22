@@ -21,7 +21,8 @@ The encoding of the input values depend on the request method:
       value="bob@example.com"
     />
 
-    <text-area
+    <text-field
+      multiline="true"
       name="feedback"
       placeholder="Please leave your feedback"
       value="Great work!"

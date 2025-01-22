@@ -17,7 +17,7 @@ import debounce from 'lodash/debounce';
 const HvTextField = (props: HvComponentProps) => {
   if (props.element.localName === LOCAL_NAME.TEXT_AREA) {
     Logging.warn(
-      'Deprecation notice: <text-area> tag is deprecated and will be removed in a future version. See https://hyperview.org/docs/reference_textarea for details.',
+      'Deprecation notice: `<text-area>` tag is deprecated and will be removed in a future version. Use `<text-field>` with attribute `multiline="true"` as a replacement.',
     );
   }
 
