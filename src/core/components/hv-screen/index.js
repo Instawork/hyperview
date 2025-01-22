@@ -167,10 +167,10 @@ export default class HvScreen extends React.Component {
     const { behaviorElementId, preloadScreen } = params;
 
     if (preloadScreen) {
-      this.props.removePreload?.(preloadScreen);
+      this.props.removeElement?.(preloadScreen);
     }
     if (behaviorElementId) {
-      this.props.removePreload?.(behaviorElementId);
+      this.props.removeElement?.(behaviorElementId);
     }
     if (this.state.url) {
       this.navigation.removeRouteKey(this.state.url);
@@ -234,10 +234,10 @@ export default class HvScreen extends React.Component {
       });
     } finally {
       if (params.preloadScreen) {
-        this.props.removePreload?.(params.preloadScreen);
+        this.props.removeElement?.(params.preloadScreen);
       }
       if (params.behaviorElementId) {
-        this.props.removePreload?.(params.behaviorElementId);
+        this.props.removeElement?.(params.behaviorElementId);
       }
     }
   };
