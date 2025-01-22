@@ -1,3 +1,4 @@
+import Constants from 'expo-constants';
 import moment from 'moment';
 
 export const formatDate = (
@@ -9,7 +10,7 @@ export const fetchWrapper = (
   input: RequestInfo | URL,
   init: RequestInit | undefined = { headers: {} },
 ): Promise<Response> => {
-  return fetch(input, {
+  const response = fetch(input, {
     ...init,
     headers: {
       // Don't cache requests for the demo
@@ -19,5 +20,14 @@ export const fetchWrapper = (
       ...init.headers,
     },
     mode: 'cors',
+  });
+
+  const baseUrl = Constants.expoConfig?.extra?.baseUrl;
+  const delayTime = baseUrl && input.toString().startsWith(baseUrl) ? 750 : 0;
+
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(response);
+    }, delayTime);
   });
 };
