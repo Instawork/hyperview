@@ -1,6 +1,6 @@
 <items xmlns="https://hyperview.org/hyperview">
   <item key="21" style="item">
-    <text style="item-label">List 21 (appended)</text>
+    <text style="item-label">Added: List 21</text>
   </item>
   <section-title style="list-header">
     <text style="list-header-text">Added: Section 5</text>
@@ -17,7 +17,7 @@
   <item key="25" style="item">
     <text style="item-label">Added: List 25</text>
   </item>
-  <item key="26" style="item">
+  <item key="26" style="item item-last">
     <text style="item-label">Added: List 26</text>
   </item>
 </items>

@@ -26,7 +26,7 @@
   <item key="39" style="item">
     <text style="item-label">Added: List 39</text>
   </item>
-  <item key="40" style="item">
+  <item key="40" style="item item-last">
     <text style="item-label">Added: List 40</text>
   </item>
 </items>

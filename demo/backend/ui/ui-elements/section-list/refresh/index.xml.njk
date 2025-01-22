@@ -7,15 +7,6 @@ hv_button_behavior: "back"
 {% extends 'templates/base.xml.njk' %}
 
 {% block styles %}
-  <style
-    id="list-header"
-    alignItems="center"
-    backgroundColor="#eee"
-    flex="1"
-    flexDirection="row"
-    height="48"
-    paddingLeft="24"
-    paddingRight="24"/>
   <style id="item-label-special" color="red"/>
 {% endblock %}
 
@@ -25,12 +16,9 @@ hv_button_behavior: "back"
       <text style="list-header-text">Section 1</text>
     </section-title>
     {% for item in range(1, 6) %}
-      <item key="{{ item }}" style="item">
+      <item key="{{ item }}" style="item{% if loop.last %} item-last{% endif %}">
         <text style="item-label">List {{ item }}</text>
       </item>
     {% endfor %}
   </section-list>
-  <view id="myIndicator" hide="true" style="spinner">
-    <spinner/>
-  </view>
 {% endblock %}

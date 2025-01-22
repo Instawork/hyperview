@@ -6,10 +6,17 @@ hv_button_behavior: "back"
 ---
 {% extends 'templates/base.xml.njk' %}
 
+{% block styles %}
+  <style id="list-horizontal" flexGrow="0" padding="24" />
+  <style id="list-item-horizontal" padding="24" marginHorizontal="8" borderWidth="1" borderColor="#aaa" borderRadius="8" />
+  <style id="list-item-horizontal-first" marginLeft="0" />
+  <style id="list-item-horizontal-last" marginRight="48" />
+{% endblock %}
+
 {% block container %}
-  <list scroll-orientation="horizontal">
+  <list scroll-orientation="horizontal" style="list-horizontal">
     {% for i in range(1, 21) %}
-      <item key="{{ i }}" style="item">
+      <item key="{{ i }}" style="list-item-horizontal{% if loop.first %} list-item-horizontal-first{% endif %}{% if loop.last %} list-item-horizontal-last{% endif %}">
         <text style="item-label">List {{ i }}</text>
       </item>
     {% endfor %}
