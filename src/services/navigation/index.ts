@@ -14,18 +14,12 @@ export const ANCHOR_ID_SEPARATOR = '#';
 export default class Navigation {
   entrypointUrl: string;
 
-  document: Document | null | undefined = null;
-
   navigation: NavigationProps;
 
   constructor(url: string, navigation: NavigationProps) {
     this.entrypointUrl = url;
     this.navigation = navigation;
   }
-
-  setDocument = (document: Document) => {
-    this.document = document;
-  };
 
   navigate = (
     href: string,
@@ -34,6 +28,7 @@ export default class Navigation {
     componentRegistry: Components.Registry,
     opts: BehaviorOptions,
     stateUrl?: string | null,
+    doc?: Document | null,
     setElement?: (id: number, e: Element) => void,
   ): void => {
     const { showIndicatorId, delay, targetId } = opts;
@@ -55,8 +50,8 @@ export default class Navigation {
 
     let preloadScreen: number | null = null;
     let behaviorElementId: number | null = null;
-    if (indicatorId && this.document) {
-      const screens: HTMLCollectionOf<Element> = this.document.getElementsByTagNameNS(
+    if (indicatorId && doc) {
+      const screens: HTMLCollectionOf<Element> = doc.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
         'screen',
       );
