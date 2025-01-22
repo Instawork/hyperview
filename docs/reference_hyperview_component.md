@@ -19,4 +19,4 @@ function Screen({ url }) {
 - `entrypointUrl` is the URL for the screen. `Hyperview` will make a `GET` request to fetch the URL. The response should be an HXML doc, that will be parsed and rendered on-screen.
 - `fetch` is the fetch method used to make requests in the screen. Since it is injected, the app can modify the method. This is commonly done to add headers for authentication, like an API header or cookie.
 
-To see more examples of `Hyperview` features, check out the [demo app code](https://github.com/Instawork/hyperview/blob/master/demo/screens/HyperviewScreen.js#L70).
+To see more examples of `Hyperview` features, check out the [demo app code](https://github.com/Instawork/hyperview/blob/2bd2cce6c381d9bb83983024fb7dc42045ad4261/demo/App.tsx#L33-L43).
