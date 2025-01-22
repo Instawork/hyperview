@@ -222,7 +222,6 @@ export default class Hyperview extends PureComponent<Types.Props> {
           targetId,
         } = options;
         const delayVal: number = +(delay || '');
-        navigation.setDocument(doc);
         navigation.navigate(
           href || Navigation.ANCHOR_ID_SEPARATOR,
           navAction,
@@ -236,6 +235,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
             targetId: targetId || undefined,
           },
           state.url,
+          doc,
           options.onUpdateCallbacks.setElement,
         );
       }
