@@ -4,7 +4,6 @@ import * as DomService from 'hyperview/src/services/dom';
 import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as NavigationContext from 'hyperview/src/contexts/navigation';
-import * as NavigatorMapContext from 'hyperview/src/contexts/navigator-map';
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Render from 'hyperview/src/services/render';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
@@ -229,8 +228,8 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     );
   };
 
-  registerPreload = (id: number, element: Element): void => {
-    this.props.setPreload(id, element);
+  setElement = (id: number, element: Element): void => {
+    this.props.setElement(id, element);
   };
 
   /**
@@ -244,8 +243,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     getNavigation: () => this.navigation,
     getOnUpdate: () => this.onUpdate,
     getState: () => this.state,
-    registerPreload: (id: number, element: Element) =>
-      this.registerPreload(id, element),
+    setElement: (id: number, element: Element) => this.setElement(id, element),
     setNeedsLoad: () => {
       this.needsLoad = true;
     },
@@ -278,7 +276,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     const noop = () => {};
 
     if (this.props.route?.params?.preloadScreen) {
-      const preloadElement = this.props.getPreload(
+      const preloadElement = this.props.getElement(
         this.props.route?.params?.preloadScreen,
       );
       if (preloadElement) {
@@ -372,7 +370,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
             errorScreen={this.props.errorScreen}
             fetch={this.props.fetch}
             formatDate={formatter}
-            getPreload={this.props.getPreload}
+            getElement={this.props.getElement}
             navigate={this.navLogic.navigate}
             navigation={this.props.navigation}
             onError={this.props.onError}
@@ -381,10 +379,10 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
             onUpdate={this.props.onUpdate}
             openModal={this.navLogic.openModal}
             push={this.navLogic.push}
-            registerPreload={this.registerPreload}
             reload={this.props.reload}
-            removePreload={this.props.removePreload}
+            removeElement={this.props.removeElement}
             route={route}
+            setElement={this.setElement}
             url={url || undefined}
           />
         )}
@@ -568,10 +566,8 @@ function HvRouteFC(props: Types.Props) {
   const navigationContext: Types.NavigationContextProps | null = useContext(
     NavigationContext.Context,
   );
-  const navigatorMapContext: Types.NavigatorMapContextProps | null = useContext(
-    NavigatorMapContext.NavigatorMapContext,
-  );
-  if (!navigationContext || !navigatorMapContext) {
+  const elemenCacheContext = useContext(Contexts.ElementCacheContext);
+  if (!navigationContext || !elemenCacheContext) {
     throw new NavigatorService.HvRouteError('No context found');
   }
   const backContext = useContext(BackBehaviorContext);
@@ -678,7 +674,7 @@ function HvRouteFC(props: Types.Props) {
       entrypointUrl={navigationContext.entrypointUrl}
       errorScreen={navigationContext.errorScreen}
       fetch={navigationContext.fetch}
-      getPreload={navigatorMapContext.getPreload}
+      getElement={elemenCacheContext.getElement}
       handleBack={navigationContext.handleBack}
       navigation={nav}
       onError={navigationContext.onError}
@@ -686,9 +682,9 @@ function HvRouteFC(props: Types.Props) {
       onParseBefore={navigationContext.onParseBefore}
       onUpdate={navigationContext.onUpdate}
       reload={navigationContext.reload}
-      removePreload={navigatorMapContext.removePreload}
+      removeElement={elemenCacheContext.removeElement}
       route={props.route}
-      setPreload={navigatorMapContext.setPreload}
+      setElement={elemenCacheContext.setElement}
       url={url}
     />
   );

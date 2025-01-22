@@ -55,7 +55,7 @@ export default class Navigation {
     element: Element,
     componentRegistry: Components.Registry,
     opts: BehaviorOptions,
-    registerPreload?: (id: number, e: Element) => void,
+    setElement?: (id: number, e: Element) => void,
   ): void => {
     const { showIndicatorId, delay, targetId } = opts;
     const formData: FormData | null | undefined = componentRegistry.getFormData(
@@ -83,8 +83,8 @@ export default class Navigation {
       ).find(s => s && s.getAttribute('id') === showIndicatorId);
       if (loadingScreen) {
         preloadScreen = Date.now(); // Not truly unique but sufficient for our use-case
-        if (registerPreload) {
-          registerPreload(preloadScreen, loadingScreen);
+        if (setElement) {
+          setElement(preloadScreen, loadingScreen);
         }
       }
     }
@@ -92,8 +92,8 @@ export default class Navigation {
     if (!preloadScreen && opts.behaviorElement) {
       // Pass the behavior element to the loading screen
       behaviorElementId = Date.now();
-      if (registerPreload) {
-        registerPreload(behaviorElementId, opts.behaviorElement);
+      if (setElement) {
+        setElement(behaviorElementId, opts.behaviorElement);
       }
     }
 

@@ -1,10 +1,9 @@
+import * as Contexts from 'hyperview/src/contexts';
 import * as NavigationContext from 'hyperview/src/contexts/navigation';
-import * as NavigatorMapContext from 'hyperview/src/contexts/navigator-map';
 import { ActivityIndicator, View } from 'react-native';
 import React, { useContext, useEffect } from 'react';
 import { LoadingProps } from './types';
 import { NavigationContextProps } from 'hyperview/src/contexts/navigation';
-import { NavigatorMapContextProps } from 'hyperview/src/contexts/navigator-map';
 import styles from './styles';
 
 /**
@@ -17,18 +16,16 @@ const Loading = (props: LoadingProps): React.ReactElement => {
   const navigationContext: NavigationContextProps | null = useContext(
     NavigationContext.Context,
   );
-  const navigatorMapContext: NavigatorMapContextProps | null = useContext(
-    NavigatorMapContext.NavigatorMapContext,
-  );
+  const elementCacheContext = useContext(Contexts.ElementCacheContext);
 
   // Perform cleanup when the component is unmounted
   useEffect(() => {
     return () => {
       if (props.cachedId) {
-        navigatorMapContext?.removePreload(props.cachedId);
+        elementCacheContext?.removeElement(props.cachedId);
       }
     };
-  }, [navigatorMapContext, props.cachedId]);
+  }, [elementCacheContext, props.cachedId]);
 
   // Use the passed preloadScreen component
   if (props.preloadScreenComponent) {
@@ -38,7 +35,7 @@ const Loading = (props: LoadingProps): React.ReactElement => {
   // Fall back to default loading screen if the contexts are not available
   if (
     !navigationContext ||
-    !navigatorMapContext ||
+    !elementCacheContext ||
     !navigationContext.loadingScreen
   ) {
     return (
@@ -50,7 +47,7 @@ const Loading = (props: LoadingProps): React.ReactElement => {
 
   // The behavior element which triggered the load
   const behaviorElement = props.cachedId
-    ? navigatorMapContext?.getPreload(props.cachedId)
+    ? elementCacheContext?.getElement(props.cachedId)
     : undefined;
 
   // If the behavior element is not found, look for a route element

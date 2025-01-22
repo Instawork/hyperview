@@ -22,16 +22,16 @@ export type Props = Omit<
   back?: (params: NavigationRouteParams | object | undefined) => void;
   closeModal?: (params: NavigationRouteParams | object | undefined) => void;
   doc?: Document;
-  getPreload?: (id: number) => Element | undefined;
+  getElement?: (id: number) => Element | undefined;
   navigate?: (params: NavigationRouteParams | object, key: string) => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   navigation?: any;
   onUpdate: HvComponentOnUpdate;
   openModal?: (params: NavigationRouteParams | object) => void;
   push?: (params: object) => void;
-  registerPreload?: (id: number, element: Element) => void;
+  setElement?: (id: number, element: Element) => void;
   reload: Reload;
-  removePreload?: (id: number) => void;
+  removeElement?: (id: number) => void;
   route?: NavigatorService.Route<string, { url?: string }>;
   url?: string;
 };
