@@ -398,7 +398,7 @@
     
   >
     
-      <behavior action="push" delay="1000" href="/hyperview/public/navigation/behaviors/actions/pushed.xml" show-during-load="loading-screen" />
+      <behavior action="push" href="/hyperview/public/navigation/behaviors/actions/pushed.xml" show-during-load="loading-screen" />
     
     <text style="button-label">Push with indicator</text>
   </view>
@@ -413,7 +413,7 @@
     
   >
     
-      <behavior action="push" delay="1000" href="/hyperview/public/navigation/behaviors/actions/pushed.xml" show-during-load="loading-screen" />
+      <behavior action="push" href="/hyperview/public/navigation/behaviors/actions/pushed.xml" show-during-load="loading-screen" />
     
     <text style="button-label">Push with params</text>
   </view>
