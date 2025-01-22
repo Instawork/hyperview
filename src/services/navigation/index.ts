@@ -12,20 +12,16 @@ import { NAV_ACTIONS } from 'hyperview/src/types';
 export const ANCHOR_ID_SEPARATOR = '#';
 
 export default class Navigation {
-  url: string;
+  entrypointUrl: string;
 
   document: Document | null | undefined = null;
 
   navigation: NavigationProps;
 
   constructor(url: string, navigation: NavigationProps) {
-    this.url = url;
+    this.entrypointUrl = url;
     this.navigation = navigation;
   }
-
-  setUrl = (url: string) => {
-    this.url = url;
-  };
 
   setDocument = (document: Document) => {
     this.document = document;
@@ -37,6 +33,7 @@ export default class Navigation {
     element: Element,
     componentRegistry: Components.Registry,
     opts: BehaviorOptions,
+    stateUrl?: string | null,
     setElement?: (id: number, e: Element) => void,
   ): void => {
     const { showIndicatorId, delay, targetId } = opts;
@@ -49,7 +46,10 @@ export default class Navigation {
     let url = href;
     if (!href.startsWith(ANCHOR_ID_SEPARATOR)) {
       // Serialize form data as query params, if present.
-      const baseUrl = UrlService.getUrlFromHref(href, this.url);
+      const baseUrl = UrlService.getUrlFromHref(
+        href,
+        stateUrl || this.entrypointUrl,
+      );
       url = UrlService.addFormDataToUrl(baseUrl, formData);
     }
 
