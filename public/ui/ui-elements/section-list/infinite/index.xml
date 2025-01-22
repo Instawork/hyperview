@@ -321,18 +321,7 @@
 <style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
 
         
-  <style
-    id="list-header"
-    alignItems="center"
-    backgroundColor="#eee"
-    flex="1"
-    flexDirection="row"
-    height="48"
-    paddingLeft="24"
-    paddingRight="24"/>
-  <style id="spinner" flex="1" flexDirection="row" justifyContent="center" padding="24"/>
-  <style id="list-header-text" fontSize="18" fontWeight="bold"/>
-
+        
       </styles>
       <body style="body" safe-area="true">
         <header style="header">
@@ -461,21 +450,17 @@
     
 
     <item
-      action="append"
+      action="replace"
       delay="1000"
       href="/hyperview/public/ui/ui-elements/section-list/infinite/infinite_scroll_page2.xml"
-      key="21"
+      key="loader"
       once="true"
-      show-during-load="myIndicator"
-      style="item"
-      target="myList"
-      trigger="visible">
-      <text style="item-label">List 21</text>
+      style="item item-last"
+      trigger="visible"
+    >
+      <spinner/>
     </item>
   </section-list>
-  <view id="myIndicator" hide="true" style="spinner">
-    <spinner/>
-  </view>
 
       </body>
     </screen>

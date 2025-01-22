@@ -430,13 +430,14 @@
         <text style="item-label">List 20</text>
       </item>
     
-    <item key="page-2-loader" style="item">
+    <item key="page-2-loader" style="item item-last">
       <behavior
         delay="300"
         trigger="visible"
         action="replace"
         once="true"
-        href="/hyperview/public/ui/ui-elements/list/infinite/infinite_scroll_page2.xml"/>
+        href="/hyperview/public/ui/ui-elements/list/infinite/infinite_scroll_page2.xml"
+      />
       <view id="list-loading-indicator" style="spinner">
         <spinner/>
       </view>

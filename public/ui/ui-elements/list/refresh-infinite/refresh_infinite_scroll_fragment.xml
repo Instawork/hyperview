@@ -1,5 +1,5 @@
 
-<list id="myList" xmlns="https://hyperview.org/hyperview">
+<items id="list-items" xmlns="https://hyperview.org/hyperview">
   <item key="0" style="item">
     <text style="item-label">New Item!</text>
   </item>
@@ -84,7 +84,7 @@
       <text style="item-label">List 20</text>
     </item>
   
-  <item key="page-2-loader" style="item">
+  <item key="page-2-loader" style="item item-last">
     <behavior
       delay="300"
       trigger="visible"
@@ -96,4 +96,4 @@
       <spinner />
     </view>
   </item>
-</list>
+</items>

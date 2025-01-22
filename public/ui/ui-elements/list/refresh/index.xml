@@ -371,7 +371,7 @@
         <text style="item-label">List 4</text>
       </item>
     
-      <item key="5" style="item">
+      <item key="5" style="item item-last">
         <text style="item-label">List 5</text>
       </item>
     

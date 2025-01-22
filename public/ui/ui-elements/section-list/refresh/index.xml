@@ -321,15 +321,6 @@
 <style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
 
         
-  <style
-    id="list-header"
-    alignItems="center"
-    backgroundColor="#eee"
-    flex="1"
-    flexDirection="row"
-    height="48"
-    paddingLeft="24"
-    paddingRight="24"/>
   <style id="item-label-special" color="red"/>
 
       </styles>
@@ -379,14 +370,11 @@
         <text style="item-label">List 4</text>
       </item>
     
-      <item key="5" style="item">
+      <item key="5" style="item item-last">
         <text style="item-label">List 5</text>
       </item>
     
   </section-list>
-  <view id="myIndicator" hide="true" style="spinner">
-    <spinner/>
-  </view>
 
       </body>
     </screen>

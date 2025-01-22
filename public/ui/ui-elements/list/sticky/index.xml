@@ -508,7 +508,7 @@
     
       <item
         key="20"
-        style="item"
+        style="item item-last"
         
       >
         <text style="item-label">Item 20</text>

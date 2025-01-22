@@ -593,7 +593,7 @@
         </behavior>
       </item>
     
-      <item key="20" style="item">
+      <item key="20" style="item item-last">
         <text style="item-label">List 20</text>
         <behavior
           xmlns:alert="https://hyperview.org/hyperview-alert"

@@ -348,13 +348,14 @@
 </header>
 
         
-  <view
+  <list
+    id="list"
     action="replace"
     href="/hyperview/public/ui/ui-elements/list/refresh-infinite/refresh_infinite_scroll_fragment.xml"
-    target="myList"
+    target="list-items"
     trigger="refresh"
   >
-    <list id="myList">
+    <items id="list-items">
       
         <item key="1" style="item">
           <text style="item-label">List 1</text>
@@ -436,7 +437,7 @@
           <text style="item-label">List 20</text>
         </item>
       
-      <item key="page-2-loader" style="item">
+      <item key="page-2-loader" style="item item-last">
         <behavior
           delay="300"
           trigger="visible"
@@ -448,8 +449,8 @@
           <spinner/>
         </view>
       </item>
-    </list>
-  </view>
+    </items>
+  </list>
 
       </body>
     </screen>

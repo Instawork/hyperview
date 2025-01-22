@@ -444,7 +444,7 @@
         <text style="item-label">List 19</text>
       </item>
     
-      <item key="20" style="item">
+      <item key="20" style="item item-last">
         <text style="item-label">List 20</text>
       </item>
     
