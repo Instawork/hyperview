@@ -101,7 +101,6 @@ Or when pressing a blurred element:
 The "focused" modifier only applies to elements that can be focused:
 
 - [`<text-field>`](/docs/reference_textfield)
-- [`<text-area>`](/docs/reference_textarea)
 
 #### `pressed`
 

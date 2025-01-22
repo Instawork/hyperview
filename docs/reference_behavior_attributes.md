@@ -128,7 +128,6 @@ Triggers when the element is focused. Only works on focusable elements.
 These elements support the `focus` trigger:
 
 - [`<text-field>`](/docs/reference_textfield)
-- [`<text-area>`](/docs/reference_textarea)
 
 ### `blur`
 
@@ -137,7 +136,6 @@ Triggers when the element loses focus. Only works on focusable elements.
 These elements support the `blur` trigger:
 
 - [`<text-field>`](/docs/reference_textfield)
-- [`<text-area>`](/docs/reference_textarea)
 
 ### `change`
 
@@ -150,7 +148,6 @@ Triggers when the element value changes. Only works on editable elements.
 These elements support the `change` trigger:
 
 - [`<text-field>`](/docs/reference_textfield)
-- [`<text-area>`](/docs/reference_textarea)
 - [`<switch>`](/docs/reference_switch)
 
 ### `on-event`
@@ -241,13 +238,6 @@ Not all elements support behavior attributes or `<behavior>` elements. Those tha
 #### `<text-field>`
 
 [`<text-field>`](/docs/reference_textfield): supports behavior attributes (or `<behavior>` elements as direct children) with the following triggers:
-
-- [focus](#focus)
-- [blur](#blur)
-
-#### `<text-area>`
-
-[`<text-area>`](/docs/reference_textarea): supports behavior attributes (or `<behavior>` elements as direct children) with the following triggers:
 
 - [focus](#focus)
 - [blur](#blur)
@@ -565,7 +555,6 @@ The `set-value` action allows setting the input value of the target element. The
 Note that the target element must only be one of the following elements:
 
 - [`<text-field>`](/docs/reference_textfield)
-- [`<text-area>`](/docs/reference_textarea)
 - [`<picker-field>`](/docs/reference_pickerfield)
 - [`<date-field>`](/docs/reference_datefield)
 - [`<select-single>`](/docs/reference_selectsingle)
