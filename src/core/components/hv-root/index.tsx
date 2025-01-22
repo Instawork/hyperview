@@ -2,7 +2,6 @@ import * as Behaviors from 'hyperview/src/behaviors';
 import * as Components from 'hyperview/src/services/components';
 import * as Contexts from 'hyperview/src/contexts';
 import * as Dom from 'hyperview/src/services/dom';
-import * as ElementCacheContext from 'hyperview/src/contexts/element-cache';
 import * as Events from 'hyperview/src/services/events';
 import * as Logging from 'hyperview/src/services/logging';
 import * as NavContexts from 'hyperview/src/contexts/navigation';
@@ -571,9 +570,9 @@ export default class Hyperview extends PureComponent<Types.Props> {
               reload: this.reload,
             }}
           >
-            <ElementCacheContext.CacheProvider>
+            <Contexts.ElementCacheProvider>
               <HvRoute />
-            </ElementCacheContext.CacheProvider>
+            </Contexts.ElementCacheProvider>
           </NavContexts.Context.Provider>
         </Contexts.RefreshControlComponentContext.Provider>
       </Contexts.DateFormatContext.Provider>

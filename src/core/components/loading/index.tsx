@@ -1,4 +1,4 @@
-import * as ElementCacheContext from 'hyperview/src/contexts/element-cache';
+import * as Contexts from 'hyperview/src/contexts';
 import * as NavigationContext from 'hyperview/src/contexts/navigation';
 import { ActivityIndicator, View } from 'react-native';
 import React, { useContext, useEffect } from 'react';
@@ -16,7 +16,7 @@ const Loading = (props: LoadingProps): React.ReactElement => {
   const navigationContext: NavigationContextProps | null = useContext(
     NavigationContext.Context,
   );
-  const elementCacheContext = useContext(ElementCacheContext.Context);
+  const elementCacheContext = useContext(Contexts.ElementCacheContext);
 
   // Perform cleanup when the component is unmounted
   useEffect(() => {

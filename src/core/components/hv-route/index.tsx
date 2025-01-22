@@ -1,7 +1,6 @@
 import * as Components from 'hyperview/src/services/components';
 import * as Contexts from 'hyperview/src/contexts';
 import * as DomService from 'hyperview/src/services/dom';
-import * as ElementCacheContext from 'hyperview/src/contexts/element-cache';
 import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as NavigationContext from 'hyperview/src/contexts/navigation';
@@ -567,7 +566,7 @@ function HvRouteFC(props: Types.Props) {
   const navigationContext: Types.NavigationContextProps | null = useContext(
     NavigationContext.Context,
   );
-  const elemenCacheContext = useContext(ElementCacheContext.Context);
+  const elemenCacheContext = useContext(Contexts.ElementCacheContext);
   if (!navigationContext || !elemenCacheContext) {
     throw new NavigatorService.HvRouteError('No context found');
   }
