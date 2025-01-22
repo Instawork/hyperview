@@ -319,7 +319,7 @@
   paddingHorizontal="16"
 />
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
-<style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
+<style id="links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" marginBottom="24" />
 
         
         
@@ -351,7 +351,7 @@
         
   <list xmlns:scroll="https://hyperview.org/hyperview-scroll">
     <item key="top">
-      <view id="top" style="top-links-container">
+      <view id="top" style="links-container">
         
   <view
     style="link-container"
@@ -682,15 +682,15 @@
     
   </item>
 
-  <item key="50" style="item" id="item-50">
+  <item key="50" style="item item-last" id="item-50">
     <text style="item-label">Item 50</text>
     
   </item>
 
 
-<item key="bottom" id="bottom">
-  <view />
-  
+<item key="bottom">
+  <view id="bottom" style="links-container">
+    
   <view
     style="link-container"
     
@@ -701,6 +701,7 @@
     <text style="link-text">Scroll to top</text>
   </view>
 
+  </view>
 </item>
 
   </list>
@@ -1027,7 +1028,7 @@
   paddingHorizontal="16"
 />
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
-<style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
+<style id="links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" marginBottom="24" />
 
   </styles>
   <body style="body" safe-area="true">
@@ -1379,7 +1380,7 @@
   paddingHorizontal="16"
 />
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
-<style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
+<style id="links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" marginBottom="24" />
 
   </styles>
   <body style="body" safe-area="true">

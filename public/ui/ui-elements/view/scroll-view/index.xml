@@ -319,7 +319,7 @@
   paddingHorizontal="16"
 />
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
-<style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
+<style id="links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" marginBottom="24" />
 
         
   <style id="Border" borderColor="#e1e1e1" borderWidth="1" flex="1" margin="24" padding="8"/>
@@ -824,7 +824,7 @@
   paddingHorizontal="16"
 />
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
-<style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
+<style id="links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" marginBottom="24" />
 
   </styles>
   <body style="body" safe-area="true">
@@ -1176,7 +1176,7 @@
   paddingHorizontal="16"
 />
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
-<style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
+<style id="links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" marginBottom="24" />
 
   </styles>
   <body style="body" safe-area="true">

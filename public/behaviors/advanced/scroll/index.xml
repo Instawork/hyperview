@@ -319,7 +319,7 @@
   paddingHorizontal="16"
 />
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
-<style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
+<style id="links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" marginBottom="24" />
 
         
         
@@ -402,13 +402,13 @@
       
       <item
         href="/hyperview/public//behaviors/advanced/scroll/section-list/index.xml"
-        key="uiui-elementssection-list"
+        key="section-list"
         show-during-load="loading-screen"
         style="item item-last"
         
       >
         <view style="item-left">
-          <text style="item-label">UI/UI Elements/Section List</text>
+          <text style="item-label">Section List</text>
         </view>
         <view style="item-chevron">
           <svg
@@ -755,7 +755,7 @@
   paddingHorizontal="16"
 />
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
-<style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
+<style id="links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" marginBottom="24" />
 
   </styles>
   <body style="body" safe-area="true">
@@ -1107,7 +1107,7 @@
   paddingHorizontal="16"
 />
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
-<style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
+<style id="links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" marginBottom="24" />
 
   </styles>
   <body style="body" safe-area="true">

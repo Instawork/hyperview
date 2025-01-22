@@ -319,7 +319,7 @@
   paddingHorizontal="16"
 />
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
-<style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
+<style id="links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" marginBottom="24" />
 
         
   <style
@@ -357,13 +357,13 @@
 
     </view>
   
-  <text style="header-title">UI/UI Elements/Section List</text>
+  <text style="header-title">Section List</text>
 </header>
 
         
   <section-list xmlns:scroll="https://hyperview.org/hyperview-scroll">
     <item key="top">
-      <view id="top" style="top-links-container">
+      <view id="top" style="links-container">
         
   <view
     style="link-container"
@@ -415,6 +415,7 @@
 <section-title style="list-header">
   <text style="list-header-text">-</text>
 </section-title>
+
 
   <item key="1" style="item" id="item-1">
     <text style="item-label">Item 1</text>
@@ -527,7 +528,7 @@
     
   >
     
-      <behavior action="scroll" target="#top" scroll:animated="true" />
+      <behavior action="scroll" target="top" scroll:animated="true" />
     
     <text style="link-text">Scroll to top</text>
   </view>
@@ -613,7 +614,7 @@
     
   >
     
-      <behavior action="scroll" target="#top" scroll:animated="true" />
+      <behavior action="scroll" target="top" scroll:animated="true" />
     
     <text style="link-text">Scroll to top</text>
   </view>
@@ -699,7 +700,7 @@
     
   >
     
-      <behavior action="scroll" target="#top" scroll:animated="true" />
+      <behavior action="scroll" target="top" scroll:animated="true" />
     
     <text style="link-text">Scroll to top</text>
   </view>
@@ -823,9 +824,9 @@
   
 
 
-<item key="bottom" id="bottom">
-  <view />
-  
+<item key="bottom">
+  <view id="bottom" style="links-container">
+    
   <view
     style="link-container"
     
@@ -836,6 +837,7 @@
     <text style="link-text">Scroll to top</text>
   </view>
 
+  </view>
 </item>
 
   </section-list>
@@ -1162,7 +1164,7 @@
   paddingHorizontal="16"
 />
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
-<style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
+<style id="links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" marginBottom="24" />
 
   </styles>
   <body style="body" safe-area="true">
@@ -1186,7 +1188,7 @@
 
     </view>
   
-  <text style="header-title">UI/UI Elements/Section List</text>
+  <text style="header-title">Section List</text>
 </header>
 
     <view style="loading">
@@ -1514,7 +1516,7 @@
   paddingHorizontal="16"
 />
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
-<style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
+<style id="links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" marginBottom="24" />
 
   </styles>
   <body style="body" safe-area="true">

@@ -319,7 +319,7 @@
   paddingHorizontal="16"
 />
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
-<style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
+<style id="links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" marginBottom="24" />
 
         
         
@@ -2211,7 +2211,7 @@
   paddingHorizontal="16"
 />
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
-<style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
+<style id="links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" marginBottom="24" />
 
   </styles>
   <body style="body" safe-area="true">
@@ -2545,7 +2545,7 @@
   paddingHorizontal="16"
 />
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
-<style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
+<style id="links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" marginBottom="24" />
 
   </styles>
   <body style="body" safe-area="true">
