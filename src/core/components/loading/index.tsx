@@ -1,5 +1,5 @@
+import * as ElementCacheContext from 'hyperview/src/contexts/element-cache';
 import * as NavigationContext from 'hyperview/src/contexts/navigation';
-import * as NavigatorMapContext from 'hyperview/src/contexts/navigator-map';
 import { ActivityIndicator, View } from 'react-native';
 import React, { useContext, useEffect } from 'react';
 import { LoadingProps } from './types';
@@ -17,9 +17,7 @@ const Loading = (props: LoadingProps): React.ReactElement => {
   const navigationContext: NavigationContextProps | null = useContext(
     NavigationContext.Context,
   );
-  const navigatorMapContext: NavigatorMapContextProps | null = useContext(
-    NavigatorMapContext.NavigatorMapContext,
-  );
+  const elementCacheContext = useContext(ElementCacheContext.Context);
 
   // Perform cleanup when the component is unmounted
   useEffect(() => {
@@ -28,7 +26,7 @@ const Loading = (props: LoadingProps): React.ReactElement => {
         navigatorMapContext?.removePreload(props.cachedId);
       }
     };
-  }, [navigatorMapContext, props.cachedId]);
+  }, [elementCacheContext, props.cachedId]);
 
   // Use the passed preloadScreen component
   if (props.preloadScreenComponent) {
@@ -38,7 +36,7 @@ const Loading = (props: LoadingProps): React.ReactElement => {
   // Fall back to default loading screen if the contexts are not available
   if (
     !navigationContext ||
-    !navigatorMapContext ||
+    !elementCacheContext ||
     !navigationContext.loadingScreen
   ) {
     return (

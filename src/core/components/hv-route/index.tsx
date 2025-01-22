@@ -1,10 +1,10 @@
 import * as Components from 'hyperview/src/services/components';
 import * as Contexts from 'hyperview/src/contexts';
 import * as DomService from 'hyperview/src/services/dom';
+import * as ElementCacheContext from 'hyperview/src/contexts/element-cache';
 import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as NavigationContext from 'hyperview/src/contexts/navigation';
-import * as NavigatorMapContext from 'hyperview/src/contexts/navigator-map';
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Render from 'hyperview/src/services/render';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
@@ -568,10 +568,8 @@ function HvRouteFC(props: Types.Props) {
   const navigationContext: Types.NavigationContextProps | null = useContext(
     NavigationContext.Context,
   );
-  const navigatorMapContext: Types.NavigatorMapContextProps | null = useContext(
-    NavigatorMapContext.NavigatorMapContext,
-  );
-  if (!navigationContext || !navigatorMapContext) {
+  const elemenCacheContext = useContext(ElementCacheContext.Context);
+  if (!navigationContext || !elemenCacheContext) {
     throw new NavigatorService.HvRouteError('No context found');
   }
   const backContext = useContext(BackBehaviorContext);
