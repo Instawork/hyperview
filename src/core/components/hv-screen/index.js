@@ -172,9 +172,6 @@ export default class HvScreen extends React.Component {
     if (behaviorElementId) {
       this.props.removePreload?.(behaviorElementId);
     }
-    if (this.state.url) {
-      this.navigation.removeRouteKey(this.state.url);
-    }
   }
 
   /**
@@ -191,7 +188,7 @@ export default class HvScreen extends React.Component {
    * Performs a full load of the screen.
    */
   load = async () => {
-    const { params, key: routeKey } = this.getRoute(this.props);
+    const { params } = this.getRoute(this.props);
 
     try {
       // If an initial document was passed, use it once and then remove
@@ -214,7 +211,6 @@ export default class HvScreen extends React.Component {
         staleHeaderType = loadedType;
       }
       const stylesheets = Stylesheets.createStylesheets(doc);
-      this.navigation.setRouteKey(this.state.url, routeKey);
       this.setState({
         doc,
         elementError: null,
