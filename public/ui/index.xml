@@ -211,6 +211,7 @@
 </style>
 
 
+<style id="flex-1" flex="1" />
 <style
   id="header"
   alignItems="center"
@@ -1511,13 +1512,13 @@
       
       <item
         href="/hyperview/public/ui/ui-elements/web-view/loading/index.xml"
-        key="show-loading-indicator"
+        key="loading-indicator-tweaks"
         show-during-load="loading-screen"
         style="item"
         
       >
         <view style="item-left">
-          <text style="item-label">Show Loading Indicator</text>
+          <text style="item-label">Loading Indicator Tweaks</text>
         </view>
         <view style="item-chevron">
           <svg
@@ -2102,6 +2103,7 @@
 </style>
 
 
+<style id="flex-1" flex="1" />
 <style
   id="header"
   alignItems="center"
@@ -2435,6 +2437,7 @@
 </style>
 
 
+<style id="flex-1" flex="1" />
 <style
   id="header"
   alignItems="center"

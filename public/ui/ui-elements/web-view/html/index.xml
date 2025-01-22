@@ -211,6 +211,7 @@
 </style>
 
 
+<style id="flex-1" flex="1" />
 <style
   id="header"
   alignItems="center"
@@ -321,7 +322,7 @@
 <style id="top-links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" />
 
         
-  <style id="flex" flex="1" flexDirection="row" justifyContent="space-between"/>
+  <style id="container" flexShrink="1" flex="1" />
 
       </styles>
       <body style="body" safe-area="true">
@@ -349,8 +350,14 @@
 </header>
 
         
-  <view style="flex">
-    <web-view html="&lt;h1&gt;Hello world!&lt;/h1&gt;" activity-indicator-color="red"/>
+  <view style="container">
+    <web-view
+      html="
+        &lt;div style=&quot;text-align: center&quot;&gt;
+          &lt;h1 style=&quot;font-size: 72px;&quot;&gt;Hello world!&lt;/h1&gt;
+        &lt;/div&gt;
+      "
+    />
   </view>
 
       </body>
@@ -567,6 +574,7 @@
 </style>
 
 
+<style id="flex-1" flex="1" />
 <style
   id="header"
   alignItems="center"
@@ -918,6 +926,7 @@
 </style>
 
 
+<style id="flex-1" flex="1" />
 <style
   id="header"
   alignItems="center"

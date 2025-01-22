@@ -211,6 +211,7 @@
 </style>
 
 
+<style id="flex-1" flex="1" />
 <style
   id="header"
   alignItems="center"
@@ -772,6 +773,7 @@
 </style>
 
 
+<style id="flex-1" flex="1" />
 <style
   id="header"
   alignItems="center"
@@ -1123,6 +1125,7 @@
 </style>
 
 
+<style id="flex-1" flex="1" />
 <style
   id="header"
   alignItems="center"
