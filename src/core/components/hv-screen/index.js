@@ -93,7 +93,7 @@ export default class HvScreen extends React.Component {
     const url = params.url || this.props.entrypointUrl || null;
 
     const preloadScreen = params.preloadScreen
-      ? this.props.getPreload(params.preloadScreen)
+      ? this.props.getElement(params.preloadScreen)
       : null;
     const preloadStyles = preloadScreen
       ? Stylesheets.createStylesheets(preloadScreen)
@@ -135,18 +135,18 @@ export default class HvScreen extends React.Component {
     const oldElementId = oldNavigationState.params.behaviorElementId;
 
     if (newPreloadScreen !== oldPreloadScreen && oldPreloadScreen) {
-      this.props.removePreload?.(oldPreloadScreen);
+      this.props.removeElement?.(oldPreloadScreen);
     }
 
     if (newElementId !== oldElementId && oldElementId) {
-      this.props.removePreload?.(oldElementId);
+      this.props.removeElement?.(oldElementId);
     }
 
     if (newUrl && newUrl !== oldUrl) {
       this.needsLoad = true;
 
       const preloadScreen = newPreloadScreen
-        ? this.props.getPreload(newPreloadScreen)
+        ? this.props.getElement(newPreloadScreen)
         : null;
 
       const doc = preloadScreen || this.doc;
@@ -317,9 +317,9 @@ export default class HvScreen extends React.Component {
     push: this.props.push,
   });
 
-  registerPreload = (id, element) => {
-    if (this.props.registerPreload) {
-      this.props.registerPreload(id, element);
+  setElement = (id, element) => {
+    if (this.props.setElement) {
+      this.props.setElement(id, element);
     }
   };
 
@@ -336,7 +336,7 @@ export default class HvScreen extends React.Component {
     getNavigation: () => this.navigation,
     getOnUpdate: () => this.onUpdate,
     getState: () => this.state,
-    registerPreload: (id, element) => this.registerPreload(id, element),
+    setElement: (id, element) => this.setElement(id, element),
     setNeedsLoad: () => {
       this.needsLoad = true;
     },

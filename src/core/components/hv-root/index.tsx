@@ -237,7 +237,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
             showIndicatorId: showIndicatorId || undefined,
             targetId: targetId || undefined,
           },
-          options.onUpdateCallbacks.registerPreload,
+          options.onUpdateCallbacks.setElement,
         );
       }
     } else if (

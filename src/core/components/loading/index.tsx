@@ -23,7 +23,7 @@ const Loading = (props: LoadingProps): React.ReactElement => {
   useEffect(() => {
     return () => {
       if (props.cachedId) {
-        navigatorMapContext?.removePreload(props.cachedId);
+        elementCacheContext?.removeElement(props.cachedId);
       }
     };
   }, [elementCacheContext, props.cachedId]);
@@ -48,7 +48,7 @@ const Loading = (props: LoadingProps): React.ReactElement => {
 
   // The behavior element which triggered the load
   const behaviorElement = props.cachedId
-    ? navigatorMapContext?.getPreload(props.cachedId)
+    ? elementCacheContext?.getElement(props.cachedId)
     : undefined;
 
   // If the behavior element is not found, look for a route element

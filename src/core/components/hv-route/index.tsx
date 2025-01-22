@@ -229,8 +229,8 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     );
   };
 
-  registerPreload = (id: number, element: Element): void => {
-    this.props.setPreload(id, element);
+  setElement = (id: number, element: Element): void => {
+    this.props.setElement(id, element);
   };
 
   /**
@@ -244,8 +244,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     getNavigation: () => this.navigation,
     getOnUpdate: () => this.onUpdate,
     getState: () => this.state,
-    registerPreload: (id: number, element: Element) =>
-      this.registerPreload(id, element),
+    setElement: (id: number, element: Element) => this.setElement(id, element),
     setNeedsLoad: () => {
       this.needsLoad = true;
     },
@@ -278,7 +277,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     const noop = () => {};
 
     if (this.props.route?.params?.preloadScreen) {
-      const preloadElement = this.props.getPreload(
+      const preloadElement = this.props.getElement(
         this.props.route?.params?.preloadScreen,
       );
       if (preloadElement) {
@@ -372,7 +371,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
             errorScreen={this.props.errorScreen}
             fetch={this.props.fetch}
             formatDate={formatter}
-            getPreload={this.props.getPreload}
+            getElement={this.props.getElement}
             navigate={this.navLogic.navigate}
             navigation={this.props.navigation}
             onError={this.props.onError}
@@ -381,10 +380,10 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
             onUpdate={this.props.onUpdate}
             openModal={this.navLogic.openModal}
             push={this.navLogic.push}
-            registerPreload={this.registerPreload}
             reload={this.props.reload}
-            removePreload={this.props.removePreload}
+            removeElement={this.props.removeElement}
             route={route}
+            setElement={this.setElement}
             url={url || undefined}
           />
         )}
@@ -676,7 +675,7 @@ function HvRouteFC(props: Types.Props) {
       entrypointUrl={navigationContext.entrypointUrl}
       errorScreen={navigationContext.errorScreen}
       fetch={navigationContext.fetch}
-      getPreload={navigatorMapContext.getPreload}
+      getElement={elemenCacheContext.getElement}
       handleBack={navigationContext.handleBack}
       navigation={nav}
       onError={navigationContext.onError}
@@ -684,9 +683,9 @@ function HvRouteFC(props: Types.Props) {
       onParseBefore={navigationContext.onParseBefore}
       onUpdate={navigationContext.onUpdate}
       reload={navigationContext.reload}
-      removePreload={navigatorMapContext.removePreload}
+      removeElement={elemenCacheContext.removeElement}
       route={props.route}
-      setPreload={navigatorMapContext.setPreload}
+      setElement={elemenCacheContext.setElement}
       url={url}
     />
   );
