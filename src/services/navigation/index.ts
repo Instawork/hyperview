@@ -10,13 +10,6 @@ import type {
 import { NAV_ACTIONS } from 'hyperview/src/types';
 
 export const ANCHOR_ID_SEPARATOR = '#';
-const QUERY_SEPARATOR = '?';
-
-const getHrefKey = (href: string): string => href.split(QUERY_SEPARATOR)[0];
-
-const routeKeys: {
-  [key: string]: string;
-} = {};
 
 export default class Navigation {
   url: string;
@@ -36,17 +29,6 @@ export default class Navigation {
 
   setDocument = (document: Document) => {
     this.document = document;
-  };
-
-  getRouteKey = (href: string): string | null | undefined =>
-    routeKeys[getHrefKey(href)];
-
-  setRouteKey = (href: string, key: string): void => {
-    routeKeys[getHrefKey(href)] = key;
-  };
-
-  removeRouteKey = (href: string): void => {
-    delete routeKeys[getHrefKey(href)];
   };
 
   navigate = (
@@ -125,12 +107,7 @@ export default class Navigation {
         this.navigation.push(routeParams);
         break;
       case NAV_ACTIONS.NAVIGATE: {
-        const key = this.getRouteKey(url);
-        if (key) {
-          this.navigation.navigate(routeParams, this.getRouteKey(url));
-        } else {
-          this.navigation.push(routeParams);
-        }
+        this.navigation.navigate(routeParams);
         break;
       }
       case NAV_ACTIONS.NEW:
