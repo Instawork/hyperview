@@ -17,9 +17,6 @@ const getHrefKey = (href: string): string => href.split(QUERY_SEPARATOR)[0];
 const routeKeys: {
   [key: string]: string;
 } = {};
-const preloadScreens: {
-  [key: number]: Element;
-} = {};
 
 export default class Navigation {
   url: string;
@@ -39,17 +36,6 @@ export default class Navigation {
 
   setDocument = (document: Document) => {
     this.document = document;
-  };
-
-  getPreloadScreen = (id: number): Element | null | undefined =>
-    preloadScreens[id];
-
-  setPreloadScreen = (id: number, element: Element): void => {
-    preloadScreens[id] = element;
-  };
-
-  removePreloadScreen = (id: number): void => {
-    delete preloadScreens[id];
   };
 
   getRouteKey = (href: string): string | null | undefined =>
@@ -97,7 +83,6 @@ export default class Navigation {
       ).find(s => s && s.getAttribute('id') === showIndicatorId);
       if (loadingScreen) {
         preloadScreen = Date.now(); // Not truly unique but sufficient for our use-case
-        this.setPreloadScreen(preloadScreen, loadingScreen);
         if (registerPreload) {
           registerPreload(preloadScreen, loadingScreen);
         }
@@ -107,7 +92,6 @@ export default class Navigation {
     if (!preloadScreen && opts.behaviorElement) {
       // Pass the behavior element to the loading screen
       behaviorElementId = Date.now();
-      this.setPreloadScreen(behaviorElementId, opts.behaviorElement);
       if (registerPreload) {
         registerPreload(behaviorElementId, opts.behaviorElement);
       }

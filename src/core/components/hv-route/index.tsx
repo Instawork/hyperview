@@ -372,6 +372,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
             errorScreen={this.props.errorScreen}
             fetch={this.props.fetch}
             formatDate={formatter}
+            getPreload={this.props.getPreload}
             navigate={this.navLogic.navigate}
             navigation={this.props.navigation}
             onError={this.props.onError}

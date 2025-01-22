@@ -22,6 +22,7 @@ export type Props = Omit<
   back?: (params: NavigationRouteParams | object | undefined) => void;
   closeModal?: (params: NavigationRouteParams | object | undefined) => void;
   doc?: Document;
+  getPreload?: (id: number) => Element | undefined;
   navigate?: (params: NavigationRouteParams | object, key: string) => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   navigation?: any;
