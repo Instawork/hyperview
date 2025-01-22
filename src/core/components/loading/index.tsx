@@ -4,7 +4,6 @@ import { ActivityIndicator, View } from 'react-native';
 import React, { useContext, useEffect } from 'react';
 import { LoadingProps } from './types';
 import { NavigationContextProps } from 'hyperview/src/contexts/navigation';
-import { NavigatorMapContextProps } from 'hyperview/src/contexts/navigator-map';
 import styles from './styles';
 
 /**
