@@ -547,8 +547,8 @@
   </picker-field>
 </view>
 <view hide="true">
-  <text id="pickerChanged" style="tip">Picker changed</text>
-  <text id="pickerChanged2" style="tip">!</text>
+  <text id="pickerChanged" style="tip">Changed:</text>
+  <text id="pickerChanged2" style="tip">Picker</text>
 </view>
 
   <view style="form-group">
@@ -578,8 +578,8 @@
   </date-field>
 </view>
 <view hide="true">
-  <text id="dateFieldChanged" style="tip">Date field changed</text>
-  <text id="dateFieldChanged2" style="tip">!</text>
+  <text id="dateFieldChanged" style="tip">Changed:</text>
+  <text id="dateFieldChanged2" style="tip">Date field</text>
 </view>
 
 

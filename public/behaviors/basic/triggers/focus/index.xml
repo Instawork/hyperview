@@ -441,8 +441,8 @@
   </picker-field>
 </view>
 <view hide="true">
-  <text id="pickerFocused" style="tip">Picker field focused</text>
-  <text id="pickerFocused2" style="tip">!</text>
+  <text id="pickerFocused" style="tip">Focused:</text>
+  <text id="pickerFocused2" style="tip">Picker field</text>
 </view>
 
   <view style="form-group">
@@ -472,8 +472,8 @@
   </date-field>
 </view>
 <view hide="true">
-  <text id="dateFieldFocused" style="tip">Date field focused</text>
-  <text id="dateFieldFocused2" style="tip">!</text>
+  <text id="dateFieldFocused" style="tip">Focused:</text>
+  <text id="dateFieldFocused2" style="tip">Date field</text>
 </view>
 
 
