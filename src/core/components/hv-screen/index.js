@@ -93,7 +93,7 @@ export default class HvScreen extends React.Component {
     const url = params.url || this.props.entrypointUrl || null;
 
     const preloadScreen = params.preloadScreen
-      ? this.navigation.getPreloadScreen(params.preloadScreen)
+      ? this.props.getPreload(params.preloadScreen)
       : null;
     const preloadStyles = preloadScreen
       ? Stylesheets.createStylesheets(preloadScreen)
@@ -146,7 +146,7 @@ export default class HvScreen extends React.Component {
       this.needsLoad = true;
 
       const preloadScreen = newPreloadScreen
-        ? this.navigation.getPreloadScreen(newPreloadScreen)
+        ? this.props.getPreload(newPreloadScreen)
         : null;
 
       const doc = preloadScreen || this.doc;
