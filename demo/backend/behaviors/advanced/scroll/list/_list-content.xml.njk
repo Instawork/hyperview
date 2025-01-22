@@ -1,7 +1,7 @@
 {% from 'macros/link/index.xml.njk' import link %}
 
 {% for i in range(1, 51) %}
-  <item key="{{ i }}" style="item" id="item-{{ i }}">
+  <item key="{{ i }}" style="item{% if loop.last %} item-last{% endif %}" id="item-{{ i }}">
     <text style="item-label">Item {{ i }}</text>
     {% if i == 15 or i == 25 or i == 35 %}
       {% call link('Scroll to top') -%}
@@ -11,9 +11,10 @@
   </item>
 {% endfor %}
 
-<item key="bottom" id="bottom">
-  <view />
-  {% call link('Scroll to top') -%}
-    <behavior action="scroll" target="top" scroll:animated="true" />
-  {%- endcall %}
+<item key="bottom">
+  <view id="bottom" style="links-container">
+    {% call link('Scroll to top') -%}
+      <behavior action="scroll" target="top" scroll:animated="true" />
+    {%- endcall %}
+  </view>
 </item>
