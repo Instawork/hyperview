@@ -240,7 +240,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       // Noop
     },
     getDoc: () => this.localDoc || null,
-    getNavigation: () => this.navigation,
+    getNavigation: () => this.navLogic,
     getOnUpdate: () => this.onUpdate,
     getState: () => this.state,
     setElement: (id: number, element: Element) => this.setElement(id, element),
@@ -360,9 +360,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       <Contexts.DateFormatContext.Consumer>
         {formatter => (
           <HvScreen
-            back={this.navLogic.backAction}
             behaviors={this.props.behaviors}
-            closeModal={this.navLogic.closeModalAction}
             components={this.props.components}
             doc={this.localDoc?.cloneNode(true) as Document}
             elementErrorComponent={this.props.elementErrorComponent}
@@ -371,18 +369,14 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
             fetch={this.props.fetch}
             formatDate={formatter}
             getElement={this.props.getElement}
-            navigate={this.navLogic.navigateAction}
-            navigation={this.props.navigation}
+            navigation={this.navLogic}
             onError={this.props.onError}
             onParseAfter={this.props.onParseAfter}
             onParseBefore={this.props.onParseBefore}
             onUpdate={this.props.onUpdate}
-            openModal={this.navLogic.openModalAction}
-            push={this.navLogic.pushAction}
             reload={this.props.reload}
             removeElement={this.props.removeElement}
             route={route}
-            setElement={this.setElement}
             url={url || undefined}
           />
         )}

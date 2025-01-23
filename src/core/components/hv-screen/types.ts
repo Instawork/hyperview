@@ -1,7 +1,7 @@
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import type {
   HvComponentOnUpdate,
-  NavigationRouteParams,
+  NavigationProvider,
   Reload,
 } from 'hyperview/src/types';
 import { Props as HvRootProps } from 'hyperview/src/core/components/hv-root/types';
@@ -19,16 +19,10 @@ export type Props = Omit<
   | 'handleBack'
   | 'logger'
 > & {
-  back?: (params: NavigationRouteParams | object | undefined) => void;
-  closeModal?: (params: NavigationRouteParams | object | undefined) => void;
   doc?: Document;
   getElement?: (id: number) => Element | undefined;
-  navigate?: (params: NavigationRouteParams | object, key: string) => void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  navigation?: any;
+  navigation: NavigationProvider;
   onUpdate: HvComponentOnUpdate;
-  openModal?: (params: NavigationRouteParams | object) => void;
-  push?: (params: object) => void;
   setElement?: (id: number, element: Element) => void;
   reload: Reload;
   removeElement?: (id: number) => void;

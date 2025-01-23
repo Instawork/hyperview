@@ -1,6 +1,5 @@
 import * as Components from 'hyperview/src/services/components';
 import * as Stylesheets from './services/stylesheets';
-import Navigation from './services/navigation';
 import type { Route as NavigatorRoute } from './services/navigator';
 import type React from 'react';
 import type { XResponseStaleReason } from './services/dom/types';
@@ -403,9 +402,23 @@ export type Fetch = (
   init?: RequestInit | undefined,
 ) => Promise<Response>;
 
+export type NavigationProvider = {
+  backAction: (params?: NavigationRouteParams | undefined) => void;
+  navigate: (
+    href: string,
+    action: NavAction,
+    element: Element,
+    componentRegistry: Components.Registry,
+    opts: BehaviorOptions,
+    stateUrl?: string | null,
+    doc?: Document | null,
+  ) => void;
+  openModalAction: (params: NavigationRouteParams) => void;
+};
+
 export type OnUpdateCallbacks = {
   clearElementError: () => void;
-  getNavigation: () => Navigation;
+  getNavigation: () => NavigationProvider;
   getOnUpdate: () => HvComponentOnUpdate;
   getDoc: () => Document | null;
   setElement: (id: number, element: Element) => void;

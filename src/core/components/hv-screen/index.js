@@ -254,10 +254,11 @@ export default class HvScreen extends React.Component {
     if (this.state.error) {
       const errorScreen = this.props.errorScreen || LoadError;
       return React.createElement(errorScreen, {
-        back: () => this.getNavigation().back(),
+        back: () => this.props.navigation.backAction(),
         error: this.state.error,
         onPressReload: () => this.reload(), // Make sure reload() is called without any args
-        onPressViewDetails: uri => this.props.openModal({ url: uri }),
+        onPressViewDetails: uri =>
+          this.props.navigation.openModalAction({ url: uri }),
       });
     }
     if (!this.state.doc) {
@@ -329,7 +330,7 @@ export default class HvScreen extends React.Component {
       }
     },
     getDoc: () => this.doc,
-    getNavigation: () => this.navigation,
+    getNavigation: () => this.props.navigation,
     getOnUpdate: () => this.onUpdate,
     getState: () => this.state,
     setElement: (id, element) => this.setElement(id, element),
