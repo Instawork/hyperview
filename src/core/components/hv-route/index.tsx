@@ -40,7 +40,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
 
   parser?: DomService.Parser;
 
-  navLogic: NavigatorService.Navigator;
+  navigator: NavigatorService.Navigator;
 
   componentRegistry: Components.Registry;
 
@@ -56,7 +56,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       doc: null,
       error: null,
     };
-    this.navLogic = new NavigatorService.Navigator(this.props);
+    this.navigator = new NavigatorService.Navigator(this.props);
     this.componentRegistry = new Components.Registry(this.props.components);
     this.needsLoad = false;
   }
@@ -80,7 +80,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       this.props.onParseBefore || null,
       this.props.onParseAfter || null,
     );
-    this.navLogic.setContext(this.context);
+    this.navigator.setContext(this.context);
 
     // When a nested navigator is found, the document is not loaded from url
     if (this.props.element === undefined) {
@@ -220,7 +220,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       // Noop
     },
     getDoc: () => this.localDoc || null,
-    getNavigation: () => this.navLogic,
+    getNavigation: () => this.navigator,
     getOnUpdate: () => this.onUpdate,
     getState: () => this.state,
     setNeedsLoad: () => {
@@ -307,11 +307,11 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     const ErrorScreen = this.props.errorScreen || LoadError;
     return (
       <ErrorScreen
-        back={() => this.navLogic.backAction({} as NavigationRouteParams)}
+        back={() => this.navigator.backAction({} as NavigationRouteParams)}
         error={props.error}
         onPressReload={() => this.load()}
         onPressViewDetails={(uri: string | undefined) => {
-          this.navLogic.openModalAction({
+          this.navigator.openModalAction({
             url: uri as string,
           } as NavigationRouteParams);
         }}
@@ -348,7 +348,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
             fetch={this.props.fetch}
             formatDate={formatter}
             getElement={this.props.getElement}
-            navigation={this.navLogic}
+            navigation={this.navigator}
             onError={this.props.onError}
             onParseAfter={this.props.onParseAfter}
             onParseBefore={this.props.onParseBefore}
