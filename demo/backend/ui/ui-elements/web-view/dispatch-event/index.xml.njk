@@ -7,20 +7,34 @@ hv_button_behavior: "back"
 {% extends 'templates/base.xml.njk' %}
 
 {% block styles %}
-  <style id="flex" flex="1" flexDirection="row" justifyContent="space-between"/>
+  <style id="container" flexShrink="1" flex="1" />
+  <style id="webview-container" height="72" />
+  <style id="content" backgroundColor="#ccc" padding="24" />
 {% endblock %}
 
 {% block container %}
-  <view style="flex">
-    <web-view html="&lt;button style=&quot;font-size: 80px&quot;
-                    onClick=&quot;window.ReactNativeWebView.postMessage('hyperview:helloworld')&quot;&gt;Post message&lt;/button&gt;"/>
+  <view style="container">
+    <view style="webview-container">
+      <web-view
+        html="
+          &lt;div style=&quot;text-align: center&quot;&gt;
+            &lt;button
+              style=&quot;font-size: 60px;&quot;
+              onClick=&quot;window.ReactNativeWebView.postMessage('hyperview:helloworld')&quot;
+            &gt;
+              Post message
+            &lt;/button&gt;
+          &lt;/div&gt;
+        "
+      />
+    </view>
     <view
-      action="append"
+      trigger="on-event"
       event-name="helloworld"
+      action="append"
       href="/hyperview/public/ui/ui-elements/web-view/dispatch-event/append.xml"
       scroll="true"
-      style="Main"
-      trigger="on-event"
+      style="content"
     />
   </view>
 {% endblock %}

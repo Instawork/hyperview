@@ -29,7 +29,7 @@
   <item key="30" style="item">
     <text style="item-label">Added: List 30</text>
   </item>
-  <item key="page-3-loader" style="item">
+  <item key="page-3-loader" style="item item-last">
     <behavior
       delay="300"
       trigger="visible"

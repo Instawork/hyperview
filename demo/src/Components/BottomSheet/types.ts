@@ -1,3 +1,5 @@
+export const namespace = 'https://hyperview.org/bottom-sheet';
+
 import type {
   HvComponentOnUpdate,
   HvComponentOptions,
@@ -11,6 +13,15 @@ export type HvProps = {
   dismissible: boolean;
   toggleEventName: string | null;
   visible: boolean;
+  swipeToClose: boolean;
+  contentSections: HTMLCollectionOf<Element>;
+  stopPoints: HTMLCollectionOf<Element>;
+};
+
+export type HvStyles = {
+  container: StyleSheet;
+  handle: StyleSheet;
+  overlay: StyleSheet;
 };
 
 export type LayoutEvent = {

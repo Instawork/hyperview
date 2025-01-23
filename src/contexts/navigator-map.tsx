@@ -2,6 +2,7 @@ import React, { createContext, useState } from 'react';
 
 export type NavigatorMapContextProps = {
   setPreload: (key: number, element: Element) => void;
+  removePreload: (key: number) => void;
   getPreload: (key: number) => Element | undefined;
 };
 
@@ -14,6 +15,7 @@ export type NavigatorMapContextProps = {
  */
 export const NavigatorMapContext = createContext<NavigatorMapContextProps>({
   getPreload: () => undefined,
+  removePreload: () => undefined,
   setPreload: () => undefined,
 });
 
@@ -34,10 +36,15 @@ export function NavigatorMapProvider(props: Props) {
     return preloadMap.get(key);
   };
 
+  const removePreload = (key: number) => {
+    preloadMap.delete(key);
+  };
+
   return (
     <NavigatorMapContext.Provider
       value={{
         getPreload,
+        removePreload,
         setPreload,
       }}
     >

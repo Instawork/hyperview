@@ -1,7 +1,7 @@
 <list
   action="replace"
   delay="1000"
-  href="/hyperview/public/ui/ui-elements/list/refresh-infinite/refresh_load2.xml"
+  href="/hyperview/public/ui/ui-elements/list/refresh/refresh_load2.xml"
   style="list"
   trigger="refresh"
   xmlns="https://hyperview.org/hyperview"
@@ -21,7 +21,7 @@
   <item key="4" style="item">
     <text style="item-label">List 4</text>
   </item>
-  <item key="5" style="item">
+  <item key="5" style="item item-last">
     <text style="item-label">List 5</text>
   </item>
 </list>

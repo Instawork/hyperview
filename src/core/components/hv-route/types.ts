@@ -34,6 +34,7 @@ export type NavigationContextProps = {
 export type NavigatorMapContextProps = {
   setPreload: (key: number, element: Element) => void;
   getPreload: (key: number) => Element | undefined;
+  removePreload: (key: number) => void;
 };
 
 /**
@@ -58,12 +59,13 @@ export type InnerRouteProps = {
   components?: HvComponent[];
   elementErrorComponent?: ComponentType<ErrorProps>;
   errorScreen?: ComponentType<ErrorProps>;
-  loadingScreen?: ComponentType<LoadingProps>;
   handleBack?: ComponentType<{ children: ReactNode }>;
   setPreload: (key: number, element: Element) => void;
   getPreload: (key: number) => Element | undefined;
+  removePreload: (key: number) => void;
   element?: Element;
   reload: Reload;
+  doc: Document | undefined;
 };
 
 /**

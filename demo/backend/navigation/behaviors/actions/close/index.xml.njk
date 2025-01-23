@@ -7,6 +7,10 @@ hv_open_modal: "true"
 ---
 {% extends 'templates/scrollview.xml.njk' %}
 
+{% block styles %}
+  <style id="container" marginHorizontal="24" />
+{% endblock %}
+
 {% block content %}
   {% include './_close-previous-screen/index.xml.njk' %}
   {% include './_close-query-params/index.xml.njk' %}

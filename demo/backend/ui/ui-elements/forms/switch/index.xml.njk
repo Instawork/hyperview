@@ -7,9 +7,7 @@ hv_button_behavior: "back"
 {% extends 'templates/scrollview.xml.njk' %}
 {% from 'macros/about/index.xml.njk' import about %}
 {% from 'macros/description/index.xml.njk' import description %}
-{% from 'macros/button/index.xml.njk' import button %}
 
-{# TBD rohanbayya: To fix serialize button #}
 {% block styles %}
   <style id="switch-styled" color="#E1E1E1" backgroundColor="red">
     <modifier selected="true">
@@ -53,11 +51,5 @@ hv_button_behavior: "back"
 
 {% block content %}
   {{ about('Switches allow users to select a boolean input') }}
-  <form>
-    {% include './_on/index.xml.njk' %}
-    {% include './_off/index.xml.njk' %}
-    {% include './_styled/index.xml.njk' %}
-  </form>
-  {{ description('Press the button below and see the request in the XML server. It will include the switch values as query params.') }}
-  {{ button('Serialize', {href:"/hyperview/public/ui/ui-elements/forms/select-multiple/index.xml"}) }}
+  {% include './_form.xml.njk' %}
 {% endblock %}

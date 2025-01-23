@@ -8,12 +8,17 @@ hv_button_behavior: "back"
 {% from 'macros/description/index.xml.njk' import description %}
 
 {% block content %}
-  {{ description('Dispatch events to load previous screen') }}
-  {% call button('Reload previous') -%}
+  {{ description('Pressing the button below will emit the event `test-event` and navigate you back to the previous screen, with new content added.') }}
+  {% call button('Dispatch event & go back') -%}
     <behavior
       action="dispatch-event"
       event-name="test-event"
       trigger="press"
+    />
+    <behavior
+      trigger="press"
+      action="back"
+      href="#"
     />
   {%- endcall %}
 {% endblock %}

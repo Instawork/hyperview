@@ -61,7 +61,6 @@
     "Input Elements": [
       "reference_form",
       "reference_textfield",
-      "reference_textarea",
       "reference_selectsingle",
       "reference_selectmultiple",
       "reference_option",
@@ -78,7 +77,8 @@
     "Hyperview Client": [
       "reference_hyperview_component",
       "reference_custom_elements",
-      "reference_custom_behaviors"
+      "reference_custom_behaviors",
+      "reference_loading_screen"
     ],
     "Hyperview Navigation":[
       "reference_navigator",

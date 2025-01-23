@@ -300,12 +300,29 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
           componentRegistry: this.componentRegistry,
         });
         if (component) {
-          return <>{component}</>;
+          return (
+            <Loading
+              cachedId={this.props.route.params.preloadScreen}
+              preloadScreenComponent={component}
+            />
+          );
         }
       }
     }
-    const LoadingScreen = this.props.loadingScreen || Loading;
-    return <LoadingScreen />;
+
+    return (
+      <Loading
+        cachedId={this.props.route?.params?.behaviorElementId}
+        routeElement={() => {
+          return this.props.route?.params?.routeId && this.props.doc
+            ? NavigatorService.getRouteById(
+                this.props.doc,
+                this.props.route.params.routeId,
+              )
+            : undefined;
+        }}
+      />
+    );
   };
 
   /**
@@ -357,7 +374,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
             errorScreen={this.props.errorScreen}
             fetch={this.props.fetch}
             formatDate={formatter}
-            loadingScreen={this.props.loadingScreen}
             navigate={this.navLogic.navigate}
             navigation={this.props.navigation}
             onError={this.props.onError}
@@ -368,6 +384,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
             push={this.navLogic.push}
             registerPreload={this.registerPreload}
             reload={this.props.reload}
+            removePreload={this.props.removePreload}
             route={route}
             url={url || undefined}
           />
@@ -656,6 +673,7 @@ function HvRouteFC(props: Types.Props) {
     <HvRouteInner
       behaviors={navigationContext.behaviors}
       components={navigationContext.components}
+      doc={docContext?.getDoc()}
       element={element}
       elementErrorComponent={navigationContext.elementErrorComponent}
       entrypointUrl={navigationContext.entrypointUrl}
@@ -663,13 +681,13 @@ function HvRouteFC(props: Types.Props) {
       fetch={navigationContext.fetch}
       getPreload={navigatorMapContext.getPreload}
       handleBack={navigationContext.handleBack}
-      loadingScreen={navigationContext.loadingScreen}
       navigation={nav}
       onError={navigationContext.onError}
       onParseAfter={navigationContext.onParseAfter}
       onParseBefore={navigationContext.onParseBefore}
       onUpdate={navigationContext.onUpdate}
       reload={navigationContext.reload}
+      removePreload={navigatorMapContext.removePreload}
       route={props.route}
       setPreload={navigatorMapContext.setPreload}
       url={url}

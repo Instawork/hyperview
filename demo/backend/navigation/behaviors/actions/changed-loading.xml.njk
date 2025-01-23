@@ -1,0 +1,17 @@
+---
+permalink: "/navigation/behaviors/actions/changed-loading.xml"
+hv_title: "Changed w/ Loading"
+hv_tab_id: "navigation"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+
+{% block content %}
+  {{ description('Changed Screen') }}
+
+  {% call button('Reload original screen') -%}
+    <behavior action="reload" href="/hyperview/public/navigation/index.xml" />
+  {%- endcall %}
+{% endblock %}

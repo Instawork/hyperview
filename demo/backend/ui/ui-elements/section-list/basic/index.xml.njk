@@ -39,7 +39,7 @@ hv_button_behavior: "back"
       <text style="list-header-text">Section 4</text>
     </section-title>
     {% for item in range(16, 21) %}
-      <item key="{{ item }}" style="item">
+      <item key="{{ item }}" style="item{% if loop.last %} item-last{% endif %}">
         <text style="item-label">List {{ item }}</text>
       </item>
     {% endfor %}
