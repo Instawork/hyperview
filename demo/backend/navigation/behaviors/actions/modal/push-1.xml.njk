@@ -1,0 +1,19 @@
+---
+permalink: "/navigation/behaviors/actions/modal/push-1.xml"
+hv_title: "Push Screen 1"
+hv_button_behavior: "back"
+---
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% extends 'templates/scrollview.xml.njk' %}
+
+{% block content %}
+  {{ description('This screen was dynamically pushed on the stack.') }}
+  {{ description('Pushing the button below will push another screen onto the stack.') }}
+  {% call button('Push on stack') -%}
+    <behavior
+      action="push"
+      href="/hyperview/public/navigation/behaviors/actions/modal/push-2.xml"
+    />
+  {%- endcall %}
+{% endblock %}

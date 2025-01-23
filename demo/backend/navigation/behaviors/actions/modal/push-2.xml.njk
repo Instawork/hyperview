@@ -1,0 +1,11 @@
+---
+permalink: "/navigation/behaviors/actions/modal/push-2.xml"
+hv_title: "Push Screen 2"
+hv_button_behavior: "back"
+---
+{% from 'macros/description/index.xml.njk' import description %}
+{% extends 'templates/scrollview.xml.njk' %}
+
+{% block content %}
+  {{ description('This screen was dynamically pushed on the stack.') }}
+{% endblock %}
