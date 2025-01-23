@@ -11,13 +11,13 @@ import { NavigationContainerRefContext } from '@react-navigation/native';
  * Provide navigation action implementations
  */
 export class Navigator {
-  props: HvRoute.Props;
+  props: HvRoute.InnerRouteProps;
 
   context:
     | React.ContextType<typeof NavigationContainerRefContext>
     | undefined = undefined;
 
-  constructor(props: HvRoute.Props) {
+  constructor(props: HvRoute.InnerRouteProps) {
     this.props = props;
   }
 
