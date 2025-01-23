@@ -362,7 +362,7 @@
   >
     
   
-    <text style="description">Dispatch events to load screens</text>
+    <text style="description">Dispatching an event is useful for cross-screen communication. This screen listens for the event `test-event` and appends content upon receipt. Press the button below and follow the instructions.</text>
   
 
     
@@ -375,11 +375,7 @@
     
   >
     
-      <behavior
-        action="dispatch-event"
-        event-name="test-event"
-        trigger="press"
-      />
+      
     
     <text style="button-label">Open new screen</text>
   </view>

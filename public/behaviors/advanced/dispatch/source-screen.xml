@@ -353,7 +353,7 @@
     
   
   
-    <text style="description">Dispatch events to load previous screen</text>
+    <text style="description">Pressing the button below will emit the event `test-event` and navigate you back to the previous screen, with new content added.</text>
   
 
   
@@ -369,8 +369,13 @@
       event-name="test-event"
       trigger="press"
     />
+    <behavior
+      trigger="press"
+      action="back"
+      href="#"
+    />
     
-    <text style="button-label">Reload previous</text>
+    <text style="button-label">Dispatch event &amp; go back</text>
   </view>
 
 
