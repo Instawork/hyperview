@@ -25,8 +25,6 @@ import HvScreen from 'hyperview/src/core/components/hv-screen';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import LoadError from 'hyperview/src/core/components/load-error';
 import Loading from 'hyperview/src/core/components/loading';
-// eslint-disable-next-line instawork/import-services
-import Navigation from 'hyperview/src/services/navigation';
 import { NavigationContainerRefContext } from '@react-navigation/native';
 
 /**
@@ -47,8 +45,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
 
   needsLoad = false;
 
-  navigation: Navigation;
-
   // See the hack in hv-screen. This is a fix for the updated DOM not being available immediately.
   localDoc: Document | null = null;
 
@@ -62,7 +58,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     this.navLogic = new NavigatorService.Navigator(this.props);
     this.componentRegistry = new Components.Registry(this.props.components);
     this.needsLoad = false;
-    this.navigation = new Navigation(props.entrypointUrl, this.getNavigation());
   }
 
   /**
@@ -98,18 +93,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       this.needsLoad = false;
     }
   }
-
-  /**
-   * Returns a navigation object similar to the one provided by React Navigation,
-   * but connected to the nav logic of this component.
-   */
-  getNavigation = () => ({
-    back: this.navLogic.backAction,
-    closeModal: this.navLogic.closeModalAction,
-    navigate: this.navLogic.navigateAction,
-    openModal: this.navLogic.openModalAction,
-    push: this.navLogic.pushAction,
-  });
 
   getUrl = (): string => {
     return UrlService.getUrlFromHref(

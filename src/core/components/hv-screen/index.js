@@ -11,8 +11,6 @@ import { createProps, createStyleProp, later } from 'hyperview/src/services';
 import LoadElementError from '../load-element-error';
 import LoadError from 'hyperview/src/core/components/load-error';
 import Loading from 'hyperview/src/core/components/loading';
-// eslint-disable-next-line instawork/import-services
-import Navigation from 'hyperview/src/services/navigation';
 import React from 'react';
 
 // eslint-disable-next-line instawork/pure-components
@@ -69,7 +67,6 @@ export default class HvScreen extends React.Component {
 
     this.behaviorRegistry = Behaviors.getRegistry(this.props.behaviors);
     this.componentRegistry = new Components.Registry(this.props.components);
-    this.navigation = new Navigation(props.entrypointUrl, this.getNavigation());
   }
 
   getRoute = props => {
@@ -302,17 +299,6 @@ export default class HvScreen extends React.Component {
     );
   }
 
-  /**
-   * Returns a navigation object similar to the one provided by React Navigation,
-   * but connected to props injected by the parent app.
-   */
-  getNavigation = () => ({
-    back: this.props.back,
-    closeModal: this.props.closeModal,
-    navigate: this.props.navigate,
-    openModal: this.props.openModal,
-    push: this.props.push,
-  });
 
   setElement = (id, element) => {
     if (this.props.setElement) {
