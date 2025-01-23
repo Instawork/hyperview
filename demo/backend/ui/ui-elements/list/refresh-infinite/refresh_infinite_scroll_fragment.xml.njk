@@ -2,7 +2,7 @@
 permalink: "/ui/ui-elements/list/refresh-infinite/refresh_infinite_scroll_fragment.xml"
 ---
 
-<list id="myList" xmlns="https://hyperview.org/hyperview">
+<items id="list-items" xmlns="https://hyperview.org/hyperview">
   <item key="0" style="item">
     <text style="item-label">New Item!</text>
   </item>
@@ -11,7 +11,7 @@ permalink: "/ui/ui-elements/list/refresh-infinite/refresh_infinite_scroll_fragme
       <text style="item-label">List {{ i }}</text>
     </item>
   {% endfor %}
-  <item key="page-2-loader" style="item">
+  <item key="page-2-loader" style="item item-last">
     <behavior
       delay="300"
       trigger="visible"
@@ -23,4 +23,4 @@ permalink: "/ui/ui-elements/list/refresh-infinite/refresh_infinite_scroll_fragme
       <spinner />
     </view>
   </item>
-</list>
+</items>

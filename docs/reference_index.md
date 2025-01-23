@@ -39,7 +39,6 @@ Input elements in HXML allow users to set local state on a Hyperview screen. Thi
 
 - [`<form>`](/docs/reference_form): An element used to group together several inputs for request serialization.
 - [`<text-field>`](/docs/reference_textfield): An element used to accept single-line text input.
-- [`<text-area>`](/docs/reference_textarea): An element used to accept multi-line text input.
 - [`<select-single>`](/docs/reference_selectsingle): An element that groups many `<option>` elements, and allows only one of the options to be selected at a time.
 - [`<select-multiple>`](/docs/reference_selectmultiple): An element that groups many `<option>` elements, and allows any number of options to be selected/deselected.
 - [`<option>`](/docs/reference_option): The `<option>` element represents an input choice within a `<select-single>` or `<select-multiple>`.
@@ -66,3 +65,4 @@ The Hyperview RN Client is a library that can parse and render HXML in a React N
 - The [`Hyperview`](/docs/reference_hyperview_component) class defines a component that takes an endpoint URL and configuration props to render Hyperview screens in an app.
 - [Custom Elements](/docs/reference_custom_elements): The Hyperview client can be extended by registering custom HXML elements and tags with custom RN components. This can be used to add elements with rich interactions, such as maps.
 - [Custom Behaviors](/docs/reference_custom_behaviors): The Hyperview client can be extended by registering custom callbacks that can be triggered via `<behavior>` elements in the HXML. Supports features like dispatching Redux actions, triggering phone calls and share sheets, event logging, etc.
+- [Loading Screen](/docs/reference_loading_screen): The Hyperview client can be extended by passing a loading screen component. This component can adjust its appearance based on the `<behavior>` or `<nav-route>` which triggered a content load.

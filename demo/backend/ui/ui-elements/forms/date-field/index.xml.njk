@@ -7,9 +7,7 @@ hv_button_behavior: "back"
 {% extends 'templates/scrollview.xml.njk' %}
 {% from 'macros/about/index.xml.njk' import about %}
 {% from 'macros/description/index.xml.njk' import description %}
-{% from 'macros/button/index.xml.njk' import button %}
 
-{# TBD rohanbayya: To fix serialize button #}
 {% block styles %}
   <style
     id="form-group"
@@ -111,16 +109,5 @@ hv_button_behavior: "back"
   {% call description() -%}
     Label formatting is determined by the client. In these examples, wer're using moment.js for the formatting.
   {%- endcall %}
-  {% include './_default/index.xml.njk' %}
-  {% include './_spinner/index.xml.njk' %}
-  {% include './_filled/index.xml.njk' %}
-  {% include './_label-format/index.xml.njk' %}
-  {% include './_min-date/index.xml.njk' %}
-  {% include './_max-date/index.xml.njk' %}
-  {% include './_min-max-date/index.xml.njk' %}
-  {% include './_validation-error/index.xml.njk' %}
-  {% include './_filled-validation-error/index.xml.njk' %}
-  {% include './_animations/index.xml.njk' %}
-  {% include './_customized/index.xml.njk' %}
-  {{ button('Serialize', {href:"/hyperview/public/ui/ui-elements/forms/date-field/index.xml"}) }}
+  {% include './_form.xml.njk' %}
 {% endblock %}

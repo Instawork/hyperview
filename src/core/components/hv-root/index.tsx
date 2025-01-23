@@ -6,6 +6,7 @@ import * as Events from 'hyperview/src/services/events';
 import * as Logging from 'hyperview/src/services/logging';
 import * as NavContexts from 'hyperview/src/contexts/navigation';
 import * as Navigation from 'hyperview/src/services/navigation';
+import * as NavigatorMapContext from 'hyperview/src/contexts/navigator-map';
 import * as Render from 'hyperview/src/services/render';
 import * as Services from 'hyperview/src/services';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
@@ -605,7 +606,9 @@ export default class Hyperview extends PureComponent<Types.Props> {
               reload: this.reload,
             }}
           >
-            <HvRoute />
+            <NavigatorMapContext.NavigatorMapProvider>
+              <HvRoute />
+            </NavigatorMapContext.NavigatorMapProvider>
           </NavContexts.Context.Provider>
         </Contexts.RefreshControlComponentContext.Provider>
       </Contexts.DateFormatContext.Provider>

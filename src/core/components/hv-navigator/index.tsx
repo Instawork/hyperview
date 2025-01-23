@@ -5,7 +5,6 @@ import * as Events from 'hyperview/src/services/events';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as NavigationContext from 'hyperview/src/contexts/navigation';
-import * as NavigatorMapContext from 'hyperview/src/contexts/navigator-map';
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import {
   BEHAVIOR_ATTRIBUTES,
@@ -191,10 +190,11 @@ export default class HvNavigator extends PureComponent<Props> {
     href: string | undefined,
     isModal: boolean,
     isFirstScreen = false,
+    routeId?: string | undefined,
   ): React.ReactElement => {
     const initialParams = NavigatorService.isDynamicRoute(id)
       ? {}
-      : { id, isModal, url: href };
+      : { id, isModal, routeId, url: href };
     if (type === NavigatorService.NAVIGATOR_TYPE.TAB) {
       return (
         <BottomTab.Screen
@@ -301,7 +301,14 @@ export default class HvNavigator extends PureComponent<Props> {
         //  including when the navigation hierarchy is reset
         // This relies on the schema requirement that each <navigator> has at least one <nav-route>
         screens.push(
-          this.buildScreen(id, type, href || undefined, isModal, index === 0),
+          this.buildScreen(
+            id,
+            type,
+            href || undefined,
+            isModal,
+            index === 0,
+            id,
+          ),
         );
       }
     });
@@ -412,6 +419,8 @@ export default class HvNavigator extends PureComponent<Props> {
         NavigatorService.NAVIGATOR_TYPE.STACK,
         this.props.params?.url || undefined,
         false,
+        false,
+        this.props.params.id,
       ),
     );
     screens.push(...this.buildDynamicScreens());
@@ -456,12 +465,10 @@ export default class HvNavigator extends PureComponent<Props> {
         {navContext => (
           <Contexts.DocContext.Consumer>
             {docProvider => (
-              <NavigatorMapContext.NavigatorMapProvider>
-                <Navigator
-                  BottomTabBar={navContext?.navigationComponents?.BottomTabBar}
-                  doc={docProvider?.getDoc()}
-                />
-              </NavigatorMapContext.NavigatorMapProvider>
+              <Navigator
+                BottomTabBar={navContext?.navigationComponents?.BottomTabBar}
+                doc={docProvider?.getDoc()}
+              />
             )}
           </Contexts.DocContext.Consumer>
         )}

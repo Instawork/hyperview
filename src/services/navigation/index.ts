@@ -76,6 +76,8 @@ export default class Navigation {
       element,
     );
 
+    // Only take the first id if there are multiple
+    const indicatorId = showIndicatorId?.split(' ')[0] || null;
     let url = href;
     if (!href.startsWith(ANCHOR_ID_SEPARATOR)) {
       // Serialize form data as query params, if present.
@@ -83,8 +85,9 @@ export default class Navigation {
       url = UrlService.addFormDataToUrl(baseUrl, formData);
     }
 
-    let preloadScreen = null;
-    if (showIndicatorId && this.document) {
+    let preloadScreen: number | null = null;
+    let behaviorElementId: number | null = null;
+    if (indicatorId && this.document) {
       const screens: HTMLCollectionOf<Element> = this.document.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
         'screen',
@@ -93,7 +96,7 @@ export default class Navigation {
         screens,
       ).find(s => s && s.getAttribute('id') === showIndicatorId);
       if (loadingScreen) {
-        preloadScreen = Date.now(); // Not trully unique but sufficient for our use-case
+        preloadScreen = Date.now(); // Not truly unique but sufficient for our use-case
         this.setPreloadScreen(preloadScreen, loadingScreen);
         if (registerPreload) {
           registerPreload(preloadScreen, loadingScreen);
@@ -101,7 +104,23 @@ export default class Navigation {
       }
     }
 
-    const routeParams = { delay, preloadScreen, targetId, url } as const;
+    if (!preloadScreen && opts.behaviorElement) {
+      // Pass the behavior element to the loading screen
+      behaviorElementId = Date.now();
+      this.setPreloadScreen(behaviorElementId, opts.behaviorElement);
+      if (registerPreload) {
+        registerPreload(behaviorElementId, opts.behaviorElement);
+      }
+    }
+
+    const routeParams = {
+      behaviorElementId,
+      delay,
+      preloadScreen,
+      targetId,
+      url,
+    } as const;
+
     if (delay) {
       setTimeout(() => {
         this.executeNavigate(action, routeParams, url, href);

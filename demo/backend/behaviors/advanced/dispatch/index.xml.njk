@@ -21,13 +21,8 @@ hv_button_behavior: "back"
     style="main"
     trigger="on-event"
   >
-    {{ description('Dispatch events to load screens') }}
+    {{ description('Dispatching an event is useful for cross-screen communication. This screen listens for the event `test-event` and appends content upon receipt. Press the button below and follow the instructions.') }}
     {% call button('Open new screen', attributes={href:"/hyperview/public/behaviors/advanced/dispatch/source-screen.xml"}) -%}
-      <behavior
-        action="dispatch-event"
-        event-name="test-event"
-        trigger="press"
-      />
     {%- endcall %}
   </view>
 {% endblock %}

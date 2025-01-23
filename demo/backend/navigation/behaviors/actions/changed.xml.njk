@@ -11,7 +11,7 @@ hv_tab_id: "navigation"
 {% block content %}
   {{ description('Changed Screen') }}
 
-  {% call button('Go back to original screen') -%}
-    <behavior href="/hyperview/public/navigation/index.xml" />
+  {% call button('Reload original screen') -%}
+    <behavior action="reload" href="/hyperview/public/navigation/index.xml" />
   {%- endcall %}
 {% endblock %}
