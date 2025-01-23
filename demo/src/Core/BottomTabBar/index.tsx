@@ -1,5 +1,4 @@
 import * as Render from 'hyperview/src/services/render';
-import type { HvComponentOnUpdate } from 'hyperview';
 import type { Props } from './types';
 import { useBottomTabBarContext } from '../../Contexts';
 import { useCallback } from 'react';
@@ -20,7 +19,7 @@ export const BottomTabBar = (navProps: Props): JSX.Element | null => {
   const props = getElementProps?.(id);
   const { onUpdate } = props || {};
 
-  const onUpdateCustom: HvComponentOnUpdate = useCallback(
+  const onUpdateCustom = useCallback(
     (href, action, currentElement, opts) => {
       if (action === 'swap' && opts?.newElement) {
         if (currentElement.parentNode) {
