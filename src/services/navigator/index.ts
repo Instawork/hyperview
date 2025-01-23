@@ -121,23 +121,23 @@ export class Navigator {
     }
   };
 
-  back = (params?: NavigationRouteParams | undefined) => {
+  backAction = (params?: NavigationRouteParams | undefined) => {
     this.sendRequest(NAV_ACTIONS.BACK, params);
   };
 
-  closeModal = (params: NavigationRouteParams | undefined) => {
+  closeModalAction = (params: NavigationRouteParams | undefined) => {
     this.sendRequest(NAV_ACTIONS.CLOSE, params);
   };
 
-  navigate = (params: NavigationRouteParams) => {
+  navigateAction = (params: NavigationRouteParams) => {
     this.sendRequest(NAV_ACTIONS.NAVIGATE, params);
   };
 
-  openModal = (params: NavigationRouteParams) => {
+  openModalAction = (params: NavigationRouteParams) => {
     this.sendRequest(NAV_ACTIONS.NEW, params);
   };
 
-  push = (params: NavigationRouteParams) => {
+  pushAction = (params: NavigationRouteParams) => {
     this.sendRequest(NAV_ACTIONS.PUSH, params);
   };
 }

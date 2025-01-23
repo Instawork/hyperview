@@ -104,11 +104,11 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
    * but connected to the nav logic of this component.
    */
   getNavigation = () => ({
-    back: this.navLogic.back,
-    closeModal: this.navLogic.closeModal,
-    navigate: this.navLogic.navigate,
-    openModal: this.navLogic.openModal,
-    push: this.navLogic.push,
+    back: this.navLogic.backAction,
+    closeModal: this.navLogic.closeModalAction,
+    navigate: this.navLogic.navigateAction,
+    openModal: this.navLogic.openModalAction,
+    push: this.navLogic.pushAction,
   });
 
   getUrl = (): string => {
@@ -328,11 +328,11 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     const ErrorScreen = this.props.errorScreen || LoadError;
     return (
       <ErrorScreen
-        back={() => this.navLogic.back({} as NavigationRouteParams)}
+        back={() => this.navLogic.backAction({} as NavigationRouteParams)}
         error={props.error}
         onPressReload={() => this.load()}
         onPressViewDetails={(uri: string | undefined) => {
-          this.navLogic.openModal({
+          this.navLogic.openModalAction({
             url: uri as string,
           } as NavigationRouteParams);
         }}
@@ -360,9 +360,9 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       <Contexts.DateFormatContext.Consumer>
         {formatter => (
           <HvScreen
-            back={this.navLogic.back}
+            back={this.navLogic.backAction}
             behaviors={this.props.behaviors}
-            closeModal={this.navLogic.closeModal}
+            closeModal={this.navLogic.closeModalAction}
             components={this.props.components}
             doc={this.localDoc?.cloneNode(true) as Document}
             elementErrorComponent={this.props.elementErrorComponent}
@@ -371,14 +371,14 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
             fetch={this.props.fetch}
             formatDate={formatter}
             getElement={this.props.getElement}
-            navigate={this.navLogic.navigate}
+            navigate={this.navLogic.navigateAction}
             navigation={this.props.navigation}
             onError={this.props.onError}
             onParseAfter={this.props.onParseAfter}
             onParseBefore={this.props.onParseBefore}
             onUpdate={this.props.onUpdate}
-            openModal={this.navLogic.openModal}
-            push={this.navLogic.push}
+            openModal={this.navLogic.openModalAction}
+            push={this.navLogic.pushAction}
             reload={this.props.reload}
             removeElement={this.props.removeElement}
             route={route}
