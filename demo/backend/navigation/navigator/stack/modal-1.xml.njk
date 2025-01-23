@@ -8,7 +8,7 @@ hv_button_behavior: "back"
 {% extends 'templates/scrollview.xml.njk' %}
 
 {% block content %}
-  {{ description('This screen was dynamically opened on the stack.') }}
+  {{ description('This screen was dynamically opened as a modal.') }}
   {{ description('Pushing the button below will push another screen onto the stack.') }}
   {% call button('Push on stack') -%}
     <behavior
