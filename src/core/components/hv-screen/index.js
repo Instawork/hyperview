@@ -299,13 +299,6 @@ export default class HvScreen extends React.Component {
     );
   }
 
-
-  setElement = (id, element) => {
-    if (this.props.setElement) {
-      this.props.setElement(id, element);
-    }
-  };
-
   /**
    * Implement the callbacks from this class
    */
@@ -319,7 +312,6 @@ export default class HvScreen extends React.Component {
     getNavigation: () => this.props.navigation,
     getOnUpdate: () => this.onUpdate,
     getState: () => this.state,
-    setElement: (id, element) => this.setElement(id, element),
     setNeedsLoad: () => {
       this.needsLoad = true;
     },

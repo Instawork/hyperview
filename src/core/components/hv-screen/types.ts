@@ -23,7 +23,6 @@ export type Props = Omit<
   getElement?: (id: number) => Element | undefined;
   navigation: NavigationProvider;
   onUpdate: HvComponentOnUpdate;
-  setElement?: (id: number, element: Element) => void;
   reload: Reload;
   removeElement?: (id: number) => void;
   route?: NavigatorService.Route<string, { url?: string }>;

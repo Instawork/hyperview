@@ -236,7 +236,6 @@ export default class Hyperview extends PureComponent<Types.Props> {
           },
           state.url,
           doc,
-          options.onUpdateCallbacks.setElement,
         );
       }
     } else if (

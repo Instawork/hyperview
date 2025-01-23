@@ -17,6 +17,7 @@ import type {
   DOMString,
   HvComponentOptions,
   NavigationRouteParams,
+  OnUpdateCallbacks,
   ScreenState,
 } from 'hyperview/src/types';
 import React, { JSXElementConstructor, PureComponent, useContext } from 'react';
@@ -211,14 +212,10 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     );
   };
 
-  setElement = (id: number, element: Element): void => {
-    this.props.setElement(id, element);
-  };
-
   /**
    * Implement the callbacks from this class
    */
-  updateCallbacks = {
+  updateCallbacks: OnUpdateCallbacks = {
     clearElementError: () => {
       // Noop
     },
@@ -226,7 +223,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     getNavigation: () => this.navLogic,
     getOnUpdate: () => this.onUpdate,
     getState: () => this.state,
-    setElement: (id: number, element: Element) => this.setElement(id, element),
     setNeedsLoad: () => {
       this.needsLoad = true;
     },
