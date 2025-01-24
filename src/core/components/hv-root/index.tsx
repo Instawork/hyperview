@@ -5,7 +5,7 @@ import * as Dom from 'hyperview/src/services/dom';
 import * as Events from 'hyperview/src/services/events';
 import * as Logging from 'hyperview/src/services/logging';
 import * as NavContexts from 'hyperview/src/contexts/navigation';
-import * as Navigation from 'hyperview/src/services/navigation';
+import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Render from 'hyperview/src/services/render';
 import * as Services from 'hyperview/src/services';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
@@ -223,7 +223,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
         } = options;
         const delayVal: number = +(delay || '');
         navigation.navigate(
-          href || Navigation.ANCHOR_ID_SEPARATOR,
+          href || NavigatorService.ANCHOR_ID_SEPARATOR,
           navAction,
           element,
           this.componentRegistry,
@@ -236,7 +236,6 @@ export default class Hyperview extends PureComponent<Types.Props> {
           },
           state.url,
           doc,
-          options.onUpdateCallbacks.setElement,
         );
       }
     } else if (

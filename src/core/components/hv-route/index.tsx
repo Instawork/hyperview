@@ -17,6 +17,7 @@ import type {
   DOMString,
   HvComponentOptions,
   NavigationRouteParams,
+  OnUpdateCallbacks,
   ScreenState,
 } from 'hyperview/src/types';
 import React, { JSXElementConstructor, PureComponent, useContext } from 'react';
@@ -25,8 +26,6 @@ import HvScreen from 'hyperview/src/core/components/hv-screen';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import LoadError from 'hyperview/src/core/components/load-error';
 import Loading from 'hyperview/src/core/components/loading';
-// eslint-disable-next-line instawork/import-services
-import Navigation from 'hyperview/src/services/navigation';
 import { NavigationContainerRefContext } from '@react-navigation/native';
 
 /**
@@ -41,13 +40,11 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
 
   parser?: DomService.Parser;
 
-  navLogic: NavigatorService.Navigator;
+  navigator: NavigatorService.Navigator;
 
   componentRegistry: Components.Registry;
 
   needsLoad = false;
-
-  navigation: Navigation;
 
   // See the hack in hv-screen. This is a fix for the updated DOM not being available immediately.
   localDoc: Document | null = null;
@@ -59,10 +56,9 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       doc: null,
       error: null,
     };
-    this.navLogic = new NavigatorService.Navigator(this.props);
+    this.navigator = new NavigatorService.Navigator(this.props);
     this.componentRegistry = new Components.Registry(this.props.components);
     this.needsLoad = false;
-    this.navigation = new Navigation(props.entrypointUrl, this.getNavigation());
   }
 
   /**
@@ -84,7 +80,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       this.props.onParseBefore || null,
       this.props.onParseAfter || null,
     );
-    this.navLogic.setContext(this.context);
+    this.navigator.setContext(this.context);
 
     // When a nested navigator is found, the document is not loaded from url
     if (this.props.element === undefined) {
@@ -98,18 +94,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       this.needsLoad = false;
     }
   }
-
-  /**
-   * Returns a navigation object similar to the one provided by React Navigation,
-   * but connected to the nav logic of this component.
-   */
-  getNavigation = () => ({
-    back: this.navLogic.back,
-    closeModal: this.navLogic.closeModal,
-    navigate: this.navLogic.navigate,
-    openModal: this.navLogic.openModal,
-    push: this.navLogic.push,
-  });
 
   getUrl = (): string => {
     return UrlService.getUrlFromHref(
@@ -228,22 +212,17 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     );
   };
 
-  setElement = (id: number, element: Element): void => {
-    this.props.setElement(id, element);
-  };
-
   /**
    * Implement the callbacks from this class
    */
-  updateCallbacks = {
+  updateCallbacks: OnUpdateCallbacks = {
     clearElementError: () => {
       // Noop
     },
     getDoc: () => this.localDoc || null,
-    getNavigation: () => this.navigation,
+    getNavigation: () => this.navigator,
     getOnUpdate: () => this.onUpdate,
     getState: () => this.state,
-    setElement: (id: number, element: Element) => this.setElement(id, element),
     setNeedsLoad: () => {
       this.needsLoad = true;
     },
@@ -328,11 +307,11 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     const ErrorScreen = this.props.errorScreen || LoadError;
     return (
       <ErrorScreen
-        back={() => this.navLogic.back({} as NavigationRouteParams)}
+        back={() => this.navigator.backAction({} as NavigationRouteParams)}
         error={props.error}
         onPressReload={() => this.load()}
         onPressViewDetails={(uri: string | undefined) => {
-          this.navLogic.openModal({
+          this.navigator.openModalAction({
             url: uri as string,
           } as NavigationRouteParams);
         }}
@@ -360,9 +339,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       <Contexts.DateFormatContext.Consumer>
         {formatter => (
           <HvScreen
-            back={this.navLogic.back}
             behaviors={this.props.behaviors}
-            closeModal={this.navLogic.closeModal}
             components={this.props.components}
             doc={this.localDoc?.cloneNode(true) as Document}
             elementErrorComponent={this.props.elementErrorComponent}
@@ -371,18 +348,14 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
             fetch={this.props.fetch}
             formatDate={formatter}
             getElement={this.props.getElement}
-            navigate={this.navLogic.navigate}
-            navigation={this.props.navigation}
+            navigation={this.navigator}
             onError={this.props.onError}
             onParseAfter={this.props.onParseAfter}
             onParseBefore={this.props.onParseBefore}
             onUpdate={this.props.onUpdate}
-            openModal={this.navLogic.openModal}
-            push={this.navLogic.push}
             reload={this.props.reload}
             removeElement={this.props.removeElement}
             route={route}
-            setElement={this.setElement}
             url={url || undefined}
           />
         )}
@@ -697,4 +670,4 @@ export default function HvRoute(props: Types.Props) {
     </BackBehaviorProvider>
   );
 }
-export type { Props } from './types';
+export type { InnerRouteProps, Props } from './types';

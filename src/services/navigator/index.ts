@@ -1,9 +1,16 @@
+import * as Components from 'hyperview/src/services/components';
 import * as Helpers from './helpers';
 import * as HvRoute from 'hyperview/src/core/components/hv-route';
 import * as Imports from './imports';
 import * as Logging from 'hyperview/src/services/logging';
+import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Types from './types';
-import type { NavAction, NavigationRouteParams } from 'hyperview/src/types';
+import * as UrlService from 'hyperview/src/services/url';
+import type {
+  BehaviorOptions,
+  NavAction,
+  NavigationRouteParams,
+} from 'hyperview/src/types';
 import { NAV_ACTIONS } from 'hyperview/src/types';
 import { NavigationContainerRefContext } from '@react-navigation/native';
 
@@ -11,13 +18,13 @@ import { NavigationContainerRefContext } from '@react-navigation/native';
  * Provide navigation action implementations
  */
 export class Navigator {
-  props: HvRoute.Props;
+  props: HvRoute.InnerRouteProps;
 
   context:
     | React.ContextType<typeof NavigationContainerRefContext>
     | undefined = undefined;
 
-  constructor(props: HvRoute.Props) {
+  constructor(props: HvRoute.InnerRouteProps) {
     this.props = props;
   }
 
@@ -121,23 +128,118 @@ export class Navigator {
     }
   };
 
-  back = (params?: NavigationRouteParams | undefined) => {
+  navigate = (
+    href: string,
+    action: NavAction,
+    element: Element,
+    componentRegistry: Components.Registry,
+    opts: BehaviorOptions,
+    stateUrl?: string | null,
+    doc?: Document | null,
+  ): void => {
+    const { showIndicatorId, delay, targetId } = opts;
+    const formData: FormData | null | undefined = componentRegistry.getFormData(
+      element,
+    );
+
+    // Only take the first id if there are multiple
+    const indicatorId = showIndicatorId?.split(' ')[0] || null;
+    let url = href;
+    if (!href.startsWith(Types.ANCHOR_ID_SEPARATOR)) {
+      // Serialize form data as query params, if present.
+      const baseUrl = UrlService.getUrlFromHref(
+        href,
+        stateUrl || this.props.entrypointUrl,
+      );
+      url = UrlService.addFormDataToUrl(baseUrl, formData);
+    }
+
+    let preloadScreen: number | null = null;
+    let behaviorElementId: number | null = null;
+    if (indicatorId && doc) {
+      const screens: HTMLCollectionOf<Element> = doc.getElementsByTagNameNS(
+        Namespaces.HYPERVIEW,
+        'screen',
+      );
+      const loadingScreen: Element | null | undefined = Array.from(
+        screens,
+      ).find(s => s && s.getAttribute('id') === showIndicatorId);
+      if (loadingScreen) {
+        preloadScreen = Date.now(); // Not truly unique but sufficient for our use-case
+        this.props.setElement?.(preloadScreen, loadingScreen);
+      }
+    }
+
+    if (!preloadScreen && opts.behaviorElement) {
+      // Pass the behavior element to the loading screen
+      behaviorElementId = Date.now();
+      this.props.setElement?.(behaviorElementId, opts.behaviorElement);
+    }
+
+    const routeParams = {
+      behaviorElementId,
+      delay,
+      preloadScreen,
+      targetId,
+      url,
+    } as const;
+
+    if (delay) {
+      setTimeout(() => {
+        this.executeNavigate(action, routeParams, href);
+      }, delay);
+    } else {
+      this.executeNavigate(action, routeParams, href);
+    }
+  };
+
+  executeNavigate = (
+    action: NavAction,
+    routeParams: NavigationRouteParams,
+    href: string,
+  ) => {
+    switch (action) {
+      case NAV_ACTIONS.PUSH:
+        this.pushAction(routeParams);
+        break;
+      case NAV_ACTIONS.NAVIGATE: {
+        this.navigateAction(routeParams);
+        break;
+      }
+      case NAV_ACTIONS.NEW:
+        this.openModalAction(routeParams);
+        break;
+      case NAV_ACTIONS.CLOSE:
+        this.closeModalAction(
+          href === Types.ANCHOR_ID_SEPARATOR ? undefined : routeParams,
+        );
+        break;
+      case NAV_ACTIONS.BACK:
+        this.backAction(
+          href === Types.ANCHOR_ID_SEPARATOR ? undefined : routeParams,
+        );
+        break;
+      default:
+    }
+  };
+
+  backAction = (params?: NavigationRouteParams | undefined) => {
     this.sendRequest(NAV_ACTIONS.BACK, params);
   };
 
-  closeModal = (params: NavigationRouteParams | undefined) => {
+  closeModalAction = (params: NavigationRouteParams | undefined) => {
     this.sendRequest(NAV_ACTIONS.CLOSE, params);
   };
 
-  navigate = (params: NavigationRouteParams) => {
+  navigateAction = (params: NavigationRouteParams) => {
     this.sendRequest(NAV_ACTIONS.NAVIGATE, params);
   };
 
-  openModal = (params: NavigationRouteParams) => {
+  openModalAction = (params: NavigationRouteParams) => {
     this.sendRequest(NAV_ACTIONS.NEW, params);
   };
 
-  push = (params: NavigationRouteParams) => {
+  pushAction = (params: NavigationRouteParams) => {
     this.sendRequest(NAV_ACTIONS.PUSH, params);
   };
 }
@@ -169,4 +271,10 @@ export {
   setSelected,
   updateRouteUrlFromState,
 } from './helpers';
-export { ID_CARD, ID_MODAL, KEY_MODAL, NAVIGATOR_TYPE } from './types';
+export {
+  ANCHOR_ID_SEPARATOR,
+  ID_CARD,
+  ID_MODAL,
+  KEY_MODAL,
+  NAVIGATOR_TYPE,
+} from './types';
