@@ -9,6 +9,7 @@ import * as UrlService from 'hyperview/src/services/url';
 import type {
   BehaviorOptions,
   NavAction,
+  NavigationProvider,
   NavigationRouteParams,
 } from 'hyperview/src/types';
 import { NAV_ACTIONS } from 'hyperview/src/types';
@@ -17,7 +18,7 @@ import { NavigationContainerRefContext } from '@react-navigation/native';
 /**
  * Provide navigation action implementations
  */
-export class Navigator {
+export class Navigator implements NavigationProvider {
   props: HvRoute.InnerRouteProps;
 
   context:
@@ -180,50 +181,25 @@ export class Navigator {
       }
     }
 
-    const routeParams = {
-      behaviorElementId,
-      delay,
-      preloadScreen,
-      targetId,
-      url,
-    } as const;
+    const routeParams =
+      (action === NAV_ACTIONS.CLOSE || action === NAV_ACTIONS.BACK) &&
+      href === Types.ANCHOR_ID_SEPARATOR
+        ? // Route params are not needed for close or back actions with no href
+          undefined
+        : ({
+            behaviorElementId,
+            delay,
+            preloadScreen,
+            targetId,
+            url,
+          } as const);
 
     if (delay) {
       setTimeout(() => {
-        this.executeNavigate(action, routeParams, href);
+        this.sendRequest(action, routeParams);
       }, delay);
     } else {
-      this.executeNavigate(action, routeParams, href);
-    }
-  };
-
-  executeNavigate = (
-    action: NavAction,
-    routeParams: NavigationRouteParams,
-    href: string,
-  ) => {
-    switch (action) {
-      case NAV_ACTIONS.PUSH:
-        this.pushAction(routeParams);
-        break;
-      case NAV_ACTIONS.NAVIGATE: {
-        this.navigateAction(routeParams);
-        break;
-      }
-      case NAV_ACTIONS.NEW:
-        this.openModalAction(routeParams);
-        break;
-      case NAV_ACTIONS.CLOSE:
-        this.closeModalAction(
-          href === Types.ANCHOR_ID_SEPARATOR ? undefined : routeParams,
-        );
-        break;
-      case NAV_ACTIONS.BACK:
-        this.backAction(
-          href === Types.ANCHOR_ID_SEPARATOR ? undefined : routeParams,
-        );
-        break;
-      default:
+      this.sendRequest(action, routeParams);
     }
   };
 
@@ -231,20 +207,8 @@ export class Navigator {
     this.sendRequest(NAV_ACTIONS.BACK, params);
   };
 
-  closeModalAction = (params: NavigationRouteParams | undefined) => {
-    this.sendRequest(NAV_ACTIONS.CLOSE, params);
-  };
-
-  navigateAction = (params: NavigationRouteParams) => {
-    this.sendRequest(NAV_ACTIONS.NAVIGATE, params);
-  };
-
   openModalAction = (params: NavigationRouteParams) => {
     this.sendRequest(NAV_ACTIONS.NEW, params);
-  };
-
-  pushAction = (params: NavigationRouteParams) => {
-    this.sendRequest(NAV_ACTIONS.PUSH, params);
   };
 }
 
