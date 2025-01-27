@@ -9,7 +9,7 @@ hv_button_behavior: "back"
 {% block container %}
   <list shows-scroll-indicator="false">
     {% for i in range(1, 21) %}
-      <item key="{{ i }}" style="item">
+      <item key="{{ i }}" style="item{% if loop.last %} item-last{% endif %}">
         <text style="item-label">List {{ i }}</text>
       </item>
     {% endfor %}

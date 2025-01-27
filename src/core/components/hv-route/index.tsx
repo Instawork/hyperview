@@ -38,6 +38,8 @@ import { NavigationContainerRefContext } from '@react-navigation/native';
 class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
   static contextType = NavigationContainerRefContext;
 
+  context: React.ContextType<typeof NavigationContainerRefContext> = undefined;
+
   parser?: DomService.Parser;
 
   navigator: NavigatorService.Navigator;

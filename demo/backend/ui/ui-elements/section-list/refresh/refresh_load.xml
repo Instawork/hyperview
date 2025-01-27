@@ -34,7 +34,7 @@
   <item key="7" style="item">
     <text style="item-label item-label-special">List 7 Added!</text>
   </item>
-  <item key="8" style="item">
+  <item key="8" style="item item-last">
     <text style="item-label item-label-special">List 8 Added!</text>
   </item>
 </section-list>

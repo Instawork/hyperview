@@ -11,7 +11,7 @@ hv_button_behavior: "back"
     {% for i in range(1, 21) %}
       <item
         key="{{ i }}"
-        style="item"
+        style="item{% if loop.last %} item-last{% endif %}"
         {% if i == 2 or i == 4 %}
           sticky="true"
         {% endif %}

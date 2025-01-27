@@ -84,21 +84,22 @@ export default class HvView extends PureComponent<HvComponentProps> {
     return { accessibilityLabel: id, style };
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  getScrollViewProps = (children: Array<any>): ScrollViewProps => {
+  getScrollViewProps = (
+    children: Array<React.ReactElement<HvComponentProps> | null | string>,
+  ): ScrollViewProps => {
     const horizontal =
       this.attributes[ATTRIBUTES.SCROLL_ORIENTATION] === 'horizontal';
     const showScrollIndicator =
       this.attributes[ATTRIBUTES.SHOWS_SCROLL_INDICATOR] !== 'false';
 
-    const contentContainerStyle = (this.attributes[
+    const contentContainerStyle = this.attributes[
       ATTRIBUTES.CONTENT_CONTAINER_STYLE
     ]
       ? createStyleProp(this.props.element, this.props.stylesheets, {
           ...this.props.options,
           styleAttr: ATTRIBUTES.CONTENT_CONTAINER_STYLE,
         })
-      : undefined) as ViewStyle;
+      : undefined;
 
     // Fix scrollbar rendering issue in iOS 13+
     // https://github.com/facebook/react-native/issues/26610#issuecomment-539843444
@@ -108,14 +109,16 @@ export default class HvView extends PureComponent<HvComponentProps> {
         : undefined;
 
     // add sticky indices
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const stickyHeaderIndices = children.reduce<Array<any>>(
-      // eslint-disable-next-line no-confusing-arrow
-      (acc, element, index) =>
-        typeof element !== 'string' &&
-        element.props?.element?.getAttribute('sticky') === 'true'
-          ? [...acc, index]
-          : acc,
+    const stickyHeaderIndices = children.reduce<Array<number>>(
+      (acc, element, index) => {
+        if (
+          typeof element !== 'string' &&
+          element?.props.element?.getAttribute('sticky') === 'true'
+        ) {
+          return [...acc, index];
+        }
+        return acc;
+      },
       [],
     );
 

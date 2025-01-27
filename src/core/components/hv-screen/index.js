@@ -8,6 +8,7 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import { createProps, createStyleProp, later } from 'hyperview/src/services';
+import { HvScreenRenderError } from './errors';
 import LoadElementError from '../load-element-error';
 import LoadError from 'hyperview/src/core/components/load-error';
 import Loading from 'hyperview/src/core/components/loading';
@@ -244,19 +245,24 @@ export default class HvScreen extends React.Component {
     });
   };
 
+  Error = ({ error }) => {
+    const errorScreen = this.props.errorScreen || LoadError;
+    return React.createElement(errorScreen, {
+      back: () => this.props.navigation.backAction(),
+      error,
+      onPressReload: () => this.reload(), // Make sure reload() is called without any args
+      onPressViewDetails: uri =>
+        this.props.navigation.openModalAction({ url: uri }),
+    });
+  };
+
   /**
    * Renders the XML doc into React components. Shows blank screen until the XML doc is available.
    */
   render() {
+    const { Error } = this;
     if (this.state.error) {
-      const errorScreen = this.props.errorScreen || LoadError;
-      return React.createElement(errorScreen, {
-        back: () => this.props.navigation.backAction(),
-        error: this.state.error,
-        onPressReload: () => this.reload(), // Make sure reload() is called without any args
-        onPressViewDetails: uri =>
-          this.props.navigation.openModalAction({ url: uri }),
-      });
+      return <Error error={this.state.error} />;
     }
     if (!this.state.doc) {
       return <Loading cachedId={this.props.route?.params?.behaviorElementId} />;
@@ -267,17 +273,27 @@ export default class HvScreen extends React.Component {
     const [body] = Array.from(
       this.state.doc.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'body'),
     );
-    const screenElement = Render.renderElement(
-      body,
-      this.state.styles,
-      this.onUpdate,
-      {
-        componentRegistry: this.componentRegistry,
-        onUpdateCallbacks: this.updateCallbacks,
-        screenUrl: this.state.url,
-        staleHeaderType: this.state.staleHeaderType,
-      },
-    );
+    let screenElement;
+    if (body) {
+      screenElement = Render.renderElement(
+        body,
+        this.state.styles,
+        this.onUpdate,
+        {
+          componentRegistry: this.componentRegistry,
+          onUpdateCallbacks: this.updateCallbacks,
+          screenUrl: this.state.url,
+          staleHeaderType: this.state.staleHeaderType,
+        },
+      );
+    }
+    if (!screenElement) {
+      return (
+        <Error
+          error={new HvScreenRenderError('The document has no content.')}
+        />
+      );
+    }
 
     return (
       <Contexts.DocContext.Provider
