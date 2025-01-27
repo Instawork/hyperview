@@ -1,11 +1,11 @@
 const urlParse = require('url-parse');
-const contactList = require('../../_data/contacts.js');
+const contactList = require('../../../_data/contacts.js');
 const nunjucks = require('nunjucks');
 const {
   highlightFilter,
   paginateFilter,
   pageCountFilter,
-} = require('../../../.eleventy/filters.js');
+} = require('../../../../.eleventy/filters.js');
 
 module.exports = function handler(req, res, next) {
   const { query } = urlParse(req.originalUrl, true);
@@ -16,10 +16,10 @@ module.exports = function handler(req, res, next) {
     return;
   }
 
-  const { search, page = 1, template = 'contacts' } = query;
+  const { search, page = 1, template = '_contacts' } = query;
 
   // Configure Nunjucks env, and add a custom filters
-  const env = nunjucks.configure('backend/advanced/case-studies/contacts');
+  const env = nunjucks.configure(['backend/advanced/case-studies/contacts']);
   env.addFilter('highlight', highlightFilter);
   env.addFilter('paginate', paginateFilter);
   env.addFilter('pageCount', pageCountFilter);

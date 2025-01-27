@@ -2,9 +2,10 @@
   id="contacts"
   trigger="refresh"
   action="replace"
-  href="?page=1&amp;template=list"
+  href="?page=1&amp;template=_list"
   target="contacts"
   keyboard-dismiss-mode="on-drag"
+  style="flex"
   xmlns="https://hyperview.org/hyperview"
 >
   {% set page = 1 %}
@@ -36,7 +37,7 @@
         trigger="change"
         action="replace"
         target="contacts"
-        href="?template=list"
+        href="?template=_list"
         show-during-load="loading-indicator"
       />
     </text-field>
@@ -44,5 +45,5 @@
       <spinner />
     </view>
   </item>
-  {% include './contacts.xml.njk' %}
+  {% include './_contacts.xml.njk' %}
 </list>
