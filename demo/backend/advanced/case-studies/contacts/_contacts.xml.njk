@@ -12,6 +12,7 @@
       id="load-more"
       trigger="visible"
       action="replace"
+      style="py-8"
       href="?page={{ page|int + 1 }}{% if search %}&amp;search={{ search|safe }}&amp;template=_contacts{% endif %}"
     >
       <spinner />
