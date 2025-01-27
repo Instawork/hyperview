@@ -12,7 +12,7 @@
       id="load-more"
       trigger="visible"
       action="replace"
-      href="?page={{ page|int + 1 }}{% if search %}&amp;search={{ search|safe }}&amp;template=contacts{% endif %}"
+      href="?page={{ page|int + 1 }}{% if search %}&amp;search={{ search|safe }}&amp;template=_contacts{% endif %}"
     >
       <spinner />
     </item>
