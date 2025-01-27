@@ -5,10 +5,12 @@ hv_button_behavior: "back"
 ---
 {% extends 'templates/base.xml.njk' %}
 
+{% from 'macros/description/index.xml.njk' import description %}
+
 {% block styles %}
   {% include './_styles.xml.njk' %}
 {% endblock %}
 
 {% block container %}
-  <text>Next page</text>
+  {{ description('Next page') }}
 {% endblock %}
