@@ -154,26 +154,30 @@ export class Navigator {
       url = UrlService.addFormDataToUrl(baseUrl, formData);
     }
 
+    const isBlankUrl = !url || url === Types.ANCHOR_ID_SEPARATOR;
     let preloadScreen: number | null = null;
     let behaviorElementId: number | null = null;
-    if (indicatorId && doc) {
-      const screens: HTMLCollectionOf<Element> = doc.getElementsByTagNameNS(
-        Namespaces.HYPERVIEW,
-        'screen',
-      );
-      const loadingScreen: Element | null | undefined = Array.from(
-        screens,
-      ).find(s => s && s.getAttribute('id') === showIndicatorId);
-      if (loadingScreen) {
-        preloadScreen = Date.now(); // Not truly unique but sufficient for our use-case
-        this.props.setElement?.(preloadScreen, loadingScreen);
+    if (!isBlankUrl) {
+      // Only cache elements when a load will occur
+      if (indicatorId && doc) {
+        const screens: HTMLCollectionOf<Element> = doc.getElementsByTagNameNS(
+          Namespaces.HYPERVIEW,
+          'screen',
+        );
+        const loadingScreen: Element | null | undefined = Array.from(
+          screens,
+        ).find(s => s && s.getAttribute('id') === showIndicatorId);
+        if (loadingScreen) {
+          preloadScreen = Date.now(); // Not truly unique but sufficient for our use-case
+          this.props.setElement?.(preloadScreen, loadingScreen);
+        }
       }
-    }
 
-    if (!preloadScreen && opts.behaviorElement) {
-      // Pass the behavior element to the loading screen
-      behaviorElementId = Date.now();
-      this.props.setElement?.(behaviorElementId, opts.behaviorElement);
+      if (!preloadScreen && opts.behaviorElement) {
+        // Pass the behavior element to the loading screen
+        behaviorElementId = Date.now();
+        this.props.setElement?.(behaviorElementId, opts.behaviorElement);
+      }
     }
 
     const routeParams = {
