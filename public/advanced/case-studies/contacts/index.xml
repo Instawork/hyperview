@@ -374,14 +374,15 @@
 </header>
 
         
-  <form>
+  <form style="flex">
     <list
   id="contacts"
   trigger="refresh"
   action="replace"
-  href="?page=1&amp;template=list"
+  href="?page=1&amp;template=_list"
   target="contacts"
   keyboard-dismiss-mode="on-drag"
+  style="flex"
   xmlns="https://hyperview.org/hyperview"
 >
   
@@ -413,7 +414,7 @@
         trigger="change"
         action="replace"
         target="contacts"
-        href="?template=list"
+        href="?template=_list"
         show-during-load="loading-indicator"
       />
     </text-field>
@@ -423,124 +424,124 @@
   </item>
   <items xmlns="https://hyperview.org/hyperview">
   
-    <item key="941fa4e9-de42-404f-9170-a4d6896945d6" style="mx-24 py-8 border-bottom">
-      <text>Aaron Armstrong</text>
-      <text>Rosamond_Harber@hotmail.com</text>
-      <text>1-378-375-3502 x785</text>
+    <item key="95acd1e0-fb8a-45ec-a29f-99ccdaae9fe6" style="mx-24 py-8 border-bottom">
+      <text>Aaron Altenwerth</text>
+      <text>Mateo.Turcotte@yahoo.com</text>
+      <text>(579) 610-4786 x94549</text>
     </item>
   
-    <item key="13451bb7-786f-4121-a507-e89b323680fa" style="mx-24 py-8 border-bottom">
-      <text>Aaron Cartwright DDS</text>
-      <text>Derrick86@gmail.com</text>
-      <text>1-974-523-9446 x8043</text>
+    <item key="b1e69d0c-2f93-4a8b-8f8f-52b5e6b39623" style="mx-24 py-8 border-bottom">
+      <text>Aaron Blanda I</text>
+      <text>Leda76@hotmail.com</text>
+      <text>713.905.2707 x625</text>
     </item>
   
-    <item key="90326137-55db-4e96-8655-19ddf51a6932" style="mx-24 py-8 border-bottom">
-      <text>Aaron Connelly</text>
-      <text>Alia_Ruecker-Flatley@yahoo.com</text>
-      <text>882-589-7421 x7672</text>
+    <item key="7016b946-8fa4-461d-9297-cb53ab59c1e1" style="mx-24 py-8 border-bottom">
+      <text>Aaron Cassin</text>
+      <text>Deion.Anderson-Lindgren@gmail.com</text>
+      <text>818.734.3807 x384</text>
     </item>
   
-    <item key="9a657ef1-3a40-4a67-92f6-2f224fd0b25f" style="mx-24 py-8 border-bottom">
-      <text>Aaron Glover</text>
-      <text>Erling_Parisian@yahoo.com</text>
-      <text>(369) 731-8145</text>
+    <item key="c4784fc7-a327-43f1-9360-9d1339e758b2" style="mx-24 py-8 border-bottom">
+      <text>Aaron Conn</text>
+      <text>Kayley63@gmail.com</text>
+      <text>363.885.9401 x13157</text>
     </item>
   
-    <item key="0d472372-de58-429d-8567-a56f51d17266" style="mx-24 py-8 border-bottom">
-      <text>Aaron Hackett</text>
-      <text>Marguerite.Kling-VonRueden91@yahoo.com</text>
-      <text>412-599-2221</text>
+    <item key="fc3bc0e7-161d-4922-a7e3-09973f47b2b9" style="mx-24 py-8 border-bottom">
+      <text>Aaron Considine</text>
+      <text>Florian46@hotmail.com</text>
+      <text>218-866-7177</text>
     </item>
   
-    <item key="60507fe0-1daf-4784-a317-6ae8105049f6" style="mx-24 py-8 border-bottom">
+    <item key="ea90089f-a708-4107-8b0f-3193228b7aa3" style="mx-24 py-8 border-bottom">
+      <text>Aaron Emard</text>
+      <text>Alf.White@gmail.com</text>
+      <text>742.359.3675 x797</text>
+    </item>
+  
+    <item key="f4e27a74-5d7c-425a-806c-a542d1f14ff9" style="mx-24 py-8 border-bottom">
+      <text>Aaron Ferry</text>
+      <text>Elena6@yahoo.com</text>
+      <text>1-838-325-7428 x4748</text>
+    </item>
+  
+    <item key="95abf431-c01c-4b12-8b87-64f320255a1d" style="mx-24 py-8 border-bottom">
+      <text>Aaron Fritsch V</text>
+      <text>Elton.Braun@yahoo.com</text>
+      <text>621.969.5901 x455</text>
+    </item>
+  
+    <item key="3ae412f7-a902-42b3-aced-791e45b9c220" style="mx-24 py-8 border-bottom">
+      <text>Aaron Herzog</text>
+      <text>Lurline.Stark58@yahoo.com</text>
+      <text>559.918.1036 x22224</text>
+    </item>
+  
+    <item key="97fb6acc-c109-4c94-97db-9219b28f4479" style="mx-24 py-8 border-bottom">
       <text>Aaron Hoeger</text>
-      <text>Reina21@hotmail.com</text>
-      <text>483-214-1417 x1128</text>
+      <text>Adrianna.Schuppe8@gmail.com</text>
+      <text>(423) 380-2215</text>
     </item>
   
-    <item key="9eb47b40-3172-4a20-a18d-5de663a64b2d" style="mx-24 py-8 border-bottom">
-      <text>Aaron Kub</text>
-      <text>Yasmine.Cartwright95@gmail.com</text>
-      <text>991.539.8732 x4758</text>
+    <item key="60a059c3-0f9c-4fdb-8c91-483fe721335c" style="mx-24 py-8 border-bottom">
+      <text>Aaron Klein</text>
+      <text>Felton54@gmail.com</text>
+      <text>(438) 267-8785 x7983</text>
     </item>
   
-    <item key="3ab352d6-49e0-43c3-a1a1-43f13af0684e" style="mx-24 py-8 border-bottom">
-      <text>Aaron Kuhn</text>
-      <text>Milan_Metz78@hotmail.com</text>
-      <text>(766) 429-5907 x95581</text>
+    <item key="fe068579-2da4-4b8e-9b37-e5fc2339f483" style="mx-24 py-8 border-bottom">
+      <text>Aaron O'Conner</text>
+      <text>Mia9@yahoo.com</text>
+      <text>732.343.6867 x950</text>
     </item>
   
-    <item key="5189f505-5755-4f1d-ac01-b1fc1040e7b6" style="mx-24 py-8 border-bottom">
-      <text>Aaron Lindgren</text>
-      <text>Gia.Powlowski97@hotmail.com</text>
-      <text>265-946-8858 x78760</text>
+    <item key="4ec61261-6a48-431d-8d3a-0a51932ee7dd" style="mx-24 py-8 border-bottom">
+      <text>Aaron Rodriguez</text>
+      <text>Hazle.Haley60@hotmail.com</text>
+      <text>1-717-912-0365 x50906</text>
     </item>
   
-    <item key="88617f98-1393-4a75-b98c-e88f5d6f0521" style="mx-24 py-8 border-bottom">
-      <text>Aaron Mann</text>
-      <text>Orville_Dooley12@yahoo.com</text>
-      <text>1-411-233-8008 x9296</text>
+    <item key="baa13713-6c6a-43ce-81a7-b4fe8817c0c2" style="mx-24 py-8 border-bottom">
+      <text>Aaron Schimmel</text>
+      <text>Gunner64@gmail.com</text>
+      <text>243.768.7493</text>
     </item>
   
-    <item key="fb0bceb8-0edb-4adc-914c-28cfb5a97ad9" style="mx-24 py-8 border-bottom">
-      <text>Aaron Nader</text>
-      <text>Jalon_Von@yahoo.com</text>
-      <text>494-680-9056 x628</text>
+    <item key="705ade3e-8f37-49f1-9bf9-61d1254fbeee" style="mx-24 py-8 border-bottom">
+      <text>Aaron Stamm</text>
+      <text>Jayde_Dare43@gmail.com</text>
+      <text>864.399.0472 x8901</text>
     </item>
   
-    <item key="e3d8a43b-cd2f-492c-8aa3-b66e836fed8f" style="mx-24 py-8 border-bottom">
-      <text>Aaron Nicolas</text>
-      <text>Porter81@yahoo.com</text>
-      <text>895.707.8435 x16922</text>
+    <item key="fc0cc7f7-8718-45f8-b38d-c2a2e778f551" style="mx-24 py-8 border-bottom">
+      <text>Aaron Streich</text>
+      <text>Irma_Wiza@yahoo.com</text>
+      <text>982-544-9525 x0698</text>
     </item>
   
-    <item key="cb325b78-6985-4fde-bd33-779d04670c34" style="mx-24 py-8 border-bottom">
-      <text>Aaron Sawayn</text>
-      <text>Tyler_Walter72@gmail.com</text>
-      <text>1-950-543-2771 x5668</text>
+    <item key="02d61cce-6203-49ae-88d9-3ab504249ec1" style="mx-24 py-8 border-bottom">
+      <text>Aaron Wuckert</text>
+      <text>Osvaldo55@gmail.com</text>
+      <text>776-644-3100</text>
     </item>
   
-    <item key="6092a0c7-a9a4-469c-9aca-5e2752b76523" style="mx-24 py-8 border-bottom">
-      <text>Aaron Smitham</text>
-      <text>Daphne.Mosciski@gmail.com</text>
-      <text>1-249-577-3821 x30345</text>
+    <item key="ec8750a8-e2b2-49cb-960b-bc910ffb4a3f" style="mx-24 py-8 border-bottom">
+      <text>Abel Bruen</text>
+      <text>Leland.Konopelski@gmail.com</text>
+      <text>(240) 518-6973 x078</text>
     </item>
   
-    <item key="4b250e83-268d-4874-9ed3-8fae52bbe27a" style="mx-24 py-8 border-bottom">
-      <text>Aaron Torphy II</text>
-      <text>Theo.Sipes@hotmail.com</text>
-      <text>845-841-2194</text>
+    <item key="0341281d-9a68-4ce1-80f7-5f6f88e2ae8f" style="mx-24 py-8 border-bottom">
+      <text>Abel Dickinson Sr.</text>
+      <text>Logan.Lesch81@yahoo.com</text>
+      <text>(217) 339-3263 x2865</text>
     </item>
   
-    <item key="4258b3e8-a390-496e-93db-9dd1fb18ea1c" style="mx-24 py-8 border-bottom">
-      <text>Aaron Wiza</text>
-      <text>Laurel.Kshlerin42@yahoo.com</text>
-      <text>779.690.5480</text>
-    </item>
-  
-    <item key="49a00d11-9817-4465-92ae-99d7b9d6745c" style="mx-24 py-8 border-bottom">
-      <text>Aaron Zboncak</text>
-      <text>Maxime.Connelly32@hotmail.com</text>
-      <text>1-777-865-9359</text>
-    </item>
-  
-    <item key="487d72e5-883a-45b0-9a61-8011d03bb952" style="mx-24 py-8 border-bottom">
-      <text>Aaron Ziemann</text>
-      <text>Olin.Casper35@yahoo.com</text>
-      <text>1-583-942-6073 x555</text>
-    </item>
-  
-    <item key="ec73229c-f43e-4976-aa9a-e4f1e3cd883d" style="mx-24 py-8 border-bottom">
-      <text>Abel Aufderhar</text>
-      <text>Marquis_Trantow66@gmail.com</text>
-      <text>1-979-859-9659</text>
-    </item>
-  
-    <item key="bea99472-0b7b-4737-9214-99a02278ff2f" style="mx-24 py-8 border-bottom">
-      <text>Abel Bernier</text>
-      <text>Kamryn.Will15@hotmail.com</text>
-      <text>255.923.6343 x5724</text>
+    <item key="be2b8917-5604-4fd4-9774-dcbc1416af20" style="mx-24 py-8 border-bottom">
+      <text>Abel Gleason I</text>
+      <text>Tevin.Zemlak95@gmail.com</text>
+      <text>909.524.7115 x81115</text>
     </item>
   
   
@@ -549,6 +550,7 @@
       id="load-more"
       trigger="visible"
       action="replace"
+      style="py-8"
       href="?page=2"
     >
       <spinner />
