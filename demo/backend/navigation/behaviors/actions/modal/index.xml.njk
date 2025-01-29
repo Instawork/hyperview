@@ -2,7 +2,8 @@
 permalink: "/navigation/behaviors/actions/modal/index.xml"
 tags: "Navigation/Behaviors/Actions"
 hv_title: "Modal"
-hv_button_behavior: "back"
+hv_button_behavior: "close"
+hv_open_modal: "true"
 ---
 {% extends 'templates/scrollview.xml.njk' %}
 {% from 'macros/description/index.xml.njk' import description %}
@@ -12,10 +13,10 @@ hv_button_behavior: "back"
   {{ description('Open a new modal screen') }}
 
   {% call button('Open another modal') -%}
-    <behavior action="new" delay="1000" href="/hyperview/public/navigation/behaviors/actions/modal/index.xml" show-during-load="loading-screen" />
+    <behavior action="new" href="/hyperview/public/navigation/behaviors/actions/modal/modal-1.xml" show-during-load="loading-screen" />
   {%- endcall %}
 
   {% call button('Push on the stack') -%}
-    <behavior action="push" href="/hyperview/public/navigation/behaviors/actions/modal/index.xml" />
+    <behavior action="push" href="/hyperview/public/navigation/behaviors/actions/modal/push-1.xml" />
   {%- endcall %}
 {% endblock %}

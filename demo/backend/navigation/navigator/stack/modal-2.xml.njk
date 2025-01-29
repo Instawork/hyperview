@@ -8,7 +8,7 @@ hv_button_behavior: "back"
 {% extends 'templates/scrollview.xml.njk' %}
 
 {% block content %}
-  {{ description('This screen was dynamically opened on the stack.') }}
+  {{ description('This screen was dynamically opened as a modal.') }}
   {% call button('Back to beginning') -%}
     <behavior
       action="close"

@@ -1,6 +1,6 @@
 ---
-permalink: "/navigation/navigator/stack/push-2.xml"
-hv_title: "Push Screen 2"
+permalink: "/navigation/behaviors/actions/modal/push-1.xml"
+hv_title: "Push Screen 1"
 hv_button_behavior: "back"
 ---
 {% from 'macros/button/index.xml.njk' import button %}
@@ -9,10 +9,11 @@ hv_button_behavior: "back"
 
 {% block content %}
   {{ description('This screen was dynamically pushed on the stack.') }}
-  {% call button('Back to beginning') -%}
+  {{ description('Pushing the button below will push another screen onto the stack.') }}
+  {% call button('Push on stack') -%}
     <behavior
-      action="navigate"
-      href="#simple-screen-route"
+      action="push"
+      href="/hyperview/public/navigation/behaviors/actions/modal/push-2.xml"
     />
   {%- endcall %}
 {% endblock %}
