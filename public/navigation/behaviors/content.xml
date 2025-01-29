@@ -119,6 +119,8 @@
         show-during-load="loading-screen"
         style="item"
         
+          action="new"
+        
       >
         <view style="item-left">
           <text style="item-label">Modal</text>

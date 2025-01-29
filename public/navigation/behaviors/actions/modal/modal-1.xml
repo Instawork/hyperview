@@ -345,7 +345,7 @@
 
     </view>
   
-  <text style="header-title">Modal</text>
+  <text style="header-title">Modal Screen 1</text>
 </header>
 
         
@@ -353,36 +353,8 @@
     
   
   
-    <text style="description">Open a new modal screen</text>
+    <text style="description">This screen was dynamically opened as a modal.</text>
   
-
-
-  
-  <view
-    
-    
-      style="button"
-    
-  >
-    
-      <behavior action="new" href="/hyperview/public/navigation/behaviors/actions/modal/modal-1.xml" show-during-load="loading-screen" />
-    
-    <text style="button-label">Open another modal</text>
-  </view>
-
-
-  
-  <view
-    
-    
-      style="button"
-    
-  >
-    
-      <behavior action="push" href="/hyperview/public/navigation/behaviors/actions/modal/push-1.xml" />
-    
-    <text style="button-label">Push on the stack</text>
-  </view>
 
 
   </view>
@@ -733,7 +705,7 @@
 
     </view>
   
-  <text style="header-title">Modal</text>
+  <text style="header-title">Modal Screen 1</text>
 </header>
 
     <view style="loading">

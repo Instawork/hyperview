@@ -353,7 +353,7 @@
     
   
   
-    <text style="description">This screen was dynamically opened on the stack.</text>
+    <text style="description">This screen was dynamically opened as a modal.</text>
   
 
   
