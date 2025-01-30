@@ -1,7 +1,10 @@
 import * as Behaviors from 'hyperview/src/services/behaviors';
-import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import type { HvComponentProps, TextContextType } from 'hyperview/src/types';
+import type {
+  HvComponentProps,
+  LocalName,
+  TextContextType,
+} from 'hyperview/src/types';
 import React, { MutableRefObject, useCallback, useEffect, useRef } from 'react';
 import {
   createProps,
@@ -15,12 +18,6 @@ import TinyMask from 'hyperview/src/mask';
 import debounce from 'lodash/debounce';
 
 const HvTextField = (props: HvComponentProps) => {
-  if (props.element.localName === LOCAL_NAME.TEXT_AREA) {
-    Logging.warn(
-      'Deprecation notice: `<text-area>` tag is deprecated and will be removed in a future version. Use `<text-field>` with attribute `multiline="true"` as a replacement.',
-    );
-  }
-
   if (props.element.getAttribute('hide') === 'true') {
     return null;
   }
@@ -34,9 +31,7 @@ const HvTextField = (props: HvComponentProps) => {
   const keyboardType =
     (props.element.getAttribute('keyboard-type') as KeyboardTypeOptions) ||
     undefined;
-  const multiline =
-    props.element.localName === LOCAL_NAME.TEXT_AREA ||
-    props.element.getAttribute('multiline') === 'true';
+  const multiline = props.element.getAttribute('multiline') === 'true';
   const secureTextEntry = props.element.getAttribute('secure-text') === 'true';
   const textContentType =
     (props.element.getAttribute('text-content-type') as TextContextType) ||
@@ -120,7 +115,7 @@ const HvTextField = (props: HvComponentProps) => {
 
 HvTextField.namespaceURI = Namespaces.HYPERVIEW;
 HvTextField.localName = LOCAL_NAME.TEXT_FIELD;
-HvTextField.localNameAliases = [LOCAL_NAME.TEXT_AREA];
+HvTextField.localNameAliases = [] as LocalName[];
 HvTextField.getFormInputValues = (
   element: Element,
 ): Array<[string, string]> => {
