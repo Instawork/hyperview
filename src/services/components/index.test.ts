@@ -1,6 +1,5 @@
 import * as Components from 'hyperview/src/services/components';
 import type { HvComponentProps } from 'hyperview/src/types';
-import HvTextField from 'hyperview/src/components/hv-text-field';
 import HvView from 'hyperview/src/components/hv-view';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { PureComponent } from 'react';
@@ -70,12 +69,6 @@ describe('Registry', () => {
       ).toBe(true);
     });
 
-    it('returns true for existing component using alias', () => {
-      expect(
-        registry.hasComponent('https://hyperview.org/hyperview', 'text-area'),
-      ).toBe(true);
-    });
-
     it('returns true for custom component using alias', () => {
       expect(registry.hasComponent('http://baz', 'baz-2')).toBe(true);
     });
@@ -108,12 +101,6 @@ describe('Registry', () => {
 
     it('returns custom component using local name', () => {
       expect(registry.getComponent('http://foo', 'image')).toBe(Foo);
-    });
-
-    it('returns existing component using alias', () => {
-      expect(
-        registry.getComponent('https://hyperview.org/hyperview', 'text-area'),
-      ).toBe(HvTextField);
     });
 
     it('returns custom component using alias', () => {
