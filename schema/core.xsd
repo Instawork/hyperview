@@ -1148,6 +1148,16 @@
       <xs:attribute name="type" type="xs:string" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
       <xs:attribute name="text-content-type" type="hv:text-content-type" />
+      <xs:attribute name="autoCapitalize">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="none" />
+            <xs:enumeration value="sentences" />
+            <xs:enumeration value="words" />
+            <xs:enumeration value="characters" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
     </xs:complexType>
   </xs:element>
 
