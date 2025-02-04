@@ -12,8 +12,6 @@ import { HvScreenRenderError } from './errors';
 import LoadElementError from '../load-element-error';
 import LoadError from 'hyperview/src/core/components/load-error';
 import Loading from 'hyperview/src/core/components/loading';
-// eslint-disable-next-line instawork/import-services
-import Navigation from 'hyperview/src/services/navigation';
 import React from 'react';
 
 // eslint-disable-next-line instawork/pure-components
@@ -70,7 +68,6 @@ export default class HvScreen extends React.Component {
 
     this.behaviorRegistry = Behaviors.getRegistry(this.props.behaviors);
     this.componentRegistry = new Components.Registry(this.props.components);
-    this.navigation = new Navigation(props.entrypointUrl, this.getNavigation());
   }
 
   getRoute = props => {
@@ -94,7 +91,7 @@ export default class HvScreen extends React.Component {
     const url = params.url || this.props.entrypointUrl || null;
 
     const preloadScreen = params.preloadScreen
-      ? this.navigation.getPreloadScreen(params.preloadScreen)
+      ? this.props.getElement(params.preloadScreen)
       : null;
     const preloadStyles = preloadScreen
       ? Stylesheets.createStylesheets(preloadScreen)
@@ -136,18 +133,18 @@ export default class HvScreen extends React.Component {
     const oldElementId = oldNavigationState.params.behaviorElementId;
 
     if (newPreloadScreen !== oldPreloadScreen && oldPreloadScreen) {
-      this.props.removePreload?.(oldPreloadScreen);
+      this.props.removeElement?.(oldPreloadScreen);
     }
 
     if (newElementId !== oldElementId && oldElementId) {
-      this.props.removePreload?.(oldElementId);
+      this.props.removeElement?.(oldElementId);
     }
 
     if (newUrl && newUrl !== oldUrl) {
       this.needsLoad = true;
 
       const preloadScreen = newPreloadScreen
-        ? this.navigation.getPreloadScreen(newPreloadScreen)
+        ? this.props.getElement(newPreloadScreen)
         : null;
 
       const doc = preloadScreen || this.doc;
@@ -168,13 +165,10 @@ export default class HvScreen extends React.Component {
     const { behaviorElementId, preloadScreen } = params;
 
     if (preloadScreen) {
-      this.props.removePreload?.(preloadScreen);
+      this.props.removeElement?.(preloadScreen);
     }
     if (behaviorElementId) {
-      this.props.removePreload?.(behaviorElementId);
-    }
-    if (this.state.url) {
-      this.navigation.removeRouteKey(this.state.url);
+      this.props.removeElement?.(behaviorElementId);
     }
   }
 
@@ -192,7 +186,7 @@ export default class HvScreen extends React.Component {
    * Performs a full load of the screen.
    */
   load = async () => {
-    const { params, key: routeKey } = this.getRoute(this.props);
+    const { params } = this.getRoute(this.props);
 
     try {
       // If an initial document was passed, use it once and then remove
@@ -215,7 +209,6 @@ export default class HvScreen extends React.Component {
         staleHeaderType = loadedType;
       }
       const stylesheets = Stylesheets.createStylesheets(doc);
-      this.navigation.setRouteKey(this.state.url, routeKey);
       this.setState({
         doc,
         elementError: null,
@@ -235,10 +228,10 @@ export default class HvScreen extends React.Component {
       });
     } finally {
       if (params.preloadScreen) {
-        this.props.removePreload?.(params.preloadScreen);
+        this.props.removeElement?.(params.preloadScreen);
       }
       if (params.behaviorElementId) {
-        this.props.removePreload?.(params.behaviorElementId);
+        this.props.removeElement?.(params.behaviorElementId);
       }
     }
   };
@@ -255,10 +248,11 @@ export default class HvScreen extends React.Component {
   Error = ({ error }) => {
     const errorScreen = this.props.errorScreen || LoadError;
     return React.createElement(errorScreen, {
-      back: () => this.getNavigation().back(),
+      back: () => this.props.navigation.backAction(),
       error,
       onPressReload: () => this.reload(), // Make sure reload() is called without any args
-      onPressViewDetails: uri => this.props.openModal({ url: uri }),
+      onPressViewDetails: uri =>
+        this.props.navigation.openModalAction({ url: uri }),
     });
   };
 
@@ -322,24 +316,6 @@ export default class HvScreen extends React.Component {
   }
 
   /**
-   * Returns a navigation object similar to the one provided by React Navigation,
-   * but connected to props injected by the parent app.
-   */
-  getNavigation = () => ({
-    back: this.props.back,
-    closeModal: this.props.closeModal,
-    navigate: this.props.navigate,
-    openModal: this.props.openModal,
-    push: this.props.push,
-  });
-
-  registerPreload = (id, element) => {
-    if (this.props.registerPreload) {
-      this.props.registerPreload(id, element);
-    }
-  };
-
-  /**
    * Implement the callbacks from this class
    */
   updateCallbacks = {
@@ -349,10 +325,9 @@ export default class HvScreen extends React.Component {
       }
     },
     getDoc: () => this.doc,
-    getNavigation: () => this.navigation,
+    getNavigation: () => this.props.navigation,
     getOnUpdate: () => this.onUpdate,
     getState: () => this.state,
-    registerPreload: (id, element) => this.registerPreload(id, element),
     setNeedsLoad: () => {
       this.needsLoad = true;
     },

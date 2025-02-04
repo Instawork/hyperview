@@ -177,7 +177,7 @@ The nested “main” navigator is dynamically added into the “root” navigat
 
 There are only a few requirements to implement navigation in Hyperview. The Hyperview component needs to be wrapped with a &lt;NavigationContainer>. This dependency has been externalized to allow developers to integrate their own additional functionality. See [react-navigation’s documentation](https://reactnavigation.org/docs/navigation-container/) of the NavigationContainer.
 
-In previous versions of Hyperview, navigation was completely externalized and required passing various additional properties including “back”, “closeModal” and others. With the new approach, there's no need to provide these callbacks. Simply pass a url into the “entrypointUrl” property which contains a navigation document similar to those illustrated above. Hyperview will automatically create the necessary navigation hierarchy based on the elements in the document
+In previous versions of Hyperview, navigation was completely externalized and required passing various additional properties including “back”, “closeModal” and others. With the new approach, there's no need to provide these callbacks. Simply pass a url into the “entrypointUrl” property which contains a navigation document similar to those illustrated above. Hyperview will automatically create the necessary navigation hierarchy based on the elements in the document.
 
 ```javascript
 import Hyperview from 'hyperview';

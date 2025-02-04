@@ -4,7 +4,6 @@ import * as DomService from 'hyperview/src/services/dom';
 import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as NavigationContext from 'hyperview/src/contexts/navigation';
-import * as NavigatorMapContext from 'hyperview/src/contexts/navigator-map';
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Render from 'hyperview/src/services/render';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
@@ -18,6 +17,7 @@ import type {
   DOMString,
   HvComponentOptions,
   NavigationRouteParams,
+  OnUpdateCallbacks,
   ScreenState,
 } from 'hyperview/src/types';
 import React, { JSXElementConstructor, PureComponent, useContext } from 'react';
@@ -26,8 +26,6 @@ import HvScreen from 'hyperview/src/core/components/hv-screen';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import LoadError from 'hyperview/src/core/components/load-error';
 import Loading from 'hyperview/src/core/components/loading';
-// eslint-disable-next-line instawork/import-services
-import Navigation from 'hyperview/src/services/navigation';
 import { NavigationContainerRefContext } from '@react-navigation/native';
 
 /**
@@ -44,13 +42,11 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
 
   parser?: DomService.Parser;
 
-  navLogic: NavigatorService.Navigator;
+  navigator: NavigatorService.Navigator;
 
   componentRegistry: Components.Registry;
 
   needsLoad = false;
-
-  navigation: Navigation;
 
   // See the hack in hv-screen. This is a fix for the updated DOM not being available immediately.
   localDoc: Document | null = null;
@@ -62,10 +58,9 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       doc: null,
       error: null,
     };
-    this.navLogic = new NavigatorService.Navigator(this.props);
+    this.navigator = new NavigatorService.Navigator(this.props);
     this.componentRegistry = new Components.Registry(this.props.components);
     this.needsLoad = false;
-    this.navigation = new Navigation(props.entrypointUrl, this.getNavigation());
   }
 
   /**
@@ -87,7 +82,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       this.props.onParseBefore || null,
       this.props.onParseAfter || null,
     );
-    this.navLogic.setContext(this.context);
+    this.navigator.setContext(this.context);
 
     // When a nested navigator is found, the document is not loaded from url
     if (this.props.element === undefined) {
@@ -101,18 +96,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       this.needsLoad = false;
     }
   }
-
-  /**
-   * Returns a navigation object similar to the one provided by React Navigation,
-   * but connected to the nav logic of this component.
-   */
-  getNavigation = () => ({
-    back: this.navLogic.back,
-    closeModal: this.navLogic.closeModal,
-    navigate: this.navLogic.navigate,
-    openModal: this.navLogic.openModal,
-    push: this.navLogic.push,
-  });
 
   getUrl = (): string => {
     return UrlService.getUrlFromHref(
@@ -231,23 +214,17 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     );
   };
 
-  registerPreload = (id: number, element: Element): void => {
-    this.props.setPreload(id, element);
-  };
-
   /**
    * Implement the callbacks from this class
    */
-  updateCallbacks = {
+  updateCallbacks: OnUpdateCallbacks = {
     clearElementError: () => {
       // Noop
     },
     getDoc: () => this.localDoc || null,
-    getNavigation: () => this.navigation,
+    getNavigation: () => this.navigator,
     getOnUpdate: () => this.onUpdate,
     getState: () => this.state,
-    registerPreload: (id: number, element: Element) =>
-      this.registerPreload(id, element),
     setNeedsLoad: () => {
       this.needsLoad = true;
     },
@@ -280,7 +257,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     const noop = () => {};
 
     if (this.props.route?.params?.preloadScreen) {
-      const preloadElement = this.props.getPreload(
+      const preloadElement = this.props.getElement(
         this.props.route?.params?.preloadScreen,
       );
       if (preloadElement) {
@@ -332,11 +309,11 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     const ErrorScreen = this.props.errorScreen || LoadError;
     return (
       <ErrorScreen
-        back={() => this.navLogic.back({} as NavigationRouteParams)}
+        back={() => this.navigator.backAction({} as NavigationRouteParams)}
         error={props.error}
         onPressReload={() => this.load()}
         onPressViewDetails={(uri: string | undefined) => {
-          this.navLogic.openModal({
+          this.navigator.openModalAction({
             url: uri as string,
           } as NavigationRouteParams);
         }}
@@ -364,9 +341,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       <Contexts.DateFormatContext.Consumer>
         {formatter => (
           <HvScreen
-            back={this.navLogic.back}
             behaviors={this.props.behaviors}
-            closeModal={this.navLogic.closeModal}
             components={this.props.components}
             doc={this.localDoc?.cloneNode(true) as Document}
             elementErrorComponent={this.props.elementErrorComponent}
@@ -374,17 +349,14 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
             errorScreen={this.props.errorScreen}
             fetch={this.props.fetch}
             formatDate={formatter}
-            navigate={this.navLogic.navigate}
-            navigation={this.props.navigation}
+            getElement={this.props.getElement}
+            navigation={this.navigator}
             onError={this.props.onError}
             onParseAfter={this.props.onParseAfter}
             onParseBefore={this.props.onParseBefore}
             onUpdate={this.props.onUpdate}
-            openModal={this.navLogic.openModal}
-            push={this.navLogic.push}
-            registerPreload={this.registerPreload}
             reload={this.props.reload}
-            removePreload={this.props.removePreload}
+            removeElement={this.props.removeElement}
             route={route}
             url={url || undefined}
           />
@@ -569,10 +541,8 @@ function HvRouteFC(props: Types.Props) {
   const navigationContext: Types.NavigationContextProps | null = useContext(
     NavigationContext.Context,
   );
-  const navigatorMapContext: Types.NavigatorMapContextProps | null = useContext(
-    NavigatorMapContext.NavigatorMapContext,
-  );
-  if (!navigationContext || !navigatorMapContext) {
+  const elemenCacheContext = useContext(Contexts.ElementCacheContext);
+  if (!navigationContext || !elemenCacheContext) {
     throw new NavigatorService.HvRouteError('No context found');
   }
   const backContext = useContext(BackBehaviorContext);
@@ -679,7 +649,7 @@ function HvRouteFC(props: Types.Props) {
       entrypointUrl={navigationContext.entrypointUrl}
       errorScreen={navigationContext.errorScreen}
       fetch={navigationContext.fetch}
-      getPreload={navigatorMapContext.getPreload}
+      getElement={elemenCacheContext.getElement}
       handleBack={navigationContext.handleBack}
       navigation={nav}
       onError={navigationContext.onError}
@@ -687,9 +657,9 @@ function HvRouteFC(props: Types.Props) {
       onParseBefore={navigationContext.onParseBefore}
       onUpdate={navigationContext.onUpdate}
       reload={navigationContext.reload}
-      removePreload={navigatorMapContext.removePreload}
+      removeElement={elemenCacheContext.removeElement}
       route={props.route}
-      setPreload={navigatorMapContext.setPreload}
+      setElement={elemenCacheContext.setElement}
       url={url}
     />
   );
@@ -702,4 +672,4 @@ export default function HvRoute(props: Types.Props) {
     </BackBehaviorProvider>
   );
 }
-export type { Props } from './types';
+export type { InnerRouteProps, Props } from './types';

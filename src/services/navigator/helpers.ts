@@ -269,8 +269,6 @@ export const getNavigatorById = (
 
 /**
  * Determine the action to perform based on the route params
- * Correct for a push action being introduced in
- * `this.getRouteKey(url);` in `hyperview/src/services/navigation`
  * Url fragments are treated as a navigate action
  */
 export const getNavAction = (

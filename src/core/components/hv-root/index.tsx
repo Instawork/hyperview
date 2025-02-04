@@ -5,8 +5,7 @@ import * as Dom from 'hyperview/src/services/dom';
 import * as Events from 'hyperview/src/services/events';
 import * as Logging from 'hyperview/src/services/logging';
 import * as NavContexts from 'hyperview/src/contexts/navigation';
-import * as Navigation from 'hyperview/src/services/navigation';
-import * as NavigatorMapContext from 'hyperview/src/contexts/navigator-map';
+import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Render from 'hyperview/src/services/render';
 import * as Services from 'hyperview/src/services';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
@@ -26,7 +25,6 @@ import {
 } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
 import HvRoute from 'hyperview/src/core/components/hv-route';
-import HvScreen from 'hyperview/src/core/components/hv-screen';
 import { Linking } from 'react-native';
 import { XNetworkRetryAction } from 'hyperview/src/services/dom/types';
 
@@ -224,10 +222,8 @@ export default class Hyperview extends PureComponent<Types.Props> {
           targetId,
         } = options;
         const delayVal: number = +(delay || '');
-        navigation.setUrl(state.url);
-        navigation.setDocument(doc);
         navigation.navigate(
-          href || Navigation.ANCHOR_ID_SEPARATOR,
+          href || NavigatorService.ANCHOR_ID_SEPARATOR,
           navAction,
           element,
           this.componentRegistry,
@@ -238,7 +234,8 @@ export default class Hyperview extends PureComponent<Types.Props> {
             showIndicatorId: showIndicatorId || undefined,
             targetId: targetId || undefined,
           },
-          options.onUpdateCallbacks.registerPreload,
+          state.url,
+          doc,
         );
       }
     } else if (
@@ -547,40 +544,6 @@ export default class Hyperview extends PureComponent<Types.Props> {
   };
 
   render() {
-    if (this.props.navigation) {
-      // Externally provided navigation will use the provided navigation and action callbacks
-      return (
-        <Contexts.RefreshControlComponentContext.Provider
-          value={this.props.refreshControl}
-        >
-          <HvScreen
-            back={this.props.back}
-            behaviors={this.props.behaviors}
-            closeModal={this.props.closeModal}
-            components={this.props.components}
-            elementErrorComponent={this.props.elementErrorComponent}
-            entrypointUrl={this.props.entrypointUrl}
-            errorScreen={this.props.errorScreen}
-            fetch={this.props.fetch}
-            formatDate={this.props.formatDate}
-            loadingScreen={this.props.loadingScreen}
-            navigate={this.props.navigate}
-            navigation={this.props.navigation}
-            onError={this.props.onError}
-            onParseAfter={this.props.onParseAfter}
-            onParseBefore={this.props.onParseBefore}
-            onUpdate={this.onUpdate}
-            openModal={this.props.openModal}
-            push={this.props.push}
-            refreshControl={this.props.refreshControl}
-            reload={this.reload}
-            route={this.props.route}
-          />
-        </Contexts.RefreshControlComponentContext.Provider>
-      );
-    }
-
-    // Without an external navigation, all navigation is handled internally
     return (
       <Contexts.DateFormatContext.Provider value={this.props.formatDate}>
         <Contexts.RefreshControlComponentContext.Provider
@@ -606,9 +569,9 @@ export default class Hyperview extends PureComponent<Types.Props> {
               reload: this.reload,
             }}
           >
-            <NavigatorMapContext.NavigatorMapProvider>
+            <Contexts.ElementCacheProvider>
               <HvRoute />
-            </NavigatorMapContext.NavigatorMapProvider>
+            </Contexts.ElementCacheProvider>
           </NavContexts.Context.Provider>
         </Contexts.RefreshControlComponentContext.Provider>
       </Contexts.DateFormatContext.Provider>

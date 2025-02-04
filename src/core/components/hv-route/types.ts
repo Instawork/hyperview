@@ -31,12 +31,6 @@ export type NavigationContextProps = {
   reload: Reload;
 };
 
-export type NavigatorMapContextProps = {
-  setPreload: (key: number, element: Element) => void;
-  getPreload: (key: number) => Element | undefined;
-  removePreload: (key: number) => void;
-};
-
 /**
  * The route prop used by react-navigation
  */
@@ -60,9 +54,9 @@ export type InnerRouteProps = {
   elementErrorComponent?: ComponentType<ErrorProps>;
   errorScreen?: ComponentType<ErrorProps>;
   handleBack?: ComponentType<{ children: ReactNode }>;
-  setPreload: (key: number, element: Element) => void;
-  getPreload: (key: number) => Element | undefined;
-  removePreload: (key: number) => void;
+  setElement: (key: number, element: Element) => void;
+  getElement: (key: number) => Element | undefined;
+  removeElement: (key: number) => void;
   element?: Element;
   reload: Reload;
   doc: Document | undefined;
