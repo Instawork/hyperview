@@ -1,0 +1,39 @@
+---
+permalink: "/ui/ui-elements/text/bug/index.xml"
+tags: "UI/UI Elements/Text"
+hv_title: "Bug"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block content %}
+  {{ description("The following will fail in 1 second.") }}
+
+  <view id="broken-replace">
+    <text>
+      The parent view should be replaced by 'replace' behavior below.
+    </text>
+
+    {# This behavior will fail because the target will have been orphaned by the second behavior. #}
+    {# If it had a 'target' attribute, or if it didn't have a 'delay', it would work. #}
+    <behavior
+      action="replace"
+      trigger="load"
+      href="/hyperview/public/ui/ui-elements/text/bug/replacement.xml"
+      delay="1000"
+      once="true"
+    />
+
+    {# This behavior will orphan the target of the first behavior. #}
+    <behavior
+      action="show"
+      trigger="load"
+      target="broken-replace"
+      once="true"
+    />
+
+  </view>
+{% endblock %}
