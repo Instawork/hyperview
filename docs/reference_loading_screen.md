@@ -37,11 +37,11 @@ The optional element which is passed into the loading screen provides a way to m
 
 ### Example
 
-The following example shows how to use the `id` attribute of the `<behavior>` element to colorize the load indicator.
+The following example shows how to use the `href` attribute of the `<behavior>` element to colorize the load indicator.
 
 ```xml
 <view>
-  <behavior id="green-loader" action="new" href="/example.xml">
+  <behavior action="new" href="/example.xml">
 </view>
 ```
 
@@ -49,8 +49,8 @@ The following example shows how to use the `id` attribute of the `<behavior>` el
 import { ActivityIndicator, View } from 'react-native';
 
 const LoadingScreen = (props: Props) => {
-  const id = props.element?.getAttribute('id');
-  const color = id === 'green-loader' ? 'green' : defaultColor;
+  const href = props.element?.getAttribute('href');
+  const color = href === '/example.xml' ? 'green' : defaultColor;
   return (
     <View
       style={{
