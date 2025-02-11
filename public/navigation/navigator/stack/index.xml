@@ -3,5 +3,6 @@
 <doc xmlns="https://hyperview.org/hyperview">
   <navigator id="simple-stack-navigator" type="stack">
     <nav-route id="simple-screen-route" href="/hyperview/public/navigation/navigator/stack/screen.xml"/>
+    <nav-route id="modal-route" href="/hyperview/public/navigation/navigator/stack/modal-1.xml" modal="true" />
   </navigator>
 </doc>
