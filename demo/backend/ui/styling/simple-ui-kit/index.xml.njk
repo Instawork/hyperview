@@ -1,0 +1,19 @@
+---
+permalink: "/ui/styling/simple-ui-kit/index.xml"
+tags: "UI/Styling"
+hv_title: "Simple UI Kit"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+
+{% block styles %}
+  {% include './uikit.xml' %}
+{% endblock %}
+
+{% block content %}
+  <text style="h1">The quick brown fox jumps over the lazy dog</text>
+  <text style="h2">The quick brown fox jumps over the lazy dog</text>
+  <text style="h3">The quick brown fox jumps over the lazy dog</text>
+  <text style="h4">The quick brown fox jumps over the lazy dog</text>
+  <text style="h5">The quick brown fox jumps over the lazy dog</text>
+{% endblock %}
