@@ -4,7 +4,6 @@
 import React, { PureComponent } from 'react';
 import ReactNative, {
   DeviceEventEmitter,
-  NativeModules,
   Keyboard,
   ScrollView,
 } from 'react-native';
@@ -15,8 +14,6 @@ import type {
   LayoutChangeEvent,
   NativeScrollEvent,
 } from 'react-native';
-
-const ScrollViewManager = NativeModules.ScrollViewManager;
 
 const defaultScrollToInputAdditionalOffset = 75;
 
@@ -86,13 +83,13 @@ export default class KeyboardAwareScrollView extends PureComponent<
   };
 
   updateKeyboardAwareViewContentSize = () => {
-    if (ScrollViewManager && ScrollViewManager.getContentSize) {
-      ScrollViewManager.getContentSize(
-        ReactNative.findNodeHandle(this.keyboardAwareView),
-        (res: { width: number; height: number }) => {
+    if (this.keyboardAwareView) {
+      // @ts-ignore: TODO(TS): fix this
+      this.keyboardAwareView.measure(
+        (x: number, y: number, width: number, height: number) => {
           if (this.keyboardAwareView) {
             // @ts-ignore: TODO(TS): fix this
-            this.keyboardAwareView.contentSize = res;
+            this.keyboardAwareView.contentSize = { width, height };
             if (this.state.scrollBottomOnNextSizeChange) {
               this.scrollToBottom();
               this.setState({ scrollBottomOnNextSizeChange: false });
