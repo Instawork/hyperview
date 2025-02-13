@@ -70,10 +70,10 @@ export default class KeyboardAwareScrollView extends PureComponent<
   ) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore: TODO(TS): fix this
-    this.keyboardAwareView?.layout = layout;
+    this.keyboardAwareView.layout = layout;
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore: TODO(TS): fix this
-    this.keyboardAwareView?.contentOffset = { x: 0, y: 0 };
+    this.keyboardAwareView.contentOffset = { x: 0, y: 0 };
     this.updateKeyboardAwareViewContentSize();
   };
 
@@ -82,7 +82,7 @@ export default class KeyboardAwareScrollView extends PureComponent<
   ) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore: TODO(TS): fix this
-    this.keyboardAwareView?.contentOffset = contentOffset;
+    this.keyboardAwareView.contentOffset = contentOffset;
     this.updateKeyboardAwareViewContentSize();
   };
 
