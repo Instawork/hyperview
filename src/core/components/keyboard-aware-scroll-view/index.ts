@@ -1,3 +1,3 @@
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import KeyboardAwareScrollView from './KeyboardAwareScrollView';
 
 export default KeyboardAwareScrollView;
