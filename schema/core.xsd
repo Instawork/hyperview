@@ -365,7 +365,6 @@
         <xs:element ref="hv:select-multiple" />
         <xs:element ref="hv:switch" />
         <xs:element ref="hv:text" />
-        <xs:element ref="hv:text-area" />
         <xs:element ref="hv:text-field" />
         <xs:element ref="hv:view" />
         <xs:element ref="hv:web-view" />
@@ -1158,28 +1157,6 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>
-    </xs:complexType>
-  </xs:element>
-
-  <xs:element name="text-area">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element ref="hv:behavior" />
-        </xs:choice>
-      </xs:sequence>
-      <xs:attribute name="name" use="required" type="xs:string" />
-      <xs:attribute name="value" type="xs:string" />
-      <xs:attribute name="placeholder" type="xs:string" />
-      <xs:attribute name="placeholderTextColor" type="hv:color" />
-      <xs:attribute name="id" type="hv:ID" />
-      <xs:attribute name="key" type="hv:KEY" />
-      <xs:attribute name="hide" type="xs:boolean" />
-      <xs:attribute name="underlineColorAndroid" type="hv:color" />
-      <xs:attribute name="style" />
-      <xs:attribute name="editable" type="xs:boolean" />
-      <xs:attributeGroup ref="hv:behaviorAttributes" />
-      <xs:attribute name="text-content-type" type="hv:text-content-type" />
     </xs:complexType>
   </xs:element>
 
