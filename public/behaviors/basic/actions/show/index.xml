@@ -330,6 +330,13 @@
     textAlign="center"
   />
   <style id="spacer" height="40" />
+  <style
+  id="spinner"
+  justifyContent="center"
+  alignItems="center"
+  paddingRight="12"
+/>
+
 
       </styles>
       <body style="body" safe-area="true">
