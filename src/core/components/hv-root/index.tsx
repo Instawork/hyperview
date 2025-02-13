@@ -478,7 +478,14 @@ export default class Hyperview extends PureComponent<Types.Props> {
         }
       }, delayMs);
       // Store the timeout ID
-      Services.setTimeoutId(element, timeoutId.toString());
+      // Find the target element by locating the behavior within the current doc
+      const targetElement = Helpers.findViewByBehavior(
+        onUpdateCallbacks.getDoc(),
+        behaviorElement,
+      );
+      if (targetElement) {
+        Services.setTimeoutId(targetElement, timeoutId.toString());
+      }
     } else {
       // If there's no delay, fetch immediately and update the doc when done.
       fetchAndUpdate();
