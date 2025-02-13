@@ -400,9 +400,14 @@ export default class Hyperview extends PureComponent<Types.Props> {
           // to the element triggering the action.
           let targetElement = targetId
             ? Dom.getElementById(onUpdateCallbacks.getDoc(), targetId)
-            : element;
+            : null;
           if (!targetElement) {
-            targetElement = element;
+            // Find the target element by locating the behavior within the current doc
+            targetElement =
+              Helpers.findViewByBehavior(
+                onUpdateCallbacks.getDoc(),
+                behaviorElement,
+              ) || element;
           }
 
           if (newElement) {

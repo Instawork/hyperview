@@ -1,5 +1,6 @@
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
+import { LOCAL_NAME, NODE_TYPE, UPDATE_ACTIONS } from 'hyperview/src/types';
 import type {
   LocalName,
   NamespaceURI,
@@ -7,7 +8,6 @@ import type {
   UpdateAction,
 } from 'hyperview/src/types';
 import { DocumentGetElementByIdError } from './errors';
-import { NODE_TYPE, UPDATE_ACTIONS } from 'hyperview/src/types';
 
 export const getBehaviorElements = (element: Element) => {
   const behaviorElements = Array.from(
@@ -140,4 +140,40 @@ export const processDocument = (doc: Document): Document => {
     }
   });
   return doc;
+};
+
+/**
+ * Walk up the DOM tree to find the first parent view element
+ */
+const findParentView = (element: Element): Element | null => {
+  if (element.tagName === LOCAL_NAME.VIEW) {
+    return element;
+  }
+  if (element.parentNode) {
+    return findParentView(element.parentNode as Element);
+  }
+  return null;
+};
+
+/**
+ * Find the behavior in the dom by its id and return the parent view
+ * This is needed in cases where the dom has been mutated and the behavior
+ * is no longer a direct child of the view
+ */
+export const findViewByBehavior = (
+  doc: Document | null,
+  behaviorElement: Element | null | undefined,
+): Element | null => {
+  if (!doc || !behaviorElement) {
+    return null;
+  }
+  const behaviorId = behaviorElement.getAttribute('id');
+  if (!behaviorId) {
+    return null;
+  }
+  const currentBehaviorElement = getElementById(doc, behaviorId);
+  if (!currentBehaviorElement) {
+    return null;
+  }
+  return findParentView(currentBehaviorElement);
 };
