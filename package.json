@@ -120,6 +120,9 @@
     ],
     "setupFiles": [
       "./test/setup.ts"
+    ],
+    "transformIgnorePatterns": [
+      "./src/core/components/keyboard-aware-scrollview/"
     ]
   }
 }
