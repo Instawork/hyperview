@@ -15,6 +15,7 @@ export default {
     supportsTablet: true,
   },
   name: 'demo',
+  newArchEnabled: true,
   orientation: 'portrait',
   scheme: 'hyperview',
   slug: 'demo',
