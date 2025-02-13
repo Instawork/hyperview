@@ -404,7 +404,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
           if (!targetElement) {
             // Find the target element by locating the behavior within the current doc
             targetElement =
-              Helpers.findViewByBehavior(
+              Helpers.findTargetByBehavior(
                 onUpdateCallbacks.getDoc(),
                 behaviorElement,
               ) || element;
@@ -479,7 +479,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
       }, delayMs);
       // Store the timeout ID
       // Find the target element by locating the behavior within the current doc
-      const targetElement = Helpers.findViewByBehavior(
+      const targetElement = Helpers.findTargetByBehavior(
         onUpdateCallbacks.getDoc(),
         behaviorElement,
       );

@@ -143,24 +143,11 @@ export const processDocument = (doc: Document): Document => {
 };
 
 /**
- * Walk up the DOM tree to find the first parent view element
- */
-const findParentView = (element: Element): Element | null => {
-  if (element.tagName === LOCAL_NAME.VIEW) {
-    return element;
-  }
-  if (element.parentNode) {
-    return findParentView(element.parentNode as Element);
-  }
-  return null;
-};
-
-/**
- * Find the behavior in the dom by its id and return the parent view
+ * Find the behavior in the dom by its id and return the target element
  * This is needed in cases where the dom has been mutated and the behavior
  * is no longer a direct child of the view
  */
-export const findViewByBehavior = (
+export const findTargetByBehavior = (
   doc: Document | null,
   behaviorElement: Element | null | undefined,
 ): Element | null => {
@@ -175,5 +162,8 @@ export const findViewByBehavior = (
   if (!currentBehaviorElement) {
     return null;
   }
-  return findParentView(currentBehaviorElement);
+  // The target is the parent of the behavior element or the element itself
+  return currentBehaviorElement.tagName === LOCAL_NAME.BEHAVIOR
+    ? (currentBehaviorElement.parentNode as Element)
+    : currentBehaviorElement;
 };
