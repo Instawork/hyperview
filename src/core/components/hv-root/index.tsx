@@ -3,6 +3,7 @@ import * as Components from 'hyperview/src/services/components';
 import * as Contexts from 'hyperview/src/contexts';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Events from 'hyperview/src/services/events';
+import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Logging from 'hyperview/src/services/logging';
 import * as NavContexts from 'hyperview/src/contexts/navigation';
 import * as NavigatorService from 'hyperview/src/services/navigator';
@@ -170,13 +171,14 @@ export default class Hyperview extends PureComponent<Types.Props> {
         onUpdateCallbacks.getState().url || '',
       );
       const httpMethod: Dom.HttpMethod = method as Dom.HttpMethod;
-      const { doc, staleHeaderType } = await this.parser.loadElement(
+      const { doc: loadedDoc, staleHeaderType } = await this.parser.loadElement(
         url,
         formData || null,
         httpMethod,
         networkRetryAction,
         networkRetryEvent,
       );
+      const doc = Helpers.processDocument(loadedDoc);
       if (staleHeaderType) {
         // We are doing this to ensure that we keep the screen stale until a `reload` happens
         onUpdateCallbacks.setState({ staleHeaderType });

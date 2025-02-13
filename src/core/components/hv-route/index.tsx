@@ -140,7 +140,8 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
 
       const url: string = this.getUrl();
 
-      const { doc } = await this.parser.loadDocument(url);
+      const { doc: loadedDoc } = await this.parser.loadDocument(url);
+      const doc = Helpers.processDocument(loadedDoc);
 
       // Set the state with the merged document
 
