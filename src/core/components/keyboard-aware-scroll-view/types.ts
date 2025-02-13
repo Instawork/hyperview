@@ -1,4 +1,4 @@
-import { TextInput, ScrollView } from 'react-native';
+import { ScrollView, TextInput } from 'react-native';
 
 export type Props = {
   getTextInputRefs?: () => Array<TextInput> | null | undefined;
