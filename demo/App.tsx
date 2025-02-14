@@ -1,4 +1,5 @@
 import './src/gesture-handler';
+import * as Linking from 'expo-linking';
 import { Logger, fetchWrapper, formatDate } from './src/Helpers';
 import {
   SafeAreaInsetsContext,
@@ -15,6 +16,24 @@ import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 import { View } from 'react-native';
 
+// this value needs to match the path prefix where the app is hosted
+// our demo app is hosted under instawork.github.io/hyperview
+const pathPrefix = 'hyperview';
+
+const linking = {
+  config: {
+    screens: {
+      card: {
+        path: `${pathPrefix}/card`,
+      },
+      modal: {
+        path: `${pathPrefix}/modal`,
+      },
+    },
+  },
+  prefixes: [Linking.createURL('/')],
+};
+
 export default () => (
   <SafeAreaProvider>
     <SafeAreaInsetsContext.Consumer>
@@ -29,7 +48,7 @@ export default () => (
             paddingRight: insets?.right,
           }}
         >
-          <NavigationContainer>
+          <NavigationContainer linking={linking}>
             <BottomTabBarContextProvider>
               <Hyperview
                 behaviors={Behaviors}

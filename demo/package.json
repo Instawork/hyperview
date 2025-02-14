@@ -30,6 +30,7 @@
     "@types/moment": "^2.13.0",
     "expo": "~49.0.13",
     "expo-constants": "~14.4.2",
+    "expo-linking": "~5.0.2",
     "expo-status-bar": "~1.6.0",
     "hyperview": "0.88.0",
     "moment": "^2.29.4",

@@ -16,6 +16,7 @@ export default {
   },
   name: 'demo',
   orientation: 'portrait',
+  scheme: 'hyperview',
   slug: 'demo',
   splash: {
     backgroundColor: '#ffffff',
