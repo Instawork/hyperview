@@ -2,6 +2,7 @@ import DateTimePicker from 'hyperview/src/core/components/date-time-picker';
 import Modal from 'hyperview/src/core/components/modal';
 import type { Props } from './types';
 import React from 'react';
+import styles from './styles';
 
 /**
  * On iOS this component is rendered inline, and on Android it's rendered as a modal.
@@ -32,6 +33,7 @@ export default (props: Props): JSX.Element | null => {
         minimumDate={props.minDate || undefined}
         mode="date"
         onChange={(evt: unknown, date?: Date) => props.setPickerValue(date)}
+        style={styles.container}
         value={props.value}
       />
     </Modal>
