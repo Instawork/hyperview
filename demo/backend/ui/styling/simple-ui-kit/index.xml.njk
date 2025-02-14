@@ -1,0 +1,59 @@
+---
+permalink: "/ui/styling/simple-ui-kit/index.xml"
+tags: "UI/Styling"
+hv_title: "Simple UI Kit"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+
+{% block styles %}
+  {% include './_uikit.xml.njk' %}
+{% endblock %}
+
+{% block content %}
+  <view style="px-24" scroll="true">
+    <text style="h1">Heading</text>
+    <text style="h1">The quick brown fox jumps over the lazy dog</text>
+    <text style="h2">The quick brown fox jumps over the lazy dog</text>
+    <text style="h3">The quick brown fox jumps over the lazy dog</text>
+    <text style="h4">The quick brown fox jumps over the lazy dog</text>
+    <text style="h5">The quick brown fox jumps over the lazy dog</text>
+    <text style="h6">The quick brown fox jumps over the lazy dog</text>
+
+    <text style="h1 mt-24">Body</text>
+    <text style="b1">The quick brown fox jumps over the lazy dog</text>
+    <text style="b2">The quick brown fox jumps over the lazy dog</text>
+    <text style="b3">The quick brown fox jumps over the lazy dog</text>
+    <text style="b4">The quick brown fox jumps over the lazy dog</text>
+    <text style="b5">The quick brown fox jumps over the lazy dog</text>
+    <text style="b6">The quick brown fox jumps over the lazy dog</text>
+
+    <text style="h1 mt-24">Button</text>
+    <view style="flex-row mb-16">
+      <view style="btn btn-primary mr-16">
+        <text style="btn-label btn-label-primary">Label</text>
+      </view>
+      <view style="btn btn-primary btn-primary-disabled mr-16">
+        <text style="btn-label btn-label-primary">Label</text>
+      </view>
+      <view style="btn btn-danger mr-16">
+        <text style="btn-label btn-label-primary">Label</text>
+      </view>
+      <view style="btn btn-danger btn-danger-disabled mr-16">
+        <text style="btn-label btn-label-primary">Label</text>
+      </view>
+      <view style="btn mr-16">
+        <text style="btn-label">Label</text>
+      </view>
+      <view style="btn btn-outline-disabled">
+        <text style="btn-label btn-label-link-disabled">Label</text>
+      </view>
+      <view style="btn btn-link">
+        <text style="btn-label btn-label-link">Label</text>
+      </view>
+      <view style="btn btn-link">
+        <text style="btn-label btn-label-link btn-label-link-disabled">Label</text>
+      </view>
+    </view>
+  </view>
+{% endblock %}

@@ -1,0 +1,914 @@
+<style id="h1" fontWeight="bold" lineHeight="72" fontSize="56" color="#1f1f1f"/>
+<style id="h2" fontWeight="bold" lineHeight="56" fontSize="48" color="#1f1f1f"/>
+<style id="h3" fontWeight="bold" lineHeight="48" fontSize="40" color="#1f1f1f"/>
+<style id="h4" fontWeight="bold" lineHeight="40" fontSize="32" color="#1f1f1f"/>
+<style id="h5" fontWeight="bold" lineHeight="32" fontSize="24" color="#1f1f1f"/>
+<style id="h6" fontWeight="bold" lineHeight="28" fontSize="20" color="#1f1f1f"/>
+<style id="h7" fontWeight="bold" lineHeight="24" fontSize="16" color="#1f1f1f"/>
+<style id="b1" fontWeight="400" lineHeight="32" fontSize="24" color="#1f1f1f"/>
+<style id="b2" fontWeight="400" lineHeight="28" fontSize="20" color="#1f1f1f"/>
+<style id="b3" fontWeight="400" lineHeight="24" fontSize="16" color="#1f1f1f"/>
+<style id="b4" fontWeight="400" lineHeight="20" fontSize="14" color="#1f1f1f"/>
+<style id="b5" fontWeight="400" lineHeight="16" fontSize="12" color="#1f1f1f"/>
+<style id="b6" fontWeight="400" lineHeight="14" fontSize="10" color="#1f1f1f"/>
+<style id="btn" borderColor="#4778ff" borderWidth="1" borderRadius="4" paddingLeft="24" paddingRight="24" paddingTop="12" paddingBottom="12"/>
+<style id="btn-link" borderWidth="0"/>
+<style id="btn-primary" backgroundColor="#4778ff" borderColor="#4778ff"/>
+<style id="btn-disabled" backgroundColor="#bdc4c4" borderColor="#bdc4c4"/>
+<style id="btn-primary-disabled" backgroundColor="#80aaff" borderColor="#80aaff"/>
+<style id="btn-outline-disabled" borderColor="#bdc4c4"/>
+<style id="btn-danger" backgroundColor="#ff4847" borderColor="#ff4847"/>
+<style id="btn-danger-disabled" backgroundColor="#ff9796" borderColor="#ff9796"/>
+<style id="btn-success" backgroundColor="#2db345" borderColor="#2db345" color="#008719"/>
+<style id="btn-outline-danger" borderColor="#ff4847"/>
+<style id="btn-sm" paddingLeft="8" paddingRight="8" paddingTop="8" paddingBottom="8"/>
+<style id="btn-nav" height="44" minWidth="44" backgroundColor="#ffffff" alignItems="center" justifyContent="center"/>
+<style id="btn-nav-container">
+  <modifier pressed="true">
+    <style backgroundColor="#ffffff"/>
+  </modifier>
+</style>
+<style id="btn-nav-primary" backgroundColor="#4778ff" paddingHorizontal="16" paddingVertical="6" borderRadius="100">
+  <modifier pressed="true">
+    <style backgroundColor="#255ccc"/>
+  </modifier>
+</style>
+<style id="btn-nav-primary-disabled-rounded" backgroundColor="#bdc4c4" paddingHorizontal="16" paddingVertical="6" borderRadius="100"/>
+<style id="btn-nav-primary-disabled" backgroundColor="#bdc4c4"/>
+<style id="btn-nav-primary-loading" backgroundColor="#80aaff"/>
+<style id="btn-outline-primary-loading" borderColor="#80aaff"/>
+<style id="hyper-ref">
+  <modifier pressed="true">
+    <style/>
+  </modifier>
+</style>
+<style id="btn-round" borderRadius="48" borderWidth="1" padding="12" height="48" width="48"/>
+<style id="btn-round-primary" backgroundColor="#4778ff" borderColor="#4778ff">
+  <modifier pressed="true">
+    <style backgroundColor="#255ccc" borderColor="#255ccc"/>
+  </modifier>
+</style>
+<style id="btn-round-secondary" backgroundColor="transparent" borderColor="#4778ff">
+  <modifier pressed="true">
+    <style borderColor="#255ccc"/>
+  </modifier>
+</style>
+<style id="btn-round-primary-disabled" backgroundColor="#bdc4c4" borderColor="#bdc4c4">
+  <modifier pressed="true">
+    <style backgroundColor="#bdc4c4" borderColor="#bdc4c4"/>
+  </modifier>
+</style>
+<style id="btn-round-secondary-disabled" backgroundColor="transparent" borderColor="#bdc4c4">
+  <modifier pressed="true">
+    <style backgroundColor="transparent" borderColor="#bdc4c4"/>
+  </modifier>
+</style>
+<style id="btn-round-primary-loading" backgroundColor="#80aaff" borderColor="#80aaff">
+  <modifier pressed="true">
+    <style backgroundColor="#80aaff" borderColor="#80aaff"/>
+  </modifier>
+</style>
+<style id="btn-round-secondary-loading" backgroundColor="transparent" borderColor="#80aaff">
+  <modifier pressed="true">
+    <style backgroundColor="transparent" borderColor="#80aaff"/>
+  </modifier>
+</style>
+<style id="btn-round-label" color="#4778ff" fontSize="14" textAlign="center">
+  <modifier pressed="true">
+    <style color="#255ccc"/>
+  </modifier>
+</style>
+<style id="btn-round-label-disabled" color="#bdc4c4">
+  <modifier pressed="true">
+    <style color="#bdc4c4"/>
+  </modifier>
+</style>
+<style id="btn-round-label-loading" color="#80aaff">
+  <modifier pressed="true">
+    <style color="#80aaff"/>
+  </modifier>
+</style>
+<style id="btn-label" fontWeight="600" fontSize="16" textAlign="center" color="#4778ff"/>
+<style id="btn-label-link" color="#4778ff"/>
+<style id="btn-label-link-loading" color="#80aaff"/>
+<style id="btn-label-primary" color="#ffffff"/>
+<style id="btn-label-disabled" color="#ffffff"/>
+<style id="btn-label-link-disabled" color="#bdc4c4"/>
+<style id="btn-label-danger" color="#ff4847"/>
+<style id="btn-label-sm" fontSize="14"/>
+<style id="btn-label-md" fontSize="16"/>
+<style id="btn-label-nav" fontWeight="500" lineHeight="24" fontSize="16" color="#4778ff" paddingHorizontal="2" marginHorizontal="8"/>
+<style id="btn-label-nav-disabled" color="#e1e3e3"/>
+<style id="btn-label-nav-primary" color="#fafafa" lineHeight="20" fontSize="14" paddingHorizontal="0" marginHorizontal="0"/>
+<style id="progress-bar" height="8" backgroundColor="#e1e3e3" borderRadius="4"/>
+<style id="progress-bar-sm" height="4"/>
+<style id="progress-bar-lg" height="16" borderRadius="8"/>
+<style id="progress-bar-inner" height="8" backgroundColor="#63cb76" borderRadius="4"/>
+<style id="progress-bar-inner-blue" backgroundColor="#80aaff"/>
+<style id="progress-bar-inner-yellow" backgroundColor="#fbb90e"/>
+<style id="progress-bar-inner-sm" height="4" borderRadius="4"/>
+<style id="progress-bar-inner-lg" height="16" borderRadius="8"/>
+<style id="progress-bar-disabled" height="8" backgroundColor="#bdc4c4" borderRadius="4"/>
+<style id="progress-bar-sharp" borderRadius="0"/>
+<style id="file-upload-image" height="40" width="40" borderRadius="4"/>
+<style id="form-content-inline" marginLeft="-8" marginRight="-8"/>
+<style id="form-group-inline" flex="0" marginTop="16" paddingLeft="8" paddingRight="8" justifyContent="flex-end"/>
+<style id="form-group" flex="1" marginLeft="24" marginRight="24" marginTop="24"/>
+<style id="form-errors" marginHorizontal="24" marginTop="24" lineHeight="24"/>
+<style id="form-error" flexDirection="row" alignItems="center"/>
+<style id="form-error-icon" marginRight="4"/>
+<style id="form-error-message" fontWeight="400" lineHeight="24" fontSize="16" color="#ff4847"/>
+<style id="input" borderBottomColor="#e1e3e3" borderBottomWidth="1" borderColor="#1f1f1f" paddingBottom="8" paddingTop="8" height="42">
+  <modifier pressed="true">
+    <style borderBottomColor="#4778ff"/>
+  </modifier>
+  <modifier focused="true">
+    <style borderBottomColor="#4778ff"/>
+  </modifier>
+</style>
+<style id="input-label" fontWeight="bold" color="#1f1f1f" fontSize="16" lineHeight="24"/>
+<style id="input-error" borderColor="#ff4847" borderBottomColor="#ff4847" borderBottomWidth="1">
+  <modifier focused="true">
+    <style borderColor="#ff4847"/>
+  </modifier>
+</style>
+<style id="input-text" fontWeight="400" fontSize="16" lineHeight="24" color="#1f1f1f"/>
+<style id="input-error-message" marginTop="16" color="#ff4847"/>
+<style id="text-area" borderColor="#e1e3e3" borderWidth="1" padding="8" marginTop="8" borderRadius="4">
+  <modifier focused="true">
+    <style borderColor="#4778ff"/>
+  </modifier>
+</style>
+<style id="text-area-lines-2" height="64"/>
+<style id="text-area-lines-3" height="88"/>
+<style id="text-area-lines-4" height="112"/>
+<style id="picker-modal" backgroundColor="white" elevation="3" shadowOffsetX="0" shadowOffsetY="-3.6" shadowOpacity="0.189" shadowRadius="3.24"/>
+<style id="picker-modal-text" fontWeight="600" color="#4778ff" fontSize="16" padding="24">
+  <modifier pressed="true">
+    <style color="#256ccc"/>
+  </modifier>
+</style>
+<style id="picker-modal-overlay" backgroundColor="#1f1f1f" opacity="0.6"/>
+<style id="option-separator" borderTopWidth="1" borderTopColor="#e1e3e3" marginLeft="24" marginRight="24"/>
+<style id="option" flexDirection="row" alignItems="center" justifyContent="space-between" paddingLeft="24" paddingRight="24" paddingBottom="16" paddingTop="16"/>
+<style id="option--formgroup" paddingLeft="0" paddingRight="0"/>
+<style id="option-label" fontWeight="400" color="#1f1f1f" fontSize="16" lineHeight="20" flexShrink="1" marginRight="16">
+  <modifier pressed="true">
+    <style color="#312f2f"/>
+  </modifier>
+</style>
+<style id="radio-outer" width="20" height="20" borderRadius="10" borderWidth="1" borderColor="#bdc4c4">
+  <modifier pressed="true">
+    <style borderColor="#8d9494" borderWidth="1"/>
+  </modifier>
+  <modifier selected="true">
+    <style borderColor="#4778ff" borderWidth="2"/>
+  </modifier>
+</style>
+<style id="radio-inner" width="10" height="10" borderRadius="5" opacity="0" marginTop="3" marginLeft="3">
+  <modifier selected="true">
+    <style backgroundColor="#4778ff" opacity="1"/>
+  </modifier>
+</style>
+<style id="checkbox-outer" width="20" height="20" borderRadius="4" borderWidth="1" borderColor="#bdc4c4">
+  <modifier pressed="true">
+    <style borderColor="#8d9494" borderWidth="1"/>
+  </modifier>
+  <modifier selected="true">
+    <style borderColor="#4778ff" borderWidth="2"/>
+  </modifier>
+</style>
+<style id="checkbox-outer-disabled" borderColor="#e1e3e3"/>
+<style id="checkbox-inner" justifyContent="center" flexDirection="row" flex="1" alignItems="center" opacity="0">
+  <modifier pressed="true">
+    <style opacity="0"/>
+  </modifier>
+  <modifier selected="true">
+    <style opacity="1"/>
+  </modifier>
+</style>
+<style id="boolean-toggle-unselected" display="flex">
+  <modifier pressed="true">
+    <style display="flex"/>
+  </modifier>
+  <modifier selected="true">
+    <style display="none"/>
+  </modifier>
+</style>
+<style id="boolean-toggle-selected" display="none">
+  <modifier pressed="true">
+    <style display="none"/>
+  </modifier>
+  <modifier selected="true">
+    <style display="flex"/>
+  </modifier>
+</style>
+<style id="switch" backgroundColor="#e1e3e3">
+  <modifier selected="true">
+    <style backgroundColor="#4778ff"/>
+  </modifier>
+</style>
+<style id="text-area" fontWeight="400" lineHeight="24" fontSize="16" color="#1f1f1f" borderWidth="1" borderColor="#e1e1e1" borderRadius="4" paddingTop="12" paddingBottom="60" paddingHorizontal="16"/>
+<style id="text-area-error" borderWidth="1" borderColor="#ff4847" borderRadius="4"/>
+<style id="pill" alignItems="center" flexDirection="row" borderColor="#8d9494" borderRadius="32" borderWidth="1" paddingHorizontal="16" paddingVertical="8">
+  <modifier selected="true">
+    <style borderWidth="2" borderColor="#4778ff" paddingVertical="7" paddingHorizontal="15"/>
+  </modifier>
+</style>
+<style id="pill-label">
+  <modifier selected="true">
+    <style color="#4778ff"/>
+  </modifier>
+</style>
+<style id="feedback-positive-pill" flexDirection="row" alignItems="center" borderRadius="8" padding="8" backgroundColor="#e2f7df">
+  <modifier selected="true">
+    <style backgroundColor="#2db245"/>
+  </modifier>
+</style>
+<style id="chip" alignItems="center" justifyContent="center" flexDirection="row" backgroundColor="#f4f4f4" borderColor="#f4f4f4" borderRadius="8" paddingHorizontal="16" paddingVertical="6"/>
+<style id="chip-label" fontWeight="400" color="#4d4d4d" lineHeight="20" fontSize="14"/>
+<style id="chip-disabled" backgroundColor="#fafafa"/>
+<style id="chip-label-disabled" color="#bdc4c4"/>
+<style id="icon-16" width="16" height="16"/>
+<style id="icon-18" width="18" height="18"/>
+<style id="icon-24" width="24" height="24"/>
+<style id="icon-32" width="32" height="32"/>
+<style id="icon-40" width="40" height="40"/>
+<style id="icon-48" width="48" height="48"/>
+<style id="icon-56" width="56" height="56"/>
+<style id="icon-64" width="64" height="64"/>
+<style id="icon-80" width="80" height="80"/>
+<style id="badge" borderRadius="4" backgroundColor="#ffffff"/>
+<style id="badge-text" fontWeight="bold" lineHeight="20" fontSize="12" color="#1f1f1f" paddingHorizontal="8"/>
+<style id="badge-blue4" backgroundColor="#e6f2ff"/>
+<style id="badge-text-blue4" color="#256ccc"/>
+<style id="badge-text-blue4-alt" color="#3964bb"/>
+<style id="badge-red4" backgroundColor="#fee6e6"/>
+<style id="badge-text-red4" color="#bb3939"/>
+<style id="badge-yellow4" backgroundColor="#fef1cf"/>
+<style id="badge-text-yellow4" color="#946300"/>
+<style id="badge-purple4" backgroundColor="#f3e0ff"/>
+<style id="badge-text-purple4" color="#633680"/>
+<style id="badge-green4" backgroundColor="#d6fecd"/>
+<style id="badge-text-green4" color="#08771d"/>
+<style id="badge-gray" backgroundColor="#e1e3e3"/>
+<style id="badge-text-gray" color="#bdc4c4"/>
+<style id="avatar-21" borderRadius="10" width="21" height="21"/>
+<style id="avatar-24" borderRadius="12" width="24" height="24"/>
+<style id="avatar-32" borderRadius="16" width="32" height="32"/>
+<style id="avatar-40" borderRadius="20" width="40" height="40"/>
+<style id="avatar-48" borderRadius="24" width="48" height="48"/>
+<style id="avatar-52" borderRadius="26" width="52" height="52"/>
+<style id="avatar-56" borderRadius="28" width="56" height="56"/>
+<style id="avatar-64" borderRadius="32" width="64" height="64"/>
+<style id="avatar-72" borderRadius="36" width="72" height="72"/>
+<style id="avatar-96" borderRadius="48" width="96" height="96"/>
+<style id="avatar-128" borderRadius="64" width="128" height="128"/>
+<style id="avatar-132" borderRadius="66" width="132" height="132"/>
+<style id="avatar-border-1" borderWidth="1" borderColor="#ffffff"/>
+<style id="avatar-border-2" borderWidth="2" borderColor="#ffffff"/>
+<style id="avatar-border-3" borderWidth="3" borderColor="#ffffff"/>
+<style id="avatar-border-4" borderWidth="4" borderColor="#ffffff"/>
+<style id="avatar-overlap-4" right="4"/>
+<style id="avatar-overlap-8" right="8"/>
+<style id="avatar-overlap-16" right="16"/>
+<style id="avatar-overlap-21" right="21"/>
+<style id="avatar-overlap-24" right="24"/>
+<style id="avatar-overlap-25" right="25"/>
+<style id="avatar-overlap-28" right="28"/>
+<style id="avatar-overlap-32" right="32"/>
+<style id="avatar-overlap-48" right="48"/>
+<style id="avatar-overlap-50" right="50"/>
+<style id="avatar-overlap-56" right="56"/>
+<style id="avatar-overlap-64" right="64"/>
+<style id="avatar-overlap-72" right="72"/>
+<style id="avatar-overlap-75" right="75"/>
+<style id="avatar-overlap-80" right="80"/>
+<style id="avatar-overlap-84" right="84"/>
+<style id="w-0" width="0%"/>
+<style id="h-0" height="0%"/>
+<style id="w-5" width="5%"/>
+<style id="h-5" height="5%"/>
+<style id="w-10" width="10%"/>
+<style id="h-10" height="10%"/>
+<style id="w-12" width="12%"/>
+<style id="h-12" height="12%"/>
+<style id="w-15" width="15%"/>
+<style id="h-15" height="15%"/>
+<style id="w-20" width="20%"/>
+<style id="h-20" height="20%"/>
+<style id="w-25" width="25%"/>
+<style id="h-25" height="25%"/>
+<style id="w-30" width="30%"/>
+<style id="h-30" height="30%"/>
+<style id="w-35" width="35%"/>
+<style id="h-35" height="35%"/>
+<style id="w-40" width="40%"/>
+<style id="h-40" height="40%"/>
+<style id="w-45" width="45%"/>
+<style id="h-45" height="45%"/>
+<style id="w-50" width="50%"/>
+<style id="h-50" height="50%"/>
+<style id="w-55" width="55%"/>
+<style id="h-55" height="55%"/>
+<style id="w-60" width="60%"/>
+<style id="h-60" height="60%"/>
+<style id="w-65" width="65%"/>
+<style id="h-65" height="65%"/>
+<style id="w-70" width="70%"/>
+<style id="h-70" height="70%"/>
+<style id="w-75" width="75%"/>
+<style id="h-75" height="75%"/>
+<style id="w-80" width="80%"/>
+<style id="h-80" height="80%"/>
+<style id="w-85" width="85%"/>
+<style id="h-85" height="85%"/>
+<style id="w-90" width="90%"/>
+<style id="h-90" height="90%"/>
+<style id="w-95" width="95%"/>
+<style id="h-95" height="95%"/>
+<style id="w-100" width="100%"/>
+<style id="h-100" height="100%"/>
+<style id="height-4" height="4"/>
+<style id="width-4" width="4"/>
+<style id="height-8" height="8"/>
+<style id="width-8" width="8"/>
+<style id="height-10" height="10"/>
+<style id="width-10" width="10"/>
+<style id="height-16" height="16"/>
+<style id="width-16" width="16"/>
+<style id="height-20" height="20"/>
+<style id="width-20" width="20"/>
+<style id="height-24" height="24"/>
+<style id="width-24" width="24"/>
+<style id="height-28" height="28"/>
+<style id="width-28" width="28"/>
+<style id="height-30" height="30"/>
+<style id="width-30" width="30"/>
+<style id="height-32" height="32"/>
+<style id="width-32" width="32"/>
+<style id="height-40" height="40"/>
+<style id="width-40" width="40"/>
+<style id="height-45" height="45"/>
+<style id="width-45" width="45"/>
+<style id="height-50" height="50"/>
+<style id="width-50" width="50"/>
+<style id="height-60" height="60"/>
+<style id="width-60" width="60"/>
+<style id="height-64" height="64"/>
+<style id="width-64" width="64"/>
+<style id="height-70" height="70"/>
+<style id="width-70" width="70"/>
+<style id="height-80" height="80"/>
+<style id="width-80" width="80"/>
+<style id="height-90" height="90"/>
+<style id="width-90" width="90"/>
+<style id="height-100" height="100"/>
+<style id="width-100" width="100"/>
+<style id="height-120" height="120"/>
+<style id="width-120" width="120"/>
+<style id="height-130" height="130"/>
+<style id="width-130" width="130"/>
+<style id="height-136" height="136"/>
+<style id="width-136" width="136"/>
+<style id="height-140" height="140"/>
+<style id="width-140" width="140"/>
+<style id="height-150" height="150"/>
+<style id="width-150" width="150"/>
+<style id="height-160" height="160"/>
+<style id="width-160" width="160"/>
+<style id="height-180" height="180"/>
+<style id="width-180" width="180"/>
+<style id="height-200" height="200"/>
+<style id="width-200" width="200"/>
+<style id="height-240" height="240"/>
+<style id="width-240" width="240"/>
+<style id="height-280" height="280"/>
+<style id="width-280" width="280"/>
+<style id="height-320" height="320"/>
+<style id="width-320" width="320"/>
+<style id="height-full" height="874"/>
+<style id="width-full" width="402"/>
+<style id="p-0" paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0"/>
+<style id="px-0" paddingLeft="0" paddingRight="0"/>
+<style id="py-0" paddingTop="0" paddingBottom="0"/>
+<style id="pt-0" paddingTop="0"/>
+<style id="pr-0" paddingRight="0"/>
+<style id="pb-0" paddingBottom="0"/>
+<style id="pl-0" paddingLeft="0"/>
+<style id="m-0" margin="0"/>
+<style id="mx-0" marginLeft="0" marginRight="0"/>
+<style id="my-0" marginVertical="0"/>
+<style id="mt-0" marginTop="0"/>
+<style id="mr-0" marginRight="0"/>
+<style id="mb-0" marginBottom="0"/>
+<style id="ml-0" marginLeft="0"/>
+<style id="p-2" paddingLeft="2" paddingRight="2" paddingTop="2" paddingBottom="2"/>
+<style id="px-2" paddingLeft="2" paddingRight="2"/>
+<style id="py-2" paddingTop="2" paddingBottom="2"/>
+<style id="pt-2" paddingTop="2"/>
+<style id="pr-2" paddingRight="2"/>
+<style id="pb-2" paddingBottom="2"/>
+<style id="pl-2" paddingLeft="2"/>
+<style id="m-2" margin="2"/>
+<style id="mx-2" marginLeft="2" marginRight="2"/>
+<style id="my-2" marginVertical="2"/>
+<style id="mt-2" marginTop="2"/>
+<style id="mr-2" marginRight="2"/>
+<style id="mb-2" marginBottom="2"/>
+<style id="ml-2" marginLeft="2"/>
+<style id="p-4" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4"/>
+<style id="px-4" paddingLeft="4" paddingRight="4"/>
+<style id="py-4" paddingTop="4" paddingBottom="4"/>
+<style id="pt-4" paddingTop="4"/>
+<style id="pr-4" paddingRight="4"/>
+<style id="pb-4" paddingBottom="4"/>
+<style id="pl-4" paddingLeft="4"/>
+<style id="m-4" margin="4"/>
+<style id="mx-4" marginLeft="4" marginRight="4"/>
+<style id="my-4" marginVertical="4"/>
+<style id="mt-4" marginTop="4"/>
+<style id="mr-4" marginRight="4"/>
+<style id="mb-4" marginBottom="4"/>
+<style id="ml-4" marginLeft="4"/>
+<style id="p-6" paddingLeft="6" paddingRight="6" paddingTop="6" paddingBottom="6"/>
+<style id="px-6" paddingLeft="6" paddingRight="6"/>
+<style id="py-6" paddingTop="6" paddingBottom="6"/>
+<style id="pt-6" paddingTop="6"/>
+<style id="pr-6" paddingRight="6"/>
+<style id="pb-6" paddingBottom="6"/>
+<style id="pl-6" paddingLeft="6"/>
+<style id="m-6" margin="6"/>
+<style id="mx-6" marginLeft="6" marginRight="6"/>
+<style id="my-6" marginVertical="6"/>
+<style id="mt-6" marginTop="6"/>
+<style id="mr-6" marginRight="6"/>
+<style id="mb-6" marginBottom="6"/>
+<style id="ml-6" marginLeft="6"/>
+<style id="p-8" paddingLeft="8" paddingRight="8" paddingTop="8" paddingBottom="8"/>
+<style id="px-8" paddingLeft="8" paddingRight="8"/>
+<style id="py-8" paddingTop="8" paddingBottom="8"/>
+<style id="pt-8" paddingTop="8"/>
+<style id="pr-8" paddingRight="8"/>
+<style id="pb-8" paddingBottom="8"/>
+<style id="pl-8" paddingLeft="8"/>
+<style id="m-8" margin="8"/>
+<style id="mx-8" marginLeft="8" marginRight="8"/>
+<style id="my-8" marginVertical="8"/>
+<style id="mt-8" marginTop="8"/>
+<style id="mr-8" marginRight="8"/>
+<style id="mb-8" marginBottom="8"/>
+<style id="ml-8" marginLeft="8"/>
+<style id="p-10" paddingLeft="10" paddingRight="10" paddingTop="10" paddingBottom="10"/>
+<style id="px-10" paddingLeft="10" paddingRight="10"/>
+<style id="py-10" paddingTop="10" paddingBottom="10"/>
+<style id="pt-10" paddingTop="10"/>
+<style id="pr-10" paddingRight="10"/>
+<style id="pb-10" paddingBottom="10"/>
+<style id="pl-10" paddingLeft="10"/>
+<style id="m-10" margin="10"/>
+<style id="mx-10" marginLeft="10" marginRight="10"/>
+<style id="my-10" marginVertical="10"/>
+<style id="mt-10" marginTop="10"/>
+<style id="mr-10" marginRight="10"/>
+<style id="mb-10" marginBottom="10"/>
+<style id="ml-10" marginLeft="10"/>
+<style id="p-12" paddingLeft="12" paddingRight="12" paddingTop="12" paddingBottom="12"/>
+<style id="px-12" paddingLeft="12" paddingRight="12"/>
+<style id="py-12" paddingTop="12" paddingBottom="12"/>
+<style id="pt-12" paddingTop="12"/>
+<style id="pr-12" paddingRight="12"/>
+<style id="pb-12" paddingBottom="12"/>
+<style id="pl-12" paddingLeft="12"/>
+<style id="m-12" margin="12"/>
+<style id="mx-12" marginLeft="12" marginRight="12"/>
+<style id="my-12" marginVertical="12"/>
+<style id="mt-12" marginTop="12"/>
+<style id="mr-12" marginRight="12"/>
+<style id="mb-12" marginBottom="12"/>
+<style id="ml-12" marginLeft="12"/>
+<style id="p-14" paddingLeft="14" paddingRight="14" paddingTop="14" paddingBottom="14"/>
+<style id="px-14" paddingLeft="14" paddingRight="14"/>
+<style id="py-14" paddingTop="14" paddingBottom="14"/>
+<style id="pt-14" paddingTop="14"/>
+<style id="pr-14" paddingRight="14"/>
+<style id="pb-14" paddingBottom="14"/>
+<style id="pl-14" paddingLeft="14"/>
+<style id="m-14" margin="14"/>
+<style id="mx-14" marginLeft="14" marginRight="14"/>
+<style id="my-14" marginVertical="14"/>
+<style id="mt-14" marginTop="14"/>
+<style id="mr-14" marginRight="14"/>
+<style id="mb-14" marginBottom="14"/>
+<style id="ml-14" marginLeft="14"/>
+<style id="p-16" paddingLeft="16" paddingRight="16" paddingTop="16" paddingBottom="16"/>
+<style id="px-16" paddingLeft="16" paddingRight="16"/>
+<style id="py-16" paddingTop="16" paddingBottom="16"/>
+<style id="pt-16" paddingTop="16"/>
+<style id="pr-16" paddingRight="16"/>
+<style id="pb-16" paddingBottom="16"/>
+<style id="pl-16" paddingLeft="16"/>
+<style id="m-16" margin="16"/>
+<style id="mx-16" marginLeft="16" marginRight="16"/>
+<style id="my-16" marginVertical="16"/>
+<style id="mt-16" marginTop="16"/>
+<style id="mr-16" marginRight="16"/>
+<style id="mb-16" marginBottom="16"/>
+<style id="ml-16" marginLeft="16"/>
+<style id="p-18" paddingLeft="18" paddingRight="18" paddingTop="18" paddingBottom="18"/>
+<style id="px-18" paddingLeft="18" paddingRight="18"/>
+<style id="py-18" paddingTop="18" paddingBottom="18"/>
+<style id="pt-18" paddingTop="18"/>
+<style id="pr-18" paddingRight="18"/>
+<style id="pb-18" paddingBottom="18"/>
+<style id="pl-18" paddingLeft="18"/>
+<style id="m-18" margin="18"/>
+<style id="mx-18" marginLeft="18" marginRight="18"/>
+<style id="my-18" marginVertical="18"/>
+<style id="mt-18" marginTop="18"/>
+<style id="mr-18" marginRight="18"/>
+<style id="mb-18" marginBottom="18"/>
+<style id="ml-18" marginLeft="18"/>
+<style id="p-20" paddingLeft="20" paddingRight="20" paddingTop="20" paddingBottom="20"/>
+<style id="px-20" paddingLeft="20" paddingRight="20"/>
+<style id="py-20" paddingTop="20" paddingBottom="20"/>
+<style id="pt-20" paddingTop="20"/>
+<style id="pr-20" paddingRight="20"/>
+<style id="pb-20" paddingBottom="20"/>
+<style id="pl-20" paddingLeft="20"/>
+<style id="m-20" margin="20"/>
+<style id="mx-20" marginLeft="20" marginRight="20"/>
+<style id="my-20" marginVertical="20"/>
+<style id="mt-20" marginTop="20"/>
+<style id="mr-20" marginRight="20"/>
+<style id="mb-20" marginBottom="20"/>
+<style id="ml-20" marginLeft="20"/>
+<style id="p-24" paddingLeft="24" paddingRight="24" paddingTop="24" paddingBottom="24"/>
+<style id="px-24" paddingLeft="24" paddingRight="24"/>
+<style id="py-24" paddingTop="24" paddingBottom="24"/>
+<style id="pt-24" paddingTop="24"/>
+<style id="pr-24" paddingRight="24"/>
+<style id="pb-24" paddingBottom="24"/>
+<style id="pl-24" paddingLeft="24"/>
+<style id="m-24" margin="24"/>
+<style id="mx-24" marginLeft="24" marginRight="24"/>
+<style id="my-24" marginVertical="24"/>
+<style id="mt-24" marginTop="24"/>
+<style id="mr-24" marginRight="24"/>
+<style id="mb-24" marginBottom="24"/>
+<style id="ml-24" marginLeft="24"/>
+<style id="p-28" paddingLeft="28" paddingRight="28" paddingTop="28" paddingBottom="28"/>
+<style id="px-28" paddingLeft="28" paddingRight="28"/>
+<style id="py-28" paddingTop="28" paddingBottom="28"/>
+<style id="pt-28" paddingTop="28"/>
+<style id="pr-28" paddingRight="28"/>
+<style id="pb-28" paddingBottom="28"/>
+<style id="pl-28" paddingLeft="28"/>
+<style id="m-28" margin="28"/>
+<style id="mx-28" marginLeft="28" marginRight="28"/>
+<style id="my-28" marginVertical="28"/>
+<style id="mt-28" marginTop="28"/>
+<style id="mr-28" marginRight="28"/>
+<style id="mb-28" marginBottom="28"/>
+<style id="ml-28" marginLeft="28"/>
+<style id="p-32" paddingLeft="32" paddingRight="32" paddingTop="32" paddingBottom="32"/>
+<style id="px-32" paddingLeft="32" paddingRight="32"/>
+<style id="py-32" paddingTop="32" paddingBottom="32"/>
+<style id="pt-32" paddingTop="32"/>
+<style id="pr-32" paddingRight="32"/>
+<style id="pb-32" paddingBottom="32"/>
+<style id="pl-32" paddingLeft="32"/>
+<style id="m-32" margin="32"/>
+<style id="mx-32" marginLeft="32" marginRight="32"/>
+<style id="my-32" marginVertical="32"/>
+<style id="mt-32" marginTop="32"/>
+<style id="mr-32" marginRight="32"/>
+<style id="mb-32" marginBottom="32"/>
+<style id="ml-32" marginLeft="32"/>
+<style id="p-36" paddingLeft="36" paddingRight="36" paddingTop="36" paddingBottom="36"/>
+<style id="px-36" paddingLeft="36" paddingRight="36"/>
+<style id="py-36" paddingTop="36" paddingBottom="36"/>
+<style id="pt-36" paddingTop="36"/>
+<style id="pr-36" paddingRight="36"/>
+<style id="pb-36" paddingBottom="36"/>
+<style id="pl-36" paddingLeft="36"/>
+<style id="m-36" margin="36"/>
+<style id="mx-36" marginLeft="36" marginRight="36"/>
+<style id="my-36" marginVertical="36"/>
+<style id="mt-36" marginTop="36"/>
+<style id="mr-36" marginRight="36"/>
+<style id="mb-36" marginBottom="36"/>
+<style id="ml-36" marginLeft="36"/>
+<style id="p-40" paddingLeft="40" paddingRight="40" paddingTop="40" paddingBottom="40"/>
+<style id="px-40" paddingLeft="40" paddingRight="40"/>
+<style id="py-40" paddingTop="40" paddingBottom="40"/>
+<style id="pt-40" paddingTop="40"/>
+<style id="pr-40" paddingRight="40"/>
+<style id="pb-40" paddingBottom="40"/>
+<style id="pl-40" paddingLeft="40"/>
+<style id="m-40" margin="40"/>
+<style id="mx-40" marginLeft="40" marginRight="40"/>
+<style id="my-40" marginVertical="40"/>
+<style id="mt-40" marginTop="40"/>
+<style id="mr-40" marginRight="40"/>
+<style id="mb-40" marginBottom="40"/>
+<style id="ml-40" marginLeft="40"/>
+<style id="p-44" paddingLeft="44" paddingRight="44" paddingTop="44" paddingBottom="44"/>
+<style id="px-44" paddingLeft="44" paddingRight="44"/>
+<style id="py-44" paddingTop="44" paddingBottom="44"/>
+<style id="pt-44" paddingTop="44"/>
+<style id="pr-44" paddingRight="44"/>
+<style id="pb-44" paddingBottom="44"/>
+<style id="pl-44" paddingLeft="44"/>
+<style id="m-44" margin="44"/>
+<style id="mx-44" marginLeft="44" marginRight="44"/>
+<style id="my-44" marginVertical="44"/>
+<style id="mt-44" marginTop="44"/>
+<style id="mr-44" marginRight="44"/>
+<style id="mb-44" marginBottom="44"/>
+<style id="ml-44" marginLeft="44"/>
+<style id="p-48" paddingLeft="48" paddingRight="48" paddingTop="48" paddingBottom="48"/>
+<style id="px-48" paddingLeft="48" paddingRight="48"/>
+<style id="py-48" paddingTop="48" paddingBottom="48"/>
+<style id="pt-48" paddingTop="48"/>
+<style id="pr-48" paddingRight="48"/>
+<style id="pb-48" paddingBottom="48"/>
+<style id="pl-48" paddingLeft="48"/>
+<style id="m-48" margin="48"/>
+<style id="mx-48" marginLeft="48" marginRight="48"/>
+<style id="my-48" marginVertical="48"/>
+<style id="mt-48" marginTop="48"/>
+<style id="mr-48" marginRight="48"/>
+<style id="mb-48" marginBottom="48"/>
+<style id="ml-48" marginLeft="48"/>
+<style id="p-60" paddingLeft="60" paddingRight="60" paddingTop="60" paddingBottom="60"/>
+<style id="px-60" paddingLeft="60" paddingRight="60"/>
+<style id="py-60" paddingTop="60" paddingBottom="60"/>
+<style id="pt-60" paddingTop="60"/>
+<style id="pr-60" paddingRight="60"/>
+<style id="pb-60" paddingBottom="60"/>
+<style id="pl-60" paddingLeft="60"/>
+<style id="m-60" margin="60"/>
+<style id="mx-60" marginLeft="60" marginRight="60"/>
+<style id="my-60" marginVertical="60"/>
+<style id="mt-60" marginTop="60"/>
+<style id="mr-60" marginRight="60"/>
+<style id="mb-60" marginBottom="60"/>
+<style id="ml-60" marginLeft="60"/>
+<style id="z-index-1" zIndex="1"/>
+<style id="z-index-2" zIndex="2"/>
+<style id="safe-area"/>
+<style id="safe-area-bottom" paddingBottom="40"/>
+<style id="border" borderWidth="1" borderColor="#e1e3e3"/>
+<style id="border-0" borderWidth="0"/>
+<style id="border-2" borderWidth="2"/>
+<style id="border-top" borderTopWidth="1" borderColor="#e1e3e3"/>
+<style id="border-top-lg" borderTopWidth="4" borderColor="#e1e3e3"/>
+<style id="border-top-xl" borderTopWidth="8" borderColor="#e1e3e3"/>
+<style id="border-right" borderRightWidth="1" borderColor="#e1e3e3"/>
+<style id="border-bottom" borderBottomWidth="1" borderColor="#e1e3e3"/>
+<style id="border-bottom-0" borderBottomWidth="0"/>
+<style id="border-bottom-lg" borderBottomWidth="4" borderColor="#e1e3e3"/>
+<style id="border-bottom-xl" borderBottomWidth="8" borderColor="#e1e3e3"/>
+<style id="border-left" borderLeftWidth="1" borderColor="#e1e3e3"/>
+<style id="border-left-lg" borderLeftWidth="4"/>
+<style id="border-grey2" borderWidth="1" borderColor="#1f1f1f"/>
+<style id="border-green1" borderWidth="1" borderColor="#63cb76"/>
+<style id="border-dashed-1" borderWidth="1" borderColor="#e1e3e3" borderStyle="dashed"/>
+<style id="border-dashed-2" borderWidth="2" borderColor="#e1e3e3" borderStyle="dashed"/>
+<style id="rounded" borderRadius="8"/>
+<style id="rounded-top-left" borderTopLeftRadius="8"/>
+<style id="rounded-top-right" borderTopRightRadius="8"/>
+<style id="rounded-left" borderTopLeftRadius="8" borderBottomLeftRadius="8"/>
+<style id="rounded-sm" borderRadius="4"/>
+<style id="rounded-md" borderRadius="8"/>
+<style id="rounded-lg" borderRadius="16"/>
+<style id="rounded-xl" borderRadius="26"/>
+<style id="rounded-circle" borderRadius="100"/>
+<style id="overflow-hidden" overflow="hidden"/>
+<style id="shadow" elevation="3" shadowOffsetX="0" shadowOffsetY="3.6" shadowOpacity="0.189" shadowRadius="3.24"/>
+<style id="shadow-top" shadowOffsetY="-3.6"/>
+<style id="shadow-footer" backgroundColor="white" shadowRadius="16" shadowOffsetY="-3.6"/>
+<style id="shadow-pressable">
+  <modifier pressed="true">
+    <style elevation="1" shadowOffsetY="1" shadowRadius="1"/>
+  </modifier>
+</style>
+<style id="shadow-top-pressable">
+  <modifier pressed="true">
+    <style shadowOffsetY="-1"/>
+  </modifier>
+</style>
+<style id="pressable-section">
+  <modifier pressed="true">
+    <style backgroundColor="#fafafa"/>
+  </modifier>
+</style>
+<style id="d-flex" flex="1"/>
+<style id="flex-row" flexDirection="row"/>
+<style id="flex-row-reverse" flexDirection="row-reverse"/>
+<style id="flex-column" flexDirection="column"/>
+<style id="flex-column-reverse" flexDirection="column-reverse"/>
+<style id="justify-content-start" justifyContent="flex-start"/>
+<style id="justify-content-end" justifyContent="flex-end"/>
+<style id="justify-content-center" justifyContent="center"/>
+<style id="justify-content-between" justifyContent="space-between"/>
+<style id="justify-content-around" justifyContent="space-around"/>
+<style id="align-items-start" alignItems="flex-start"/>
+<style id="align-items-end" alignItems="flex-end"/>
+<style id="align-items-center" alignItems="center"/>
+<style id="align-items-stretch" alignItems="stretch"/>
+<style id="align-self-start" alignSelf="flex-start"/>
+<style id="align-self-end" alignSelf="flex-end"/>
+<style id="align-self-center" alignSelf="center"/>
+<style id="align-self-stretch" alignSelf="stretch"/>
+<style id="flex-1" flex="1"/>
+<style id="flex-grow-1" flexGrow="1"/>
+<style id="flex-grow-0" flexGrow="0"/>
+<style id="flex-shrink-1" flexShrink="1"/>
+<style id="flex-shrink-0" flexShrink="0"/>
+<style id="flex-wrap" flexWrap="wrap"/>
+<style id="flex-nowrap" flexWrap="nowrap"/>
+<style id="align-content-start" alignContent="flex-start"/>
+<style id="align-content-end" alignContent="flex-end"/>
+<style id="align-content-center" alignContent="center"/>
+<style id="align-content-between" alignContent="space-between"/>
+<style id="align-content-around" alignContent="space-around"/>
+<style id="relative" position="relative"/>
+<style id="absolute" position="absolute"/>
+<style id="bottom-0" bottom="0"/>
+<style id="left-0" left="0"/>
+<style id="right-0" right="0"/>
+<style id="top-0" top="0"/>
+<style id="left-16" left="-16px"/>
+<style id="left-32" left="-32px"/>
+<style id="right-8" right="-8px"/>
+<style id="right-16" right="-16px"/>
+<style id="top--20" top="-20%"/>
+<style id="top--15" top="-15%"/>
+<style id="top--10" top="-10%"/>
+<style id="top--5" top="-5%"/>
+<style id="top-5" top="5%"/>
+<style id="top-10" top="10%"/>
+<style id="top-15" top="15%"/>
+<style id="top-20" top="20%"/>
+<style id="top-25" top="25%"/>
+<style id="top-30" top="30%"/>
+<style id="top-35" top="35%"/>
+<style id="top-40" top="40%"/>
+<style id="top-45" top="45%"/>
+<style id="top-50" top="50%"/>
+<style id="top-55" top="55%"/>
+<style id="top-60" top="60%"/>
+<style id="top-65" top="65%"/>
+<style id="top-70" top="70%"/>
+<style id="top-75" top="75%"/>
+<style id="top-80" top="80%"/>
+<style id="top-85" top="85%"/>
+<style id="top-90" top="90%"/>
+<style id="top-95" top="95%"/>
+<style id="top-100" top="100%"/>
+<style id="opacity-0" opacity="0"/>
+<style id="opacity-25" opacity="0.25"/>
+<style id="opacity-50" opacity="0.5"/>
+<style id="opacity-75" opacity="0.75"/>
+<style id="opacity-100" opacity="1"/>
+<style id="card-tag" marginTop="-16" marginRight="-16" marginBottom="-6" paddingVertical="4" paddingHorizontal="8" alignSelf="flex-end" borderBottomLeftRadius="8" borderTopRightRadius="8" overflow="hidden"/>
+<style id="border-top-left-radius-sm" borderTopLeftRadius="4"/>
+<style id="border-top-right-radius-sm" borderTopRightRadius="4"/>
+<style id="border-bottom-left-radius-sm" borderBottomLeftRadius="4"/>
+<style id="border-bottom-right-radius-sm" borderBottomRightRadius="4"/>
+<style id="text-primary" color="#4778ff"/>
+<style id="text-success" color="#63cb76"/>
+<style id="text-warning" color="#fbb90e"/>
+<style id="text-danger" color="#ff4847"/>
+<style id="text-info" color="#c56bff"/>
+<style id="text-left" textAlign="left"/>
+<style id="text-right" textAlign="right"/>
+<style id="text-center" textAlign="center"/>
+<style id="text-justify" textAlign="justify"/>
+<style id="font-weight-bold" fontWeight="bold"/>
+<style id="font-weight-semibold" fontWeight="600"/>
+<style id="font-weight-medium" fontWeight="500"/>
+<style id="font-weight-normal" fontWeight="400"/>
+<style id="font-weight-light" fontWeight="300"/>
+<style id="font-style-italic" fontWeight="400" fontStyle="italic"/>
+<style id="font-style-underline" textDecorationLine="underline"/>
+<style id="font-style-line-through" textDecorationLine="line-through"/>
+<style id="text-black1" color="#312f2f"/>
+<style id="text-black2" color="#1f1f1f"/>
+<style id="text-black3" color="#000000"/>
+<style id="text-blue1" color="#4778ff"/>
+<style id="text-blue2" color="#255ccc"/>
+<style id="text-blue3" color="#80aaff"/>
+<style id="text-blue4" color="#4d6bbc"/>
+<style id="text-blue5" color="#3964bb"/>
+<style id="text-gray1" color="#8d9494"/>
+<style id="text-gray2" color="#bdc4c4"/>
+<style id="text-gray3" color="#e1e3e3"/>
+<style id="text-green1" color="#63cb76"/>
+<style id="text-green2" color="#2db345"/>
+<style id="text-green3" color="#a6d5ae"/>
+<style id="text-green4" color="#008719"/>
+<style id="text-green5" color="#08771d"/>
+<style id="text-green7" color="#2db245"/>
+<style id="text-red1" color="#ff4847"/>
+<style id="text-red2" color="#d92b2b"/>
+<style id="text-red3" color="#ff9796"/>
+<style id="text-red4" color="#bb3939"/>
+<style id="text-red5" color="#bd4d4c"/>
+<style id="text-white" color="#ffffff"/>
+<style id="text-yellow1" color="#a0670c"/>
+<style id="text-yellow2" color="#d99100"/>
+<style id="text-yellow3" color="#906d14"/>
+<style id="text-yellow7" color="#946300"/>
+<style id="text-yellow9" color="#d99000"/>
+<style id="text-bronze" color="#b19484"/>
+<style id="text-silver" color="#a9a9a9"/>
+<style id="text-gold" color="#efb11b"/>
+<style id="text-gold2" color="#9d741f"/>
+<style id="text-platinum" color="#6aafd4"/>
+<style id="text-platinum2" color="#3a6e8a"/>
+<style id="togglable-text-white">
+  <modifier selected="true">
+    <style color="#ffffff"/>
+  </modifier>
+</style>
+<style id="bg-primary" backgroundColor="#4778ff"/>
+<style id="bg-success" backgroundColor="#63cb76"/>
+<style id="bg-warning" backgroundColor="#fbb90e"/>
+<style id="bg-danger" backgroundColor="#ff4847"/>
+<style id="bg-blue-1" backgroundColor="#4778ff"/>
+<style id="bg-blue-050" backgroundColor="#f6f8ff"/>
+<style id="bg-blue-300" backgroundColor="#80aaff"/>
+<style id="bg-blue-10" backgroundColor="#e6f2ff"/>
+<style id="bg-info" backgroundColor="#c56bff"/>
+<style id="bg-white" backgroundColor="#ffffff"/>
+<style id="bg-black2" backgroundColor="#1f1f1f"/>
+<style id="bg-blue-light" backgroundColor="#4778ff0d"/>
+<style id="bg-transparent" backgroundColor="transparent"/>
+<style id="bg-yellow1" backgroundColor="#fffbf3"/>
+<style id="bg-yellow2" backgroundColor="#d99100"/>
+<style id="bg-gray1" backgroundColor="#e5e5e5"/>
+<style id="bg-gray2" backgroundColor="#bdc4c4"/>
+<style id="bg-gray3" backgroundColor="#e1e3e3"/>
+<style id="bg-gray4" backgroundColor="#fafafa"/>
+<style id="bg-gray5" backgroundColor="#edeeee"/>
+<style id="bg-gray6" backgroundColor="#f4f4f4"/>
+<style id="bg-gray7" backgroundColor="#dfe7f0"/>
+<style id="bg-red4" backgroundColor="#fee6e6"/>
+<style id="bg-green1" backgroundColor="#63cb76"/>
+<style id="bg-green2" backgroundColor="#2db345"/>
+<style id="bg-green3" backgroundColor="#e2f7df"/>
+<style id="bg-green4" backgroundColor="#a7ecb4"/>
+<style id="bg-green-100" backgroundColor="#d6fecd"/>
+<style id="bg-red3" backgroundColor="#ff9796"/>
+<style id="bg-red4" backgroundColor="#fee6e6"/>
+<style id="bg-gold" backgroundColor="#fef1cf"/>
+<style id="bg-platinum" backgroundColor="#d8f0fe"/>
+<style id="bg-purple" backgroundColor="#f9f0ff"/>
+<style id="bg-white12" backgroundColor="#ffffff1f"/>
+<style id="border-primary" borderColor="#4778ff"/>
+<style id="border-yellow1" borderColor="#d99100"/>
+<style id="border-yellow2" borderColor="#fbb90e"/>
+<style id="border-red1" borderColor="#ff4847"/>
+<style id="border-red2" borderColor="#d92b2b"/>
+<style id="border-gray1" borderColor="#8d9494"/>
+<style id="border-gray2" borderColor="#bdc4c4"/>
+<style id="border-white" borderColor="#ffffff"/>
+<style id="border-purple" borderColor="#c56bff"/>
+<style id="border-black2" borderColor="#1f1f1f"/>
+<style id="border-success" borderColor="#2db345"/>
+<style id="alert" borderWidth="1" borderRadius="4" paddingLeft="16" paddingRight="16" paddingTop="16" paddingBottom="16"/>
+<style id="alert-danger" backgroundColor="#fee6e6" borderColor="#d92b2b" color="#bb3939"/>
+<style id="alert-info" backgroundColor="#f7f8ff" borderColor="#80aaff" color="#4d6bbc"/>
+<style id="alert-success" backgroundColor="#f7fcf8" borderColor="#2db345" color="#008719"/>
+<style id="alert-warning" backgroundColor="#fffbf3" borderColor="#d99100" color="#a0670c"/>
+<style id="notification-box" flex="1" padding="16" marginTop="12" borderRadius="8" borderWidth="1"/>
+<style id="blue-notification-box" backgroundColor="#e6f2ff" borderColor="#80aaff"/>
+<style id="lines-1" numberOfLines="1"/>
+<style id="lines-2" numberOfLines="2"/>
+<style id="badge-circle" alignItems="center" marginBottom="24" marginRight="24" width="80" borderRadius="40"/>
+<style id="badge-circle-image" height="80" marginBottom="8" width="80" borderRadius="40"/>
+<style id="badge-count" flex="1" flexDirection="row" justifyContent="center" alignItems="center" height="26" paddingLeft="6" paddingRight="6" borderRadius="40" borderColor="#ffffff" borderWidth="2" color="#ffffff" backgroundColor="#4778ff"/>
+<style id="vertical-card" flexDirection="column" alignItems="center" height="174" paddingTop="16" paddingBottom="8"/>
+<style id="callout" flex="1" flexGrow="1" flexDirection="row" backgroundColor="#fafafa" padding="12" borderRadius="4" alignItems="center"/>
+<style id="callout-icon" marginRight="12" backgroundColor="#edeeee" padding="8" justifyContent="center" borderRadius="32" height="32" width="32"/>
+<style id="callout-text" fontWeight="400" fontSize="14" lineHeight="20" color="#1f1f1f" flexShrink="1"/>
+<style id="tab-bar" flexDirection="row"/>
+<style id="tab" flex="0" borderBottomColor="#e1e3e3" borderBottomWidth="1">
+  <modifier selected="true">
+    <style borderBottomWidth="1" borderBottomColor="#4778ff"/>
+  </modifier>
+</style>
+<style id="tab-bar-inner" borderBottomWidth="1" borderBottomColor="transparent">
+  <modifier selected="true">
+    <style borderBottomColor="#4778ff"/>
+  </modifier>
+</style>
+<style id="tab-bar-label" fontWeight="500" fontSize="18" lineHeight="24" color="#8d9494" paddingBottom="8" textAlign="center" paddingTop="8">
+  <modifier selected="true">
+    <style color="#1f1f1f"/>
+  </modifier>
+</style>
+<style id="loading-box" backgroundColor="#e1e3e3" borderRadius="4"/>
