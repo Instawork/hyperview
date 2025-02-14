@@ -5,12 +5,12 @@
 <style id="h5" fontWeight="bold" lineHeight="32" fontSize="24" color="#1f1f1f"/>
 <style id="h6" fontWeight="bold" lineHeight="28" fontSize="20" color="#1f1f1f"/>
 <style id="h7" fontWeight="bold" lineHeight="24" fontSize="16" color="#1f1f1f"/>
+<style id="b1" fontWeight="400" lineHeight="32" fontSize="24" color="#1f1f1f"/>
 <style id="b2" fontWeight="400" lineHeight="28" fontSize="20" color="#1f1f1f"/>
 <style id="b3" fontWeight="400" lineHeight="24" fontSize="16" color="#1f1f1f"/>
 <style id="b4" fontWeight="400" lineHeight="20" fontSize="14" color="#1f1f1f"/>
 <style id="b5" fontWeight="400" lineHeight="16" fontSize="12" color="#1f1f1f"/>
 <style id="b6" fontWeight="400" lineHeight="14" fontSize="10" color="#1f1f1f"/>
-<style id="b7" fontWeight="400" lineHeight="24" fontSize="16" color="#3964bb"/>
 <style id="btn" borderColor="#4778ff" borderWidth="1" borderRadius="4" paddingLeft="24" paddingRight="24" paddingTop="12" paddingBottom="12"/>
 <style id="btn-link" borderWidth="0"/>
 <style id="btn-primary" backgroundColor="#4778ff" borderColor="#4778ff"/>
