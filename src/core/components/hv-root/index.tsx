@@ -403,14 +403,13 @@ export default class Hyperview extends PureComponent<Types.Props> {
             : null;
           if (!targetElement) {
             // Find the target element by locating the behavior within the current doc
-            targetElement =
-              Helpers.findTargetByBehavior(
-                onUpdateCallbacks.getDoc(),
-                behaviorElement,
-              ) || element;
+            targetElement = Helpers.findTargetByBehavior(
+              onUpdateCallbacks.getDoc(),
+              behaviorElement,
+            );
           }
 
-          if (newElement) {
+          if (newElement && targetElement) {
             newRoot = Behaviors.performUpdate(
               action,
               targetElement,
