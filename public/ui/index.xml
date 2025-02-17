@@ -1773,14 +1773,14 @@
       
       
       <item
-        href="/hyperview/public//ui/styling/text/index.xml"
-        key="text"
+        href="/hyperview/public//ui/styling/simple-ui-kit/index.xml"
+        key="simple-ui-kit"
         show-during-load="loading-screen"
         style="item"
         
       >
         <view style="item-left">
-          <text style="item-label">Text</text>
+          <text style="item-label">Simple UI Kit</text>
         </view>
         <view style="item-chevron">
           <svg
@@ -1807,14 +1807,14 @@
         
       
       <item
-        href="/hyperview/public//ui/styling/simple-ui-kit/index.xml"
-        key="simple-ui-kit"
+        href="/hyperview/public//ui/styling/text/index.xml"
+        key="text"
         show-during-load="loading-screen"
         style="item item-last"
         
       >
         <view style="item-left">
-          <text style="item-label">Simple UI Kit</text>
+          <text style="item-label">Text</text>
         </view>
         <view style="item-chevron">
           <svg
