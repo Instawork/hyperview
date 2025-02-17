@@ -29,6 +29,9 @@ const linking = {
       modal: {
         path: `${pathPrefix}/modal`,
       },
+      tabs: {
+        path: `${pathPrefix}/tabs`,
+      },
     },
   },
   prefixes: [Linking.createURL('/')],
