@@ -8,6 +8,7 @@ import type {
   UpdateAction,
 } from 'hyperview/src/types';
 import { DocumentGetElementByIdError } from './errors';
+import { uuid } from 'hyperview/src/core/utils';
 
 export const getBehaviorElements = (element: Element) => {
   const behaviorElements = Array.from(
@@ -134,7 +135,7 @@ export const processDocument = (doc: Document): Document => {
       if (!target) {
         const behaviorId = behavior.getAttribute('id');
         if (!behaviorId) {
-          behavior.setAttribute('id', Math.random().toString(36).substring(7));
+          behavior.setAttribute('id', uuid());
         }
       }
     }
