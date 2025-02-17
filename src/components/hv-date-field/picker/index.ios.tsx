@@ -29,7 +29,10 @@ export default (props: Props): JSX.Element | null => {
         // so that the picking experience is available immediately.
         display="spinner"
         locale={props.locale}
-        maximumDate={props.maxDate || undefined}
+        // Force a max date - this is a workaround for a bug in the DateTimePicker
+        // where selection is not possible after a picker was rendered with a max date
+        // unless the max date is actually set to a value.
+        maximumDate={props.maxDate || new Date('2100-01-01T00:00:00.000Z')}
         minimumDate={props.minDate || undefined}
         mode="date"
         onChange={(evt: unknown, date?: Date) => props.setPickerValue(date)}
