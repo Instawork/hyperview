@@ -4,7 +4,6 @@ import * as Components from 'hyperview/src/services/components';
 import * as Contexts from 'hyperview/src/contexts';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Events from 'hyperview/src/services/events';
-import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
@@ -206,7 +205,7 @@ export default class HvScreen extends React.Component {
           doc: loadedDoc,
           staleHeaderType: loadedType,
         } = await this.parser.loadDocument(this.state.url);
-        doc = Helpers.processDocument(loadedDoc);
+        doc = loadedDoc;
         staleHeaderType = loadedType;
       }
       const stylesheets = Stylesheets.createStylesheets(doc);

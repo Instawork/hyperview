@@ -171,14 +171,13 @@ export default class Hyperview extends PureComponent<Types.Props> {
         onUpdateCallbacks.getState().url || '',
       );
       const httpMethod: Dom.HttpMethod = method as Dom.HttpMethod;
-      const { doc: loadedDoc, staleHeaderType } = await this.parser.loadElement(
+      const { doc, staleHeaderType } = await this.parser.loadElement(
         url,
         formData || null,
         httpMethod,
         networkRetryAction,
         networkRetryEvent,
       );
-      const doc = Helpers.processDocument(loadedDoc);
       if (staleHeaderType) {
         // We are doing this to ensure that we keep the screen stale until a `reload` happens
         onUpdateCallbacks.setState({ staleHeaderType });

@@ -13,11 +13,11 @@ import {
   HTTP_METHODS,
   X_RESPONSE_STALE_REASON,
 } from './types';
+import { getFirstTag, processDocument } from './helpers';
 import { DOMParser } from '@instawork/xmldom';
 import { Dimensions } from 'react-native';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { LocalName } from 'hyperview/src/types';
-import { getFirstTag } from './helpers';
 import { version } from 'hyperview/package.json';
 
 const { width, height } = Dimensions.get('window');
@@ -131,8 +131,8 @@ export class Parser {
     doc: Document;
     staleHeaderType: XResponseStaleReason | null | undefined;
   }> => {
-    const { doc, staleHeaderType } = await this.load(baseUrl);
-    const docElement = getFirstTag(doc, LOCAL_NAME.DOC);
+    const { doc: loadedDoc, staleHeaderType } = await this.load(baseUrl);
+    const docElement = getFirstTag(loadedDoc, LOCAL_NAME.DOC);
     if (!docElement) {
       throw new Errors.XMLRequiredElementNotFound(LOCAL_NAME.DOC, baseUrl);
     }
@@ -165,6 +165,7 @@ export class Parser {
         baseUrl,
       );
     }
+    const doc = processDocument(loadedDoc);
     return { doc, staleHeaderType };
   };
 
@@ -178,7 +179,7 @@ export class Parser {
     doc: Document;
     staleHeaderType: XResponseStaleReason | null | undefined;
   }> => {
-    const { doc, staleHeaderType } = await this.load(
+    const { doc: loadedDoc, staleHeaderType } = await this.load(
       baseUrl,
       data,
       method,
@@ -186,25 +187,26 @@ export class Parser {
       networkRetryAction,
       networkRetryEvent,
     );
-    const docElement = getFirstTag(doc, LOCAL_NAME.DOC);
+    const docElement = getFirstTag(loadedDoc, LOCAL_NAME.DOC);
     if (docElement) {
       throw new Errors.XMLRestrictedElementFound(LOCAL_NAME.DOC, baseUrl);
     }
 
-    const navigatorElement = getFirstTag(doc, LOCAL_NAME.NAVIGATOR);
+    const navigatorElement = getFirstTag(loadedDoc, LOCAL_NAME.NAVIGATOR);
     if (navigatorElement) {
       throw new Errors.XMLRestrictedElementFound(LOCAL_NAME.NAVIGATOR, baseUrl);
     }
 
-    const screenElement = getFirstTag(doc, LOCAL_NAME.SCREEN);
+    const screenElement = getFirstTag(loadedDoc, LOCAL_NAME.SCREEN);
     if (screenElement) {
       throw new Errors.XMLRestrictedElementFound(LOCAL_NAME.SCREEN, baseUrl);
     }
 
-    const bodyElement = getFirstTag(doc, LOCAL_NAME.BODY);
+    const bodyElement = getFirstTag(loadedDoc, LOCAL_NAME.BODY);
     if (bodyElement) {
       throw new Errors.XMLRestrictedElementFound(LOCAL_NAME.BODY, baseUrl);
     }
+    const doc = processDocument(loadedDoc);
     return { doc, staleHeaderType };
   };
 }
