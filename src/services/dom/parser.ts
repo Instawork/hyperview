@@ -131,8 +131,8 @@ export class Parser {
     doc: Document;
     staleHeaderType: XResponseStaleReason | null | undefined;
   }> => {
-    const { doc: loadedDoc, staleHeaderType } = await this.load(baseUrl);
-    const docElement = getFirstTag(loadedDoc, LOCAL_NAME.DOC);
+    const { doc, staleHeaderType } = await this.load(baseUrl);
+    const docElement = getFirstTag(doc, LOCAL_NAME.DOC);
     if (!docElement) {
       throw new Errors.XMLRequiredElementNotFound(LOCAL_NAME.DOC, baseUrl);
     }
@@ -165,8 +165,7 @@ export class Parser {
         baseUrl,
       );
     }
-    const doc = processDocument(loadedDoc);
-    return { doc, staleHeaderType };
+    return { doc: processDocument(doc), staleHeaderType };
   };
 
   loadElement = async (
@@ -179,7 +178,7 @@ export class Parser {
     doc: Document;
     staleHeaderType: XResponseStaleReason | null | undefined;
   }> => {
-    const { doc: loadedDoc, staleHeaderType } = await this.load(
+    const { doc, staleHeaderType } = await this.load(
       baseUrl,
       data,
       method,
@@ -187,26 +186,25 @@ export class Parser {
       networkRetryAction,
       networkRetryEvent,
     );
-    const docElement = getFirstTag(loadedDoc, LOCAL_NAME.DOC);
+    const docElement = getFirstTag(doc, LOCAL_NAME.DOC);
     if (docElement) {
       throw new Errors.XMLRestrictedElementFound(LOCAL_NAME.DOC, baseUrl);
     }
 
-    const navigatorElement = getFirstTag(loadedDoc, LOCAL_NAME.NAVIGATOR);
+    const navigatorElement = getFirstTag(doc, LOCAL_NAME.NAVIGATOR);
     if (navigatorElement) {
       throw new Errors.XMLRestrictedElementFound(LOCAL_NAME.NAVIGATOR, baseUrl);
     }
 
-    const screenElement = getFirstTag(loadedDoc, LOCAL_NAME.SCREEN);
+    const screenElement = getFirstTag(doc, LOCAL_NAME.SCREEN);
     if (screenElement) {
       throw new Errors.XMLRestrictedElementFound(LOCAL_NAME.SCREEN, baseUrl);
     }
 
-    const bodyElement = getFirstTag(loadedDoc, LOCAL_NAME.BODY);
+    const bodyElement = getFirstTag(doc, LOCAL_NAME.BODY);
     if (bodyElement) {
       throw new Errors.XMLRestrictedElementFound(LOCAL_NAME.BODY, baseUrl);
     }
-    const doc = processDocument(loadedDoc);
-    return { doc, staleHeaderType };
+    return { doc: processDocument(doc), staleHeaderType };
   };
 }
