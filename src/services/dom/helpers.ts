@@ -163,8 +163,15 @@ export const findTargetByBehavior = (
   if (!currentBehaviorElement) {
     return null;
   }
-  // The target is the parent of the behavior element or the element itself
-  return currentBehaviorElement.tagName === LOCAL_NAME.BEHAVIOR
-    ? (currentBehaviorElement.parentNode as Element)
-    : currentBehaviorElement;
+
+  // The target is the element itself
+  if (currentBehaviorElement.tagName !== LOCAL_NAME.BEHAVIOR) {
+    return currentBehaviorElement;
+  }
+
+  // The target is the parent of the behavior element
+  if (!currentBehaviorElement.parentNode) {
+    return null;
+  }
+  return currentBehaviorElement.parentNode as Element;
 };
