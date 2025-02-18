@@ -71,13 +71,11 @@ export class DocumentGetElementByIdError extends ErrorService.HvBaseError {
   name = 'DocumentGetElementByIdError';
 
   constructor(id: string, doc: Document, error: Error) {
-    super(
-      `Document.getElementById failed for id: ${id} on doc: ${docToString(
-        doc,
-      )} and error: ${error.message}`,
-    );
+    super(`Document.getElementById failed for id: ${id}`);
     this.stack = error.stack;
     this.setExtraContext('error', error);
+    this.setExtraContext('doc', docToString(doc));
+    this.setExtraContext('id', id);
   }
 }
 
