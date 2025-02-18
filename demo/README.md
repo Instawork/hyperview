@@ -7,6 +7,8 @@ This directory contains the code to run an expo app that will showcase the vario
 The following commands should in theory suffice to recreate the demo app without having to manually manipulate any files.
 However, it's possible that some of these commands will need to be tweaked. If that's the case, make sure to update this file once the command has been adjusted!
 
+> Hyperview currently supports `node` versions up to 22. If you are using a newer version of `node`, please downgrade to version 22 before proceeding.
+
 ```sh
 mv demo/ demo-old
 npx --yes create-expo-app demo --template expo-template-blank-typescript
