@@ -1,8 +1,14 @@
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import type { LocalName, NamespaceURI, NodeType } from 'hyperview/src/types';
+import { LOCAL_NAME, NODE_TYPE, UPDATE_ACTIONS } from 'hyperview/src/types';
+import type {
+  LocalName,
+  NamespaceURI,
+  NodeType,
+  UpdateAction,
+} from 'hyperview/src/types';
 import { DocumentGetElementByIdError } from './errors';
-import { NODE_TYPE } from 'hyperview/src/types';
+import { uuid } from 'hyperview/src/core/utils';
 
 export const getBehaviorElements = (element: Element) => {
   const behaviorElements = Array.from(
@@ -114,3 +120,58 @@ export const getElementById = (
 function isDoc(object: Element | Document): object is Element | Document {
   return 'getElementById' in object;
 }
+
+/**
+ * Process the incoming doc before it is added to state
+ * - Ensure all behaviors with an update action have an id to allow for targeting
+ */
+export const processDocument = (doc: Document): Document => {
+  const behaviors = Array.from(doc.getElementsByTagName('behavior'));
+  behaviors.forEach(behavior => {
+    const action = behavior.getAttribute('action');
+    const updateAction: UpdateAction = action as UpdateAction;
+    if (updateAction && Object.values(UPDATE_ACTIONS).includes(updateAction)) {
+      const target = behavior.getAttribute('target');
+      if (!target) {
+        const behaviorId = behavior.getAttribute('id');
+        if (!behaviorId) {
+          behavior.setAttribute('id', uuid());
+        }
+      }
+    }
+  });
+  return doc;
+};
+
+/**
+ * Find the behavior in the dom by its id and return the target element
+ * This is needed in cases where the dom has been mutated and the behavior
+ * is no longer a direct child of the view
+ */
+export const findTargetByBehavior = (
+  doc: Document | null,
+  behaviorElement: Element | null | undefined,
+): Element | null => {
+  if (!doc || !behaviorElement) {
+    return null;
+  }
+  const behaviorId = behaviorElement.getAttribute('id');
+  if (!behaviorId) {
+    return null;
+  }
+  const currentBehaviorElement = getElementById(doc, behaviorId);
+  if (!currentBehaviorElement) {
+    return null;
+  }
+
+  // The target is the element itself
+  if (currentBehaviorElement.tagName !== LOCAL_NAME.BEHAVIOR) {
+    return currentBehaviorElement;
+  }
+
+  // The target is the parent of the behavior element
+  if (!currentBehaviorElement.parentNode) {
+    return null;
+  }
+  return currentBehaviorElement.parentNode as Element;
+};

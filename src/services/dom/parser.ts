@@ -13,11 +13,11 @@ import {
   HTTP_METHODS,
   X_RESPONSE_STALE_REASON,
 } from './types';
+import { getFirstTag, processDocument } from './helpers';
 import { DOMParser } from '@instawork/xmldom';
 import { Dimensions } from 'react-native';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { LocalName } from 'hyperview/src/types';
-import { getFirstTag } from './helpers';
 import { version } from 'hyperview/package.json';
 
 const { width, height } = Dimensions.get('window');
@@ -165,7 +165,7 @@ export class Parser {
         baseUrl,
       );
     }
-    return { doc, staleHeaderType };
+    return { doc: processDocument(doc), staleHeaderType };
   };
 
   loadElement = async (
@@ -205,6 +205,6 @@ export class Parser {
     if (bodyElement) {
       throw new Errors.XMLRestrictedElementFound(LOCAL_NAME.BODY, baseUrl);
     }
-    return { doc, staleHeaderType };
+    return { doc: processDocument(doc), staleHeaderType };
   };
 }

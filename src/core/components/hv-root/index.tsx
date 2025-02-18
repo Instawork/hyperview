@@ -3,6 +3,7 @@ import * as Components from 'hyperview/src/services/components';
 import * as Contexts from 'hyperview/src/contexts';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Events from 'hyperview/src/services/events';
+import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Logging from 'hyperview/src/services/logging';
 import * as NavContexts from 'hyperview/src/contexts/navigation';
 import * as NavigatorService from 'hyperview/src/services/navigator';
@@ -398,12 +399,16 @@ export default class Hyperview extends PureComponent<Types.Props> {
           // to the element triggering the action.
           let targetElement = targetId
             ? Dom.getElementById(onUpdateCallbacks.getDoc(), targetId)
-            : element;
+            : null;
           if (!targetElement) {
-            targetElement = element;
+            // Find the target element by locating the behavior within the current doc
+            targetElement = Helpers.findTargetByBehavior(
+              onUpdateCallbacks.getDoc(),
+              behaviorElement,
+            );
           }
 
-          if (newElement) {
+          if (newElement && targetElement) {
             newRoot = Behaviors.performUpdate(
               action,
               targetElement,
@@ -471,7 +476,14 @@ export default class Hyperview extends PureComponent<Types.Props> {
         }
       }, delayMs);
       // Store the timeout ID
-      Services.setTimeoutId(element, timeoutId.toString());
+      // Find the target element by locating the behavior within the current doc
+      const targetElement = Helpers.findTargetByBehavior(
+        onUpdateCallbacks.getDoc(),
+        behaviorElement,
+      );
+      if (targetElement) {
+        Services.setTimeoutId(targetElement, timeoutId.toString());
+      }
     } else {
       // If there's no delay, fetch immediately and update the doc when done.
       fetchAndUpdate();

@@ -14,6 +14,7 @@ import type {
 } from 'hyperview/src/types';
 import { NAV_ACTIONS } from 'hyperview/src/types';
 import { NavigationContainerRefContext } from '@react-navigation/native';
+import { uuidNumber } from 'hyperview/src/core/utils';
 
 /**
  * Provide navigation action implementations
@@ -169,14 +170,14 @@ export class Navigator implements NavigationProvider {
           screens,
         ).find(s => s && s.getAttribute('id') === showIndicatorId);
         if (loadingScreen) {
-          preloadScreen = Date.now(); // Not truly unique but sufficient for our use-case
+          preloadScreen = uuidNumber();
           this.props.setElement?.(preloadScreen, loadingScreen);
         }
       }
 
       if (!preloadScreen && opts.behaviorElement) {
         // Pass the behavior element to the loading screen
-        behaviorElementId = Date.now();
+        behaviorElementId = uuidNumber();
         this.props.setElement?.(behaviorElementId, opts.behaviorElement);
       }
     }

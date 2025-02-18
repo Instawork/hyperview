@@ -270,6 +270,7 @@ export default class HvSectionList extends PureComponent<
     const once = this.props.element.getAttribute('once') || null;
 
     this.props.onUpdate(path, action, this.props.element, {
+      behaviorElement: this.props.element,
       delay,
       hideIndicatorIds,
       once,
