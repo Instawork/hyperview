@@ -408,6 +408,11 @@ export default class Hyperview extends PureComponent<Types.Props> {
             );
           }
 
+          if (!targetElement && element?.parentNode) {
+            // Fall back to the original element if it is not orphaned
+            targetElement = element;
+          }
+
           if (newElement && targetElement) {
             newRoot = Behaviors.performUpdate(
               action,
