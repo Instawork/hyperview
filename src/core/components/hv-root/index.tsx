@@ -411,6 +411,12 @@ export default class Hyperview extends PureComponent<Types.Props> {
           if (!targetElement && element?.parentNode) {
             // Fall back to the original element if it is not orphaned
             targetElement = element;
+            if (targetId) {
+              Logging.error(
+                'Target element not found. Falling back to current element.',
+                { id: targetId },
+              );
+            }
           }
 
           if (newElement && targetElement) {
