@@ -131,12 +131,9 @@ export const processDocument = (doc: Document): Document => {
     const action = behavior.getAttribute('action');
     const updateAction: UpdateAction = action as UpdateAction;
     if (updateAction && Object.values(UPDATE_ACTIONS).includes(updateAction)) {
-      const target = behavior.getAttribute('target');
-      if (!target) {
-        const behaviorId = behavior.getAttribute('id');
-        if (!behaviorId) {
-          behavior.setAttribute('id', uuid());
-        }
+      const behaviorId = behavior.getAttribute('id');
+      if (!behaviorId) {
+        behavior.setAttribute('id', uuid());
       }
     }
   });

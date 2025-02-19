@@ -406,6 +406,13 @@ export default class Hyperview extends PureComponent<Types.Props> {
               onUpdateCallbacks.getDoc(),
               behaviorElement,
             );
+            // Warn developers if a provided target was not found
+            if (targetId) {
+              Logging.error(
+                'Target element not found. Falling back to current element.',
+                { id: targetId },
+              );
+            }
           }
 
           if (newElement && targetElement) {
