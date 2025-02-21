@@ -563,26 +563,32 @@ function HvRouteFC(props: Types.Props) {
     const id = props.route?.params?.id || props.route?.key;
     if (nav) {
       const unsubscribeBlur: () => void = nav.addListener('blur', () => {
-        if (navigationContext.onRouteBlur && props.route) {
-          navigationContext.onRouteBlur(props.route);
-        }
+        // The timeout ensures the processing occurs after the screen is removed or hidden
+        setTimeout(() => {
+          if (navigationContext.onRouteBlur && props.route) {
+            navigationContext.onRouteBlur(props.route);
+          }
+        }, 100);
       });
 
       // Use the focus event to set the selected route
       const unsubscribeFocus: () => void = nav.addListener('focus', () => {
-        const doc = docContext?.getDoc();
-        NavigatorService.setSelected(doc, id, docContext?.setDoc);
-        NavigatorService.addStackRoute(
-          doc,
-          id,
-          props.route,
-          nav.getState().routes[0]?.name,
-          navigationContext.entrypointUrl,
-          docContext?.setDoc,
-        );
-        if (navigationContext.onRouteFocus && props.route) {
-          navigationContext.onRouteFocus(props.route);
-        }
+        // The timeout ensures the processing occurs after the screen is rendered or shown
+        setTimeout(() => {
+          const doc = docContext?.getDoc();
+          NavigatorService.setSelected(doc, id, docContext?.setDoc);
+          NavigatorService.addStackRoute(
+            doc,
+            id,
+            props.route,
+            nav.getState().routes[0]?.name,
+            navigationContext.entrypointUrl,
+            docContext?.setDoc,
+          );
+          if (navigationContext.onRouteFocus && props.route) {
+            navigationContext.onRouteFocus(props.route);
+          }
+        }, 100);
       });
 
       // Use the beforeRemove event to remove the route from the stack
@@ -621,12 +627,15 @@ function HvRouteFC(props: Types.Props) {
 
       // Update the urls in each route when the state updates the params
       const unsubscribeState: () => void = nav.addListener('state', event => {
-        NavigatorService.updateRouteUrlFromState(
-          docContext?.getDoc(),
-          id,
-          event.data?.state,
-          docContext?.setDoc,
-        );
+        // The timeout ensures the processing occurs after the screen is rendered or shown
+        setTimeout(() => {
+          NavigatorService.updateRouteUrlFromState(
+            docContext?.getDoc(),
+            id,
+            event.data?.state,
+            docContext?.setDoc,
+          );
+        }, 100);
       });
 
       return () => {
