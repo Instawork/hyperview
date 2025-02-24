@@ -126,7 +126,7 @@ This command will start an Expo development server and will display a QR code.
 
 As you're developing new features in the Hyperview library, you can use the demo app along with this special command to help you quickly test your changes:
 
-From the `demo/` directory:
+From the `demo/` directory (in a separate terminal):
 
 ```sh
 yarn sync
