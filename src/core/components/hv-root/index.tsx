@@ -575,6 +575,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
               elementErrorComponent: this.props.elementErrorComponent,
               entrypointUrl: this.props.entrypointUrl,
               errorScreen: this.props.errorScreen,
+              experimentalFeatures: this.props.experimentalFeatures,
               fetch: this.props.fetch,
               handleBack: this.props.handleBack,
               loadingScreen: this.props.loadingScreen,

@@ -1,6 +1,7 @@
 import * as Logging from 'hyperview/src/services/logging';
 import { ComponentType, ReactNode } from 'react';
 import type {
+  ExperimentalFeatures,
   Fetch,
   HvBehavior,
   HvComponent,
@@ -35,4 +36,5 @@ export type Props = {
   loadingScreen?: ComponentType<LoadingProps>;
   handleBack?: ComponentType<{ children: ReactNode }>;
   logger?: Logging.Logger;
+  experimentalFeatures?: ExperimentalFeatures;
 };
