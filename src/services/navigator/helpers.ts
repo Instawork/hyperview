@@ -545,20 +545,19 @@ export const mergeDocument = (
   return composite;
 };
 
-export const setSelected = (
+const setSelected = (
   doc: Document | undefined,
   id: string | undefined,
-  setDoc?: ((d: Document) => void) | undefined,
-) => {
+): boolean => {
   if (!doc || !id) {
-    return;
+    return false;
   }
   const route = getRouteById(doc, id);
   if (route && route.parentNode) {
     const parentNode = route.parentNode as Element;
     const type = parentNode.getAttribute(Types.KEY_TYPE);
     if (type !== Types.NAVIGATOR_TYPE.TAB) {
-      return;
+      return false;
     }
 
     // Reset all siblings
@@ -573,12 +572,9 @@ export const setSelected = (
 
     // Set the selected route
     route.setAttribute(Types.KEY_SELECTED, 'true');
+    return true;
   }
-
-  if (setDoc) {
-    const newRoot = shallowCloneToRoot(doc);
-    setDoc(newRoot);
-  }
+  return false;
 };
 
 /**
@@ -613,14 +609,13 @@ export const removeStackRoute = (
 /**
  * Add a route to a stack navigator
  */
-export const addStackRoute = (
+const addStackRoute = (
   doc: Document | undefined,
   id: string | undefined,
   route: Route<string, NavigationRouteParams> | undefined,
   siblingName: string | undefined,
   baseUrl: string,
-  setDoc?: ((d: Document) => void) | undefined,
-) => {
+): boolean => {
   if (
     !doc ||
     !id ||
@@ -630,7 +625,7 @@ export const addStackRoute = (
     !route.params.url ||
     getRouteByUrl(doc, route.params.url, baseUrl)
   ) {
-    return;
+    return false;
   }
 
   const siblingElement = getRouteById(doc, siblingName);
@@ -645,13 +640,10 @@ export const addStackRoute = (
       element.setAttribute(Types.KEY_ID, id);
       element.setAttribute(Types.KEY_HREF, route.params.url);
       parentElement.appendChild(element);
-
-      if (setDoc) {
-        const newRoot = shallowCloneToRoot(doc);
-        setDoc(newRoot);
-      }
+      return true;
     }
   }
+  return false;
 };
 
 const getUrlFromState = (
@@ -700,5 +692,28 @@ export const updateRouteUrlFromState = (
         setDoc(newRoot);
       }
     }
+  }
+};
+
+/**
+ * Set the route state based on the focused element
+ * If the route state has changed, the document is updated
+ */
+export const setRouteStateFromFocus = (
+  doc: Document | undefined,
+  id: string | undefined,
+  setDoc: ((d: Document) => void) | undefined,
+  route: Route<string, NavigationRouteParams> | undefined,
+  siblingName: string | undefined,
+  baseUrl: string,
+) => {
+  if (!doc || !id || !setDoc) {
+    return;
+  }
+
+  const selectionSet = setSelected(doc, id);
+  const stackAdded = addStackRoute(doc, id, route, siblingName, baseUrl);
+  if (selectionSet || stackAdded) {
+    setDoc(shallowCloneToRoot(doc));
   }
 };
