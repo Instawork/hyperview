@@ -573,8 +573,9 @@ function HvRouteFC(props: Types.Props) {
         if (navigationContext.onRouteFocus && props.route) {
           navigationContext.onRouteFocus(props.route);
         }
-        // The timeout ensures the processing occurs after the screen is rendered or shown
-        setTimeout(() => {
+        const navStateMutationsDelay =
+          navigationContext.experimentalFeatures?.navStateMutationsDelay || 0;
+        const updateRouteFocus = () => {
           const doc = docContext?.getDoc();
           NavigatorService.setSelected(doc, id, docContext?.setDoc);
           NavigatorService.addStackRoute(
@@ -585,7 +586,15 @@ function HvRouteFC(props: Types.Props) {
             navigationContext.entrypointUrl,
             docContext?.setDoc,
           );
-        }, 100);
+        };
+        if (navStateMutationsDelay > 0) {
+          // The timeout ensures the processing occurs after the screen is rendered or shown
+          setTimeout(() => {
+            updateRouteFocus();
+          }, navStateMutationsDelay);
+        } else {
+          updateRouteFocus();
+        }
       });
 
       // Use the beforeRemove event to remove the route from the stack
@@ -624,15 +633,24 @@ function HvRouteFC(props: Types.Props) {
 
       // Update the urls in each route when the state updates the params
       const unsubscribeState: () => void = nav.addListener('state', event => {
-        // The timeout ensures the processing occurs after the screen is rendered or shown
-        setTimeout(() => {
+        const navStateMutationsDelay =
+          navigationContext.experimentalFeatures?.navStateMutationsDelay || 0;
+        const updateRouteUrlFromState = (e: NavigatorService.ListenerEvent) => {
           NavigatorService.updateRouteUrlFromState(
             docContext?.getDoc(),
             id,
-            event.data?.state,
+            e.data?.state,
             docContext?.setDoc,
           );
-        }, 100);
+        };
+        if (navStateMutationsDelay > 0) {
+          // The timeout ensures the processing occurs after the screen is rendered or shown
+          setTimeout(() => {
+            updateRouteUrlFromState(event);
+          }, navStateMutationsDelay);
+        } else {
+          updateRouteUrlFromState(event);
+        }
       });
 
       return () => {
