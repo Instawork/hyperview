@@ -226,7 +226,6 @@ export {
 } from './imports';
 export { HvRouteError, HvNavigatorError, HvRenderError } from './errors';
 export {
-  addStackRoute,
   isDynamicRoute,
   isUrlFragment,
   cleanHrefFragment,
@@ -237,8 +236,8 @@ export {
   getUrlFromHref,
   mergeDocument,
   removeStackRoute,
-  setSelected,
   updateRouteUrlFromState,
+  setRouteStateFromFocus,
 } from './helpers';
 export {
   ANCHOR_ID_SEPARATOR,
