@@ -4,25 +4,4 @@ This directory contains the code to run an expo app that will showcase the vario
 
 ## Updating dependencies
 
-The following commands should in theory suffice to recreate the demo app without having to manually manipulate any files.
-However, it's possible that some of these commands will need to be tweaked. If that's the case, make sure to update this file once the command has been adjusted!
-
-> Hyperview currently supports `node` versions up to 22. If you are using a newer version of `node`, please downgrade to version 22 before proceeding.
-
-```sh
-mv demo/ demo-old
-npx --yes create-expo-app demo --template expo-template-blank-typescript
-cd demo/
-npx expo install @react-native-community/datetimepicker @react-native-picker/picker react-native-gesture-handler react-native-safe-area-context react-native-screens react-native-web react-native-webview
-yarn add @babel/preset-env @react-navigation/bottom-tabs @react-navigation/native @react-navigation/stack @types/react moment react-dom typescript hyperview
-yarn add @expo/webpack-config -D
-cd ..
-mv demo-old/src demo
-mv demo-old/App.tsx demo
-mv demo-old/assets/* demo/assets
-mv demo-old/webpack.config.js demo
-mv demo-old/tsconfig.json demo
-mv demo-old/README.md demo
-rm -rf demo-old
-rm demo/package-lock.json
-```
+Run the script `./scripts/update-demo.sh` from the root of the repository.
