@@ -438,3 +438,5 @@ export type Reload = (
   optHref: DOMString | null | undefined,
   opts: HvComponentOptions,
 ) => void;
+
+export type ExperimentalFeatures = Record<string, never>;
