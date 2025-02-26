@@ -38,12 +38,12 @@ hv_button_behavior: "back"
   {%- endcall %}
 
   {% call button('New with indicator') -%}
-    <behavior action="new" delay="1000" href="/hyperview/public/navigation/behaviors/actions/modal/index.xml" show-during-load="loading-screen" />
+    <behavior action="new" href="/hyperview/public/navigation/behaviors/actions/modal/index.xml" show-during-load="loading-screen" />
   {%- endcall %}
 
   <form>
     {% call button('New with params') -%}
-      <behavior action="new" delay="1000" href="/hyperview/public/navigation/behaviors/actions/modal/index.xml" show-during-load="loading-screen" />
+      <behavior action="new" href="/hyperview/public/navigation/behaviors/actions/modal/index.xml" show-during-load="loading-screen" />
     {%- endcall %}
     <text-field style="input" name="param1" value="value1"/>
   </form>
