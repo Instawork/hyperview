@@ -372,7 +372,7 @@
     
   
   
-    <text style="description">Tapping the button below will request an XML screen and show it in a new modal.</text>
+    <text style="description">Tapping the button below will open a screen in a modal.</text>
   
 
 
@@ -384,7 +384,7 @@
     
   >
     
-      <behavior action="new" href="/hyperview/public/navigation/behaviors/actions/modal/index.xml" />
+      <behavior action="new" href="/hyperview/public/navigation/behaviors/actions/new/modal.xml" />
     
     <text style="button-label">New</text>
   </view>
@@ -398,11 +398,16 @@
     
   >
     
-      <behavior action="new" delay="1000" href="/hyperview/public/navigation/behaviors/actions/modal/index.xml" show-during-load="loading-screen" />
+      <behavior action="new" href="/hyperview/public/navigation/behaviors/actions/new/modal.xml" show-during-load="loading-screen" />
     
     <text style="button-label">New with indicator</text>
   </view>
 
+
+  
+  
+    <text style="description">Tapping the button below will open a modal with query params from the form.</text>
+  
 
   <form>
     
@@ -413,7 +418,7 @@
     
   >
     
-      <behavior action="new" delay="1000" href="/hyperview/public/navigation/behaviors/actions/modal/index.xml" show-during-load="loading-screen" />
+      <behavior action="new" href="/hyperview/public/navigation/behaviors/actions/new/modal.xml" show-during-load="loading-screen" />
     
     <text style="button-label">New with params</text>
   </view>

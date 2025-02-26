@@ -322,37 +322,12 @@
 <style id="links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" marginBottom="24" />
 
         
-  <style id="flex" flex="1" />
-  <style
-    id="input"
-    backgroundColor="#FFFFFF"
-    borderBottomColor="#E1E1E1"
-    borderBottomWidth="1"
-    borderColor="#4E4D4D"
-    fontSize="16"
-    fontWeight="normal"
-    paddingBottom="8"
-    paddingTop="8">
-    <modifier pressed="true">
-    <style borderBottomColor="green"/>
-    </modifier>
-    <modifier focused="true">
-    <style borderBottomColor="#4778FF"/>
-    </modifier>
-  </style>
-  <style id="relative" position="relative" />
-  <style id="absolute" position="absolute" />
-  <style id="r-0" right="0" />
-  <style id="mx-24" marginHorizontal="24" />
-  <style id="py-8" paddingVertical="8" />
-  <style id="border-bottom" borderBottomWidth="1" borderBottomColor="lightgray" />
-  <style id="highlight" fontWeight="bold" color="blue" />
-
+        
       </styles>
       <body style="body" safe-area="true">
         <header style="header">
   
-    <view action="back" href="#" style="header-btn">
+    <view action="close" href="#" style="header-btn">
       <svg
   width="24"
   height="24"
@@ -363,204 +338,26 @@
   <path
     fill-rule="evenodd"
     clip-rule="evenodd"
-    d="M11.7803 0.96967C12.0732 1.26256 12.0732 1.73744 11.7803 2.03033L2.56066 11.25H23.25C23.6642 11.25 24 11.5858 24 12C24 12.4142 23.6642 12.75 23.25 12.75H2.56066L11.7803 21.9697C12.0732 22.2626 12.0732 22.7374 11.7803 23.0303C11.4874 23.3232 11.0126 23.3232 10.7197 23.0303L0.21967 12.5303C-0.0732233 12.2374 -0.0732233 11.7626 0.21967 11.4697L10.7197 0.96967C11.0126 0.676777 11.4874 0.676777 11.7803 0.96967Z"
+    d="M21.7803 3.28033C22.0732 2.98744 22.0732 2.51256 21.7803 2.21967C21.4874 1.92678 21.0126 1.92678 20.7197 2.21967L12 10.9393L3.28033 2.21967C2.98744 1.92678 2.51256 1.92678 2.21967 2.21967C1.92678 2.51256 1.92678 2.98744 2.21967 3.28033L10.9393 12L2.21967 20.7197C1.92678 21.0126 1.92678 21.4874 2.21967 21.7803C2.51256 22.0732 2.98744 22.0732 3.28033 21.7803L12 13.0607L20.7197 21.7803C21.0126 22.0732 21.4874 22.0732 21.7803 21.7803C22.0732 21.4874 22.0732 21.0126 21.7803 20.7197L13.0607 12L21.7803 3.28033Z"
     fill="#4778FF"
   />
 </svg>
 
     </view>
   
-  <text style="header-title">Contacts</text>
+  <text style="header-title">Modal Screen</text>
 </header>
 
         
-  <form style="flex">
-    <list
-  id="contacts"
-  trigger="refresh"
-  action="replace"
-  href="?page=1&amp;template=_list"
-  target="contacts"
-  keyboard-dismiss-mode="on-drag"
-  style="flex"
-  xmlns="https://hyperview.org/hyperview"
->
-  
-  <item key="search" id="top" sticky="true" style="relative mx-24">
-    <text-field
-      placeholder="Search a contact…"
-      placeholderTextColor="#8D9494"
-      name="search"
-      style="input"
-      debounce="200"
-      value=""
-    >
-      
-      
-      
-      
-      <behavior
-        trigger="change"
-        action="hide"
-        target="load-more"
-      />
-      <behavior
-        trigger="change"
-        action="scroll"
-        target="top"
-        xmlns:scroll="https://hyperview.org/hyperview-scroll"
-      />
-      <behavior
-        trigger="change"
-        action="replace"
-        target="contacts"
-        href="?template=_list"
-        show-during-load="loading-indicator"
-      />
-    </text-field>
-    <view id="loading-indicator" style="absolute r-0 py-8" hide="true">
-      <spinner />
-    </view>
-  </item>
-  <items xmlns="https://hyperview.org/hyperview">
-  
-    <item key="079d26e4-99a9-4598-b903-f37c5a51c82f" style="mx-24 py-8 border-bottom">
-      <text>Aaron Abbott</text>
-      <text>Janis_Luettgen51@hotmail.com</text>
-      <text>(474) 864-2030</text>
-    </item>
-  
-    <item key="f41351d8-f1ad-457a-9c73-4c616fa1aa15" style="mx-24 py-8 border-bottom">
-      <text>Aaron Barrows</text>
-      <text>Jacklyn_Zboncak91@yahoo.com</text>
-      <text>(309) 750-3707 x078</text>
-    </item>
-  
-    <item key="3d1cdfc8-2aba-4faf-9a71-f1b84eeb29bf" style="mx-24 py-8 border-bottom">
-      <text>Aaron Beahan MD</text>
-      <text>Sid.Mraz89@yahoo.com</text>
-      <text>(689) 347-9656 x15102</text>
-    </item>
-  
-    <item key="8f3383a7-ba27-4a2b-981b-bec6cce2701c" style="mx-24 py-8 border-bottom">
-      <text>Aaron Ebert</text>
-      <text>Daisy.Conn@gmail.com</text>
-      <text>1-904-464-5283</text>
-    </item>
-  
-    <item key="3a50a679-5d5d-44ed-b5be-0351daf52876" style="mx-24 py-8 border-bottom">
-      <text>Aaron Frami</text>
-      <text>Jamison31@gmail.com</text>
-      <text>(479) 523-2557 x721</text>
-    </item>
-  
-    <item key="70d80d11-5f38-4a42-b117-7c66b564665c" style="mx-24 py-8 border-bottom">
-      <text>Aaron Gerhold</text>
-      <text>Amani73@gmail.com</text>
-      <text>(830) 243-9570</text>
-    </item>
-  
-    <item key="66ded7a8-7656-4bbd-8a9f-83c80c8e421d" style="mx-24 py-8 border-bottom">
-      <text>Aaron Hilpert</text>
-      <text>Foster39@yahoo.com</text>
-      <text>822-472-0044</text>
-    </item>
-  
-    <item key="2e88ad95-2d8b-465c-82b7-136cddb109f0" style="mx-24 py-8 border-bottom">
-      <text>Aaron Price</text>
-      <text>Domenick_Bogisich40@yahoo.com</text>
-      <text>268-235-1285 x8195</text>
-    </item>
-  
-    <item key="16b574b8-0263-43ad-bd5f-822ca41076a2" style="mx-24 py-8 border-bottom">
-      <text>Aaron Strosin</text>
-      <text>Torey.McDermott-Lind@gmail.com</text>
-      <text>(525) 224-3821 x04044</text>
-    </item>
-  
-    <item key="2a188655-be9c-4562-895e-6686b1ad4d78" style="mx-24 py-8 border-bottom">
-      <text>Aaron Swift</text>
-      <text>Giovani_Wyman@gmail.com</text>
-      <text>(564) 860-6383 x84553</text>
-    </item>
-  
-    <item key="f534a8e0-34c7-44b0-9fee-795f18c08b87" style="mx-24 py-8 border-bottom">
-      <text>Aaron Torp</text>
-      <text>Nicholas.Leffler@gmail.com</text>
-      <text>676-724-5235 x48189</text>
-    </item>
-  
-    <item key="ad0ab150-0662-4b64-b959-8988d8b9701c" style="mx-24 py-8 border-bottom">
-      <text>Aaron Torphy</text>
-      <text>Kendra.Corkery17@gmail.com</text>
-      <text>631-736-2279 x25319</text>
-    </item>
-  
-    <item key="fad094c5-b6c4-49d1-9c09-40a76a4c94e9" style="mx-24 py-8 border-bottom">
-      <text>Aaron Toy Sr.</text>
-      <text>Rita.Swift83@yahoo.com</text>
-      <text>434-485-7910</text>
-    </item>
-  
-    <item key="ae96666c-dd87-421b-abe7-4ce4484159a5" style="mx-24 py-8 border-bottom">
-      <text>Aaron Veum</text>
-      <text>Roslyn.Ullrich21@gmail.com</text>
-      <text>(989) 302-3108 x30151</text>
-    </item>
-  
-    <item key="b0890cc3-891f-47a2-bcbc-a32738019a9c" style="mx-24 py-8 border-bottom">
-      <text>Abel Cummerata</text>
-      <text>Jeramy.Stroman@hotmail.com</text>
-      <text>806.257.5293</text>
-    </item>
-  
-    <item key="7c73bc8f-1381-4b91-a4f2-d964bf27f252" style="mx-24 py-8 border-bottom">
-      <text>Abel Franey</text>
-      <text>Zaria.Braun@gmail.com</text>
-      <text>(628) 936-5640 x7933</text>
-    </item>
-  
-    <item key="e17d4d34-6060-466a-8bad-882778e6906f" style="mx-24 py-8 border-bottom">
-      <text>Abel Homenick</text>
-      <text>Amely_Luettgen14@gmail.com</text>
-      <text>353-356-7218 x6232</text>
-    </item>
-  
-    <item key="65805c4a-1dde-4d01-bf64-3a66d5c713ac" style="mx-24 py-8 border-bottom">
-      <text>Abel Kessler</text>
-      <text>Aglae78@gmail.com</text>
-      <text>1-487-835-7261 x070</text>
-    </item>
-  
-    <item key="9e4386b5-b86d-4797-ada9-95fe24cff11d" style="mx-24 py-8 border-bottom">
-      <text>Abel Koepp</text>
-      <text>Moses30@yahoo.com</text>
-      <text>890-511-7635 x81180</text>
-    </item>
-  
-    <item key="c5d91041-43c9-4188-be47-fc0a0da3c647" style="mx-24 py-8 border-bottom">
-      <text>Abel Koss</text>
-      <text>Constance.Schulist@hotmail.com</text>
-      <text>(647) 924-8991 x2208</text>
-    </item>
+  <view scroll="true" style="main">
+    
   
   
-    <item
-      key="load-more"
-      id="load-more"
-      trigger="visible"
-      action="replace"
-      style="py-8"
-      href="?page=2"
-    >
-      <spinner />
-    </item>
+    <text style="description">This screen was dynamically opened as a modal.</text>
   
-</items>
 
-</list>
 
-  </form>
+  </view>
 
       </body>
     </screen>
@@ -890,7 +687,7 @@
   <body style="body" safe-area="true">
     <header style="header">
   
-    <view action="back" href="#" style="header-btn">
+    <view action="close" href="#" style="header-btn">
       <svg
   width="24"
   height="24"
@@ -901,14 +698,14 @@
   <path
     fill-rule="evenodd"
     clip-rule="evenodd"
-    d="M11.7803 0.96967C12.0732 1.26256 12.0732 1.73744 11.7803 2.03033L2.56066 11.25H23.25C23.6642 11.25 24 11.5858 24 12C24 12.4142 23.6642 12.75 23.25 12.75H2.56066L11.7803 21.9697C12.0732 22.2626 12.0732 22.7374 11.7803 23.0303C11.4874 23.3232 11.0126 23.3232 10.7197 23.0303L0.21967 12.5303C-0.0732233 12.2374 -0.0732233 11.7626 0.21967 11.4697L10.7197 0.96967C11.0126 0.676777 11.4874 0.676777 11.7803 0.96967Z"
+    d="M21.7803 3.28033C22.0732 2.98744 22.0732 2.51256 21.7803 2.21967C21.4874 1.92678 21.0126 1.92678 20.7197 2.21967L12 10.9393L3.28033 2.21967C2.98744 1.92678 2.51256 1.92678 2.21967 2.21967C1.92678 2.51256 1.92678 2.98744 2.21967 3.28033L10.9393 12L2.21967 20.7197C1.92678 21.0126 1.92678 21.4874 2.21967 21.7803C2.51256 22.0732 2.98744 22.0732 3.28033 21.7803L12 13.0607L20.7197 21.7803C21.0126 22.0732 21.4874 22.0732 21.7803 21.7803C22.0732 21.4874 22.0732 21.0126 21.7803 20.7197L13.0607 12L21.7803 3.28033Z"
     fill="#4778FF"
   />
 </svg>
 
     </view>
   
-  <text style="header-title">Contacts</text>
+  <text style="header-title">Modal Screen</text>
 </header>
 
     <view style="loading">
