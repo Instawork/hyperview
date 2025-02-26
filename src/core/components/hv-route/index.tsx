@@ -570,9 +570,6 @@ function HvRouteFC(props: Types.Props) {
 
       // Use the focus event to set the selected route
       const unsubscribeFocus: () => void = nav.addListener('focus', () => {
-        if (navigationContext.onRouteFocus && props.route) {
-          navigationContext.onRouteFocus(props.route);
-        }
         const navStateMutationsDelay =
           navigationContext.experimentalFeatures?.navStateMutationsDelay || 0;
         const updateRouteFocus = () => {
@@ -586,6 +583,9 @@ function HvRouteFC(props: Types.Props) {
             navigationContext.entrypointUrl,
             docContext?.setDoc,
           );
+          if (navigationContext.onRouteFocus && props.route) {
+            navigationContext.onRouteFocus(props.route);
+          }
         };
         if (navStateMutationsDelay > 0) {
           // The timeout ensures the processing occurs after the screen is rendered or shown
