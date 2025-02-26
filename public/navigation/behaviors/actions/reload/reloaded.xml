@@ -345,7 +345,7 @@
 
     </view>
   
-  <text style="header-title">Reload</text>
+  <text style="header-title">Reload - Updated</text>
 </header>
 
         
@@ -353,44 +353,8 @@
     
   
   
-    <text style="description">Tapping the button below will reload this entire screen. Modifications to the file will appear without navigation.</text>
+    <text style="description">Changed Screen</text>
   
-
-  
-  <view
-    
-    
-      style="button"
-    
-  >
-    
-      <behavior action="reload" href="#" show-during-load="loadingElement" />
-    
-    <text style="button-label">Reload!</text>
-  </view>
-
-  <view id="loadingElement" hide="true">
-    <spinner id="myIndicator"/>
-    <text style="item">Loading...</text>
-  </view>
-
-  
-  
-    <text style="description">Tapping the button below will reload this screen with a new URL</text>
-  
-
-  
-  <view
-    
-    
-      style="button"
-    
-  >
-    
-      <behavior action="reload" href="/hyperview/public/navigation/behaviors/actions/reload/reloaded.xml" show-during-load="loadingElement" />
-    
-    <text style="button-label">Reload different screen</text>
-  </view>
 
 
   </view>
@@ -741,7 +705,7 @@
 
     </view>
   
-  <text style="header-title">Reload</text>
+  <text style="header-title">Reload - Updated</text>
 </header>
 
     <view style="loading">
