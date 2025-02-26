@@ -27,6 +27,13 @@ export type NavigationNavigateParams = {
   params?: NavigationNavigateParams | NavigationRouteParams;
 };
 
+export type ListenerEvent = {
+  data: { state: NavigationState | undefined } | undefined;
+  preventDefault: () => void;
+};
+
+export type ListenerCallback = (event: ListenerEvent) => void;
+
 /**
  * Minimal representation of the 'NavigationProp' used by react-navigation
  */
@@ -36,13 +43,7 @@ export type NavigationProp = {
   goBack: () => void;
   getState: () => NavigationState;
   getParent: (id?: string) => NavigationProp | undefined;
-  addListener: (
-    eventName: string,
-    callback: (event: {
-      data: { state: NavigationState | undefined } | undefined;
-      preventDefault: () => void;
-    }) => void,
-  ) => () => void;
+  addListener: (eventName: string, callback: ListenerCallback) => () => void;
   isFocused: () => boolean;
 };
 
