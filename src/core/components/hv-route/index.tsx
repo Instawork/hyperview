@@ -571,14 +571,13 @@ function HvRouteFC(props: Types.Props) {
       // Use the focus event to set the selected route
       const unsubscribeFocus: () => void = nav.addListener('focus', () => {
         const doc = docContext?.getDoc();
-        NavigatorService.setSelected(doc, id, docContext?.setDoc);
-        NavigatorService.addStackRoute(
+        NavigatorService.setRouteStateFromFocus(
           doc,
           id,
+          docContext?.setDoc,
           props.route,
           nav.getState().routes[0]?.name,
           navigationContext.entrypointUrl,
-          docContext?.setDoc,
         );
         if (navigationContext.onRouteFocus && props.route) {
           navigationContext.onRouteFocus(props.route);
