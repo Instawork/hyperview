@@ -20,7 +20,7 @@ hv_button_behavior: "back"
 
   {{ description('Tapping the button below will reload this screen with a new URL') }}
   {% call button('Reload different screen') -%}
-    <behavior action="reload" href="/hyperview/public/navigation/index.xml" show-during-load="loading-screen" />
+    <behavior action="reload" href="/hyperview/public/navigation/behaviors/actions/reload/reloaded.xml" show-during-load="loadingElement" />
   {%- endcall %}
 
   {{ description('Tapping the button below will reload the root navigation hierarchy with the "Advanced" tab selected') }}
