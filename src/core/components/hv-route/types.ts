@@ -1,6 +1,7 @@
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import { ComponentType, ReactNode } from 'react';
 import {
+  ExperimentalFeatures,
   Fetch,
   HvBehavior,
   HvComponent,
@@ -29,6 +30,7 @@ export type NavigationContextProps = {
   loadingScreen?: ComponentType<LoadingProps>;
   handleBack?: ComponentType<{ children: ReactNode }>;
   reload: Reload;
+  experimentalFeatures?: ExperimentalFeatures;
 };
 
 /**

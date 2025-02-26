@@ -570,18 +570,30 @@ function HvRouteFC(props: Types.Props) {
 
       // Use the focus event to set the selected route
       const unsubscribeFocus: () => void = nav.addListener('focus', () => {
-        const doc = docContext?.getDoc();
-        NavigatorService.setSelected(doc, id, docContext?.setDoc);
-        NavigatorService.addStackRoute(
-          doc,
-          id,
-          props.route,
-          nav.getState().routes[0]?.name,
-          navigationContext.entrypointUrl,
-          docContext?.setDoc,
-        );
         if (navigationContext.onRouteFocus && props.route) {
           navigationContext.onRouteFocus(props.route);
+        }
+        const navStateMutationsDelay =
+          navigationContext.experimentalFeatures?.navStateMutationsDelay || 0;
+        const updateRouteFocus = () => {
+          const doc = docContext?.getDoc();
+          NavigatorService.setSelected(doc, id, docContext?.setDoc);
+          NavigatorService.addStackRoute(
+            doc,
+            id,
+            props.route,
+            nav.getState().routes[0]?.name,
+            navigationContext.entrypointUrl,
+            docContext?.setDoc,
+          );
+        };
+        if (navStateMutationsDelay > 0) {
+          // The timeout ensures the processing occurs after the screen is rendered or shown
+          setTimeout(() => {
+            updateRouteFocus();
+          }, navStateMutationsDelay);
+        } else {
+          updateRouteFocus();
         }
       });
 
@@ -621,12 +633,24 @@ function HvRouteFC(props: Types.Props) {
 
       // Update the urls in each route when the state updates the params
       const unsubscribeState: () => void = nav.addListener('state', event => {
-        NavigatorService.updateRouteUrlFromState(
-          docContext?.getDoc(),
-          id,
-          event.data?.state,
-          docContext?.setDoc,
-        );
+        const navStateMutationsDelay =
+          navigationContext.experimentalFeatures?.navStateMutationsDelay || 0;
+        const updateRouteUrlFromState = (e: NavigatorService.ListenerEvent) => {
+          NavigatorService.updateRouteUrlFromState(
+            docContext?.getDoc(),
+            id,
+            e.data?.state,
+            docContext?.setDoc,
+          );
+        };
+        if (navStateMutationsDelay > 0) {
+          // The timeout ensures the processing occurs after the screen is rendered or shown
+          setTimeout(() => {
+            updateRouteUrlFromState(event);
+          }, navStateMutationsDelay);
+        } else {
+          updateRouteUrlFromState(event);
+        }
       });
 
       return () => {
