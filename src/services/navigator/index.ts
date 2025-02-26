@@ -214,6 +214,7 @@ export class Navigator implements NavigationProvider {
 }
 
 export type {
+  ListenerEvent,
   NavigationComponents,
   NavigationProp,
   NavigatorProps,

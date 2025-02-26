@@ -439,4 +439,8 @@ export type Reload = (
   opts: HvComponentOptions,
 ) => void;
 
-export type ExperimentalFeatures = Record<string, never>;
+export type ExperimentalFeatures = {
+  // Delay the mutation of the navigation state until after the screen has been rendered
+  // This is intended to improve the performance of navigation actions
+  navStateMutationsDelay?: number;
+};
