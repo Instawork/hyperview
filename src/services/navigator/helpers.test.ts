@@ -4,7 +4,6 @@ import * as Namespaces from '../namespaces';
 import * as Types from './types';
 import { ID_CARD, ID_MODAL } from './types';
 import {
-  addStackRoute,
   buildParams,
   buildRequest,
   cleanHrefFragment,
@@ -19,6 +18,7 @@ import {
   isUrlFragment,
   mergeDocument,
   removeStackRoute,
+  setRouteStateFromFocus,
   validateUrl,
 } from './helpers';
 import { DOMParser } from '@instawork/xmldom';
@@ -136,6 +136,19 @@ const mergeSourceEnabledTabToStackDoc = `
  */
 const navDocStackNavigatorSource =
   '<doc xmlns="https://hyperview.org/hyperview"><navigator id="navigator" type="stack"><nav-route id="route1" href="/route1" /><nav-route id="route2" href="/route2" selected="true" /></navigator></doc>';
+
+/**
+ * Test tab navigator response
+ * Includes a navigator with two tabs, the second of which is selected
+ */
+const navDocTabNavigatorSource = `
+<doc xmlns="https://hyperview.org/hyperview">
+  <navigator id="shift-navigator" type="tab">
+    <nav-route id="route-1" href="/biz_app/gigs/groups" selected="false"/>
+    <nav-route id="route-2" href="/biz_app/gigs/groups" selected="true"/>
+  </navigator>
+</doc>
+`;
 
 /**
  * Parser used to parse the document
@@ -878,7 +891,10 @@ describe('mergeDocuments', () => {
 });
 
 describe('addStackRoute', () => {
-  const doc = parser.parseFromString(navDocStackNavigatorSource);
+  let doc = parser.parseFromString(navDocStackNavigatorSource);
+  const setDoc = (newDoc: Document) => {
+    doc = newDoc;
+  };
 
   it('should find 2 route elements', () => {
     const navigators = doc.getElementsByTagNameNS(
@@ -889,9 +905,10 @@ describe('addStackRoute', () => {
     expect(routes.length).toEqual(2);
   });
 
-  addStackRoute(
+  setRouteStateFromFocus(
     doc,
     'test-route',
+    setDoc,
     { key: 'key1', name: 'card', params: { url: '/a/b/c' } },
     'route1',
     'http://foo.com',
@@ -912,6 +929,45 @@ describe('addStackRoute', () => {
   });
 
   removeStackRoute(doc, '/a/b/c', 'http://foo.com');
+
+  it('should find 2 route elements', () => {
+    const navs = doc.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'navigator');
+    const rts = getChildElements(navs[0]);
+    expect(rts.length).toEqual(2);
+  });
+});
+
+describe('setSelectedRoute', () => {
+  let doc = parser.parseFromString(navDocTabNavigatorSource);
+  const setDoc = (newDoc: Document) => {
+    doc = newDoc;
+  };
+
+  it('should find route-2 as selected', () => {
+    const navigators = doc.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      'navigator',
+    );
+    const selected = getSelectedNavRouteElement(navigators[0]);
+    expect(selected?.getAttribute('id')).toEqual('route-2');
+  });
+
+  it('should find route-1 as selected', () => {
+    setRouteStateFromFocus(
+      doc,
+      'route-1',
+      setDoc,
+      { key: '', name: '', params: {} },
+      '',
+      '',
+    );
+    const navigators = doc.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      'navigator',
+    );
+    const selected = getSelectedNavRouteElement(navigators[0]);
+    expect(selected?.getAttribute('id')).toEqual('route-1');
+  });
 });
 
 describe('getNavigatorById', () => {
