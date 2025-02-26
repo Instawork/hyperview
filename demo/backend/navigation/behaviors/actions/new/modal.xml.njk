@@ -1,0 +1,11 @@
+---
+permalink: "/navigation/behaviors/actions/new/modal.xml"
+hv_title: "Modal Screen"
+hv_button_behavior: "close"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block content %}
+  {{ description('This screen was dynamically opened as a modal.') }}
+{% endblock %}
