@@ -55,6 +55,9 @@ export default class HvWebView extends PureComponent<HvComponentProps> {
       injectedJavaScript +=
         'window.ReactNativeWebView.postMessage("hv-web-view:render-loading:false");';
     }
+    const sharedCookiesEnabled = props['shared-cookies-enabled']
+      ? props['shared-cookies-enabled'] === 'true'
+      : undefined;
     const source = { html: props.html, uri: props.url } as const;
     return (
       <WebView
@@ -71,6 +74,7 @@ export default class HvWebView extends PureComponent<HvComponentProps> {
             <></>
           );
         }}
+        sharedCookiesEnabled={sharedCookiesEnabled}
         source={source}
         startInLoadingState
       />
