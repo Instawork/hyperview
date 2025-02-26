@@ -42,7 +42,6 @@ export const LOCAL_NAME = {
   SUBJECT: 'subject',
   SWITCH: 'switch',
   TEXT: 'text',
-  TEXT_AREA: 'text-area',
   TEXT_FIELD: 'text-field',
   TITLE: 'title',
   URL: 'url',
@@ -439,3 +438,5 @@ export type Reload = (
   optHref: DOMString | null | undefined,
   opts: HvComponentOptions,
 ) => void;
+
+export type ExperimentalFeatures = Record<string, never>;

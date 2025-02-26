@@ -57,11 +57,8 @@ export default class HvView extends PureComponent<HvComponentProps> {
       Namespaces.HYPERVIEW,
       'text-field',
     );
-    const textAreas = this.props.element.getElementsByTagNameNS(
-      Namespaces.HYPERVIEW,
-      'text-area',
-    );
-    return textFields.length > 0 || textAreas.length > 0;
+
+    return textFields.length > 0;
   };
 
   getCommonProps = (): CommonProps => {

@@ -1,4 +1,5 @@
 import type {
+  ExperimentalFeatures,
   Fetch,
   HvBehavior,
   HvComponent,
@@ -29,6 +30,7 @@ export type NavigationContextProps = {
   loadingScreen?: ComponentType<LoadingProps>;
   handleBack?: ComponentType<{ children: ReactNode }>;
   navigationComponents?: NavigationComponents;
+  experimentalFeatures?: ExperimentalFeatures;
 };
 
 /**
