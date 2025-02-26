@@ -365,9 +365,9 @@
     
   >
     
-      <behavior action="navigate" href="/hyperview/public/index.xml" />
+      <behavior action="navigate" href="/hyperview/public/navigation/behaviors/actions/pushed.xml" />
     
-    <text style="button-label">Navigate to home</text>
+    <text style="button-label">Navigate forward</text>
   </view>
 
 
@@ -379,7 +379,7 @@
     
   >
     
-      <behavior action="navigate" delay="1000" href="/hyperview/public/navigation/behaviors/actions/pushed.xml" show-during-load="loading-screen" />
+      <behavior action="navigate" href="/hyperview/public/navigation/behaviors/actions/pushed.xml" show-during-load="loading-screen" />
     
     <text style="button-label">Navigate with indicator</text>
   </view>
