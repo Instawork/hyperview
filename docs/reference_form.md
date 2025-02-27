@@ -28,7 +28,9 @@ The encoding of the input values depend on the request method:
       value="Great work!"
     />
 
-    <text verb="post" href="/feedback" target="feedbackForm">Submit</text>
+    <text verb="post" href="/feedback" action="replace" target="feedbackForm">
+      Submit
+    </text>
   </form>
 </screen>
 ```
