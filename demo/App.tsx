@@ -57,6 +57,7 @@ export default () => (
                 behaviors={Behaviors}
                 components={Components}
                 entrypointUrl={`${Constants.expoConfig?.extra?.baseUrl}/hyperview/public/index.xml`}
+                experimentalFeatures={{ navStateMutationsDelay: 10 }}
                 fetch={fetchWrapper}
                 formatDate={formatDate}
                 loadingScreen={LoadingScreen}
