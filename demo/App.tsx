@@ -34,7 +34,8 @@ const linking = {
       },
     },
   },
-  prefixes: [Linking.createURL('/')],
+  enabled: 'auto',
+  prefixes: [Linking.createURL('/hyperview')],
 };
 
 export default () => (

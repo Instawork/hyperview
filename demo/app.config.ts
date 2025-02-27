@@ -6,6 +6,9 @@ export default {
     },
   },
   assetBundlePatterns: ['**/*'],
+  experiments: {
+    baseUrl: '/hyperview',
+  },
   extra: {
     baseUrl: process.env.BASE_URL || 'http://0.0.0.0:8085',
     googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY || '', // Leaving the key empty will enable dev-only experience
