@@ -6,26 +6,24 @@ sidebar_label: <header>
 
 The `<header>` element represents the header of a screen in the app. Typically, the header shows a title and navigation elements
 
-An example header on a screen with a scrolling body.
+An example header on a screen with a scrolling view.
 
 ```xml
 <screen>
-  <header style="MyHeader">
-    <text href="#">Back</text>
-    <text>My App</text>
-  </header>
-  <body style="Flex" scroll="true">
-    <view style="FlexHorizontal">
-      <text>Basic view</text>
-      <text>With Horizontal Layout</text>
+  <body style="Flex">
+    <header style="MyHeader">
+      <text href="#">Back</text>
+      <text>My App</text>
+    </header>
+    <view scroll="true" style="Flex">
+      <view style="FlexHorizontal">
+        <text>Basic view</text>
+        <text>With Horizontal Layout</text>
+      </view>
     </view>
   </body>
 </screen>
 ```
-
-## Structure
-
-A `<header>` element can only appear as a direct child of a `<screen>` element.
 
 ## Attributes
 
