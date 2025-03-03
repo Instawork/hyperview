@@ -62,6 +62,6 @@ export type KeyboardAwareScrollViewProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getTextInputRefs?: () => Array<any> | null | undefined;
   keyboardShouldPersistTaps?: string | null | undefined;
-  scrollEventThrottle?: number | null | undefined;
+  scrollEventThrottle?: number | undefined;
   scrollToInputAdditionalOffset?: number | null | undefined;
 };
