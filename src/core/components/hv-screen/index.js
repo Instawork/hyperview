@@ -6,6 +6,7 @@ import * as Dom from 'hyperview/src/services/dom';
 import * as Events from 'hyperview/src/services/events';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
+import * as Scroll from 'hyperview/src/core/components/scroll';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import { createProps, createStyleProp, later } from 'hyperview/src/services';
 import { HvScreenRenderError } from './errors';
@@ -309,7 +310,7 @@ export default class HvScreen extends React.Component {
                 onPressReload: () => this.reload(),
               })
             : null}
-          {screenElement}
+          <Scroll.Provider>{screenElement}</Scroll.Provider>
         </Contexts.DateFormatContext.Provider>
       </Contexts.DocContext.Provider>
     );
