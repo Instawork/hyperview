@@ -383,6 +383,12 @@
     </xs:sequence>
   </xs:group>
 
+  <xs:simpleType name="networkRetryAction">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="replace" />
+    </xs:restriction>
+  </xs:simpleType>
+
   <xs:attributeGroup name="behaviorAttributes">
     <xs:attribute name="action" type="hv:action" />
     <xs:attribute name="target" type="hv:IDREF" />
@@ -408,6 +414,8 @@
     <xs:attribute name="debounce" type="xs:nonNegativeInteger" />
     <xs:attributeGroup ref="alert:alertAttributes" />
     <xs:attributeGroup ref="scroll:scrollAttributes" />
+    <xs:attribute name="network-retry-action" type="hv:networkRetryAction" />
+    <xs:attribute name="network-retry-event" type="hv:eventName" />
   </xs:attributeGroup>
 
   <xs:attributeGroup name="scrollAttributes">
