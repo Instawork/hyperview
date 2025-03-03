@@ -20,14 +20,10 @@ import type {
 } from 'hyperview/src/types';
 import type { PressHandlers, PressPropName, Props, State } from './types';
 import React, { PureComponent } from 'react';
-import {
-  RefreshControl,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import { RefreshControl, Text, TouchableOpacity } from 'react-native';
 import { BackBehaviorContext } from 'hyperview/src/contexts/back-behaviors';
 import { PRESS_TRIGGERS_PROP_NAMES } from './types';
+import { ScrollView } from 'hyperview/src/core/components/scroll';
 import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
 import { XMLSerializer } from '@instawork/xmldom';
 import { X_RESPONSE_STALE_REASON } from 'hyperview/src/services/dom/types';
@@ -374,6 +370,7 @@ export default class HyperRef extends PureComponent<Props, State> {
     return React.createElement(
       ScrollView,
       {
+        element: this.props.element,
         refreshControl,
         showsVerticalScrollIndicator:
           this.props.element.getAttribute('shows-scroll-indicator') !== 'false',
