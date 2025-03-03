@@ -13,7 +13,7 @@ hv_open_modal: "true"
   {{ description('Open a new modal screen') }}
 
   {% call button('Open another modal') -%}
-    <behavior action="new" href="/hyperview/public/navigation/behaviors/actions/modal/modal-1.xml" show-during-load="loading-screen" />
+    <behavior action="new" href="/hyperview/public/navigation/behaviors/actions/modal/modal-1.xml" show-during-load="loading-screen-no-header" />
   {%- endcall %}
 
   {% call button('Push on the stack') -%}

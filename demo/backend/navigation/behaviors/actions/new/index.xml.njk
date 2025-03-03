@@ -38,13 +38,13 @@ hv_button_behavior: "back"
   {%- endcall %}
 
   {% call button('New with indicator') -%}
-    <behavior action="new" href="/hyperview/public/navigation/behaviors/actions/new/modal.xml" show-during-load="loading-screen" />
+    <behavior action="new" href="/hyperview/public/navigation/behaviors/actions/new/modal.xml" show-during-load="loading-screen-no-header" />
   {%- endcall %}
 
   {{ description('Tapping the button below will open a modal with query params from the form.') }}
   <form>
     {% call button('New with params') -%}
-      <behavior action="new" href="/hyperview/public/navigation/behaviors/actions/new/modal.xml" show-during-load="loading-screen" />
+      <behavior action="new" href="/hyperview/public/navigation/behaviors/actions/new/modal.xml" show-during-load="loading-screen-no-header" />
     {%- endcall %}
     <text-field style="input" name="param1" value="value1"/>
   </form>
