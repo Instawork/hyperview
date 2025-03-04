@@ -1,3 +1,4 @@
+import { NODE_TYPE } from 'hyperview';
 import moment from 'moment';
 
 export const formatDate = (
@@ -20,4 +21,32 @@ export const fetchWrapper = (
     },
     mode: 'cors',
   });
+};
+
+export const findElements = (
+  namespace: string,
+  node: Element,
+  attributeNames: string[],
+) => {
+  if (node.nodeType !== NODE_TYPE.ELEMENT_NODE) {
+    return [];
+  }
+
+  if (
+    attributeNames.reduce(
+      (found, name) => found || !!node.getAttributeNS(namespace, name),
+      false,
+    )
+  ) {
+    return [node];
+  }
+
+  return (Array.from(node.childNodes) as Element[])
+    .filter((child: Node | null) => {
+      return child !== null && child.nodeType === NODE_TYPE.ELEMENT_NODE;
+    })
+    .reduce((elements: Element[], child: Element) => {
+      elements.push(...findElements(namespace, child, attributeNames));
+      return elements;
+    }, []);
 };
