@@ -24,6 +24,7 @@ const LoadingScreen = (props: Props) => {
     <View
       style={{
         alignItems: 'center',
+        backgroundColor: 'white',
         flex: 1,
         gap: 10,
         justifyContent: 'center',
