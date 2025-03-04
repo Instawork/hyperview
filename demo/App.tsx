@@ -49,7 +49,7 @@ export default () => (
             paddingBottom: insets?.bottom,
             paddingLeft: insets?.left,
             paddingRight: insets?.right,
-            paddingTop: Platform.OS === 'ios' ? insets?.top : 0,
+            paddingTop: insets?.top,
           }}
         >
           <NavigationContainer linking={linking}>
