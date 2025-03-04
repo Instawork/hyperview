@@ -5,4 +5,5 @@ import Hyperview from 'hyperview/src/core/components/hv-root';
 
 export * from 'hyperview/src/types';
 export { Events, Namespaces };
+export { useScrollContext } from 'hyperview/src/core/components/scroll';
 export default Hyperview;
