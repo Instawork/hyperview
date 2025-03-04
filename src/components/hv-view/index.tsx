@@ -16,13 +16,15 @@ import {
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
-  ScrollView,
   View,
   ViewStyle,
 } from 'react-native';
+import {
+  KeyboardAwareScrollView,
+  ScrollView,
+} from 'hyperview/src/core/components/scroll';
 import React, { PureComponent } from 'react';
 import { ATTRIBUTES } from './types';
-import KeyboardAwareScrollView from 'hyperview/src/core/components/keyboard-aware-scroll-view';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { addHref } from 'hyperview/src/core/hyper-ref';
 import { createStyleProp } from 'hyperview/src/services';
@@ -195,6 +197,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
         return React.createElement(
           KeyboardAwareScrollView,
           {
+            element: this.props.element,
             ...this.getCommonProps(),
             ...this.getScrollViewProps(children),
             ...this.getKeyboardAwareScrollViewProps(inputFieldRefs),
@@ -205,6 +208,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
       return React.createElement(
         ScrollView,
         {
+          element: this.props.element,
           ...this.getCommonProps(),
           ...this.getScrollViewProps(children),
         },

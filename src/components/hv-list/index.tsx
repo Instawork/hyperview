@@ -12,13 +12,13 @@ import type {
 } from 'hyperview/src/types';
 import {
   RefreshControl as DefaultRefreshControl,
-  FlatList,
   Platform,
 } from 'react-native';
 import React, { PureComponent } from 'react';
 import type { ScrollParams, State } from './types';
 import { DOMParser } from '@instawork/xmldom';
 import type { ElementRef } from 'react';
+import { FlatList } from 'hyperview/src/core/components/scroll';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { getAncestorByTagName } from 'hyperview/src/services';
 
@@ -243,6 +243,7 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
             <FlatList
               ref={this.onRef}
               data={this.getItems()}
+              element={this.props.element}
               horizontal={horizontal}
               keyboardDismissMode={Keyboard.getKeyboardDismissMode(
                 this.props.element,

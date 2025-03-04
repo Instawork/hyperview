@@ -7,6 +7,7 @@ import { BottomTabBar, BottomTabBarItem } from './BottomTabBar';
 import { Map, MapMarker } from './Map';
 import { Filter } from './Filter';
 import { ProgressBar } from './ProgressBar';
+import { ScrollOpacity } from './ScrollOpacity';
 import { Svg } from './Svg';
 
 export default [
@@ -19,5 +20,6 @@ export default [
   Map,
   MapMarker,
   ProgressBar,
+  ScrollOpacity,
   Svg,
 ];

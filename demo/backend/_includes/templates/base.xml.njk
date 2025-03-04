@@ -11,8 +11,10 @@
         {% endblock %}
       </styles>
       <body style="body" safe-area="true">
-        {% include 'templates/header.xml.njk' %}
-        {% block container %}{% endblock %}
+        {% block body %}
+          {% include 'templates/header.xml.njk' %}
+          {% block container %}{% endblock %}
+        {% endblock %}
       </body>
     </screen>
     {% block custom_screen %}

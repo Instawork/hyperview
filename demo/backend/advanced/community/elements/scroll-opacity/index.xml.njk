@@ -1,0 +1,80 @@
+---
+permalink: "/backend/advanced/community/scroll-opacity.xml"
+tags: "Advanced/Community/Elements"
+hv_title: "Scroll Opacity"
+---
+
+{% extends 'templates/base.xml.njk' %}
+
+{% block styles %}
+  {% include './_styles.xml.njk' %}
+{% endblock %}
+
+{% block body %}
+  <header style="header">
+    <view action="back" href="#" style="header-btn">
+      {% include 'icons/back.svg' %}
+    </view>
+    <scroll-opacity:scroll-opacity
+      xmlns:scroll-opacity="https://hyperview.org/scroll-opacity"
+      scroll-opacity:context-key="scroll-view"
+      scroll-opacity:distance="20"
+      scroll-opacity:initial-opacity="0"
+    >
+      <text style="header-title" key="title">{{ hv_title }}</text>
+    </scroll-opacity:scroll-opacity>
+  </header>
+  <view
+    style="main"
+    xmlns:scroll="https://hyperview.org/hyperview-scroll"
+    scroll="true"
+    scroll:context-key="scroll-view"
+    scroll:event-throttle="24"
+  >
+    <text style="header-title text">{{ hv_title }}</text>
+    <text style="text">
+      Velit voluptas et alias atque provident sapiente consequuntur deserunt. Dolorem et
+      non error dolorem voluptate amet accusantium. Corporis rerum sed labore quae sed qui quis quasi. Illo pariatur sint qui.
+      Quasi quaerat id molestias. Necessitatibus et ipsa quia asperiores laborum neque. Quisquam dolorem consequatur illum. Ut
+      magni iusto explicabo blanditiis quasi laborum incidunt earum. Eius ut in rerum ipsam. Officiis dolores suscipit
+      consequatur placeat commodi eum. Vel possimus placeat aut eos tempore saepe. Esse assumenda eum illo sed aut earum quia
+      voluptatibus. Recusandae qui iusto corporis sed atque. Veniam et possimus praesentium. Cum molestiae non velit minus
+      voluptatibus quos illo sed. Et omnis ut soluta qui inventore molestias. Dolores voluptatem perspiciatis exercitationem
+      consectetur minus illum. Quos quaerat omnis aut eius eos dolores velit. Et quia vel ea unde eum repudiandae. Repellat et
+      ab sed.
+    </text>
+    <text style="text">
+      Velit voluptas et alias atque provident sapiente consequuntur deserunt. Dolorem et
+      non error dolorem voluptate amet accusantium. Corporis rerum sed labore quae sed qui quis quasi. Illo pariatur sint qui.
+      Quasi quaerat id molestias. Necessitatibus et ipsa quia asperiores laborum neque. Quisquam dolorem consequatur illum. Ut
+      magni iusto explicabo blanditiis quasi laborum incidunt earum. Eius ut in rerum ipsam. Officiis dolores suscipit
+      consequatur placeat commodi eum. Vel possimus placeat aut eos tempore saepe. Esse assumenda eum illo sed aut earum quia
+      voluptatibus. Recusandae qui iusto corporis sed atque. Veniam et possimus praesentium. Cum molestiae non velit minus
+      voluptatibus quos illo sed. Et omnis ut soluta qui inventore molestias. Dolores voluptatem perspiciatis exercitationem
+      consectetur minus illum. Quos quaerat omnis aut eius eos dolores velit. Et quia vel ea unde eum repudiandae. Repellat et
+      ab sed.
+    </text>
+    <text style="text">
+      Velit voluptas et alias atque provident sapiente consequuntur deserunt. Dolorem et
+      non error dolorem voluptate amet accusantium. Corporis rerum sed labore quae sed qui quis quasi. Illo pariatur sint qui.
+      Quasi quaerat id molestias. Necessitatibus et ipsa quia asperiores laborum neque. Quisquam dolorem consequatur illum. Ut
+      magni iusto explicabo blanditiis quasi laborum incidunt earum. Eius ut in rerum ipsam. Officiis dolores suscipit
+      consequatur placeat commodi eum. Vel possimus placeat aut eos tempore saepe. Esse assumenda eum illo sed aut earum quia
+      voluptatibus. Recusandae qui iusto corporis sed atque. Veniam et possimus praesentium. Cum molestiae non velit minus
+      voluptatibus quos illo sed. Et omnis ut soluta qui inventore molestias. Dolores voluptatem perspiciatis exercitationem
+      consectetur minus illum. Quos quaerat omnis aut eius eos dolores velit. Et quia vel ea unde eum repudiandae. Repellat et
+      ab sed.
+    </text>
+    <text style="text">
+      Velit voluptas et alias atque provident sapiente consequuntur deserunt. Dolorem et
+      non error dolorem voluptate amet accusantium. Corporis rerum sed labore quae sed qui quis quasi. Illo pariatur sint qui.
+      Quasi quaerat id molestias. Necessitatibus et ipsa quia asperiores laborum neque. Quisquam dolorem consequatur illum. Ut
+      magni iusto explicabo blanditiis quasi laborum incidunt earum. Eius ut in rerum ipsam. Officiis dolores suscipit
+      consequatur placeat commodi eum. Vel possimus placeat aut eos tempore saepe. Esse assumenda eum illo sed aut earum quia
+      voluptatibus. Recusandae qui iusto corporis sed atque. Veniam et possimus praesentium. Cum molestiae non velit minus
+      voluptatibus quos illo sed. Et omnis ut soluta qui inventore molestias. Dolores voluptatem perspiciatis exercitationem
+      consectetur minus illum. Quos quaerat omnis aut eius eos dolores velit. Et quia vel ea unde eum repudiandae. Repellat et
+      ab sed.
+    </text>
+  </view>
+{% endblock %}

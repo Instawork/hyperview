@@ -13,13 +13,13 @@ import type {
 import {
   RefreshControl as DefaultRefreshControl,
   Platform,
-  SectionList,
 } from 'react-native';
 import { LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
 import type { ScrollParams, State } from './types';
 import { DOMParser } from '@instawork/xmldom';
 import type { ElementRef } from 'react';
+import { SectionList } from 'hyperview/src/core/components/scroll';
 import { getAncestorByTagName } from 'hyperview/src/services';
 
 const getSectionIndex = (
@@ -356,6 +356,7 @@ export default class HvSectionList extends PureComponent<
           return (
             <SectionList
               ref={this.onRef}
+              element={this.props.element}
               keyboardDismissMode={Keyboard.getKeyboardDismissMode(
                 this.props.element,
               )}
