@@ -378,9 +378,11 @@ const BottomSheet = (props: HvComponentProps) => {
     index: number,
     contentSectionHeight: number,
   ) => {
-    const currentHeights = [...contentSectionHeights];
-    currentHeights[index] = contentSectionHeight;
-    setContentSectionHeights(currentHeights);
+    setContentSectionHeights(prevHeights => {
+      const currentHeights = [...prevHeights];
+      currentHeights[index] = contentSectionHeight;
+      return currentHeights;
+    });
   };
 
   return (
