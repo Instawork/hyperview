@@ -20,5 +20,7 @@
         </xs:restriction>
       </xs:simpleType>
     </xs:attribute>
+    <xs:attribute name="context-key" type="xs:token" />
+    <xs:attribute name="event-throttle" type="xs:nonNegativeInteger" />
   </xs:attributeGroup>
 </xs:schema>
