@@ -327,7 +327,8 @@
 
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -350,12 +351,13 @@
   <text style="header-title">Escaped</text>
 </header>
 
-        
+          
   <text style="text">
     <![CDATA[Escaped with <![CDATA[]>:
     <hello>
       <world>]]></text>
 
+        
       </body>
     </screen>
     

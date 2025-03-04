@@ -328,7 +328,8 @@
 
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -351,7 +352,7 @@
   <text style="header-title">Delayed Navigation</text>
 </header>
 
-        
+          
   <text style="label">This is screen 1.</text>
   <text
     action="replace-inner"
@@ -366,6 +367,7 @@
   <spinner id="loadingSpinner" hide="true" />
   <view id="redirectContainer" />
 
+        
       </body>
     </screen>
     

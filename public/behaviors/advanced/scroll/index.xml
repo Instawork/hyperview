@@ -326,7 +326,8 @@
         
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -349,7 +350,7 @@
   <text style="header-title">Scroll</text>
 </header>
 
-        
+          
   
 <list
   action="replace"
@@ -434,6 +435,7 @@
 </list>
 
 
+        
       </body>
     </screen>
     

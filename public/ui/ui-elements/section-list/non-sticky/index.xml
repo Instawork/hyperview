@@ -326,7 +326,8 @@
         
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -349,7 +350,7 @@
   <text style="header-title">Non-sticky Titles</text>
 </header>
 
-        
+          
   <section-list sticky-section-titles="false">
     <section-title style="list-header">
       <text style="list-header-text">Section 1</text>
@@ -452,6 +453,7 @@
     
   </section-list>
 
+        
       </body>
     </screen>
     

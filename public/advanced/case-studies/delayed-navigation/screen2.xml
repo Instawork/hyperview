@@ -328,7 +328,8 @@
 
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -351,10 +352,11 @@
   <text style="header-title">Delayed Navigation</text>
 </header>
 
-        
+          
   <text style="label">This is screen 2.</text>
   <text action="back" href="#" style="label label-link">Go back</text>
 
+        
       </body>
     </screen>
     

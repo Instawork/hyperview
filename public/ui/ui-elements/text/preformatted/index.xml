@@ -327,7 +327,8 @@
 
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -350,7 +351,7 @@
   <text style="header-title">Preformatted</text>
 </header>
 
-        
+          
   <text style="text" preformatted="true">
     <![CDATA[<hello>
       <world />
@@ -358,6 +359,7 @@
     ]]>
   </text>
 
+        
       </body>
     </screen>
     

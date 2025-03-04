@@ -327,7 +327,8 @@
 
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -350,11 +351,12 @@
   <text style="header-title">Loading Indicator Tweaks</text>
 </header>
 
-        
+          
   <view style="container">
     <web-view url="https://hyperview.org/" show-loading-indicator="document-only" activity-indicator-color="#4778ff" />
   </view>
 
+        
       </body>
     </screen>
     

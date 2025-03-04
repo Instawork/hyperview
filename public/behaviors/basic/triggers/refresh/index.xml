@@ -326,7 +326,8 @@
         
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -349,7 +350,7 @@
   <text style="header-title">Refresh</text>
 </header>
 
-        
+          
   
   
     <text style="description">Pull to refresh on the button will replace the content.</text>
@@ -373,6 +374,7 @@
   </view>
 
 
+        
       </body>
     </screen>
     

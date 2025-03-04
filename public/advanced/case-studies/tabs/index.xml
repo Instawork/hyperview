@@ -357,7 +357,8 @@
 
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -380,7 +381,7 @@
   <text style="header-title">Tabs</text>
 </header>
 
-        
+          
   <select-single id="tabs" name="tabs" style="tab-bar-select">
     <option value="1" style="tab">
       <behavior trigger="deselect" action="hide" target="tab-1" />
@@ -423,6 +424,7 @@
     <text>TAB 3 CONTENT</text>
   </view>
 
+        
       </body>
     </screen>
     

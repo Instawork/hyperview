@@ -326,12 +326,13 @@
         
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
   <text style="header-title">UI</text>
 </header>
 
-        
+          
   <view style="tab-route-content">
     
   
@@ -1960,6 +1961,7 @@
   </navigation:bottom-tab-bar>
 
 
+        
       </body>
     </screen>
     

@@ -330,7 +330,8 @@
 
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -353,7 +354,7 @@
   <text style="header-title">Horizontal List</text>
 </header>
 
-        
+          
   <list scroll-orientation="horizontal" style="list-horizontal">
     
       <item key="1" style="list-item-horizontal list-item-horizontal-first">
@@ -438,6 +439,7 @@
     
   </list>
 
+        
       </body>
     </screen>
     

@@ -327,7 +327,8 @@
 
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -350,11 +351,12 @@
   <text style="header-title">Injected Javascript</text>
 </header>
 
-        
+          
   <view style="container">
     <web-view url="https://hyperview.org/" injected-java-script="alert('Hello world!')"/>
   </view>
 
+        
       </body>
     </screen>
     

@@ -497,7 +497,8 @@
 
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -520,7 +521,7 @@
   <text style="header-title">Photo Sharing App</text>
 </header>
 
-        
+          
   <view scroll="true" style="main">
     
   <view hide="true">
@@ -961,6 +962,7 @@
 
   </view>
 
+        
       </body>
     </screen>
     

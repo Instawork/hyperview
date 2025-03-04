@@ -507,7 +507,8 @@
 
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="close" href="#" style="header-btn">
       <svg
@@ -530,7 +531,7 @@
   <text style="header-title">Rate the Instaworker</text>
 </header>
 
-        
+          
   <view scroll="true" style="main">
     <text style="title">Rate the Instaworker</text>
     <view style="worker-info">
@@ -985,6 +986,7 @@
     </view>
   </view>
 
+        
       </body>
     </screen>
     

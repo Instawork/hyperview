@@ -340,7 +340,8 @@
 
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -363,7 +364,7 @@
   <text style="header-title">Keyboard Avoiding View</text>
 </header>
 
-        
+          
   
   
     <text style="description">
@@ -386,6 +387,7 @@
     </view>
   </view>
 
+        
       </body>
     </screen>
     

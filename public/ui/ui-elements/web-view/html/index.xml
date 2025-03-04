@@ -327,7 +327,8 @@
 
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -350,7 +351,7 @@
   <text style="header-title">HTML</text>
 </header>
 
-        
+          
   <view style="container">
     <web-view
       html="
@@ -361,6 +362,7 @@
     />
   </view>
 
+        
       </body>
     </screen>
     

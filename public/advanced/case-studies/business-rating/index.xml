@@ -391,7 +391,8 @@
 
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -414,7 +415,7 @@
   <text style="header-title">Rate by Business</text>
 </header>
 
-        
+          
   <view style="section">
     <view style="section-top">
       <text style="section-header">Instaworkers</text>
@@ -562,6 +563,7 @@
     </list>
   </view>
 
+        
       </body>
     </screen>
     

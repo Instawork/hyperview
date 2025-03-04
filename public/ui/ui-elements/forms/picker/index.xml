@@ -408,7 +408,8 @@
 
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -431,7 +432,7 @@
   <text style="header-title">Picker</text>
 </header>
 
-        
+          
   <view scroll="true" style="main">
     
   
@@ -650,6 +651,7 @@
 
   </view>
 
+        
       </body>
     </screen>
     

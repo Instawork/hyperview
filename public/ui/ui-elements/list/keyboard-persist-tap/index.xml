@@ -326,7 +326,8 @@
         
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -349,7 +350,7 @@
   <text style="header-title">Keyboard Persist Tap</text>
 </header>
 
-        
+          
   <list keyboard-should-persist-taps="handled">
     <item key="field" style="item">
       
@@ -609,6 +610,7 @@
     
   </list>
 
+        
       </body>
     </screen>
     

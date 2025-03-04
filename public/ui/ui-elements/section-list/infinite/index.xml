@@ -326,7 +326,8 @@
         
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -349,7 +350,7 @@
   <text style="header-title">Section List Infinite Scroll</text>
 </header>
 
-        
+          
   <section-list id="myList">
     <section-title style="list-header">
       <text style="list-header-text">Section 1</text>
@@ -464,6 +465,7 @@
     </item>
   </section-list>
 
+        
       </body>
     </screen>
     

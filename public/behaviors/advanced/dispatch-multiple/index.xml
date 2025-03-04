@@ -328,7 +328,8 @@
 
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -351,7 +352,7 @@
   <text style="header-title">Dispatch Events Multiple</text>
 </header>
 
-        
+          
   
   
     <text style="description">The items below will respond to different events for independent status updates.</text>
@@ -420,6 +421,7 @@
   
   </list>
 
+        
       </body>
     </screen>
     

@@ -337,7 +337,8 @@
 
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -360,7 +361,7 @@
   <text style="header-title">Nested</text>
 </header>
 
-        
+          
   <text style="text">
     Hello,
     <text style="bold">
@@ -396,6 +397,7 @@
     Corporis rerum sed labore quae sed qui quis quasi.
   </text>
 
+        
       </body>
     </screen>
     

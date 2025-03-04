@@ -326,7 +326,8 @@
         
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -349,7 +350,7 @@
   <text style="header-title">List</text>
 </header>
 
-        
+          
   <list xmlns:scroll="https://hyperview.org/hyperview-scroll">
     <item key="top">
       <view id="top" style="links-container">
@@ -707,6 +708,7 @@
 
   </list>
 
+        
       </body>
     </screen>
     

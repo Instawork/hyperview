@@ -380,7 +380,8 @@
 
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -403,13 +404,14 @@
   <text style="header-title">Basic Forms</text>
 </header>
 
-        
+          
   
   
     <text style="description">Next page</text>
   
 
 
+        
       </body>
     </screen>
     

@@ -327,7 +327,8 @@
 
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -350,9 +351,10 @@
   <text style="header-title">Selectable</text>
 </header>
 
-        
+          
   <text style="text" selectable="true">Select me!</text>
 
+        
       </body>
     </screen>
     

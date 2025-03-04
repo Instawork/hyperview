@@ -443,7 +443,8 @@
 
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -466,7 +467,7 @@
   <text style="header-title">Set Value</text>
 </header>
 
-        
+          
   <view scroll="true" style="main">
     
   <view style="links-container">
@@ -786,6 +787,7 @@
 
   </view>
 
+        
       </body>
     </screen>
     

@@ -335,7 +335,8 @@
 
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -358,7 +359,7 @@
   <text style="header-title">Custom Android Back</text>
 </header>
 
-        
+          
   <view style="container">
     <text style="basic">
       Custom handling for Android back button press.
@@ -385,6 +386,7 @@
     </view>
   </view>
 
+        
       </body>
     </screen>
     

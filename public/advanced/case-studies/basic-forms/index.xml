@@ -380,7 +380,8 @@
 
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -403,7 +404,7 @@
   <text style="header-title">Basic Forms</text>
 </header>
 
-        
+          
   <form id="myForm" scroll="true">
     <view style="form-group">
       <text style="label">Label line</text>
@@ -427,6 +428,7 @@
   </form>
   <spinner id="mySpinner" hide="true" />
 
+        
       </body>
     </screen>
     

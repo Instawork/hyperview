@@ -363,7 +363,8 @@
 
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -386,7 +387,7 @@
   <text style="header-title">Bottom Tab - Tab 2</text>
 </header>
 
-        
+          
   
   
     <text style="description">This is the content for tab 2.</text>
@@ -414,6 +415,7 @@
     </view>
   </view>
 
+        
       </body>
     </screen>
     

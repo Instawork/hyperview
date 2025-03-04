@@ -327,7 +327,8 @@
 
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -350,10 +351,11 @@
   <text style="header-title">Adjustable Font Size</text>
 </header>
 
-        
+          
   <text style="text" adjustsFontSizeToFit="true" numberOfLines="1">The font of this text will be adjusted to fit the
     specified number of lines</text>
 
+        
       </body>
     </screen>
     

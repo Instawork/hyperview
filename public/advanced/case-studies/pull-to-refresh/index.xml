@@ -326,7 +326,8 @@
         
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -349,7 +350,7 @@
   <text style="header-title">Pull To Refresh</text>
 </header>
 
-        
+          
   <list
     action="replace"
     delay="800"
@@ -367,6 +368,7 @@
     </item>
   </list>
 
+        
       </body>
     </screen>
     

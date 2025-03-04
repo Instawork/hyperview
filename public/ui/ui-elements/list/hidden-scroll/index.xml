@@ -326,7 +326,8 @@
         
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -349,7 +350,7 @@
   <text style="header-title">Hidden Scrollbar</text>
 </header>
 
-        
+          
   <list shows-scroll-indicator="false">
     
       <item key="1" style="item">
@@ -434,6 +435,7 @@
     
   </list>
 
+        
       </body>
     </screen>
     

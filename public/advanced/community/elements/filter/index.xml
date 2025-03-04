@@ -331,7 +331,8 @@
 
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -354,7 +355,7 @@
   <text style="header-title">Filter</text>
 </header>
 
-        
+          
   <form>
     <filter:container filter:on-event="search" filter:on-param="search-term" filter:transform="lowercase">
       <list key="list">
@@ -430,6 +431,7 @@
     </filter:container>
   </form>
 
+        
       </body>
     </screen>
     

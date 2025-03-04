@@ -333,7 +333,8 @@
 
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -356,7 +357,7 @@
   <text style="header-title">Infinite Scroll</text>
 </header>
 
-        
+          
   <list>
     
       <item key="1" style="item">
@@ -451,6 +452,7 @@
     </item>
   </list>
 
+        
       </body>
     </screen>
     

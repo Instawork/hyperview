@@ -327,7 +327,8 @@
 
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -350,7 +351,7 @@
   <text style="header-title">Section List with Refresh</text>
 </header>
 
-        
+          
   <section-list action="replace" delay="700" href="/hyperview/public/ui/ui-elements/section-list/refresh/refresh_load.xml" trigger="refresh">
     <section-title style="list-header">
       <text style="list-header-text">Section 1</text>
@@ -378,6 +379,7 @@
     
   </section-list>
 
+        
       </body>
     </screen>
     

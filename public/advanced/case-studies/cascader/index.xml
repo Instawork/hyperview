@@ -412,7 +412,8 @@
 
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -435,7 +436,7 @@
   <text style="header-title">Cascader</text>
 </header>
 
-        
+          
   <view
     action="reload"
     href="#"
@@ -528,6 +529,7 @@
     </select-single>
   </view>
 
+        
       </body>
     </screen>
     

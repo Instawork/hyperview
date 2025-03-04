@@ -340,7 +340,8 @@
 
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -363,7 +364,7 @@
   <text style="header-title">Text</text>
 </header>
 
-        
+          
   <view scroll="true" style="main">
     
   <text style="text text-small">Small</text>
@@ -392,6 +393,7 @@
 
   </view>
 
+        
       </body>
     </screen>
     

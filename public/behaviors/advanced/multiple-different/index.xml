@@ -327,7 +327,8 @@
 
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -350,7 +351,7 @@
   <text style="header-title">Multiple Different Behaviors</text>
 </header>
 
-        
+          
   
   
     <text style="description">The button below has behaviors for presses, refresh, and load.</text>
@@ -386,6 +387,7 @@
     <text id="visible-fragment" style="event">Visible</text>
   </view>
 
+        
       </body>
     </screen>
     

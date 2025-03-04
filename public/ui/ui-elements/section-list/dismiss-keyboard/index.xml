@@ -326,7 +326,8 @@
         
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -349,7 +350,7 @@
   <text style="header-title">Dismiss Keyboard on Drag</text>
 </header>
 
-        
+          
   <section-list keyboard-dismiss-mode="on-drag">
     <item key="field" style="item">
       
@@ -457,6 +458,7 @@
     
   </section-list>
 
+        
       </body>
     </screen>
     

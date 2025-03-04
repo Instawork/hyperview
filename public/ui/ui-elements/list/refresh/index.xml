@@ -326,7 +326,8 @@
         
       </styles>
       <body style="body" safe-area="true">
-        <header style="header">
+        
+          <header style="header">
   
     <view action="back" href="#" style="header-btn">
       <svg
@@ -349,7 +350,7 @@
   <text style="header-title">List with Refresh</text>
 </header>
 
-        
+          
   
   
     <text style="description">Try multiple pull-to-refresh gestures on the list below.</text>
@@ -379,6 +380,7 @@
     
   </list>
 
+        
       </body>
     </screen>
     
