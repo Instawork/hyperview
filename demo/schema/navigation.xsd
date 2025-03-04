@@ -3,6 +3,7 @@
   attributeFormDefault="qualified"
   elementFormDefault="qualified"
   targetNamespace="https://hyperview.org/navigation"
+  xmlns:nav="https://hyperview.org/navigation"
   xmlns:hv="https://hyperview.org/hyperview"
 >
   <xs:import
@@ -28,4 +29,20 @@
       <xs:attribute name="key" type="hv:KEY" form="unqualified" />
     </xs:complexType>
   </xs:element>
+  <xs:simpleType name="role">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="back" />
+      <xs:enumeration value="close" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="back">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:any minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="navAttributes">
+    <xs:attribute name="role" type="nav:role" />
+  </xs:attributeGroup>
 </xs:schema>
