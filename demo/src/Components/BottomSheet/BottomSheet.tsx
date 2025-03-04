@@ -32,17 +32,15 @@ import styles from './styles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
-const DEFAULT_DAMPING = 50;
+const DEFAULT_ANIMATION_DURATION = 200;
+const DEFAULT_DAMPING_MULTIPLIER = 0.1;
+const MIN_DAMPING = 15;
+const DEFAULT_PADDING_ANDROID = 10;
 const MIN_VELOCITY_FOR_MOVE = 0.01;
 const SWIPE_TO_CLOSE_THRESHOLD = 0.1;
 
 const BottomSheet = (props: HvComponentProps) => {
   const insets = useSafeAreaInsets();
-  const PADDING = Platform.select({
-    default: insets.top,
-    ios: insets.bottom,
-  });
-
   const topOffset = Platform.select({
     default: 0,
     ios: insets.top,
@@ -56,7 +54,7 @@ const BottomSheet = (props: HvComponentProps) => {
   const hvProps: HvProps = {
     animationDuration: animationDuration
       ? parseInt(animationDuration, 10)
-      : 250,
+      : DEFAULT_ANIMATION_DURATION,
     contentSections: props.element.getElementsByTagNameNS(
       namespace,
       BottomSheetContentSection.localName,
@@ -90,6 +88,14 @@ const BottomSheet = (props: HvComponentProps) => {
       styleAttr: `${prefix}:overlay-style`,
     }),
   };
+
+  const gestureEnabled =
+    hvProps.stopPoints.length > 0 || hvProps.contentSections.length > 0;
+  const PADDING = Platform.select({
+    android: DEFAULT_PADDING_ANDROID,
+    default: 0,
+    ios: gestureEnabled ? insets.top : 0,
+  });
 
   const [contentSectionHeights, setContentSectionHeights] = useState(
     new Array(hvProps.contentSections.length),
@@ -137,9 +143,14 @@ const BottomSheet = (props: HvComponentProps) => {
       // we need the new value to calculate whether innerView should scroll
       // so we use upcomingTranslateY to handle this case
       runOnJS(setUpcomingTranslateY)(destination);
-      translateY.value = withSpring(destination, { damping: DEFAULT_DAMPING });
+      translateY.value = withSpring(destination, {
+        damping: Math.max(
+          hvProps.animationDuration * DEFAULT_DAMPING_MULTIPLIER,
+          MIN_DAMPING,
+        ),
+      });
     },
-    [translateY],
+    [hvProps.animationDuration, translateY],
   );
 
   useEffect(() => {
@@ -226,16 +237,6 @@ const BottomSheet = (props: HvComponentProps) => {
     };
   }, [onHyperviewEventDispatch, visible]);
 
-  const childNodes = Array.from(props.element.childNodes).filter(
-    n => (n as Element).tagName !== 'bottom-sheet:stop-point',
-  );
-  const children = Hyperview.renderChildNodes(
-    childNodes,
-    props.stylesheets,
-    props.onUpdate,
-    props.options,
-  );
-
   const findBottomSheetEndPoint = () => {
     'worklet';
 
@@ -291,8 +292,6 @@ const BottomSheet = (props: HvComponentProps) => {
     }
   };
 
-  const gestureEnabled =
-    hvProps.stopPoints.length > 0 || hvProps.contentSections.length > 0;
   const gesture = Gesture.Pan()
     .enabled(gestureEnabled)
     .onStart(() => {
@@ -322,18 +321,38 @@ const BottomSheet = (props: HvComponentProps) => {
     };
   });
 
-  const innerView = useMemo(() => {
-    const onLayout = (event: LayoutChangeEvent) => {
-      const { height: sheetHeight } = event.nativeEvent.layout;
-      setHeight(sheetHeight);
-    };
+  const onStartShouldSetResponder = useCallback(() => {
+    return gestureEnabled && upcomingTranslateY > MAX_TRANSLATE_Y;
+  }, [gestureEnabled, upcomingTranslateY, MAX_TRANSLATE_Y]);
 
-    return Platform.OS === 'ios' ? (
+  const children = useMemo(() => {
+    const childNodes = Array.from(props.element.childNodes).filter(
+      n => (n as Element).tagName !== 'bottom-sheet:stop-point',
+    );
+
+    return Hyperview.renderChildNodes(
+      childNodes,
+      props.stylesheets,
+      props.onUpdate,
+      props.options,
+    );
+  }, [
+    props.element.childNodes,
+    props.onUpdate,
+    props.options,
+    props.stylesheets,
+  ]);
+
+  const onLayout = (event: LayoutChangeEvent) => {
+    const { height: sheetHeight } = event.nativeEvent.layout;
+    setHeight(sheetHeight);
+  };
+
+  const innerView =
+    Platform.OS === 'ios' ? (
       <View
         onLayout={onLayout}
-        onStartShouldSetResponder={() => {
-          return upcomingTranslateY > MAX_TRANSLATE_Y;
-        }}
+        onStartShouldSetResponder={onStartShouldSetResponder}
       >
         <>{children}</>
       </View>
@@ -347,7 +366,6 @@ const BottomSheet = (props: HvComponentProps) => {
         </ScrollView>
       </View>
     );
-  }, [upcomingTranslateY, children, MAX_TRANSLATE_Y]);
 
   const content = (
     <GestureDetector gesture={gesture}>
@@ -378,9 +396,11 @@ const BottomSheet = (props: HvComponentProps) => {
     index: number,
     contentSectionHeight: number,
   ) => {
-    const currentHeights = [...contentSectionHeights];
-    currentHeights[index] = contentSectionHeight;
-    setContentSectionHeights(currentHeights);
+    setContentSectionHeights(prevHeights => {
+      const currentHeights = [...prevHeights];
+      currentHeights[index] = contentSectionHeight;
+      return currentHeights;
+    });
   };
 
   return (
