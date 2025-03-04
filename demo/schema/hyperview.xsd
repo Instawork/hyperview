@@ -6,11 +6,16 @@
   xmlns:hv="https://hyperview.org/hyperview"
   xmlns:alert="https://hyperview.org/hyperview-alert"
   xmlns:filter="https://hyperview.org/filter"
+  xmlns:scroll="https://hyperview.org/hyperview-scroll"
   xmlns:share="https://hyperview.org/share"
 >
   <xs:import
     namespace="https://hyperview.org/hyperview-alert"
     schemaLocation="../../schema/alert.xsd"
+  />
+  <xs:import
+    namespace="https://hyperview.org/hyperview-scroll"
+    schemaLocation="../../schema/scroll.xsd"
   />
   <xs:import
     namespace="https://hyperview.org/bottom-sheet"
@@ -31,6 +36,10 @@
   <xs:import
     namespace="https://hyperview.org/progress-bar"
     schemaLocation="progress-bar.xsd"
+  />
+  <xs:import
+    namespace="https://hyperview.org/scroll-opacity"
+    schemaLocation="scroll-opacity.xsd"
   />
   <xs:import
     namespace="https://hyperview.org/share"
