@@ -1,11 +1,7 @@
 import * as Logging from 'hyperview/src/services/logging';
 import type { HvComponentProps, LocalName } from 'hyperview';
-import Hyperview, {
-  Events,
-  LOCAL_NAME,
-  NODE_TYPE,
-  Namespaces,
-} from 'hyperview';
+import Hyperview, { Events, LOCAL_NAME, Namespaces } from 'hyperview';
+import { findElements } from '../../Helpers';
 import { useEffect } from 'react';
 
 type FormDataPart = {
@@ -17,30 +13,6 @@ declare class FormData {
   getParts(): Array<FormDataPart>;
 }
 const FILTER_NS = 'https://hyperview.org/filter';
-
-export const findElements = (node: Element, attributeNames: string[]) => {
-  if (node.nodeType !== NODE_TYPE.ELEMENT_NODE) {
-    return [];
-  }
-
-  if (
-    attributeNames.reduce(
-      (found, name) => found || !!node.getAttributeNS(FILTER_NS, name),
-      false,
-    )
-  ) {
-    return [node];
-  }
-
-  return (Array.from(node.childNodes) as Element[])
-    .filter((child: Node | null) => {
-      return child !== null && child.nodeType === NODE_TYPE.ELEMENT_NODE;
-    })
-    .reduce((elements: Element[], child: Element) => {
-      elements.push(...findElements(child, attributeNames));
-      return elements;
-    }, []);
-};
 
 const Filter = (props: HvComponentProps) => {
   const onEventDispatch = (eventName: string) => {
@@ -74,7 +46,7 @@ const Filter = (props: HvComponentProps) => {
       : filterTerm;
 
     // Hide/show each element with filter terms or matching given regex. Modify attributes in-place
-    const filterElements: Element[] = findElements(props.element, [
+    const filterElements: Element[] = findElements(FILTER_NS, props.element, [
       'terms',
       'regex',
     ]);
@@ -101,22 +73,24 @@ const Filter = (props: HvComponentProps) => {
     props.onUpdate(null, 'swap', props.element, { newElement });
 
     // Set elements that need to render the filter term
-    findElements(newElement, ['role']).forEach((element: Element) => {
-      if (element.getAttributeNS(FILTER_NS, 'role') === 'filter-terms') {
-        if (
-          element.namespaceURI === Namespaces.HYPERVIEW &&
-          element.localName !== LOCAL_NAME.TEXT
-        ) {
-          Logging.error(
-            'Element with attribute `role="filter-terms"` should be a <text> element or a custom element',
-          );
-          return;
+    findElements(FILTER_NS, newElement, ['role']).forEach(
+      (element: Element) => {
+        if (element.getAttributeNS(FILTER_NS, 'role') === 'filter-terms') {
+          if (
+            element.namespaceURI === Namespaces.HYPERVIEW &&
+            element.localName !== LOCAL_NAME.TEXT
+          ) {
+            Logging.error(
+              'Element with attribute `role="filter-terms"` should be a <text> element or a custom element',
+            );
+            return;
+          }
+          const newRoleElement = element.cloneNode(true) as Element;
+          newRoleElement.textContent = filterTerm;
+          props.onUpdate(null, 'swap', element, { newElement: newRoleElement });
         }
-        const newRoleElement = element.cloneNode(true) as Element;
-        newRoleElement.textContent = filterTerm;
-        props.onUpdate(null, 'swap', element, { newElement: newRoleElement });
-      }
-    });
+      },
+    );
   };
 
   useEffect(() => {

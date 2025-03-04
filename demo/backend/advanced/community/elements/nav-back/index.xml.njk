@@ -1,0 +1,26 @@
+---
+permalink: "/backend/advanced/community/nav-back/index.xml"
+tags: "Advanced/Community/Elements"
+hv_button_behavior: "back"
+hv_title: "Nav Back"
+---
+
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% extends 'templates/scrollview.xml.njk' %}
+
+{% block content %}
+  {{ description('Tapping one of the buttons will render the same screen with a different navigation style. The control to navigate back will be dynamic, based on the navigation context.') }}
+  {% call button('Push') -%}
+    <behavior
+      action="push"
+      href="/hyperview/public/advanced/community/elements/nav-back/screen.xml"
+    />
+  {%- endcall %}
+  {% call button('New') -%}
+    <behavior
+      action="new"
+      href="/hyperview/public/advanced/community/elements/nav-back/screen.xml"
+    />
+  {%- endcall %}
+{% endblock %}

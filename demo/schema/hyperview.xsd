@@ -6,6 +6,7 @@
   xmlns:hv="https://hyperview.org/hyperview"
   xmlns:alert="https://hyperview.org/hyperview-alert"
   xmlns:filter="https://hyperview.org/filter"
+  xmlns:nav="https://hyperview.org/navigation"
   xmlns:scroll="https://hyperview.org/hyperview-scroll"
   xmlns:share="https://hyperview.org/share"
 >
@@ -85,6 +86,7 @@
 
       <!-- Hyperview demo extensions -->
       <xs:attributeGroup ref="filter:filterAttributes" />
+      <xs:attributeGroup ref="nav:navAttributes" />
       <xs:attributeGroup ref="share:shareAttributes" />
     </xs:attributeGroup>
 
