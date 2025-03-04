@@ -221,6 +221,7 @@
   paddingBottom="16"
   paddingLeft="24"
   paddingRight="24"
+  height="48"
 />
 <style
   id="header-btn"

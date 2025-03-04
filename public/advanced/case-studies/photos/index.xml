@@ -223,6 +223,7 @@
   paddingBottom="16"
   paddingLeft="24"
   paddingRight="24"
+  height="48"
 />
 <style
   id="header-btn"
@@ -1186,6 +1187,7 @@
   paddingBottom="16"
   paddingLeft="24"
   paddingRight="24"
+  height="48"
 />
 <style
   id="header-btn"
@@ -1286,6 +1288,7 @@
 
   </styles>
   <body style="body" safe-area="true">
+    
     <header style="header">
   
     <view action="back" href="#" style="header-btn">
@@ -1306,7 +1309,7 @@
 
     </view>
   
-  <text style="header-title">Photo Sharing App</text>
+  <text style="header-title"></text>
 </header>
 
     <view style="loading">
@@ -1538,6 +1541,7 @@
   paddingBottom="16"
   paddingLeft="24"
   paddingRight="24"
+  height="48"
 />
 <style
   id="header-btn"
