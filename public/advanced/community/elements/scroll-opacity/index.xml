@@ -329,6 +329,12 @@
   marginBottom="16"
 />
 
+<style
+  id="instructions-text"
+  flex="1"
+  alignItems="flex-end"
+/>
+
 
       </styles>
       <body style="body" safe-area="true">
@@ -354,10 +360,19 @@
     <scroll-opacity:scroll-opacity
       xmlns:scroll-opacity="https://hyperview.org/scroll-opacity"
       scroll-opacity:context-key="scroll-view"
-      scroll-opacity:distance="20"
-      scroll-opacity:initial-opacity="0"
+      scroll-opacity:scroll-range="[30, 100]"
+      scroll-opacity:opacity-range="[0, 1]"
     >
       <text style="header-title" key="title">Scroll Opacity</text>
+    </scroll-opacity:scroll-opacity>
+    <scroll-opacity:scroll-opacity
+      xmlns:scroll-opacity="https://hyperview.org/scroll-opacity"
+      style="instructions-text"
+      scroll-opacity:context-key="scroll-view"
+      scroll-opacity:scroll-range="[0, 20]"
+      scroll-opacity:opacity-range="[1, 0]"
+    >
+      <text key="instructions-text">Scroll down…</text>
     </scroll-opacity:scroll-opacity>
   </header>
   <view
