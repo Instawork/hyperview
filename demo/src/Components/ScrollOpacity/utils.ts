@@ -36,6 +36,13 @@ export const calculateOpacity = (
   const [a, b] = inputRange;
   const [c, d] = outputRange;
 
+  // Check if the input range has the same start and end values
+  if (a === b) {
+    // If the position is exactly at a (or b), return the start of the output range
+    // Otherwise, return the end of the output range
+    return position <= a ? c : d;
+  }
+
   // Calculate the slope
   const slope = (d - c) / (b - a);
 
