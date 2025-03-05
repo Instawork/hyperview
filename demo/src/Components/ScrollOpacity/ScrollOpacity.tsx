@@ -1,16 +1,28 @@
 import type { HvComponentProps, LocalName } from 'hyperview';
 import Hyperview, { useScrollContext } from 'hyperview';
 import React, { useEffect, useRef } from 'react';
-import { getNumberAttr, namespaceURI } from './utils';
+import {
+  calculateOpacity,
+  getNumberAttr,
+  getRangeAttr,
+  namespaceURI,
+} from './utils';
 import { Animated } from 'react-native';
 
 const ScrollOpacity = (props: HvComponentProps) => {
   const contextKey = props.element.getAttributeNS(namespaceURI, 'context-key');
   const axis = props.element.getAttributeNS(namespaceURI, 'axis') || 'vertical';
-  const distance = getNumberAttr(props.element, 'distance', 0);
+  const scrollRange = getRangeAttr(props.element, 'scroll-range', [0, 100]);
+  const opacityRange = getRangeAttr(props.element, 'opacity-range', [0, 1]);
   const duration = getNumberAttr(props.element, 'duration', 0);
-  const initialOpacity = getNumberAttr(props.element, 'initial-opacity', 1);
-  const opacity = useRef(new Animated.Value(initialOpacity)).current;
+  const style = Hyperview.createStyleProp(props.element, props.stylesheets, {
+    ...props.options,
+    styleAttr: 'style',
+  });
+  const opacity = useRef(
+    // Assumes the default scroll position is 0
+    new Animated.Value(calculateOpacity(0, scrollRange, opacityRange)),
+  ).current;
   const { offsets } = useScrollContext();
 
   const defaultPosition = { x: 0, y: 0 };
@@ -34,16 +46,13 @@ const ScrollOpacity = (props: HvComponentProps) => {
   })();
 
   useEffect(() => {
-    const toValue = Math.min(
-      Math.max(position / Math.max(distance, 2) - 1, 0),
-      1,
-    );
+    const toValue = calculateOpacity(position, scrollRange, opacityRange);
     Animated.timing(opacity, {
       duration,
       toValue,
       useNativeDriver: true,
     }).start();
-  }, [axis, contextKey, distance, duration, opacity, position, x, y]);
+  }, [duration, opacity, opacityRange, position, scrollRange]);
 
   const children = (Hyperview.renderChildren(
     props.element,
@@ -51,7 +60,7 @@ const ScrollOpacity = (props: HvComponentProps) => {
     props.onUpdate,
     props.options,
   ) as unknown) as JSX.Element;
-  return <Animated.View style={{ opacity }}>{children}</Animated.View>;
+  return <Animated.View style={[style, { opacity }]}>{children}</Animated.View>;
 };
 
 ScrollOpacity.namespaceURI = namespaceURI;

@@ -3,17 +3,24 @@
   attributeFormDefault="qualified"
   elementFormDefault="qualified"
   targetNamespace="https://hyperview.org/scroll-opacity"
+  xmlns:scroll-opacity="https://hyperview.org/scroll-opacity"
   xmlns:hv="https://hyperview.org/hyperview"
 >
   <xs:import
     namespace="https://hyperview.org/hyperview"
     schemaLocation="hyperview.xsd"
   />
+  <xs:simpleType name="range">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="\[-?[0-9]+,\s?-?[0-9]+\]" />
+    </xs:restriction>
+  </xs:simpleType>
   <xs:element name="scroll-opacity">
     <xs:complexType>
       <xs:sequence>
         <xs:any minOccurs="0" maxOccurs="unbounded" />
       </xs:sequence>
+      <xs:attribute name="style" type="hv:styleList" form="unqualified" />
       <xs:attribute name="context-key" type="xs:token" />
       <xs:attribute name="axis">
         <xs:simpleType>
@@ -23,9 +30,9 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>
-      <xs:attribute name="distance" type="xs:nonNegativeInteger" />
       <xs:attribute name="duration" type="xs:nonNegativeInteger" />
-      <xs:attribute name="initial-opacity" type="xs:nonNegativeInteger" />
+      <xs:attribute name="scroll-range" type="scroll-opacity:range" />
+      <xs:attribute name="opacity-range" type="scroll-opacity:range" />
     </xs:complexType>
   </xs:element>
 </xs:schema>
