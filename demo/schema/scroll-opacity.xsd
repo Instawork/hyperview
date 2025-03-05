@@ -10,9 +10,14 @@
     namespace="https://hyperview.org/hyperview"
     schemaLocation="hyperview.xsd"
   />
-  <xs:simpleType name="range">
+  <xs:simpleType name="scroll-range">
     <xs:restriction base="xs:string">
       <xs:pattern value="\[-?[0-9]+,\s?-?[0-9]+\]" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="opacity-range">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="\[[0-9]\.?[0-9]*,\s?[0-9]\.?[0-9]*\]" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="scroll-opacity">
@@ -31,8 +36,8 @@
         </xs:simpleType>
       </xs:attribute>
       <xs:attribute name="duration" type="xs:nonNegativeInteger" />
-      <xs:attribute name="scroll-range" type="scroll-opacity:range" />
-      <xs:attribute name="opacity-range" type="scroll-opacity:range" />
+      <xs:attribute name="scroll-range" type="scroll-opacity:scroll-range" />
+      <xs:attribute name="opacity-range" type="scroll-opacity:opacity-range" />
     </xs:complexType>
   </xs:element>
 </xs:schema>
