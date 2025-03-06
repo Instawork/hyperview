@@ -124,7 +124,6 @@ const BottomSheet = (props: HvComponentProps) => {
   const [height, setHeight] = useState(0);
 
   const overlayOpacity = useSharedValue(0);
-  const contentOpacity = useSharedValue(0);
   const context = useSharedValue({ startTime: Date.now(), y: 0 });
   const translateY = useSharedValue(0);
   const [upcomingTranslateY, setUpcomingTranslateY] = useState(0);
@@ -177,17 +176,12 @@ const BottomSheet = (props: HvComponentProps) => {
     overlayOpacity.value = withTiming(targetOpacity, {
       duration: hvProps.animationDuration,
     });
-    // We start with a 0 opacity to avoid a flash of the content
-    // before the animation starts, that occurs because `onLayout`
-    // is called before `onShow`
-    contentOpacity.value = withTiming(1, { duration: 1 });
   }, [
     height,
     contentSectionHeights,
     stopPointLocations,
     hvProps.animationDuration,
     targetOpacity,
-    contentOpacity,
     overlayOpacity,
     hvProps.contentSections.length,
     hvProps.stopPoints.length,
@@ -316,7 +310,6 @@ const BottomSheet = (props: HvComponentProps) => {
 
   const bottomSheetStyle = useAnimatedStyle(() => {
     return {
-      opacity: contentOpacity.value,
       transform: [{ translateY: translateY.value }],
     };
   });
