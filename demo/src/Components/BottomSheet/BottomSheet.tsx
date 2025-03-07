@@ -121,6 +121,7 @@ const BottomSheet = (props: HvComponentProps) => {
   }, [hvProps.stopPoints]);
 
   const [visible, setVisible] = useState(hvProps.visible);
+  const [closing, setClosing] = useState(false);
   const [height, setHeight] = useState(0);
 
   const overlayOpacity = useSharedValue(0);
@@ -129,10 +130,6 @@ const BottomSheet = (props: HvComponentProps) => {
   const [upcomingTranslateY, setUpcomingTranslateY] = useState(0);
   const velocity = useSharedValue(0);
   const targetOpacity: number = hvStyles.overlay[0]?.opacity ?? 1;
-
-  const hide = () => {
-    setVisible(false);
-  };
 
   const scrollTo = useCallback(
     (destination: number) => {
@@ -157,6 +154,22 @@ const BottomSheet = (props: HvComponentProps) => {
       scrollTo(-contentSectionHeights[0] - PADDING);
     }
   }, [contentSectionHeights, scrollTo, PADDING]);
+
+  useEffect(() => {
+    // if height changes from onLayout while bottom sheet is open
+    // adjust scroll position of sheet accordingly:
+    if (visible && !closing) {
+      if (hvProps.stopPoints.length > 0) {
+        const [firstStopPointLocation] = stopPointLocations;
+        if (firstStopPointLocation !== null) {
+          scrollTo(-SCREEN_HEIGHT * firstStopPointLocation);
+        }
+      } else {
+        scrollTo(-height - PADDING);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [height]);
 
   const animateOpen = useCallback(() => {
     setVisible(true);
@@ -189,9 +202,18 @@ const BottomSheet = (props: HvComponentProps) => {
     PADDING,
   ]);
 
+  const hide = useCallback(() => {
+    if (hvProps.toggleEventName) {
+      Events.dispatch(hvProps.toggleEventName);
+    }
+    setVisible(false);
+    setClosing(false);
+  }, [hvProps.toggleEventName]);
+
   const animateClose = useCallback(() => {
     'worklet';
 
+    runOnJS(setClosing)(true);
     scrollTo(0);
     overlayOpacity.value = withTiming(
       0,
@@ -204,7 +226,7 @@ const BottomSheet = (props: HvComponentProps) => {
         }
       },
     );
-  }, [scrollTo, hvProps.animationDuration, overlayOpacity]);
+  }, [scrollTo, hvProps.animationDuration, overlayOpacity, hide]);
 
   useEffect(() => {
     setVisible(hvProps.visible);
@@ -217,11 +239,11 @@ const BottomSheet = (props: HvComponentProps) => {
       }
       if (!visible) {
         animateOpen();
-      } else {
+      } else if (!closing) {
         animateClose();
       }
     },
-    [hvProps.toggleEventName, animateOpen, animateClose, visible],
+    [hvProps.toggleEventName, visible, closing, animateOpen, animateClose],
   );
 
   useEffect(() => {
