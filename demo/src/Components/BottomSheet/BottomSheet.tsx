@@ -155,7 +155,7 @@ const BottomSheet = (props: HvComponentProps) => {
     }
   }, [contentSectionHeights, scrollTo, PADDING]);
 
-  useEffect(() => {
+  const onLayoutHeightChange = (newHeight: number) => {
     // if height changes from onLayout while bottom sheet is open
     // adjust scroll position of sheet accordingly:
     if (visible && !closing) {
@@ -165,11 +165,10 @@ const BottomSheet = (props: HvComponentProps) => {
           scrollTo(-SCREEN_HEIGHT * firstStopPointLocation);
         }
       } else {
-        scrollTo(-height - PADDING);
+        scrollTo(-newHeight - PADDING);
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [height]);
+  };
 
   const animateOpen = useCallback(() => {
     setVisible(true);
@@ -360,7 +359,10 @@ const BottomSheet = (props: HvComponentProps) => {
 
   const onLayout = (event: LayoutChangeEvent) => {
     const { height: sheetHeight } = event.nativeEvent.layout;
-    setHeight(sheetHeight);
+    if (sheetHeight !== height) {
+      setHeight(sheetHeight);
+      onLayoutHeightChange(sheetHeight);
+    }
   };
 
   const innerView =
