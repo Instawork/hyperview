@@ -121,19 +121,15 @@ const BottomSheet = (props: HvComponentProps) => {
   }, [hvProps.stopPoints]);
 
   const [visible, setVisible] = useState(hvProps.visible);
+  const [closing, setClosing] = useState(false);
   const [height, setHeight] = useState(0);
 
   const overlayOpacity = useSharedValue(0);
-  const contentOpacity = useSharedValue(0);
   const context = useSharedValue({ startTime: Date.now(), y: 0 });
   const translateY = useSharedValue(0);
   const [upcomingTranslateY, setUpcomingTranslateY] = useState(0);
   const velocity = useSharedValue(0);
   const targetOpacity: number = hvStyles.overlay[0]?.opacity ?? 1;
-
-  const hide = () => {
-    setVisible(false);
-  };
 
   const scrollTo = useCallback(
     (destination: number) => {
@@ -159,6 +155,21 @@ const BottomSheet = (props: HvComponentProps) => {
     }
   }, [contentSectionHeights, scrollTo, PADDING]);
 
+  const onLayoutHeightChange = (newHeight: number) => {
+    // if height changes from onLayout while bottom sheet is open
+    // adjust scroll position of sheet accordingly:
+    if (visible && !closing) {
+      if (hvProps.stopPoints.length > 0) {
+        const [firstStopPointLocation] = stopPointLocations;
+        if (firstStopPointLocation !== null) {
+          scrollTo(-SCREEN_HEIGHT * firstStopPointLocation);
+        }
+      } else {
+        scrollTo(-newHeight - PADDING);
+      }
+    }
+  };
+
   const animateOpen = useCallback(() => {
     setVisible(true);
     if (hvProps.contentSections.length > 0) {
@@ -177,17 +188,12 @@ const BottomSheet = (props: HvComponentProps) => {
     overlayOpacity.value = withTiming(targetOpacity, {
       duration: hvProps.animationDuration,
     });
-    // We start with a 0 opacity to avoid a flash of the content
-    // before the animation starts, that occurs because `onLayout`
-    // is called before `onShow`
-    contentOpacity.value = withTiming(1, { duration: 1 });
   }, [
     height,
     contentSectionHeights,
     stopPointLocations,
     hvProps.animationDuration,
     targetOpacity,
-    contentOpacity,
     overlayOpacity,
     hvProps.contentSections.length,
     hvProps.stopPoints.length,
@@ -195,9 +201,18 @@ const BottomSheet = (props: HvComponentProps) => {
     PADDING,
   ]);
 
+  const hide = useCallback(() => {
+    if (hvProps.toggleEventName) {
+      Events.dispatch(hvProps.toggleEventName);
+    }
+    setVisible(false);
+    setClosing(false);
+  }, [hvProps.toggleEventName]);
+
   const animateClose = useCallback(() => {
     'worklet';
 
+    runOnJS(setClosing)(true);
     scrollTo(0);
     overlayOpacity.value = withTiming(
       0,
@@ -210,7 +225,7 @@ const BottomSheet = (props: HvComponentProps) => {
         }
       },
     );
-  }, [scrollTo, hvProps.animationDuration, overlayOpacity]);
+  }, [scrollTo, hvProps.animationDuration, overlayOpacity, hide]);
 
   useEffect(() => {
     setVisible(hvProps.visible);
@@ -223,11 +238,11 @@ const BottomSheet = (props: HvComponentProps) => {
       }
       if (!visible) {
         animateOpen();
-      } else {
+      } else if (!closing) {
         animateClose();
       }
     },
-    [hvProps.toggleEventName, animateOpen, animateClose, visible],
+    [hvProps.toggleEventName, visible, closing, animateOpen, animateClose],
   );
 
   useEffect(() => {
@@ -316,7 +331,6 @@ const BottomSheet = (props: HvComponentProps) => {
 
   const bottomSheetStyle = useAnimatedStyle(() => {
     return {
-      opacity: contentOpacity.value,
       transform: [{ translateY: translateY.value }],
     };
   });
@@ -345,7 +359,10 @@ const BottomSheet = (props: HvComponentProps) => {
 
   const onLayout = (event: LayoutChangeEvent) => {
     const { height: sheetHeight } = event.nativeEvent.layout;
-    setHeight(sheetHeight);
+    if (sheetHeight !== height) {
+      setHeight(sheetHeight);
+      onLayoutHeightChange(sheetHeight);
+    }
   };
 
   const innerView =
