@@ -33,8 +33,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 const DEFAULT_ANIMATION_DURATION = 200;
-const DEFAULT_DAMPING_MULTIPLIER = 0.1;
-const MIN_DAMPING = 15;
 const DEFAULT_PADDING_ANDROID = 10;
 const MIN_VELOCITY_FOR_MOVE = 0.01;
 const SWIPE_TO_CLOSE_THRESHOLD = 0.1;
@@ -139,11 +137,8 @@ const BottomSheet = (props: HvComponentProps) => {
       // we need the new value to calculate whether innerView should scroll
       // so we use upcomingTranslateY to handle this case
       runOnJS(setUpcomingTranslateY)(destination);
-      translateY.value = withSpring(destination, {
-        damping: Math.max(
-          hvProps.animationDuration * DEFAULT_DAMPING_MULTIPLIER,
-          MIN_DAMPING,
-        ),
+      translateY.value = withTiming(destination, {
+        duration: hvProps.animationDuration,
       });
     },
     [hvProps.animationDuration, translateY],
