@@ -323,17 +323,17 @@
 <style id="links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" marginBottom="24" />
 
         
-  <style id="bottom-sheet" backgroundColor="#fff" padding="24" />
+  <style id="bottom-sheet" padding="24" />
   <style id="bottom-sheet-handle"
     alignSelf='center'
     backgroundColor='gray'
-    borderRadius="25"
-    height="4"
-    marginVertical="15"
-    width="75"
+    borderRadius="24"
+    height="8"
+    marginVertical="12"
+    width="100"
   />
   <style id="bottom-sheet-overlay" backgroundColor='#2f2f2f' opacity="0.6" />
-  <style id="bottom-sheet-container" backgroundColor="#fff" />
+  <style id="bottom-sheet-container" backgroundColor="#fff" borderRadius="8" />
   <style id="heading" flexDirection="row" justifyContent="space-between" marginHorizontal="24" marginBottom="16" />
 <style id="heading-label" fontSize="20" fontWeight="bold" />
 <style id="add-button-label" fontSize="32" lineHeight="30" color="#4778FF" />
