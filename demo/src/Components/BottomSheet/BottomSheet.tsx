@@ -382,7 +382,7 @@ const BottomSheet = (props: HvComponentProps) => {
     <GestureDetector gesture={gesture}>
       <Animated.View
         style={[
-          styles.bottomSheetContainer,
+          styles.container,
           bottomSheetStyle,
           hvStyles.container,
           {
