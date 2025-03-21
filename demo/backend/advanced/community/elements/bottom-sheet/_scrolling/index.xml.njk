@@ -11,18 +11,67 @@
   bottom-sheet:handle-style="bottom-sheet-handle"
   bottom-sheet:overlay-style="bottom-sheet-overlay"
 >
+  <bottom-sheet:stop-point bottom-sheet:location="0.5" />
+  <bottom-sheet:stop-point bottom-sheet:location="1" />
   <view scroll="true">
-    <bottom-sheet:content-section key="0">
-      <view key="bottom-sheet-content" style="bottom-sheet">
-        <text>
-          Section 1. This is only text that should initially be showing. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
-          consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
-          nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
-          ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
-        </text>
-      </view>
-    </bottom-sheet:content-section>
-    <bottom-sheet:content-section key="1">
+    <view key="bottom-sheet-content-1" style="bottom-sheet">
+      <text>
+        Section 1. This is only text that should initially be showing. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+        consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+        nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+        ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+      </text>
+    </view>
+    <view key="bottom-sheet-content-2" style="bottom-sheet">
+      <text>
+        Section 2. This should be hidden from the initial view render. Testing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+        consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+        nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+        ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+      </text>
+      <text></text>
+      <text>
+        Testing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+        consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+        nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+        ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+      </text>
+    </view>
+    <view key="bottom-sheet-content-3" style="bottom-sheet">
+      <text>
+        Section 3. This should be hidden from the initial view render. Testing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+        consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+        nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+        ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+      </text>
+      <text></text>
+      <text>
+        Testing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+        consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+        nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+        ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+      </text>
+      <text></text>
+      <text>
+        Testing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+        consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+        nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+        ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+      </text>
+      <text></text>
+      <text>
+        Testing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+        consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+        nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+        ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+      </text>
+      <text></text>
+      <text>
+        Testing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+        consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+        nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+        ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+      </text>
       {% call button('Close') -%}
         <behavior
           action="dispatch-event"
@@ -30,62 +79,7 @@
           trigger="press"
         />
       {%- endcall %}
-    </bottom-sheet:content-section>
-    <bottom-sheet:content-section key="2">
-      <view key="bottom-sheet-content" style="bottom-sheet">
-        <text>
-          Section 2. This should be hidden from the initial view render. Testing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
-          consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
-          nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
-          ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
-        </text>
-        <text></text>
-        <text>
-          Testing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
-          consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
-          nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
-          ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
-        </text>
-      </view>
-    </bottom-sheet:content-section>
-    <bottom-sheet:content-section key="3">
-      <view key="bottom-sheet-content" style="bottom-sheet">
-        <text>
-          Section 3. This should be hidden from the initial view render. Testing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
-          consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
-          nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
-          ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
-        </text>
-        <text></text>
-        <text>
-          Testing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
-          consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
-          nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
-          ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
-        </text>
-        <text></text>
-        <text>
-          Testing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
-          consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
-          nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
-          ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
-        </text>
-        <text></text>
-        <text>
-          Testing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
-          consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
-          nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
-          ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
-        </text>
-        <text></text>
-        <text>
-          Testing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
-          consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
-          nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
-          ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
-        </text>
-      </view>
-    </bottom-sheet:content-section>
+    </view>
   </view>
 </bottom-sheet:bottom-sheet>
 {% call button('Open bottom sheet w/ scrolling') -%}

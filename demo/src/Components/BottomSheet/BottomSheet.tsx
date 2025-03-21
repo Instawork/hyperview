@@ -32,7 +32,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 const DEFAULT_ANIMATION_DURATION = 200;
-const DEFAULT_PADDING_ANDROID = 10;
+const DEFAULT_PADDING_ANDROID = 42;
 const MIN_VELOCITY_FOR_MOVE = 0.01;
 const SWIPE_TO_CLOSE_THRESHOLD = 0.1;
 
@@ -333,6 +333,10 @@ const BottomSheet = (props: HvComponentProps) => {
     return gestureEnabled && upcomingTranslateY > MAX_TRANSLATE_Y;
   }, [gestureEnabled, upcomingTranslateY, MAX_TRANSLATE_Y]);
 
+  const scrollEnabled = useMemo(() => {
+    return upcomingTranslateY <= MAX_TRANSLATE_Y;
+  }, [MAX_TRANSLATE_Y, upcomingTranslateY]);
+
   const children = useMemo(() => {
     const childNodes = Array.from(props.element.childNodes).filter(
       n => (n as Element).tagName !== 'bottom-sheet:stop-point',
@@ -364,15 +368,21 @@ const BottomSheet = (props: HvComponentProps) => {
       <View
         onLayout={onLayout}
         onStartShouldSetResponder={onStartShouldSetResponder}
+        style={{
+          paddingBottom: gestureEnabled && scrollEnabled ? insets.bottom : 0,
+        }}
       >
         <>{children}</>
       </View>
     ) : (
-      <View onLayout={onLayout}>
-        <ScrollView
-          nestedScrollEnabled
-          scrollEnabled={upcomingTranslateY <= MAX_TRANSLATE_Y}
-        >
+      <View
+        onLayout={onLayout}
+        style={{
+          paddingBottom:
+            gestureEnabled && scrollEnabled ? DEFAULT_PADDING_ANDROID : 0,
+        }}
+      >
+        <ScrollView nestedScrollEnabled scrollEnabled={scrollEnabled}>
           {children}
         </ScrollView>
       </View>
@@ -386,7 +396,7 @@ const BottomSheet = (props: HvComponentProps) => {
           bottomSheetStyle,
           hvStyles.container,
           {
-            height: SCREEN_HEIGHT,
+            height: Math.abs(MAX_TRANSLATE_Y),
             top: SCREEN_HEIGHT,
           },
         ]}
