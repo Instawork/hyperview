@@ -24,13 +24,18 @@ const HvDoc = (props: Props) => {
         getLocalDoc: () => localDoc.current,
         getState: () => state,
         setLocalDoc: (doc: Document | null) => {
-          if (doc !== null) {
+          if (doc !== undefined) {
             localDoc.current = doc;
           }
         },
         // * Override the state to clear the doc when an element is passed
-        setState: (newState: ScreenState) =>
-          setState({ ...newState, doc: props.element ? null : newState.doc }),
+        setState: (newState: ScreenState) => {
+          setState({
+            ...state,
+            ...newState,
+            doc: props.element ? null : newState.doc,
+          });
+        },
       }}
     >
       <>{props.children}</>

@@ -318,30 +318,40 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     };
 
     return (
-      <Contexts.DateFormatContext.Consumer>
-        {formatter => (
-          <HvScreen
-            behaviors={this.props.behaviors}
-            components={this.props.components}
-            doc={this.props.getLocalDoc()?.cloneNode(true) as Document}
-            elementErrorComponent={this.props.elementErrorComponent}
-            entrypointUrl={this.props.entrypointUrl}
-            errorScreen={this.props.errorScreen}
-            fetch={this.props.fetch}
-            formatDate={formatter}
-            getElement={this.props.getElement}
-            navigation={this.navigator}
-            onError={this.props.onError}
-            onParseAfter={this.props.onParseAfter}
-            onParseBefore={this.props.onParseBefore}
-            onUpdate={this.props.onUpdate}
-            reload={this.props.reload}
-            removeElement={this.props.removeElement}
-            route={route}
-            url={url || undefined}
-          />
-        )}
-      </Contexts.DateFormatContext.Consumer>
+      <HvDoc>
+        <StateContext.Consumer>
+          {({ getLocalDoc, getState, setLocalDoc, setState }) => (
+            <Contexts.DateFormatContext.Consumer>
+              {formatter => (
+                <HvScreen
+                  behaviors={this.props.behaviors}
+                  components={this.props.components}
+                  doc={this.props.getLocalDoc()?.cloneNode(true) as Document}
+                  elementErrorComponent={this.props.elementErrorComponent}
+                  entrypointUrl={this.props.entrypointUrl}
+                  errorScreen={this.props.errorScreen}
+                  fetch={this.props.fetch}
+                  formatDate={formatter}
+                  getElement={this.props.getElement}
+                  getLocalDoc={getLocalDoc}
+                  getState={getState}
+                  navigation={this.navigator}
+                  onError={this.props.onError}
+                  onParseAfter={this.props.onParseAfter}
+                  onParseBefore={this.props.onParseBefore}
+                  onUpdate={this.props.onUpdate}
+                  reload={this.props.reload}
+                  removeElement={this.props.removeElement}
+                  route={route}
+                  setLocalDoc={setLocalDoc}
+                  setState={setState}
+                  url={url || undefined}
+                />
+              )}
+            </Contexts.DateFormatContext.Consumer>
+          )}
+        </StateContext.Consumer>
+      </HvDoc>
     );
   };
 
