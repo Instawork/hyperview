@@ -73,7 +73,7 @@ class HvScreenInner extends React.Component {
 
     this.needsLoad = true;
     if (preloadScreen) {
-      this.props.setState({
+      this.props.setScreenState({
         doc: preloadScreen,
         elementError: null,
         error: null,
@@ -81,7 +81,7 @@ class HvScreenInner extends React.Component {
         url,
       });
     } else {
-      this.props.setState({
+      this.props.setScreenState({
         elementError: null,
         error: null,
         url,
@@ -125,9 +125,9 @@ class HvScreenInner extends React.Component {
       const styles = preloadScreen
         ? Stylesheets.createStylesheets(preloadScreen)
         : // eslint-disable-next-line react/no-access-state-in-setstate
-          this.props.getState().styles;
+          this.props.getScreenState().styles;
 
-      this.props.setState({ doc, styles, url: newUrl });
+      this.props.setScreenState({ doc, styles, url: newUrl });
     }
   };
 
@@ -151,7 +151,7 @@ class HvScreenInner extends React.Component {
    */
   componentDidUpdate() {
     if (this.needsLoad) {
-      this.load(this.props.getState().url);
+      this.load(this.props.getScreenState().url);
       this.needsLoad = false;
     }
   }
@@ -178,12 +178,12 @@ class HvScreenInner extends React.Component {
         const {
           doc: loadedDoc,
           staleHeaderType: loadedType,
-        } = await this.parser.loadDocument(this.props.getState().url);
+        } = await this.parser.loadDocument(this.props.getScreenState().url);
         doc = loadedDoc;
         staleHeaderType = loadedType;
       }
       const stylesheets = Stylesheets.createStylesheets(doc);
-      this.props.setState({
+      this.props.setScreenState({
         doc,
         elementError: null,
         error: null,
@@ -194,7 +194,7 @@ class HvScreenInner extends React.Component {
       if (this.props.onError) {
         this.props.onError(err);
       }
-      this.props.setState({
+      this.props.setScreenState({
         doc: null,
         elementError: null,
         error: err,
@@ -214,7 +214,7 @@ class HvScreenInner extends React.Component {
    * Reload if an error occured using the screen's current URL
    */
   reload = () => {
-    this.props.reload(this.props.getState().url, {
+    this.props.reload(this.props.getScreenState().url, {
       onUpdateCallbacks: this.updateCallbacks,
     });
   };
@@ -235,31 +235,31 @@ class HvScreenInner extends React.Component {
    */
   render() {
     const { Error } = this;
-    if (this.props.getState().error) {
-      return <Error error={this.props.getState().error} />;
+    if (this.props.getScreenState().error) {
+      return <Error error={this.props.getScreenState().error} />;
     }
-    if (!this.props.getState().doc) {
+    if (!this.props.getScreenState().doc) {
       return <Loading cachedId={this.props.route?.params?.behaviorElementId} />;
     }
-    const elementErrorComponent = this.props.getState().elementError
+    const elementErrorComponent = this.props.getScreenState().elementError
       ? this.props.elementErrorComponent || LoadElementError
       : null;
     const [body] = Array.from(
       this.props
-        .getState()
+        .getScreenState()
         .doc.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'body'),
     );
     let screenElement;
     if (body) {
       screenElement = Render.renderElement(
         body,
-        this.props.getState().styles,
+        this.props.getScreenState().styles,
         this.onUpdate,
         {
           componentRegistry: this.componentRegistry,
           onUpdateCallbacks: this.updateCallbacks,
-          screenUrl: this.props.getState().url,
-          staleHeaderType: this.props.getState().staleHeaderType,
+          screenUrl: this.props.getScreenState().url,
+          staleHeaderType: this.props.getScreenState().staleHeaderType,
         },
       );
     }
@@ -280,8 +280,9 @@ class HvScreenInner extends React.Component {
         <Contexts.DateFormatContext.Provider value={this.props.formatDate}>
           {elementErrorComponent
             ? React.createElement(elementErrorComponent, {
-                error: this.props.getState().elementError,
-                onPressClose: () => this.props.setState({ elementError: null }),
+                error: this.props.getScreenState().elementError,
+                onPressClose: () =>
+                  this.props.setScreenState({ elementError: null }),
                 onPressReload: () => this.reload(),
               })
             : null}
@@ -296,19 +297,19 @@ class HvScreenInner extends React.Component {
    */
   updateCallbacks = {
     clearElementError: () => {
-      if (this.props.getState().elementError) {
-        this.props.setState({ elementError: null });
+      if (this.props.getScreenState().elementError) {
+        this.props.setScreenState({ elementError: null });
       }
     },
     getDoc: () => this.props.getLocalDoc(),
     getNavigation: () => this.props.navigation,
     getOnUpdate: () => this.onUpdate,
-    getState: () => this.props.getState(),
+    getState: () => this.props.getScreenState(),
     setNeedsLoad: () => {
       this.needsLoad = true;
     },
     setState: state => {
-      this.props.setState(state);
+      this.props.setScreenState(state);
     },
   };
 
@@ -327,11 +328,11 @@ export default function HvScreen(props) {
   return (
     <HvScreenInner
       {...props}
-      setState={newState => {
+      setScreenState={newState => {
         if (newState.doc !== undefined) {
           props.setLocalDoc(newState.doc);
         }
-        props.setState(newState);
+        props.setScreenState(newState);
       }}
     />
   );

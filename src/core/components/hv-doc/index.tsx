@@ -22,14 +22,14 @@ const HvDoc = (props: Props) => {
     <StateContext.Provider
       value={{
         getLocalDoc: () => localDoc.current,
-        getState: () => state,
+        getScreenState: () => state,
         setLocalDoc: (doc: Document | null) => {
           if (doc !== undefined) {
             localDoc.current = doc;
           }
         },
         // * Override the state to clear the doc when an element is passed
-        setState: (newState: ScreenState) => {
+        setScreenState: (newState: ScreenState) => {
           setState({
             ...state,
             ...newState,

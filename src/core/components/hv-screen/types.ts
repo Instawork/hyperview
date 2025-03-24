@@ -29,7 +29,7 @@ export type Props = Omit<
   route?: NavigatorService.Route<string, { url?: string }>;
   url?: string;
   getLocalDoc: () => Document | null;
-  getState: () => ScreenState;
+  getScreenState: () => ScreenState;
   setLocalDoc: (doc: Document | null) => void;
-  setState: (state: ScreenState) => void;
+  setScreenState: (state: ScreenState) => void;
 };

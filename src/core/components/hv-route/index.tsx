@@ -79,7 +79,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
 
   getUrl = (): string => {
     return UrlService.getUrlFromHref(
-      (this.needsLoad ? this.props.getState().url : undefined) ||
+      (this.needsLoad ? this.props.getScreenState().url : undefined) ||
         this.props.url ||
         this.props.entrypointUrl,
       this.props.entrypointUrl,
@@ -102,7 +102,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
    */
   load = async (): Promise<void> => {
     if (!this.parser) {
-      this.props.setState({
+      this.props.setScreenState({
         doc: null,
         error: new NavigatorService.HvRouteError('No parser or context found'),
         url: null,
@@ -130,7 +130,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       );
       const root = Helpers.getFirstChildTag(merged, LOCAL_NAME.DOC);
       if (!root) {
-        this.props.setState({
+        this.props.setScreenState({
           doc: null,
           error: new NavigatorService.HvRouteError('No root element found'),
           url: null,
@@ -138,7 +138,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
         return;
       }
       this.props.setLocalDoc(merged);
-      this.props.setState({
+      this.props.setScreenState({
         doc: merged,
         error: undefined,
         url,
@@ -147,7 +147,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       if (this.props.onError) {
         this.props.onError(err as Error);
       }
-      this.props.setState({
+      this.props.setScreenState({
         doc: null,
         error: err as Error,
         url: null,
@@ -204,7 +204,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     getDoc: () => this.props.getLocalDoc(),
     getNavigation: () => this.navigator,
     getOnUpdate: () => this.onUpdate,
-    getState: () => this.props.getState(),
+    getState: () => this.props.getScreenState(),
     setNeedsLoad: () => {
       this.needsLoad = true;
     },
@@ -212,7 +212,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       if (state.doc) {
         this.props.setLocalDoc(state.doc);
       }
-      this.props.setState(state);
+      this.props.setScreenState(state);
     },
   };
 
@@ -320,7 +320,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     return (
       <HvDoc>
         <StateContext.Consumer>
-          {({ getLocalDoc, getState, setLocalDoc, setState }) => (
+          {({ getLocalDoc, getScreenState, setLocalDoc, setScreenState }) => (
             <Contexts.DateFormatContext.Consumer>
               {formatter => (
                 <HvScreen
@@ -334,7 +334,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
                   formatDate={formatter}
                   getElement={this.props.getElement}
                   getLocalDoc={getLocalDoc}
-                  getState={getState}
+                  getScreenState={getScreenState}
                   navigation={this.navigator}
                   onError={this.props.onError}
                   onParseAfter={this.props.onParseAfter}
@@ -344,7 +344,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
                   removeElement={this.props.removeElement}
                   route={route}
                   setLocalDoc={setLocalDoc}
-                  setState={setState}
+                  setScreenState={setScreenState}
                   url={url || undefined}
                 />
               )}
@@ -392,7 +392,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
                 if (doc !== null) {
                   this.props.setLocalDoc(doc);
                 }
-                this.props.setState({ doc });
+                this.props.setScreenState({ doc });
               },
             }}
           >
@@ -463,8 +463,8 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
   render() {
     const { Error: Err, Load, Content } = this;
     try {
-      if (this.props.getState().error) {
-        return <Err error={this.props.getState().error} />;
+      if (this.props.getScreenState().error) {
+        return <Err error={this.props.getScreenState().error} />;
       }
       if (
         this.props.element ||
@@ -656,7 +656,7 @@ function HvRouteFC(props: Types.Props) {
   return (
     <HvDoc element={element}>
       <StateContext.Consumer>
-        {({ getLocalDoc, getState, setLocalDoc, setState }) => (
+        {({ getLocalDoc, getScreenState, setLocalDoc, setScreenState }) => (
           <HvRouteInner
             behaviors={navigationContext.behaviors}
             components={navigationContext.components}
@@ -668,7 +668,7 @@ function HvRouteFC(props: Types.Props) {
             fetch={navigationContext.fetch}
             getElement={elemenCacheContext.getElement}
             getLocalDoc={getLocalDoc}
-            getState={getState}
+            getScreenState={getScreenState}
             handleBack={navigationContext.handleBack}
             navigation={nav}
             onError={navigationContext.onError}
@@ -680,7 +680,7 @@ function HvRouteFC(props: Types.Props) {
             route={props.route}
             setElement={elemenCacheContext.setElement}
             setLocalDoc={setLocalDoc}
-            setState={setState}
+            setScreenState={setScreenState}
             url={url}
           />
         )}
