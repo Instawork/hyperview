@@ -38,7 +38,7 @@ const HvDoc = (props: Props) => {
         },
       }}
     >
-      <>{props.children}</>
+      {props.children}
     </StateContext.Provider>
   );
 };
