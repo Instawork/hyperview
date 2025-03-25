@@ -3,6 +3,7 @@ import type {
   HvComponentOnUpdate,
   NavigationProvider,
   Reload,
+  ScreenState,
 } from 'hyperview/src/types';
 import { Props as HvRootProps } from 'hyperview/src/core/components/hv-root/types';
 
@@ -27,4 +28,8 @@ export type Props = Omit<
   removeElement?: (id: number) => void;
   route?: NavigatorService.Route<string, { url?: string }>;
   url?: string;
+  getLocalDoc: () => Document | null;
+  getScreenState: () => ScreenState;
+  setLocalDoc: (doc: Document | null) => void;
+  setScreenState: (state: ScreenState) => void;
 };

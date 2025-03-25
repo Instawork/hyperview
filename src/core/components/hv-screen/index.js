@@ -30,7 +30,6 @@ export default class HvScreen extends React.Component {
 
     this.onUpdate = this.onUpdate.bind(this);
 
-    this.updateActions = ['replace', 'replace-inner', 'append', 'prepend'];
     this.parser = new Dom.Parser(
       this.props.fetch,
       this.props.onParseBefore,
@@ -38,34 +37,8 @@ export default class HvScreen extends React.Component {
     );
 
     this.needsLoad = false;
-    this.state = {
-      doc: null,
-      elementError: null,
-      error: null,
-      staleHeaderType: null,
-      styles: null,
-      url: null,
-    };
     // Injecting a passed document as a single-use document
     this.initialDoc = props.doc;
-
-    // <HACK>
-    // In addition to storing the document on the react state, we keep a reference to it
-    // on the instance. When performing batched updates on the DOM, we need to ensure every
-    // update occurence operates on the latest DOM version. We cannot rely on `state` right after
-    // setting it with `setState`, because React does not guarantee the new state to be immediately
-    // available (see details here: https://reactjs.org/docs/react-component.html#setstate)
-    // Whenever we need to access the document for reasons other than rendering, we should use
-    // `this.doc`. When rendering, we should use `this.state.doc`.
-    this.doc = null;
-    this.oldSetState = this.setState;
-    this.setState = (...args) => {
-      if (args[0].doc !== undefined) {
-        this.doc = args[0].doc;
-      }
-      this.oldSetState(...args);
-    };
-    // </HACK>
 
     this.behaviorRegistry = Behaviors.getRegistry(this.props.behaviors);
     this.componentRegistry = new Components.Registry(this.props.components);
@@ -84,6 +57,13 @@ export default class HvScreen extends React.Component {
     return { params: {} };
   };
 
+  setScreenState = newState => {
+    if (newState.doc !== undefined) {
+      this.props.setLocalDoc(newState.doc);
+    }
+    this.props.setScreenState(newState);
+  };
+
   componentDidMount() {
     const { params } = this.getRoute(this.props);
     // The screen may be rendering via a navigation from another HyperScreen.
@@ -100,7 +80,7 @@ export default class HvScreen extends React.Component {
 
     this.needsLoad = true;
     if (preloadScreen) {
-      this.setState({
+      this.setScreenState({
         doc: preloadScreen,
         elementError: null,
         error: null,
@@ -108,7 +88,7 @@ export default class HvScreen extends React.Component {
         url,
       });
     } else {
-      this.setState({
+      this.setScreenState({
         elementError: null,
         error: null,
         url,
@@ -148,13 +128,13 @@ export default class HvScreen extends React.Component {
         ? this.props.getElement(newPreloadScreen)
         : null;
 
-      const doc = preloadScreen || this.doc;
+      const doc = preloadScreen || this.props.getLocalDoc();
       const styles = preloadScreen
         ? Stylesheets.createStylesheets(preloadScreen)
         : // eslint-disable-next-line react/no-access-state-in-setstate
-          this.state.styles;
+          this.props.getScreenState().styles;
 
-      this.setState({ doc, styles, url: newUrl });
+      this.setScreenState({ doc, styles, url: newUrl });
     }
   };
 
@@ -178,7 +158,7 @@ export default class HvScreen extends React.Component {
    */
   componentDidUpdate() {
     if (this.needsLoad) {
-      this.load(this.state.url);
+      this.load(this.props.getScreenState().url);
       this.needsLoad = false;
     }
   }
@@ -205,12 +185,12 @@ export default class HvScreen extends React.Component {
         const {
           doc: loadedDoc,
           staleHeaderType: loadedType,
-        } = await this.parser.loadDocument(this.state.url);
+        } = await this.parser.loadDocument(this.props.getScreenState().url);
         doc = loadedDoc;
         staleHeaderType = loadedType;
       }
       const stylesheets = Stylesheets.createStylesheets(doc);
-      this.setState({
+      this.setScreenState({
         doc,
         elementError: null,
         error: null,
@@ -221,7 +201,7 @@ export default class HvScreen extends React.Component {
       if (this.props.onError) {
         this.props.onError(err);
       }
-      this.setState({
+      this.setScreenState({
         doc: null,
         elementError: null,
         error: err,
@@ -241,7 +221,7 @@ export default class HvScreen extends React.Component {
    * Reload if an error occured using the screen's current URL
    */
   reload = () => {
-    this.props.reload(this.state.url, {
+    this.props.reload(this.props.getScreenState().url, {
       onUpdateCallbacks: this.updateCallbacks,
     });
   };
@@ -262,29 +242,31 @@ export default class HvScreen extends React.Component {
    */
   render() {
     const { Error } = this;
-    if (this.state.error) {
-      return <Error error={this.state.error} />;
+    if (this.props.getScreenState().error) {
+      return <Error error={this.props.getScreenState().error} />;
     }
-    if (!this.state.doc) {
+    if (!this.props.getScreenState().doc) {
       return <Loading cachedId={this.props.route?.params?.behaviorElementId} />;
     }
-    const elementErrorComponent = this.state.elementError
+    const elementErrorComponent = this.props.getScreenState().elementError
       ? this.props.elementErrorComponent || LoadElementError
       : null;
     const [body] = Array.from(
-      this.state.doc.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'body'),
+      this.props
+        .getScreenState()
+        .doc.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'body'),
     );
     let screenElement;
     if (body) {
       screenElement = Render.renderElement(
         body,
-        this.state.styles,
+        this.props.getScreenState().styles,
         this.onUpdate,
         {
           componentRegistry: this.componentRegistry,
           onUpdateCallbacks: this.updateCallbacks,
-          screenUrl: this.state.url,
-          staleHeaderType: this.state.staleHeaderType,
+          screenUrl: this.props.getScreenState().url,
+          staleHeaderType: this.props.getScreenState().staleHeaderType,
         },
       );
     }
@@ -299,14 +281,14 @@ export default class HvScreen extends React.Component {
     return (
       <Contexts.DocContext.Provider
         value={{
-          getDoc: () => this.doc,
+          getDoc: () => this.props.getLocalDoc(),
         }}
       >
         <Contexts.DateFormatContext.Provider value={this.props.formatDate}>
           {elementErrorComponent
             ? React.createElement(elementErrorComponent, {
-                error: this.state.elementError,
-                onPressClose: () => this.setState({ elementError: null }),
+                error: this.props.getScreenState().elementError,
+                onPressClose: () => this.setScreenState({ elementError: null }),
                 onPressReload: () => this.reload(),
               })
             : null}
@@ -321,19 +303,19 @@ export default class HvScreen extends React.Component {
    */
   updateCallbacks = {
     clearElementError: () => {
-      if (this.state.elementError) {
-        this.setState({ elementError: null });
+      if (this.props.getScreenState().elementError) {
+        this.setScreenState({ elementError: null });
       }
     },
-    getDoc: () => this.doc,
+    getDoc: () => this.props.getLocalDoc(),
     getNavigation: () => this.props.navigation,
     getOnUpdate: () => this.onUpdate,
-    getState: () => this.state,
+    getState: () => this.props.getScreenState(),
     setNeedsLoad: () => {
       this.needsLoad = true;
     },
     setState: state => {
-      this.setState(state);
+      this.setScreenState(state);
     },
   };
 
