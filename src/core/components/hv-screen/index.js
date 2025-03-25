@@ -16,7 +16,7 @@ import Loading from 'hyperview/src/core/components/loading';
 import React from 'react';
 
 // eslint-disable-next-line instawork/pure-components
-class HvScreenInner extends React.Component {
+export default class HvScreen extends React.Component {
   static createProps = createProps;
 
   static createStyleProp = createStyleProp;
@@ -57,6 +57,13 @@ class HvScreenInner extends React.Component {
     return { params: {} };
   };
 
+  setScreenState = newState => {
+    if (newState.doc !== undefined) {
+      this.props.setLocalDoc(newState.doc);
+    }
+    this.props.setScreenState(newState);
+  };
+
   componentDidMount() {
     const { params } = this.getRoute(this.props);
     // The screen may be rendering via a navigation from another HyperScreen.
@@ -73,7 +80,7 @@ class HvScreenInner extends React.Component {
 
     this.needsLoad = true;
     if (preloadScreen) {
-      this.props.setScreenState({
+      this.setScreenState({
         doc: preloadScreen,
         elementError: null,
         error: null,
@@ -81,7 +88,7 @@ class HvScreenInner extends React.Component {
         url,
       });
     } else {
-      this.props.setScreenState({
+      this.setScreenState({
         elementError: null,
         error: null,
         url,
@@ -127,7 +134,7 @@ class HvScreenInner extends React.Component {
         : // eslint-disable-next-line react/no-access-state-in-setstate
           this.props.getScreenState().styles;
 
-      this.props.setScreenState({ doc, styles, url: newUrl });
+      this.setScreenState({ doc, styles, url: newUrl });
     }
   };
 
@@ -183,7 +190,7 @@ class HvScreenInner extends React.Component {
         staleHeaderType = loadedType;
       }
       const stylesheets = Stylesheets.createStylesheets(doc);
-      this.props.setScreenState({
+      this.setScreenState({
         doc,
         elementError: null,
         error: null,
@@ -194,7 +201,7 @@ class HvScreenInner extends React.Component {
       if (this.props.onError) {
         this.props.onError(err);
       }
-      this.props.setScreenState({
+      this.setScreenState({
         doc: null,
         elementError: null,
         error: err,
@@ -281,8 +288,7 @@ class HvScreenInner extends React.Component {
           {elementErrorComponent
             ? React.createElement(elementErrorComponent, {
                 error: this.props.getScreenState().elementError,
-                onPressClose: () =>
-                  this.props.setScreenState({ elementError: null }),
+                onPressClose: () => this.setScreenState({ elementError: null }),
                 onPressReload: () => this.reload(),
               })
             : null}
@@ -298,7 +304,7 @@ class HvScreenInner extends React.Component {
   updateCallbacks = {
     clearElementError: () => {
       if (this.props.getScreenState().elementError) {
-        this.props.setScreenState({ elementError: null });
+        this.setScreenState({ elementError: null });
       }
     },
     getDoc: () => this.props.getLocalDoc(),
@@ -309,7 +315,7 @@ class HvScreenInner extends React.Component {
       this.needsLoad = true;
     },
     setState: state => {
-      this.props.setScreenState(state);
+      this.setScreenState(state);
     },
   };
 
@@ -322,20 +328,6 @@ class HvScreenInner extends React.Component {
       onUpdateCallbacks: this.updateCallbacks,
     });
   };
-}
-
-export default function HvScreen(props) {
-  return (
-    <HvScreenInner
-      {...props}
-      setScreenState={newState => {
-        if (newState.doc !== undefined) {
-          props.setLocalDoc(newState.doc);
-        }
-        props.setScreenState(newState);
-      }}
-    />
-  );
 }
 
 export * from 'hyperview/src/types';
