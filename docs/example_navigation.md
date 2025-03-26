@@ -4,9 +4,20 @@ title: Navigation
 sidebar_label: Navigation
 ---
 
-To create a navigation that simply pushes a new screen onto the stack, all you need to do is to add an `href` attribute to any `<view>`, `<text>`, or `<image>` element.
+To create a navigation that simply pushes a new screen onto the stack, you first need to define the navigation hierarchy which contains the stack.
 
 ```xml
+<doc xmlns="https://hyperview.org/hyperview">
+  <navigator id="root" type="stack">
+    <nav-route id="home" href="http://myapp.com/home.xml" />
+  </navigator>
+</doc>
+```
+
+Next, inside the `home.xml`, add an `href` attribute to any `<view>`, `<text>`, or `<image>` element. In the example below, a `<text>` element has an `href` attribute which will push the `screen2.xml` screen onto the stack.
+
+```xml
+<!-- home.xml -->
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
@@ -54,6 +65,8 @@ Notice that Hyperview immediately pushes the new screen onto the stack while req
 - The new screen shows a spinner to indicate that the screen content is still loading.
 
 We can customize both of these aspects of the navigation.
+
+A [Navigation Guide](https://hyperview.org/docs/guide_navigation) dives deeper into the details including some useful examples and best practices.
 
 ## Customized pressed appearance
 
