@@ -67,6 +67,7 @@ export type InnerRouteProps = {
   getScreenState: () => ScreenState;
   setLocalDoc: (doc: Document | null) => void;
   setScreenState: (state: ScreenState) => void;
+  loadUrl: (url?: string) => void;
 };
 
 /**

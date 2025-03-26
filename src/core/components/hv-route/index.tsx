@@ -1,6 +1,5 @@
 import * as Components from 'hyperview/src/services/components';
 import * as Contexts from 'hyperview/src/contexts';
-import * as DomService from 'hyperview/src/services/dom';
 import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as NavigationContext from 'hyperview/src/contexts/navigation';
@@ -41,8 +40,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
 
   context: React.ContextType<typeof NavigationContainerRefContext> = undefined;
 
-  parser?: DomService.Parser;
-
   navigator: NavigatorService.Navigator;
 
   componentRegistry: Components.Registry;
@@ -57,11 +54,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
   }
 
   componentDidMount() {
-    this.parser = new DomService.Parser(
-      this.props.fetch,
-      this.props.onParseBefore || null,
-      this.props.onParseAfter || null,
-    );
     this.navigator.setContext(this.context);
 
     // When a nested navigator is found, the document is not loaded from url
@@ -101,58 +93,15 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
    * Load the url and resolve the xml.
    */
   load = async (): Promise<void> => {
-    if (!this.parser) {
-      this.props.setScreenState({
-        doc: null,
-        error: new NavigatorService.HvRouteError('No parser or context found'),
-        url: null,
-      });
+    // When a modal is included, a wrapper stack navigator is created
+    // The route which contains the navigator should not load the document
+    // The code below prevents the route from loading the document
+    if (this.props.route?.params?.isModal || !this.shouldReload()) {
       return;
     }
 
-    try {
-      // When a modal is included, a wrapper stack navigator is created
-      // The route which contains the navigator should not load the document
-      // The code below prevents the route from loading the document
-      if (this.props.route?.params?.isModal || !this.shouldReload()) {
-        return;
-      }
-
-      const url: string = this.getUrl();
-
-      const { doc } = await this.parser.loadDocument(url);
-
-      // Set the state with the merged document
-
-      const merged = NavigatorService.mergeDocument(
-        doc,
-        this.props.getLocalDoc() || undefined,
-      );
-      const root = Helpers.getFirstChildTag(merged, LOCAL_NAME.DOC);
-      if (!root) {
-        this.props.setScreenState({
-          doc: null,
-          error: new NavigatorService.HvRouteError('No root element found'),
-          url: null,
-        });
-        return;
-      }
-      this.props.setLocalDoc(merged);
-      this.props.setScreenState({
-        doc: merged,
-        error: undefined,
-        url,
-      });
-    } catch (err: unknown) {
-      if (this.props.onError) {
-        this.props.onError(err as Error);
-      }
-      this.props.setScreenState({
-        doc: null,
-        error: err as Error,
-        url: null,
-      });
-    }
+    const url: string = this.getUrl();
+    this.props.loadUrl(url);
   };
 
   getRenderElement = (): Element | undefined => {
@@ -656,7 +605,13 @@ function HvRouteFC(props: Types.Props) {
   return (
     <HvDoc element={element}>
       <StateContext.Consumer>
-        {({ getLocalDoc, getScreenState, setLocalDoc, setScreenState }) => (
+        {({
+          getLocalDoc,
+          getScreenState,
+          loadUrl,
+          setLocalDoc,
+          setScreenState,
+        }) => (
           <HvRouteInner
             behaviors={navigationContext.behaviors}
             components={navigationContext.components}
@@ -670,6 +625,7 @@ function HvRouteFC(props: Types.Props) {
             getLocalDoc={getLocalDoc}
             getScreenState={getScreenState}
             handleBack={navigationContext.handleBack}
+            loadUrl={loadUrl}
             navigation={nav}
             onError={navigationContext.onError}
             onParseAfter={navigationContext.onParseAfter}
