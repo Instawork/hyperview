@@ -20,7 +20,6 @@ export type Props = Omit<
   | 'handleBack'
   | 'logger'
 > & {
-  doc?: Document;
   getElement?: (id: number) => Element | undefined;
   navigation: NavigationProvider;
   onUpdate: HvComponentOnUpdate;
@@ -32,4 +31,5 @@ export type Props = Omit<
   getScreenState: () => ScreenState;
   setLocalDoc: (doc: Document | null) => void;
   setScreenState: (state: ScreenState) => void;
+  loadUrl: (url?: string) => void;
 };

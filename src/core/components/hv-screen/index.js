@@ -2,13 +2,12 @@
 import * as Behaviors from 'hyperview/src/behaviors';
 import * as Components from 'hyperview/src/services/components';
 import * as Contexts from 'hyperview/src/contexts';
-import * as Dom from 'hyperview/src/services/dom';
 import * as Events from 'hyperview/src/services/events';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import * as Scroll from 'hyperview/src/core/components/scroll';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
-import { createProps, createStyleProp, later } from 'hyperview/src/services';
+import { createProps, createStyleProp } from 'hyperview/src/services';
 import { HvScreenRenderError } from './errors';
 import LoadElementError from '../load-element-error';
 import LoadError from 'hyperview/src/core/components/load-error';
@@ -30,15 +29,7 @@ export default class HvScreen extends React.Component {
 
     this.onUpdate = this.onUpdate.bind(this);
 
-    this.parser = new Dom.Parser(
-      this.props.fetch,
-      this.props.onParseBefore,
-      this.props.onParseAfter,
-    );
-
     this.needsLoad = false;
-    // Injecting a passed document as a single-use document
-    this.initialDoc = props.doc;
 
     this.behaviorRegistry = Behaviors.getRegistry(this.props.behaviors);
     this.componentRegistry = new Components.Registry(this.props.components);
@@ -78,8 +69,8 @@ export default class HvScreen extends React.Component {
       ? Stylesheets.createStylesheets(preloadScreen)
       : {};
 
-    this.needsLoad = true;
-    if (preloadScreen) {
+    this.needsLoad = !this.props.getScreenState().doc;
+    if (preloadScreen && !this.props.getScreenState().doc) {
       this.setScreenState({
         doc: preloadScreen,
         elementError: null,
@@ -168,52 +159,12 @@ export default class HvScreen extends React.Component {
    */
   load = async () => {
     const { params } = this.getRoute(this.props);
-
-    try {
-      // If an initial document was passed, use it once and then remove
-      let doc;
-      let staleHeaderType;
-      if (this.initialDoc) {
-        doc = this.initialDoc;
-        this.initialDoc = null;
-      } else {
-        if (params.delay) {
-          await later(parseInt(params.delay, 10));
-        }
-
-        // eslint-disable-next-line react/no-access-state-in-setstate
-        const {
-          doc: loadedDoc,
-          staleHeaderType: loadedType,
-        } = await this.parser.loadDocument(this.props.getScreenState().url);
-        doc = loadedDoc;
-        staleHeaderType = loadedType;
-      }
-      const stylesheets = Stylesheets.createStylesheets(doc);
-      this.setScreenState({
-        doc,
-        elementError: null,
-        error: null,
-        staleHeaderType,
-        styles: stylesheets,
-      });
-    } catch (err) {
-      if (this.props.onError) {
-        this.props.onError(err);
-      }
-      this.setScreenState({
-        doc: null,
-        elementError: null,
-        error: err,
-        styles: null,
-      });
-    } finally {
-      if (params.preloadScreen) {
-        this.props.removeElement?.(params.preloadScreen);
-      }
-      if (params.behaviorElementId) {
-        this.props.removeElement?.(params.behaviorElementId);
-      }
+    await this.props.loadUrl(this.props.getScreenState().url);
+    if (params.preloadScreen) {
+      this.props.removeElement?.(params.preloadScreen);
+    }
+    if (params.behaviorElementId) {
+      this.props.removeElement?.(params.behaviorElementId);
     }
   };
 
