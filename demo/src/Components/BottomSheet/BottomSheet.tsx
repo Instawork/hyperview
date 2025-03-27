@@ -407,25 +407,29 @@ const BottomSheet = (props: HvComponentProps) => {
     </GestureDetector>
   );
 
+  const setContentSectionHeight = useCallback(
+    () => (index: number, contentSectionHeight: number) => {
+      setContentSectionHeights(prevHeights => {
+        const currentHeights = [...prevHeights];
+        currentHeights[index] = contentSectionHeight;
+        return currentHeights;
+      });
+    },
+    [],
+  );
+
+  const contextValue = useMemo(() => ({ setContentSectionHeight }), [
+    setContentSectionHeight,
+  ]);
+
   if (height === 0) {
     // Pre-render the content to trigger the layout calculation
     // The content should not be visible as we start with an opacity of 0
     return content;
   }
 
-  const setContentSectionHeight = (
-    index: number,
-    contentSectionHeight: number,
-  ) => {
-    setContentSectionHeights(prevHeights => {
-      const currentHeights = [...prevHeights];
-      currentHeights[index] = contentSectionHeight;
-      return currentHeights;
-    });
-  };
-
   return (
-    <BottomSheetContext.Provider value={{ setContentSectionHeight }}>
+    <BottomSheetContext.Provider value={contextValue}>
       <Modal onShow={animateOpen} transparent visible={visible}>
         <GestureHandlerRootView style={{ flex: 1 }}>
           <Overlay
