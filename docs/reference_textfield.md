@@ -38,6 +38,10 @@ A `<text-field>` element can appear anywhere within a `<form>` element.
 - [`hide`](#hide)
 - [`auto-focus`](#auto-focus)
 - [`secure-text`](#secure-text)
+- [`text-content-type`](#text-content-type)
+- [`allowFontScaling`](#allowFontScaling)
+- [`maxFontSizeMultiplier`](#maxFontSizeMultiplier)
+- [`minimumFontScale`](#minimumFontScale)
 
 #### Behavior attributes
 
@@ -201,3 +205,27 @@ If `secure-text="true"`, the input in the text field will be obscured. Appropria
 | **none** (default), none, URL, addressCity, addressCityAndState, addressState, countryName, creditCardNumber, emailAddress, familyName, fullStreetAddress, givenName, jobTitle, location, middleName, name, namePrefix, nameSuffix, nickname, organizationName, postalCode, streetAddressLine1, streetAddressLine2, sublocality, telephoneNumber, username, password, newPassword, oneTimeCode | No       |
 
 The `text-content-type` autofills available fields (for example, for iOS 12+ `oneTimeCode` can be used to indicate that a field can be autofilled by a code arriving in an SMS).
+
+#### `allowFontScaling`
+
+| Type    | Required |
+| ------- | -------- |
+| boolean | No       |
+
+Specifies whether fonts should scale to respect Text Size accessibility setting
+
+#### `maxFontSizeMultiplier`
+
+| Type   | Required |
+| ------ | -------- |
+| number | No       |
+
+Specifies whether fonts should scale to respect Text Size accessibility setting
+
+#### `minimumFontScale` (iOS)
+
+| Type   | Required |
+| ------ | -------- |
+| number | No       |
+
+Specifies the smallest possible scale a font can reach when adjustsFontSizeToFit is enabled. (values 0.01-1.0).
