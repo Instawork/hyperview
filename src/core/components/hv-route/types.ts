@@ -9,6 +9,7 @@ import {
   Reload,
   Route,
   RouteParams,
+  ScreenState,
 } from 'hyperview/src/types';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
@@ -62,6 +63,11 @@ export type InnerRouteProps = {
   element?: Element;
   reload: Reload;
   doc: Document | undefined;
+  getLocalDoc: () => Document | null;
+  getScreenState: () => ScreenState;
+  setLocalDoc: (doc: Document | null) => void;
+  setScreenState: (state: ScreenState) => void;
+  loadUrl: (url?: string) => void;
 };
 
 /**
