@@ -562,33 +562,33 @@ export default class Hyperview extends PureComponent<Types.Props> {
     }
   };
 
+  getContextValue = () => ({
+    behaviors: this.props.behaviors,
+    components: this.props.components,
+    elementErrorComponent: this.props.elementErrorComponent,
+    entrypointUrl: this.props.entrypointUrl,
+    errorScreen: this.props.errorScreen,
+    experimentalFeatures: this.props.experimentalFeatures,
+    fetch: this.props.fetch,
+    handleBack: this.props.handleBack,
+    loadingScreen: this.props.loadingScreen,
+    navigationComponents: this.props.navigationComponents,
+    onError: this.props.onError,
+    onParseAfter: this.props.onParseAfter,
+    onParseBefore: this.props.onParseBefore,
+    onRouteBlur: this.props.onRouteBlur,
+    onRouteFocus: this.props.onRouteFocus,
+    onUpdate: this.onUpdate,
+    reload: this.reload,
+  });
+
   render() {
     return (
       <Contexts.DateFormatContext.Provider value={this.props.formatDate}>
         <Contexts.RefreshControlComponentContext.Provider
           value={this.props.refreshControl}
         >
-          <NavContexts.Context.Provider
-            value={{
-              behaviors: this.props.behaviors,
-              components: this.props.components,
-              elementErrorComponent: this.props.elementErrorComponent,
-              entrypointUrl: this.props.entrypointUrl,
-              errorScreen: this.props.errorScreen,
-              experimentalFeatures: this.props.experimentalFeatures,
-              fetch: this.props.fetch,
-              handleBack: this.props.handleBack,
-              loadingScreen: this.props.loadingScreen,
-              navigationComponents: this.props.navigationComponents,
-              onError: this.props.onError,
-              onParseAfter: this.props.onParseAfter,
-              onParseBefore: this.props.onParseBefore,
-              onRouteBlur: this.props.onRouteBlur,
-              onRouteFocus: this.props.onRouteFocus,
-              onUpdate: this.onUpdate,
-              reload: this.reload,
-            }}
-          >
+          <NavContexts.Context.Provider value={this.getContextValue()}>
             <Contexts.ElementCacheProvider>
               <HvRoute />
             </Contexts.ElementCacheProvider>
