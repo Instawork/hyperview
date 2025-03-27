@@ -257,6 +257,10 @@ export default class HvScreen extends React.Component {
     });
   };
 
+  getDocContextValue = () => ({
+    getDoc: () => this.doc,
+  });
+
   /**
    * Renders the XML doc into React components. Shows blank screen until the XML doc is available.
    */
@@ -297,11 +301,7 @@ export default class HvScreen extends React.Component {
     }
 
     return (
-      <Contexts.DocContext.Provider
-        value={{
-          getDoc: () => this.doc,
-        }}
-      >
+      <Contexts.DocContext.Provider value={this.getDocContextValue()}>
         <Contexts.DateFormatContext.Provider value={this.props.formatDate}>
           {elementErrorComponent
             ? React.createElement(elementErrorComponent, {
