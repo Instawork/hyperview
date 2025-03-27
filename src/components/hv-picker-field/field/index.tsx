@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
-import { createProps, createStyleProp } from 'hyperview/src/services';
+import { TouchableWithoutFeedback, View } from 'react-native';
 import FieldLabel from '../field-label';
 import type { Props } from './types';
-import type { StyleSheet as StyleSheetType } from 'hyperview/src/types';
+import { createProps } from 'hyperview/src/services';
 
 /**
  * The input field component. This is a box with text in it.
@@ -21,15 +20,6 @@ export default (props: Props) => {
     styleAttr: 'field-style',
   });
 
-  const labelStyle: StyleSheetType = StyleSheet.flatten(
-    createStyleProp(props.element, props.stylesheets, {
-      ...props.options,
-      focused: props.focused,
-      pressed,
-      styleAttr: 'field-text-style',
-    }),
-  );
-
   return (
     <TouchableWithoutFeedback
       onPress={props.onPress}
@@ -41,14 +31,11 @@ export default (props: Props) => {
         {...viewProps}
       >
         <FieldLabel
+          element={props.element}
           focused={props.focused}
-          labelFormat={props.element.getAttribute('label-format')}
-          placeholder={props.element.getAttribute('placeholder')}
-          placeholderTextColor={props.element.getAttribute(
-            'placeholderTextColor',
-          )}
+          options={props.options}
           pressed={pressed}
-          style={labelStyle}
+          stylesheets={props.stylesheets}
           value={props.value}
         />
         {props.children}

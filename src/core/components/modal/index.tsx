@@ -43,13 +43,6 @@ export default (props: Props): JSX.Element => {
     props.element.getAttribute('cancel-label') || 'Cancel';
   const doneLabel: string = props.element.getAttribute('done-label') || 'Done';
 
-  const getTextStyle = (pressed: boolean): Array<StyleSheetType> =>
-    createStyleProp(props.element, props.stylesheets, {
-      ...props.options,
-      pressed,
-      styleAttr: 'modal-text-style',
-    });
-
   const overlayStyle = StyleSheet.flatten(
     createStyleProp(props.element, props.stylesheets, {
       ...props.options,
@@ -150,14 +143,18 @@ export default (props: Props): JSX.Element => {
         <View style={style}>
           <View style={styles.actions}>
             <ModalButton
-              getStyle={getTextStyle}
+              element={props.element}
               label={cancelLabel}
               onPress={onDismiss}
+              options={props.options}
+              stylesheets={props.stylesheets}
             />
             <ModalButton
-              getStyle={getTextStyle}
+              element={props.element}
               label={doneLabel}
               onPress={onDone}
+              options={props.options}
+              stylesheets={props.stylesheets}
             />
           </View>
           {props.children}

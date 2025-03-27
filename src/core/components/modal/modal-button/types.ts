@@ -1,7 +1,9 @@
-import type { StyleSheet } from 'hyperview/src/types';
+import type { HvComponentOptions, StyleSheets } from 'hyperview/src/types';
 
 export type Props = {
-  getStyle: (pressed: boolean) => Array<StyleSheet>;
+  element: Element;
   label: string;
   onPress: () => void;
+  options: HvComponentOptions;
+  stylesheets: StyleSheets;
 };
