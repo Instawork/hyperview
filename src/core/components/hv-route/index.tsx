@@ -20,7 +20,12 @@ import type {
   ScreenState,
 } from 'hyperview/src/types';
 import HvDoc, { StateContext } from 'hyperview/src/core/components/hv-doc';
-import React, { JSXElementConstructor, PureComponent, useContext } from 'react';
+import React, {
+  JSXElementConstructor,
+  PureComponent,
+  useContext,
+  useMemo,
+} from 'react';
 import HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
 import { LOCAL_NAME } from 'hyperview/src/types';
@@ -266,11 +271,13 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       },
     };
 
+    const propsLocalDoc = this.props.getLocalDoc();
+    const localDoc = useMemo(() => {
+      return propsLocalDoc?.cloneNode(true) as Document;
+    }, [propsLocalDoc]);
+
     return (
-      <HvDoc
-        doc={this.props.getLocalDoc()?.cloneNode(true) as Document}
-        route={route}
-      >
+      <HvDoc doc={localDoc} route={route}>
         <StateContext.Consumer>
           {({
             getLocalDoc,
