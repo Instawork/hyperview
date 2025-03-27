@@ -1,3 +1,4 @@
+import * as FontScale from 'hyperview/src/services/font-scale';
 import React, { useState } from 'react';
 import { Text, TouchableWithoutFeedback, View } from 'react-native';
 import type { Props } from './types';
@@ -27,7 +28,9 @@ export default (props: Props) => {
       onPressOut={() => setPressed(false)}
     >
       <View>
-        <Text style={style}>{props.label}</Text>
+        <Text style={style} {...FontScale.getFontScaleProps(props.element)}>
+          {props.label}
+        </Text>
       </View>
     </TouchableWithoutFeedback>
   );

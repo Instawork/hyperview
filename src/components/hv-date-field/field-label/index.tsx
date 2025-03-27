@@ -1,3 +1,4 @@
+import * as FontScale from 'hyperview/src/services/font-scale';
 import type { Props } from './types';
 import React from 'react';
 import type { StyleSheet } from 'hyperview/src/types';
@@ -22,5 +23,10 @@ export default (props: Props) => {
     ? props.formatter(props.value, labelFormat || undefined)
     : placeholder || '';
 
-  return <Text style={labelStyles}>{label}</Text>;
+  return (
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <Text style={labelStyles} {...FontScale.getFontScaleProps(props.element)}>
+      {label}
+    </Text>
+  );
 };

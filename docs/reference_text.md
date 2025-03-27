@@ -55,6 +55,9 @@ A `<view>` element can only appear anywhere within a `<screen>` element.
 - [`hide`](#hide)
 - [`selectable`](#selectable)
 - [`adjustsFontSizeToFit`](#adjustsFontSizeToFit)
+- [`allowFontScaling`](#allowFontScaling)
+- [`maxFontSizeMultiplier`](#maxFontSizeMultiplier)
+- [`minimumFontScale`](#minimumFontScale)
 - [`preformatted`](#preformatted)
 
 #### Behavior attributes
@@ -108,6 +111,30 @@ A boolean that allows users to select the content of `<text>` element.
 | boolean | No       |
 
 If `adjustsFontSizeToFit="true"`, fonts will be scaled down automatically to fit given style constraints.
+
+#### `allowFontScaling`
+
+| Type    | Required |
+| ------- | -------- |
+| boolean | No       |
+
+Specifies whether fonts should scale to respect Text Size accessibility setting
+
+#### `maxFontSizeMultiplier`
+
+| Type   | Required |
+| ------ | -------- |
+| number | No       |
+
+Specifies whether fonts should scale to respect Text Size accessibility setting
+
+#### `minimumFontScale` (iOS)
+
+| Type   | Required |
+| ------ | -------- |
+| number | No       |
+
+Specifies the smallest possible scale a font can reach when adjustsFontSizeToFit is enabled. (values 0.01-1.0).
 
 #### `preformatted`
 
