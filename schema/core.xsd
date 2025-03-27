@@ -418,6 +418,12 @@
     <xs:attribute name="network-retry-event" type="hv:eventName" />
   </xs:attributeGroup>
 
+  <xs:attributeGroup name="fontScaleAttributes">
+    <xs:attribute name="allowFontScaling" type="xs:boolean" />
+    <xs:attribute name="maxFontSizeMultiplier" type="xs:float" />
+    <xs:attribute name="minimumFontScale" type="xs:float" />
+  </xs:attributeGroup>
+
   <xs:attributeGroup name="scrollAttributes">
     <xs:attribute name="scroll" type="xs:boolean" />
     <xs:attribute name="scroll-orientation">
@@ -858,6 +864,7 @@
       <xs:attribute name="value" type="xs:string" />
       <xs:attribute name="adjustsFontSizeToFit" type="xs:boolean" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
+      <xs:attributeGroup ref="hv:fontScaleAttributes" />
     </xs:complexType>
   </xs:element>
 
@@ -1033,6 +1040,7 @@
       <xs:attribute name="key" type="hv:KEY" />
       <xs:attribute name="hide" type="xs:boolean" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
+      <xs:attributeGroup ref="hv:fontScaleAttributes" />
     </xs:complexType>
   </xs:element>
 
@@ -1066,6 +1074,7 @@
       <xs:attribute name="key" type="hv:KEY" />
       <xs:attribute name="hide" type="xs:boolean" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
+      <xs:attributeGroup ref="hv:fontScaleAttributes" />
     </xs:complexType>
   </xs:element>
 
@@ -1165,6 +1174,7 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>
+      <xs:attributeGroup ref="hv:fontScaleAttributes" />
     </xs:complexType>
   </xs:element>
 
