@@ -91,7 +91,13 @@ export const createProps = (
   options: HvComponentOptions,
 ) => {
   const numericRules = ['numberOfLines'];
-  const booleanRules = ['multiline', 'selectable', 'adjustsFontSizeToFit'];
+  const booleanRules = [
+    'adjustsFontSizeToFit',
+    'allowFontScaling',
+    'multiline',
+    'selectable',
+  ];
+  const floatRules = ['maxFontSizeMultiplier', 'minimumFontScale'];
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const props: Record<string, any> = {};
@@ -106,6 +112,9 @@ export const createProps = (
         props[attr.name] = intValue || 0;
       } else if (booleanRules.indexOf(attr.name) >= 0) {
         props[attr.name] = attr.value === 'true';
+      } else if (floatRules.indexOf(attr.name) >= 0) {
+        const floatValue = parseFloat(attr.value);
+        props[attr.name] = floatValue || 0;
       } else {
         props[attr.name] = attr.value;
       }
