@@ -74,13 +74,16 @@ const HvDoc = (props: Props) => {
     async (url?: string) => {
       // Updates the state and calls the error handler
       const handleError = (err: Error) => {
-        if (navigationContext.onError) {
-          navigationContext.onError(err);
+        try {
+          if (navigationContext.onError) {
+            navigationContext.onError(err);
+          }
+        } finally {
+          setState(prev => ({
+            ...prev,
+            error: err,
+          }));
         }
-        setState(prev => ({
-          ...prev,
-          error: err,
-        }));
       };
 
       const targetUrl = url ?? state.url;
