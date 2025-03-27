@@ -49,6 +49,8 @@ export default class Hyperview extends PureComponent<Types.Props> {
 
   parser: Dom.Parser;
 
+  private contextValue: ReturnType<typeof this.getContextValue>;
+
   constructor(props: Types.Props) {
     super(props);
 
@@ -61,6 +63,30 @@ export default class Hyperview extends PureComponent<Types.Props> {
 
     this.behaviorRegistry = Behaviors.getRegistry(this.props.behaviors);
     this.componentRegistry = new Components.Registry(this.props.components);
+    this.contextValue = this.getContextValue();
+  }
+
+  componentDidUpdate(prevProps: Types.Props) {
+    // Update context value if any dependencies changed
+    if (
+      prevProps.behaviors !== this.props.behaviors ||
+      prevProps.components !== this.props.components ||
+      prevProps.elementErrorComponent !== this.props.elementErrorComponent ||
+      prevProps.entrypointUrl !== this.props.entrypointUrl ||
+      prevProps.errorScreen !== this.props.errorScreen ||
+      prevProps.experimentalFeatures !== this.props.experimentalFeatures ||
+      prevProps.fetch !== this.props.fetch ||
+      prevProps.handleBack !== this.props.handleBack ||
+      prevProps.loadingScreen !== this.props.loadingScreen ||
+      prevProps.navigationComponents !== this.props.navigationComponents ||
+      prevProps.onError !== this.props.onError ||
+      prevProps.onParseAfter !== this.props.onParseAfter ||
+      prevProps.onParseBefore !== this.props.onParseBefore ||
+      prevProps.onRouteBlur !== this.props.onRouteBlur ||
+      prevProps.onRouteFocus !== this.props.onRouteFocus
+    ) {
+      this.contextValue = this.getContextValue();
+    }
   }
 
   /**
@@ -588,7 +614,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
         <Contexts.RefreshControlComponentContext.Provider
           value={this.props.refreshControl}
         >
-          <NavContexts.Context.Provider value={this.getContextValue()}>
+          <NavContexts.Context.Provider value={this.contextValue}>
             <Contexts.ElementCacheProvider>
               <HvRoute />
             </Contexts.ElementCacheProvider>

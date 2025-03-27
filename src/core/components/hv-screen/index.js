@@ -69,6 +69,7 @@ export default class HvScreen extends React.Component {
 
     this.behaviorRegistry = Behaviors.getRegistry(this.props.behaviors);
     this.componentRegistry = new Components.Registry(this.props.components);
+    this.docContextValue = this.getDocContextValue();
   }
 
   getRoute = props => {
@@ -176,7 +177,11 @@ export default class HvScreen extends React.Component {
   /**
    * Fetch data from the url if the screen should reload.
    */
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
+    if (prevProps.formatDate !== this.props.formatDate) {
+      this.docContextValue = this.getDocContextValue();
+    }
+
     if (this.needsLoad) {
       this.load(this.state.url);
       this.needsLoad = false;
@@ -301,7 +306,7 @@ export default class HvScreen extends React.Component {
     }
 
     return (
-      <Contexts.DocContext.Provider value={this.getDocContextValue()}>
+      <Contexts.DocContext.Provider value={this.docContextValue}>
         <Contexts.DateFormatContext.Provider value={this.props.formatDate}>
           {elementErrorComponent
             ? React.createElement(elementErrorComponent, {
