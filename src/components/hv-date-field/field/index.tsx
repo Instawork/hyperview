@@ -41,13 +41,9 @@ export default (props: Props) => {
         <Contexts.DateFormatContext.Consumer>
           {formatter => (
             <FieldLabel
+              element={props.element}
               focused={props.focused}
               formatter={formatter}
-              labelFormat={props.element.getAttribute('label-format')}
-              placeholder={props.element.getAttribute('placeholder')}
-              placeholderTextColor={props.element.getAttribute(
-                'placeholderTextColor',
-              )}
               pressed={pressed}
               style={labelStyle}
               value={props.value}
