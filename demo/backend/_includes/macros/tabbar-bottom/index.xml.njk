@@ -3,10 +3,16 @@
     xmlns:navigation="https://hyperview.org/navigation"
     navigation:navigator="{{ navigator }}"
   >
-    <view style="tabbar-bottom" key="tabbar-bottom">
+    <safe-area:safe-area-view
+      xmlns:safe-area="https://hyperview.org/safe-area"
+      key="tabbar-bottom"
+      style="tabbar-bottom"
+      safe-area:mode="padding"
+      safe-area:insets="[&quot;right&quot;,&quot;bottom&quot;,&quot;left&quot;]"
+    >
       {% if caller %}
         {{ caller() }}
       {% endif %}
-    </view>
+    </safe-area:safe-area-view>
   </navigation:bottom-tab-bar>
 {% endmacro %}

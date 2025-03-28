@@ -28,7 +28,7 @@ An example header on a screen with a scrolling view.
 ## Attributes
 
 - [Behavior attributes](#behavior-attributes)
-- [`safe-area`](#safe-area)
+- [`safe-area (deprecated)`](#safe-area)
 - [`style`](#style)
 - [`id`](#id)
 - [`hide`](#hide)
@@ -44,6 +44,8 @@ A `<header>` element accepts the standard [behavior attributes](/docs/reference_
 | boolean, **false** (default) | No       |
 
 If true, the body will be rendered in the safe area of the mobile device (avoiding notches at the top or bottom). Note that `safe-area` will only have an effect if `scroll` is false.
+
+Deprecation note: support for this attribute will be removed in a future release. Instead, implement the custom [safe-area element](https://github.com/Instawork/hyperview/blob/master/demo/src/Components/SafeAreaView/SafeAreaView.tsx).
 
 #### `style`
 
