@@ -186,7 +186,6 @@
   flexDirection="row"
   flexShrink="1"
   flexGrow="0"
-  height="48"
   justifyContent="space-around"
   backgroundColor="white"
   width="100%"
@@ -223,7 +222,6 @@
   paddingBottom="16"
   paddingLeft="24"
   paddingRight="24"
-  height="48"
 />
 <style
   id="header-btn"
@@ -233,7 +231,7 @@
   paddingRight="16"
 />
 <style id="header-title" color="black" fontSize="24" fontWeight="600" />
-<style id="body" backgroundColor="white" flex="1" paddingTop="24" />
+<style id="body" backgroundColor="white" flex="1" />
 <style id="description" fontSize="16" margin="24" />
 <style
   id="item"
@@ -350,12 +348,19 @@
   <style id="highlight" fontWeight="bold" color="blue" />
 
       </styles>
-      <body style="body" safe-area="true">
+      <body style="body">
         
-          <header style="header">
-  
-    <view action="back" href="#" style="header-btn">
-      <svg
+          <safe-area:safe-area-view
+  xmlns:safe-area="https://hyperview.org/safe-area"
+  key="header-container"
+  safe-area:mode="padding"
+  safe-area:insets="[&quot;right&quot;,&quot;top&quot;,&quot;left&quot;]"
+  style="debug"
+>
+  <header style="header" key="header">
+    
+      <view action="back" href="#" style="header-btn">
+        <svg
   width="24"
   height="24"
   viewBox="0 0 24 24"
@@ -370,10 +375,11 @@
   />
 </svg>
 
-    </view>
-  
-  <text style="header-title">Contacts</text>
-</header>
+      </view>
+    
+    <text style="header-title">Contacts</text>
+  </header>
+</safe-area:safe-area-view>
 
           
   <form style="flex">
@@ -426,124 +432,124 @@
   </item>
   <items xmlns="https://hyperview.org/hyperview">
   
-    <item key="0d60c8d1-0a5f-4f9c-b4f8-dd1e9605bee8" style="mx-24 py-8 border-bottom">
-      <text>Aaron Bayer</text>
-      <text>Murl_Rodriguez@hotmail.com</text>
-      <text>(432) 555-6625 x748</text>
+    <item key="beb07264-2c84-4a74-b8ce-26f00816faa3" style="mx-24 py-8 border-bottom">
+      <text>Aaron Barrows</text>
+      <text>Quinn.Bogan43@yahoo.com</text>
+      <text>619-587-1950 x262</text>
     </item>
   
-    <item key="06e26f56-2890-49b2-b08f-a068b38c2cba" style="mx-24 py-8 border-bottom">
-      <text>Aaron Boyle</text>
-      <text>Martin.Fahey49@gmail.com</text>
-      <text>(231) 432-1157 x62323</text>
+    <item key="d4d819d4-9345-48e3-a6ed-4afae485f834" style="mx-24 py-8 border-bottom">
+      <text>Aaron Barrows</text>
+      <text>Edgardo.Mosciski@gmail.com</text>
+      <text>867.741.0824 x1427</text>
     </item>
   
-    <item key="93d796c0-8d83-496f-9b1a-ecb8b6e4dfee" style="mx-24 py-8 border-bottom">
-      <text>Aaron Bruen</text>
-      <text>Kayden_Huels@gmail.com</text>
-      <text>782-776-3131 x0513</text>
+    <item key="a61f5dcf-91be-49ae-83a4-5d5dc7a439d4" style="mx-24 py-8 border-bottom">
+      <text>Aaron Bednar Sr.</text>
+      <text>Cleta41@gmail.com</text>
+      <text>368.359.6504 x5336</text>
     </item>
   
-    <item key="c6a845b6-5465-4c63-a63a-41e7d4e105b5" style="mx-24 py-8 border-bottom">
-      <text>Aaron Carroll</text>
-      <text>Dayne_Senger-Gleason44@hotmail.com</text>
-      <text>634-264-8190</text>
+    <item key="b17bca83-2a7d-4004-9f3d-67b942d72a3d" style="mx-24 py-8 border-bottom">
+      <text>Aaron Bosco</text>
+      <text>Gennaro.Rau@yahoo.com</text>
+      <text>(215) 999-7237 x9029</text>
     </item>
   
-    <item key="8b706094-57f4-4b86-b4fc-493a6f174a7c" style="mx-24 py-8 border-bottom">
-      <text>Aaron Cummerata</text>
-      <text>Christop.Waelchi11@yahoo.com</text>
-      <text>(312) 399-0344 x9099</text>
+    <item key="9d1793d5-dda2-41aa-91e6-2f79a9df5dfd" style="mx-24 py-8 border-bottom">
+      <text>Aaron Breitenberg</text>
+      <text>Curtis_Collins1@yahoo.com</text>
+      <text>(303) 388-7350</text>
     </item>
   
-    <item key="b9fae9a8-aaac-4fb0-9664-df4e361be32e" style="mx-24 py-8 border-bottom">
-      <text>Aaron Daniel</text>
-      <text>Christian_Jacobs75@yahoo.com</text>
-      <text>476-686-9238 x497</text>
+    <item key="c5907c89-7df0-4b30-9afc-2d633646abc9" style="mx-24 py-8 border-bottom">
+      <text>Aaron Christiansen</text>
+      <text>Tre45@yahoo.com</text>
+      <text>(530) 242-3712 x04515</text>
     </item>
   
-    <item key="c528952c-d1ce-4e70-9bfd-27a8594c7a27" style="mx-24 py-8 border-bottom">
-      <text>Aaron Daniel DVM</text>
-      <text>Jovany26@hotmail.com</text>
-      <text>1-670-870-4954 x43765</text>
+    <item key="a82c6844-bd47-4914-9fed-1a7546f403d5" style="mx-24 py-8 border-bottom">
+      <text>Aaron D'Amore</text>
+      <text>Orlo.Mraz@gmail.com</text>
+      <text>1-457-558-5895 x5189</text>
     </item>
   
-    <item key="de09ef51-5653-4c54-857f-d13a5bd466a8" style="mx-24 py-8 border-bottom">
-      <text>Aaron Farrell</text>
-      <text>Flossie.Feest@yahoo.com</text>
-      <text>642.604.2502 x928</text>
+    <item key="ec466212-81bb-45b9-ad91-4552a099f0f5" style="mx-24 py-8 border-bottom">
+      <text>Aaron Durgan</text>
+      <text>Charlotte18@gmail.com</text>
+      <text>(478) 551-0774 x4994</text>
     </item>
   
-    <item key="7e0e313f-fd84-4aec-a5c3-a2509640a562" style="mx-24 py-8 border-bottom">
-      <text>Aaron Hane</text>
-      <text>Lonny38@yahoo.com</text>
-      <text>1-393-691-2823 x5338</text>
+    <item key="6c34ba79-50c8-4ea3-866a-8cf82b92abbb" style="mx-24 py-8 border-bottom">
+      <text>Aaron Emard</text>
+      <text>Anne15@yahoo.com</text>
+      <text>770.542.9036 x884</text>
     </item>
   
-    <item key="7139f276-0428-4844-9607-5654a78044e0" style="mx-24 py-8 border-bottom">
-      <text>Aaron Harris</text>
-      <text>Briana_Sanford28@yahoo.com</text>
-      <text>(365) 742-3800 x62323</text>
+    <item key="aa3750fe-f1a9-4d52-8be8-61b91706eef0" style="mx-24 py-8 border-bottom">
+      <text>Aaron Frami</text>
+      <text>Fletcher.McLaughlin86@gmail.com</text>
+      <text>405.253.3675 x97528</text>
     </item>
   
-    <item key="89834e60-38a9-4f4a-8273-5c41df59d6e0" style="mx-24 py-8 border-bottom">
-      <text>Aaron Jaskolski</text>
-      <text>Laury.Spencer@yahoo.com</text>
-      <text>1-835-940-0409 x16250</text>
+    <item key="8258bbc2-cd64-4753-9e31-b211ebed32ec" style="mx-24 py-8 border-bottom">
+      <text>Aaron Hoeger</text>
+      <text>Wyatt.Grady@hotmail.com</text>
+      <text>1-999-680-0920 x57216</text>
     </item>
   
-    <item key="192c0538-29ed-4b9d-8e2b-d5cef4fb130c" style="mx-24 py-8 border-bottom">
-      <text>Aaron Jenkins I</text>
-      <text>Jessy3@yahoo.com</text>
-      <text>(775) 716-6349 x6639</text>
+    <item key="b31b094f-c252-4b17-9cbe-d6ed53608396" style="mx-24 py-8 border-bottom">
+      <text>Aaron Jakubowski-Reichel</text>
+      <text>Lonny_Becker-Kshlerin@gmail.com</text>
+      <text>377-433-0743</text>
     </item>
   
-    <item key="3ef7a7fa-5790-46b9-a399-e99a4d45302a" style="mx-24 py-8 border-bottom">
-      <text>Aaron Keeling</text>
-      <text>Eva32@yahoo.com</text>
-      <text>(852) 418-7245</text>
+    <item key="f20c96e9-2e10-4441-b36d-77178f634096" style="mx-24 py-8 border-bottom">
+      <text>Aaron Lesch V</text>
+      <text>Gabriella71@yahoo.com</text>
+      <text>(694) 855-1470 x265</text>
     </item>
   
-    <item key="6a94aa34-b6ff-4b4b-8c12-21f515f62610" style="mx-24 py-8 border-bottom">
-      <text>Aaron Lehner</text>
-      <text>Al_Carter2@yahoo.com</text>
-      <text>762-305-3811 x71390</text>
+    <item key="75e9c111-df0a-4ee9-9564-c4651a1f16ac" style="mx-24 py-8 border-bottom">
+      <text>Aaron Roberts</text>
+      <text>Libby_Kiehn@hotmail.com</text>
+      <text>1-525-600-5856 x8221</text>
     </item>
   
-    <item key="764d3353-342f-4e4a-b984-b498357735c3" style="mx-24 py-8 border-bottom">
-      <text>Aaron Mante</text>
-      <text>Odessa.Walter@hotmail.com</text>
-      <text>795-993-9673</text>
+    <item key="0027fa6a-b8f7-4be2-9eec-99f0307416a8" style="mx-24 py-8 border-bottom">
+      <text>Aaron Stanton Sr.</text>
+      <text>Keshawn63@gmail.com</text>
+      <text>1-359-959-9353 x1230</text>
     </item>
   
-    <item key="feb3e0a6-9b79-4934-82e6-4edca4087df3" style="mx-24 py-8 border-bottom">
-      <text>Aaron Moen</text>
-      <text>Theodore_Legros69@yahoo.com</text>
-      <text>(843) 561-5922 x283</text>
+    <item key="9274a319-f494-4c30-80a9-bf652beb9825" style="mx-24 py-8 border-bottom">
+      <text>Aaron Streich</text>
+      <text>Hardy_Lynch@yahoo.com</text>
+      <text>(609) 563-8740 x055</text>
     </item>
   
-    <item key="db44f59c-9df7-4f38-a2e6-cb8670d02846" style="mx-24 py-8 border-bottom">
-      <text>Aaron Nikolaus</text>
-      <text>Melvin.Wisozk57@hotmail.com</text>
-      <text>1-656-253-4031 x301</text>
+    <item key="0173b30c-689b-4ba9-bb89-d0c73bb58308" style="mx-24 py-8 border-bottom">
+      <text>Aaron Swaniawski</text>
+      <text>Eldon_Reinger37@yahoo.com</text>
+      <text>622-981-8140 x38158</text>
     </item>
   
-    <item key="76886aff-ed43-4477-8024-1b9e2d291b64" style="mx-24 py-8 border-bottom">
-      <text>Aaron Nikolaus</text>
-      <text>Rebekah20@gmail.com</text>
-      <text>(929) 947-1016 x37561</text>
+    <item key="ee45d7cd-a1a8-42d3-ac48-ed9327b275ea" style="mx-24 py-8 border-bottom">
+      <text>Aaron Ward I</text>
+      <text>Kayden_Stanton38@gmail.com</text>
+      <text>(677) 416-7134 x58621</text>
     </item>
   
-    <item key="88428d59-efd7-448f-92d7-d8d6e6070d96" style="mx-24 py-8 border-bottom">
-      <text>Aaron O'Hara</text>
-      <text>Tyrel_Strosin0@hotmail.com</text>
-      <text>271.980.6696 x5971</text>
+    <item key="1a46f7cc-7e70-40f7-a67b-a46b7c327825" style="mx-24 py-8 border-bottom">
+      <text>Aaron Weissnat</text>
+      <text>Elroy.Koelpin-Kozey87@gmail.com</text>
+      <text>(451) 379-1636 x28962</text>
     </item>
   
-    <item key="d33ca431-4c2b-4c08-83b2-4f5886c12536" style="mx-24 py-8 border-bottom">
-      <text>Aaron Pagac</text>
-      <text>Anya7@gmail.com</text>
-      <text>207-300-9112</text>
+    <item key="05157d42-6ac6-41e7-bc34-45e7cad4b66b" style="mx-24 py-8 border-bottom">
+      <text>Aaron Wilderman DVM</text>
+      <text>Sheridan.Herzog44@hotmail.com</text>
+      <text>1-929-224-4511 x7245</text>
     </item>
   
   
@@ -754,7 +760,6 @@
   flexDirection="row"
   flexShrink="1"
   flexGrow="0"
-  height="48"
   justifyContent="space-around"
   backgroundColor="white"
   width="100%"
@@ -791,7 +796,6 @@
   paddingBottom="16"
   paddingLeft="24"
   paddingRight="24"
-  height="48"
 />
 <style
   id="header-btn"
@@ -801,7 +805,7 @@
   paddingRight="16"
 />
 <style id="header-title" color="black" fontSize="24" fontWeight="600" />
-<style id="body" backgroundColor="white" flex="1" paddingTop="24" />
+<style id="body" backgroundColor="white" flex="1" />
 <style id="description" fontSize="16" margin="24" />
 <style
   id="item"
@@ -893,10 +897,17 @@
   </styles>
   <body style="body" safe-area="true">
     
-    <header style="header">
-  
-    <view action="back" href="#" style="header-btn">
-      <svg
+    <safe-area:safe-area-view
+  xmlns:safe-area="https://hyperview.org/safe-area"
+  key="header-container"
+  safe-area:mode="padding"
+  safe-area:insets="[&quot;right&quot;,&quot;top&quot;,&quot;left&quot;]"
+  style="debug"
+>
+  <header style="header" key="header">
+    
+      <view action="back" href="#" style="header-btn">
+        <svg
   width="24"
   height="24"
   viewBox="0 0 24 24"
@@ -911,10 +922,11 @@
   />
 </svg>
 
-    </view>
-  
-  <text style="header-title"></text>
-</header>
+      </view>
+    
+    <text style="header-title"></text>
+  </header>
+</safe-area:safe-area-view>
 
     <view style="loading">
       <text style="loading-text">Loading…</text>
@@ -1108,7 +1120,6 @@
   flexDirection="row"
   flexShrink="1"
   flexGrow="0"
-  height="48"
   justifyContent="space-around"
   backgroundColor="white"
   width="100%"
@@ -1145,7 +1156,6 @@
   paddingBottom="16"
   paddingLeft="24"
   paddingRight="24"
-  height="48"
 />
 <style
   id="header-btn"
@@ -1155,7 +1165,7 @@
   paddingRight="16"
 />
 <style id="header-title" color="black" fontSize="24" fontWeight="600" />
-<style id="body" backgroundColor="white" flex="1" paddingTop="24" />
+<style id="body" backgroundColor="white" flex="1" />
 <style id="description" fontSize="16" margin="24" />
 <style
   id="item"

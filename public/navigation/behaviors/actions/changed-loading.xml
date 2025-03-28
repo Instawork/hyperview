@@ -186,7 +186,6 @@
   flexDirection="row"
   flexShrink="1"
   flexGrow="0"
-  height="48"
   justifyContent="space-around"
   backgroundColor="white"
   width="100%"
@@ -223,7 +222,6 @@
   paddingBottom="16"
   paddingLeft="24"
   paddingRight="24"
-  height="48"
 />
 <style
   id="header-btn"
@@ -233,7 +231,7 @@
   paddingRight="16"
 />
 <style id="header-title" color="black" fontSize="24" fontWeight="600" />
-<style id="body" backgroundColor="white" flex="1" paddingTop="24" />
+<style id="body" backgroundColor="white" flex="1" />
 <style id="description" fontSize="16" margin="24" />
 <style
   id="item"
@@ -325,12 +323,20 @@
         
         
       </styles>
-      <body style="body" safe-area="true">
+      <body style="body">
         
-          <header style="header">
-  
-  <text style="header-title">Changed w/ Loading</text>
-</header>
+          <safe-area:safe-area-view
+  xmlns:safe-area="https://hyperview.org/safe-area"
+  key="header-container"
+  safe-area:mode="padding"
+  safe-area:insets="[&quot;right&quot;,&quot;top&quot;,&quot;left&quot;]"
+  style="debug"
+>
+  <header style="header" key="header">
+    
+    <text style="header-title">Changed w/ Loading</text>
+  </header>
+</safe-area:safe-area-view>
 
           
   <view scroll="true" style="main">
@@ -547,7 +553,6 @@
   flexDirection="row"
   flexShrink="1"
   flexGrow="0"
-  height="48"
   justifyContent="space-around"
   backgroundColor="white"
   width="100%"
@@ -584,7 +589,6 @@
   paddingBottom="16"
   paddingLeft="24"
   paddingRight="24"
-  height="48"
 />
 <style
   id="header-btn"
@@ -594,7 +598,7 @@
   paddingRight="16"
 />
 <style id="header-title" color="black" fontSize="24" fontWeight="600" />
-<style id="body" backgroundColor="white" flex="1" paddingTop="24" />
+<style id="body" backgroundColor="white" flex="1" />
 <style id="description" fontSize="16" margin="24" />
 <style
   id="item"
@@ -686,10 +690,18 @@
   </styles>
   <body style="body" safe-area="true">
     
-    <header style="header">
-  
-  <text style="header-title"></text>
-</header>
+    <safe-area:safe-area-view
+  xmlns:safe-area="https://hyperview.org/safe-area"
+  key="header-container"
+  safe-area:mode="padding"
+  safe-area:insets="[&quot;right&quot;,&quot;top&quot;,&quot;left&quot;]"
+  style="debug"
+>
+  <header style="header" key="header">
+    
+    <text style="header-title"></text>
+  </header>
+</safe-area:safe-area-view>
 
     <view style="loading">
       <text style="loading-text">Loading…</text>
@@ -883,7 +895,6 @@
   flexDirection="row"
   flexShrink="1"
   flexGrow="0"
-  height="48"
   justifyContent="space-around"
   backgroundColor="white"
   width="100%"
@@ -920,7 +931,6 @@
   paddingBottom="16"
   paddingLeft="24"
   paddingRight="24"
-  height="48"
 />
 <style
   id="header-btn"
@@ -930,7 +940,7 @@
   paddingRight="16"
 />
 <style id="header-title" color="black" fontSize="24" fontWeight="600" />
-<style id="body" backgroundColor="white" flex="1" paddingTop="24" />
+<style id="body" backgroundColor="white" flex="1" />
 <style id="description" fontSize="16" margin="24" />
 <style
   id="item"
