@@ -20,7 +20,12 @@ import type {
   OnUpdateCallbacks,
   ScreenState,
 } from 'hyperview/src/types';
-import React, { JSXElementConstructor, PureComponent, useContext } from 'react';
+import React, {
+  JSXElementConstructor,
+  PureComponent,
+  useContext,
+  useMemo,
+} from 'react';
 import HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
 import { LOCAL_NAME } from 'hyperview/src/types';
@@ -337,13 +342,18 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       },
     };
 
+    const { localDoc } = this;
+    const localClone = useMemo(() => {
+      return localDoc?.cloneNode(true) as Document;
+    }, [localDoc]);
+
     return (
       <Contexts.DateFormatContext.Consumer>
         {formatter => (
           <HvScreen
             behaviors={this.props.behaviors}
             components={this.props.components}
-            doc={this.localDoc?.cloneNode(true) as Document}
+            doc={localClone}
             elementErrorComponent={this.props.elementErrorComponent}
             entrypointUrl={this.props.entrypointUrl}
             errorScreen={this.props.errorScreen}
