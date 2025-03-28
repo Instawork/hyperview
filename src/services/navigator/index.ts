@@ -1,6 +1,5 @@
 import * as Components from 'hyperview/src/services/components';
 import * as Helpers from './helpers';
-import * as HvRoute from 'hyperview/src/core/components/hv-route';
 import * as Imports from './imports';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
@@ -13,28 +12,17 @@ import type {
   NavigationRouteParams,
 } from 'hyperview/src/types';
 import { NAV_ACTIONS } from 'hyperview/src/types';
-import { NavigationContainerRefContext } from '@react-navigation/native';
 import { uuidNumber } from 'hyperview/src/core/utils';
 
 /**
  * Provide navigation action implementations
  */
 export class Navigator implements NavigationProvider {
-  props: HvRoute.InnerRouteProps;
+  props: Types.Props;
 
-  context:
-    | React.ContextType<typeof NavigationContainerRefContext>
-    | undefined = undefined;
-
-  constructor(props: HvRoute.InnerRouteProps) {
+  constructor(props: Types.Props) {
     this.props = props;
   }
-
-  setContext = (
-    context: React.ContextType<typeof NavigationContainerRefContext>,
-  ) => {
-    this.context = context;
-  };
 
   /**
    * Process the request by changing params before going back
@@ -75,7 +63,7 @@ export class Navigator implements NavigationProvider {
 
     // Update the params of the new focused route
     if (routeParams) {
-      const route = this.context?.getCurrentRoute();
+      const route = this.props.rootNavigation?.getCurrentRoute();
       if (route) {
         navigation.dispatch({
           ...Imports.CommonActions.setParams({
