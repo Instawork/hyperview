@@ -45,6 +45,7 @@ export type RouteProps = NavigatorService.Route<string, { url?: string }>;
 export type InnerRouteProps = {
   url?: string;
   navigation?: NavigatorService.NavigationProp;
+  navigator: NavigatorService.Navigator;
   route?: NavigatorService.Route<string, RouteParams>;
   entrypointUrl: string;
   fetch: Fetch;

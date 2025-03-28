@@ -41,26 +41,17 @@ import { NavigationContainerRefContext } from '@react-navigation/native';
  * - Handles errors
  */
 class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
-  static contextType = NavigationContainerRefContext;
-
-  context: React.ContextType<typeof NavigationContainerRefContext> = undefined;
-
-  navigator: NavigatorService.Navigator;
-
   componentRegistry: Components.Registry;
 
   needsLoad = false;
 
   constructor(props: Types.InnerRouteProps) {
     super(props);
-    this.navigator = new NavigatorService.Navigator(this.props);
     this.componentRegistry = new Components.Registry(this.props.components);
     this.needsLoad = false;
   }
 
   componentDidMount() {
-    this.navigator.setContext(this.context);
-
     // When a nested navigator is found, the document is not loaded from url
     if (this.props.element === undefined) {
       this.load();
@@ -156,7 +147,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       // Noop
     },
     getDoc: () => this.props.getLocalDoc(),
-    getNavigation: () => this.navigator,
+    getNavigation: () => this.props.navigator,
     getOnUpdate: () => this.onUpdate,
     getState: () => this.props.getScreenState(),
     setNeedsLoad: () => {
@@ -243,11 +234,13 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     const ErrorScreen = this.props.errorScreen || LoadError;
     return (
       <ErrorScreen
-        back={() => this.navigator.backAction({} as NavigationRouteParams)}
+        back={() =>
+          this.props.navigator.backAction({} as NavigationRouteParams)
+        }
         error={props.error}
         onPressReload={() => this.load()}
         onPressViewDetails={(uri: string | undefined) => {
-          this.navigator.openModalAction({
+          this.props.navigator.openModalAction({
             url: uri as string,
           } as NavigationRouteParams);
         }}
@@ -300,7 +293,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
                   getLocalDoc={getLocalDoc}
                   getScreenState={getScreenState}
                   loadUrl={loadUrl}
-                  navigation={this.navigator}
+                  navigation={this.props.navigator}
                   onError={this.props.onError}
                   onParseAfter={this.props.onParseAfter}
                   onParseBefore={this.props.onParseBefore}
@@ -507,6 +500,23 @@ function HvRouteFC(props: Types.Props) {
   const rootNavigation = useContext(NavigationContainerRefContext);
   const nav =
     props.navigation || (rootNavigation as NavigatorService.NavigationProp);
+  const navigator = useMemo(
+    () =>
+      new NavigatorService.Navigator({
+        entrypointUrl: navigationContext.entrypointUrl,
+        navigation: nav,
+        rootNavigation,
+        route: props.route,
+        setElement: elemenCacheContext.setElement,
+      }),
+    [
+      elemenCacheContext.setElement,
+      nav,
+      navigationContext.entrypointUrl,
+      props.route,
+      rootNavigation,
+    ],
+  );
 
   // Get the navigator element from the context
   const element: Element | undefined = getNestedNavigator(
@@ -643,6 +653,7 @@ function HvRouteFC(props: Types.Props) {
             handleBack={navigationContext.handleBack}
             loadUrl={loadUrl}
             navigation={nav}
+            navigator={navigator}
             onError={navigationContext.onError}
             onParseAfter={navigationContext.onParseAfter}
             onParseBefore={navigationContext.onParseBefore}
