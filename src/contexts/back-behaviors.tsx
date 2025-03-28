@@ -1,4 +1,10 @@
-import React, { ReactNode, createContext, useRef, useState } from 'react';
+import React, {
+  ReactNode,
+  createContext,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { HvComponentOnUpdate } from 'hyperview/src/types';
 
 export type BackBehaviorContextProps = {
@@ -44,15 +50,18 @@ export function BackBehaviorProvider(props: { children: ReactNode }) {
     registry.current = removeElements(registry.current, elements);
   };
 
+  const contextValue = useMemo(
+    () => ({
+      add,
+      get,
+      onUpdate,
+      remove,
+    }),
+    [onUpdate],
+  );
+
   return (
-    <BackBehaviorContext.Provider
-      value={{
-        add,
-        get,
-        onUpdate,
-        remove,
-      }}
-    >
+    <BackBehaviorContext.Provider value={contextValue}>
       {props.children}
     </BackBehaviorContext.Provider>
   );
