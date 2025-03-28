@@ -1,0 +1,30 @@
+<xs:schema
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  attributeFormDefault="qualified"
+  elementFormDefault="qualified"
+  targetNamespace="https://hyperview.org/safe-area"
+  xmlns:hv="https://hyperview.org/hyperview"
+  xmlns:safe-area="https://hyperview.org/safe-area"
+>
+  <xs:import
+    namespace="https://hyperview.org/hyperview"
+    schemaLocation="hyperview.xsd"
+  />
+  <xs:simpleType name="mode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="margin" />
+      <xs:enumeration value="padding" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="safe-area-view">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:any minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+      <xs:attribute name="key" type="hv:KEY" form="unqualified" />
+      <xs:attribute name="style" type="hv:styleList" form="unqualified" />
+      <xs:attribute name="mode" type="safe-area:mode" />
+      <xs:attribute name="insets" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
