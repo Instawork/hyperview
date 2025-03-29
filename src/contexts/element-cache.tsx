@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useMemo, useState } from 'react';
 
 export type ElementCacheProps = {
   setElement: (key: number, element: Element) => void;
@@ -24,27 +24,27 @@ type Props = { children: React.ReactNode };
 export function CacheProvider(props: Props) {
   const [elementMap] = useState<Map<number, Element>>(new Map());
 
-  const setElement = (key: number, element: Element) => {
-    elementMap.set(key, element);
-  };
+  const contextValue = useMemo(() => {
+    const setElement = (key: number, element: Element) => {
+      elementMap.set(key, element);
+    };
 
-  const getElement = (key: number): Element | undefined => {
-    return elementMap.get(key);
-  };
+    const getElement = (key: number): Element | undefined => {
+      return elementMap.get(key);
+    };
 
-  const removeElement = (key: number) => {
-    elementMap.delete(key);
-  };
+    const removeElement = (key: number) => {
+      elementMap.delete(key);
+    };
+
+    return {
+      getElement,
+      removeElement,
+      setElement,
+    };
+  }, [elementMap]);
 
   return (
-    <Context.Provider
-      value={{
-        getElement,
-        removeElement,
-        setElement,
-      }}
-    >
-      {props.children}
-    </Context.Provider>
+    <Context.Provider value={contextValue}>{props.children}</Context.Provider>
   );
 }

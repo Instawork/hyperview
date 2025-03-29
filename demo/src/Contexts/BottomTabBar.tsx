@@ -2,6 +2,7 @@ import React, {
   createContext,
   useCallback,
   useContext,
+  useMemo,
   useReducer,
 } from 'react';
 import type { HvComponentProps } from 'hyperview';
@@ -103,11 +104,13 @@ export function BottomTabBarContextProvider(p: { children: React.ReactNode }) {
     },
     [dispatch],
   );
-  return (
-    <Context.Provider value={{ getElementProps, setElement, setElementProps }}>
-      {p.children}
-    </Context.Provider>
+
+  const contextValue = useMemo(
+    () => ({ getElementProps, setElement, setElementProps }),
+    [getElementProps, setElement, setElementProps],
   );
+
+  return <Context.Provider value={contextValue}>{p.children}</Context.Provider>;
 }
 
 export const useBottomTabBarContext = () => useContext(Context);
