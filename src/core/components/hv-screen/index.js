@@ -69,7 +69,7 @@ export default class HvScreen extends React.Component {
 
     this.behaviorRegistry = Behaviors.getRegistry(this.props.behaviors);
     this.componentRegistry = new Components.Registry(this.props.components);
-    this.docContextValue = this.getDocContextValue();
+    this.contextValue = this.getContextValue(props);
   }
 
   getRoute = props => {
@@ -159,6 +159,17 @@ export default class HvScreen extends React.Component {
     }
   };
 
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillUpdate = nextProps => {
+    this.contextValue = this.getContextValue(nextProps);
+  };
+
+  getContextValue = () => {
+    return {
+      getDoc: () => this.doc,
+    };
+  };
+
   /**
    * Clear out the preload screen associated with this screen.
    */
@@ -177,11 +188,7 @@ export default class HvScreen extends React.Component {
   /**
    * Fetch data from the url if the screen should reload.
    */
-  componentDidUpdate(prevProps) {
-    if (prevProps.formatDate !== this.props.formatDate) {
-      this.docContextValue = this.getDocContextValue();
-    }
-
+  componentDidUpdate() {
     if (this.needsLoad) {
       this.load(this.state.url);
       this.needsLoad = false;
@@ -262,10 +269,6 @@ export default class HvScreen extends React.Component {
     });
   };
 
-  getDocContextValue = () => ({
-    getDoc: () => this.doc,
-  });
-
   /**
    * Renders the XML doc into React components. Shows blank screen until the XML doc is available.
    */
@@ -306,7 +309,7 @@ export default class HvScreen extends React.Component {
     }
 
     return (
-      <Contexts.DocContext.Provider value={this.docContextValue}>
+      <Contexts.DocContext.Provider value={this.contextValue}>
         <Contexts.DateFormatContext.Provider value={this.props.formatDate}>
           {elementErrorComponent
             ? React.createElement(elementErrorComponent, {

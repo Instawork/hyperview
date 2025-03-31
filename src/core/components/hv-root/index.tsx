@@ -49,7 +49,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
 
   parser: Dom.Parser;
 
-  private contextValue: ReturnType<typeof this.getContextValue>;
+  private contextValue: NavContexts.NavigationContextProps;
 
   constructor(props: Types.Props) {
     super(props);
@@ -63,31 +63,35 @@ export default class Hyperview extends PureComponent<Types.Props> {
 
     this.behaviorRegistry = Behaviors.getRegistry(this.props.behaviors);
     this.componentRegistry = new Components.Registry(this.props.components);
-    this.contextValue = this.getContextValue();
+    this.contextValue = this.getContextValue(props);
   }
 
-  componentDidUpdate(prevProps: Types.Props) {
-    // Update context value if any dependencies changed
-    if (
-      prevProps.behaviors !== this.props.behaviors ||
-      prevProps.components !== this.props.components ||
-      prevProps.elementErrorComponent !== this.props.elementErrorComponent ||
-      prevProps.entrypointUrl !== this.props.entrypointUrl ||
-      prevProps.errorScreen !== this.props.errorScreen ||
-      prevProps.experimentalFeatures !== this.props.experimentalFeatures ||
-      prevProps.fetch !== this.props.fetch ||
-      prevProps.handleBack !== this.props.handleBack ||
-      prevProps.loadingScreen !== this.props.loadingScreen ||
-      prevProps.navigationComponents !== this.props.navigationComponents ||
-      prevProps.onError !== this.props.onError ||
-      prevProps.onParseAfter !== this.props.onParseAfter ||
-      prevProps.onParseBefore !== this.props.onParseBefore ||
-      prevProps.onRouteBlur !== this.props.onRouteBlur ||
-      prevProps.onRouteFocus !== this.props.onRouteFocus
-    ) {
-      this.contextValue = this.getContextValue();
-    }
-  }
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillUpdate = (nextProps: Readonly<Types.Props>) => {
+    this.contextValue = this.getContextValue(nextProps);
+  };
+
+  getContextValue = (p: Types.Props) => {
+    return {
+      behaviors: p.behaviors,
+      components: p.components,
+      elementErrorComponent: p.elementErrorComponent,
+      entrypointUrl: p.entrypointUrl,
+      errorScreen: p.errorScreen,
+      experimentalFeatures: p.experimentalFeatures,
+      fetch: p.fetch,
+      handleBack: p.handleBack,
+      loadingScreen: p.loadingScreen,
+      navigationComponents: p.navigationComponents,
+      onError: p.onError,
+      onParseAfter: p.onParseAfter,
+      onParseBefore: p.onParseBefore,
+      onRouteBlur: p.onRouteBlur,
+      onRouteFocus: p.onRouteFocus,
+      onUpdate: this.onUpdate,
+      reload: this.reload,
+    };
+  };
 
   /**
    * Reload if an error occured.
@@ -587,26 +591,6 @@ export default class Hyperview extends PureComponent<Types.Props> {
       Logging.warn(`No behavior registered for action "${action}"`);
     }
   };
-
-  getContextValue = () => ({
-    behaviors: this.props.behaviors,
-    components: this.props.components,
-    elementErrorComponent: this.props.elementErrorComponent,
-    entrypointUrl: this.props.entrypointUrl,
-    errorScreen: this.props.errorScreen,
-    experimentalFeatures: this.props.experimentalFeatures,
-    fetch: this.props.fetch,
-    handleBack: this.props.handleBack,
-    loadingScreen: this.props.loadingScreen,
-    navigationComponents: this.props.navigationComponents,
-    onError: this.props.onError,
-    onParseAfter: this.props.onParseAfter,
-    onParseBefore: this.props.onParseBefore,
-    onRouteBlur: this.props.onRouteBlur,
-    onRouteFocus: this.props.onRouteFocus,
-    onUpdate: this.onUpdate,
-    reload: this.reload,
-  });
 
   render() {
     return (
