@@ -100,6 +100,9 @@ export default class HyperRef extends PureComponent<Props, State> {
     Events.unsubscribe(this.onEventDispatch);
     // Deregister event listener for back triggers
     this.removeBackBehaviors();
+    if (this.props.element.localName === LOCAL_NAME.VIEW) {
+      this.triggerUnLoadBehaviors();
+    }
   }
 
   updateBehaviorElements = () => {
@@ -213,6 +216,27 @@ export default class HyperRef extends PureComponent<Props, State> {
       Behaviors.triggerBehaviors(
         this.props.element,
         loadBehaviors,
+        this.props.onUpdate,
+      );
+    }
+  };
+
+  triggerUnLoadBehaviors = () => {
+    let unloadBehaviors = this.getBehaviorElements(TRIGGERS.UNLOAD);
+    if (
+      this.props.options?.staleHeaderType ===
+      X_RESPONSE_STALE_REASON.STALE_IF_ERROR
+    ) {
+      const loadStaleBehaviors = this.getBehaviorElements(
+        TRIGGERS.LOAD_STALE_ERROR,
+      );
+      unloadBehaviors = unloadBehaviors.concat(loadStaleBehaviors);
+    }
+
+    if (unloadBehaviors.length > 0) {
+      Behaviors.triggerBehaviors(
+        this.props.element,
+        unloadBehaviors,
         this.props.onUpdate,
       );
     }
