@@ -146,17 +146,16 @@ const HvDoc = (props: Props) => {
       getLocalDoc: () => localDoc.current ?? null,
       getScreenState: () => state,
       loadUrl,
-      setLocalDoc: (doc: Document | null) => {
-        if (doc !== undefined) {
-          localDoc.current = doc;
+      setScreenState: (newState: ScreenState) => {
+        if (newState.doc !== undefined) {
+          localDoc.current = newState.doc;
         }
-      },
-      setScreenState: (newState: ScreenState) =>
         setState(prev => ({
           ...prev,
           ...newState,
           doc: props.element ? null : newState.doc ?? prev.doc,
-        })),
+        }));
+      },
     }),
     [loadUrl, props.element, state],
   );

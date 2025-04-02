@@ -18,6 +18,5 @@ export type StateContextProps = {
   getLocalDoc: () => Document | null;
   getScreenState: () => ScreenState;
   loadUrl: (url?: string) => void;
-  setLocalDoc: (doc: Document | null) => void;
   setScreenState: (state: ScreenState) => void;
 };

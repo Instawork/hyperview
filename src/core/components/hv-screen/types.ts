@@ -29,7 +29,6 @@ export type Props = Omit<
   url?: string;
   getLocalDoc: () => Document | null;
   getScreenState: () => ScreenState;
-  setLocalDoc: (doc: Document | null) => void;
   setScreenState: (state: ScreenState) => void;
   loadUrl: (url?: string) => void;
 };
