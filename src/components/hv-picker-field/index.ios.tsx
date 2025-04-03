@@ -24,10 +24,10 @@ import { View } from 'react-native';
  *   opens a system dialog.
  */
 export default class HvPickerField extends PureComponent<HvComponentProps> {
+  pickerItemsCache: Array<{ label: string | null | undefined; value: string | null | undefined }> | null = null;
+
   static namespaceURI = Namespaces.HYPERVIEW;
-
   static localName = LOCAL_NAME.PICKER_FIELD;
-
   static localNameAliases = [];
 
   static getFormInputValues = (element: Element): Array<[string, string]> => {
@@ -54,31 +54,34 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
   getValue = (): string => this.props.element.getAttribute('value') || '';
 
   /**
+   * 
+   * Cache the value-label pairs when the picker items are fetched.
+   */
+  getPickerItemsCache = () => {
+    if (!this.pickerItemsCache) {
+      const pickerItemElements = this.props.element.getElementsByTagNameNS(
+        Namespaces.HYPERVIEW,
+        LOCAL_NAME.PICKER_ITEM,
+      );
+      this.pickerItemsCache = Array.from(pickerItemElements).map(item => ({
+        value: item.getAttribute('value'),
+        label: item.getAttribute('label'),
+      }));
+    }
+    return this.pickerItemsCache;
+  };
+
+  /**
    * Gets the label from the picker items for the given value.
    * If the value doesn't have a picker item, returns null.
    */
-  getLabelForValue = (value: DOMString): string | null | undefined => {
-    const pickerItemElements: HTMLCollectionOf<Element> = this.props.element.getElementsByTagNameNS(
-      Namespaces.HYPERVIEW,
-      LOCAL_NAME.PICKER_ITEM,
+  getLabelForValue = (value: DOMString): string | null => {
+    const item = this.getPickerItemsCache().find(
+      item => item.value === value,
     );
-
-    let item: Element | null | undefined = null;
-    for (let i = 0; i < pickerItemElements.length; i += 1) {
-      const pickerItemElement:
-        | Element
-        | null
-        | undefined = pickerItemElements.item(i);
-      if (
-        pickerItemElement &&
-        pickerItemElement.getAttribute('value') === value
-      ) {
-        item = pickerItemElement;
-        break;
-      }
-    }
-    return item ? item.getAttribute('label') : null;
+    return item ? item.label ?? null : null;
   };
+  
 
   /**
    * Returns a string representing the value in the picker.
