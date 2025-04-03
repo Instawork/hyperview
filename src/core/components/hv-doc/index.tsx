@@ -8,9 +8,11 @@ import {
   DOMString,
   HvComponentOptions,
   LOCAL_NAME,
+  NavigationRouteParams,
   OnUpdateCallbacks,
   ScreenState,
 } from 'hyperview/src/types';
+import { ErrorProps, Props } from './types';
 import React, {
   useCallback,
   useContext,
@@ -19,7 +21,7 @@ import React, {
   useState,
 } from 'react';
 import { HvDocError } from './errors';
-import { Props } from './types';
+import LoadError from 'hyperview/src/core/components/load-error';
 import { StateContext } from './context';
 import { later } from 'hyperview/src/services';
 
@@ -188,6 +190,12 @@ const HvDoc = (props: Props) => {
       setState: setScreenState,
     };
 
+    const reload = (url?: string | null) => {
+      navigationContext.reload(url, {
+        onUpdateCallbacks,
+      });
+    };
+
     const onUpdate = (
       href: DOMString | null | undefined,
       action: DOMString | null | undefined,
@@ -206,6 +214,7 @@ const HvDoc = (props: Props) => {
       loadUrl,
       onUpdate,
       onUpdateCallbacks,
+      reload,
       setNeedsLoadCallback: (callback: () => void) => {
         needsLoadCallback.current = callback;
       },
@@ -221,9 +230,40 @@ const HvDoc = (props: Props) => {
     state.elementError,
   ]);
 
+  /**
+   * View shown when there is an error
+   */
+  const Err = (p: ErrorProps): React.ReactElement => {
+    const { error, navigationProvider, url } = p;
+    const ErrorScreen = navigationContext.errorScreen || LoadError;
+    return (
+      <ErrorScreen
+        back={() => navigationProvider?.backAction({} as NavigationRouteParams)}
+        error={error}
+        onPressReload={() => contextValue.reload(url)}
+        onPressViewDetails={(u: string | undefined) => {
+          if (u) {
+            navigationProvider?.openModalAction({
+              url: u,
+            } as NavigationRouteParams);
+          }
+        }}
+      />
+    );
+  };
+
   return (
     <StateContext.Provider value={contextValue}>
-      {props.children}
+      {state.error ? (
+        //  Render the state error
+        <Err
+          error={state.error}
+          navigationProvider={props.navigationProvider}
+          url={state.url ?? props.route?.params.url}
+        />
+      ) : (
+        props.children
+      )}
     </StateContext.Provider>
   );
 };

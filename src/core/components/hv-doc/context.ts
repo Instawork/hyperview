@@ -21,6 +21,7 @@ export const StateContext = createContext<StateContextProps>({
   loadUrl: () => null,
   onUpdate: () => undefined,
   onUpdateCallbacks: callbacks,
+  reload: () => null,
   setNeedsLoadCallback: () => null,
   setScreenState: () => undefined,
 });
