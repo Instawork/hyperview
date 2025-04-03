@@ -223,6 +223,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
             loadUrl,
             onUpdate,
             onUpdateCallbacks,
+            reload,
             setNeedsLoadCallback,
             setScreenState,
           }) => (
@@ -246,7 +247,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
                   onParseBefore={this.props.onParseBefore}
                   onUpdate={onUpdate}
                   onUpdateCallbacks={onUpdateCallbacks}
-                  reload={this.props.reload}
+                  reload={reload}
                   removeElement={this.props.removeElement}
                   route={route}
                   setNeedsLoadCallback={setNeedsLoadCallback}
