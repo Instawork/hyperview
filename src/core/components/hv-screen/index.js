@@ -48,13 +48,6 @@ export default class HvScreen extends React.Component {
     return { params: {} };
   };
 
-  setScreenState = newState => {
-    if (newState.doc !== undefined) {
-      this.props.setLocalDoc(newState.doc);
-    }
-    this.props.setScreenState(newState);
-  };
-
   componentDidMount() {
     const { params } = this.getRoute(this.props);
     // The screen may be rendering via a navigation from another HyperScreen.
@@ -71,7 +64,7 @@ export default class HvScreen extends React.Component {
 
     this.needsLoad = !this.props.getScreenState().doc;
     if (preloadScreen && !this.props.getScreenState().doc) {
-      this.setScreenState({
+      this.props.setScreenState({
         doc: preloadScreen,
         elementError: null,
         error: null,
@@ -79,7 +72,7 @@ export default class HvScreen extends React.Component {
         url,
       });
     } else {
-      this.setScreenState({
+      this.props.setScreenState({
         elementError: null,
         error: null,
         url,
@@ -125,7 +118,7 @@ export default class HvScreen extends React.Component {
         : // eslint-disable-next-line react/no-access-state-in-setstate
           this.props.getScreenState().styles;
 
-      this.setScreenState({ doc, styles, url: newUrl });
+      this.props.setScreenState({ doc, styles, url: newUrl });
     }
   };
 
@@ -239,7 +232,8 @@ export default class HvScreen extends React.Component {
           {elementErrorComponent
             ? React.createElement(elementErrorComponent, {
                 error: this.props.getScreenState().elementError,
-                onPressClose: () => this.setScreenState({ elementError: null }),
+                onPressClose: () =>
+                  this.props.setScreenState({ elementError: null }),
                 onPressReload: () => this.reload(),
               })
             : null}
@@ -255,7 +249,7 @@ export default class HvScreen extends React.Component {
   updateCallbacks = {
     clearElementError: () => {
       if (this.props.getScreenState().elementError) {
-        this.setScreenState({ elementError: null });
+        this.props.setScreenState({ elementError: null });
       }
     },
     getDoc: () => this.props.getLocalDoc(),
@@ -266,7 +260,7 @@ export default class HvScreen extends React.Component {
       this.needsLoad = true;
     },
     setState: state => {
-      this.setScreenState(state);
+      this.props.setScreenState(state);
     },
   };
 

@@ -153,12 +153,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     setNeedsLoad: () => {
       this.needsLoad = true;
     },
-    setState: (state: ScreenState) => {
-      if (state.doc) {
-        this.props.setLocalDoc(state.doc);
-      }
-      this.props.setScreenState(state);
-    },
+    setState: (state: ScreenState) => this.props.setScreenState(state),
   };
 
   onUpdate = (
@@ -272,13 +267,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     return (
       <HvDoc doc={localDoc} route={route}>
         <StateContext.Consumer>
-          {({
-            getLocalDoc,
-            getScreenState,
-            loadUrl,
-            setLocalDoc,
-            setScreenState,
-          }) => (
+          {({ getLocalDoc, getScreenState, loadUrl, setScreenState }) => (
             <Contexts.DateFormatContext.Consumer>
               {formatter => (
                 <HvScreen
@@ -301,7 +290,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
                   reload={this.props.reload}
                   removeElement={this.props.removeElement}
                   route={route}
-                  setLocalDoc={setLocalDoc}
                   setScreenState={setScreenState}
                   url={url || undefined}
                 />
@@ -346,12 +334,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
           <Contexts.DocContext.Provider
             value={{
               getDoc: () => this.props.getLocalDoc() || undefined,
-              setDoc: (doc: Document) => {
-                if (doc !== null) {
-                  this.props.setLocalDoc(doc);
-                }
-                this.props.setScreenState({ doc });
-              },
+              setDoc: (doc: Document) => this.props.setScreenState({ doc }),
             }}
           >
             <Contexts.OnUpdateContext.Provider
@@ -631,13 +614,7 @@ function HvRouteFC(props: Types.Props) {
   return (
     <HvDoc element={element}>
       <StateContext.Consumer>
-        {({
-          getLocalDoc,
-          getScreenState,
-          loadUrl,
-          setLocalDoc,
-          setScreenState,
-        }) => (
+        {({ getLocalDoc, getScreenState, loadUrl, setScreenState }) => (
           <HvRouteInner
             behaviors={navigationContext.behaviors}
             components={navigationContext.components}
@@ -662,7 +639,6 @@ function HvRouteFC(props: Types.Props) {
             removeElement={elemenCacheContext.removeElement}
             route={props.route}
             setElement={elemenCacheContext.setElement}
-            setLocalDoc={setLocalDoc}
             setScreenState={setScreenState}
             url={url}
           />
