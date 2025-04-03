@@ -79,7 +79,7 @@ const HvDoc = (props: Props) => {
   const loadUrl = useCallback(
     async (url?: string) => {
       // Updates the state and calls the error handler
-      const handleError = (err: Error) => {
+      const handleError = (err: Error, u?: string | null) => {
         try {
           if (navigationContext.onError) {
             navigationContext.onError(err);
@@ -88,13 +88,14 @@ const HvDoc = (props: Props) => {
           setState(prev => ({
             ...prev,
             error: err,
+            url: u ?? prev.url,
           }));
         }
       };
 
       const targetUrl = url ?? state.url;
       if (!targetUrl) {
-        handleError(new HvDocError('No URL provided'));
+        handleError(new HvDocError('No URL provided'), targetUrl);
         return;
       }
 
@@ -136,12 +137,12 @@ const HvDoc = (props: Props) => {
         } else {
           // Invalid document
           localDoc.current = undefined;
-          handleError(new HvDocError('No root element found'));
+          handleError(new HvDocError('No root element found'), targetUrl);
         }
       } catch (err: unknown) {
         // Error
         localDoc.current = undefined;
-        handleError(err as Error);
+        handleError(err as Error, targetUrl);
       }
     },
     [navigationContext, parser, props.route?.params.delay, state.url],
