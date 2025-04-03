@@ -13,7 +13,6 @@ import {
   BackBehaviorProvider,
 } from 'hyperview/src/contexts/back-behaviors';
 import HvDoc, { StateContext } from 'hyperview/src/core/components/hv-doc';
-import type { NavigationRouteParams, ScreenState } from 'hyperview/src/types';
 import React, {
   JSXElementConstructor,
   PureComponent,
@@ -23,9 +22,9 @@ import React, {
 import HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import LoadError from 'hyperview/src/core/components/load-error';
 import Loading from 'hyperview/src/core/components/loading';
 import { NavigationContainerRefContext } from '@react-navigation/native';
+import type { ScreenState } from 'hyperview/src/types';
 
 /**
  * Implementation of an HvRoute component
@@ -185,27 +184,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
                 this.props.route.params.routeId,
               )
             : undefined;
-        }}
-      />
-    );
-  };
-
-  /**
-   * View shown when there is an error
-   */
-  Error = (props: { error: Error | null | undefined }): React.ReactElement => {
-    const ErrorScreen = this.props.errorScreen || LoadError;
-    return (
-      <ErrorScreen
-        back={() =>
-          this.props.navigator.backAction({} as NavigationRouteParams)
-        }
-        error={props.error}
-        onPressReload={() => this.load()}
-        onPressViewDetails={(uri: string | undefined) => {
-          this.props.navigator.openModalAction({
-            url: uri as string,
-          } as NavigationRouteParams);
         }}
       />
     );
@@ -384,25 +362,16 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
   };
 
   render() {
-    const { Error: Err, Load, Content } = this;
-    try {
-      if (this.props.getScreenState().error) {
-        return <Err error={this.props.getScreenState().error} />;
-      }
-      if (
-        this.props.element ||
-        this.props.getLocalDoc() ||
-        this.props.route?.params?.isModal
-      ) {
-        return <Content />;
-      }
-      return <Load />;
-    } catch (err) {
-      if (this.props.onError) {
-        this.props.onError(err as Error);
-      }
-      return <Err error={err as Error} />;
+    const { Load, Content } = this;
+
+    if (
+      this.props.element ||
+      this.props.getLocalDoc() ||
+      this.props.route?.params?.isModal
+    ) {
+      return <Content />;
     }
+    return <Load />;
   }
 }
 
@@ -626,7 +595,6 @@ function HvRouteFC(props: Types.Props) {
             onParseBefore={navigationContext.onParseBefore}
             onUpdate={onUpdate}
             onUpdateCallbacks={onUpdateCallbacks}
-            reload={navigationContext.reload}
             removeElement={elemenCacheContext.removeElement}
             route={props.route}
             setElement={elemenCacheContext.setElement}
