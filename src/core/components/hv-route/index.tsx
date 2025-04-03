@@ -12,14 +12,8 @@ import {
   BackBehaviorContext,
   BackBehaviorProvider,
 } from 'hyperview/src/contexts/back-behaviors';
-import type {
-  DOMString,
-  HvComponentOptions,
-  NavigationRouteParams,
-  OnUpdateCallbacks,
-  ScreenState,
-} from 'hyperview/src/types';
 import HvDoc, { StateContext } from 'hyperview/src/core/components/hv-doc';
+import type { NavigationRouteParams, ScreenState } from 'hyperview/src/types';
 import React, {
   JSXElementConstructor,
   PureComponent,
@@ -49,6 +43,9 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     super(props);
     this.componentRegistry = new Components.Registry(this.props.components);
     this.needsLoad = false;
+    this.props.setNeedsLoadCallback(() => {
+      this.needsLoad = true;
+    });
   }
 
   componentDidMount() {
@@ -137,35 +134,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     throw new NavigatorService.HvRenderError(
       'No <screen> or <navigator> element found',
     );
-  };
-
-  /**
-   * Implement the callbacks from this class
-   */
-  updateCallbacks: OnUpdateCallbacks = {
-    clearElementError: () => {
-      // Noop
-    },
-    getDoc: () => this.props.getLocalDoc(),
-    getNavigation: () => this.props.navigator,
-    getOnUpdate: () => this.onUpdate,
-    getState: () => this.props.getScreenState(),
-    setNeedsLoad: () => {
-      this.needsLoad = true;
-    },
-    setState: (state: ScreenState) => this.props.setScreenState(state),
-  };
-
-  onUpdate = (
-    href: DOMString | null | undefined,
-    action: DOMString | null | undefined,
-    element: Element,
-    options: HvComponentOptions,
-  ) => {
-    this.props.onUpdate(href, action, element, {
-      ...options,
-      onUpdateCallbacks: this.updateCallbacks,
-    });
   };
 
   /**
@@ -339,12 +307,12 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
           >
             <Contexts.OnUpdateContext.Provider
               value={{
-                onUpdate: this.onUpdate,
+                onUpdate: this.props.onUpdate,
               }}
             >
               <HvNavigator
                 element={renderElement}
-                onUpdate={this.onUpdate}
+                onUpdate={this.props.onUpdate}
                 params={this.props.route?.params}
                 routeComponent={HvRoute}
               />
@@ -612,9 +580,17 @@ function HvRouteFC(props: Types.Props) {
   }, [nav, props.route, backContext, docContext, navigationContext]);
 
   return (
-    <HvDoc element={element}>
+    <HvDoc element={element} navigationProvider={navigator}>
       <StateContext.Consumer>
-        {({ getLocalDoc, getScreenState, loadUrl, setScreenState }) => (
+        {({
+          getLocalDoc,
+          getScreenState,
+          loadUrl,
+          onUpdate,
+          onUpdateCallbacks,
+          setNeedsLoadCallback,
+          setScreenState,
+        }) => (
           <HvRouteInner
             behaviors={navigationContext.behaviors}
             components={navigationContext.components}
@@ -634,11 +610,13 @@ function HvRouteFC(props: Types.Props) {
             onError={navigationContext.onError}
             onParseAfter={navigationContext.onParseAfter}
             onParseBefore={navigationContext.onParseBefore}
-            onUpdate={navigationContext.onUpdate}
+            onUpdate={onUpdate}
+            onUpdateCallbacks={onUpdateCallbacks}
             reload={navigationContext.reload}
             removeElement={elemenCacheContext.removeElement}
             route={props.route}
             setElement={elemenCacheContext.setElement}
+            setNeedsLoadCallback={setNeedsLoadCallback}
             setScreenState={setScreenState}
             url={url}
           />

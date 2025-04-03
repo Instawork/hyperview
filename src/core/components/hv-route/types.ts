@@ -6,6 +6,7 @@ import {
   HvBehavior,
   HvComponent,
   HvComponentOnUpdate,
+  OnUpdateCallbacks,
   Reload,
   Route,
   RouteParams,
@@ -53,6 +54,7 @@ export type InnerRouteProps = {
   onParseAfter?: (url: string) => void;
   onParseBefore?: (url: string) => void;
   onUpdate: HvComponentOnUpdate;
+  onUpdateCallbacks: OnUpdateCallbacks;
   behaviors?: HvBehavior[];
   components?: HvComponent[];
   elementErrorComponent?: ComponentType<ErrorProps>;
@@ -67,6 +69,7 @@ export type InnerRouteProps = {
   getLocalDoc: () => Document | null;
   getScreenState: () => ScreenState;
   setScreenState: (state: ScreenState) => void;
+  setNeedsLoadCallback: (callback: () => void) => void;
   loadUrl: (url?: string) => void;
 };
 
