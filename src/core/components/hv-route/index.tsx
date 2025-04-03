@@ -233,9 +233,21 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     }, [propsLocalDoc]);
 
     return (
-      <HvDoc doc={localDoc} route={route}>
+      <HvDoc
+        doc={localDoc}
+        navigationProvider={this.props.navigator}
+        route={route}
+      >
         <StateContext.Consumer>
-          {({ getLocalDoc, getScreenState, loadUrl, setScreenState }) => (
+          {({
+            getLocalDoc,
+            getScreenState,
+            loadUrl,
+            onUpdate,
+            onUpdateCallbacks,
+            setNeedsLoadCallback,
+            setScreenState,
+          }) => (
             <Contexts.DateFormatContext.Consumer>
               {formatter => (
                 <HvScreen
@@ -254,10 +266,12 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
                   onError={this.props.onError}
                   onParseAfter={this.props.onParseAfter}
                   onParseBefore={this.props.onParseBefore}
-                  onUpdate={this.props.onUpdate}
+                  onUpdate={onUpdate}
+                  onUpdateCallbacks={onUpdateCallbacks}
                   reload={this.props.reload}
                   removeElement={this.props.removeElement}
                   route={route}
+                  setNeedsLoadCallback={setNeedsLoadCallback}
                   setScreenState={setScreenState}
                   url={url || undefined}
                 />
