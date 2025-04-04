@@ -234,17 +234,12 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
                   components={this.props.components}
                   elementErrorComponent={this.props.elementErrorComponent}
                   entrypointUrl={this.props.entrypointUrl}
-                  errorScreen={this.props.errorScreen}
-                  fetch={this.props.fetch}
                   formatDate={formatter}
                   getElement={this.props.getElement}
                   getLocalDoc={getLocalDoc}
                   getScreenState={getScreenState}
                   loadUrl={loadUrl}
                   navigation={this.props.navigator}
-                  onError={this.props.onError}
-                  onParseAfter={this.props.onParseAfter}
-                  onParseBefore={this.props.onParseBefore}
                   onUpdate={onUpdate}
                   onUpdateCallbacks={onUpdateCallbacks}
                   reload={reload}
@@ -252,7 +247,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
                   route={route}
                   setNeedsLoadCallback={setNeedsLoadCallback}
                   setScreenState={setScreenState}
-                  url={url || undefined}
                 />
               )}
             </Contexts.DateFormatContext.Consumer>
@@ -582,8 +576,6 @@ function HvRouteFC(props: Types.Props) {
             element={element}
             elementErrorComponent={navigationContext.elementErrorComponent}
             entrypointUrl={navigationContext.entrypointUrl}
-            errorScreen={navigationContext.errorScreen}
-            fetch={navigationContext.fetch}
             getElement={elemenCacheContext.getElement}
             getLocalDoc={getLocalDoc}
             getScreenState={getScreenState}
@@ -591,9 +583,6 @@ function HvRouteFC(props: Types.Props) {
             loadUrl={loadUrl}
             navigation={nav}
             navigator={navigator}
-            onError={navigationContext.onError}
-            onParseAfter={navigationContext.onParseAfter}
-            onParseBefore={navigationContext.onParseBefore}
             onUpdate={onUpdate}
             onUpdateCallbacks={onUpdateCallbacks}
             removeElement={elemenCacheContext.removeElement}

@@ -19,6 +19,12 @@ export type Props = Omit<
   | 'loadingScreen'
   | 'handleBack'
   | 'logger'
+  | 'errorScreen'
+  | 'fetch'
+  | 'onError'
+  | 'onParseAfter'
+  | 'onParseBefore'
+  | 'url'
 > & {
   getElement?: (id: number) => Element | undefined;
   navigation: NavigationProvider;

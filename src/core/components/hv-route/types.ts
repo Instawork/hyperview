@@ -49,16 +49,11 @@ export type InnerRouteProps = {
   navigator: NavigatorService.Navigator;
   route?: NavigatorService.Route<string, RouteParams>;
   entrypointUrl: string;
-  fetch: Fetch;
-  onError?: (error: Error) => void;
-  onParseAfter?: (url: string) => void;
-  onParseBefore?: (url: string) => void;
   onUpdate: HvComponentOnUpdate;
   onUpdateCallbacks: OnUpdateCallbacks;
   behaviors?: HvBehavior[];
   components?: HvComponent[];
   elementErrorComponent?: ComponentType<ErrorProps>;
-  errorScreen?: ComponentType<ErrorProps>;
   handleBack?: ComponentType<{ children: ReactNode }>;
   setElement: (key: number, element: Element) => void;
   getElement: (key: number) => Element | undefined;
