@@ -10,7 +10,6 @@ import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import { createProps, createStyleProp } from 'hyperview/src/services';
 import { HvScreenRenderError } from './errors';
 import LoadElementError from '../load-element-error';
-import LoadError from 'hyperview/src/core/components/load-error';
 import Loading from 'hyperview/src/core/components/loading';
 import React from 'react';
 
@@ -163,33 +162,9 @@ export default class HvScreen extends React.Component {
   };
 
   /**
-   * Reload if an error occured using the screen's current URL
-   */
-  reload = () => {
-    this.props.reload(this.props.getScreenState().url, {
-      onUpdateCallbacks: this.props.updateCallbacks,
-    });
-  };
-
-  Error = ({ error }) => {
-    const errorScreen = this.props.errorScreen || LoadError;
-    return React.createElement(errorScreen, {
-      back: () => this.props.navigation.backAction(),
-      error,
-      onPressReload: () => this.reload(), // Make sure reload() is called without any args
-      onPressViewDetails: uri =>
-        this.props.navigation.openModalAction({ url: uri }),
-    });
-  };
-
-  /**
    * Renders the XML doc into React components. Shows blank screen until the XML doc is available.
    */
   render() {
-    const { Error } = this;
-    if (this.props.getScreenState().error) {
-      return <Error error={this.props.getScreenState().error} />;
-    }
     if (!this.props.getScreenState().doc) {
       return <Loading cachedId={this.props.route?.params?.behaviorElementId} />;
     }
@@ -216,11 +191,7 @@ export default class HvScreen extends React.Component {
       );
     }
     if (!screenElement) {
-      return (
-        <Error
-          error={new HvScreenRenderError('The document has no content.')}
-        />
-      );
+      throw new HvScreenRenderError('The document has no content.');
     }
 
     return (
@@ -235,7 +206,7 @@ export default class HvScreen extends React.Component {
                 error: this.props.getScreenState().elementError,
                 onPressClose: () =>
                   this.props.setScreenState({ elementError: null }),
-                onPressReload: () => this.reload(),
+                onPressReload: () => this.props.reload(),
               })
             : null}
           <Scroll.Provider>{screenElement}</Scroll.Provider>

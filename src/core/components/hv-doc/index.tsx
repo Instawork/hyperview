@@ -8,9 +8,11 @@ import {
   DOMString,
   HvComponentOptions,
   LOCAL_NAME,
+  NavigationRouteParams,
   OnUpdateCallbacks,
   ScreenState,
 } from 'hyperview/src/types';
+import { ErrorProps, Props } from './types';
 import React, {
   useCallback,
   useContext,
@@ -19,7 +21,7 @@ import React, {
   useState,
 } from 'react';
 import { HvDocError } from './errors';
-import { Props } from './types';
+import LoadError from 'hyperview/src/core/components/load-error';
 import { StateContext } from './context';
 import { later } from 'hyperview/src/services';
 
@@ -79,7 +81,7 @@ const HvDoc = (props: Props) => {
   const loadUrl = useCallback(
     async (url?: string) => {
       // Updates the state and calls the error handler
-      const handleError = (err: Error) => {
+      const handleError = (err: Error, u?: string | null) => {
         try {
           if (navigationContext.onError) {
             navigationContext.onError(err);
@@ -88,13 +90,14 @@ const HvDoc = (props: Props) => {
           setState(prev => ({
             ...prev,
             error: err,
+            url: u ?? prev.url,
           }));
         }
       };
 
       const targetUrl = url ?? state.url;
       if (!targetUrl) {
-        handleError(new HvDocError('No URL provided'));
+        handleError(new HvDocError('No URL provided'), targetUrl);
         return;
       }
 
@@ -136,12 +139,12 @@ const HvDoc = (props: Props) => {
         } else {
           // Invalid document
           localDoc.current = undefined;
-          handleError(new HvDocError('No root element found'));
+          handleError(new HvDocError('No root element found'), targetUrl);
         }
       } catch (err: unknown) {
         // Error
         localDoc.current = undefined;
-        handleError(err as Error);
+        handleError(err as Error, targetUrl);
       }
     },
     [navigationContext, parser, props.route?.params.delay, state.url],
@@ -187,6 +190,12 @@ const HvDoc = (props: Props) => {
       setState: setScreenState,
     };
 
+    const reload = (url?: string | null) => {
+      navigationContext.reload(url, {
+        onUpdateCallbacks,
+      });
+    };
+
     const onUpdate = (
       href: DOMString | null | undefined,
       action: DOMString | null | undefined,
@@ -205,6 +214,7 @@ const HvDoc = (props: Props) => {
       loadUrl,
       onUpdate,
       onUpdateCallbacks,
+      reload,
       setNeedsLoadCallback: (callback: () => void) => {
         needsLoadCallback.current = callback;
       },
@@ -220,9 +230,40 @@ const HvDoc = (props: Props) => {
     state.elementError,
   ]);
 
+  /**
+   * View shown when there is an error
+   */
+  const Err = (p: ErrorProps): React.ReactElement => {
+    const { error, navigationProvider, url } = p;
+    const ErrorScreen = navigationContext.errorScreen || LoadError;
+    return (
+      <ErrorScreen
+        back={() => navigationProvider?.backAction({} as NavigationRouteParams)}
+        error={error}
+        onPressReload={() => contextValue.reload(url)}
+        onPressViewDetails={(u: string | undefined) => {
+          if (u) {
+            navigationProvider?.openModalAction({
+              url: u,
+            } as NavigationRouteParams);
+          }
+        }}
+      />
+    );
+  };
+
   return (
     <StateContext.Provider value={contextValue}>
-      {props.children}
+      {state.error ? (
+        //  Render the state error
+        <Err
+          error={state.error}
+          navigationProvider={props.navigationProvider}
+          url={state.url ?? props.route?.params.url}
+        />
+      ) : (
+        props.children
+      )}
     </StateContext.Provider>
   );
 };

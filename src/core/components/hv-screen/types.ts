@@ -3,7 +3,6 @@ import type {
   HvComponentOnUpdate,
   NavigationProvider,
   OnUpdateCallbacks,
-  Reload,
   ScreenState,
 } from 'hyperview/src/types';
 import { Props as HvRootProps } from 'hyperview/src/core/components/hv-root/types';
@@ -20,12 +19,18 @@ export type Props = Omit<
   | 'loadingScreen'
   | 'handleBack'
   | 'logger'
+  | 'errorScreen'
+  | 'fetch'
+  | 'onError'
+  | 'onParseAfter'
+  | 'onParseBefore'
+  | 'url'
 > & {
   getElement?: (id: number) => Element | undefined;
   navigation: NavigationProvider;
   onUpdate: HvComponentOnUpdate;
   onUpdateCallbacks: OnUpdateCallbacks;
-  reload: Reload;
+  reload: (url?: string | null) => void;
   removeElement?: (id: number) => void;
   route?: NavigatorService.Route<string, { url?: string }>;
   url?: string;

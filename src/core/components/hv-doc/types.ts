@@ -27,6 +27,13 @@ export type StateContextProps = {
   loadUrl: (url?: string) => void;
   onUpdate: HvComponentOnUpdate;
   onUpdateCallbacks: OnUpdateCallbacks;
+  reload: (url?: string | null) => void;
   setNeedsLoadCallback: (callback: () => void) => void;
   setScreenState: (state: ScreenState) => void;
+};
+
+export type ErrorProps = {
+  error: Error | null | undefined;
+  navigationProvider?: NavigationProvider;
+  url: string | null | undefined;
 };
