@@ -27,12 +27,13 @@ export default class HvScreen extends React.Component {
   constructor(props) {
     super(props);
 
-    this.onUpdate = this.onUpdate.bind(this);
-
     this.needsLoad = false;
 
     this.behaviorRegistry = Behaviors.getRegistry(this.props.behaviors);
     this.componentRegistry = new Components.Registry(this.props.components);
+    this.props.setNeedsLoadCallback(() => {
+      this.needsLoad = true;
+    });
   }
 
   getRoute = props => {
@@ -166,7 +167,7 @@ export default class HvScreen extends React.Component {
    */
   reload = () => {
     this.props.reload(this.props.getScreenState().url, {
-      onUpdateCallbacks: this.updateCallbacks,
+      onUpdateCallbacks: this.props.updateCallbacks,
     });
   };
 
@@ -205,10 +206,10 @@ export default class HvScreen extends React.Component {
       screenElement = Render.renderElement(
         body,
         this.props.getScreenState().styles,
-        this.onUpdate,
+        this.props.onUpdate,
         {
           componentRegistry: this.componentRegistry,
-          onUpdateCallbacks: this.updateCallbacks,
+          onUpdateCallbacks: this.props.onUpdateCallbacks,
           screenUrl: this.props.getScreenState().url,
           staleHeaderType: this.props.getScreenState().staleHeaderType,
         },
@@ -242,37 +243,6 @@ export default class HvScreen extends React.Component {
       </Contexts.DocContext.Provider>
     );
   }
-
-  /**
-   * Implement the callbacks from this class
-   */
-  updateCallbacks = {
-    clearElementError: () => {
-      if (this.props.getScreenState().elementError) {
-        this.props.setScreenState({ elementError: null });
-      }
-    },
-    getDoc: () => this.props.getLocalDoc(),
-    getNavigation: () => this.props.navigation,
-    getOnUpdate: () => this.onUpdate,
-    getState: () => this.props.getScreenState(),
-    setNeedsLoad: () => {
-      this.needsLoad = true;
-    },
-    setState: state => {
-      this.props.setScreenState(state);
-    },
-  };
-
-  /**
-   *
-   */
-  onUpdate = (href, action, currentElement, opts) => {
-    this.props.onUpdate(href, action, currentElement, {
-      ...opts,
-      onUpdateCallbacks: this.updateCallbacks,
-    });
-  };
 }
 
 export * from 'hyperview/src/types';

@@ -4,7 +4,13 @@ import * as NavigationContext from 'hyperview/src/contexts/navigation';
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as UrlService from 'hyperview/src/services/url';
-import { LOCAL_NAME, ScreenState } from 'hyperview/src/types';
+import {
+  DOMString,
+  HvComponentOptions,
+  LOCAL_NAME,
+  OnUpdateCallbacks,
+  ScreenState,
+} from 'hyperview/src/types';
 import React, {
   useCallback,
   useContext,
@@ -141,24 +147,78 @@ const HvDoc = (props: Props) => {
     [navigationContext, parser, props.route?.params.delay, state.url],
   );
 
-  const contextValue = useMemo(
-    () => ({
-      getLocalDoc: () => localDoc.current ?? null,
-      getScreenState: () => state,
-      loadUrl,
-      setScreenState: (newState: ScreenState) => {
-        if (newState.doc !== undefined) {
-          localDoc.current = newState.doc;
-        }
-        setState(prev => ({
-          ...prev,
-          ...newState,
-          doc: props.element ? null : newState.doc ?? prev.doc,
-        }));
-      },
-    }),
-    [loadUrl, props.element, state],
+  const needsLoadCallback = useRef(() => {
+    // Noop
+  });
+  const getScreenState = useCallback(() => state, [state]);
+  const getDoc = useCallback(() => localDoc.current ?? null, [localDoc]);
+  const getNavigation = useCallback(() => props.navigationProvider, [
+    props.navigationProvider,
+  ]);
+  const setScreenState = useCallback(
+    (newState: ScreenState) => {
+      if (newState.doc !== undefined) {
+        localDoc.current = newState.doc;
+      }
+      setState(prev => ({
+        ...prev,
+        ...newState,
+        doc: props.element ? null : newState.doc ?? prev.doc,
+      }));
+    },
+    [props.element],
   );
+
+  const contextValue = useMemo(() => {
+    const onUpdateCallbacks: OnUpdateCallbacks = {
+      clearElementError: () => {
+        if (state.elementError) {
+          setState(prev => ({
+            ...prev,
+            elementError: null,
+          }));
+        }
+      },
+      getDoc,
+      getNavigation,
+      getOnUpdate: () => onUpdate,
+      getState: getScreenState,
+      setNeedsLoad: needsLoadCallback.current,
+      setState: setScreenState,
+    };
+
+    const onUpdate = (
+      href: DOMString | null | undefined,
+      action: DOMString | null | undefined,
+      element: Element,
+      options: HvComponentOptions,
+    ) => {
+      navigationContext.onUpdate(href, action, element, {
+        ...options,
+        onUpdateCallbacks,
+      });
+    };
+
+    return {
+      getLocalDoc: getDoc,
+      getScreenState,
+      loadUrl,
+      onUpdate,
+      onUpdateCallbacks,
+      setNeedsLoadCallback: (callback: () => void) => {
+        needsLoadCallback.current = callback;
+      },
+      setScreenState,
+    };
+  }, [
+    getDoc,
+    getNavigation,
+    getScreenState,
+    loadUrl,
+    navigationContext,
+    setScreenState,
+    state.elementError,
+  ]);
 
   return (
     <StateContext.Provider value={contextValue}>
