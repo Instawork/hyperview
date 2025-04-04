@@ -8,6 +8,7 @@ import { Map, MapMarker } from './Map';
 import { Filter } from './Filter';
 import { NavBack } from './NavBack';
 import { ProgressBar } from './ProgressBar';
+import { SafeAreaView } from './SafeAreaView';
 import { ScrollOpacity } from './ScrollOpacity';
 import { Svg } from './Svg';
 
@@ -22,6 +23,7 @@ export default [
   MapMarker,
   NavBack,
   ProgressBar,
+  SafeAreaView,
   ScrollOpacity,
   Svg,
 ];

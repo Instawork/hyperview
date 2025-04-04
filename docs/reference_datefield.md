@@ -41,6 +41,9 @@ A `<date-field>` element can appear anywhere within a `<form>` element.
 - [`modal-text-style`](#modal-text-style)
 - [`id`](#id)
 - [`hide`](#hide)
+- [`allowFontScaling`](#allowFontScaling)
+- [`maxFontSizeMultiplier`](#maxFontSizeMultiplier)
+- [`minimumFontScale`](#minimumFontScale)
 
 #### Behavior attributes
 
@@ -193,3 +196,27 @@ A global attribute uniquely identifying the element in the whole document.
 | **false** (default), true | No       |
 
 If `hide="true"`, the element will not be rendered on screen. If the element or any of the element's children have a behavior that triggers on "load" or "visible", those behaviors will not trigger while the element is hidden.
+
+#### `allowFontScaling`
+
+| Type    | Required |
+| ------- | -------- |
+| boolean | No       |
+
+Specifies whether fonts should scale to respect Text Size accessibility setting
+
+#### `maxFontSizeMultiplier`
+
+| Type   | Required |
+| ------ | -------- |
+| number | No       |
+
+Specifies whether fonts should scale to respect Text Size accessibility setting
+
+#### `minimumFontScale` (iOS)
+
+| Type   | Required |
+| ------ | -------- |
+| number | No       |
+
+Specifies the smallest possible scale a font can reach when adjustsFontSizeToFit is enabled. (values 0.01-1.0).

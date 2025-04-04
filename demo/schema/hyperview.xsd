@@ -7,6 +7,7 @@
   xmlns:alert="https://hyperview.org/hyperview-alert"
   xmlns:filter="https://hyperview.org/filter"
   xmlns:nav="https://hyperview.org/navigation"
+  xmlns:safe-area="https://hyperview.org/safe-area"
   xmlns:scroll="https://hyperview.org/hyperview-scroll"
   xmlns:share="https://hyperview.org/share"
 >
@@ -37,6 +38,10 @@
   <xs:import
     namespace="https://hyperview.org/progress-bar"
     schemaLocation="progress-bar.xsd"
+  />
+  <xs:import
+    namespace="https://hyperview.org/safe-area"
+    schemaLocation="safe-area.xsd"
   />
   <xs:import
     namespace="https://hyperview.org/scroll-opacity"

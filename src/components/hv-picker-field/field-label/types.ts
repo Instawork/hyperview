@@ -1,11 +1,14 @@
-import type { DOMString, StyleSheet } from 'hyperview/src/types';
+import type {
+  DOMString,
+  HvComponentOptions,
+  StyleSheets,
+} from 'hyperview/src/types';
 
 export type Props = {
+  element: Element;
   focused: boolean;
-  labelFormat: string | null | undefined;
-  placeholder: string | null | undefined;
-  placeholderTextColor: string | null | undefined;
+  options: HvComponentOptions;
   pressed: boolean;
-  style: StyleSheet;
+  stylesheets: StyleSheets;
   value: DOMString | null | undefined;
 };
