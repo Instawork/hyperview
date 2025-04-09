@@ -158,6 +158,7 @@ const HvDoc = (props: Props) => {
   const getNavigation = useCallback(() => props.navigationProvider, [
     props.navigationProvider,
   ]);
+  const hasElement = !!props.element;
   const setScreenState = useCallback(
     (newState: ScreenState) => {
       if (newState.doc !== undefined) {
@@ -166,10 +167,10 @@ const HvDoc = (props: Props) => {
       setState(prev => ({
         ...prev,
         ...newState,
-        doc: props.element ? null : newState.doc ?? prev.doc,
+        doc: hasElement ? null : newState.doc ?? prev.doc,
       }));
     },
-    [props.element],
+    [hasElement],
   );
 
   const contextValue = useMemo(() => {
