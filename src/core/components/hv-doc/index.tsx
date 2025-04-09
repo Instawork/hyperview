@@ -173,8 +173,34 @@ const HvDoc = (props: Props) => {
     [hasElement],
   );
 
+  const onUpdateCallbacksRef = useRef<OnUpdateCallbacks>();
+
+  const onUpdate = useCallback(
+    (
+      href: DOMString | null | undefined,
+      action: DOMString | null | undefined,
+      element: Element,
+      options: HvComponentOptions,
+    ) => {
+      navigationContext.onUpdate(href, action, element, {
+        ...options,
+        onUpdateCallbacks: onUpdateCallbacksRef.current,
+      });
+    },
+    [navigationContext],
+  );
+
+  const reload = useCallback(
+    (url?: string | null) => {
+      navigationContext.reload(url, {
+        onUpdateCallbacks: onUpdateCallbacksRef.current,
+      });
+    },
+    [navigationContext],
+  );
+
   const contextValue = useMemo(() => {
-    const onUpdateCallbacks: OnUpdateCallbacks = {
+    onUpdateCallbacksRef.current = {
       clearElementError: () => {
         if (state.elementError) {
           setState(prev => ({
@@ -191,30 +217,12 @@ const HvDoc = (props: Props) => {
       setState: setScreenState,
     };
 
-    const reload = (url?: string | null) => {
-      navigationContext.reload(url, {
-        onUpdateCallbacks,
-      });
-    };
-
-    const onUpdate = (
-      href: DOMString | null | undefined,
-      action: DOMString | null | undefined,
-      element: Element,
-      options: HvComponentOptions,
-    ) => {
-      navigationContext.onUpdate(href, action, element, {
-        ...options,
-        onUpdateCallbacks,
-      });
-    };
-
     return {
       getLocalDoc: getDoc,
       getScreenState,
       loadUrl,
       onUpdate,
-      onUpdateCallbacks,
+      onUpdateCallbacks: onUpdateCallbacksRef.current,
       reload,
       setNeedsLoadCallback: (callback: () => void) => {
         needsLoadCallback.current = callback;
@@ -226,7 +234,8 @@ const HvDoc = (props: Props) => {
     getNavigation,
     getScreenState,
     loadUrl,
-    navigationContext,
+    onUpdate,
+    reload,
     setScreenState,
     state.elementError,
   ]);
