@@ -188,13 +188,14 @@ export default class HvNavigator extends PureComponent<Props> {
     id: string,
     type: string,
     href: string | undefined,
-    isModal: boolean,
+    needsSubStack: boolean,
     isFirstScreen = false,
     routeId?: string | undefined,
+    isModal = false,
   ): React.ReactElement => {
     const initialParams = NavigatorService.isDynamicRoute(id)
       ? {}
-      : { id, isModal, routeId, url: href };
+      : { id, isModal, needsSubStack, routeId, url: href };
     if (type === NavigatorService.NAVIGATOR_TYPE.TAB) {
       return (
         <BottomTab.Screen
@@ -206,7 +207,7 @@ export default class HvNavigator extends PureComponent<Props> {
       );
     }
     if (type === NavigatorService.NAVIGATOR_TYPE.STACK) {
-      const gestureEnabled = Platform.OS === 'ios' ? !isModal : false;
+      const gestureEnabled = Platform.OS === 'ios' ? !needsSubStack : false;
       return (
         <Stack.Screen
           key={id}
@@ -216,11 +217,11 @@ export default class HvNavigator extends PureComponent<Props> {
           name={id}
           options={{
             animationEnabled: !isFirstScreen,
-            cardStyleInterpolator: isModal
+            cardStyleInterpolator: needsSubStack
               ? NavigatorService.CardStyleInterpolators.forVerticalIOS
               : undefined,
             gestureEnabled,
-            presentation: isModal
+            presentation: needsSubStack
               ? NavigatorService.ID_MODAL
               : NavigatorService.ID_CARD,
           }}
@@ -308,6 +309,7 @@ export default class HvNavigator extends PureComponent<Props> {
             isModal,
             index === 0,
             id,
+            isModal,
           ),
         );
       }
@@ -421,6 +423,7 @@ export default class HvNavigator extends PureComponent<Props> {
         false,
         false,
         this.props.params.id,
+        true,
       ),
     );
     screens.push(...this.buildDynamicScreens());
@@ -457,7 +460,7 @@ export default class HvNavigator extends PureComponent<Props> {
   };
 
   render() {
-    const Navigator = this.props.params?.isModal
+    const Navigator = this.props.params?.needsSubStack
       ? this.ModalNavigator
       : this.Navigator;
     return (
