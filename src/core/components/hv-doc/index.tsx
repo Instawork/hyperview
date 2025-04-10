@@ -35,6 +35,10 @@ const HvDoc = (props: Props) => {
   // Whenever we need to access the document for reasons other than rendering, we should use
   // `localDoc`. When rendering, we should use `document`.
   const localDoc = useRef<Document | null | undefined>(null);
+
+  // This is a temporary solution to ensure the url is available immediately while
+  // external components are still triggering the loadUrl callback
+  const localUrl = useRef<string | null | undefined>(null);
   // </HACK>
 
   const [state, setState] = useState<ScreenState>(() => {
@@ -110,9 +114,11 @@ const HvDoc = (props: Props) => {
           await later(delay);
         }
 
-        const { doc, staleHeaderType } = await parser.loadDocument(
-          UrlService.getUrlFromHref(targetUrl, navigationContext.entrypointUrl),
+        const fullUrl = UrlService.getUrlFromHref(
+          targetUrl,
+          navigationContext.entrypointUrl,
         );
+        const { doc, staleHeaderType } = await parser.loadDocument(fullUrl);
 
         const root = Helpers.getFirstChildTag(doc, LOCAL_NAME.DOC);
         if (root) {
@@ -127,6 +133,7 @@ const HvDoc = (props: Props) => {
             : doc;
 
           localDoc.current = document;
+          localUrl.current = fullUrl;
           const stylesheets = Stylesheets.createStylesheets(doc);
           setState(prev => ({
             ...prev,
@@ -153,27 +160,60 @@ const HvDoc = (props: Props) => {
   const needsLoadCallback = useRef(() => {
     // Noop
   });
-  const getScreenState = useCallback(() => state, [state]);
+  const getScreenState = useCallback(
+    () => ({ ...state, url: localUrl.current }),
+    [state],
+  );
   const getDoc = useCallback(() => localDoc.current ?? null, [localDoc]);
   const getNavigation = useCallback(() => props.navigationProvider, [
     props.navigationProvider,
   ]);
+  const hasElement = !!props.element;
   const setScreenState = useCallback(
     (newState: ScreenState) => {
       if (newState.doc !== undefined) {
         localDoc.current = newState.doc;
       }
+      if (newState.url !== undefined) {
+        localUrl.current = newState.url;
+      }
       setState(prev => ({
         ...prev,
         ...newState,
-        doc: props.element ? null : newState.doc ?? prev.doc,
+        doc: hasElement ? null : newState.doc ?? prev.doc,
       }));
     },
-    [props.element],
+    [hasElement],
+  );
+
+  const onUpdateCallbacksRef = useRef<OnUpdateCallbacks>();
+
+  const onUpdate = useCallback(
+    (
+      href: DOMString | null | undefined,
+      action: DOMString | null | undefined,
+      element: Element,
+      options: HvComponentOptions,
+    ) => {
+      navigationContext.onUpdate(href, action, element, {
+        ...options,
+        onUpdateCallbacks: onUpdateCallbacksRef.current,
+      });
+    },
+    [navigationContext],
+  );
+
+  const reload = useCallback(
+    (url?: string | null) => {
+      navigationContext.reload(url, {
+        onUpdateCallbacks: onUpdateCallbacksRef.current,
+      });
+    },
+    [navigationContext],
   );
 
   const contextValue = useMemo(() => {
-    const onUpdateCallbacks: OnUpdateCallbacks = {
+    onUpdateCallbacksRef.current = {
       clearElementError: () => {
         if (state.elementError) {
           setState(prev => ({
@@ -190,30 +230,12 @@ const HvDoc = (props: Props) => {
       setState: setScreenState,
     };
 
-    const reload = (url?: string | null) => {
-      navigationContext.reload(url, {
-        onUpdateCallbacks,
-      });
-    };
-
-    const onUpdate = (
-      href: DOMString | null | undefined,
-      action: DOMString | null | undefined,
-      element: Element,
-      options: HvComponentOptions,
-    ) => {
-      navigationContext.onUpdate(href, action, element, {
-        ...options,
-        onUpdateCallbacks,
-      });
-    };
-
     return {
       getLocalDoc: getDoc,
       getScreenState,
       loadUrl,
       onUpdate,
-      onUpdateCallbacks,
+      onUpdateCallbacks: onUpdateCallbacksRef.current,
       reload,
       setNeedsLoadCallback: (callback: () => void) => {
         needsLoadCallback.current = callback;
@@ -225,7 +247,8 @@ const HvDoc = (props: Props) => {
     getNavigation,
     getScreenState,
     loadUrl,
-    navigationContext,
+    onUpdate,
+    reload,
     setScreenState,
     state.elementError,
   ]);
