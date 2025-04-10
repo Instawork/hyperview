@@ -392,6 +392,7 @@ export type RouteParams = {
   preloadScreen?: number;
   isModal?: boolean;
   routeId?: string;
+  needsSubStack?: boolean;
 };
 
 export const ON_EVENT_DISPATCH = 'hyperview:on-event';

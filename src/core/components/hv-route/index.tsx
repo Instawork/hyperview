@@ -88,7 +88,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     // When a modal is included, a wrapper stack navigator is created
     // The route which contains the navigator should not load the document
     // The code below prevents the route from loading the document
-    if (this.props.route?.params?.isModal || !this.shouldReload()) {
+    if (this.props.route?.params?.needsSubStack || !this.shouldReload()) {
       return;
     }
 
@@ -262,15 +262,15 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
   Route = (): React.ReactElement => {
     const { Screen } = this;
 
-    const isModal = this.props.route?.params.isModal
-      ? this.props.route.params.isModal
+    const needsSubStack = this.props.route?.params.needsSubStack
+      ? this.props.route.params.needsSubStack
       : false;
 
-    const renderElement: Element | undefined = isModal
+    const renderElement: Element | undefined = needsSubStack
       ? undefined
       : this.getRenderElement();
 
-    if (!isModal) {
+    if (!needsSubStack) {
       if (!renderElement) {
         throw new NavigatorService.HvRenderError('No element found');
       }
@@ -280,7 +280,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       }
     }
 
-    if (isModal || renderElement?.localName === LOCAL_NAME.NAVIGATOR) {
+    if (needsSubStack || renderElement?.localName === LOCAL_NAME.NAVIGATOR) {
       if (this.props.getLocalDoc()) {
         // The <DocContext> provides doc access to nested navigators
         // The <UpdateContext> provides access to the onUpdate method for this route
@@ -342,7 +342,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
   Content = (): React.ReactElement => {
     if (
       this.props.element === undefined &&
-      !this.props.route?.params?.isModal
+      !this.props.route?.params?.needsSubStack
     ) {
       if (!this.props.url) {
         throw new NavigatorService.HvRouteError('No url received');
@@ -362,7 +362,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     if (
       this.props.element ||
       this.props.getLocalDoc() ||
-      this.props.route?.params?.isModal
+      this.props.route?.params?.needsSubStack
     ) {
       return <Content />;
     }
