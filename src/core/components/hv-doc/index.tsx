@@ -35,6 +35,10 @@ const HvDoc = (props: Props) => {
   // Whenever we need to access the document for reasons other than rendering, we should use
   // `localDoc`. When rendering, we should use `document`.
   const localDoc = useRef<Document | null | undefined>(null);
+
+  // This is a temporary solution to ensure the url is available immediately while
+  // external components are still triggering the loadUrl callback
+  const localUrl = useRef<string | null | undefined>(null);
   // </HACK>
 
   const [state, setState] = useState<ScreenState>(() => {
@@ -110,9 +114,11 @@ const HvDoc = (props: Props) => {
           await later(delay);
         }
 
-        const { doc, staleHeaderType } = await parser.loadDocument(
-          UrlService.getUrlFromHref(targetUrl, navigationContext.entrypointUrl),
+        const fullUrl = UrlService.getUrlFromHref(
+          targetUrl,
+          navigationContext.entrypointUrl,
         );
+        const { doc, staleHeaderType } = await parser.loadDocument(fullUrl);
 
         const root = Helpers.getFirstChildTag(doc, LOCAL_NAME.DOC);
         if (root) {
@@ -127,6 +133,7 @@ const HvDoc = (props: Props) => {
             : doc;
 
           localDoc.current = document;
+          localUrl.current = fullUrl;
           const stylesheets = Stylesheets.createStylesheets(doc);
           setState(prev => ({
             ...prev,
@@ -153,7 +160,10 @@ const HvDoc = (props: Props) => {
   const needsLoadCallback = useRef(() => {
     // Noop
   });
-  const getScreenState = useCallback(() => state, [state]);
+  const getScreenState = useCallback(
+    () => ({ ...state, url: localUrl.current }),
+    [state],
+  );
   const getDoc = useCallback(() => localDoc.current ?? null, [localDoc]);
   const getNavigation = useCallback(() => props.navigationProvider, [
     props.navigationProvider,
@@ -163,6 +173,9 @@ const HvDoc = (props: Props) => {
     (newState: ScreenState) => {
       if (newState.doc !== undefined) {
         localDoc.current = newState.doc;
+      }
+      if (newState.url !== undefined) {
+        localUrl.current = newState.url;
       }
       setState(prev => ({
         ...prev,
