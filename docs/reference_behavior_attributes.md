@@ -105,6 +105,16 @@ These elements support the `load` trigger:
 - [`<text>`](/docs/reference_text)
 - [`<image>`](/docs/reference_image)
 
+### `unload`
+
+Triggers when the element is unloaded in the screen.
+
+> Elements with `hide="true"` are not unloaded in the screen. This means any hidden element (or child element) with the `unload` trigger will not be executed.
+
+These elements support the `unload` trigger:
+
+- [`<view>`](/docs/reference_view)
+
 ### `select`
 
 Triggers when the element is selected. Only works on selectable elements.

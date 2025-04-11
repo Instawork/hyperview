@@ -1,0 +1,30 @@
+---
+permalink: "/behaviors/basic/unload/index.xml"
+tags: "Behaviors/Basic/Triggers"
+hv_title: "Unload"
+hv_button_behavior: "back"
+---
+
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block content %}
+  {{ description('Navigate to the next screen. When you navigate back, a message will be displayed.') }}
+
+  <view id="confirmation" style="container-style" hide="true">
+    <text style="confirmation-label">The screen was unloaded</text>
+  </view>
+
+  {% call button('Next', attributes={xmlns:"https://hyperview.org/hyperview"}) -%}
+    <behavior action="push" href="/hyperview/public/behaviors/basic/triggers/unload/unload.xml" />
+  {%- endcall %}
+
+  <behavior
+    action="show"
+    target="confirmation"
+    trigger="on-event"
+    event-name="unload-example"
+  />
+
+{% endblock %}
