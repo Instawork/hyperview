@@ -6,9 +6,11 @@ import {
   HvBehavior,
   HvComponent,
   HvComponentOnUpdate,
+  OnUpdateCallbacks,
   Reload,
   Route,
   RouteParams,
+  ScreenState,
 } from 'hyperview/src/types';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
@@ -44,24 +46,25 @@ export type RouteProps = NavigatorService.Route<string, { url?: string }>;
 export type InnerRouteProps = {
   url?: string;
   navigation?: NavigatorService.NavigationProp;
+  navigator: NavigatorService.Navigator;
   route?: NavigatorService.Route<string, RouteParams>;
   entrypointUrl: string;
-  fetch: Fetch;
-  onError?: (error: Error) => void;
-  onParseAfter?: (url: string) => void;
-  onParseBefore?: (url: string) => void;
   onUpdate: HvComponentOnUpdate;
+  onUpdateCallbacks: OnUpdateCallbacks;
   behaviors?: HvBehavior[];
   components?: HvComponent[];
   elementErrorComponent?: ComponentType<ErrorProps>;
-  errorScreen?: ComponentType<ErrorProps>;
   handleBack?: ComponentType<{ children: ReactNode }>;
   setElement: (key: number, element: Element) => void;
   getElement: (key: number) => Element | undefined;
   removeElement: (key: number) => void;
   element?: Element;
-  reload: Reload;
   doc: Document | undefined;
+  getLocalDoc: () => Document | null;
+  getScreenState: () => ScreenState;
+  setScreenState: (state: ScreenState) => void;
+  setNeedsLoadCallback: (callback: () => void) => void;
+  loadUrl: (url?: string) => void;
 };
 
 /**
