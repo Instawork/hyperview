@@ -1,0 +1,248 @@
+---
+description: Rules for ensuring documentation stays in sync with component and behavior changes
+globs: ["**/components/**/*.ts*", "**/behaviors/**/*.ts*", "docs/reference_*.md"]
+alwaysApply: true
+---
+# Documentation Update Rules
+
+## Overview
+Rules for ensuring documentation stays in sync with component and behavior changes.
+
+## Rules
+
+### Component Documentation Check
+```mdc
+pattern: **/components/hv-([a-z]+)/index.ts*
+checks:
+  - type: file_exists
+    pattern: docs/reference_{1}.md
+    message: Component {1} should have corresponding documentation in docs
+```
+
+### Behavior Documentation Check
+```mdc
+pattern: **/behaviors/hv-([a-z]+)/index.ts*
+checks:
+  - type: file_exists
+    pattern: docs/reference_{1}.md
+    message: Behavior {1} should have corresponding documentation in docs
+```
+
+### Documentation Structure
+```mdc
+pattern: docs/reference_*.md
+checks:
+  - type: regex
+    pattern: # {name}
+    message: Documentation must include title
+  - type: regex
+    pattern: ## Structure
+    message: Documentation must include Structure section
+  - type: regex
+    pattern: ## Attributes
+    message: Documentation must include Attributes section
+  - type: regex
+    pattern: #### Behavior attributes
+    message: Documentation must include Behavior attributes section
+```
+
+### Documentation Updates
+```mdc
+pattern: **/{components,behaviors}/hv-([a-z]+)/index.ts*
+when:
+  type: git
+  pattern: modified
+checks:
+  - type: regex
+    pattern: export (type|interface) [A-Z][a-zA-Z]+Props
+    when:
+      type: file_exists
+      pattern: docs/reference_{1}.md
+    message: {type} {1} has API changes, documentation should be updated to reflect new attributes
+    notification:
+      type: inline
+      location: cursor
+      message: "API changes detected: Update documentation to reflect new attributes"
+      style: info
+      actions:
+        - update_docs
+        - skip
+  - type: regex
+    pattern: @deprecated
+    when:
+      type: file_exists
+      pattern: docs/reference_{1}.md
+    message: {type} {1} has deprecated features, documentation should be updated to show alternatives
+    notification:
+      type: inline
+      location: cursor
+      message: "Deprecated feature: Update documentation to show alternative usage"
+      style: warning
+      actions:
+        - update_docs
+        - skip
+```
+
+## Actions
+
+### Create Documentation
+```mdc
+pattern: **/{components,behaviors}/hv-([a-z]+)/index.ts*
+template: |
+  ---
+  id: reference_{1}
+  title: <{1}>
+  sidebar_label: <{1}>
+  ---
+
+  The `<{1}>` element [brief description of the component's purpose and main functionality].
+
+  ```xml
+  <form>
+    <{1}>
+      <!-- Basic implementation showing main attributes -->
+    </{1}>
+    
+    <{1} style="CustomStyle" [other-common-attributes]>
+      <!-- Implementation showing common usage -->
+    </{1}>
+  </form>
+  ```
+
+  ## Structure
+
+  A `<{1}>` element [describe where this element can appear in the XML hierarchy, e.g., "can appear anywhere within a <screen> element" or "must be within a <form> element"].
+
+  ## Attributes
+
+  [List all attributes supported by the component, starting with the most commonly used]
+
+  - [Behavior attributes](mdc:#behavior-attributes)
+  - [`name`](mdc:#name)
+  - [`value`](mdc:#value)
+  - [`style`](mdc:#style)
+  - [`id`](mdc:#id)
+  - [`hide`](mdc:#hide)
+  [Add other component-specific attributes...]
+
+  #### Behavior attributes
+
+  A `<{1}>` element accepts the standard [behavior attributes](mdc:docs/reference_behavior_attributes), including the following triggers:
+
+  [List component-specific triggers, e.g.:]
+  - [blur](mdc:docs/reference_behavior_attributes#blur)
+  - [change](mdc:docs/reference_behavior_attributes#change)
+  - [focus](mdc:docs/reference_behavior_attributes#focus)
+
+  #### `name`
+
+  | Type   | Required |
+  | ------ | -------- |
+  | string | [Yes/No] |
+
+  [Description of the name attribute and its purpose]
+
+  #### `value`
+
+  | Type   | Required               |
+  | ------ | --------------------- |
+  | string | No (defaults to blank) |
+
+  [Description of the value attribute and its purpose]
+
+  #### `style`
+
+  | Type   | Required |
+  | ------ | -------- |
+  | string | No       |
+
+  A space-separated list of styles to apply to the element. See [Styles](mdc:docs/reference_style).
+
+  [Add any style-specific notes, e.g., "Note that text style rules cannot be applied to this element" or "Supports the 'focused' style modifier"]
+
+  #### `id`
+
+  | Type   | Required |
+  | ------ | -------- |
+  | string | No       |
+
+  A global attribute uniquely identifying the element in the whole document.
+
+  #### `hide`
+
+  | Type                      | Required |
+  | ------------------------- | -------- |
+  | **false** (default), true | No       |
+
+  If `hide="true"`, the element will not be rendered on screen. If the element or any of the element's children have a behavior that triggers on "load" or "visible", those behaviors will not trigger while the element is hidden.
+
+  [Add other component-specific attributes with their types, requirements, and descriptions...]
+
+  ## Special Considerations
+
+  [List any important notes about the component's behavior, including:]
+  - Platform-specific behavior (iOS vs Android differences)
+  - Performance considerations
+  - Common pitfalls or edge cases
+  - Best practices for usage
+
+  ## Examples
+
+  ### Basic Usage
+  ```xml
+  <{1} [basic-attributes]>
+    <!-- Basic implementation -->
+  </{1}>
+  ```
+
+  ### Advanced Usage
+  ```xml
+  <{1} style="CustomStyle" [advanced-attributes]>
+    <!-- Implementation showing advanced features -->
+  </{1}>
+  ```
+
+  ### With Behaviors
+  ```xml
+  <{1} trigger="load" action="replace" href="/path/to/resource" [behavior-specific-attributes]>
+    <!-- Implementation showing behavior integration -->
+  </{1}>
+  ```
+
+  [Add more specific examples based on common use cases for this component]
+```
+
+### Update Documentation
+```mdc
+pattern: **/{components,behaviors}/hv-([a-z]+)/index.ts*
+when:
+  type: git
+  pattern: modified
+template: Update documentation for {1} with latest changes
+```
+
+## Triggers
+- On component/behavior file save
+- During git operations (commit, push)
+- When component/behavior files are modified
+- During PR creation/updates
+- When creating new components/behaviors
+
+## Notifications
+```mdc
+settings:
+  notifications:
+    - type: inline
+      location: cursor
+      style: info
+      actions:
+        - create_docs
+        - update_docs
+        - skip
+    - type: status_bar
+      message: "Documentation needs updates"
+      style: warning
+    - type: problems_panel
+      category: "Documentation"
+      severity: info
+```
