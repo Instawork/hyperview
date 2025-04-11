@@ -1,0 +1,48 @@
+---
+description: Set up terminal windows for running the Hyperview demo for iOS or Android
+globs:
+alwaysApply: true
+---
+
+# Terminal Windows Setup for Hyperview Demo
+
+```yaml
+terminalWindows:
+  - name: "Hyperview Sync"
+    command: "yarn sync"
+    directory: "."
+    openInNewWindow: true
+    executeCommand: true
+  - name: "Demo Server"
+    command: "yarn server"
+    directory: "./demo"
+    openInNewWindow: true
+    executeCommand: true
+  - name: "Demo iOS"
+    command: "yarn ios"
+    directory: "./demo"
+    openInNewWindow: true
+    executeCommand: true
+  - name: "Demo Android"
+    command: "adb reverse tcp:8085 tcp:8085 && yarn android"
+    directory: "./demo"
+    openInNewWindow: true
+    executeCommand: true
+```
+
+# How to Run the Demo
+
+This configuration sets up the necessary terminal windows:
+1. "Hyperview Sync" - Keeps demo app in sync with source changes
+2. "Demo Server" - Builds XML and hosts local demo server
+3. "Demo iOS" - Runs Expo demo app for iOS (preferred platform)
+4. "Demo Android" - Alternative to iOS for Android testing
+5. For Android: Set up port forwarding (adb reverse tcp:8085 tcp:8085)
+
+
+## Important Notes:
+- The sync and server processes must be running for the demo to work
+- iOS is the preferred platform for testing
+- Use Android configuration only when specifically needed. Android requires setting port forwarding (adb reverse tcp:8085 tcp:8085)
+- Each window will open in a new terminal window
+- Wait for the sync and server processes to fully start before the mobile app will work
