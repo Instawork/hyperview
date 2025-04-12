@@ -1,6 +1,5 @@
 import * as Components from 'hyperview/src/services/components';
 import * as Contexts from 'hyperview/src/contexts';
-import * as DomService from 'hyperview/src/services/dom';
 import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as NavigationContext from 'hyperview/src/contexts/navigation';
@@ -13,13 +12,7 @@ import {
   BackBehaviorContext,
   BackBehaviorProvider,
 } from 'hyperview/src/contexts/back-behaviors';
-import type {
-  DOMString,
-  HvComponentOptions,
-  NavigationRouteParams,
-  OnUpdateCallbacks,
-  ScreenState,
-} from 'hyperview/src/types';
+import HvDoc, { StateContext } from 'hyperview/src/core/components/hv-doc';
 import React, {
   JSXElementConstructor,
   PureComponent,
@@ -29,9 +22,9 @@ import React, {
 import HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import LoadError from 'hyperview/src/core/components/load-error';
 import Loading from 'hyperview/src/core/components/loading';
 import { NavigationContainerRefContext } from '@react-navigation/native';
+import type { ScreenState } from 'hyperview/src/types';
 
 /**
  * Implementation of an HvRoute component
@@ -41,54 +34,20 @@ import { NavigationContainerRefContext } from '@react-navigation/native';
  * - Handles errors
  */
 class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
-  static contextType = NavigationContainerRefContext;
-
-  context: React.ContextType<typeof NavigationContainerRefContext> = undefined;
-
-  parser?: DomService.Parser;
-
-  navigator: NavigatorService.Navigator;
-
   componentRegistry: Components.Registry;
 
   needsLoad = false;
 
-  // See the hack in hv-screen. This is a fix for the updated DOM not being available immediately.
-  localDoc: Document | null = null;
-
   constructor(props: Types.InnerRouteProps) {
     super(props);
-
-    this.state = {
-      doc: null,
-      error: null,
-    };
-    this.navigator = new NavigatorService.Navigator(this.props);
     this.componentRegistry = new Components.Registry(this.props.components);
     this.needsLoad = false;
-  }
-
-  /**
-   * Override the state to clear the doc when an element is passed
-   */
-  static getDerivedStateFromProps(
-    props: Types.InnerRouteProps,
-    state: ScreenState,
-  ) {
-    if (props.element) {
-      return { ...state, doc: null };
-    }
-    return state;
+    this.props.setNeedsLoadCallback(() => {
+      this.needsLoad = true;
+    });
   }
 
   componentDidMount() {
-    this.parser = new DomService.Parser(
-      this.props.fetch,
-      this.props.onParseBefore || null,
-      this.props.onParseAfter || null,
-    );
-    this.navigator.setContext(this.context);
-
     // When a nested navigator is found, the document is not loaded from url
     if (this.props.element === undefined) {
       this.load();
@@ -104,7 +63,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
 
   getUrl = (): string => {
     return UrlService.getUrlFromHref(
-      (this.needsLoad ? this.state.url : undefined) ||
+      (this.needsLoad ? this.props.getScreenState().url : undefined) ||
         this.props.url ||
         this.props.entrypointUrl,
       this.props.entrypointUrl,
@@ -117,7 +76,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
    */
   shouldReload = (): boolean => {
     return (
-      !this.localDoc ||
+      !this.props.getLocalDoc() ||
       !(this.getRenderElement()?.localName === LOCAL_NAME.SCREEN)
     );
   };
@@ -126,71 +85,28 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
    * Load the url and resolve the xml.
    */
   load = async (): Promise<void> => {
-    if (!this.parser) {
-      this.setState({
-        doc: null,
-        error: new NavigatorService.HvRouteError('No parser or context found'),
-        url: null,
-      });
+    // When a modal is included, a wrapper stack navigator is created
+    // The route which contains the navigator should not load the document
+    // The code below prevents the route from loading the document
+    if (this.props.route?.params?.needsSubStack || !this.shouldReload()) {
       return;
     }
 
-    try {
-      // When a modal is included, a wrapper stack navigator is created
-      // The route which contains the navigator should not load the document
-      // The code below prevents the route from loading the document
-      if (this.props.route?.params?.needsSubStack || !this.shouldReload()) {
-        return;
-      }
-
-      const url: string = this.getUrl();
-
-      const { doc } = await this.parser.loadDocument(url);
-
-      // Set the state with the merged document
-
-      const merged = NavigatorService.mergeDocument(
-        doc,
-        this.localDoc || undefined,
-      );
-      const root = Helpers.getFirstChildTag(merged, LOCAL_NAME.DOC);
-      if (!root) {
-        this.setState({
-          doc: null,
-          error: new NavigatorService.HvRouteError('No root element found'),
-          url: null,
-        });
-        return;
-      }
-      this.localDoc = merged;
-      this.setState({
-        doc: merged,
-        error: undefined,
-        url,
-      });
-    } catch (err: unknown) {
-      if (this.props.onError) {
-        this.props.onError(err as Error);
-      }
-      this.setState({
-        doc: null,
-        error: err as Error,
-        url: null,
-      });
-    }
+    const url: string = this.getUrl();
+    this.props.loadUrl(url);
   };
 
   getRenderElement = (): Element | undefined => {
     if (this.props.element) {
       return this.props.element;
     }
-    if (!this.localDoc) {
+    if (!this.props.getLocalDoc()) {
       throw new NavigatorService.HvRenderError('No document found');
     }
 
     // Get the <doc> element
     const root: Element | null = Helpers.getFirstChildTag(
-      this.localDoc,
+      this.props.getLocalDoc() as Document,
       LOCAL_NAME.DOC,
     );
     if (!root) {
@@ -217,40 +133,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     throw new NavigatorService.HvRenderError(
       'No <screen> or <navigator> element found',
     );
-  };
-
-  /**
-   * Implement the callbacks from this class
-   */
-  updateCallbacks: OnUpdateCallbacks = {
-    clearElementError: () => {
-      // Noop
-    },
-    getDoc: () => this.localDoc || null,
-    getNavigation: () => this.navigator,
-    getOnUpdate: () => this.onUpdate,
-    getState: () => this.state,
-    setNeedsLoad: () => {
-      this.needsLoad = true;
-    },
-    setState: (state: ScreenState) => {
-      if (state.doc) {
-        this.localDoc = state.doc;
-      }
-      this.setState(state);
-    },
-  };
-
-  onUpdate = (
-    href: DOMString | null | undefined,
-    action: DOMString | null | undefined,
-    element: Element,
-    options: HvComponentOptions,
-  ) => {
-    this.props.onUpdate(href, action, element, {
-      ...options,
-      onUpdateCallbacks: this.updateCallbacks,
-    });
   };
 
   /**
@@ -308,25 +190,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
   };
 
   /**
-   * View shown when there is an error
-   */
-  Error = (props: { error: Error | null | undefined }): React.ReactElement => {
-    const ErrorScreen = this.props.errorScreen || LoadError;
-    return (
-      <ErrorScreen
-        back={() => this.navigator.backAction({} as NavigationRouteParams)}
-        error={props.error}
-        onPressReload={() => this.load()}
-        onPressViewDetails={(uri: string | undefined) => {
-          this.navigator.openModalAction({
-            url: uri as string,
-          } as NavigationRouteParams);
-        }}
-      />
-    );
-  };
-
-  /**
    * Build the <HvScreen> component with injected props
    */
   Screen = (): React.ReactElement => {
@@ -342,36 +205,54 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       },
     };
 
-    const { localDoc } = this;
-    const localClone = useMemo(() => {
-      return localDoc?.cloneNode(true) as Document;
-    }, [localDoc]);
+    const propsLocalDoc = this.props.getLocalDoc();
+    const localDoc = useMemo(() => {
+      return propsLocalDoc?.cloneNode(true) as Document;
+    }, [propsLocalDoc]);
 
     return (
-      <Contexts.DateFormatContext.Consumer>
-        {formatter => (
-          <HvScreen
-            behaviors={this.props.behaviors}
-            components={this.props.components}
-            doc={localClone}
-            elementErrorComponent={this.props.elementErrorComponent}
-            entrypointUrl={this.props.entrypointUrl}
-            errorScreen={this.props.errorScreen}
-            fetch={this.props.fetch}
-            formatDate={formatter}
-            getElement={this.props.getElement}
-            navigation={this.navigator}
-            onError={this.props.onError}
-            onParseAfter={this.props.onParseAfter}
-            onParseBefore={this.props.onParseBefore}
-            onUpdate={this.props.onUpdate}
-            reload={this.props.reload}
-            removeElement={this.props.removeElement}
-            route={route}
-            url={url || undefined}
-          />
-        )}
-      </Contexts.DateFormatContext.Consumer>
+      <HvDoc
+        doc={localDoc}
+        navigationProvider={this.props.navigator}
+        route={route}
+      >
+        <StateContext.Consumer>
+          {({
+            getLocalDoc,
+            getScreenState,
+            loadUrl,
+            onUpdate,
+            onUpdateCallbacks,
+            reload,
+            setNeedsLoadCallback,
+            setScreenState,
+          }) => (
+            <Contexts.DateFormatContext.Consumer>
+              {formatter => (
+                <HvScreen
+                  behaviors={this.props.behaviors}
+                  components={this.props.components}
+                  elementErrorComponent={this.props.elementErrorComponent}
+                  entrypointUrl={this.props.entrypointUrl}
+                  formatDate={formatter}
+                  getElement={this.props.getElement}
+                  getLocalDoc={getLocalDoc}
+                  getScreenState={getScreenState}
+                  loadUrl={loadUrl}
+                  navigation={this.props.navigator}
+                  onUpdate={onUpdate}
+                  onUpdateCallbacks={onUpdateCallbacks}
+                  reload={reload}
+                  removeElement={this.props.removeElement}
+                  route={route}
+                  setNeedsLoadCallback={setNeedsLoadCallback}
+                  setScreenState={setScreenState}
+                />
+              )}
+            </Contexts.DateFormatContext.Consumer>
+          )}
+        </StateContext.Consumer>
+      </HvDoc>
     );
   };
 
@@ -400,30 +281,25 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     }
 
     if (needsSubStack || renderElement?.localName === LOCAL_NAME.NAVIGATOR) {
-      if (this.localDoc) {
+      if (this.props.getLocalDoc()) {
         // The <DocContext> provides doc access to nested navigators
         // The <UpdateContext> provides access to the onUpdate method for this route
         // only pass it when the doc is available and is not being overridden by an element
         return (
           <Contexts.DocContext.Provider
             value={{
-              getDoc: () => this.localDoc || undefined,
-              setDoc: (doc: Document) => {
-                if (doc != null) {
-                  this.localDoc = doc;
-                }
-                this.setState({ doc });
-              },
+              getDoc: () => this.props.getLocalDoc() || undefined,
+              setDoc: (doc: Document) => this.props.setScreenState({ doc }),
             }}
           >
             <Contexts.OnUpdateContext.Provider
               value={{
-                onUpdate: this.onUpdate,
+                onUpdate: this.props.onUpdate,
               }}
             >
               <HvNavigator
                 element={renderElement}
-                onUpdate={this.onUpdate}
+                onUpdate={this.props.onUpdate}
                 params={this.props.route?.params}
                 routeComponent={HvRoute}
               />
@@ -471,7 +347,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       if (!this.props.url) {
         throw new NavigatorService.HvRouteError('No url received');
       }
-      if (!this.localDoc) {
+      if (!this.props.getLocalDoc()) {
         throw new NavigatorService.HvRouteError('No document received');
       }
     }
@@ -481,25 +357,16 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
   };
 
   render() {
-    const { Error: Err, Load, Content } = this;
-    try {
-      if (this.state.error) {
-        return <Err error={this.state.error} />;
-      }
-      if (
-        this.props.element ||
-        this.localDoc ||
-        this.props.route?.params?.needsSubStack
-      ) {
-        return <Content />;
-      }
-      return <Load />;
-    } catch (err) {
-      if (this.props.onError) {
-        this.props.onError(err as Error);
-      }
-      return <Err error={err as Error} />;
+    const { Load, Content } = this;
+
+    if (
+      this.props.element ||
+      this.props.getLocalDoc() ||
+      this.props.route?.params?.needsSubStack
+    ) {
+      return <Content />;
     }
+    return <Load />;
   }
 }
 
@@ -562,6 +429,23 @@ function HvRouteFC(props: Types.Props) {
   const rootNavigation = useContext(NavigationContainerRefContext);
   const nav =
     props.navigation || (rootNavigation as NavigatorService.NavigationProp);
+  const navigator = useMemo(
+    () =>
+      new NavigatorService.Navigator({
+        entrypointUrl: navigationContext.entrypointUrl,
+        navigation: nav,
+        rootNavigation,
+        route: props.route,
+        setElement: elemenCacheContext.setElement,
+      }),
+    [
+      elemenCacheContext.setElement,
+      nav,
+      navigationContext.entrypointUrl,
+      props.route,
+      rootNavigation,
+    ],
+  );
 
   // Get the navigator element from the context
   const element: Element | undefined = getNestedNavigator(
@@ -674,28 +558,43 @@ function HvRouteFC(props: Types.Props) {
   }, [nav, props.route, backContext, docContext, navigationContext]);
 
   return (
-    <HvRouteInner
-      behaviors={navigationContext.behaviors}
-      components={navigationContext.components}
-      doc={docContext?.getDoc()}
-      element={element}
-      elementErrorComponent={navigationContext.elementErrorComponent}
-      entrypointUrl={navigationContext.entrypointUrl}
-      errorScreen={navigationContext.errorScreen}
-      fetch={navigationContext.fetch}
-      getElement={elemenCacheContext.getElement}
-      handleBack={navigationContext.handleBack}
-      navigation={nav}
-      onError={navigationContext.onError}
-      onParseAfter={navigationContext.onParseAfter}
-      onParseBefore={navigationContext.onParseBefore}
-      onUpdate={navigationContext.onUpdate}
-      reload={navigationContext.reload}
-      removeElement={elemenCacheContext.removeElement}
-      route={props.route}
-      setElement={elemenCacheContext.setElement}
-      url={url}
-    />
+    <HvDoc element={element} navigationProvider={navigator}>
+      <StateContext.Consumer>
+        {({
+          getLocalDoc,
+          getScreenState,
+          loadUrl,
+          onUpdate,
+          onUpdateCallbacks,
+          setNeedsLoadCallback,
+          setScreenState,
+        }) => (
+          <HvRouteInner
+            behaviors={navigationContext.behaviors}
+            components={navigationContext.components}
+            doc={docContext?.getDoc()}
+            element={element}
+            elementErrorComponent={navigationContext.elementErrorComponent}
+            entrypointUrl={navigationContext.entrypointUrl}
+            getElement={elemenCacheContext.getElement}
+            getLocalDoc={getLocalDoc}
+            getScreenState={getScreenState}
+            handleBack={navigationContext.handleBack}
+            loadUrl={loadUrl}
+            navigation={nav}
+            navigator={navigator}
+            onUpdate={onUpdate}
+            onUpdateCallbacks={onUpdateCallbacks}
+            removeElement={elemenCacheContext.removeElement}
+            route={props.route}
+            setElement={elemenCacheContext.setElement}
+            setNeedsLoadCallback={setNeedsLoadCallback}
+            setScreenState={setScreenState}
+            url={url}
+          />
+        )}
+      </StateContext.Consumer>
+    </HvDoc>
   );
 }
 
