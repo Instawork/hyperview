@@ -68,8 +68,18 @@ export type BottomTabBarComponent = (
   props: BottomTabBarProps,
 ) => JSX.Element | null;
 
+export type HeaderProps = {
+  navigation: NavigationProp;
+  route: Route<string, object>;
+  options: object;
+  back: () => void;
+};
+
+export type HeaderComponent = (props: HeaderProps) => JSX.Element | null;
+
 export type NavigationComponents = {
   BottomTabBar?: BottomTabBarComponent;
+  Header?: HeaderComponent;
 };
 
 /* List of props available to navigators */

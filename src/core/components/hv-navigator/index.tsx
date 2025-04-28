@@ -35,7 +35,7 @@ const SHOW_DEFAULT_FOOTER_UI = false;
 /**
  * Flag to show the header UIs
  */
-const SHOW_DEFAULT_HEADER_UI = false;
+const SHOW_DEFAULT_HEADER_UI = true;
 
 const Stack = createCustomStackNavigator<ParamTypes>();
 const BottomTab = createCustomTabNavigator<ParamTypes>();
@@ -147,17 +147,25 @@ export default class HvNavigator extends PureComponent<Props> {
   /**
    * Encapsulated options for the stack screenOptions
    */
-  stackScreenOptions = (route: ScreenParams): StackScreenOptions => ({
+  stackScreenOptions = (
+    route: ScreenParams,
+    header: HeaderComponent | undefined,
+  ): StackScreenOptions => ({
+    header,
     headerMode: 'screen',
-    headerShown: SHOW_DEFAULT_HEADER_UI,
+    headerShown: SHOW_DEFAULT_HEADER_UI || header !== undefined,
     title: this.getId(route.params),
   });
 
   /**
    * Encapsulated options for the tab screenOptions
    */
-  tabScreenOptions = (route: ScreenParams): TabScreenOptions => ({
-    headerShown: SHOW_DEFAULT_HEADER_UI,
+  tabScreenOptions = (
+    route: ScreenParams,
+    header: HeaderComponent | undefined,
+  ): TabScreenOptions => ({
+    header,
+    headerShown: SHOW_DEFAULT_HEADER_UI || header !== undefined,
     tabBarStyle: {
       display: SHOW_DEFAULT_FOOTER_UI ? 'flex' : 'none',
     },
@@ -355,7 +363,9 @@ export default class HvNavigator extends PureComponent<Props> {
         return (
           <Stack.Navigator
             id={id}
-            screenOptions={({ route }) => this.stackScreenOptions(route)}
+            screenOptions={({ route }) =>
+              this.stackScreenOptions(route, props.Header)
+            }
           >
             {this.buildScreens(type, this.props.element)}
           </Stack.Navigator>
@@ -366,7 +376,9 @@ export default class HvNavigator extends PureComponent<Props> {
             backBehavior="none"
             id={id}
             initialRouteName={selectedId}
-            screenOptions={({ route }) => this.tabScreenOptions(route)}
+            screenOptions={({ route }) =>
+              this.tabScreenOptions(route, props.Header)
+            }
             tabBar={
               BottomTabBar &&
               (p => (
@@ -449,7 +461,9 @@ export default class HvNavigator extends PureComponent<Props> {
     return (
       <Stack.Navigator
         id={navigatorId}
-        screenOptions={({ route }) => this.stackScreenOptions(route)}
+        screenOptions={({ route }) =>
+          this.stackScreenOptions(route, props.Header)
+        }
       >
         {screens}
       </Stack.Navigator>
@@ -460,6 +474,7 @@ export default class HvNavigator extends PureComponent<Props> {
     const Navigator = this.props.params?.isModal
       ? this.ModalNavigator
       : this.Navigator;
+
     return (
       <NavigationContext.Context.Consumer>
         {navContext => (
@@ -468,6 +483,7 @@ export default class HvNavigator extends PureComponent<Props> {
               <Navigator
                 BottomTabBar={navContext?.navigationComponents?.BottomTabBar}
                 doc={docProvider?.getDoc()}
+                Header={navContext?.navigationComponents?.Header}
               />
             )}
           </Contexts.DocContext.Consumer>

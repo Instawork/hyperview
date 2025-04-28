@@ -219,6 +219,8 @@ export type {
   NavigationProp,
   NavigatorProps,
   Route,
+  HeaderComponent,
+  HeaderProps,
 } from './types';
 export {
   CardStyleInterpolators,

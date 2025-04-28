@@ -1,5 +1,6 @@
 import type { HvComponentOnUpdate, RouteParams } from 'hyperview/src/types';
 import { FC } from 'react';
+import type { HeaderComponent } from 'hyperview/src/services/navigator';
 import type { Props as HvRouteProps } from 'hyperview/src/core/components/hv-route';
 
 export type ParamTypes = Record<string, RouteParams>;
@@ -26,8 +27,9 @@ export type Props = {
  * Options used for a stack navigator's screenOptions
  */
 export type StackScreenOptions = {
+  header: HeaderComponent | undefined;
   headerMode: 'float' | 'screen' | undefined;
-  headerShown: boolean;
+  headerShown?: boolean;
   title: string | undefined;
 };
 
@@ -35,7 +37,8 @@ export type StackScreenOptions = {
  * Options used for a tab navigator's screenOptions
  */
 export type TabScreenOptions = {
-  headerShown: boolean;
+  header: HeaderComponent | undefined;
+  headerShown?: boolean;
   tabBarStyle: { display: 'flex' | 'none' | undefined };
   title: string | undefined;
 };
