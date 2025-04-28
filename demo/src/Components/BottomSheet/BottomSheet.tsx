@@ -17,7 +17,6 @@ import {
   GestureHandlerRootView,
   ScrollView,
 } from 'react-native-gesture-handler';
-import type { HvComponentProps, LocalName } from 'hyperview';
 import type { HvProps, HvStyles } from './types';
 import Hyperview, { Events } from 'hyperview';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
@@ -25,6 +24,7 @@ import { dragDownHelper, dragUpHelper } from './utils';
 import { BottomSheetContentSection } from './ContentSection';
 import { Context as BottomSheetContext } from '../../Contexts/BottomSheet';
 import { BottomSheetStopPoint } from './StopPoint';
+import type { HvComponentProps } from 'hyperview';
 import Overlay from './Overlay';
 import { namespace } from './types';
 import styles from './styles';
@@ -441,9 +441,7 @@ const BottomSheet = (props: HvComponentProps) => {
   );
 };
 
-BottomSheet.localName = 'bottom-sheet' as LocalName;
-
-BottomSheet.localNameAliases = [] as LocalName[];
+BottomSheet.localName = 'bottom-sheet';
 
 BottomSheet.namespaceURI = namespace;
 

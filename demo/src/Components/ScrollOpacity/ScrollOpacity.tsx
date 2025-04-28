@@ -1,4 +1,3 @@
-import type { HvComponentProps, LocalName } from 'hyperview';
 import Hyperview, { useScrollContext } from 'hyperview';
 import React, { useEffect, useRef } from 'react';
 import {
@@ -8,6 +7,7 @@ import {
   namespaceURI,
 } from './utils';
 import { Animated } from 'react-native';
+import type { HvComponentProps } from 'hyperview';
 
 const ScrollOpacity = (props: HvComponentProps) => {
   const contextKey = props.element.getAttributeNS(namespaceURI, 'context-key');
@@ -64,7 +64,6 @@ const ScrollOpacity = (props: HvComponentProps) => {
 };
 
 ScrollOpacity.namespaceURI = namespaceURI;
-ScrollOpacity.localName = 'scroll-opacity' as LocalName;
-ScrollOpacity.localNameAliases = [] as LocalName[];
+ScrollOpacity.localName = 'scroll-opacity';
 
 export { ScrollOpacity };

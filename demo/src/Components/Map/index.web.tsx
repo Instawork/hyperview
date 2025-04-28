@@ -26,7 +26,6 @@ const Map = (props: HvComponentProps) => {
 
 Map.namespaceURI = MapComponent.namespaceURI;
 Map.localName = MapComponent.localName;
-Map.localNameAliases = MapComponent.localNameAliases;
 
 export { Map };
 export { MapMarker } from './MapMarker';

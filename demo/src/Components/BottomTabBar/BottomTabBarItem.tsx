@@ -1,9 +1,5 @@
 import * as Render from 'hyperview/src/services/render';
-import type {
-  HvComponentOnUpdate,
-  HvComponentProps,
-  LocalName,
-} from 'hyperview';
+import type { HvComponentOnUpdate, HvComponentProps } from 'hyperview';
 import { TouchableWithoutFeedback, View } from 'react-native';
 import { createElement, useState } from 'react';
 import { createEventHandler } from 'hyperview/src/core/hyper-ref';
@@ -54,7 +50,6 @@ const BottomTabBarItem = (props: HvComponentProps) => {
 };
 
 BottomTabBarItem.namespaceURI = namespaceURI;
-BottomTabBarItem.localName = 'bottom-tab-bar-item' as LocalName;
-BottomTabBarItem.localNameAliases = [] as LocalName[];
+BottomTabBarItem.localName = 'bottom-tab-bar-item';
 
 export { BottomTabBarItem };

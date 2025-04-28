@@ -1,5 +1,5 @@
-import type { HvComponentProps, LocalName } from 'hyperview';
 import React, { useMemo } from 'react';
+import type { HvComponentProps } from 'hyperview';
 import Hyperview from 'hyperview';
 import type { InsetsStyle } from './types';
 import { View } from 'react-native';
@@ -97,7 +97,6 @@ const SafeAreaView = (props: HvComponentProps) => {
 };
 
 SafeAreaView.namespaceURI = namespaceURI;
-SafeAreaView.localName = 'safe-area-view' as LocalName;
-SafeAreaView.localNameAliases = [] as LocalName[];
+SafeAreaView.localName = 'safe-area-view';
 
 export { SafeAreaView };

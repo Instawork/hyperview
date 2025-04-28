@@ -1,5 +1,5 @@
-import type { HvComponentProps, LocalName } from 'hyperview';
 import { LayoutChangeEvent, View } from 'react-native';
+import type { HvComponentProps } from 'hyperview';
 import Hyperview from 'hyperview';
 import React from 'react';
 import { namespace } from './types';
@@ -27,7 +27,6 @@ const BottomSheetContentSection = (props: HvComponentProps) => {
 };
 
 BottomSheetContentSection.namespaceURI = namespace;
-BottomSheetContentSection.localName = 'content-section' as LocalName;
-BottomSheetContentSection.localNameAliases = [] as LocalName[];
+BottomSheetContentSection.localName = 'content-section';
 
 export { BottomSheetContentSection };
