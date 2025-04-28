@@ -1,7 +1,7 @@
 import * as Components from 'hyperview/src/services/components';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
-import type { HvComponent, LocalName, StyleSheets } from 'hyperview/src/types';
+import type { HvComponent, StyleSheets } from 'hyperview/src/types';
 import { DOMParser } from '@instawork/xmldom';
 import humps from 'humps';
 import { storiesOf } from '@storybook/react-native';
@@ -19,10 +19,10 @@ type Render = (options: {
 
 export const stories = (
   Component: HvComponent,
-): ((template: string, render?: Render, tagName?: LocalName) => void) => {
+): ((template: string, render?: Render, tagName?: string) => void) => {
   const componentPath = getComponentPath(Component.name);
   const s = storiesOf(Component.name, module);
-  return (templateName: string, render?: Render, tagName?: LocalName) => {
+  return (templateName: string, render?: Render, tagName?: string) => {
     const templatePath = `${componentPath}/stories/${templateName}.xml`;
     const storyName = humps.pascalize(templateName);
     const parser = new DOMParser();

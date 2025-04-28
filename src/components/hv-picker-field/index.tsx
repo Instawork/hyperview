@@ -26,8 +26,6 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
 
   static localName = LOCAL_NAME.PICKER_FIELD;
 
-  static localNameAliases = [];
-
   static getFormInputValues = (element: Element): Array<[string, string]> => {
     return getNameValueFormInputValues(element);
   };

@@ -1,7 +1,6 @@
 /* eslint-disable max-classes-per-file */
 
 import * as ErrorService from 'hyperview/src/services/error';
-import type { LocalName } from 'hyperview/src/types';
 import { XMLSerializer } from '@instawork/xmldom';
 
 export class UnsupportedContentTypeError extends ErrorService.HvBaseError {
@@ -29,7 +28,7 @@ export class XMLParserFatalError extends ErrorService.HvBaseError {
 export class XMLRequiredElementNotFound extends ErrorService.HvBaseError {
   name = 'XMLRequiredElementNotFound';
 
-  constructor(tag: LocalName, url: string) {
+  constructor(tag: string, url: string) {
     super(`Required <${tag}> tag not found in the response from ${url}`);
     this.setExtraContext('tag', tag);
     this.setExtraContext('url', url);
@@ -39,7 +38,7 @@ export class XMLRequiredElementNotFound extends ErrorService.HvBaseError {
 export class XMLRestrictedElementFound extends ErrorService.HvBaseError {
   name = 'XMLRestrictedElementFound';
 
-  constructor(tag: LocalName, url: string) {
+  constructor(tag: string, url: string) {
     super(`Restricted <${tag}> tag found in the response from ${url}`);
     this.setExtraContext('tag', tag);
     this.setExtraContext('url', url);

@@ -12,8 +12,6 @@ export default class HvWebView extends PureComponent<HvComponentProps> {
 
   static localName = LOCAL_NAME.WEB_VIEW;
 
-  static localNameAliases = [];
-
   state = {
     renderLoading: true,
   };

@@ -21,8 +21,6 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
 
   static localName = LOCAL_NAME.OPTION;
 
-  static localNameAliases = [];
-
   state: State = {
     pressed: false,
   };

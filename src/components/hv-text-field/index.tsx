@@ -1,10 +1,6 @@
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import type {
-  HvComponentProps,
-  LocalName,
-  TextContextType,
-} from 'hyperview/src/types';
+import type { HvComponentProps, TextContextType } from 'hyperview/src/types';
 import React, { MutableRefObject, useCallback, useEffect, useRef } from 'react';
 import {
   createProps,
@@ -115,7 +111,7 @@ const HvTextField = (props: HvComponentProps) => {
 
 HvTextField.namespaceURI = Namespaces.HYPERVIEW;
 HvTextField.localName = LOCAL_NAME.TEXT_FIELD;
-HvTextField.localNameAliases = [] as LocalName[];
+
 HvTextField.getFormInputValues = (
   element: Element,
 ): Array<[string, string]> => {

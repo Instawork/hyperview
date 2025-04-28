@@ -49,8 +49,6 @@ export const LOCAL_NAME = {
   WEB_VIEW: 'web-view',
 } as const;
 
-export type LocalName = typeof LOCAL_NAME[keyof typeof LOCAL_NAME];
-
 export const NODE_TYPE = {
   ATTRIBUTE_NODE: 2,
   CDATA_SECTION_NODE: 4,
@@ -137,14 +135,14 @@ export type NamedNodeMap = {
   getNamedItem: (key: string) => Attribute | null | undefined;
   getNamedItemNS: (
     namespaceURI: NamespaceURI,
-    localName: LocalName,
+    localName: string,
   ) => Attribute | null | undefined;
   item: (index: number) => Attribute | null | undefined;
   length: number;
   removeNamedItem: (key: string) => Attribute | null | undefined;
   removeNamedItemNS: (
     namespaceURI: NamespaceURI,
-    localName: LocalName,
+    localName: string,
   ) => Attribute | null | undefined;
   setNamedItem: (attribute: Attribute) => Attribute | null | undefined;
   setNamedItemNS: (attribute: Attribute) => Attribute | null | undefined;
@@ -219,8 +217,8 @@ export type HvFormValues = {
 };
 
 export type HvComponentStatics = {
-  localName: LocalName;
-  localNameAliases: Array<LocalName | string>;
+  localName: string;
+  localNameAliases?: Array<string>;
   namespaceURI: NamespaceURI;
 };
 

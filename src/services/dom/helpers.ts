@@ -1,12 +1,7 @@
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import { LOCAL_NAME, NODE_TYPE, UPDATE_ACTIONS } from 'hyperview/src/types';
-import type {
-  LocalName,
-  NamespaceURI,
-  NodeType,
-  UpdateAction,
-} from 'hyperview/src/types';
+import type { NamespaceURI, NodeType, UpdateAction } from 'hyperview/src/types';
 import { DocumentGetElementByIdError } from './errors';
 import { uuid } from 'hyperview/src/core/utils';
 
@@ -24,7 +19,7 @@ export const getBehaviorElements = (element: Element) => {
 
 export const getFirstTag = (
   document: Document | Element,
-  localName: LocalName,
+  localName: string,
   namespace: NamespaceURI = Namespaces.HYPERVIEW,
 ) => {
   const elements = document.getElementsByTagNameNS(namespace, localName);
@@ -39,7 +34,7 @@ export const getFirstTag = (
  */
 export const getFirstChildTag = (
   node: Node,
-  localName: LocalName,
+  localName: string,
   namespace: NamespaceURI = Namespaces.HYPERVIEW,
 ): Element | null => {
   if (!node || !node.childNodes) {
