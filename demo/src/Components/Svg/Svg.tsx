@@ -1,4 +1,4 @@
-import type { HvComponentProps, LocalName } from 'hyperview';
+import type { HvComponentProps } from 'hyperview';
 import { Platform } from 'react-native';
 import React from 'react';
 import { SvgXml } from 'react-native-svg';
@@ -51,7 +51,6 @@ const Svg = (props: HvComponentProps) => {
 };
 
 Svg.namespaceURI = 'http://www.w3.org/2000/svg';
-Svg.localName = 'svg' as LocalName;
-Svg.localNameAliases = [] as LocalName[];
+Svg.localName = 'svg';
 
 export { Svg };

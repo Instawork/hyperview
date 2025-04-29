@@ -15,8 +15,6 @@ export default class HvSelectMultiple extends PureComponent<HvComponentProps> {
 
   static localName = LOCAL_NAME.SELECT_MULTIPLE;
 
-  static localNameAliases = [];
-
   static getFormInputValues = (element: Element): Array<[string, string]> => {
     const values: Array<[string, string]> = [];
     const name = element.getAttribute('name');

@@ -1,4 +1,4 @@
-import type { HvComponentProps, LocalName } from 'hyperview';
+import type { HvComponentProps } from 'hyperview';
 import Hyperview from 'hyperview';
 import React from 'react';
 import { View } from 'react-native';
@@ -15,7 +15,6 @@ const BottomSheetStopPoint = (props: HvComponentProps) => {
 };
 
 BottomSheetStopPoint.namespaceURI = namespace;
-BottomSheetStopPoint.localName = 'stop-point' as LocalName;
-BottomSheetStopPoint.localNameAliases = [] as LocalName[];
+BottomSheetStopPoint.localName = 'stop-point';
 
 export { BottomSheetStopPoint };

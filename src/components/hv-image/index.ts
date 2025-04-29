@@ -15,8 +15,6 @@ export default class HvImage extends PureComponent<HvComponentProps> {
 
   static localName = LOCAL_NAME.IMAGE;
 
-  static localNameAliases = [];
-
   render() {
     const { skipHref } = this.props.options || {};
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

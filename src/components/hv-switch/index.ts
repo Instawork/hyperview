@@ -36,8 +36,6 @@ export default class HvSwitch extends PureComponent<HvComponentProps> {
 
   static localName = LOCAL_NAME.SWITCH;
 
-  static localNameAliases = [];
-
   static getFormInputValues = (element: Element): Array<[string, string]> => {
     return getNameValueFormInputValues(element);
   };

@@ -1,7 +1,7 @@
 import type { AutoZoomToMarker, Coordinate, HvProps } from './types';
-import type { HvComponentProps, LocalName } from 'hyperview';
 import React, { useCallback, useRef } from 'react';
 import type { ElementRef } from 'react';
+import type { HvComponentProps } from 'hyperview';
 import Hyperview from 'hyperview';
 import MapView from 'react-native-maps';
 import { namespace } from './types';
@@ -116,7 +116,6 @@ const Map = (props: HvComponentProps) => {
 };
 
 Map.namespaceURI = namespace;
-Map.localName = 'map' as LocalName;
-Map.localNameAliases = [] as LocalName[];
+Map.localName = 'map';
 
 export { Map };

@@ -1,4 +1,4 @@
-import type { HvComponentProps, LocalName } from 'hyperview';
+import type { HvComponentProps } from 'hyperview';
 import Hyperview from 'hyperview';
 import { NavigationContext } from '@react-navigation/native';
 import { findElements } from '../../Helpers';
@@ -34,7 +34,6 @@ const NavBack = (props: HvComponentProps) => {
 };
 
 NavBack.namespaceURI = namespaceURI;
-NavBack.localName = 'back' as LocalName;
-NavBack.localNameAliases = [] as LocalName[];
+NavBack.localName = 'back';
 
 export { NavBack };

@@ -1,5 +1,5 @@
 import * as Services from 'hyperview/src/services';
-import type { HvComponent, HvFormValues, LocalName } from 'hyperview/src/types';
+import type { HvComponent, HvFormValues } from 'hyperview/src/types';
 import HvDateField from 'hyperview/src/components/hv-date-field';
 import HvImage from 'hyperview/src/components/hv-image';
 import HvList from 'hyperview/src/components/hv-list';
@@ -81,10 +81,7 @@ export class Registry {
         const ns = c.namespaceURI;
         const localNames = [c.localName, ...(c.localNameAliases || [])];
         localNames.forEach(tag => {
-          const inputElements = formElement.getElementsByTagNameNS(
-            ns,
-            tag as LocalName,
-          );
+          const inputElements = formElement.getElementsByTagNameNS(ns, tag);
           for (let i = 0; i < inputElements.length; i += 1) {
             const inputElement = inputElements.item(i);
             if (inputElement) {

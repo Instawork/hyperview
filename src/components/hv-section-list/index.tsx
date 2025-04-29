@@ -66,8 +66,6 @@ export default class HvSectionList extends PureComponent<
 
   static localName = LOCAL_NAME.SECTION_LIST;
 
-  static localNameAliases = [];
-
   context: React.ContextType<typeof Contexts.DocContext> = null;
 
   static contextType = Contexts.DocContext;

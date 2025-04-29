@@ -1,6 +1,6 @@
 import * as Logging from 'hyperview/src/services/logging';
-import type { HvComponentProps, LocalName } from 'hyperview';
 import Hyperview, { Events, LOCAL_NAME, Namespaces } from 'hyperview';
+import type { HvComponentProps } from 'hyperview';
 import { findElements } from '../../Helpers';
 import { useEffect } from 'react';
 
@@ -110,7 +110,6 @@ const Filter = (props: HvComponentProps) => {
 };
 
 Filter.namespaceURI = FILTER_NS;
-Filter.localName = 'container' as LocalName;
-Filter.localNameAliases = [] as LocalName[];
+Filter.localName = 'container';
 
 export { Filter };

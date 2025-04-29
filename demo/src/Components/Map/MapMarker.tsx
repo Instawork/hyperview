@@ -1,6 +1,6 @@
-import type { HvComponentProps, LocalName } from 'hyperview';
 import MapView, { MapMarker as RNMapMarker } from 'react-native-maps';
 import React, { useCallback } from 'react';
+import type { HvComponentProps } from 'hyperview';
 import Hyperview from 'hyperview';
 import type { MarkerHvProps } from './types';
 import { Platform } from 'react-native';
@@ -31,7 +31,6 @@ const MapMarker = (props: HvComponentProps) => {
 };
 
 MapMarker.namespaceURI = namespace;
-MapMarker.localName = 'map-marker' as LocalName;
-MapMarker.localNameAliases = [] as LocalName[];
+MapMarker.localName = 'map-marker';
 
 export { MapMarker };

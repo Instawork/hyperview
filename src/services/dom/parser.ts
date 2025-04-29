@@ -17,7 +17,6 @@ import { getFirstTag, processDocument } from './helpers';
 import { DOMParser } from '@instawork/xmldom';
 import { Dimensions } from 'react-native';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import type { LocalName } from 'hyperview/src/types';
 import { version } from 'hyperview/package.json';
 
 const { width, height } = Dimensions.get('window');
@@ -141,7 +140,7 @@ export class Parser {
     const navigatorElement = getFirstTag(docElement, LOCAL_NAME.NAVIGATOR);
     if (!screenElement && !navigatorElement) {
       throw new Errors.XMLRequiredElementNotFound(
-        `${LOCAL_NAME.SCREEN}/${LOCAL_NAME.NAVIGATOR}` as LocalName,
+        `${LOCAL_NAME.SCREEN}/${LOCAL_NAME.NAVIGATOR}`,
         baseUrl,
       );
     }
@@ -161,7 +160,7 @@ export class Parser {
       }
     } else {
       throw new Errors.XMLRequiredElementNotFound(
-        `${LOCAL_NAME.SCREEN}/${LOCAL_NAME.NAVIGATOR}` as LocalName,
+        `${LOCAL_NAME.SCREEN}/${LOCAL_NAME.NAVIGATOR}`,
         baseUrl,
       );
     }

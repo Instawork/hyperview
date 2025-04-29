@@ -30,8 +30,6 @@ describe('Registry', () => {
 
     static localName = LOCAL_NAME.IMAGE;
 
-    static localNameAliases = [];
-
     static getFormInputValues() {
       return [['a', 'b']];
     }
@@ -41,8 +39,6 @@ describe('Registry', () => {
     static namespaceURI = 'http://bar';
 
     static localName = LOCAL_NAME.IMAGE;
-
-    static localNameAliases = [];
   }
   // eslint-disable-next-line react/no-multi-comp
   class Baz extends PureComponent<HvComponentProps> {

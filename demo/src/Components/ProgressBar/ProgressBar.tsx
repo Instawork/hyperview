@@ -1,6 +1,6 @@
 import { Animated, View } from 'react-native';
-import type { HvComponentProps, LocalName } from 'hyperview';
 import React, { useEffect, useRef, useState } from 'react';
+import type { HvComponentProps } from 'hyperview';
 import Hyperview from 'hyperview';
 
 const namespace = 'https://hyperview.org/progress-bar';
@@ -58,7 +58,6 @@ const ProgressBar = (props: HvComponentProps) => {
 };
 
 ProgressBar.namespaceURI = namespace;
-ProgressBar.localName = 'progress-bar' as LocalName;
-ProgressBar.localNameAliases = [] as LocalName[];
+ProgressBar.localName = 'progress-bar';
 
 export { ProgressBar };

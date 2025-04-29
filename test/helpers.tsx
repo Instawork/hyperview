@@ -2,15 +2,15 @@ import * as Components from 'hyperview/src/services/components';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
-import type { HvComponent, LocalName } from 'hyperview/src/types';
 import { DOMParser } from '@instawork/xmldom';
+import type { HvComponent } from 'hyperview/src/types';
 import React from 'react';
 
 const parser = new DOMParser();
 
 export const getElements = (
   xml: string,
-  localName: LocalName,
+  localName: string,
   namespaceURI: string = Namespaces.HYPERVIEW,
 ): Element[] => {
   const document = parser.parseFromString(xml);

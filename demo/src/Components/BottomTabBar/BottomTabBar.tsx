@@ -1,4 +1,4 @@
-import type { HvComponentProps, LocalName } from 'hyperview';
+import type { HvComponentProps } from 'hyperview';
 import { namespaceURI } from './constants';
 import { useBottomTabBarContext } from '../../Contexts';
 import { useEffect } from 'react';
@@ -37,7 +37,6 @@ const BottomTabBar = (props: HvComponentProps) => {
 };
 
 BottomTabBar.namespaceURI = namespaceURI;
-BottomTabBar.localName = 'bottom-tab-bar' as LocalName;
-BottomTabBar.localNameAliases = [] as LocalName[];
+BottomTabBar.localName = 'bottom-tab-bar';
 
 export { BottomTabBar };

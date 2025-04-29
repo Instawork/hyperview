@@ -1,8 +1,8 @@
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import type { HvComponentProps, LocalName } from 'hyperview/src/types';
 import { createDateFromString, createStringFromDate } from './helpers';
 import Field from './field';
+import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import Picker from './picker';
 import React from 'react';
@@ -121,8 +121,6 @@ const HvDateField = (props: HvComponentProps): JSX.Element | null => {
 HvDateField.namespaceURI = Namespaces.HYPERVIEW;
 
 HvDateField.localName = LOCAL_NAME.DATE_FIELD;
-
-HvDateField.localNameAliases = [] as LocalName[];
 
 HvDateField.getFormInputValues = (element: Element): Array<[string, string]> =>
   getNameValueFormInputValues(element);

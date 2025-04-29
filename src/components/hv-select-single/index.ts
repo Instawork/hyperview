@@ -15,8 +15,6 @@ export default class HvSelectSingle extends PureComponent<HvComponentProps> {
 
   static localName = LOCAL_NAME.SELECT_SINGLE;
 
-  static localNameAliases = [];
-
   static getFormInputValues = (element: Element): Array<[string, string]> => {
     const name = element.getAttribute('name');
     if (!name) {
