@@ -38,7 +38,6 @@
           <style color="#4778FF" fontFamily="HKGrotesk-Medium" />
         </modifier>
       </style>
-
       <style id="image-wrapper" marginBottom="8" width="32" height="32" />
       <style
         id="image"
@@ -47,7 +46,6 @@
         position="absolute"
         top="0"
         left="0"
-        backgroundColor="blue"
       />
       <style id="image-unselected">
         <modifier selected="true">
@@ -61,19 +59,47 @@
       </style>
     </styles>
     <body style="body">
-      <option id="custom-option" style="option" value="123" selected="true">
-        <view style="image-wrapper">
-          <image
-            style="image image-unselected"
-            source="/ui_elements/forms/unselected.png"
-          />
-          <image
-            style="image image-selected"
-            source="/ui_elements/forms/selected.png"
-          />
-        </view>
-        <text style="label">Label</text>
-      </option>
+      <select-single id="select" style="select-custom" name="choice">
+        <option style="option" value="option-1">
+          <view style="image-wrapper">
+            <image
+              style="image image-unselected"
+              source="/ui_elements/forms/unselected.png"
+            />
+            <image
+              style="image image-selected"
+              source="/ui_elements/forms/selected.png"
+            />
+          </view>
+          <text style="label">Option 1</text>
+        </option>
+        <option style="option" value="option-2" selected="true">
+          <view style="image-wrapper">
+            <image
+              style="image image-unselected"
+              source="/ui_elements/forms/unselected.png"
+            />
+            <image
+              style="image image-selected"
+              source="/ui_elements/forms/selected.png"
+            />
+          </view>
+          <text style="label">Option 2</text>
+        </option>
+        <option style="option" value="option-3">
+          <view style="image-wrapper">
+            <image
+              style="image image-unselected"
+              source="/ui_elements/forms/unselected.png"
+            />
+            <image
+              style="image image-selected"
+              source="/ui_elements/forms/selected.png"
+            />
+          </view>
+          <text style="label">Option 3</text>
+        </option>
+      </select-single>
     </body>
   </screen>
 </doc>

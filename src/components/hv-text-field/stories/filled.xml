@@ -28,9 +28,10 @@
     </styles>
     <body style="body">
       <text-field
+        style="input"
+        value="Some text"
         placeholder="Placeholder"
         placeholderTextColor="#8D9494"
-        style="input"
       />
     </body>
   </screen>

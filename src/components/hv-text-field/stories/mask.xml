@@ -28,9 +28,12 @@
     </styles>
     <body style="body">
       <text-field
-        placeholder="Placeholder"
+        keyboard-type="phone-pad"
+        mask="(999) 999-9999"
+        placeholder="Phone number"
         placeholderTextColor="#8D9494"
         style="input"
+        value=""
       />
     </body>
   </screen>

@@ -13,7 +13,7 @@
       />
     </styles>
     <body style="body">
-      <text style="text">Hello, world!</text>
+      <text style="text" selectable="true">Hello, world!</text>
     </body>
   </screen>
 </doc>

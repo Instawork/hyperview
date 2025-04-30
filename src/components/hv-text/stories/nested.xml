@@ -11,9 +11,13 @@
         margin="24"
         padding="16"
       />
+      <style id="nested-text" fontSize="16" fontWeight="normal" />
     </styles>
     <body style="body">
-      <text style="text">Hello, world!</text>
+      <text style="text">
+        Hello,
+        <text style="nested-text">world!</text>
+      </text>
     </body>
   </screen>
 </doc>

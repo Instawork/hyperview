@@ -1,13 +1,14 @@
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
-      <style id="Body" backgroundColor="white" flex="1" />
-      <style id="img" width="200" height="200" />
+      <style id="body" backgroundColor="white" flex="1" />
+      <style id="image" width="200" height="200" />
     </styles>
-    <body style="Body">
+    <body style="body">
       <image
         source="https://upload.wikimedia.org/wikipedia/en/a/a4/Guns-N-Roses-1987.jpg"
-        style="img"
+        style="image"
+        testID="image"
       />
     </body>
   </screen>

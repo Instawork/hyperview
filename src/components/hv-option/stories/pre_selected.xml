@@ -1,9 +1,9 @@
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
-      <style id="Body" backgroundColor="white" flex="1" />
+      <style id="body" backgroundColor="white" flex="1" />
       <style
-        id="Select__Option"
+        id="option"
         flex="1"
         flexDirection="row"
         alignItems="center"
@@ -14,7 +14,7 @@
         paddingTop="16"
       />
       <style
-        id="Select__RadioOuter"
+        id="radio-outer"
         width="20"
         height="20"
         borderRadius="10"
@@ -28,9 +28,8 @@
           <style borderColor="#4778ff" borderWidth="2" />
         </modifier>
       </style>
-
       <style
-        id="Select__RadioInner"
+        id="radio-inner"
         width="10"
         height="10"
         borderRadius="5"
@@ -42,9 +41,8 @@
           <style backgroundColor="#4778ff" opacity="1" />
         </modifier>
       </style>
-
       <style
-        id="Select__Label"
+        id="label"
         fontFamily="HKGrotesk-Regular"
         color="#4e4d4d"
         fontSize="16"
@@ -58,11 +56,16 @@
         </modifier>
       </style>
     </styles>
-    <body style="Body">
-      <option style="Select__Option" value="paid_parking" selected="true">
-        <text style="Select__Label">Paid parking</text>
-        <view style="Select__RadioOuter">
-          <view style="Select__RadioInner" />
+    <body style="body">
+      <option
+        id="pre-selected-option"
+        style="option"
+        value="123"
+        selected="true"
+      >
+        <text style="label">Label</text>
+        <view style="radio-outer">
+          <view style="radio-inner" />
         </view>
       </option>
     </body>
