@@ -16,11 +16,11 @@ import {
 } from 'react-native';
 import React, { PureComponent } from 'react';
 import type { ScrollParams, State } from './types';
+import { createTestProps, getAncestorByTagName } from 'hyperview/src/services';
 import { DOMParser } from '@instawork/xmldom';
 import type { ElementRef } from 'react';
 import { FlatList } from 'hyperview/src/core/components/scroll';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import { getAncestorByTagName } from 'hyperview/src/services';
 
 export default class HvList extends PureComponent<HvComponentProps, State> {
   static namespaceURI = Namespaces.HYPERVIEW;
@@ -231,6 +231,8 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
         : acc;
     }, []);
 
+    const { testID, accessibilityLabel } = createTestProps(this.props.element);
+
     return (
       <Contexts.RefreshControlComponentContext.Consumer>
         {ContextRefreshControl => {
@@ -240,6 +242,7 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
           return (
             <FlatList
               ref={this.onRef}
+              accessibilityLabel={accessibilityLabel}
               data={this.getItems()}
               element={this.props.element}
               horizontal={horizontal}
@@ -275,6 +278,7 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
               showsVerticalScrollIndicator={!horizontal && showScrollIndicator}
               stickyHeaderIndices={stickyHeaderIndices}
               style={style}
+              testID={testID}
             />
           );
         }}

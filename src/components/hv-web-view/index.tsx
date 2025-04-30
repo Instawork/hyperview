@@ -59,6 +59,7 @@ export default class HvWebView extends PureComponent<HvComponentProps> {
     const source = { html: props.html, uri: props.url } as const;
     return (
       <WebView
+        accessibilityLabel={props.accessibilityLabel}
         allowsInlineMediaPlayback={allowsInlineMediaPlayback}
         injectedJavaScript={injectedJavaScript}
         onMessage={this.onMessage}
@@ -75,6 +76,7 @@ export default class HvWebView extends PureComponent<HvComponentProps> {
         sharedCookiesEnabled={sharedCookiesEnabled}
         source={source}
         startInLoadingState
+        testID={props.testID}
       />
     );
   }

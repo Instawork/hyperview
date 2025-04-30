@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react';
 import { ActivityIndicator } from 'react-native';
 import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
+import { createTestProps } from 'hyperview/src/services';
 
 export default class HvSpinner extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
@@ -11,6 +12,13 @@ export default class HvSpinner extends PureComponent<HvComponentProps> {
 
   render() {
     const color = this.props.element.getAttribute('color') || '#8d9494';
-    return <ActivityIndicator color={color} />;
+    const { testID, accessibilityLabel } = createTestProps(this.props.element);
+    return (
+      <ActivityIndicator
+        accessibilityLabel={accessibilityLabel}
+        color={color}
+        testID={testID}
+      />
+    );
   }
 }
