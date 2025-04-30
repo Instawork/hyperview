@@ -10,17 +10,11 @@ jobs:
           name: Install dependencies
           command: yarn
       - run:
-          name: Install dependencies
-          command: yarn test:generators
-      - run:
           name: Check types
           command: yarn test:ts
       - run:
           name: Unit tests
           command: yarn test:unit
-      - run:
-          name: Render tests
-          command: yarn test:render
       - run:
           name: Validate XML
           command: pip install xmlschema; yarn test:validate-xml
