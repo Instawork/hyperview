@@ -6,14 +6,10 @@
       "warn",
       {
         "devDependencies": [
-          "**/*.stories.js",
-          "**/stories/*.js",
           "**/*.test.js",
-          "**/stories.js",
           "**/scripts/*",
           "**/scripts/*/*",
           "**/scripts/*/*/*",
-          "**/storybook/*",
           "**/test",
           "**/test/*",
           "**/test/**/*"
@@ -75,10 +71,10 @@
           "warn",
           {
             "devDependencies": [
+              "**/*.test.{ts,tsx}",
               "**/scripts/*",
               "**/scripts/*/*",
               "**/scripts/*/*/*",
-              "**/storybook/*",
               "**/test",
               "**/test/*",
               "**/test/**/*"

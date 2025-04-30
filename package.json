@@ -25,7 +25,6 @@
   },
   "scripts": {
     "sync": "ts-node ./scripts/sync",
-    "generate": "ts-node ./scripts/generate",
     "preversion": "yarn test",
     "prettify": "pretty-quick && prettier --write '**/*.xsd' '**/*.xml' '**/*.md'",
     "postversion": "yarn publish --new-version $npm_package_version && cd demo && yarn add hyperview@$npm_package_version && git add package.json yarn.lock && git commit -m\"chore(demo): update Hyperview to v$npm_package_version\" && cd .. && git push --follow-tags",
@@ -33,14 +32,11 @@
     "release:patch": "yarn version --patch",
     "release:minor": "yarn version --minor",
     "release:major": "yarn version --major",
-    "storybook": "NODE_OPTIONS=--openssl-legacy-provider storybook start -p 7007",
     "test:ts": "tsc",
-    "test:generators": "yarn generate test && git diff --quiet HEAD",
     "test:lint": "eslint src && prettier --check 'schema/**/*.xsd' 'test/**/*.xml' '**/*.md' && yarn format-njk -c",
-    "test:render": "npx patch-package && jest test/render.test.ts --forceExit",
     "test:unit": "jest --runInBand --testPathPattern src",
     "test:validate-xml": "find test/schema -name '*.xml' | xargs xmlschema-validate --schema schema/hyperview.xsd --version 1.1",
-    "test": "yarn generate test && yarn test:ts && yarn test:lint && yarn test:render && yarn test:unit && yarn test:validate-xml"
+    "test": "yarn test:ts && yarn test:lint && yarn test:unit && yarn test:validate-xml"
   },
   "dependencies": {
     "@instawork/xmldom": "0.0.3",
@@ -74,12 +70,8 @@
     "@react-navigation/bottom-tabs": "6.5.7",
     "@react-navigation/native": "6.1.6",
     "@react-navigation/stack": "6.3.16",
-    "@storybook/addon-actions": "4.1.18",
-    "@storybook/addon-storyshots": "4.1.18",
-    "@storybook/react-native": "4.1.18",
     "@tsconfig/react-native": "3.0.2",
     "@testing-library/react-native": "13.2.0",
-    "@types/glob": "8.1.0",
     "@types/jest": "29.5.14",
     "@types/lodash": "4.14.198",
     "@types/node": "20.8.2",
@@ -92,12 +84,9 @@
     "eslint": "7.20.0",
     "eslint-import-resolver-babel-module": "5.2.0",
     "eslint-plugin-instawork": "0.12.0",
-    "glob": "7.1.6",
-    "humps": "2.0.1",
     "husky": "5.1.1",
     "jest": "29.7.0",
     "metro-react-native-babel-preset": "0.76.9",
-    "mkdirp": "1.0.4",
     "nunjucks": "^3.2.4",
     "patch-package": "6.2.2",
     "prettier": "2.2.1",
@@ -113,9 +102,6 @@
   },
   "jest": {
     "preset": "react-native",
-    "moduleNameMapper": {
-      "\\.(png|jpg|jpeg|ttf|mp4|mov)$": "<rootDir>/test/assets-transformer.js"
-    },
     "modulePathIgnorePatterns": [
       "./demo/"
     ],
