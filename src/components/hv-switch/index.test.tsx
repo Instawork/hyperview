@@ -1,6 +1,8 @@
+import { HyperviewMock, getElements } from 'hyperview/test/helpers';
+import { render, screen, waitFor } from '@testing-library/react-native';
 import HvSwitch from 'hyperview/src/components/hv-switch';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import { getElements } from 'hyperview/test/helpers';
+import React from 'react';
 
 describe('HvSwitch', () => {
   describe('getFormInputValues', () => {
@@ -34,6 +36,21 @@ describe('HvSwitch', () => {
 
     it('returns empty array if no name attr', async () => {
       expect(HvSwitch.getFormInputValues(elements[2])).toEqual([]);
+    });
+  });
+  describe('render', () => {
+    test('basic', async () => {
+      render(<HyperviewMock paths={[`${__dirname}/stories/basic.xml`]} />);
+
+      await waitFor(() => {
+        const element = screen.getByRole('switch');
+        expect(element).toBeOnTheScreen();
+        expect(element.props.onTintColor).toBe('#4778FF');
+        expect(element.props.tintColor).toBe('#E1E1E1');
+        expect(element.props.value).toBe(true);
+        expect(element.props.thumbTintColor).toBe(undefined);
+        return true;
+      });
     });
   });
 });

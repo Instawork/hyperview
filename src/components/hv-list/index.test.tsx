@@ -1,6 +1,12 @@
-import { getDummyHvProps, getElements } from 'hyperview/test/helpers';
+import {
+  HyperviewMock,
+  getDummyHvProps,
+  getElements,
+} from 'hyperview/test/helpers';
+import { render, screen, waitFor } from '@testing-library/react-native';
 import HvList from 'hyperview/src/components/hv-list';
 import { LOCAL_NAME } from 'hyperview/src/types';
+import React from 'react';
 
 describe('HvList', () => {
   describe('getItems', () => {
@@ -265,6 +271,26 @@ describe('HvList', () => {
           expect(items[3].getAttribute('id')).toEqual('1-baz-1-bar');
           expect(items[4].getAttribute('id')).toEqual('1-baz-baz');
         });
+      });
+    });
+  });
+  describe('render', () => {
+    test('basic', async () => {
+      render(<HyperviewMock paths={[`${__dirname}/stories/basic.xml`]} />);
+
+      await waitFor(() => {
+        expect(screen.getByTestId('list')).toBeOnTheScreen();
+        return true;
+      });
+    });
+    test('infinite scroll', async () => {
+      render(
+        <HyperviewMock paths={[`${__dirname}/stories/infinite_scroll.xml`]} />,
+      );
+
+      await waitFor(() => {
+        expect(screen.getByTestId('list')).toBeOnTheScreen();
+        return true;
       });
     });
   });

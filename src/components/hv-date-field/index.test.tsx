@@ -1,7 +1,9 @@
+import { HyperviewMock, getElements } from 'hyperview/test/helpers';
 import { createDateFromString, createStringFromDate } from './helpers';
+import { render, screen, waitFor } from '@testing-library/react-native';
 import HvDateField from 'hyperview/src/components/hv-date-field';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import { getElements } from 'hyperview/test/helpers';
+import React from 'react';
 
 describe('HvDateField', () => {
   describe('getFormInputValues', () => {
@@ -66,6 +68,17 @@ describe('HvDateField', () => {
 
     it('returns correct date for single digit month', () => {
       expect(createDateFromString('2023-07-12')).toEqual(new Date(2023, 6, 12));
+    });
+  });
+  describe('render', () => {
+    test('basic', async () => {
+      render(<HyperviewMock paths={[`${__dirname}/stories/basic.xml`]} />);
+
+      await waitFor(() => {
+        const element = screen.getByTestId('date-field');
+        expect(element).toBeOnTheScreen();
+        return true;
+      });
     });
   });
 });

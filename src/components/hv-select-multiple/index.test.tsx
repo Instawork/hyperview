@@ -1,6 +1,8 @@
+import { HyperviewMock, getElements } from 'hyperview/test/helpers';
+import { render, screen, waitFor } from '@testing-library/react-native';
 import HvSelectMultiple from 'hyperview/src/components/hv-select-multiple';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import { getElements } from 'hyperview/test/helpers';
+import React from 'react';
 
 describe('HvSelectMultiple', () => {
   describe('getFormInputValues', () => {
@@ -65,6 +67,34 @@ describe('HvSelectMultiple', () => {
     });
     it('returns empty array if no name attr', async () => {
       expect(HvSelectMultiple.getFormInputValues(elements[4])).toEqual([]);
+    });
+  });
+  describe('render', () => {
+    test('basic', async () => {
+      render(<HyperviewMock paths={[`${__dirname}/stories/basic.xml`]} />);
+
+      await waitFor(() => {
+        expect(screen.getByTestId('select')).toBeOnTheScreen();
+        return true;
+      });
+    });
+    test('preselected', async () => {
+      render(
+        <HyperviewMock paths={[`${__dirname}/stories/pre_selected.xml`]} />,
+      );
+
+      await waitFor(() => {
+        expect(screen.getByTestId('select')).toBeOnTheScreen();
+        return true;
+      });
+    });
+    test('custom', async () => {
+      render(<HyperviewMock paths={[`${__dirname}/stories/custom.xml`]} />);
+
+      await waitFor(() => {
+        expect(screen.getByTestId('select')).toBeOnTheScreen();
+        return true;
+      });
     });
   });
 });
