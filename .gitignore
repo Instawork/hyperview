@@ -8,8 +8,6 @@ yarn-error.log
 node_modules/
 lib/
 
-storybook/app-key.gen.ts
-
 demo/hyperview/public/
 
 website/translated_docs

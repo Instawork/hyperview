@@ -1,9 +1,9 @@
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
-      <style id="Body" backgroundColor="white" flex="1" />
+      <style id="body" backgroundColor="white" flex="1" />
       <style
-        id="SelectCustom"
+        id="select-custom"
         flex="1"
         flexDirection="row"
         marginLeft="24"
@@ -12,7 +12,7 @@
         marginTop="24"
       />
       <style
-        id="SelectCustom__Option"
+        id="option"
         flex="1"
         justifyContent="flex-start"
         alignItems="center"
@@ -27,7 +27,7 @@
         </modifier>
       </style>
       <style
-        id="SelectCustom__Label"
+        id="label"
         fontFamily="HKGrotesk-Regular"
         color="#4e4d4d"
         fontSize="16"
@@ -39,14 +39,9 @@
         </modifier>
       </style>
 
+      <style id="image-wrapper" marginBottom="8" width="32" height="32" />
       <style
-        id="SelectCustom__ImageWrapper"
-        marginBottom="8"
-        width="32"
-        height="32"
-      />
-      <style
-        id="SelectCustom__Image"
+        id="image"
         width="32"
         height="32"
         position="absolute"
@@ -54,31 +49,30 @@
         left="0"
         backgroundColor="blue"
       />
-      <style id="SelectCustom__Image--Unselected">
+      <style id="image-unselected">
         <modifier selected="true">
           <style width="0" height="0" />
         </modifier>
       </style>
-      <style id="SelectCustom__Image--Selected" width="0" height="0">
+      <style id="image-selected" width="0" height="0">
         <modifier selected="true">
           <style width="32" height="32" />
         </modifier>
       </style>
     </styles>
-
-    <body style="Body">
-      <option style="SelectCustom__Option" value="free_parking" selected="true">
-        <view style="SelectCustom__ImageWrapper">
+    <body style="body">
+      <option id="custom-option" style="option" value="123" selected="true">
+        <view style="image-wrapper">
           <image
-            style="SelectCustom__Image SelectCustom__Image--Unselected"
+            style="image image-unselected"
             source="/ui_elements/forms/unselected.png"
           />
           <image
-            style="SelectCustom__Image SelectCustom__Image--Selected"
+            style="image image-selected"
             source="/ui_elements/forms/selected.png"
           />
         </view>
-        <text style="SelectCustom__Label">Free parking</text>
+        <text style="label">Label</text>
       </option>
     </body>
   </screen>

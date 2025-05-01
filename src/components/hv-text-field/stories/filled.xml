@@ -1,0 +1,39 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style id="body" backgroundColor="white" flex="1" />
+      <style
+        id="input"
+        borderBottomColor="#E1E1E1"
+        borderBottomWidth="1"
+        borderColor="#4E4D4D"
+        flex="1"
+        fontFamily="HKGrotesk-Regular"
+        fontSize="16"
+        paddingBottom="8"
+        paddingTop="8"
+      >
+        <modifier pressed="true">
+          <style borderBottomColor="green" />
+        </modifier>
+        <modifier focused="true">
+          <style borderBottomColor="#4778FF" />
+        </modifier>
+      </style>
+      <style borderBottomColor="#FF4847" color="#FF4847" id="input--error">
+        <modifier focused="true">
+          <style borderBottomColor="#FF4847" />
+        </modifier>
+      </style>
+    </styles>
+    <body style="body">
+      <text-field
+        name="text-field"
+        style="input"
+        value="Some text"
+        placeholder="Placeholder"
+        placeholderTextColor="#8D9494"
+      />
+    </body>
+  </screen>
+</doc>

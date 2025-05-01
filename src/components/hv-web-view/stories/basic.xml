@@ -1,7 +1,11 @@
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
-    <body style="Body">
+    <styles>
+      <style id="body" backgroundColor="white" flex="1" />
+    </styles>
+    <body style="body">
       <web-view
+        id="web-view"
         url="https://hyperview.org"
         activity-indicator-color="blue"
         injected-java-script="alert('Hello Hyperview user!')"

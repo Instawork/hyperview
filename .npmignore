@@ -10,15 +10,12 @@
 .prettierrc.js
 .vscode/
 demo/hyperview/public/
-**/stories/
 demo/
 docs/
 examples/
 lib/
 node_modules/
 scripts/
-stories/
-storybook/
 tidy.cfg
 website/
 yarn-error.log

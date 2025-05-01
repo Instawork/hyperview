@@ -1,9 +1,9 @@
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
-      <style id="Body" backgroundColor="white" flex="1" />
+      <style id="body" backgroundColor="white" flex="1" />
       <style
-        id="Input"
+        id="field"
         borderBottomColor="#E1E1E1"
         borderBottomWidth="1"
         borderColor="#4E4D4D"
@@ -18,9 +18,9 @@
           <style borderBottomColor="#4778FF" />
         </modifier>
       </style>
-      <style id="Input__Text" fontSize="16" fontWeight="normal" />
+      <style id="field-text" fontSize="16" fontWeight="normal" />
       <style
-        id="PickerModal"
+        id="modal"
         backgroundColor="white"
         borderTopColor="#E1E1E1"
         borderTopWidth="1"
@@ -29,9 +29,9 @@
         shadowOpacity="0.2"
         shadowRadius="5"
       />
-      <style id="PickerModal__overlay" backgroundColor="#1f1f1fa0" />
+      <style id="modal-overlay" backgroundColor="#1f1f1fa0" />
       <style
-        id="PickerModal__text"
+        id="modal-text"
         color="blue"
         fontSize="16"
         fontWeight="600"
@@ -43,14 +43,16 @@
         </modifier>
       </style>
     </styles>
-    <body style="Body">
+    <body style="body">
       <date-field
-        field-style="Input"
-        field-text-style="Input__Text"
+        id="date-field"
+        name="date-field"
+        field-style="field"
+        field-text-style="field-text"
         label-format="MMMM D, YYYY"
-        modal-style="PickerModal"
-        modal-overlay-style="PickerModal__overlay"
-        modal-text-style="PickerModal__text"
+        modal-style="modal"
+        modal-overlay-style="modal-overlay"
+        modal-text-style="modal-text"
         placeholder="Select date"
         placeholderTextColor="#8D9494"
       />

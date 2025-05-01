@@ -1,51 +1,17 @@
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
+      <style id="body" backgroundColor="white" flex="1" />
+      <style id="select" marginTop="24" />
       <style
-        alignItems="center"
-        backgroundColor="white"
-        borderBottomColor="#eee"
-        borderBottomWidth="1"
-        flexDirection="row"
-        height="72"
-        id="Header"
-        paddingLeft="24"
-        paddingRight="24"
-        paddingTop="24"
-      />
-      <style
-        color="blue"
-        fontFamily="HKGrotesk-SemiBold"
-        fontSize="16"
-        id="Header__Back"
-        paddingRight="16"
-      />
-      <style
-        color="black"
-        fontFamily="HKGrotesk-SemiBold"
-        fontSize="24"
-        id="Header__Title"
-      />
-      <style backgroundColor="white" flex="1" id="Body" />
-      <style
-        fontFamily="HKGrotesk-SemiBold"
-        fontSize="16"
-        id="Description"
-        marginLeft="24"
-        marginRight="24"
-        marginTop="24"
-      />
-
-      <style id="Select" marginTop="24" />
-      <style
-        id="Select__Separator"
+        id="select-separator"
         borderTopWidth="1"
         borderTopColor="#e1e3e3"
         marginLeft="24"
         marginRight="24"
       />
       <style
-        id="Select__Option"
+        id="option"
         flex="1"
         flexDirection="row"
         alignItems="center"
@@ -56,7 +22,7 @@
         paddingTop="16"
       />
       <style
-        id="Select__RadioOuter"
+        id="radio-outer"
         width="20"
         height="20"
         borderRadius="10"
@@ -70,9 +36,8 @@
           <style borderColor="#4778ff" borderWidth="2" />
         </modifier>
       </style>
-
       <style
-        id="Select__RadioInner"
+        id="radio-inner"
         width="10"
         height="10"
         borderRadius="5"
@@ -84,9 +49,8 @@
           <style backgroundColor="#4778ff" opacity="1" />
         </modifier>
       </style>
-
       <style
-        id="Select__Label"
+        id="label"
         fontFamily="HKGrotesk-Regular"
         color="#4e4d4d"
         fontSize="16"
@@ -99,175 +63,31 @@
           <style color="#312f2f" />
         </modifier>
       </style>
-
-      <style
-        id="SelectCustom"
-        flex="1"
-        flexDirection="row"
-        marginLeft="24"
-        marginRight="24"
-        marginBottom="40"
-        marginTop="24"
-      />
-      <style
-        id="SelectCustom__Option"
-        flex="1"
-        justifyContent="flex-start"
-        alignItems="center"
-        borderRadius="4"
-        borderWidth="1"
-        borderColor="#BDC4C4"
-        padding="16"
-        marginRight="8"
-      >
-        <modifier selected="true">
-          <style borderColor="#4778FF" />
-        </modifier>
-      </style>
-      <style
-        id="SelectCustom__Label"
-        fontFamily="HKGrotesk-Regular"
-        color="#4e4d4d"
-        fontSize="16"
-        lineHeight="18"
-        textAlign="center"
-      >
-        <modifier selected="true">
-          <style color="#4778FF" fontFamily="HKGrotesk-Medium" />
-        </modifier>
-      </style>
-
-      <style
-        id="SelectCustom__ImageWrapper"
-        marginBottom="8"
-        width="32"
-        height="32"
-      />
-      <style
-        id="SelectCustom__Image"
-        width="32"
-        height="32"
-        position="absolute"
-        top="0"
-        left="0"
-      />
-      <style id="SelectCustom__Image--Unselected">
-        <modifier selected="true">
-          <style width="0" height="0" />
-        </modifier>
-      </style>
-      <style id="SelectCustom__Image--Selected" width="0" height="0">
-        <modifier selected="true">
-          <style width="32" height="32" />
-        </modifier>
-      </style>
     </styles>
-
-    <body style="Body">
-      <header style="Header">
-        <text action="back" href="#" style="Header__Back">Back</text>
-        <text style="Header__Title">Select Single</text>
-      </header>
-      <view scroll="true" style="Main">
-        <text style="Description">Simple Select</text>
-        <select-single style="Select" name="choice">
-          <view style="Select__Separator" />
-          <option style="Select__Option" value="paid_parking">
-            <text style="Select__Label">Paid parking</text>
-            <view style="Select__RadioOuter">
-              <view style="Select__RadioInner" />
-            </view>
-          </option>
-          <view style="Select__Separator" />
-          <option style="Select__Option" value="free_parking">
-            <text style="Select__Label">Free parking</text>
-            <view style="Select__RadioOuter">
-              <view style="Select__RadioInner" />
-            </view>
-          </option>
-          <view style="Select__Separator" />
-          <option style="Select__Option" value="unknown_parking">
-            <text style="Select__Label">Unknown</text>
-            <view style="Select__RadioOuter">
-              <view style="Select__RadioInner" />
-            </view>
-          </option>
-          <view style="Select__Separator" />
-        </select-single>
-
-        <text style="Description">Pre-selected</text>
-        <select-single style="Select" name="choice">
-          <view style="Select__Separator" />
-          <option style="Select__Option" value="paid_parking">
-            <text style="Select__Label">Paid parking</text>
-            <view style="Select__RadioOuter">
-              <view style="Select__RadioInner" />
-            </view>
-          </option>
-          <view style="Select__Separator" />
-          <option style="Select__Option" value="free_parking" selected="true">
-            <text style="Select__Label">Free parking</text>
-            <view style="Select__RadioOuter">
-              <view style="Select__RadioInner" />
-            </view>
-          </option>
-          <view style="Select__Separator" />
-          <option style="Select__Option" value="unknown_parking">
-            <text style="Select__Label">Unknown</text>
-            <view style="Select__RadioOuter">
-              <view style="Select__RadioInner" />
-            </view>
-          </option>
-          <view style="Select__Separator" />
-        </select-single>
-
-        <text style="Description">Custom</text>
-        <select-single style="SelectCustom" name="choice">
-          <option style="SelectCustom__Option" value="paid_parking">
-            <view style="SelectCustom__ImageWrapper">
-              <image
-                style="SelectCustom__Image SelectCustom__Image--Unselected"
-                source="/ui_elements/forms/unselected.png"
-              />
-              <image
-                style="SelectCustom__Image SelectCustom__Image--Selected"
-                source="/ui_elements/forms/selected.png"
-              />
-            </view>
-            <text style="SelectCustom__Label">Paid parking</text>
-          </option>
-          <option
-            style="SelectCustom__Option"
-            value="free_parking"
-            selected="true"
-          >
-            <view style="SelectCustom__ImageWrapper">
-              <image
-                style="SelectCustom__Image SelectCustom__Image--Unselected"
-                source="/ui_elements/forms/unselected.png"
-              />
-              <image
-                style="SelectCustom__Image SelectCustom__Image--Selected"
-                source="/ui_elements/forms/selected.png"
-              />
-            </view>
-            <text style="SelectCustom__Label">Free parking</text>
-          </option>
-          <option style="SelectCustom__Option" value="unknown_parking">
-            <view style="SelectCustom__ImageWrapper">
-              <image
-                style="SelectCustom__Image SelectCustom__Image--Unselected"
-                source="/ui_elements/forms/unselected.png"
-              />
-              <image
-                style="SelectCustom__Image SelectCustom__Image--Selected"
-                source="/ui_elements/forms/selected.png"
-              />
-            </view>
-            <text style="SelectCustom__Label">Unknown</text>
-          </option>
-        </select-single>
-      </view>
+    <body style="body">
+      <select-single id="select" style="select" name="choice">
+        <view style="select-separator" />
+        <option style="option" value="option-1">
+          <text style="label">Option 1</text>
+          <view style="radio-outer">
+            <view style="radio-inner" />
+          </view>
+        </option>
+        <view style="select-separator" />
+        <option style="option" value="option-2">
+          <text style="label">Option 2</text>
+          <view style="radio-outer">
+            <view style="radio-inner" />
+          </view>
+        </option>
+        <view style="select-separator" />
+        <option style="option" value="option-3">
+          <text style="label">Option 3</text>
+          <view style="radio-outer">
+            <view style="radio-inner" />
+          </view>
+        </option>
+      </select-single>
     </body>
   </screen>
 </doc>

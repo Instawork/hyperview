@@ -17,10 +17,10 @@ import {
 import { LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
 import type { ScrollParams, State } from './types';
+import { createTestProps, getAncestorByTagName } from 'hyperview/src/services';
 import { DOMParser } from '@instawork/xmldom';
 import type { ElementRef } from 'react';
 import { SectionList } from 'hyperview/src/core/components/scroll';
-import { getAncestorByTagName } from 'hyperview/src/services';
 
 const getSectionIndex = (
   sectionTitle: Element,
@@ -345,6 +345,8 @@ export default class HvSectionList extends PureComponent<
         ? { right: 1 }
         : undefined;
 
+    const { testID, accessibilityLabel } = createTestProps(this.props.element);
+
     return (
       <Contexts.RefreshControlComponentContext.Consumer>
         {ContextRefreshControl => {
@@ -354,6 +356,7 @@ export default class HvSectionList extends PureComponent<
           return (
             <SectionList
               ref={this.onRef}
+              accessibilityLabel={accessibilityLabel}
               element={this.props.element}
               keyboardDismissMode={Keyboard.getKeyboardDismissMode(
                 this.props.element,
@@ -394,6 +397,7 @@ export default class HvSectionList extends PureComponent<
               sections={sections}
               stickySectionHeadersEnabled={this.getStickySectionHeadersEnabled()}
               style={style}
+              testID={testID}
             />
           );
         }}

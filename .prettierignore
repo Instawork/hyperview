@@ -1,5 +1,4 @@
 flow-typed
-*.gen.ts
 demo/hyperview/public/
 website/
 /src/mask.js

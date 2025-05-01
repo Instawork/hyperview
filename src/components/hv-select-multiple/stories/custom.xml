@@ -1,0 +1,105 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style id="body" backgroundColor="white" flex="1" />
+      <style
+        id="select-custom"
+        flex="1"
+        flexDirection="row"
+        marginLeft="24"
+        marginRight="24"
+        marginBottom="40"
+        marginTop="24"
+      />
+      <style
+        id="option"
+        flex="1"
+        justifyContent="flex-start"
+        alignItems="center"
+        borderRadius="4"
+        borderWidth="1"
+        borderColor="#BDC4C4"
+        padding="16"
+        marginRight="8"
+      >
+        <modifier selected="true">
+          <style borderColor="#4778FF" />
+        </modifier>
+      </style>
+      <style
+        id="label"
+        fontFamily="HKGrotesk-Regular"
+        color="#4e4d4d"
+        fontSize="16"
+        lineHeight="18"
+        textAlign="center"
+      >
+        <modifier selected="true">
+          <style color="#4778FF" fontFamily="HKGrotesk-Medium" />
+        </modifier>
+      </style>
+      <style id="image-wrapper" marginBottom="8" width="32" height="32" />
+      <style
+        id="image"
+        width="32"
+        height="32"
+        position="absolute"
+        top="0"
+        left="0"
+      />
+      <style id="image-unselected">
+        <modifier selected="true">
+          <style width="0" height="0" />
+        </modifier>
+      </style>
+      <style id="image-selected" width="0" height="0">
+        <modifier selected="true">
+          <style width="32" height="32" />
+        </modifier>
+      </style>
+    </styles>
+    <body style="body">
+      <select-multiple id="select" style="select-custom" name="choice">
+        <option style="option" value="option-1">
+          <view style="image-wrapper">
+            <image
+              style="image image-unselected"
+              source="/ui_elements/forms/unselected.png"
+            />
+            <image
+              style="image image-selected"
+              source="/ui_elements/forms/selected.png"
+            />
+          </view>
+          <text style="label">Option 1</text>
+        </option>
+        <option style="option" value="option-2" selected="true">
+          <view style="image-wrapper">
+            <image
+              style="image image-unselected"
+              source="/ui_elements/forms/unselected.png"
+            />
+            <image
+              style="image image-selected"
+              source="/ui_elements/forms/selected.png"
+            />
+          </view>
+          <text style="label">Option 2</text>
+        </option>
+        <option style="option" value="option-3">
+          <view style="image-wrapper">
+            <image
+              style="image image-unselected"
+              source="/ui_elements/forms/unselected.png"
+            />
+            <image
+              style="image image-selected"
+              source="/ui_elements/forms/selected.png"
+            />
+          </view>
+          <text style="label">Option 3</text>
+        </option>
+      </select-multiple>
+    </body>
+  </screen>
+</doc>

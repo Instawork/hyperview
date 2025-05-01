@@ -1,106 +1,54 @@
 <doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
+      <style id="body" backgroundColor="white" flex="1" />
       <style
-        id="Header"
-        alignItems="center"
-        backgroundColor="white"
-        borderBottomColor="#eee"
-        borderBottomWidth="1"
-        flexDirection="row"
-        height="72"
-        paddingLeft="24"
-        paddingRight="24"
-        paddingTop="24"
-      />
-      <style
-        id="Header__Back"
-        color="blue"
-        fontSize="16"
-        fontWeight="600"
-        paddingRight="16"
-      />
-      <style id="Header__Title" color="black" fontSize="24" fontWeight="600" />
-      <style id="Body" backgroundColor="white" flex="1" />
-      <style
-        id="Description"
-        fontSize="16"
-        fontWeight="normal"
-        margin="24"
-        marginBottom="0"
-      />
-      <style
-        id="Item"
-        alignItems="center"
-        borderBottomColor="#eee"
-        borderBottomWidth="1"
-        flex="1"
-        flexDirection="row"
-        height="48"
-        justifyContent="space-between"
-        paddingLeft="24"
-        paddingRight="24"
-      />
-      <style id="Item__Label" fontSize="18" fontWeight="normal" />
-      <style id="Item__Chevron" fontSize="18" fontWeight="bold" />
-      <style
-        id="Border"
-        borderColor="#e1e1e1"
-        borderWidth="1"
-        flex="1"
-        margin="24"
-        padding="8"
-      />
-      <style id="Main" flex="1" />
-      <style
-        id="ScrollContainer"
+        id="container"
         borderColor="#e1e1e1"
         borderRadius="16"
         borderWidth="1"
         height="160"
         margin="24"
       />
-      <style id="ScrollContainer--Vertical" flexDirection="column" />
-      <style id="ScrollContainer--Horizontal" flexDirection="row" />
+      <style id="container-vertical" flexDirection="column" />
+      <style id="container-horizontal" flexDirection="row" />
       <style
-        id="ScrollChild"
+        id="child"
         backgroundColor="#63CB76"
         borderRadius="16"
         height="40"
         margin="8"
       />
-      <style id="ScrollChild--Vertical" height="40" />
-      <style id="ScrollChild--Horizontal" width="40" />
+      <style id="child-vertical" height="40" />
+      <style id="child-horizontal" width="40" />
     </styles>
-    <body style="Body">
-      <header style="Header">
-        <text action="back" href="#" style="Header__Back">Back</text>
-        <text style="Header__Title">Scroll Views</text>
-      </header>
-      <view>
-        <text style="Description">Vertical Scroll</text>
-        <view scroll="true" style="ScrollContainer ScrollContainer--Vertical">
-          <view style="ScrollChild ScrollChild--Vertical" />
-          <view style="ScrollChild ScrollChild--Vertical" />
-          <view style="ScrollChild ScrollChild--Vertical" />
-          <view style="ScrollChild ScrollChild--Vertical" />
-          <view style="ScrollChild ScrollChild--Vertical" />
-          <view style="ScrollChild ScrollChild--Vertical" />
-        </view>
-        <text style="Description">Horizontal Scroll</text>
-        <view
-          scroll="true"
-          scroll-orientation="horizontal"
-          style="ScrollContainer ScrollContainer--Horizontal"
-        >
-          <view style="ScrollChild ScrollChild--Horizontal" />
-          <view style="ScrollChild ScrollChild--Horizontal" />
-          <view style="ScrollChild ScrollChild--Horizontal" />
-          <view style="ScrollChild ScrollChild--Horizontal" />
-          <view style="ScrollChild ScrollChild--Horizontal" />
-          <view style="ScrollChild ScrollChild--Horizontal" />
-          <view style="ScrollChild ScrollChild--Horizontal" />
-        </view>
+    <body style="body">
+      <view
+        scroll="true"
+        scroll-orientation="vertical"
+        style="container container-vertical"
+        id="container-vertical"
+      >
+        <view style="child child-vertical" id="child-vertical-1" />
+        <view style="child child-vertical" id="child-vertical-2" />
+        <view style="child child-vertical" id="child-vertical-3" />
+        <view style="child child-vertical" id="child-vertical-4" />
+        <view style="child child-vertical" id="child-vertical-5" />
+        <view style="child child-vertical" id="child-vertical-6" />
+      </view>
+      <view
+        scroll="true"
+        scroll-orientation="horizontal"
+        style="container container-horizontal"
+        id="container-horizontal"
+      >
+        <view style="child child-horizontal" id="child-horizontal-1" />
+        <view style="child child-horizontal" id="child-horizontal-2" />
+        <view style="child child-horizontal" id="child-horizontal-3" />
+        <view style="child child-horizontal" id="child-horizontal-4" />
+        <view style="child child-horizontal" id="child-horizontal-5" />
+        <view style="child child-horizontal" id="child-horizontal-6" />
+        <view style="child child-horizontal" id="child-horizontal-7" />
       </view>
     </body>
   </screen>

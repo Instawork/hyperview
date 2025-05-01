@@ -1,0 +1,22 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style id="body" backgroundColor="white" flex="1" />
+      <style
+        id="text"
+        backgroundColor="#63CB76"
+        color="white"
+        fontSize="32"
+        fontWeight="bold"
+        margin="24"
+        padding="16"
+      />
+    </styles>
+    <body style="body">
+      <text style="text" preformatted="true">
+        Hello,
+                        world!
+      </text>
+    </body>
+  </screen>
+</doc>
