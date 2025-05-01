@@ -1,17 +1,8 @@
 __mocks__/
-.circleci/
-.cursor/
-.vscode/
-demo/
-docs/
 node_modules/
-scripts/
-website/
 .DS_Store
-.editorconfig
 .eslintignore
 .eslintrc
-.gitignore
 .prettierignore
 .prettierrc.js
 yarn-error.log
