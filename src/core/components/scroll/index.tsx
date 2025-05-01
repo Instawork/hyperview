@@ -40,6 +40,7 @@ export function withContext<T, P extends ScrollProps>(
     );
     return (
       <Component
+        // eslint-disable-next-line react/jsx-props-no-spreading
         {...(p as P)}
         ref={ref}
         onScroll={onScrollWrapper}

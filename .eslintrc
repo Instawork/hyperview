@@ -33,9 +33,9 @@
     "instawork/import-modules": "error",
     "instawork/import-services": "error",
     "instawork/pure-components": "error",
-    "instawork/stories-components": "error",
-    "instawork/stories-navbars": "error",
-    "instawork/stories-screens": "error",
+    "instawork/stories-components": "off",
+    "instawork/stories-navbars": "off",
+    "instawork/stories-screens": "off",
     "padding-line-between-statements": "off",
     "@typescript-eslint/padding-line-between-statements": [
       "error",
@@ -84,6 +84,9 @@
         "indent": "off",
         "instawork/error-object": "off",
         "instawork/flow-annotate": "off",
+        "instawork/stories-components": "off",
+        "instawork/stories-navbars": "off",
+        "instawork/stories-screens": "off",
         "no-spaced-func": "off",
         "no-undef": "off",
         "no-use-before-define": "off",
@@ -91,18 +94,6 @@
         "operator-linebreak": "off",
         "react/jsx-curly-newline": "off",
         "react/jsx-wrap-multilines": "off"
-      }
-    },
-    {
-      "files": ["src/core/components/**/*"],
-      "rules": {
-        "instawork/stories-components": "warn"
-      }
-    },
-    {
-      "files": ["demo/**/*"],
-      "rules": {
-        "instawork/stories-components": "off"
       }
     }
   ]

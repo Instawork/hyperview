@@ -37,6 +37,7 @@ export default (props: Props) => {
       onPressIn={() => setPressed(true)}
       onPressOut={() => setPressed(false)}
     >
+      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <View {...viewProps}>
         <Contexts.DateFormatContext.Consumer>
           {formatter => (

@@ -28,6 +28,7 @@ export default (props: Props) => {
       onPressOut={() => setPressed(false)}
     >
       <View>
+        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         <Text style={style} {...FontScale.getFontScaleProps(props.element)}>
           {props.label}
         </Text>

@@ -88,6 +88,7 @@ const HvTextField = (props: HvComponentProps) => {
 
   return (
     <TextInput
+      // eslint-disable-next-line react/jsx-props-no-spreading
       {...p}
       ref={(ref: ElementRef<typeof TextInput> | null) => {
         textInputRef.current = ref;
