@@ -1,0 +1,22 @@
+---
+permalink: "/behaviors/basic/triggers/unload/unload.xml"
+---
+
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block content %}
+  {{ description('Navigate back to the previous screen to see the confirmation message.') }}
+
+  {% call button('Go back', attributes={xmlns:"https://hyperview.org/hyperview"}) -%}
+    <behavior action="back" />
+  {%- endcall %}
+
+  <behavior
+    trigger="unload"
+    event-name="unload-example"
+    action="dispatch-event"
+  />
+
+{% endblock %}
