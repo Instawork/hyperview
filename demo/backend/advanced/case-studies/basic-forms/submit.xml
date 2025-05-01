@@ -1,4 +1,4 @@
-<form id="myForm"  scroll="true" xmlns="https://hyperview.org/hyperview">
+<form id="myForm" scroll="true" xmlns="https://hyperview.org/hyperview">
   <view style="form-group">
     <text style="label">Label line</text>
     <text-field

@@ -6,4 +6,7 @@ import { View } from 'react-native';
 // avoiding when the web page is rendered on device
 // equiped with a virtual keyboard
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default (props: any) => <View {...props} />;
+export default (props: any) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <View {...props} />
+);

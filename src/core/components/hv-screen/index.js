@@ -1,4 +1,4 @@
-/* eslint instawork/flow-annotate: 0 */
+/* eslint instawork/flow-annotate: 0 react/prop-types: 0 */
 import * as Behaviors from 'hyperview/src/behaviors';
 import * as Components from 'hyperview/src/services/components';
 import * as Contexts from 'hyperview/src/contexts';
