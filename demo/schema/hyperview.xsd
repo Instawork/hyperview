@@ -31,10 +31,7 @@
     namespace="https://hyperview.org/navigation"
     schemaLocation="navigation.xsd"
   />
-  <xs:import
-    namespace="https://hyperview.org/map"
-    schemaLocation="map.xsd"
-  />
+  <xs:import namespace="https://hyperview.org/map" schemaLocation="map.xsd" />
   <xs:import
     namespace="https://hyperview.org/progress-bar"
     schemaLocation="progress-bar.xsd"
@@ -100,7 +97,11 @@
       <xs:complexContent>
         <xs:restriction base="hv:behavior">
           <xs:sequence>
-            <xs:element minOccurs="0" maxOccurs="unbounded" ref="alert:option" />
+            <xs:element
+              minOccurs="0"
+              maxOccurs="unbounded"
+              ref="alert:option"
+            />
             <xs:element minOccurs="0" maxOccurs="unbounded" ref="hv:styles" />
           </xs:sequence>
           <xs:attributeGroup ref="hv:behaviorAttributes" />
