@@ -46,6 +46,7 @@
     <body style="body">
       <date-field
         id="date-field"
+        name="date-field"
         field-style="field"
         field-text-style="field-text"
         label-format="MMMM D, YYYY"

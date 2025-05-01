@@ -41,6 +41,7 @@
     <body style="body">
       <picker-field
         id="picker-field"
+        name="picker-field"
         field-style="field"
         field-text-style="field-text"
         modal-style="modal"

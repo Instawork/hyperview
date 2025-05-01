@@ -28,6 +28,7 @@
     </styles>
     <body style="body">
       <text-field
+        name="text-field"
         keyboard-type="phone-pad"
         mask="(999) 999-9999"
         placeholder="Phone number"

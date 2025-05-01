@@ -8,7 +8,7 @@
       <image
         source="https://upload.wikimedia.org/wikipedia/en/a/a4/Guns-N-Roses-1987.jpg"
         style="image"
-        testID="image"
+        id="image"
       />
     </body>
   </screen>

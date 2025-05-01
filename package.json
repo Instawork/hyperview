@@ -35,7 +35,7 @@
     "test:ts": "tsc",
     "test:lint": "eslint src && prettier --check 'schema/**/*.xsd' 'test/**/*.xml' '**/*.md' && yarn format-njk -c",
     "test:unit": "jest --runInBand --testPathPattern src",
-    "test:validate-xml": "find test/schema -name '*.xml' | xargs xmlschema-validate --schema schema/hyperview.xsd --version 1.1",
+    "test:validate-xml": "find test src -name '*.xml' | xargs xmlschema-validate --schema schema/hyperview.xsd --version 1.1",
     "test": "yarn test:ts && yarn test:lint && yarn test:unit && yarn test:validate-xml"
   },
   "dependencies": {
