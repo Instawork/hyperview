@@ -278,6 +278,15 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       if (renderElement.namespaceURI !== Namespaces.HYPERVIEW) {
         throw new NavigatorService.HvRenderError('Invalid namespace');
       }
+
+      if (this.props.element === undefined) {
+        if (!this.props.url) {
+          throw new NavigatorService.HvRouteError('No url received');
+        }
+        if (!this.props.getLocalDoc()) {
+          throw new NavigatorService.HvRouteError('No document received');
+        }
+      }
     }
 
     if (needsSubStack || renderElement?.localName === LOCAL_NAME.NAVIGATOR) {
@@ -336,35 +345,15 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     throw new NavigatorService.HvRenderError('Invalid element type');
   };
 
-  /**
-   * View shown when the document is loaded
-   */
-  Content = (): React.ReactElement => {
-    if (
-      this.props.element === undefined &&
-      !this.props.route?.params?.needsSubStack
-    ) {
-      if (!this.props.url) {
-        throw new NavigatorService.HvRouteError('No url received');
-      }
-      if (!this.props.getLocalDoc()) {
-        throw new NavigatorService.HvRouteError('No document received');
-      }
-    }
-
-    const { Route } = this;
-    return <Route />;
-  };
-
   render() {
-    const { Load, Content } = this;
+    const { Load, Route } = this;
 
     if (
       this.props.element ||
       this.props.getLocalDoc() ||
       this.props.route?.params?.needsSubStack
     ) {
-      return <Content />;
+      return <Route />;
     }
     return <Load />;
   }
