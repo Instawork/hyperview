@@ -6,7 +6,6 @@ import {
   HvBehavior,
   HvComponent,
   HvComponentOnUpdate,
-  OnUpdateCallbacks,
   Reload,
   Route,
   RouteParams,
@@ -45,23 +44,19 @@ export type RouteProps = NavigatorService.Route<string, { url?: string }>;
  */
 export type InnerRouteProps = {
   url?: string;
-  navigation?: NavigatorService.NavigationProp;
   navigator: NavigatorService.Navigator;
   route?: NavigatorService.Route<string, RouteParams>;
   entrypointUrl: string;
   onUpdate: HvComponentOnUpdate;
-  onUpdateCallbacks: OnUpdateCallbacks;
   behaviors?: HvBehavior[];
   components?: HvComponent[];
   elementErrorComponent?: ComponentType<ErrorProps>;
   handleBack?: ComponentType<{ children: ReactNode }>;
-  setElement: (key: number, element: Element) => void;
   getElement: (key: number) => Element | undefined;
   removeElement: (key: number) => void;
   element?: Element;
   doc: Document | undefined;
   getLocalDoc: () => Document | null;
-  getScreenState: () => ScreenState;
   setScreenState: (state: ScreenState) => void;
 };
 

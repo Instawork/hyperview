@@ -500,13 +500,7 @@ function HvRouteFC(props: Types.Props) {
       url={url}
     >
       <StateContext.Consumer>
-        {({
-          getLocalDoc,
-          getScreenState,
-          onUpdate,
-          onUpdateCallbacks,
-          setScreenState,
-        }) => (
+        {({ getLocalDoc, onUpdate, setScreenState }) => (
           <HvRouteInner
             behaviors={navigationContext.behaviors}
             components={navigationContext.components}
@@ -516,15 +510,11 @@ function HvRouteFC(props: Types.Props) {
             entrypointUrl={navigationContext.entrypointUrl}
             getElement={elemenCacheContext.getElement}
             getLocalDoc={getLocalDoc}
-            getScreenState={getScreenState}
             handleBack={navigationContext.handleBack}
-            navigation={nav}
             navigator={navigator}
             onUpdate={onUpdate}
-            onUpdateCallbacks={onUpdateCallbacks}
             removeElement={elemenCacheContext.removeElement}
             route={props.route}
-            setElement={elemenCacheContext.setElement}
             setScreenState={setScreenState}
             url={url}
           />
