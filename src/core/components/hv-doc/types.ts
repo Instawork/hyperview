@@ -31,7 +31,6 @@ export type StateContextProps = {
   onUpdate: HvComponentOnUpdate;
   onUpdateCallbacks: OnUpdateCallbacks;
   reload: (url?: string | null) => void;
-  setNeedsLoadCallback: (callback: () => void) => void;
   setScreenState: (state: ScreenState) => void;
 };
 

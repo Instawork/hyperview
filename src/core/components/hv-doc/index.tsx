@@ -177,9 +177,6 @@ const HvDoc = (props: Props) => {
     ],
   );
 
-  const needsLoadCallback = useRef(() => {
-    // Noop
-  });
   // Monitor props.url changes
   useEffect(() => {
     if (
@@ -272,8 +269,10 @@ const HvDoc = (props: Props) => {
       getNavigation,
       getOnUpdate: () => onUpdate,
       getState: getScreenState,
-      setNeedsLoad: needsLoadCallback.current,
       setState: setScreenState,
+      updateUrl: (url: string) => {
+        setLoadingUrl(url);
+      },
     };
 
     return {
@@ -282,9 +281,6 @@ const HvDoc = (props: Props) => {
       onUpdate,
       onUpdateCallbacks: onUpdateCallbacksRef.current,
       reload,
-      setNeedsLoadCallback: (callback: () => void) => {
-        needsLoadCallback.current = callback;
-      },
       setScreenState,
     };
   }, [

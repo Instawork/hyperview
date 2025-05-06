@@ -36,25 +36,10 @@ import type { ScreenState } from 'hyperview/src/types';
 class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
   componentRegistry: Components.Registry;
 
-  needsLoad = false;
-
   constructor(props: Types.InnerRouteProps) {
     super(props);
     this.componentRegistry = new Components.Registry(this.props.components);
-    this.needsLoad = false;
-    this.props.setNeedsLoadCallback(() => {
-      this.needsLoad = true;
-    });
   }
-
-  getUrl = (): string => {
-    return UrlService.getUrlFromHref(
-      (this.needsLoad ? this.props.getScreenState().url : undefined) ||
-        this.props.url ||
-        this.props.entrypointUrl,
-      this.props.entrypointUrl,
-    );
-  };
 
   /**
    * Fix for both route and screen loading the document when url changes
@@ -164,7 +149,11 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
    * Build the <HvScreen> component with injected props
    */
   Screen = (): React.ReactElement => {
-    const url = this.getUrl();
+    const url = UrlService.getUrlFromHref(
+      this.props.url || this.props.entrypointUrl,
+      this.props.entrypointUrl,
+    );
+
     // Inject the corrected url into the params and cast as correct type
     const route: Types.RouteProps = {
       ...this.props.route,
@@ -195,7 +184,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
             onUpdate,
             onUpdateCallbacks,
             reload,
-            setNeedsLoadCallback,
             setScreenState,
           }) => (
             <Contexts.DateFormatContext.Consumer>
@@ -215,7 +203,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
                   reload={reload}
                   removeElement={this.props.removeElement}
                   route={route}
-                  setNeedsLoadCallback={setNeedsLoadCallback}
                   setScreenState={setScreenState}
                 />
               )}
@@ -330,23 +317,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
 }
 
 /**
- * Retrieve the url from the props, params, or context
- */
-const getRouteUrl = (
-  props: Types.Props,
-  navigationContext: Types.NavigationContextProps,
-) => {
-  // The initial hv-route element will use the entrypoint url
-  if (props.navigation === undefined) {
-    return navigationContext.entrypointUrl;
-  }
-
-  return props.route?.params?.url
-    ? NavigatorService.cleanHrefFragment(props.route?.params?.url)
-    : undefined;
-};
-
-/**
  * Retrieve a nested navigator as a child of the nav-route with the given id
  */
 const getNestedNavigator = (
@@ -384,7 +354,13 @@ function HvRouteFC(props: Types.Props) {
   const backContext = useContext(BackBehaviorContext);
   const docContext = useContext(Contexts.DocContext);
 
-  const url = getRouteUrl(props, navigationContext);
+  const url =
+    props.navigation === undefined
+      ? navigationContext.entrypointUrl
+      : NavigatorService.cleanHrefFragment(
+          props.route?.params?.url || navigationContext.entrypointUrl,
+        );
+
   const rootNavigation = useContext(NavigationContainerRefContext);
   const nav =
     props.navigation || (rootNavigation as NavigatorService.NavigationProp);
@@ -529,7 +505,6 @@ function HvRouteFC(props: Types.Props) {
           getScreenState,
           onUpdate,
           onUpdateCallbacks,
-          setNeedsLoadCallback,
           setScreenState,
         }) => (
           <HvRouteInner
@@ -550,7 +525,6 @@ function HvRouteFC(props: Types.Props) {
             removeElement={elemenCacheContext.removeElement}
             route={props.route}
             setElement={elemenCacheContext.setElement}
-            setNeedsLoadCallback={setNeedsLoadCallback}
             setScreenState={setScreenState}
             url={url}
           />

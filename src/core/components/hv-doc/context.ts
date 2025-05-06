@@ -11,8 +11,8 @@ const callbacks = {
   }),
   getOnUpdate: () => () => undefined,
   getState: () => ({}),
-  setNeedsLoad: () => null,
   setState: () => undefined,
+  updateUrl: () => null,
 };
 
 export const StateContext = createContext<StateContextProps>({
@@ -21,6 +21,5 @@ export const StateContext = createContext<StateContextProps>({
   onUpdate: () => undefined,
   onUpdateCallbacks: callbacks,
   reload: () => null,
-  setNeedsLoadCallback: () => null,
   setScreenState: () => undefined,
 });

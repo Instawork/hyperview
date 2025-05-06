@@ -36,6 +36,5 @@ export type Props = Omit<
   url?: string;
   getLocalDoc: () => Document | null;
   getScreenState: () => ScreenState;
-  setNeedsLoadCallback: (callback: () => void) => void;
   setScreenState: (state: ScreenState) => void;
 };
