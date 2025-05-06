@@ -41,17 +41,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     this.componentRegistry = new Components.Registry(this.props.components);
   }
 
-  /**
-   * Fix for both route and screen loading the document when url changes
-   * The route will not perform a load if a screen has already been rendered
-   */
-  shouldReload = (): boolean => {
-    return (
-      !this.props.getLocalDoc() ||
-      !(this.getRenderElement()?.localName === LOCAL_NAME.SCREEN)
-    );
-  };
-
   getRenderElement = (): Element | undefined => {
     if (this.props.element) {
       return this.props.element;
