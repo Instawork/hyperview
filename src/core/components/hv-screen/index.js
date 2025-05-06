@@ -138,30 +138,6 @@ export default class HvScreen extends React.Component {
   }
 
   /**
-   * Fetch data from the url if the screen should reload.
-   */
-  componentDidUpdate() {
-    if (this.needsLoad) {
-      this.load(this.props.getScreenState().url);
-      this.needsLoad = false;
-    }
-  }
-
-  /**
-   * Performs a full load of the screen.
-   */
-  load = async () => {
-    const { params } = this.getRoute(this.props);
-    await this.props.loadUrl(this.props.getScreenState().url);
-    if (params.preloadScreen) {
-      this.props.removeElement?.(params.preloadScreen);
-    }
-    if (params.behaviorElementId) {
-      this.props.removeElement?.(params.behaviorElementId);
-    }
-  };
-
-  /**
    * Renders the XML doc into React components. Shows blank screen until the XML doc is available.
    */
   render() {

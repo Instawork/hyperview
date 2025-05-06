@@ -38,5 +38,4 @@ export type Props = Omit<
   getScreenState: () => ScreenState;
   setNeedsLoadCallback: (callback: () => void) => void;
   setScreenState: (state: ScreenState) => void;
-  loadUrl: (url?: string) => void;
 };

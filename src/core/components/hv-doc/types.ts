@@ -15,16 +15,19 @@ export type Props = {
   route?: NavigatorService.Route<
     string,
     {
+      behaviorElementId?: number;
       delay?: DOMString | number | null;
+      needsSubStack?: boolean;
+      preloadScreen?: number;
       url?: string | null;
     }
   >;
+  url: string;
 };
 
 export type StateContextProps = {
   getLocalDoc: () => Document | null;
   getScreenState: () => ScreenState;
-  loadUrl: (url?: string) => void;
   onUpdate: HvComponentOnUpdate;
   onUpdateCallbacks: OnUpdateCallbacks;
   reload: (url?: string | null) => void;

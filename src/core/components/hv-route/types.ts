@@ -64,7 +64,6 @@ export type InnerRouteProps = {
   getScreenState: () => ScreenState;
   setScreenState: (state: ScreenState) => void;
   setNeedsLoadCallback: (callback: () => void) => void;
-  loadUrl: (url?: string) => void;
 };
 
 /**
