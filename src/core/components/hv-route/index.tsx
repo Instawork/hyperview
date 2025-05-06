@@ -504,7 +504,7 @@ function HvRouteFC(props: Types.Props) {
           <HvRouteInner
             behaviors={navigationContext.behaviors}
             components={navigationContext.components}
-            doc={docContext?.getDoc()}
+            doc={getLocalDoc() || undefined}
             element={element}
             elementErrorComponent={navigationContext.elementErrorComponent}
             entrypointUrl={navigationContext.entrypointUrl}
