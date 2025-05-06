@@ -104,13 +104,14 @@ const HvDoc = (props: Props) => {
         handleError(new HvDocError('No URL provided'), targetUrl);
         return;
       }
+      const params = props.route?.params ?? {};
 
       try {
-        if (props.route?.params.delay) {
+        if (params.delay) {
           const delay =
-            typeof props.route.params.delay === 'number'
-              ? props.route.params.delay
-              : parseInt(props.route.params.delay, 10);
+            typeof params.delay === 'number'
+              ? params.delay
+              : parseInt(params.delay, 10);
           await later(delay);
         }
 
