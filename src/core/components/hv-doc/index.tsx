@@ -255,6 +255,13 @@ const HvDoc = (props: Props) => {
     [navigationContext],
   );
 
+  const updateUrl = useCallback((url: string) => {
+    setState(prev => ({
+      ...prev,
+      loadingUrl: url,
+    }));
+  }, []);
+
   const contextValue = useMemo(() => {
     onUpdateCallbacksRef.current = {
       clearElementError: () => {
@@ -270,7 +277,7 @@ const HvDoc = (props: Props) => {
       getOnUpdate: () => onUpdate,
       getState: getScreenState,
       setState: setScreenState,
-      updateUrl: setLoadingUrl,
+      updateUrl,
     };
 
     return {
@@ -289,6 +296,7 @@ const HvDoc = (props: Props) => {
     reload,
     setScreenState,
     state.elementError,
+    updateUrl,
   ]);
 
   /**
