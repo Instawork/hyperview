@@ -44,18 +44,6 @@ const HvDoc = (props: Props) => {
   // </HACK>
 
   const [state, setState] = useState<DocState>(() => {
-    // Initial state may receive a doc from the props
-    if (props.doc) {
-      localDoc.current = props.doc;
-      return {
-        doc: props.doc,
-        error: undefined,
-        staleHeaderType: undefined,
-        styles: props.doc
-          ? Stylesheets.createStylesheets(props.doc)
-          : undefined,
-      };
-    }
     return {
       doc: undefined,
       error: undefined,
@@ -181,7 +169,6 @@ const HvDoc = (props: Props) => {
     if (
       props.url &&
       props.url !== state.url &&
-      !props.doc &&
       !props.element &&
       !props.route?.params.needsSubStack
     ) {
@@ -195,7 +182,6 @@ const HvDoc = (props: Props) => {
     }
   }, [
     loadUrl,
-    props.doc,
     props.element,
     props.route?.params.needsSubStack,
     props.url,

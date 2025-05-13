@@ -9,7 +9,6 @@ import {
 
 export type Props = {
   children?: React.ReactNode;
-  doc?: Document;
   element?: Element;
   navigationProvider: NavigationProvider;
   route?: NavigatorService.Route<
