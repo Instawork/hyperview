@@ -1,3 +1,4 @@
+import * as Contexts from 'hyperview/src/contexts';
 import * as DomService from 'hyperview/src/services/dom';
 import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as NavigationContext from 'hyperview/src/contexts/navigation';
@@ -12,10 +13,11 @@ import {
   OnUpdateCallbacks,
   ScreenState,
 } from 'hyperview/src/types';
-import { ErrorProps, Props } from './types';
+import { DocState, ErrorProps, Props } from './types';
 import React, {
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -41,7 +43,7 @@ const HvDoc = (props: Props) => {
   const localUrl = useRef<string | null | undefined>(null);
   // </HACK>
 
-  const [state, setState] = useState<ScreenState>(() => {
+  const [state, setState] = useState<DocState>(() => {
     // Initial state may receive a doc from the props
     if (props.doc) {
       localDoc.current = props.doc;
@@ -64,7 +66,8 @@ const HvDoc = (props: Props) => {
     NavigationContext.Context,
   );
 
-  if (!navigationContext) {
+  const elemenCacheContext = useContext(Contexts.ElementCacheContext);
+  if (!navigationContext || !elemenCacheContext) {
     throw new HvDocError('No context found');
   }
 
@@ -94,6 +97,7 @@ const HvDoc = (props: Props) => {
           setState(prev => ({
             ...prev,
             error: err,
+            loadingUrl: null,
             url: u ?? prev.url,
           }));
         }
@@ -104,13 +108,14 @@ const HvDoc = (props: Props) => {
         handleError(new HvDocError('No URL provided'), targetUrl);
         return;
       }
+      const params = props.route?.params ?? {};
 
       try {
-        if (props.route?.params.delay) {
+        if (params.delay) {
           const delay =
-            typeof props.route.params.delay === 'number'
-              ? props.route.params.delay
-              : parseInt(props.route.params.delay, 10);
+            typeof params.delay === 'number'
+              ? params.delay
+              : parseInt(params.delay, 10);
           await later(delay);
         }
 
@@ -139,6 +144,7 @@ const HvDoc = (props: Props) => {
             ...prev,
             doc: document,
             error: undefined,
+            loadingUrl: null,
             staleHeaderType,
             styles: stylesheets,
             url: targetUrl,
@@ -152,14 +158,51 @@ const HvDoc = (props: Props) => {
         // Error
         localDoc.current = undefined;
         handleError(err as Error, targetUrl);
+      } finally {
+        if (params.preloadScreen) {
+          elemenCacheContext.removeElement?.(params.preloadScreen);
+        }
+        if (params.behaviorElementId) {
+          elemenCacheContext.removeElement?.(params.behaviorElementId);
+        }
       }
     },
-    [navigationContext, parser, props.route?.params.delay, state.url],
+    [
+      elemenCacheContext,
+      navigationContext,
+      parser,
+      props.route?.params,
+      state.url,
+    ],
   );
 
-  const needsLoadCallback = useRef(() => {
-    // Noop
-  });
+  // Monitor url changes
+  useEffect(() => {
+    if (
+      props.url &&
+      props.url !== state.url &&
+      !props.doc &&
+      !props.element &&
+      !props.route?.params.needsSubStack
+    ) {
+      loadUrl(props.url);
+    } else if (
+      props.url &&
+      state.loadingUrl &&
+      props.url !== state.loadingUrl
+    ) {
+      loadUrl(state.loadingUrl);
+    }
+  }, [
+    loadUrl,
+    props.doc,
+    props.element,
+    props.route?.params.needsSubStack,
+    props.url,
+    state.url,
+    state.loadingUrl,
+  ]);
+
   const getScreenState = useCallback(
     () => ({ ...state, url: localUrl.current }),
     [state],
@@ -212,6 +255,13 @@ const HvDoc = (props: Props) => {
     [navigationContext],
   );
 
+  const updateUrl = useCallback((url: string) => {
+    setState(prev => ({
+      ...prev,
+      loadingUrl: url,
+    }));
+  }, []);
+
   const contextValue = useMemo(() => {
     onUpdateCallbacksRef.current = {
       clearElementError: () => {
@@ -226,31 +276,27 @@ const HvDoc = (props: Props) => {
       getNavigation,
       getOnUpdate: () => onUpdate,
       getState: getScreenState,
-      setNeedsLoad: needsLoadCallback.current,
       setState: setScreenState,
+      updateUrl,
     };
 
     return {
       getLocalDoc: getDoc,
       getScreenState,
-      loadUrl,
       onUpdate,
       onUpdateCallbacks: onUpdateCallbacksRef.current,
       reload,
-      setNeedsLoadCallback: (callback: () => void) => {
-        needsLoadCallback.current = callback;
-      },
       setScreenState,
     };
   }, [
     getDoc,
     getNavigation,
     getScreenState,
-    loadUrl,
     onUpdate,
     reload,
     setScreenState,
     state.elementError,
+    updateUrl,
   ]);
 
   /**
