@@ -43,11 +43,14 @@ const HvDoc = (props: Props) => {
   const localUrl = useRef<string | null | undefined>(null);
   // </HACK>
 
-  const [state, setState] = useState<DocState>(() => {
-    return {
-      doc: undefined,
-      error: undefined,
-    };
+  const [state, setState] = useState<DocState>({
+    doc: null,
+    elementError: null,
+    error: null,
+    loadingUrl: null,
+    staleHeaderType: null,
+    styles: null,
+    url: null,
   });
 
   const navigationContext: NavigationContext.NavigationContextProps | null = useContext(
@@ -131,7 +134,7 @@ const HvDoc = (props: Props) => {
           setState(prev => ({
             ...prev,
             doc: document,
-            error: undefined,
+            error: null,
             loadingUrl: null,
             staleHeaderType,
             styles: stylesheets,
@@ -166,19 +169,18 @@ const HvDoc = (props: Props) => {
 
   // Monitor url changes
   useEffect(() => {
-    if (
+    if (state.loadingUrl) {
+      // Handle force reload
+      loadUrl(state.loadingUrl);
+    } else if (
       props.url &&
+      !state.url &&
       props.url !== state.url &&
       !props.element &&
       !props.route?.params.needsSubStack
     ) {
+      // Handle initial load
       loadUrl(props.url);
-    } else if (
-      props.url &&
-      state.loadingUrl &&
-      props.url !== state.loadingUrl
-    ) {
-      loadUrl(state.loadingUrl);
     }
   }, [
     loadUrl,
