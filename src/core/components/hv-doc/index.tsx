@@ -129,7 +129,7 @@ const HvDoc = (props: Props) => {
             : doc;
 
           localDoc.current = document;
-          localUrl.current = fullUrl;
+          localUrl.current = targetUrl;
           const stylesheets = Stylesheets.createStylesheets(doc);
           setState(prev => ({
             ...prev,
