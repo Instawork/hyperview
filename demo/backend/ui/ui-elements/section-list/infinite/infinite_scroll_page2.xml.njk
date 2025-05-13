@@ -1,0 +1,23 @@
+---
+permalink: "/ui/ui-elements/section-list/infinite/infinite_scroll_page2.xml"
+---
+
+<items xmlns="https://hyperview.org/hyperview">
+  {% for i in range(21, 31) %}
+    <item key="{{ i }}" style="item">
+      <text style="item-label">Added: List {{ i }}</text>
+    </item>
+  {% endfor %}
+  <item key="page-3-loader" style="item item-last">
+    <behavior
+      delay="300"
+      trigger="visible"
+      action="replace"
+      once="true"
+      href="/hyperview/public/ui/ui-elements/section-list/infinite/infinite_scroll_page3.xml"
+    />
+    <view id="list-loading-indicator" style="spinner">
+      <spinner/>
+    </view>
+  </item>
+</items>

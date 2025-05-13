@@ -44,16 +44,17 @@ hv_button_behavior: "back"
       </item>
     {% endfor %}
 
-    <item
-      action="replace"
-      delay="1000"
-      href="/hyperview/public/ui/ui-elements/section-list/infinite/infinite_scroll_page2.xml"
-      key="loader"
-      once="true"
-      style="item item-last"
-      trigger="visible"
-    >
-      <spinner/>
+    <item key="page-2-loader" style="item item-last">
+      <behavior
+        delay="300"
+        trigger="visible"
+        action="replace"
+        once="true"
+        href="/hyperview/public/ui/ui-elements/section-list/infinite/infinite_scroll_page2.xml"
+      />
+      <view id="list-loading-indicator" style="spinner">
+        <spinner/>
+      </view>
     </item>
   </section-list>
 {% endblock %}
