@@ -13,7 +13,7 @@ import {
   OnUpdateCallbacks,
   ScreenState,
 } from 'hyperview/src/types';
-import { ErrorProps, Props } from './types';
+import { DocState, ErrorProps, Props } from './types';
 import React, {
   useCallback,
   useContext,
@@ -43,9 +43,7 @@ const HvDoc = (props: Props) => {
   const localUrl = useRef<string | null | undefined>(null);
   // </HACK>
 
-  const [loadingUrl, setLoadingUrl] = useState<string | null | undefined>(null);
-
-  const [state, setState] = useState<ScreenState>(() => {
+  const [state, setState] = useState<DocState>(() => {
     // Initial state may receive a doc from the props
     if (props.doc) {
       localDoc.current = props.doc;
@@ -99,6 +97,7 @@ const HvDoc = (props: Props) => {
           setState(prev => ({
             ...prev,
             error: err,
+            loadingUrl: null,
             url: u ?? prev.url,
           }));
         }
@@ -145,6 +144,7 @@ const HvDoc = (props: Props) => {
             ...prev,
             doc: document,
             error: undefined,
+            loadingUrl: null,
             staleHeaderType,
             styles: stylesheets,
             url: targetUrl,
@@ -159,7 +159,6 @@ const HvDoc = (props: Props) => {
         localDoc.current = undefined;
         handleError(err as Error, targetUrl);
       } finally {
-        setLoadingUrl(null);
         if (params.preloadScreen) {
           elemenCacheContext.removeElement?.(params.preloadScreen);
         }
@@ -177,7 +176,7 @@ const HvDoc = (props: Props) => {
     ],
   );
 
-  // Monitor props.url changes
+  // Monitor url changes
   useEffect(() => {
     if (
       props.url &&
@@ -186,22 +185,23 @@ const HvDoc = (props: Props) => {
       !props.element &&
       !props.route?.params.needsSubStack
     ) {
-      setLoadingUrl(props.url);
+      loadUrl(props.url);
+    } else if (
+      props.url &&
+      state.loadingUrl &&
+      props.url !== state.loadingUrl
+    ) {
+      loadUrl(state.loadingUrl);
     }
   }, [
+    loadUrl,
     props.doc,
     props.element,
     props.route?.params.needsSubStack,
     props.url,
     state.url,
+    state.loadingUrl,
   ]);
-
-  // Load the url when the state is updated
-  useEffect(() => {
-    if (loadingUrl) {
-      loadUrl(loadingUrl);
-    }
-  }, [loadUrl, loadingUrl]);
 
   const getScreenState = useCallback(
     () => ({ ...state, url: localUrl.current }),
@@ -270,9 +270,7 @@ const HvDoc = (props: Props) => {
       getOnUpdate: () => onUpdate,
       getState: getScreenState,
       setState: setScreenState,
-      updateUrl: (url: string) => {
-        setLoadingUrl(url);
-      },
+      updateUrl: setLoadingUrl,
     };
 
     return {

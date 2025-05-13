@@ -39,3 +39,7 @@ export type ErrorProps = {
   navigationProvider?: NavigationProvider;
   url: string | null | undefined;
 };
+
+export type DocState = ScreenState & {
+  loadingUrl?: string | null | undefined;
+};
