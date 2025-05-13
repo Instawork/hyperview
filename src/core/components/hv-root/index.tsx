@@ -124,13 +124,13 @@ export default class Hyperview extends PureComponent<Types.Props> {
     }
 
     // Re-render the modifications
-    opts.onUpdateCallbacks?.setNeedsLoad();
     opts.onUpdateCallbacks?.setState({
       doc: newRoot,
       elementError: null,
       error: null,
       url,
     });
+    opts.onUpdateCallbacks?.updateUrl(url);
   };
 
   /**

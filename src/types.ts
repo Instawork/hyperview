@@ -419,9 +419,9 @@ export type OnUpdateCallbacks = {
   getNavigation: () => NavigationProvider;
   getOnUpdate: () => HvComponentOnUpdate;
   getDoc: () => Document | null;
-  setNeedsLoad: () => void;
   getState: () => ScreenState;
   setState: (state: ScreenState) => void;
+  updateUrl: (url: string) => void;
 };
 
 export type ScreenState = {
