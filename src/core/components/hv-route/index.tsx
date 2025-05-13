@@ -154,51 +154,28 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       },
     };
 
-    const propsLocalDoc = this.props.getLocalDoc();
-    const localDoc = useMemo(() => {
-      return propsLocalDoc?.cloneNode(true) as Document;
-    }, [propsLocalDoc]);
-
     return (
-      <HvDoc
-        doc={localDoc}
-        navigationProvider={this.props.navigator}
-        route={route}
-        url={url}
-      >
-        <StateContext.Consumer>
-          {({
-            getLocalDoc,
-            getScreenState,
-            onUpdate,
-            onUpdateCallbacks,
-            reload,
-            setScreenState,
-          }) => (
-            <Contexts.DateFormatContext.Consumer>
-              {formatter => (
-                <HvScreen
-                  behaviors={this.props.behaviors}
-                  components={this.props.components}
-                  elementErrorComponent={this.props.elementErrorComponent}
-                  entrypointUrl={this.props.entrypointUrl}
-                  formatDate={formatter}
-                  getElement={this.props.getElement}
-                  getLocalDoc={getLocalDoc}
-                  getScreenState={getScreenState}
-                  navigation={this.props.navigator}
-                  onUpdate={onUpdate}
-                  onUpdateCallbacks={onUpdateCallbacks}
-                  reload={reload}
-                  removeElement={this.props.removeElement}
-                  route={route}
-                  setScreenState={setScreenState}
-                />
-              )}
-            </Contexts.DateFormatContext.Consumer>
-          )}
-        </StateContext.Consumer>
-      </HvDoc>
+      <Contexts.DateFormatContext.Consumer>
+        {formatter => (
+          <HvScreen
+            behaviors={this.props.behaviors}
+            components={this.props.components}
+            elementErrorComponent={this.props.elementErrorComponent}
+            entrypointUrl={this.props.entrypointUrl}
+            formatDate={formatter}
+            getElement={this.props.getElement}
+            getLocalDoc={this.props.getLocalDoc}
+            getScreenState={this.props.getScreenState}
+            navigation={this.props.navigator}
+            onUpdate={this.props.onUpdate}
+            onUpdateCallbacks={this.props.onUpdateCallbacks}
+            reload={this.props.reload}
+            removeElement={this.props.removeElement}
+            route={route}
+            setScreenState={this.props.setScreenState}
+          />
+        )}
+      </Contexts.DateFormatContext.Consumer>
     );
   };
 
@@ -489,7 +466,14 @@ function HvRouteFC(props: Types.Props) {
       url={url}
     >
       <StateContext.Consumer>
-        {({ getLocalDoc, onUpdate, setScreenState }) => (
+        {({
+          getLocalDoc,
+          getScreenState,
+          onUpdate,
+          onUpdateCallbacks,
+          reload,
+          setScreenState,
+        }) => (
           <HvRouteInner
             behaviors={navigationContext.behaviors}
             components={navigationContext.components}
@@ -499,9 +483,12 @@ function HvRouteFC(props: Types.Props) {
             entrypointUrl={navigationContext.entrypointUrl}
             getElement={elemenCacheContext.getElement}
             getLocalDoc={getLocalDoc}
+            getScreenState={getScreenState}
             handleBack={navigationContext.handleBack}
             navigator={navigator}
             onUpdate={onUpdate}
+            onUpdateCallbacks={onUpdateCallbacks}
+            reload={reload}
             removeElement={elemenCacheContext.removeElement}
             route={props.route}
             setScreenState={setScreenState}
