@@ -43,23 +43,14 @@ const HvDoc = (props: Props) => {
   const localUrl = useRef<string | null | undefined>(null);
   // </HACK>
 
-  const [state, setState] = useState<DocState>(() => {
-    // Initial state may receive a doc from the props
-    if (props.doc) {
-      localDoc.current = props.doc;
-      return {
-        doc: props.doc,
-        error: undefined,
-        staleHeaderType: undefined,
-        styles: props.doc
-          ? Stylesheets.createStylesheets(props.doc)
-          : undefined,
-      };
-    }
-    return {
-      doc: undefined,
-      error: undefined,
-    };
+  const [state, setState] = useState<DocState>({
+    doc: null,
+    elementError: null,
+    error: null,
+    loadingUrl: null,
+    staleHeaderType: null,
+    styles: null,
+    url: null,
   });
 
   const navigationContext: NavigationContext.NavigationContextProps | null = useContext(
@@ -138,12 +129,12 @@ const HvDoc = (props: Props) => {
             : doc;
 
           localDoc.current = document;
-          localUrl.current = fullUrl;
+          localUrl.current = targetUrl;
           const stylesheets = Stylesheets.createStylesheets(doc);
           setState(prev => ({
             ...prev,
             doc: document,
-            error: undefined,
+            error: null,
             loadingUrl: null,
             staleHeaderType,
             styles: stylesheets,
@@ -178,24 +169,21 @@ const HvDoc = (props: Props) => {
 
   // Monitor url changes
   useEffect(() => {
-    if (
+    if (state.loadingUrl) {
+      // Handle force reload
+      loadUrl(state.loadingUrl);
+    } else if (
       props.url &&
+      !state.url &&
       props.url !== state.url &&
-      !props.doc &&
       !props.element &&
       !props.route?.params.needsSubStack
     ) {
+      // Handle initial load
       loadUrl(props.url);
-    } else if (
-      props.url &&
-      state.loadingUrl &&
-      props.url !== state.loadingUrl
-    ) {
-      loadUrl(state.loadingUrl);
     }
   }, [
     loadUrl,
-    props.doc,
     props.element,
     props.route?.params.needsSubStack,
     props.url,
