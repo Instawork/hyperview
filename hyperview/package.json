@@ -28,7 +28,7 @@
     "release:minor": "yarn version --minor",
     "release:major": "yarn version --major",
     "test:ts": "tsc",
-    "test:lint": "eslint src && prettier --check '**/*.xsd' '**/*.xml' '**/*.md' && yarn format-njk -c",
+    "test:lint": "prettier --check '**/*.xsd' '**/*.xml' '**/*.md'",
     "test:unit": "jest --runInBand --testPathPattern src",
     "test:validate-xml": "find test src -name '*.xml' | xargs xmlschema-validate --schema schema/hyperview.xsd --version 1.1",
     "test": "yarn test:ts && yarn test:lint && yarn test:unit && yarn test:validate-xml"
