@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 if [[ `uname` == "Darwin" ]]; then
-  TEMPLATE_FILES=`find -E . -path ./node_modules -prune -o -regex ".*\\.njk" | grep examples`
+  TEMPLATE_FILES=`find -E . -path ./node_modules -prune -o -regex ".*\\.njk" | grep demo/backend`
 else
-  TEMPLATE_FILES=`find . -path ./node_modules -prune -o -regextype sed -regex ".*\\.\\njk" | grep examples`
+  TEMPLATE_FILES=`find . -path ./node_modules -prune -o -regextype sed -regex ".*\\.\\njk" | grep demo/backend`
 fi
 
 EXCLUDED_FILES=()
