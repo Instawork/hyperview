@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "name": "instawork",
+  "packageManager": "yarn@4.3.1",
+  "workspaces": [
+    "hyperview"
+  ],
+  "installConfig": {
+    "hoistingLimits": "workspaces"
+  }
+}

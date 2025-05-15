@@ -20,3 +20,5 @@ website/i18n/*
 demo/yalc.lock
 
 .idea/
+
+.yarn/
