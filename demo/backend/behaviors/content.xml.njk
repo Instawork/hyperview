@@ -5,8 +5,8 @@
 
 {% block tab_route_content %}
   {{ tabbar_top([
-    {id: "tab-basic", label: "Basic", selected: true},
-    {id: "tab-advanced", label: "Advanced"}
+  {id: "tab-basic", label: "Basic", selected: true},
+  {id: "tab-advanced", label: "Advanced"}
   ]) }}
   {% call tabbar_top_tab("tab-basic", true) -%}
     {% include './basic/content.xml.njk' %}

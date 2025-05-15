@@ -11,8 +11,8 @@ hv_button_behavior: "none"
 
 {% block tab_route_content %}
   {{ tabbar_top([
-    {id: "tab-ui-elements", label: "UI Elements", selected: true},
-    {id: "tab-styling", label: "Styling"}
+  {id: "tab-ui-elements", label: "UI Elements", selected: true},
+  {id: "tab-styling", label: "Styling"}
   ]) }}
   {% call tabbar_top_tab("tab-ui-elements", true) -%}
     {% include './ui-elements/content.xml.njk' %}

@@ -11,8 +11,8 @@ hv_button_behavior: "none"
 
 {% block tab_route_content %}
   {{ tabbar_top([
-    {id: "tab-case-studies", label: "Case Studies", selected: true},
-    {id: "tab-community", label: "Community"}
+  {id: "tab-case-studies", label: "Case Studies", selected: true},
+  {id: "tab-community", label: "Community"}
   ]) }}
   {% call tabbar_top_tab("tab-case-studies", true) -%}
     {% include './case-studies/content.xml.njk' %}

@@ -11,8 +11,8 @@ hv_button_behavior: "none"
 
 {% block tab_route_content %}
   {{ tabbar_top([
-    {id: "tab-behaviors", label: "Behaviors", selected: true},
-    {id: "tab-navigator", label: "Navigator"}
+  {id: "tab-behaviors", label: "Behaviors", selected: true},
+  {id: "tab-navigator", label: "Navigator"}
   ]) }}
   {% call tabbar_top_tab("tab-behaviors", true) -%}
     {% include './behaviors/content.xml.njk' %}
