@@ -138,26 +138,26 @@
   fontWeight="bold"
 >
   <modifier selected="true">
-    <style color="#4778FF" />
+  <style color="#4778FF" />
   </modifier>
   <modifier pressed="true">
-    <style color="#4778FF" />
+  <style color="#4778FF" />
   </modifier>
 </style>
 <style id="tabbar-bottom-tab-icon">
   <modifier selected="true">
-    <style display="none" />
+  <style display="none" />
   </modifier>
   <modifier pressed="true">
-    <style display="none" />
+  <style display="none" />
   </modifier>
 </style>
 <style id="tabbar-bottom-tab-icon-selected" display="none">
   <modifier selected="true">
-    <style display="flex" />
+  <style display="flex" />
   </modifier>
   <modifier pressed="true">
-    <style display="flex" />
+  <style display="flex" />
   </modifier>
 </style>
 <style
@@ -582,26 +582,26 @@
   fontWeight="bold"
 >
   <modifier selected="true">
-    <style color="#4778FF" />
+  <style color="#4778FF" />
   </modifier>
   <modifier pressed="true">
-    <style color="#4778FF" />
+  <style color="#4778FF" />
   </modifier>
 </style>
 <style id="tabbar-bottom-tab-icon">
   <modifier selected="true">
-    <style display="none" />
+  <style display="none" />
   </modifier>
   <modifier pressed="true">
-    <style display="none" />
+  <style display="none" />
   </modifier>
 </style>
 <style id="tabbar-bottom-tab-icon-selected" display="none">
   <modifier selected="true">
-    <style display="flex" />
+  <style display="flex" />
   </modifier>
   <modifier pressed="true">
-    <style display="flex" />
+  <style display="flex" />
   </modifier>
 </style>
 <style
@@ -942,26 +942,26 @@
   fontWeight="bold"
 >
   <modifier selected="true">
-    <style color="#4778FF" />
+  <style color="#4778FF" />
   </modifier>
   <modifier pressed="true">
-    <style color="#4778FF" />
+  <style color="#4778FF" />
   </modifier>
 </style>
 <style id="tabbar-bottom-tab-icon">
   <modifier selected="true">
-    <style display="none" />
+  <style display="none" />
   </modifier>
   <modifier pressed="true">
-    <style display="none" />
+  <style display="none" />
   </modifier>
 </style>
 <style id="tabbar-bottom-tab-icon-selected" display="none">
   <modifier selected="true">
-    <style display="flex" />
+  <style display="flex" />
   </modifier>
   <modifier pressed="true">
-    <style display="flex" />
+  <style display="flex" />
   </modifier>
 </style>
 <style
