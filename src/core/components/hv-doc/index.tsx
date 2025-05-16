@@ -43,6 +43,8 @@ const HvDoc = (props: Props) => {
   const localUrl = useRef<string | null | undefined>(null);
   // </HACK>
 
+  const currentProps = useRef(props);
+
   const [state, setState] = useState<DocState>({
     doc: null,
     elementError: null,
@@ -190,6 +192,18 @@ const HvDoc = (props: Props) => {
     state.url,
     state.loadingUrl,
   ]);
+
+  // Monitor prop changes
+  useEffect(() => {
+    if (
+      props.url &&
+      currentProps.current.url &&
+      props.url !== currentProps.current.url
+    ) {
+      loadUrl(props.url);
+    }
+    currentProps.current = props;
+  }, [loadUrl, props]);
 
   const getScreenState = useCallback(
     () => ({ ...state, url: localUrl.current }),
