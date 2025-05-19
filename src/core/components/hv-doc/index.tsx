@@ -131,7 +131,7 @@ const HvDoc = (props: Props) => {
             : doc;
 
           localDoc.current = document;
-          localUrl.current = targetUrl;
+          localUrl.current = fullUrl;
           const stylesheets = Stylesheets.createStylesheets(doc);
           setState(prev => ({
             ...prev,
@@ -140,7 +140,7 @@ const HvDoc = (props: Props) => {
             loadingUrl: null,
             staleHeaderType,
             styles: stylesheets,
-            url: targetUrl,
+            url: fullUrl,
           }));
         } else {
           // Invalid document
