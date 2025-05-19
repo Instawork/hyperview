@@ -1,5 +1,4 @@
 import * as Dom from 'hyperview/src/services/dom';
-import * as Logging from 'hyperview/src/services/logging';
 import {
   ACTIONS,
   BEHAVIOR_ATTRIBUTES,
@@ -11,7 +10,6 @@ import type {
   NavAction,
   UpdateAction,
 } from 'hyperview/src/types';
-import { XMLSerializer } from '@instawork/xmldom';
 import { shallowCloneToRoot } from 'hyperview/src/services';
 
 /**
@@ -113,17 +111,6 @@ export const performUpdate = (
   return shallowCloneToRoot(targetElement);
 };
 
-const logBehavior = (behaviorElement: Element, action: string | null) => {
-  Logging.info(
-    `[behavior] | action: ${action} |`,
-    Logging.deferredToString(() => {
-      const be = behaviorElement.cloneNode(true) as Element;
-      be.textContent = '';
-      return new XMLSerializer().serializeToString(be);
-    }),
-  );
-};
-
 /**
  * Trigger all behaviors matching the given name
  */
@@ -154,7 +141,6 @@ export const trigger = (
       targetId,
       verb,
     });
-    logBehavior(behaviorElement, action);
   });
 };
 
@@ -199,7 +185,6 @@ export const createActionHandler = (
         showIndicatorId,
         targetId,
       });
-      logBehavior(behaviorElement, action);
     };
   }
   if (
@@ -227,13 +212,11 @@ export const createActionHandler = (
         targetId,
         verb,
       });
-      logBehavior(behaviorElement, action);
     };
   }
   // Custom behavior
   return (element: Element) => {
     onUpdate(null, action, element, { behaviorElement, custom: true });
-    logBehavior(behaviorElement, action);
   };
 };
 
