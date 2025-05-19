@@ -243,15 +243,9 @@ export default class Hyperview extends PureComponent<Types.Props> {
       updateAction &&
       Object.values(UPDATE_ACTIONS).includes(updateAction)
     ) {
-      this.onUpdateFragment(
-        href,
-        updateAction,
-        element,
-        options,
-        options.onUpdateCallbacks,
-      );
+      this.onUpdateFragment(href, updateAction, element, options);
     } else if (action === ACTIONS.SWAP) {
-      this.onSwap(element, options.newElement, options.onUpdateCallbacks);
+      this.onSwap(element, options);
     } else if (action === ACTIONS.DISPATCH_EVENT) {
       const { behaviorElement } = options;
       if (!behaviorElement) {
@@ -297,7 +291,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
       }
     } else {
       const { behaviorElement } = options;
-      this.onCustomUpdate(behaviorElement, options.onUpdateCallbacks);
+      this.onCustomUpdate(behaviorElement, options);
     }
   };
 
@@ -329,7 +323,6 @@ export default class Hyperview extends PureComponent<Types.Props> {
     action: UpdateAction,
     element: Element,
     options: HvComponentOptions,
-    onUpdateCallbacks: OnUpdateCallbacks,
   ) => {
     const opts = options || {};
     const {
@@ -341,7 +334,12 @@ export default class Hyperview extends PureComponent<Types.Props> {
       delay,
       once,
       onEnd,
+      onUpdateCallbacks,
     } = opts;
+    if (!onUpdateCallbacks) {
+      Logging.warn('onUpdateFragment requires an onUpdateCallbacks object');
+      return;
+    }
     const networkRetryAction = behaviorElement?.getAttribute(
       'network-retry-action',
     ) as XNetworkRetryAction | null | undefined;
@@ -500,13 +498,10 @@ export default class Hyperview extends PureComponent<Types.Props> {
   /**
    * Used internally to update the state of things like select forms.
    */
-  onSwap = (
-    currentElement: Element,
-    newElement: Element | null | undefined,
-    onUpdateCallbacks: OnUpdateCallbacks,
-  ) => {
+  onSwap = (currentElement: Element, options: HvComponentOptions) => {
+    const { newElement, onUpdateCallbacks } = options;
     const parentElement = currentElement.parentNode as Element;
-    if (!parentElement || !newElement) {
+    if (!parentElement || !newElement || !onUpdateCallbacks) {
       return;
     }
     parentElement.replaceChild(newElement, currentElement);
@@ -521,9 +516,10 @@ export default class Hyperview extends PureComponent<Types.Props> {
    */
   onCustomUpdate = (
     behaviorElement: Element | null | undefined,
-    onUpdateCallbacks: OnUpdateCallbacks,
+    options: HvComponentOptions,
   ) => {
-    if (!behaviorElement) {
+    const { onUpdateCallbacks } = options;
+    if (!behaviorElement || !onUpdateCallbacks) {
       Logging.warn('Custom behavior requires a behaviorElement');
       return;
     }
