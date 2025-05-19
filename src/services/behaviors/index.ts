@@ -145,16 +145,21 @@ export const trigger = (
     const hideIndicatorIds = behaviorElement.getAttribute('hide-during-load');
     const delay = behaviorElement.getAttribute('delay');
     const once = behaviorElement.getAttribute('once');
+    const onUpdateComplete = (success: boolean) => {
+      if (success) {
+        logBehavior(behaviorElement, action);
+      }
+    };
     onUpdate(href, action, element, {
       behaviorElement,
       delay,
       hideIndicatorIds,
       once,
+      onUpdateComplete,
       showIndicatorIds,
       targetId,
       verb,
     });
-    logBehavior(behaviorElement, action);
   });
 };
 
@@ -193,13 +198,18 @@ export const createActionHandler = (
         BEHAVIOR_ATTRIBUTES.SHOW_DURING_LOAD,
       );
       const delay = behaviorElement.getAttribute(BEHAVIOR_ATTRIBUTES.DELAY);
+      const onUpdateComplete = (success: boolean) => {
+        if (success) {
+          logBehavior(behaviorElement, action);
+        }
+      };
       onUpdate(href, action, element, {
         behaviorElement,
         delay,
+        onUpdateComplete,
         showIndicatorId,
         targetId,
       });
-      logBehavior(behaviorElement, action);
     };
   }
   if (
@@ -218,22 +228,35 @@ export const createActionHandler = (
       );
       const delay = behaviorElement.getAttribute(BEHAVIOR_ATTRIBUTES.DELAY);
       const once = behaviorElement.getAttribute(BEHAVIOR_ATTRIBUTES.ONCE);
+      const onUpdateComplete = (success: boolean) => {
+        if (success) {
+          logBehavior(behaviorElement, action);
+        }
+      };
       onUpdate(href, action, element, {
         behaviorElement,
         delay,
         hideIndicatorIds,
         once,
+        onUpdateComplete,
         showIndicatorIds,
         targetId,
         verb,
       });
-      logBehavior(behaviorElement, action);
     };
   }
   // Custom behavior
   return (element: Element) => {
-    onUpdate(null, action, element, { behaviorElement, custom: true });
-    logBehavior(behaviorElement, action);
+    const onUpdateComplete = (success: boolean) => {
+      if (success) {
+        logBehavior(behaviorElement, action);
+      }
+    };
+    onUpdate(null, action, element, {
+      behaviorElement,
+      custom: true,
+      onUpdateComplete,
+    });
   };
 };
 
