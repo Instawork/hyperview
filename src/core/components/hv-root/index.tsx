@@ -392,53 +392,57 @@ export default class Hyperview extends PureComponent<Types.Props> {
           onUpdateCallbacks,
           networkRetryAction,
           networkRetryEvent,
-        ).then(newElement => {
-          // If a target is specified and exists, use it. Otherwise, the action target defaults
-          // to the element triggering the action.
-          let targetElement = targetId
-            ? Dom.getElementById(onUpdateCallbacks.getDoc(), targetId)
-            : null;
-          if (!targetElement) {
-            // Find the target element by locating the behavior within the current doc
-            targetElement = Helpers.findTargetByBehavior(
-              onUpdateCallbacks.getDoc(),
-              behaviorElement,
-            );
-            // Warn developers if a provided target was not found
-            if (targetId) {
-              Logging.error(
-                'Target element not found. Falling back to current element.',
-                { id: targetId },
+        )
+          .then(newElement => {
+            // If a target is specified and exists, use it. Otherwise, the action target defaults
+            // to the element triggering the action.
+            let targetElement = targetId
+              ? Dom.getElementById(onUpdateCallbacks.getDoc(), targetId)
+              : null;
+            if (!targetElement) {
+              // Find the target element by locating the behavior within the current doc
+              targetElement = Helpers.findTargetByBehavior(
+                onUpdateCallbacks.getDoc(),
+                behaviorElement,
               );
+              // Warn developers if a provided target was not found
+              if (targetId) {
+                Logging.error(
+                  'Target element not found. Falling back to current element.',
+                  { id: targetId },
+                );
+              }
             }
-          }
 
-          if (newElement && targetElement) {
-            newRoot = Behaviors.performUpdate(
-              action,
-              targetElement,
-              newElement as Element,
-            );
-          } else {
-            // When fetch fails, make sure to get the latest version of
-            // the doc to avoid any race conditions
-            newRoot = onUpdateCallbacks.getDoc();
-          }
-          if (newRoot) {
-            newRoot = Behaviors.setIndicatorsAfterLoad(
-              showIndicatorIdList,
-              hideIndicatorIdList,
-              newRoot,
-            );
-            // Re-render the modifications
-            onUpdateCallbacks.setState({
-              doc: newRoot,
-            });
-          }
-          if (typeof onEnd === 'function') {
-            onEnd();
-          }
-        });
+            if (newElement && targetElement) {
+              newRoot = Behaviors.performUpdate(
+                action,
+                targetElement,
+                newElement as Element,
+              );
+            } else {
+              // When fetch fails, make sure to get the latest version of
+              // the doc to avoid any race conditions
+              newRoot = onUpdateCallbacks.getDoc();
+            }
+            if (newRoot) {
+              newRoot = Behaviors.setIndicatorsAfterLoad(
+                showIndicatorIdList,
+                hideIndicatorIdList,
+                newRoot,
+              );
+              // Re-render the modifications
+              onUpdateCallbacks.setState({
+                doc: newRoot,
+              });
+            }
+            if (typeof onEnd === 'function') {
+              onEnd();
+            }
+          })
+          .catch(() => {
+            // TODO
+          });
       }
     };
 
