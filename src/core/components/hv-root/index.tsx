@@ -83,6 +83,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
       : UrlService.getUrlFromHref(optHref, stateUrl || '');
 
     if (!url) {
+      opts.onUpdateComplete?.(false);
       return;
     }
 
@@ -109,6 +110,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
         if (typeof onEnd === 'function') {
           onEnd();
         }
+        opts.onUpdateComplete?.(false);
         return;
       }
       Behaviors.setRanOnce(behaviorElement);
@@ -131,6 +133,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
       error: null,
       url,
     });
+    opts.onUpdateComplete?.(true);
   };
 
   /**
@@ -201,6 +204,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
   ) => {
     if (!options.onUpdateCallbacks) {
       Logging.warn('onUpdate requires an onUpdateCallbacks object');
+      options.onUpdateComplete?.(false);
       return;
     }
     const navAction: NavAction = action as NavAction;
@@ -210,6 +214,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
       this.reload(href, options);
     } else if (action === ACTIONS.DEEP_LINK && href) {
       Linking.openURL(href);
+      options.onUpdateComplete?.(true);
     } else if (navAction && Object.values(NAV_ACTIONS).includes(navAction)) {
       const navigation = options.onUpdateCallbacks.getNavigation();
       const doc = options.onUpdateCallbacks.getDoc();
@@ -238,6 +243,9 @@ export default class Hyperview extends PureComponent<Types.Props> {
           state.url,
           doc,
         );
+        options.onUpdateComplete?.(true);
+      } else {
+        options.onUpdateComplete?.(false);
       }
     } else if (
       updateAction &&
@@ -250,6 +258,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
       const { behaviorElement } = options;
       if (!behaviorElement) {
         Logging.warn('dispatch-event requires a behaviorElement');
+        options.onUpdateComplete?.(false);
         return;
       }
       const eventName = behaviorElement.getAttribute('event-name');
@@ -257,6 +266,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
       const delay = behaviorElement.getAttribute('delay');
 
       if (Behaviors.isOncePreviouslyApplied(behaviorElement)) {
+        options.onUpdateComplete?.(false);
         return;
       }
 
@@ -269,6 +279,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
             'trigger="on-event" and action="dispatch-event" cannot be used on the same element',
           ),
         );
+        options.onUpdateComplete?.(false);
         return;
       }
       if (!eventName) {
@@ -277,11 +288,13 @@ export default class Hyperview extends PureComponent<Types.Props> {
             'dispatch-event requires an event-name attribute to be present',
           ),
         );
+        options.onUpdateComplete?.(false);
         return;
       }
 
       const dispatch = () => {
         Events.dispatch(eventName);
+        options.onUpdateComplete?.(true);
       };
 
       if (delay) {
@@ -338,6 +351,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
     } = opts;
     if (!onUpdateCallbacks) {
       Logging.warn('onUpdateFragment requires an onUpdateCallbacks object');
+      opts.onUpdateComplete?.(false);
       return;
     }
     const networkRetryAction = behaviorElement?.getAttribute(
@@ -363,6 +377,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
         if (typeof onEnd === 'function') {
           onEnd();
         }
+        opts.onUpdateComplete?.(false);
         return;
       }
       Behaviors.setRanOnce(behaviorElement);
@@ -439,10 +454,13 @@ export default class Hyperview extends PureComponent<Types.Props> {
             if (typeof onEnd === 'function') {
               onEnd();
             }
+            opts.onUpdateComplete?.(true);
           })
           .catch(() => {
-            // TODO
+            opts.onUpdateComplete?.(false);
           });
+      } else {
+        opts.onUpdateComplete?.(false);
       }
     };
 
@@ -506,6 +524,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
     const { newElement, onUpdateCallbacks } = options;
     const parentElement = currentElement.parentNode as Element;
     if (!parentElement || !newElement || !onUpdateCallbacks) {
+      options.onUpdateComplete?.(false);
       return;
     }
     parentElement.replaceChild(newElement, currentElement);
@@ -513,6 +532,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
     onUpdateCallbacks.setState({
       doc: newRoot,
     });
+    options.onUpdateComplete?.(true);
   };
 
   /**
@@ -525,16 +545,19 @@ export default class Hyperview extends PureComponent<Types.Props> {
     const { onUpdateCallbacks } = options;
     if (!behaviorElement || !onUpdateCallbacks) {
       Logging.warn('Custom behavior requires a behaviorElement');
+      options.onUpdateComplete?.(false);
       return;
     }
     const action = behaviorElement.getAttribute('action');
     if (!action) {
       Logging.warn('Custom behavior requires an action attribute');
+      options.onUpdateComplete?.(false);
       return;
     }
     const behavior = this.behaviorRegistry[action];
 
     if (Behaviors.isOncePreviouslyApplied(behaviorElement)) {
+      options.onUpdateComplete?.(false);
       return;
     }
 
@@ -556,9 +579,11 @@ export default class Hyperview extends PureComponent<Types.Props> {
         getRoot,
         updateRoot,
       );
+      options.onUpdateComplete?.(true);
     } else {
       // No behavior detected.
       Logging.warn(`No behavior registered for action "${action}"`);
+      options.onUpdateComplete?.(false);
     }
   };
 

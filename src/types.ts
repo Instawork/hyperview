@@ -189,6 +189,7 @@ export type HvComponentOptions = {
   newElement?: Element | null | undefined;
   showIndicatorId?: string | null | undefined;
   onUpdateCallbacks?: OnUpdateCallbacks;
+  onUpdateComplete?: (success: boolean) => void;
 };
 
 export type HvComponentOnUpdate = (
