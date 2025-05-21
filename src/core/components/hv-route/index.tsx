@@ -155,27 +155,22 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     };
 
     return (
-      <Contexts.DateFormatContext.Consumer>
-        {formatter => (
-          <HvScreen
-            behaviors={this.props.behaviors}
-            components={this.props.components}
-            elementErrorComponent={this.props.elementErrorComponent}
-            entrypointUrl={this.props.entrypointUrl}
-            formatDate={formatter}
-            getElement={this.props.getElement}
-            getLocalDoc={this.props.getLocalDoc}
-            getScreenState={this.props.getScreenState}
-            navigation={this.props.navigator}
-            onUpdate={this.props.onUpdate}
-            onUpdateCallbacks={this.props.onUpdateCallbacks}
-            reload={this.props.reload}
-            removeElement={this.props.removeElement}
-            route={route}
-            setScreenState={this.props.setScreenState}
-          />
-        )}
-      </Contexts.DateFormatContext.Consumer>
+      <HvScreen
+        behaviors={this.props.behaviors}
+        components={this.props.components}
+        elementErrorComponent={this.props.elementErrorComponent}
+        entrypointUrl={this.props.entrypointUrl}
+        getElement={this.props.getElement}
+        getLocalDoc={this.props.getLocalDoc}
+        getScreenState={this.props.getScreenState}
+        navigation={this.props.navigator}
+        onUpdate={this.props.onUpdate}
+        onUpdateCallbacks={this.props.onUpdateCallbacks}
+        reload={this.props.reload}
+        removeElement={this.props.removeElement}
+        route={route}
+        setScreenState={this.props.setScreenState}
+      />
     );
   };
 
