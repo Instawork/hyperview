@@ -7,7 +7,7 @@ import type {
   Reload,
   Route,
 } from 'hyperview/src/types';
-import React, { ComponentType, ReactNode } from 'react';
+import React, { ComponentType } from 'react';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
 import type { NavigationComponents } from 'hyperview/src/services/navigator';
@@ -28,7 +28,6 @@ export type NavigationContextProps = {
   elementErrorComponent?: ComponentType<ErrorProps>;
   errorScreen?: ComponentType<ErrorProps>;
   loadingScreen?: ComponentType<LoadingProps>;
-  handleBack?: ComponentType<{ children: ReactNode }>;
   navigationComponents?: NavigationComponents;
   experimentalFeatures?: ExperimentalFeatures;
 };

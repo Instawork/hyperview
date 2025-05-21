@@ -1,5 +1,4 @@
 import * as Logging from 'hyperview/src/services/logging';
-import { ComponentType, ReactNode } from 'react';
 import type {
   ExperimentalFeatures,
   Fetch,
@@ -7,6 +6,7 @@ import type {
   HvComponent,
   Route,
 } from 'hyperview/src/types';
+import { ComponentType } from 'react';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
 import type { NavigationComponents } from 'hyperview/src/services/navigator';
@@ -34,7 +34,6 @@ export type Props = {
   elementErrorComponent?: ComponentType<ErrorProps>;
   errorScreen?: ComponentType<ErrorProps>;
   loadingScreen?: ComponentType<LoadingProps>;
-  handleBack?: ComponentType<{ children: ReactNode }>;
   logger?: Logging.Logger;
   experimentalFeatures?: ExperimentalFeatures;
 };

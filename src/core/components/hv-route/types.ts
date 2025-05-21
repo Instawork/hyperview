@@ -1,5 +1,4 @@
 import * as NavigatorService from 'hyperview/src/services/navigator';
-import { ComponentType, ReactNode } from 'react';
 import {
   ExperimentalFeatures,
   Fetch,
@@ -12,6 +11,7 @@ import {
   RouteParams,
   ScreenState,
 } from 'hyperview/src/types';
+import { ComponentType } from 'react';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
 
@@ -30,7 +30,6 @@ export type NavigationContextProps = {
   elementErrorComponent?: ComponentType<ErrorProps>;
   errorScreen?: ComponentType<ErrorProps>;
   loadingScreen?: ComponentType<LoadingProps>;
-  handleBack?: ComponentType<{ children: ReactNode }>;
   reload: Reload;
   experimentalFeatures?: ExperimentalFeatures;
 };
@@ -52,7 +51,6 @@ export type InnerRouteProps = {
   behaviors?: HvBehavior[];
   components?: HvComponent[];
   elementErrorComponent?: ComponentType<ErrorProps>;
-  handleBack?: ComponentType<{ children: ReactNode }>;
   getElement: (key: number) => Element | undefined;
   removeElement: (key: number) => void;
   element?: Element;
