@@ -12,6 +12,7 @@ import { Props as HvRootProps } from 'hyperview/src/core/components/hv-root/type
  */
 export type Props = Omit<
   HvRootProps,
+  | 'formatDate'
   | 'refreshControl'
   | 'navigationComponents'
   | 'onRouteBlur'

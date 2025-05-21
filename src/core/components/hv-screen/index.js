@@ -168,17 +168,15 @@ export default class HvScreen extends React.Component {
           getDoc: () => this.props.getLocalDoc(),
         }}
       >
-        <Contexts.DateFormatContext.Provider value={this.props.formatDate}>
-          {elementErrorComponent
-            ? React.createElement(elementErrorComponent, {
-                error: this.props.getScreenState().elementError,
-                onPressClose: () =>
-                  this.props.setScreenState({ elementError: null }),
-                onPressReload: () => this.props.reload(),
-              })
-            : null}
-          <Scroll.Provider>{screenElement}</Scroll.Provider>
-        </Contexts.DateFormatContext.Provider>
+        {elementErrorComponent
+          ? React.createElement(elementErrorComponent, {
+              error: this.props.getScreenState().elementError,
+              onPressClose: () =>
+                this.props.setScreenState({ elementError: null }),
+              onPressReload: () => this.props.reload(),
+            })
+          : null}
+        <Scroll.Provider>{screenElement}</Scroll.Provider>
       </Contexts.DocContext.Provider>
     );
   }
