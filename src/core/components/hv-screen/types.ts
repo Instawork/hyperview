@@ -17,7 +17,6 @@ export type Props = Omit<
   | 'onRouteBlur'
   | 'onRouteFocus'
   | 'loadingScreen'
-  | 'handleBack'
   | 'logger'
   | 'errorScreen'
   | 'fetch'

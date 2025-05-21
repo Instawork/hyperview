@@ -255,13 +255,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     }
 
     if (renderElement?.localName === LOCAL_NAME.SCREEN) {
-      if (this.props.handleBack) {
-        return (
-          <this.props.handleBack>
-            <Screen />
-          </this.props.handleBack>
-        );
-      }
       return <Screen />;
     }
 
@@ -484,7 +477,6 @@ function HvRouteFC(props: Types.Props) {
             getElement={elemenCacheContext.getElement}
             getLocalDoc={getLocalDoc}
             getScreenState={getScreenState}
-            handleBack={navigationContext.handleBack}
             navigator={navigator}
             onUpdate={onUpdate}
             onUpdateCallbacks={onUpdateCallbacks}
