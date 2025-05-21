@@ -26,13 +26,8 @@ export default class HvScreen extends React.Component {
   constructor(props) {
     super(props);
 
-    this.needsLoad = false;
-
     this.behaviorRegistry = Behaviors.getRegistry(this.props.behaviors);
     this.componentRegistry = new Components.Registry(this.props.components);
-    this.props.setNeedsLoadCallback(() => {
-      this.needsLoad = true;
-    });
   }
 
   getRoute = props => {
@@ -62,7 +57,6 @@ export default class HvScreen extends React.Component {
       ? Stylesheets.createStylesheets(preloadScreen)
       : {};
 
-    this.needsLoad = !this.props.getScreenState().doc;
     if (preloadScreen && !this.props.getScreenState().doc) {
       this.props.setScreenState({
         doc: preloadScreen,
@@ -106,8 +100,6 @@ export default class HvScreen extends React.Component {
     }
 
     if (newUrl && newUrl !== oldUrl) {
-      this.needsLoad = true;
-
       const preloadScreen = newPreloadScreen
         ? this.props.getElement(newPreloadScreen)
         : null;
@@ -136,30 +128,6 @@ export default class HvScreen extends React.Component {
       this.props.removeElement?.(behaviorElementId);
     }
   }
-
-  /**
-   * Fetch data from the url if the screen should reload.
-   */
-  componentDidUpdate() {
-    if (this.needsLoad) {
-      this.load(this.props.getScreenState().url);
-      this.needsLoad = false;
-    }
-  }
-
-  /**
-   * Performs a full load of the screen.
-   */
-  load = async () => {
-    const { params } = this.getRoute(this.props);
-    await this.props.loadUrl(this.props.getScreenState().url);
-    if (params.preloadScreen) {
-      this.props.removeElement?.(params.preloadScreen);
-    }
-    if (params.behaviorElementId) {
-      this.props.removeElement?.(params.behaviorElementId);
-    }
-  };
 
   /**
    * Renders the XML doc into React components. Shows blank screen until the XML doc is available.
