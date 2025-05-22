@@ -22,6 +22,7 @@ import type { PressHandlers, PressPropName, Props, State } from './types';
 import React, { PureComponent } from 'react';
 import { RefreshControl, Text, TouchableOpacity } from 'react-native';
 import { BackBehaviorContext } from 'hyperview/src/contexts/back-behaviors';
+import HvElement from 'hyperview/src/core/components/hv-element';
 import { PRESS_TRIGGERS_PROP_NAMES } from './types';
 import { ScrollView } from 'hyperview/src/core/components/scroll';
 import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
@@ -422,13 +423,18 @@ export default class HyperRef extends PureComponent<Props, State> {
   render() {
     // Render the component based on the XML element. Depending on the applied behaviors,
     // this component will be wrapped with others to provide the necessary interaction.
-    const children = Render.renderElement(
-      this.props.element,
-      this.props.stylesheets,
-      this.props.onUpdate,
-      { ...this.props.options, pressed: this.state.pressed, skipHref: true },
+    const children = (
+      <HvElement
+        element={this.props.element}
+        onUpdate={this.props.onUpdate}
+        options={{
+          ...this.props.options,
+          pressed: this.state.pressed,
+          skipHref: true,
+        }}
+        stylesheets={this.props.stylesheets}
+      />
     );
-
     const { ScrollableView, TouchableView, VisibilityView } = this;
 
     return (
