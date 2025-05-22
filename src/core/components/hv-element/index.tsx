@@ -5,9 +5,7 @@ import { LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
 import React, { useMemo } from 'react';
 import type { HvComponentProps } from 'hyperview/src/types';
 
-export default (
-  props: HvComponentProps,
-): React.ReactElement<HvComponentProps> | null | string => {
+export default (props: HvComponentProps): JSX.Element | null | string => {
   if (!props.element) {
     return null;
   }
