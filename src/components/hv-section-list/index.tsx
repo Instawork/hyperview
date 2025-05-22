@@ -3,7 +3,6 @@ import * as Dom from 'hyperview/src/services/dom';
 import * as Keyboard from 'hyperview/src/services/keyboard';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import * as Render from 'hyperview/src/services/render';
 import type {
   DOMString,
   HvComponentOnUpdate,
@@ -20,6 +19,7 @@ import type { ScrollParams, State } from './types';
 import { createTestProps, getAncestorByTagName } from 'hyperview/src/services';
 import { DOMParser } from '@instawork/xmldom';
 import type { ElementRef } from 'react';
+import HvElement from 'hyperview/src/core/components/hv-element';
 import { SectionList } from 'hyperview/src/core/components/scroll';
 
 const getSectionIndex = (
@@ -376,23 +376,23 @@ export default class HvSectionList extends PureComponent<
               }
               removeClippedSubviews={false}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              renderItem={({ item }: any): any =>
-                Render.renderElement(
-                  item,
-                  this.props.stylesheets,
-                  this.onUpdate,
-                  this.props.options,
-                )
-              }
+              renderItem={({ item }: any): any => (
+                <HvElement
+                  element={item as Element}
+                  onUpdate={this.onUpdate}
+                  options={this.props.options}
+                  stylesheets={this.props.stylesheets}
+                />
+              )}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              renderSectionHeader={({ section: { title } }: any): any =>
-                Render.renderElement(
-                  title,
-                  this.props.stylesheets,
-                  this.onUpdate,
-                  this.props.options,
-                )
-              }
+              renderSectionHeader={({ section: { title } }: any): any => (
+                <HvElement
+                  element={title as Element}
+                  onUpdate={this.onUpdate}
+                  options={this.props.options}
+                  stylesheets={this.props.stylesheets}
+                />
+              )}
               scrollIndicatorInsets={scrollIndicatorInsets}
               sections={sections}
               stickySectionHeadersEnabled={this.getStickySectionHeadersEnabled()}
