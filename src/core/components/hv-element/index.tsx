@@ -16,10 +16,12 @@ export default (props: HvComponentProps): JSX.Element | null | string => {
       return null;
     }
   }
+
   if (props.element.nodeType === NODE_TYPE.COMMENT_NODE) {
     // XML comments don't get rendered.
     return null;
   }
+
   if (
     props.element.nodeType === NODE_TYPE.ELEMENT_NODE &&
     props.element.namespaceURI === Namespaces.HYPERVIEW
@@ -36,18 +38,30 @@ export default (props: HvComponentProps): JSX.Element | null | string => {
     }
   }
 
+  const nodeType = useMemo(() => {
+    return props.element.nodeType;
+  }, [props.element]);
+
+  const localName = useMemo(() => {
+    return props.element.localName;
+  }, [props.element]);
+
+  const namespaceURI = useMemo(() => {
+    return props.element.namespaceURI;
+  }, [props.element]);
+
   const formattingContext = useMemo(() => {
     let { inlineFormattingContext } = props.options;
     if (
       !props.options.preformatted &&
       !inlineFormattingContext &&
-      props.element.nodeType === NODE_TYPE.ELEMENT_NODE &&
-      props.element.localName === LOCAL_NAME.TEXT
+      nodeType === NODE_TYPE.ELEMENT_NODE &&
+      localName === LOCAL_NAME.TEXT
     ) {
       inlineFormattingContext = InlineContext.formatter(props.element);
     }
     return inlineFormattingContext;
-  }, [props.element, props.options]);
+  }, [localName, nodeType, props.element, props.options]);
 
   const componentProps = useMemo(() => {
     return {
@@ -60,36 +74,32 @@ export default (props: HvComponentProps): JSX.Element | null | string => {
       stylesheets: props.stylesheets,
     };
   }, [
-    props.element,
     formattingContext,
+    props.element,
     props.onUpdate,
     props.options,
     props.stylesheets,
   ]);
 
   const Component = useMemo(() => {
-    if (
-      props.element.nodeType === NODE_TYPE.ELEMENT_NODE &&
-      props.element.namespaceURI &&
-      props.element.localName
-    ) {
+    if (nodeType === NODE_TYPE.ELEMENT_NODE && namespaceURI && localName) {
       return props.options.componentRegistry?.getComponent(
-        props.element.namespaceURI,
-        props.element.localName,
+        namespaceURI,
+        localName,
       );
     }
     return undefined;
-  }, [props.element, props.options.componentRegistry]);
+  }, [localName, namespaceURI, nodeType, props.options.componentRegistry]);
 
-  if (props.element.nodeType === NODE_TYPE.ELEMENT_NODE) {
-    if (!props.element.namespaceURI) {
+  if (nodeType === NODE_TYPE.ELEMENT_NODE) {
+    if (!namespaceURI) {
       Logging.warn(
         '`namespaceURI` missing for node:',
         props.element.toString(),
       );
       return null;
     }
-    if (!props.element.localName) {
+    if (!localName) {
       Logging.warn('`localName` missing for node:', props.element.toString());
       return null;
     }
@@ -112,11 +122,11 @@ export default (props: HvComponentProps): JSX.Element | null | string => {
     // No component registered for the namespace/local name.
     // Warn in case this was an unintended mistake.
     Logging.warn(
-      `No component registered for tag <${props.element.localName}> (namespace: ${props.element.namespaceURI})`,
+      `No component registered for tag <${localName}> (namespace: ${namespaceURI})`,
     );
   }
 
-  if (props.element.nodeType === NODE_TYPE.TEXT_NODE) {
+  if (nodeType === NODE_TYPE.TEXT_NODE) {
     // Render non-empty text nodes, when wrapped inside a <text> element
     if (props.element.nodeValue) {
       if (
@@ -148,7 +158,7 @@ export default (props: HvComponentProps): JSX.Element | null | string => {
     }
   }
 
-  if (props.element.nodeType === NODE_TYPE.CDATA_SECTION_NODE) {
+  if (nodeType === NODE_TYPE.CDATA_SECTION_NODE) {
     return props.element.nodeValue;
   }
   return null;
