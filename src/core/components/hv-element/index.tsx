@@ -4,56 +4,29 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import { LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
 import React, { useMemo } from 'react';
 import type { HvComponentProps } from 'hyperview/src/types';
+import { isRenderableElement } from '../../utils';
 
 export default (props: HvComponentProps): JSX.Element | null | string => {
-  if (!props.element) {
-    return null;
-  }
-
-  if (props.element.nodeType === NODE_TYPE.ELEMENT_NODE) {
-    // Hidden elements don't get rendered
-    if (props.element.getAttribute('hide') === 'true') {
-      return null;
-    }
-  }
-
-  if (props.element.nodeType === NODE_TYPE.COMMENT_NODE) {
-    // XML comments don't get rendered.
-    return null;
-  }
-
-  if (
-    props.element.nodeType === NODE_TYPE.ELEMENT_NODE &&
-    props.element.namespaceURI === Namespaces.HYPERVIEW
-  ) {
-    switch (props.element.localName) {
-      case LOCAL_NAME.BEHAVIOR:
-      case LOCAL_NAME.MODIFIER:
-      case LOCAL_NAME.STYLES:
-      case LOCAL_NAME.STYLE:
-        // Non-UI elements don't get rendered
-        return null;
-      default:
-        break;
-    }
-  }
-
   const nodeType = useMemo(() => {
-    return props.element.nodeType;
+    return props.element?.nodeType;
   }, [props.element]);
 
   const localName = useMemo(() => {
-    return props.element.localName;
+    return props.element?.localName;
   }, [props.element]);
 
   const namespaceURI = useMemo(() => {
-    return props.element.namespaceURI;
+    return props.element?.namespaceURI;
   }, [props.element]);
 
+  const options = useMemo(() => {
+    return props.options || {};
+  }, [props.options]);
+
   const formattingContext = useMemo(() => {
-    let { inlineFormattingContext } = props.options;
+    let { inlineFormattingContext } = options;
     if (
-      !props.options.preformatted &&
+      !options.preformatted &&
       !inlineFormattingContext &&
       nodeType === NODE_TYPE.ELEMENT_NODE &&
       localName === LOCAL_NAME.TEXT
@@ -61,49 +34,39 @@ export default (props: HvComponentProps): JSX.Element | null | string => {
       inlineFormattingContext = InlineContext.formatter(props.element);
     }
     return inlineFormattingContext;
-  }, [localName, nodeType, props.element, props.options]);
+  }, [localName, nodeType, options, props.element]);
 
   const componentProps = useMemo(() => {
     return {
       element: props.element,
       onUpdate: props.onUpdate,
       options: {
-        ...props.options,
+        ...options,
         inlineFormattingContext: formattingContext,
       },
       stylesheets: props.stylesheets,
     };
   }, [
     formattingContext,
+    options,
     props.element,
     props.onUpdate,
-    props.options,
     props.stylesheets,
   ]);
 
   const Component = useMemo(() => {
     if (nodeType === NODE_TYPE.ELEMENT_NODE && namespaceURI && localName) {
-      return props.options.componentRegistry?.getComponent(
-        namespaceURI,
-        localName,
-      );
+      return options.componentRegistry?.getComponent(namespaceURI, localName);
     }
     return undefined;
-  }, [localName, namespaceURI, nodeType, props.options.componentRegistry]);
+  }, [localName, namespaceURI, nodeType, options.componentRegistry]);
+
+  // Check if the element is renderable before rendering the component
+  if (!isRenderableElement(props.element, options, formattingContext)) {
+    return null;
+  }
 
   if (nodeType === NODE_TYPE.ELEMENT_NODE) {
-    if (!namespaceURI) {
-      Logging.warn(
-        '`namespaceURI` missing for node:',
-        props.element.toString(),
-      );
-      return null;
-    }
-    if (!localName) {
-      Logging.warn('`localName` missing for node:', props.element.toString());
-      return null;
-    }
-
     if (Component) {
       // Prepare props for the component
 
@@ -118,12 +81,6 @@ export default (props: HvComponentProps): JSX.Element | null | string => {
       }
       return <Component {...componentProps} />; // eslint-disable-line react/jsx-props-no-spreading
     }
-
-    // No component registered for the namespace/local name.
-    // Warn in case this was an unintended mistake.
-    Logging.warn(
-      `No component registered for tag <${localName}> (namespace: ${namespaceURI})`,
-    );
   }
 
   if (nodeType === NODE_TYPE.TEXT_NODE) {
@@ -137,7 +94,7 @@ export default (props: HvComponentProps): JSX.Element | null | string => {
         (props.element.parentNode as Element)?.namespaceURI !==
           Namespaces.HYPERVIEW
       ) {
-        if (props.options.preformatted) {
+        if (options.preformatted) {
           return props.element.nodeValue;
         }
         // When inline formatting context exists, lookup formatted value using node's index.

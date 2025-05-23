@@ -1,8 +1,8 @@
+import React, { useContext } from 'react';
 import type { HvComponentProps } from 'hyperview';
 import Hyperview from 'hyperview';
 import { NavigationContext } from '@react-navigation/native';
 import { findElements } from '../../Helpers';
-import { useContext } from 'react';
 
 export const namespaceURI = 'https://hyperview.org/navigation';
 
@@ -25,12 +25,15 @@ const NavBack = (props: HvComponentProps) => {
   if (!element) {
     return null;
   }
-  return (Hyperview.renderElement(
-    element,
-    props.stylesheets,
-    props.onUpdate,
-    props.options,
-  ) as unknown) as JSX.Element;
+
+  return (
+    <Hyperview.HvElement
+      element={element}
+      onUpdate={props.onUpdate}
+      options={props.options}
+      stylesheets={props.stylesheets}
+    />
+  );
 };
 
 NavBack.namespaceURI = namespaceURI;
