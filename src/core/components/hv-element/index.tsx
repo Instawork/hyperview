@@ -8,19 +8,19 @@ import { isRenderableElement } from '../../utils';
 
 export default (props: HvComponentProps): JSX.Element | null | string => {
   const nodeType = useMemo(() => {
-    return props.element.nodeType;
+    return props.element?.nodeType;
   }, [props.element]);
 
   const localName = useMemo(() => {
-    return props.element.localName;
+    return props.element?.localName;
   }, [props.element]);
 
   const namespaceURI = useMemo(() => {
-    return props.element.namespaceURI;
+    return props.element?.namespaceURI;
   }, [props.element]);
 
   const options = useMemo(() => {
-    return props.options;
+    return props.options || {};
   }, [props.options]);
 
   const formattingContext = useMemo(() => {
