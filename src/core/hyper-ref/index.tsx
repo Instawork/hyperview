@@ -3,13 +3,16 @@ import * as Dom from 'hyperview/src/services/dom';
 import * as Events from 'hyperview/src/services/events';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import * as Render from 'hyperview/src/services/render';
 import {
   BEHAVIOR_ATTRIBUTES,
   LOCAL_NAME,
   PRESS_TRIGGERS,
   TRIGGERS,
 } from 'hyperview/src/types';
+import {
+  ChildrenContextProvider,
+  useChildrenContext,
+} from 'hyperview/src/core/children-context';
 import type {
   HvComponentOnUpdate,
   HvComponentOptions,
@@ -19,7 +22,7 @@ import type {
   Trigger,
 } from 'hyperview/src/types';
 import type { PressHandlers, PressPropName, Props, State } from './types';
-import React, { PureComponent } from 'react';
+import React, { PureComponent, createElement } from 'react';
 import { RefreshControl, Text, TouchableOpacity } from 'react-native';
 import { BackBehaviorContext } from 'hyperview/src/contexts/back-behaviors';
 import HvElement from 'hyperview/src/core/components/hv-element';
@@ -466,9 +469,23 @@ export const addHref = (
     return component;
   }
 
-  return React.createElement(
-    HyperRef,
-    { element, onUpdate, options, stylesheets },
-    ...Render.renderChildren(element, stylesheets, onUpdate, options),
+  const Content = () => {
+    const { childList: children } = useChildrenContext();
+    return createElement(
+      HyperRef,
+      { element, onUpdate, options, stylesheets },
+      ...children,
+    );
+  };
+
+  return (
+    <ChildrenContextProvider
+      element={element}
+      onUpdate={onUpdate}
+      options={options}
+      stylesheets={stylesheets}
+    >
+      <Content />
+    </ChildrenContextProvider>
   );
 };

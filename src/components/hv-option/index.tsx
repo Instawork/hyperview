@@ -1,11 +1,11 @@
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import * as Render from 'hyperview/src/services/render';
-import type {
-  HvComponentOnUpdate,
-  HvComponentProps,
-} from 'hyperview/src/types';
-import React, { PureComponent } from 'react';
+import {
+  ChildrenContextProvider,
+  useChildrenContext,
+} from 'hyperview/src/core/children-context';
+import type { HvComponentOptions, HvComponentProps } from 'hyperview/src/types';
+import React, { PureComponent, createElement } from 'react';
 import { TouchableWithoutFeedback, View } from 'react-native';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { State } from './types';
@@ -37,24 +37,13 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
     }
   }
 
-  render() {
+  Content = (props: { options: HvComponentOptions }) => {
     const { onSelect, onToggle } = this.props.options;
-
     const value = this.props.element.getAttribute('value');
-    const selected = this.props.element.getAttribute('selected') === 'true';
-
-    // Updates options with pressed/selected state, so that child element can render
-    // using the appropriate modifier styles.
-    const newOptions = {
-      ...this.props.options,
-      pressed: this.state.pressed,
-      pressedSelected: this.state.pressed && selected,
-      selected,
-    } as const;
-    const props = createProps(
+    const elementProps = createProps(
       this.props.element,
       this.props.stylesheets,
-      newOptions,
+      props.options,
     );
 
     // Option renders as an outer TouchableWithoutFeedback view and inner view.
@@ -76,25 +65,42 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
       onPressOut: createEventHandler(() => this.setState({ pressed: false })),
       style: {},
     };
-    if (props.style && props.style.flex) {
+    if (elementProps.style && elementProps.style.flex) {
       // Flex is a style that needs to be lifted from the inner component to the outer
       // component to ensure proper layout.
-      outerProps.style = { flex: props.style.flex };
+      outerProps.style = { flex: elementProps.style.flex };
     }
 
-    return React.createElement(
+    const { childList: children } = useChildrenContext();
+    return createElement(
       TouchableWithoutFeedback,
       outerProps,
-      React.createElement(
-        View,
-        props,
-        ...Render.renderChildren(
-          this.props.element,
-          this.props.stylesheets,
-          this.props.onUpdate as HvComponentOnUpdate,
-          newOptions,
-        ),
-      ),
+      createElement(View, elementProps, ...children),
+    );
+  };
+
+  render() {
+    const selected = this.props.element.getAttribute('selected') === 'true';
+
+    // Updates options with pressed/selected state, so that child element can render
+    // using the appropriate modifier styles.
+    const options = {
+      ...this.props.options,
+      pressed: this.state.pressed,
+      pressedSelected: this.state.pressed && selected,
+      selected,
+    } as const;
+
+    const { Content } = this;
+    return (
+      <ChildrenContextProvider
+        element={this.props.element}
+        onUpdate={this.props.onUpdate}
+        options={options}
+        stylesheets={this.props.stylesheets}
+      >
+        <Content options={options} />
+      </ChildrenContextProvider>
     );
   }
 }

@@ -1,13 +1,16 @@
 import * as Keyboard from 'hyperview/src/services/keyboard';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import * as Render from 'hyperview/src/services/render';
 import type {
   Attributes,
   CommonProps,
   KeyboardAwareScrollViewProps,
   ScrollViewProps,
 } from './types';
+import {
+  ChildrenContextProvider,
+  useChildrenContext,
+} from 'hyperview/src/core/children-context';
 import type {
   HvComponentOnUpdate,
   HvComponentProps,
@@ -173,23 +176,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
       }
     }
 
-    const children = Render.renderChildren(
-      this.props.element,
-      this.props.stylesheets,
-      this.props.onUpdate as HvComponentOnUpdate,
-      {
-        ...this.props.options,
-        ...(scrollable && hasInputFields
-          ? {
-              registerInputHandler: ref => {
-                if (ref !== null) {
-                  inputFieldRefs.push(ref);
-                }
-              },
-            }
-          : {}),
-      },
-    );
+    const { childList: children } = useChildrenContext();
 
     /* eslint-disable react/jsx-props-no-spreading */
     if (scrollable) {
@@ -233,13 +220,44 @@ export default class HvView extends PureComponent<HvComponentProps> {
     /* eslint-enable react/jsx-props-no-spreading */
   };
 
-  render() {
+  Provider = () => {
+    const scrollable = this.attributes[ATTRIBUTES.SCROLL] === 'true';
+    const hasInputFields = this.hasInputFields();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const inputFieldRefs: Array<any | undefined> = [];
+    const options = {
+      ...this.props.options,
+      ...(scrollable && hasInputFields
+        ? {
+            registerInputHandler: (ref: unknown) => {
+              if (ref !== null) {
+                inputFieldRefs.push(ref);
+              }
+            },
+          }
+        : {}),
+    };
+
     const { Content } = this;
+    return (
+      <ChildrenContextProvider
+        element={this.props.element}
+        onUpdate={this.props.onUpdate}
+        options={options}
+        stylesheets={this.props.stylesheets}
+      >
+        <Content />
+      </ChildrenContextProvider>
+    );
+  };
+
+  render() {
+    const { Provider } = this;
     return this.props.options?.skipHref ? (
-      <Content />
+      <Provider />
     ) : (
       addHref(
-        <Content />,
+        <Provider />,
         this.props.element,
         this.props.stylesheets,
         this.props.onUpdate as HvComponentOnUpdate,
