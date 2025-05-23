@@ -4,40 +4,9 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import { LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
 import React, { useMemo } from 'react';
 import type { HvComponentProps } from 'hyperview/src/types';
+import { isRenderableElement } from '../../utils';
 
 export default (props: HvComponentProps): JSX.Element | null | string => {
-  if (!props.element) {
-    return null;
-  }
-
-  if (props.element.nodeType === NODE_TYPE.ELEMENT_NODE) {
-    // Hidden elements don't get rendered
-    if (props.element.getAttribute('hide') === 'true') {
-      return null;
-    }
-  }
-
-  if (props.element.nodeType === NODE_TYPE.COMMENT_NODE) {
-    // XML comments don't get rendered.
-    return null;
-  }
-
-  if (
-    props.element.nodeType === NODE_TYPE.ELEMENT_NODE &&
-    props.element.namespaceURI === Namespaces.HYPERVIEW
-  ) {
-    switch (props.element.localName) {
-      case LOCAL_NAME.BEHAVIOR:
-      case LOCAL_NAME.MODIFIER:
-      case LOCAL_NAME.STYLES:
-      case LOCAL_NAME.STYLE:
-        // Non-UI elements don't get rendered
-        return null;
-      default:
-        break;
-    }
-  }
-
   const nodeType = useMemo(() => {
     return props.element.nodeType;
   }, [props.element]);
@@ -92,19 +61,12 @@ export default (props: HvComponentProps): JSX.Element | null | string => {
     return undefined;
   }, [localName, namespaceURI, nodeType, options.componentRegistry]);
 
-  if (nodeType === NODE_TYPE.ELEMENT_NODE) {
-    if (!namespaceURI) {
-      Logging.warn(
-        '`namespaceURI` missing for node:',
-        props.element.toString(),
-      );
-      return null;
-    }
-    if (!localName) {
-      Logging.warn('`localName` missing for node:', props.element.toString());
-      return null;
-    }
+  // Check if the element is renderable before rendering the component
+  if (!isRenderableElement(props.element, options, formattingContext)) {
+    return null;
+  }
 
+  if (nodeType === NODE_TYPE.ELEMENT_NODE) {
     if (Component) {
       // Prepare props for the component
 
@@ -119,12 +81,6 @@ export default (props: HvComponentProps): JSX.Element | null | string => {
       }
       return <Component {...componentProps} />; // eslint-disable-line react/jsx-props-no-spreading
     }
-
-    // No component registered for the namespace/local name.
-    // Warn in case this was an unintended mistake.
-    Logging.warn(
-      `No component registered for tag <${localName}> (namespace: ${namespaceURI})`,
-    );
   }
 
   if (nodeType === NODE_TYPE.TEXT_NODE) {
