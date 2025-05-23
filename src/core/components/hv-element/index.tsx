@@ -50,10 +50,14 @@ export default (props: HvComponentProps): JSX.Element | null | string => {
     return props.element.namespaceURI;
   }, [props.element]);
 
+  const options = useMemo(() => {
+    return props.options;
+  }, [props.options]);
+
   const formattingContext = useMemo(() => {
-    let { inlineFormattingContext } = props.options;
+    let { inlineFormattingContext } = options;
     if (
-      !props.options.preformatted &&
+      !options.preformatted &&
       !inlineFormattingContext &&
       nodeType === NODE_TYPE.ELEMENT_NODE &&
       localName === LOCAL_NAME.TEXT
@@ -61,35 +65,32 @@ export default (props: HvComponentProps): JSX.Element | null | string => {
       inlineFormattingContext = InlineContext.formatter(props.element);
     }
     return inlineFormattingContext;
-  }, [localName, nodeType, props.element, props.options]);
+  }, [localName, nodeType, options, props.element]);
 
   const componentProps = useMemo(() => {
     return {
       element: props.element,
       onUpdate: props.onUpdate,
       options: {
-        ...props.options,
+        ...options,
         inlineFormattingContext: formattingContext,
       },
       stylesheets: props.stylesheets,
     };
   }, [
     formattingContext,
+    options,
     props.element,
     props.onUpdate,
-    props.options,
     props.stylesheets,
   ]);
 
   const Component = useMemo(() => {
     if (nodeType === NODE_TYPE.ELEMENT_NODE && namespaceURI && localName) {
-      return props.options.componentRegistry?.getComponent(
-        namespaceURI,
-        localName,
-      );
+      return options.componentRegistry?.getComponent(namespaceURI, localName);
     }
     return undefined;
-  }, [localName, namespaceURI, nodeType, props.options.componentRegistry]);
+  }, [localName, namespaceURI, nodeType, options.componentRegistry]);
 
   if (nodeType === NODE_TYPE.ELEMENT_NODE) {
     if (!namespaceURI) {
@@ -137,7 +138,7 @@ export default (props: HvComponentProps): JSX.Element | null | string => {
         (props.element.parentNode as Element)?.namespaceURI !==
           Namespaces.HYPERVIEW
       ) {
-        if (props.options.preformatted) {
+        if (options.preformatted) {
           return props.element.nodeValue;
         }
         // When inline formatting context exists, lookup formatted value using node's index.
