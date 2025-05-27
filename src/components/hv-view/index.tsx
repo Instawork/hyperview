@@ -1,7 +1,6 @@
 import * as Keyboard from 'hyperview/src/services/keyboard';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import * as Render from 'hyperview/src/services/render';
 import type {
   Attributes,
   CommonProps,
@@ -25,6 +24,7 @@ import {
 } from 'hyperview/src/core/components/scroll';
 import React, { PureComponent } from 'react';
 import { ATTRIBUTES } from './types';
+import HvChildren from 'hyperview/src/core/components/hv-children';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { addHref } from 'hyperview/src/core/hyper-ref';
 import { createStyleProp } from 'hyperview/src/services';
@@ -173,63 +173,81 @@ export default class HvView extends PureComponent<HvComponentProps> {
       }
     }
 
-    const children = Render.renderChildren(
-      this.props.element,
-      this.props.stylesheets,
-      this.props.onUpdate as HvComponentOnUpdate,
-      {
-        ...this.props.options,
-        ...(scrollable && hasInputFields
-          ? {
-              registerInputHandler: ref => {
-                if (ref !== null) {
-                  inputFieldRefs.push(ref);
-                }
-              },
-            }
-          : {}),
-      },
+    const children = (
+      <HvChildren
+        element={this.props.element}
+        onUpdate={this.props.onUpdate}
+        options={{
+          ...this.props.options,
+          ...(scrollable && hasInputFields
+            ? {
+                registerInputHandler: ref => {
+                  if (ref !== null) {
+                    inputFieldRefs.push(ref);
+                  }
+                },
+              }
+            : {}),
+        }}
+        stylesheets={this.props.stylesheets}
+      />
     );
+
+    const childArray = React.Children.toArray(children) as Array<
+      React.ReactElement<HvComponentProps> | null | string
+    >;
 
     /* eslint-disable react/jsx-props-no-spreading */
     if (scrollable) {
       if (hasInputFields) {
-        return React.createElement(
-          KeyboardAwareScrollView,
-          {
-            element: this.props.element,
-            ...this.getCommonProps(),
-            ...this.getScrollViewProps(children),
-            ...this.getKeyboardAwareScrollViewProps(inputFieldRefs),
-          },
-          ...children,
+        return (
+          <KeyboardAwareScrollView
+            {...{
+              element: this.props.element,
+              ...this.getCommonProps(),
+              ...this.getScrollViewProps(childArray),
+              ...this.getKeyboardAwareScrollViewProps(inputFieldRefs),
+            }}
+          >
+            {children}
+          </KeyboardAwareScrollView>
         );
       }
-      return React.createElement(
-        ScrollView,
-        {
-          element: this.props.element,
-          ...this.getCommonProps(),
-          ...this.getScrollViewProps(children),
-        },
-        ...children,
+      return (
+        <ScrollView
+          {...{
+            element: this.props.element,
+            ...this.getCommonProps(),
+            ...this.getScrollViewProps(childArray),
+          }}
+        >
+          {children}
+        </ScrollView>
       );
     }
     if (!keyboardAvoiding && safeArea) {
-      return React.createElement(
-        SafeAreaView,
-        this.getCommonProps(),
-        ...children,
-      );
+      return <SafeAreaView {...this.getCommonProps()}>{children}</SafeAreaView>;
     }
     if (keyboardAvoiding) {
-      return React.createElement(
-        KeyboardAvoidingView,
-        { ...this.getCommonProps(), behavior: 'position' },
-        ...children,
+      return (
+        <KeyboardAvoidingView
+          {...{
+            ...this.getCommonProps(),
+            behavior: 'position',
+          }}
+        >
+          {children}
+        </KeyboardAvoidingView>
       );
     }
-    return React.createElement(View, this.getCommonProps(), ...children);
+    return (
+      <View
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...this.getCommonProps()}
+      >
+        {children}
+      </View>
+    );
     /* eslint-enable react/jsx-props-no-spreading */
   };
 
