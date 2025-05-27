@@ -112,7 +112,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
       (acc, element, index) => {
         if (
           typeof element !== 'string' &&
-          element?.props.element?.getAttribute('sticky') === 'true'
+          element?.props.element?.getAttribute?.('sticky') === 'true'
         ) {
           return [...acc, index];
         }
