@@ -4,7 +4,7 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import { LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
 import React, { useMemo } from 'react';
 import type { HvComponentProps } from 'hyperview/src/types';
-import { isRenderableElement } from '../../utils';
+import { isRenderableElement } from 'hyperview/src/core/utils';
 
 export default (props: HvComponentProps): JSX.Element | null | string => {
   // eslint-disable-next-line react/destructuring-assignment
@@ -34,7 +34,7 @@ export default (props: HvComponentProps): JSX.Element | null | string => {
       },
       stylesheets,
     };
-  }, [formattingContext, options, element, onUpdate, stylesheets]);
+  }, [element, formattingContext, onUpdate, options, stylesheets]);
 
   const Component = useMemo(() => {
     if (nodeType === NODE_TYPE.ELEMENT_NODE && namespaceURI && localName) {
