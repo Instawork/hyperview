@@ -94,12 +94,12 @@ export default class HvSelectMultiple extends PureComponent<HvComponentProps> {
     const props = createProps(this.props.element, this.props.stylesheets, {
       ...this.props.options,
     });
-    const { key, ...rest } = props;
+    const { key, ...otherProps } = props;
     return (
       <View
         key={key}
         // eslint-disable-next-line react/jsx-props-no-spreading
-        {...rest}
+        {...otherProps}
       >
         <HvChildren
           element={this.props.element}
