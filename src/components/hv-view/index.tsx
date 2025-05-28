@@ -24,7 +24,7 @@ import {
 } from 'hyperview/src/core/components/scroll';
 import React, { PureComponent } from 'react';
 import { ATTRIBUTES } from './types';
-import HvChildren from 'hyperview/src/core/components/hv-children';
+import HvElement from 'hyperview/src/core/components/hv-element';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { addHref } from 'hyperview/src/core/hyper-ref';
 import { createStyleProp } from 'hyperview/src/services';
@@ -173,29 +173,27 @@ export default class HvView extends PureComponent<HvComponentProps> {
       }
     }
 
-    const children = (
-      <HvChildren
-        element={this.props.element}
-        onUpdate={this.props.onUpdate}
-        options={{
-          ...this.props.options,
-          ...(scrollable && hasInputFields
-            ? {
-                registerInputHandler: ref => {
-                  if (ref !== null) {
-                    inputFieldRefs.push(ref);
-                  }
-                },
-              }
-            : {}),
-        }}
-        stylesheets={this.props.stylesheets}
-      />
+    const children = Array.from(this.props.element.childNodes || []).map(
+      node => (
+        <HvElement
+          element={node as Element}
+          onUpdate={this.props.onUpdate}
+          options={{
+            ...this.props.options,
+            ...(scrollable && hasInputFields
+              ? {
+                  registerInputHandler: ref => {
+                    if (ref !== null) {
+                      inputFieldRefs.push(ref);
+                    }
+                  },
+                }
+              : {}),
+          }}
+          stylesheets={this.props.stylesheets}
+        />
+      ),
     );
-
-    const childArray = React.Children.toArray(children) as Array<
-      React.ReactElement<HvComponentProps> | null | string
-    >;
 
     /* eslint-disable react/jsx-props-no-spreading */
     if (scrollable) {
@@ -204,7 +202,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
           <KeyboardAwareScrollView
             element={this.props.element}
             {...this.getCommonProps()}
-            {...this.getScrollViewProps(childArray)}
+            {...this.getScrollViewProps(children)}
             {...this.getKeyboardAwareScrollViewProps(inputFieldRefs)}
           >
             {children}
@@ -215,7 +213,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
         <ScrollView
           element={this.props.element}
           {...this.getCommonProps()}
-          {...this.getScrollViewProps(childArray)}
+          {...this.getScrollViewProps(children)}
         >
           {children}
         </ScrollView>
