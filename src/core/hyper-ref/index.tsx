@@ -3,7 +3,6 @@ import * as Dom from 'hyperview/src/services/dom';
 import * as Events from 'hyperview/src/services/events';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import * as Render from 'hyperview/src/services/render';
 import {
   BEHAVIOR_ATTRIBUTES,
   LOCAL_NAME,
@@ -466,9 +465,12 @@ export const addHref = (
     return component;
   }
 
-  return React.createElement(
-    HyperRef,
-    { element, onUpdate, options, stylesheets },
-    ...Render.renderChildren(element, stylesheets, onUpdate, options),
+  return (
+    <HyperRef
+      element={element}
+      onUpdate={onUpdate}
+      options={options}
+      stylesheets={stylesheets}
+    />
   );
 };
