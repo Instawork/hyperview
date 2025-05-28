@@ -24,7 +24,7 @@ import {
 } from 'hyperview/src/core/components/scroll';
 import React, { PureComponent } from 'react';
 import { ATTRIBUTES } from './types';
-import HvElement from 'hyperview/src/core/components/hv-element';
+import HvChildren from 'hyperview/src/core/components/hv-children';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { addHref } from 'hyperview/src/core/hyper-ref';
 import { createStyleProp } from 'hyperview/src/services';
@@ -173,27 +173,23 @@ export default class HvView extends PureComponent<HvComponentProps> {
       }
     }
 
-    const children = Array.from(this.props.element.childNodes || []).map(
-      node => (
-        <HvElement
-          element={node as Element}
-          onUpdate={this.props.onUpdate}
-          options={{
-            ...this.props.options,
-            ...(scrollable && hasInputFields
-              ? {
-                  registerInputHandler: ref => {
-                    if (ref !== null) {
-                      inputFieldRefs.push(ref);
-                    }
-                  },
+    const children = HvChildren({
+      element: this.props.element,
+      onUpdate: this.props.onUpdate,
+      options: {
+        ...this.props.options,
+        ...(scrollable && hasInputFields
+          ? {
+              registerInputHandler: ref => {
+                if (ref !== null) {
+                  inputFieldRefs.push(ref);
                 }
-              : {}),
-          }}
-          stylesheets={this.props.stylesheets}
-        />
-      ),
-    );
+              },
+            }
+          : {}),
+      },
+      stylesheets: this.props.stylesheets,
+    });
 
     /* eslint-disable react/jsx-props-no-spreading */
     if (scrollable) {
