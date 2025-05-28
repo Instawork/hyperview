@@ -21,11 +21,12 @@ export default class HvText extends PureComponent<HvComponentProps> {
       this.props.stylesheets,
       this.props.options,
     );
-
+    const { key, ...rest } = props;
     return (
       <Text
+        key={key}
         // eslint-disable-next-line react/jsx-props-no-spreading
-        {...props}
+        {...rest}
       >
         <HvChildren
           element={this.props.element}

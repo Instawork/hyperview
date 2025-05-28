@@ -53,6 +53,7 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
       this.props.stylesheets,
       newOptions,
     );
+    const { key, ...rest } = props;
 
     // Option renders as an outer TouchableWithoutFeedback view and inner view.
     // The outer view handles presses, the inner view handles styling.
@@ -85,8 +86,9 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
         {...outerProps}
       >
         <View
+          key={key}
           // eslint-disable-next-line react/jsx-props-no-spreading
-          {...props}
+          {...rest}
         >
           <HvChildren
             element={this.props.element}
