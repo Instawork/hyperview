@@ -1,6 +1,7 @@
 import * as Keyboard from 'hyperview/src/services/keyboard';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
+import * as Render from 'hyperview/src/services/render';
 import type {
   Attributes,
   CommonProps,
@@ -24,7 +25,6 @@ import {
 } from 'hyperview/src/core/components/scroll';
 import React, { PureComponent } from 'react';
 import { ATTRIBUTES } from './types';
-import HvChildren from 'hyperview/src/core/components/hv-children';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { addHref } from 'hyperview/src/core/hyper-ref';
 import { createStyleProp } from 'hyperview/src/services';
@@ -173,10 +173,10 @@ export default class HvView extends PureComponent<HvComponentProps> {
       }
     }
 
-    const children = HvChildren({
-      element: this.props.element,
-      onUpdate: this.props.onUpdate,
-      options: {
+    const children = Render.buildChildArray(
+      this.props.element,
+      this.props.onUpdate,
+      {
         ...this.props.options,
         ...(scrollable && hasInputFields
           ? {
@@ -188,8 +188,8 @@ export default class HvView extends PureComponent<HvComponentProps> {
             }
           : {}),
       },
-      stylesheets: this.props.stylesheets,
-    });
+      this.props.stylesheets,
+    );
 
     /* eslint-disable react/jsx-props-no-spreading */
     if (scrollable) {

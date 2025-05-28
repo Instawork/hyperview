@@ -1,6 +1,5 @@
+import * as Render from 'hyperview/src/services/render';
 import type { HvComponentProps } from 'hyperview/src/types';
-import HvElement from 'hyperview/src/core/components/hv-element';
-import React from 'react';
 
 /**
  * Returns the children of an element as an array of HvElement components
@@ -10,16 +9,10 @@ import React from 'react';
 export default (
   props: HvComponentProps,
 ): Array<JSX.Element | null | string> => {
-  if (!props.element?.childNodes) {
-    return [];
-  }
-
-  return Array.from(props.element.childNodes).map(node => (
-    <HvElement
-      element={node as Element}
-      onUpdate={props.onUpdate}
-      options={props.options}
-      stylesheets={props.stylesheets}
-    />
-  ));
+  return Render.buildChildArray(
+    props.element,
+    props.onUpdate,
+    props.options,
+    props.stylesheets,
+  );
 };

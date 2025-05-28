@@ -82,3 +82,26 @@ export const renderChildNodes = (
   }
   return children;
 };
+
+/**
+ * Converts an element's childNodes into an array of HvElement components.
+ * @returns An array of HvElement components.
+ */
+export const buildChildArray = (
+  element: Element,
+  onUpdate: HvComponentOnUpdate,
+  options: HvComponentOptions,
+  stylesheets: StyleSheets,
+): Array<React.ReactElement<HvComponentProps> | null | string> => {
+  if (!element || !element.childNodes) {
+    return [];
+  }
+  return Array.from(element.childNodes).map(node => (
+    <HvElement
+      element={node as Element}
+      onUpdate={onUpdate}
+      options={options}
+      stylesheets={stylesheets}
+    />
+  ));
+};
