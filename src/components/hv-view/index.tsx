@@ -202,12 +202,10 @@ export default class HvView extends PureComponent<HvComponentProps> {
       if (hasInputFields) {
         return (
           <KeyboardAwareScrollView
-            {...{
-              element: this.props.element,
-              ...this.getCommonProps(),
-              ...this.getScrollViewProps(childArray),
-              ...this.getKeyboardAwareScrollViewProps(inputFieldRefs),
-            }}
+            element={this.props.element}
+            {...this.getCommonProps()}
+            {...this.getScrollViewProps(childArray)}
+            {...this.getKeyboardAwareScrollViewProps(inputFieldRefs)}
           >
             {children}
           </KeyboardAwareScrollView>
@@ -215,11 +213,9 @@ export default class HvView extends PureComponent<HvComponentProps> {
       }
       return (
         <ScrollView
-          {...{
-            element: this.props.element,
-            ...this.getCommonProps(),
-            ...this.getScrollViewProps(childArray),
-          }}
+          element={this.props.element}
+          {...this.getCommonProps()}
+          {...this.getScrollViewProps(childArray)}
         >
           {children}
         </ScrollView>
@@ -230,12 +226,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
     }
     if (keyboardAvoiding) {
       return (
-        <KeyboardAvoidingView
-          {...{
-            ...this.getCommonProps(),
-            behavior: 'position',
-          }}
-        >
+        <KeyboardAvoidingView {...this.getCommonProps()} behavior="position">
           {children}
         </KeyboardAvoidingView>
       );
