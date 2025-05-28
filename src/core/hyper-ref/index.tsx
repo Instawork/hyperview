@@ -21,7 +21,6 @@ import type { PressHandlers, PressPropName, Props, State } from './types';
 import React, { PureComponent } from 'react';
 import { RefreshControl, Text, TouchableOpacity } from 'react-native';
 import { BackBehaviorContext } from 'hyperview/src/contexts/back-behaviors';
-import HvChildren from '../components/hv-children';
 import HvElement from 'hyperview/src/core/components/hv-element';
 import { PRESS_TRIGGERS_PROP_NAMES } from './types';
 import { ScrollView } from 'hyperview/src/core/components/scroll';
@@ -467,13 +466,11 @@ export const addHref = (
   }
 
   return (
-    <HyperRef {...{ element, onUpdate, options, stylesheets }}>
-      <HvChildren
-        element={element}
-        onUpdate={onUpdate}
-        options={options}
-        stylesheets={stylesheets}
-      />
-    </HyperRef>
+    <HyperRef
+      element={element}
+      onUpdate={onUpdate}
+      options={options}
+      stylesheets={stylesheets}
+    />
   );
 };
