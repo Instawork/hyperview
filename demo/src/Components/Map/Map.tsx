@@ -81,13 +81,6 @@ const Map = (props: HvComponentProps) => {
     });
   };
 
-  const children = Hyperview.renderChildren(
-    props.element,
-    props.stylesheets,
-    props.onUpdate,
-    props.options,
-  );
-
   return (
     <MapView
       ref={ref}
@@ -110,7 +103,12 @@ const Map = (props: HvComponentProps) => {
       toolbarEnabled={false}
       zoomEnabled={false}
     >
-      {children}
+      <Hyperview.HvChildren
+        element={props.element}
+        onUpdate={props.onUpdate}
+        options={props.options}
+        stylesheets={props.stylesheets}
+      />
     </MapView>
   );
 };

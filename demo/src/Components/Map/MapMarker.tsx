@@ -16,11 +16,14 @@ const MapMarker = (props: HvComponentProps) => {
     latitude: parseFloat(getAttribute('latitude') || '0'),
     longitude: parseFloat(getAttribute('longitude') || '0'),
   };
-  const children = Hyperview.renderChildren(
-    props.element,
-    props.stylesheets,
-    props.onUpdate,
-    props.options,
+
+  const children = (
+    <Hyperview.HvChildren
+      element={props.element}
+      onUpdate={props.onUpdate}
+      options={props.options}
+      stylesheets={props.stylesheets}
+    />
   );
   if (Platform.OS === 'web') {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment

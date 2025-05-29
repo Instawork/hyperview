@@ -34,12 +34,6 @@ const SafeAreaView = (props: HvComponentProps) => {
     props.element.getAttributeNS(namespaceURI, 'mode') || defaultMode;
   const insets =
     props.element.getAttributeNS(namespaceURI, 'insets') || defaultInsets;
-  const children = Hyperview.renderChildren(
-    props.element,
-    props.stylesheets,
-    props.onUpdate,
-    props.options,
-  );
   const extraStyle = Hyperview.createStyleProp(
     props.element,
     props.stylesheets,
@@ -91,7 +85,12 @@ const SafeAreaView = (props: HvComponentProps) => {
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <View key={key} style={style}>
-      {children}
+      <Hyperview.HvChildren
+        element={props.element}
+        onUpdate={props.onUpdate}
+        options={props.options}
+        stylesheets={props.stylesheets}
+      />
     </View>
   );
 };
