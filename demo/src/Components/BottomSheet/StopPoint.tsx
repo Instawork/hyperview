@@ -5,13 +5,16 @@ import { View } from 'react-native';
 import { namespace } from './types';
 
 const BottomSheetStopPoint = (props: HvComponentProps) => {
-  const children = Hyperview.renderChildren(
-    props.element,
-    props.stylesheets,
-    props.onUpdate,
-    props.options,
+  return (
+    <View>
+      <Hyperview.HvChildren
+        element={props.element}
+        onUpdate={props.onUpdate}
+        options={props.options}
+        stylesheets={props.stylesheets}
+      />
+    </View>
   );
-  return <View>{children}</View>;
 };
 
 BottomSheetStopPoint.namespaceURI = namespace;

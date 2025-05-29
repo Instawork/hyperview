@@ -1,7 +1,7 @@
-import * as Render from 'hyperview/src/services/render';
-import type { HvComponentOnUpdate, HvComponentProps } from 'hyperview';
+import React, { useState } from 'react';
 import { TouchableWithoutFeedback, View } from 'react-native';
-import { createElement, useState } from 'react';
+import type { HvComponentProps } from 'hyperview';
+import Hyperview from 'hyperview';
 import { createEventHandler } from 'hyperview/src/core/hyper-ref';
 import { createProps } from 'hyperview/src/services';
 import { namespaceURI } from './constants';
@@ -36,17 +36,24 @@ const BottomTabBarItem = (props: HvComponentProps) => {
     // component to ensure proper layout.
     outerProps.style = { flex: p.style.flex };
   }
-  const component = createElement(
-    View,
-    p,
-    ...Render.renderChildren(
-      props.element,
-      props.stylesheets,
-      props.onUpdate as HvComponentOnUpdate,
-      newOptions,
-    ),
+  return (
+    <TouchableWithoutFeedback
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...outerProps}
+    >
+      <View
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...p}
+      >
+        <Hyperview.HvChildren
+          element={props.element}
+          onUpdate={props.onUpdate}
+          options={newOptions}
+          stylesheets={props.stylesheets}
+        />
+      </View>
+    </TouchableWithoutFeedback>
   );
-  return createElement(TouchableWithoutFeedback, outerProps, component);
 };
 
 BottomTabBarItem.namespaceURI = namespaceURI;

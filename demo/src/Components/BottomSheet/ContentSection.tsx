@@ -17,13 +17,16 @@ const BottomSheetContentSection = (props: HvComponentProps) => {
     [key, setContentSectionHeight],
   );
 
-  const children = Hyperview.renderChildren(
-    props.element,
-    props.stylesheets,
-    props.onUpdate,
-    props.options,
+  return (
+    <View onLayout={onLayout}>
+      <Hyperview.HvChildren
+        element={props.element}
+        onUpdate={props.onUpdate}
+        options={props.options}
+        stylesheets={props.stylesheets}
+      />
+    </View>
   );
-  return <View onLayout={onLayout}>{children}</View>;
 };
 
 BottomSheetContentSection.namespaceURI = namespace;

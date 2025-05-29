@@ -1,8 +1,8 @@
-import * as Render from 'hyperview/src/services/render';
+import React, { useCallback } from 'react';
 import type { HvComponentOnUpdate } from 'hyperview';
+import Hyperview from 'hyperview';
 import type { Props } from './types';
 import { useBottomTabBarContext } from '../../Contexts';
-import { useCallback } from 'react';
 
 /**
  * Component used by Hyperview to render a custom bottom tab bar.
@@ -40,18 +40,20 @@ export const BottomTabBar = (navProps: Props): JSX.Element | null => {
     return null;
   }
 
-  return (Render.renderChildren(
-    props.element,
-    props.stylesheets,
-    onUpdateCustom,
-    {
-      ...props.options,
-      onSelect: (route: string | null | undefined) => {
-        if (route) {
-          navigation.navigate(route);
-        }
-      },
-      targetId: state.routes[state.index].name,
-    },
-  ) as unknown) as JSX.Element;
+  return (
+    <Hyperview.HvChildren
+      element={props.element}
+      onUpdate={onUpdateCustom}
+      options={{
+        ...props.options,
+        onSelect: (route: string | null | undefined) => {
+          if (route) {
+            navigation.navigate(route);
+          }
+        },
+        targetId: state.routes[state.index].name,
+      }}
+      stylesheets={props.stylesheets}
+    />
+  );
 };

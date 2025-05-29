@@ -1,8 +1,8 @@
 import * as Logging from 'hyperview/src/services/logging';
 import Hyperview, { Events, LOCAL_NAME, Namespaces } from 'hyperview';
+import React, { useEffect } from 'react';
 import type { HvComponentProps } from 'hyperview';
 import { findElements } from '../../Helpers';
-import { useEffect } from 'react';
 
 type FormDataPart = {
   fieldName: string;
@@ -101,12 +101,14 @@ const Filter = (props: HvComponentProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.element]);
 
-  return (Hyperview.renderChildren(
-    props.element,
-    props.stylesheets,
-    props.onUpdate,
-    props.options,
-  ) as unknown) as JSX.Element;
+  return (
+    <Hyperview.HvChildren
+      element={props.element}
+      onUpdate={props.onUpdate}
+      options={props.options}
+      stylesheets={props.stylesheets}
+    />
+  );
 };
 
 Filter.namespaceURI = FILTER_NS;
