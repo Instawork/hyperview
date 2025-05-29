@@ -25,6 +25,8 @@ import {
   UpdateAction,
 } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
+import HvChildren from 'hyperview/src/core/components/hv-children';
+import HvElement from 'hyperview/src/core/components/hv-element';
 import HvRoute from 'hyperview/src/core/components/hv-route';
 import { Linking } from 'react-native';
 import { XNetworkRetryAction } from 'hyperview/src/services/dom/types';
@@ -42,6 +44,10 @@ export default class Hyperview extends PureComponent<Types.Props> {
   static renderChildNodes = Render.renderChildNodes;
 
   static renderElement = Render.renderElement;
+
+  static HvElement = HvElement;
+
+  static HvChildren = HvChildren;
 
   behaviorRegistry: BehaviorRegistry;
 
