@@ -194,45 +194,50 @@ export default class HvView extends PureComponent<HvComponentProps> {
     /* eslint-disable react/jsx-props-no-spreading */
     if (scrollable) {
       if (hasInputFields) {
-        return (
-          <KeyboardAwareScrollView
-            element={this.props.element}
-            {...this.getCommonProps()}
-            {...this.getScrollViewProps(children)}
-            {...this.getKeyboardAwareScrollViewProps(inputFieldRefs)}
-          >
-            {children}
-          </KeyboardAwareScrollView>
+        // TODO: Replace with <HvChildren>
+        return React.createElement(
+          KeyboardAwareScrollView,
+          {
+            element: this.props.element,
+            ...this.getCommonProps(),
+            ...this.getScrollViewProps(children),
+            ...this.getKeyboardAwareScrollViewProps(inputFieldRefs),
+          },
+          ...children,
         );
       }
-      return (
-        <ScrollView
-          element={this.props.element}
-          {...this.getCommonProps()}
-          {...this.getScrollViewProps(children)}
-        >
-          {children}
-        </ScrollView>
+      // TODO: Replace with <HvChildren>
+      return React.createElement(
+        ScrollView,
+        {
+          element: this.props.element,
+          ...this.getCommonProps(),
+          ...this.getScrollViewProps(children),
+        },
+        ...children,
       );
     }
     if (!keyboardAvoiding && safeArea) {
-      return <SafeAreaView {...this.getCommonProps()}>{children}</SafeAreaView>;
-    }
-    if (keyboardAvoiding) {
-      return (
-        <KeyboardAvoidingView {...this.getCommonProps()} behavior="position">
-          {children}
-        </KeyboardAvoidingView>
+      // TODO: Replace with <HvChildren>
+      return React.createElement(
+        SafeAreaView,
+        this.getCommonProps(),
+        ...children,
       );
     }
-    return (
-      <View
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        {...this.getCommonProps()}
-      >
-        {children}
-      </View>
-    );
+    if (keyboardAvoiding) {
+      // TODO: Replace with <HvChildren>
+      return React.createElement(
+        KeyboardAvoidingView,
+        {
+          ...this.getCommonProps(),
+          behavior: 'position',
+        },
+        ...children,
+      );
+    }
+    // TODO: Replace with <HvChildren>
+    return React.createElement(View, this.getCommonProps(), ...children);
     /* eslint-enable react/jsx-props-no-spreading */
   };
 

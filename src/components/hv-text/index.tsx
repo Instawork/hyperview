@@ -1,10 +1,10 @@
 import * as Namespaces from 'hyperview/src/services/namespaces';
+import * as Render from 'hyperview/src/services/render';
 import type {
   HvComponentOnUpdate,
   HvComponentProps,
 } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
-import HvChildren from 'hyperview/src/core/components/hv-children';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { Text } from 'react-native';
 import { addHref } from 'hyperview/src/core/hyper-ref';
@@ -21,24 +21,21 @@ export default class HvText extends PureComponent<HvComponentProps> {
       this.props.stylesheets,
       this.props.options,
     );
-    const { key, ...otherProps } = props;
-    return (
-      <Text
-        key={key}
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        {...otherProps}
-      >
-        <HvChildren
-          element={this.props.element}
-          onUpdate={this.props.onUpdate}
-          options={{
-            ...this.props.options,
-            preformatted:
-              this.props.element.getAttribute('preformatted') === 'true',
-          }}
-          stylesheets={this.props.stylesheets}
-        />
-      </Text>
+
+    // TODO: Replace with <HvChildren>
+    return React.createElement(
+      Text,
+      props,
+      ...Render.buildChildArray(
+        this.props.element,
+        this.props.onUpdate,
+        {
+          ...this.props.options,
+          preformatted:
+            this.props.element.getAttribute('preformatted') === 'true',
+        },
+        this.props.stylesheets,
+      ),
     );
   };
 

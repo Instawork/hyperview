@@ -1,7 +1,7 @@
 import * as Namespaces from 'hyperview/src/services/namespaces';
+import * as Render from 'hyperview/src/services/render';
 import type { DOMString, HvComponentProps } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
-import HvChildren from 'hyperview/src/core/components/hv-children';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { View } from 'react-native';
 import { createProps } from 'hyperview/src/services';
@@ -89,23 +89,20 @@ export default class HvSelectSingle extends PureComponent<HvComponentProps> {
     const props = createProps(this.props.element, this.props.stylesheets, {
       ...this.props.options,
     });
-    const { key, ...otherProps } = props;
-    return (
-      <View
-        key={key}
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        {...otherProps}
-      >
-        <HvChildren
-          element={this.props.element}
-          onUpdate={this.props.onUpdate}
-          options={{
-            ...this.props.options,
-            onSelect: this.onSelect,
-          }}
-          stylesheets={this.props.stylesheets}
-        />
-      </View>
+
+    // TODO: Replace with <HvChildren>
+    return React.createElement(
+      View,
+      props,
+      ...Render.buildChildArray(
+        this.props.element,
+        this.props.onUpdate,
+        {
+          ...this.props.options,
+          onSelect: this.onSelect,
+        },
+        this.props.stylesheets,
+      ),
     );
   }
 }
