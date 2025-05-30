@@ -1,5 +1,5 @@
 import * as Contexts from 'hyperview/src/contexts';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import { createProps, createStyleProp } from 'hyperview/src/services';
 import FieldLabel from '../field-label';
@@ -22,13 +22,17 @@ export default (props: Props) => {
     styleAttr: 'field-style',
   });
 
-  const labelStyle: StyleSheetType = StyleSheet.flatten(
-    createStyleProp(props.element, props.stylesheets, {
-      ...props.options,
-      focused: props.focused,
-      pressed,
-      styleAttr: 'field-text-style',
-    }),
+  const labelStyle: StyleSheetType = useMemo(
+    () =>
+      StyleSheet.flatten(
+        createStyleProp(props.element, props.stylesheets, {
+          ...props.options,
+          focused: props.focused,
+          pressed,
+          styleAttr: 'field-text-style',
+        }),
+      ),
+    [props.element, props.stylesheets, props.options, props.focused, pressed],
   );
 
   return (

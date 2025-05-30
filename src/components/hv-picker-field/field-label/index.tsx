@@ -1,7 +1,7 @@
 import * as FontScale from 'hyperview/src/services/font-scale';
+import React, { useMemo } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import type { Props } from './types';
-import React from 'react';
 import type { StyleSheet as StyleSheetType } from 'hyperview/src/types';
 import { createStyleProp } from 'hyperview/src/services';
 
@@ -14,13 +14,23 @@ export default (props: Props) => {
   const placeholderTextColor = props.element.getAttribute(
     'placeholderTextColor',
   );
-  const style: StyleSheetType = StyleSheet.flatten(
-    createStyleProp(props.element, props.stylesheets, {
-      ...props.options,
-      focused: props.focused,
-      pressed: props.pressed,
-      styleAttr: 'field-text-style',
-    }),
+  const style: StyleSheetType = useMemo(
+    () =>
+      StyleSheet.flatten(
+        createStyleProp(props.element, props.stylesheets, {
+          ...props.options,
+          focused: props.focused,
+          pressed: props.pressed,
+          styleAttr: 'field-text-style',
+        }),
+      ),
+    [
+      props.element,
+      props.stylesheets,
+      props.options,
+      props.focused,
+      props.pressed,
+    ],
   );
 
   const labelStyles: Array<StyleSheetType> = [style];
