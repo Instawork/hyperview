@@ -4,7 +4,6 @@ import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as NavigationContext from 'hyperview/src/contexts/navigation';
 import * as NavigatorService from 'hyperview/src/services/navigator';
-import * as Render from 'hyperview/src/services/render';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as Types from './types';
 import * as UrlService from 'hyperview/src/services/url';
@@ -13,12 +12,8 @@ import {
   BackBehaviorProvider,
 } from 'hyperview/src/contexts/back-behaviors';
 import HvDoc, { StateContext } from 'hyperview/src/core/components/hv-doc';
-import React, {
-  JSXElementConstructor,
-  PureComponent,
-  useContext,
-  useMemo,
-} from 'react';
+import React, { PureComponent, useContext, useMemo } from 'react';
+import HvElement from 'hyperview/src/core/components/hv-element';
 import HvNavigator from 'hyperview/src/core/components/hv-navigator';
 import HvScreen from 'hyperview/src/core/components/hv-screen';
 import { LOCAL_NAME } from 'hyperview/src/types';
@@ -102,12 +97,14 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
         const styleSheet = Stylesheets.createStylesheets(
           (preloadElement as unknown) as Document,
         );
-        const component:
-          | string
-          | React.ReactElement<unknown, string | JSXElementConstructor<unknown>>
-          | null = Render.renderElement(body, styleSheet, () => noop, {
-          componentRegistry: this.componentRegistry,
-        });
+        const component = (
+          <HvElement
+            element={body as Element}
+            onUpdate={noop}
+            options={{ componentRegistry: this.componentRegistry }}
+            stylesheets={styleSheet}
+          />
+        );
         if (component) {
           return (
             <Loading

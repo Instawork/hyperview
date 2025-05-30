@@ -8,6 +8,7 @@ import * as Render from 'hyperview/src/services/render';
 import * as Scroll from 'hyperview/src/core/components/scroll';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import { createProps, createStyleProp } from 'hyperview/src/services';
+import HvElement from 'hyperview/src/core/components/hv-element';
 import { HvScreenRenderError } from './errors';
 import LoadElementError from '../load-element-error';
 import Loading from 'hyperview/src/core/components/loading';
@@ -146,16 +147,18 @@ export default class HvScreen extends React.Component {
     );
     let screenElement;
     if (body) {
-      screenElement = Render.renderElement(
-        body,
-        this.props.getScreenState().styles,
-        this.props.onUpdate,
-        {
-          componentRegistry: this.componentRegistry,
-          onUpdateCallbacks: this.props.onUpdateCallbacks,
-          screenUrl: this.props.getScreenState().url,
-          staleHeaderType: this.props.getScreenState().staleHeaderType,
-        },
+      screenElement = (
+        <HvElement
+          element={body}
+          onUpdate={this.props.onUpdate}
+          options={{
+            componentRegistry: this.componentRegistry,
+            onUpdateCallbacks: this.props.onUpdateCallbacks,
+            screenUrl: this.props.getScreenState().url,
+            staleHeaderType: this.props.getScreenState().staleHeaderType,
+          }}
+          stylesheets={this.props.getScreenState().styles}
+        />
       );
     }
     if (!screenElement) {

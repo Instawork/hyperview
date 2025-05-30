@@ -3,7 +3,6 @@ import * as Dom from 'hyperview/src/services/dom';
 import * as Keyboard from 'hyperview/src/services/keyboard';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import * as Render from 'hyperview/src/services/render';
 import type {
   DOMString,
   HvComponentOnUpdate,
@@ -20,6 +19,7 @@ import { createTestProps, getAncestorByTagName } from 'hyperview/src/services';
 import { DOMParser } from '@instawork/xmldom';
 import type { ElementRef } from 'react';
 import { FlatList } from 'hyperview/src/core/components/scroll';
+import HvElement from 'hyperview/src/core/components/hv-element';
 import { LOCAL_NAME } from 'hyperview/src/types';
 
 export default class HvList extends PureComponent<HvComponentProps, State> {
@@ -265,12 +265,13 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
               removeClippedSubviews={false}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               renderItem={({ item }: any) =>
-                item &&
-                Render.renderElement(
-                  item,
-                  this.props.stylesheets,
-                  this.onUpdate,
-                  this.props.options,
+                item && (
+                  <HvElement
+                    element={item as Element}
+                    onUpdate={this.onUpdate}
+                    options={this.props.options}
+                    stylesheets={this.props.stylesheets}
+                  />
                 )
               }
               scrollIndicatorInsets={scrollIndicatorInsets}

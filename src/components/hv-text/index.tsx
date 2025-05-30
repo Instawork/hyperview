@@ -15,36 +15,44 @@ export default class HvText extends PureComponent<HvComponentProps> {
 
   static localName = LOCAL_NAME.TEXT;
 
-  render() {
-    const { skipHref } = this.props.options || {};
+  Component = () => {
     const props = createProps(
       this.props.element,
       this.props.stylesheets,
       this.props.options,
     );
-    const component = React.createElement(
+
+    // TODO: Replace with <HvChildren>
+    return React.createElement(
       Text,
       props,
-      ...Render.renderChildren(
+      ...Render.buildChildArray(
         this.props.element,
-        this.props.stylesheets,
-        this.props.onUpdate as HvComponentOnUpdate,
+        this.props.onUpdate,
         {
           ...this.props.options,
           preformatted:
             this.props.element.getAttribute('preformatted') === 'true',
         },
+        this.props.stylesheets,
       ),
     );
+  };
 
-    return skipHref
-      ? component
-      : addHref(
-          component,
-          this.props.element,
-          this.props.stylesheets,
-          this.props.onUpdate as HvComponentOnUpdate,
-          this.props.options,
-        );
+  render() {
+    const { Component } = this;
+    const { skipHref } = this.props.options || {};
+
+    return skipHref ? (
+      <Component />
+    ) : (
+      addHref(
+        <Component />,
+        this.props.element,
+        this.props.stylesheets,
+        this.props.onUpdate as HvComponentOnUpdate,
+        this.props.options,
+      )
+    );
   }
 }

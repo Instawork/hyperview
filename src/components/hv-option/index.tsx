@@ -1,12 +1,9 @@
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
-import type {
-  HvComponentOnUpdate,
-  HvComponentProps,
-} from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
 import { TouchableWithoutFeedback, View } from 'react-native';
+import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { State } from './types';
 import { createEventHandler } from 'hyperview/src/core/hyper-ref';
@@ -82,17 +79,18 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
       outerProps.style = { flex: props.style.flex };
     }
 
+    // TODO: Replace with <HvChildren>
     return React.createElement(
       TouchableWithoutFeedback,
       outerProps,
       React.createElement(
         View,
         props,
-        ...Render.renderChildren(
+        ...Render.buildChildArray(
           this.props.element,
-          this.props.stylesheets,
-          this.props.onUpdate as HvComponentOnUpdate,
+          this.props.onUpdate,
           newOptions,
+          this.props.stylesheets,
         ),
       ),
     );
