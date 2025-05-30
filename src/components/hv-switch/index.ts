@@ -1,6 +1,7 @@
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import { Platform, StyleSheet, Switch } from 'react-native';
+import React, { useMemo } from 'react';
 import {
   createStyleProp,
   getNameValueFormInputValues,
@@ -8,7 +9,6 @@ import {
 import type { ColorValue } from './style-sheet';
 import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import React from 'react';
 import normalizeColor from './style-sheet';
 
 /* eslint no-bitwise: ["error", { "allow": [">>", "&"] }] */
@@ -32,20 +32,28 @@ function darkenColor(color: ColorValue, percent: number): ColorValue {
 }
 
 const HvSwitch = (props: HvComponentProps) => {
+  const unselectedStyle = useMemo(
+    () =>
+      StyleSheet.flatten(
+        createStyleProp(props.element, props.stylesheets, {
+          selected: false,
+        }),
+      ),
+    [props.element, props.stylesheets],
+  );
+  const selectedStyle = useMemo(
+    () =>
+      StyleSheet.flatten(
+        createStyleProp(props.element, props.stylesheets, {
+          selected: true,
+        }),
+      ),
+    [props.element, props.stylesheets],
+  );
+
   if (props.element.getAttribute('hide') === 'true') {
     return null;
   }
-
-  const unselectedStyle = StyleSheet.flatten(
-    createStyleProp(props.element, props.stylesheets, {
-      selected: false,
-    }),
-  );
-  const selectedStyle = StyleSheet.flatten(
-    createStyleProp(props.element, props.stylesheets, {
-      selected: true,
-    }),
-  );
 
   const p = {
     ios_backgroundColor: unselectedStyle

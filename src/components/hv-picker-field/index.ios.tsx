@@ -5,6 +5,7 @@ import type {
   HvComponentProps,
   StyleSheet,
 } from 'hyperview/src/types';
+import React, { useMemo } from 'react';
 import {
   createStyleProp,
   createTestProps,
@@ -14,7 +15,6 @@ import Field from './field';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import Modal from 'hyperview/src/core/components/modal';
 import Picker from 'hyperview/src/core/components/picker';
-import React from 'react';
 import { View } from 'react-native';
 
 /**
@@ -140,13 +140,13 @@ const HvPickerField = (props: HvComponentProps) => {
   const isFocused = (): boolean =>
     props.element.getAttribute('focused') === 'true';
 
-  const style: Array<StyleSheet> = createStyleProp(
-    props.element,
-    props.stylesheets,
-    {
-      ...props.options,
-      styleAttr: 'field-text-style',
-    },
+  const style: Array<StyleSheet> = useMemo(
+    () =>
+      createStyleProp(props.element, props.stylesheets, {
+        ...props.options,
+        styleAttr: 'field-text-style',
+      }),
+    [props.element, props.stylesheets, props.options],
   );
   const { testID, accessibilityLabel } = createTestProps(props.element);
   const value: DOMString | null | undefined = props.element.getAttribute(

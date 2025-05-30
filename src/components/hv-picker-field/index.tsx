@@ -5,6 +5,7 @@ import type {
   HvComponentProps,
   StyleSheet,
 } from 'hyperview/src/types';
+import React, { useMemo } from 'react';
 import {
   createStyleProp,
   createTestProps,
@@ -12,7 +13,6 @@ import {
 } from 'hyperview/src/services';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import Picker from 'hyperview/src/core/components/picker';
-import React from 'react';
 import { View } from 'react-native';
 
 /**
@@ -91,13 +91,13 @@ const HvPickerField = (props: HvComponentProps) => {
     }
   };
 
-  const style: Array<StyleSheet> = createStyleProp(
-    props.element,
-    props.stylesheets,
-    {
-      ...props.options,
-      styleAttr: 'field-text-style',
-    },
+  const style: Array<StyleSheet> = useMemo(
+    () =>
+      createStyleProp(props.element, props.stylesheets, {
+        ...props.options,
+        styleAttr: 'field-text-style',
+      }),
+    [props.element, props.stylesheets, props.options],
   );
   const { testID, accessibilityLabel } = createTestProps(props.element);
   const value: DOMString | null | undefined = props.element.getAttribute(
@@ -111,13 +111,13 @@ const HvPickerField = (props: HvComponentProps) => {
     style.push({ color: placeholderTextColor });
   }
 
-  const fieldStyle: Array<StyleSheet> = createStyleProp(
-    props.element,
-    props.stylesheets,
-    {
-      ...props.options,
-      styleAttr: 'field-style',
-    },
+  const fieldStyle: Array<StyleSheet> = useMemo(
+    () =>
+      createStyleProp(props.element, props.stylesheets, {
+        ...props.options,
+        styleAttr: 'field-style',
+      }),
+    [props.element, props.stylesheets, props.options],
   );
 
   // Gets all of the <picker-item> elements. All picker item elements

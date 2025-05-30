@@ -5,7 +5,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import ModalButton from './modal-button';
 import Overlay from './overlay';
 import type { Props } from './types';
@@ -30,24 +30,28 @@ export default (props: Props): JSX.Element => {
   const overlayOpacity = useRef(new Animated.Value(0)).current;
   const contentOpacity = useRef(new Animated.Value(0)).current;
 
-  const style: Array<StyleSheetType> = createStyleProp(
-    props.element,
-    props.stylesheets,
-    {
-      ...props.options,
-      styleAttr: 'modal-style',
-    },
+  const style: Array<StyleSheetType> = useMemo(
+    () =>
+      createStyleProp(props.element, props.stylesheets, {
+        ...props.options,
+        styleAttr: 'modal-style',
+      }),
+    [props.element, props.stylesheets, props.options],
   );
 
   const cancelLabel: string =
     props.element.getAttribute('cancel-label') || 'Cancel';
   const doneLabel: string = props.element.getAttribute('done-label') || 'Done';
 
-  const overlayStyle = StyleSheet.flatten(
-    createStyleProp(props.element, props.stylesheets, {
-      ...props.options,
-      styleAttr: 'modal-overlay-style',
-    }),
+  const overlayStyle = useMemo(
+    () =>
+      StyleSheet.flatten(
+        createStyleProp(props.element, props.stylesheets, {
+          ...props.options,
+          styleAttr: 'modal-overlay-style',
+        }),
+      ),
+    [props.element, props.stylesheets, props.options],
   );
 
   const onLayout = (event: LayoutChangeEvent) => {

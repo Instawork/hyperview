@@ -41,6 +41,29 @@ const HvView = (props: HvComponentProps) => {
     );
   }, [props.element]);
 
+  // TODO: fix type
+  // createStyleProp returns an array of StyleSheet,
+  // but it appears something wants a ViewStyle, which is not
+  // not an array type. Does a type need to get fixed elsewhere?
+  const style = useMemo(
+    () =>
+      (createStyleProp(
+        props.element,
+        props.stylesheets,
+        props.options,
+      ) as unknown) as ViewStyle,
+    [props.element, props.stylesheets, props.options],
+  );
+
+  const containerStyle = useMemo(
+    () =>
+      createStyleProp(props.element, props.stylesheets, {
+        ...props.options,
+        styleAttr: ATTRIBUTES.CONTENT_CONTAINER_STYLE,
+      }),
+    [props.element, props.stylesheets, props.options],
+  );
+
   const checkHasInputFields = (): boolean => {
     const textFields = props.element.getElementsByTagNameNS(
       Namespaces.HYPERVIEW,
@@ -51,15 +74,6 @@ const HvView = (props: HvComponentProps) => {
   };
 
   const getCommonProps = (): CommonProps => {
-    // TODO: fix type
-    // createStyleProp returns an array of StyleSheet,
-    // but it appears something wants a ViewStyle, which is not
-    // not an array type. Does a type need to get fixed elsewhere?
-    const style = (createStyleProp(
-      props.element,
-      props.stylesheets,
-      props.options,
-    ) as unknown) as ViewStyle;
     const id = props.element.getAttribute('id');
     if (!id) {
       return { style };
@@ -79,10 +93,7 @@ const HvView = (props: HvComponentProps) => {
       attributes[ATTRIBUTES.SHOWS_SCROLL_INDICATOR] !== 'false';
 
     const contentContainerStyle = attributes[ATTRIBUTES.CONTENT_CONTAINER_STYLE]
-      ? createStyleProp(props.element, props.stylesheets, {
-          ...props.options,
-          styleAttr: ATTRIBUTES.CONTENT_CONTAINER_STYLE,
-        })
+      ? containerStyle
       : undefined;
 
     // Fix scrollbar rendering issue in iOS 13+
