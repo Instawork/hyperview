@@ -33,6 +33,18 @@ export const renderElement = (
     return null;
   }
 
+  const key = element.getAttribute?.('key');
+  if (key && key !== '') {
+    return (
+      <HvElement
+        key={key}
+        element={element}
+        onUpdate={onUpdate}
+        options={options}
+        stylesheets={stylesheets}
+      />
+    );
+  }
   return (
     <HvElement
       element={element}
@@ -96,12 +108,27 @@ export const buildChildArray = (
   if (!element || !element.childNodes) {
     return [];
   }
-  return Array.from(element.childNodes).map(node => (
-    <HvElement
-      element={node as Element}
-      onUpdate={onUpdate}
-      options={options}
-      stylesheets={stylesheets}
-    />
-  ));
+  return Array.from(element.childNodes).map(node => {
+    const nodeElement = node as Element;
+    const key = nodeElement?.getAttribute?.('key');
+    if (key && key !== '') {
+      return (
+        <HvElement
+          key={key}
+          element={nodeElement}
+          onUpdate={onUpdate}
+          options={options}
+          stylesheets={stylesheets}
+        />
+      );
+    }
+    return (
+      <HvElement
+        element={nodeElement}
+        onUpdate={onUpdate}
+        options={options}
+        stylesheets={stylesheets}
+      />
+    );
+  });
 };
