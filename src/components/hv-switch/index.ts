@@ -32,26 +32,29 @@ function darkenColor(color: ColorValue, percent: number): ColorValue {
 }
 
 const HvSwitch = (props: HvComponentProps) => {
+  // eslint-disable-next-line react/destructuring-assignment
+  const { element, onUpdate, stylesheets } = props;
+
   const unselectedStyle = useMemo(
     () =>
       StyleSheet.flatten(
-        createStyleProp(props.element, props.stylesheets, {
+        createStyleProp(element, stylesheets, {
           selected: false,
         }),
       ),
-    [props.element, props.stylesheets],
+    [element, stylesheets],
   );
   const selectedStyle = useMemo(
     () =>
       StyleSheet.flatten(
-        createStyleProp(props.element, props.stylesheets, {
+        createStyleProp(element, stylesheets, {
           selected: true,
         }),
       ),
-    [props.element, props.stylesheets],
+    [element, stylesheets],
   );
 
-  if (props.element.getAttribute('hide') === 'true') {
+  if (element.getAttribute('hide') === 'true') {
     return null;
   }
 
@@ -60,14 +63,14 @@ const HvSwitch = (props: HvComponentProps) => {
       ? unselectedStyle.backgroundColor
       : null,
     onChange: () => {
-      const newElement = props.element.cloneNode(true) as Element;
-      Behaviors.trigger('change', newElement, props.onUpdate);
+      const newElement = element.cloneNode(true) as Element;
+      Behaviors.trigger('change', newElement, onUpdate);
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onValueChange: (value: any) => {
-      const newElement = props.element.cloneNode(true) as Element;
+      const newElement = element.cloneNode(true) as Element;
       newElement.setAttribute('value', value ? 'on' : 'off');
-      props.onUpdate(null, 'swap', props.element, { newElement });
+      onUpdate(null, 'swap', element, { newElement });
     },
     // iOS thumbColor default
     thumbColor: unselectedStyle?.color || selectedStyle?.color,
@@ -75,7 +78,7 @@ const HvSwitch = (props: HvComponentProps) => {
       false: unselectedStyle ? unselectedStyle.backgroundColor : null,
       true: selectedStyle ? selectedStyle.backgroundColor : null,
     },
-    value: props.element.getAttribute('value') === 'on',
+    value: element.getAttribute('value') === 'on',
   };
 
   // android thumbColor default
