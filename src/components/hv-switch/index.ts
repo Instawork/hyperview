@@ -33,26 +33,25 @@ function darkenColor(color: ColorValue, percent: number): ColorValue {
 
 const HvSwitch = (props: HvComponentProps) => {
   // eslint-disable-next-line react/destructuring-assignment
-  const { element, onUpdate, stylesheets } = props;
+  const { element, onUpdate, options, stylesheets } = props;
+  const { styleAttr } = options;
+  const unselectedStyle = useMemo(() => {
+    return StyleSheet.flatten(
+      createStyleProp(element, stylesheets, {
+        selected: false,
+        styleAttr,
+      }),
+    );
+  }, [element, styleAttr, stylesheets]);
 
-  const unselectedStyle = useMemo(
-    () =>
-      StyleSheet.flatten(
-        createStyleProp(element, stylesheets, {
-          selected: false,
-        }),
-      ),
-    [element, stylesheets],
-  );
-  const selectedStyle = useMemo(
-    () =>
-      StyleSheet.flatten(
-        createStyleProp(element, stylesheets, {
-          selected: true,
-        }),
-      ),
-    [element, stylesheets],
-  );
+  const selectedStyle = useMemo(() => {
+    return StyleSheet.flatten(
+      createStyleProp(element, stylesheets, {
+        selected: true,
+        styleAttr,
+      }),
+    );
+  }, [element, styleAttr, stylesheets]);
 
   if (element.getAttribute('hide') === 'true') {
     return null;

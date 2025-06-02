@@ -1,10 +1,6 @@
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import type {
-  DOMString,
-  HvComponentProps,
-  StyleSheet,
-} from 'hyperview/src/types';
+import type { DOMString, HvComponentProps } from 'hyperview/src/types';
 import React, { useCallback, useMemo } from 'react';
 import {
   createStyleProp,
@@ -159,13 +155,17 @@ const HvPickerField = (props: HvComponentProps) => {
     [element],
   );
 
-  const style: Array<StyleSheet> = useMemo(
+  const { focused, pressed, pressedSelected, selected } = options;
+  const style = useMemo(
     () =>
       createStyleProp(element, stylesheets, {
-        ...options,
+        focused,
+        pressed,
+        pressedSelected,
+        selected,
         styleAttr: 'field-text-style',
       }),
-    [element, stylesheets, options],
+    [element, focused, pressed, pressedSelected, selected, stylesheets],
   );
   const { testID, accessibilityLabel } = createTestProps(element);
   const value: DOMString | null | undefined = element.getAttribute('value');
@@ -190,21 +190,21 @@ const HvPickerField = (props: HvComponentProps) => {
       return <Picker.Item key={l + v} label={l} value={v} />;
     });
 
-  const focused = isFocused();
+  const focusedVal = isFocused();
 
   return (
     <Field
       element={element}
-      focused={focused}
+      focused={focusedVal}
       onPress={onFieldPress}
       options={options}
       stylesheets={stylesheets}
       value={getLabelForValue(getValue())}
     >
-      {focused ? (
+      {focusedVal ? (
         <Modal
           element={element}
-          focused={focused}
+          focused={focusedVal}
           onModalCancel={onCancel}
           onModalDone={onDone}
           onUpdate={onUpdate}

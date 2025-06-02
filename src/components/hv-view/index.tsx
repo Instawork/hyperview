@@ -44,24 +44,40 @@ const HvView = (props: HvComponentProps) => {
     );
   }, [element]);
 
+  const { focused, pressed, pressedSelected, selected } = options;
+  const { styleAttr } = options;
+
   // TODO: fix type
   // createStyleProp returns an array of StyleSheet,
   // but it appears something wants a ViewStyle, which is not
   // not an array type. Does a type need to get fixed elsewhere?
-  const style = useMemo(
-    () =>
-      (createStyleProp(element, stylesheets, options) as unknown) as ViewStyle,
-    [element, stylesheets, options],
-  );
+  const style = useMemo(() => {
+    return (createStyleProp(element, stylesheets, {
+      focused,
+      pressed,
+      pressedSelected,
+      selected,
+      styleAttr,
+    }) as unknown) as ViewStyle;
+  }, [
+    element,
+    focused,
+    pressed,
+    pressedSelected,
+    selected,
+    styleAttr,
+    stylesheets,
+  ]);
 
-  const containerStyle = useMemo(
-    () =>
-      createStyleProp(element, stylesheets, {
-        ...options,
-        styleAttr: ATTRIBUTES.CONTENT_CONTAINER_STYLE,
-      }),
-    [element, stylesheets, options],
-  );
+  const containerStyle = useMemo(() => {
+    return createStyleProp(element, stylesheets, {
+      focused,
+      pressed,
+      pressedSelected,
+      selected,
+      styleAttr: ATTRIBUTES.CONTENT_CONTAINER_STYLE,
+    });
+  }, [element, focused, pressed, pressedSelected, selected, stylesheets]);
 
   const checkHasInputFields = useCallback((): boolean => {
     const textFields = element.getElementsByTagNameNS(
