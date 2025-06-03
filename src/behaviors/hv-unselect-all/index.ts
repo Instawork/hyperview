@@ -19,9 +19,8 @@ export default {
     getRoot: HvGetRoot,
     updateRoot: HvUpdateRoot,
   ) => {
-    const targetId: DOMString | null | undefined = element.getAttribute(
-      'target',
-    );
+    const targetId: DOMString | null | undefined =
+      element.getAttribute('target');
     if (!targetId) {
       Logging.warn('[behaviors/unselect-all]: missing "target" attribute');
       return;

@@ -87,13 +87,8 @@ export default class Hyperview extends PureComponent<Types.Props> {
     }
 
     const options = opts || {};
-    const {
-      behaviorElement,
-      showIndicatorIds,
-      hideIndicatorIds,
-      once,
-      onEnd,
-    } = options;
+    const { behaviorElement, showIndicatorIds, hideIndicatorIds, once, onEnd } =
+      options;
 
     const showIndicatorIdList = showIndicatorIds
       ? Xml.splitAttributeList(showIndicatorIds)

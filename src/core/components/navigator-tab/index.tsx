@@ -15,24 +15,20 @@ import {
 } from '@react-navigation/native';
 
 const CustomTabNavigator = (props: Types.Props) => {
-  const {
-    state,
-    descriptors,
-    navigation,
-    NavigationContent,
-  } = useNavigationBuilder<
-    TabNavigationState<Types.ParamListBase>,
-    TabRouterOptions,
-    TabActionHelpers<Types.ParamListBase>,
-    BottomTabNavigationOptions,
-    BottomTabNavigationEventMap
-  >(TabRouter, {
-    backBehavior: props.backBehavior,
-    children: props.children,
-    id: props.id,
-    initialRouteName: props.initialRouteName,
-    screenOptions: props.screenOptions,
-  });
+  const { state, descriptors, navigation, NavigationContent } =
+    useNavigationBuilder<
+      TabNavigationState<Types.ParamListBase>,
+      TabRouterOptions,
+      TabActionHelpers<Types.ParamListBase>,
+      BottomTabNavigationOptions,
+      BottomTabNavigationEventMap
+    >(TabRouter, {
+      backBehavior: props.backBehavior,
+      children: props.children,
+      id: props.id,
+      initialRouteName: props.initialRouteName,
+      screenOptions: props.screenOptions,
+    });
 
   React.useEffect(() => {
     const curState = navigation.getState();

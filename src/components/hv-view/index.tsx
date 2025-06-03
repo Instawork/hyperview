@@ -68,11 +68,11 @@ export default class HvView extends PureComponent<HvComponentProps> {
     // createStyleProp returns an array of StyleSheet,
     // but it appears something wants a ViewStyle, which is not
     // not an array type. Does a type need to get fixed elsewhere?
-    const style = (createStyleProp(
+    const style = createStyleProp(
       this.props.element,
       this.props.stylesheets,
       this.props.options,
-    ) as unknown) as ViewStyle;
+    ) as unknown as ViewStyle;
     const id = this.props.element.getAttribute('id');
     if (!id) {
       return { style };

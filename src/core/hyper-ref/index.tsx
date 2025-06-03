@@ -35,16 +35,18 @@ import { createTestProps } from 'hyperview/src/services';
  * This prevents clicks on various elements to trigger browser navigation
  * when using Hyperview for web.
  */
-export const createEventHandler = (
-  handler: () => void,
-  preventDefault = false,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): ((event?: any) => void) => event => {
-  if (preventDefault) {
-    event?.preventDefault();
-  }
-  handler();
-};
+export const createEventHandler =
+  (
+    handler: () => void,
+    preventDefault = false,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ): ((event?: any) => void) =>
+  event => {
+    if (preventDefault) {
+      event?.preventDefault();
+    }
+    handler();
+  };
 
 /**
  * Component that handles dispatching behaviors based on the appropriate
@@ -132,14 +134,10 @@ export default class HyperRef extends PureComponent<Props, State> {
     const behaviorElements = Dom.getBehaviorElements(this.props.element);
     const onEventBehaviors = behaviorElements.filter(e => {
       if (e.getAttribute(BEHAVIOR_ATTRIBUTES.TRIGGER) === TRIGGERS.ON_EVENT) {
-        const currentAttributeEventName:
-          | string
-          | null
-          | undefined = e.getAttribute('event-name');
-        const currentAttributeAction:
-          | string
-          | null
-          | undefined = e.getAttribute('action');
+        const currentAttributeEventName: string | null | undefined =
+          e.getAttribute('event-name');
+        const currentAttributeAction: string | null | undefined =
+          e.getAttribute('action');
         if (currentAttributeAction === 'dispatch-event') {
           Logging.error(
             new Error(
@@ -259,9 +257,9 @@ export default class HyperRef extends PureComponent<Props, State> {
           },
         );
       } else {
-        pressHandlers[
-          triggerPropName as PressPropName
-        ] = createEventHandler(() => handler(this.props.element));
+        pressHandlers[triggerPropName as PressPropName] = createEventHandler(
+          () => handler(this.props.element),
+        );
       }
     });
 

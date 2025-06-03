@@ -11,7 +11,7 @@ export const ATTRIBUTES = {
   SHOWS_SCROLL_INDICATOR: 'shows-scroll-indicator',
 } as const;
 
-export type Attribute = typeof ATTRIBUTES[keyof typeof ATTRIBUTES];
+export type Attribute = (typeof ATTRIBUTES)[keyof typeof ATTRIBUTES];
 
 // eslint-disable-next-line instawork/exact-object-types
 export type Attributes = {

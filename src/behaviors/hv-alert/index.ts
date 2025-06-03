@@ -44,12 +44,10 @@ export default {
             const action = behaviorElement.getAttribute('action');
             const verb = behaviorElement.getAttribute('verb');
             const targetId = behaviorElement.getAttribute('target');
-            const showIndicatorIds = behaviorElement.getAttribute(
-              'show-during-load',
-            );
-            const hideIndicatorIds = behaviorElement.getAttribute(
-              'hide-during-load',
-            );
+            const showIndicatorIds =
+              behaviorElement.getAttribute('show-during-load');
+            const hideIndicatorIds =
+              behaviorElement.getAttribute('hide-during-load');
             const delay = behaviorElement.getAttribute('delay');
             const once = behaviorElement.getAttribute('once');
             // With multiple behaviors for the same trigger, we need to stagger

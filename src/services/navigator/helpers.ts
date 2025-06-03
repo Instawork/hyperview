@@ -406,9 +406,8 @@ export const buildRequest = (
   //  { screen: 'shifts', params:
   //    { screen: 'my-shifts', params: { url: 'someurl.xml' } } })
   const lastPathId = path.shift();
-  const params:
-    | Types.NavigationNavigateParams
-    | NavigationRouteParams = buildParams(routeId, path, cleanedParams);
+  const params: Types.NavigationNavigateParams | NavigationRouteParams =
+    buildParams(routeId, path, cleanedParams);
 
   return [navAction, navigation, lastPathId || routeId, params];
 };

@@ -155,7 +155,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
           ) as HTMLCollectionOf<Element>,
         );
         const styleSheet = Stylesheets.createStylesheets(
-          (preloadElement as unknown) as Document,
+          preloadElement as unknown as Document,
         );
         const component:
           | string
@@ -507,9 +507,8 @@ function HvRouteFC(props: Types.Props) {
               const action = behaviorElement.getAttribute('action');
               onUpdate(href, action, behaviorElement, {
                 behaviorElement,
-                showIndicatorId: behaviorElement.getAttribute(
-                  'show-during-load',
-                ),
+                showIndicatorId:
+                  behaviorElement.getAttribute('show-during-load'),
                 targetId: behaviorElement.getAttribute('target'),
               });
             });

@@ -128,9 +128,8 @@ export class Navigator implements NavigationProvider {
     doc?: Document | null,
   ): void => {
     const { showIndicatorId, delay, targetId } = opts;
-    const formData: FormData | null | undefined = componentRegistry.getFormData(
-      element,
-    );
+    const formData: FormData | null | undefined =
+      componentRegistry.getFormData(element);
 
     // Only take the first id if there are multiple
     const indicatorId = showIndicatorId?.split(' ')[0] || null;

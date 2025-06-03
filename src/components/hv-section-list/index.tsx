@@ -96,10 +96,8 @@ export default class HvSectionList extends PureComponent<
   };
 
   handleScrollBehavior = (behaviorElement: Element) => {
-    const targetId:
-      | DOMString
-      | null
-      | undefined = behaviorElement?.getAttribute('target');
+    const targetId: DOMString | null | undefined =
+      behaviorElement?.getAttribute('target');
     if (!targetId) {
       Logging.warn('[behaviors/scroll]: missing "target" attribute');
       return;

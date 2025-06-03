@@ -56,17 +56,16 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
    * If the value doesn't have a picker item, returns null.
    */
   getLabelForValue = (value: DOMString): string | null | undefined => {
-    const pickerItemElements: HTMLCollectionOf<Element> = this.props.element.getElementsByTagNameNS(
-      Namespaces.HYPERVIEW,
-      LOCAL_NAME.PICKER_ITEM,
-    );
+    const pickerItemElements: HTMLCollectionOf<Element> =
+      this.props.element.getElementsByTagNameNS(
+        Namespaces.HYPERVIEW,
+        LOCAL_NAME.PICKER_ITEM,
+      );
 
     let item: Element | null | undefined = null;
     for (let i = 0; i < pickerItemElements.length; i += 1) {
-      const pickerItemElement:
-        | Element
-        | null
-        | undefined = pickerItemElements.item(i);
+      const pickerItemElement: Element | null | undefined =
+        pickerItemElements.item(i);
       if (
         pickerItemElement &&
         pickerItemElement.getAttribute('value') === value
@@ -158,13 +157,10 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
       },
     );
     const { testID, accessibilityLabel } = createTestProps(this.props.element);
-    const value: DOMString | null | undefined = this.props.element.getAttribute(
-      'value',
-    );
-    const placeholderTextColor:
-      | DOMString
-      | null
-      | undefined = this.props.element.getAttribute('placeholderTextColor');
+    const value: DOMString | null | undefined =
+      this.props.element.getAttribute('value');
+    const placeholderTextColor: DOMString | null | undefined =
+      this.props.element.getAttribute('placeholderTextColor');
     if ([undefined, null, ''].includes(value) && placeholderTextColor) {
       style.push({ color: placeholderTextColor });
     }

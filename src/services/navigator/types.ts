@@ -63,7 +63,7 @@ export type NavigationProp = {
  */
 export type Route<
   RouteName extends string,
-  Params extends object | undefined = object | undefined
+  Params extends object | undefined = object | undefined,
 > = {
   key: string;
   name: RouteName;

@@ -13,7 +13,7 @@ export const HTTP_METHODS = {
   POST: 'post',
 } as const;
 
-export type HttpMethod = typeof HTTP_METHODS[keyof typeof HTTP_METHODS];
+export type HttpMethod = (typeof HTTP_METHODS)[keyof typeof HTTP_METHODS];
 
 export const CONTENT_TYPE = {
   APPLICATION_VND_HYPERVIEW_FRAGMENT_XML:
@@ -28,7 +28,8 @@ export const X_RESPONSE_STALE_REASON = {
 } as const;
 
 // eslint-disable-next-line max-len
-export type XResponseStaleReason = typeof X_RESPONSE_STALE_REASON[keyof typeof X_RESPONSE_STALE_REASON];
+export type XResponseStaleReason =
+  (typeof X_RESPONSE_STALE_REASON)[keyof typeof X_RESPONSE_STALE_REASON];
 
 export const X_NETWORK_RETRY_ACTION = {
   DROP: 'drop',
@@ -37,7 +38,8 @@ export const X_NETWORK_RETRY_ACTION = {
 } as const;
 
 // eslint-disable-next-line max-len
-export type XNetworkRetryAction = typeof X_NETWORK_RETRY_ACTION[keyof typeof X_NETWORK_RETRY_ACTION];
+export type XNetworkRetryAction =
+  (typeof X_NETWORK_RETRY_ACTION)[keyof typeof X_NETWORK_RETRY_ACTION];
 
 export type Fetch = (
   url: string,

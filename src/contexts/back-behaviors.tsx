@@ -12,9 +12,8 @@ export type BackBehaviorContextProps = {
  * Provides a registry of back behaviors to allow sharing between hv-screen and hv-route
  * Additionally contains the onUpdate to use for the behaviors
  */
-export const BackBehaviorContext = createContext<BackBehaviorContextProps | null>(
-  null,
-);
+export const BackBehaviorContext =
+  createContext<BackBehaviorContextProps | null>(null);
 
 export function removeElements(
   registry: Element[],

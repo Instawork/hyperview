@@ -19,25 +19,21 @@ const CustomStackNavigator = (props: Types.Props) => {
   const docContextProps = React.useContext(Contexts.DocContext);
   const navContextProps = React.useContext(NavigationContext.Context);
 
-  const {
-    state,
-    descriptors,
-    navigation,
-    NavigationContent,
-  } = useNavigationBuilder<
-    StackNavigationState<Types.ParamListBase>,
-    Types.StackOptions,
-    StackActionHelpers<Types.ParamListBase>,
-    StackNavigationOptions,
-    StackNavigationEventMap
-  >(CustomStackRouter.Router, {
-    children: props.children,
-    docContextProps,
-    id: props.id,
-    initialRouteName: props.initialRouteName,
-    navContextProps,
-    screenOptions: props.screenOptions,
-  });
+  const { state, descriptors, navigation, NavigationContent } =
+    useNavigationBuilder<
+      StackNavigationState<Types.ParamListBase>,
+      Types.StackOptions,
+      StackActionHelpers<Types.ParamListBase>,
+      StackNavigationOptions,
+      StackNavigationEventMap
+    >(CustomStackRouter.Router, {
+      children: props.children,
+      docContextProps,
+      id: props.id,
+      initialRouteName: props.initialRouteName,
+      navContextProps,
+      screenOptions: props.screenOptions,
+    });
 
   return (
     <NavigationContent>

@@ -69,14 +69,10 @@ export default class HvNavigator extends PureComponent<Props> {
   onEventDispatch = (eventName: string) => {
     const onEventBehaviors = this.behaviorElements.filter(e => {
       if (e.getAttribute(BEHAVIOR_ATTRIBUTES.TRIGGER) === TRIGGERS.ON_EVENT) {
-        const currentAttributeEventName:
-          | string
-          | null
-          | undefined = e.getAttribute('event-name');
-        const currentAttributeAction:
-          | string
-          | null
-          | undefined = e.getAttribute('action');
+        const currentAttributeEventName: string | null | undefined =
+          e.getAttribute('event-name');
+        const currentAttributeAction: string | null | undefined =
+          e.getAttribute('action');
         if (currentAttributeAction === 'dispatch-event') {
           Logging.error(
             new Error(
@@ -337,14 +333,10 @@ export default class HvNavigator extends PureComponent<Props> {
       throw new NavigatorService.HvNavigatorError('No id found for navigator');
     }
 
-    const type: string | null | undefined = this.props.element.getAttribute(
-      'type',
-    );
-    const selected:
-      | Element
-      | undefined = NavigatorService.getSelectedNavRouteElement(
-      this.props.element,
-    );
+    const type: string | null | undefined =
+      this.props.element.getAttribute('type');
+    const selected: Element | undefined =
+      NavigatorService.getSelectedNavRouteElement(this.props.element);
 
     const selectedId: string | undefined = selected
       ? selected.getAttribute('id')?.toString()

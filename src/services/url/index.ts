@@ -24,9 +24,8 @@ export const addParamsToUrl = (
   }>,
 ): string => {
   const [baseUrl, existingParams] = url.split(QUERY_SEPARATOR);
-  const query = (existingParams
-    ? existingParams.split(QUERY_PARAM_SEPARATOR)
-    : []
+  const query = (
+    existingParams ? existingParams.split(QUERY_PARAM_SEPARATOR) : []
   ).concat(
     params.map(
       p => `${encodeURIComponent(p.name)}=${encodeURIComponent(p.value)}`,

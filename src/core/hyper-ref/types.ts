@@ -32,7 +32,8 @@ export const PRESS_PROP_NAMES = {
   ON_PRESS_OUT: 'onPressOut',
 } as const;
 
-export type PressPropName = typeof PRESS_PROP_NAMES[keyof typeof PRESS_PROP_NAMES];
+export type PressPropName =
+  (typeof PRESS_PROP_NAMES)[keyof typeof PRESS_PROP_NAMES];
 
 export const PRESS_TRIGGERS_PROP_NAMES: Partial<
   Record<PressTrigger, PressPropName>

@@ -60,9 +60,8 @@ const HvDoc = (props: Props) => {
     };
   });
 
-  const navigationContext: NavigationContext.NavigationContextProps | null = useContext(
-    NavigationContext.Context,
-  );
+  const navigationContext: NavigationContext.NavigationContextProps | null =
+    useContext(NavigationContext.Context);
 
   if (!navigationContext) {
     throw new HvDocError('No context found');
@@ -165,9 +164,10 @@ const HvDoc = (props: Props) => {
     [state],
   );
   const getDoc = useCallback(() => localDoc.current ?? null, [localDoc]);
-  const getNavigation = useCallback(() => props.navigationProvider, [
-    props.navigationProvider,
-  ]);
+  const getNavigation = useCallback(
+    () => props.navigationProvider,
+    [props.navigationProvider],
+  );
   const hasElement = !!props.element;
   const setScreenState = useCallback(
     (newState: ScreenState) => {
@@ -180,7 +180,7 @@ const HvDoc = (props: Props) => {
       setState(prev => ({
         ...prev,
         ...newState,
-        doc: hasElement ? null : newState.doc ?? prev.doc,
+        doc: hasElement ? null : (newState.doc ?? prev.doc),
       }));
     },
     [hasElement],

@@ -64,7 +64,7 @@ export const NODE_TYPE = {
   TEXT_NODE: 3,
 } as const;
 
-export type NodeType = typeof NODE_TYPE[keyof typeof NODE_TYPE];
+export type NodeType = (typeof NODE_TYPE)[keyof typeof NODE_TYPE];
 
 export type Attribute = Node & {
   value: DOMString;
@@ -277,7 +277,7 @@ export const TRIGGERS = Object.freeze({
   VISIBLE: 'visible',
 });
 
-export type Trigger = typeof TRIGGERS[keyof typeof TRIGGERS];
+export type Trigger = (typeof TRIGGERS)[keyof typeof TRIGGERS];
 
 export const PRESS_TRIGGERS = Object.freeze([
   TRIGGERS.LONG_PRESS,
@@ -347,7 +347,7 @@ export const NAV_ACTIONS = {
   PUSH: ACTIONS.PUSH,
 } as const;
 
-export type NavAction = typeof NAV_ACTIONS[keyof typeof NAV_ACTIONS];
+export type NavAction = (typeof NAV_ACTIONS)[keyof typeof NAV_ACTIONS];
 
 export const UPDATE_ACTIONS = {
   APPEND: ACTIONS.APPEND,
@@ -356,7 +356,7 @@ export const UPDATE_ACTIONS = {
   REPLACE_INNER: ACTIONS.REPLACE_INNER,
 } as const;
 
-export type UpdateAction = typeof UPDATE_ACTIONS[keyof typeof UPDATE_ACTIONS];
+export type UpdateAction = (typeof UPDATE_ACTIONS)[keyof typeof UPDATE_ACTIONS];
 
 export type BehaviorOptions = {
   newElement?: Element;

@@ -174,8 +174,9 @@ function createStylesheet(document: Document, modifiers = {}): StyleSheetType {
       let styleId = styleElement?.getAttribute('id');
       if (hasModifier) {
         // TODO(adam): Use less hacky way to get id of parent style element.
-        styleId = (styleElement?.parentNode
-          ?.parentNode as Element)?.getAttribute('id');
+        styleId = (
+          styleElement?.parentNode?.parentNode as Element
+        )?.getAttribute('id');
       }
 
       // This must be a root style or a modifier style
