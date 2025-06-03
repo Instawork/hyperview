@@ -1,6 +1,10 @@
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
-import type { DOMString, HvComponentProps } from 'hyperview/src/types';
+import type {
+  DOMString,
+  HvComponentOnUpdate,
+  HvComponentProps,
+} from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { View } from 'react-native';
@@ -94,14 +98,14 @@ export default class HvSelectSingle extends PureComponent<HvComponentProps> {
     return React.createElement(
       View,
       props,
-      ...Render.buildChildArray(
+      ...Render.renderChildren(
         this.props.element,
-        this.props.onUpdate,
+        this.props.stylesheets,
+        this.props.onUpdate as HvComponentOnUpdate,
         {
           ...this.props.options,
           onSelect: this.onSelect,
         },
-        this.props.stylesheets,
       ),
     );
   }

@@ -9,10 +9,10 @@ import type { HvComponentProps } from 'hyperview/src/types';
 export default (
   props: HvComponentProps,
 ): Array<JSX.Element | null | string> => {
-  return Render.buildChildArray(
+  return Render.renderChildren(
     props.element,
+    props.stylesheets,
     props.onUpdate,
     props.options,
-    props.stylesheets,
   );
 };

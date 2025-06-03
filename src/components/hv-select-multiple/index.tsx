@@ -1,7 +1,11 @@
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import type { DOMString, HvComponentProps } from 'hyperview/src/types';
+import * as Render from 'hyperview/src/services/render';
+import type {
+  DOMString,
+  HvComponentOnUpdate,
+  HvComponentProps,
+} from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
-import HvChildren from 'hyperview/src/core/components/hv-children';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { View } from 'react-native';
 import { createProps } from 'hyperview/src/services';
@@ -94,23 +98,20 @@ export default class HvSelectMultiple extends PureComponent<HvComponentProps> {
     const props = createProps(this.props.element, this.props.stylesheets, {
       ...this.props.options,
     });
-    const { key, ...otherProps } = props;
-    return (
-      <View
-        key={key}
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        {...otherProps}
-      >
-        <HvChildren
-          element={this.props.element}
-          onUpdate={this.props.onUpdate}
-          options={{
-            ...this.props.options,
-            onToggle: this.onToggle,
-          }}
-          stylesheets={this.props.stylesheets}
-        />
-      </View>
+
+    // TODO: Replace with <HvChildren>
+    return React.createElement(
+      View,
+      props,
+      ...Render.renderChildren(
+        this.props.element,
+        this.props.stylesheets,
+        this.props.onUpdate as HvComponentOnUpdate,
+        {
+          ...this.props.options,
+          onToggle: this.onToggle,
+        },
+      ),
     );
   }
 }
