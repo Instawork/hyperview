@@ -10,25 +10,31 @@ hv_title: "Bottom Sheet"
 {% from 'macros/button/index.xml.njk' import button %}
 
 {% block styles %}
-  <style id="bottom-sheet" padding="24" />
-  <style
-    id="bottom-sheet-handle"
-    alignSelf='center'
-    backgroundColor='gray'
-    borderRadius="24"
-    height="8"
-    marginVertical="12"
-    width="100"
-  />
-  <style id="bottom-sheet-overlay" backgroundColor='#2f2f2f' opacity="0.6" />
-  <style id="bottom-sheet-container" backgroundColor="#fff" borderRadius="8" />
-  {%include './_users/styles.xml.njk' %}
+  <style id="bottom-sheet" backgroundColor="#fff" padding="24" />
 {% endblock %}
 
 {% block content %}
-  {%include './_default/index.xml.njk' %}
-  {%include './_stop-points/index.xml.njk' %}
-  {%include './_content-sections/index.xml.njk' %}
-  {%include './_scrolling/index.xml.njk' %}
-  {%include './_users/index.xml.njk' %}
+  <bottom-sheet:bottom-sheet
+    xmlns:bottom-sheet="https://hyperview.org/bottom-sheet"
+    bottom-sheet:toggle-event-name="bottom-sheet/toggle"
+    bottom-sheet:animation-duration="250"
+    bottom-sheet:dismissible="true"
+    bottom-sheet:visible="false"
+  >
+    <view key="bottom-sheet-content" style="bottom-sheet">
+      <text>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc
+        consectetur ultricies. Donec nec nunc consectetur, ultricies nunc nec, ultricies
+        nunc. Nullam nec purus nec nunc consectetur ultricies. Donec nec nunc consectetur,
+        ultricies nunc nec, ultricies nunc. Nullam nec purus nec nunc consectetur ultricies.
+      </text>
+    </view>
+  </bottom-sheet:bottom-sheet>
+  {% call button('Open bottom sheet') -%}
+    <behavior
+      action="dispatch-event"
+      event-name="bottom-sheet/toggle"
+      trigger="press"
+    />
+  {%- endcall %}
 {% endblock %}
