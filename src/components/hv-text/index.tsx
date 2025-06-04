@@ -26,15 +26,15 @@ export default class HvText extends PureComponent<HvComponentProps> {
     return React.createElement(
       Text,
       props,
-      ...Render.buildChildArray(
+      ...Render.renderChildren(
         this.props.element,
-        this.props.onUpdate,
+        this.props.stylesheets,
+        this.props.onUpdate as HvComponentOnUpdate,
         {
           ...this.props.options,
           preformatted:
             this.props.element.getAttribute('preformatted') === 'true',
         },
-        this.props.stylesheets,
       ),
     );
   };

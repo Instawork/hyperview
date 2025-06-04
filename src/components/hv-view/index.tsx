@@ -173,8 +173,9 @@ export default class HvView extends PureComponent<HvComponentProps> {
       }
     }
 
-    const children = Render.buildChildArray(
+    const children = Render.renderChildren(
       this.props.element,
+      this.props.stylesheets,
       this.props.onUpdate,
       {
         ...this.props.options,
@@ -188,7 +189,6 @@ export default class HvView extends PureComponent<HvComponentProps> {
             }
           : {}),
       },
-      this.props.stylesheets,
     );
 
     /* eslint-disable react/jsx-props-no-spreading */
