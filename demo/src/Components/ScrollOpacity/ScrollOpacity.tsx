@@ -54,13 +54,16 @@ const ScrollOpacity = (props: HvComponentProps) => {
     }).start();
   }, [duration, opacity, opacityRange, position, scrollRange]);
 
-  const children = (Hyperview.renderChildren(
-    props.element,
-    props.stylesheets,
-    props.onUpdate,
-    props.options,
-  ) as unknown) as JSX.Element;
-  return <Animated.View style={[style, { opacity }]}>{children}</Animated.View>;
+  return (
+    <Animated.View style={[style, { opacity }]}>
+      <Hyperview.HvChildren
+        element={props.element}
+        onUpdate={props.onUpdate}
+        options={props.options}
+        stylesheets={props.stylesheets}
+      />
+    </Animated.View>
+  );
 };
 
 ScrollOpacity.namespaceURI = namespaceURI;
