@@ -9,6 +9,10 @@ import { isRenderableElement } from 'hyperview/src/core/utils';
 export default (props: HvComponentProps): JSX.Element | null | string => {
   // eslint-disable-next-line react/destructuring-assignment
   const { element, onUpdate, options, stylesheets } = props;
+  if (!element) {
+    return null;
+  }
+
   const { localName, namespaceURI, nodeType } = element;
   const { componentRegistry, inlineFormattingContext, preformatted } = options;
 
