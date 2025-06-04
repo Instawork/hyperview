@@ -25,7 +25,7 @@ import {
   KeyboardAwareScrollView,
   ScrollView,
 } from 'hyperview/src/core/components/scroll';
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { ATTRIBUTES } from './types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { addHref } from 'hyperview/src/core/hyper-ref';
@@ -64,7 +64,7 @@ const HvView = (props: HvComponentProps) => {
     currentOptions.current = options;
   }, [element, stylesheets, onUpdate, options]);
 
-  const getAttributes = (): Attributes => {
+  const getAttributes = useCallback((): Attributes => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return Object.values(ATTRIBUTES).reduce<Record<string, any>>(
       (attributes, name: string) => ({
@@ -73,18 +73,18 @@ const HvView = (props: HvComponentProps) => {
       }),
       {},
     );
-  };
+  }, [element]);
 
-  const hasInputFields = (): boolean => {
+  const hasInputFields = useCallback((): boolean => {
     const textFields = element.getElementsByTagNameNS(
       Namespaces.HYPERVIEW,
       'text-field',
     );
 
     return textFields.length > 0;
-  };
+  }, [element]);
 
-  const getCommonProps = (): CommonProps => {
+  const getCommonProps = useCallback((): CommonProps => {
     // TODO: fix type
     // createStyleProp returns an array of StyleSheet,
     // but it appears something wants a ViewStyle, which is not
@@ -102,57 +102,62 @@ const HvView = (props: HvComponentProps) => {
       return { style, testID: id };
     }
     return { accessibilityLabel: id, style };
-  };
+  }, [element, stylesheets, options]);
 
-  const getScrollViewProps = (
-    children: Array<React.ReactElement<HvComponentProps> | null | string>,
-  ): ScrollViewProps => {
-    const attributes = getAttributes();
-    const horizontal =
-      attributes[ATTRIBUTES.SCROLL_ORIENTATION] === 'horizontal';
-    const showScrollIndicator =
-      attributes[ATTRIBUTES.SHOWS_SCROLL_INDICATOR] !== 'false';
+  const getScrollViewProps = useCallback(
+    (
+      children: Array<React.ReactElement<HvComponentProps> | null | string>,
+    ): ScrollViewProps => {
+      const attributes = getAttributes();
+      const horizontal =
+        attributes[ATTRIBUTES.SCROLL_ORIENTATION] === 'horizontal';
+      const showScrollIndicator =
+        attributes[ATTRIBUTES.SHOWS_SCROLL_INDICATOR] !== 'false';
 
-    const contentContainerStyle = attributes[ATTRIBUTES.CONTENT_CONTAINER_STYLE]
-      ? createStyleProp(element, stylesheets, {
-          ...options,
-          styleAttr: ATTRIBUTES.CONTENT_CONTAINER_STYLE,
-        })
-      : undefined;
-
-    // Fix scrollbar rendering issue in iOS 13+
-    // https://github.com/facebook/react-native/issues/26610#issuecomment-539843444
-    const scrollIndicatorInsets =
-      Platform.OS === 'ios' && parseInt(Platform.Version, 10) >= 13
-        ? { right: 1 }
+      const contentContainerStyle = attributes[
+        ATTRIBUTES.CONTENT_CONTAINER_STYLE
+      ]
+        ? createStyleProp(element, stylesheets, {
+            ...options,
+            styleAttr: ATTRIBUTES.CONTENT_CONTAINER_STYLE,
+          })
         : undefined;
 
-    // add sticky indices
-    const stickyHeaderIndices = children.reduce<Array<number>>(
-      (acc, ele, index) => {
-        if (
-          typeof ele !== 'string' &&
-          ele?.props?.element?.getAttribute('sticky') === 'true'
-        ) {
-          return [...acc, index];
-        }
-        return acc;
-      },
-      [],
-    );
+      // Fix scrollbar rendering issue in iOS 13+
+      // https://github.com/facebook/react-native/issues/26610#issuecomment-539843444
+      const scrollIndicatorInsets =
+        Platform.OS === 'ios' && parseInt(Platform.Version, 10) >= 13
+          ? { right: 1 }
+          : undefined;
 
-    return {
-      contentContainerStyle,
-      horizontal,
-      keyboardDismissMode: Keyboard.getKeyboardDismissMode(element),
-      scrollIndicatorInsets,
-      showsHorizontalScrollIndicator: horizontal && showScrollIndicator,
-      showsVerticalScrollIndicator: !horizontal && showScrollIndicator,
-      stickyHeaderIndices,
-    };
-  };
+      // add sticky indices
+      const stickyHeaderIndices = children.reduce<Array<number>>(
+        (acc, ele, index) => {
+          if (
+            typeof ele !== 'string' &&
+            ele?.props?.element?.getAttribute('sticky') === 'true'
+          ) {
+            return [...acc, index];
+          }
+          return acc;
+        },
+        [],
+      );
 
-  const getScrollToInputAdditionalOffsetProp = (): number => {
+      return {
+        contentContainerStyle,
+        horizontal,
+        keyboardDismissMode: Keyboard.getKeyboardDismissMode(element),
+        scrollIndicatorInsets,
+        showsHorizontalScrollIndicator: horizontal && showScrollIndicator,
+        showsVerticalScrollIndicator: !horizontal && showScrollIndicator,
+        stickyHeaderIndices,
+      };
+    },
+    [element, getAttributes, stylesheets, options],
+  );
+
+  const getScrollToInputAdditionalOffsetProp = useCallback((): number => {
     const defaultOffset = 120;
     const offsetStr = getAttributes()[ATTRIBUTES.SCROLL_TO_INPUT_OFFSET];
     if (offsetStr) {
@@ -160,20 +165,23 @@ const HvView = (props: HvComponentProps) => {
       return Number.isNaN(offset) ? 0 : defaultOffset;
     }
     return defaultOffset;
-  };
+  }, [getAttributes]);
 
-  const getKeyboardAwareScrollViewProps = (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    inputFieldRefs: Array<any>,
-  ): KeyboardAwareScrollViewProps => ({
-    automaticallyAdjustContentInsets: false,
-    getTextInputRefs: () => inputFieldRefs,
-    keyboardShouldPersistTaps: 'handled',
-    scrollEventThrottle: 16,
-    scrollToInputAdditionalOffset: getScrollToInputAdditionalOffsetProp(),
-  });
+  const getKeyboardAwareScrollViewProps = useCallback(
+    (
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      inputFieldRefs: Array<any>,
+    ): KeyboardAwareScrollViewProps => ({
+      automaticallyAdjustContentInsets: false,
+      getTextInputRefs: () => inputFieldRefs,
+      keyboardShouldPersistTaps: 'handled',
+      scrollEventThrottle: 16,
+      scrollToInputAdditionalOffset: getScrollToInputAdditionalOffsetProp(),
+    }),
+    [getScrollToInputAdditionalOffsetProp],
+  );
 
-  const Content = () => {
+  const Content = useCallback(() => {
     /**
      * Useful when you want keyboard avoiding behavior in non-scrollable views.
      * Note: Android has built-in support for avoiding keyboard.
@@ -246,7 +254,17 @@ const HvView = (props: HvComponentProps) => {
     }
     return React.createElement(View, getCommonProps(), ...children);
     /* eslint-enable react/jsx-props-no-spreading */
-  };
+  }, [
+    element,
+    stylesheets,
+    onUpdate,
+    options,
+    getAttributes,
+    getCommonProps,
+    getScrollViewProps,
+    getKeyboardAwareScrollViewProps,
+    hasInputFields,
+  ]);
 
   return options?.skipHref ? (
     <Content />
