@@ -654,7 +654,11 @@ describe('buildRequest', () => {
   describe('ignored', () => {
     actions.forEach(action => {
       describe(`action:${action}`, () => {
-        const params = { url: 'url' };
+        const params = {
+          url: 'url',
+          // New actions are always modal
+          ...(action === NAV_ACTIONS.NEW && { isModal: true }),
+        };
         it('should ignore object without params', () => {
           expect(buildRequest(undefined, action, undefined)).toEqual([
             action,
