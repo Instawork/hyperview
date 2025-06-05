@@ -381,7 +381,12 @@ export const buildRequest = (
     nav,
   );
 
-  const cleanedParams: NavigationRouteParams = { ...routeParams };
+  const cleanedParams: NavigationRouteParams = {
+    ...routeParams,
+    // New actions are always modal
+    ...(action === NAV_ACTIONS.NEW && { isModal: true }),
+  };
+
   if (cleanedParams.url && isUrlFragment(cleanedParams.url)) {
     // When a fragment is used, the original url is used for the route
     // setting url to undefined will overwrite the value, so the url has to be
