@@ -1,7 +1,5 @@
 import * as Keyboard from 'hyperview/src/services/keyboard';
-import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import * as Render from 'hyperview/src/services/render';
 import type {
   Attributes,
   CommonProps,
@@ -12,50 +10,31 @@ import type {
   HvComponentOnUpdate,
   HvComponentProps,
 } from 'hyperview/src/types';
-import {
-  KeyboardAvoidingView,
-  Platform,
-  SafeAreaView,
-  View,
-  ViewStyle,
-} from 'react-native';
-import {
-  KeyboardAwareScrollView,
-  ScrollView,
-} from 'hyperview/src/core/components/scroll';
-import React, { PureComponent } from 'react';
+import { Platform, ViewStyle } from 'react-native';
 import { ATTRIBUTES } from './types';
 import { LOCAL_NAME } from 'hyperview/src/types';
+import React from 'react';
+import View from './View';
 import { addHref } from 'hyperview/src/core/hyper-ref';
 import { createStyleProp } from 'hyperview/src/services';
 
-export default class HvView extends PureComponent<HvComponentProps> {
-  static namespaceURI = Namespaces.HYPERVIEW;
+const HvView = (props: HvComponentProps) => {
+  // eslint-disable-next-line react/destructuring-assignment
+  const { element, onUpdate, options, stylesheets } = props;
 
-  static localName = LOCAL_NAME.VIEW;
-
-  static localNameAliases = [
-    LOCAL_NAME.BODY,
-    LOCAL_NAME.FORM,
-    LOCAL_NAME.HEADER,
-    LOCAL_NAME.ITEM,
-    LOCAL_NAME.ITEMS,
-    LOCAL_NAME.SECTION_TITLE,
-  ];
-
-  get attributes(): Attributes {
+  const getAttributes = (): Attributes => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return Object.values(ATTRIBUTES).reduce<Record<string, any>>(
       (attributes, name: string) => ({
         ...attributes,
-        [name]: this.props.element.getAttribute(name),
+        [name]: element.getAttribute(name),
       }),
       {},
     );
-  }
+  };
 
-  hasInputFields = (): boolean => {
-    const textFields = this.props.element.getElementsByTagNameNS(
+  const hasInputFields = (): boolean => {
+    const textFields = element.getElementsByTagNameNS(
       Namespaces.HYPERVIEW,
       'text-field',
     );
@@ -63,17 +42,17 @@ export default class HvView extends PureComponent<HvComponentProps> {
     return textFields.length > 0;
   };
 
-  getCommonProps = (): CommonProps => {
+  const getCommonProps = (): CommonProps => {
     // TODO: fix type
     // createStyleProp returns an array of StyleSheet,
     // but it appears something wants a ViewStyle, which is not
     // not an array type. Does a type need to get fixed elsewhere?
     const style = (createStyleProp(
-      this.props.element,
-      this.props.stylesheets,
-      this.props.options,
+      element,
+      stylesheets,
+      options,
     ) as unknown) as ViewStyle;
-    const id = this.props.element.getAttribute('id');
+    const id = element.getAttribute('id');
     if (!id) {
       return { style };
     }
@@ -83,19 +62,18 @@ export default class HvView extends PureComponent<HvComponentProps> {
     return { accessibilityLabel: id, style };
   };
 
-  getScrollViewProps = (
+  const getScrollViewProps = (
     children: Array<React.ReactElement<HvComponentProps> | null | string>,
   ): ScrollViewProps => {
+    const attributes = getAttributes();
     const horizontal =
-      this.attributes[ATTRIBUTES.SCROLL_ORIENTATION] === 'horizontal';
+      attributes[ATTRIBUTES.SCROLL_ORIENTATION] === 'horizontal';
     const showScrollIndicator =
-      this.attributes[ATTRIBUTES.SHOWS_SCROLL_INDICATOR] !== 'false';
+      attributes[ATTRIBUTES.SHOWS_SCROLL_INDICATOR] !== 'false';
 
-    const contentContainerStyle = this.attributes[
-      ATTRIBUTES.CONTENT_CONTAINER_STYLE
-    ]
-      ? createStyleProp(this.props.element, this.props.stylesheets, {
-          ...this.props.options,
+    const contentContainerStyle = attributes[ATTRIBUTES.CONTENT_CONTAINER_STYLE]
+      ? createStyleProp(element, stylesheets, {
+          ...options,
           styleAttr: ATTRIBUTES.CONTENT_CONTAINER_STYLE,
         })
       : undefined;
@@ -109,10 +87,10 @@ export default class HvView extends PureComponent<HvComponentProps> {
 
     // add sticky indices
     const stickyHeaderIndices = children.reduce<Array<number>>(
-      (acc, element, index) => {
+      (acc, ele, index) => {
         if (
-          typeof element !== 'string' &&
-          element?.props.element?.getAttribute?.('sticky') === 'true'
+          typeof ele !== 'string' &&
+          ele?.props.element?.getAttribute?.('sticky') === 'true'
         ) {
           return [...acc, index];
         }
@@ -124,7 +102,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
     return {
       contentContainerStyle,
       horizontal,
-      keyboardDismissMode: Keyboard.getKeyboardDismissMode(this.props.element),
+      keyboardDismissMode: Keyboard.getKeyboardDismissMode(element),
       scrollIndicatorInsets,
       showsHorizontalScrollIndicator: horizontal && showScrollIndicator,
       showsVerticalScrollIndicator: !horizontal && showScrollIndicator,
@@ -132,9 +110,9 @@ export default class HvView extends PureComponent<HvComponentProps> {
     };
   };
 
-  getScrollToInputAdditionalOffsetProp = (): number => {
+  const getScrollToInputAdditionalOffsetProp = (): number => {
     const defaultOffset = 120;
-    const offsetStr = this.attributes[ATTRIBUTES.SCROLL_TO_INPUT_OFFSET];
+    const offsetStr = getAttributes()[ATTRIBUTES.SCROLL_TO_INPUT_OFFSET];
     if (offsetStr) {
       const offset = parseInt(offsetStr, 10);
       return Number.isNaN(offset) ? 0 : defaultOffset;
@@ -142,7 +120,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
     return defaultOffset;
   };
 
-  getKeyboardAwareScrollViewProps = (
+  const getKeyboardAwareScrollViewProps = (
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     inputFieldRefs: Array<any>,
   ): KeyboardAwareScrollViewProps => ({
@@ -150,109 +128,43 @@ export default class HvView extends PureComponent<HvComponentProps> {
     getTextInputRefs: () => inputFieldRefs,
     keyboardShouldPersistTaps: 'handled',
     scrollEventThrottle: 16,
-    scrollToInputAdditionalOffset: this.getScrollToInputAdditionalOffsetProp(),
+    scrollToInputAdditionalOffset: getScrollToInputAdditionalOffsetProp(),
   });
 
-  Content = () => {
-    /**
-     * Useful when you want keyboard avoiding behavior in non-scrollable views.
-     * Note: Android has built-in support for avoiding keyboard.
-     */
-    const keyboardAvoiding =
-      this.attributes[ATTRIBUTES.AVOID_KEYBOARD] === 'true' &&
-      Platform.OS === 'ios';
+  const content = (
+    <View
+      attributes={getAttributes()}
+      element={element}
+      getCommonProps={getCommonProps}
+      getKeyboardAwareScrollViewProps={getKeyboardAwareScrollViewProps}
+      getScrollViewProps={getScrollViewProps}
+      hasInputFields={hasInputFields}
+      onUpdate={onUpdate}
+      options={options}
+      stylesheets={stylesheets}
+    />
+  );
 
-    const hasInputFields = this.hasInputFields();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const inputFieldRefs: Array<any | undefined> = [];
-    const scrollable = this.attributes[ATTRIBUTES.SCROLL] === 'true';
-    const safeArea = this.attributes[ATTRIBUTES.SAFE_AREA] === 'true';
-    if (safeArea) {
-      if (keyboardAvoiding || scrollable) {
-        Logging.warn('safe-area is incompatible with scroll or avoid-keyboard');
-      }
-    }
-
-    const children = Render.renderChildren(
-      this.props.element,
-      this.props.stylesheets,
-      this.props.onUpdate,
-      {
-        ...this.props.options,
-        ...(scrollable && hasInputFields
-          ? {
-              registerInputHandler: ref => {
-                if (ref !== null) {
-                  inputFieldRefs.push(ref);
-                }
-              },
-            }
-          : {}),
-      },
-    );
-
-    /* eslint-disable react/jsx-props-no-spreading */
-    if (scrollable) {
-      if (hasInputFields) {
-        // TODO: Replace with <HvChildren>
-        return React.createElement(
-          KeyboardAwareScrollView,
-          {
-            element: this.props.element,
-            ...this.getCommonProps(),
-            ...this.getScrollViewProps(children),
-            ...this.getKeyboardAwareScrollViewProps(inputFieldRefs),
-          },
-          ...children,
-        );
-      }
-      // TODO: Replace with <HvChildren>
-      return React.createElement(
-        ScrollView,
-        {
-          element: this.props.element,
-          ...this.getCommonProps(),
-          ...this.getScrollViewProps(children),
-        },
-        ...children,
+  return options?.skipHref
+    ? content
+    : addHref(
+        content,
+        element,
+        stylesheets,
+        onUpdate as HvComponentOnUpdate,
+        options,
       );
-    }
-    if (!keyboardAvoiding && safeArea) {
-      // TODO: Replace with <HvChildren>
-      return React.createElement(
-        SafeAreaView,
-        this.getCommonProps(),
-        ...children,
-      );
-    }
-    if (keyboardAvoiding) {
-      // TODO: Replace with <HvChildren>
-      return React.createElement(
-        KeyboardAvoidingView,
-        {
-          ...this.getCommonProps(),
-          behavior: 'position',
-        },
-        ...children,
-      );
-    }
-    // TODO: Replace with <HvChildren>
-    return React.createElement(View, this.getCommonProps(), ...children);
-    /* eslint-enable react/jsx-props-no-spreading */
-  };
+};
 
-  render() {
-    const { Content } = this;
-    return this.props.options?.skipHref ? (
-      <Content />
-    ) : (
-      addHref(
-        <Content />,
-        this.props.element,
-        this.props.stylesheets,
-        this.props.onUpdate as HvComponentOnUpdate,
-        this.props.options,
-      )
-    );
-  }
-}
+HvView.namespaceURI = Namespaces.HYPERVIEW;
+HvView.localName = LOCAL_NAME.VIEW;
+HvView.localNameAliases = [
+  LOCAL_NAME.BODY,
+  LOCAL_NAME.FORM,
+  LOCAL_NAME.HEADER,
+  LOCAL_NAME.ITEM,
+  LOCAL_NAME.ITEMS,
+  LOCAL_NAME.SECTION_TITLE,
+];
+
+export default HvView;

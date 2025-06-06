@@ -1,5 +1,11 @@
+import type {
+  DOMString,
+  HvComponentOnUpdate,
+  HvComponentOptions,
+  HvComponentProps,
+  StyleSheets,
+} from 'hyperview/src/types';
 import type { StyleProp, ViewStyle } from 'react-native';
-import type { DOMString } from 'hyperview/src/types';
 
 export const ATTRIBUTES = {
   AVOID_KEYBOARD: 'avoid-keyboard',
@@ -64,4 +70,21 @@ export type KeyboardAwareScrollViewProps = {
   keyboardShouldPersistTaps?: string | null | undefined;
   scrollEventThrottle?: number | undefined;
   scrollToInputAdditionalOffset?: number | null | undefined;
+};
+
+export type ViewProps = {
+  attributes: Attributes;
+  element: Element;
+  getCommonProps: () => CommonProps;
+  getKeyboardAwareScrollViewProps: (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    inputFieldRefs: Array<any | undefined>,
+  ) => KeyboardAwareScrollViewProps;
+  getScrollViewProps: (
+    children: Array<React.ReactElement<HvComponentProps> | null | string>,
+  ) => ScrollViewProps;
+  hasInputFields: () => boolean;
+  onUpdate: HvComponentOnUpdate;
+  options: HvComponentOptions;
+  stylesheets: StyleSheets;
 };
