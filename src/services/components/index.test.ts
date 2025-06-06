@@ -1,5 +1,6 @@
 /* eslint-disable max-classes-per-file */
 import * as Components from 'hyperview/src/services/components';
+import { DOMParser } from '@instawork/xmldom';
 import type { HvComponentProps } from 'hyperview/src/types';
 import HvView from 'hyperview/src/components/hv-view';
 import { LOCAL_NAME } from 'hyperview/src/types';
@@ -55,65 +56,87 @@ describe('Registry', () => {
   }
   const registry = new Components.Registry([Foo, Bar, Baz]);
 
+  const document = new DOMParser().parseFromString(
+    '<doc xmlns="https://hyperview.org/hyperview" />',
+  );
+
   describe('hasComponent', () => {
     it('returns true for existing component using local name', () => {
-      expect(registry.hasComponent('http://foo', 'image')).toBe(true);
+      const element = document.createElementNS('http://foo', 'image');
+      expect(registry.hasComponent(element)).toBe(true);
     });
 
     it('returns true for custom component using local name', () => {
-      expect(
-        registry.hasComponent('https://hyperview.org/hyperview', 'body'),
-      ).toBe(true);
+      const element = document.createElementNS(
+        'https://hyperview.org/hyperview',
+        'body',
+      );
+      expect(registry.hasComponent(element)).toBe(true);
     });
 
     it('returns true for custom component using alias', () => {
-      expect(registry.hasComponent('http://baz', 'baz-2')).toBe(true);
+      const element = document.createElementNS('http://baz', 'baz-2');
+      expect(registry.hasComponent(element)).toBe(true);
     });
 
     it('returns false for non-existing component', () => {
-      expect(
-        registry.hasComponent('https://hyperview.org/hyperview', 'foo'),
-      ).toBe(false);
+      const element = document.createElementNS(
+        'https://hyperview.org/hyperview',
+        'foo',
+      );
+      expect(registry.hasComponent(element)).toBe(false);
     });
 
     it('returns false for existing component with matching local name but different namespace', () => {
-      expect(registry.hasComponent('https://foo.org/hyperview', 'body')).toBe(
-        false,
+      const element = document.createElementNS(
+        'https://foo.org/hyperview',
+        'body',
       );
+      expect(registry.hasComponent(element)).toBe(false);
     });
 
     it('returns false for custom component with matching local name but different namespace', () => {
-      expect(
-        registry.hasComponent('https://hyperview.org/hyperview', 'baz'),
-      ).toBe(false);
+      const element = document.createElementNS(
+        'https://hyperview.org/hyperview',
+        'baz',
+      );
+      expect(registry.hasComponent(element)).toBe(false);
     });
   });
 
   describe('getComponent', () => {
     it('returns existing component using local name', () => {
-      expect(
-        registry.getComponent('https://hyperview.org/hyperview', 'body'),
-      ).toBe(HvView);
+      const element = document.createElementNS(
+        'https://hyperview.org/hyperview',
+        'body',
+      );
+      expect(registry.getComponent(element)).toBe(HvView);
     });
 
     it('returns custom component using local name', () => {
-      expect(registry.getComponent('http://foo', 'image')).toBe(Foo);
+      const element = document.createElementNS('http://foo', 'image');
+      expect(registry.getComponent(element)).toBe(Foo);
     });
 
     it('returns custom component using alias', () => {
-      expect(registry.getComponent('http://baz', 'baz-1')).toBe(Baz);
+      const element = document.createElementNS('http://baz', 'baz-1');
+      expect(registry.getComponent(element)).toBe(Baz);
     });
 
     it('returns undefined non-existing component', () => {
-      expect(
-        registry.getComponent('https://hyperview.org/hyperview', 'foo'),
-      ).toBe(undefined);
+      const element = document.createElementNS(
+        'https://hyperview.org/hyperview',
+        'foo',
+      );
+      expect(registry.getComponent(element)).toBe(undefined);
     });
 
     it('returns undefined for component with matching local name but different namespace', () => {
-      expect(registry.getComponent('https://foo.org/hyperview', 'body')).toBe(
-        undefined,
+      const element = document.createElementNS(
+        'https://foo.org/hyperview',
+        'body',
       );
+      expect(registry.getComponent(element)).toBe(undefined);
     });
   });
 

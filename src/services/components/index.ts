@@ -39,20 +39,17 @@ export class Registry {
     this.components = [...HYPERVIEW_COMPONENTS, ...(components || [])];
   }
 
-  getComponent(
-    namespaceURI: string,
-    localName: string,
-  ): HvComponent | undefined {
+  getComponent(element: Element): HvComponent | undefined {
     return this.components.find(
       component =>
-        component.namespaceURI === namespaceURI &&
-        (component.localName === localName ||
-          (component.localNameAliases || []).includes(localName)),
+        component.namespaceURI === element.namespaceURI &&
+        (component.localName === element.localName ||
+          (component.localNameAliases || []).includes(element.localName)),
     );
   }
 
-  hasComponent(namespaceURI: string, localName: string): boolean {
-    return this.getComponent(namespaceURI, localName) !== undefined;
+  hasComponent(element: Element): boolean {
+    return this.getComponent(element) !== undefined;
   }
 
   /**
