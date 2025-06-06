@@ -112,7 +112,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
       (acc, element, index) => {
         if (
           typeof element !== 'string' &&
-          element?.props.element?.getAttribute('sticky') === 'true'
+          element?.props.element?.getAttribute?.('sticky') === 'true'
         ) {
           return [...acc, index];
         }
@@ -176,7 +176,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
     const children = Render.renderChildren(
       this.props.element,
       this.props.stylesheets,
-      this.props.onUpdate as HvComponentOnUpdate,
+      this.props.onUpdate,
       {
         ...this.props.options,
         ...(scrollable && hasInputFields
@@ -194,6 +194,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
     /* eslint-disable react/jsx-props-no-spreading */
     if (scrollable) {
       if (hasInputFields) {
+        // TODO: Replace with <HvChildren>
         return React.createElement(
           KeyboardAwareScrollView,
           {
@@ -205,6 +206,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
           ...children,
         );
       }
+      // TODO: Replace with <HvChildren>
       return React.createElement(
         ScrollView,
         {
@@ -216,6 +218,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
       );
     }
     if (!keyboardAvoiding && safeArea) {
+      // TODO: Replace with <HvChildren>
       return React.createElement(
         SafeAreaView,
         this.getCommonProps(),
@@ -223,12 +226,17 @@ export default class HvView extends PureComponent<HvComponentProps> {
       );
     }
     if (keyboardAvoiding) {
+      // TODO: Replace with <HvChildren>
       return React.createElement(
         KeyboardAvoidingView,
-        { ...this.getCommonProps(), behavior: 'position' },
+        {
+          ...this.getCommonProps(),
+          behavior: 'position',
+        },
         ...children,
       );
     }
+    // TODO: Replace with <HvChildren>
     return React.createElement(View, this.getCommonProps(), ...children);
     /* eslint-enable react/jsx-props-no-spreading */
   };

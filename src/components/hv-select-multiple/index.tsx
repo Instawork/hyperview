@@ -10,15 +10,16 @@ import { LOCAL_NAME } from 'hyperview/src/types';
 import { View } from 'react-native';
 import { createProps } from 'hyperview/src/services';
 
-export default class HvSelectSingle extends PureComponent<HvComponentProps> {
+export default class HvSelectMultiple extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
 
-  static localName = LOCAL_NAME.SELECT_SINGLE;
+  static localName = LOCAL_NAME.SELECT_MULTIPLE;
 
   static getFormInputValues = (element: Element): Array<[string, string]> => {
+    const values: Array<[string, string]> = [];
     const name = element.getAttribute('name');
     if (!name) {
-      return [];
+      return values;
     }
     // Add each selected option to the form data
     const optionElements = element.getElementsByTagNameNS(
@@ -28,59 +29,63 @@ export default class HvSelectSingle extends PureComponent<HvComponentProps> {
     for (let i = 0; i < optionElements.length; i += 1) {
       const optionElement = optionElements.item(i);
       if (optionElement && optionElement.getAttribute('selected') === 'true') {
-        return [[name, optionElement.getAttribute('value') || '']];
+        values.push([name, optionElement.getAttribute('value') || '']);
       }
     }
-    return [];
+    return values;
   };
 
   constructor(props: HvComponentProps) {
     super(props);
-    this.onSelect = this.onSelect.bind(this);
+    this.onToggle = this.onToggle.bind(this);
   }
 
   componentDidUpdate() {
-    // NOTE(adam): we need to remove the attribute before
-    // selection, since selection will update the component.
-    if (this.props.element.hasAttribute('value')) {
-      const newValue = this.props.element.getAttribute('value');
-      this.props.element.removeAttribute('value');
-      this.onSelect(newValue);
+    // NOTE: we need to remove the attribute before
+    // (un)selecting all, since (un)selecting all will update the component.
+    if (this.props.element.hasAttribute('select-all')) {
+      this.props.element.removeAttribute('select-all');
+      this.applyToAllOptions(true);
     }
     if (this.props.element.hasAttribute('unselect-all')) {
       this.props.element.removeAttribute('unselect-all');
-      this.onSelect(null);
+      this.applyToAllOptions(false);
     }
   }
 
   /**
-   * Callback passed to children. Option components invoke this callback when selected.
-   * SingleSelect will update the XML DOM so that only the selected option is has a
-   * selected=true attribute.
+   * Callback passed to children. Option components invoke this callback when toggles.
+   * Will update the XML DOM to toggle the option with the given value.
    */
-  onSelect = (selectedValue: DOMString | null | undefined) => {
+  onToggle = (selectedValue?: DOMString | null) => {
     const newElement = this.props.element.cloneNode(true) as Element;
-    const allowDeselect = this.props.element.getAttribute('allow-deselect');
     const options = newElement.getElementsByTagNameNS(
       Namespaces.HYPERVIEW,
       'option',
     );
     for (let i = 0; i < options.length; i += 1) {
-      const opt = options.item(i);
-      if (opt) {
-        const value = opt.getAttribute('value');
-        const current = value === selectedValue;
-        if (current && allowDeselect === 'true') {
-          // when deselection is allowed and user presses the option
-          const selected = opt.getAttribute('selected') === 'true';
-          opt.setAttribute('selected', selected ? 'false' : 'true');
-        } else if (current) {
-          // when deselection is not allowed and user presses the option
-          opt.setAttribute('selected', 'true');
-        } else {
-          // untouched option
-          opt.setAttribute('selected', 'false');
+      const option = options.item(i);
+      if (option) {
+        const value = option.getAttribute('value');
+        if (value === selectedValue) {
+          const selected = option.getAttribute('selected') === 'true';
+          option.setAttribute('selected', selected ? 'false' : 'true');
         }
+      }
+    }
+    this.props.onUpdate('#', 'swap', this.props.element, { newElement });
+  };
+
+  applyToAllOptions = (selected: boolean) => {
+    const newElement = this.props.element.cloneNode(true) as Element;
+    const options = newElement.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      'option',
+    );
+    for (let i = 0; i < options.length; i += 1) {
+      const option = options.item(i);
+      if (option) {
+        option.setAttribute('selected', selected ? 'true' : 'false');
       }
     }
     this.props.onUpdate('#', 'swap', this.props.element, { newElement });
@@ -93,6 +98,8 @@ export default class HvSelectSingle extends PureComponent<HvComponentProps> {
     const props = createProps(this.props.element, this.props.stylesheets, {
       ...this.props.options,
     });
+
+    // TODO: Replace with <HvChildren>
     return React.createElement(
       View,
       props,
@@ -102,7 +109,7 @@ export default class HvSelectSingle extends PureComponent<HvComponentProps> {
         this.props.onUpdate as HvComponentOnUpdate,
         {
           ...this.props.options,
-          onSelect: this.onSelect,
+          onToggle: this.onToggle,
         },
       ),
     );

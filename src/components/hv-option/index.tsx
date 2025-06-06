@@ -82,6 +82,7 @@ export default class HvOption extends PureComponent<HvComponentProps, State> {
       outerProps.style = { flex: props.style.flex };
     }
 
+    // TODO: Replace with <HvChildren>
     return React.createElement(
       TouchableWithoutFeedback,
       outerProps,
