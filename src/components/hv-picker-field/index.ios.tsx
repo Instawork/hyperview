@@ -6,9 +6,9 @@ import type {
   StyleSheet,
 } from 'hyperview/src/types';
 import {
-  createStyleProp,
   createTestProps,
   getNameValueFormInputValues,
+  useStyleProp,
 } from 'hyperview/src/services';
 import Field from './field';
 import { LOCAL_NAME } from 'hyperview/src/types';
@@ -142,7 +142,7 @@ const HvPickerField = (props: HvComponentProps) => {
    */
   const isFocused = (): boolean => element.getAttribute('focused') === 'true';
 
-  const style: Array<StyleSheet> = createStyleProp(element, stylesheets, {
+  const style: Array<StyleSheet> = useStyleProp(element, stylesheets, {
     ...options,
     styleAttr: 'field-text-style',
   });

@@ -9,7 +9,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { TouchableWithoutFeedback, View } from 'react-native';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { createEventHandler } from 'hyperview/src/core/hyper-ref';
-import { createProps } from 'hyperview/src/services';
+import { useProps } from 'hyperview/src/services';
 
 /**
  * A component representing an option in a single-select or multiple-select list.
@@ -32,7 +32,7 @@ const HvOption = (props: HvComponentProps) => {
     pressedSelected: pressed && selected,
     selected,
   } as const;
-  const componentProps = createProps(element, stylesheets, newOptions);
+  const componentProps = useProps(element, stylesheets, newOptions);
 
   // Option renders as an outer TouchableWithoutFeedback view and inner view.
   // The outer view handles presses, the inner view handles styling.

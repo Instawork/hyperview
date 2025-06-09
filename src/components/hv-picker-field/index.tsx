@@ -6,9 +6,9 @@ import type {
   StyleSheet,
 } from 'hyperview/src/types';
 import {
-  createStyleProp,
   createTestProps,
   getNameValueFormInputValues,
+  useStyleProp,
 } from 'hyperview/src/services';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import Picker from 'hyperview/src/core/components/picker';
@@ -93,7 +93,7 @@ const HvPickerField = (props: HvComponentProps) => {
     }
   };
 
-  const style: Array<StyleSheet> = createStyleProp(element, stylesheets, {
+  const style: Array<StyleSheet> = useStyleProp(element, stylesheets, {
     ...options,
     styleAttr: 'field-text-style',
   });
@@ -107,7 +107,7 @@ const HvPickerField = (props: HvComponentProps) => {
     style.push({ color: placeholderTextColor });
   }
 
-  const fieldStyle: Array<StyleSheet> = createStyleProp(element, stylesheets, {
+  const fieldStyle: Array<StyleSheet> = useStyleProp(element, stylesheets, {
     ...options,
     styleAttr: 'field-style',
   });

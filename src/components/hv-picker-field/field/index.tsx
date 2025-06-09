@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { TouchableWithoutFeedback, View } from 'react-native';
 import FieldLabel from '../field-label';
 import type { Props } from './types';
-import { createProps } from 'hyperview/src/services';
+import { useProps } from 'hyperview/src/services';
 
 /**
  * The input field component. This is a box with text in it.
@@ -13,7 +13,7 @@ export default (props: Props) => {
   const [pressed, setPressed] = useState(false);
 
   // Create the props (including styles) for the box of the input field.
-  const viewProps = createProps(props.element, props.stylesheets, {
+  const viewProps = useProps(props.element, props.stylesheets, {
     ...props.options,
     focused: props.focused,
     pressed,

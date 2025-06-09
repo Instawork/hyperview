@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import WebView from 'hyperview/src/core/components/web-view';
-import { createProps } from 'hyperview/src/services';
+import { useProps } from 'hyperview/src/services';
 
 const HvWebView = (props: HvComponentProps) => {
   // eslint-disable-next-line react/destructuring-assignment
@@ -33,7 +33,7 @@ const HvWebView = (props: HvComponentProps) => {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const componentProps: any = createProps(element, stylesheets, options);
+  const componentProps: any = useProps(element, stylesheets, options);
   const allowsInlineMediaPlayback = componentProps[
     'allows-inline-media-playback'
   ]

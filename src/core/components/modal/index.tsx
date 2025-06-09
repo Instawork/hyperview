@@ -10,8 +10,8 @@ import ModalButton from './modal-button';
 import Overlay from './overlay';
 import type { Props } from './types';
 import type { StyleSheet as StyleSheetType } from 'hyperview/src/types';
-import { createStyleProp } from 'hyperview/src/services';
 import styles from './styles';
+import { useStyleProp } from 'hyperview/src/services';
 
 /**
  * Renders a bottom sheet with cancel/done buttons and a picker component.
@@ -30,7 +30,7 @@ export default (props: Props): JSX.Element => {
   const overlayOpacity = useRef(new Animated.Value(0)).current;
   const contentOpacity = useRef(new Animated.Value(0)).current;
 
-  const style: Array<StyleSheetType> = createStyleProp(
+  const style: Array<StyleSheetType> = useStyleProp(
     props.element,
     props.stylesheets,
     {
@@ -44,7 +44,7 @@ export default (props: Props): JSX.Element => {
   const doneLabel: string = props.element.getAttribute('done-label') || 'Done';
 
   const overlayStyle = StyleSheet.flatten(
-    createStyleProp(props.element, props.stylesheets, {
+    useStyleProp(props.element, props.stylesheets, {
       ...props.options,
       styleAttr: 'modal-overlay-style',
     }),

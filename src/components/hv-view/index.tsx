@@ -16,7 +16,7 @@ import { LOCAL_NAME } from 'hyperview/src/types';
 import React from 'react';
 import View from './View';
 import { addHref } from 'hyperview/src/core/hyper-ref';
-import { createStyleProp } from 'hyperview/src/services';
+import { useStyleProp } from 'hyperview/src/services';
 
 const HvView = (props: HvComponentProps) => {
   // eslint-disable-next-line react/destructuring-assignment
@@ -42,16 +42,17 @@ const HvView = (props: HvComponentProps) => {
     return textFields.length > 0;
   };
 
+  const style = (useStyleProp(
+    element,
+    stylesheets,
+    options,
+  ) as unknown) as ViewStyle;
+
   const getCommonProps = (): CommonProps => {
     // TODO: fix type
     // createStyleProp returns an array of StyleSheet,
     // but it appears something wants a ViewStyle, which is not
     // not an array type. Does a type need to get fixed elsewhere?
-    const style = (createStyleProp(
-      element,
-      stylesheets,
-      options,
-    ) as unknown) as ViewStyle;
     const id = element.getAttribute('id');
     if (!id) {
       return { style };
@@ -61,6 +62,11 @@ const HvView = (props: HvComponentProps) => {
     }
     return { accessibilityLabel: id, style };
   };
+
+  const containerStyle = useStyleProp(element, stylesheets, {
+    ...options,
+    styleAttr: ATTRIBUTES.CONTENT_CONTAINER_STYLE,
+  });
 
   const getScrollViewProps = (
     children: Array<React.ReactElement<HvComponentProps> | null | string>,
@@ -72,10 +78,7 @@ const HvView = (props: HvComponentProps) => {
       attributes[ATTRIBUTES.SHOWS_SCROLL_INDICATOR] !== 'false';
 
     const contentContainerStyle = attributes[ATTRIBUTES.CONTENT_CONTAINER_STYLE]
-      ? createStyleProp(element, stylesheets, {
-          ...options,
-          styleAttr: ATTRIBUTES.CONTENT_CONTAINER_STYLE,
-        })
+      ? containerStyle
       : undefined;
 
     // Fix scrollbar rendering issue in iOS 13+

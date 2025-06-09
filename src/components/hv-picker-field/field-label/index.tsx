@@ -3,7 +3,7 @@ import { StyleSheet, Text } from 'react-native';
 import type { Props } from './types';
 import React from 'react';
 import type { StyleSheet as StyleSheetType } from 'hyperview/src/types';
-import { createStyleProp } from 'hyperview/src/services';
+import { useStyleProp } from 'hyperview/src/services';
 
 /**
  * This text label of the field. Contains logic to decide how to format the value
@@ -15,7 +15,7 @@ export default (props: Props) => {
     'placeholderTextColor',
   );
   const style: StyleSheetType = StyleSheet.flatten(
-    createStyleProp(props.element, props.stylesheets, {
+    useStyleProp(props.element, props.stylesheets, {
       ...props.options,
       focused: props.focused,
       pressed: props.pressed,

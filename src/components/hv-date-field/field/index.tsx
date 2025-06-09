@@ -1,7 +1,7 @@
 import * as Contexts from 'hyperview/src/contexts';
 import React, { useState } from 'react';
 import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
-import { createProps, createStyleProp } from 'hyperview/src/services';
+import { useProps, useStyleProp } from 'hyperview/src/services';
 import FieldLabel from '../field-label';
 import type { Props } from './types';
 import type { StyleSheet as StyleSheetType } from 'hyperview/src/types';
@@ -15,7 +15,7 @@ export default (props: Props) => {
   const [pressed, setPressed] = useState(false);
 
   // Create the props (including styles) for the box of the input field.
-  const viewProps = createProps(props.element, props.stylesheets, {
+  const viewProps = useProps(props.element, props.stylesheets, {
     ...props.options,
     focused: props.focused,
     pressed,
@@ -23,7 +23,7 @@ export default (props: Props) => {
   });
 
   const labelStyle: StyleSheetType = StyleSheet.flatten(
-    createStyleProp(props.element, props.stylesheets, {
+    useStyleProp(props.element, props.stylesheets, {
       ...props.options,
       focused: props.focused,
       pressed,

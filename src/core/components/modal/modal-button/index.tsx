@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Text, TouchableWithoutFeedback, View } from 'react-native';
 import type { Props } from './types';
 import type { StyleSheet } from 'hyperview/src/types';
-import { createStyleProp } from 'hyperview/src/services';
+import { useStyleProp } from 'hyperview/src/services';
 
 /**
  * Component used to render the Cancel/Done buttons in the picker modal.
@@ -11,7 +11,7 @@ import { createStyleProp } from 'hyperview/src/services';
 export default (props: Props) => {
   const [pressed, setPressed] = useState(false);
 
-  const style: Array<StyleSheet> = createStyleProp(
+  const style: Array<StyleSheet> = useStyleProp(
     props.element,
     props.stylesheets,
     {

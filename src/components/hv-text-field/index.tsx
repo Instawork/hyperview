@@ -2,10 +2,7 @@ import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type { HvComponentProps, TextContextType } from 'hyperview/src/types';
 import React, { MutableRefObject, useCallback, useEffect, useRef } from 'react';
-import {
-  createProps,
-  getNameValueFormInputValues,
-} from 'hyperview/src/services';
+import { getNameValueFormInputValues, useProps } from 'hyperview/src/services';
 import type { ElementRef } from 'react';
 import type { KeyboardTypeOptions } from 'react-native';
 import { LOCAL_NAME } from 'hyperview/src/types';
@@ -14,6 +11,14 @@ import TinyMask from 'hyperview/src/mask';
 import debounce from 'lodash/debounce';
 
 const HvTextField = (props: HvComponentProps) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const textInputRef: MutableRefObject<TextInput | null> = useRef(
+    null as TextInput | null,
+  );
+  const elementProps = useProps(props.element, props.stylesheets, {
+    ...props.options,
+    focused: textInputRef.current?.isFocused(),
+  });
   if (props.element.getAttribute('hide') === 'true') {
     return null;
   }
@@ -65,11 +70,6 @@ const HvTextField = (props: HvComponentProps) => {
   };
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const textInputRef: MutableRefObject<TextInput | null> = useRef(
-    null as TextInput | null,
-  );
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const prevDefaultValue = useRef<string | undefined>(defaultValue);
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
@@ -80,10 +80,7 @@ const HvTextField = (props: HvComponentProps) => {
   }, [defaultValue, onChangeText]);
 
   const p = {
-    ...createProps(props.element, props.stylesheets, {
-      ...props.options,
-      focused: textInputRef.current?.isFocused(),
-    }),
+    ...elementProps,
   };
 
   return (

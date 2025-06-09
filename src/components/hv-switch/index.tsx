@@ -2,8 +2,8 @@ import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import { Platform, StyleSheet, Switch } from 'react-native';
 import {
-  createStyleProp,
   getNameValueFormInputValues,
+  useStyleProp,
 } from 'hyperview/src/services';
 import type { ColorValue } from './style-sheet';
 import type { HvComponentProps } from 'hyperview/src/types';
@@ -35,20 +35,20 @@ const HvSwitch = (props: HvComponentProps) => {
   // eslint-disable-next-line react/destructuring-assignment
   const { element, onUpdate, stylesheets } = props;
 
-  if (element.getAttribute('hide') === 'true') {
-    return null;
-  }
-
   const unselectedStyle = StyleSheet.flatten(
-    createStyleProp(element, stylesheets, {
+    useStyleProp(element, stylesheets, {
       selected: false,
     }),
   );
   const selectedStyle = StyleSheet.flatten(
-    createStyleProp(element, stylesheets, {
+    useStyleProp(element, stylesheets, {
       selected: true,
     }),
   );
+
+  if (element.getAttribute('hide') === 'true') {
+    return null;
+  }
 
   const componentProps = {
     ios_backgroundColor: unselectedStyle

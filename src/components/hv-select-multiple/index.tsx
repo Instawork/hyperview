@@ -8,7 +8,7 @@ import type {
 import React, { useCallback, useEffect } from 'react';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { View } from 'react-native';
-import { createProps } from 'hyperview/src/services';
+import { useProps } from 'hyperview/src/services';
 
 const HvSelectMultiple = (props: HvComponentProps) => {
   // eslint-disable-next-line react/destructuring-assignment
@@ -68,12 +68,13 @@ const HvSelectMultiple = (props: HvComponentProps) => {
     }
   }, [applyToAllOptions, element]);
 
+  const componentProps = useProps(element, stylesheets, {
+    ...options,
+  });
+
   if (element.getAttribute('hide') === 'true') {
     return null;
   }
-  const componentProps = createProps(element, stylesheets, {
-    ...options,
-  });
 
   // TODO: Replace with <HvChildren>
   return React.createElement(
