@@ -42,7 +42,10 @@ export default (props: Props): JSX.Element => {
   const contentOpacity = useRef(new Animated.Value(0)).current;
 
   const style: Array<StyleSheetType> = useStyleProp(element, stylesheets, {
-    ...options,
+    focused,
+    pressed,
+    pressedSelected,
+    selected,
     styleAttr: 'modal-style',
   });
 
@@ -51,7 +54,10 @@ export default (props: Props): JSX.Element => {
 
   const overlayStyle = StyleSheet.flatten(
     useStyleProp(element, stylesheets, {
-      ...options,
+      focused,
+      pressed,
+      pressedSelected,
+      selected,
       styleAttr: 'modal-overlay-style',
     }),
   );

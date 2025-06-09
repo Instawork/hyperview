@@ -21,6 +21,7 @@ import { useStyleProp } from 'hyperview/src/services';
 const HvView = (props: HvComponentProps) => {
   // eslint-disable-next-line react/destructuring-assignment
   const { element, onUpdate, options, stylesheets } = props;
+  const { focused, pressed, pressedSelected, selected, styleAttr } = options;
 
   const getAttributes = (): Attributes => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -42,11 +43,13 @@ const HvView = (props: HvComponentProps) => {
     return textFields.length > 0;
   };
 
-  const style = (useStyleProp(
-    element,
-    stylesheets,
-    options,
-  ) as unknown) as ViewStyle;
+  const style = (useStyleProp(element, stylesheets, {
+    focused,
+    pressed,
+    pressedSelected,
+    selected,
+    styleAttr,
+  }) as unknown) as ViewStyle;
 
   const getCommonProps = (): CommonProps => {
     // TODO: fix type
@@ -64,7 +67,10 @@ const HvView = (props: HvComponentProps) => {
   };
 
   const containerStyle = useStyleProp(element, stylesheets, {
-    ...options,
+    focused,
+    pressed,
+    pressedSelected,
+    selected,
     styleAttr: ATTRIBUTES.CONTENT_CONTAINER_STYLE,
   });
 

@@ -24,6 +24,7 @@ import { View } from 'react-native';
 const HvPickerField = (props: HvComponentProps) => {
   // eslint-disable-next-line react/destructuring-assignment
   const { element, onUpdate, options, stylesheets } = props;
+  const { focused, pressed, pressedSelected, selected } = options;
 
   /**
    * Returns a string representing the value in the field.
@@ -94,7 +95,10 @@ const HvPickerField = (props: HvComponentProps) => {
   };
 
   const style: Array<StyleSheet> = useStyleProp(element, stylesheets, {
-    ...options,
+    focused,
+    pressed,
+    pressedSelected,
+    selected,
     styleAttr: 'field-text-style',
   });
   const { testID, accessibilityLabel } = createTestProps(element);
@@ -108,7 +112,10 @@ const HvPickerField = (props: HvComponentProps) => {
   }
 
   const fieldStyle: Array<StyleSheet> = useStyleProp(element, stylesheets, {
-    ...options,
+    focused,
+    pressed,
+    pressedSelected,
+    selected,
     styleAttr: 'field-style',
   });
 

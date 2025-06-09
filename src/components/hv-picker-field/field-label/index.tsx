@@ -12,13 +12,15 @@ import { useStyleProp } from 'hyperview/src/services';
 export default (props: Props) => {
   // eslint-disable-next-line react/destructuring-assignment
   const { element, focused, pressed, options, stylesheets, value } = props;
+  const { pressedSelected, selected } = options;
   const placeholder = element.getAttribute('placeholder');
   const placeholderTextColor = element.getAttribute('placeholderTextColor');
   const style: StyleSheetType = StyleSheet.flatten(
     useStyleProp(element, stylesheets, {
-      ...options,
       focused,
       pressed,
+      pressedSelected,
+      selected,
       styleAttr: 'field-text-style',
     }),
   );

@@ -11,11 +11,14 @@ import { useStyleProp } from 'hyperview/src/services';
 export default (props: Props) => {
   // eslint-disable-next-line react/destructuring-assignment
   const { element, label, onPress, options, stylesheets } = props;
+  const { focused, pressedSelected, selected } = options;
   const [pressed, setPressed] = useState(false);
 
   const style: Array<StyleSheet> = useStyleProp(element, stylesheets, {
-    ...options,
+    focused,
     pressed,
+    pressedSelected,
+    selected,
     styleAttr: 'modal-text-style',
   });
 

@@ -21,6 +21,7 @@ export default (props: Props) => {
     stylesheets,
     value,
   } = props;
+  const { pressedSelected, selected } = options;
   // Styles selected based on pressed state of the field.
   const [pressed, setPressed] = useState(false);
 
@@ -34,9 +35,10 @@ export default (props: Props) => {
 
   const labelStyle: StyleSheetType = StyleSheet.flatten(
     useStyleProp(element, stylesheets, {
-      ...options,
       focused,
       pressed,
+      pressedSelected,
+      selected,
       styleAttr: 'field-text-style',
     }),
   );

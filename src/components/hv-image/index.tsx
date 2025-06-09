@@ -13,12 +13,12 @@ import { useProps } from 'hyperview/src/services';
 const HvImage = (props: HvComponentProps) => {
   // eslint-disable-next-line react/destructuring-assignment
   const { element, onUpdate, options, stylesheets } = props;
-  const { skipHref } = options || {};
+  const { screenUrl, skipHref } = options;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const imageProps: Record<string, any> = {};
   let source = element.getAttribute('source');
   if (source) {
-    source = urlParse(source, options.screenUrl, true).toString();
+    source = urlParse(source, screenUrl, true).toString();
     imageProps.source = { uri: source };
   }
   const componentProps = {

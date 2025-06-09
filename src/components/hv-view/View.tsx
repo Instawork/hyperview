@@ -26,6 +26,8 @@ export default (props: ViewProps) => {
     options,
     stylesheets,
   } = props;
+  const { focused, pressed, pressedSelected, selected, styleAttr } = options;
+
   /**
    * Useful when you want keyboard avoiding behavior in non-scrollable views.
    * Note: Android has built-in support for avoiding keyboard.
