@@ -1,19 +1,106 @@
 import * as Xml from 'hyperview/src/services/xml';
 import { DEFAULT_PRESS_OPACITY, HV_TIMEOUT_ID_ATTR } from './types';
 import type {
-  DOMString,
   HvComponentOptions,
   StyleSheet,
   StyleSheets,
 } from 'hyperview/src/types';
 import { NODE_TYPE } from 'hyperview/src/types';
 import { Platform } from 'react-native';
+import { useMemo } from 'react';
 
 /**
  * This file is currently a dumping place for every functions used accross
  * various Hyperview components.
  */
 
+type StyleRule = Record<string, unknown>;
+
+const getStyleRules = (
+  styleIds: string[],
+  stylesheet: Record<string, StyleRule>,
+  fallback?: StyleRule,
+): StyleRule[] => {
+  if (styleIds.length === 0) {
+    return [];
+  }
+  const rules = styleIds.map(styleId => stylesheet[styleId]).filter(Boolean);
+  if (rules.length > 0) {
+    return rules;
+  }
+  return fallback ? [fallback] : [];
+};
+
+export const useStyleProp = (
+  element: Element,
+  stylesheets: StyleSheets,
+  options: HvComponentOptions,
+): Array<StyleSheet> => {
+  const { styleAttr, focused, pressed, pressedSelected, selected } = options;
+
+  const styleIds = useMemo(() => {
+    const value = element.getAttribute(styleAttr || 'style');
+    if (typeof value !== 'string') {
+      return [];
+    }
+    return Xml.splitAttributeList(value);
+  }, [element, styleAttr]);
+
+  const baseStyleRules = useMemo(() => {
+    return styleIds.map(styleId => stylesheets.regular[styleId]);
+  }, [styleIds, stylesheets.regular]);
+
+  const pressedRules = useMemo(() => {
+    if (!pressed) {
+      return [];
+    }
+    return getStyleRules(styleIds, stylesheets.pressed, {
+      opacity: DEFAULT_PRESS_OPACITY,
+    });
+  }, [pressed, styleIds, stylesheets.pressed]);
+
+  const focusedRules = useMemo(() => {
+    if (!focused) {
+      return [];
+    }
+    return getStyleRules(styleIds, stylesheets.focused);
+  }, [focused, styleIds, stylesheets.focused]);
+
+  const selectedRules = useMemo(() => {
+    if (!selected) {
+      return [];
+    }
+    return getStyleRules(styleIds, stylesheets.selected);
+  }, [selected, styleIds, stylesheets.selected]);
+
+  const pressedSelectedRules = useMemo(() => {
+    if (!pressedSelected) {
+      return [];
+    }
+    return getStyleRules(styleIds, stylesheets.pressedSelected);
+  }, [pressedSelected, styleIds, stylesheets.pressedSelected]);
+
+  return useMemo(() => {
+    return [
+      ...baseStyleRules,
+      ...pressedRules,
+      ...focusedRules,
+      ...selectedRules,
+      ...pressedSelectedRules,
+    ];
+  }, [
+    baseStyleRules,
+    pressedRules,
+    focusedRules,
+    selectedRules,
+    pressedSelectedRules,
+  ]);
+};
+
+/**
+ * This is the legacy createStyleProp function. Replace implementations
+ * with useStyleProp for better performance.
+ */
 export const createStyleProp = (
   element: Element,
   stylesheets: StyleSheets,
@@ -68,23 +155,89 @@ export const createStyleProp = (
  * Sets the element's id attribute as a test id and accessibility label
  * (for testing automation purposes).
  */
-export const createTestProps = (
-  element: Element,
-): {
-  testID?: string;
-  accessibilityLabel?: string;
-} => {
-  const testProps = {};
-  const id: DOMString | null | undefined = element.getAttribute('id');
+export const createTestProps = (element: Element) => {
+  const id = element.getAttribute('id');
   if (!id) {
-    return testProps;
+    return {};
   }
-  if (Platform.OS === 'ios') {
-    return { testID: id };
-  }
-  return { accessibilityLabel: id };
+  return Platform.OS === 'ios' ? { testID: id } : { accessibilityLabel: id };
 };
 
+const ATTRIBUTE_TYPES: Record<
+  string,
+  'numeric' | 'boolean' | 'float' | 'string'
+> = {
+  adjustsFontSizeToFit: 'boolean',
+  allowFontScaling: 'boolean',
+  maxFontSizeMultiplier: 'float',
+  minimumFontScale: 'float',
+  multiline: 'boolean',
+  numberOfLines: 'numeric',
+  selectable: 'boolean',
+};
+
+const parseAttributeValue = (attr: Attr) => {
+  const type = ATTRIBUTE_TYPES[attr.name];
+  if (!type) {
+    return attr.value;
+  }
+
+  switch (type) {
+    case 'numeric':
+      return parseInt(attr.value, 10) || 0;
+    case 'boolean':
+      return attr.value === 'true';
+    case 'float':
+      return parseFloat(attr.value) || 0;
+    default:
+      return attr.value;
+  }
+};
+
+export const useProps = (
+  element: Element,
+  stylesheets: StyleSheets,
+  options: HvComponentOptions,
+) => {
+  const { attributes } = element;
+  const { focused, pressed, pressedSelected, selected, styleAttr } = options;
+
+  const style = useStyleProp(element, stylesheets, {
+    focused,
+    pressed,
+    pressedSelected,
+    selected,
+    styleAttr,
+  });
+
+  const testProps = useMemo(() => createTestProps(element), [element]);
+
+  const parsedAttributes = useMemo(() => {
+    if (!attributes) {
+      return {};
+    }
+
+    const props: Record<string, unknown> = {};
+    Array.from(attributes).forEach(attr => {
+      props[attr.name] = parseAttributeValue(attr);
+    });
+    return props;
+  }, [attributes]);
+
+  return useMemo(
+    () => ({
+      ...parsedAttributes,
+      style,
+      ...testProps,
+    }),
+    [parsedAttributes, style, testProps],
+  );
+};
+
+/**
+ * This is the legacy createProps function. Replace implementations
+ * with useProps for better performance.
+ */
 export const createProps = (
   element: Element,
   stylesheets: StyleSheets,
