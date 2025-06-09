@@ -19,33 +19,39 @@ import { useStyleProp } from 'hyperview/src/services';
  * This is used on iOS only.
  */
 export default (props: Props): JSX.Element => {
-  const [visible, setVisible] = useState(props.focused);
+  // eslint-disable-next-line react/destructuring-assignment
+  const {
+    children,
+    element,
+    focused: propsFocused,
+    onModalCancel,
+    onModalDone,
+    options,
+    stylesheets,
+  } = props;
+  const { focused, pressed, pressedSelected, selected } = options;
+  const [visible, setVisible] = useState(propsFocused);
   const [height, setHeight] = useState(0);
 
   useEffect(() => {
-    setVisible(props.focused);
-  }, [props.focused]);
+    setVisible(propsFocused);
+  }, [propsFocused]);
 
   const translateY = useRef(new Animated.Value(0)).current;
   const overlayOpacity = useRef(new Animated.Value(0)).current;
   const contentOpacity = useRef(new Animated.Value(0)).current;
 
-  const style: Array<StyleSheetType> = useStyleProp(
-    props.element,
-    props.stylesheets,
-    {
-      ...props.options,
-      styleAttr: 'modal-style',
-    },
-  );
+  const style: Array<StyleSheetType> = useStyleProp(element, stylesheets, {
+    ...options,
+    styleAttr: 'modal-style',
+  });
 
-  const cancelLabel: string =
-    props.element.getAttribute('cancel-label') || 'Cancel';
-  const doneLabel: string = props.element.getAttribute('done-label') || 'Done';
+  const cancelLabel: string = element.getAttribute('cancel-label') || 'Cancel';
+  const doneLabel: string = element.getAttribute('done-label') || 'Done';
 
   const overlayStyle = StyleSheet.flatten(
-    useStyleProp(props.element, props.stylesheets, {
-      ...props.options,
+    useStyleProp(element, stylesheets, {
+      ...options,
       styleAttr: 'modal-overlay-style',
     }),
   );
@@ -55,7 +61,7 @@ export default (props: Props): JSX.Element => {
   };
 
   const getDuration = (attribute: string, defaultValue: number) => {
-    const value = parseInt(props.element.getAttribute(attribute) || '', 10);
+    const value = parseInt(element.getAttribute(attribute) || '', 10);
     return Number.isNaN(value) || value < 0 ? defaultValue : value;
   };
 
@@ -119,12 +125,12 @@ export default (props: Props): JSX.Element => {
   };
 
   const onShow = animateOpen();
-  const onDismiss = animateClose(props.onModalCancel);
-  const onDone = animateClose(props.onModalDone);
+  const onDismiss = animateClose(onModalCancel);
+  const onDone = animateClose(onModalDone);
 
   return (
     <Modal
-      onRequestClose={props.onModalCancel}
+      onRequestClose={onModalCancel}
       onShow={onShow}
       transparent
       visible={visible}
@@ -143,21 +149,21 @@ export default (props: Props): JSX.Element => {
         <View style={style}>
           <View style={styles.actions}>
             <ModalButton
-              element={props.element}
+              element={element}
               label={cancelLabel}
               onPress={onDismiss}
-              options={props.options}
-              stylesheets={props.stylesheets}
+              options={options}
+              stylesheets={stylesheets}
             />
             <ModalButton
-              element={props.element}
+              element={element}
               label={doneLabel}
               onPress={onDone}
-              options={props.options}
-              stylesheets={props.stylesheets}
+              options={options}
+              stylesheets={stylesheets}
             />
           </View>
-          {props.children}
+          {children}
         </View>
       </Animated.View>
     </Modal>

@@ -11,21 +11,31 @@ import type { StyleSheet as StyleSheetType } from 'hyperview/src/types';
  * Tapping the box focuses the field and brings up the date picker.
  */
 export default (props: Props) => {
+  // eslint-disable-next-line react/destructuring-assignment
+  const {
+    children,
+    element,
+    focused,
+    onPress,
+    options,
+    stylesheets,
+    value,
+  } = props;
   // Styles selected based on pressed state of the field.
   const [pressed, setPressed] = useState(false);
 
   // Create the props (including styles) for the box of the input field.
-  const viewProps = useProps(props.element, props.stylesheets, {
-    ...props.options,
-    focused: props.focused,
+  const viewProps = useProps(element, stylesheets, {
+    ...options,
+    focused,
     pressed,
     styleAttr: 'field-style',
   });
 
   const labelStyle: StyleSheetType = StyleSheet.flatten(
-    useStyleProp(props.element, props.stylesheets, {
-      ...props.options,
-      focused: props.focused,
+    useStyleProp(element, stylesheets, {
+      ...options,
+      focused,
       pressed,
       styleAttr: 'field-text-style',
     }),
@@ -33,7 +43,7 @@ export default (props: Props) => {
 
   return (
     <TouchableWithoutFeedback
-      onPress={props.onPress}
+      onPress={onPress}
       onPressIn={() => setPressed(true)}
       onPressOut={() => setPressed(false)}
     >
@@ -42,16 +52,16 @@ export default (props: Props) => {
         <Contexts.DateFormatContext.Consumer>
           {formatter => (
             <FieldLabel
-              element={props.element}
-              focused={props.focused}
+              element={element}
+              focused={focused}
               formatter={formatter}
               pressed={pressed}
               style={labelStyle}
-              value={props.value}
+              value={value}
             />
           )}
         </Contexts.DateFormatContext.Consumer>
-        {props.children}
+        {children}
       </View>
     </TouchableWithoutFeedback>
   );

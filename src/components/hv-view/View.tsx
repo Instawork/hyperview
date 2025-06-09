@@ -14,54 +14,59 @@ import {
 import React from 'react';
 
 export default (props: ViewProps) => {
+  // eslint-disable-next-line react/destructuring-assignment
+  const {
+    attributes,
+    element,
+    getCommonProps,
+    getScrollViewProps,
+    getKeyboardAwareScrollViewProps,
+    hasInputFields,
+    onUpdate,
+    options,
+    stylesheets,
+  } = props;
   /**
    * Useful when you want keyboard avoiding behavior in non-scrollable views.
    * Note: Android has built-in support for avoiding keyboard.
    */
   const keyboardAvoiding =
-    props.attributes[ATTRIBUTES.AVOID_KEYBOARD] === 'true' &&
-    Platform.OS === 'ios';
+    attributes[ATTRIBUTES.AVOID_KEYBOARD] === 'true' && Platform.OS === 'ios';
 
-  const hasInputFields = props.hasInputFields();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const inputFieldRefs: Array<any | undefined> = [];
-  const scrollable = props.attributes[ATTRIBUTES.SCROLL] === 'true';
-  const safeArea = props.attributes[ATTRIBUTES.SAFE_AREA] === 'true';
+  const scrollable = attributes[ATTRIBUTES.SCROLL] === 'true';
+  const safeArea = attributes[ATTRIBUTES.SAFE_AREA] === 'true';
   if (safeArea) {
     if (keyboardAvoiding || scrollable) {
       Logging.warn('safe-area is incompatible with scroll or avoid-keyboard');
     }
   }
 
-  const children = Render.renderChildren(
-    props.element,
-    props.stylesheets,
-    props.onUpdate,
-    {
-      ...props.options,
-      ...(scrollable && hasInputFields
-        ? {
-            registerInputHandler: ref => {
-              if (ref !== null) {
-                inputFieldRefs.push(ref);
-              }
-            },
-          }
-        : {}),
-    },
-  );
+  const children = Render.renderChildren(element, stylesheets, onUpdate, {
+    ...options,
+    ...(scrollable && hasInputFields()
+      ? {
+          registerInputHandler: ref => {
+            if (ref !== null) {
+              inputFieldRefs.push(ref);
+            }
+          },
+        }
+      : {}),
+  });
 
   /* eslint-disable react/jsx-props-no-spreading */
   if (scrollable) {
-    if (hasInputFields) {
+    if (hasInputFields()) {
       // TODO: Replace with <HvChildren>
       return React.createElement(
         KeyboardAwareScrollView,
         {
-          element: props.element,
-          ...props.getCommonProps(),
-          ...props.getScrollViewProps(children),
-          ...props.getKeyboardAwareScrollViewProps(inputFieldRefs),
+          element,
+          ...getCommonProps(),
+          ...getScrollViewProps(children),
+          ...getKeyboardAwareScrollViewProps(inputFieldRefs),
         },
         ...children,
       );
@@ -70,33 +75,29 @@ export default (props: ViewProps) => {
     return React.createElement(
       ScrollView,
       {
-        element: props.element,
-        ...props.getCommonProps(),
-        ...props.getScrollViewProps(children),
+        element,
+        ...getCommonProps(),
+        ...getScrollViewProps(children),
       },
       ...children,
     );
   }
   if (!keyboardAvoiding && safeArea) {
     // TODO: Replace with <HvChildren>
-    return React.createElement(
-      SafeAreaView,
-      props.getCommonProps(),
-      ...children,
-    );
+    return React.createElement(SafeAreaView, getCommonProps(), ...children);
   }
   if (keyboardAvoiding) {
     // TODO: Replace with <HvChildren>
     return React.createElement(
       KeyboardAvoidingView,
       {
-        ...props.getCommonProps(),
+        ...getCommonProps(),
         behavior: 'position',
       },
       ...children,
     );
   }
   // TODO: Replace with <HvChildren>
-  return React.createElement(View, props.getCommonProps(), ...children);
+  return React.createElement(View, getCommonProps(), ...children);
   /* eslint-enable react/jsx-props-no-spreading */
 };

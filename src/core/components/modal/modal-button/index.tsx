@@ -9,28 +9,26 @@ import { useStyleProp } from 'hyperview/src/services';
  * Component used to render the Cancel/Done buttons in the picker modal.
  */
 export default (props: Props) => {
+  // eslint-disable-next-line react/destructuring-assignment
+  const { element, label, onPress, options, stylesheets } = props;
   const [pressed, setPressed] = useState(false);
 
-  const style: Array<StyleSheet> = useStyleProp(
-    props.element,
-    props.stylesheets,
-    {
-      ...props.options,
-      pressed,
-      styleAttr: 'modal-text-style',
-    },
-  );
+  const style: Array<StyleSheet> = useStyleProp(element, stylesheets, {
+    ...options,
+    pressed,
+    styleAttr: 'modal-text-style',
+  });
 
   return (
     <TouchableWithoutFeedback
-      onPress={props.onPress}
+      onPress={onPress}
       onPressIn={() => setPressed(true)}
       onPressOut={() => setPressed(false)}
     >
       <View>
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-        <Text style={style} {...FontScale.getFontScaleProps(props.element)}>
-          {props.label}
+        <Text style={style} {...FontScale.getFontScaleProps(element)}>
+          {label}
         </Text>
       </View>
     </TouchableWithoutFeedback>
