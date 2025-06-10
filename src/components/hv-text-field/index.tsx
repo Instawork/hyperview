@@ -2,10 +2,7 @@ import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import type { HvComponentProps, TextContextType } from 'hyperview/src/types';
 import React, { MutableRefObject, useCallback, useEffect, useRef } from 'react';
-import {
-  createProps,
-  getNameValueFormInputValues,
-} from 'hyperview/src/services';
+import { getNameValueFormInputValues, useProps } from 'hyperview/src/services';
 import type { ElementRef } from 'react';
 import type { KeyboardTypeOptions } from 'react-native';
 import { LOCAL_NAME } from 'hyperview/src/types';
@@ -14,34 +11,42 @@ import TinyMask from 'hyperview/src/mask';
 import debounce from 'lodash/debounce';
 
 const HvTextField = (props: HvComponentProps) => {
-  if (props.element.getAttribute('hide') === 'true') {
+  // eslint-disable-next-line react/destructuring-assignment
+  const { element, onUpdate, options, stylesheets } = props;
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const textInputRef: MutableRefObject<TextInput | null> = useRef(
+    null as TextInput | null,
+  );
+  const elementProps = useProps(element, stylesheets, {
+    ...options,
+    focused: textInputRef.current?.isFocused(),
+  });
+  if (element.getAttribute('hide') === 'true') {
     return null;
   }
 
   // Extract known attributes into their own variables
-  const autoFocus = props.element.getAttribute('auto-focus') === 'true';
+  const autoFocus = element.getAttribute('auto-focus') === 'true';
   const debounceTimeMs =
-    parseInt(props.element.getAttribute('debounce') || '', 10) || 0;
-  const defaultValue = props.element.getAttribute('value') || undefined;
-  const editable = props.element.getAttribute('editable') !== 'false';
+    parseInt(element.getAttribute('debounce') || '', 10) || 0;
+  const defaultValue = element.getAttribute('value') || undefined;
+  const editable = element.getAttribute('editable') !== 'false';
   const keyboardType =
-    (props.element.getAttribute('keyboard-type') as KeyboardTypeOptions) ||
-    undefined;
-  const multiline = props.element.getAttribute('multiline') === 'true';
-  const secureTextEntry = props.element.getAttribute('secure-text') === 'true';
+    (element.getAttribute('keyboard-type') as KeyboardTypeOptions) || undefined;
+  const multiline = element.getAttribute('multiline') === 'true';
+  const secureTextEntry = element.getAttribute('secure-text') === 'true';
   const textContentType =
-    (props.element.getAttribute('text-content-type') as TextContextType) ||
-    'none';
+    (element.getAttribute('text-content-type') as TextContextType) || 'none';
 
   // Handlers
   const setFocus = (focused: boolean) => {
-    const newElement = props.element.cloneNode(true) as Element;
-    props.onUpdate(null, 'swap', props.element, { newElement });
+    const newElement = element.cloneNode(true) as Element;
+    onUpdate(null, 'swap', element, { newElement });
 
     if (focused) {
-      Behaviors.trigger('focus', newElement, props.onUpdate);
+      Behaviors.trigger('focus', newElement, onUpdate);
     } else {
-      Behaviors.trigger('blur', newElement, props.onUpdate);
+      Behaviors.trigger('blur', newElement, onUpdate);
     }
   };
 
@@ -49,7 +54,7 @@ const HvTextField = (props: HvComponentProps) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks, react-hooks/exhaustive-deps
   const triggerChangeBehaviors = useCallback(
     debounce((newElement: Element) => {
-      Behaviors.trigger('change', newElement, props.onUpdate);
+      Behaviors.trigger('change', newElement, onUpdate);
     }, debounceTimeMs),
     [],
   );
@@ -57,17 +62,12 @@ const HvTextField = (props: HvComponentProps) => {
   // This handler takes care of handling the state, so it shouldn't be debounced
   // eslint-disable-next-line react-hooks/rules-of-hooks, react-hooks/exhaustive-deps
   const onChangeText = (value: string) => {
-    const formattedValue = HvTextField.getFormattedValue(props.element, value);
-    const newElement = props.element.cloneNode(true) as Element;
+    const formattedValue = HvTextField.getFormattedValue(element, value);
+    const newElement = element.cloneNode(true) as Element;
     newElement.setAttribute('value', formattedValue);
-    props.onUpdate(null, 'swap', props.element, { newElement });
+    onUpdate(null, 'swap', element, { newElement });
     triggerChangeBehaviors(newElement);
   };
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const textInputRef: MutableRefObject<TextInput | null> = useRef(
-    null as TextInput | null,
-  );
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const prevDefaultValue = useRef<string | undefined>(defaultValue);
@@ -80,10 +80,7 @@ const HvTextField = (props: HvComponentProps) => {
   }, [defaultValue, onChangeText]);
 
   const p = {
-    ...createProps(props.element, props.stylesheets, {
-      ...props.options,
-      focused: textInputRef.current?.isFocused(),
-    }),
+    ...elementProps,
   };
 
   return (
@@ -92,8 +89,8 @@ const HvTextField = (props: HvComponentProps) => {
       {...p}
       ref={(ref: ElementRef<typeof TextInput> | null) => {
         textInputRef.current = ref;
-        if (props.options?.registerInputHandler) {
-          props.options.registerInputHandler(ref);
+        if (options?.registerInputHandler) {
+          options.registerInputHandler(ref);
         }
       }}
       autoFocus={autoFocus}

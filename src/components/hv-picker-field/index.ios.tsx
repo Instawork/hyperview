@@ -1,15 +1,11 @@
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import type {
-  DOMString,
-  HvComponentProps,
-  StyleSheet,
-} from 'hyperview/src/types';
-import React, { PureComponent } from 'react';
+import type { DOMString, HvComponentProps } from 'hyperview/src/types';
+import React, { useCallback, useMemo } from 'react';
 import {
-  createStyleProp,
   createTestProps,
   getNameValueFormInputValues,
+  useStyleProp,
 } from 'hyperview/src/services';
 import Field from './field';
 import { LOCAL_NAME } from 'hyperview/src/types';
@@ -23,18 +19,38 @@ import { View } from 'react-native';
  * - On Android, the system picker is rendered inline on the screen. Pressing the picker
  *   opens a system dialog.
  */
-export default class HvPickerField extends PureComponent<HvComponentProps> {
-  static namespaceURI = Namespaces.HYPERVIEW;
+const HvPickerField = (props: HvComponentProps) => {
+  // eslint-disable-next-line react/destructuring-assignment
+  const { element, onUpdate, options, stylesheets } = props;
+  const { focused, pressed, pressedSelected, selected } = options;
 
-  static localName = LOCAL_NAME.PICKER_FIELD;
+  /**
+   * Returns a string representing the value in the field.
+   */
+  const value = useMemo((): string => element.getAttribute('value') || '', [
+    element,
+  ]);
 
-  static getFormInputValues = (element: Element): Array<[string, string]> => {
-    return getNameValueFormInputValues(element);
-  };
+  /**
+   * Returns a string representing the value in the picker.
+   */
+  const pickerValue = useMemo(
+    (): string => element.getAttribute('picker-value') || '',
+    [element],
+  );
 
-  getPickerInitialValue = (): string => {
-    const value = this.getValue();
-    const pickerItems: Element[] = this.getPickerItems();
+  const pickerItems = useMemo(
+    (): Element[] =>
+      Array.from(
+        element.getElementsByTagNameNS(
+          Namespaces.HYPERVIEW,
+          LOCAL_NAME.PICKER_ITEM,
+        ),
+      ),
+    [element],
+  );
+
+  const pickerInitialValue = useMemo((): string => {
     const valueExists = pickerItems.some(
       item => item.getAttribute('value') === value,
     );
@@ -44,177 +60,173 @@ export default class HvPickerField extends PureComponent<HvComponentProps> {
     return pickerItems.length > 0
       ? pickerItems[0].getAttribute('value') || ''
       : '';
-  };
-
-  /**
-   * Returns a string representing the value in the field.
-   */
-  getValue = (): string => this.props.element.getAttribute('value') || '';
+  }, [pickerItems, value]);
 
   /**
    * Gets the label from the picker items for the given value.
    * If the value doesn't have a picker item, returns null.
    */
-  getLabelForValue = (value: DOMString): string | null | undefined => {
-    const pickerItemElements: HTMLCollectionOf<Element> = this.props.element.getElementsByTagNameNS(
-      Namespaces.HYPERVIEW,
-      LOCAL_NAME.PICKER_ITEM,
-    );
-
-    let item: Element | null | undefined = null;
-    for (let i = 0; i < pickerItemElements.length; i += 1) {
-      const pickerItemElement:
-        | Element
-        | null
-        | undefined = pickerItemElements.item(i);
-      if (
-        pickerItemElement &&
-        pickerItemElement.getAttribute('value') === value
-      ) {
-        item = pickerItemElement;
-        break;
-      }
-    }
-    return item ? item.getAttribute('label') : null;
-  };
-
-  /**
-   * Returns a string representing the value in the picker.
-   */
-  getPickerValue = (): string =>
-    this.props.element.getAttribute('picker-value') || '';
-
-  getPickerItems = (): Element[] =>
-    Array.from(
-      this.props.element.getElementsByTagNameNS(
+  const getLabelForValue = useCallback(
+    (v: DOMString): string | null | undefined => {
+      const pickerItemElements: HTMLCollectionOf<Element> = element.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
         LOCAL_NAME.PICKER_ITEM,
-      ),
-    );
+      );
+
+      let item: Element | null | undefined = null;
+      for (let i = 0; i < pickerItemElements.length; i += 1) {
+        const pickerItemElement:
+          | Element
+          | null
+          | undefined = pickerItemElements.item(i);
+        if (
+          pickerItemElement &&
+          pickerItemElement.getAttribute('value') === v
+        ) {
+          item = pickerItemElement;
+          break;
+        }
+      }
+      return item ? item.getAttribute('label') : null;
+    },
+    [element],
+  );
 
   /**
    * Shows the picker, defaulting to the field's value.
    * If the field is not set, use the first value in the picker.
    */
-  onFieldPress = () => {
-    const newElement = this.props.element.cloneNode(true) as Element;
+  const onFieldPress = useCallback(() => {
+    const newElement = element.cloneNode(true) as Element;
     newElement.setAttribute('focused', 'true');
-    newElement.setAttribute('picker-value', this.getPickerInitialValue());
-    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
-    Behaviors.trigger('focus', newElement, this.props.onUpdate);
-  };
+    newElement.setAttribute('picker-value', pickerInitialValue);
+    onUpdate(null, 'swap', element, { newElement });
+    Behaviors.trigger('focus', newElement, onUpdate);
+  }, [element, onUpdate, pickerInitialValue]);
 
   /**
    * Hides the picker without applying the chosen value.
    */
-  onCancel = () => {
-    const newElement = this.props.element.cloneNode(true) as Element;
+  const onCancel = useCallback(() => {
+    const newElement = element.cloneNode(true) as Element;
     newElement.setAttribute('focused', 'false');
     newElement.removeAttribute('picker-value');
-    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
-    Behaviors.trigger('blur', newElement, this.props.onUpdate);
-  };
+    onUpdate(null, 'swap', element, { newElement });
+    Behaviors.trigger('blur', newElement, onUpdate);
+  }, [element, onUpdate]);
 
   /**
    * Hides the picker and applies the chosen value to the field.
    */
-  onDone = () => {
-    const pickerValue = this.getPickerValue();
-    const value = this.getValue();
-    const newElement = this.props.element.cloneNode(true) as Element;
+  const onDone = useCallback(() => {
+    const newElement = element.cloneNode(true) as Element;
     newElement.setAttribute('value', pickerValue);
     newElement.removeAttribute('picker-value');
     newElement.setAttribute('focused', 'false');
-    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
+    onUpdate(null, 'swap', element, { newElement });
     const hasChanged = value !== pickerValue;
     if (hasChanged) {
-      Behaviors.trigger('change', newElement, this.props.onUpdate);
+      Behaviors.trigger('change', newElement, onUpdate);
     }
-    Behaviors.trigger('blur', newElement, this.props.onUpdate);
-  };
+    Behaviors.trigger('blur', newElement, onUpdate);
+  }, [element, onUpdate, pickerValue, value]);
 
   /**
    * Updates the picker value while keeping the picker open.
    */
-  setPickerValue = (value: string) => {
-    const newElement = this.props.element.cloneNode(true) as Element;
-    newElement.setAttribute('picker-value', value);
-    this.props.onUpdate(null, 'swap', this.props.element, { newElement });
-  };
+  const setPickerValue = useCallback(
+    (v: string) => {
+      const newElement = element.cloneNode(true) as Element;
+      newElement.setAttribute('picker-value', v);
+      onUpdate(null, 'swap', element, { newElement });
+    },
+    [element, onUpdate],
+  );
 
   /**
    * Returns true if the field is focused (and picker is showing).
    */
-  isFocused = (): boolean =>
-    this.props.element.getAttribute('focused') === 'true';
+  const isFocused = useMemo(
+    (): boolean => element.getAttribute('focused') === 'true',
+    [element],
+  );
 
-  render() {
-    const style: Array<StyleSheet> = createStyleProp(
-      this.props.element,
-      this.props.stylesheets,
-      {
-        ...this.props.options,
-        styleAttr: 'field-text-style',
-      },
-    );
-    const { testID, accessibilityLabel } = createTestProps(this.props.element);
-    const value: DOMString | null | undefined = this.props.element.getAttribute(
-      'value',
-    );
-    const placeholderTextColor:
-      | DOMString
-      | null
-      | undefined = this.props.element.getAttribute('placeholderTextColor');
-    if ([undefined, null, ''].includes(value) && placeholderTextColor) {
-      style.push({ color: placeholderTextColor });
+  const fieldTextStyle = useStyleProp(element, stylesheets, {
+    focused,
+    pressed,
+    pressedSelected,
+    selected,
+    styleAttr: 'field-text-style',
+  });
+
+  const placeholderTextColor: DOMString | null | undefined = useMemo(
+    () => element.getAttribute('placeholderTextColor'),
+    [element],
+  );
+
+  const style = useMemo(() => {
+    if (placeholderTextColor && [undefined, null, ''].includes(value)) {
+      return { ...fieldTextStyle, color: placeholderTextColor };
     }
+    return fieldTextStyle;
+  }, [fieldTextStyle, placeholderTextColor, value]);
 
-    // Gets all of the <picker-item> elements. All picker item elements
-    // with a value and label are turned into options for the picker.
-    const children = this.getPickerItems()
-      .filter(Boolean)
-      .map((item: Element) => {
+  const { testID, accessibilityLabel } = useMemo(
+    () => createTestProps(element),
+    [element],
+  );
+
+  // Gets all of the <picker-item> elements. All picker item elements
+  // with a value and label are turned into options for the picker.
+  const children = useMemo(
+    () =>
+      pickerItems.filter(Boolean).map((item: Element) => {
         const l: DOMString | null | undefined = item.getAttribute('label');
         const v: DOMString | null | undefined = item.getAttribute('value');
         if (!l || typeof v !== 'string') {
           return null;
         }
         return <Picker.Item key={l + v} label={l} value={v} />;
-      });
+      }),
+    [pickerItems],
+  );
 
-    const focused = this.props.element.getAttribute('focused') === 'true';
+  return (
+    <Field
+      element={element}
+      focused={isFocused}
+      onPress={onFieldPress}
+      options={options}
+      stylesheets={stylesheets}
+      value={getLabelForValue(value)}
+    >
+      {isFocused ? (
+        <Modal
+          element={element}
+          focused={isFocused}
+          onModalCancel={onCancel}
+          onModalDone={onDone}
+          onUpdate={onUpdate}
+          options={options}
+          stylesheets={stylesheets}
+        >
+          <View accessibilityLabel={accessibilityLabel} testID={testID}>
+            <Picker
+              onValueChange={setPickerValue}
+              selectedValue={pickerValue}
+              style={style}
+            >
+              {children}
+            </Picker>
+          </View>
+        </Modal>
+      ) : null}
+    </Field>
+  );
+};
 
-    return (
-      <Field
-        element={this.props.element}
-        focused={focused}
-        onPress={this.onFieldPress}
-        options={this.props.options}
-        stylesheets={this.props.stylesheets}
-        value={this.getLabelForValue(this.getValue())}
-      >
-        {focused ? (
-          <Modal
-            element={this.props.element}
-            focused={focused}
-            onModalCancel={this.onCancel}
-            onModalDone={this.onDone}
-            onUpdate={this.props.onUpdate}
-            options={this.props.options}
-            stylesheets={this.props.stylesheets}
-          >
-            <View accessibilityLabel={accessibilityLabel} testID={testID}>
-              <Picker
-                onValueChange={this.setPickerValue}
-                selectedValue={this.getPickerValue()}
-                style={style}
-              >
-                {children}
-              </Picker>
-            </View>
-          </Modal>
-        ) : null}
-      </Field>
-    );
-  }
-}
+HvPickerField.namespaceURI = Namespaces.HYPERVIEW;
+HvPickerField.localName = LOCAL_NAME.PICKER_FIELD;
+HvPickerField.getFormInputValues = getNameValueFormInputValues;
+
+export default HvPickerField;

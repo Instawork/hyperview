@@ -4,55 +4,50 @@ import type {
   HvComponentOnUpdate,
   HvComponentProps,
 } from 'hyperview/src/types';
-import React, { PureComponent } from 'react';
+import React, { useMemo } from 'react';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { Text } from 'react-native';
 import { addHref } from 'hyperview/src/core/hyper-ref';
-import { createProps } from 'hyperview/src/services';
+import { useProps } from 'hyperview/src/services';
 
-export default class HvText extends PureComponent<HvComponentProps> {
-  static namespaceURI = Namespaces.HYPERVIEW;
+const HvText = (props: HvComponentProps) => {
+  // eslint-disable-next-line react/destructuring-assignment
+  const { element, onUpdate, options, stylesheets } = props;
 
-  static localName = LOCAL_NAME.TEXT;
+  const componentProps = useProps(element, stylesheets, options);
 
-  Component = () => {
-    const props = createProps(
-      this.props.element,
-      this.props.stylesheets,
-      this.props.options,
-    );
-
-    // TODO: Replace with <HvChildren>
-    return React.createElement(
-      Text,
-      props,
-      ...Render.renderChildren(
-        this.props.element,
-        this.props.stylesheets,
-        this.props.onUpdate as HvComponentOnUpdate,
-        {
-          ...this.props.options,
-          preformatted:
-            this.props.element.getAttribute('preformatted') === 'true',
-        },
+  // TODO: Replace with <HvChildren>
+  const component = useMemo(
+    () =>
+      React.createElement(
+        Text,
+        componentProps,
+        ...Render.renderChildren(
+          element,
+          stylesheets,
+          onUpdate as HvComponentOnUpdate,
+          {
+            ...options,
+            preformatted: element.getAttribute('preformatted') === 'true',
+          },
+        ),
       ),
-    );
-  };
+    [componentProps, element, onUpdate, options, stylesheets],
+  );
 
-  render() {
-    const { Component } = this;
-    const { skipHref } = this.props.options || {};
+  const { skipHref } = options || {};
+  return skipHref
+    ? component
+    : addHref(
+        component,
+        element,
+        stylesheets,
+        onUpdate as HvComponentOnUpdate,
+        options,
+      );
+};
 
-    return skipHref ? (
-      <Component />
-    ) : (
-      addHref(
-        <Component />,
-        this.props.element,
-        this.props.stylesheets,
-        this.props.onUpdate as HvComponentOnUpdate,
-        this.props.options,
-      )
-    );
-  }
-}
+HvText.namespaceURI = Namespaces.HYPERVIEW;
+HvText.localName = LOCAL_NAME.TEXT;
+
+export default HvText;
