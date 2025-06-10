@@ -4,8 +4,8 @@ import type {
   HvComponentOnUpdate,
   HvComponentProps,
 } from 'hyperview/src/types';
+import React, { useMemo } from 'react';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import React from 'react';
 import { Text } from 'react-native';
 import { addHref } from 'hyperview/src/core/hyper-ref';
 import { useProps } from 'hyperview/src/services';
@@ -17,18 +17,22 @@ const HvText = (props: HvComponentProps) => {
   const componentProps = useProps(element, stylesheets, options);
 
   // TODO: Replace with <HvChildren>
-  const component = React.createElement(
-    Text,
-    componentProps,
-    ...Render.renderChildren(
-      element,
-      stylesheets,
-      onUpdate as HvComponentOnUpdate,
-      {
-        ...options,
-        preformatted: element.getAttribute('preformatted') === 'true',
-      },
-    ),
+  const component = useMemo(
+    () =>
+      React.createElement(
+        Text,
+        componentProps,
+        ...Render.renderChildren(
+          element,
+          stylesheets,
+          onUpdate as HvComponentOnUpdate,
+          {
+            ...options,
+            preformatted: element.getAttribute('preformatted') === 'true',
+          },
+        ),
+      ),
+    [componentProps, element, onUpdate, options, stylesheets],
   );
 
   const { skipHref } = options || {};

@@ -5,7 +5,7 @@ import type {
   HvComponentOnUpdate,
   HvComponentProps,
 } from 'hyperview/src/types';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { View } from 'react-native';
 import { useProps } from 'hyperview/src/services';
@@ -18,24 +18,27 @@ const HvSelectMultiple = (props: HvComponentProps) => {
    * Callback passed to children. Option components invoke this callback when toggles.
    * Will update the XML DOM to toggle the option with the given value.
    */
-  const onToggle = (selectedValue?: DOMString | null) => {
-    const newElement = element.cloneNode(true) as Element;
-    const opts = newElement.getElementsByTagNameNS(
-      Namespaces.HYPERVIEW,
-      'option',
-    );
-    for (let i = 0; i < opts.length; i += 1) {
-      const option = opts.item(i);
-      if (option) {
-        const value = option.getAttribute('value');
-        if (value === selectedValue) {
-          const selected = option.getAttribute('selected') === 'true';
-          option.setAttribute('selected', selected ? 'false' : 'true');
+  const onToggle = useCallback(
+    (selectedValue?: DOMString | null) => {
+      const newElement = element.cloneNode(true) as Element;
+      const opts = newElement.getElementsByTagNameNS(
+        Namespaces.HYPERVIEW,
+        'option',
+      );
+      for (let i = 0; i < opts.length; i += 1) {
+        const option = opts.item(i);
+        if (option) {
+          const value = option.getAttribute('value');
+          if (value === selectedValue) {
+            const selected = option.getAttribute('selected') === 'true';
+            option.setAttribute('selected', selected ? 'false' : 'true');
+          }
         }
       }
-    }
-    onUpdate('#', 'swap', element, { newElement });
-  };
+      onUpdate('#', 'swap', element, { newElement });
+    },
+    [element, onUpdate],
+  );
 
   const applyToAllOptions = useCallback(
     (selected: boolean) => {
@@ -72,15 +75,9 @@ const HvSelectMultiple = (props: HvComponentProps) => {
     ...options,
   });
 
-  if (element.getAttribute('hide') === 'true') {
-    return null;
-  }
-
   // TODO: Replace with <HvChildren>
-  return React.createElement(
-    View,
-    componentProps,
-    ...Render.renderChildren(
+  const children = useMemo(() => {
+    return Render.renderChildren(
       element,
       stylesheets,
       onUpdate as HvComponentOnUpdate,
@@ -88,8 +85,18 @@ const HvSelectMultiple = (props: HvComponentProps) => {
         ...options,
         onToggle,
       },
-    ),
-  );
+    );
+  }, [element, onUpdate, options, stylesheets, onToggle]);
+
+  const view = useMemo(() => {
+    return React.createElement(View, componentProps, ...children);
+  }, [componentProps, children]);
+
+  if (element.getAttribute('hide') === 'true') {
+    return null;
+  }
+
+  return view;
 };
 
 HvSelectMultiple.namespaceURI = Namespaces.HYPERVIEW;

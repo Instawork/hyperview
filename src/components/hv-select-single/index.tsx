@@ -5,7 +5,7 @@ import type {
   HvComponentOnUpdate,
   HvComponentProps,
 } from 'hyperview/src/types';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { View } from 'react-native';
 import { useProps } from 'hyperview/src/services';
@@ -13,6 +13,10 @@ import { useProps } from 'hyperview/src/services';
 const HvSelectSingle = (props: HvComponentProps) => {
   // eslint-disable-next-line react/destructuring-assignment
   const { element, onUpdate, options, stylesheets } = props;
+
+  const hide = useMemo(() => element.getAttribute('hide') === 'true', [
+    element,
+  ]);
 
   /**
    * Callback passed to children. Option components invoke this callback when selected.
@@ -68,15 +72,9 @@ const HvSelectSingle = (props: HvComponentProps) => {
     ...options,
   });
 
-  if (element.getAttribute('hide') === 'true') {
-    return null;
-  }
-
   // TODO: Replace with <HvChildren>
-  return React.createElement(
-    View,
-    componentProps,
-    ...Render.renderChildren(
+  const children = useMemo(() => {
+    return Render.renderChildren(
       element,
       stylesheets,
       onUpdate as HvComponentOnUpdate,
@@ -84,8 +82,18 @@ const HvSelectSingle = (props: HvComponentProps) => {
         ...options,
         onSelect,
       },
-    ),
-  );
+    );
+  }, [element, onUpdate, options, stylesheets, onSelect]);
+
+  const view = useMemo(() => {
+    return React.createElement(View, componentProps, ...children);
+  }, [componentProps, children]);
+
+  if (hide) {
+    return null;
+  }
+
+  return view;
 };
 
 HvSelectSingle.namespaceURI = Namespaces.HYPERVIEW;

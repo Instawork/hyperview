@@ -3,9 +3,9 @@ import type {
   HvComponentOnUpdate,
   HvComponentProps,
 } from 'hyperview/src/types';
-import { Image, ImageProps } from 'react-native';
+import React, { useMemo } from 'react';
+import { Image } from 'react-native';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import React from 'react';
 import { addHref } from 'hyperview/src/core/hyper-ref';
 import urlParse from 'url-parse';
 import { useProps } from 'hyperview/src/services';
@@ -14,18 +14,21 @@ const HvImage = (props: HvComponentProps) => {
   // eslint-disable-next-line react/destructuring-assignment
   const { element, onUpdate, options, stylesheets } = props;
   const { screenUrl, skipHref } = options;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const imageProps: Record<string, any> = {};
-  let source = element.getAttribute('source');
-  if (source) {
-    source = urlParse(source, screenUrl, true).toString();
-    imageProps.source = { uri: source };
-  }
-  const componentProps = {
-    ...useProps(element, stylesheets, options),
-    ...imageProps,
-  } as ImageProps;
-  const component = React.createElement(Image, componentProps);
+  const baseProps = useProps(element, stylesheets, options);
+  const source = useMemo(() => element.getAttribute('source'), [element]);
+  const componentProps = useMemo(() => {
+    if (!source) {
+      return baseProps;
+    }
+    return {
+      ...baseProps,
+      source: { uri: urlParse(source, screenUrl, true).toString() },
+    };
+  }, [baseProps, screenUrl, source]);
+
+  const component = useMemo(() => React.createElement(Image, componentProps), [
+    componentProps,
+  ]);
   return skipHref
     ? component
     : addHref(

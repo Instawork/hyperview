@@ -5,7 +5,13 @@ import type {
   HvComponentOnUpdate,
   HvComponentProps,
 } from 'hyperview/src/types';
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { TouchableWithoutFeedback, View } from 'react-native';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { createEventHandler } from 'hyperview/src/core/hyper-ref';
@@ -20,44 +26,74 @@ const HvOption = (props: HvComponentProps) => {
   const { element, onUpdate, options, stylesheets } = props;
   const [pressed, setPressed] = useState(false);
   const { onSelect, onToggle } = options;
-  const value = element.getAttribute('value');
-  const selected = element.getAttribute('selected') === 'true';
+  const value = useMemo(() => element.getAttribute('value'), [element]);
+  const selected = useMemo(() => element.getAttribute('selected') === 'true', [
+    element,
+  ]);
   const prevSelected = useRef(selected);
 
   // Updates options with pressed/selected state, so that child element can render
   // using the appropriate modifier styles.
-  const newOptions = {
-    ...options,
-    pressed,
-    pressedSelected: pressed && selected,
-    selected,
-  } as const;
+  const newOptions = useMemo(() => {
+    return {
+      ...options,
+      pressed,
+      pressedSelected: pressed && selected,
+      selected,
+    } as const;
+  }, [options, pressed, selected]);
+
   const componentProps = useProps(element, stylesheets, newOptions);
+
+  const flex = useMemo(() => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore TODO: fix this
+    return componentProps.style?.flex;
+  }, [
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore TODO: fix this
+    componentProps.style?.flex,
+  ]);
+
+  const handlePress = useCallback(() => {
+    if (onSelect) {
+      // Updates the DOM state, causing this element to re-render as selected.
+      // Used in select-single context.
+      onSelect(value);
+    }
+    if (onToggle) {
+      // Updates the DOM state, toggling this element.
+      // Used in select-multiple context.
+      onToggle(value);
+    }
+  }, [onSelect, onToggle, value]);
+
+  const handlePressIn = useCallback(() => setPressed(true), []);
+  const handlePressOut = useCallback(() => setPressed(false), []);
 
   // Option renders as an outer TouchableWithoutFeedback view and inner view.
   // The outer view handles presses, the inner view handles styling.
-  const outerProps = {
-    onPress: createEventHandler(() => {
-      if (onSelect) {
-        // Updates the DOM state, causing this element to re-render as selected.
-        // Used in select-single context.
-        onSelect(value);
-      }
-      if (onToggle) {
-        // Updates the DOM state, toggling this element.
-        // Used in select-multiple context.
-        onToggle(value);
-      }
-    }, true),
-    onPressIn: createEventHandler(() => setPressed(true)),
-    onPressOut: createEventHandler(() => setPressed(false)),
-    style: {},
-  };
-  if (componentProps.style && componentProps.style.flex) {
-    // Flex is a style that needs to be lifted from the inner component to the outer
-    // component to ensure proper layout.
-    outerProps.style = { flex: componentProps.style.flex };
-  }
+  const outerProps = useMemo(() => {
+    return {
+      onPress: createEventHandler(handlePress, true),
+      onPressIn: createEventHandler(handlePressIn),
+      onPressOut: createEventHandler(handlePressOut),
+
+      // Flex is a style that needs to be lifted from the inner component to the outer
+      // component to ensure proper layout.
+      style: flex ? { flex } : {},
+    };
+  }, [flex, handlePress, handlePressIn, handlePressOut]);
+
+  // TODO: Replace with <HvChildren>
+  const children = useMemo(() => {
+    return Render.renderChildren(
+      element,
+      stylesheets,
+      onUpdate as HvComponentOnUpdate,
+      newOptions,
+    );
+  }, [element, newOptions, onUpdate, stylesheets]);
 
   useEffect(() => {
     if (selected && !prevSelected.current) {
@@ -70,20 +106,13 @@ const HvOption = (props: HvComponentProps) => {
     prevSelected.current = selected;
   }, [element, onUpdate, selected]);
 
-  // TODO: Replace with <HvChildren>
-  return React.createElement(
-    TouchableWithoutFeedback,
-    outerProps,
-    React.createElement(
-      View,
-      componentProps,
-      ...Render.renderChildren(
-        element,
-        stylesheets,
-        onUpdate as HvComponentOnUpdate,
-        newOptions,
-      ),
-    ),
+  const view = useMemo(() => {
+    return React.createElement(View, componentProps, ...children);
+  }, [componentProps, children]);
+
+  return useMemo(
+    () => React.createElement(TouchableWithoutFeedback, outerProps, view),
+    [outerProps, view],
   );
 };
 
