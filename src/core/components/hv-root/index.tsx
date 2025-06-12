@@ -27,6 +27,7 @@ import {
 import React, { PureComponent } from 'react';
 import HvRoute from 'hyperview/src/core/components/hv-route';
 import { Linking } from 'react-native';
+import { XMLSerializer } from '@instawork/xmldom';
 import { XNetworkRetryAction } from 'hyperview/src/services/dom/types';
 
 /**
@@ -488,8 +489,19 @@ export default class Hyperview extends PureComponent<Types.Props> {
         onUpdateCallbacks.getDoc(),
         behaviorElement,
       );
+
       if (targetElement) {
         Services.setTimeoutId(targetElement, timeoutId.toString());
+      } else {
+        // Warn developers if the behavior element is not found
+        Logging.error(
+          `Cannot find a behavior element to perform "${action}". It may be missing an id.`,
+          Logging.deferredToString(() => {
+            return new XMLSerializer().serializeToString(
+              behaviorElement as Element,
+            );
+          }),
+        );
       }
     } else {
       // If there's no delay, fetch immediately and update the doc when done.
