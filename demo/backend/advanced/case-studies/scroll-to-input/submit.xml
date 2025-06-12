@@ -1,0 +1,18 @@
+<form
+  id="myScrollForm"
+  scroll="true"
+  xmlns="https://hyperview.org/hyperview"
+  scroll-to-input-offset="512"
+>
+  <view style="form-group">
+    <text style="label">Label line</text>
+    <text-field
+      name="data"
+      placeholder="Placeholder"
+      placeholderTextColor="#8D9494"
+      style="input"
+      value=""
+    />
+  </view>
+  <text style="submit">Saved!</text>
+</form>

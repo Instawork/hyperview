@@ -111,9 +111,9 @@ An attribute indicating the direction in which the view will scroll.
 
 #### `scroll-to-input-offset`
 
-| Type   | Required                |
-| ------ | ----------------------- |
-| number | No (defauls to **120**) |
+| Type   | Required                 |
+| ------ | ------------------------ |
+| number | No (defaults to **120**) |
 
 An attribute defining an additional scroll offset to be applied to the view, when a `<text-field>` is focused. Only valid in combination with attribute `scroll` set to `"true"`.
 

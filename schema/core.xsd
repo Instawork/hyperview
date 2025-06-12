@@ -456,6 +456,7 @@
     <xs:attribute name="safe-area" type="xs:boolean" />
     <xs:attribute name="value" type="xs:string" />
     <xs:attribute name="sticky" type="xs:boolean" />
+    <xs:attribute name="scroll-to-input-offset" type="xs:nonNegativeInteger" />
     <xs:attributeGroup ref="hv:behaviorAttributes" />
     <xs:attributeGroup ref="hv:scrollAttributes" />
   </xs:attributeGroup>

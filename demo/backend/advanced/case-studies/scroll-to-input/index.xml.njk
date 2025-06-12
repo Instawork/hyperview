@@ -1,0 +1,44 @@
+---
+permalink: "/advanced/case-studies/scroll-to-input/index.xml"
+tags: "Advanced/Case Studies"
+hv_title: "Scroll to Input Offset"
+hv_button_behavior: "back"
+---
+{% extends 'templates/base.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block styles %}
+  {% include './_styles.xml.njk' %}
+{% endblock %}
+
+{% block container %}
+  <form id="myScrollForm" scroll="true" scroll-to-input-offset="450">
+    {{ description('Scroll to input offset is a property that can be used to scroll to an input field when it is focused.') }}
+    <view style="spacer" />
+    <view style="spacer" />
+    <view style="form-group">
+      <text style="label">Label line</text>
+      <text-field
+        name="data"
+        placeholder="Placeholder"
+        placeholderTextColor="#8D9494"
+        style="input"
+      />
+    </view>
+    <text
+      action="replace"
+      href="/hyperview/public/advanced/case-studies/scroll-to-input/submit.xml"
+      show-during-load="mySpinner"
+      style="submit"
+      target="myScrollForm"
+    >
+      Submit
+    </text>
+    <view style="spacer" />
+    <view style="spacer" />
+    <view style="spacer" />
+    <view style="spacer" />
+    {{ description('Bottom of the form') }}
+  </form>
+  <spinner id="mySpinner" hide="true" />
+{% endblock %}
