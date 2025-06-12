@@ -137,7 +137,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
     const offsetStr = this.attributes[ATTRIBUTES.SCROLL_TO_INPUT_OFFSET];
     if (offsetStr) {
       const offset = parseInt(offsetStr, 10);
-      return Number.isNaN(offset) ? 0 : defaultOffset;
+      return Number.isNaN(offset) ? defaultOffset : offset;
     }
     return defaultOffset;
   };
