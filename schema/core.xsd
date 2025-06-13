@@ -42,6 +42,7 @@
       <xs:enumeration value="on-event" />
       <xs:enumeration value="change" />
       <xs:enumeration value="load-stale-error" />
+      <xs:enumeration value="unload" />
     </xs:restriction>
   </xs:simpleType>
 

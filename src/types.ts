@@ -274,6 +274,7 @@ export const TRIGGERS = Object.freeze({
   PRESS_OUT: 'pressOut',
   REFRESH: 'refresh',
   SELECT: 'select',
+  UNLOAD: 'unload',
   VISIBLE: 'visible',
 });
 
