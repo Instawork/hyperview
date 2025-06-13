@@ -9,7 +9,7 @@ import React, { PureComponent } from 'react';
 import { TouchableWithoutFeedback, View } from 'react-native';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { State } from './types';
-import { createEventHandler } from 'hyperview/src/core/components/hyper-ref';
+import { createEventHandler } from 'hyperview/src/core/utils';
 import { createProps } from 'hyperview/src/services';
 
 /**

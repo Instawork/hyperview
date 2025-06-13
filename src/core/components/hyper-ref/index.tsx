@@ -27,24 +27,8 @@ import { ScrollView } from 'hyperview/src/core/components/scroll';
 import VisibilityDetectingView from './VisibilityDetectingView';
 import { XMLSerializer } from '@instawork/xmldom';
 import { X_RESPONSE_STALE_REASON } from 'hyperview/src/services/dom/types';
+import { createEventHandler } from 'hyperview/src/core/utils';
 import { createTestProps } from 'hyperview/src/services';
-
-/**
- * Wrapper to handle UI events
- * Stop propagation and prevent default client behavior
- * This prevents clicks on various elements to trigger browser navigation
- * when using Hyperview for web.
- */
-export const createEventHandler = (
-  handler: () => void,
-  preventDefault = false,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): ((event?: any) => void) => event => {
-  if (preventDefault) {
-    event?.preventDefault();
-  }
-  handler();
-};
 
 /**
  * Component that handles dispatching behaviors based on the appropriate
