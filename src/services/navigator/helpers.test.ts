@@ -1,6 +1,6 @@
 import * as DomErrors from 'hyperview/src/services/dom/errors';
 import * as Errors from './errors';
-import * as Namespaces from '../namespaces';
+import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Types from './types';
 import { ID_CARD, ID_MODAL } from './types';
 import {
