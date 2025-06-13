@@ -19,8 +19,8 @@ import type { ScrollParams, State } from './types';
 import { createTestProps, getAncestorByTagName } from 'hyperview/src/services';
 import { DOMParser } from '@instawork/xmldom';
 import type { ElementRef } from 'react';
+import { FlatList } from 'hyperview/src/core/components/scroll';
 import HvElement from 'hyperview/src/core/components/hv-element';
-import { SectionList } from 'hyperview/src/core/components/scroll';
 
 const getSectionIndex = (
   sectionTitle: Element,
@@ -72,13 +72,13 @@ export default class HvSectionList extends PureComponent<
 
   parser: DOMParser = new DOMParser();
 
-  ref: ElementRef<typeof SectionList> | null = null;
+  ref: ElementRef<typeof FlatList> | null = null;
 
   state: State = {
     refreshing: false,
   };
 
-  onRef = (ref: ElementRef<typeof SectionList> | null) => {
+  onRef = (ref: ElementRef<typeof FlatList> | null) => {
     this.ref = ref;
   };
 
@@ -184,7 +184,7 @@ export default class HvSectionList extends PureComponent<
 
       const params: ScrollParams = {
         animated,
-        itemIndex: itemIndex + 1,
+        index: itemIndex + 1,
         sectionIndex,
       };
       if (typeof viewOffset === 'number') {
@@ -195,7 +195,7 @@ export default class HvSectionList extends PureComponent<
         params.viewPosition = viewPosition;
       }
 
-      this.ref?.scrollToLocation(params);
+      this.ref?.scrollToIndex(params);
     } else {
       // eslint-disable-next-line max-len
       // No parent section? Check new section-list format, where items are nested under the section-list
@@ -222,7 +222,7 @@ export default class HvSectionList extends PureComponent<
       }
       const params: ScrollParams = {
         animated,
-        itemIndex,
+        index: itemIndex,
         sectionIndex,
       };
       if (viewOffset) {
@@ -231,7 +231,7 @@ export default class HvSectionList extends PureComponent<
       if (viewPosition) {
         params.viewPosition = viewPosition;
       }
-      this.ref?.scrollToLocation(params);
+      this.ref?.scrollToIndex(params);
     }
   };
 
@@ -280,6 +280,18 @@ export default class HvSectionList extends PureComponent<
     });
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  renderListItem = (item: any) => {
+    return (
+      <HvElement
+        element={item.item as Element}
+        onUpdate={this.onUpdate}
+        options={this.props.options}
+        stylesheets={this.props.stylesheets}
+      />
+    );
+  };
+
   render() {
     const styleAttr = this.props.element.getAttribute('style');
     const style = styleAttr
@@ -309,33 +321,19 @@ export default class HvSectionList extends PureComponent<
 
     addNodes(this.props.element);
 
-    let items = [];
-    let titleElement = null;
-    const sections: { data: Element[]; title: Element | null }[] = [];
+    const data: Element[] = [];
+    const headerIndeces: number[] = [];
 
     for (let j = 0; j < flattened.length; j += 1) {
       const sectionElement = flattened[j];
       if (sectionElement) {
         if (sectionElement.nodeName === LOCAL_NAME.ITEM) {
-          items.push(sectionElement);
+          data.push(sectionElement);
         } else if (sectionElement.nodeName === LOCAL_NAME.SECTION_TITLE) {
-          if (items.length > 0) {
-            sections.push({
-              data: items,
-              title: titleElement,
-            });
-            items = [];
-          }
-          titleElement = sectionElement;
+          headerIndeces.push(j);
+          data.push(sectionElement);
         }
       }
-    }
-
-    if (items.length > 0) {
-      sections.push({
-        data: items,
-        title: titleElement,
-      });
     }
 
     // Fix scrollbar rendering issue in iOS 13+
@@ -354,9 +352,10 @@ export default class HvSectionList extends PureComponent<
           const hasRefreshTrigger =
             this.props.element.getAttribute('trigger') === 'refresh';
           return (
-            <SectionList
+            <FlatList
               ref={this.onRef}
               accessibilityLabel={accessibilityLabel}
+              data={data}
               element={this.props.element}
               keyboardDismissMode={Keyboard.getKeyboardDismissMode(
                 this.props.element,
@@ -375,27 +374,9 @@ export default class HvSectionList extends PureComponent<
                 ) : undefined
               }
               removeClippedSubviews={false}
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              renderItem={({ item }: any): any => (
-                <HvElement
-                  element={item as Element}
-                  onUpdate={this.onUpdate}
-                  options={this.props.options}
-                  stylesheets={this.props.stylesheets}
-                />
-              )}
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              renderSectionHeader={({ section: { title } }: any): any => (
-                <HvElement
-                  element={title as Element}
-                  onUpdate={this.onUpdate}
-                  options={this.props.options}
-                  stylesheets={this.props.stylesheets}
-                />
-              )}
+              renderItem={this.renderListItem}
               scrollIndicatorInsets={scrollIndicatorInsets}
-              sections={sections}
-              stickySectionHeadersEnabled={this.getStickySectionHeadersEnabled()}
+              stickyHeaderIndices={headerIndeces}
               style={style}
               testID={testID}
             />

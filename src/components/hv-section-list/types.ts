@@ -5,7 +5,7 @@ export type State = {
 // https://reactnative.dev/docs/sectionlist#scrolltolocation
 export type ScrollParams = {
   animated?: boolean | undefined;
-  itemIndex: number;
+  index: number;
   sectionIndex: number;
   viewOffset?: number;
   viewPosition?: number;
