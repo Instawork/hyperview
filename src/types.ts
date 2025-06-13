@@ -1,7 +1,12 @@
 import * as Components from 'hyperview/src/services/components';
+import * as Logging from 'hyperview/src/services/logging';
 import * as Stylesheets from './services/stylesheets';
+import React, { ComponentType } from 'react';
+import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
+import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
+import type { NavigationComponents } from 'hyperview/src/services/navigator';
 import type { Route as NavigatorRoute } from './services/navigator';
-import type React from 'react';
+import type { RefreshControlProps } from 'react-native';
 import type { XResponseStaleReason } from './services/dom/types';
 
 export type DOMString = string;
@@ -442,4 +447,30 @@ export type ExperimentalFeatures = {
   // Delay the mutation of the navigation state until after the screen has been rendered
   // This is intended to improve the performance of navigation actions
   navStateMutationsDelay?: number;
+};
+
+/**
+ * All of the props used by Hyperview
+ */
+export type Props = {
+  formatDate: (
+    date: Date | null | undefined,
+    format: string | undefined,
+  ) => string | undefined;
+  refreshControl?: ComponentType<RefreshControlProps>;
+  navigationComponents?: NavigationComponents;
+  entrypointUrl: string;
+  fetch: Fetch;
+  onError?: (error: Error) => void;
+  onParseAfter?: (url: string) => void;
+  onParseBefore?: (url: string) => void;
+  onRouteBlur?: (route: Route) => void;
+  onRouteFocus?: (route: Route) => void;
+  behaviors?: HvBehavior[];
+  components?: HvComponent[];
+  elementErrorComponent?: ComponentType<ErrorProps>;
+  errorScreen?: ComponentType<ErrorProps>;
+  loadingScreen?: ComponentType<LoadingProps>;
+  logger?: Logging.Logger;
+  experimentalFeatures?: ExperimentalFeatures;
 };

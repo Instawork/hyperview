@@ -5,7 +5,7 @@ import type {
   OnUpdateCallbacks,
   ScreenState,
 } from 'hyperview/src/types';
-import { Props as HvProps } from 'hyperview/src/core/components/hyperview/types';
+import { Props as HvProps } from 'hyperview/src/types';
 
 /**
  * All of the props used by hv-screen
