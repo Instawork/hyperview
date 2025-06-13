@@ -10,7 +10,7 @@ import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import { createProps, createStyleProp } from 'hyperview/src/services';
 import HvElement from 'hyperview/src/core/components/hv-element';
 import { HvScreenRenderError } from './errors';
-import LoadElementError from '../load-element-error';
+import LoadElementError from 'hyperview/src/core/components/load-element-error';
 import Loading from 'hyperview/src/core/components/loading';
 import React from 'react';
 

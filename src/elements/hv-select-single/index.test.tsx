@@ -1,6 +1,6 @@
 import { HyperviewMock, getElements } from 'hyperview/test/helpers';
 import { render, screen, waitFor } from '@testing-library/react-native';
-import HvSelectSingle from 'hyperview/src/components/hv-select-single';
+import HvSelectSingle from 'hyperview/src/elements/hv-select-single';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import React from 'react';
 

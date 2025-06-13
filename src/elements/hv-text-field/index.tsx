@@ -10,7 +10,7 @@ import type { ElementRef } from 'react';
 import type { KeyboardTypeOptions } from 'react-native';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { TextInput } from 'react-native';
-import TinyMask from 'hyperview/src/mask';
+import TinyMask from './mask';
 import debounce from 'lodash/debounce';
 
 const HvTextField = (props: HvComponentProps) => {

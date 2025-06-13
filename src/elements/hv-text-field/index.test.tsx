@@ -1,4 +1,4 @@
-import HvTextField from 'hyperview/src/components/hv-text-field';
+import HvTextField from 'hyperview/src/elements/hv-text-field';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { getElements } from 'hyperview/test/helpers';
 

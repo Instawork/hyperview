@@ -1,6 +1,6 @@
 import type { HvComponentOnUpdate, RouteParams } from 'hyperview/src/types';
 import { FC } from 'react';
-import type { Props as HvRouteProps } from 'hyperview/src/core/components/hv-route';
+import type { Props as HvRouteProps } from 'hyperview/src/elements/hv-route';
 
 export type ParamTypes = Record<string, RouteParams>;
 

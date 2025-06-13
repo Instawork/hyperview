@@ -7,7 +7,7 @@ import type {
 import React, { PureComponent } from 'react';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { Text } from 'react-native';
-import { addHref } from 'hyperview/src/core/hyper-ref';
+import { addHref } from 'hyperview/src/core/components/hyper-ref';
 import { createProps } from 'hyperview/src/services';
 
 export default class HvText extends PureComponent<HvComponentProps> {

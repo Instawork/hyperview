@@ -1,5 +1,8 @@
 import React, { useEffect, useRef } from 'react';
-import { createDateFromString, createStringFromDate } from '../helpers';
+import {
+  createDateFromString,
+  createStringFromDate,
+} from 'hyperview/src/elements/hv-date-field/helpers';
 import type { Props } from './types';
 
 export default (props: Props): JSX.Element => {

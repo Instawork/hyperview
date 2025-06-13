@@ -24,7 +24,7 @@ import { BackBehaviorContext } from 'hyperview/src/contexts/back-behaviors';
 import HvElement from 'hyperview/src/core/components/hv-element';
 import { PRESS_TRIGGERS_PROP_NAMES } from './types';
 import { ScrollView } from 'hyperview/src/core/components/scroll';
-import VisibilityDetectingView from 'hyperview/src/VisibilityDetectingView';
+import VisibilityDetectingView from './VisibilityDetectingView';
 import { XMLSerializer } from '@instawork/xmldom';
 import { X_RESPONSE_STALE_REASON } from 'hyperview/src/services/dom/types';
 import { createTestProps } from 'hyperview/src/services';

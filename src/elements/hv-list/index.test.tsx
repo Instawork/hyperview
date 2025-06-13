@@ -4,7 +4,7 @@ import {
   getElements,
 } from 'hyperview/test/helpers';
 import { render, screen, waitFor } from '@testing-library/react-native';
-import HvList from 'hyperview/src/components/hv-list';
+import HvList from 'hyperview/src/elements/hv-list';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import React from 'react';
 

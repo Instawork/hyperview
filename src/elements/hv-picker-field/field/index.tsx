@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TouchableWithoutFeedback, View } from 'react-native';
-import FieldLabel from '../field-label';
+import FieldLabel from 'hyperview/src/elements/hv-picker-field/field-label';
 import type { Props } from './types';
 import { createProps } from 'hyperview/src/services';
 

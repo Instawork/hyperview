@@ -1,6 +1,6 @@
 import { HyperviewMock, getElements } from 'hyperview/test/helpers';
 import { render, screen, waitFor } from '@testing-library/react-native';
-import HvSwitch from 'hyperview/src/components/hv-switch';
+import HvSwitch from 'hyperview/src/elements/hv-switch';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import React from 'react';
 

@@ -2,7 +2,7 @@ import * as Contexts from 'hyperview/src/contexts';
 import React, { useState } from 'react';
 import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import { createProps, createStyleProp } from 'hyperview/src/services';
-import FieldLabel from '../field-label';
+import FieldLabel from 'hyperview/src/elements/hv-date-field/field-label';
 import type { Props } from './types';
 import type { StyleSheet as StyleSheetType } from 'hyperview/src/types';
 

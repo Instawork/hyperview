@@ -1,6 +1,6 @@
 import { HyperviewMock, getElements } from 'hyperview/test/helpers';
 import { render, screen, waitFor } from '@testing-library/react-native';
-import HvPickerField from 'hyperview/src/components/hv-picker-field';
+import HvPickerField from 'hyperview/src/elements/hv-picker-field';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import React from 'react';
 

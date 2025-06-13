@@ -25,7 +25,7 @@ import {
   UpdateAction,
 } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
-import HvRoute from 'hyperview/src/core/components/hv-route';
+import HvRoute from 'hyperview/src/elements/hv-route';
 import { Linking } from 'react-native';
 import { XMLSerializer } from '@instawork/xmldom';
 import { XNetworkRetryAction } from 'hyperview/src/services/dom/types';

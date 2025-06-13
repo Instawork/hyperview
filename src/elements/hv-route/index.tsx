@@ -11,11 +11,11 @@ import {
   BackBehaviorContext,
   BackBehaviorProvider,
 } from 'hyperview/src/contexts/back-behaviors';
-import HvDoc, { StateContext } from 'hyperview/src/core/components/hv-doc';
+import HvDoc, { StateContext } from 'hyperview/src/elements/hv-doc';
 import React, { PureComponent, useContext, useMemo } from 'react';
 import HvElement from 'hyperview/src/core/components/hv-element';
-import HvNavigator from 'hyperview/src/core/components/hv-navigator';
-import HvScreen from 'hyperview/src/core/components/hv-screen';
+import HvNavigator from 'hyperview/src/elements/hv-navigator';
+import HvScreen from 'hyperview/src/elements/hv-screen';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import Loading from 'hyperview/src/core/components/loading';
 import { NavigationContainerRefContext } from '@react-navigation/native';

@@ -26,7 +26,7 @@ import {
 import React, { PureComponent } from 'react';
 import { ATTRIBUTES } from './types';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import { addHref } from 'hyperview/src/core/hyper-ref';
+import { addHref } from 'hyperview/src/core/components/hyper-ref';
 import { createStyleProp } from 'hyperview/src/services';
 
 export default class HvView extends PureComponent<HvComponentProps> {

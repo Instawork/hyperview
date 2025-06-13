@@ -1,7 +1,7 @@
 import { HyperviewMock, getElements } from 'hyperview/test/helpers';
 import { createDateFromString, createStringFromDate } from './helpers';
 import { render, screen, waitFor } from '@testing-library/react-native';
-import HvDateField from 'hyperview/src/components/hv-date-field';
+import HvDateField from 'hyperview/src/elements/hv-date-field';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import React from 'react';
 
