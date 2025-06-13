@@ -49,7 +49,7 @@ export type NavigationState = {
 /**
  * Minimal representation of the 'Route' used by react-navigation
  */
-export type Route<
+type Route<
   RouteName extends string,
   Params extends object | undefined = object | undefined
 > = {

@@ -39,7 +39,7 @@ export type PressHandlers = {
   onPress?: () => void;
 };
 
-export const PRESS_PROP_NAMES = {
+const PRESS_PROP_NAMES = {
   ON_LONG_PRESS: 'onLongPress',
   ON_PRESS: 'onPress',
   ON_PRESS_IN: 'onPressIn',

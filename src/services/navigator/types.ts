@@ -43,7 +43,7 @@ export type ListenerEvent = {
   preventDefault: () => void;
 };
 
-export type ListenerCallback = (event: ListenerEvent) => void;
+type ListenerCallback = (event: ListenerEvent) => void;
 
 /**
  * Minimal representation of the 'NavigationProp' used by react-navigation
@@ -71,13 +71,11 @@ export type Route<
   state?: NavigationState;
 };
 
-export type BottomTabBarProps = RNBottomTabBarProps & {
+type BottomTabBarProps = RNBottomTabBarProps & {
   id: string;
 };
 
-export type BottomTabBarComponent = (
-  props: BottomTabBarProps,
-) => JSX.Element | null;
+type BottomTabBarComponent = (props: BottomTabBarProps) => JSX.Element | null;
 
 export type NavigationComponents = {
   BottomTabBar?: BottomTabBarComponent;

@@ -15,20 +15,6 @@ export type Props = {
 
 export type ParamListBase = Record<string, object | undefined>;
 
-export type RouterConfigOptions = {
-  routeNames: string[];
-  routeParamList: Record<string, object | undefined>;
-  routeGetIdList: Record<
-    string,
-    | ((options: { params?: Record<string, unknown> }) => string | undefined)
-    | undefined
-  >;
-};
-
-export type RouterRenameOptions = RouterConfigOptions & {
-  routeKeyChanges: string[];
-};
-
 export type TabOptions = {
   id?: string;
   initialRouteName?: string;
@@ -50,7 +36,7 @@ export type NavigationState = {
 /**
  * Minimal representation of the 'Route' used by react-navigation
  */
-export type Route<
+type Route<
   RouteName extends string,
   Params extends object | undefined = object | undefined
 > = {

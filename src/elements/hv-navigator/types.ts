@@ -8,10 +8,6 @@ export type ScreenParams = {
   params: RouteParams;
 };
 
-export type NavigatorParams = {
-  route: ScreenParams;
-};
-
 /**
  * All of the props used by hv-navigator
  */
