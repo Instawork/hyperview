@@ -69,90 +69,6 @@ export const NODE_TYPE = {
   TEXT_NODE: 3,
 } as const;
 
-export type NodeType = typeof NODE_TYPE[keyof typeof NODE_TYPE];
-
-export type Attribute = Node & {
-  value: DOMString;
-  nodeType: typeof NODE_TYPE.ATTRIBUTE_NODE;
-  readonly name: DOMString;
-  readonly specified: true;
-  ownerElement: Element;
-};
-
-export type DocumentType = {
-  entities: NamedNodeMap;
-  internalSubset: DOMString;
-  name: DOMString;
-  notations: NamedNodeMap;
-  publicId: DOMString;
-  systemId: DOMString;
-};
-
-export type DOMImplementation = {
-  createDocument: (
-    namespaceURI: NamespaceURI,
-    qualifiedName: DOMString,
-    doctype: DocumentType,
-  ) => Document;
-  createDocumentType: (
-    qualifiedName: DOMString,
-    publicId: DOMString,
-    systemId: DOMString,
-  ) => DocumentType;
-  hasFeature: (feature: DOMString, version: DOMString) => boolean;
-};
-
-export type DocumentFragment = Node;
-
-export type EntityReference = Node;
-
-export type ProcessingInstruction = Node & {
-  data: DOMString;
-  readonly target: DOMString;
-};
-
-export type CharacterData = Node & {
-  data: DOMString;
-  appendData: (data: DOMString) => void;
-  deleteData: (offset: number, count: number) => void;
-  insertData: (offset: number, data: DOMString) => void;
-  replaceData: (offset: number, count: number, data: DOMString) => void;
-  substringData: (offset: number, count: number) => DOMString;
-};
-
-export type Text = CharacterData & {
-  nodeName: '#text';
-  nodeType: typeof NODE_TYPE.TEXT_NODE;
-  splitText: (offset: number) => Text;
-};
-
-export type Comment = CharacterData & {
-  nodeName: '#comment';
-  nodeType: typeof NODE_TYPE.COMMENT_NODE;
-};
-
-export type CDATASection = CharacterData & {
-  nodeName: '#cdata-section';
-  nodeType: typeof NODE_TYPE.CDATA_SECTION_NODE;
-};
-
-export type NamedNodeMap = {
-  getNamedItem: (key: string) => Attribute | null | undefined;
-  getNamedItemNS: (
-    namespaceURI: NamespaceURI,
-    localName: string,
-  ) => Attribute | null | undefined;
-  item: (index: number) => Attribute | null | undefined;
-  length: number;
-  removeNamedItem: (key: string) => Attribute | null | undefined;
-  removeNamedItemNS: (
-    namespaceURI: NamespaceURI,
-    localName: string,
-  ) => Attribute | null | undefined;
-  setNamedItem: (attribute: Attribute) => Attribute | null | undefined;
-  setNamedItemNS: (attribute: Attribute) => Attribute | null | undefined;
-};
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type StyleSheet = any;
 
@@ -203,10 +119,6 @@ export type HvComponentOnUpdate = (
   options: HvComponentOptions,
 ) => void;
 
-export type HvGetRoot = () => Document | null;
-
-export type HvUpdateRoot = (root: Document, updateStylesheet?: boolean) => void;
-
 export type HvComponentProps = {
   element: Element;
   onUpdate: HvComponentOnUpdate;
@@ -214,14 +126,7 @@ export type HvComponentProps = {
   stylesheets: StyleSheets;
 };
 
-// This type exists for casting since our current version of Flow
-// does not support optional static properties. Otherwise this would
-// be added as an optional property in HvComponentStatics
-export type HvFormValues = {
-  getFormInputValues: (element: Element) => Array<[string, string]>;
-};
-
-export type HvComponentStatics = {
+type HvComponentStatics = {
   localName: string;
   localNameAliases?: Array<string>;
   namespaceURI: NamespaceURI;
@@ -232,6 +137,10 @@ export type HvComponent = (
   | React.FunctionComponent<HvComponentProps>
 ) &
   HvComponentStatics;
+
+export type HvGetRoot = () => Document | null;
+
+export type HvUpdateRoot = (root: Document, updateStylesheet?: boolean) => void;
 
 export type HvBehavior = {
   action: string;
@@ -282,48 +191,6 @@ export const TRIGGERS = Object.freeze({
   VISIBLE: 'visible',
 });
 
-export type Trigger = typeof TRIGGERS[keyof typeof TRIGGERS];
-
-export const PRESS_TRIGGERS = Object.freeze([
-  TRIGGERS.LONG_PRESS,
-  TRIGGERS.PRESS_IN,
-  TRIGGERS.PRESS_OUT,
-  TRIGGERS.PRESS,
-]);
-
-export type PressTrigger = 'longPress' | 'pressIn' | 'pressOut' | 'press';
-
-export type TextContextType =
-  | 'none'
-  | 'URL'
-  | 'addressCity'
-  | 'addressCityAndState'
-  | 'addressState'
-  | 'countryName'
-  | 'creditCardNumber'
-  | 'emailAddress'
-  | 'familyName'
-  | 'fullStreetAddress'
-  | 'givenName'
-  | 'jobTitle'
-  | 'location'
-  | 'middleName'
-  | 'name'
-  | 'namePrefix'
-  | 'nameSuffix'
-  | 'nickname'
-  | 'organizationName'
-  | 'postalCode'
-  | 'streetAddressLine1'
-  | 'streetAddressLine2'
-  | 'sublocality'
-  | 'telephoneNumber'
-  | 'username'
-  | 'password'
-  | 'newPassword'
-  | 'oneTimeCode'
-  | undefined;
-
 // https://hyperview.org/docs/reference_behavior_attributes#action
 export const ACTIONS = {
   APPEND: 'append',
@@ -363,14 +230,9 @@ export const UPDATE_ACTIONS = {
 
 export type UpdateAction = typeof UPDATE_ACTIONS[keyof typeof UPDATE_ACTIONS];
 
-export type BehaviorOptions = {
-  newElement?: Element;
-  behaviorElement?: Element;
-  showIndicatorId?: string;
-  delay?: number;
-  targetId?: string;
-};
-
+/**
+ * Route params injected by ???
+ */
 export type NavigationRouteParams = {
   delay?: number | null;
   preloadScreen?: number | null;
@@ -378,16 +240,9 @@ export type NavigationRouteParams = {
   targetId?: string | null;
 };
 
-export type NavigationProps = {
-  back: (routeParams?: NavigationRouteParams | undefined) => void;
-  closeModal: (routeParams?: NavigationRouteParams | undefined) => void;
-  navigate: (routeParams: NavigationRouteParams) => void;
-  openModal: (routeParams: NavigationRouteParams) => void;
-  push: (routeParams: NavigationRouteParams) => void;
-};
-
-export type Route = NavigatorRoute<string, RouteParams>;
-
+/**
+ * Route params injected by hv-navigator
+ */
 export type RouteParams = {
   id?: string;
   behaviorElementId?: number;
@@ -398,12 +253,20 @@ export type RouteParams = {
   needsSubStack?: boolean;
 };
 
-export const ON_EVENT_DISPATCH = 'hyperview:on-event';
+export type Route = NavigatorRoute<string, RouteParams>;
 
 export type Fetch = (
   input: RequestInfo | URL,
   init?: RequestInit | undefined,
 ) => Promise<Response>;
+
+export type BehaviorOptions = {
+  newElement?: Element;
+  behaviorElement?: Element;
+  showIndicatorId?: string;
+  delay?: number;
+  targetId?: string;
+};
 
 export type NavigationProvider = {
   backAction: (params?: NavigationRouteParams | undefined) => void;
@@ -450,7 +313,7 @@ export type ExperimentalFeatures = {
 };
 
 /**
- * All of the props used by Hyperview
+ * All of the props used by hyperview
  */
 export type Props = {
   formatDate: (

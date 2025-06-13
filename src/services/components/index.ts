@@ -1,6 +1,7 @@
 import * as Services from 'hyperview/src/services';
-import type { HvComponent, HvFormValues } from 'hyperview/src/types';
+import type { HvComponent } from 'hyperview/src/types';
 import HvDateField from 'hyperview/src/elements/hv-date-field';
+import type { HvFormValues } from './types';
 import HvImage from 'hyperview/src/elements/hv-image';
 import HvList from 'hyperview/src/elements/hv-list';
 import HvOption from 'hyperview/src/elements/hv-option';

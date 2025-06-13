@@ -1,3 +1,7 @@
+import { NODE_TYPE } from 'hyperview/src/types';
+
+export type NodeType = typeof NODE_TYPE[keyof typeof NODE_TYPE];
+
 export const HTTP_HEADERS = {
   ACCEPT: 'Accept',
   CONTENT_TYPE: 'Content-Type',
