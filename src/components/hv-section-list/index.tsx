@@ -284,7 +284,11 @@ export default class HvSectionList extends PureComponent<
               removeClippedSubviews={false}
               renderItem={this.renderListItem}
               scrollIndicatorInsets={scrollIndicatorInsets}
-              stickyHeaderIndices={headerIndeces}
+              stickyHeaderIndices={
+                this.getStickySectionHeadersEnabled()
+                  ? headerIndeces
+                  : undefined
+              }
               style={style}
               testID={testID}
             />
