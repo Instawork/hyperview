@@ -13,7 +13,6 @@ import {
   RefreshControl as DefaultRefreshControl,
   Platform,
 } from 'react-native';
-import { LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
 import type { ScrollParams, State } from './types';
 import { createTestProps, getAncestorByTagName } from 'hyperview/src/services';
@@ -21,42 +20,7 @@ import { DOMParser } from '@instawork/xmldom';
 import type { ElementRef } from 'react';
 import { FlatList } from 'hyperview/src/core/components/scroll';
 import HvElement from 'hyperview/src/core/components/hv-element';
-
-const getSectionIndex = (
-  sectionTitle: Element,
-  sectionTitles: HTMLCollectionOf<Element>,
-): number => {
-  const sectionIndex = Array.from(sectionTitles).indexOf(sectionTitle);
-
-  // If first section did not have an explicit title, we still need to account for it
-  const previousElement = Dom.getPreviousNodeOfType(
-    sectionTitles[0],
-    NODE_TYPE.ELEMENT_NODE,
-  );
-  if ((previousElement as Element)?.localName === LOCAL_NAME.ITEM) {
-    return sectionIndex + 1;
-  }
-
-  return sectionIndex;
-};
-
-const getPreviousSectionTitle = (
-  element: Element,
-  itemIndex: number,
-): [Element | null, number] => {
-  const { previousSibling } = element;
-  if (!previousSibling) {
-    return [null, itemIndex];
-  }
-  if ((previousSibling as Element).localName === LOCAL_NAME.SECTION_TITLE) {
-    return [previousSibling as Element, itemIndex];
-  }
-  if ((previousSibling as Element).localName === LOCAL_NAME.ITEM) {
-    // eslint-disable-next-line no-param-reassign
-    itemIndex += 1;
-  }
-  return getPreviousSectionTitle(previousSibling as Element, itemIndex);
-};
+import { LOCAL_NAME } from 'hyperview/src/types';
 
 export default class HvSectionList extends PureComponent<
   HvComponentProps,
@@ -154,85 +118,29 @@ export default class HvSectionList extends PureComponent<
       return;
     }
 
-    // find index of target in section-list
-    // first, check legacy section-list format, where items are nested under a <section>
-    const targetElementParentSection = getAncestorByTagName(
-      targetElement,
-      LOCAL_NAME.SECTION,
+    // eslint-disable-next-line max-len
+    // No parent section? Check new section-list format, where items are nested under the section-list
+    const items = this.props.element.getElementsByTagNameNS(
+      Namespaces.HYPERVIEW,
+      LOCAL_NAME.ITEM,
     );
-    if (targetElementParentSection) {
-      const sections = this.props.element.getElementsByTagNameNS(
-        Namespaces.HYPERVIEW,
-        LOCAL_NAME.SECTION,
-      );
-      const sectionIndex = Array.from(sections).indexOf(
-        targetElementParentSection,
-      );
-      if (sectionIndex === -1) {
-        return;
-      }
-      const itemsInSection = Array.from(
-        targetElementParentSection.getElementsByTagNameNS(
-          Namespaces.HYPERVIEW,
-          LOCAL_NAME.ITEM,
-        ),
-      );
-      const itemIndex = itemsInSection.indexOf(targetListItem);
-      if (itemIndex === -1) {
-        return;
-      }
-
-      const params: ScrollParams = {
-        animated,
-        index: itemIndex + 1,
-        sectionIndex,
-      };
-      if (typeof viewOffset === 'number') {
-        params.viewOffset = viewOffset;
-      }
-
-      if (typeof viewPosition === 'number') {
-        params.viewPosition = viewPosition;
-      }
-
-      this.ref?.scrollToIndex(params);
-    } else {
-      // eslint-disable-next-line max-len
-      // No parent section? Check new section-list format, where items are nested under the section-list
-      const items = this.props.element.getElementsByTagNameNS(
-        Namespaces.HYPERVIEW,
-        LOCAL_NAME.ITEM,
-      );
-      if (Array.from(items).indexOf(targetListItem) === -1) {
-        return;
-      }
-      const [sectionTitle, itemIndex] = getPreviousSectionTitle(
-        targetListItem,
-        1, // 1 instead of 0 as it appears itemIndex is 1-based
-      );
-      const sectionTitles = this.props.element.getElementsByTagNameNS(
-        Namespaces.HYPERVIEW,
-        LOCAL_NAME.SECTION_TITLE,
-      );
-      const sectionIndex = sectionTitle
-        ? getSectionIndex(sectionTitle, sectionTitles)
-        : 0;
-      if (sectionIndex === -1) {
-        return;
-      }
-      const params: ScrollParams = {
-        animated,
-        index: itemIndex,
-        sectionIndex,
-      };
-      if (viewOffset) {
-        params.viewOffset = viewOffset;
-      }
-      if (viewPosition) {
-        params.viewPosition = viewPosition;
-      }
-      this.ref?.scrollToIndex(params);
+    const itemIndex = Array.from(items).indexOf(targetListItem);
+    if (itemIndex === -1) {
+      return;
     }
+
+    const params: ScrollParams = {
+      animated,
+      index: itemIndex,
+    };
+    if (viewOffset) {
+      params.viewOffset = viewOffset;
+    }
+    if (viewPosition) {
+      params.viewPosition = viewPosition;
+    }
+
+    this.ref?.scrollToIndex(params);
   };
 
   getStickySectionHeadersEnabled = (): boolean => {

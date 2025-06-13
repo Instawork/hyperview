@@ -6,7 +6,6 @@ export type State = {
 export type ScrollParams = {
   animated?: boolean | undefined;
   index: number;
-  sectionIndex: number;
   viewOffset?: number;
   viewPosition?: number;
 };
