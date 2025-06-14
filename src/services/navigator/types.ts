@@ -1,4 +1,8 @@
 import type { NavigationRouteParams, RouteParams } from 'hyperview/src/types';
+import type {
+  NavigationState,
+  Route as NavigatorRoute,
+} from '@react-navigation/native';
 import { NavigationContainerRefContext } from '@react-navigation/native';
 import type { BottomTabBarProps as RNBottomTabBarProps } from '@react-navigation/bottom-tabs';
 
@@ -22,7 +26,7 @@ export const NAVIGATOR_TYPE = {
 
 export type Props = {
   navigation?: NavigationProp;
-  route?: Route<string, RouteParams>;
+  route?: NavigatorRoute<string, RouteParams>;
   entrypointUrl: string;
   rootNavigation?:
     | React.ContextType<typeof NavigationContainerRefContext>
@@ -58,19 +62,6 @@ export type NavigationProp = {
   isFocused: () => boolean;
 };
 
-/**
- * Minimal representation of the 'Route' used by react-navigation
- */
-export type Route<
-  RouteName extends string,
-  Params extends object | undefined = object | undefined
-> = {
-  key: string;
-  name: RouteName;
-  params: Params;
-  state?: NavigationState;
-};
-
 type BottomTabBarProps = RNBottomTabBarProps & {
   id: string;
 };
@@ -84,19 +75,6 @@ export type NavigationComponents = {
 /* List of props available to navigators */
 export type NavigatorProps = NavigationComponents & {
   doc: Document | undefined;
-};
-
-/**
- * Minimal representation of the 'NavigationState' used by react-navigation
- */
-export type NavigationState = {
-  index: number;
-  key: string;
-  routeNames: string[];
-  routes: Route<string, object>[];
-  stale: false;
-  type: string;
-  history?: unknown[];
 };
 
 /**

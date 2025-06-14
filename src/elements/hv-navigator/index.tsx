@@ -20,6 +20,7 @@ import type {
   TabScreenOptions,
 } from './types';
 import React, { PureComponent } from 'react';
+import { CardStyleInterpolators } from '@react-navigation/stack';
 import { Platform } from 'react-native';
 import { createCustomStackNavigator } from 'hyperview/src/core/components/navigator-stack';
 import { createCustomTabNavigator } from 'hyperview/src/core/components/navigator-tab';
@@ -218,7 +219,7 @@ export default class HvNavigator extends PureComponent<Props> {
           options={{
             animationEnabled: !isFirstScreen,
             cardStyleInterpolator: needsSubStack
-              ? NavigatorService.CardStyleInterpolators.forVerticalIOS
+              ? CardStyleInterpolators.forVerticalIOS
               : undefined,
             gestureEnabled,
             presentation: needsSubStack

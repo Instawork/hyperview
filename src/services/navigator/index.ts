@@ -1,6 +1,5 @@
 import * as Components from 'hyperview/src/services/components';
 import * as Helpers from './helpers';
-import * as Imports from './imports';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Types from './types';
@@ -11,6 +10,7 @@ import type {
   NavigationProvider,
   NavigationRouteParams,
 } from 'hyperview/src/types';
+import { CommonActions, StackActions } from '@react-navigation/native';
 import { NAV_ACTIONS } from 'hyperview/src/types';
 import { uuidNumber } from 'hyperview/src/core/utils';
 
@@ -50,7 +50,7 @@ export class Navigator implements NavigationProvider {
       const routes =
         state?.routes.filter(route => route.key !== sourceKey) || [];
       navigation?.dispatch({
-        ...Imports.CommonActions.reset({
+        ...CommonActions.reset({
           ...state,
           index: routes.length - 1,
           routes,
@@ -66,7 +66,7 @@ export class Navigator implements NavigationProvider {
       const route = this.props.rootNavigation?.getCurrentRoute();
       if (route) {
         navigation.dispatch({
-          ...Imports.CommonActions.setParams({
+          ...CommonActions.setParams({
             ...routeParams,
           }),
           source: route.key,
@@ -106,12 +106,12 @@ export class Navigator implements NavigationProvider {
       case NAV_ACTIONS.NAVIGATE:
       case NAV_ACTIONS.NEW:
         if (routeId) {
-          navigation.dispatch(Imports.CommonActions.navigate(routeId, params));
+          navigation.dispatch(CommonActions.navigate(routeId, params));
         }
         break;
       case NAV_ACTIONS.PUSH:
         if (routeId) {
-          navigation.dispatch(Imports.StackActions.push(routeId, params));
+          navigation.dispatch(StackActions.push(routeId, params));
         }
         break;
       default:
@@ -206,13 +206,7 @@ export type {
   NavigationComponents,
   NavigationProp,
   NavigatorProps,
-  Route,
 } from './types';
-export {
-  CardStyleInterpolators,
-  createStackNavigator,
-  createBottomTabNavigator,
-} from './imports';
 export { HvRouteError, HvNavigatorError, HvRenderError } from './errors';
 export {
   addStackRoute,

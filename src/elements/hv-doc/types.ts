@@ -1,4 +1,3 @@
-import * as NavigatorService from 'hyperview/src/services/navigator';
 import {
   DOMString,
   HvComponentOnUpdate,
@@ -6,12 +5,13 @@ import {
   OnUpdateCallbacks,
   ScreenState,
 } from 'hyperview/src/types';
+import type { Route as NavigatorRoute } from '@react-navigation/native';
 
 export type Props = {
   children?: React.ReactNode;
   element?: Element;
   navigationProvider: NavigationProvider;
-  route?: NavigatorService.Route<
+  route?: NavigatorRoute<
     string,
     {
       behaviorElementId?: number;

@@ -3,13 +3,17 @@ import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Types from './types';
 import * as UrlService from 'hyperview/src/services/url';
-import { ANCHOR_ID_SEPARATOR, Route } from './types';
 import { LOCAL_NAME, NAV_ACTIONS, NODE_TYPE } from 'hyperview/src/types';
 import type {
   NavAction,
   NavigationRouteParams,
   RouteParams,
 } from 'hyperview/src/types';
+import type {
+  NavigationState,
+  Route as NavigatorRoute,
+} from '@react-navigation/native';
+import { ANCHOR_ID_SEPARATOR } from './types';
 import { shallowCloneToRoot } from 'hyperview/src/services';
 
 /**
@@ -119,7 +123,7 @@ export const validateUrl = (
  * example: ['home', 'shifts', 'my-shifts']
  */
 export const findPath = (
-  state: Types.NavigationState,
+  state: NavigationState,
   targetId: string,
 ): string[] => {
   let path: string[] = [];
@@ -135,10 +139,7 @@ export const findPath = (
       path.unshift(route.name);
       return false;
     }
-    path = [
-      ...path,
-      ...findPath(route.state as Types.NavigationState, targetId),
-    ];
+    path = [...path, ...findPath(route.state as NavigationState, targetId)];
     // If the recursion found the target, add the current route name to the path as we back out
     if (path.length) {
       path.unshift(route.name);
@@ -286,7 +287,7 @@ export const getNavAction = (
   return action;
 };
 
-const isRouteModal = (state: Types.NavigationState, index: number): boolean => {
+const isRouteModal = (state: NavigationState, index: number): boolean => {
   if (!state || index > state.routes.length - 1) {
     return false;
   }
@@ -621,7 +622,7 @@ export const removeStackRoute = (
 export const addStackRoute = (
   doc: Document | undefined,
   id: string | undefined,
-  route: Route<string, NavigationRouteParams> | undefined,
+  route: NavigatorRoute<string, NavigationRouteParams> | undefined,
   siblingName: string | undefined,
   baseUrl: string,
   setDoc?: ((d: Document) => void) | undefined,
@@ -660,7 +661,7 @@ export const addStackRoute = (
 };
 
 const getUrlFromState = (
-  state: Types.NavigationState,
+  state: NavigationState,
   id: string,
 ): string | undefined => {
   if (!state) {
@@ -673,7 +674,7 @@ const getUrlFromState = (
       const params = route.params as RouteParams;
       return params.url || undefined;
     }
-    const url = getUrlFromState(route.state as Types.NavigationState, id);
+    const url = getUrlFromState(route.state as NavigationState, id);
     if (url) {
       return url;
     }
@@ -688,7 +689,7 @@ const getUrlFromState = (
 export const updateRouteUrlFromState = (
   doc: Document | undefined,
   id: string | undefined,
-  state: Types.NavigationState | undefined,
+  state: NavigationState | undefined,
   setDoc?: ((d: Document) => void) | undefined,
 ) => {
   if (!doc || !id || !state) {

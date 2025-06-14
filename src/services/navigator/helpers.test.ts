@@ -24,6 +24,7 @@ import {
 import { DOMParser } from '@instawork/xmldom';
 import { NAV_ACTIONS } from 'hyperview/src/types';
 import type { NavigationRouteParams } from 'hyperview/src/types';
+import type { NavigationState } from '@react-navigation/native';
 import StateSource from './test.state.json';
 
 /**
@@ -395,7 +396,7 @@ describe('validateUrl', () => {
 });
 
 describe('findPath', () => {
-  const state = StateSource as Types.NavigationState;
+  const state = StateSource as NavigationState;
   describe('found', () => {
     const path = findPath(state, 'performance_2');
     it('should find the path 3 levels from the top', () => {
