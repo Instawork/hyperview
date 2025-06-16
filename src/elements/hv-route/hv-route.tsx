@@ -499,4 +499,3 @@ export default function HvRoute(props: Types.Props) {
     </BackBehaviorProvider>
   );
 }
-export type { InnerRouteProps, Props } from './types';

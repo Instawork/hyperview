@@ -62,5 +62,4 @@ const Loading = (props: LoadingProps): React.ReactElement => {
   });
 };
 
-export type { Props } from './types';
 export default Loading;

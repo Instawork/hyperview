@@ -1,6 +1,5 @@
 import * as Components from 'hyperview/src/services/components';
 import * as Logging from 'hyperview/src/services/logging';
-import * as Stylesheets from './services/stylesheets';
 import type {
   NavigationState,
   Route as NavigatorRoute,
@@ -312,7 +311,7 @@ export type ScreenState = {
   elementError?: Error | null;
   error?: Error | null;
   staleHeaderType?: XResponseStaleReason | null;
-  styles?: Stylesheets.StyleSheets | null;
+  styles?: StyleSheets | null;
   url?: string | null;
 };
 
