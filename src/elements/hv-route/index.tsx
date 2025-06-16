@@ -182,7 +182,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
   /**
    * Evaluate the <doc> element and render the appropriate component
    */
-  RouteComponent = (): React.ReactElement => {
+  Route = (): React.ReactElement => {
     const { Screen } = this;
 
     const needsSubStack = this.props.route?.params?.needsSubStack
@@ -262,14 +262,14 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
   };
 
   render() {
-    const { Load, RouteComponent } = this;
+    const { Load, Route } = this;
 
     if (
       this.props.element ||
       this.props.getLocalDoc() ||
       this.props.route?.params?.needsSubStack
     ) {
-      return <RouteComponent />;
+      return <Route />;
     }
     return <Load />;
   }
