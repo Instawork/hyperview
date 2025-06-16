@@ -7,14 +7,11 @@ import { LOCAL_NAME, NAV_ACTIONS, NODE_TYPE } from 'hyperview/src/types';
 import type {
   NavAction,
   NavigationProps,
-  NavigationRouteParams,
+  Route,
   RouteParams,
 } from 'hyperview/src/types';
-import type {
-  NavigationState,
-  Route as NavigatorRoute,
-} from '@react-navigation/native';
 import { ANCHOR_ID_SEPARATOR } from './types';
+import type { NavigationState } from '@react-navigation/native';
 import { shallowCloneToRoot } from 'hyperview/src/services';
 
 /**
@@ -105,10 +102,7 @@ export const getUrlFromHref = (
 /**
  * If the params contain a url, ensure that it is valid
  */
-export const validateUrl = (
-  action: NavAction,
-  routeParams: NavigationRouteParams,
-) => {
+export const validateUrl = (action: NavAction, routeParams: RouteParams) => {
   if (action === NAV_ACTIONS.PUSH || action === NAV_ACTIONS.NEW) {
     if (!routeParams.url || !cleanHrefFragment(routeParams.url)) {
       throw new Errors.HvNavigatorError(
@@ -184,9 +178,9 @@ export const getNavigatorAndPath = (
 export const buildParams = (
   routeId: string,
   path: string[],
-  routeParams: NavigationRouteParams,
+  routeParams: RouteParams,
   index = 0,
-): Types.NavigationNavigateParams | NavigationRouteParams => {
+): Types.NavigationNavigateParams | RouteParams => {
   if (path.length && index < path.length) {
     const screen = path[index];
 
@@ -275,7 +269,7 @@ export const getNavigatorById = (
  */
 export const getNavAction = (
   action: NavAction,
-  routeParams?: NavigationRouteParams,
+  routeParams?: RouteParams,
 ): NavAction => {
   if (
     routeParams &&
@@ -301,12 +295,12 @@ const isRouteModal = (state: NavigationState, index: number): boolean => {
  */
 const buildCloseRequest = (
   navigation: NavigationProps | undefined,
-  routeParams?: NavigationRouteParams,
+  routeParams?: RouteParams,
 ): [
   NavAction,
   NavigationProps | undefined,
   string,
-  Types.NavigationNavigateParams | NavigationRouteParams | undefined,
+  Types.NavigationNavigateParams | RouteParams | undefined,
 ] => {
   if (!navigation) {
     return [NAV_ACTIONS.CLOSE, navigation, '', routeParams];
@@ -355,12 +349,12 @@ const buildCloseRequest = (
 export const buildRequest = (
   nav: NavigationProps | undefined,
   action: NavAction,
-  routeParams?: NavigationRouteParams,
+  routeParams?: RouteParams,
 ): [
   NavAction,
   NavigationProps | undefined,
   string,
-  Types.NavigationNavigateParams | NavigationRouteParams | undefined,
+  Types.NavigationNavigateParams | RouteParams | undefined,
 ] => {
   const navAction: NavAction = getNavAction(action, routeParams);
 
@@ -383,7 +377,7 @@ export const buildRequest = (
     nav,
   );
 
-  const cleanedParams: NavigationRouteParams = {
+  const cleanedParams: RouteParams = {
     ...routeParams,
     // New actions are always modal
     ...(action === NAV_ACTIONS.NEW && { isModal: true }),
@@ -413,9 +407,11 @@ export const buildRequest = (
   //  { screen: 'shifts', params:
   //    { screen: 'my-shifts', params: { url: 'someurl.xml' } } })
   const lastPathId = path.shift();
-  const params:
-    | Types.NavigationNavigateParams
-    | NavigationRouteParams = buildParams(routeId, path, cleanedParams);
+  const params: Types.NavigationNavigateParams | RouteParams = buildParams(
+    routeId,
+    path,
+    cleanedParams,
+  );
 
   return [navAction, navigation, lastPathId || routeId, params];
 };
@@ -623,7 +619,7 @@ export const removeStackRoute = (
 export const addStackRoute = (
   doc: Document | undefined,
   id: string | undefined,
-  route: NavigatorRoute<string, NavigationRouteParams> | undefined,
+  route: Route | undefined,
   siblingName: string | undefined,
   baseUrl: string,
   setDoc?: ((d: Document) => void) | undefined,
@@ -634,8 +630,8 @@ export const addStackRoute = (
     !route ||
     !siblingName ||
     !isDynamicRoute(route.name) ||
-    !route.params.url ||
-    getRouteByUrl(doc, route.params.url, baseUrl)
+    !route.params?.url ||
+    getRouteByUrl(doc, route.params?.url, baseUrl)
   ) {
     return;
   }

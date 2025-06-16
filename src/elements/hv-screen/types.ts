@@ -2,10 +2,10 @@ import type {
   HvComponentOnUpdate,
   NavigationProvider,
   OnUpdateCallbacks,
+  Route,
   ScreenState,
 } from 'hyperview/src/types';
 import { Props as HvProps } from 'hyperview/src/types';
-import type { Route as NavigatorRoute } from '@react-navigation/native';
 
 /**
  * All of the props used by hv-screen
@@ -32,7 +32,7 @@ export type Props = Omit<
   onUpdateCallbacks: OnUpdateCallbacks;
   reload: (url?: string | null) => void;
   removeElement?: (id: number) => void;
-  route?: NavigatorRoute<string, { url?: string }>;
+  route?: Route;
   url?: string;
   getLocalDoc: () => Document | null;
   getScreenState: () => ScreenState;

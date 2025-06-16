@@ -23,8 +23,8 @@ import {
 } from './helpers';
 import { DOMParser } from '@instawork/xmldom';
 import { NAV_ACTIONS } from 'hyperview/src/types';
-import type { NavigationRouteParams } from 'hyperview/src/types';
 import type { NavigationState } from '@react-navigation/native';
+import type { RouteParams } from 'hyperview/src/types';
 import StateSource from './test.state.json';
 
 /**
@@ -424,15 +424,15 @@ describe('findPath', () => {
 // - build navigator hierarchy
 
 function isNavigateParam(
-  p: NavigationRouteParams | Types.NavigationNavigateParams | undefined,
+  p: RouteParams | Types.NavigationNavigateParams | undefined,
 ): p is Types.NavigationNavigateParams {
   return (p as Types.NavigationNavigateParams).screen !== undefined;
 }
 
 function isRouteParam(
-  p: NavigationRouteParams | Types.NavigationNavigateParams | undefined,
-): p is NavigationRouteParams {
-  return (p as NavigationRouteParams).url !== undefined;
+  p: RouteParams | Types.NavigationNavigateParams | undefined,
+): p is RouteParams {
+  return (p as RouteParams).url !== undefined;
 }
 
 describe('buildParams', () => {

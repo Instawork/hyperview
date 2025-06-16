@@ -9,7 +9,7 @@ import type {
   NavAction,
   NavigationProps,
   NavigationProvider,
-  NavigationRouteParams,
+  RouteParams,
 } from 'hyperview/src/types';
 import { CommonActions, StackActions } from '@react-navigation/native';
 import { NAV_ACTIONS } from 'hyperview/src/types';
@@ -34,7 +34,7 @@ export class Navigator implements NavigationProvider {
     navigation: NavigationProps,
     action: NavAction,
     sourceKey: string,
-    routeParams?: NavigationRouteParams,
+    routeParams?: RouteParams,
   ) {
     const state = navigation.getState();
     const sourceIndex = state?.routes.findIndex(
@@ -79,7 +79,7 @@ export class Navigator implements NavigationProvider {
   /**
    * Prepare and send the request
    */
-  sendRequest = (action: NavAction, routeParams?: NavigationRouteParams) => {
+  sendRequest = (action: NavAction, routeParams?: RouteParams) => {
     const [navAction, navigation, routeId, params] = Helpers.buildRequest(
       this.props.navigation,
       action,
@@ -193,11 +193,11 @@ export class Navigator implements NavigationProvider {
     }
   };
 
-  backAction = (params?: NavigationRouteParams | undefined) => {
+  backAction = (params?: RouteParams | undefined) => {
     this.sendRequest(NAV_ACTIONS.BACK, params);
   };
 
-  openModalAction = (params: NavigationRouteParams) => {
+  openModalAction = (params: RouteParams) => {
     this.sendRequest(NAV_ACTIONS.NEW, params);
   };
 }

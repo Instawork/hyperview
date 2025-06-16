@@ -253,30 +253,19 @@ export type NavigationProps = {
   isFocused: () => boolean;
 };
 
-/**
- * Route params injected by ???
- */
-export type NavigationRouteParams = {
-  delay?: number | null;
-  preloadScreen?: number | null;
-  url?: string | null;
-  targetId?: string | null;
-};
-
-/**
- * Route params injected by hv-navigator
- */
 export type RouteParams = {
+  behaviorElementId?: number | null;
+  delay?: number;
   id?: string;
-  behaviorElementId?: number;
-  url: string;
-  preloadScreen?: number;
   isModal?: boolean;
-  routeId?: string;
   needsSubStack?: boolean;
+  preloadScreen?: number | null;
+  routeId?: string;
+  targetId?: string;
+  url?: DOMString;
 };
 
-export type Route = NavigatorRoute<string, RouteParams>;
+export type Route = NavigatorRoute<string, RouteParams | undefined>;
 
 export type Fetch = (
   input: RequestInfo | URL,
@@ -292,7 +281,7 @@ export type BehaviorOptions = {
 };
 
 export type NavigationProvider = {
-  backAction: (params?: NavigationRouteParams | undefined) => void;
+  backAction: (params?: RouteParams | undefined) => void;
   navigate: (
     href: string,
     action: NavAction,
@@ -302,7 +291,7 @@ export type NavigationProvider = {
     stateUrl?: string | null,
     doc?: Document | null,
   ) => void;
-  openModalAction: (params: NavigationRouteParams) => void;
+  openModalAction: (params: RouteParams) => void;
 };
 
 export type OnUpdateCallbacks = {

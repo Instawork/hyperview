@@ -18,6 +18,7 @@ import HvDoc, { StateContext } from 'hyperview/src/elements/hv-doc';
 import type {
   ListenerEvent,
   NavigationProps,
+  Route,
   ScreenState,
 } from 'hyperview/src/types';
 import React, { PureComponent, useContext, useMemo } from 'react';
@@ -148,7 +149,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     );
 
     // Inject the corrected url into the params and cast as correct type
-    const route: Types.RouteProps = {
+    const route: Route = {
       ...this.props.route,
       key: this.props.route?.key || 'hv-screen',
       name: this.props.route?.name || 'hv-screen',
@@ -181,10 +182,10 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
   /**
    * Evaluate the <doc> element and render the appropriate component
    */
-  Route = (): React.ReactElement => {
+  RouteComponent = (): React.ReactElement => {
     const { Screen } = this;
 
-    const needsSubStack = this.props.route?.params.needsSubStack
+    const needsSubStack = this.props.route?.params?.needsSubStack
       ? this.props.route.params.needsSubStack
       : false;
 
@@ -261,14 +262,14 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
   };
 
   render() {
-    const { Load, Route } = this;
+    const { Load, RouteComponent } = this;
 
     if (
       this.props.element ||
       this.props.getLocalDoc() ||
       this.props.route?.params?.needsSubStack
     ) {
-      return <Route />;
+      return <RouteComponent />;
     }
     return <Load />;
   }

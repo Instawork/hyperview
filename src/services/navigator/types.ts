@@ -1,10 +1,5 @@
-import type {
-  NavigationProps,
-  NavigationRouteParams,
-  RouteParams,
-} from 'hyperview/src/types';
+import type { NavigationProps, Route, RouteParams } from 'hyperview/src/types';
 import { NavigationContainerRefContext } from '@react-navigation/native';
-import type { Route as NavigatorRoute } from '@react-navigation/native';
 import type { BottomTabBarProps as RNBottomTabBarProps } from '@react-navigation/bottom-tabs';
 
 export const ANCHOR_ID_SEPARATOR = '#';
@@ -27,7 +22,7 @@ export const NAVIGATOR_TYPE = {
 
 export type Props = {
   navigation?: NavigationProps;
-  route?: NavigatorRoute<string, RouteParams>;
+  route?: Route;
   entrypointUrl: string;
   rootNavigation?:
     | React.ContextType<typeof NavigationContainerRefContext>
@@ -40,7 +35,7 @@ export type Props = {
  */
 export type NavigationNavigateParams = {
   screen?: string;
-  params?: NavigationNavigateParams | NavigationRouteParams;
+  params?: NavigationNavigateParams | RouteParams;
 };
 
 type BottomTabBarProps = RNBottomTabBarProps & {

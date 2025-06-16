@@ -1,18 +1,8 @@
 import * as NavigatorHelpers from 'hyperview/src/services/navigator/helpers';
 import { ID_CARD, ID_MODAL } from 'hyperview/src/services/navigator/types';
-import { LOCAL_NAME } from 'hyperview/src/types';
+import { LOCAL_NAME, Route } from 'hyperview/src/types';
 import type { ParamListBase } from '@react-navigation/routers';
 import { StackNavigationState } from '@react-navigation/native';
-
-// TODO: Replace this with the Route type from `hyperview/src/types`
-type Route = {
-  key: string;
-  name: string;
-  params?: {
-    id?: string;
-    url?: string;
-  };
-};
 
 export const buildRoutesFromDom = (
   doc: Document | undefined,

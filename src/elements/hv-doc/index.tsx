@@ -8,8 +8,8 @@ import {
   DOMString,
   HvComponentOptions,
   LOCAL_NAME,
-  NavigationRouteParams,
   OnUpdateCallbacks,
+  RouteParams,
   ScreenState,
 } from 'hyperview/src/types';
 import { DocState, ErrorProps, Props } from './types';
@@ -182,7 +182,7 @@ const HvDoc = (props: Props) => {
       !state.url &&
       props.url !== state.url &&
       !props.element &&
-      !props.route?.params.needsSubStack
+      !props.route?.params?.needsSubStack
     ) {
       // Handle initial load
       loadUrl(props.url);
@@ -190,7 +190,7 @@ const HvDoc = (props: Props) => {
   }, [
     loadUrl,
     props.element,
-    props.route?.params.needsSubStack,
+    props.route?.params?.needsSubStack,
     props.url,
     state.url,
     state.loadingUrl,
@@ -312,14 +312,14 @@ const HvDoc = (props: Props) => {
     const ErrorScreen = navigationContext.errorScreen || LoadError;
     return (
       <ErrorScreen
-        back={() => navigationProvider?.backAction({} as NavigationRouteParams)}
+        back={() => navigationProvider?.backAction({} as RouteParams)}
         error={error}
         onPressReload={() => contextValue.reload(url)}
         onPressViewDetails={(u: string | undefined) => {
           if (u) {
             navigationProvider?.openModalAction({
               url: u,
-            } as NavigationRouteParams);
+            } as RouteParams);
           }
         }}
       />
@@ -333,7 +333,7 @@ const HvDoc = (props: Props) => {
         <Err
           error={state.error}
           navigationProvider={props.navigationProvider}
-          url={state.url ?? props.route?.params.url}
+          url={state.url ?? props.route?.params?.url}
         />
       ) : (
         props.children

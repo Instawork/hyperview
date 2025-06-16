@@ -179,7 +179,7 @@ export default class HvNavigator extends PureComponent<Props> {
       }
       return params.id;
     }
-    return params.url;
+    return params.url || '';
   };
 
   /**
