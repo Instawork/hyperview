@@ -7,6 +7,7 @@ import * as UrlService from 'hyperview/src/services/url';
 import type {
   BehaviorOptions,
   NavAction,
+  NavigationProps,
   NavigationProvider,
   NavigationRouteParams,
 } from 'hyperview/src/types';
@@ -30,7 +31,7 @@ export class Navigator implements NavigationProvider {
    * If the navigator is not type stack, the back request is bubbled
    */
   routeBackRequest(
-    navigation: Types.NavigationProp,
+    navigation: NavigationProps,
     action: NavAction,
     sourceKey: string,
     routeParams?: NavigationRouteParams,
@@ -201,12 +202,7 @@ export class Navigator implements NavigationProvider {
   };
 }
 
-export type {
-  ListenerEvent,
-  NavigationComponents,
-  NavigationProp,
-  NavigatorProps,
-} from './types';
+export type { NavigationComponents, NavigatorProps } from './types';
 export { HvRouteError, HvNavigatorError, HvRenderError } from './errors';
 export {
   addStackRoute,

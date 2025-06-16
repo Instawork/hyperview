@@ -12,6 +12,11 @@ import {
   BackBehaviorProvider,
 } from 'hyperview/src/contexts/back-behaviors';
 import HvDoc, { StateContext } from 'hyperview/src/elements/hv-doc';
+import type {
+  ListenerEvent,
+  NavigationProps,
+  ScreenState,
+} from 'hyperview/src/types';
 import React, { PureComponent, useContext, useMemo } from 'react';
 import HvElement from 'hyperview/src/core/components/hv-element';
 import HvNavigator from 'hyperview/src/elements/hv-navigator';
@@ -19,7 +24,6 @@ import HvScreen from 'hyperview/src/elements/hv-screen';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import Loading from 'hyperview/src/core/components/loading';
 import { NavigationContainerRefContext } from '@react-navigation/native';
-import type { ScreenState } from 'hyperview/src/types';
 
 /**
  * Implementation of an HvRoute component
@@ -313,8 +317,7 @@ function HvRouteFC(props: Types.Props) {
         );
 
   const rootNavigation = useContext(NavigationContainerRefContext);
-  const nav =
-    props.navigation || (rootNavigation as NavigatorService.NavigationProp);
+  const nav = props.navigation || (rootNavigation as NavigationProps);
   const navigator = useMemo(
     () =>
       new NavigatorService.Navigator({
@@ -412,26 +415,29 @@ function HvRouteFC(props: Types.Props) {
       );
 
       // Update the urls in each route when the state updates the params
-      const unsubscribeState: () => void = nav.addListener('state', event => {
-        const navStateMutationsDelay =
-          navigationContext.experimentalFeatures?.navStateMutationsDelay || 0;
-        const updateRouteUrlFromState = (e: NavigatorService.ListenerEvent) => {
-          NavigatorService.updateRouteUrlFromState(
-            docContext?.getDoc(),
-            id,
-            e.data?.state,
-            docContext?.setDoc,
-          );
-        };
-        if (navStateMutationsDelay > 0) {
-          // The timeout ensures the processing occurs after the screen is rendered or shown
-          setTimeout(() => {
+      const unsubscribeState: () => void = nav.addListener(
+        'state',
+        (event: ListenerEvent) => {
+          const navStateMutationsDelay =
+            navigationContext.experimentalFeatures?.navStateMutationsDelay || 0;
+          const updateRouteUrlFromState = (e: ListenerEvent) => {
+            NavigatorService.updateRouteUrlFromState(
+              docContext?.getDoc(),
+              id,
+              e.data?.state,
+              docContext?.setDoc,
+            );
+          };
+          if (navStateMutationsDelay > 0) {
+            // The timeout ensures the processing occurs after the screen is rendered or shown
+            setTimeout(() => {
+              updateRouteUrlFromState(event);
+            }, navStateMutationsDelay);
+          } else {
             updateRouteUrlFromState(event);
-          }, navStateMutationsDelay);
-        } else {
-          updateRouteUrlFromState(event);
-        }
-      });
+          }
+        },
+      );
 
       return () => {
         unsubscribeBlur();

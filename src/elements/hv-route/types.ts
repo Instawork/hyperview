@@ -5,6 +5,7 @@ import {
   HvBehavior,
   HvComponent,
   HvComponentOnUpdate,
+  NavigationProps,
   OnUpdateCallbacks,
   Reload,
   Route,
@@ -67,6 +68,6 @@ export type InnerRouteProps = {
  * All of the props used by hv-route
  */
 export type Props = {
-  navigation?: NavigatorService.NavigationProp;
+  navigation?: NavigationProps;
   route?: NavigatorRoute<string, RouteParams>;
 };

@@ -1,11 +1,14 @@
 import * as Components from 'hyperview/src/services/components';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Stylesheets from './services/stylesheets';
+import type {
+  NavigationState,
+  Route as NavigatorRoute,
+} from '@react-navigation/native';
 import React, { ComponentType } from 'react';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
 import type { NavigationComponents } from 'hyperview/src/services/navigator';
-import type { Route as NavigatorRoute } from '@react-navigation/native';
 import type { RefreshControlProps } from 'react-native';
 import type { XResponseStaleReason } from './services/dom/types';
 
@@ -229,6 +232,26 @@ export const UPDATE_ACTIONS = {
 } as const;
 
 export type UpdateAction = typeof UPDATE_ACTIONS[keyof typeof UPDATE_ACTIONS];
+
+export type ListenerEvent = {
+  data: { state: NavigationState | undefined } | undefined;
+  preventDefault: () => void;
+};
+
+type ListenerCallback = (event: ListenerEvent) => void;
+
+/**
+ * Minimal representation of the 'NavigationProp' used by react-navigation
+ */
+export type NavigationProps = {
+  navigate: (options: object) => void;
+  dispatch: (options: object) => void;
+  goBack: () => void;
+  getState: () => NavigationState;
+  getParent: (id?: string) => NavigationProps | undefined;
+  addListener: (eventName: string, callback: ListenerCallback) => () => void;
+  isFocused: () => boolean;
+};
 
 /**
  * Route params injected by ???

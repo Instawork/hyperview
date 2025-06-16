@@ -1,9 +1,10 @@
-import type { NavigationRouteParams, RouteParams } from 'hyperview/src/types';
 import type {
-  NavigationState,
-  Route as NavigatorRoute,
-} from '@react-navigation/native';
+  NavigationProps,
+  NavigationRouteParams,
+  RouteParams,
+} from 'hyperview/src/types';
 import { NavigationContainerRefContext } from '@react-navigation/native';
+import type { Route as NavigatorRoute } from '@react-navigation/native';
 import type { BottomTabBarProps as RNBottomTabBarProps } from '@react-navigation/bottom-tabs';
 
 export const ANCHOR_ID_SEPARATOR = '#';
@@ -25,7 +26,7 @@ export const NAVIGATOR_TYPE = {
 };
 
 export type Props = {
-  navigation?: NavigationProp;
+  navigation?: NavigationProps;
   route?: NavigatorRoute<string, RouteParams>;
   entrypointUrl: string;
   rootNavigation?:
@@ -40,26 +41,6 @@ export type Props = {
 export type NavigationNavigateParams = {
   screen?: string;
   params?: NavigationNavigateParams | NavigationRouteParams;
-};
-
-export type ListenerEvent = {
-  data: { state: NavigationState | undefined } | undefined;
-  preventDefault: () => void;
-};
-
-type ListenerCallback = (event: ListenerEvent) => void;
-
-/**
- * Minimal representation of the 'NavigationProp' used by react-navigation
- */
-export type NavigationProp = {
-  navigate: (options: object) => void;
-  dispatch: (options: object) => void;
-  goBack: () => void;
-  getState: () => NavigationState;
-  getParent: (id?: string) => NavigationProp | undefined;
-  addListener: (eventName: string, callback: ListenerCallback) => () => void;
-  isFocused: () => boolean;
 };
 
 type BottomTabBarProps = RNBottomTabBarProps & {

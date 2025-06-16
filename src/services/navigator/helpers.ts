@@ -6,6 +6,7 @@ import * as UrlService from 'hyperview/src/services/url';
 import { LOCAL_NAME, NAV_ACTIONS, NODE_TYPE } from 'hyperview/src/types';
 import type {
   NavAction,
+  NavigationProps,
   NavigationRouteParams,
   RouteParams,
 } from 'hyperview/src/types';
@@ -157,8 +158,8 @@ export const findPath = (
  */
 export const getNavigatorAndPath = (
   targetId?: string,
-  navigation?: Types.NavigationProp,
-): [Types.NavigationProp?, string[]?] => {
+  navigation?: NavigationProps,
+): [NavigationProps?, string[]?] => {
   if (!targetId) {
     return [navigation, undefined];
   }
@@ -299,11 +300,11 @@ const isRouteModal = (state: NavigationState, index: number): boolean => {
  * Search up the hierarchy for the first stack which is presenting a modal screen
  */
 const buildCloseRequest = (
-  navigation: Types.NavigationProp | undefined,
+  navigation: NavigationProps | undefined,
   routeParams?: NavigationRouteParams,
 ): [
   NavAction,
-  Types.NavigationProp | undefined,
+  NavigationProps | undefined,
   string,
   Types.NavigationNavigateParams | NavigationRouteParams | undefined,
 ] => {
@@ -352,12 +353,12 @@ const buildCloseRequest = (
  * building params, and determining screen id
  */
 export const buildRequest = (
-  nav: Types.NavigationProp | undefined,
+  nav: NavigationProps | undefined,
   action: NavAction,
   routeParams?: NavigationRouteParams,
 ): [
   NavAction,
-  Types.NavigationProp | undefined,
+  NavigationProps | undefined,
   string,
   Types.NavigationNavigateParams | NavigationRouteParams | undefined,
 ] => {
