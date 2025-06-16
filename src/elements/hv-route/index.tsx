@@ -2,7 +2,6 @@ import * as Components from 'hyperview/src/services/components';
 import * as Contexts from 'hyperview/src/contexts';
 import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import * as NavigationContext from 'hyperview/src/contexts/navigation';
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as Types from './types';
@@ -11,6 +10,10 @@ import {
   BackBehaviorContext,
   BackBehaviorProvider,
 } from 'hyperview/src/contexts/back-behaviors';
+import {
+  Context,
+  NavigationContextProps,
+} from 'hyperview/src/contexts/navigation';
 import HvDoc, { StateContext } from 'hyperview/src/elements/hv-doc';
 import type {
   ListenerEvent,
@@ -299,9 +302,7 @@ const getNestedNavigator = (
  * - Passes the props, context, and url to HvRouteInner
  */
 function HvRouteFC(props: Types.Props) {
-  const navigationContext: Types.NavigationContextProps | null = useContext(
-    NavigationContext.Context,
-  );
+  const navigationContext: NavigationContextProps | null = useContext(Context);
   const elemenCacheContext = useContext(Contexts.ElementCacheContext);
   if (!navigationContext || !elemenCacheContext) {
     throw new NavigatorService.HvRouteError('No context found');

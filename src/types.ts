@@ -324,11 +324,6 @@ export type ScreenState = {
   url?: string | null;
 };
 
-export type Reload = (
-  optHref: DOMString | null | undefined,
-  opts: HvComponentOptions,
-) => void;
-
 export type ExperimentalFeatures = {
   // Delay the mutation of the navigation state until after the screen has been rendered
   // This is intended to improve the performance of navigation actions

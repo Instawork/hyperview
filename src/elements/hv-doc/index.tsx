@@ -1,7 +1,6 @@
 import * as Contexts from 'hyperview/src/contexts';
 import * as DomService from 'hyperview/src/services/dom';
 import * as Helpers from 'hyperview/src/services/dom/helpers';
-import * as NavigationContext from 'hyperview/src/contexts/navigation';
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as UrlService from 'hyperview/src/services/url';
@@ -14,6 +13,10 @@ import {
   ScreenState,
 } from 'hyperview/src/types';
 import { DocState, ErrorProps, Props } from './types';
+import {
+  Context as NavigationContext,
+  NavigationContextProps,
+} from 'hyperview/src/contexts/navigation';
 import React, {
   useCallback,
   useContext,
@@ -55,8 +58,8 @@ const HvDoc = (props: Props) => {
     url: null,
   });
 
-  const navigationContext: NavigationContext.NavigationContextProps | null = useContext(
-    NavigationContext.Context,
+  const navigationContext: NavigationContextProps | null = useContext(
+    NavigationContext,
   );
 
   const elemenCacheContext = useContext(Contexts.ElementCacheContext);

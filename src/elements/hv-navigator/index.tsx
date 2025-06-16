@@ -4,7 +4,6 @@ import * as Dom from 'hyperview/src/services/dom';
 import * as Events from 'hyperview/src/services/events';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import * as NavigationContext from 'hyperview/src/contexts/navigation';
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import {
   BEHAVIOR_ATTRIBUTES,
@@ -21,6 +20,7 @@ import type {
 } from './types';
 import React, { PureComponent } from 'react';
 import { CardStyleInterpolators } from '@react-navigation/stack';
+import { Context as NavigationContext } from 'hyperview/src/contexts/navigation';
 import { Platform } from 'react-native';
 import { createCustomStackNavigator } from 'hyperview/src/core/components/navigator-stack';
 import { createCustomTabNavigator } from 'hyperview/src/core/components/navigator-tab';
@@ -465,7 +465,7 @@ export default class HvNavigator extends PureComponent<Props> {
       ? this.ModalNavigator
       : this.Navigator;
     return (
-      <NavigationContext.Context.Consumer>
+      <NavigationContext.Consumer>
         {navContext => (
           <Contexts.DocContext.Consumer>
             {docProvider => (
@@ -476,7 +476,7 @@ export default class HvNavigator extends PureComponent<Props> {
             )}
           </Contexts.DocContext.Consumer>
         )}
-      </NavigationContext.Context.Consumer>
+      </NavigationContext.Consumer>
     );
   }
 }

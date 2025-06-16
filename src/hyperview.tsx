@@ -5,7 +5,6 @@ import * as Dom from 'hyperview/src/services/dom';
 import * as Events from 'hyperview/src/services/events';
 import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Logging from 'hyperview/src/services/logging';
-import * as NavContexts from 'hyperview/src/contexts/navigation';
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Render from 'hyperview/src/services/render';
 import * as Services from 'hyperview/src/services';
@@ -27,6 +26,7 @@ import {
 import React, { PureComponent } from 'react';
 import HvRoute from 'hyperview/src/elements/hv-route';
 import { Linking } from 'react-native';
+import { Context as NavigationContext } from 'hyperview/src/contexts/navigation';
 import { XMLSerializer } from '@instawork/xmldom';
 import { XNetworkRetryAction } from 'hyperview/src/services/dom/types';
 
@@ -580,7 +580,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
         <Contexts.RefreshControlComponentContext.Provider
           value={this.props.refreshControl}
         >
-          <NavContexts.Context.Provider
+          <NavigationContext.Provider
             value={{
               behaviors: this.props.behaviors,
               components: this.props.components,
@@ -603,7 +603,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
             <Contexts.ElementCacheProvider>
               <HvRoute />
             </Contexts.ElementCacheProvider>
-          </NavContexts.Context.Provider>
+          </NavigationContext.Provider>
         </Contexts.RefreshControlComponentContext.Provider>
       </Contexts.DateFormatContext.Provider>
     );

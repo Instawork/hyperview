@@ -1,6 +1,5 @@
 import * as Contexts from 'hyperview/src/contexts';
 import * as CustomStackRouter from 'hyperview/src/core/components/navigator-stack/router';
-import * as NavigationContext from 'hyperview/src/contexts/navigation';
 import * as React from 'react';
 import type { NavigationState, ParamListBase } from '@react-navigation/routers';
 import type { Props, StackOptions } from './types';
@@ -16,10 +15,11 @@ import {
   StackView,
 } from '@react-navigation/stack';
 import type { EventMapBase } from '@react-navigation/native';
+import { Context as NavigationContext } from 'hyperview/src/contexts/navigation';
 
 const CustomStackNavigator = (props: Props) => {
   const docContextProps = React.useContext(Contexts.DocContext);
-  const navContextProps = React.useContext(NavigationContext.Context);
+  const navContextProps = React.useContext(NavigationContext);
 
   const {
     state,

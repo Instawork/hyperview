@@ -1,16 +1,22 @@
 import type {
+  DOMString,
   ExperimentalFeatures,
   Fetch,
   HvBehavior,
   HvComponent,
   HvComponentOnUpdate,
-  Reload,
+  HvComponentOptions,
   Route,
 } from 'hyperview/src/types';
 import React, { ComponentType } from 'react';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
 import type { NavigationComponents } from 'hyperview/src/services/navigator';
+
+type Reload = (
+  optHref: DOMString | null | undefined,
+  opts: HvComponentOptions,
+) => void;
 
 export type NavigationContextProps = {
   entrypointUrl: string;
