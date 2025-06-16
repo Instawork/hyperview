@@ -72,6 +72,8 @@ export const NODE_TYPE = {
   TEXT_NODE: 3,
 } as const;
 
+export type NodeType = typeof NODE_TYPE[keyof typeof NODE_TYPE];
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type StyleSheet = any;
 
