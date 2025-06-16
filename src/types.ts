@@ -9,7 +9,7 @@ import type { Props as ErrorProps } from 'hyperview/src/core/components/load-err
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
 import type { NavigationComponents } from 'hyperview/src/services/navigator';
 import type { RefreshControlProps } from 'react-native';
-import type { XResponseStaleReason } from './services/dom/types';
+import type { XResponseStaleReason } from 'hyperview/src/services/dom';
 
 export type DOMString = string;
 export type NamespaceURI = string;

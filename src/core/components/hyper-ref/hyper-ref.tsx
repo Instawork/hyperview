@@ -24,7 +24,6 @@ import { ScrollView } from 'hyperview/src/core/components/scroll';
 import type { StyleSheet } from 'hyperview/src/types';
 import VisibilityDetectingView from './VisibilityDetectingView';
 import { XMLSerializer } from '@instawork/xmldom';
-import { X_RESPONSE_STALE_REASON } from 'hyperview/src/services/dom/types';
 import { createEventHandler } from 'hyperview/src/core/utils';
 import { createTestProps } from 'hyperview/src/services';
 
@@ -183,7 +182,7 @@ export default class HyperRef extends PureComponent<Props, State> {
     let loadBehaviors = this.getBehaviorElements(TRIGGERS.LOAD);
     if (
       this.props.options?.staleHeaderType ===
-      X_RESPONSE_STALE_REASON.STALE_IF_ERROR
+      Dom.X_RESPONSE_STALE_REASON.STALE_IF_ERROR
     ) {
       const loadStaleBehaviors = this.getBehaviorElements(
         TRIGGERS.LOAD_STALE_ERROR,
