@@ -1,7 +1,6 @@
 import * as Services from 'hyperview/src/services';
 import type { HvComponent } from 'hyperview/src/types';
 import HvDateField from 'hyperview/src/elements/hv-date-field';
-import type { HvFormValues } from './types';
 import HvImage from 'hyperview/src/elements/hv-image';
 import HvList from 'hyperview/src/elements/hv-list';
 import HvOption from 'hyperview/src/elements/hv-option';
@@ -86,9 +85,9 @@ export class Registry {
           for (let i = 0; i < inputElements.length; i += 1) {
             const inputElement = inputElements.item(i);
             if (inputElement) {
-              const formComponent = c as HvComponent & HvFormValues;
+              const formComponent = c as HvComponent;
               formComponent
-                .getFormInputValues(inputElement)
+                .getFormInputValues?.(inputElement)
                 // eslint-disable-next-line no-loop-func
                 .forEach(([name, value]: [string, string]) => {
                   formData.append(name, value);

@@ -132,6 +132,7 @@ export type HvComponentProps = {
 };
 
 type HvComponentStatics = {
+  getFormInputValues?: (element: Element) => Array<[string, string]>;
   localName: string;
   localNameAliases?: Array<string>;
   namespaceURI: NamespaceURI;
