@@ -1,4 +1,8 @@
-import type { NavigationProps, Route, RouteParams } from 'hyperview/src/types';
+import type {
+  NavigationProps,
+  RouteParams,
+  RouteProps,
+} from 'hyperview/src/types';
 import { NavigationContainerRefContext } from '@react-navigation/native';
 import type { BottomTabBarProps as RNBottomTabBarProps } from '@react-navigation/bottom-tabs';
 
@@ -22,7 +26,7 @@ export const NAVIGATOR_TYPE = {
 
 export type Props = {
   navigation?: NavigationProps;
-  route?: Route;
+  route?: RouteProps;
   entrypointUrl: string;
   rootNavigation?:
     | React.ContextType<typeof NavigationContainerRefContext>

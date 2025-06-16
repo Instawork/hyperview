@@ -2,7 +2,7 @@ import {
   HvComponentOnUpdate,
   NavigationProvider,
   OnUpdateCallbacks,
-  Route,
+  RouteProps,
   ScreenState,
 } from 'hyperview/src/types';
 
@@ -10,7 +10,7 @@ export type Props = {
   children?: React.ReactNode;
   element?: Element;
   navigationProvider: NavigationProvider;
-  route?: Route;
+  route?: RouteProps;
   url: string;
 };
 

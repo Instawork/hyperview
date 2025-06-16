@@ -18,7 +18,7 @@ import HvDoc, { StateContext } from 'hyperview/src/elements/hv-doc';
 import type {
   ListenerEvent,
   NavigationProps,
-  Route,
+  RouteProps,
   ScreenState,
 } from 'hyperview/src/types';
 import React, { PureComponent, useContext, useMemo } from 'react';
@@ -149,7 +149,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     );
 
     // Inject the corrected url into the params and cast as correct type
-    const route: Route = {
+    const route: RouteProps = {
       ...this.props.route,
       key: this.props.route?.key || 'hv-screen',
       name: this.props.route?.name || 'hv-screen',

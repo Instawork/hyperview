@@ -7,8 +7,8 @@ import { LOCAL_NAME, NAV_ACTIONS, NODE_TYPE } from 'hyperview/src/types';
 import type {
   NavAction,
   NavigationProps,
-  Route,
   RouteParams,
+  RouteProps,
 } from 'hyperview/src/types';
 import { ANCHOR_ID_SEPARATOR } from './types';
 import type { NavigationState } from '@react-navigation/native';
@@ -619,7 +619,7 @@ export const removeStackRoute = (
 export const addStackRoute = (
   doc: Document | undefined,
   id: string | undefined,
-  route: Route | undefined,
+  route: RouteProps | undefined,
   siblingName: string | undefined,
   baseUrl: string,
   setDoc?: ((d: Document) => void) | undefined,

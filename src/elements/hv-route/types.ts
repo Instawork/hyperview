@@ -5,7 +5,7 @@ import {
   HvComponentOnUpdate,
   NavigationProps,
   OnUpdateCallbacks,
-  Route,
+  RouteProps,
   ScreenState,
 } from 'hyperview/src/types';
 import { ComponentType } from 'react';
@@ -17,7 +17,7 @@ import type { Props as ErrorProps } from 'hyperview/src/core/components/load-err
 export type InnerRouteProps = {
   url?: string;
   navigator: NavigatorService.Navigator;
-  route?: Route;
+  route?: RouteProps;
   entrypointUrl: string;
   onUpdate: HvComponentOnUpdate;
   behaviors?: HvBehavior[];
@@ -39,5 +39,5 @@ export type InnerRouteProps = {
  */
 export type Props = {
   navigation?: NavigationProps;
-  route?: Route;
+  route?: RouteProps;
 };

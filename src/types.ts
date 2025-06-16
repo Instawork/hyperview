@@ -268,7 +268,7 @@ export type RouteParams = {
   url?: DOMString;
 };
 
-export type Route = NavigatorRoute<string, RouteParams | undefined>;
+export type RouteProps = NavigatorRoute<string, RouteParams | undefined>;
 
 export type Fetch = (
   input: RequestInfo | URL,
@@ -337,8 +337,8 @@ export type Props = {
   onError?: (error: Error) => void;
   onParseAfter?: (url: string) => void;
   onParseBefore?: (url: string) => void;
-  onRouteBlur?: (route: Route) => void;
-  onRouteFocus?: (route: Route) => void;
+  onRouteBlur?: (route: RouteProps) => void;
+  onRouteFocus?: (route: RouteProps) => void;
   behaviors?: HvBehavior[];
   components?: HvComponent[];
   elementErrorComponent?: ComponentType<ErrorProps>;
