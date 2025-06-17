@@ -64,4 +64,4 @@ export const KeyboardAwareScrollView = withContext<
   HVKeyboardAwareScrollView['props']
 >(HVKeyboardAwareScrollView);
 
-export * from './context';
+export { Context, Provider, useScrollContext } from './context';

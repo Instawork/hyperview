@@ -67,5 +67,3 @@ export default class LoadError extends PureComponent<Props> {
     );
   }
 }
-
-export * from './types';

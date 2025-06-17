@@ -4,12 +4,6 @@ import * as Events from 'hyperview/src/services/events';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import { BEHAVIOR_ATTRIBUTES, LOCAL_NAME, TRIGGERS } from 'hyperview/src/types';
-import type {
-  HvComponentOnUpdate,
-  HvComponentOptions,
-  StyleSheet,
-  StyleSheets,
-} from 'hyperview/src/types';
 import {
   PRESS_TRIGGERS,
   PRESS_TRIGGERS_PROP_NAMES,
@@ -27,9 +21,9 @@ import { RefreshControl, Text, TouchableOpacity } from 'react-native';
 import { BackBehaviorContext } from 'hyperview/src/contexts/back-behaviors';
 import HvElement from 'hyperview/src/core/components/hv-element';
 import { ScrollView } from 'hyperview/src/core/components/scroll';
+import type { StyleSheet } from 'hyperview/src/types';
 import VisibilityDetectingView from './VisibilityDetectingView';
 import { XMLSerializer } from '@instawork/xmldom';
-import { X_RESPONSE_STALE_REASON } from 'hyperview/src/services/dom/types';
 import { createEventHandler } from 'hyperview/src/core/utils';
 import { createTestProps } from 'hyperview/src/services';
 
@@ -188,7 +182,7 @@ export default class HyperRef extends PureComponent<Props, State> {
     let loadBehaviors = this.getBehaviorElements(TRIGGERS.LOAD);
     if (
       this.props.options?.staleHeaderType ===
-      X_RESPONSE_STALE_REASON.STALE_IF_ERROR
+      Dom.X_RESPONSE_STALE_REASON.STALE_IF_ERROR
     ) {
       const loadStaleBehaviors = this.getBehaviorElements(
         TRIGGERS.LOAD_STALE_ERROR,
@@ -432,32 +426,3 @@ export default class HyperRef extends PureComponent<Props, State> {
     );
   }
 }
-
-export const addHref = (
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  component: any,
-  element: Element,
-  stylesheets: StyleSheets,
-  onUpdate: HvComponentOnUpdate,
-  options: HvComponentOptions,
-) => {
-  const href = element.getAttribute('href');
-  const action = element.getAttribute('action');
-  const childNodes = element.childNodes ? Array.from(element.childNodes) : [];
-  const behaviorElements = childNodes.filter(
-    n => n && n.nodeType === 1 && (n as Element).tagName === 'behavior',
-  );
-  const hasBehaviors = href || action || behaviorElements.length > 0;
-  if (!hasBehaviors) {
-    return component;
-  }
-
-  return (
-    <HyperRef
-      element={element}
-      onUpdate={onUpdate}
-      options={options}
-      stylesheets={stylesheets}
-    />
-  );
-};
