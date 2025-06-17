@@ -28,7 +28,6 @@ import HvRoute from 'hyperview/src/elements/hv-route';
 import { Linking } from 'react-native';
 import { Context as NavigationContext } from 'hyperview/src/contexts/navigation';
 import { XMLSerializer } from '@instawork/xmldom';
-import { XNetworkRetryAction } from 'hyperview/src/services/dom/types';
 
 /**
  * Provides routing to the correct path based on the state passed in
@@ -149,7 +148,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
     root: Document,
     formData: FormData | null | undefined,
     onUpdateCallbacks: OnUpdateCallbacks,
-    networkRetryAction: XNetworkRetryAction | null | undefined,
+    networkRetryAction: Dom.XNetworkRetryAction | null | undefined,
     networkRetryEvent: string | null | undefined,
   ): Promise<Element | null> => {
     if (!href) {
@@ -345,7 +344,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
     } = opts;
     const networkRetryAction = behaviorElement?.getAttribute(
       'network-retry-action',
-    ) as XNetworkRetryAction | null | undefined;
+    ) as Dom.XNetworkRetryAction | null | undefined;
     const networkRetryEvent = behaviorElement?.getAttribute(
       'network-retry-event',
     ) as string | null | undefined;

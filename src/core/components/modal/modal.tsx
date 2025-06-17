@@ -163,5 +163,3 @@ export default (props: Props): JSX.Element => {
     </Modal>
   );
 };
-
-export * from './types';

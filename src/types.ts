@@ -1,6 +1,5 @@
 import * as Components from 'hyperview/src/services/components';
 import * as Logging from 'hyperview/src/services/logging';
-import * as Stylesheets from './services/stylesheets';
 import type {
   NavigationState,
   Route as NavigatorRoute,
@@ -10,7 +9,7 @@ import type { Props as ErrorProps } from 'hyperview/src/core/components/load-err
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
 import type { NavigationComponents } from 'hyperview/src/services/navigator';
 import type { RefreshControlProps } from 'react-native';
-import type { XResponseStaleReason } from './services/dom/types';
+import type { XResponseStaleReason } from 'hyperview/src/services/dom';
 
 export type DOMString = string;
 export type NamespaceURI = string;
@@ -312,7 +311,7 @@ export type ScreenState = {
   elementError?: Error | null;
   error?: Error | null;
   staleHeaderType?: XResponseStaleReason | null;
-  styles?: Stylesheets.StyleSheets | null;
+  styles?: StyleSheets | null;
   url?: string | null;
 };
 

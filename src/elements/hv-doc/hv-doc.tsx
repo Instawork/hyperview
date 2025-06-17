@@ -30,7 +30,7 @@ import LoadError from 'hyperview/src/core/components/load-error';
 import { StateContext } from './context';
 import { later } from 'hyperview/src/services';
 
-const HvDoc = (props: Props) => {
+export default (props: Props) => {
   // <HACK>
   // In addition to storing the document on the react state, we keep a reference to it.
   // When performing batched updates on the DOM, we need to ensure every
@@ -341,6 +341,3 @@ const HvDoc = (props: Props) => {
     </StateContext.Provider>
   );
 };
-
-export default HvDoc;
-export { StateContext };
