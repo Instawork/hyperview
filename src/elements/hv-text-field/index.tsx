@@ -1,14 +1,15 @@
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import type { HvComponentProps, TextContextType } from 'hyperview/src/types';
 import React, { MutableRefObject, useCallback, useEffect, useRef } from 'react';
 import {
   createProps,
   getNameValueFormInputValues,
 } from 'hyperview/src/services';
 import type { ElementRef } from 'react';
+import type { HvComponentProps } from 'hyperview/src/types';
 import type { KeyboardTypeOptions } from 'react-native';
 import { LOCAL_NAME } from 'hyperview/src/types';
+import type { TextContextType } from './types';
 import { TextInput } from 'react-native';
 import TinyMask from './mask';
 import debounce from 'lodash/debounce';

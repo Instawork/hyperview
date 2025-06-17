@@ -1,9 +1,8 @@
-import * as NavigatorService from 'hyperview/src/services/navigator';
 import {
-  DOMString,
   HvComponentOnUpdate,
   NavigationProvider,
   OnUpdateCallbacks,
+  RouteProps,
   ScreenState,
 } from 'hyperview/src/types';
 
@@ -11,16 +10,7 @@ export type Props = {
   children?: React.ReactNode;
   element?: Element;
   navigationProvider: NavigationProvider;
-  route?: NavigatorService.Route<
-    string,
-    {
-      behaviorElementId?: number;
-      delay?: DOMString | number | null;
-      needsSubStack?: boolean;
-      preloadScreen?: number;
-      url?: string | null;
-    }
-  >;
+  route?: RouteProps;
   url: string;
 };
 

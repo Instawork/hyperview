@@ -1,9 +1,11 @@
 import * as Contexts from 'hyperview/src/contexts';
-import * as NavigationContext from 'hyperview/src/contexts/navigation';
 import { ActivityIndicator, View } from 'react-native';
+import {
+  Context as NavigationContext,
+  NavigationContextProps,
+} from 'hyperview/src/contexts/navigation';
 import React, { useContext, useEffect } from 'react';
 import { LoadingProps } from './types';
-import { NavigationContextProps } from 'hyperview/src/contexts/navigation';
 import styles from './styles';
 
 /**
@@ -14,7 +16,7 @@ import styles from './styles';
  */
 const Loading = (props: LoadingProps): React.ReactElement => {
   const navigationContext: NavigationContextProps | null = useContext(
-    NavigationContext.Context,
+    NavigationContext,
   );
   const elementCacheContext = useContext(Contexts.ElementCacheContext);
 

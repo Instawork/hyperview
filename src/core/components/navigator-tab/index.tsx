@@ -1,11 +1,11 @@
 import * as React from 'react';
-import * as Types from './types';
 import {
   BottomTabNavigationEventMap,
   BottomTabNavigationOptions,
   BottomTabView,
 } from '@react-navigation/bottom-tabs';
 import {
+  EventMapBase,
   TabActionHelpers,
   TabNavigationState,
   TabRouter,
@@ -13,17 +13,19 @@ import {
   createNavigatorFactory,
   useNavigationBuilder,
 } from '@react-navigation/native';
+import type { NavigationState, ParamListBase } from '@react-navigation/routers';
+import type { Props } from './types';
 
-const CustomTabNavigator = (props: Types.Props) => {
+const CustomTabNavigator = (props: Props) => {
   const {
     state,
     descriptors,
     navigation,
     NavigationContent,
   } = useNavigationBuilder<
-    TabNavigationState<Types.ParamListBase>,
+    TabNavigationState<ParamListBase>,
     TabRouterOptions,
-    TabActionHelpers<Types.ParamListBase>,
+    TabActionHelpers<ParamListBase>,
     BottomTabNavigationOptions,
     BottomTabNavigationEventMap
   >(TabRouter, {
@@ -58,8 +60,8 @@ const CustomTabNavigator = (props: Types.Props) => {
 };
 
 export const createCustomTabNavigator = createNavigatorFactory<
-  Readonly<Types.NavigationState>,
+  Readonly<NavigationState>,
   object,
-  Types.EventMapBase,
+  EventMapBase,
   typeof CustomTabNavigator
 >(CustomTabNavigator);

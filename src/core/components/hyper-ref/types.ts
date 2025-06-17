@@ -1,10 +1,24 @@
 import type {
   HvComponentOnUpdate,
   HvComponentOptions,
-  PressTrigger,
   StyleSheets,
 } from 'hyperview/src/types';
 import { TRIGGERS } from 'hyperview/src/types';
+
+export type TriggerType = typeof TRIGGERS[keyof typeof TRIGGERS];
+
+export const PRESS_TRIGGERS = Object.freeze([
+  TRIGGERS.LONG_PRESS,
+  TRIGGERS.PRESS_IN,
+  TRIGGERS.PRESS_OUT,
+  TRIGGERS.PRESS,
+]);
+
+export type PressTrigger =
+  | typeof TRIGGERS.LONG_PRESS
+  | typeof TRIGGERS.PRESS_IN
+  | typeof TRIGGERS.PRESS_OUT
+  | typeof TRIGGERS.PRESS;
 
 export type Props = {
   element: Element;
@@ -25,7 +39,7 @@ export type PressHandlers = {
   onPress?: () => void;
 };
 
-export const PRESS_PROP_NAMES = {
+const PRESS_PROP_NAMES = {
   ON_LONG_PRESS: 'onLongPress',
   ON_PRESS: 'onPress',
   ON_PRESS_IN: 'onPressIn',

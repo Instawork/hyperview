@@ -1,6 +1,5 @@
 import * as Components from 'hyperview/src/services/components';
 import * as Helpers from './helpers';
-import * as Imports from './imports';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Types from './types';
@@ -8,9 +7,11 @@ import * as UrlService from 'hyperview/src/services/url';
 import type {
   BehaviorOptions,
   NavAction,
+  NavigationProps,
   NavigationProvider,
-  NavigationRouteParams,
+  RouteParams,
 } from 'hyperview/src/types';
+import { CommonActions, StackActions } from '@react-navigation/native';
 import { NAV_ACTIONS } from 'hyperview/src/types';
 import { uuidNumber } from 'hyperview/src/core/utils';
 
@@ -30,10 +31,10 @@ export class Navigator implements NavigationProvider {
    * If the navigator is not type stack, the back request is bubbled
    */
   routeBackRequest(
-    navigation: Types.NavigationProp,
+    navigation: NavigationProps,
     action: NavAction,
     sourceKey: string,
-    routeParams?: NavigationRouteParams,
+    routeParams?: RouteParams,
   ) {
     const state = navigation.getState();
     const sourceIndex = state?.routes.findIndex(
@@ -50,7 +51,7 @@ export class Navigator implements NavigationProvider {
       const routes =
         state?.routes.filter(route => route.key !== sourceKey) || [];
       navigation?.dispatch({
-        ...Imports.CommonActions.reset({
+        ...CommonActions.reset({
           ...state,
           index: routes.length - 1,
           routes,
@@ -66,7 +67,7 @@ export class Navigator implements NavigationProvider {
       const route = this.props.rootNavigation?.getCurrentRoute();
       if (route) {
         navigation.dispatch({
-          ...Imports.CommonActions.setParams({
+          ...CommonActions.setParams({
             ...routeParams,
           }),
           source: route.key,
@@ -78,7 +79,7 @@ export class Navigator implements NavigationProvider {
   /**
    * Prepare and send the request
    */
-  sendRequest = (action: NavAction, routeParams?: NavigationRouteParams) => {
+  sendRequest = (action: NavAction, routeParams?: RouteParams) => {
     const [navAction, navigation, routeId, params] = Helpers.buildRequest(
       this.props.navigation,
       action,
@@ -106,12 +107,12 @@ export class Navigator implements NavigationProvider {
       case NAV_ACTIONS.NAVIGATE:
       case NAV_ACTIONS.NEW:
         if (routeId) {
-          navigation.dispatch(Imports.CommonActions.navigate(routeId, params));
+          navigation.dispatch(CommonActions.navigate(routeId, params));
         }
         break;
       case NAV_ACTIONS.PUSH:
         if (routeId) {
-          navigation.dispatch(Imports.StackActions.push(routeId, params));
+          navigation.dispatch(StackActions.push(routeId, params));
         }
         break;
       default:
@@ -192,27 +193,16 @@ export class Navigator implements NavigationProvider {
     }
   };
 
-  backAction = (params?: NavigationRouteParams | undefined) => {
+  backAction = (params?: RouteParams | undefined) => {
     this.sendRequest(NAV_ACTIONS.BACK, params);
   };
 
-  openModalAction = (params: NavigationRouteParams) => {
+  openModalAction = (params: RouteParams) => {
     this.sendRequest(NAV_ACTIONS.NEW, params);
   };
 }
 
-export type {
-  ListenerEvent,
-  NavigationComponents,
-  NavigationProp,
-  NavigatorProps,
-  Route,
-} from './types';
-export {
-  CardStyleInterpolators,
-  createStackNavigator,
-  createBottomTabNavigator,
-} from './imports';
+export type { NavigationComponents, NavigatorProps } from './types';
 export { HvRouteError, HvNavigatorError, HvRenderError } from './errors';
 export {
   addStackRoute,

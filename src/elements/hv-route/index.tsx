@@ -2,7 +2,6 @@ import * as Components from 'hyperview/src/services/components';
 import * as Contexts from 'hyperview/src/contexts';
 import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import * as NavigationContext from 'hyperview/src/contexts/navigation';
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as Types from './types';
@@ -11,7 +10,17 @@ import {
   BackBehaviorContext,
   BackBehaviorProvider,
 } from 'hyperview/src/contexts/back-behaviors';
+import {
+  Context,
+  NavigationContextProps,
+} from 'hyperview/src/contexts/navigation';
 import HvDoc, { StateContext } from 'hyperview/src/elements/hv-doc';
+import type {
+  ListenerEvent,
+  NavigationProps,
+  RouteProps,
+  ScreenState,
+} from 'hyperview/src/types';
 import React, { PureComponent, useContext, useMemo } from 'react';
 import HvElement from 'hyperview/src/core/components/hv-element';
 import HvNavigator from 'hyperview/src/elements/hv-navigator';
@@ -19,7 +28,6 @@ import HvScreen from 'hyperview/src/elements/hv-screen';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import Loading from 'hyperview/src/core/components/loading';
 import { NavigationContainerRefContext } from '@react-navigation/native';
-import type { ScreenState } from 'hyperview/src/types';
 
 /**
  * Implementation of an HvRoute component
@@ -141,7 +149,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     );
 
     // Inject the corrected url into the params and cast as correct type
-    const route: Types.RouteProps = {
+    const route: RouteProps = {
       ...this.props.route,
       key: this.props.route?.key || 'hv-screen',
       name: this.props.route?.name || 'hv-screen',
@@ -177,7 +185,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
   Route = (): React.ReactElement => {
     const { Screen } = this;
 
-    const needsSubStack = this.props.route?.params.needsSubStack
+    const needsSubStack = this.props.route?.params?.needsSubStack
       ? this.props.route.params.needsSubStack
       : false;
 
@@ -295,9 +303,7 @@ const getNestedNavigator = (
  * - Passes the props, context, and url to HvRouteInner
  */
 function HvRouteFC(props: Types.Props) {
-  const navigationContext: Types.NavigationContextProps | null = useContext(
-    NavigationContext.Context,
-  );
+  const navigationContext: NavigationContextProps | null = useContext(Context);
   const elemenCacheContext = useContext(Contexts.ElementCacheContext);
   if (!navigationContext || !elemenCacheContext) {
     throw new NavigatorService.HvRouteError('No context found');
@@ -313,8 +319,7 @@ function HvRouteFC(props: Types.Props) {
         );
 
   const rootNavigation = useContext(NavigationContainerRefContext);
-  const nav =
-    props.navigation || (rootNavigation as NavigatorService.NavigationProp);
+  const nav = props.navigation || (rootNavigation as NavigationProps);
   const navigator = useMemo(
     () =>
       new NavigatorService.Navigator({
@@ -412,26 +417,29 @@ function HvRouteFC(props: Types.Props) {
       );
 
       // Update the urls in each route when the state updates the params
-      const unsubscribeState: () => void = nav.addListener('state', event => {
-        const navStateMutationsDelay =
-          navigationContext.experimentalFeatures?.navStateMutationsDelay || 0;
-        const updateRouteUrlFromState = (e: NavigatorService.ListenerEvent) => {
-          NavigatorService.updateRouteUrlFromState(
-            docContext?.getDoc(),
-            id,
-            e.data?.state,
-            docContext?.setDoc,
-          );
-        };
-        if (navStateMutationsDelay > 0) {
-          // The timeout ensures the processing occurs after the screen is rendered or shown
-          setTimeout(() => {
+      const unsubscribeState: () => void = nav.addListener(
+        'state',
+        (event: ListenerEvent) => {
+          const navStateMutationsDelay =
+            navigationContext.experimentalFeatures?.navStateMutationsDelay || 0;
+          const updateRouteUrlFromState = (e: ListenerEvent) => {
+            NavigatorService.updateRouteUrlFromState(
+              docContext?.getDoc(),
+              id,
+              e.data?.state,
+              docContext?.setDoc,
+            );
+          };
+          if (navStateMutationsDelay > 0) {
+            // The timeout ensures the processing occurs after the screen is rendered or shown
+            setTimeout(() => {
+              updateRouteUrlFromState(event);
+            }, navStateMutationsDelay);
+          } else {
             updateRouteUrlFromState(event);
-          }, navStateMutationsDelay);
-        } else {
-          updateRouteUrlFromState(event);
-        }
-      });
+          }
+        },
+      );
 
       return () => {
         unsubscribeBlur();

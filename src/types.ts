@@ -1,11 +1,14 @@
 import * as Components from 'hyperview/src/services/components';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Stylesheets from './services/stylesheets';
+import type {
+  NavigationState,
+  Route as NavigatorRoute,
+} from '@react-navigation/native';
 import React, { ComponentType } from 'react';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
 import type { NavigationComponents } from 'hyperview/src/services/navigator';
-import type { Route as NavigatorRoute } from './services/navigator';
 import type { RefreshControlProps } from 'react-native';
 import type { XResponseStaleReason } from './services/dom/types';
 
@@ -71,88 +74,6 @@ export const NODE_TYPE = {
 
 export type NodeType = typeof NODE_TYPE[keyof typeof NODE_TYPE];
 
-export type Attribute = Node & {
-  value: DOMString;
-  nodeType: typeof NODE_TYPE.ATTRIBUTE_NODE;
-  readonly name: DOMString;
-  readonly specified: true;
-  ownerElement: Element;
-};
-
-export type DocumentType = {
-  entities: NamedNodeMap;
-  internalSubset: DOMString;
-  name: DOMString;
-  notations: NamedNodeMap;
-  publicId: DOMString;
-  systemId: DOMString;
-};
-
-export type DOMImplementation = {
-  createDocument: (
-    namespaceURI: NamespaceURI,
-    qualifiedName: DOMString,
-    doctype: DocumentType,
-  ) => Document;
-  createDocumentType: (
-    qualifiedName: DOMString,
-    publicId: DOMString,
-    systemId: DOMString,
-  ) => DocumentType;
-  hasFeature: (feature: DOMString, version: DOMString) => boolean;
-};
-
-export type DocumentFragment = Node;
-
-export type EntityReference = Node;
-
-export type ProcessingInstruction = Node & {
-  data: DOMString;
-  readonly target: DOMString;
-};
-
-export type CharacterData = Node & {
-  data: DOMString;
-  appendData: (data: DOMString) => void;
-  deleteData: (offset: number, count: number) => void;
-  insertData: (offset: number, data: DOMString) => void;
-  replaceData: (offset: number, count: number, data: DOMString) => void;
-  substringData: (offset: number, count: number) => DOMString;
-};
-
-export type Text = CharacterData & {
-  nodeName: '#text';
-  nodeType: typeof NODE_TYPE.TEXT_NODE;
-  splitText: (offset: number) => Text;
-};
-
-export type Comment = CharacterData & {
-  nodeName: '#comment';
-  nodeType: typeof NODE_TYPE.COMMENT_NODE;
-};
-
-export type CDATASection = CharacterData & {
-  nodeName: '#cdata-section';
-  nodeType: typeof NODE_TYPE.CDATA_SECTION_NODE;
-};
-
-export type NamedNodeMap = {
-  getNamedItem: (key: string) => Attribute | null | undefined;
-  getNamedItemNS: (
-    namespaceURI: NamespaceURI,
-    localName: string,
-  ) => Attribute | null | undefined;
-  item: (index: number) => Attribute | null | undefined;
-  length: number;
-  removeNamedItem: (key: string) => Attribute | null | undefined;
-  removeNamedItemNS: (
-    namespaceURI: NamespaceURI,
-    localName: string,
-  ) => Attribute | null | undefined;
-  setNamedItem: (attribute: Attribute) => Attribute | null | undefined;
-  setNamedItemNS: (attribute: Attribute) => Attribute | null | undefined;
-};
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type StyleSheet = any;
 
@@ -203,10 +124,6 @@ export type HvComponentOnUpdate = (
   options: HvComponentOptions,
 ) => void;
 
-export type HvGetRoot = () => Document | null;
-
-export type HvUpdateRoot = (root: Document, updateStylesheet?: boolean) => void;
-
 export type HvComponentProps = {
   element: Element;
   onUpdate: HvComponentOnUpdate;
@@ -214,14 +131,8 @@ export type HvComponentProps = {
   stylesheets: StyleSheets;
 };
 
-// This type exists for casting since our current version of Flow
-// does not support optional static properties. Otherwise this would
-// be added as an optional property in HvComponentStatics
-export type HvFormValues = {
-  getFormInputValues: (element: Element) => Array<[string, string]>;
-};
-
-export type HvComponentStatics = {
+type HvComponentStatics = {
+  getFormInputValues?: (element: Element) => Array<[string, string]>;
   localName: string;
   localNameAliases?: Array<string>;
   namespaceURI: NamespaceURI;
@@ -232,6 +143,10 @@ export type HvComponent = (
   | React.FunctionComponent<HvComponentProps>
 ) &
   HvComponentStatics;
+
+export type HvGetRoot = () => Document | null;
+
+export type HvUpdateRoot = (root: Document, updateStylesheet?: boolean) => void;
 
 export type HvBehavior = {
   action: string;
@@ -282,48 +197,6 @@ export const TRIGGERS = Object.freeze({
   VISIBLE: 'visible',
 });
 
-export type Trigger = typeof TRIGGERS[keyof typeof TRIGGERS];
-
-export const PRESS_TRIGGERS = Object.freeze([
-  TRIGGERS.LONG_PRESS,
-  TRIGGERS.PRESS_IN,
-  TRIGGERS.PRESS_OUT,
-  TRIGGERS.PRESS,
-]);
-
-export type PressTrigger = 'longPress' | 'pressIn' | 'pressOut' | 'press';
-
-export type TextContextType =
-  | 'none'
-  | 'URL'
-  | 'addressCity'
-  | 'addressCityAndState'
-  | 'addressState'
-  | 'countryName'
-  | 'creditCardNumber'
-  | 'emailAddress'
-  | 'familyName'
-  | 'fullStreetAddress'
-  | 'givenName'
-  | 'jobTitle'
-  | 'location'
-  | 'middleName'
-  | 'name'
-  | 'namePrefix'
-  | 'nameSuffix'
-  | 'nickname'
-  | 'organizationName'
-  | 'postalCode'
-  | 'streetAddressLine1'
-  | 'streetAddressLine2'
-  | 'sublocality'
-  | 'telephoneNumber'
-  | 'username'
-  | 'password'
-  | 'newPassword'
-  | 'oneTimeCode'
-  | undefined;
-
 // https://hyperview.org/docs/reference_behavior_attributes#action
 export const ACTIONS = {
   APPEND: 'append',
@@ -363,6 +236,45 @@ export const UPDATE_ACTIONS = {
 
 export type UpdateAction = typeof UPDATE_ACTIONS[keyof typeof UPDATE_ACTIONS];
 
+export type ListenerEvent = {
+  data: { state: NavigationState | undefined } | undefined;
+  preventDefault: () => void;
+};
+
+type ListenerCallback = (event: ListenerEvent) => void;
+
+/**
+ * Minimal representation of the 'NavigationProp' used by react-navigation
+ */
+export type NavigationProps = {
+  navigate: (options: object) => void;
+  dispatch: (options: object) => void;
+  goBack: () => void;
+  getState: () => NavigationState;
+  getParent: (id?: string) => NavigationProps | undefined;
+  addListener: (eventName: string, callback: ListenerCallback) => () => void;
+  isFocused: () => boolean;
+};
+
+export type RouteParams = {
+  behaviorElementId?: number | null;
+  delay?: number;
+  id?: string;
+  isModal?: boolean;
+  needsSubStack?: boolean;
+  preloadScreen?: number | null;
+  routeId?: string;
+  targetId?: string;
+  url?: DOMString;
+};
+
+export type RouteProps = NavigatorRoute<string, RouteParams | undefined>;
+
+export type Fetch = (
+  input: RequestInfo | URL,
+  init?: RequestInit | undefined,
+) => Promise<Response>;
+
 export type BehaviorOptions = {
   newElement?: Element;
   behaviorElement?: Element;
@@ -371,42 +283,8 @@ export type BehaviorOptions = {
   targetId?: string;
 };
 
-export type NavigationRouteParams = {
-  delay?: number | null;
-  preloadScreen?: number | null;
-  url?: string | null;
-  targetId?: string | null;
-};
-
-export type NavigationProps = {
-  back: (routeParams?: NavigationRouteParams | undefined) => void;
-  closeModal: (routeParams?: NavigationRouteParams | undefined) => void;
-  navigate: (routeParams: NavigationRouteParams) => void;
-  openModal: (routeParams: NavigationRouteParams) => void;
-  push: (routeParams: NavigationRouteParams) => void;
-};
-
-export type Route = NavigatorRoute<string, RouteParams>;
-
-export type RouteParams = {
-  id?: string;
-  behaviorElementId?: number;
-  url: string;
-  preloadScreen?: number;
-  isModal?: boolean;
-  routeId?: string;
-  needsSubStack?: boolean;
-};
-
-export const ON_EVENT_DISPATCH = 'hyperview:on-event';
-
-export type Fetch = (
-  input: RequestInfo | URL,
-  init?: RequestInit | undefined,
-) => Promise<Response>;
-
 export type NavigationProvider = {
-  backAction: (params?: NavigationRouteParams | undefined) => void;
+  backAction: (params?: RouteParams | undefined) => void;
   navigate: (
     href: string,
     action: NavAction,
@@ -416,7 +294,7 @@ export type NavigationProvider = {
     stateUrl?: string | null,
     doc?: Document | null,
   ) => void;
-  openModalAction: (params: NavigationRouteParams) => void;
+  openModalAction: (params: RouteParams) => void;
 };
 
 export type OnUpdateCallbacks = {
@@ -438,11 +316,6 @@ export type ScreenState = {
   url?: string | null;
 };
 
-export type Reload = (
-  optHref: DOMString | null | undefined,
-  opts: HvComponentOptions,
-) => void;
-
 export type ExperimentalFeatures = {
   // Delay the mutation of the navigation state until after the screen has been rendered
   // This is intended to improve the performance of navigation actions
@@ -450,7 +323,7 @@ export type ExperimentalFeatures = {
 };
 
 /**
- * All of the props used by Hyperview
+ * All of the props used by hyperview
  */
 export type Props = {
   formatDate: (
@@ -464,8 +337,8 @@ export type Props = {
   onError?: (error: Error) => void;
   onParseAfter?: (url: string) => void;
   onParseBefore?: (url: string) => void;
-  onRouteBlur?: (route: Route) => void;
-  onRouteFocus?: (route: Route) => void;
+  onRouteBlur?: (route: RouteProps) => void;
+  onRouteFocus?: (route: RouteProps) => void;
   behaviors?: HvBehavior[];
   components?: HvComponent[];
   elementErrorComponent?: ComponentType<ErrorProps>;
