@@ -1,7 +1,7 @@
 /* eslint-disable max-classes-per-file */
 import * as Components from 'hyperview/src/services/components';
 import type { HvComponentProps } from 'hyperview/src/types';
-import HvView from 'hyperview/src/components/hv-view';
+import HvView from 'hyperview/src/elements/hv-view';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { PureComponent } from 'react';
 import { getElements } from 'hyperview/test/helpers';

@@ -1,4 +1,8 @@
-import type { NavigationRouteParams, RouteParams } from 'hyperview/src/types';
+import type {
+  NavigationProps,
+  RouteParams,
+  RouteProps,
+} from 'hyperview/src/types';
 import { NavigationContainerRefContext } from '@react-navigation/native';
 import type { BottomTabBarProps as RNBottomTabBarProps } from '@react-navigation/bottom-tabs';
 
@@ -21,8 +25,8 @@ export const NAVIGATOR_TYPE = {
 };
 
 export type Props = {
-  navigation?: NavigationProp;
-  route?: Route<string, RouteParams>;
+  navigation?: NavigationProps;
+  route?: RouteProps;
   entrypointUrl: string;
   rootNavigation?:
     | React.ContextType<typeof NavigationContainerRefContext>
@@ -35,49 +39,14 @@ export type Props = {
  */
 export type NavigationNavigateParams = {
   screen?: string;
-  params?: NavigationNavigateParams | NavigationRouteParams;
+  params?: NavigationNavigateParams | RouteParams;
 };
 
-export type ListenerEvent = {
-  data: { state: NavigationState | undefined } | undefined;
-  preventDefault: () => void;
-};
-
-export type ListenerCallback = (event: ListenerEvent) => void;
-
-/**
- * Minimal representation of the 'NavigationProp' used by react-navigation
- */
-export type NavigationProp = {
-  navigate: (options: object) => void;
-  dispatch: (options: object) => void;
-  goBack: () => void;
-  getState: () => NavigationState;
-  getParent: (id?: string) => NavigationProp | undefined;
-  addListener: (eventName: string, callback: ListenerCallback) => () => void;
-  isFocused: () => boolean;
-};
-
-/**
- * Minimal representation of the 'Route' used by react-navigation
- */
-export type Route<
-  RouteName extends string,
-  Params extends object | undefined = object | undefined
-> = {
-  key: string;
-  name: RouteName;
-  params: Params;
-  state?: NavigationState;
-};
-
-export type BottomTabBarProps = RNBottomTabBarProps & {
+type BottomTabBarProps = RNBottomTabBarProps & {
   id: string;
 };
 
-export type BottomTabBarComponent = (
-  props: BottomTabBarProps,
-) => JSX.Element | null;
+type BottomTabBarComponent = (props: BottomTabBarProps) => JSX.Element | null;
 
 export type NavigationComponents = {
   BottomTabBar?: BottomTabBarComponent;
@@ -86,19 +55,6 @@ export type NavigationComponents = {
 /* List of props available to navigators */
 export type NavigatorProps = NavigationComponents & {
   doc: Document | undefined;
-};
-
-/**
- * Minimal representation of the 'NavigationState' used by react-navigation
- */
-export type NavigationState = {
-  index: number;
-  key: string;
-  routeNames: string[];
-  routes: Route<string, object>[];
-  stale: false;
-  type: string;
-  history?: unknown[];
 };
 
 /**

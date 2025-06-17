@@ -5,7 +5,7 @@ export type Coordinate = {
   longitude: number;
 };
 
-export type Region = {
+type Region = {
   latitude: number;
   latitudeDelta: number;
   longitude: number;

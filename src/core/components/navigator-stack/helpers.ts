@@ -1,26 +1,16 @@
 import * as NavigatorHelpers from 'hyperview/src/services/navigator/helpers';
-import * as Types from './types';
 import { ID_CARD, ID_MODAL } from 'hyperview/src/services/navigator/types';
-import { LOCAL_NAME } from 'hyperview/src/types';
+import { LOCAL_NAME, RouteProps } from 'hyperview/src/types';
+import type { ParamListBase } from '@react-navigation/routers';
 import { StackNavigationState } from '@react-navigation/native';
-
-// TODO: Replace this with the Route type from `hyperview/src/types`
-type Route = {
-  key: string;
-  name: string;
-  params?: {
-    id?: string;
-    url?: string;
-  };
-};
 
 export const buildRoutesFromDom = (
   doc: Document | undefined,
-  state: StackNavigationState<Types.ParamListBase>,
+  state: StackNavigationState<ParamListBase>,
   navigatorId: string,
   routeParamList: Record<string, object | undefined>,
   entrypointUrl: string | undefined,
-): Route[] => {
+): RouteProps[] => {
   const element = doc
     ? NavigatorHelpers.getNavigatorById(doc, navigatorId)
     : null;
@@ -30,9 +20,9 @@ export const buildRoutesFromDom = (
       )
     : [];
 
-  const routes: Route[] = [];
-  const routeIds = state.routes.map((r: Route) => r.params?.id);
-  const routeHrefs = state.routes.map((r: Route) => {
+  const routes: RouteProps[] = [];
+  const routeIds = state.routes.map((r: RouteProps) => r.params?.id);
+  const routeHrefs = state.routes.map((r: RouteProps) => {
     return r.params?.url
       ? NavigatorHelpers.getUrlFromHref(r.params.url, entrypointUrl)
       : undefined;

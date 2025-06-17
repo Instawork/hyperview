@@ -116,3 +116,20 @@ export const isRenderableElement = (
   }
   return false;
 };
+
+/**
+ * Wrapper to handle UI events
+ * Stop propagation and prevent default client behavior
+ * This prevents clicks on various elements to trigger browser navigation
+ * when using Hyperview for web.
+ */
+export const createEventHandler = (
+  handler: () => void,
+  preventDefault = false,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): ((event?: any) => void) => event => {
+  if (preventDefault) {
+    event?.preventDefault();
+  }
+  handler();
+};

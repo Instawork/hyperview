@@ -3,13 +3,15 @@ import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Types from './types';
 import * as UrlService from 'hyperview/src/services/url';
-import { ANCHOR_ID_SEPARATOR, Route } from './types';
 import { LOCAL_NAME, NAV_ACTIONS, NODE_TYPE } from 'hyperview/src/types';
 import type {
   NavAction,
-  NavigationRouteParams,
+  NavigationProps,
   RouteParams,
+  RouteProps,
 } from 'hyperview/src/types';
+import { ANCHOR_ID_SEPARATOR } from './types';
+import type { NavigationState } from '@react-navigation/native';
 import { shallowCloneToRoot } from 'hyperview/src/services';
 
 /**
@@ -100,10 +102,7 @@ export const getUrlFromHref = (
 /**
  * If the params contain a url, ensure that it is valid
  */
-export const validateUrl = (
-  action: NavAction,
-  routeParams: NavigationRouteParams,
-) => {
+export const validateUrl = (action: NavAction, routeParams: RouteParams) => {
   if (action === NAV_ACTIONS.PUSH || action === NAV_ACTIONS.NEW) {
     if (!routeParams.url || !cleanHrefFragment(routeParams.url)) {
       throw new Errors.HvNavigatorError(
@@ -119,7 +118,7 @@ export const validateUrl = (
  * example: ['home', 'shifts', 'my-shifts']
  */
 export const findPath = (
-  state: Types.NavigationState,
+  state: NavigationState,
   targetId: string,
 ): string[] => {
   let path: string[] = [];
@@ -135,10 +134,7 @@ export const findPath = (
       path.unshift(route.name);
       return false;
     }
-    path = [
-      ...path,
-      ...findPath(route.state as Types.NavigationState, targetId),
-    ];
+    path = [...path, ...findPath(route.state as NavigationState, targetId)];
     // If the recursion found the target, add the current route name to the path as we back out
     if (path.length) {
       path.unshift(route.name);
@@ -156,8 +152,8 @@ export const findPath = (
  */
 export const getNavigatorAndPath = (
   targetId?: string,
-  navigation?: Types.NavigationProp,
-): [Types.NavigationProp?, string[]?] => {
+  navigation?: NavigationProps,
+): [NavigationProps?, string[]?] => {
   if (!targetId) {
     return [navigation, undefined];
   }
@@ -182,9 +178,9 @@ export const getNavigatorAndPath = (
 export const buildParams = (
   routeId: string,
   path: string[],
-  routeParams: NavigationRouteParams,
+  routeParams: RouteParams,
   index = 0,
-): Types.NavigationNavigateParams | NavigationRouteParams => {
+): Types.NavigationNavigateParams | RouteParams => {
   if (path.length && index < path.length) {
     const screen = path[index];
 
@@ -273,7 +269,7 @@ export const getNavigatorById = (
  */
 export const getNavAction = (
   action: NavAction,
-  routeParams?: NavigationRouteParams,
+  routeParams?: RouteParams,
 ): NavAction => {
   if (
     routeParams &&
@@ -286,7 +282,7 @@ export const getNavAction = (
   return action;
 };
 
-const isRouteModal = (state: Types.NavigationState, index: number): boolean => {
+const isRouteModal = (state: NavigationState, index: number): boolean => {
   if (!state || index > state.routes.length - 1) {
     return false;
   }
@@ -298,13 +294,13 @@ const isRouteModal = (state: Types.NavigationState, index: number): boolean => {
  * Search up the hierarchy for the first stack which is presenting a modal screen
  */
 const buildCloseRequest = (
-  navigation: Types.NavigationProp | undefined,
-  routeParams?: NavigationRouteParams,
+  navigation: NavigationProps | undefined,
+  routeParams?: RouteParams,
 ): [
   NavAction,
-  Types.NavigationProp | undefined,
+  NavigationProps | undefined,
   string,
-  Types.NavigationNavigateParams | NavigationRouteParams | undefined,
+  Types.NavigationNavigateParams | RouteParams | undefined,
 ] => {
   if (!navigation) {
     return [NAV_ACTIONS.CLOSE, navigation, '', routeParams];
@@ -351,14 +347,14 @@ const buildCloseRequest = (
  * building params, and determining screen id
  */
 export const buildRequest = (
-  nav: Types.NavigationProp | undefined,
+  nav: NavigationProps | undefined,
   action: NavAction,
-  routeParams?: NavigationRouteParams,
+  routeParams?: RouteParams,
 ): [
   NavAction,
-  Types.NavigationProp | undefined,
+  NavigationProps | undefined,
   string,
-  Types.NavigationNavigateParams | NavigationRouteParams | undefined,
+  Types.NavigationNavigateParams | RouteParams | undefined,
 ] => {
   const navAction: NavAction = getNavAction(action, routeParams);
 
@@ -381,7 +377,7 @@ export const buildRequest = (
     nav,
   );
 
-  const cleanedParams: NavigationRouteParams = {
+  const cleanedParams: RouteParams = {
     ...routeParams,
     // New actions are always modal
     ...(action === NAV_ACTIONS.NEW && { isModal: true }),
@@ -411,9 +407,11 @@ export const buildRequest = (
   //  { screen: 'shifts', params:
   //    { screen: 'my-shifts', params: { url: 'someurl.xml' } } })
   const lastPathId = path.shift();
-  const params:
-    | Types.NavigationNavigateParams
-    | NavigationRouteParams = buildParams(routeId, path, cleanedParams);
+  const params: Types.NavigationNavigateParams | RouteParams = buildParams(
+    routeId,
+    path,
+    cleanedParams,
+  );
 
   return [navAction, navigation, lastPathId || routeId, params];
 };
@@ -621,7 +619,7 @@ export const removeStackRoute = (
 export const addStackRoute = (
   doc: Document | undefined,
   id: string | undefined,
-  route: Route<string, NavigationRouteParams> | undefined,
+  route: RouteProps | undefined,
   siblingName: string | undefined,
   baseUrl: string,
   setDoc?: ((d: Document) => void) | undefined,
@@ -632,8 +630,8 @@ export const addStackRoute = (
     !route ||
     !siblingName ||
     !isDynamicRoute(route.name) ||
-    !route.params.url ||
-    getRouteByUrl(doc, route.params.url, baseUrl)
+    !route.params?.url ||
+    getRouteByUrl(doc, route.params?.url, baseUrl)
   ) {
     return;
   }
@@ -660,7 +658,7 @@ export const addStackRoute = (
 };
 
 const getUrlFromState = (
-  state: Types.NavigationState,
+  state: NavigationState,
   id: string,
 ): string | undefined => {
   if (!state) {
@@ -673,7 +671,7 @@ const getUrlFromState = (
       const params = route.params as RouteParams;
       return params.url || undefined;
     }
-    const url = getUrlFromState(route.state as Types.NavigationState, id);
+    const url = getUrlFromState(route.state as NavigationState, id);
     if (url) {
       return url;
     }
@@ -688,7 +686,7 @@ const getUrlFromState = (
 export const updateRouteUrlFromState = (
   doc: Document | undefined,
   id: string | undefined,
-  state: Types.NavigationState | undefined,
+  state: NavigationState | undefined,
   setDoc?: ((d: Document) => void) | undefined,
 ) => {
   if (!doc || !id || !state) {
