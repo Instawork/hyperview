@@ -1,6 +1,6 @@
 import * as DomErrors from 'hyperview/src/services/dom/errors';
-import * as Types from './types';
 import { DOMParser } from '@instawork/xmldom';
+import type { ParamListBase } from '@react-navigation/routers';
 import { StackNavigationState } from '@react-navigation/native';
 import { buildRoutesFromDom } from './helpers';
 
@@ -58,7 +58,7 @@ describe('buildRoutesFromDom', () => {
 
   it('should add one route', () => {
     const doc = parser.parseFromString(navDocSource);
-    const state: StackNavigationState<Types.ParamListBase> = {
+    const state: StackNavigationState<ParamListBase> = {
       index: 0,
       key: 'key1',
       routeNames: ['route1'],
@@ -90,7 +90,7 @@ describe('buildRoutesFromDom', () => {
   it('should ignore same order route', () => {
     // When the incoming dom contains the same url as one already in state, don't change
     const doc = parser.parseFromString(navDocSource);
-    const state: StackNavigationState<Types.ParamListBase> = {
+    const state: StackNavigationState<ParamListBase> = {
       index: 0,
       key: 'key1',
       routeNames: ['route1'],
@@ -125,7 +125,7 @@ describe('buildRoutesFromDom', () => {
 
   it('should replace out of order routes', () => {
     const doc = parser.parseFromString(navDocSource);
-    const state: StackNavigationState<Types.ParamListBase> = {
+    const state: StackNavigationState<ParamListBase> = {
       index: 0,
       key: 'key1',
       routeNames: ['route1'],
@@ -162,7 +162,7 @@ describe('buildRoutesFromDom', () => {
     // When the incoming dom contains the same order as state but adds new ones after,
     // leave the current one intact and add a new ones
     const doc = parser.parseFromString(navDocSourceThreeRoute);
-    const state: StackNavigationState<Types.ParamListBase> = {
+    const state: StackNavigationState<ParamListBase> = {
       index: 0,
       key: 'key1',
       routeNames: ['route1'],
@@ -199,7 +199,7 @@ describe('buildRoutesFromDom', () => {
 
   it('should change presentation to modal', () => {
     const doc = parser.parseFromString(navDocSourceModal);
-    const state: StackNavigationState<Types.ParamListBase> = {
+    const state: StackNavigationState<ParamListBase> = {
       index: 0,
       key: 'key1',
       routeNames: ['route1'],
@@ -241,7 +241,7 @@ describe('buildRoutesFromDom', () => {
 
   it('should change presentation to card', () => {
     const doc = parser.parseFromString(navDocSourceCard);
-    const state: StackNavigationState<Types.ParamListBase> = {
+    const state: StackNavigationState<ParamListBase> = {
       index: 0,
       key: 'key1',
       routeNames: ['route1'],

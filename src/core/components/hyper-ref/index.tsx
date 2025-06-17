@@ -3,26 +3,29 @@ import * as Dom from 'hyperview/src/services/dom';
 import * as Events from 'hyperview/src/services/events';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import {
-  BEHAVIOR_ATTRIBUTES,
-  LOCAL_NAME,
-  PRESS_TRIGGERS,
-  TRIGGERS,
-} from 'hyperview/src/types';
+import { BEHAVIOR_ATTRIBUTES, LOCAL_NAME, TRIGGERS } from 'hyperview/src/types';
 import type {
   HvComponentOnUpdate,
   HvComponentOptions,
-  PressTrigger,
   StyleSheet,
   StyleSheets,
-  Trigger,
 } from 'hyperview/src/types';
-import type { PressHandlers, PressPropName, Props, State } from './types';
+import {
+  PRESS_TRIGGERS,
+  PRESS_TRIGGERS_PROP_NAMES,
+  PressTrigger,
+} from './types';
+import type {
+  PressHandlers,
+  PressPropName,
+  Props,
+  State,
+  TriggerType,
+} from './types';
 import React, { PureComponent } from 'react';
 import { RefreshControl, Text, TouchableOpacity } from 'react-native';
 import { BackBehaviorContext } from 'hyperview/src/contexts/back-behaviors';
 import HvElement from 'hyperview/src/core/components/hv-element';
-import { PRESS_TRIGGERS_PROP_NAMES } from './types';
 import { ScrollView } from 'hyperview/src/core/components/scroll';
 import VisibilityDetectingView from './VisibilityDetectingView';
 import { XMLSerializer } from '@instawork/xmldom';
@@ -166,7 +169,7 @@ export default class HyperRef extends PureComponent<Props, State> {
     });
   };
 
-  getBehaviorElements = (trigger: Trigger): Element[] => {
+  getBehaviorElements = (trigger: TriggerType): Element[] => {
     return this.behaviorElements.filter(
       e => e.getAttribute(BEHAVIOR_ATTRIBUTES.TRIGGER) === trigger,
     );

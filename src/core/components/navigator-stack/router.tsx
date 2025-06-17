@@ -1,17 +1,21 @@
-import * as Types from './types';
+import type {
+  ParamListBase,
+  RouterConfigOptions,
+} from '@react-navigation/routers';
+import type { RouterRenameOptions, StackOptions } from './types';
 import { StackNavigationState, StackRouter } from '@react-navigation/native';
 import { buildRoutesFromDom } from './helpers';
 
 /**
  * Provides a custom stack router that allows us to set the initial route
  */
-export const Router = (stackOptions: Types.StackOptions) => {
+export const Router = (stackOptions: StackOptions) => {
   const router = StackRouter(stackOptions);
 
   return {
     ...router,
 
-    getInitialState(options: Types.RouterConfigOptions) {
+    getInitialState(options: RouterConfigOptions) {
       const initState = router.getInitialState(options);
       return mutateState(initState, stackOptions, {
         ...options,
@@ -20,8 +24,8 @@ export const Router = (stackOptions: Types.StackOptions) => {
     },
 
     getStateForRouteNamesChange(
-      state: StackNavigationState<Types.ParamListBase>,
-      options: Types.RouterRenameOptions,
+      state: StackNavigationState<ParamListBase>,
+      options: RouterRenameOptions,
     ) {
       const changeState = router.getStateForRouteNamesChange(state, options);
       return mutateState(changeState, stackOptions, options);
@@ -33,9 +37,9 @@ export const Router = (stackOptions: Types.StackOptions) => {
  * Inject all routes into the state and set the index to the last route
  */
 const mutateState = (
-  state: StackNavigationState<Types.ParamListBase>,
-  stackOptions: Types.StackOptions,
-  options: Types.RouterRenameOptions,
+  state: StackNavigationState<ParamListBase>,
+  stackOptions: StackOptions,
+  options: RouterRenameOptions,
 ) => {
   const entrypointUrl = stackOptions.navContextProps?.entrypointUrl;
   const doc = stackOptions.docContextProps?.getDoc();
