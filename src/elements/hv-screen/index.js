@@ -2,9 +2,12 @@
 import * as Behaviors from 'hyperview/src/behaviors';
 import * as Components from 'hyperview/src/services/components';
 import * as Contexts from 'hyperview/src/contexts';
+import * as Events from 'hyperview/src/services/events';
 import * as Namespaces from 'hyperview/src/services/namespaces';
+import * as Render from 'hyperview/src/services/render';
 import * as Scroll from 'hyperview/src/core/components/scroll';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
+import { createProps, createStyleProp } from 'hyperview/src/services';
 import HvElement from 'hyperview/src/core/components/hv-element';
 import { HvScreenRenderError } from './errors';
 import LoadElementError from 'hyperview/src/core/components/load-element-error';
@@ -13,6 +16,14 @@ import React from 'react';
 
 // eslint-disable-next-line instawork/pure-components
 export default class HvScreen extends React.Component {
+  static createProps = createProps;
+
+  static createStyleProp = createStyleProp;
+
+  static renderChildren = Render.renderChildren;
+
+  static renderElement = Render.renderElement;
+
   constructor(props) {
     super(props);
 
@@ -173,3 +184,6 @@ export default class HvScreen extends React.Component {
     );
   }
 }
+
+export * from 'hyperview/src/types';
+export { Events, Namespaces };
