@@ -3,7 +3,12 @@ import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Types from './types';
 import * as UrlService from 'hyperview/src/services/url';
-import { LOCAL_NAME, NAV_ACTIONS, NODE_TYPE } from 'hyperview/src/types';
+import {
+  LOCAL_NAME,
+  NAVIGATOR_TYPE,
+  NAV_ACTIONS,
+  NODE_TYPE,
+} from 'hyperview/src/types';
 import type {
   NavAction,
   NavigationProps,
@@ -180,7 +185,7 @@ export const buildParams = (
   path: string[],
   routeParams: RouteParams,
   index = 0,
-): Types.NavigationNavigateParams | RouteParams => {
+): Types.NavigateParams | RouteParams => {
   if (path.length && index < path.length) {
     const screen = path[index];
 
@@ -300,14 +305,14 @@ const buildCloseRequest = (
   NavAction,
   NavigationProps | undefined,
   string,
-  Types.NavigationNavigateParams | RouteParams | undefined,
+  Types.NavigateParams | RouteParams | undefined,
 ] => {
   if (!navigation) {
     return [NAV_ACTIONS.CLOSE, navigation, '', routeParams];
   }
 
   const state = navigation.getState();
-  if (state.type === Types.NAVIGATOR_TYPE.STACK) {
+  if (state.type === NAVIGATOR_TYPE.STACK) {
     // Check if current route is modal
     if (isRouteModal(state, state.index)) {
       return [NAV_ACTIONS.CLOSE, navigation, '', routeParams];
@@ -354,7 +359,7 @@ export const buildRequest = (
   NavAction,
   NavigationProps | undefined,
   string,
-  Types.NavigationNavigateParams | RouteParams | undefined,
+  Types.NavigateParams | RouteParams | undefined,
 ] => {
   const navAction: NavAction = getNavAction(action, routeParams);
 
@@ -407,7 +412,7 @@ export const buildRequest = (
   //  { screen: 'shifts', params:
   //    { screen: 'my-shifts', params: { url: 'someurl.xml' } } })
   const lastPathId = path.shift();
-  const params: Types.NavigationNavigateParams | RouteParams = buildParams(
+  const params: Types.NavigateParams | RouteParams = buildParams(
     routeId,
     path,
     cleanedParams,
@@ -560,7 +565,7 @@ export const setSelected = (
   if (route && route.parentNode) {
     const parentNode = route.parentNode as Element;
     const type = parentNode.getAttribute(Types.KEY_TYPE);
-    if (type !== Types.NAVIGATOR_TYPE.TAB) {
+    if (type !== NAVIGATOR_TYPE.TAB) {
       return;
     }
 
@@ -600,7 +605,7 @@ export const removeStackRoute = (
   if (route && route.parentNode) {
     const parentNode = route.parentNode as Element;
     const type = parentNode.getAttribute(Types.KEY_TYPE);
-    if (type === Types.NAVIGATOR_TYPE.STACK) {
+    if (type === NAVIGATOR_TYPE.STACK) {
       if (getChildElements(parentNode).length > 1) {
         parentNode.removeChild(route);
 
@@ -640,7 +645,7 @@ export const addStackRoute = (
   if (siblingElement && siblingElement.parentNode) {
     const parentElement = siblingElement.parentNode as Element;
     const type = parentElement.getAttribute(Types.KEY_TYPE);
-    if (type === Types.NAVIGATOR_TYPE.STACK) {
+    if (type === NAVIGATOR_TYPE.STACK) {
       const element = doc.createElementNS(
         Namespaces.HYPERVIEW,
         LOCAL_NAME.NAV_ROUTE,

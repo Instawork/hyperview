@@ -7,7 +7,7 @@ import type {
 import React, { ComponentType } from 'react';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
-import type { NavigationComponents } from 'hyperview/src/services/navigator';
+import type { BottomTabBarProps as RNBottomTabBarProps } from '@react-navigation/bottom-tabs';
 import type { RefreshControlProps } from 'react-native';
 import type { XResponseStaleReason } from 'hyperview/src/services/dom';
 
@@ -215,6 +215,14 @@ export const ACTIONS = {
   UNSELECT_ALL: 'unselect-all',
 } as const;
 
+/**
+ * Definition of the available navigator types
+ */
+export const NAVIGATOR_TYPE = {
+  STACK: 'stack',
+  TAB: 'tab',
+};
+
 export const NAV_ACTIONS = {
   BACK: ACTIONS.BACK,
   CLOSE: ACTIONS.CLOSE,
@@ -325,6 +333,16 @@ export type FormatDate = (
   date: Date | null | undefined,
   format: string | undefined,
 ) => string | undefined;
+
+type BottomTabBarProps = RNBottomTabBarProps & {
+  id: string;
+};
+
+type BottomTabBarComponent = (props: BottomTabBarProps) => JSX.Element | null;
+
+export type NavigationComponents = {
+  BottomTabBar?: BottomTabBarComponent;
+};
 
 /**
  * All of the props used by hyperview
