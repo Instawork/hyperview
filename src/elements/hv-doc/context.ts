@@ -1,7 +1,7 @@
-import { StateContextProps } from './types';
-import { createContext } from 'react';
+import { createContext, useContext } from 'react';
+import { StateProps } from './types';
 
-const callbacks = {
+const defaultCallbacks = {
   clearElementError: () => undefined,
   getDoc: () => null,
   getNavigation: () => ({
@@ -15,11 +15,14 @@ const callbacks = {
   updateUrl: () => null,
 };
 
-export const StateContext = createContext<StateContextProps>({
-  getLocalDoc: () => null,
+export const Context = createContext<StateProps>({
+  getDoc: () => null,
   getScreenState: () => ({}),
   onUpdate: () => undefined,
-  onUpdateCallbacks: callbacks,
+  onUpdateCallbacks: defaultCallbacks,
   reload: () => null,
+  setDoc: () => undefined,
   setScreenState: () => undefined,
 });
+
+export const useDocStateContext = () => useContext(Context);

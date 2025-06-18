@@ -34,7 +34,7 @@ export type Props = Omit<
   removeElement?: (id: number) => void;
   route?: RouteProps;
   url?: string;
-  getLocalDoc: () => Document | null;
+  getDoc: () => Document | null;
   getScreenState: () => ScreenState;
   setScreenState: (state: ScreenState) => void;
 };

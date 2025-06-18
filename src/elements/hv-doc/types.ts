@@ -14,12 +14,13 @@ export type Props = {
   url: string;
 };
 
-export type StateContextProps = {
-  getLocalDoc: () => Document | null;
+export type StateProps = {
+  getDoc: () => Document | null;
   getScreenState: () => ScreenState;
   onUpdate: HvComponentOnUpdate;
   onUpdateCallbacks: OnUpdateCallbacks;
   reload: (url?: string | null) => void;
+  setDoc: (doc: Document) => void;
   setScreenState: (state: ScreenState) => void;
 };
 
@@ -29,6 +30,6 @@ export type ErrorProps = {
   url: string | null | undefined;
 };
 
-export type DocState = ScreenState & {
+export type DocStateProps = ScreenState & {
   loadingUrl?: string | null | undefined;
 };

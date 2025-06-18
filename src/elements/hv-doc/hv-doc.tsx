@@ -11,7 +11,7 @@ import {
   RouteParams,
   ScreenState,
 } from 'hyperview/src/types';
-import { DocState, ErrorProps, Props } from './types';
+import { DocStateProps, ErrorProps, Props } from './types';
 import React, {
   useCallback,
   useEffect,
@@ -19,9 +19,9 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { Context } from './context';
 import { HvDocError } from './errors';
 import LoadError from 'hyperview/src/core/components/load-error';
-import { StateContext } from './context';
 import { later } from 'hyperview/src/services';
 import { useDependencyContext } from 'hyperview/src/core/components/dependencies';
 import { useElementCacheContext } from 'hyperview/src/core/components/element-cache/context';
@@ -44,7 +44,7 @@ export default (props: Props) => {
 
   const currentProps = useRef(props);
 
-  const [state, setState] = useState<DocState>({
+  const [state, setState] = useState<DocStateProps>({
     doc: null,
     elementError: null,
     error: null,
@@ -216,6 +216,12 @@ export default (props: Props) => {
     },
     [hasElement],
   );
+  const setDoc = useCallback(
+    (doc: Document) => {
+      setScreenState({ doc });
+    },
+    [setScreenState],
+  );
 
   const onUpdateCallbacksRef = useRef<OnUpdateCallbacks>();
 
@@ -269,11 +275,12 @@ export default (props: Props) => {
     };
 
     return {
-      getLocalDoc: getDoc,
+      getDoc,
       getScreenState,
       onUpdate,
       onUpdateCallbacks: onUpdateCallbacksRef.current,
       reload,
+      setDoc,
       setScreenState,
     };
   }, [
@@ -282,6 +289,7 @@ export default (props: Props) => {
     getScreenState,
     onUpdate,
     reload,
+    setDoc,
     setScreenState,
     state.elementError,
     updateUrl,
@@ -310,7 +318,7 @@ export default (props: Props) => {
   };
 
   return (
-    <StateContext.Provider value={contextValue}>
+    <Context.Provider value={contextValue}>
       {state.error ? (
         //  Render the state error
         <Err
@@ -321,6 +329,6 @@ export default (props: Props) => {
       ) : (
         props.children
       )}
-    </StateContext.Provider>
+    </Context.Provider>
   );
 };

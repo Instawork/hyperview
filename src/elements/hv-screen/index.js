@@ -105,7 +105,7 @@ export default class HvScreen extends React.Component {
         ? this.props.getElement(newPreloadScreen)
         : null;
 
-      const doc = preloadScreen || this.props.getLocalDoc();
+      const doc = preloadScreen || this.props.getDoc();
       const styles = preloadScreen
         ? Stylesheets.createStylesheets(preloadScreen)
         : // eslint-disable-next-line react/no-access-state-in-setstate
@@ -168,7 +168,7 @@ export default class HvScreen extends React.Component {
     return (
       <Contexts.DocContext.Provider
         value={{
-          getDoc: () => this.props.getLocalDoc(),
+          getDoc: () => this.props.getDoc(),
         }}
       >
         {elementErrorComponent

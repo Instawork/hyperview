@@ -6,7 +6,7 @@ import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as Types from './types';
 import * as UrlService from 'hyperview/src/services/url';
-import HvDoc, { StateContext } from 'hyperview/src/elements/hv-doc';
+import HvDoc, { DocStateContext } from 'hyperview/src/elements/hv-doc';
 import type {
   ListenerEvent,
   NavigationProps,
@@ -43,13 +43,13 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     if (this.props.element) {
       return this.props.element;
     }
-    if (!this.props.getLocalDoc()) {
+    if (!this.props.getDoc()) {
       throw new NavigatorService.HvRenderError('No document found');
     }
 
     // Get the <doc> element
     const root: Element | null = Helpers.getFirstChildTag(
-      this.props.getLocalDoc() as Document,
+      this.props.getDoc() as Document,
       LOCAL_NAME.DOC,
     );
     if (!root) {
@@ -160,8 +160,8 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
         components={this.props.components}
         elementErrorComponent={this.props.elementErrorComponent}
         entrypointUrl={this.props.entrypointUrl}
+        getDoc={this.props.getDoc}
         getElement={this.props.getElement}
-        getLocalDoc={this.props.getLocalDoc}
         getScreenState={this.props.getScreenState}
         navigation={this.props.navigator}
         onUpdate={this.props.onUpdate}
@@ -201,20 +201,20 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
         if (!this.props.url) {
           throw new NavigatorService.HvRouteError('No url received');
         }
-        if (!this.props.getLocalDoc()) {
+        if (!this.props.getDoc()) {
           throw new NavigatorService.HvRouteError('No document received');
         }
       }
     }
 
     if (needsSubStack || renderElement?.localName === LOCAL_NAME.NAVIGATOR) {
-      if (this.props.getLocalDoc()) {
+      if (this.props.getDoc()) {
         // The <DocContext> provides doc access to nested navigators
         // only pass it when the doc is available and is not being overridden by an element
         return (
           <Contexts.DocContext.Provider
             value={{
-              getDoc: () => this.props.getLocalDoc() || undefined,
+              getDoc: () => this.props.getDoc() || undefined,
               setDoc: (doc: Document) => this.props.setScreenState({ doc }),
             }}
           >
@@ -250,7 +250,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
 
     if (
       this.props.element ||
-      this.props.getLocalDoc() ||
+      this.props.getDoc() ||
       this.props.route?.params?.needsSubStack
     ) {
       return <Route />;
@@ -442,9 +442,9 @@ function HvRouteFC(props: Types.Props) {
       route={props.route}
       url={url}
     >
-      <StateContext.Consumer>
+      <DocStateContext.Consumer>
         {({
-          getLocalDoc,
+          getDoc,
           getScreenState,
           onUpdate,
           onUpdateCallbacks,
@@ -454,12 +454,12 @@ function HvRouteFC(props: Types.Props) {
           <HvRouteInner
             behaviors={dependencies.behaviors}
             components={dependencies.components}
-            doc={getLocalDoc() || undefined}
+            doc={getDoc() || undefined}
             element={element}
             elementErrorComponent={dependencies.elementErrorComponent}
             entrypointUrl={dependencies.entrypointUrl}
+            getDoc={getDoc}
             getElement={elementCache.getElement}
-            getLocalDoc={getLocalDoc}
             getScreenState={getScreenState}
             navigator={navigator}
             onUpdate={onUpdate}
@@ -471,7 +471,7 @@ function HvRouteFC(props: Types.Props) {
             url={url}
           />
         )}
-      </StateContext.Consumer>
+      </DocStateContext.Consumer>
     </HvDoc>
   );
 }
