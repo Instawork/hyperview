@@ -1,9 +1,9 @@
-import * as Contexts from 'hyperview/src/contexts';
 import { ActivityIndicator, View } from 'react-native';
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { LoadingProps } from './types';
 import styles from './styles';
 import { useDependencyContext } from 'hyperview/src/core/components/dependencies';
+import { useElementCacheContext } from 'hyperview/src/core/components/element-cache/context';
 
 /**
  * Renders a loading screen
@@ -13,16 +13,16 @@ import { useDependencyContext } from 'hyperview/src/core/components/dependencies
  */
 const Loading = (props: LoadingProps): React.ReactElement => {
   const dependencies = useDependencyContext();
-  const elementCacheContext = useContext(Contexts.ElementCacheContext);
+  const elementCache = useElementCacheContext();
 
   // Perform cleanup when the component is unmounted
   useEffect(() => {
     return () => {
       if (props.cachedId) {
-        elementCacheContext?.removeElement(props.cachedId);
+        elementCache?.removeElement(props.cachedId);
       }
     };
-  }, [elementCacheContext, props.cachedId]);
+  }, [elementCache, props.cachedId]);
 
   // Use the passed preloadScreen component
   if (props.preloadScreenComponent) {
@@ -30,7 +30,7 @@ const Loading = (props: LoadingProps): React.ReactElement => {
   }
 
   // Fall back to default loading screen if the contexts are not available
-  if (!dependencies || !elementCacheContext || !dependencies.loadingScreen) {
+  if (!dependencies || !elementCache || !dependencies.loadingScreen) {
     return (
       <View style={styles.container}>
         <ActivityIndicator />
@@ -40,7 +40,7 @@ const Loading = (props: LoadingProps): React.ReactElement => {
 
   // The behavior element which triggered the load
   const behaviorElement = props.cachedId
-    ? elementCacheContext?.getElement(props.cachedId)
+    ? elementCache?.getElement(props.cachedId)
     : undefined;
 
   // If the behavior element is not found, look for a route element

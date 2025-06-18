@@ -25,6 +25,7 @@ import { LOCAL_NAME } from 'hyperview/src/types';
 import Loading from 'hyperview/src/core/components/loading';
 import { NavigationContainerRefContext } from '@react-navigation/native';
 import { useDependencyContext } from 'hyperview/src/core/components/dependencies';
+import { useElementCacheContext } from 'hyperview/src/core/components/element-cache/context';
 
 /**
  * Implementation of an HvRoute component
@@ -301,8 +302,8 @@ const getNestedNavigator = (
  */
 function HvRouteFC(props: Types.Props) {
   const dependencies = useDependencyContext();
-  const elemenCacheContext = useContext(Contexts.ElementCacheContext);
-  if (!dependencies || !elemenCacheContext) {
+  const elementCache = useElementCacheContext();
+  if (!dependencies || !elementCache) {
     throw new NavigatorService.HvRouteError('No context found');
   }
   const backContext = useContext(BackBehaviorContext);
@@ -324,10 +325,10 @@ function HvRouteFC(props: Types.Props) {
         navigation: nav,
         rootNavigation,
         route: props.route,
-        setElement: elemenCacheContext.setElement,
+        setElement: elementCache.setElement,
       }),
     [
-      elemenCacheContext.setElement,
+      elementCache.setElement,
       nav,
       dependencies.entrypointUrl,
       props.route,
@@ -446,14 +447,7 @@ function HvRouteFC(props: Types.Props) {
       };
     }
     return undefined;
-  }, [
-    backContext,
-    dependencies,
-    docContext,
-    elemenCacheContext,
-    nav,
-    props.route,
-  ]);
+  }, [backContext, dependencies, docContext, elementCache, nav, props.route]);
 
   return (
     <HvDoc
@@ -478,14 +472,14 @@ function HvRouteFC(props: Types.Props) {
             element={element}
             elementErrorComponent={dependencies.elementErrorComponent}
             entrypointUrl={dependencies.entrypointUrl}
-            getElement={elemenCacheContext.getElement}
+            getElement={elementCache.getElement}
             getLocalDoc={getLocalDoc}
             getScreenState={getScreenState}
             navigator={navigator}
             onUpdate={onUpdate}
             onUpdateCallbacks={onUpdateCallbacks}
             reload={reload}
-            removeElement={elemenCacheContext.removeElement}
+            removeElement={elementCache.removeElement}
             route={props.route}
             setScreenState={setScreenState}
             url={url}

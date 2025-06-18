@@ -1,6 +1,5 @@
 import * as Behaviors from 'hyperview/src/behaviors';
 import * as Components from 'hyperview/src/services/components';
-import * as Contexts from 'hyperview/src/contexts';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Events from 'hyperview/src/services/events';
 import * as Helpers from 'hyperview/src/services/dom/helpers';
@@ -25,6 +24,7 @@ import {
 } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
 import { Provider as DependencyProvider } from 'hyperview/src/core/components/dependencies';
+import { Provider as ElementCacheProvider } from 'hyperview/src/core/components/element-cache/context';
 import HvRoute from 'hyperview/src/elements/hv-route';
 import { Linking } from 'react-native';
 import { XMLSerializer } from '@instawork/xmldom';
@@ -595,9 +595,9 @@ export default class Hyperview extends PureComponent<Types.Props> {
         refreshControl={this.props.refreshControl}
         reload={this.reload}
       >
-        <Contexts.ElementCacheProvider>
+        <ElementCacheProvider>
           <HvRoute />
-        </Contexts.ElementCacheProvider>
+        </ElementCacheProvider>
       </DependencyProvider>
     );
   }
