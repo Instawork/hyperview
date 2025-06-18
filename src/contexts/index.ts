@@ -1,4 +1,3 @@
-import type { HvComponentOnUpdate } from 'hyperview/src/types';
 import React from 'react';
 
 export type DocContextProps = {
@@ -6,8 +5,3 @@ export type DocContextProps = {
   setDoc?: (doc: Document) => void;
 };
 export const DocContext = React.createContext<DocContextProps | null>(null);
-
-export const OnUpdateContext = React.createContext<{
-  onUpdate: HvComponentOnUpdate;
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-}>({ onUpdate: () => {} });
