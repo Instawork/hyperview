@@ -213,7 +213,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     if (needsSubStack || renderElement?.localName === LOCAL_NAME.NAVIGATOR) {
       if (this.props.getLocalDoc()) {
         // The <DocContext> provides doc access to nested navigators
-        // The <UpdateContext> provides access to the onUpdate method for this route
         // only pass it when the doc is available and is not being overridden by an element
         return (
           <Contexts.DocContext.Provider
@@ -222,33 +221,23 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
               setDoc: (doc: Document) => this.props.setScreenState({ doc }),
             }}
           >
-            <Contexts.OnUpdateContext.Provider
-              value={{
-                onUpdate: this.props.onUpdate,
-              }}
-            >
-              <HvNavigator
-                element={renderElement}
-                onUpdate={this.props.onUpdate}
-                params={this.props.route?.params}
-                routeComponent={HvRoute}
-              />
-            </Contexts.OnUpdateContext.Provider>
+            <HvNavigator
+              element={renderElement}
+              onUpdate={this.props.onUpdate}
+              params={this.props.route?.params}
+              routeComponent={HvRoute}
+            />
           </Contexts.DocContext.Provider>
         );
       }
       // Without a doc, the navigator shares the higher level context
       return (
-        <Contexts.OnUpdateContext.Consumer>
-          {updater => (
-            <HvNavigator
-              element={renderElement}
-              onUpdate={updater.onUpdate}
-              params={this.props.route?.params}
-              routeComponent={HvRoute}
-            />
-          )}
-        </Contexts.OnUpdateContext.Consumer>
+        <HvNavigator
+          element={renderElement}
+          onUpdate={this.props.onUpdate}
+          params={this.props.route?.params}
+          routeComponent={HvRoute}
+        />
       );
     }
 
