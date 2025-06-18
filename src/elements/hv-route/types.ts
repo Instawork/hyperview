@@ -41,3 +41,10 @@ export type Props = {
   navigation?: NavigationProps;
   route?: RouteProps;
 };
+
+export type BackBehaviorContextProps = {
+  add: (elements: Element[], onUpdate: HvComponentOnUpdate) => void;
+  get: () => Element[];
+  onUpdate: HvComponentOnUpdate;
+  remove: (elements: Element[]) => void;
+};

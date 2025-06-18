@@ -6,10 +6,6 @@ import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as Types from './types';
 import * as UrlService from 'hyperview/src/services/url';
-import {
-  BackBehaviorContext,
-  BackBehaviorProvider,
-} from 'hyperview/src/contexts/back-behaviors';
 import HvDoc, { StateContext } from 'hyperview/src/elements/hv-doc';
 import type {
   ListenerEvent,
@@ -17,6 +13,7 @@ import type {
   RouteProps,
   ScreenState,
 } from 'hyperview/src/types';
+import { Provider, useBackBehaviorContext } from './context';
 import React, { PureComponent, useContext, useMemo } from 'react';
 import HvElement from 'hyperview/src/core/components/hv-element';
 import HvNavigator from 'hyperview/src/elements/hv-navigator';
@@ -306,7 +303,7 @@ function HvRouteFC(props: Types.Props) {
   if (!dependencies || !elementCache) {
     throw new NavigatorService.HvRouteError('No context found');
   }
-  const backContext = useContext(BackBehaviorContext);
+  const backBehaviors = useBackBehaviorContext();
   const docContext = useContext(Contexts.DocContext);
 
   const url =
@@ -386,7 +383,7 @@ function HvRouteFC(props: Types.Props) {
         (event: { preventDefault: () => void }) => {
           // Use the current document state to access behaviors on the document
           // Check for elements registered to interrupt back action via a trigger of BACK
-          const { get, onUpdate } = backContext || {};
+          const { get, onUpdate } = backBehaviors || {};
           const elements: Element[] = (get && get()) || [];
           if (elements.length > 0 && onUpdate && nav.isFocused()) {
             // Process the elements
@@ -447,7 +444,7 @@ function HvRouteFC(props: Types.Props) {
       };
     }
     return undefined;
-  }, [backContext, dependencies, docContext, elementCache, nav, props.route]);
+  }, [backBehaviors, dependencies, docContext, elementCache, nav, props.route]);
 
   return (
     <HvDoc
@@ -492,8 +489,8 @@ function HvRouteFC(props: Types.Props) {
 
 export default function HvRoute(props: Types.Props) {
   return (
-    <BackBehaviorProvider>
+    <Provider>
       <HvRouteFC navigation={props.navigation} route={props.route} />
-    </BackBehaviorProvider>
+    </Provider>
   );
 }

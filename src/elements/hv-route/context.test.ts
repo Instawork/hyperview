@@ -1,7 +1,7 @@
 import * as DomErrors from 'hyperview/src/services/dom/errors';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import { DOMParser } from '@instawork/xmldom';
-import { removeElements } from './back-behaviors';
+import { removeElements } from './context';
 
 const testDoc = `
 <doc xmlns="https://hyperview.org/hyperview">
