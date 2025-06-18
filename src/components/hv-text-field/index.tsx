@@ -32,6 +32,15 @@ const HvTextField = (props: HvComponentProps) => {
   const textContentType =
     (props.element.getAttribute('text-content-type') as TextContextType) ||
     'none';
+  // Force email addresses to have no auto-capitalization, others use default
+  const defaultCapitalization =
+    keyboardType === 'email-address' ? 'none' : undefined;
+  const autoCapitalize =
+    (props.element.getAttribute('auto-capitalize') as
+      | 'none'
+      | 'sentences'
+      | 'words'
+      | 'characters') || defaultCapitalization;
 
   // Handlers
   const setFocus = (focused: boolean) => {
@@ -96,6 +105,7 @@ const HvTextField = (props: HvComponentProps) => {
           props.options.registerInputHandler(ref);
         }
       }}
+      autoCapitalize={autoCapitalize}
       autoFocus={autoFocus}
       defaultValue={defaultValue}
       editable={editable}
