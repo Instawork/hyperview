@@ -1,6 +1,6 @@
 import * as Contexts from 'hyperview/src/contexts';
 import * as React from 'react';
-import { NavigationContextProps } from 'hyperview/src/contexts/navigation';
+import { Dependencies } from 'hyperview/src/core/components/dependencies/types';
 import { RouterConfigOptions } from '@react-navigation/native';
 import { StackNavigationOptions } from '@react-navigation/stack';
 
@@ -20,8 +20,8 @@ export type RouterRenameOptions = RouterConfigOptions & {
 };
 
 export type StackOptions = {
+  dependencies: Dependencies | null;
   docContextProps: Contexts.DocContextProps | null;
   id: string;
   initialRouteName?: string;
-  navContextProps: NavigationContextProps | null;
 };

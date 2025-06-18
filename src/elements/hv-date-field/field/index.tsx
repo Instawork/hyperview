@@ -1,4 +1,7 @@
-import * as Contexts from 'hyperview/src/contexts';
+import {
+  DefaultDateFormatter,
+  Context as DependencyContext,
+} from 'hyperview/src/core/components/dependencies';
 import React, { useState } from 'react';
 import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import { createProps, createStyleProp } from 'hyperview/src/services';
@@ -39,18 +42,18 @@ export default (props: Props) => {
     >
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <View {...viewProps}>
-        <Contexts.DateFormatContext.Consumer>
+        <DependencyContext.Consumer>
           {formatter => (
             <FieldLabel
               element={props.element}
               focused={props.focused}
-              formatter={formatter}
+              formatter={formatter?.dateFormatter ?? DefaultDateFormatter}
               pressed={pressed}
               style={labelStyle}
               value={props.value}
             />
           )}
-        </Contexts.DateFormatContext.Consumer>
+        </DependencyContext.Consumer>
         {props.children}
       </View>
     </TouchableWithoutFeedback>

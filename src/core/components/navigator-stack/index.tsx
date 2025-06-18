@@ -15,11 +15,11 @@ import {
   StackView,
 } from '@react-navigation/stack';
 import type { EventMapBase } from '@react-navigation/native';
-import { Context as NavigationContext } from 'hyperview/src/contexts/navigation';
+import { useDependencyContext } from 'hyperview/src/core/components/dependencies';
 
 const CustomStackNavigator = (props: Props) => {
   const docContextProps = React.useContext(Contexts.DocContext);
-  const navContextProps = React.useContext(NavigationContext);
+  const dependencies = useDependencyContext();
 
   const {
     state,
@@ -34,10 +34,10 @@ const CustomStackNavigator = (props: Props) => {
     StackNavigationEventMap
   >(CustomStackRouter.Router, {
     children: props.children,
+    dependencies,
     docContextProps,
     id: props.id,
     initialRouteName: props.initialRouteName,
-    navContextProps,
     screenOptions: props.screenOptions,
   });
 

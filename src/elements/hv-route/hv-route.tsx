@@ -10,10 +10,6 @@ import {
   BackBehaviorContext,
   BackBehaviorProvider,
 } from 'hyperview/src/contexts/back-behaviors';
-import {
-  Context,
-  NavigationContextProps,
-} from 'hyperview/src/contexts/navigation';
 import HvDoc, { StateContext } from 'hyperview/src/elements/hv-doc';
 import type {
   ListenerEvent,
@@ -28,6 +24,7 @@ import HvScreen from 'hyperview/src/elements/hv-screen';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import Loading from 'hyperview/src/core/components/loading';
 import { NavigationContainerRefContext } from '@react-navigation/native';
+import { useDependencyContext } from 'hyperview/src/core/components/dependencies';
 
 /**
  * Implementation of an HvRoute component
@@ -303,9 +300,9 @@ const getNestedNavigator = (
  * - Passes the props, context, and url to HvRouteInner
  */
 function HvRouteFC(props: Types.Props) {
-  const navigationContext: NavigationContextProps | null = useContext(Context);
+  const dependencies = useDependencyContext();
   const elemenCacheContext = useContext(Contexts.ElementCacheContext);
-  if (!navigationContext || !elemenCacheContext) {
+  if (!dependencies || !elemenCacheContext) {
     throw new NavigatorService.HvRouteError('No context found');
   }
   const backContext = useContext(BackBehaviorContext);
@@ -313,9 +310,9 @@ function HvRouteFC(props: Types.Props) {
 
   const url =
     props.navigation === undefined
-      ? navigationContext.entrypointUrl
+      ? dependencies.entrypointUrl
       : NavigatorService.cleanHrefFragment(
-          props.route?.params?.url || navigationContext.entrypointUrl,
+          props.route?.params?.url || dependencies.entrypointUrl,
         );
 
   const rootNavigation = useContext(NavigationContainerRefContext);
@@ -323,7 +320,7 @@ function HvRouteFC(props: Types.Props) {
   const navigator = useMemo(
     () =>
       new NavigatorService.Navigator({
-        entrypointUrl: navigationContext.entrypointUrl,
+        entrypointUrl: dependencies.entrypointUrl,
         navigation: nav,
         rootNavigation,
         route: props.route,
@@ -332,7 +329,7 @@ function HvRouteFC(props: Types.Props) {
     [
       elemenCacheContext.setElement,
       nav,
-      navigationContext.entrypointUrl,
+      dependencies.entrypointUrl,
       props.route,
       rootNavigation,
     ],
@@ -348,15 +345,15 @@ function HvRouteFC(props: Types.Props) {
     const id = props.route?.params?.id || props.route?.key;
     if (nav) {
       const unsubscribeBlur: () => void = nav.addListener('blur', () => {
-        if (navigationContext.onRouteBlur && props.route) {
-          navigationContext.onRouteBlur(props.route);
+        if (dependencies.onRouteBlur && props.route) {
+          dependencies.onRouteBlur(props.route);
         }
       });
 
       // Use the focus event to set the selected route
       const unsubscribeFocus: () => void = nav.addListener('focus', () => {
         const navStateMutationsDelay =
-          navigationContext.experimentalFeatures?.navStateMutationsDelay || 0;
+          dependencies.experimentalFeatures?.navStateMutationsDelay || 0;
         const updateRouteFocus = () => {
           const doc = docContext?.getDoc();
           NavigatorService.setSelected(doc, id, docContext?.setDoc);
@@ -365,11 +362,11 @@ function HvRouteFC(props: Types.Props) {
             id,
             props.route,
             nav.getState().routes[0]?.name,
-            navigationContext.entrypointUrl,
+            dependencies.entrypointUrl,
             docContext?.setDoc,
           );
-          if (navigationContext.onRouteFocus && props.route) {
-            navigationContext.onRouteFocus(props.route);
+          if (dependencies.onRouteFocus && props.route) {
+            dependencies.onRouteFocus(props.route);
           }
         };
         if (navStateMutationsDelay > 0) {
@@ -409,7 +406,7 @@ function HvRouteFC(props: Types.Props) {
             NavigatorService.removeStackRoute(
               docContext?.getDoc(),
               props.route?.params?.url,
-              navigationContext.entrypointUrl,
+              dependencies.entrypointUrl,
               docContext?.setDoc,
             );
           }
@@ -421,7 +418,7 @@ function HvRouteFC(props: Types.Props) {
         'state',
         (event: ListenerEvent) => {
           const navStateMutationsDelay =
-            navigationContext.experimentalFeatures?.navStateMutationsDelay || 0;
+            dependencies.experimentalFeatures?.navStateMutationsDelay || 0;
           const updateRouteUrlFromState = (e: ListenerEvent) => {
             NavigatorService.updateRouteUrlFromState(
               docContext?.getDoc(),
@@ -449,7 +446,14 @@ function HvRouteFC(props: Types.Props) {
       };
     }
     return undefined;
-  }, [nav, props.route, backContext, docContext, navigationContext]);
+  }, [
+    backContext,
+    dependencies,
+    docContext,
+    elemenCacheContext,
+    nav,
+    props.route,
+  ]);
 
   return (
     <HvDoc
@@ -468,12 +472,12 @@ function HvRouteFC(props: Types.Props) {
           setScreenState,
         }) => (
           <HvRouteInner
-            behaviors={navigationContext.behaviors}
-            components={navigationContext.components}
+            behaviors={dependencies.behaviors}
+            components={dependencies.components}
             doc={getLocalDoc() || undefined}
             element={element}
-            elementErrorComponent={navigationContext.elementErrorComponent}
-            entrypointUrl={navigationContext.entrypointUrl}
+            elementErrorComponent={dependencies.elementErrorComponent}
+            entrypointUrl={dependencies.entrypointUrl}
             getElement={elemenCacheContext.getElement}
             getLocalDoc={getLocalDoc}
             getScreenState={getScreenState}

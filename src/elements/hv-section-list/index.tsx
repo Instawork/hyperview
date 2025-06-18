@@ -18,6 +18,7 @@ import React, { PureComponent } from 'react';
 import type { ScrollParams, State } from './types';
 import { createTestProps, getAncestorByTagName } from 'hyperview/src/services';
 import { DOMParser } from '@instawork/xmldom';
+import { Context as DependencyContext } from 'hyperview/src/core/components/dependencies';
 import type { ElementRef } from 'react';
 import HvElement from 'hyperview/src/core/components/hv-element';
 import { SectionList } from 'hyperview/src/core/components/scroll';
@@ -348,9 +349,10 @@ export default class HvSectionList extends PureComponent<
     const { testID, accessibilityLabel } = createTestProps(this.props.element);
 
     return (
-      <Contexts.RefreshControlComponentContext.Consumer>
-        {ContextRefreshControl => {
-          const RefreshControl = ContextRefreshControl || DefaultRefreshControl;
+      <DependencyContext.Consumer>
+        {dependencies => {
+          const RefreshControl =
+            dependencies?.refreshControl || DefaultRefreshControl;
           const hasRefreshTrigger =
             this.props.element.getAttribute('trigger') === 'refresh';
           return (
@@ -401,7 +403,7 @@ export default class HvSectionList extends PureComponent<
             />
           );
         }}
-      </Contexts.RefreshControlComponentContext.Consumer>
+      </DependencyContext.Consumer>
     );
   }
 }

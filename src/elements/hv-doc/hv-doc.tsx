@@ -13,10 +13,6 @@ import {
   ScreenState,
 } from 'hyperview/src/types';
 import { DocState, ErrorProps, Props } from './types';
-import {
-  Context as NavigationContext,
-  NavigationContextProps,
-} from 'hyperview/src/contexts/navigation';
 import React, {
   useCallback,
   useContext,
@@ -29,6 +25,7 @@ import { HvDocError } from './errors';
 import LoadError from 'hyperview/src/core/components/load-error';
 import { StateContext } from './context';
 import { later } from 'hyperview/src/services';
+import { useDependencyContext } from 'hyperview/src/core/components/dependencies';
 
 export default (props: Props) => {
   // <HACK>
@@ -58,27 +55,21 @@ export default (props: Props) => {
     url: null,
   });
 
-  const navigationContext: NavigationContextProps | null = useContext(
-    NavigationContext,
-  );
+  const dependencies = useDependencyContext();
 
   const elemenCacheContext = useContext(Contexts.ElementCacheContext);
-  if (!navigationContext || !elemenCacheContext) {
+  if (!dependencies || !elemenCacheContext) {
     throw new HvDocError('No context found');
   }
 
   const parser: DomService.Parser = useMemo(
     () =>
       new DomService.Parser(
-        navigationContext.fetch,
-        navigationContext.onParseBefore ?? null,
-        navigationContext.onParseAfter ?? null,
+        dependencies.fetch,
+        dependencies.onParseBefore ?? null,
+        dependencies.onParseAfter ?? null,
       ),
-    [
-      navigationContext.fetch,
-      navigationContext.onParseBefore,
-      navigationContext.onParseAfter,
-    ],
+    [dependencies.fetch, dependencies.onParseBefore, dependencies.onParseAfter],
   );
 
   const loadUrl = useCallback(
@@ -86,8 +77,8 @@ export default (props: Props) => {
       // Updates the state and calls the error handler
       const handleError = (err: Error, u?: string | null) => {
         try {
-          if (navigationContext.onError) {
-            navigationContext.onError(err);
+          if (dependencies.onError) {
+            dependencies.onError(err);
           }
         } finally {
           setState(prev => ({
@@ -117,7 +108,7 @@ export default (props: Props) => {
 
         const fullUrl = UrlService.getUrlFromHref(
           targetUrl,
-          navigationContext.entrypointUrl,
+          dependencies.entrypointUrl,
         );
         const { doc, staleHeaderType } = await parser.loadDocument(fullUrl);
 
@@ -163,13 +154,7 @@ export default (props: Props) => {
         }
       }
     },
-    [
-      elemenCacheContext,
-      navigationContext,
-      parser,
-      props.route?.params,
-      state.url,
-    ],
+    [elemenCacheContext, dependencies, parser, props.route?.params, state.url],
   );
 
   // Monitor url changes
@@ -243,21 +228,21 @@ export default (props: Props) => {
       element: Element,
       options: HvComponentOptions,
     ) => {
-      navigationContext.onUpdate(href, action, element, {
+      dependencies.onUpdate(href, action, element, {
         ...options,
         onUpdateCallbacks: onUpdateCallbacksRef.current,
       });
     },
-    [navigationContext],
+    [dependencies],
   );
 
   const reload = useCallback(
     (url?: string | null) => {
-      navigationContext.reload(url, {
+      dependencies.reload(url, {
         onUpdateCallbacks: onUpdateCallbacksRef.current,
       });
     },
-    [navigationContext],
+    [dependencies],
   );
 
   const updateUrl = useCallback((url: string) => {
@@ -309,7 +294,7 @@ export default (props: Props) => {
    */
   const Err = (p: ErrorProps): React.ReactElement => {
     const { error, navigationProvider, url } = p;
-    const ErrorScreen = navigationContext.errorScreen || LoadError;
+    const ErrorScreen = dependencies.errorScreen || LoadError;
     return (
       <ErrorScreen
         back={() => navigationProvider?.backAction({} as RouteParams)}
