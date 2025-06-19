@@ -15,7 +15,7 @@ export type Props = {
 };
 
 export type StateProps = {
-  getDoc: () => Document | null;
+  getDoc: () => Document | undefined;
   getScreenState: () => ScreenState;
   onUpdate: HvComponentOnUpdate;
   onUpdateCallbacks: OnUpdateCallbacks;

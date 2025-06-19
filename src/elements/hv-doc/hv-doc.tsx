@@ -35,7 +35,7 @@ export default (props: Props) => {
   // available (see details here: https://reactjs.org/docs/react-component.html#setstate)
   // Whenever we need to access the document for reasons other than rendering, we should use
   // `localDoc`. When rendering, we should use `document`.
-  const localDoc = useRef<Document | null | undefined>(null);
+  const localDoc = useRef<Document | undefined>(undefined);
 
   // This is a temporary solution to ensure the url is available immediately while
   // external components are still triggering the loadUrl callback
@@ -45,7 +45,7 @@ export default (props: Props) => {
   const currentProps = useRef(props);
 
   const [state, setState] = useState<DocStateProps>({
-    doc: null,
+    doc: undefined,
     elementError: null,
     error: null,
     loadingUrl: null,
@@ -195,7 +195,7 @@ export default (props: Props) => {
     () => ({ ...state, url: localUrl.current }),
     [state],
   );
-  const getDoc = useCallback(() => localDoc.current ?? null, [localDoc]);
+  const getDoc = useCallback(() => localDoc.current ?? undefined, [localDoc]);
   const getNavigation = useCallback(() => props.navigationProvider, [
     props.navigationProvider,
   ]);
@@ -211,7 +211,7 @@ export default (props: Props) => {
       setState(prev => ({
         ...prev,
         ...newState,
-        doc: hasElement ? null : newState.doc ?? prev.doc,
+        doc: hasElement ? undefined : newState.doc ?? prev.doc,
       }));
     },
     [hasElement],

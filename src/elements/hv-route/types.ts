@@ -27,7 +27,7 @@ export type InnerRouteProps = {
   removeElement: (key: number) => void;
   element?: Element;
   doc: Document | undefined;
-  getDoc: () => Document | null;
+  getDoc: () => Document | undefined;
   setScreenState: (state: ScreenState) => void;
   getScreenState: () => ScreenState;
   onUpdateCallbacks: OnUpdateCallbacks;

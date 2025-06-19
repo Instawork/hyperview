@@ -3,7 +3,7 @@ import { StateProps } from './types';
 
 const defaultCallbacks = {
   clearElementError: () => undefined,
-  getDoc: () => null,
+  getDoc: () => undefined,
   getNavigation: () => ({
     backAction: () => undefined,
     navigate: () => undefined,
@@ -16,7 +16,7 @@ const defaultCallbacks = {
 };
 
 export const Context = createContext<StateProps>({
-  getDoc: () => null,
+  getDoc: () => undefined,
   getScreenState: () => ({}),
   onUpdate: () => undefined,
   onUpdateCallbacks: defaultCallbacks,

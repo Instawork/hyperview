@@ -143,7 +143,7 @@ export type HvComponent = (
 ) &
   HvComponentStatics;
 
-export type HvGetRoot = () => Document | null;
+export type HvGetRoot = () => Document | undefined;
 
 export type HvUpdateRoot = (root: Document, updateStylesheet?: boolean) => void;
 
@@ -299,7 +299,7 @@ export type NavigationProvider = {
     componentRegistry: Components.Registry,
     opts: BehaviorOptions,
     stateUrl?: string | null,
-    doc?: Document | null,
+    doc?: Document,
   ) => void;
   openModalAction: (params: RouteParams) => void;
 };
@@ -308,14 +308,14 @@ export type OnUpdateCallbacks = {
   clearElementError: () => void;
   getNavigation: () => NavigationProvider;
   getOnUpdate: () => HvComponentOnUpdate;
-  getDoc: () => Document | null;
+  getDoc: () => Document | undefined;
   getState: () => ScreenState;
   setState: (state: ScreenState) => void;
   updateUrl: (url: string) => void;
 };
 
 export type ScreenState = {
-  doc?: Document | null;
+  doc?: Document;
   elementError?: Error | null;
   error?: Error | null;
   staleHeaderType?: XResponseStaleReason | null;
