@@ -1,4 +1,3 @@
-import * as Contexts from 'hyperview/src/contexts';
 import * as React from 'react';
 import { Dependencies } from 'hyperview/src/core/components/dependencies/types';
 import { RouterConfigOptions } from '@react-navigation/native';
@@ -21,7 +20,7 @@ export type RouterRenameOptions = RouterConfigOptions & {
 
 export type StackOptions = {
   dependencies: Dependencies | null;
-  docContextProps: Contexts.DocContextProps | null;
+  getDoc?: () => Document | undefined;
   id: string;
   initialRouteName?: string;
 };

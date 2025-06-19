@@ -35,7 +35,7 @@ const CustomStackNavigator = (props: Props) => {
   >(CustomStackRouter.Router, {
     children: props.children,
     dependencies,
-    docContextProps,
+    getDoc: docContextProps?.getDoc,
     id: props.id,
     initialRouteName: props.initialRouteName,
     screenOptions: props.screenOptions,
