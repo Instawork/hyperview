@@ -1,6 +1,7 @@
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import { Platform, StyleSheet, Switch } from 'react-native';
+import React, { useCallback, useMemo } from 'react';
 import {
   createStyleProp,
   getNameValueFormInputValues,
@@ -8,7 +9,6 @@ import {
 import type { ColorValue } from './style-sheet';
 import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import React from 'react';
 import normalizeColor from './style-sheet';
 
 /* eslint no-bitwise: ["error", { "allow": [">>", "&"] }] */
@@ -32,60 +32,81 @@ function darkenColor(color: ColorValue, percent: number): ColorValue {
 }
 
 const HvSwitch = (props: HvComponentProps) => {
-  if (props.element.getAttribute('hide') === 'true') {
-    return null;
-  }
+  // eslint-disable-next-line react/destructuring-assignment
+  const { element, stylesheets, onUpdate } = props;
 
-  const unselectedStyle = StyleSheet.flatten(
-    createStyleProp(props.element, props.stylesheets, {
-      selected: false,
-    }),
-  );
-  const selectedStyle = StyleSheet.flatten(
-    createStyleProp(props.element, props.stylesheets, {
-      selected: true,
-    }),
+  const value = useMemo(() => element.getAttribute('value') === 'on', [
+    element,
+  ]);
+
+  const unselectedStyle = useMemo(
+    () =>
+      StyleSheet.flatten(
+        createStyleProp(element, stylesheets, {
+          selected: false,
+        }),
+      ),
+    [element, stylesheets],
   );
 
-  const componentProps = {
-    ios_backgroundColor: unselectedStyle
-      ? unselectedStyle.backgroundColor
-      : null,
-    onChange: () => {
-      const newElement = props.element.cloneNode(true) as Element;
-      Behaviors.trigger('change', newElement, props.onUpdate);
-    },
+  const selectedStyle = useMemo(
+    () =>
+      StyleSheet.flatten(
+        createStyleProp(element, stylesheets, {
+          selected: true,
+        }),
+      ),
+    [element, stylesheets],
+  );
+
+  const onChange = useCallback(() => {
+    const newElement = element.cloneNode(true) as Element;
+    Behaviors.trigger('change', newElement, onUpdate);
+  }, [element, onUpdate]);
+
+  const onValueChange = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    onValueChange: (value: any) => {
-      const newElement = props.element.cloneNode(true) as Element;
-      newElement.setAttribute('value', value ? 'on' : 'off');
-      props.onUpdate(null, 'swap', props.element, { newElement });
+    (v: any) => {
+      const newElement = element.cloneNode(true) as Element;
+      newElement.setAttribute('value', v ? 'on' : 'off');
+      onUpdate(null, 'swap', element, { newElement });
     },
-    // iOS thumbColor default
-    thumbColor: unselectedStyle?.color || selectedStyle?.color,
-    trackColor: {
-      false: unselectedStyle ? unselectedStyle.backgroundColor : null,
-      true: selectedStyle ? selectedStyle.backgroundColor : null,
-    },
-    value: props.element.getAttribute('value') === 'on',
-  };
+    [element, onUpdate],
+  );
 
-  // android thumbColor default
-  if (
-    Platform.OS === 'android' &&
-    !componentProps.thumbColor &&
-    componentProps.trackColor.true
-  ) {
-    componentProps.thumbColor = componentProps.value
-      ? darkenColor(componentProps.trackColor.true, 0.3)
-      : '#FFFFFF';
-  }
+  const componentProps = useMemo(() => {
+    const p = {
+      ios_backgroundColor: unselectedStyle
+        ? unselectedStyle.backgroundColor
+        : null,
+      onChange,
+      onValueChange,
+      // iOS thumbColor default
+      thumbColor: unselectedStyle?.color || selectedStyle?.color,
+      trackColor: {
+        false: unselectedStyle ? unselectedStyle.backgroundColor : null,
+        true: selectedStyle ? selectedStyle.backgroundColor : null,
+      },
+      value,
+    };
 
-  // if thumbColors are explicitly specified, override defaults
-  if (componentProps.value && selectedStyle?.color) {
-    componentProps.thumbColor = selectedStyle.color;
-  } else if (!componentProps.value && unselectedStyle?.color) {
-    componentProps.thumbColor = unselectedStyle.color;
+    // android thumbColor default
+    if (Platform.OS === 'android' && !p.thumbColor && p.trackColor.true) {
+      p.thumbColor = p.value ? darkenColor(p.trackColor.true, 0.3) : '#FFFFFF';
+    }
+
+    // if thumbColors are explicitly specified, override defaults
+    if (p.value && selectedStyle?.color) {
+      p.thumbColor = selectedStyle.color;
+    } else if (!p.value && unselectedStyle?.color) {
+      p.thumbColor = unselectedStyle.color;
+    }
+
+    return p;
+  }, [onChange, onValueChange, unselectedStyle, selectedStyle, value]);
+
+  if (element.getAttribute('hide') === 'true') {
+    return null;
   }
 
   return React.createElement(Switch, componentProps);
