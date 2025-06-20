@@ -1,40 +1,42 @@
 import * as Events from 'hyperview/src/services/events';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import { ActivityIndicator, StyleSheet } from 'react-native';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import WebView from 'hyperview/src/core/components/web-view';
 import { createProps } from 'hyperview/src/services';
 
 const HvWebView = (props: HvComponentProps) => {
-  const [renderLoading, setRenderLoading] = useState(true);
-  const onMessage = (
-    event: {
-      nativeEvent: {
-        data: string;
-      };
-    } | null,
-  ) => {
-    if (!event) {
-      return;
-    }
+  // eslint-disable-next-line react/destructuring-assignment
+  const { element, options, stylesheets } = props;
 
-    if (event.nativeEvent.data === 'hv-web-view:render-loading:false') {
-      setRenderLoading(false);
-    }
-    const matches = event.nativeEvent.data.match(/^hyperview:(.*)$/);
-    if (matches) {
-      Events.dispatch(matches[1]);
-    }
-  };
+  const [renderLoading, setRenderLoading] = useState(true);
+  const onMessage = useCallback(
+    (
+      event: {
+        nativeEvent: {
+          data: string;
+        };
+      } | null,
+    ) => {
+      if (!event) {
+        return;
+      }
+
+      if (event.nativeEvent.data === 'hv-web-view:render-loading:false') {
+        setRenderLoading(false);
+      }
+      const matches = event.nativeEvent.data.match(/^hyperview:(.*)$/);
+      if (matches) {
+        Events.dispatch(matches[1]);
+      }
+    },
+    [],
+  );
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const componentProps: any = createProps(
-    props.element,
-    props.stylesheets,
-    props.options,
-  );
+  const componentProps: any = createProps(element, stylesheets, options);
   const allowsInlineMediaPlayback = componentProps[
     'allows-inline-media-playback'
   ]
