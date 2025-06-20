@@ -8,7 +8,7 @@ import {
 
 export type Props = {
   children?: React.ReactNode;
-  element?: Element;
+  hasElement?: boolean;
   navigationProvider: NavigationProvider;
   route?: RouteProps;
   url: string;
@@ -17,6 +17,7 @@ export type Props = {
 export type StateProps = {
   getDoc: () => Document | undefined;
   getScreenState: () => ScreenState;
+  getSourceDoc: () => Document | undefined;
   onUpdate: HvComponentOnUpdate;
   onUpdateCallbacks: OnUpdateCallbacks;
   reload: (url?: string | null) => void;

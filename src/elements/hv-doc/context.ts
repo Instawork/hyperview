@@ -18,6 +18,7 @@ const defaultCallbacks = {
 export const Context = createContext<StateProps>({
   getDoc: () => undefined,
   getScreenState: () => ({}),
+  getSourceDoc: () => undefined,
   onUpdate: () => undefined,
   onUpdateCallbacks: defaultCallbacks,
   reload: () => null,

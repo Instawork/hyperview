@@ -1,4 +1,3 @@
-import * as Contexts from 'hyperview/src/contexts';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Keyboard from 'hyperview/src/services/keyboard';
 import * as Logging from 'hyperview/src/services/logging';
@@ -18,6 +17,7 @@ import type { ScrollParams, State } from './types';
 import { createTestProps, getAncestorByTagName } from 'hyperview/src/services';
 import { DOMParser } from '@instawork/xmldom';
 import { Context as DependencyContext } from 'hyperview/src/core/components/dependencies';
+import { DocStateContext } from 'hyperview/src/elements/hv-doc';
 import type { ElementRef } from 'react';
 import { FlatList } from 'hyperview/src/core/components/scroll';
 import HvElement from 'hyperview/src/core/components/hv-element';
@@ -28,9 +28,9 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
 
   static localName = LOCAL_NAME.LIST;
 
-  context: React.ContextType<typeof Contexts.DocContext> = null;
+  context: React.ContextType<typeof DocStateContext> | null = null;
 
-  static contextType = Contexts.DocContext;
+  static contextType = DocStateContext;
 
   parser: DOMParser = new DOMParser();
 

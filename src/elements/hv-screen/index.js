@@ -1,7 +1,6 @@
 /* eslint instawork/flow-annotate: 0 react/prop-types: 0 */
 import * as Behaviors from 'hyperview/src/behaviors';
 import * as Components from 'hyperview/src/services/components';
-import * as Contexts from 'hyperview/src/contexts';
 import * as Events from 'hyperview/src/services/events';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
@@ -130,6 +129,20 @@ export default class HvScreen extends React.Component {
     }
   }
 
+  Error = () => {
+    const elementErrorComponent = this.props.getScreenState().elementError
+      ? this.props.elementErrorComponent || LoadElementError
+      : null;
+    if (!elementErrorComponent) {
+      return null;
+    }
+    return React.createElement(elementErrorComponent, {
+      error: this.props.getScreenState().elementError,
+      onPressClose: () => this.props.setScreenState({ elementError: null }),
+      onPressReload: () => this.props.reload(),
+    });
+  };
+
   /**
    * Renders the XML doc into React components. Shows blank screen until the XML doc is available.
    */
@@ -137,9 +150,9 @@ export default class HvScreen extends React.Component {
     if (!this.props.getScreenState().doc) {
       return <Loading cachedId={this.props.route?.params?.behaviorElementId} />;
     }
-    const elementErrorComponent = this.props.getScreenState().elementError
-      ? this.props.elementErrorComponent || LoadElementError
-      : null;
+
+    const { Error } = this;
+
     const [body] = Array.from(
       this.props
         .getScreenState()
@@ -166,21 +179,10 @@ export default class HvScreen extends React.Component {
     }
 
     return (
-      <Contexts.DocContext.Provider
-        value={{
-          getDoc: () => this.props.getDoc(),
-        }}
-      >
-        {elementErrorComponent
-          ? React.createElement(elementErrorComponent, {
-              error: this.props.getScreenState().elementError,
-              onPressClose: () =>
-                this.props.setScreenState({ elementError: null }),
-              onPressReload: () => this.props.reload(),
-            })
-          : null}
+      <>
+        <Error />
         <Scroll.Provider>{screenElement}</Scroll.Provider>
-      </Contexts.DocContext.Provider>
+      </>
     );
   }
 }

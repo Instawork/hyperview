@@ -1,12 +1,14 @@
 import * as Components from 'hyperview/src/services/components';
-import * as Contexts from 'hyperview/src/contexts';
 import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as Types from './types';
 import * as UrlService from 'hyperview/src/services/url';
-import HvDoc, { DocStateContext } from 'hyperview/src/elements/hv-doc';
+import HvDoc, {
+  DocStateContext,
+  useDocStateContext,
+} from 'hyperview/src/elements/hv-doc';
 import type {
   ListenerEvent,
   NavigationProps,
@@ -208,26 +210,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     }
 
     if (needsSubStack || renderElement?.localName === LOCAL_NAME.NAVIGATOR) {
-      if (this.props.getDoc()) {
-        // The <DocContext> provides doc access to nested navigators
-        // only pass it when the doc is available and is not being overridden by an element
-        return (
-          <Contexts.DocContext.Provider
-            value={{
-              getDoc: () => this.props.getDoc() || undefined,
-              setDoc: (doc: Document) => this.props.setScreenState({ doc }),
-            }}
-          >
-            <HvNavigator
-              element={renderElement}
-              onUpdate={this.props.onUpdate}
-              params={this.props.route?.params}
-              routeComponent={HvRoute}
-            />
-          </Contexts.DocContext.Provider>
-        );
-      }
-      // Without a doc, the navigator shares the higher level context
       return (
         <HvNavigator
           element={renderElement}
@@ -293,7 +275,7 @@ function HvRouteFC(props: Types.Props) {
     throw new NavigatorService.HvRouteError('No context found');
   }
   const backBehaviors = useBackBehaviorContext();
-  const docContext = useContext(Contexts.DocContext);
+  const docState = useDocStateContext();
 
   const url =
     props.navigation === undefined
@@ -325,7 +307,7 @@ function HvRouteFC(props: Types.Props) {
   // Get the navigator element from the context
   const element: Element | undefined = getNestedNavigator(
     props.route?.params?.id,
-    docContext?.getDoc(),
+    docState?.getDoc(),
   );
 
   React.useEffect(() => {
@@ -342,15 +324,15 @@ function HvRouteFC(props: Types.Props) {
         const navStateMutationsDelay =
           dependencies.experimentalFeatures?.navStateMutationsDelay || 0;
         const updateRouteFocus = () => {
-          const doc = docContext?.getDoc();
-          NavigatorService.setSelected(doc, id, docContext?.setDoc);
+          const doc = docState?.getDoc();
+          NavigatorService.setSelected(doc, id, docState?.setDoc);
           NavigatorService.addStackRoute(
             doc,
             id,
             props.route,
             nav.getState().routes[0]?.name,
             dependencies.entrypointUrl,
-            docContext?.setDoc,
+            docState?.setDoc,
           );
           if (dependencies.onRouteFocus && props.route) {
             dependencies.onRouteFocus(props.route);
@@ -391,10 +373,10 @@ function HvRouteFC(props: Types.Props) {
           } else {
             // Perform cleanup of the associated route (retrieved from parent document state)
             NavigatorService.removeStackRoute(
-              docContext?.getDoc(),
+              docState?.getDoc(),
               props.route?.params?.url,
               dependencies.entrypointUrl,
-              docContext?.setDoc,
+              docState?.setDoc,
             );
           }
         },
@@ -408,10 +390,10 @@ function HvRouteFC(props: Types.Props) {
             dependencies.experimentalFeatures?.navStateMutationsDelay || 0;
           const updateRouteUrlFromState = (e: ListenerEvent) => {
             NavigatorService.updateRouteUrlFromState(
-              docContext?.getDoc(),
+              docState?.getDoc(),
               id,
               e.data?.state,
-              docContext?.setDoc,
+              docState?.setDoc,
             );
           };
           if (navStateMutationsDelay > 0) {
@@ -433,11 +415,12 @@ function HvRouteFC(props: Types.Props) {
       };
     }
     return undefined;
-  }, [backBehaviors, dependencies, docContext, elementCache, nav, props.route]);
+  }, [backBehaviors, dependencies, docState, elementCache, nav, props.route]);
 
   return (
+    // TODO: HvDoc doesn't need to be added to every route; only those that will load content
     <HvDoc
-      element={element}
+      hasElement={!!element}
       navigationProvider={navigator}
       route={props.route}
       url={url}
@@ -454,7 +437,7 @@ function HvRouteFC(props: Types.Props) {
           <HvRouteInner
             behaviors={dependencies.behaviors}
             components={dependencies.components}
-            doc={getDoc() || undefined}
+            doc={getDoc()}
             element={element}
             elementErrorComponent={dependencies.elementErrorComponent}
             entrypointUrl={dependencies.entrypointUrl}

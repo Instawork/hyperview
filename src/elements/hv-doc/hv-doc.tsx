@@ -3,6 +3,7 @@ import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as UrlService from 'hyperview/src/services/url';
+import { Context, useDocStateContext } from './context';
 import {
   DOMString,
   HvComponentOptions,
@@ -19,7 +20,6 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Context } from './context';
 import { HvDocError } from './errors';
 import LoadError from 'hyperview/src/core/components/load-error';
 import { later } from 'hyperview/src/services';
@@ -59,6 +59,7 @@ export default (props: Props) => {
   if (!dependencies || !elementCache) {
     throw new HvDocError('No context found');
   }
+  const parentDocState = useDocStateContext();
 
   const parser: DomService.Parser = useMemo(
     () =>
@@ -164,7 +165,7 @@ export default (props: Props) => {
       props.url &&
       !state.url &&
       props.url !== state.url &&
-      !props.element &&
+      !props.hasElement &&
       !props.route?.params?.needsSubStack
     ) {
       // Handle initial load
@@ -172,7 +173,7 @@ export default (props: Props) => {
     }
   }, [
     loadUrl,
-    props.element,
+    props.hasElement,
     props.route?.params?.needsSubStack,
     props.url,
     state.url,
@@ -196,10 +197,16 @@ export default (props: Props) => {
     [state],
   );
   const getDoc = useCallback(() => localDoc.current ?? undefined, [localDoc]);
+
+  // Walk up the tree to find the closest loaded doc
+  // TODO: Remove this once hv-route is rewritten; use getDoc() instead
+  const getSourceDoc = useCallback(
+    () => localDoc.current ?? parentDocState?.getSourceDoc?.(),
+    [localDoc, parentDocState],
+  );
   const getNavigation = useCallback(() => props.navigationProvider, [
     props.navigationProvider,
   ]);
-  const hasElement = !!props.element;
   const setScreenState = useCallback(
     (newState: ScreenState) => {
       if (newState.doc !== undefined) {
@@ -211,16 +218,21 @@ export default (props: Props) => {
       setState(prev => ({
         ...prev,
         ...newState,
-        doc: hasElement ? undefined : newState.doc ?? prev.doc,
+        doc: props.hasElement ? undefined : newState.doc ?? prev.doc,
       }));
     },
-    [hasElement],
+    [props.hasElement],
   );
   const setDoc = useCallback(
     (doc: Document) => {
-      setScreenState({ doc });
+      if (!localDoc.current) {
+        // If this doc hasn't loaded content, use the higher level doc state
+        parentDocState?.setDoc?.(doc);
+      } else {
+        setScreenState({ doc });
+      }
     },
-    [setScreenState],
+    [parentDocState, setScreenState],
   );
 
   const onUpdateCallbacksRef = useRef<OnUpdateCallbacks>();
@@ -277,6 +289,7 @@ export default (props: Props) => {
     return {
       getDoc,
       getScreenState,
+      getSourceDoc,
       onUpdate,
       onUpdateCallbacks: onUpdateCallbacksRef.current,
       reload,
@@ -286,6 +299,7 @@ export default (props: Props) => {
   }, [
     getDoc,
     getNavigation,
+    getSourceDoc,
     getScreenState,
     onUpdate,
     reload,

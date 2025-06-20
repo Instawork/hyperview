@@ -1,5 +1,4 @@
 import * as Behaviors from 'hyperview/src/services/behaviors';
-import * as Contexts from 'hyperview/src/contexts';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Events from 'hyperview/src/services/events';
 import * as Logging from 'hyperview/src/services/logging';
@@ -22,6 +21,7 @@ import type {
 } from './types';
 import React, { PureComponent } from 'react';
 import { CardStyleInterpolators } from '@react-navigation/stack';
+import { DocStateContext } from 'hyperview/src/elements/hv-doc';
 import { Platform } from 'react-native';
 import { createCustomStackNavigator } from 'hyperview/src/core/components/navigator-stack';
 import { createCustomTabNavigator } from 'hyperview/src/core/components/navigator-tab';
@@ -466,9 +466,9 @@ export default class HvNavigator extends PureComponent<Props> {
       ? this.ModalNavigator
       : this.Navigator;
     return (
-      <Contexts.DocContext.Consumer>
-        {docProvider => <Navigator doc={docProvider?.getDoc()} />}
-      </Contexts.DocContext.Consumer>
+      <DocStateContext.Consumer>
+        {docState => <Navigator doc={docState?.getSourceDoc()} />}
+      </DocStateContext.Consumer>
     );
   }
 }
