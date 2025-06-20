@@ -11,40 +11,38 @@ import { addHref } from 'hyperview/src/core/components/hyper-ref';
 import { createProps } from 'hyperview/src/services';
 
 const HvText = (props: HvComponentProps) => {
-  const Component = () => {
-    const componentProps = createProps(
-      props.element,
-      props.stylesheets,
-      props.options,
-    );
+  // eslint-disable-next-line react/destructuring-assignment
+  const { element, onUpdate, options, stylesheets } = props;
+  const { skipHref } = options || {};
+
+  const Component = (p: { element: Element }) => {
+    const componentProps = createProps(element, stylesheets, options);
 
     // TODO: Replace with <HvChildren>
     return React.createElement(
       Text,
       componentProps,
       ...Render.renderChildren(
-        props.element,
-        props.stylesheets,
-        props.onUpdate as HvComponentOnUpdate,
+        p.element,
+        stylesheets,
+        onUpdate as HvComponentOnUpdate,
         {
-          ...props.options,
-          preformatted: props.element.getAttribute('preformatted') === 'true',
+          ...options,
+          preformatted: p.element.getAttribute('preformatted') === 'true',
         },
       ),
     );
   };
 
-  const { skipHref } = props.options || {};
-
   return skipHref ? (
-    <Component />
+    <Component element={element} />
   ) : (
     addHref(
-      <Component />,
-      props.element,
-      props.stylesheets,
-      props.onUpdate as HvComponentOnUpdate,
-      props.options,
+      <Component element={element} />,
+      element,
+      stylesheets,
+      onUpdate as HvComponentOnUpdate,
+      options,
     )
   );
 };
