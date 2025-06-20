@@ -5,7 +5,13 @@ import type {
   HvComponentOnUpdate,
   HvComponentProps,
 } from 'hyperview/src/types';
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { TouchableWithoutFeedback, View } from 'react-native';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { createEventHandler } from 'hyperview/src/core/utils';
@@ -21,7 +27,6 @@ const HvOption = (props: HvComponentProps) => {
   const { onSelect, onToggle } = options;
   const [pressed, setPressed] = useState(false);
   const prevProps = useRef<HvComponentProps | null>(null);
-
   const value = element.getAttribute('value');
   const selected = element.getAttribute('selected') === 'true';
 
@@ -32,33 +37,43 @@ const HvOption = (props: HvComponentProps) => {
     pressed,
     pressedSelected: pressed && selected,
     selected,
-  } as const;
+  };
+
   const componentProps = createProps(element, stylesheets, newOptions);
+
+  const flex = useMemo(() => {
+    return componentProps.style?.flex;
+  }, [componentProps.style?.flex]);
+
+  const handlePress = useCallback(() => {
+    if (onSelect) {
+      // Updates the DOM state, causing this element to re-render as selected.
+      // Used in select-single context.
+      onSelect(value);
+    }
+    if (onToggle) {
+      // Updates the DOM state, toggling this element.
+      // Used in select-multiple context.
+      onToggle(value);
+    }
+  }, [onSelect, onToggle, value]);
+
+  const handlePressIn = useCallback(() => setPressed(true), []);
+  const handlePressOut = useCallback(() => setPressed(false), []);
 
   // Option renders as an outer TouchableWithoutFeedback view and inner view.
   // The outer view handles presses, the inner view handles styling.
-  const outerProps = {
-    onPress: createEventHandler(() => {
-      if (onSelect) {
-        // Updates the DOM state, causing this element to re-render as selected.
-        // Used in select-single context.
-        onSelect(value);
-      }
-      if (onToggle) {
-        // Updates the DOM state, toggling this element.
-        // Used in select-multiple context.
-        onToggle(value);
-      }
-    }, true),
-    onPressIn: createEventHandler(() => setPressed(true)),
-    onPressOut: createEventHandler(() => setPressed(false)),
-    style: {},
-  };
-  if (componentProps.style && componentProps.style.flex) {
-    // Flex is a style that needs to be lifted from the inner component to the outer
-    // component to ensure proper layout.
-    outerProps.style = { flex: componentProps.style.flex };
-  }
+  const outerProps = useMemo(() => {
+    return {
+      onPress: createEventHandler(handlePress, true),
+      onPressIn: createEventHandler(handlePressIn),
+      onPressOut: createEventHandler(handlePressOut),
+
+      // Flex is a style that needs to be lifted from the inner component to the outer
+      // component to ensure proper layout.
+      style: flex ? { flex } : {},
+    };
+  }, [flex, handlePress, handlePressIn, handlePressOut]);
 
   useEffect(() => {
     const prevSelected =
