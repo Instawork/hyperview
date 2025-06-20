@@ -15,60 +15,67 @@ import TinyMask from './mask';
 import debounce from 'lodash/debounce';
 
 const HvTextField = (props: HvComponentProps) => {
-  if (props.element.getAttribute('hide') === 'true') {
-    return null;
-  }
+  // eslint-disable-next-line react/destructuring-assignment
+  const { element, onUpdate, options, stylesheets } = props;
 
   // Extract known attributes into their own variables
-  const autoFocus = props.element.getAttribute('auto-focus') === 'true';
+  const autoFocus = element.getAttribute('auto-focus') === 'true';
   const debounceTimeMs =
-    parseInt(props.element.getAttribute('debounce') || '', 10) || 0;
-  const defaultValue = props.element.getAttribute('value') || undefined;
-  const editable = props.element.getAttribute('editable') !== 'false';
+    parseInt(element.getAttribute('debounce') || '', 10) || 0;
+  const defaultValue = element.getAttribute('value') || undefined;
+  const editable = element.getAttribute('editable') !== 'false';
   const keyboardType =
-    (props.element.getAttribute('keyboard-type') as KeyboardTypeOptions) ||
-    undefined;
-  const multiline = props.element.getAttribute('multiline') === 'true';
-  const secureTextEntry = props.element.getAttribute('secure-text') === 'true';
+    (element.getAttribute('keyboard-type') as KeyboardTypeOptions) || undefined;
+  const multiline = element.getAttribute('multiline') === 'true';
+  const secureTextEntry = element.getAttribute('secure-text') === 'true';
   const textContentType =
-    (props.element.getAttribute('text-content-type') as TextContextType) ||
-    'none';
+    (element.getAttribute('text-content-type') as TextContextType) || 'none';
 
   // Handlers
-  const setFocus = (focused: boolean) => {
-    const newElement = props.element.cloneNode(true) as Element;
-    props.onUpdate(null, 'swap', props.element, { newElement });
+  const setFocus = useCallback(
+    (focused: boolean) => {
+      const newElement = element.cloneNode(true) as Element;
+      onUpdate(null, 'swap', element, { newElement });
 
-    if (focused) {
-      Behaviors.trigger('focus', newElement, props.onUpdate);
-    } else {
-      Behaviors.trigger('blur', newElement, props.onUpdate);
-    }
-  };
+      if (focused) {
+        Behaviors.trigger('focus', newElement, onUpdate);
+      } else {
+        Behaviors.trigger('blur', newElement, onUpdate);
+      }
+    },
+    [element, onUpdate],
+  );
 
   // Create a memoized, debounced function to trigger the "change" behavior
   // eslint-disable-next-line react-hooks/rules-of-hooks, react-hooks/exhaustive-deps
   const triggerChangeBehaviors = useCallback(
     debounce((newElement: Element) => {
-      Behaviors.trigger('change', newElement, props.onUpdate);
+      Behaviors.trigger('change', newElement, onUpdate);
     }, debounceTimeMs),
-    [],
+    [debounceTimeMs, onUpdate],
   );
 
   // This handler takes care of handling the state, so it shouldn't be debounced
   // eslint-disable-next-line react-hooks/rules-of-hooks, react-hooks/exhaustive-deps
-  const onChangeText = (value: string) => {
-    const formattedValue = HvTextField.getFormattedValue(props.element, value);
-    const newElement = props.element.cloneNode(true) as Element;
-    newElement.setAttribute('value', formattedValue);
-    props.onUpdate(null, 'swap', props.element, { newElement });
-    triggerChangeBehaviors(newElement);
-  };
+  const onChangeText = useCallback(
+    (value: string) => {
+      const formattedValue = HvTextField.getFormattedValue(element, value);
+      const newElement = element.cloneNode(true) as Element;
+      newElement.setAttribute('value', formattedValue);
+      onUpdate(null, 'swap', element, { newElement });
+      triggerChangeBehaviors(newElement);
+    },
+    [element, onUpdate, triggerChangeBehaviors],
+  );
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const textInputRef: MutableRefObject<TextInput | null> = useRef(
     null as TextInput | null,
   );
+
+  if (element.getAttribute('hide') === 'true') {
+    return null;
+  }
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const prevDefaultValue = useRef<string | undefined>(defaultValue);
@@ -80,9 +87,9 @@ const HvTextField = (props: HvComponentProps) => {
     prevDefaultValue.current = defaultValue;
   }, [defaultValue, onChangeText]);
 
-  const p = {
-    ...createProps(props.element, props.stylesheets, {
-      ...props.options,
+  const componentProps = {
+    ...createProps(element, stylesheets, {
+      ...options,
       focused: textInputRef.current?.isFocused(),
     }),
   };
@@ -90,11 +97,11 @@ const HvTextField = (props: HvComponentProps) => {
   return (
     <TextInput
       // eslint-disable-next-line react/jsx-props-no-spreading
-      {...p}
+      {...componentProps}
       ref={(ref: ElementRef<typeof TextInput> | null) => {
         textInputRef.current = ref;
-        if (props.options?.registerInputHandler) {
-          props.options.registerInputHandler(ref);
+        if (options?.registerInputHandler) {
+          options.registerInputHandler(ref);
         }
       }}
       autoFocus={autoFocus}
