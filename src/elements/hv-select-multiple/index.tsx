@@ -11,65 +11,71 @@ import { View } from 'react-native';
 import { createProps } from 'hyperview/src/services';
 
 const HvSelectMultiple = (props: HvComponentProps) => {
+  // eslint-disable-next-line react/destructuring-assignment
+  const { element, onUpdate, options, stylesheets } = props;
+
   /**
    * Callback passed to children. Option components invoke this callback when toggles.
    * Will update the XML DOM to toggle the option with the given value.
    */
-  const onToggle = (selectedValue?: DOMString | null) => {
-    const newElement = props.element.cloneNode(true) as Element;
-    const options = newElement.getElementsByTagNameNS(
-      Namespaces.HYPERVIEW,
-      'option',
-    );
-    for (let i = 0; i < options.length; i += 1) {
-      const option = options.item(i);
-      if (option) {
-        const value = option.getAttribute('value');
-        if (value === selectedValue) {
-          const selected = option.getAttribute('selected') === 'true';
-          option.setAttribute('selected', selected ? 'false' : 'true');
-        }
-      }
-    }
-    props.onUpdate('#', 'swap', props.element, { newElement });
-  };
-
-  const applyToAllOptions = useCallback(
-    (selected: boolean) => {
-      const newElement = props.element.cloneNode(true) as Element;
-      const options = newElement.getElementsByTagNameNS(
+  const onToggle = useCallback(
+    (selectedValue?: DOMString | null) => {
+      const newElement = element.cloneNode(true) as Element;
+      const opts = newElement.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
         'option',
       );
-      for (let i = 0; i < options.length; i += 1) {
-        const option = options.item(i);
+      for (let i = 0; i < opts.length; i += 1) {
+        const option = opts.item(i);
+        if (option) {
+          const value = option.getAttribute('value');
+          if (value === selectedValue) {
+            const selected = option.getAttribute('selected') === 'true';
+            option.setAttribute('selected', selected ? 'false' : 'true');
+          }
+        }
+      }
+      onUpdate('#', 'swap', element, { newElement });
+    },
+    [element, onUpdate],
+  );
+
+  const applyToAllOptions = useCallback(
+    (selected: boolean) => {
+      const newElement = element.cloneNode(true) as Element;
+      const opts = newElement.getElementsByTagNameNS(
+        Namespaces.HYPERVIEW,
+        'option',
+      );
+      for (let i = 0; i < opts.length; i += 1) {
+        const option = opts.item(i);
         if (option) {
           option.setAttribute('selected', selected ? 'true' : 'false');
         }
       }
-      props.onUpdate('#', 'swap', props.element, { newElement });
+      onUpdate('#', 'swap', element, { newElement });
     },
-    [props.element, props.onUpdate],
+    [element, onUpdate],
   );
 
   useEffect(() => {
     // NOTE: we need to remove the attribute before
     // (un)selecting all, since (un)selecting all will update the component.
-    if (props.element.hasAttribute('select-all')) {
-      props.element.removeAttribute('select-all');
+    if (element.hasAttribute('select-all')) {
+      element.removeAttribute('select-all');
       applyToAllOptions(true);
     }
-    if (props.element.hasAttribute('unselect-all')) {
-      props.element.removeAttribute('unselect-all');
+    if (element.hasAttribute('unselect-all')) {
+      element.removeAttribute('unselect-all');
       applyToAllOptions(false);
     }
-  }, [applyToAllOptions, props.element]);
+  }, [applyToAllOptions, element]);
 
-  if (props.element.getAttribute('hide') === 'true') {
+  if (element.getAttribute('hide') === 'true') {
     return null;
   }
-  const componentProps = createProps(props.element, props.stylesheets, {
-    ...props.options,
+  const componentProps = createProps(element, stylesheets, {
+    ...options,
   });
 
   // TODO: Replace with <HvChildren>
@@ -77,11 +83,11 @@ const HvSelectMultiple = (props: HvComponentProps) => {
     View,
     componentProps,
     ...Render.renderChildren(
-      props.element,
-      props.stylesheets,
-      props.onUpdate as HvComponentOnUpdate,
+      element,
+      stylesheets,
+      onUpdate as HvComponentOnUpdate,
       {
-        ...props.options,
+        ...options,
         onToggle,
       },
     ),
