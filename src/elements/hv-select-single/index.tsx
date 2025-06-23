@@ -11,6 +11,8 @@ import { View } from 'react-native';
 import { createProps } from 'hyperview/src/services';
 
 const HvSelectSingle = (props: HvComponentProps) => {
+  // eslint-disable-next-line react/destructuring-assignment
+  const { element, stylesheets, onUpdate, options } = props;
   /**
    * Callback passed to children. Option components invoke this callback when selected.
    * SingleSelect will update the XML DOM so that only the selected option is has a
@@ -18,14 +20,14 @@ const HvSelectSingle = (props: HvComponentProps) => {
    */
   const onSelect = useCallback(
     (selectedValue: DOMString | null | undefined) => {
-      const newElement = props.element.cloneNode(true) as Element;
-      const allowDeselect = props.element.getAttribute('allow-deselect');
-      const options = newElement.getElementsByTagNameNS(
+      const newElement = element.cloneNode(true) as Element;
+      const allowDeselect = element.getAttribute('allow-deselect');
+      const opts = newElement.getElementsByTagNameNS(
         Namespaces.HYPERVIEW,
         'option',
       );
-      for (let i = 0; i < options.length; i += 1) {
-        const opt = options.item(i);
+      for (let i = 0; i < opts.length; i += 1) {
+        const opt = opts.item(i);
         if (opt) {
           const value = opt.getAttribute('value');
           const current = value === selectedValue;
@@ -42,30 +44,30 @@ const HvSelectSingle = (props: HvComponentProps) => {
           }
         }
       }
-      props.onUpdate('#', 'swap', props.element, { newElement });
+      onUpdate('#', 'swap', element, { newElement });
     },
-    [props.element, props.onUpdate],
+    [element, onUpdate],
   );
 
   useEffect(() => {
     // NOTE(adam): we need to remove the attribute before
     // selection, since selection will update the component.
-    if (props.element.hasAttribute('value')) {
-      const newValue = props.element.getAttribute('value');
-      props.element.removeAttribute('value');
+    if (element.hasAttribute('value')) {
+      const newValue = element.getAttribute('value');
+      element.removeAttribute('value');
       onSelect(newValue);
     }
-    if (props.element.hasAttribute('unselect-all')) {
-      props.element.removeAttribute('unselect-all');
+    if (element.hasAttribute('unselect-all')) {
+      element.removeAttribute('unselect-all');
       onSelect(null);
     }
-  }, [props.element, onSelect]);
+  }, [element, onSelect]);
 
-  if (props.element.getAttribute('hide') === 'true') {
+  if (element.getAttribute('hide') === 'true') {
     return null;
   }
-  const componentProps = createProps(props.element, props.stylesheets, {
-    ...props.options,
+  const componentProps = createProps(element, stylesheets, {
+    ...options,
   });
 
   // TODO: Replace with <HvChildren>
@@ -73,11 +75,11 @@ const HvSelectSingle = (props: HvComponentProps) => {
     View,
     componentProps,
     ...Render.renderChildren(
-      props.element,
-      props.stylesheets,
-      props.onUpdate as HvComponentOnUpdate,
+      element,
+      stylesheets,
+      onUpdate as HvComponentOnUpdate,
       {
-        ...props.options,
+        ...options,
         onSelect,
       },
     ),
