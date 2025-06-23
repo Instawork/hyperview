@@ -35,8 +35,7 @@ const HvWebView = (props: HvComponentProps) => {
     [],
   );
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const componentProps: any = createProps(element, stylesheets, options);
+  const componentProps = createProps(element, stylesheets, options);
   const allowsInlineMediaPlayback = componentProps[
     'allows-inline-media-playback'
   ]
