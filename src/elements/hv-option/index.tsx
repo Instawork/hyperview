@@ -20,7 +20,7 @@ const HvOption = (props: HvComponentProps) => {
   const { element, onUpdate, options, stylesheets } = props;
   const { onSelect, onToggle } = options;
   const [pressed, setPressed] = useState(false);
-  const prevProps = useRef<HvComponentProps | null>(null);
+  const prevProps = useRef<HvComponentProps>(props);
 
   const value = element.getAttribute('value');
   const selected = element.getAttribute('selected') === 'true';
