@@ -25,8 +25,8 @@ import {
 } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
 import HvRoute from 'hyperview/src/elements/hv-route';
+import { HyperviewContext } from 'hyperview/src/contexts/hyperview';
 import { Linking } from 'react-native';
-import { Context as NavigationContext } from 'hyperview/src/contexts/navigation';
 import { XMLSerializer } from '@instawork/xmldom';
 
 /**
@@ -575,36 +575,32 @@ export default class Hyperview extends PureComponent<Types.Props> {
 
   render() {
     return (
-      <Contexts.DateFormatContext.Provider value={this.props.formatDate}>
-        <Contexts.RefreshControlComponentContext.Provider
-          value={this.props.refreshControl}
-        >
-          <NavigationContext.Provider
-            value={{
-              behaviors: this.props.behaviors,
-              components: this.props.components,
-              elementErrorComponent: this.props.elementErrorComponent,
-              entrypointUrl: this.props.entrypointUrl,
-              errorScreen: this.props.errorScreen,
-              experimentalFeatures: this.props.experimentalFeatures,
-              fetch: this.props.fetch,
-              loadingScreen: this.props.loadingScreen,
-              navigationComponents: this.props.navigationComponents,
-              onError: this.props.onError,
-              onParseAfter: this.props.onParseAfter,
-              onParseBefore: this.props.onParseBefore,
-              onRouteBlur: this.props.onRouteBlur,
-              onRouteFocus: this.props.onRouteFocus,
-              onUpdate: this.onUpdate,
-              reload: this.reload,
-            }}
-          >
-            <Contexts.ElementCacheProvider>
-              <HvRoute />
-            </Contexts.ElementCacheProvider>
-          </NavigationContext.Provider>
-        </Contexts.RefreshControlComponentContext.Provider>
-      </Contexts.DateFormatContext.Provider>
+      <HyperviewContext.Provider
+        value={{
+          behaviors: this.props.behaviors,
+          components: this.props.components,
+          elementErrorComponent: this.props.elementErrorComponent,
+          entrypointUrl: this.props.entrypointUrl,
+          errorScreen: this.props.errorScreen,
+          experimentalFeatures: this.props.experimentalFeatures,
+          fetch: this.props.fetch,
+          formatDate: this.props.formatDate,
+          loadingScreen: this.props.loadingScreen,
+          navigationComponents: this.props.navigationComponents,
+          onError: this.props.onError,
+          onParseAfter: this.props.onParseAfter,
+          onParseBefore: this.props.onParseBefore,
+          onRouteBlur: this.props.onRouteBlur,
+          onRouteFocus: this.props.onRouteFocus,
+          onUpdate: this.onUpdate,
+          refreshControl: this.props.refreshControl,
+          reload: this.reload,
+        }}
+      >
+        <Contexts.ElementCacheProvider>
+          <HvRoute />
+        </Contexts.ElementCacheProvider>
+      </HyperviewContext.Provider>
     );
   }
 }
