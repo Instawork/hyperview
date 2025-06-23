@@ -36,6 +36,10 @@ export default class HvSectionList extends PureComponent<
 
   parser: DOMParser = new DOMParser();
 
+  startTime: number = Date.now();
+
+  renderCount: number = 0;
+
   ref: ElementRef<typeof FlatList> | null = null;
 
   state: State = {
@@ -201,6 +205,7 @@ export default class HvSectionList extends PureComponent<
   };
 
   render() {
+    this.renderCount += 1;
     const styleAttr = this.props.element.getAttribute('style');
     const style = styleAttr
       ? styleAttr.split(' ').map(s => this.props.stylesheets.regular[s])
@@ -252,6 +257,13 @@ export default class HvSectionList extends PureComponent<
         : undefined;
 
     const { testID, accessibilityLabel } = createTestProps(this.props.element);
+
+    console.log(
+      '>> SectionList render time:',
+      Date.now() - this.startTime,
+      'render count:',
+      this.renderCount,
+    );
 
     return (
       <Contexts.RefreshControlComponentContext.Consumer>
