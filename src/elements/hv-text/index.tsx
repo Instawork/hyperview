@@ -4,8 +4,8 @@ import type {
   HvComponentOnUpdate,
   HvComponentProps,
 } from 'hyperview/src/types';
+import React, { useCallback } from 'react';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import React from 'react';
 import { Text } from 'react-native';
 import { addHref } from 'hyperview/src/core/components/hyper-ref';
 import { createProps } from 'hyperview/src/services';
@@ -15,7 +15,7 @@ const HvText = (props: HvComponentProps) => {
   const { element, onUpdate, options, stylesheets } = props;
   const { skipHref } = options || {};
 
-  const Component = (p: { element: Element }) => {
+  const Component = useCallback(() => {
     const componentProps = createProps(element, stylesheets, options);
 
     // TODO: Replace with <HvChildren>
@@ -23,22 +23,22 @@ const HvText = (props: HvComponentProps) => {
       Text,
       componentProps,
       ...Render.renderChildren(
-        p.element,
+        element,
         stylesheets,
         onUpdate as HvComponentOnUpdate,
         {
           ...options,
-          preformatted: p.element.getAttribute('preformatted') === 'true',
+          preformatted: element.getAttribute('preformatted') === 'true',
         },
       ),
     );
-  };
+  }, [element, onUpdate, options, stylesheets]);
 
   return skipHref ? (
-    <Component element={element} />
+    <Component />
   ) : (
     addHref(
-      <Component element={element} />,
+      <Component />,
       element,
       stylesheets,
       onUpdate as HvComponentOnUpdate,
