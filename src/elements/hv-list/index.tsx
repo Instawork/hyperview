@@ -20,6 +20,7 @@ import { DOMParser } from '@instawork/xmldom';
 import type { ElementRef } from 'react';
 import { FlatList } from 'hyperview/src/core/components/scroll';
 import HvElement from 'hyperview/src/core/components/hv-element';
+import { HyperviewContext } from 'hyperview/src/contexts/hyperview';
 import { LOCAL_NAME } from 'hyperview/src/types';
 
 export default class HvList extends PureComponent<HvComponentProps, State> {
@@ -234,9 +235,10 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
     const { testID, accessibilityLabel } = createTestProps(this.props.element);
 
     return (
-      <Contexts.RefreshControlComponentContext.Consumer>
-        {ContextRefreshControl => {
-          const RefreshControl = ContextRefreshControl || DefaultRefreshControl;
+      <HyperviewContext.Consumer>
+        {hyperview => {
+          const RefreshControl =
+            hyperview?.refreshControl || DefaultRefreshControl;
           const hasRefreshTrigger =
             this.props.element.getAttribute('trigger') === 'refresh';
           return (
@@ -283,7 +285,7 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
             />
           );
         }}
-      </Contexts.RefreshControlComponentContext.Consumer>
+      </HyperviewContext.Consumer>
     );
   }
 }

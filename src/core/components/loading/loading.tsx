@@ -1,12 +1,9 @@
 import * as Contexts from 'hyperview/src/contexts';
 import { ActivityIndicator, View } from 'react-native';
-import {
-  Context as NavigationContext,
-  NavigationContextProps,
-} from 'hyperview/src/contexts/navigation';
 import React, { useContext, useEffect } from 'react';
 import { LoadingProps } from './types';
 import styles from './styles';
+import { useHyperview } from 'hyperview/src/contexts/hyperview';
 
 /**
  * Renders a loading screen
@@ -15,9 +12,7 @@ import styles from './styles';
  * Performs cleanup when the component is unmounted
  */
 const Loading = (props: LoadingProps): React.ReactElement => {
-  const navigationContext: NavigationContextProps | null = useContext(
-    NavigationContext,
-  );
+  const { loadingScreen } = useHyperview();
   const elementCacheContext = useContext(Contexts.ElementCacheContext);
 
   // Perform cleanup when the component is unmounted
@@ -35,11 +30,7 @@ const Loading = (props: LoadingProps): React.ReactElement => {
   }
 
   // Fall back to default loading screen if the contexts are not available
-  if (
-    !navigationContext ||
-    !elementCacheContext ||
-    !navigationContext.loadingScreen
-  ) {
+  if (!loadingScreen || !elementCacheContext) {
     return (
       <View style={styles.container}>
         <ActivityIndicator />
@@ -57,7 +48,7 @@ const Loading = (props: LoadingProps): React.ReactElement => {
     behaviorElement !== undefined ? behaviorElement : props.routeElement?.();
 
   // Instantiate the loading screen with the triggering element
-  return React.createElement(navigationContext.loadingScreen, {
+  return React.createElement(loadingScreen, {
     element,
   });
 };

@@ -20,11 +20,11 @@ import type {
 } from './types';
 import React, { PureComponent } from 'react';
 import { CardStyleInterpolators } from '@react-navigation/stack';
-import { Context as NavigationContext } from 'hyperview/src/contexts/navigation';
 import { Platform } from 'react-native';
 import { createCustomStackNavigator } from 'hyperview/src/core/components/navigator-stack';
 import { createCustomTabNavigator } from 'hyperview/src/core/components/navigator-tab';
 import { getFirstChildTag } from 'hyperview/src/services/dom/helpers';
+import { useHyperview } from 'hyperview/src/contexts/hyperview';
 
 /**
  * Flag to show the default navigator UIs
@@ -326,7 +326,8 @@ export default class HvNavigator extends PureComponent<Props> {
   /**
    * Build the required navigator from the xml element
    */
-  Navigator = (props: NavigatorService.NavigatorProps): React.ReactElement => {
+  Navigator = (): React.ReactElement => {
+    const { navigationComponents } = useHyperview();
     if (!this.props.element) {
       throw new NavigatorService.HvNavigatorError(
         'No element found for navigator',
@@ -351,7 +352,7 @@ export default class HvNavigator extends PureComponent<Props> {
       ? selected.getAttribute('id')?.toString()
       : undefined;
 
-    const { BottomTabBar } = props;
+    const { BottomTabBar } = navigationComponents || {};
 
     switch (type) {
       case NavigatorService.NAVIGATOR_TYPE.STACK:
@@ -465,18 +466,9 @@ export default class HvNavigator extends PureComponent<Props> {
       ? this.ModalNavigator
       : this.Navigator;
     return (
-      <NavigationContext.Consumer>
-        {navContext => (
-          <Contexts.DocContext.Consumer>
-            {docProvider => (
-              <Navigator
-                BottomTabBar={navContext?.navigationComponents?.BottomTabBar}
-                doc={docProvider?.getDoc()}
-              />
-            )}
-          </Contexts.DocContext.Consumer>
-        )}
-      </NavigationContext.Consumer>
+      <Contexts.DocContext.Consumer>
+        {docProvider => <Navigator doc={docProvider?.getDoc()} />}
+      </Contexts.DocContext.Consumer>
     );
   }
 }
