@@ -1,25 +1,25 @@
-import { StateProps } from './types';
-import { createContext } from 'react';
+import React, { ConsumerProps, createContext, useContext } from 'react';
+import { ContextProps } from './types';
 
-const callbacks = {
-  clearElementError: () => undefined,
-  getDoc: () => undefined,
-  getNavigation: () => ({
-    backAction: () => undefined,
-    navigate: () => undefined,
-    openModalAction: () => undefined,
-  }),
-  getOnUpdate: () => () => undefined,
-  getState: () => ({}),
-  setState: () => undefined,
-  updateUrl: () => null,
+export const Context = createContext<ContextProps | undefined>(undefined);
+
+export const useHvDoc = () => {
+  const context = useContext(Context);
+  if (!context) {
+    throw new Error('Trying to use HvDoc context without provider');
+  }
+  return context;
 };
 
-export const Context = createContext<StateProps>({
-  getDoc: () => undefined,
-  getScreenState: () => ({}),
-  onUpdate: () => undefined,
-  onUpdateCallbacks: callbacks,
-  reload: () => null,
-  setScreenState: () => undefined,
-});
+export const Consumer = (props: ConsumerProps<ContextProps>) => {
+  return (
+    <Context.Consumer>
+      {context => {
+        if (!context) {
+          throw new Error('Trying to use HvDoc context without provider');
+        }
+        return props.children(context);
+      }}
+    </Context.Consumer>
+  );
+};

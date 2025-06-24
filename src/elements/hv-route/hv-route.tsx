@@ -10,7 +10,7 @@ import {
   BackBehaviorProvider,
   useBackBehaviorContext,
 } from 'hyperview/src/contexts/back-behaviors';
-import HvDoc, { StateContext } from 'hyperview/src/elements/hv-doc';
+import HvDoc, { StateConsumer } from 'hyperview/src/elements/hv-doc';
 import type {
   ListenerEvent,
   NavigationProps,
@@ -453,7 +453,7 @@ function HvRouteFC(props: Types.Props) {
       route={props.route}
       url={url}
     >
-      <StateContext.Consumer>
+      <StateConsumer>
         {({
           getDoc,
           getScreenState,
@@ -482,7 +482,7 @@ function HvRouteFC(props: Types.Props) {
             url={url}
           />
         )}
-      </StateContext.Consumer>
+      </StateConsumer>
     </HvDoc>
   );
 }

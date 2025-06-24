@@ -1,2 +1,2 @@
 export { default } from './hv-doc';
-export { Context as StateContext } from './context';
+export { Consumer as StateConsumer, useHvDoc } from './context';
