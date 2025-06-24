@@ -1,2 +1,2 @@
 export { default } from './hv-doc';
-export { StateContext } from './context';
+export { Context as StateContext } from './context';

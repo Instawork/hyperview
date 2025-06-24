@@ -91,7 +91,7 @@ export const preorder = (
  * Handle cases where an element is passed in instead of a document
  */
 export const getElementById = (
-  doc: Document | null | undefined,
+  doc: Document | undefined,
   id: string,
 ): Element | null | undefined => {
   if (!doc) {
@@ -141,7 +141,7 @@ export const processDocument = (doc: Document): Document => {
  * is no longer a direct child of the view
  */
 export const findTargetByBehavior = (
-  doc: Document | null,
+  doc: Document | undefined,
   behaviorElement: Element | null | undefined,
 ): Element | null => {
   if (!doc || !behaviorElement) {
