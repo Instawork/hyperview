@@ -221,7 +221,7 @@ export const ACTIONS = {
 export const NAVIGATOR_TYPE = {
   STACK: 'stack',
   TAB: 'tab',
-};
+} as const;
 
 export const NAV_ACTIONS = {
   BACK: ACTIONS.BACK,
