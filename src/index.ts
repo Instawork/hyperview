@@ -1,7 +1,6 @@
 import * as Events from 'hyperview/src/services/events';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import * as TestHelpers from 'hyperview/test/helpers';
 
 /**
  * Root component for Hyperview.
@@ -42,7 +41,7 @@ export { createEventHandler } from 'hyperview/src/core/utils';
 /**
  * Services
  */
-export { Events, Logging, Namespaces, TestHelpers };
+export { Events, Logging, Namespaces };
 export {
   createProps,
   createStyleProp,
