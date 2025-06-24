@@ -34,8 +34,8 @@ const CustomStackNavigator = (props: Props) => {
     StackNavigationEventMap
   >(CustomStackRouter.Router, {
     children: props.children,
-    docContextProps,
-    hyperview,
+    entrypointUrl: hyperview?.entrypointUrl,
+    getDoc: () => docContextProps?.getDoc(),
     id: props.id,
     initialRouteName: props.initialRouteName,
     screenOptions: props.screenOptions,

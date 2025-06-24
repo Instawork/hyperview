@@ -302,6 +302,7 @@ const getNestedNavigator = (
 function HvRouteFC(props: Types.Props) {
   const {
     behaviors,
+    components,
     elementErrorComponent,
     entrypointUrl,
     onRouteBlur,
@@ -483,6 +484,7 @@ function HvRouteFC(props: Types.Props) {
         }) => (
           <HvRouteInner
             behaviors={behaviors}
+            components={components}
             doc={getLocalDoc() || undefined}
             element={element}
             elementErrorComponent={elementErrorComponent}

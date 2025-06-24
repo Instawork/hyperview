@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import { createProps, createStyleProp } from 'hyperview/src/services';
 import FieldLabel from 'hyperview/src/elements/hv-date-field/field-label';
-import { HyperviewContext } from 'hyperview/src/contexts/hyperview';
+import { HyperviewConsumer } from 'hyperview/src/contexts/hyperview';
 import type { Props } from './types';
 import type { StyleSheet as StyleSheetType } from 'hyperview/src/types';
 
@@ -39,18 +39,18 @@ export default (props: Props) => {
     >
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <View {...viewProps}>
-        <HyperviewContext.Consumer>
-          {hyperview => (
+        <HyperviewConsumer>
+          {({ formatDate }) => (
             <FieldLabel
               element={props.element}
               focused={props.focused}
-              formatter={hyperview?.formatDate}
+              formatter={formatDate}
               pressed={pressed}
               style={labelStyle}
               value={props.value}
             />
           )}
-        </HyperviewContext.Consumer>
+        </HyperviewConsumer>
         {props.children}
       </View>
     </TouchableWithoutFeedback>
