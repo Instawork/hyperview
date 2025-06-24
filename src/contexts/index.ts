@@ -11,8 +11,3 @@ export const OnUpdateContext = React.createContext<{
   onUpdate: HvComponentOnUpdate;
   // eslint-disable-next-line @typescript-eslint/no-empty-function
 }>({ onUpdate: () => {} });
-
-export {
-  CacheProvider as ElementCacheProvider,
-  Context as ElementCacheContext,
-} from 'hyperview/src/contexts/element-cache';
