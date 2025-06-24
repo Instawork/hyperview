@@ -7,8 +7,8 @@ import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as Types from './types';
 import * as UrlService from 'hyperview/src/services/url';
 import {
-  BackBehaviorContext,
   BackBehaviorProvider,
+  useBackBehaviorContext,
 } from 'hyperview/src/contexts/back-behaviors';
 import HvDoc, { StateContext } from 'hyperview/src/elements/hv-doc';
 import type {
@@ -311,7 +311,7 @@ function HvRouteFC(props: Types.Props) {
     experimentalFeatures,
   } = useHyperview();
   const { getElement, removeElement, setElement } = useElementCache();
-  const backContext = useContext(BackBehaviorContext);
+  const { get, onUpdate } = useBackBehaviorContext();
   const docContext = useContext(Contexts.DocContext);
 
   const url =
@@ -385,7 +385,6 @@ function HvRouteFC(props: Types.Props) {
         (event: { preventDefault: () => void }) => {
           // Use the current document state to access behaviors on the document
           // Check for elements registered to interrupt back action via a trigger of BACK
-          const { get, onUpdate } = backContext || {};
           const elements: Element[] = (get && get()) || [];
           if (elements.length > 0 && onUpdate && nav.isFocused()) {
             // Process the elements
@@ -447,13 +446,14 @@ function HvRouteFC(props: Types.Props) {
     }
     return undefined;
   }, [
-    backContext,
     docContext,
     entrypointUrl,
     experimentalFeatures,
+    get,
     nav,
     onRouteBlur,
     onRouteFocus,
+    onUpdate,
     props.route,
   ]);
 
@@ -468,7 +468,7 @@ function HvRouteFC(props: Types.Props) {
         {({
           getLocalDoc,
           getScreenState,
-          onUpdate,
+          onUpdate: stateOnUpdate,
           onUpdateCallbacks,
           reload,
           setScreenState,
@@ -484,7 +484,7 @@ function HvRouteFC(props: Types.Props) {
             getLocalDoc={getLocalDoc}
             getScreenState={getScreenState}
             navigator={navigator}
-            onUpdate={onUpdate}
+            onUpdate={stateOnUpdate}
             onUpdateCallbacks={onUpdateCallbacks}
             reload={reload}
             removeElement={removeElement}
