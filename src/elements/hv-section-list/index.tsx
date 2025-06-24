@@ -20,6 +20,7 @@ import { createTestProps, getAncestorByTagName } from 'hyperview/src/services';
 import { DOMParser } from '@instawork/xmldom';
 import type { ElementRef } from 'react';
 import HvElement from 'hyperview/src/core/components/hv-element';
+import { HyperviewContext } from 'hyperview/src/contexts/hyperview';
 import { SectionList } from 'hyperview/src/core/components/scroll';
 
 const getSectionIndex = (
@@ -348,9 +349,10 @@ export default class HvSectionList extends PureComponent<
     const { testID, accessibilityLabel } = createTestProps(this.props.element);
 
     return (
-      <Contexts.RefreshControlComponentContext.Consumer>
-        {ContextRefreshControl => {
-          const RefreshControl = ContextRefreshControl || DefaultRefreshControl;
+      <HyperviewContext.Consumer>
+        {hyperview => {
+          const RefreshControl =
+            hyperview?.refreshControl || DefaultRefreshControl;
           const hasRefreshTrigger =
             this.props.element.getAttribute('trigger') === 'refresh';
           return (
@@ -401,7 +403,7 @@ export default class HvSectionList extends PureComponent<
             />
           );
         }}
-      </Contexts.RefreshControlComponentContext.Consumer>
+      </HyperviewContext.Consumer>
     );
   }
 }

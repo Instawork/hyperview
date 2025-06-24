@@ -41,8 +41,8 @@ const mutateState = (
   stackOptions: StackOptions,
   options: RouterRenameOptions,
 ) => {
-  const entrypointUrl = stackOptions.navContextProps?.entrypointUrl;
-  const doc = stackOptions.docContextProps?.getDoc();
+  const { entrypointUrl, getDoc } = stackOptions;
+  const doc = getDoc?.();
   const routes = buildRoutesFromDom(
     doc,
     state,
