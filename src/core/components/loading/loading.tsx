@@ -1,8 +1,8 @@
-import * as Contexts from 'hyperview/src/contexts';
 import { ActivityIndicator, View } from 'react-native';
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { LoadingProps } from './types';
 import styles from './styles';
+import { useElementCache } from 'hyperview/src/contexts/element-cache';
 import { useHyperview } from 'hyperview/src/contexts/hyperview';
 
 /**
@@ -13,16 +13,16 @@ import { useHyperview } from 'hyperview/src/contexts/hyperview';
  */
 const Loading = (props: LoadingProps): React.ReactElement => {
   const { loadingScreen } = useHyperview();
-  const elementCacheContext = useContext(Contexts.ElementCacheContext);
+  const { getElement, removeElement } = useElementCache();
 
   // Perform cleanup when the component is unmounted
   useEffect(() => {
     return () => {
       if (props.cachedId) {
-        elementCacheContext?.removeElement(props.cachedId);
+        removeElement(props.cachedId);
       }
     };
-  }, [elementCacheContext, props.cachedId]);
+  }, [props.cachedId, removeElement]);
 
   // Use the passed preloadScreen component
   if (props.preloadScreenComponent) {
@@ -30,7 +30,8 @@ const Loading = (props: LoadingProps): React.ReactElement => {
   }
 
   // Fall back to default loading screen if the contexts are not available
-  if (!loadingScreen || !elementCacheContext) {
+
+  if (!loadingScreen) {
     return (
       <View style={styles.container}>
         <ActivityIndicator />
@@ -40,7 +41,7 @@ const Loading = (props: LoadingProps): React.ReactElement => {
 
   // The behavior element which triggered the load
   const behaviorElement = props.cachedId
-    ? elementCacheContext?.getElement(props.cachedId)
+    ? getElement(props.cachedId)
     : undefined;
 
   // If the behavior element is not found, look for a route element

@@ -1,6 +1,5 @@
 import * as Behaviors from 'hyperview/src/behaviors';
 import * as Components from 'hyperview/src/services/components';
-import * as Contexts from 'hyperview/src/contexts';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Events from 'hyperview/src/services/events';
 import * as Helpers from 'hyperview/src/services/dom/helpers';
@@ -24,6 +23,7 @@ import {
   UpdateAction,
 } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
+import { ElementCacheProvider } from 'hyperview/src/contexts/element-cache';
 import HvRoute from 'hyperview/src/elements/hv-route';
 import { HyperviewContext } from 'hyperview/src/contexts/hyperview';
 import { Linking } from 'react-native';
@@ -597,9 +597,9 @@ export default class Hyperview extends PureComponent<Types.Props> {
           reload: this.reload,
         }}
       >
-        <Contexts.ElementCacheProvider>
+        <ElementCacheProvider>
           <HvRoute />
-        </Contexts.ElementCacheProvider>
+        </ElementCacheProvider>
       </HyperviewContext.Provider>
     );
   }

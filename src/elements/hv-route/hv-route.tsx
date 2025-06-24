@@ -24,6 +24,7 @@ import HvScreen from 'hyperview/src/elements/hv-screen';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import Loading from 'hyperview/src/core/components/loading';
 import { NavigationContainerRefContext } from '@react-navigation/native';
+import { useElementCache } from 'hyperview/src/contexts/element-cache';
 import { useHyperview } from 'hyperview/src/contexts/hyperview';
 
 /**
@@ -309,10 +310,7 @@ function HvRouteFC(props: Types.Props) {
     onRouteFocus,
     experimentalFeatures,
   } = useHyperview();
-  const elemenCacheContext = useContext(Contexts.ElementCacheContext);
-  if (!elemenCacheContext) {
-    throw new NavigatorService.HvRouteError('No context found');
-  }
+  const { getElement, removeElement, setElement } = useElementCache();
   const backContext = useContext(BackBehaviorContext);
   const docContext = useContext(Contexts.DocContext);
 
@@ -332,15 +330,9 @@ function HvRouteFC(props: Types.Props) {
         navigation: nav,
         rootNavigation,
         route: props.route,
-        setElement: elemenCacheContext.setElement,
+        setElement,
       }),
-    [
-      elemenCacheContext.setElement,
-      nav,
-      entrypointUrl,
-      props.route,
-      rootNavigation,
-    ],
+    [entrypointUrl, nav, props.route, rootNavigation, setElement],
   );
 
   // Get the navigator element from the context
@@ -456,13 +448,12 @@ function HvRouteFC(props: Types.Props) {
     return undefined;
   }, [
     backContext,
+    docContext,
     entrypointUrl,
     experimentalFeatures,
+    nav,
     onRouteBlur,
     onRouteFocus,
-    docContext,
-    elemenCacheContext,
-    nav,
     props.route,
   ]);
 
@@ -489,14 +480,14 @@ function HvRouteFC(props: Types.Props) {
             element={element}
             elementErrorComponent={elementErrorComponent}
             entrypointUrl={entrypointUrl}
-            getElement={elemenCacheContext.getElement}
+            getElement={getElement}
             getLocalDoc={getLocalDoc}
             getScreenState={getScreenState}
             navigator={navigator}
             onUpdate={onUpdate}
             onUpdateCallbacks={onUpdateCallbacks}
             reload={reload}
-            removeElement={elemenCacheContext.removeElement}
+            removeElement={removeElement}
             route={props.route}
             setScreenState={setScreenState}
             url={url}

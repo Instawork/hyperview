@@ -1,4 +1,3 @@
-import * as Contexts from 'hyperview/src/contexts';
 import * as DomService from 'hyperview/src/services/dom';
 import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as NavigatorService from 'hyperview/src/services/navigator';
@@ -15,7 +14,6 @@ import {
 import { DocState, ErrorProps, Props } from './types';
 import React, {
   useCallback,
-  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -25,6 +23,7 @@ import { HvDocError } from './errors';
 import LoadError from 'hyperview/src/core/components/load-error';
 import { StateContext } from './context';
 import { later } from 'hyperview/src/services';
+import { useElementCache } from 'hyperview/src/contexts/element-cache';
 import { useHyperview } from 'hyperview/src/contexts/hyperview';
 
 export default (props: Props) => {
@@ -66,10 +65,7 @@ export default (props: Props) => {
     reload,
   } = useHyperview();
 
-  const elemenCacheContext = useContext(Contexts.ElementCacheContext);
-  if (!elemenCacheContext) {
-    throw new HvDocError('No context found');
-  }
+  const { removeElement } = useElementCache();
 
   const parser: DomService.Parser = useMemo(
     () =>
@@ -149,19 +145,20 @@ export default (props: Props) => {
         handleError(err as Error, targetUrl);
       } finally {
         if (params.preloadScreen) {
-          elemenCacheContext.removeElement?.(params.preloadScreen);
+          removeElement(params.preloadScreen);
         }
         if (params.behaviorElementId) {
-          elemenCacheContext.removeElement?.(params.behaviorElementId);
+          removeElement(params.behaviorElementId);
         }
       }
     },
+
     [
-      elemenCacheContext,
       entrypointUrl,
       onError,
       parser,
       props.route?.params,
+      removeElement,
       state.url,
     ],
   );
