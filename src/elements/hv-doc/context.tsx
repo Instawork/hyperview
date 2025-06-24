@@ -3,7 +3,7 @@ import { ContextProps } from './types';
 
 export const Context = createContext<ContextProps | undefined>(undefined);
 
-export const useHvDoc = () => {
+export const useHvDocContext = () => {
   const context = useContext(Context);
   if (!context) {
     throw new Error('Trying to use HvDoc context without provider');
