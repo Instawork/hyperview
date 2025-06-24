@@ -8,10 +8,12 @@ import * as NavigatorService from 'hyperview/src/services/navigator';
 import {
   BEHAVIOR_ATTRIBUTES,
   LOCAL_NAME,
+  NAVIGATOR_TYPE,
   RouteParams,
   TRIGGERS,
 } from 'hyperview/src/types';
 import type {
+  NavigatorProps,
   ParamTypes,
   Props,
   ScreenParams,
@@ -197,7 +199,7 @@ export default class HvNavigator extends PureComponent<Props> {
     const initialParams = NavigatorService.isDynamicRoute(id)
       ? {}
       : { id, isModal, needsSubStack, routeId, url: href };
-    if (type === NavigatorService.NAVIGATOR_TYPE.TAB) {
+    if (type === NAVIGATOR_TYPE.TAB) {
       return (
         <BottomTab.Screen
           key={id}
@@ -207,7 +209,7 @@ export default class HvNavigator extends PureComponent<Props> {
         />
       );
     }
-    if (type === NavigatorService.NAVIGATOR_TYPE.STACK) {
+    if (type === NAVIGATOR_TYPE.STACK) {
       const gestureEnabled = Platform.OS === 'ios' ? !needsSubStack : false;
       return (
         <Stack.Screen
@@ -243,7 +245,7 @@ export default class HvNavigator extends PureComponent<Props> {
     screens.push(
       this.buildScreen(
         NavigatorService.ID_CARD,
-        NavigatorService.NAVIGATOR_TYPE.STACK,
+        NAVIGATOR_TYPE.STACK,
         undefined,
         false,
       ),
@@ -252,7 +254,7 @@ export default class HvNavigator extends PureComponent<Props> {
     screens.push(
       this.buildScreen(
         NavigatorService.ID_MODAL,
-        NavigatorService.NAVIGATOR_TYPE.STACK,
+        NAVIGATOR_TYPE.STACK,
         undefined,
         true,
       ),
@@ -317,7 +319,7 @@ export default class HvNavigator extends PureComponent<Props> {
     });
 
     // Add the dynamic stack screens
-    if (type === NavigatorService.NAVIGATOR_TYPE.STACK) {
+    if (type === NAVIGATOR_TYPE.STACK) {
       screens.push(...this.buildDynamicScreens());
     }
     return screens;
@@ -355,7 +357,7 @@ export default class HvNavigator extends PureComponent<Props> {
     const { BottomTabBar } = navigationComponents || {};
 
     switch (type) {
-      case NavigatorService.NAVIGATOR_TYPE.STACK:
+      case NAVIGATOR_TYPE.STACK:
         return (
           <Stack.Navigator
             id={id}
@@ -364,7 +366,7 @@ export default class HvNavigator extends PureComponent<Props> {
             {this.buildScreens(type, this.props.element)}
           </Stack.Navigator>
         );
-      case NavigatorService.NAVIGATOR_TYPE.TAB:
+      case NAVIGATOR_TYPE.TAB:
         return (
           <BottomTab.Navigator
             backBehavior="none"
@@ -397,9 +399,7 @@ export default class HvNavigator extends PureComponent<Props> {
   /**
    * Build a stack navigator for a modal
    */
-  ModalNavigator = (
-    props: NavigatorService.NavigatorProps,
-  ): React.ReactElement => {
+  ModalNavigator = (props: NavigatorProps): React.ReactElement => {
     if (!this.props.params) {
       throw new NavigatorService.HvNavigatorError(
         'No params found for modal screen',
@@ -420,7 +420,7 @@ export default class HvNavigator extends PureComponent<Props> {
     screens.push(
       this.buildScreen(
         screenId,
-        NavigatorService.NAVIGATOR_TYPE.STACK,
+        NAVIGATOR_TYPE.STACK,
         this.props.params?.url || undefined,
         false,
         false,

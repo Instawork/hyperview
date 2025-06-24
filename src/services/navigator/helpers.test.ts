@@ -424,13 +424,13 @@ describe('findPath', () => {
 // - build navigator hierarchy
 
 function isNavigateParam(
-  p: RouteParams | Types.NavigationNavigateParams | undefined,
-): p is Types.NavigationNavigateParams {
-  return (p as Types.NavigationNavigateParams).screen !== undefined;
+  p: RouteParams | Types.NavigateParams | undefined,
+): p is Types.NavigateParams {
+  return (p as Types.NavigateParams).screen !== undefined;
 }
 
 function isRouteParam(
-  p: RouteParams | Types.NavigationNavigateParams | undefined,
+  p: RouteParams | Types.NavigateParams | undefined,
 ): p is RouteParams {
   return (p as RouteParams).url !== undefined;
 }

@@ -18,6 +18,11 @@ export type Props = {
   routeComponent: FC<HvRouteProps>;
 };
 
+/* List of props available to navigators */
+export type NavigatorProps = {
+  doc: Document | undefined;
+};
+
 /**
  * Options used for a stack navigator's screenOptions
  */
