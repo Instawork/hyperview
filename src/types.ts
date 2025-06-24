@@ -321,28 +321,30 @@ export type ExperimentalFeatures = {
   navStateMutationsDelay?: number;
 };
 
+export type FormatDate = (
+  date: Date | null | undefined,
+  format: string | undefined,
+) => string | undefined;
+
 /**
  * All of the props used by hyperview
  */
 export type Props = {
-  formatDate: (
-    date: Date | null | undefined,
-    format: string | undefined,
-  ) => string | undefined;
-  refreshControl?: ComponentType<RefreshControlProps>;
-  navigationComponents?: NavigationComponents;
+  behaviors?: HvBehavior[];
+  components?: HvComponent[];
+  elementErrorComponent?: ComponentType<ErrorProps>;
   entrypointUrl: string;
+  errorScreen?: ComponentType<ErrorProps>;
+  experimentalFeatures?: ExperimentalFeatures;
   fetch: Fetch;
+  formatDate: FormatDate;
+  loadingScreen?: ComponentType<LoadingProps>;
+  logger?: Logging.Logger;
+  navigationComponents?: NavigationComponents;
   onError?: (error: Error) => void;
   onParseAfter?: (url: string) => void;
   onParseBefore?: (url: string) => void;
   onRouteBlur?: (route: RouteProps) => void;
   onRouteFocus?: (route: RouteProps) => void;
-  behaviors?: HvBehavior[];
-  components?: HvComponent[];
-  elementErrorComponent?: ComponentType<ErrorProps>;
-  errorScreen?: ComponentType<ErrorProps>;
-  loadingScreen?: ComponentType<LoadingProps>;
-  logger?: Logging.Logger;
-  experimentalFeatures?: ExperimentalFeatures;
+  refreshControl?: ComponentType<RefreshControlProps>;
 };
