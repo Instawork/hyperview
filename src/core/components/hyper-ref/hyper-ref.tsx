@@ -34,7 +34,9 @@ import { createTestProps } from 'hyperview/src/services';
 export default class HyperRef extends PureComponent<Props, State> {
   static contextType = BackBehaviorContext;
 
-  context: React.ContextType<typeof BackBehaviorContext> = null;
+  context:
+    | React.ContextType<typeof BackBehaviorContext>
+    | undefined = undefined;
 
   state: State = {
     pressed: false,
