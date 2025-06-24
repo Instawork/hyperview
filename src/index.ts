@@ -22,6 +22,7 @@ export type {
   HvComponentOptions,
   HvGetRoot,
   HvUpdateRoot,
+  NavigationComponents,
   RouteParams,
   RouteProps,
   StyleSheet,
@@ -54,7 +55,6 @@ export {
   getFirstTag,
 } from 'hyperview/src/services/dom';
 export { HvBaseError } from 'hyperview/src/services/error';
-export type { NavigationComponents } from 'hyperview/src/services/navigator';
 export { renderChildren, renderElement } from 'hyperview/src/services/render';
 export { createStylesheets } from 'hyperview/src/services/stylesheets';
 export { getUrlFromHref } from 'hyperview/src/services/url';

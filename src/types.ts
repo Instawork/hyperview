@@ -7,7 +7,7 @@ import type {
 import React, { ComponentType } from 'react';
 import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
 import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
-import type { NavigationComponents } from 'hyperview/src/services/navigator';
+import type { BottomTabBarProps as RNBottomTabBarProps } from '@react-navigation/bottom-tabs';
 import type { RefreshControlProps } from 'react-native';
 import type { XResponseStaleReason } from 'hyperview/src/services/dom';
 
@@ -143,7 +143,7 @@ export type HvComponent = (
 ) &
   HvComponentStatics;
 
-export type HvGetRoot = () => Document | null;
+export type HvGetRoot = () => Document | undefined;
 
 export type HvUpdateRoot = (root: Document, updateStylesheet?: boolean) => void;
 
@@ -213,6 +213,14 @@ export const ACTIONS = {
   SELECT_ALL: 'select-all',
   SWAP: 'swap',
   UNSELECT_ALL: 'unselect-all',
+} as const;
+
+/**
+ * Definition of the available navigator types
+ */
+export const NAVIGATOR_TYPE = {
+  STACK: 'stack',
+  TAB: 'tab',
 } as const;
 
 export const NAV_ACTIONS = {
@@ -291,7 +299,7 @@ export type NavigationProvider = {
     componentRegistry: Components.Registry,
     opts: BehaviorOptions,
     stateUrl?: string | null,
-    doc?: Document | null,
+    doc?: Document,
   ) => void;
   openModalAction: (params: RouteParams) => void;
 };
@@ -300,14 +308,14 @@ export type OnUpdateCallbacks = {
   clearElementError: () => void;
   getNavigation: () => NavigationProvider;
   getOnUpdate: () => HvComponentOnUpdate;
-  getDoc: () => Document | null;
+  getDoc: () => Document | undefined;
   getState: () => ScreenState;
   setState: (state: ScreenState) => void;
   updateUrl: (url: string) => void;
 };
 
 export type ScreenState = {
-  doc?: Document | null;
+  doc?: Document;
   elementError?: Error | null;
   error?: Error | null;
   staleHeaderType?: XResponseStaleReason | null;
@@ -325,6 +333,16 @@ export type FormatDate = (
   date: Date | null | undefined,
   format: string | undefined,
 ) => string | undefined;
+
+type BottomTabBarProps = RNBottomTabBarProps & {
+  id: string;
+};
+
+type BottomTabBarComponent = (props: BottomTabBarProps) => JSX.Element | null;
+
+export type NavigationComponents = {
+  BottomTabBar?: BottomTabBarComponent;
+};
 
 /**
  * All of the props used by hyperview

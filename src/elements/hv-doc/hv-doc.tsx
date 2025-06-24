@@ -19,9 +19,9 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { Context } from './context';
 import { HvDocError } from './errors';
 import LoadError from 'hyperview/src/core/components/load-error';
-import { StateContext } from './context';
 import { later } from 'hyperview/src/services';
 import { useElementCache } from 'hyperview/src/contexts/element-cache';
 import { useHyperview } from 'hyperview/src/contexts/hyperview';
@@ -35,7 +35,7 @@ export default (props: Props) => {
   // available (see details here: https://reactjs.org/docs/react-component.html#setstate)
   // Whenever we need to access the document for reasons other than rendering, we should use
   // `localDoc`. When rendering, we should use `document`.
-  const localDoc = useRef<Document | null | undefined>(null);
+  const localDoc = useRef<Document | undefined>(undefined);
 
   // This is a temporary solution to ensure the url is available immediately while
   // external components are still triggering the loadUrl callback
@@ -45,7 +45,7 @@ export default (props: Props) => {
   const currentProps = useRef(props);
 
   const [state, setState] = useState<DocState>({
-    doc: null,
+    doc: undefined,
     elementError: null,
     error: null,
     loadingUrl: null,
@@ -203,7 +203,7 @@ export default (props: Props) => {
     () => ({ ...state, url: localUrl.current }),
     [state],
   );
-  const getDoc = useCallback(() => localDoc.current ?? null, [localDoc]);
+  const getDoc = useCallback(() => localDoc.current ?? undefined, [localDoc]);
   const getNavigation = useCallback(() => props.navigationProvider, [
     props.navigationProvider,
   ]);
@@ -219,7 +219,7 @@ export default (props: Props) => {
       setState(prev => ({
         ...prev,
         ...newState,
-        doc: hasElement ? null : newState.doc ?? prev.doc,
+        doc: hasElement ? undefined : newState.doc ?? prev.doc,
       }));
     },
     [hasElement],
@@ -277,7 +277,7 @@ export default (props: Props) => {
     };
 
     return {
-      getLocalDoc: getDoc,
+      getDoc,
       getScreenState,
       onUpdate: onDocUpdate,
       onUpdateCallbacks: onUpdateCallbacksRef.current,
@@ -318,7 +318,7 @@ export default (props: Props) => {
   };
 
   return (
-    <StateContext.Provider value={contextValue}>
+    <Context.Provider value={contextValue}>
       {state.error ? (
         //  Render the state error
         <Err
@@ -329,6 +329,6 @@ export default (props: Props) => {
       ) : (
         props.children
       )}
-    </StateContext.Provider>
+    </Context.Provider>
   );
 };

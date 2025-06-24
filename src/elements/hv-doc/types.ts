@@ -14,8 +14,8 @@ export type Props = {
   url: string;
 };
 
-export type StateContextProps = {
-  getLocalDoc: () => Document | null;
+export type StateProps = {
+  getDoc: () => Document | undefined;
   getScreenState: () => ScreenState;
   onUpdate: HvComponentOnUpdate;
   onUpdateCallbacks: OnUpdateCallbacks;

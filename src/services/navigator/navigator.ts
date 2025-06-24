@@ -126,7 +126,7 @@ export class Navigator implements NavigationProvider {
     componentRegistry: Components.Registry,
     opts: BehaviorOptions,
     stateUrl?: string | null,
-    doc?: Document | null,
+    doc?: Document,
   ): void => {
     const { showIndicatorId, delay, targetId } = opts;
     const formData: FormData | null | undefined = componentRegistry.getFormData(
