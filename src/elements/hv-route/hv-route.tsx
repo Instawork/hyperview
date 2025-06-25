@@ -1,8 +1,6 @@
-import * as Components from 'hyperview/src/services/components';
 import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as NavigatorService from 'hyperview/src/services/navigator';
-import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as Types from './types';
 import * as UrlService from 'hyperview/src/services/url';
 import {
@@ -20,11 +18,9 @@ import type {
   ScreenState,
 } from 'hyperview/src/types';
 import React, { PureComponent, useContext, useMemo } from 'react';
-import HvElement from 'hyperview/src/core/components/hv-element';
 import HvNavigator from 'hyperview/src/elements/hv-navigator';
 import HvScreen from 'hyperview/src/elements/hv-screen';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import Loading from 'hyperview/src/core/components/loading';
 import { NavigationContainerRefContext } from '@react-navigation/native';
 import { useElementCache } from 'hyperview/src/contexts/element-cache';
 import { useHyperview } from 'hyperview/src/contexts/hyperview';
@@ -37,13 +33,6 @@ import { useHyperview } from 'hyperview/src/contexts/hyperview';
  * - Handles errors
  */
 class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
-  componentRegistry: Components.Registry;
-
-  constructor(props: Types.InnerRouteProps) {
-    super(props);
-    this.componentRegistry = new Components.Registry(this.props.components);
-  }
-
   getRenderElement = (): Element | undefined => {
     if (this.props.element) {
       return this.props.element;
@@ -80,62 +69,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
 
     throw new NavigatorService.HvRenderError(
       'No <screen> or <navigator> element found',
-    );
-  };
-
-  /**
-   * View shown while loading
-   * Includes preload functionality
-   */
-  Load = (): React.ReactElement => {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    const noop = () => {};
-
-    if (this.props.route?.params?.preloadScreen) {
-      const preloadElement = this.props.getElement(
-        this.props.route?.params?.preloadScreen,
-      );
-      if (preloadElement) {
-        const [body] = Array.from(
-          preloadElement.getElementsByTagNameNS(
-            Namespaces.HYPERVIEW,
-            'body',
-          ) as HTMLCollectionOf<Element>,
-        );
-        const styleSheet = Stylesheets.createStylesheets(
-          (preloadElement as unknown) as Document,
-        );
-        const component = (
-          <HvElement
-            element={body as Element}
-            onUpdate={noop}
-            options={{ componentRegistry: this.componentRegistry }}
-            stylesheets={styleSheet}
-          />
-        );
-        if (component) {
-          return (
-            <Loading
-              cachedId={this.props.route.params.preloadScreen}
-              preloadScreenComponent={component}
-            />
-          );
-        }
-      }
-    }
-
-    return (
-      <Loading
-        cachedId={this.props.route?.params?.behaviorElementId}
-        routeElement={() => {
-          return this.props.route?.params?.routeId && this.props.doc
-            ? NavigatorService.getRouteById(
-                this.props.doc,
-                this.props.route.params.routeId,
-              )
-            : undefined;
-        }}
-      />
     );
   };
 
@@ -231,16 +164,8 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
   };
 
   render() {
-    const { Load, Route } = this;
-
-    if (
-      this.props.element ||
-      this.props.getDoc() ||
-      this.props.route?.params?.needsSubStack
-    ) {
-      return <Route />;
-    }
-    return <Load />;
+    const { Route } = this;
+    return <Route />;
   }
 }
 
