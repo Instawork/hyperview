@@ -19,7 +19,7 @@ import { useHyperview } from 'hyperview/src/contexts/hyperview';
 
 const CustomStackNavigator = (props: Props) => {
   const docContextProps = React.useContext(Contexts.DocContext);
-  const hyperview = useHyperview();
+  const { entrypointUrl } = useHyperview();
 
   const {
     state,
@@ -34,7 +34,7 @@ const CustomStackNavigator = (props: Props) => {
     StackNavigationEventMap
   >(CustomStackRouter.Router, {
     children: props.children,
-    entrypointUrl: hyperview?.entrypointUrl,
+    entrypointUrl,
     getDoc: () => docContextProps?.getDoc(),
     id: props.id,
     initialRouteName: props.initialRouteName,
