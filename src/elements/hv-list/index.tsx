@@ -13,135 +13,123 @@ import {
   RefreshControl as DefaultRefreshControl,
   Platform,
 } from 'react-native';
-import React, { PureComponent } from 'react';
-import type { ScrollParams, State } from './types';
+import React, { useCallback, useContext, useRef, useState } from 'react';
 import { createTestProps, getAncestorByTagName } from 'hyperview/src/services';
-import { DOMParser } from '@instawork/xmldom';
 import type { ElementRef } from 'react';
 import { FlatList } from 'hyperview/src/core/components/scroll';
 import HvElement from 'hyperview/src/core/components/hv-element';
 import { HyperviewConsumer } from 'hyperview/src/contexts/hyperview';
 import { LOCAL_NAME } from 'hyperview/src/types';
+import type { ScrollParams } from './types';
 
-export default class HvList extends PureComponent<HvComponentProps, State> {
-  static namespaceURI = Namespaces.HYPERVIEW;
+const HvList = (props: HvComponentProps) => {
+  // eslint-disable-next-line react/destructuring-assignment
+  const { element, onUpdate, options, stylesheets } = props;
+  const ref = useRef<ElementRef<typeof FlatList> | null>(null);
+  const [refreshing, setRefreshing] = useState(false);
+  const { getDoc } = useContext(Contexts.DocContext) || {};
 
-  static localName = LOCAL_NAME.LIST;
+  const handleScrollBehavior = useCallback(
+    (behaviorElement: Element) => {
+      const targetId:
+        | DOMString
+        | null
+        | undefined = behaviorElement?.getAttribute('target');
+      if (!targetId) {
+        Logging.warn('[behaviors/scroll]: missing "target" attribute');
+        return;
+      }
+      const doc: Document | undefined = getDoc?.();
+      const targetElement: Element | null | undefined = Dom.getElementById(
+        doc,
+        targetId,
+      );
+      if (!targetElement) {
+        return;
+      }
 
-  context: React.ContextType<typeof Contexts.DocContext> = null;
+      const targetElementParentList = getAncestorByTagName(
+        targetElement,
+        LOCAL_NAME.LIST,
+      );
+      if (targetElementParentList !== element) {
+        return;
+      }
+      const listItems = Array.from(
+        element.getElementsByTagNameNS(Namespaces.HYPERVIEW, LOCAL_NAME.ITEM),
+      );
 
-  static contextType = Contexts.DocContext;
+      // Target can either be an <item> or a child of an <item>
+      const targetListItem =
+        targetElement.localName === LOCAL_NAME.ITEM
+          ? targetElement
+          : getAncestorByTagName(targetElement, LOCAL_NAME.ITEM);
 
-  parser: DOMParser = new DOMParser();
+      if (!targetListItem) {
+        return;
+      }
 
-  ref: ElementRef<typeof FlatList> | null | undefined;
+      // find index of target in list
+      const index = listItems.indexOf(targetListItem);
+      if (index < 0) {
+        return;
+      }
 
-  state: State = {
-    refreshing: false,
-  };
-
-  onRef = (ref: ElementRef<typeof FlatList> | null) => {
-    this.ref = ref;
-  };
-
-  onUpdate: HvComponentOnUpdate = (
-    href: DOMString | null | undefined,
-    action: DOMString | null | undefined,
-    element: Element,
-    options: HvComponentOptions,
-  ) => {
-    if (action === 'scroll' && options.behaviorElement) {
-      this.handleScrollBehavior(options.behaviorElement);
-      return;
-    }
-    this.props.onUpdate(href, action, element, options);
-  };
-
-  handleScrollBehavior = (behaviorElement: Element) => {
-    const targetId:
-      | DOMString
-      | null
-      | undefined = behaviorElement?.getAttribute('target');
-    if (!targetId) {
-      Logging.warn('[behaviors/scroll]: missing "target" attribute');
-      return;
-    }
-    const doc: Document | undefined = this.context?.getDoc();
-    const targetElement: Element | null | undefined = Dom.getElementById(
-      doc,
-      targetId,
-    );
-    if (!targetElement) {
-      return;
-    }
-
-    const targetElementParentList = getAncestorByTagName(
-      targetElement,
-      LOCAL_NAME.LIST,
-    );
-    if (targetElementParentList !== this.props.element) {
-      return;
-    }
-    const listItems = Array.from(
-      this.props.element.getElementsByTagNameNS(
-        Namespaces.HYPERVIEW,
-        LOCAL_NAME.ITEM,
-      ),
-    );
-
-    // Target can either be an <item> or a child of an <item>
-    const targetListItem =
-      targetElement.localName === LOCAL_NAME.ITEM
-        ? targetElement
-        : getAncestorByTagName(targetElement, LOCAL_NAME.ITEM);
-
-    if (!targetListItem) {
-      return;
-    }
-
-    // find index of target in list
-    const index = listItems.indexOf(targetListItem);
-    if (index < 0) {
-      return;
-    }
-
-    const animated: boolean =
-      behaviorElement?.getAttributeNS(
-        Namespaces.HYPERVIEW_SCROLL,
-        'animated',
-      ) === 'true';
-    const params: ScrollParams = { animated, index };
-
-    const viewOffset: number | null | undefined =
-      parseInt(
+      const animated: boolean =
         behaviorElement?.getAttributeNS(
           Namespaces.HYPERVIEW_SCROLL,
-          'offset',
-        ) || '',
-        10,
-      ) || undefined;
-    if (typeof viewOffset === 'number') {
-      params.viewOffset = viewOffset;
-    }
+          'animated',
+        ) === 'true';
+      const params: ScrollParams = { animated, index };
 
-    const viewPosition: number | null | undefined =
-      parseFloat(
-        behaviorElement?.getAttributeNS(
-          Namespaces.HYPERVIEW_SCROLL,
-          'position',
-        ) || '',
-      ) || undefined;
-    if (typeof viewPosition === 'number') {
-      params.viewPosition = viewPosition;
-    }
+      const viewOffset: number | null | undefined =
+        parseInt(
+          behaviorElement?.getAttributeNS(
+            Namespaces.HYPERVIEW_SCROLL,
+            'offset',
+          ) || '',
+          10,
+        ) || undefined;
+      if (typeof viewOffset === 'number') {
+        params.viewOffset = viewOffset;
+      }
 
-    this.ref?.scrollToIndex(params);
-  };
+      const viewPosition: number | null | undefined =
+        parseFloat(
+          behaviorElement?.getAttributeNS(
+            Namespaces.HYPERVIEW_SCROLL,
+            'position',
+          ) || '',
+        ) || undefined;
+      if (typeof viewPosition === 'number') {
+        params.viewPosition = viewPosition;
+      }
 
-  refresh = () => {
-    this.setState({ refreshing: true });
+      ref.current?.scrollToIndex(params);
+    },
+    [element, getDoc],
+  );
 
-    Dom.getBehaviorElements(this.props.element)
+  const onListUpdate: HvComponentOnUpdate = useCallback(
+    (
+      href: DOMString | null | undefined,
+      action: DOMString | null | undefined,
+      el: Element,
+      opts: HvComponentOptions,
+    ) => {
+      if (action === 'scroll' && opts.behaviorElement) {
+        handleScrollBehavior(opts.behaviorElement);
+        return;
+      }
+      onUpdate(href, action, el, opts);
+    },
+    [handleScrollBehavior, onUpdate],
+  );
+
+  const refresh = useCallback(() => {
+    setRefreshing(true);
+
+    Dom.getBehaviorElements(element)
       .filter(e => e.getAttribute('trigger') === 'refresh')
       .forEach((e, i) => {
         const path = e.getAttribute('href');
@@ -151,9 +139,8 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
         const hideIndicatorIds = e.getAttribute('hide-during-load');
         const delay = e.getAttribute('delay');
         const once = e.getAttribute('once');
-        const onEnd =
-          i === 0 ? () => this.setState({ refreshing: false }) : null;
-        this.props.onUpdate(path, action, this.props.element, {
+        const onEnd = i === 0 ? () => setRefreshing(false) : null;
+        onUpdate(path, action, element, {
           behaviorElement: e,
           delay,
           hideIndicatorIds,
@@ -163,11 +150,11 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
           targetId,
         });
       });
-  };
+  }, [element, onUpdate]);
 
-  getItems = () => {
+  const getItems = useCallback(() => {
     const isOwnedBySelf = (item: Element): boolean => {
-      if (item.parentNode === this.props.element) {
+      if (item.parentNode === element) {
         return true;
       }
       if (item.parentNode === null || typeof item.parentNode === 'undefined') {
@@ -176,14 +163,14 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
       if (
         (item.parentNode as Element).tagName === LOCAL_NAME.ITEMS &&
         (item.parentNode as Element).namespaceURI === Namespaces.HYPERVIEW &&
-        item.parentNode.parentNode === this.props.element
+        item.parentNode.parentNode === element
       ) {
         return true;
       }
       if (
         (item.parentNode as Element).tagName === LOCAL_NAME.LIST &&
         (item.parentNode as Element).namespaceURI === Namespaces.HYPERVIEW &&
-        item.parentNode.parentNode !== this.props.element
+        item.parentNode.parentNode !== element
       ) {
         return false;
       }
@@ -191,100 +178,91 @@ export default class HvList extends PureComponent<HvComponentProps, State> {
     };
 
     return Array.from(
-      this.props.element.getElementsByTagNameNS(
-        Namespaces.HYPERVIEW,
-        LOCAL_NAME.ITEM,
-      ),
+      element.getElementsByTagNameNS(Namespaces.HYPERVIEW, LOCAL_NAME.ITEM),
     ).filter(isOwnedBySelf);
-  };
+  }, [element]);
 
-  render() {
-    const styleAttr = this.props.element.getAttribute('style');
-    const style = styleAttr
-      ? styleAttr.split(' ').map(s => this.props.stylesheets.regular[s])
-      : null;
+  const styleAttr = element.getAttribute('style');
+  const style = styleAttr
+    ? styleAttr.split(' ').map(s => stylesheets.regular[s])
+    : null;
 
-    const horizontal =
-      this.props.element.getAttribute('scroll-orientation') === 'horizontal';
-    const showScrollIndicator =
-      this.props.element.getAttribute('shows-scroll-indicator') !== 'false';
+  const horizontal =
+    element.getAttribute('scroll-orientation') === 'horizontal';
+  const showScrollIndicator =
+    element.getAttribute('shows-scroll-indicator') !== 'false';
 
-    // Fix scrollbar rendering issue in iOS 13+
-    // https://github.com/facebook/react-native/issues/26610#issuecomment-539843444
-    const scrollIndicatorInsets =
-      Platform.OS === 'ios' && parseInt(Platform.Version, 10) >= 13
-        ? { right: 1 }
-        : undefined;
+  // Fix scrollbar rendering issue in iOS 13+
+  // https://github.com/facebook/react-native/issues/26610#issuecomment-539843444
+  const scrollIndicatorInsets =
+    Platform.OS === 'ios' && parseInt(Platform.Version, 10) >= 13
+      ? { right: 1 }
+      : undefined;
 
-    // add sticky indices
-    const stickyHeaderIndices = Array.from(
-      this.props.element.getElementsByTagNameNS(
-        Namespaces.HYPERVIEW,
-        LOCAL_NAME.ITEM,
-      ),
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ).reduce<Array<any>>((acc, element, index) => {
-      return typeof element !== 'string' &&
-        element &&
-        element.getAttribute &&
-        element.getAttribute('sticky') === 'true'
-        ? [...acc, index]
-        : acc;
-    }, []);
+  // add sticky indices
+  const stickyHeaderIndices = Array.from(
+    element.getElementsByTagNameNS(Namespaces.HYPERVIEW, LOCAL_NAME.ITEM),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ).reduce<Array<any>>((acc, el, index) => {
+    return typeof el !== 'string' &&
+      el &&
+      el.getAttribute &&
+      el.getAttribute('sticky') === 'true'
+      ? [...acc, index]
+      : acc;
+  }, []);
 
-    const { testID, accessibilityLabel } = createTestProps(this.props.element);
+  const { testID, accessibilityLabel } = createTestProps(element);
 
-    return (
-      <HyperviewConsumer>
-        {({ refreshControl }) => {
-          const RefreshControl = refreshControl ?? DefaultRefreshControl;
-          const hasRefreshTrigger =
-            this.props.element.getAttribute('trigger') === 'refresh';
-          return (
-            <FlatList
-              ref={this.onRef}
-              accessibilityLabel={accessibilityLabel}
-              data={this.getItems()}
-              element={this.props.element}
-              horizontal={horizontal}
-              keyboardDismissMode={Keyboard.getKeyboardDismissMode(
-                this.props.element,
-              )}
-              keyboardShouldPersistTaps={Keyboard.getKeyboardShouldPersistTaps(
-                this.props.element,
-              )}
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              keyExtractor={(item: any) => item && item.getAttribute('key')}
-              refreshControl={
-                hasRefreshTrigger ? (
-                  <RefreshControl
-                    onRefresh={this.refresh}
-                    refreshing={this.state.refreshing}
-                  />
-                ) : undefined
-              }
-              removeClippedSubviews={false}
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              renderItem={({ item }: any) =>
-                item && (
-                  <HvElement
-                    element={item as Element}
-                    onUpdate={this.onUpdate}
-                    options={this.props.options}
-                    stylesheets={this.props.stylesheets}
-                  />
-                )
-              }
-              scrollIndicatorInsets={scrollIndicatorInsets}
-              showsHorizontalScrollIndicator={horizontal && showScrollIndicator}
-              showsVerticalScrollIndicator={!horizontal && showScrollIndicator}
-              stickyHeaderIndices={stickyHeaderIndices}
-              style={style}
-              testID={testID}
-            />
-          );
-        }}
-      </HyperviewConsumer>
-    );
-  }
-}
+  return (
+    <HyperviewConsumer>
+      {({ refreshControl }) => {
+        const RefreshControl = refreshControl ?? DefaultRefreshControl;
+        const hasRefreshTrigger = element.getAttribute('trigger') === 'refresh';
+        return (
+          <FlatList
+            ref={ref}
+            accessibilityLabel={accessibilityLabel}
+            data={getItems()}
+            element={element}
+            horizontal={horizontal}
+            keyboardDismissMode={Keyboard.getKeyboardDismissMode(element)}
+            keyboardShouldPersistTaps={Keyboard.getKeyboardShouldPersistTaps(
+              element,
+            )}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            keyExtractor={(item: any) => item && item.getAttribute('key')}
+            refreshControl={
+              hasRefreshTrigger ? (
+                <RefreshControl onRefresh={refresh} refreshing={refreshing} />
+              ) : undefined
+            }
+            removeClippedSubviews={false}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            renderItem={({ item }: any) =>
+              item && (
+                <HvElement
+                  element={item as Element}
+                  onUpdate={onListUpdate}
+                  options={options}
+                  stylesheets={stylesheets}
+                />
+              )
+            }
+            scrollIndicatorInsets={scrollIndicatorInsets}
+            showsHorizontalScrollIndicator={horizontal && showScrollIndicator}
+            showsVerticalScrollIndicator={!horizontal && showScrollIndicator}
+            stickyHeaderIndices={stickyHeaderIndices}
+            style={style}
+            testID={testID}
+          />
+        );
+      }}
+    </HyperviewConsumer>
+  );
+};
+
+HvList.namespaceURI = Namespaces.HYPERVIEW;
+HvList.localName = LOCAL_NAME.LIST;
+
+export default HvList;
