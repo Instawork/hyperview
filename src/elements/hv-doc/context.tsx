@@ -11,6 +11,18 @@ export const useHvDocContext = () => {
   return context;
 };
 
+/**
+ * TODO: HvDoc
+ * The `unsafe` flag is a temporary solution
+ * Since HvRoute is currently at the top of the context stack,
+ * the initial route will not have access to the HvDoc context.
+ *
+ * Once we move HvDoc to the top of the hierarchy, we can remove this flag
+ */
+export const useUnsafeHvDocContext = () => {
+  return useContext(Context);
+};
+
 export const Consumer = (props: ConsumerProps<ContextProps>) => {
   return (
     <Context.Consumer>

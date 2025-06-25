@@ -14,6 +14,7 @@ import {
 import { DocState, ErrorProps, Props } from './types';
 import React, {
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -72,6 +73,8 @@ export default (props: Props) => {
       new DomService.Parser(fetch, onParseBefore ?? null, onParseAfter ?? null),
     [fetch, onParseBefore, onParseAfter],
   );
+
+  const parentDocState = useContext(Context);
 
   const loadUrl = useCallback(
     async (url?: string) => {
@@ -204,6 +207,16 @@ export default (props: Props) => {
     [state],
   );
   const getDoc = useCallback(() => localDoc.current ?? undefined, [localDoc]);
+
+  // TODO: HvDoc
+  // This is a temporary solution required because each HvRoute creates a new HvDoc context
+  // and we need to walk up the tree to find the closest loaded doc
+  // Once we move HvDoc to the top of the hierarchy, we can remove this
+  const getSourceDoc = useCallback(
+    () => localDoc.current ?? parentDocState?.getSourceDoc?.(),
+    [localDoc, parentDocState],
+  );
+
   const getNavigation = useCallback(() => props.navigationProvider, [
     props.navigationProvider,
   ]);
@@ -222,6 +235,17 @@ export default (props: Props) => {
       }));
     },
     [props.hasElement],
+  );
+  const setDoc = useCallback(
+    (doc: Document) => {
+      if (!localDoc.current) {
+        // If this doc hasn't loaded content, use the higher level doc state
+        parentDocState?.setDoc?.(doc);
+      } else {
+        setScreenState({ doc });
+      }
+    },
+    [parentDocState, setScreenState],
   );
 
   const onUpdateCallbacksRef = useRef<OnUpdateCallbacks>();
@@ -278,17 +302,21 @@ export default (props: Props) => {
     return {
       getDoc,
       getScreenState,
+      getSourceDoc,
       onUpdate: onDocUpdate,
       onUpdateCallbacks: onUpdateCallbacksRef.current,
       reload: onDocReload,
+      setDoc,
       setScreenState,
     };
   }, [
     getDoc,
     getNavigation,
     getScreenState,
+    getSourceDoc,
     onDocUpdate,
     onDocReload,
+    setDoc,
     setScreenState,
     state.elementError,
     updateUrl,
