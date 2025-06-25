@@ -1,8 +1,6 @@
 import type { HvComponentOnUpdate, RouteParams } from 'hyperview/src/types';
 import { FC } from 'react';
 import type { Props as HvRouteProps } from 'hyperview/src/elements/hv-route';
-import { createCustomStackNavigator } from 'hyperview/src/core/components/navigator-stack';
-import { createCustomTabNavigator } from 'hyperview/src/core/components/navigator-tab';
 
 /**
  * Flag to show the default navigator UIs
@@ -54,6 +52,3 @@ export type TabScreenOptions = {
   tabBarStyle: { display: 'flex' | 'none' | undefined };
   title: string | undefined;
 };
-
-export const Stack = createCustomStackNavigator<ParamTypes>();
-export const BottomTab = createCustomTabNavigator<ParamTypes>();

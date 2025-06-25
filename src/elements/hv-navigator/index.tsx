@@ -13,21 +13,25 @@ import {
   TRIGGERS,
 } from 'hyperview/src/types';
 import {
-  BottomTab,
   NavigatorProps,
+  ParamTypes,
   Props,
   SHOW_DEFAULT_FOOTER_UI,
   SHOW_DEFAULT_HEADER_UI,
   ScreenParams,
-  Stack,
   StackScreenOptions,
   TabScreenOptions,
 } from './types';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { CardStyleInterpolators } from '@react-navigation/stack';
 import { Platform } from 'react-native';
+import { createCustomStackNavigator } from 'hyperview/src/core/components/navigator-stack';
+import { createCustomTabNavigator } from 'hyperview/src/core/components/navigator-tab';
 import { getFirstChildTag } from 'hyperview/src/services/dom/helpers';
 import { useHyperview } from 'hyperview/src/contexts/hyperview';
+
+export const Stack = createCustomStackNavigator<ParamTypes>();
+export const BottomTab = createCustomTabNavigator<ParamTypes>();
 
 export default function HvNavigator(props: Props) {
   // eslint-disable-next-line react/destructuring-assignment
