@@ -448,7 +448,7 @@ function HvRouteFC(props: Types.Props) {
 
   return (
     <HvDoc
-      element={element}
+      hasElement={!!element}
       navigationProvider={navigator}
       route={props.route}
       url={url}

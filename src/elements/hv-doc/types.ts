@@ -8,7 +8,7 @@ import {
 
 export type Props = {
   children?: React.ReactNode;
-  element?: Element;
+  hasElement?: boolean;
   navigationProvider: NavigationProvider;
   route?: RouteProps;
   url: string;

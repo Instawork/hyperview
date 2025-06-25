@@ -172,7 +172,7 @@ export default (props: Props) => {
       props.url &&
       !state.url &&
       props.url !== state.url &&
-      !props.element &&
+      !props.hasElement &&
       !props.route?.params?.needsSubStack
     ) {
       // Handle initial load
@@ -180,7 +180,7 @@ export default (props: Props) => {
     }
   }, [
     loadUrl,
-    props.element,
+    props.hasElement,
     props.route?.params?.needsSubStack,
     props.url,
     state.url,
@@ -207,7 +207,6 @@ export default (props: Props) => {
   const getNavigation = useCallback(() => props.navigationProvider, [
     props.navigationProvider,
   ]);
-  const hasElement = !!props.element;
   const setScreenState = useCallback(
     (newState: ScreenState) => {
       if (newState.doc !== undefined) {
@@ -219,10 +218,10 @@ export default (props: Props) => {
       setState(prev => ({
         ...prev,
         ...newState,
-        doc: hasElement ? undefined : newState.doc ?? prev.doc,
+        doc: props.hasElement ? undefined : newState.doc ?? prev.doc,
       }));
     },
-    [hasElement],
+    [props.hasElement],
   );
 
   const onUpdateCallbacksRef = useRef<OnUpdateCallbacks>();
