@@ -70,10 +70,6 @@ const HvSectionList = (props: HvComponentProps) => {
   const [refreshing, setRefreshing] = useState(false);
   const { getDoc } = useContext(Contexts.DocContext) || {};
 
-  const onRef = useCallback((r: ElementRef<typeof SectionList> | null) => {
-    ref.current = r;
-  }, []);
-
   const handleScrollBehavior = useCallback(
     (behaviorElement: Element) => {
       const targetId:
@@ -351,7 +347,7 @@ const HvSectionList = (props: HvComponentProps) => {
         const hasRefreshTrigger = element.getAttribute('trigger') === 'refresh';
         return (
           <SectionList
-            ref={onRef}
+            ref={ref}
             accessibilityLabel={accessibilityLabel}
             element={element}
             keyboardDismissMode={Keyboard.getKeyboardDismissMode(element)}
