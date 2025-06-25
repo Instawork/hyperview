@@ -1,4 +1,3 @@
-import * as Contexts from 'hyperview/src/contexts';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Keyboard from 'hyperview/src/services/keyboard';
 import * as Logging from 'hyperview/src/services/logging';
@@ -13,7 +12,7 @@ import {
   RefreshControl as DefaultRefreshControl,
   Platform,
 } from 'react-native';
-import React, { useCallback, useContext, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { createTestProps, getAncestorByTagName } from 'hyperview/src/services';
 import type { ElementRef } from 'react';
 import { FlatList } from 'hyperview/src/core/components/scroll';
@@ -21,13 +20,14 @@ import HvElement from 'hyperview/src/core/components/hv-element';
 import { HyperviewConsumer } from 'hyperview/src/contexts/hyperview';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { ScrollParams } from './types';
+import { useHvDocContext } from 'hyperview/src/elements/hv-doc';
 
 const HvList = (props: HvComponentProps) => {
   // eslint-disable-next-line react/destructuring-assignment
   const { element, onUpdate, options, stylesheets } = props;
   const ref = useRef<ElementRef<typeof FlatList> | null>(null);
   const [refreshing, setRefreshing] = useState(false);
-  const { getDoc } = useContext(Contexts.DocContext) || {};
+  const { getDoc } = useHvDocContext();
 
   const handleScrollBehavior = useCallback(
     (behaviorElement: Element) => {

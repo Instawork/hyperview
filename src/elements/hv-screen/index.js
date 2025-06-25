@@ -1,7 +1,6 @@
 /* eslint instawork/flow-annotate: 0 react/prop-types: 0 */
 import * as Behaviors from 'hyperview/src/behaviors';
 import * as Components from 'hyperview/src/services/components';
-import * as Contexts from 'hyperview/src/contexts';
 import * as Events from 'hyperview/src/services/events';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
@@ -166,11 +165,7 @@ export default class HvScreen extends React.Component {
     }
 
     return (
-      <Contexts.DocContext.Provider
-        value={{
-          getDoc: () => this.props.getLocalDoc(),
-        }}
-      >
+      <>
         {elementErrorComponent
           ? React.createElement(elementErrorComponent, {
               error: this.props.getScreenState().elementError,
@@ -180,7 +175,7 @@ export default class HvScreen extends React.Component {
             })
           : null}
         <Scroll.Provider>{screenElement}</Scroll.Provider>
-      </Contexts.DocContext.Provider>
+      </>
     );
   }
 }
