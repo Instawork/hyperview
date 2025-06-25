@@ -578,6 +578,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
       <HyperviewContext.Provider
         value={{
           behaviors: this.props.behaviors,
+          componentRegistry: this.componentRegistry,
           components: this.props.components,
           elementErrorComponent: this.props.elementErrorComponent,
           entrypointUrl: this.props.entrypointUrl,

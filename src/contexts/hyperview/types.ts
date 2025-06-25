@@ -1,3 +1,4 @@
+import * as Components from 'hyperview/src/services/components';
 import {
   DOMString,
   HvComponentOnUpdate,
@@ -11,6 +12,7 @@ type Reload = (
 ) => void;
 
 export type Props = HyperviewProps & {
+  componentRegistry: Components.Registry;
   onUpdate: HvComponentOnUpdate;
   reload: Reload;
 };
