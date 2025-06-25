@@ -29,10 +29,6 @@ const HvList = (props: HvComponentProps) => {
   const [refreshing, setRefreshing] = useState(false);
   const { getDoc } = useContext(Contexts.DocContext) || {};
 
-  const onRef = useCallback((r: ElementRef<typeof FlatList> | null) => {
-    ref.current = r;
-  }, []);
-
   const handleScrollBehavior = useCallback(
     (behaviorElement: Element) => {
       const targetId:
@@ -225,7 +221,7 @@ const HvList = (props: HvComponentProps) => {
         const hasRefreshTrigger = element.getAttribute('trigger') === 'refresh';
         return (
           <FlatList
-            ref={onRef}
+            ref={ref}
             accessibilityLabel={accessibilityLabel}
             data={getItems()}
             element={element}
