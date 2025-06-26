@@ -19,19 +19,6 @@ export default class HvScreen extends React.Component {
 
   static renderElement = Render.renderElement;
 
-  getRoute = props => {
-    // The prop route is available in React Navigation v5 and above
-    if (props.route) {
-      return props.route;
-    }
-
-    // Fallback for older versions of React Navigation
-    if (props.navigation) {
-      return props.navigation.state;
-    }
-    return { params: {} };
-  };
-
   /**
    * Renders the XML doc into React components. Shows blank screen until the XML doc is available.
    */

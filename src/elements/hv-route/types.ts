@@ -1,5 +1,4 @@
 import * as Components from 'hyperview/src/services/components';
-import * as NavigatorService from 'hyperview/src/services/navigator';
 import {
   HvComponentOnUpdate,
   NavigationProps,
@@ -14,22 +13,17 @@ import type { Props as ErrorProps } from 'hyperview/src/core/components/load-err
  * The props used by inner components of hv-route
  */
 export type InnerRouteProps = {
-  url?: string;
-  navigator: NavigatorService.Navigator;
-  route?: RouteProps;
-  entrypointUrl: string;
-  onUpdate: HvComponentOnUpdate;
-  elementErrorComponent?: ComponentType<ErrorProps>;
-  getElement: (key: number) => Element | undefined;
-  removeElement: (key: number) => void;
   componentRegistry: Components.Registry;
   element?: Element;
-  doc: Document | undefined;
+  elementErrorComponent?: ComponentType<ErrorProps>;
   getDoc: () => Document | undefined;
-  setScreenState: (state: ScreenState) => void;
   getScreenState: () => ScreenState;
+  onUpdate: HvComponentOnUpdate;
   onUpdateCallbacks: OnUpdateCallbacks;
   reload: (url?: string | null) => void;
+  route?: RouteProps;
+  setScreenState: (state: ScreenState) => void;
+  url?: string;
 };
 
 /**
