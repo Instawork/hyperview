@@ -244,6 +244,10 @@ export default (props: Props) => {
 
   const setDoc = useCallback(
     (doc: Document) => {
+      // TODO: HvDoc
+      // This is a temporary solution required because each HvRoute creates a new HvDoc context
+      // and we need to walk up the tree to find the closest loaded doc
+      // Once we move HvDoc to the top of the hierarchy, we can remove this
       if (!localDoc.current) {
         // If this doc hasn't loaded content, use the higher level doc state
         parentDocState?.setDoc?.(doc);

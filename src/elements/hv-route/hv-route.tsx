@@ -369,8 +369,8 @@ function HvRouteFC(props: Types.Props) {
           setScreenState,
         }) => (
           <HvRouteInner
-            doc={localGetDoc() || undefined}
             componentRegistry={componentRegistry}
+            doc={localGetDoc() || undefined}
             element={element}
             elementErrorComponent={elementErrorComponent}
             entrypointUrl={entrypointUrl}
