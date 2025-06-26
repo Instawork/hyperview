@@ -1,4 +1,3 @@
-import * as Contexts from 'hyperview/src/contexts';
 import * as CustomStackRouter from 'hyperview/src/core/components/navigator-stack/router';
 import * as React from 'react';
 import type { NavigationState, ParamListBase } from '@react-navigation/routers';
@@ -15,11 +14,12 @@ import {
   StackView,
 } from '@react-navigation/stack';
 import type { EventMapBase } from '@react-navigation/native';
+import { useHvDocContext } from 'hyperview/src/elements/hv-doc';
 import { useHyperview } from 'hyperview/src/contexts/hyperview';
 
 const CustomStackNavigator = (props: Props) => {
-  const docContextProps = React.useContext(Contexts.DocContext);
-  const hyperview = useHyperview();
+  const { getSourceDoc } = useHvDocContext();
+  const { entrypointUrl } = useHyperview();
 
   const {
     state,
@@ -34,8 +34,8 @@ const CustomStackNavigator = (props: Props) => {
     StackNavigationEventMap
   >(CustomStackRouter.Router, {
     children: props.children,
-    entrypointUrl: hyperview?.entrypointUrl,
-    getDoc: () => docContextProps?.getDoc(),
+    entrypointUrl,
+    getDoc: () => getSourceDoc(),
     id: props.id,
     initialRouteName: props.initialRouteName,
     screenOptions: props.screenOptions,

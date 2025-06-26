@@ -1,4 +1,3 @@
-import * as Contexts from 'hyperview/src/contexts';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Keyboard from 'hyperview/src/services/keyboard';
 import * as Logging from 'hyperview/src/services/logging';
@@ -13,19 +12,14 @@ import {
   Platform,
 } from 'react-native';
 import { LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
-import React, {
-  useCallback,
-  useContext,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { createTestProps, getAncestorByTagName } from 'hyperview/src/services';
 import type { ElementRef } from 'react';
 import HvElement from 'hyperview/src/core/components/hv-element';
 import { HyperviewContext } from 'hyperview/src/contexts/hyperview';
 import type { ScrollParams } from './types';
 import { SectionList } from 'hyperview/src/core/components/scroll';
+import { useHvDocContext } from 'hyperview/src/elements/hv-doc';
 
 const getSectionIndex = (
   sectionTitle: Element,
@@ -68,7 +62,7 @@ const HvSectionList = (props: HvComponentProps) => {
   const { element, onUpdate, options, stylesheets } = props;
   const ref = useRef<ElementRef<typeof SectionList> | null>(null);
   const [refreshing, setRefreshing] = useState(false);
-  const { getDoc } = useContext(Contexts.DocContext) || {};
+  const { getDoc } = useHvDocContext();
 
   const handleScrollBehavior = useCallback(
     (behaviorElement: Element) => {
