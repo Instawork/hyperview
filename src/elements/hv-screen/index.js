@@ -1,6 +1,4 @@
 /* eslint instawork/flow-annotate: 0 react/prop-types: 0 */
-import * as Behaviors from 'hyperview/src/behaviors';
-import * as Components from 'hyperview/src/services/components';
 import * as Events from 'hyperview/src/services/events';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
@@ -10,7 +8,6 @@ import { createProps, createStyleProp } from 'hyperview/src/services';
 import HvElement from 'hyperview/src/core/components/hv-element';
 import { HvScreenRenderError } from './errors';
 import LoadElementError from 'hyperview/src/core/components/load-element-error';
-import Loading from 'hyperview/src/core/components/loading';
 import React from 'react';
 
 // eslint-disable-next-line instawork/pure-components
@@ -22,13 +19,6 @@ export default class HvScreen extends React.Component {
   static renderChildren = Render.renderChildren;
 
   static renderElement = Render.renderElement;
-
-  constructor(props) {
-    super(props);
-
-    this.behaviorRegistry = Behaviors.getRegistry(this.props.behaviors);
-    this.componentRegistry = new Components.Registry(this.props.components);
-  }
 
   getRoute = props => {
     // The prop route is available in React Navigation v5 and above
@@ -133,9 +123,6 @@ export default class HvScreen extends React.Component {
    * Renders the XML doc into React components. Shows blank screen until the XML doc is available.
    */
   render() {
-    if (!this.props.getScreenState().doc) {
-      return <Loading cachedId={this.props.route?.params?.behaviorElementId} />;
-    }
     const elementErrorComponent = this.props.getScreenState().elementError
       ? this.props.elementErrorComponent || LoadElementError
       : null;
@@ -151,7 +138,7 @@ export default class HvScreen extends React.Component {
           element={body}
           onUpdate={this.props.onUpdate}
           options={{
-            componentRegistry: this.componentRegistry,
+            componentRegistry: this.props.componentRegistry,
             onUpdateCallbacks: this.props.onUpdateCallbacks,
             screenUrl: this.props.getScreenState().url,
             staleHeaderType: this.props.getScreenState().staleHeaderType,

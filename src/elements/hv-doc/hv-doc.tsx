@@ -1,5 +1,6 @@
 import * as DomService from 'hyperview/src/services/dom';
 import * as Helpers from 'hyperview/src/services/dom/helpers';
+import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as UrlService from 'hyperview/src/services/url';
@@ -22,7 +23,9 @@ import React, {
 } from 'react';
 import { Context } from './context';
 import { HvDocError } from './errors';
+import HvElement from 'hyperview/src/core/components/hv-element';
 import LoadError from 'hyperview/src/core/components/load-error';
+import Loading from 'hyperview/src/core/components/loading';
 import { later } from 'hyperview/src/services';
 import { useElementCache } from 'hyperview/src/contexts/element-cache';
 import { useHyperview } from 'hyperview/src/contexts/hyperview';
@@ -56,6 +59,7 @@ export default (props: Props) => {
   });
 
   const {
+    componentRegistry,
     entrypointUrl,
     errorScreen,
     fetch,
@@ -66,7 +70,7 @@ export default (props: Props) => {
     reload,
   } = useHyperview();
 
-  const { removeElement } = useElementCache();
+  const { getElement, removeElement } = useElementCache();
 
   const parser: DomService.Parser = useMemo(
     () =>
@@ -220,6 +224,7 @@ export default (props: Props) => {
   const getNavigation = useCallback(() => props.navigationProvider, [
     props.navigationProvider,
   ]);
+
   const setScreenState = useCallback(
     (newState: ScreenState) => {
       if (newState.doc !== undefined) {
@@ -236,6 +241,7 @@ export default (props: Props) => {
     },
     [props.hasElement],
   );
+
   const setDoc = useCallback(
     (doc: Document) => {
       // TODO: HvDoc
@@ -326,40 +332,126 @@ export default (props: Props) => {
     updateUrl,
   ]);
 
+  const isLoading = useMemo(() => {
+    return (
+      !!state.loadingUrl ||
+      (!state.doc &&
+        !props.route?.params?.needsSubStack &&
+        !props.hasElement &&
+        !state.loadingUrl)
+    );
+  }, [
+    state.doc,
+    state.loadingUrl,
+    props.hasElement,
+    props.route?.params?.needsSubStack,
+  ]);
+
   /**
    * View shown when there is an error
    */
-  const Err = (p: ErrorProps): React.ReactElement => {
-    const { error, navigationProvider, url } = p;
-    const ErrorScreen = errorScreen || LoadError;
+  const Error = useCallback(
+    (p: ErrorProps): React.ReactElement => {
+      const { error, navigationProvider, url } = p;
+      const ErrorScreen = errorScreen || LoadError;
+      return (
+        <ErrorScreen
+          back={() => navigationProvider?.backAction({} as RouteParams)}
+          error={error}
+          onPressReload={() => contextValue.reload(url)}
+          onPressViewDetails={(u: string | undefined) => {
+            if (u) {
+              navigationProvider?.openModalAction({
+                url: u,
+              } as RouteParams);
+            }
+          }}
+        />
+      );
+    },
+    [contextValue, errorScreen],
+  );
+
+  /**
+   * View shown while loading
+   * Includes preload functionality
+   */
+  const Loader = useCallback(() => {
+    if (props.route?.params?.preloadScreen) {
+      const preloadElement = getElement(props.route?.params?.preloadScreen);
+      if (preloadElement) {
+        const [body] = Array.from(
+          preloadElement.getElementsByTagNameNS(
+            Namespaces.HYPERVIEW,
+            'body',
+          ) as HTMLCollectionOf<Element>,
+        );
+        const styleSheet = Stylesheets.createStylesheets(
+          (preloadElement as unknown) as Document,
+        );
+        const component = (
+          <HvElement
+            element={body as Element}
+            onUpdate={
+              // eslint-disable-next-line @typescript-eslint/no-empty-function
+              () => {}
+            }
+            options={{ componentRegistry }}
+            stylesheets={styleSheet}
+          />
+        );
+        if (component) {
+          return (
+            <Loading
+              cachedId={props.route?.params?.preloadScreen}
+              preloadScreenComponent={component}
+            />
+          );
+        }
+      }
+    }
+
     return (
-      <ErrorScreen
-        back={() => navigationProvider?.backAction({} as RouteParams)}
-        error={error}
-        onPressReload={() => contextValue.reload(url)}
-        onPressViewDetails={(u: string | undefined) => {
-          if (u) {
-            navigationProvider?.openModalAction({
-              url: u,
-            } as RouteParams);
-          }
+      <Loading
+        cachedId={props.route?.params?.behaviorElementId}
+        routeElement={() => {
+          const doc = getDoc();
+          return props.route?.params?.routeId && doc
+            ? NavigatorService.getRouteById(doc, props.route.params.routeId)
+            : undefined;
         }}
       />
     );
-  };
+  }, [
+    componentRegistry,
+    getDoc,
+    getElement,
+    props.route?.params?.behaviorElementId,
+    props.route?.params?.preloadScreen,
+    props.route?.params?.routeId,
+  ]);
 
-  return (
-    <Context.Provider value={contextValue}>
-      {state.error ? (
-        //  Render the state error
-        <Err
+  const component = useMemo(() => {
+    if (state.error) {
+      return (
+        <Error
           error={state.error}
           navigationProvider={props.navigationProvider}
           url={state.url ?? props.route?.params?.url}
         />
-      ) : (
-        props.children
-      )}
-    </Context.Provider>
-  );
+      );
+    }
+    return isLoading ? <Loader /> : props.children;
+  }, [
+    Error,
+    isLoading,
+    Loader,
+    props.children,
+    props.navigationProvider,
+    props.route?.params?.url,
+    state.error,
+    state.url,
+  ]);
+
+  return <Context.Provider value={contextValue}>{component}</Context.Provider>;
 };

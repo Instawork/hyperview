@@ -1,3 +1,4 @@
+import * as Components from 'hyperview/src/services/components';
 import type {
   HvComponentOnUpdate,
   NavigationProvider,
@@ -28,6 +29,7 @@ export type Props = Omit<
 > & {
   getElement?: (id: number) => Element | undefined;
   navigation: NavigationProvider;
+  componentRegistry: Components.Registry;
   onUpdate: HvComponentOnUpdate;
   onUpdateCallbacks: OnUpdateCallbacks;
   reload: (url?: string | null) => void;
