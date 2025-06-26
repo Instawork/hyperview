@@ -135,6 +135,7 @@ type HvComponentStatics = {
   localName: string;
   localNameAliases?: Array<string>;
   namespaceURI: NamespaceURI;
+  supportsHyperRef?: boolean;
 };
 
 export type HvComponent = (
