@@ -203,8 +203,22 @@ export default (props: Props) => {
     ) {
       loadUrl(props.url);
     }
+
+    // Update the element cache
+    const newBehaviorElementId = props.route?.params?.behaviorElementId;
+    const newPreloadScreen = props.route?.params?.preloadScreen;
+    const oldBehaviorElementId =
+      currentProps.current?.route?.params?.behaviorElementId;
+    const oldPreloadScreen = currentProps.current?.route?.params?.preloadScreen;
+    if (oldBehaviorElementId && newBehaviorElementId !== oldBehaviorElementId) {
+      removeElement?.(oldBehaviorElementId);
+    }
+    if (oldPreloadScreen && newPreloadScreen !== oldPreloadScreen) {
+      removeElement?.(oldPreloadScreen);
+    }
+
     currentProps.current = props;
-  }, [loadUrl, props]);
+  }, [loadUrl, props, removeElement]);
 
   const getScreenState = useCallback(
     () => ({ ...state, url: localUrl.current }),

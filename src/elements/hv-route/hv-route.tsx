@@ -2,7 +2,6 @@ import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Types from './types';
-import * as UrlService from 'hyperview/src/services/url';
 import {
   BackBehaviorProvider,
   useBackBehaviorContext,
@@ -14,7 +13,6 @@ import HvDoc, {
 import type {
   ListenerEvent,
   NavigationProps,
-  RouteProps,
   ScreenState,
 } from 'hyperview/src/types';
 import React, { PureComponent, useContext, useMemo } from 'react';
@@ -76,36 +74,14 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
    * Build the <HvScreen> component with injected props
    */
   Screen = (): React.ReactElement => {
-    const url = UrlService.getUrlFromHref(
-      this.props.url || this.props.entrypointUrl,
-      this.props.entrypointUrl,
-    );
-
-    // Inject the corrected url into the params and cast as correct type
-    const route: RouteProps = {
-      ...this.props.route,
-      key: this.props.route?.key || 'hv-screen',
-      name: this.props.route?.name || 'hv-screen',
-      params: {
-        ...this.props.route?.params,
-        url: url || undefined,
-      },
-    };
-
     return (
       <HvScreen
         componentRegistry={this.props.componentRegistry}
         elementErrorComponent={this.props.elementErrorComponent}
-        entrypointUrl={this.props.entrypointUrl}
-        getDoc={this.props.getDoc}
-        getElement={this.props.getElement}
         getScreenState={this.props.getScreenState}
-        navigation={this.props.navigator}
         onUpdate={this.props.onUpdate}
         onUpdateCallbacks={this.props.onUpdateCallbacks}
         reload={this.props.reload}
-        removeElement={this.props.removeElement}
-        route={route}
         setScreenState={this.props.setScreenState}
       />
     );
@@ -204,7 +180,7 @@ function HvRouteFC(props: Types.Props) {
     onRouteFocus,
     experimentalFeatures,
   } = useHyperview();
-  const { getElement, removeElement, setElement } = useElementCache();
+  const { setElement } = useElementCache();
   const { get, onUpdate } = useBackBehaviorContext();
   const { getDoc, setDoc } = useUnsafeHvDocContext() || {};
 
@@ -370,18 +346,13 @@ function HvRouteFC(props: Types.Props) {
         }) => (
           <HvRouteInner
             componentRegistry={componentRegistry}
-            doc={localGetDoc() || undefined}
             element={element}
             elementErrorComponent={elementErrorComponent}
-            entrypointUrl={entrypointUrl}
             getDoc={localGetDoc}
-            getElement={getElement}
             getScreenState={getScreenState}
-            navigator={navigator}
             onUpdate={stateOnUpdate}
             onUpdateCallbacks={onUpdateCallbacks}
             reload={reload}
-            removeElement={removeElement}
             route={props.route}
             setScreenState={setScreenState}
             url={url}
