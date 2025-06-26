@@ -27,5 +27,6 @@ const HvImage = (props: HvComponentProps) => {
 
 HvImage.namespaceURI = Namespaces.HYPERVIEW;
 HvImage.localName = LOCAL_NAME.IMAGE;
+HvImage.supportsHyperRef = true;
 
 export default HvImage;

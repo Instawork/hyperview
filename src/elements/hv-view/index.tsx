@@ -39,6 +39,8 @@ export default class HvView extends PureComponent<HvComponentProps> {
     LOCAL_NAME.SECTION_TITLE,
   ];
 
+  static supportsHyperRef = true;
+
   get attributes(): Attributes {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return Object.values(ATTRIBUTES).reduce<Record<string, any>>(

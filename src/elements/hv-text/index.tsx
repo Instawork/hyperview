@@ -37,5 +37,6 @@ const HvText = (props: HvComponentProps) => {
 
 HvText.namespaceURI = Namespaces.HYPERVIEW;
 HvText.localName = LOCAL_NAME.TEXT;
+HvText.supportsHyperRef = true;
 
 export default HvText;
