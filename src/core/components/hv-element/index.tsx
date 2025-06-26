@@ -1,14 +1,30 @@
 import * as InlineContext from 'hyperview/src/services/inline-context';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
+import HyperRef, {
+  useNeedsHyperRef,
+} from 'hyperview/src/core/components/hyper-ref';
 import { LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
 import React, { useMemo } from 'react';
 import type { HvComponentProps } from 'hyperview/src/types';
 import { isRenderableElement } from 'hyperview/src/core/utils';
 
+const SUPPORTS_HYPER_REF = [
+  LOCAL_NAME.IMAGE,
+  LOCAL_NAME.TEXT,
+  LOCAL_NAME.VIEW,
+  LOCAL_NAME.BODY,
+  LOCAL_NAME.FORM,
+  LOCAL_NAME.HEADER,
+  LOCAL_NAME.ITEM,
+  LOCAL_NAME.ITEMS,
+  LOCAL_NAME.SECTION_TITLE,
+];
+
 export default (props: HvComponentProps): JSX.Element | null | string => {
   // eslint-disable-next-line react/destructuring-assignment
   const { element, onUpdate, options, stylesheets } = props;
+  const { skipHref } = options;
   if (!element) {
     return null;
   }
@@ -53,6 +69,24 @@ export default (props: HvComponentProps): JSX.Element | null | string => {
   }
 
   if (nodeType === NODE_TYPE.ELEMENT_NODE) {
+    const needsHyperRef = useNeedsHyperRef(element);
+    if (
+      needsHyperRef &&
+      !skipHref &&
+      SUPPORTS_HYPER_REF.includes(
+        element.localName as typeof SUPPORTS_HYPER_REF[number],
+      )
+    ) {
+      console.log('>>> zz:', element.localName);
+      return (
+        <HyperRef
+          element={element}
+          onUpdate={onUpdate}
+          options={options}
+          stylesheets={stylesheets}
+        />
+      );
+    }
     if (Component) {
       // Prepare props for the component
 
