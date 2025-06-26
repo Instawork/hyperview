@@ -11,7 +11,7 @@ type Reload = (
   opts: HvComponentOptions,
 ) => void;
 
-export type Props = HyperviewProps & {
+export type Props = Omit<HyperviewProps, 'behaviors' | 'components'> & {
   componentRegistry: Components.Registry;
   onUpdate: HvComponentOnUpdate;
   reload: Reload;

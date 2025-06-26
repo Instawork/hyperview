@@ -94,8 +94,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
 
     return (
       <HvScreen
-        behaviors={this.props.behaviors}
-        components={this.props.components}
+        componentRegistry={this.props.componentRegistry}
         elementErrorComponent={this.props.elementErrorComponent}
         entrypointUrl={this.props.entrypointUrl}
         getDoc={this.props.getDoc}
@@ -198,8 +197,7 @@ const getNestedNavigator = (
  */
 function HvRouteFC(props: Types.Props) {
   const {
-    behaviors,
-    components,
+    componentRegistry,
     elementErrorComponent,
     entrypointUrl,
     onRouteBlur,
@@ -371,9 +369,8 @@ function HvRouteFC(props: Types.Props) {
           setScreenState,
         }) => (
           <HvRouteInner
-            behaviors={behaviors}
-            components={components}
             doc={localGetDoc() || undefined}
+            componentRegistry={componentRegistry}
             element={element}
             elementErrorComponent={elementErrorComponent}
             entrypointUrl={entrypointUrl}

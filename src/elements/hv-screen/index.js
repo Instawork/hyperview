@@ -1,6 +1,4 @@
 /* eslint instawork/flow-annotate: 0 react/prop-types: 0 */
-import * as Behaviors from 'hyperview/src/behaviors';
-import * as Components from 'hyperview/src/services/components';
 import * as Events from 'hyperview/src/services/events';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
@@ -21,13 +19,6 @@ export default class HvScreen extends React.Component {
   static renderChildren = Render.renderChildren;
 
   static renderElement = Render.renderElement;
-
-  constructor(props) {
-    super(props);
-
-    this.behaviorRegistry = Behaviors.getRegistry(this.props.behaviors);
-    this.componentRegistry = new Components.Registry(this.props.components);
-  }
 
   getRoute = props => {
     // The prop route is available in React Navigation v5 and above
@@ -147,7 +138,7 @@ export default class HvScreen extends React.Component {
           element={body}
           onUpdate={this.props.onUpdate}
           options={{
-            componentRegistry: this.componentRegistry,
+            componentRegistry: this.props.componentRegistry,
             onUpdateCallbacks: this.props.onUpdateCallbacks,
             screenUrl: this.props.getScreenState().url,
             staleHeaderType: this.props.getScreenState().staleHeaderType,

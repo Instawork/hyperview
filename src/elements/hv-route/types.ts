@@ -1,7 +1,6 @@
+import * as Components from 'hyperview/src/services/components';
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import {
-  HvBehavior,
-  HvComponent,
   HvComponentOnUpdate,
   NavigationProps,
   OnUpdateCallbacks,
@@ -20,11 +19,10 @@ export type InnerRouteProps = {
   route?: RouteProps;
   entrypointUrl: string;
   onUpdate: HvComponentOnUpdate;
-  behaviors?: HvBehavior[];
-  components?: HvComponent[];
   elementErrorComponent?: ComponentType<ErrorProps>;
   getElement: (key: number) => Element | undefined;
   removeElement: (key: number) => void;
+  componentRegistry: Components.Registry;
   element?: Element;
   doc: Document | undefined;
   getDoc: () => Document | undefined;
