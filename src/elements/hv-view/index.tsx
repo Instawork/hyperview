@@ -8,10 +8,6 @@ import type {
   KeyboardAwareScrollViewProps,
   ScrollViewProps,
 } from './types';
-import type {
-  HvComponentOnUpdate,
-  HvComponentProps,
-} from 'hyperview/src/types';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -25,8 +21,8 @@ import {
 } from 'hyperview/src/core/components/scroll';
 import React, { PureComponent } from 'react';
 import { ATTRIBUTES } from './types';
+import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import { addHref } from 'hyperview/src/core/components/hyper-ref';
 import { createStyleProp } from 'hyperview/src/services';
 
 export default class HvView extends PureComponent<HvComponentProps> {
@@ -243,16 +239,6 @@ export default class HvView extends PureComponent<HvComponentProps> {
 
   render() {
     const { Content } = this;
-    return this.props.options?.skipHref ? (
-      <Content />
-    ) : (
-      addHref(
-        <Content />,
-        this.props.element,
-        this.props.stylesheets,
-        this.props.onUpdate as HvComponentOnUpdate,
-        this.props.options,
-      )
-    );
+    return <Content />;
   }
 }
