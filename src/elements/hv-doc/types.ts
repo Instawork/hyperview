@@ -25,12 +25,6 @@ export type ContextProps = {
   setScreenState: (state: ScreenState) => void;
 };
 
-export type ErrorProps = {
-  error: Error | null | undefined;
-  navigationProvider?: NavigationProvider;
-  url: string | null | undefined;
-};
-
 export type DocState = ScreenState & {
   loadingUrl?: string | null | undefined;
 };

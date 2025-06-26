@@ -12,7 +12,6 @@ import {
   TRIGGERS,
 } from 'hyperview/src/types';
 import {
-  NavigatorProps,
   ParamTypes,
   Props,
   SHOW_DEFAULT_FOOTER_UI,
@@ -21,7 +20,7 @@ import {
   StackScreenOptions,
   TabScreenOptions,
 } from './types';
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { CardStyleInterpolators } from '@react-navigation/stack';
 import { HvDocContext } from 'hyperview/src/elements/hv-doc';
 import { Platform } from 'react-native';
@@ -332,154 +331,137 @@ export default function HvNavigator(props: Props) {
     triggerLoadBehaviors();
   }, [element, triggerLoadBehaviors, updateBehaviorElements]);
 
-  /**
-   * Build the required navigator from the xml element
-   */
-  const Navigator = useCallback((): React.ReactElement => {
-    if (!element) {
-      throw new NavigatorService.HvNavigatorError(
-        'No element found for navigator',
-      );
-    }
-
-    const id: string | null | undefined = element.getAttribute('id');
-    if (!id) {
-      throw new NavigatorService.HvNavigatorError('No id found for navigator');
-    }
-
-    const type: string | null | undefined = element.getAttribute('type');
-    const selected:
-      | Element
-      | undefined = NavigatorService.getSelectedNavRouteElement(element);
-
-    const selectedId: string | undefined = selected
-      ? selected.getAttribute('id')?.toString()
-      : undefined;
-
-    const { BottomTabBar } = navigationComponents || {};
-
-    switch (type) {
-      case NAVIGATOR_TYPE.STACK:
-        return (
-          <Stack.Navigator
-            id={id}
-            screenOptions={({ route }) => stackScreenOptions(route)}
-          >
-            {buildScreens(type, element)}
-          </Stack.Navigator>
-        );
-      case NAVIGATOR_TYPE.TAB:
-        return (
-          <BottomTab.Navigator
-            backBehavior="none"
-            id={id}
-            initialRouteName={selectedId}
-            screenOptions={({ route }) => tabScreenOptions(route)}
-            tabBar={
-              BottomTabBar &&
-              (p => (
-                <BottomTabBar
-                  descriptors={p.descriptors}
-                  id={id}
-                  insets={p.insets}
-                  navigation={p.navigation}
-                  state={p.state}
-                />
-              ))
-            }
-          >
-            {buildScreens(type, element)}
-          </BottomTab.Navigator>
-        );
-      default:
-    }
-    throw new NavigatorService.HvNavigatorError(
-      `No navigator type '${type}'found for '${id}'`,
-    );
-  }, [
-    buildScreens,
-    element,
-    navigationComponents,
-    stackScreenOptions,
-    tabScreenOptions,
-  ]);
-
-  /**
-   * Build a stack navigator for a modal
-   */
-  const ModalNavigator = useCallback(
-    (p: NavigatorProps): React.ReactElement => {
-      if (!params) {
-        throw new NavigatorService.HvNavigatorError(
-          'No params found for modal screen',
-        );
-      }
-
-      if (!params.id) {
-        throw new NavigatorService.HvNavigatorError(
-          'No id found for modal screen',
-        );
-      }
-
-      const navigatorId = `stack-${params?.id}`;
-      const screenId = `modal-screen-${params?.id}`;
-
-      // Generate a simple structure for the modal
-      const screens: React.ReactElement[] = [];
-      screens.push(
-        buildScreen(
-          screenId,
-          NAVIGATOR_TYPE.STACK,
-          params?.url || undefined,
-          false,
-          false,
-          params?.id,
-          true,
-        ),
-      );
-      screens.push(...buildDynamicScreens());
-
-      // Mutate the dom to match
-      if (p.doc) {
-        const route: Element | null = params?.id
-          ? Dom.getElementById(p.doc, params.id) || null
-          : null;
-        if (route && !NavigatorService.getNavigatorById(p.doc, navigatorId)) {
-          const navigator = p.doc.createElementNS(
-            Namespaces.HYPERVIEW,
-            LOCAL_NAME.NAVIGATOR,
-          );
-          navigator.setAttribute('id', navigatorId);
-          navigator.setAttribute('type', 'stack');
-          const screen = p.doc.createElementNS(
-            Namespaces.HYPERVIEW,
-            LOCAL_NAME.NAV_ROUTE,
-          );
-          screen.setAttribute('id', screenId);
-          navigator.appendChild(screen);
-          route.appendChild(navigator);
-        }
-      }
-
-      return (
-        <Stack.Navigator
-          id={navigatorId}
-          screenOptions={({ route }) => stackScreenOptions(route)}
-        >
-          {screens}
-        </Stack.Navigator>
-      );
-    },
-    [buildDynamicScreens, buildScreen, params, stackScreenOptions],
-  );
-
-  const Component = useMemo(() => {
-    return params?.needsSubStack ? ModalNavigator : Navigator;
-  }, [ModalNavigator, Navigator, params?.needsSubStack]);
-
   return (
     <HvDocContext>
-      {({ getSourceDoc }) => <Component doc={getSourceDoc?.()} />}
+      {({ getSourceDoc }) => {
+        if (params?.needsSubStack) {
+          // Build a stack navigator for a modal screen
+          const doc = getSourceDoc?.();
+          if (!params) {
+            throw new NavigatorService.HvNavigatorError(
+              'No params found for modal screen',
+            );
+          }
+
+          if (!params.id) {
+            throw new NavigatorService.HvNavigatorError(
+              'No id found for modal screen',
+            );
+          }
+
+          const navigatorId = `stack-${params?.id}`;
+          const screenId = `modal-screen-${params?.id}`;
+
+          // Generate a simple structure for the modal
+          const screens: React.ReactElement[] = [];
+          screens.push(
+            buildScreen(
+              screenId,
+              NAVIGATOR_TYPE.STACK,
+              params?.url || undefined,
+              false,
+              false,
+              params?.id,
+              true,
+            ),
+          );
+          screens.push(...buildDynamicScreens());
+
+          // Mutate the dom to match
+          if (doc) {
+            const route: Element | null = params?.id
+              ? Dom.getElementById(doc, params.id) || null
+              : null;
+            if (route && !NavigatorService.getNavigatorById(doc, navigatorId)) {
+              const navigator = doc.createElementNS(
+                Namespaces.HYPERVIEW,
+                LOCAL_NAME.NAVIGATOR,
+              );
+              navigator.setAttribute('id', navigatorId);
+              navigator.setAttribute('type', 'stack');
+              const screen = doc.createElementNS(
+                Namespaces.HYPERVIEW,
+                LOCAL_NAME.NAV_ROUTE,
+              );
+              screen.setAttribute('id', screenId);
+              navigator.appendChild(screen);
+              route.appendChild(navigator);
+            }
+          }
+
+          return (
+            <Stack.Navigator
+              id={navigatorId}
+              screenOptions={({ route }) => stackScreenOptions(route)}
+            >
+              {screens}
+            </Stack.Navigator>
+          );
+        }
+        // Build a navigator
+        if (!element) {
+          throw new NavigatorService.HvNavigatorError(
+            'No element found for navigator',
+          );
+        }
+
+        const id: string | null | undefined = element.getAttribute('id');
+        if (!id) {
+          throw new NavigatorService.HvNavigatorError(
+            'No id found for navigator',
+          );
+        }
+
+        const type: string | null | undefined = element.getAttribute('type');
+        const selected:
+          | Element
+          | undefined = NavigatorService.getSelectedNavRouteElement(element);
+
+        const selectedId: string | undefined = selected
+          ? selected.getAttribute('id')?.toString()
+          : undefined;
+
+        const { BottomTabBar } = navigationComponents || {};
+
+        switch (type) {
+          case NAVIGATOR_TYPE.STACK:
+            return (
+              <Stack.Navigator
+                id={id}
+                screenOptions={({ route }) => stackScreenOptions(route)}
+              >
+                {buildScreens(type, element)}
+              </Stack.Navigator>
+            );
+          case NAVIGATOR_TYPE.TAB:
+            return (
+              <BottomTab.Navigator
+                backBehavior="none"
+                id={id}
+                initialRouteName={selectedId}
+                screenOptions={({ route }) => tabScreenOptions(route)}
+                tabBar={
+                  BottomTabBar &&
+                  (p => (
+                    <BottomTabBar
+                      descriptors={p.descriptors}
+                      id={id}
+                      insets={p.insets}
+                      navigation={p.navigation}
+                      state={p.state}
+                    />
+                  ))
+                }
+              >
+                {buildScreens(type, element)}
+              </BottomTab.Navigator>
+            );
+          default:
+        }
+        throw new NavigatorService.HvNavigatorError(
+          `No navigator type '${type}'found for '${id}'`,
+        );
+      }}
     </HvDocContext>
   );
 }

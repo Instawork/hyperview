@@ -12,7 +12,7 @@ import {
   RouteParams,
   ScreenState,
 } from 'hyperview/src/types';
-import { DocState, ErrorProps, Props } from './types';
+import { DocState, Props } from './types';
 import React, {
   useCallback,
   useContext,
@@ -361,36 +361,27 @@ export default (props: Props) => {
     props.route?.params?.needsSubStack,
   ]);
 
-  /**
-   * View shown when there is an error
-   */
-  const Error = useCallback(
-    (p: ErrorProps): React.ReactElement => {
-      const { error, navigationProvider, url } = p;
-      const ErrorScreen = errorScreen || LoadError;
-      return (
-        <ErrorScreen
-          back={() => navigationProvider?.backAction({} as RouteParams)}
-          error={error}
-          onPressReload={() => contextValue.reload(url)}
-          onPressViewDetails={(u: string | undefined) => {
-            if (u) {
-              navigationProvider?.openModalAction({
-                url: u,
-              } as RouteParams);
-            }
-          }}
-        />
-      );
-    },
-    [contextValue, errorScreen],
-  );
+  if (state.error) {
+    const ErrorScreen = errorScreen || LoadError;
+    return (
+      <ErrorScreen
+        back={() => props.navigationProvider?.backAction({} as RouteParams)}
+        error={state.error}
+        onPressReload={() =>
+          contextValue.reload(state.url ?? props.route?.params?.url)
+        }
+        onPressViewDetails={(u: string | undefined) => {
+          if (u) {
+            props.navigationProvider?.openModalAction({
+              url: u,
+            } as RouteParams);
+          }
+        }}
+      />
+    );
+  }
 
-  /**
-   * View shown while loading
-   * Includes preload functionality
-   */
-  const Loader = useCallback(() => {
+  if (isLoading) {
     if (props.route?.params?.preloadScreen) {
       const preloadElement = getElement(props.route?.params?.preloadScreen);
       if (preloadElement) {
@@ -436,36 +427,9 @@ export default (props: Props) => {
         }}
       />
     );
-  }, [
-    componentRegistry,
-    getDoc,
-    getElement,
-    props.route?.params?.behaviorElementId,
-    props.route?.params?.preloadScreen,
-    props.route?.params?.routeId,
-  ]);
+  }
 
-  const component = useMemo(() => {
-    if (state.error) {
-      return (
-        <Error
-          error={state.error}
-          navigationProvider={props.navigationProvider}
-          url={state.url ?? props.route?.params?.url}
-        />
-      );
-    }
-    return isLoading ? <Loader /> : props.children;
-  }, [
-    Error,
-    isLoading,
-    Loader,
-    props.children,
-    props.navigationProvider,
-    props.route?.params?.url,
-    state.error,
-    state.url,
-  ]);
-
-  return <Context.Provider value={contextValue}>{component}</Context.Provider>;
+  return (
+    <Context.Provider value={contextValue}>{props.children}</Context.Provider>
+  );
 };
