@@ -49,6 +49,8 @@ describe('Registry', () => {
 
     static localNameAliases = ['baz-1', 'baz-2'];
 
+    static supportsHyperRef = true;
+
     static getFormInputValues() {
       return [['c', 'd']];
     }
@@ -102,6 +104,18 @@ describe('Registry', () => {
 
     it('returns custom component using alias', () => {
       expect(registry.getComponent('http://baz', 'baz-1')).toBe(Baz);
+    });
+
+    it('returns component with supportsHyperRef', () => {
+      expect(
+        registry.getComponent('http://baz', 'baz-1')?.supportsHyperRef,
+      ).toBe(true);
+    });
+
+    it('does not return component with supportsHyperRef', () => {
+      expect(
+        registry.getComponent('http://bar', 'baz-1')?.supportsHyperRef,
+      ).not.toBe(false);
     });
 
     it('returns undefined non-existing component', () => {

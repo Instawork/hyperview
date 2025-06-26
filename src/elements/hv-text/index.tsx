@@ -7,13 +7,11 @@ import type {
 import React, { useCallback } from 'react';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { Text } from 'react-native';
-import { addHref } from 'hyperview/src/core/components/hyper-ref';
 import { createProps } from 'hyperview/src/services';
 
 const HvText = (props: HvComponentProps) => {
   // eslint-disable-next-line react/destructuring-assignment
   const { element, onUpdate, options, stylesheets } = props;
-  const { skipHref } = options || {};
 
   const Component = useCallback(() => {
     const componentProps = createProps(element, stylesheets, options);
@@ -34,20 +32,11 @@ const HvText = (props: HvComponentProps) => {
     );
   }, [element, onUpdate, options, stylesheets]);
 
-  return skipHref ? (
-    <Component />
-  ) : (
-    addHref(
-      <Component />,
-      element,
-      stylesheets,
-      onUpdate as HvComponentOnUpdate,
-      options,
-    )
-  );
+  return <Component />;
 };
 
 HvText.namespaceURI = Namespaces.HYPERVIEW;
 HvText.localName = LOCAL_NAME.TEXT;
+HvText.supportsHyperRef = true;
 
 export default HvText;
