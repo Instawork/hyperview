@@ -59,3 +59,7 @@ export { HvBaseError } from 'hyperview/src/services/error';
 export { renderChildren, renderElement } from 'hyperview/src/services/render';
 export { createStylesheets } from 'hyperview/src/services/stylesheets';
 export { getUrlFromHref } from 'hyperview/src/services/url';
+
+// TODO: Legacy export
+// Remove and replace with RouteProps
+export type { RouteProps as Route } from 'hyperview/src/types';
