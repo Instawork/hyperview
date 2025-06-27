@@ -276,7 +276,9 @@ export type RouteParams = {
   url?: DOMString;
 };
 
-export type RouteProps = NavigatorRoute<string, RouteParams | undefined>;
+// TODO: Legacy export
+// Replace second param with RouteParams | undefined
+export type RouteProps = NavigatorRoute<string, RouteParams>;
 
 export type Fetch = (
   input: RequestInfo | URL,
