@@ -276,5 +276,3 @@ export function createStylesheets(document: Document): StyleSheets {
   } as const;
   return styles;
 }
-
-export type { StyleSheets };

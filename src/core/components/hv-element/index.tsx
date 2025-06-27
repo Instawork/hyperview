@@ -4,7 +4,9 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import { LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
 import React, { useMemo } from 'react';
 import type { HvComponentProps } from 'hyperview/src/types';
+import HyperRef from 'hyperview/src/core/components/hyper-ref';
 import { isRenderableElement } from 'hyperview/src/core/utils';
+import { needsHyperRef } from './utils';
 
 export default (props: HvComponentProps): JSX.Element | null | string => {
   // eslint-disable-next-line react/destructuring-assignment
@@ -54,6 +56,17 @@ export default (props: HvComponentProps): JSX.Element | null | string => {
 
   if (nodeType === NODE_TYPE.ELEMENT_NODE) {
     if (Component) {
+      if (needsHyperRef(Component, element, options)) {
+        return (
+          <HyperRef
+            element={element}
+            onUpdate={onUpdate}
+            options={options}
+            stylesheets={stylesheets}
+          />
+        );
+      }
+
       // Prepare props for the component
 
       // Conditionally render the component with a key if it exists, to avoid

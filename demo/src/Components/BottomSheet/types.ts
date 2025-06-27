@@ -13,14 +13,6 @@ export type HvProps = {
   visible: boolean;
 };
 
-export type LayoutEvent = {
-  nativeEvent: {
-    layout: {
-      height: number;
-    };
-  };
-};
-
 export type Props = {
   children: ReactNode;
   element: Element;
