@@ -46,7 +46,7 @@ export default (props: Props) => {
   const localUrl = useRef<string | null | undefined>(null);
   // </HACK>
 
-  const currentProps = useRef(props);
+  const currentUrl = useRef<string | null | undefined>(null);
 
   const [state, setState] = useState<DocState>({
     doc: undefined,
@@ -170,55 +170,27 @@ export default (props: Props) => {
     ],
   );
 
-  // Monitor url changes
+  // Monitor prop changes
   useEffect(() => {
     if (state.loadingUrl) {
       // Handle force reload
       loadUrl(state.loadingUrl);
-    } else if (
-      props.url &&
-      !state.url &&
-      props.url !== state.url &&
-      !props.hasElement &&
-      !props.route?.params?.needsSubStack
-    ) {
-      // Handle initial load
-      loadUrl(props.url);
-    }
-  }, [
-    loadUrl,
-    props.hasElement,
-    props.route?.params?.needsSubStack,
-    props.url,
-    state.url,
-    state.loadingUrl,
-  ]);
-
-  // Monitor prop changes
-  useEffect(() => {
-    if (
-      props.url &&
-      currentProps.current.url &&
-      props.url !== currentProps.current.url
-    ) {
-      loadUrl(props.url);
+    } else if (props.url) {
+      if (
+        !currentUrl.current &&
+        !props.hasElement &&
+        !props.route?.params.needsSubStack
+      ) {
+        // Handle initial load
+        loadUrl(props.url);
+      } else if (currentUrl.current && props.url !== currentUrl.current) {
+        // Handle prop change
+        loadUrl(props.url);
+      }
     }
 
-    // Update the element cache
-    const newBehaviorElementId = props.route?.params?.behaviorElementId;
-    const newPreloadScreen = props.route?.params?.preloadScreen;
-    const oldBehaviorElementId =
-      currentProps.current?.route?.params?.behaviorElementId;
-    const oldPreloadScreen = currentProps.current?.route?.params?.preloadScreen;
-    if (oldBehaviorElementId && newBehaviorElementId !== oldBehaviorElementId) {
-      removeElement?.(oldBehaviorElementId);
-    }
-    if (oldPreloadScreen && newPreloadScreen !== oldPreloadScreen) {
-      removeElement?.(oldPreloadScreen);
-    }
-
-    currentProps.current = props;
-  }, [loadUrl, props, removeElement]);
+    currentUrl.current = props.url;
+  }, [loadUrl, props, state.loadingUrl]);
 
   const getScreenState = useCallback(
     () => ({ ...state, url: localUrl.current }),
