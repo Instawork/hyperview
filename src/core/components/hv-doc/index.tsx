@@ -43,7 +43,7 @@ const HvDoc = (props: Props) => {
   const localUrl = useRef<string | null | undefined>(null);
   // </HACK>
 
-  const currentProps = useRef<Props>();
+  const currentUrl = useRef<string | null | undefined>(null);
 
   const [state, setState] = useState<DocState>({
     doc: null,
@@ -176,7 +176,7 @@ const HvDoc = (props: Props) => {
       loadUrl(state.loadingUrl);
     } else if (
       props.url &&
-      !currentProps.current?.url &&
+      !currentUrl.current &&
       !props.element &&
       !props.route?.params.needsSubStack
     ) {
@@ -194,14 +194,10 @@ const HvDoc = (props: Props) => {
 
   // Monitor prop changes
   useEffect(() => {
-    if (
-      props.url &&
-      currentProps.current?.url &&
-      props.url !== currentProps.current?.url
-    ) {
+    if (props.url && currentUrl.current && props.url !== currentUrl.current) {
       loadUrl(props.url);
     }
-    currentProps.current = props;
+    currentUrl.current = props.url;
   }, [loadUrl, props]);
 
   const getScreenState = useCallback(
