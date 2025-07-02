@@ -169,36 +169,27 @@ const HvDoc = (props: Props) => {
     ],
   );
 
-  // Monitor url changes
+  // Monitor prop changes
   useEffect(() => {
     if (state.loadingUrl) {
       // Handle force reload
       loadUrl(state.loadingUrl);
-    } else if (
-      props.url &&
-      !currentUrl.current &&
-      !props.element &&
-      !props.route?.params.needsSubStack
-    ) {
-      // Handle initial load
-      loadUrl(props.url);
+    } else if (props.url) {
+      if (
+        !currentUrl.current &&
+        !props.element &&
+        !props.route?.params.needsSubStack
+      ) {
+        // Handle initial load
+        loadUrl(props.url);
+      } else if (currentUrl.current && props.url !== currentUrl.current) {
+        // Handle prop change
+        loadUrl(props.url);
+      }
     }
-  }, [
-    loadUrl,
-    props.element,
-    props.route?.params.needsSubStack,
-    props.url,
-    state.url,
-    state.loadingUrl,
-  ]);
 
-  // Monitor prop changes
-  useEffect(() => {
-    if (props.url && currentUrl.current && props.url !== currentUrl.current) {
-      loadUrl(props.url);
-    }
     currentUrl.current = props.url;
-  }, [loadUrl, props]);
+  }, [loadUrl, props, state.loadingUrl]);
 
   const getScreenState = useCallback(
     () => ({ ...state, url: localUrl.current }),
