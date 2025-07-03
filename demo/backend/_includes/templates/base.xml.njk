@@ -19,7 +19,44 @@
     </screen>
     {% block custom_screen %}
     {% endblock %}
-    {% include 'templates/loading-screen.xml.njk' %}
-    {% include 'templates/loading-screen-no-header.xml.njk' %}
+    <screen id="loading-screen">
+      <styles>
+        {% include 'templates/styles.xml.njk' %}
+      </styles>
+      <body style="body">
+        <view style="loading">
+          <text style="loading-text">Loading…</text>
+          <spinner/>
+        </view>
+      </body>
+    </screen>
+    <screen id="loading-screen-pushed">
+      <styles>
+        {% include 'templates/styles.xml.njk' %}
+      </styles>
+      <body style="body">
+        {% set hv_title = "" %}
+        {% set hv_button_behavior = "back" %}
+        {% include 'templates/header.xml.njk' %}
+        <view style="loading">
+          <text style="loading-text">Loading…</text>
+          <spinner/>
+        </view>
+      </body>
+    </screen>
+    <screen id="loading-screen-modal">
+      <styles>
+        {% include 'templates/styles.xml.njk' %}
+      </styles>
+      <body style="body">
+        {% set hv_title = "" %}
+        {% set hv_button_behavior = "close" %}
+        {% include 'templates/header.xml.njk' %}
+        <view style="loading">
+          <text style="loading-text">Loading…</text>
+          <spinner/>
+        </view>
+      </body>
+    </screen>
   </doc>
 {% endblock %}

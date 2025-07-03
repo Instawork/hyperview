@@ -2,6 +2,8 @@
 permalink: "/behaviors/basic/triggers/refresh/replace_inner_fragment.xml"
 ---
 
-<text style="button-label" xmlns="https://hyperview.org/hyperview">
-  Replaced inner!
-</text>
+{% from 'macros/description/index.xml.njk' import description %}
+
+<view xmlns="https://hyperview.org/hyperview">
+  {{ description('Refreshed!') }}
+</view>

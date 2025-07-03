@@ -8,12 +8,18 @@ hv_button_behavior: "back"
 {% from 'macros/button/index.xml.njk' import button %}
 {% from 'macros/description/index.xml.njk' import description %}
 
+{% block styles %}
+  <style id="box" borderColor="blue" borderWidth="2" padding="24" margin="24" />
+{% endblock %}
 
 {% block container %}
-  {{ description('Pull to refresh on the button will replace the content.') }}
-  {{ button('Refresh me!', attributes={
-  action: "replace-inner",
-  href: "/hyperview/public/behaviors/basic/triggers/refresh/replace_inner_fragment.xml",
-  trigger: "refresh"
-  }) }}
+  <view
+    id="container"
+    style="box"
+    action="replace-inner"
+    trigger="refresh"
+    href="/hyperview/public/behaviors/basic/triggers/refresh/replace_inner_fragment.xml"
+  >
+    {{ description('Pull down this box to replace its content.') }}
+  </view>
 {% endblock %}

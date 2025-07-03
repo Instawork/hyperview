@@ -8,11 +8,11 @@ hv_button_behavior: "back"
   <screen>
     <styles>
       {% include 'templates/styles.xml.njk' %}
-      <style id="body" backgroundColor="white" flex="1" padding="48" />
-      <style id="label" fontSize="18" lineHeight="24" />
+      <style id="body" backgroundColor="white" flex="1" />
+      <style id="label" fontSize="18" lineHeight="24" margin="24" />
       <style id="label-link" color="blue" fontSize="18" />
     </styles>
-    <body style="body" safe-area="true">
+    <body style="body">
       {% include 'templates/header.xml.njk' %}
       <text style="label">This is screen 2.</text>
       <text action="back" href="#" style="label label-link">Go back</text>

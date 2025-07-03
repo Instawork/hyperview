@@ -22,8 +22,7 @@ All included files go under `_includes/` folder to contain reusable files across
    4. `styles.xml.njk`: Contains re-usable styles across the app.
    5. `base.xml.njk`: Base template for all the screens. Can be extended by providing custom styles and content.
    6. `scrollview.xml.njk`: Extends `base.xml.njk` to provide a scroll view for any screen that extends it.
-   7. `loading-screen.xml.njk`: Included as a loading screen in other templates.
-   8. `header.xml.njk`: Used to render the header button logic.
+   7. `header.xml.njk`: Used to render the header button logic.
 2. `icons/` : All icons used across the app go into this folder.
 3. `macros/` : Folder that includes all reusable macros. Each macro should have a separate folder with `index.xml.njk` containing the definition along with `styles.xml.njk` containing the styles.
 

@@ -28,6 +28,7 @@ hv_button_behavior: "back"
   <list>
     {% call item("item item-first", "Jeeves", "1") -%}
       <text
+        id="add-item-1"
         action="replace"
         event-name="added-item1"
         trigger="on-event"
@@ -40,6 +41,7 @@ hv_button_behavior: "back"
 
     {% call item("item", "Wooster", "2") -%}
       <text
+        id="add-item-2"
         action="replace"
         event-name="added-item2"
         trigger="on-event"
@@ -52,6 +54,7 @@ hv_button_behavior: "back"
 
     {% call item("item item-last", "Wooster", "3") -%}
       <text
+        id="add-item-3"
         action="replace"
         event-name="added-item3"
         trigger="on-event"

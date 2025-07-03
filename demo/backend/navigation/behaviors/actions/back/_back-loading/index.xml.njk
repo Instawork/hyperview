@@ -5,6 +5,6 @@
   {{ description('Tapping the button below will navigate back to a different screen, with a loading screen') }}
 
   {% call button('Back with loading') -%}
-    <behavior action="back" href="/hyperview/public/navigation/behaviors/actions/changed.xml" show-during-load="loading-screen-no-header" />
+    <behavior action="back" href="/hyperview/public/navigation/behaviors/actions/changed.xml" show-during-load="loading-screen" />
   {%- endcall %}
 {% endblock %}

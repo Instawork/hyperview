@@ -38,12 +38,12 @@ hv_button_behavior: "back"
   {%- endcall %}
 
   {% call button('Push with indicator') -%}
-    <behavior action="push" href="/hyperview/public/navigation/behaviors/actions/pushed.xml" show-during-load="loading-screen" />
+    <behavior action="push" href="/hyperview/public/navigation/behaviors/actions/pushed.xml" show-during-load="loading-screen-pushed" />
   {%- endcall %}
 
   <form>
     {% call button('Push with params') -%}
-      <behavior action="push" href="/hyperview/public/navigation/behaviors/actions/pushed.xml" show-during-load="loading-screen" />
+      <behavior action="push" href="/hyperview/public/navigation/behaviors/actions/pushed.xml" show-during-load="loading-screen-pushed" />
     {%- endcall %}
     <text-field style="input" name="param1" value="value1"/>
   </form>
