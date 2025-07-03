@@ -116,12 +116,35 @@ function isDoc(object: Element | Document): object is Element | Document {
   return 'getElementById' in object;
 }
 
+function getAllBehaviorTypeElements(doc: Document): Element[] {
+  // List of tags which support behavior attributes
+  const behaviorTags = [
+    'behavior',
+    'date-field',
+    'image',
+    'list',
+    'option',
+    'picker-field',
+    'section-list',
+    'switch',
+    'text',
+    'text-field',
+    'view',
+  ];
+  const behaviors: Element[] = [];
+  behaviorTags.forEach(tag => {
+    const elements = Array.from(doc.getElementsByTagName(tag));
+    behaviors.push(...elements);
+  });
+  return behaviors;
+}
+
 /**
  * Process the incoming doc before it is added to state
  * - Ensure all behaviors with an update action have an id to allow for targeting
  */
 export const processDocument = (doc: Document): Document => {
-  const behaviors = Array.from(doc.getElementsByTagName('behavior'));
+  const behaviors = getAllBehaviorTypeElements(doc);
   behaviors.forEach(behavior => {
     const action = behavior.getAttribute('action');
     const updateAction: UpdateAction = action as UpdateAction;
