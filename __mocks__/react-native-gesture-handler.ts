@@ -1,1 +1,30 @@
-export default jest.fn();
+import mocks from 'react-native-gesture-handler/src/mocks';
+
+export const {
+  TouchableHighlight,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  ScrollView,
+  FlatList,
+  Switch,
+  TextInput,
+  DrawerLayoutAndroid,
+  NativeViewGestureHandler,
+  TapGestureHandler,
+  ForceTouchGestureHandler,
+  LongPressGestureHandler,
+  PinchGestureHandler,
+  RotationGestureHandler,
+  FlingGestureHandler,
+  RawButton,
+  BaseButton,
+  RectButton,
+  BorderlessButton,
+  PanGestureHandler,
+  attachGestureHandler,
+  createGestureHandler,
+  dropGestureHandler,
+  updateGestureHandler,
+  flushOperations,
+} = mocks;
