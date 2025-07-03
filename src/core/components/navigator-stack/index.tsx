@@ -1,8 +1,7 @@
-import * as Contexts from 'hyperview/src/contexts';
 import * as CustomStackRouter from 'hyperview/src/core/components/navigator-stack/router';
-import * as NavigationContext from 'hyperview/src/contexts/navigation';
 import * as React from 'react';
-import * as Types from './types';
+import type { NavigationState, ParamListBase } from '@react-navigation/routers';
+import type { Props, StackOptions } from './types';
 import {
   StackActionHelpers,
   StackNavigationState,
@@ -14,10 +13,13 @@ import {
   StackNavigationOptions,
   StackView,
 } from '@react-navigation/stack';
+import type { EventMapBase } from '@react-navigation/native';
+import { useHvDocContext } from 'hyperview/src/elements/hv-doc';
+import { useHyperview } from 'hyperview/src/contexts/hyperview';
 
-const CustomStackNavigator = (props: Types.Props) => {
-  const docContextProps = React.useContext(Contexts.DocContext);
-  const navContextProps = React.useContext(NavigationContext.Context);
+const CustomStackNavigator = (props: Props) => {
+  const { getSourceDoc } = useHvDocContext();
+  const { entrypointUrl } = useHyperview();
 
   const {
     state,
@@ -25,17 +27,17 @@ const CustomStackNavigator = (props: Types.Props) => {
     navigation,
     NavigationContent,
   } = useNavigationBuilder<
-    StackNavigationState<Types.ParamListBase>,
-    Types.StackOptions,
-    StackActionHelpers<Types.ParamListBase>,
+    StackNavigationState<ParamListBase>,
+    StackOptions,
+    StackActionHelpers<ParamListBase>,
     StackNavigationOptions,
     StackNavigationEventMap
   >(CustomStackRouter.Router, {
     children: props.children,
-    docContextProps,
+    entrypointUrl,
+    getDoc: () => getSourceDoc(),
     id: props.id,
     initialRouteName: props.initialRouteName,
-    navContextProps,
     screenOptions: props.screenOptions,
   });
 
@@ -51,8 +53,8 @@ const CustomStackNavigator = (props: Types.Props) => {
 };
 
 export const createCustomStackNavigator = createNavigatorFactory<
-  Readonly<Types.NavigationState>,
+  Readonly<NavigationState>,
   StackNavigationOptions,
-  Types.EventMapBase,
+  EventMapBase,
   typeof CustomStackNavigator
 >(CustomStackNavigator);

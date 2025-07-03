@@ -1,19 +1,19 @@
 import * as Services from 'hyperview/src/services';
-import type { HvComponent, HvFormValues } from 'hyperview/src/types';
-import HvDateField from 'hyperview/src/components/hv-date-field';
-import HvImage from 'hyperview/src/components/hv-image';
-import HvList from 'hyperview/src/components/hv-list';
-import HvOption from 'hyperview/src/components/hv-option';
-import HvPickerField from 'hyperview/src/components/hv-picker-field';
-import HvSectionList from 'hyperview/src/components/hv-section-list';
-import HvSelectMultiple from 'hyperview/src/components/hv-select-multiple';
-import HvSelectSingle from 'hyperview/src/components/hv-select-single';
-import HvSpinner from 'hyperview/src/components/hv-spinner';
-import HvSwitch from 'hyperview/src/components/hv-switch';
-import HvText from 'hyperview/src/components/hv-text';
-import HvTextField from 'hyperview/src/components/hv-text-field';
-import HvView from 'hyperview/src/components/hv-view';
-import HvWebView from 'hyperview/src/components/hv-web-view';
+import type { HvComponent } from 'hyperview/src/types';
+import HvDateField from 'hyperview/src/elements/hv-date-field';
+import HvImage from 'hyperview/src/elements/hv-image';
+import HvList from 'hyperview/src/elements/hv-list';
+import HvOption from 'hyperview/src/elements/hv-option';
+import HvPickerField from 'hyperview/src/elements/hv-picker-field';
+import HvSectionList from 'hyperview/src/elements/hv-section-list';
+import HvSelectMultiple from 'hyperview/src/elements/hv-select-multiple';
+import HvSelectSingle from 'hyperview/src/elements/hv-select-single';
+import HvSpinner from 'hyperview/src/elements/hv-spinner';
+import HvSwitch from 'hyperview/src/elements/hv-switch';
+import HvText from 'hyperview/src/elements/hv-text';
+import HvTextField from 'hyperview/src/elements/hv-text-field';
+import HvView from 'hyperview/src/elements/hv-view';
+import HvWebView from 'hyperview/src/elements/hv-web-view';
 
 const HYPERVIEW_COMPONENTS = [
   HvDateField,
@@ -85,9 +85,9 @@ export class Registry {
           for (let i = 0; i < inputElements.length; i += 1) {
             const inputElement = inputElements.item(i);
             if (inputElement) {
-              const formComponent = c as HvComponent & HvFormValues;
+              const formComponent = c as HvComponent;
               formComponent
-                .getFormInputValues(inputElement)
+                .getFormInputValues?.(inputElement)
                 // eslint-disable-next-line no-loop-func
                 .forEach(([name, value]: [string, string]) => {
                   formData.append(name, value);
