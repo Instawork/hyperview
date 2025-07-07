@@ -319,6 +319,29 @@
 />
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
 <style id="links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" marginBottom="24" />
+<style
+  id="picker-modal"
+  backgroundColor="white"
+  borderTopColor="#E1E1E1"
+  borderTopWidth="1"
+  shadowOffsetX="0"
+  shadowOffsetY="-5"
+  shadowOpacity="0.2"
+  shadowRadius="5"
+/>
+<style id="picker-modal-overlay" backgroundColor="#1f1f1fa0" />
+<style
+  id="picker-modal-text"
+  color="blue"
+  fontSize="16"
+  fontWeight="600"
+  marginBottom="16"
+  padding="24"
+>
+  <modifier pressed="true">
+  <style opacity="0.5" />
+  </modifier>
+</style>
 
         
         
@@ -2314,6 +2337,29 @@
 />
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
 <style id="links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" marginBottom="24" />
+<style
+  id="picker-modal"
+  backgroundColor="white"
+  borderTopColor="#E1E1E1"
+  borderTopWidth="1"
+  shadowOffsetX="0"
+  shadowOffsetY="-5"
+  shadowOpacity="0.2"
+  shadowRadius="5"
+/>
+<style id="picker-modal-overlay" backgroundColor="#1f1f1fa0" />
+<style
+  id="picker-modal-text"
+  color="blue"
+  fontSize="16"
+  fontWeight="600"
+  marginBottom="16"
+  padding="24"
+>
+  <modifier pressed="true">
+  <style opacity="0.5" />
+  </modifier>
+</style>
 
   </styles>
   <body style="body" safe-area="true">
@@ -2656,6 +2702,29 @@
 />
 <style id="list-header-text" fontSize="18" fontWeight="bold"/>
 <style id="links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" marginBottom="24" />
+<style
+  id="picker-modal"
+  backgroundColor="white"
+  borderTopColor="#E1E1E1"
+  borderTopWidth="1"
+  shadowOffsetX="0"
+  shadowOffsetY="-5"
+  shadowOpacity="0.2"
+  shadowRadius="5"
+/>
+<style id="picker-modal-overlay" backgroundColor="#1f1f1fa0" />
+<style
+  id="picker-modal-text"
+  color="blue"
+  fontSize="16"
+  fontWeight="600"
+  marginBottom="16"
+  padding="24"
+>
+  <modifier pressed="true">
+  <style opacity="0.5" />
+  </modifier>
+</style>
 
   </styles>
   <body style="body" safe-area="true">
