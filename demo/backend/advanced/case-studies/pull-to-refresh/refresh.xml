@@ -1,4 +1,5 @@
 <list
+  id="list"
   action="replace"
   href="/hyperview/public/advanced/case-studies/pull-to-refresh/refresh.xml"
   trigger="refresh"
@@ -10,7 +11,7 @@
   <item key="1" style="item">
     <text style="item-label">List 1</text>
   </item>
-  <item key="2" style="item">
+  <item key="2" style="item item-last">
     <text style="item-label">List 2</text>
   </item>
 </list>

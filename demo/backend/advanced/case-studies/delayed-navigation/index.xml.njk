@@ -7,7 +7,7 @@ hv_button_behavior: "back"
 {% extends 'templates/base.xml.njk' %}
 
 {% block styles %}
-  <style id="label" fontSize="18" lineHeight="24" />
+  <style id="label" fontSize="18" lineHeight="24" margin="24" />
   <style id="label-link" color="blue" fontSize="18" />
 {% endblock %}
 
@@ -16,6 +16,7 @@ hv_button_behavior: "back"
   <text
     action="replace-inner"
     delay="800"
+    id="trigger-screen-1"
     href="/hyperview/public/advanced/case-studies/delayed-navigation/redirect.xml"
     show-during-load="loadingSpinner"
     style="label label-link"
