@@ -20,10 +20,13 @@
       <item
         href="/hyperview/public/{{ screen.data.permalink }}"
         key="{{ screen.data.hv_title | slug }}"
-        show-during-load="loading-screen"
         style="{{ item_style }}"
         {% if screen.data.hv_open_modal == "true" %}
           action="new"
+          show-during-load="loading-screen-modal"
+        {% else %}
+          action="push"
+          show-during-load="loading-screen-pushed"
         {% endif %}
       >
         <view style="item-left">
