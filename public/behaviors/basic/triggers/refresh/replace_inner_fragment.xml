@@ -1,4 +1,10 @@
 
-<text style="button-label" xmlns="https://hyperview.org/hyperview">
-  Replaced inner!
-</text>
+
+
+<view xmlns="https://hyperview.org/hyperview">
+  
+  
+    <text style="description">Refreshed!</text>
+  
+
+</view>

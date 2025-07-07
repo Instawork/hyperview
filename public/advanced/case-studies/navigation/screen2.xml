@@ -341,11 +341,11 @@
   </modifier>
 </style>
 
-      <style id="body" backgroundColor="white" flex="1" padding="48" />
-      <style id="label" fontSize="18" lineHeight="24" />
+      <style id="body" backgroundColor="white" flex="1" />
+      <style id="label" fontSize="18" lineHeight="24" margin="24" />
       <style id="label-link" color="blue" fontSize="18" />
     </styles>
-    <body style="body" safe-area="true">
+    <body style="body">
       <safe-area:safe-area-view
   xmlns:safe-area="https://hyperview.org/safe-area"
   key="header-container"

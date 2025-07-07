@@ -21,8 +21,10 @@
       <item
         href="/hyperview/public/navigation/behaviors/actions/back/index.xml"
         key="back"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -52,10 +54,10 @@
       <item
         href="/hyperview/public/navigation/behaviors/actions/close/index.xml"
         key="close"
-        show-during-load="loading-screen"
         style="item"
         
           action="new"
+          show-during-load="loading-screen-modal"
         
       >
         <view style="item-left">
@@ -85,8 +87,10 @@
       <item
         href="/hyperview/public/navigation/behaviors/actions/deep-links/index.xml"
         key="deep-links"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -116,10 +120,10 @@
       <item
         href="/hyperview/public/navigation/behaviors/actions/modal/index.xml"
         key="modal"
-        show-during-load="loading-screen"
         style="item"
         
           action="new"
+          show-during-load="loading-screen-modal"
         
       >
         <view style="item-left">
@@ -149,8 +153,10 @@
       <item
         href="/hyperview/public/navigation/behaviors/actions/navigate/index.xml"
         key="navigate"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -180,8 +186,10 @@
       <item
         href="/hyperview/public/navigation/behaviors/actions/new/index.xml"
         key="new"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -211,8 +219,10 @@
       <item
         href="/hyperview/public/navigation/behaviors/actions/push/index.xml"
         key="push"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -244,8 +254,10 @@
       <item
         href="/hyperview/public/navigation/behaviors/actions/reload/index.xml"
         key="reload"
-        show-during-load="loading-screen"
         style="item item-last"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -282,8 +294,10 @@
       <item
         href="/hyperview/public/navigation/behaviors/triggers/back/index.xml"
         key="back"
-        show-during-load="loading-screen"
         style="item item-last"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">

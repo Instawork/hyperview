@@ -20,8 +20,10 @@
       <item
         href="/hyperview/public//ui/styling/button/index.xml"
         key="button"
-        show-during-load="loading-screen"
         style="item item-first"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -52,8 +54,10 @@
       <item
         href="/hyperview/public//ui/styling/elevation/index.xml"
         key="elevation"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -84,8 +88,10 @@
       <item
         href="/hyperview/public//ui/styling/flex/index.xml"
         key="flex"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -116,8 +122,10 @@
       <item
         href="/hyperview/public//ui/styling/shadows/index.xml"
         key="shadow"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -148,8 +156,10 @@
       <item
         href="/hyperview/public//ui/styling/simple-ui-kit/index.xml"
         key="simple-ui-kit"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -182,8 +192,10 @@
       <item
         href="/hyperview/public//ui/styling/text/index.xml"
         key="text"
-        show-during-load="loading-screen"
         style="item item-last"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">

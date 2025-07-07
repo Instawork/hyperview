@@ -22,8 +22,10 @@
       <item
         href="/hyperview/public/advanced/community/elements/bottom-sheet/index.xml"
         key="bottom-sheet"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -53,8 +55,10 @@
       <item
         href="/hyperview/public/advanced/community/elements/bottom-tabbar/index.xml"
         key="bottom-tab-bar"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -84,8 +88,10 @@
       <item
         href="/hyperview/public/advanced/community/elements/filter/index.xml"
         key="filter"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -115,8 +121,10 @@
       <item
         href="/hyperview/public/advanced/community/elements/map/index.xml"
         key="map"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -146,8 +154,10 @@
       <item
         href="/hyperview/public/advanced/community/elements/nav-back/index.xml"
         key="nav-back"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -177,8 +187,10 @@
       <item
         href="/hyperview/public/advanced/community/elements/progress-bar/index.xml"
         key="progress-bar"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -208,8 +220,10 @@
       <item
         href="/hyperview/public/advanced/community/elements/scroll-opacity/index.xml"
         key="scroll-opacity"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -241,8 +255,10 @@
       <item
         href="/hyperview/public/advanced/community/elements/svg-image/index.xml"
         key="svg-image"
-        show-during-load="loading-screen"
         style="item item-last"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -277,8 +293,10 @@
       <item
         href="/hyperview/public/advanced/community/behaviors/add-styles/index.xml"
         key="add-styles"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -310,8 +328,10 @@
       <item
         href="/hyperview/public/advanced/community/behaviors/share/index.xml"
         key="share"
-        show-during-load="loading-screen"
         style="item item-last"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">

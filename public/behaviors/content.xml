@@ -417,8 +417,10 @@
       <item
         href="/hyperview/public/behaviors/basic/actions/append/index.xml"
         key="append"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -448,8 +450,10 @@
       <item
         href="/hyperview/public/behaviors/basic/actions/hide/index.xml"
         key="hide"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -479,8 +483,10 @@
       <item
         href="/hyperview/public/behaviors/basic/actions/prepend/index.xml"
         key="prepend"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -510,8 +516,10 @@
       <item
         href="/hyperview/public/behaviors/basic/actions/replace-inner/index.xml"
         key="replace-inner"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -541,8 +549,10 @@
       <item
         href="/hyperview/public/behaviors/basic/actions/replace/index.xml"
         key="replace"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -572,8 +582,10 @@
       <item
         href="/hyperview/public/behaviors/basic/actions/select-all/index.xml"
         key="select-all"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -603,8 +615,10 @@
       <item
         href="/hyperview/public/behaviors/basic/actions/show/index.xml"
         key="show"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -634,8 +648,10 @@
       <item
         href="/hyperview/public/behaviors/basic/actions/toggle/index.xml"
         key="toggle"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -667,8 +683,10 @@
       <item
         href="/hyperview/public/behaviors/basic/actions/unselect-all/index.xml"
         key="unselect-all"
-        show-during-load="loading-screen"
         style="item item-last"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -703,8 +721,10 @@
       <item
         href="/hyperview/public/behaviors/basic/triggers/back/index.xml"
         key="back"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -734,8 +754,10 @@
       <item
         href="/hyperview/public/behaviors/basic/triggers/blur/index.xml"
         key="blur"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -765,8 +787,10 @@
       <item
         href="/hyperview/public/behaviors/basic/triggers/change/index.xml"
         key="change"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -796,8 +820,10 @@
       <item
         href="/hyperview/public/behaviors/basic/triggers/deselect/index.xml"
         key="deselect"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -827,8 +853,10 @@
       <item
         href="/hyperview/public/behaviors/basic/triggers/focus/index.xml"
         key="focus"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -858,8 +886,10 @@
       <item
         href="/hyperview/public/behaviors/basic/triggers/load/index.xml"
         key="load"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -889,8 +919,10 @@
       <item
         href="/hyperview/public/behaviors/basic/triggers/long-press/index.xml"
         key="long-press"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -920,8 +952,10 @@
       <item
         href="/hyperview/public/behaviors/basic/triggers/press-in/index.xml"
         key="press-in"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -951,8 +985,10 @@
       <item
         href="/hyperview/public/behaviors/basic/triggers/press-out/index.xml"
         key="press-out"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -982,8 +1018,10 @@
       <item
         href="/hyperview/public/behaviors/basic/triggers/press/index.xml"
         key="press"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -1013,8 +1051,10 @@
       <item
         href="/hyperview/public/behaviors/basic/triggers/refresh/index.xml"
         key="refresh"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -1044,8 +1084,10 @@
       <item
         href="/hyperview/public/behaviors/basic/triggers/select/index.xml"
         key="select"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -1075,8 +1117,10 @@
       <item
         href="/hyperview/public/behaviors/basic/triggers/visible-once/index.xml"
         key="visible-once"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -1108,8 +1152,10 @@
       <item
         href="/hyperview/public/behaviors/basic/triggers/visible/index.xml"
         key="visible"
-        show-during-load="loading-screen"
         style="item item-last"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -1144,8 +1190,10 @@
       <item
         href="/hyperview/public/behaviors/basic/target/target-child/index.xml"
         key="target-child"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -1175,8 +1223,10 @@
       <item
         href="/hyperview/public/behaviors/basic/target/target-parent-element/index.xml"
         key="target-parent-element"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -1206,8 +1256,10 @@
       <item
         href="/hyperview/public/behaviors/basic/target/target-parent/index.xml"
         key="target-parent"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -1237,8 +1289,10 @@
       <item
         href="/hyperview/public/behaviors/basic/target/target-sibling-append/index.xml"
         key="target-sibling-append"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -1270,8 +1324,10 @@
       <item
         href="/hyperview/public/behaviors/basic/target/target-sibling/index.xml"
         key="target-sibling"
-        show-during-load="loading-screen"
         style="item item-last"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -1306,8 +1362,10 @@
       <item
         href="/hyperview/public/behaviors/basic/indicators/hide-indicator-multiple/index.xml"
         key="hide-multiple-indicators"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -1337,8 +1395,10 @@
       <item
         href="/hyperview/public/behaviors/basic/indicators/hide-indicator/index.xml"
         key="hide-indicator"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -1368,8 +1428,10 @@
       <item
         href="/hyperview/public/behaviors/basic/indicators/inline-indicator/index.xml"
         key="inline-indicator"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -1399,8 +1461,10 @@
       <item
         href="/hyperview/public/behaviors/basic/indicators/shimmer-indicator/index.xml"
         key="shimmer-indicator"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -1430,8 +1494,10 @@
       <item
         href="/hyperview/public/behaviors/basic/indicators/show-hide-indicators/index.xml"
         key="showhide-indicators"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -1461,8 +1527,10 @@
       <item
         href="/hyperview/public/behaviors/basic/indicators/show-indicator/index.xml"
         key="show-indicator"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -1494,8 +1562,10 @@
       <item
         href="/hyperview/public/behaviors/basic/indicators/show-multiple-indicators/index.xml"
         key="show-multiple-indicators"
-        show-during-load="loading-screen"
         style="item item-last"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -1530,8 +1600,10 @@
       <item
         href="/hyperview/public/behaviors/basic/fragments/fragment-replace/index.xml"
         key="fragments"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -1563,8 +1635,10 @@
       <item
         href="/hyperview/public/behaviors/basic/fragments/rating/index.xml"
         key="rating"
-        show-during-load="loading-screen"
         style="item item-last"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -1601,8 +1675,10 @@
       <item
         href="/hyperview/public/behaviors/basic/once/index.xml"
         key="once"
-        show-during-load="loading-screen"
         style="item item-last"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -1664,8 +1740,10 @@
       <item
         href="/hyperview/public//behaviors/advanced/copy-to-clipboard/index.xml"
         key="copy-to-clipboard"
-        show-during-load="loading-screen"
         style="item item-first"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -1696,8 +1774,10 @@
       <item
         href="/hyperview/public//behaviors/advanced/dispatch-multiple/index.xml"
         key="dispatch-events-multiple"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -1728,8 +1808,10 @@
       <item
         href="/hyperview/public//behaviors/advanced/dispatch/index.xml"
         key="dispatch-event"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -1760,8 +1842,10 @@
       <item
         href="/hyperview/public//behaviors/advanced/multiple-different/index.xml"
         key="multiple-different-behaviors"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -1792,8 +1876,10 @@
       <item
         href="/hyperview/public//behaviors/advanced/multiple-same/index.xml"
         key="multiple-same-behaviors"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -1824,8 +1910,10 @@
       <item
         href="/hyperview/public//behaviors/advanced/scroll/index.xml"
         key="scroll"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -1858,8 +1946,10 @@
       <item
         href="/hyperview/public//behaviors/advanced/set-value/index.xml"
         key="set-value"
-        show-during-load="loading-screen"
         style="item item-last"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -2019,10 +2109,9 @@
     </screen>
     
     
-    
-<screen id="loading-screen">
-  <styles>
-    <style
+    <screen id="loading-screen">
+      <styles>
+        <style
   id="button"
   backgroundColor="#63CB76"
   borderRadius="16"
@@ -2361,10 +2450,360 @@
   </modifier>
 </style>
 
-  </styles>
-  <body style="body" safe-area="true">
-    
-    <safe-area:safe-area-view
+      </styles>
+      <body style="body">
+        <view style="loading">
+          <text style="loading-text">Loading…</text>
+          <spinner/>
+        </view>
+      </body>
+    </screen>
+    <screen id="loading-screen-pushed">
+      <styles>
+        <style
+  id="button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"
+/>
+<style id="button-disabled" backgroundColor="#bdc4c4" />
+<style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style id="button-serialize-title" fontSize="16" marginHorizontal="24" marginTop="24" />
+<style id="button-serialize-data" backgroundColor="lightgrey" marginHorizontal="24" marginTop="8" padding="16" />
+
+<style
+  id="about-title"
+  flex="1"
+  alignItems="center"
+  flexDirection="row"
+  justifyContent="space-between"
+  paddingTop="24"
+  paddingHorizontal="24"
+/>
+<style
+  id="about-container"
+  backgroundColor="#FEF1CF"
+  borderRadius="18"
+  margin="24"
+/>
+<style id="about-text" fontSize="20" fontWeight="700" />
+
+<style id="description" fontSize="16" margin="24" />
+
+<style
+  id="link-text"
+  color="#4778FF"
+/>
+<style
+  id="link-container"
+  borderColor="#4778FF"
+  paddingHorizontal="8"
+  paddingVertical="4"
+  borderRadius="24"
+  borderWidth="1"
+  marginVertical="6"
+  marginRight="6"
+  justifyContent="center"
+/>
+
+<style
+  id="container-style"
+  borderColor="#e1e1e1"
+  borderRadius="16"
+  borderWidth="2"
+  margin="24"
+  padding="24"
+/>
+<style
+  id="container-label"
+  color="black"
+  fontSize="16"
+  fontWeight="normal"
+/>
+
+<style
+  id="name"
+  fontSize="18"
+  fontWeight="600"
+  margin="24"
+  marginBottom="0"
+/>
+<style
+  id="phone"
+  fontSize="18"
+  fontWeight="normal"
+  margin="24"
+  marginBottom="0"
+/>
+
+<style
+  id="tabbar-top-select"
+  backgroundColor="#eee"
+  borderRadius="12"
+  flexDirection="row"
+  justifyContent="space-between"
+  marginBottom="24"
+  marginHorizontal="24"
+  padding="2"
+/>
+<style
+  id="tabbar-top-item"
+  alignItems="center"
+  borderColor="transparent"
+  borderRadius="8"
+  borderWidth="1"
+  flex="1"
+  padding="8"
+  justifyContent="center"
+>
+  <modifier selected="true">
+  <style
+  backgroundColor="white"
+  elevation="2"
+  shadowColor="black"
+  shadowOffsetX="0"
+  shadowOffsetY="2"
+  shadowOpacity="0.1"
+  shadowRadius="2"
+  />
+  </modifier>
+</style>
+<style
+  id="tabbar-top-label"
+  fontSize="16"
+  fontWeight="500"
+  lineHeight="24"
+/>
+
+<style id="tabbar-top-tab-content" flex="1" />
+
+<style
+  id="tabbar-bottom-tab"
+  alignItems="center"
+  flex="1"
+  justifyContent="center"
+/>
+<style
+  id="tabbar-bottom-tabbar-top-label"
+  color="#cccccc"
+  fontSize="8"
+  fontWeight="bold"
+>
+  <modifier selected="true">
+  <style color="#4778FF" />
+  </modifier>
+  <modifier pressed="true">
+  <style color="#4778FF" />
+  </modifier>
+</style>
+<style id="tabbar-bottom-tab-icon">
+  <modifier selected="true">
+  <style display="none" />
+  </modifier>
+  <modifier pressed="true">
+  <style display="none" />
+  </modifier>
+</style>
+<style id="tabbar-bottom-tab-icon-selected" display="none">
+  <modifier selected="true">
+  <style display="flex" />
+  </modifier>
+  <modifier pressed="true">
+  <style display="flex" />
+  </modifier>
+</style>
+<style
+  id="tabbar-bottom-tab-content"
+  alignItems="center"
+  position="relative"
+/>
+<style
+  id="tabbar-bottom-tab-notify"
+  backgroundColor="#d92b2b"
+  position="absolute"
+  top="0"
+  right="0"
+  height="6"
+  width="6"
+  borderWidth="2"
+  borderColor="#d92b2b"
+  borderRadius="6"
+/>
+
+<style
+  id="tabbar-bottom"
+  alignItems="stretch"
+  borderTopColor="#eee"
+  borderTopWidth="1"
+  flexDirection="row"
+  flexShrink="1"
+  flexGrow="0"
+  justifyContent="space-around"
+  backgroundColor="white"
+  width="100%"
+/>
+
+<style
+  id="input"
+  borderBottomColor="#E1E1E1"
+  borderBottomWidth="1"
+  borderColor="#4E4D4D"
+  flex="1"
+  fontSize="16"
+  fontWeight="normal"
+  paddingBottom="8"
+  paddingTop="8">
+  <modifier pressed="true">
+  <style borderBottomColor="green"/>
+  </modifier>
+  <modifier focused="true">
+  <style borderBottomColor="#4778FF"/>
+  </modifier>
+</style>
+
+
+<style id="flex-1" flex="1" />
+<style
+  id="header"
+  alignItems="center"
+  backgroundColor="white"
+  borderBottomColor="#eee"
+  borderBottomWidth="1"
+  flexDirection="row"
+  marginBottom="24"
+  paddingBottom="16"
+  paddingLeft="24"
+  paddingRight="24"
+/>
+<style
+  id="header-btn"
+  color="blue"
+  fontSize="16"
+  fontWeight="600"
+  paddingRight="16"
+/>
+<style id="header-title" color="black" fontSize="24" fontWeight="600" />
+<style id="body" backgroundColor="white" flex="1" />
+<style id="description" fontSize="16" margin="24" />
+<style
+  id="item"
+  alignItems="center"
+  backgroundColor="#FFFFFF"
+  borderColor="#eee"
+  borderBottomWidth="0"
+  borderWidth="1"
+  flex="1"
+  flexDirection="row"
+  paddingVertical="12"
+  justifyContent="space-between"
+  marginHorizontal="24"
+  paddingHorizontal="16"
+/>
+<style id="item-first" borderTopLeftRadius="16" borderTopRightRadius="16" />
+<style
+  id="item-last"
+  borderBottomWidth="1"
+  borderBottomLeftRadius="16"
+  borderBottomRightRadius="16"
+  marginBottom="24"
+/>
+<style id="item-left" flex="1" flexDirection="row" />
+<style id="item-label" fontSize="18" fontWeight="normal" />
+<style id="item-chevron" />
+<style
+  id="button"
+  backgroundColor="#63CB76"
+  borderRadius="16"
+  flex="1"
+  flexDirection="row"
+  justifyContent="center"
+  margin="24"
+  padding="24"
+/>
+<style id="button-label" color="white" fontSize="24" fontWeight="bold" />
+<style id="tab-route-content" flex="1" />
+<style
+  id="back-image"
+  alignItems="center"
+  flex="0"
+  height="10"
+  justifyContent="center"
+  padding="10"
+  width="10"
+/>
+<style
+  id="list-container"
+  flex="1"
+  flexGrow="1"
+/>
+<style id="loading-text" fontSize="14" fontWeight="normal" marginBottom="16" color="#999" />
+<style id="loading" alignItems="center" flex="1" justifyContent="center" />
+<style
+  id="link"
+  color="#4778FF"
+  fontWeight="bold"
+  marginTop="8"
+  marginRight="16"
+/>
+<style
+  id="container-style"
+  borderColor="#e1e1e1"
+  borderRadius="16"
+  borderWidth="2"
+  margin="24"
+  padding="24"
+/>
+<style
+  id="container-label"
+  color="black"
+  fontSize="16"
+  fontWeight="normal"
+/>
+<style
+  id="list-header"
+  alignItems="center"
+  backgroundColor="#eee"
+  flex="1"
+  flexDirection="row"
+  paddingVertical="12"
+  marginHorizontal="24"
+  paddingHorizontal="16"
+/>
+<style id="list-header-text" fontSize="18" fontWeight="bold"/>
+<style id="links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" marginBottom="24" />
+<style
+  id="picker-modal"
+  backgroundColor="white"
+  borderTopColor="#E1E1E1"
+  borderTopWidth="1"
+  shadowOffsetX="0"
+  shadowOffsetY="-5"
+  shadowOpacity="0.2"
+  shadowRadius="5"
+/>
+<style id="picker-modal-overlay" backgroundColor="#1f1f1fa0" />
+<style
+  id="picker-modal-text"
+  color="blue"
+  fontSize="16"
+  fontWeight="600"
+  marginBottom="16"
+  padding="24"
+>
+  <modifier pressed="true">
+  <style opacity="0.5" />
+  </modifier>
+</style>
+
+      </styles>
+      <body style="body">
+        
+        
+        <safe-area:safe-area-view
   xmlns:safe-area="https://hyperview.org/safe-area"
   key="header-container"
   safe-area:mode="padding"
@@ -2373,21 +2812,37 @@
 >
   <header style="header" key="header">
     
+      <view action="back" href="#" style="header-btn">
+        <svg
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M11.7803 0.96967C12.0732 1.26256 12.0732 1.73744 11.7803 2.03033L2.56066 11.25H23.25C23.6642 11.25 24 11.5858 24 12C24 12.4142 23.6642 12.75 23.25 12.75H2.56066L11.7803 21.9697C12.0732 22.2626 12.0732 22.7374 11.7803 23.0303C11.4874 23.3232 11.0126 23.3232 10.7197 23.0303L0.21967 12.5303C-0.0732233 12.2374 -0.0732233 11.7626 0.21967 11.4697L10.7197 0.96967C11.0126 0.676777 11.4874 0.676777 11.7803 0.96967Z"
+    fill="#4778FF"
+  />
+</svg>
+
+      </view>
+    
     <text style="header-title"></text>
   </header>
 </safe-area:safe-area-view>
 
-    <view style="loading">
-      <text style="loading-text">Loading…</text>
-      <spinner/>
-    </view>
-  </body>
-</screen>
-
-    
-<screen id="loading-screen-no-header">
-  <styles>
-    <style
+        <view style="loading">
+          <text style="loading-text">Loading…</text>
+          <spinner/>
+        </view>
+      </body>
+    </screen>
+    <screen id="loading-screen-modal">
+      <styles>
+        <style
   id="button"
   backgroundColor="#63CB76"
   borderRadius="16"
@@ -2726,14 +3181,46 @@
   </modifier>
 </style>
 
-  </styles>
-  <body style="body" safe-area="true">
-    <view style="loading">
-      <text style="loading-text">Loading…</text>
-      <spinner/>
-    </view>
-  </body>
-</screen>
+      </styles>
+      <body style="body">
+        
+        
+        <safe-area:safe-area-view
+  xmlns:safe-area="https://hyperview.org/safe-area"
+  key="header-container"
+  safe-area:mode="padding"
+  safe-area:insets="[&quot;right&quot;,&quot;top&quot;,&quot;left&quot;]"
+  style="debug"
+>
+  <header style="header" key="header">
+    
+      <view action="close" href="#" style="header-btn">
+        <svg
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M21.7803 3.28033C22.0732 2.98744 22.0732 2.51256 21.7803 2.21967C21.4874 1.92678 21.0126 1.92678 20.7197 2.21967L12 10.9393L3.28033 2.21967C2.98744 1.92678 2.51256 1.92678 2.21967 2.21967C1.92678 2.51256 1.92678 2.98744 2.21967 3.28033L10.9393 12L2.21967 20.7197C1.92678 21.0126 1.92678 21.4874 2.21967 21.7803C2.51256 22.0732 2.98744 22.0732 3.28033 21.7803L12 13.0607L20.7197 21.7803C21.0126 22.0732 21.4874 22.0732 21.7803 21.7803C22.0732 21.4874 22.0732 21.0126 21.7803 20.7197L13.0607 12L21.7803 3.28033Z"
+    fill="#4778FF"
+  />
+</svg>
 
+      </view>
+    
+    <text style="header-title"></text>
+  </header>
+</safe-area:safe-area-view>
+
+        <view style="loading">
+          <text style="loading-text">Loading…</text>
+          <spinner/>
+        </view>
+      </body>
+    </screen>
   </doc>
 

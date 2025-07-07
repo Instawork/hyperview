@@ -20,8 +20,10 @@
       <item
         href="/hyperview/public//navigation/navigator/bottom-tab/index.xml"
         key="tab"
-        show-during-load="loading-screen"
         style="item item-first"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -54,8 +56,10 @@
       <item
         href="/hyperview/public//navigation/navigator/stack/index.xml"
         key="stack"
-        show-during-load="loading-screen"
         style="item item-last"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">

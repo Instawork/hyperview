@@ -20,8 +20,10 @@
       <item
         href="/hyperview/public//behaviors/advanced/copy-to-clipboard/index.xml"
         key="copy-to-clipboard"
-        show-during-load="loading-screen"
         style="item item-first"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -52,8 +54,10 @@
       <item
         href="/hyperview/public//behaviors/advanced/dispatch-multiple/index.xml"
         key="dispatch-events-multiple"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -84,8 +88,10 @@
       <item
         href="/hyperview/public//behaviors/advanced/dispatch/index.xml"
         key="dispatch-event"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -116,8 +122,10 @@
       <item
         href="/hyperview/public//behaviors/advanced/multiple-different/index.xml"
         key="multiple-different-behaviors"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -148,8 +156,10 @@
       <item
         href="/hyperview/public//behaviors/advanced/multiple-same/index.xml"
         key="multiple-same-behaviors"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -180,8 +190,10 @@
       <item
         href="/hyperview/public//behaviors/advanced/scroll/index.xml"
         key="scroll"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -214,8 +226,10 @@
       <item
         href="/hyperview/public//behaviors/advanced/set-value/index.xml"
         key="set-value"
-        show-during-load="loading-screen"
         style="item item-last"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">

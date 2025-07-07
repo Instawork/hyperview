@@ -21,8 +21,10 @@
       <item
         href="/hyperview/public//advanced/case-studies/advanced-forms/index.xml"
         key="advanced-forms"
-        show-during-load="loading-screen"
         style="item item-first"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -53,8 +55,10 @@
       <item
         href="/hyperview/public//advanced/case-studies/basic-forms/index.xml"
         key="basic-forms"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -85,8 +89,10 @@
       <item
         href="/hyperview/public//advanced/case-studies/business-rating/index.xml"
         key="rate-by-business"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -117,8 +123,10 @@
       <item
         href="/hyperview/public//advanced/case-studies/cascader/index.xml"
         key="cascader"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -149,8 +157,10 @@
       <item
         href="/hyperview/public//advanced/case-studies/contacts/index.xml"
         key="contacts"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -181,8 +191,10 @@
       <item
         href="/hyperview/public//advanced/case-studies/custom-android-back/index.xml"
         key="custom-android-back"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -213,8 +225,10 @@
       <item
         href="/hyperview/public//advanced/case-studies/delayed-navigation/index.xml"
         key="delayed-navigation"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -245,8 +259,10 @@
       <item
         href="/hyperview/public//advanced/case-studies/feedback-widget/index.xml"
         key="feedback-widget"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -277,8 +293,10 @@
       <item
         href="/hyperview/public//advanced/case-studies/infinite-scroll/index.xml"
         key="infinite-scroll"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -309,8 +327,10 @@
       <item
         href="/hyperview/public//advanced/case-studies/lazy-load/index.xml"
         key="lazy-load"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -341,8 +361,10 @@
       <item
         href="/hyperview/public//advanced/case-studies/navigation/index.xml"
         key="navigation"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -373,8 +395,10 @@
       <item
         href="/hyperview/public//advanced/case-studies/photos/index.xml"
         key="photo-sharing-app"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -405,8 +429,10 @@
       <item
         href="/hyperview/public//advanced/case-studies/pull-to-refresh/index.xml"
         key="pull-to-refresh"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -437,8 +463,10 @@
       <item
         href="/hyperview/public//advanced/case-studies/scroll-to-input/index.xml"
         key="scroll-to-input-offset"
-        show-during-load="loading-screen"
         style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
@@ -471,8 +499,10 @@
       <item
         href="/hyperview/public//advanced/case-studies/tabs/index.xml"
         key="tabs"
-        show-during-load="loading-screen"
         style="item item-last"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
         
       >
         <view style="item-left">
