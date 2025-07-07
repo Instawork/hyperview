@@ -143,16 +143,20 @@ export const processDocument = (doc: Document): Document => {
 export const findTargetByBehavior = (
   doc: Document | undefined,
   behaviorElement: Element | null | undefined,
+  element: Element | null | undefined,
 ): Element | null => {
   if (!doc || !behaviorElement) {
     return null;
   }
   const behaviorId = behaviorElement.getAttribute('id');
-  if (!behaviorId) {
-    return null;
-  }
-  const currentBehaviorElement = getElementById(doc, behaviorId);
-  if (!currentBehaviorElement) {
+  const currentBehaviorElement = behaviorId
+    ? getElementById(doc, behaviorId)
+    : null;
+
+  if (!currentBehaviorElement || !currentBehaviorElement.parentNode) {
+    if (element?.parentNode) {
+      return element;
+    }
     return null;
   }
 
@@ -162,8 +166,5 @@ export const findTargetByBehavior = (
   }
 
   // The target is the parent of the behavior element
-  if (!currentBehaviorElement.parentNode) {
-    return null;
-  }
   return currentBehaviorElement.parentNode as Element;
 };

@@ -405,6 +405,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
             targetElement = Helpers.findTargetByBehavior(
               onUpdateCallbacks.getDoc(),
               behaviorElement,
+              element,
             );
             // Warn developers if a provided target was not found
             if (targetId) {
@@ -487,6 +488,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
       const targetElement = Helpers.findTargetByBehavior(
         onUpdateCallbacks.getDoc(),
         behaviorElement,
+        element,
       );
 
       if (targetElement) {
