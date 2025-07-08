@@ -354,15 +354,21 @@
       </styles>
       <body style="body">
         
-  <header style="header">
-    <nav:back xmlns:nav="https://hyperview.org/navigation">
-      <view
-        nav:role="close"
-        action="close"
-        href="#"
-        style="header-btn"
-      >
-        <svg
+  <safe-area:safe-area-view
+    xmlns:safe-area="https://hyperview.org/safe-area"
+    key="header-container"
+    safe-area:mode="padding"
+    safe-area:insets="[&quot;right&quot;,&quot;top&quot;,&quot;left&quot;]"
+  >
+    <header style="header">
+      <nav:back xmlns:nav="https://hyperview.org/navigation">
+        <view
+          nav:role="close"
+          action="close"
+          href="#"
+          style="header-btn"
+        >
+          <svg
   width="24"
   height="24"
   viewBox="0 0 24 24"
@@ -377,14 +383,14 @@
   />
 </svg>
 
-      </view>
-      <view
-        nav:role="back"
-        action="back"
-        href="#"
-        style="header-btn"
-      >
-        <svg
+        </view>
+        <view
+          nav:role="back"
+          action="back"
+          href="#"
+          style="header-btn"
+        >
+          <svg
   width="24"
   height="24"
   viewBox="0 0 24 24"
@@ -399,10 +405,11 @@
   />
 </svg>
 
-      </view>
-    </nav:back>
-    <text style="header-title">Nav Back</text>
-  </header>
+        </view>
+      </nav:back>
+      <text style="header-title">Nav Back</text>
+    </header>
+  </safe-area:safe-area-view>
   <text style="text">
     The button to navigate back to the previous screen will be rendered dynamically,
     based on which kind of navigator the screen is currently loaded on. For regular screens
@@ -1115,7 +1122,6 @@
   key="header-container"
   safe-area:mode="padding"
   safe-area:insets="[&quot;right&quot;,&quot;top&quot;,&quot;left&quot;]"
-  style="debug"
 >
   <header style="header" key="header">
     
@@ -1497,7 +1503,6 @@
   key="header-container"
   safe-area:mode="padding"
   safe-area:insets="[&quot;right&quot;,&quot;top&quot;,&quot;left&quot;]"
-  style="debug"
 >
   <header style="header" key="header">
     

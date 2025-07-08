@@ -353,7 +353,6 @@
   key="header-container"
   safe-area:mode="padding"
   safe-area:insets="[&quot;right&quot;,&quot;top&quot;,&quot;left&quot;]"
-  style="debug"
 >
   <header style="header" key="header">
     
@@ -401,7 +400,13 @@
   navigation:navigator="custom-bottom-tabs-navigator"
   id="bottom-tab-bar"
 >
-  <view style="tabbar-bottom" key="tabbar-bottom">
+  <safe-area:safe-area-view
+    xmlns:safe-area="https://hyperview.org/safe-area"
+    key="tabbar-bottom"
+    style="tabbar-bottom"
+    safe-area:mode="padding"
+    safe-area:insets="[&quot;right&quot;,&quot;bottom&quot;,&quot;left&quot;]"
+  >
     <navigation:bottom-tab-bar-item
       navigation:route="custom-bottom-tabs-tab-1"
       style="tabbar-bottom-tab"
@@ -452,7 +457,7 @@
         
       </view>
     </navigation:bottom-tab-bar-item>
-  </view>
+  </safe-area:safe-area-view>
 </navigation:bottom-tab-bar>
 
 
@@ -1160,7 +1165,6 @@
   key="header-container"
   safe-area:mode="padding"
   safe-area:insets="[&quot;right&quot;,&quot;top&quot;,&quot;left&quot;]"
-  style="debug"
 >
   <header style="header" key="header">
     
@@ -1542,7 +1546,6 @@
   key="header-container"
   safe-area:mode="padding"
   safe-area:insets="[&quot;right&quot;,&quot;top&quot;,&quot;left&quot;]"
-  style="debug"
 >
   <header style="header" key="header">
     

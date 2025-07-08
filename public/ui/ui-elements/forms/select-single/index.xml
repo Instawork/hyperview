@@ -426,7 +426,6 @@
   key="header-container"
   safe-area:mode="padding"
   safe-area:insets="[&quot;right&quot;,&quot;top&quot;,&quot;left&quot;]"
-  style="debug"
 >
   <header style="header" key="header">
     
@@ -1324,7 +1323,6 @@
   key="header-container"
   safe-area:mode="padding"
   safe-area:insets="[&quot;right&quot;,&quot;top&quot;,&quot;left&quot;]"
-  style="debug"
 >
   <header style="header" key="header">
     
@@ -1706,7 +1704,6 @@
   key="header-container"
   safe-area:mode="padding"
   safe-area:insets="[&quot;right&quot;,&quot;top&quot;,&quot;left&quot;]"
-  style="debug"
 >
   <header style="header" key="header">
     
