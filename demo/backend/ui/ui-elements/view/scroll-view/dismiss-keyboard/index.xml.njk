@@ -1,0 +1,25 @@
+---
+permalink: "/ui/ui-elements/list/scroll-view/dismiss-keyboard/index.xml"
+tags: "UI/UI Elements/Scroll View"
+hv_title: "Dismiss Keyboard On Drag"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+
+{% from 'macros/text-field/index.xml.njk' import text_field %}
+
+{% block styles %}
+  {% include '../_styles.xml.njk' %}
+{% endblock %}
+
+{% block content %}
+  <view scroll="true" keyboard-dismiss-mode="on-drag" style="scroll-container scroll-container-vertical">
+    {{ text_field("field", {"auto-focus":"true", "placeholder":"Focus me, then scroll!"}) }}
+    <view style="scroll-child scroll-child-vertical"/>
+    <view style="scroll-child scroll-child-vertical"/>
+    <view style="scroll-child scroll-child-vertical"/>
+    <view style="scroll-child scroll-child-vertical"/>
+    <view style="scroll-child scroll-child-vertical"/>
+    <view style="scroll-child scroll-child-vertical"/>
+  </view>
+{% endblock %}
