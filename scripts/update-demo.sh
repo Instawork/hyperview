@@ -38,13 +38,10 @@ npx expo install \
 
 # Install Hyperview dependencies
 yarn add \
-  @googlemaps/js-api-loader \
   hyperview \
   moment \
   react-dom \
-  react-google-maps \
-  react-native-svg \
-  react-native-web-maps
+  react-native-svg
 
 # Install Hyperview dependencies with exact versions
 yarn add --exact \

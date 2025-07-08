@@ -1,31 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import Constants from 'expo-constants';
-import type { HvComponentProps } from 'hyperview';
-import { Loader } from '@googlemaps/js-api-loader';
-import { Map as MapComponent } from './Map';
+import React from 'react';
+import { Text } from 'react-native';
+import { namespace } from './types';
 
-const Map = (props: HvComponentProps) => {
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    const initGoogleMaps = async () => {
-      const loader = new Loader({
-        apiKey: Constants.expoConfig?.extra?.googleMapsApiKey,
-        version: 'weekly',
-      });
-      await loader.load();
-      setLoading(false);
-    };
-    initGoogleMaps();
-  }, []);
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-  // eslint-disable-next-line react/jsx-props-no-spreading
-  return <MapComponent {...props} />;
+const NotSupported = () => {
+  return <Text style={{ marginHorizontal: 24 }}>Not supported on web</Text>;
 };
 
-Map.namespaceURI = MapComponent.namespaceURI;
-Map.localName = MapComponent.localName;
+const Map = () => {
+  return <NotSupported />;
+};
 
-export { Map };
-export { MapMarker } from './MapMarker';
+Map.namespaceURI = namespace;
+Map.localName = 'map';
+
+const MapMarker = () => {
+  return <NotSupported />;
+};
+
+MapMarker.namespaceURI = namespace;
+MapMarker.localName = 'map-marker';
+
+export { Map, MapMarker };
