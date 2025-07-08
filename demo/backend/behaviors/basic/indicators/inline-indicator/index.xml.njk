@@ -26,8 +26,9 @@ hv_button_behavior: "back"
     The button shows a spinner and alternate text during the loading.
   {%- endcall %}
   {% call button('', attributes = {
+  "id": "replace-button",
   "action": "replace",
-  "href": "/behaviors/basic/target_sibling_fragment.xml",
+  "href": "/hyperview/public/behaviors/basic/target_sibling_fragment.xml",
   "hide-during-load": "normalLabel",
   "target": "container",
   "delay": "300",
