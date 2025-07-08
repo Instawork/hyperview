@@ -318,20 +318,14 @@ export default (props: Props) => {
     updateUrl,
   ]);
 
+  /**
+   * Don't show loading screen if the doc is already loaded
+   */
   const isLoading = useMemo(() => {
     return (
-      !!state.loadingUrl ||
-      (!state.doc &&
-        !props.route?.params?.needsSubStack &&
-        !props.hasElement &&
-        !state.loadingUrl)
+      !state.doc && !props.route?.params?.needsSubStack && !props.hasElement
     );
-  }, [
-    state.doc,
-    state.loadingUrl,
-    props.hasElement,
-    props.route?.params?.needsSubStack,
-  ]);
+  }, [state.doc, props.hasElement, props.route?.params?.needsSubStack]);
 
   if (state.error) {
     const ErrorScreen = errorScreen || LoadError;
