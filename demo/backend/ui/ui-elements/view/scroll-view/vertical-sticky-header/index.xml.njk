@@ -1,0 +1,34 @@
+---
+permalink: "/ui/ui-elements/list/scroll-view/vertical-sticky-header/index.xml"
+tags: "UI/UI Elements/Scroll View"
+hv_title: "Vertical w/ Sticky Header"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+
+{% block styles %}
+  {% include '../_styles.xml.njk' %}
+{% endblock %}
+
+{% block content %}
+  <view scroll="true" style="scroll-container scroll-container-vertical">
+    <view id="view-0" style="scroll-child scroll-child-vertical">
+      <text style="scroll-child-text">Non Sticky</text>
+    </view>
+    <view id="view-1" sticky="true" style="scroll-child scroll-child-vertical">
+      <text style="scroll-child-text">Sticky</text>
+    </view>
+    <view id="view-2" style="scroll-child scroll-child-vertical">
+      <text style="scroll-child-text">Non Sticky</text>
+    </view>
+    <view id="view-3" style="scroll-child scroll-child-vertical">
+      <text style="scroll-child-text">Non Sticky</text>
+    </view>
+    <view id="view-4" style="scroll-child scroll-child-vertical">
+      <text style="scroll-child-text">Non Sticky</text>
+    </view>
+    <view id="view-5" style="scroll-child scroll-child-vertical">
+      <text style="scroll-child-text">Non Sticky</text>
+    </view>
+  </view>
+{% endblock %}

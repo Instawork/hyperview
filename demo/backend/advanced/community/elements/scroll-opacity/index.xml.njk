@@ -11,28 +11,35 @@ hv_title: "Scroll Opacity"
 {% endblock %}
 
 {% block body %}
-  <header style="header">
-    <view action="back" href="#" style="header-btn">
-      {% include 'icons/back.svg' %}
-    </view>
-    <scroll-opacity:scroll-opacity
-      xmlns:scroll-opacity="https://hyperview.org/scroll-opacity"
-      scroll-opacity:context-key="scroll-view"
-      scroll-opacity:scroll-range="[30, 100]"
-      scroll-opacity:opacity-range="[0, 1]"
-    >
-      <text style="header-title" key="title">{{ hv_title }}</text>
-    </scroll-opacity:scroll-opacity>
-    <scroll-opacity:scroll-opacity
-      xmlns:scroll-opacity="https://hyperview.org/scroll-opacity"
-      style="instructions-text"
-      scroll-opacity:context-key="scroll-view"
-      scroll-opacity:scroll-range="[0, 20]"
-      scroll-opacity:opacity-range="[1, 0]"
-    >
-      <text key="instructions-text">Scroll down…</text>
-    </scroll-opacity:scroll-opacity>
-  </header>
+  <safe-area:safe-area-view
+    xmlns:safe-area="https://hyperview.org/safe-area"
+    key="header-container"
+    safe-area:mode="padding"
+    safe-area:insets="[&quot;right&quot;,&quot;top&quot;,&quot;left&quot;]"
+  >
+    <header style="header">
+      <view action="back" href="#" style="header-btn">
+        {% include 'icons/back.svg' %}
+      </view>
+      <scroll-opacity:scroll-opacity
+        xmlns:scroll-opacity="https://hyperview.org/scroll-opacity"
+        scroll-opacity:context-key="scroll-view"
+        scroll-opacity:scroll-range="[30, 100]"
+        scroll-opacity:opacity-range="[0, 1]"
+      >
+        <text style="header-title" key="title">{{ hv_title }}</text>
+      </scroll-opacity:scroll-opacity>
+      <scroll-opacity:scroll-opacity
+        xmlns:scroll-opacity="https://hyperview.org/scroll-opacity"
+        style="instructions-text"
+        scroll-opacity:context-key="scroll-view"
+        scroll-opacity:scroll-range="[0, 20]"
+        scroll-opacity:opacity-range="[1, 0]"
+      >
+        <text key="instructions-text">Scroll down…</text>
+      </scroll-opacity:scroll-opacity>
+    </header>
+  </safe-area:safe-area-view>
   <view
     style="main"
     xmlns:scroll="https://hyperview.org/hyperview-scroll"
