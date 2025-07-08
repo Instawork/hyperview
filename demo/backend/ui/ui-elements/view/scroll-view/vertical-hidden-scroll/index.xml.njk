@@ -1,0 +1,22 @@
+---
+permalink: "/ui/ui-elements/list/scroll-view/vertical-hidden-scroll/index.xml"
+tags: "UI/UI Elements/Scroll View"
+hv_title: "Vertical w/ Hidden Scroll Bar"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+
+{% block styles %}
+  {% include '../_styles.xml.njk' %}
+{% endblock %}
+
+{% block content %}
+  <view scroll="true" shows-scroll-indicator="false" style="scroll-container scroll-container-vertical">
+    <view style="scroll-child scroll-child-vertical"/>
+    <view style="scroll-child scroll-child-vertical"/>
+    <view style="scroll-child scroll-child-vertical"/>
+    <view style="scroll-child scroll-child-vertical"/>
+    <view style="scroll-child scroll-child-vertical"/>
+    <view style="scroll-child scroll-child-vertical"/>
+  </view>
+{% endblock %}

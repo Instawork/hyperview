@@ -1,0 +1,23 @@
+---
+permalink: "/ui/ui-elements/list/scroll-view/horizontal/index.xml"
+tags: "UI/UI Elements/Scroll View"
+hv_title: "Horizontal"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+
+{% block styles %}
+  {% include '../_styles.xml.njk' %}
+{% endblock %}
+
+{% block content %}
+  <view scroll="true" scroll-orientation="horizontal" style="scroll-container scroll-container-horizontal">
+    <view style="scroll-child scroll-child-horizontal"/>
+    <view style="scroll-child scroll-child-horizontal"/>
+    <view style="scroll-child scroll-child-horizontal"/>
+    <view style="scroll-child scroll-child-horizontal"/>
+    <view style="scroll-child scroll-child-horizontal"/>
+    <view style="scroll-child scroll-child-horizontal"/>
+    <view style="scroll-child scroll-child-horizontal"/>
+  </view>
+{% endblock %}
