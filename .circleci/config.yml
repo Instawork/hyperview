@@ -7,18 +7,23 @@ jobs:
     steps:
       - checkout
       - run:
+          working_directory: hyperview
           name: Install dependencies
           command: yarn
       - run:
+          working_directory: hyperview
           name: Check types
           command: yarn test:ts
       - run:
+          working_directory: hyperview
           name: Unit tests
           command: yarn test:unit
       - run:
+          working_directory: hyperview
           name: Validate XML
           command: pip install xmlschema; yarn test:validate-xml
       - run:
+          working_directory: hyperview
           name: Lint
           command: pip install djhtml; yarn test:lint
       - run:
@@ -30,7 +35,7 @@ jobs:
           name: Demo - Sync hyperview
           command: |
             rm -rf node_modules/hyperview/src
-            cp -r ../src node_modules/hyperview
+            cp -r ../hyperview/src node_modules/hyperview
       - run:
           working_directory: demo
           name: Demo - Check types
@@ -51,17 +56,20 @@ jobs:
           fingerprints:
             - 'SHA256:efIwcAYspXfEF3arKOxCPis7fOPJ1SRlYKCx7AC+HoE'
       - checkout
-      - run: yarn
+      - run:
+          working_directory: hyperview
+          name: Install Hyperview dependencies
+          command: yarn
       - run:
           working_directory: demo
-          name: Install
+          name: Install Demo dependencies
           command: yarn
       - run:
           working_directory: demo
           name: Sync hyperview
           command: |
             rm -rf node_modules/hyperview/src
-            cp -r ../src node_modules/hyperview
+            cp -r ../hyperview/src node_modules/hyperview
       - run:
           working_directory: demo
           name: Deploy

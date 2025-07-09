@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-ROOT_DIR=$(cd "$(dirname "$0")/..";pwd -P)
+ROOT_DIR=$(cd "$(dirname "$0")/../..";pwd -P)
 cd $ROOT_DIR
 
 # Move app code in temp dir and recreate app
