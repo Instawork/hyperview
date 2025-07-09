@@ -6,7 +6,8 @@ yarn-error.log
 *.swo
 
 node_modules/
-lib/
+hyperview/lib/
+hyperview/node_modules/
 
 demo/hyperview/public/
 

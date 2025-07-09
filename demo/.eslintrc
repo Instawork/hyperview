@@ -1,0 +1,93 @@
+{
+  "extends": ["plugin:instawork/recommended"],
+  "plugins": ["instawork"],
+  "rules": {
+    "import/no-extraneous-dependencies": [
+      "warn",
+      {
+        "devDependencies": [
+          "**/*.test.js",
+          "**/scripts/*",
+          "**/scripts/*/*",
+          "**/scripts/*/*/*",
+          "**/test",
+          "**/test/*",
+          "**/test/**/*"
+        ]
+      }
+    ],
+    "import/no-internal-modules": [
+      "warn",
+      {
+        "allow": [
+          "hyperview/**",
+          "react-native/Libraries/StyleSheet/StyleSheet",
+          "react-native/Libraries/StyleSheet/StyleSheetTypes",
+          "react-native/Libraries/StyleSheet/normalizeColor"
+        ]
+      }
+    ],
+    "instawork/deprecate-components": "error",
+    "instawork/deprecate-stateless": "error",
+    "instawork/error-object": "off",
+    "instawork/import-modules": "error",
+    "instawork/import-services": "error",
+    "instawork/pure-components": "error",
+    "instawork/stories-components": "off",
+    "instawork/stories-navbars": "off",
+    "instawork/stories-screens": "off",
+    "padding-line-between-statements": "off",
+    "@typescript-eslint/padding-line-between-statements": [
+      "error",
+      {
+        "blankLine": "never",
+        "prev": "import",
+        "next": "import"
+      }
+    ],
+    "react/destructuring-assignment": "error",
+    "react/jsx-sort-props": "error",
+    "sort-keys": "error"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.ts", "**/*.tsx"],
+      "extends": ["plugin:instawork/recommended-typescript"],
+      "rules": {
+        "arrow-body-style": "off",
+        "arrow-parens": "off",
+        "flowtype/no-types-missing-file-annotation": "off",
+        "func-call-spacing": "off",
+        "function-paren-newline": "off",
+        "implicit-arrow-linebreak": "off",
+        "import/no-extraneous-dependencies": [
+          "warn",
+          {
+            "devDependencies": [
+              "**/*.test.{ts,tsx}",
+              "**/scripts/*",
+              "**/scripts/*/*",
+              "**/scripts/*/*/*",
+              "**/test",
+              "**/test/*",
+              "**/test/**/*"
+            ]
+          }
+        ],
+        "indent": "off",
+        "instawork/error-object": "off",
+        "instawork/flow-annotate": "off",
+        "instawork/stories-components": "off",
+        "instawork/stories-navbars": "off",
+        "instawork/stories-screens": "off",
+        "no-spaced-func": "off",
+        "no-undef": "off",
+        "no-use-before-define": "off",
+        "object-curly-newline": "off",
+        "operator-linebreak": "off",
+        "react/jsx-curly-newline": "off",
+        "react/jsx-wrap-multilines": "off"
+      }
+    }
+  ]
+}

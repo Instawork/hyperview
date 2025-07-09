@@ -126,7 +126,7 @@ This command will start an Expo development server and will display a QR code.
 
 As you're developing new features in the Hyperview library, you can use the demo app along with this special command to help you quickly test your changes:
 
-From the `demo/` directory (in a separate terminal):
+From the `hyperview/` directory (in a separate terminal):
 
 ```sh
 yarn sync
@@ -137,7 +137,7 @@ This command will copy all the files from the `hyperview/src` directory, into th
 You can also pass as an additional argument the root path of your own react-native app where you've installed hyperview to perform the same sync/watch operation. e.g.
 
 ```sh
-yarn sync ../projects/my-cool-app
+yarn sync ../../projects/my-cool-app
 ```
 
 > **Tip**
