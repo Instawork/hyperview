@@ -1,14 +1,12 @@
-import * as Dom from 'hyperview/src/services/dom';
-import type {
+import {
   HvBehavior,
   HvComponentOnUpdate,
   HvGetRoot,
   HvUpdateRoot,
-} from 'hyperview';
-import {
   getAncestorByTagName,
+  getFirstTag,
   shallowCloneToRoot,
-} from 'hyperview/src/services';
+} from 'hyperview';
 
 /**
  * Checks if a style element has changed by comparing its attributes and children
@@ -67,11 +65,11 @@ export const AddStyles: HvBehavior = {
     updateRoot: HvUpdateRoot,
   ) => {
     try {
-      const newStyles = Dom.getFirstTag(element, 'styles');
+      const newStyles = getFirstTag(element, 'styles');
       if (newStyles) {
         const screen = getAncestorByTagName(element, 'screen');
         if (screen) {
-          const styles: Element | null | undefined = Dom.getFirstTag(
+          const styles: Element | null | undefined = getFirstTag(
             screen,
             'styles',
           );

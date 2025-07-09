@@ -1,10 +1,10 @@
 import type {
   HvComponentOnUpdate,
   HvComponentOptions,
+  StyleSheet,
   StyleSheets,
 } from 'hyperview';
 import type { ReactNode } from 'react';
-import type { StyleSheet } from 'hyperview/src/types';
 
 export type HvProps = {
   animationDuration: number;
