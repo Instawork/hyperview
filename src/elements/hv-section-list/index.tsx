@@ -19,9 +19,9 @@ import { createTestProps, getAncestorByTagName } from 'hyperview/src/services';
 import { DOMParser } from '@instawork/xmldom';
 import { Context as DocContext } from 'hyperview/src/elements/hv-doc/context';
 import type { ElementRef } from 'react';
-import HvElement from 'hyperview/src/core/components/hv-element';
+import HvElement from 'hyperview/src/components/hv-element';
 import { HyperviewContext } from 'hyperview/src/contexts/hyperview';
-import { SectionList } from 'hyperview/src/core/components/scroll';
+import { SectionList } from 'hyperview/src/components/scroll';
 
 const getSectionIndex = (
   sectionTitle: Element,

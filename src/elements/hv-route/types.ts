@@ -7,7 +7,7 @@ import {
   ScreenState,
 } from 'hyperview/src/types';
 import { ComponentType } from 'react';
-import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
+import type { Props as ErrorProps } from 'hyperview/src/components/load-error';
 
 /**
  * The props used by inner components of hv-route

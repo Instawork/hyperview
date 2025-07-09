@@ -6,7 +6,7 @@ import type {
   StyleSheets,
 } from 'hyperview/src/types';
 import { LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
-import HvElement from 'hyperview/src/core/components/hv-element';
+import HvElement from 'hyperview/src/components/hv-element';
 import React from 'react';
 import { isRenderableElement } from 'hyperview/src/services';
 

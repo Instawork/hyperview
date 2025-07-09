@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import React, { forwardRef, useCallback, useContext } from 'react';
 import { Context } from './context';
-import HVKeyboardAwareScrollView from 'hyperview/src/core/components/keyboard-aware-scroll-view';
+import HVKeyboardAwareScrollView from 'hyperview/src/components/keyboard-aware-scroll-view';
 
 export function withContext<T, P extends ScrollProps>(
   Component: React.ComponentType<P>,

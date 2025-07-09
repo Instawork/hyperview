@@ -18,7 +18,7 @@ import {
 import {
   KeyboardAwareScrollView,
   ScrollView,
-} from 'hyperview/src/core/components/scroll';
+} from 'hyperview/src/components/scroll';
 import React, { PureComponent } from 'react';
 import { ATTRIBUTES } from './types';
 import type { HvComponentProps } from 'hyperview/src/types';

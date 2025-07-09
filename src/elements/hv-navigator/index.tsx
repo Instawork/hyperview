@@ -24,8 +24,8 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import { CardStyleInterpolators } from '@react-navigation/stack';
 import { HvDocContext } from 'hyperview/src/elements/hv-doc';
 import { Platform } from 'react-native';
-import { createCustomStackNavigator } from 'hyperview/src/core/components/navigator-stack';
-import { createCustomTabNavigator } from 'hyperview/src/core/components/navigator-tab';
+import { createCustomStackNavigator } from 'hyperview/src/components/navigator-stack';
+import { createCustomTabNavigator } from 'hyperview/src/components/navigator-tab';
 import { getFirstChildTag } from 'hyperview/src/services/dom/helpers';
 import { useHyperview } from 'hyperview/src/contexts/hyperview';
 
