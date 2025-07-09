@@ -8,7 +8,7 @@ import type {
 import { LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
 import HvElement from 'hyperview/src/core/components/hv-element';
 import React from 'react';
-import { isRenderableElement } from 'hyperview/src/core/utils';
+import { isRenderableElement } from 'hyperview/src/services';
 
 export const renderElement = (
   element: Element | null | undefined,

@@ -3,7 +3,7 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import { LOCAL_NAME, NODE_TYPE, UPDATE_ACTIONS } from 'hyperview/src/types';
 import type { NamespaceURI, NodeType, UpdateAction } from 'hyperview/src/types';
 import { DocumentGetElementByIdError } from './errors';
-import { uuid } from 'hyperview/src/core/utils';
+import { uuid } from 'hyperview/src/services';
 
 export const getBehaviorElements = (element: Element) => {
   const behaviorElements = Array.from(

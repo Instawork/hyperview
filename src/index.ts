@@ -37,7 +37,7 @@ export { ACTIONS, LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
  */
 export { default as HvElement } from 'hyperview/src/core/components/hv-element';
 export { useScrollContext } from 'hyperview/src/core/components/scroll';
-export { createEventHandler } from 'hyperview/src/core/utils';
+export { createEventHandler } from 'hyperview/src/services';
 
 /**
  * Services
