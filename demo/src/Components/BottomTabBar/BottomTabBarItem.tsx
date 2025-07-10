@@ -1,12 +1,7 @@
-import {
-  HvComponentOnUpdate,
-  HvComponentProps,
-  createEventHandler,
-  createProps,
-  renderChildren,
-} from 'hyperview';
+import type { HvComponentOnUpdate, HvComponentProps } from 'hyperview';
 import { TouchableWithoutFeedback, View } from 'react-native';
 import { createElement, useState } from 'react';
+import { createEventHandler, createProps, renderChildren } from 'hyperview';
 import { namespaceURI } from './constants';
 
 const BottomTabBarItem = (props: HvComponentProps) => {

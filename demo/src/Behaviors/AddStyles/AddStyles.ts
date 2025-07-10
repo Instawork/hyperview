@@ -1,8 +1,10 @@
-import {
+import type {
   HvBehavior,
   HvComponentOnUpdate,
   HvGetRoot,
   HvUpdateRoot,
+} from 'hyperview';
+import {
   getAncestorByTagName,
   getFirstTag,
   shallowCloneToRoot,
