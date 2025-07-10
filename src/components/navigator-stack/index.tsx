@@ -52,7 +52,7 @@ const CustomStackNavigator = (props: Props) => {
   );
 };
 
-export const createCustomStackNavigator = createNavigatorFactory<
+export default createNavigatorFactory<
   Readonly<NavigationState>,
   StackNavigationOptions,
   EventMapBase,
