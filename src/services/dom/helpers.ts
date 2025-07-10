@@ -3,7 +3,7 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import { LOCAL_NAME, NODE_TYPE, UPDATE_ACTIONS } from 'hyperview/src/types';
 import type { NamespaceURI, NodeType, UpdateAction } from 'hyperview/src/types';
 import { DocumentGetElementByIdError } from './errors';
-import { uuid } from 'hyperview/src/core/utils';
+import { uuid } from 'hyperview/src/services';
 
 export const getBehaviorElements = (element: Element) => {
   const behaviorElements = Array.from(
@@ -91,7 +91,7 @@ export const preorder = (
  * Handle cases where an element is passed in instead of a document
  */
 export const getElementById = (
-  doc: Document | null | undefined,
+  doc: Document | undefined,
   id: string,
 ): Element | null | undefined => {
   if (!doc) {
@@ -141,18 +141,22 @@ export const processDocument = (doc: Document): Document => {
  * is no longer a direct child of the view
  */
 export const findTargetByBehavior = (
-  doc: Document | null,
+  doc: Document | undefined,
   behaviorElement: Element | null | undefined,
+  element: Element | null | undefined,
 ): Element | null => {
   if (!doc || !behaviorElement) {
     return null;
   }
   const behaviorId = behaviorElement.getAttribute('id');
-  if (!behaviorId) {
-    return null;
-  }
-  const currentBehaviorElement = getElementById(doc, behaviorId);
-  if (!currentBehaviorElement) {
+  const currentBehaviorElement = behaviorId
+    ? getElementById(doc, behaviorId)
+    : null;
+
+  if (!currentBehaviorElement || !currentBehaviorElement.parentNode) {
+    if (element?.parentNode) {
+      return element;
+    }
     return null;
   }
 
@@ -162,8 +166,5 @@ export const findTargetByBehavior = (
   }
 
   // The target is the parent of the behavior element
-  if (!currentBehaviorElement.parentNode) {
-    return null;
-  }
   return currentBehaviorElement.parentNode as Element;
 };

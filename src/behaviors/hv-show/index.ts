@@ -36,7 +36,7 @@ export default {
     );
 
     const showElement = () => {
-      const doc: Document | null = getRoot();
+      const doc: Document | undefined = getRoot();
       const targetElement: Element | null | undefined = Dom.getElementById(
         doc,
         targetId,
@@ -67,7 +67,7 @@ export default {
       showElement();
     } else {
       // If there's a delay, first trigger the indicators before the show.
-      const doc: Document | null = getRoot();
+      const doc: Document | undefined = getRoot();
       if (doc) {
         const newRoot = Behaviors.setIndicatorsBeforeLoad(
           showIndicatorIds,

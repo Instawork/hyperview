@@ -39,7 +39,7 @@ export default {
     );
 
     const unselectAll = () => {
-      const doc: Document | null = getRoot();
+      const doc: Document | undefined = getRoot();
       const targetElement: Element | null | undefined = Dom.getElementById(
         doc,
         targetId,
@@ -69,7 +69,7 @@ export default {
       unselectAll();
     } else {
       // If there's a delay, first trigger the indicators before the unselect-all.
-      const doc: Document | null = getRoot();
+      const doc: Document | undefined = getRoot();
       if (doc) {
         const newRoot = Behaviors.setIndicatorsBeforeLoad(
           showIndicatorIds,

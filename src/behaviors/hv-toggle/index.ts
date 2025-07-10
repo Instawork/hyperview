@@ -36,7 +36,7 @@ export default {
     );
 
     const toggleElement = () => {
-      const doc: Document | null = getRoot();
+      const doc: Document | undefined = getRoot();
       const targetElement: Element | null | undefined = Dom.getElementById(
         doc,
         targetId,
@@ -70,7 +70,7 @@ export default {
       toggleElement();
     } else {
       // If there's a delay, first trigger the indicators before the toggle.
-      const doc: Document | null = getRoot();
+      const doc: Document | undefined = getRoot();
       if (doc) {
         const newRoot = Behaviors.setIndicatorsBeforeLoad(
           showIndicatorIds,

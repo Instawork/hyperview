@@ -105,7 +105,7 @@
       "./test/setup.ts"
     ],
     "transformIgnorePatterns": [
-      "./src/core/components/keyboard-aware-scrollview/"
+      "./src/components/keyboard-aware-scrollview/"
     ]
   }
 }

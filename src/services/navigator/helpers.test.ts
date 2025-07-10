@@ -1,6 +1,6 @@
 import * as DomErrors from 'hyperview/src/services/dom/errors';
 import * as Errors from './errors';
-import * as Namespaces from '../namespaces';
+import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Types from './types';
 import { ID_CARD, ID_MODAL } from './types';
 import {
@@ -23,7 +23,8 @@ import {
 } from './helpers';
 import { DOMParser } from '@instawork/xmldom';
 import { NAV_ACTIONS } from 'hyperview/src/types';
-import type { NavigationRouteParams } from 'hyperview/src/types';
+import type { NavigationState } from '@react-navigation/native';
+import type { RouteParams } from 'hyperview/src/types';
 import StateSource from './test.state.json';
 
 /**
@@ -395,7 +396,7 @@ describe('validateUrl', () => {
 });
 
 describe('findPath', () => {
-  const state = StateSource as Types.NavigationState;
+  const state = StateSource as NavigationState;
   describe('found', () => {
     const path = findPath(state, 'performance_2');
     it('should find the path 3 levels from the top', () => {
@@ -423,15 +424,15 @@ describe('findPath', () => {
 // - build navigator hierarchy
 
 function isNavigateParam(
-  p: NavigationRouteParams | Types.NavigationNavigateParams | undefined,
-): p is Types.NavigationNavigateParams {
-  return (p as Types.NavigationNavigateParams).screen !== undefined;
+  p: RouteParams | Types.NavigateParams | undefined,
+): p is Types.NavigateParams {
+  return (p as Types.NavigateParams).screen !== undefined;
 }
 
 function isRouteParam(
-  p: NavigationRouteParams | Types.NavigationNavigateParams | undefined,
-): p is NavigationRouteParams {
-  return (p as NavigationRouteParams).url !== undefined;
+  p: RouteParams | Types.NavigateParams | undefined,
+): p is RouteParams {
+  return (p as RouteParams).url !== undefined;
 }
 
 describe('buildParams', () => {
