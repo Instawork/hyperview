@@ -59,7 +59,7 @@ const CustomTabNavigator = (props: Props) => {
   );
 };
 
-export const createCustomTabNavigator = createNavigatorFactory<
+export default createNavigatorFactory<
   Readonly<NavigationState>,
   object,
   EventMapBase,

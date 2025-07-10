@@ -1,4 +1,4 @@
-import * as CustomStackRouter from 'hyperview/src/core/components/navigator-stack/router';
+import * as CustomStackRouter from 'hyperview/src/components/navigator-stack/router';
 import * as React from 'react';
 import type { NavigationState, ParamListBase } from '@react-navigation/routers';
 import type { Props, StackOptions } from './types';
@@ -52,7 +52,7 @@ const CustomStackNavigator = (props: Props) => {
   );
 };
 
-export const createCustomStackNavigator = createNavigatorFactory<
+export default createNavigatorFactory<
   Readonly<NavigationState>,
   StackNavigationOptions,
   EventMapBase,

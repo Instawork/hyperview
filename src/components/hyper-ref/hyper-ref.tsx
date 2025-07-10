@@ -18,14 +18,14 @@ import type {
 } from './types';
 import React, { PureComponent } from 'react';
 import { RefreshControl, Text, TouchableOpacity } from 'react-native';
+import { createEventHandler, createTestProps } from 'hyperview/src/services';
 import { BackBehaviorContext } from 'hyperview/src/contexts/back-behaviors';
-import HvElement from 'hyperview/src/core/components/hv-element';
-import { ScrollView } from 'hyperview/src/core/components/scroll';
+import HvElement from 'hyperview/src/components/hv-element';
+// eslint-disable-next-line instawork/import-components
+import { ScrollView } from 'hyperview/src/components/scroll';
 import type { StyleSheet } from 'hyperview/src/types';
 import VisibilityDetectingView from './VisibilityDetectingView';
 import { XMLSerializer } from '@instawork/xmldom';
-import { createEventHandler } from 'hyperview/src/core/utils';
-import { createTestProps } from 'hyperview/src/services';
 
 /**
  * Component that handles dispatching behaviors based on the appropriate

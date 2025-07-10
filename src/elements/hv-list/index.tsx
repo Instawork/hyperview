@@ -15,8 +15,9 @@ import {
 import React, { useCallback, useRef, useState } from 'react';
 import { createTestProps, getAncestorByTagName } from 'hyperview/src/services';
 import type { ElementRef } from 'react';
-import { FlatList } from 'hyperview/src/core/components/scroll';
-import HvElement from 'hyperview/src/core/components/hv-element';
+// eslint-disable-next-line instawork/import-components
+import { FlatList } from 'hyperview/src/components/scroll';
+import HvElement from 'hyperview/src/components/hv-element';
 import { HyperviewConsumer } from 'hyperview/src/contexts/hyperview';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { ScrollParams } from './types';

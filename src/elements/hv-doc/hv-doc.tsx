@@ -23,9 +23,9 @@ import React, {
 } from 'react';
 import { Context } from './context';
 import { HvDocError } from './errors';
-import HvElement from 'hyperview/src/core/components/hv-element';
-import LoadError from 'hyperview/src/core/components/load-error';
-import Loading from 'hyperview/src/core/components/loading';
+import HvElement from 'hyperview/src/components/hv-element';
+import LoadError from 'hyperview/src/components/load-error';
+import Loading from 'hyperview/src/components/loading';
 import { later } from 'hyperview/src/services';
 import { useElementCache } from 'hyperview/src/contexts/element-cache';
 import { useHyperview } from 'hyperview/src/contexts/hyperview';

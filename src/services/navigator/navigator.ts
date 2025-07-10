@@ -13,7 +13,7 @@ import type {
 } from 'hyperview/src/types';
 import { CommonActions, StackActions } from '@react-navigation/native';
 import { NAV_ACTIONS } from 'hyperview/src/types';
-import { uuidNumber } from 'hyperview/src/core/utils';
+import { uuidNumber } from 'hyperview/src/services';
 
 /**
  * Provide navigation action implementations

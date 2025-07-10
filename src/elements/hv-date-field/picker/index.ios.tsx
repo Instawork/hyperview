@@ -1,5 +1,5 @@
-import DateTimePicker from 'hyperview/src/core/components/date-time-picker';
-import Modal from 'hyperview/src/core/components/modal';
+import DateTimePicker from 'hyperview/src/components/date-time-picker';
+import Modal from 'hyperview/src/components/modal';
 import type { Props } from './types';
 import React from 'react';
 import styles from './styles';

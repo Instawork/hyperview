@@ -13,8 +13,8 @@ import {
 } from 'hyperview/src/services';
 import Field from './field';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import Modal from 'hyperview/src/core/components/modal';
-import Picker from 'hyperview/src/core/components/picker';
+import Modal from 'hyperview/src/components/modal';
+import Picker from 'hyperview/src/components/picker';
 import { View } from 'react-native';
 
 /**

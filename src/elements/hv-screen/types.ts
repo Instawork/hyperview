@@ -5,7 +5,7 @@ import type {
   ScreenState,
 } from 'hyperview/src/types';
 import { ComponentType } from 'react';
-import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
+import type { Props as ErrorProps } from 'hyperview/src/components/load-error';
 
 /**
  * All of the props used by hv-screen

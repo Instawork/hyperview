@@ -7,9 +7,8 @@ import type {
 } from 'hyperview/src/types';
 import React, { useEffect, useRef, useState } from 'react';
 import { TouchableWithoutFeedback, View } from 'react-native';
+import { createEventHandler, createProps } from 'hyperview/src/services';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import { createEventHandler } from 'hyperview/src/core/utils';
-import { createProps } from 'hyperview/src/services';
 
 /**
  * A component representing an option in a single-select or multiple-select list.

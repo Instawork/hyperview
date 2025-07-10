@@ -35,9 +35,9 @@ export { ACTIONS, LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
  *
  * @see https://hyperview.dev/docs/getting-started/installation
  */
-export { default as HvElement } from 'hyperview/src/core/components/hv-element';
-export { useScrollContext } from 'hyperview/src/core/components/scroll';
-export { createEventHandler } from 'hyperview/src/core/utils';
+export { default as HvElement } from 'hyperview/src/components/hv-element';
+export { useScrollContext } from 'hyperview/src/components/scroll';
+export { createEventHandler } from 'hyperview/src/services';
 
 /**
  * Services

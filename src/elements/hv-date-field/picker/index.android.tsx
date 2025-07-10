@@ -1,5 +1,5 @@
 import type { DisplayMode, Props } from './types';
-import DateTimePicker from 'hyperview/src/core/components/date-time-picker';
+import DateTimePicker from 'hyperview/src/components/date-time-picker';
 import type { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import React from 'react';
 

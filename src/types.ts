@@ -5,8 +5,8 @@ import type {
   Route as NavigatorRoute,
 } from '@react-navigation/native';
 import React, { ComponentType } from 'react';
-import type { Props as ErrorProps } from 'hyperview/src/core/components/load-error';
-import type { Props as LoadingProps } from 'hyperview/src/core/components/loading';
+import type { Props as ErrorProps } from 'hyperview/src/components/load-error';
+import type { Props as LoadingProps } from 'hyperview/src/components/loading';
 import type { BottomTabBarProps as RNBottomTabBarProps } from '@react-navigation/bottom-tabs';
 import type { RefreshControlProps } from 'react-native';
 import type { XResponseStaleReason } from 'hyperview/src/services/dom';

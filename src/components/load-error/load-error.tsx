@@ -2,7 +2,7 @@ import * as Dom from 'hyperview/src/services/dom';
 import React, { PureComponent } from 'react';
 import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import type { Props } from './types';
-import WebView from 'hyperview/src/core/components/web-view';
+import WebView from 'hyperview/src/components/web-view';
 import styles from './styles';
 
 export default class LoadError extends PureComponent<Props> {

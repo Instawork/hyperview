@@ -12,7 +12,7 @@ import {
   getNameValueFormInputValues,
 } from 'hyperview/src/services';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import Picker from 'hyperview/src/core/components/picker';
+import Picker from 'hyperview/src/components/picker';
 import { View } from 'react-native';
 
 /**
