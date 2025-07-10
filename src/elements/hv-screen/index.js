@@ -2,6 +2,7 @@
 import * as Events from 'hyperview/src/services/events';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
+// eslint-disable-next-line instawork/import-components
 import * as Scroll from 'hyperview/src/components/scroll';
 import { createProps, createStyleProp } from 'hyperview/src/services';
 import HvElement from 'hyperview/src/components/hv-element';

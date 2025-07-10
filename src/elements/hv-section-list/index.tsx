@@ -21,6 +21,7 @@ import { Context as DocContext } from 'hyperview/src/elements/hv-doc/context';
 import type { ElementRef } from 'react';
 import HvElement from 'hyperview/src/components/hv-element';
 import { HyperviewContext } from 'hyperview/src/contexts/hyperview';
+// eslint-disable-next-line instawork/import-components
 import { SectionList } from 'hyperview/src/components/scroll';
 
 const getSectionIndex = (
