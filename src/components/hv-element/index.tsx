@@ -1,11 +1,11 @@
 import * as InlineContext from 'hyperview/src/services/inline-context';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
+import * as Render from 'hyperview/src/services/render';
 import { LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
 import React, { useMemo } from 'react';
 import type { HvComponentProps } from 'hyperview/src/types';
 import HyperRef from 'hyperview/src/components/hyper-ref';
-import { isRenderableElement } from 'hyperview/src/services';
 import { needsHyperRef } from './utils';
 
 export default (props: HvComponentProps): JSX.Element | null | string => {
@@ -50,7 +50,7 @@ export default (props: HvComponentProps): JSX.Element | null | string => {
   }, [localName, namespaceURI, nodeType, componentRegistry]);
 
   // Check if the element is renderable before rendering the component
-  if (!isRenderableElement(element, options, formattingContext)) {
+  if (!Render.isRenderableElement(element, options, formattingContext)) {
     return null;
   }
 
