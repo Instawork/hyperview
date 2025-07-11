@@ -1,5 +1,5 @@
 import type { Content, Options } from './types';
-import type { DOMString } from 'hyperview/src/types';
+import type { DOMString } from 'hyperview';
 
 export const getOptions = (
   dialogTitle?: DOMString | null,

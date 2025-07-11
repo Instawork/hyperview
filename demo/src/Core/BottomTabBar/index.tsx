@@ -1,6 +1,6 @@
-import * as Render from 'hyperview/src/services/render';
 import type { HvComponentOnUpdate } from 'hyperview';
 import type { Props } from './types';
+import { renderChildren } from 'hyperview';
 import { useBottomTabBarContext } from '../../Contexts';
 import { useCallback } from 'react';
 
@@ -40,18 +40,13 @@ export const BottomTabBar = (navProps: Props): JSX.Element | null => {
     return null;
   }
 
-  return (Render.renderChildren(
-    props.element,
-    props.stylesheets,
-    onUpdateCustom,
-    {
-      ...props.options,
-      onSelect: (route: string | null | undefined) => {
-        if (route) {
-          navigation.navigate(route);
-        }
-      },
-      targetId: state.routes[state.index].name,
+  return (renderChildren(props.element, props.stylesheets, onUpdateCustom, {
+    ...props.options,
+    onSelect: (route: string | null | undefined) => {
+      if (route) {
+        navigation.navigate(route);
+      }
     },
-  ) as unknown) as JSX.Element;
+    targetId: state.routes[state.index].name,
+  }) as unknown) as JSX.Element;
 };

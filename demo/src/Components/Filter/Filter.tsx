@@ -1,5 +1,4 @@
-import * as Logging from 'hyperview/src/services/logging';
-import Hyperview, { Events, LOCAL_NAME, Namespaces } from 'hyperview';
+import Hyperview, { Events, LOCAL_NAME, Logging, Namespaces } from 'hyperview';
 import type { HvComponentProps } from 'hyperview';
 import { findElements } from '../../Helpers';
 import { useEffect } from 'react';

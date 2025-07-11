@@ -1,9 +1,7 @@
-import * as Render from 'hyperview/src/services/render';
 import type { HvComponentOnUpdate, HvComponentProps } from 'hyperview';
 import { TouchableWithoutFeedback, View } from 'react-native';
 import { createElement, useState } from 'react';
-import { createEventHandler } from 'hyperview/src/core/hyper-ref';
-import { createProps } from 'hyperview/src/services';
+import { createEventHandler, createProps, renderChildren } from 'hyperview';
 import { namespaceURI } from './constants';
 
 const BottomTabBarItem = (props: HvComponentProps) => {
@@ -39,7 +37,7 @@ const BottomTabBarItem = (props: HvComponentProps) => {
   const component = createElement(
     View,
     p,
-    ...Render.renderChildren(
+    ...renderChildren(
       props.element,
       props.stylesheets,
       props.onUpdate as HvComponentOnUpdate,
