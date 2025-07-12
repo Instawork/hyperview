@@ -183,14 +183,18 @@ export default (props: Props) => {
       ) {
         // Handle initial load
         loadUrl(props.url);
-      } else if (currentUrl.current && props.url !== currentUrl.current) {
+      } else if (
+        currentUrl.current &&
+        UrlService.getUrlFromHref(props.url, entrypointUrl) !==
+          UrlService.getUrlFromHref(currentUrl.current, entrypointUrl)
+      ) {
         // Handle prop change
         loadUrl(props.url);
       }
     }
 
     currentUrl.current = props.url;
-  }, [loadUrl, props, state.loadingUrl]);
+  }, [entrypointUrl, loadUrl, props, state.loadingUrl]);
 
   const getScreenState = useCallback(
     () => ({ ...state, url: localUrl.current }),
@@ -216,8 +220,11 @@ export default (props: Props) => {
       if (newState.doc !== undefined) {
         localDoc.current = newState.doc;
       }
-      if (newState.url !== undefined) {
-        localUrl.current = newState.url;
+      if (newState.url !== undefined && newState.url !== null) {
+        localUrl.current = UrlService.getUrlFromHref(
+          newState.url,
+          entrypointUrl,
+        );
       }
       setState(prev => ({
         ...prev,
@@ -225,7 +232,7 @@ export default (props: Props) => {
         doc: props.hasElement ? undefined : newState.doc ?? prev.doc,
       }));
     },
-    [props.hasElement],
+    [entrypointUrl, props.hasElement],
   );
 
   const setDoc = useCallback(
