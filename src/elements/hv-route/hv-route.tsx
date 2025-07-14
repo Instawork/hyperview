@@ -70,6 +70,24 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     );
   };
 
+  componentDidMount(): void {
+    // This legacy behavior is required to ensure the document state is updated
+    // after the initial load behaviors are applied.
+    // See: https://github.com/Instawork/hyperview/pull/1238
+    // TODO: remove this once we remove HvDoc localDoc
+
+    const needsSubStack = this.props.route?.params?.needsSubStack
+      ? this.props.route.params.needsSubStack
+      : false;
+
+    const renderElement: Element | undefined = needsSubStack
+      ? undefined
+      : this.getRenderElement();
+    if (renderElement?.localName === LOCAL_NAME.SCREEN) {
+      this.props.setScreenState({});
+    }
+  }
+
   /**
    * Build the <HvScreen> component with injected props
    */
