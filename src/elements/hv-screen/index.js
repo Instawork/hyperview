@@ -20,6 +20,15 @@ export default class HvScreen extends React.Component {
 
   static renderElement = Render.renderElement;
 
+  componentDidMount() {
+    // This legacy behavior is required to ensure the document state is updated
+    // after the initial load behaviors are applied.
+    // See: https://github.com/Instawork/hyperview/pull/1238
+    // TODO: remove this once we remove HvDoc localDoc
+
+    this.props.setScreenState({});
+  }
+
   /**
    * Renders the XML doc into React components. Shows blank screen until the XML doc is available.
    */
