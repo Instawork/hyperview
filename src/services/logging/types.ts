@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type LogFunction = (message?: any, ...optionalParams: any[]) => void;
+type LogFunction = (message?: any, ...RouteParams: any[]) => void;
 
 export type Logger = {
   error: LogFunction;

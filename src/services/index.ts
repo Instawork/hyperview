@@ -266,3 +266,40 @@ export const encodeXml = (xml: string): string =>
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&apos;');
+
+/**
+ * Provides a random UUID string.
+ * @returns {string}
+ */
+export const uuid = (): string => {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    const r = Math.floor(Math.random() * 16);
+    const v = c === 'x' ? r : (r % 4) + 8;
+    return v.toString(16);
+  });
+};
+
+/**
+ * Provides a random UUID number.
+ * @returns {number}
+ */
+export const uuidNumber = (): number => {
+  return parseInt(uuid().replace(/-/g, ''), 16);
+};
+
+/**
+ * Wrapper to handle UI events
+ * Stop propagation and prevent default client behavior
+ * This prevents clicks on various elements to trigger browser navigation
+ * when using Hyperview for web.
+ */
+export const createEventHandler = (
+  handler: () => void,
+  preventDefault = false,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): ((event?: any) => void) => event => {
+  if (preventDefault) {
+    event?.preventDefault();
+  }
+  handler();
+};

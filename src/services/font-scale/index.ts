@@ -20,4 +20,4 @@ export const getFontScaleProps = (element: Element): FontScaleProps => {
   return props;
 };
 
-export * from './types';
+export type { FontScaleProps } from './types';
