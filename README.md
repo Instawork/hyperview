@@ -55,7 +55,7 @@ It also contains a demo Expo project that can connect to the example XML server,
 
 ### 1. Install dependencies
 
-From the `demo/` directory:
+From the `hyperview/` directory:
 
 ```sh
 yarn
@@ -137,7 +137,7 @@ This command will copy all the files from the `hyperview/src` directory, into th
 You can also pass as an additional argument the root path of your own react-native app where you've installed hyperview to perform the same sync/watch operation. e.g.
 
 ```sh
-yarn sync ../projects/my-cool-app
+yarn sync ../../projects/my-cool-app
 ```
 
 > **Tip**
