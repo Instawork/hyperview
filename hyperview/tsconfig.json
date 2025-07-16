@@ -24,8 +24,7 @@
     "paths": {
       "hyperview/*": ["./*"]
     },
-    "types": ["jest", "node"],
-    "typeRoots": ["./node_modules/@types", "./@types"]
+    "types": ["jest", "node"]
   },
   "exclude": ["**/*.js", "**/*.jsx", "demo/**/*"]
 }
