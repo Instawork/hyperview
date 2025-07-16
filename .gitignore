@@ -6,9 +6,12 @@ yarn-error.log
 *.swo
 
 node_modules/
-lib/
+hyperview/node_modules/
+hyperview/lib/
 
 demo/hyperview/public/
+demo/hyperview/node_modules/
+demo/hyperview/lib/
 
 website/translated_docs
 website/build/

@@ -6,12 +6,12 @@ set -e
 # Get the directory where the script is located
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 # Get the project root directory (parent of scripts)
-PROJECT_DIR="$( cd "$SCRIPT_DIR/.." &> /dev/null && pwd )"
+PROJECT_DIR="$( cd "$SCRIPT_DIR/../.." &> /dev/null && pwd )"
 
 if [[ `uname` == "Darwin" ]]; then
-  TEMPLATE_FILES=`find -E "$PROJECT_DIR" -path "$PROJECT_DIR/node_modules" -prune -o -regex ".*\\.njk" | grep demo/backend`
+  TEMPLATE_FILES=`find -E "$PROJECT_DIR" -path "$PROJECT_DIR/hyperview/node_modules" -prune -o -regex ".*\\.njk" | grep demo/backend`
 else
-  TEMPLATE_FILES=`find "$PROJECT_DIR" -path "$PROJECT_DIR/node_modules" -prune -o -regextype sed -regex ".*\\.\\njk" | grep demo/backend`
+  TEMPLATE_FILES=`find "$PROJECT_DIR" -path "$PROJECT_DIR/hyperview/node_modules" -prune -o -regextype sed -regex ".*\\.\\njk" | grep demo/backend`
 fi
 
 # Check if TEMPLATE_FILES is empty
