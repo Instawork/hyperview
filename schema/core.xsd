@@ -1165,6 +1165,7 @@
       <xs:attribute name="type" type="xs:string" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
       <xs:attribute name="text-content-type" type="hv:text-content-type" />
+      <xs:attribute name="autoComplete" type="hv:autoComplete" />
       <xs:attribute name="autoCapitalize">
         <xs:simpleType>
           <xs:restriction base="xs:string">
@@ -1235,6 +1236,72 @@
       <xs:attribute name="key" type="hv:KEY" />
     </xs:complexType>
   </xs:element>
+
+  <xs:simpleType name="autoComplete">
+    <xs:restriction base="xs:string">
+      <!-- https://reactnative.dev/docs/0.76/textinput#autocomplete -->
+      <xs:enumeration value="additional-name" />
+      <xs:enumeration value="address-line1" />
+      <xs:enumeration value="address-line2" />
+      <xs:enumeration value="birthday-day" />
+      <xs:enumeration value="birthday-full" />
+      <xs:enumeration value="birthday-month" />
+      <xs:enumeration value="birthday-year" />
+      <xs:enumeration value="cc-csp" />
+      <xs:enumeration value="cc-exp" />
+      <xs:enumeration value="cc-exp-day" />
+      <xs:enumeration value="cc-exp-month" />
+      <xs:enumeration value="cc-exp-year" />
+      <xs:enumeration value="cc-number" />
+      <xs:enumeration value="country" />
+      <xs:enumeration value="current-password" />
+      <xs:enumeration value="email" />
+      <xs:enumeration value="family-name" />
+      <xs:enumeration value="full-name" />
+      <xs:enumeration value="given-name" />
+      <xs:enumeration value="honorific-prefix" />
+      <xs:enumeration value="honorific-suffix" />
+      <xs:enumeration value="name" />
+      <xs:enumeration value="new-password" />
+      <xs:enumeration value="off" />
+      <xs:enumeration value="one-time-code" />
+      <xs:enumeration value="postal-code" />
+      <xs:enumeration value="street-address" />
+      <xs:enumeration value="tel" />
+      <xs:enumeration value="username" />
+      <!-- iOS only -->
+      <xs:enumeration value="cc-family-name" />
+      <xs:enumeration value="cc-given-name" />
+      <xs:enumeration value="cc-middle-name" />
+      <xs:enumeration value="cc-name" />
+      <xs:enumeration value="cc-type" />
+      <xs:enumeration value="nickname" />
+      <xs:enumeration value="organization" />
+      <xs:enumeration value="organization-title" />
+      <xs:enumeration value="url" />
+      <!-- Android only -->
+      <xs:enumeration value="gender" />
+      <xs:enumeration value="name-family" />
+      <xs:enumeration value="name-given" />
+      <xs:enumeration value="name-middle" />
+      <xs:enumeration value="name-middle-initial" />
+      <xs:enumeration value="name-prefix" />
+      <xs:enumeration value="name-suffix" />
+      <xs:enumeration value="password" />
+      <xs:enumeration value="password-new" />
+      <xs:enumeration value="postal-address" />
+      <xs:enumeration value="postal-address-country" />
+      <xs:enumeration value="postal-address-extended" />
+      <xs:enumeration value="postal-address-extended-postal-code" />
+      <xs:enumeration value="postal-address-extended-locality" />
+      <xs:enumeration value="postal-address-extended-region" />
+      <xs:enumeration value="sms-otp" />
+      <xs:enumeration value="tel-country-code" />
+      <xs:enumeration value="tel-device" />
+      <xs:enumeration value="tel-national" />
+      <xs:enumeration value="username-new" />
+    </xs:restriction>
+  </xs:simpleType>
 
   <xs:simpleType name="text-content-type">
     <xs:restriction base="xs:string">
