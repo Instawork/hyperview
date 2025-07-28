@@ -56,13 +56,6 @@ import { createProps, renderElement, Parser } from 'hyperview';
 - **Backward Compatibility**: Existing code continues to work while you migrate to the new APIs
 - **Better Documentation**: Cleaner API surface makes it easier to understand what's available
 
-## Demo App Improvements
-
-Our demo application has received some love to better showcase Hyperview's capabilities:
-
-- **Improved Examples**: Removed placeholder content and refined examples to be more practical and focused
-- **Better Documentation Links**: Fixed broken links to example code
-- **Enhanced User Experience**: Smoother navigation and more responsive interactions
 
 ## What's Next
 
@@ -81,5 +74,3 @@ We encourage all users to upgrade and experience the improvements for themselves
 ## Thank You
 
 Special thanks to everyone who has contributed to Hyperview's development and provided feedback that shaped these improvements. Your input has been invaluable in making Hyperview better for everyone.
-
-The future of Hyperview is brighter than ever, and we can't wait to show you what comes next.
