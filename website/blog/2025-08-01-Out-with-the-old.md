@@ -1,0 +1,85 @@
+---
+author: Hardin Gray
+authorURL: https://github.com/hgray-instawork
+title: Out with the old
+---
+
+Every mature codebase eventually needs a thorough spring cleaning. Over the last few months, we've embarked on an ambitious modernization effort, systematically removing legacy code, streamlining APIs, improving render performance, and setting the stage for Hyperview's next chapter.
+
+Recent Hyperview releases have included foundational improvements that make it more maintainable, more performant, and more enjoyable to work with.
+
+## Performance Improvements
+
+One of the most significant improvements in recent releases is a substantial reduction in view redraws throughout Hyperview. Starting with **version 0.94.0**, our optimization work has streamlined the rendering pipeline, resulting in measurably better performance across the framework.
+
+**Key performance enhancements:**
+- **Reduced View Redraws**: Significant optimization of when and how components re-render, eliminating unnecessary view updates
+- **Optimized Element Processing**: Streamlined rendering pipeline reduces overhead and improves frame rates
+- **Enhanced Error Handling**: Better error messages and more graceful failure modes help with debugging
+- **Stronger Type Safety**: Eliminated entire classes of runtime errors through better TypeScript coverage
+
+These improvements mean your Hyperview apps will feel smoother and more responsive, especially in complex screens with frequent updates or dynamic content.
+
+## Code Cleanup and Consolidation
+
+It has been over a year since we [released an integrated navigation solution](https://hyperview.org/blog/2024/05/14/Hyperview-Navigation) into Hyperview, marking a major milestone in the framework's evolution. The integrated navigation has been very successful in providing the flexibility and features that both our internal team and the broader Hyperview community have come to rely on.
+
+With this solid foundation in place, we've been able to remove significant amounts of redundant code and consolidate functionality across the codebase. This cleanup eliminates legacy code and simplifies our internal architecture significantly.
+
+**What we've accomplished:**
+- Removed the remaining legacy external navigation support that was superseded by the integrated solution
+- Consolidated duplicate functionality into simplified implementations
+- Streamlined internal APIs and eliminated unnecessary complexity
+- Improved code organization and reduced technical debt
+
+## Streamlined Developer Experience
+
+Beyond performance gains, we've completely overhauled Hyperview's public API. We've eliminated the need to reach into internal modules and provided a clean, well-organized interface that makes common tasks simpler and more intuitive.
+
+**Before:**
+```typescript
+// Old way - reaching into internals
+import { createProps } from 'hyperview/src/services/dom/helpers';
+import { renderElement } from 'hyperview/src/services/render/index';
+import { Parser } from 'hyperview/src/services/dom/parser';
+```
+
+**After:**
+```typescript
+// New way - clean public API
+import { createProps, renderElement, Parser } from 'hyperview';
+```
+
+**Key improvements include:**
+- **Enhanced TypeScript Support**: Better type definitions with improved IntelliSense and compile-time error checking
+- **Consolidated Exports**: All commonly-used functions now available from the main import
+- **Backward Compatibility**: Existing code continues to work while you migrate to the new APIs
+- **Better Documentation**: Cleaner API surface makes it easier to understand what's available
+
+## Demo App Improvements
+
+Our demo application has received some love to better showcase Hyperview's capabilities:
+
+- **Improved Examples**: Removed placeholder content and refined examples to be more practical and focused
+- **Better Documentation Links**: Fixed broken links to example code
+- **Enhanced User Experience**: Smoother navigation and more responsive interactions
+
+## What's Next
+
+This modernization effort sets the foundation for exciting developments ahead. With legacy code removed and APIs streamlined, our team can focus on innovation rather than maintenance.
+
+**For developers using Hyperview:**
+1. Consider updating your imports to use the new public API for better TypeScript support
+2. Take advantage of improved error messages and better debugging capabilities
+3. Explore the updated demo app examples for best practices and new patterns
+
+**Looking ahead:**
+The cleanup work in this release enables us to move faster on new features and improvements. We're already seeing the benefits internally, with faster development cycles and fewer bugs. We expect the same improvements will benefit the broader Hyperview ecosystem.
+
+We encourage all users to upgrade and experience the improvements for themselves. As always, we're here to help if you run into any issues—don't hesitate to [reach out](https://github.com/Instawork/hyperview/issues) with questions or feedback.
+
+## Thank You
+
+Special thanks to everyone who has contributed to Hyperview's development and provided feedback that shaped these improvements. Your input has been invaluable in making Hyperview better for everyone.
+
+The future of Hyperview is brighter than ever, and we can't wait to show you what comes next.
