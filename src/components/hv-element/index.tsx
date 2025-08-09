@@ -8,7 +8,7 @@ import type { HvComponentProps } from 'hyperview/src/types';
 import HyperRef from 'hyperview/src/components/hyper-ref';
 import { needsHyperRef } from './utils';
 
-export default (props: HvComponentProps): JSX.Element | null | string => {
+export default (props: HvComponentProps): JSX.Element | null => {
   // eslint-disable-next-line react/destructuring-assignment
   const { element, onUpdate, options, stylesheets } = props;
   if (!element) {
@@ -92,12 +92,12 @@ export default (props: HvComponentProps): JSX.Element | null | string => {
         (element.parentNode as Element)?.namespaceURI !== Namespaces.HYPERVIEW
       ) {
         if (preformatted) {
-          return element.nodeValue;
+          return <>{element.nodeValue}</>;
         }
         // When inline formatting context exists, lookup formatted value using node's index.
         if (formattingContext) {
           const index = formattingContext[0].indexOf(element);
-          return formattingContext[1][index];
+          return <>{formattingContext[1][index]}</>;
         }
 
         // Other strings might be whitespaces in non text elements, which we ignore
@@ -113,7 +113,7 @@ export default (props: HvComponentProps): JSX.Element | null | string => {
   }
 
   if (nodeType === NODE_TYPE.CDATA_SECTION_NODE) {
-    return element.nodeValue;
+    return <>{element.nodeValue}</>;
   }
   return null;
 };
