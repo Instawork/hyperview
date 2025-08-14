@@ -18,6 +18,7 @@ import {
   HvComponentOptions,
   NAV_ACTIONS,
   NavAction,
+  NO_OP,
   OnUpdateCallbacks,
   UPDATE_ACTIONS,
   UpdateAction,
@@ -150,6 +151,8 @@ export default class Hyperview extends PureComponent<Types.Props> {
     onUpdateCallbacks: OnUpdateCallbacks,
     networkRetryAction: Dom.XNetworkRetryAction | null | undefined,
     networkRetryEvent: string | null | undefined,
+    syncId: DOMString | null | undefined = undefined,
+    syncMethod: DOMString | null | undefined = 'drop',
   ): Promise<Element | null> => {
     if (!href) {
       Logging.error(new Error('No href passed to fetchElement'));
@@ -171,13 +174,22 @@ export default class Hyperview extends PureComponent<Types.Props> {
         onUpdateCallbacks.getState().url || '',
       );
       const httpMethod: Dom.HttpMethod = method as Dom.HttpMethod;
-      const { doc, staleHeaderType } = await this.parser.loadElement(
+      const result = await this.parser.loadElement(
         url,
         formData || null,
         httpMethod,
         networkRetryAction,
         networkRetryEvent,
+        syncId,
+        syncMethod,
       );
+
+      if (result === NO_OP) {
+        // Request was dropped due to sync logic, return null to indicate no-op
+        return null;
+      }
+
+      const { doc, staleHeaderType } = result;
       if (staleHeaderType) {
         // We are doing this to ensure that we keep the screen stale until a `reload` happens
         onUpdateCallbacks.setState({ staleHeaderType });
@@ -394,7 +406,14 @@ export default class Hyperview extends PureComponent<Types.Props> {
           onUpdateCallbacks,
           networkRetryAction,
           networkRetryEvent,
+          options.syncId,
+          options.syncMethod,
         ).then(newElement => {
+          if (newElement === null) {
+            // Request was dropped due to sync logic, no update needed
+            return;
+          }
+
           // If a target is specified and exists, use it. Otherwise, the action target defaults
           // to the element triggering the action.
           let targetElement = targetId

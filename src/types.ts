@@ -107,6 +107,8 @@ export type HvComponentOptions = {
   skipHref?: boolean | null | undefined;
   showIndicatorIds?: DOMString | null | undefined;
   styleAttr?: DOMString | null | undefined;
+  syncId?: DOMString | null | undefined;
+  syncMethod?: DOMString | null | undefined;
   targetId?: DOMString | null | undefined;
   inlineFormattingContext?: [Node[], string[]] | null | undefined;
   verb?: DOMString | null | undefined;
@@ -176,6 +178,8 @@ export const BEHAVIOR_ATTRIBUTES = {
   NEW_VALUE: 'new-value',
   ONCE: 'once',
   SHOW_DURING_LOAD: 'show-during-load',
+  SYNC_ID: 'sync-id',
+  SYNC_METHOD: 'sync-method',
   TARGET: 'target',
   TRIGGER: 'trigger',
   VERB: 'verb',
@@ -215,6 +219,14 @@ export const ACTIONS = {
   SWAP: 'swap',
   UNSELECT_ALL: 'unselect-all',
 } as const;
+
+export const SYNC_METHODS = {
+  DROP: 'drop',
+  REPLACE: 'replace',
+} as const;
+export type SyncMethod = typeof SYNC_METHODS[keyof typeof SYNC_METHODS];
+
+export const NO_OP = Symbol('NO_OP');
 
 /**
  * Definition of the available navigator types

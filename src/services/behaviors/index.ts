@@ -132,12 +132,16 @@ export const trigger = (
     const hideIndicatorIds = behaviorElement.getAttribute('hide-during-load');
     const delay = behaviorElement.getAttribute('delay');
     const once = behaviorElement.getAttribute('once');
+    const syncId = behaviorElement.getAttribute('sync-id');
+    const syncMethod = behaviorElement.getAttribute('sync-method');
     onUpdate(href, action, element, {
       behaviorElement,
       delay,
       hideIndicatorIds,
       once,
       showIndicatorIds,
+      syncId,
+      syncMethod,
       targetId,
       verb,
     });
@@ -203,12 +207,18 @@ export const createActionHandler = (
       );
       const delay = behaviorElement.getAttribute(BEHAVIOR_ATTRIBUTES.DELAY);
       const once = behaviorElement.getAttribute(BEHAVIOR_ATTRIBUTES.ONCE);
+      const syncId = behaviorElement.getAttribute(BEHAVIOR_ATTRIBUTES.SYNC_ID);
+      const syncMethod = behaviorElement.getAttribute(
+        BEHAVIOR_ATTRIBUTES.SYNC_METHOD,
+      );
       onUpdate(href, action, element, {
         behaviorElement,
         delay,
         hideIndicatorIds,
         once,
         showIndicatorIds,
+        syncId,
+        syncMethod,
         targetId,
         verb,
       });
