@@ -399,6 +399,15 @@
     <xs:attribute name="show-during-load" type="hv:IDREFS" />
     <xs:attribute name="hide-during-load" type="hv:IDREFS" />
     <xs:attribute name="delay" type="xs:nonNegativeInteger" />
+    <xs:attribute name="sync-id" type="xs:string" />
+    <xs:attribute name="sync-method">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="drop" />
+          <xs:enumeration value="replace" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
     <xs:attribute name="verb">
       <xs:simpleType>
         <xs:restriction base="xs:string">
