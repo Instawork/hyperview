@@ -74,29 +74,29 @@ hv_button_behavior: "back"
       As you type, the server will respond with the same text, but with a random delay.
       The UI will only display the results of the most recent request.
     </text>
-    
+
     <view style="formGroup">
       <form>
-      <text-field
-        id="messageField"
-        name="message"
-        style="input"
-        placeholder="Type your message..."
-      >
-        <behavior
-          href="/behaviors/advanced/sync/submit.xml"
-          behavior="press"
-          action="prepend"
-          target="responseList"
-          method="post"
-          sync-id="messageSync"
-          sync-method="replace"
-          trigger="change"       
-        />
-      </text-field>
+        <text-field
+          id="messageField"
+          name="message"
+          style="input"
+          placeholder="Type your message..."
+        >
+          <behavior
+            href="/behaviors/advanced/sync/submit.xml"
+            behavior="press"
+            action="prepend"
+            target="responseList"
+            method="post"
+            sync-id="messageSync"
+            sync-method="replace"
+            trigger="change"
+          />
+        </text-field>
       </form>
     </view>
-    
+
     <view style="responseContainer">
       <text style="description">Responses (in order):</text>
       <view id="responseList">
