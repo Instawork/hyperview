@@ -118,8 +118,8 @@ export class Parser {
           currentRequest = this.fetch(url, options);
           this.syncRequests.set(syncId, currentRequest);
         } else {
-          // Default to existing request
-          currentRequest = existingRequest;
+          // Unsupported sync method, drop the request
+          return NO_OP;
         }
       } else {
         // No existing request, create and store new one
