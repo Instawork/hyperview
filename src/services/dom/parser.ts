@@ -7,17 +7,16 @@ import type {
   XNetworkRetryAction,
   XResponseStaleReason,
 } from './types';
-import { NO_OP, SYNC_METHODS } from 'hyperview/src/types';
 import {
   CONTENT_TYPE,
   HTTP_HEADERS,
   HTTP_METHODS,
   X_RESPONSE_STALE_REASON,
 } from './types';
+import { LOCAL_NAME, NO_OP, SYNC_METHODS } from 'hyperview/src/types';
 import { getFirstTag, processDocument } from './helpers';
 import { DOMParser } from '@instawork/xmldom';
 import { Dimensions } from 'react-native';
-import { LOCAL_NAME } from 'hyperview/src/types';
 import { version } from 'hyperview/package.json';
 
 const { width, height } = Dimensions.get('window');
@@ -113,7 +112,8 @@ export class Parser {
         if (syncMethod === SYNC_METHODS.DROP) {
           // Drop this request
           return NO_OP;
-        } else if (syncMethod === SYNC_METHODS.REPLACE) {
+        }
+        if (syncMethod === SYNC_METHODS.REPLACE) {
           // Create new request and update the map
           currentRequest = this.fetch(url, options);
           this.syncRequests.set(syncId, currentRequest);
