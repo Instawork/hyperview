@@ -21,7 +21,7 @@ module.exports = function handler(req, res) {
   // Add a delay to simulate network latency
   setTimeout(() => {
     // Configure Nunjucks env
-    const env = nunjucks.configure(['backend/behaviors/advanced/sync']);
+    const env = nunjucks.configure(['backend/behaviors/advanced/sync_replace']);
 
     // Render template with form data
     const content = env.render('_submit.xml.njk', {
