@@ -5,6 +5,7 @@ import type {
   Route as NavigatorRoute,
 } from '@react-navigation/native';
 import React, { ComponentType } from 'react';
+import type { Props as ElementErrorProps } from 'hyperview/src/components/load-element-error';
 import type { Props as ErrorProps } from 'hyperview/src/components/load-error';
 import type { Props as LoadingProps } from 'hyperview/src/components/loading';
 import type { BottomTabBarProps as RNBottomTabBarProps } from '@react-navigation/bottom-tabs';
@@ -365,7 +366,7 @@ export type NavigationComponents = {
 export type Props = {
   behaviors?: HvBehavior[];
   components?: HvComponent[];
-  elementErrorComponent?: ComponentType<ErrorProps>;
+  elementErrorComponent?: ComponentType<ElementErrorProps>;
   entrypointUrl: string;
   errorScreen?: ComponentType<ErrorProps>;
   experimentalFeatures?: ExperimentalFeatures;
