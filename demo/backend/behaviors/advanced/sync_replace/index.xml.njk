@@ -1,0 +1,104 @@
+---
+permalink: "/behaviors/advanced/sync_replace/index.xml"
+tags: "Behaviors/Advanced"
+hv_title: "Sync Replace"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+
+{% block styles %}
+  <style
+    id="container"
+    flex="1"
+    padding="24"
+  />
+  <style
+    id="formGroup"
+    borderColor="#8D9494"
+    borderRadius="12"
+    borderWidth="1"
+    marginBottom="16"
+    padding="24"
+  />
+  <style
+    id="input"
+    borderBottomColor="#E1E1E1"
+    borderBottomWidth="1"
+    borderColor="#4E4D4D"
+    fontSize="16"
+    fontWeight="normal"
+    paddingBottom="8"
+    marginBottom="16"
+  />
+  <style
+    id="button"
+    alignItems="center"
+    backgroundColor="#4778F2"
+    borderRadius="8"
+    justifyContent="center"
+    paddingHorizontal="16"
+    paddingVertical="12"
+  />
+  <style
+    id="buttonText"
+    color="white"
+    fontSize="16"
+    fontWeight="bold"
+  />
+  <style
+    id="responseContainer"
+    marginTop="24"
+  />
+  <style
+    id="responseItem"
+    backgroundColor="#F0F8FF"
+    borderColor="#4778F2"
+    borderWidth="1"
+    borderRadius="8"
+    padding="16"
+    marginBottom="8"
+    fontSize="14"
+  />
+  <style
+    id="description"
+    fontSize="16"
+    marginBottom="16"
+    color="#666"
+  />
+{% endblock %}
+
+{% block content %}
+  <view style="container">
+    <text style="description">
+      This demo shows sync functionality with the "replace" method.
+      As you type, the server will respond with the same text, but with a random delay.
+      The UI will only display the results of the most recent request.
+    </text>
+
+    <view style="formGroup">
+      <form>
+        <text-field
+          id="messageField"
+          name="message"
+          style="input"
+          placeholder="Type your message..."
+        >
+          <behavior
+            href="/behaviors/advanced/sync_replace/submit.xml"
+            action="prepend"
+            target="responseList"
+            sync-id="messageSync"
+            sync-method="replace"
+            trigger="change"
+          />
+        </text-field>
+      </form>
+    </view>
+
+    <view style="responseContainer">
+      <text style="description">Responses (in order):</text>
+      <view id="responseList">
+      </view>
+    </view>
+  </view>
+{% endblock %}

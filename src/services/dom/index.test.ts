@@ -1,5 +1,6 @@
 import * as Dom from 'hyperview/src/services/dom';
 import * as UrlService from 'hyperview/src/services/url';
+import { NO_OP, SYNC_METHODS } from 'hyperview/src/types';
 import { X_RESPONSE_STALE_REASON } from './types';
 import { version } from 'hyperview/package.json';
 
@@ -52,7 +53,12 @@ describe('Parser', () => {
         const responseText = 'foobarbaz';
         responseTextMock.mockResolvedValue(responseText);
 
-        const { doc, staleHeaderType } = await parser.load(url);
+        const result = await parser.load(url);
+        expect(result).not.toBe(NO_OP);
+        const { doc, staleHeaderType } = result as {
+          doc: Document;
+          staleHeaderType: any;
+        };
 
         expect(urlServiceAddFormDataToUrlMock).toHaveBeenCalledTimes(0);
         expect(mockParseFromString).toHaveBeenCalledWith(responseText);
@@ -75,7 +81,12 @@ describe('Parser', () => {
         const responseText = 'foobarbaz';
         responseTextMock.mockResolvedValue(responseText);
 
-        const { doc, staleHeaderType } = await parser.load(url, data);
+        const result = await parser.load(url, data);
+        expect(result).not.toBe(NO_OP);
+        const { doc, staleHeaderType } = result as {
+          doc: Document;
+          staleHeaderType: any;
+        };
 
         expect(urlServiceAddFormDataToUrlMock).toHaveBeenCalledWith(url, data);
         expect(mockParseFromString).toHaveBeenCalledWith(responseText);
@@ -116,7 +127,12 @@ describe('Parser', () => {
         );
         fetchMock.mockResolvedValueOnce({ headers, text: responseTextMock });
 
-        const { doc, staleHeaderType } = await parser.load(url);
+        const result = await parser.load(url);
+        expect(result).not.toBe(NO_OP);
+        const { doc, staleHeaderType } = result as {
+          doc: Document;
+          staleHeaderType: any;
+        };
 
         expect(urlServiceAddFormDataToUrlMock).toHaveBeenCalledTimes(0);
         expect(mockParseFromString).toHaveBeenCalledWith(responseText);
@@ -136,7 +152,12 @@ describe('Parser', () => {
         data.append('bar', 'baz');
         const responseText = 'foobarbaz';
         responseTextMock.mockResolvedValue(responseText);
-        const { doc, staleHeaderType } = await parser.load(url, data, 'post');
+        const result = await parser.load(url, data, 'post');
+        expect(result).not.toBe(NO_OP);
+        const { doc, staleHeaderType } = result as {
+          doc: Document;
+          staleHeaderType: any;
+        };
 
         expect(urlServiceAddFormDataToUrlMock).toHaveBeenCalledTimes(0);
         expect(mockParseFromString).toHaveBeenCalledWith(responseText);
@@ -159,6 +180,174 @@ describe('Parser', () => {
     // it.todo('parser error', () => {});
     // it.todo('parser fatal error', () => {});
     // it.todo('server error', () => {});
+
+    describe('sync functionality', () => {
+      it('drops request when sync-method is drop and request is in flight', async () => {
+        const url = 'http://foo/bar';
+        const syncId = 'test-sync-id';
+        const responseText = 'foobarbaz';
+
+        // Mock a slow response for the first request
+        let resolveFirst: (value: any) => void;
+        const firstRequestPromise = new Promise(resolve => {
+          resolveFirst = resolve;
+        });
+        fetchMock.mockReturnValueOnce(firstRequestPromise);
+
+        // Start first request
+        const firstRequest = parser.load(
+          url,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          syncId,
+          SYNC_METHODS.DROP,
+        );
+
+        // Start second request with same sync ID - should be dropped
+        const secondRequest = parser.load(
+          url,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          syncId,
+          SYNC_METHODS.DROP,
+        );
+
+        // Second request should return NO_OP immediately
+        const secondResult = await secondRequest;
+        expect(secondResult).toBe(NO_OP);
+
+        // Complete first request
+        responseTextMock.mockResolvedValue(responseText);
+        resolveFirst!({ text: responseTextMock, headers: new Map() });
+
+        const firstResult = await firstRequest;
+        expect(firstResult).toEqual({
+          doc: mockExpectedDocument,
+          staleHeaderType: null,
+        });
+      });
+
+      it('replaces request when sync-method is replace and request is in flight', async () => {
+        const url = 'http://foo/bar';
+        const syncId = 'test-sync-id-2';
+        const responseText1 = 'first-response';
+        const responseText2 = 'second-response';
+
+        // Mock responses
+        let resolveFirst: (value: any) => void;
+        let resolveSecond: (value: any) => void;
+        const firstRequestPromise = new Promise(resolve => {
+          resolveFirst = resolve;
+        });
+        const secondRequestPromise = new Promise(resolve => {
+          resolveSecond = resolve;
+        });
+
+        fetchMock
+          .mockReturnValueOnce(firstRequestPromise)
+          .mockReturnValueOnce(secondRequestPromise);
+
+        // Start first request
+        const firstRequest = parser.load(
+          url,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          syncId,
+          SYNC_METHODS.REPLACE,
+        );
+
+        // Start second request with same sync ID - should replace first
+        const secondRequest = parser.load(
+          url,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          syncId,
+          SYNC_METHODS.REPLACE,
+        );
+
+        // Complete both requests
+        responseTextMock.mockResolvedValueOnce(responseText1);
+        resolveFirst!({
+          text: () => Promise.resolve(responseText1),
+          headers: new Map(),
+        });
+
+        responseTextMock.mockResolvedValueOnce(responseText2);
+        resolveSecond!({
+          text: () => Promise.resolve(responseText2),
+          headers: new Map(),
+        });
+
+        // First request should return NO_OP (was replaced)
+        const firstResult = await firstRequest;
+        expect(firstResult).toBe(NO_OP);
+
+        // Second request should succeed
+        const secondResult = await secondRequest;
+        expect(secondResult).toEqual({
+          doc: mockExpectedDocument,
+          staleHeaderType: null,
+        });
+      });
+
+      it('allows multiple requests with different sync IDs', async () => {
+        const url = 'http://foo/bar';
+        const syncId1 = 'sync-id-1';
+        const syncId2 = 'sync-id-2';
+        const responseText = 'response';
+
+        responseTextMock.mockResolvedValue(responseText);
+        fetchMock.mockResolvedValue({
+          text: responseTextMock,
+          headers: new Map(),
+        });
+
+        // Start two requests with different sync IDs
+        const request1 = parser.load(
+          url,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          syncId1,
+          SYNC_METHODS.DROP,
+        );
+        const request2 = parser.load(
+          url,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          syncId2,
+          SYNC_METHODS.DROP,
+        );
+
+        // Both should succeed
+        const [result1, result2] = await Promise.all([request1, request2]);
+        expect(result1).toEqual({
+          doc: mockExpectedDocument,
+          staleHeaderType: null,
+        });
+        expect(result2).toEqual({
+          doc: mockExpectedDocument,
+          staleHeaderType: null,
+        });
+      });
+    });
   });
   // describe('loadDocument', () => {
   // it.todo('missing <doc>');

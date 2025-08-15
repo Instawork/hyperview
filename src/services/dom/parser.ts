@@ -13,10 +13,10 @@ import {
   HTTP_METHODS,
   X_RESPONSE_STALE_REASON,
 } from './types';
+import { LOCAL_NAME, NO_OP, SYNC_METHODS } from 'hyperview/src/types';
 import { getFirstTag, processDocument } from './helpers';
 import { DOMParser } from '@instawork/xmldom';
 import { Dimensions } from 'react-native';
-import { LOCAL_NAME } from 'hyperview/src/types';
 import { version } from 'hyperview/package.json';
 
 const { width, height } = Dimensions.get('window');
@@ -43,6 +43,8 @@ export class Parser {
 
   onAfterParse: BeforeAfterParseHandler | null | undefined;
 
+  syncRequests: Map<string, Promise<Response>>;
+
   constructor(
     fetch: Fetch,
     onBeforeParse: BeforeAfterParseHandler | null | undefined,
@@ -51,6 +53,7 @@ export class Parser {
     this.fetch = fetch;
     this.onBeforeParse = onBeforeParse;
     this.onAfterParse = onAfterParse;
+    this.syncRequests = new Map();
   }
 
   load = async (
@@ -60,10 +63,15 @@ export class Parser {
     acceptContentType: string = CONTENT_TYPE.APPLICATION_VND_HYPERVIEW_XML,
     networkRetryAction: XNetworkRetryAction | null | undefined = undefined,
     networkRetryEvent: string | null | undefined = undefined,
-  ): Promise<{
-    doc: Document;
-    staleHeaderType: XResponseStaleReason | null | undefined;
-  }> => {
+    syncId: string | null | undefined = undefined,
+    syncMethod: string | null | undefined = 'drop',
+  ): Promise<
+    | {
+        doc: Document;
+        staleHeaderType: XResponseStaleReason | null | undefined;
+      }
+    | typeof NO_OP
+  > => {
     // HTTP method can either be POST when explicitly set
     // Any other value and we'll default to GET
     const method =
@@ -93,7 +101,48 @@ export class Parser {
       method,
     } as const;
 
-    const response: Response = await this.fetch(url, options);
+    // Handle sync logic
+    let currentRequest: Promise<Response>;
+
+    if (syncId) {
+      const existingRequest = this.syncRequests.get(syncId);
+
+      if (existingRequest) {
+        // There's already a request in flight for this sync ID
+        if (syncMethod === SYNC_METHODS.DROP) {
+          // Drop this request
+          return NO_OP;
+        }
+        if (syncMethod === SYNC_METHODS.REPLACE) {
+          // Create new request and update the map
+          currentRequest = this.fetch(url, options);
+          this.syncRequests.set(syncId, currentRequest);
+        } else {
+          // Unsupported sync method, drop the request
+          return NO_OP;
+        }
+      } else {
+        // No existing request, create and store new one
+        currentRequest = this.fetch(url, options);
+        this.syncRequests.set(syncId, currentRequest);
+      }
+    } else {
+      // No sync ID, proceed normally
+      currentRequest = this.fetch(url, options);
+    }
+
+    const response: Response = await currentRequest;
+
+    // Clean up the sync request when done
+    if (syncId) {
+      const storedRequest = this.syncRequests.get(syncId);
+      if (storedRequest === currentRequest) {
+        this.syncRequests.delete(syncId);
+      } else if (syncMethod === SYNC_METHODS.REPLACE) {
+        // This request was replaced by a newer one, return NO_OP
+        return NO_OP;
+      }
+    }
     const responseText: string = await response.text();
     const contentType: string | null = response.headers?.get(
       HTTP_HEADERS.CONTENT_TYPE,
@@ -130,7 +179,11 @@ export class Parser {
     doc: Document;
     staleHeaderType: XResponseStaleReason | null | undefined;
   }> => {
-    const { doc, staleHeaderType } = await this.load(baseUrl);
+    const result = await this.load(baseUrl);
+    if (result === NO_OP) {
+      throw new Error('loadDocument cannot return NO_OP');
+    }
+    const { doc, staleHeaderType } = result;
     const docElement = getFirstTag(doc, LOCAL_NAME.DOC);
     if (!docElement) {
       throw new Errors.XMLRequiredElementNotFound(LOCAL_NAME.DOC, baseUrl);
@@ -173,18 +226,31 @@ export class Parser {
     method: HttpMethod | null = HTTP_METHODS.GET,
     networkRetryAction: XNetworkRetryAction | null | undefined,
     networkRetryEvent: string | null | undefined,
-  ): Promise<{
-    doc: Document;
-    staleHeaderType: XResponseStaleReason | null | undefined;
-  }> => {
-    const { doc, staleHeaderType } = await this.load(
+    syncId: string | null | undefined = undefined,
+    syncMethod: string | null | undefined = 'drop',
+  ): Promise<
+    | {
+        doc: Document;
+        staleHeaderType: XResponseStaleReason | null | undefined;
+      }
+    | typeof NO_OP
+  > => {
+    const result = await this.load(
       baseUrl,
       data,
       method,
       CONTENT_TYPE.APPLICATION_VND_HYPERVIEW_FRAGMENT_XML,
       networkRetryAction,
       networkRetryEvent,
+      syncId,
+      syncMethod,
     );
+
+    if (result === NO_OP) {
+      return NO_OP;
+    }
+
+    const { doc, staleHeaderType } = result;
     const docElement = getFirstTag(doc, LOCAL_NAME.DOC);
     if (docElement) {
       throw new Errors.XMLRestrictedElementFound(LOCAL_NAME.DOC, baseUrl);
