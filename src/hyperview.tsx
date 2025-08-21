@@ -5,7 +5,6 @@ import * as Events from 'hyperview/src/services/events';
 import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Logging from 'hyperview/src/services/logging';
 import * as NavigatorService from 'hyperview/src/services/navigator';
-import * as Render from 'hyperview/src/services/render';
 import * as Services from 'hyperview/src/services';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as Types from './types';
@@ -34,16 +33,6 @@ import { XMLSerializer } from '@instawork/xmldom';
  * Provides routing to the correct path based on the state passed in
  */
 export default class Hyperview extends PureComponent<Types.Props> {
-  static createProps = Services.createProps;
-
-  static createStyleProp = Services.createStyleProp;
-
-  static renderChildren = Render.renderChildren;
-
-  static renderChildNodes = Render.renderChildNodes;
-
-  static renderElement = Render.renderElement;
-
   behaviorRegistry: BehaviorRegistry;
 
   componentRegistry: Components.Registry;
