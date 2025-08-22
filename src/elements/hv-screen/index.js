@@ -1,10 +1,7 @@
 /* eslint instawork/flow-annotate: 0 react/prop-types: 0 */
-import * as Events from 'hyperview/src/services/events';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import * as Render from 'hyperview/src/services/render';
 // eslint-disable-next-line instawork/import-components
 import * as Scroll from 'hyperview/src/components/scroll';
-import { createProps, createStyleProp } from 'hyperview/src/services';
 import HvElement from 'hyperview/src/components/hv-element';
 import { HvScreenRenderError } from './errors';
 import LoadElementError from 'hyperview/src/components/load-element-error';
@@ -12,14 +9,6 @@ import React from 'react';
 
 // eslint-disable-next-line instawork/pure-components
 export default class HvScreen extends React.Component {
-  static createProps = createProps;
-
-  static createStyleProp = createStyleProp;
-
-  static renderChildren = Render.renderChildren;
-
-  static renderElement = Render.renderElement;
-
   componentDidMount() {
     // This legacy behavior is required to ensure the document state is updated
     // after the initial load behaviors are applied.
@@ -76,6 +65,3 @@ export default class HvScreen extends React.Component {
     );
   }
 }
-
-export * from 'hyperview/src/types';
-export { Events, Namespaces };
