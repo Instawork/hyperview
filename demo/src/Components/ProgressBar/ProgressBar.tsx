@@ -1,7 +1,7 @@
 import { Animated, View } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
+import { createProps, createStyleProp } from 'hyperview';
 import type { HvComponentProps } from 'hyperview';
-import Hyperview from 'hyperview';
 
 const namespace = 'https://hyperview.org/progress-bar';
 
@@ -29,12 +29,12 @@ const ProgressBar = (props: HvComponentProps) => {
       outputRange: ['0%', '100%'],
     }),
   };
-  const containerProps = Hyperview.createProps(
+  const containerProps = createProps(
     props.element,
     props.stylesheets,
     props.options,
   );
-  const style = Hyperview.createStyleProp(props.element, props.stylesheets, {
+  const style = createStyleProp(props.element, props.stylesheets, {
     ...props.options,
     styleAttr: `${props.element.prefix}:bar-style`,
   });

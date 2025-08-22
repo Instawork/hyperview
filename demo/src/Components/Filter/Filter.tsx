@@ -1,4 +1,10 @@
-import Hyperview, { Events, LOCAL_NAME, Logging, Namespaces } from 'hyperview';
+import {
+  Events,
+  LOCAL_NAME,
+  Logging,
+  Namespaces,
+  renderChildren,
+} from 'hyperview';
 import type { HvComponentProps } from 'hyperview';
 import { findElements } from '../../Helpers';
 import { useEffect } from 'react';
@@ -100,7 +106,7 @@ const Filter = (props: HvComponentProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.element]);
 
-  return (Hyperview.renderChildren(
+  return (renderChildren(
     props.element,
     props.stylesheets,
     props.onUpdate,

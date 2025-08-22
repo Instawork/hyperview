@@ -1,4 +1,3 @@
-import Hyperview, { useScrollContext } from 'hyperview';
 import React, { useEffect, useRef } from 'react';
 import {
   calculateOpacity,
@@ -6,6 +5,7 @@ import {
   getRangeAttr,
   namespaceURI,
 } from './utils';
+import { createStyleProp, renderChildren, useScrollContext } from 'hyperview';
 import { Animated } from 'react-native';
 import type { HvComponentProps } from 'hyperview';
 
@@ -15,7 +15,7 @@ const ScrollOpacity = (props: HvComponentProps) => {
   const scrollRange = getRangeAttr(props.element, 'scroll-range', [0, 100]);
   const opacityRange = getRangeAttr(props.element, 'opacity-range', [0, 1]);
   const duration = getNumberAttr(props.element, 'duration', 0);
-  const style = Hyperview.createStyleProp(props.element, props.stylesheets, {
+  const style = createStyleProp(props.element, props.stylesheets, {
     ...props.options,
     styleAttr: 'style',
   });
@@ -54,7 +54,7 @@ const ScrollOpacity = (props: HvComponentProps) => {
     }).start();
   }, [duration, opacity, opacityRange, position, scrollRange]);
 
-  const children = (Hyperview.renderChildren(
+  const children = (renderChildren(
     props.element,
     props.stylesheets,
     props.onUpdate,

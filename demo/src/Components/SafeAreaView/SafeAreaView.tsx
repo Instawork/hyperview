@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
+import { createStyleProp, renderChildren } from 'hyperview';
 import type { HvComponentProps } from 'hyperview';
-import Hyperview from 'hyperview';
 import type { InsetsStyle } from './types';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -34,13 +34,13 @@ const SafeAreaView = (props: HvComponentProps) => {
     props.element.getAttributeNS(namespaceURI, 'mode') || defaultMode;
   const insets =
     props.element.getAttributeNS(namespaceURI, 'insets') || defaultInsets;
-  const children = Hyperview.renderChildren(
+  const children = renderChildren(
     props.element,
     props.stylesheets,
     props.onUpdate,
     props.options,
   );
-  const extraStyle = Hyperview.createStyleProp(
+  const extraStyle = createStyleProp(
     props.element,
     props.stylesheets,
     props.options,

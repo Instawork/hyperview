@@ -1,5 +1,5 @@
 import { Animated, LayoutChangeEvent, Modal } from 'react-native';
-import Hyperview, { Events } from 'hyperview';
+import { Events, renderChildren } from 'hyperview';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import type { HvComponentProps } from 'hyperview';
 import type { HvProps } from './types';
@@ -111,7 +111,7 @@ const BottomSheet = (props: HvComponentProps) => {
     };
   }, [onHyperviewEventDispatch, visible]);
 
-  const children = Hyperview.renderChildren(
+  const children = renderChildren(
     props.element,
     props.stylesheets,
     props.onUpdate,

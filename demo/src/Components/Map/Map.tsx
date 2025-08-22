@@ -1,13 +1,13 @@
 import type { AutoZoomToMarker, Coordinate, HvProps } from './types';
 import React, { useCallback, useRef } from 'react';
+import { createStyleProp, renderChildren } from 'hyperview';
 import type { ElementRef } from 'react';
 import type { HvComponentProps } from 'hyperview';
-import Hyperview from 'hyperview';
 import MapView from 'react-native-maps';
 import { namespace } from './types';
 
 const Map = (props: HvComponentProps) => {
-  const style = Hyperview.createStyleProp(
+  const style = createStyleProp(
     props.element,
     props.stylesheets,
     props.options,
@@ -81,7 +81,7 @@ const Map = (props: HvComponentProps) => {
     });
   };
 
-  const children = Hyperview.renderChildren(
+  const children = renderChildren(
     props.element,
     props.stylesheets,
     props.onUpdate,
