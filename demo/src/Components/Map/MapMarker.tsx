@@ -1,10 +1,10 @@
 import MapView, { MapMarker as RNMapMarker } from 'react-native-maps';
 import React, { useCallback } from 'react';
 import type { HvComponentProps } from 'hyperview';
-import Hyperview from 'hyperview';
 import type { MarkerHvProps } from './types';
 import { Platform } from 'react-native';
 import { namespace } from './types';
+import { renderChildren } from 'hyperview';
 
 const MapMarker = (props: HvComponentProps) => {
   const getAttribute = useCallback(
@@ -16,7 +16,7 @@ const MapMarker = (props: HvComponentProps) => {
     latitude: parseFloat(getAttribute('latitude') || '0'),
     longitude: parseFloat(getAttribute('longitude') || '0'),
   };
-  const children = Hyperview.renderChildren(
+  const children = renderChildren(
     props.element,
     props.stylesheets,
     props.onUpdate,
