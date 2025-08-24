@@ -1,0 +1,192 @@
+---
+permalink: "/backend/advanced/community/scroll-transform.xml"
+tags: "Advanced/Community/Elements"
+hv_title: "Scroll Transform"
+---
+
+{% extends 'templates/base.xml.njk' %}
+
+{% block styles %}
+  {% include './_styles.xml.njk' %}
+  <style id="hero-container" width="100%" position="relative" top="-24" />
+  <style id="hero-image" width="460" height="360" />
+  <style id="hero-title" fontSize="36" color="white" position="absolute" bottom="16" left="0" zIndex="100" />
+
+  <style id="header-transparent" backgroundColor="transparent" borderBottomColor="transparent" />
+
+  <style id="hero-header-container"
+    position="absolute"
+    top="0"
+    bottom="0"
+    left="0"
+    height="0"
+    width="100%"
+    zIndex="1000"
+  />
+  <style id="hero-header"
+    backgroundColor="white"
+    borderBottomWidth="1"
+    borderBottomColor="black"
+    flexDirection="row"
+    padding="16"
+    alignItems="center"
+    position="absolute"
+    top="0"
+    paddingTop="60"
+    width="100%"
+  />
+{% endblock %}
+
+{% block body %}
+
+    <header style="hero-header-container">
+
+      <scroll-transform:container
+        xmlns:scroll-transform="https://hyperview.org/scroll-transform"
+      >
+        <scroll-transform:transform
+          context-key="scroll-view"
+          style-attr="opacity"
+          scroll-range="[200, 230]"
+          attr-range="[1, 0]"
+          axis="vertical"
+        />
+        <view style="hero-header header-transparent">
+          <view action="back" href="#" style="header-btn">
+            {% include 'icons/back-white.svg' %}
+          </view>
+        </view>
+      </scroll-transform:container>
+
+      <scroll-transform:container
+        xmlns:scroll-transform="https://hyperview.org/scroll-transform"
+      >
+        <scroll-transform:transform
+          context-key="scroll-view"
+          style-attr="opacity"
+          scroll-range="[200, 230]"
+          attr-range="[0, 1]"
+          axis="vertical"
+        />
+        <view style="hero-header">
+          <view action="back" href="#" style="header-btn">
+            {% include 'icons/back.svg' %}
+          </view>
+          <text style="header-title" key="title">{{ hv_title }}</text>
+        </view>
+      </scroll-transform:container>
+
+    </header>
+
+  <view
+    style="main"
+    xmlns:scroll="https://hyperview.org/hyperview-scroll"
+    scroll="true"
+    scroll:context-key="scroll-view"
+    scroll:event-throttle="16"
+  >
+
+    <view style="hero-container">
+      <scroll-transform:container
+        xmlns:scroll-transform="https://hyperview.org/scroll-transform"
+        transform-origin="bottom center"
+      >
+        <scroll-transform:transform
+          context-key="scroll-view"
+          transform-attr="scale"
+          scroll-range="[0, -200]"
+          attr-range="[1, 1.6]"
+          axis="vertical"
+          duration="0"
+        />
+
+        <image
+          style="hero-image"
+          source="https://instawork-pro-vetting-dev.imgix.net/skills_hero_images/a1c548b2-2379-4482-83d8-3bfa6d571ff1.png?w=360&h=360&dpr=2"
+        />
+      </scroll-transform:container>
+
+      <scroll-transform:container
+        xmlns:scroll-transform="https://hyperview.org/scroll-transform"
+      >
+        <scroll-transform:transform
+          context-key="scroll-view"
+          style-attr="opacity"
+          scroll-range="[100, 180]"
+          attr-range="[1, 0]"
+          axis="vertical"
+        />
+        <text style="header-title text hero-title">{{ hv_title }}</text>
+      </scroll-transform:container>
+    </view>
+
+    <text style="text">
+      Velit voluptas et alias atque provident sapiente consequuntur deserunt. Dolorem et
+      non error dolorem voluptate amet accusantium. Corporis rerum sed labore quae sed qui quis quasi. Illo pariatur sint qui.
+      Quasi quaerat id molestias. Necessitatibus et ipsa quia asperiores laborum neque. Quisquam dolorem consequatur illum. Ut
+      magni iusto explicabo blanditiis quasi laborum incidunt earum. Eius ut in rerum ipsam. Officiis dolores suscipit
+      consequatur placeat commodi eum. Vel possimus placeat aut eos tempore saepe. Esse assumenda eum illo sed aut earum quia
+      voluptatibus. Recusandae qui iusto corporis sed atque. Veniam et possimus praesentium. Cum molestiae non velit minus
+      voluptatibus quos illo sed. Et omnis ut soluta qui inventore molestias. Dolores voluptatem perspiciatis exercitationem
+      consectetur minus illum. Quos quaerat omnis aut eius eos dolores velit. Et quia vel ea unde eum repudiandae. Repellat et
+      ab sed.
+    </text>
+
+    <!-- Red square that rotates and shrinks as we scroll -->
+    <!--scroll-transform:container
+      xmlns:scroll-transform="https://hyperview.org/scroll-transform"
+      style="red-square"
+    >
+      <scroll-transform:transform
+        context-key="scroll-view"
+        transform-attr="translateX"
+        scroll-range="[100, 400]"
+        attr-range="[-100, 100]"
+        axis="vertical"
+        duration="1"
+      />
+      <scroll-transform:transform
+        context-key="scroll-view"
+        transform-attr="scale"
+        scroll-range="[100, 400]"
+        attr-range="[1, 0.3]"
+        axis="vertical"
+        duration="1"
+      />
+    </scroll-transform:container-->
+
+    <text style="text">
+      Velit voluptas et alias atque provident sapiente consequuntur deserunt. Dolorem et
+      non error dolorem voluptate amet accusantium. Corporis rerum sed labore quae sed qui quis quasi. Illo pariatur sint qui.
+      Quasi quaerat id molestias. Necessitatibus et ipsa quia asperiores laborum neque. Quisquam dolorem consequatur illum. Ut
+      magni iusto explicabo blanditiis quasi laborum incidunt earum. Eius ut in rerum ipsam. Officiis dolores suscipit
+      consequatur placeat commodi eum. Vel possimus placeat aut eos tempore saepe. Esse assumenda eum illo sed aut earum quia
+      voluptatibus. Recusandae qui iusto corporis sed atque. Veniam et possimus praesentium. Cum molestiae non velit minus
+      voluptatibus quos illo sed. Et omnis ut soluta qui inventore molestias. Dolores voluptatem perspiciatis exercitationem
+      consectetur minus illum. Quos quaerat omnis aut eius eos dolores velit. Et quia vel ea unde eum repudiandae. Repellat et
+      ab sed.
+    </text>
+    <text style="text">
+      Velit voluptas et alias atque provident sapiente consequuntur deserunt. Dolorem et
+      non error dolorem voluptate amet accusantium. Corporis rerum sed labore quae sed qui quis quasi. Illo pariatur sint qui.
+      Quasi quaerat id molestias. Necessitatibus et ipsa quia asperiores laborum neque. Quisquam dolorem consequatur illum. Ut
+      magni iusto explicabo blanditiis quasi laborum incidunt earum. Eius ut in rerum ipsam. Officiis dolores suscipit
+      consequatur placeat commodi eum. Vel possimus placeat aut eos tempore saepe. Esse assumenda eum illo sed aut earum quia
+      voluptatibus. Recusandae qui iusto corporis sed atque. Veniam et possimus praesentium. Cum molestiae non velit minus
+      voluptatibus quos illo sed. Et omnis ut soluta qui inventore molestias. Dolores voluptatem perspiciatis exercitationem
+      consectetur minus illum. Quos quaerat omnis aut eius eos dolores velit. Et quia vel ea unde eum repudiandae. Repellat et
+      ab sed.
+    </text>
+    <text style="text">
+      Velit voluptas et alias atque provident sapiente consequuntur deserunt. Dolorem et
+      non error dolorem voluptate amet accusantium. Corporis rerum sed labore quae sed qui quis quasi. Illo pariatur sint qui.
+      Quasi quaerat id molestias. Necessitatibus et ipsa quia asperiores laborum neque. Quisquam dolorem consequatur illum. Ut
+      magni iusto explicabo blanditiis quasi laborum incidunt earum. Eius ut in rerum ipsam. Officiis dolores suscipit
+      consequatur placeat commodi eum. Vel possimus placeat aut eos tempore saepe. Esse assumenda eum illo sed aut earum quia
+      voluptatibus. Recusandae qui iusto corporis sed atque. Veniam et possimus praesentium. Cum molestiae non velit minus
+      voluptatibus quos illo sed. Et omnis ut soluta qui inventore molestias. Dolores voluptatem perspiciatis exercitationem
+      consectetur minus illum. Quos quaerat omnis aut eius eos dolores velit. Et quia vel ea unde eum repudiandae. Repellat et
+      ab sed.
+    </text>
+  </view>
+{% endblock %}
