@@ -3,6 +3,8 @@ import type { Props } from './types';
 import React from 'react';
 import styles from './styles';
 
+export type { Props };
+
 const LoadElementError = (props: Props) => {
   const getError = () => {
     if (__DEV__) {

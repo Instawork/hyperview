@@ -5,6 +5,7 @@ import type {
   ScreenState,
 } from 'hyperview/src/types';
 import { ComponentType } from 'react';
+import type { Props as ElementErrorProps } from 'hyperview/src/components/load-element-error';
 import type { Props as ErrorProps } from 'hyperview/src/components/load-error';
 
 /**
@@ -12,7 +13,13 @@ import type { Props as ErrorProps } from 'hyperview/src/components/load-error';
  */
 export type Props = {
   componentRegistry: Components.Registry;
-  elementErrorComponent?: ComponentType<ErrorProps>;
+  /**
+   * @deprecated Components typed with ErrorProps are temporarily accepted;
+   * migrate to ElementErrorProps.
+   */
+  elementErrorComponent?:
+    | ComponentType<ElementErrorProps>
+    | ComponentType<ErrorProps>;
   getScreenState: () => ScreenState;
   onUpdate: HvComponentOnUpdate;
   onUpdateCallbacks: OnUpdateCallbacks;
