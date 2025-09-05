@@ -7,15 +7,7 @@ sidebar_label: <text-field>
 The `<text-field>` element represents a single-line input field. When pressed, the field focuses and a keyboard appears to accept user input. The value entered into the `<text-field>` get serialized as form data when a `<form>` gets submitted.
 
 ```xml
-<form>
-  <text-field name="name" placeholder="Your name" value="Bart" />
-  <text-field
-    name="phone"
-    placeholder="Your phone number"
-    mask="(999) 999-9999"
-    keyboard-type="phone-pad"
-  />
-</form>
+
 ```
 
 ## Structure
@@ -42,7 +34,7 @@ A `<text-field>` element can appear anywhere within a `<form>` element.
 - [`allowFontScaling`](#allowFontScaling)
 - [`maxFontSizeMultiplier`](#maxFontSizeMultiplier)
 - [`minimumFontScale`](#minimumFontScale)
-- [`on-submit-editing-events`](#on-submit-editing-events)
+- [`on-submit-editing-event`](#on-submit-editing-event)
 
 #### Behavior attributes
 
@@ -152,7 +144,7 @@ A mask string that formats the user's input. If specificed, on every keystroke t
 All other characters will automatically appear in the mask when the format is satisfied. For example:
 
 ```xml
-<text-field name="phone" mask="(999) 999-9999" />
+
 ```
 
 If the user types a `4`, the field will show `(4`. If the user tries to type the letter `A`, the field will still show `(4`.
@@ -231,10 +223,10 @@ Specifies whether fonts should scale to respect Text Size accessibility setting
 
 Specifies the smallest possible scale a font can reach when adjustsFontSizeToFit is enabled. (values 0.01-1.0).
 
-#### `#on-submit-editing-events`
+#### `#on-submit-editing-event`
 
 | Type   | Required |
 | ------ | -------- |
 | string | No       |
 
-A space-separated list of events to dispatch when the field is submitted. See [`on-event`](/docs/reference_behavior_attributes#on-event).
+An event to dispatch when the field is submitted. See [`on-event`](/docs/reference_behavior_attributes#on-event).

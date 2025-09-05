@@ -67,11 +67,9 @@ const HvTextField = (props: HvComponentProps) => {
   };
 
   const onSubmitEditing = () => {
-    const submitEvents = props.element.getAttribute('on-submit-editing-events');
-    if (submitEvents) {
-      submitEvents.split(' ').forEach(event => {
-        Events.dispatch(event);
-      });
+    const submitEvent = props.element.getAttribute('on-submit-editing-event');
+    if (submitEvent) {
+      Events.dispatch(submitEvent);
     }
   };
 
