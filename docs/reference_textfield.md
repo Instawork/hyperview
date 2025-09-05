@@ -42,6 +42,7 @@ A `<text-field>` element can appear anywhere within a `<form>` element.
 - [`allowFontScaling`](#allowFontScaling)
 - [`maxFontSizeMultiplier`](#maxFontSizeMultiplier)
 - [`minimumFontScale`](#minimumFontScale)
+- [`on-submit-editing-events`](#on-submit-editing-events)
 
 #### Behavior attributes
 
@@ -229,3 +230,11 @@ Specifies whether fonts should scale to respect Text Size accessibility setting
 | number | No       |
 
 Specifies the smallest possible scale a font can reach when adjustsFontSizeToFit is enabled. (values 0.01-1.0).
+
+#### `#on-submit-editing-events`
+
+| Type   | Required |
+| ------ | -------- |
+| string | No       |
+
+A space-separated list of events to dispatch when the field is submitted. See [`on-event`](/docs/reference_behavior_attributes#on-event).
