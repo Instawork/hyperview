@@ -1,0 +1,17 @@
+<view style="form-group">
+  <text style="label">Submit events</text>
+  <text-field
+    style="text-field-submit"
+    name="basic-text-field"
+    placeholder="Placeholder"
+    placeholderTextColor="#8D9494"
+    selectionColor="#4778FF"
+    selectionHandleColor="#4778FF"
+    cursorColor="#4778FF"
+    on-submit-editing-event="field-submit"
+    enterKeyHint="send"
+    value=""
+  />
+  <text id="field-submitted" hide="true" style="label submitted">Submitted!</text>
+  <behavior trigger="on-event" event-name="field-submit" action="show" target="field-submitted" />
+</view>
