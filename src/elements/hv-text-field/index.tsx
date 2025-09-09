@@ -65,6 +65,10 @@ const HvTextField = (props: HvComponentProps) => {
     triggerChangeBehaviors(newElement);
   };
 
+  const onSubmitEditing = () => {
+    Behaviors.trigger('submit', props.element, props.onUpdate);
+  };
+
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const textInputRef: MutableRefObject<TextInput | null> = useRef(
     null as TextInput | null,
@@ -105,6 +109,7 @@ const HvTextField = (props: HvComponentProps) => {
       onBlur={() => setFocus(false)}
       onChangeText={onChangeText}
       onFocus={() => setFocus(true)}
+      onSubmitEditing={onSubmitEditing}
       secureTextEntry={secureTextEntry}
       textContentType={textContentType}
     />

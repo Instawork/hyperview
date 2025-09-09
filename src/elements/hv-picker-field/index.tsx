@@ -89,6 +89,8 @@ const HvPickerField = (props: HvComponentProps) => {
       newElement.setAttribute('focused', 'false');
       onUpdate(null, 'swap', element, { newElement });
 
+      Behaviors.trigger('submit', newElement, onUpdate);
+
       const hasChanged = value !== pickerValue;
       if (hasChanged) {
         Behaviors.trigger('change', newElement, onUpdate);
