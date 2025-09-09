@@ -390,24 +390,6 @@
   </modifier>
 </style>
 
-  <style
-  id="text-field-submit"
-  borderBottomColor="#E1E1E1"
-  borderBottomWidth="1"
-  flex="1"
-  fontSize="16"
-  fontWeight="normal"
-  paddingVertical="8"
->
-  <modifier pressed="true">
-  <style borderBottomColor="#4778FF"/>
-  </modifier>
-  <modifier focused="true">
-  <style borderBottomColor="#4778FF"/>
-  </modifier>
-</style>
-<style id="submitted" color="#008719" />
-
 
       </styles>
       <body style="body">
@@ -507,24 +489,6 @@
     cursorColor="#4778FF"
     value=""
   />
-</view>
-
-  <view style="form-group">
-  <text style="label">Submit events</text>
-  <text-field
-    style="text-field-submit"
-    name="basic-text-field"
-    placeholder="Placeholder"
-    placeholderTextColor="#8D9494"
-    selectionColor="#4778FF"
-    selectionHandleColor="#4778FF"
-    cursorColor="#4778FF"
-    on-submit-editing-event="field-submit"
-    enterKeyHint="send"
-    value=""
-  />
-  <text id="field-submitted" hide="true" style="label submitted">Submitted!</text>
-  <behavior trigger="on-event" event-name="field-submit" action="show" target="field-submitted" />
 </view>
 
 
