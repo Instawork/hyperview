@@ -52,6 +52,7 @@ A `<date-field>` element accepts the standard [behavior attributes](/docs/refere
 - [blur](/docs/reference_behavior_attributes#blur)
 - [change](/docs/reference_behavior_attributes#change)
 - [focus](/docs/reference_behavior_attributes#focus)
+- [submit](/docs/reference_behavior_attributes#submit)
 
 #### `name`
 

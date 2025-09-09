@@ -27,9 +27,9 @@ The rest of the document describes in-depth how these attributes work together.
 
 ## trigger
 
-| Type                                                                                                                       | Required |
-| -------------------------------------------------------------------------------------------------------------------------- | -------- |
-| **press** (default), longPress, pressIn, pressOut, visible, refresh, load, select, deselect, focus, blur, change, on-event | No       |
+| Type                                                                                                                               | Required |
+| ---------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| **press** (default), longPress, pressIn, pressOut, visible, refresh, load, select, deselect, focus, blur, submit, change, on-event | No       |
 
 ### `press`
 
@@ -128,6 +128,8 @@ Triggers when the element is focused. Only works on focusable elements.
 These elements support the `focus` trigger:
 
 - [`<text-field>`](/docs/reference_textfield)
+- [`<date-field>`](/docs/reference_datefield)
+- [`<picker-field>`](/docs/reference_pickerfield)
 
 ### `blur`
 
@@ -136,6 +138,18 @@ Triggers when the element loses focus. Only works on focusable elements.
 These elements support the `blur` trigger:
 
 - [`<text-field>`](/docs/reference_textfield)
+- [`<date-field>`](/docs/reference_datefield)
+- [`<picker-field>`](/docs/reference_pickerfield)
+
+### `submit`
+
+Triggers when the element loses focus. Only works on submitable elements.
+
+These elements support the `submit` trigger:
+
+- [`<text-field>`](/docs/reference_textfield)
+- [`<date-field>`](/docs/reference_datefield)
+- [`<picker-field>`](/docs/reference_pickerfield)
 
 ### `change`
 
@@ -148,6 +162,8 @@ Triggers when the element value changes. Only works on editable elements.
 These elements support the `change` trigger:
 
 - [`<text-field>`](/docs/reference_textfield)
+- [`<date-field>`](/docs/reference_datefield)
+- [`<picker-field>`](/docs/reference_pickerfield)
 - [`<switch>`](/docs/reference_switch)
 
 ### `on-event`
@@ -241,6 +257,26 @@ Not all elements support behavior attributes or `<behavior>` elements. Those tha
 
 - [focus](#focus)
 - [blur](#blur)
+- [change](#change)
+- [submit](#submit)
+
+#### `<date-field>`
+
+[`<date-field>`](/docs/reference_datefield): supports behavior attributes (or `<behavior>` elements as direct children) with the following triggers:
+
+- [focus](#focus)
+- [blur](#blur)
+- [change](#change)
+- [submit](#submit)
+
+#### `<picker-field>`
+
+[`<picker-field>`](/docs/reference_pickerfield): supports behavior attributes (or `<behavior>` elements as direct children) with the following triggers:
+
+- [focus](#focus)
+- [blur](#blur)
+- [change](#change)
+- [submit](#submit)
 
 ## href
 
