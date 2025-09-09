@@ -39,6 +39,7 @@
       <xs:enumeration value="deselect" />
       <xs:enumeration value="focus" />
       <xs:enumeration value="blur" />
+      <xs:enumeration value="submit" />
       <xs:enumeration value="on-event" />
       <xs:enumeration value="change" />
       <xs:enumeration value="load-stale-error" />
