@@ -1,0 +1,45 @@
+<view style="form-group">
+  <text style="label">Input field 1</text>
+  <text-field
+    action="replace-inner"
+    href="#fieldSubmitted"
+    name="text"
+    placeholder="First name"
+    placeholderTextColor="#8D9494"
+    style="input"
+    target="container1"
+    trigger="submit"
+  >
+    <behavior
+      trigger="submit"
+      action="append"
+      target="container1"
+      href="#field1Submitted"
+    />
+  </text-field>
+</view>
+<view style="form-group">
+  <text style="label">Input field 2</text>
+  <text-field
+    action="replace-inner"
+    href="#fieldSubmitted"
+    name="text"
+    placeholder="Last name"
+    placeholderTextColor="#8D9494"
+    style="input"
+    target="container1"
+    trigger="submit"
+  >
+    <behavior
+      trigger="submit"
+      action="append"
+      target="container1"
+      href="#field2Submitted"
+    />
+  </text-field>
+</view>
+<view hide="true">
+  <text id="fieldSubmitted" style="tip">Submitted:</text>
+  <text id="field1Submitted" style="tip">Field 1 submitted</text>
+  <text id="field2Submitted" style="tip">Field 2 submitted</text>
+</view>

@@ -1,0 +1,57 @@
+---
+permalink: "/behaviors/basic/submit/index.xml"
+tags: "Behaviors/Basic/Triggers"
+hv_title: "Submit"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block styles %}
+  <style
+    id="form-group"
+    flex="1"
+    marginLeft="24"
+    marginRight="24"
+    marginTop="24"
+  />
+  <style
+    id="label"
+    borderColor="#4E4D4D"
+    fontSize="16"
+    fontWeight="bold"
+    lineHeight="24"
+    marginBottom="8"
+  />
+  <style
+    id="input"
+    borderBottomColor="#E1E1E1"
+    borderBottomWidth="1"
+    borderColor="#4E4D4D"
+    flex="1"
+    fontSize="16"
+    fontWeight="normal"
+    paddingBottom="8"
+    paddingTop="8"
+  >
+    <modifier pressed="true">
+    <style borderBottomColor="green" />
+    </modifier>
+    <modifier focused="true">
+    <style borderBottomColor="#4778FF" />
+    </modifier>
+  </style>
+  <style id="tip" color="#FF4847" fontSize="16" />
+  <style id="input-text" fontSize="16" fontWeight="normal" />
+{% endblock %}
+
+{% block content %}
+  {% call description() -%}
+    When a field is submitted, the content in the container will be replaced.
+  {%- endcall %}
+  <view id="container1" style="container-style" />
+  {% include './_text-field/index.xml.njk' %}
+  {% include './_picker-field/index.xml.njk' %}
+  {% include './_date-field/index.xml.njk' %}
+{% endblock %}
