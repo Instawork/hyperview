@@ -1,5 +1,4 @@
 import * as Behaviors from 'hyperview/src/services/behaviors';
-import * as Events from 'hyperview/src/services/events';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import React, { MutableRefObject, useCallback, useEffect, useRef } from 'react';
 import {
@@ -66,13 +65,6 @@ const HvTextField = (props: HvComponentProps) => {
     triggerChangeBehaviors(newElement);
   };
 
-  const onSubmitEditing = () => {
-    const submitEvent = props.element.getAttribute('on-submit-editing-event');
-    if (submitEvent) {
-      Events.dispatch(submitEvent);
-    }
-  };
-
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const textInputRef: MutableRefObject<TextInput | null> = useRef(
     null as TextInput | null,
@@ -113,7 +105,6 @@ const HvTextField = (props: HvComponentProps) => {
       onBlur={() => setFocus(false)}
       onChangeText={onChangeText}
       onFocus={() => setFocus(true)}
-      onSubmitEditing={onSubmitEditing}
       secureTextEntry={secureTextEntry}
       textContentType={textContentType}
     />

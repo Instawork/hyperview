@@ -1174,10 +1174,6 @@
       <xs:attribute name="type" type="xs:string" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
       <xs:attribute name="text-content-type" type="hv:text-content-type" />
-      <xs:attribute name="on-submit-editing-event" type="xs:string" />
-      <xs:attribute name="enterKeyHint" type="hv:enterKeyHint" />
-      <xs:attribute name="returnKeyLabel" type="xs:string" />
-      <xs:attribute name="returnKeyType" type="hv:returnKeyType" />
       <xs:attribute name="autoComplete" type="hv:autoComplete" />
       <xs:attribute name="autoCapitalize">
         <xs:simpleType>
@@ -1345,36 +1341,6 @@
       <xs:enumeration value="password" />
       <xs:enumeration value="newPassword" />
       <xs:enumeration value="oneTimeCode" />
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="returnKeyType">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="done" />
-      <xs:enumeration value="go" />
-      <xs:enumeration value="next" />
-      <xs:enumeration value="search" />
-      <xs:enumeration value="send" />
-      <xs:enumeration value="none" />
-      <xs:enumeration value="previous" />
-      <xs:enumeration value="default" />
-      <xs:enumeration value="emergency-call" />
-      <xs:enumeration value="google" />
-      <xs:enumeration value="join" />
-      <xs:enumeration value="route" />
-      <xs:enumeration value="yahoo" />
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="enterKeyHint">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="done" />
-      <xs:enumeration value="next" />
-      <xs:enumeration value="search" />
-      <xs:enumeration value="send" />
-      <xs:enumeration value="go" />
-      <xs:enumeration value="previous" />
-      <xs:enumeration value="enter" />
     </xs:restriction>
   </xs:simpleType>
 
