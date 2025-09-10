@@ -1,10 +1,12 @@
 ---
-permalink: "/behaviors/basic/focus/index.xml"
+permalink: "/behaviors/basic/submit/index.xml"
 tags: "Behaviors/Basic/Triggers"
-hv_title: "Focus"
+hv_title: "Submit"
 hv_button_behavior: "back"
 ---
 {% extends 'templates/scrollview.xml.njk' %}
+
+{% from 'macros/description/index.xml.njk' import description %}
 
 {% block styles %}
   <style
@@ -45,6 +47,9 @@ hv_button_behavior: "back"
 {% endblock %}
 
 {% block content %}
+  {% call description() -%}
+    When a field is submitted, the content in the container will be replaced.
+  {%- endcall %}
   <view id="container1" style="container-style" />
   {% include './_text-field/index.xml.njk' %}
   {% include './_picker-field/index.xml.njk' %}

@@ -57,6 +57,9 @@ const HvDateField = (props: HvComponentProps): JSX.Element | null => {
     newElement.removeAttribute('picker-value');
     newElement.setAttribute('focused', 'false');
     props.onUpdate(null, 'swap', props.element, { newElement });
+
+    Behaviors.trigger('submit', newElement, props.onUpdate);
+
     if (hasChanged) {
       Behaviors.trigger('change', newElement, props.onUpdate);
     }
