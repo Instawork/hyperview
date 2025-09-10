@@ -1175,6 +1175,39 @@
       <xs:attribute name="type" type="xs:string" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
       <xs:attribute name="text-content-type" type="hv:text-content-type" />
+      <xs:attribute name="enterKeyHint">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="done" />
+            <xs:enumeration value="next" />
+            <xs:enumeration value="search" />
+            <xs:enumeration value="send" />
+            <xs:enumeration value="go" />
+            <xs:enumeration value="previous" />
+            <xs:enumeration value="enter" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="returnKeyLabel" type="xs:string" />
+      <xs:attribute name="returnKeyType">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="done" />
+            <xs:enumeration value="go" />
+            <xs:enumeration value="next" />
+            <xs:enumeration value="search" />
+            <xs:enumeration value="send" />
+            <xs:enumeration value="none" />
+            <xs:enumeration value="previous" />
+            <xs:enumeration value="default" />
+            <xs:enumeration value="emergency-call" />
+            <xs:enumeration value="google" />
+            <xs:enumeration value="join" />
+            <xs:enumeration value="route" />
+            <xs:enumeration value="yahoo" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
       <xs:attribute name="autoComplete" type="hv:autoComplete" />
       <xs:attribute name="autoCapitalize">
         <xs:simpleType>
