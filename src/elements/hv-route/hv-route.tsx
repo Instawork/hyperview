@@ -93,9 +93,7 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
   Route = (): React.ReactElement => {
     const { Screen } = this;
 
-    const needsSubStack = this.props.route?.params?.needsSubStack
-      ? this.props.route.params.needsSubStack
-      : false;
+    const needsSubStack = this.props.route?.params?.needsSubStack ?? false;
 
     const renderElement: Element | undefined = needsSubStack
       ? undefined
