@@ -179,7 +179,7 @@ export default (props: Props) => {
       if (
         !currentUrl.current &&
         !props.hasElement &&
-        !props.route?.params.needsSubStack
+        !props.route?.params?.needsSubStack
       ) {
         // Handle initial load
         loadUrl(props.url);
@@ -395,7 +395,7 @@ export default (props: Props) => {
         routeElement={() => {
           const doc = getDoc();
           return props.route?.params?.routeId && doc
-            ? NavigatorService.getRouteById(doc, props.route.params.routeId)
+            ? NavigatorService.getRouteById(doc, props.route?.params?.routeId)
             : undefined;
         }}
       />

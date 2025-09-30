@@ -1,19 +1,8 @@
 import * as NavigatorHelpers from 'hyperview/src/services/navigator/helpers';
 import { ID_CARD, ID_MODAL } from 'hyperview/src/services/navigator/types';
-import { LOCAL_NAME } from 'hyperview/src/types';
+import { LOCAL_NAME, RouteProps } from 'hyperview/src/types';
 import type { ParamListBase } from '@react-navigation/routers';
 import { StackNavigationState } from '@react-navigation/native';
-
-// TODO: Legacy export
-// Delete
-export type LegacyRoute = {
-  key: string;
-  name: string;
-  params?: {
-    id?: string;
-    url?: string;
-  };
-};
 
 export const buildRoutesFromDom = (
   doc: Document | undefined,
@@ -21,7 +10,7 @@ export const buildRoutesFromDom = (
   navigatorId: string,
   routeParamList: Record<string, object | undefined>,
   entrypointUrl: string | undefined,
-): LegacyRoute[] => {
+): RouteProps[] => {
   const element = doc
     ? NavigatorHelpers.getNavigatorById(doc, navigatorId)
     : null;
@@ -31,11 +20,9 @@ export const buildRoutesFromDom = (
       )
     : [];
 
-  // TODO: Legacy export
-  // Replace with RouteProps[]
-  const routes: LegacyRoute[] = [];
-  const routeIds = state.routes.map((r: LegacyRoute) => r.params?.id);
-  const routeHrefs = state.routes.map((r: LegacyRoute) => {
+  const routes: RouteProps[] = [];
+  const routeIds = state.routes.map((r: RouteProps) => r.params?.id);
+  const routeHrefs = state.routes.map((r: RouteProps) => {
     return r.params?.url
       ? NavigatorHelpers.getUrlFromHref(r.params.url, entrypointUrl)
       : undefined;
