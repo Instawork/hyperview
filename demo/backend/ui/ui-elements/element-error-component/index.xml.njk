@@ -1,0 +1,18 @@
+---
+permalink: "/ui/ui-elements/element-error-component/index.xml"
+tags: "UI/UI Elements/Element Error Component"
+hv_title: "Element Error Component"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  {{ description('Clicking the button will show the custom element error component which is provided in the "elementErrorComponent" property passed in App.tsx.') }}
+
+  {# The behavior element is passed into the elementErrorComponent component passed in App.tsx #}
+  {% call button('Show custom element error component') -%}
+    <behavior action="replace" href="/hyperview/public/ui/ui-elements/element-error-component/broken.xml" />
+  {%- endcall %}
+{% endblock %}
