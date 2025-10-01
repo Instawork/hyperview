@@ -1,5 +1,6 @@
 import * as Components from 'hyperview/src/services/components';
-import {
+import type {
+  ElementErrorComponentProps,
   HvComponentOnUpdate,
   NavigationProps,
   OnUpdateCallbacks,
@@ -7,7 +8,6 @@ import {
   ScreenState,
 } from 'hyperview/src/types';
 import { ComponentType } from 'react';
-import type { Props as ErrorProps } from 'hyperview/src/components/load-error';
 
 /**
  * The props used by inner components of hv-route
@@ -15,7 +15,7 @@ import type { Props as ErrorProps } from 'hyperview/src/components/load-error';
 export type InnerRouteProps = {
   componentRegistry: Components.Registry;
   element?: Element;
-  elementErrorComponent?: ComponentType<ErrorProps>;
+  elementErrorComponent?: ComponentType<ElementErrorComponentProps>;
   getDoc: () => Document | undefined;
   getScreenState: () => ScreenState;
   onUpdate: HvComponentOnUpdate;
