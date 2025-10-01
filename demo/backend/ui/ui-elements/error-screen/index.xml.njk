@@ -1,0 +1,18 @@
+---
+permalink: "/ui/ui-elements/error-screen/index.xml"
+tags: "UI/UI Elements/Error Screen"
+hv_title: "Error Screen"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  {{ description('Clicking the button will show the custom error screen which is provided in the "errorScreen" property passed in App.tsx.') }}
+
+  {# The behavior element is passed into the errorScreen component passed in App.tsx #}
+  {% call button('Show custom error screen') -%}
+    <behavior action="new" href="/hyperview/public/ui/ui-elements/error-screen/not-found.xml" />
+  {%- endcall %}
+{% endblock %}
