@@ -4,15 +4,14 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as Stylesheets from 'hyperview/src/services/stylesheets';
 import * as UrlService from 'hyperview/src/services/url';
-import {
+import type {
   DOMString,
   HvComponentOptions,
-  LOCAL_NAME,
   OnUpdateCallbacks,
   RouteParams,
   ScreenState,
 } from 'hyperview/src/types';
-import { DocState, Props } from './types';
+import type { DocState, Props } from './types';
 import React, {
   useCallback,
   useContext,
@@ -24,6 +23,7 @@ import React, {
 import { Context } from './context';
 import { HvDocError } from './errors';
 import HvElement from 'hyperview/src/components/hv-element';
+import { LOCAL_NAME } from 'hyperview/src/types';
 import LoadError from 'hyperview/src/components/load-error';
 import Loading from 'hyperview/src/components/loading';
 import { later } from 'hyperview/src/services';

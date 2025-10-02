@@ -3,7 +3,8 @@ import type {
   RouterConfigOptions,
 } from '@react-navigation/routers';
 import type { RouterRenameOptions, StackOptions } from './types';
-import { StackNavigationState, StackRouter } from '@react-navigation/native';
+import type { StackNavigationState } from '@react-navigation/native';
+import { StackRouter } from '@react-navigation/native';
 import { buildRoutesFromDom } from './helpers';
 
 /**

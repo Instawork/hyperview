@@ -1,6 +1,7 @@
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import { Image, ImageProps } from 'react-native';
 import type { HvComponentProps } from 'hyperview/src/types';
+import { Image } from 'react-native';
+import type { ImageProps } from 'react-native';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import React from 'react';
 import { createProps } from 'hyperview/src/services';

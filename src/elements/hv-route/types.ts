@@ -7,7 +7,7 @@ import type {
   RouteProps,
   ScreenState,
 } from 'hyperview/src/types';
-import { ComponentType } from 'react';
+import type { ComponentType } from 'react';
 
 /**
  * The props used by inner components of hv-route

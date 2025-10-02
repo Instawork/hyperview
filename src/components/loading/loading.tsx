@@ -1,6 +1,6 @@
 import { ActivityIndicator, View } from 'react-native';
 import React, { useEffect } from 'react';
-import { LoadingProps } from './types';
+import type { LoadingProps } from './types';
 import styles from './styles';
 import { useElementCache } from 'hyperview/src/contexts/element-cache';
 import { useHyperview } from 'hyperview/src/contexts/hyperview';
