@@ -1,9 +1,9 @@
 import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
-import type { Props } from './types';
+import type { ElementErrorComponentProps } from 'hyperview/src/types';
 import React from 'react';
 import styles from './styles';
 
-const LoadElementError = (props: Props) => {
+const LoadElementError = (props: ElementErrorComponentProps) => {
   const getError = () => {
     if (__DEV__) {
       return `${props.error.name}: ${props.error.message}`;
