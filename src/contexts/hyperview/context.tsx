@@ -1,5 +1,5 @@
 import React, { ConsumerProps, useContext } from 'react';
-import { Props } from './types';
+import type { Props } from './types';
 
 /**
  * Context used to store external dependencies.

@@ -1,5 +1,5 @@
 import React, { ConsumerProps, createContext, useContext } from 'react';
-import { ContextProps } from './types';
+import type { ContextProps } from './types';
 
 export const Context = createContext<ContextProps | undefined>(undefined);
 

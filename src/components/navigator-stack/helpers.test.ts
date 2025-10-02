@@ -1,7 +1,7 @@
 import * as DomErrors from 'hyperview/src/services/dom/errors';
 import { DOMParser } from '@instawork/xmldom';
 import type { ParamListBase } from '@react-navigation/routers';
-import { StackNavigationState } from '@react-navigation/native';
+import type { StackNavigationState } from '@react-navigation/native';
 import { buildRoutesFromDom } from './helpers';
 
 /**

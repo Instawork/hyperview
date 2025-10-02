@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { RouterConfigOptions } from '@react-navigation/native';
-import { StackNavigationOptions } from '@react-navigation/stack';
+import type { RouterConfigOptions } from '@react-navigation/native';
+import type { StackNavigationOptions } from '@react-navigation/stack';
 
 export type Props = {
   id: string;
