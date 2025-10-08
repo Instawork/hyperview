@@ -1,4 +1,4 @@
-import { ScrollView, TextInput } from 'react-native';
+import type { ScrollView, TextInput } from 'react-native';
 
 export type Props = {
   children?: React.ReactNode;

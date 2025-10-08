@@ -5,7 +5,6 @@ import type {
   Route as NavigatorRoute,
 } from '@react-navigation/native';
 import React, { ComponentType } from 'react';
-import type { Props as ErrorProps } from 'hyperview/src/components/load-error';
 import type { Props as LoadingProps } from 'hyperview/src/components/loading';
 import type { BottomTabBarProps as RNBottomTabBarProps } from '@react-navigation/bottom-tabs';
 import type { RefreshControlProps } from 'react-native';
@@ -336,6 +335,19 @@ export type ScreenState = {
   url?: string | null;
 };
 
+export type ElementErrorComponentProps = {
+  error: Error;
+  onPressReload: () => void;
+  onPressClose: () => void;
+};
+
+export type ErrorScreenProps = {
+  back: () => void;
+  error: Error | null | undefined;
+  onPressReload: () => void;
+  onPressViewDetails: (uri: string) => void;
+};
+
 export type ExperimentalFeatures = {
   // Delay the mutation of the navigation state until after the screen has been rendered
   // This is intended to improve the performance of navigation actions
@@ -363,9 +375,9 @@ export type NavigationComponents = {
 export type Props = {
   behaviors?: HvBehavior[];
   components?: HvComponent[];
-  elementErrorComponent?: ComponentType<ErrorProps>;
+  elementErrorComponent?: ComponentType<ElementErrorComponentProps>;
   entrypointUrl: string;
-  errorScreen?: ComponentType<ErrorProps>;
+  errorScreen?: ComponentType<ErrorScreenProps>;
   experimentalFeatures?: ExperimentalFeatures;
   fetch: Fetch;
   formatDate: FormatDate;

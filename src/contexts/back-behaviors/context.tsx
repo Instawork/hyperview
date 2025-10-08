@@ -6,8 +6,8 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { HvComponentOnUpdate } from 'hyperview/src/types';
-import { Props } from './types';
+import type { HvComponentOnUpdate } from 'hyperview/src/types';
+import type { Props } from './types';
 
 /*
  * Provides a registry of back behaviors to allow sharing between hv-screen and hv-route

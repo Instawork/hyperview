@@ -14,6 +14,8 @@ export { default } from './hyperview';
  */
 export type {
   DOMString,
+  ElementErrorComponentProps,
+  ErrorScreenProps,
   ExperimentalFeatures,
   HvBehavior,
   HvComponent,

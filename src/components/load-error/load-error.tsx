@@ -1,11 +1,11 @@
 import * as Dom from 'hyperview/src/services/dom';
 import React, { PureComponent } from 'react';
 import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
-import type { Props } from './types';
+import type { ErrorScreenProps } from 'hyperview/src/types';
 import WebView from 'hyperview/src/components/web-view';
 import styles from './styles';
 
-export default class LoadError extends PureComponent<Props> {
+export default class LoadError extends PureComponent<ErrorScreenProps> {
   getHTML = (): string | null | undefined => {
     if (
       !__DEV__ ||

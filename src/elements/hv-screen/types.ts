@@ -1,18 +1,18 @@
 import * as Components from 'hyperview/src/services/components';
 import type {
+  ElementErrorComponentProps,
   HvComponentOnUpdate,
   OnUpdateCallbacks,
   ScreenState,
 } from 'hyperview/src/types';
-import { ComponentType } from 'react';
-import type { Props as ErrorProps } from 'hyperview/src/components/load-error';
+import type { ComponentType } from 'react';
 
 /**
  * All of the props used by hv-screen
  */
 export type Props = {
   componentRegistry: Components.Registry;
-  elementErrorComponent?: ComponentType<ErrorProps>;
+  elementErrorComponent?: ComponentType<ElementErrorComponentProps>;
   getScreenState: () => ScreenState;
   onUpdate: HvComponentOnUpdate;
   onUpdateCallbacks: OnUpdateCallbacks;
