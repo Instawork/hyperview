@@ -6,6 +6,7 @@ import { BottomTabBar } from './src/Core';
 import { BottomTabBarContextProvider } from './src/Contexts';
 import Components from './src/Components';
 import Constants from 'expo-constants';
+import ElementErrorComponent from './src/element-error-component';
 import ErrorScreen from './src/error-screen';
 import Hyperview from 'hyperview';
 import LoadingScreen from './src/loading-screen';
@@ -41,6 +42,7 @@ export default () => (
         <Hyperview
           behaviors={Behaviors}
           components={Components}
+          elementErrorComponent={ElementErrorComponent}
           entrypointUrl={`${Constants.expoConfig?.extra?.baseUrl}/hyperview/public/index.xml`}
           errorScreen={ErrorScreen}
           experimentalFeatures={{ navStateMutationsDelay: 10 }}
