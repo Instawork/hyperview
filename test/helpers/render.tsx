@@ -21,6 +21,7 @@ export const HyperviewMock = (props: Props) => {
 
     return {
       ok: true,
+      status: 200,
       text: async () => response,
     } as Response;
   };
