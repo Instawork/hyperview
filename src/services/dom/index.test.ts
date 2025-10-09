@@ -359,6 +359,30 @@ describe('Parser', () => {
         });
       });
     });
+
+    describe('errors', () => {
+      it('throws ServerError on non-200 HTTP status', async () => {
+        const url = 'http://foo/bar';
+        const responseText = 'server error body';
+
+        fetchMock.mockResolvedValueOnce({
+          text: () => Promise.resolve(responseText),
+          headers: new Map(),
+          status: 500,
+        });
+
+        let thrown: unknown;
+        try {
+          await parser.load(url);
+        } catch (e) {
+          thrown = e;
+        }
+        expect(thrown).toBeInstanceOf(Dom.ServerError);
+        const error = thrown as any;
+        expect(error.status).toBe(500);
+        expect(error.responseText).toBe(responseText);
+      });
+    });
   });
   // describe('loadDocument', () => {
   // it.todo('missing <doc>');
