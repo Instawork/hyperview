@@ -18,7 +18,7 @@ jest.mock('@instawork/xmldom', () => {
 // Mock other dependencies
 const fetchMock = jest.fn();
 const responseTextMock = jest.fn();
-fetchMock.mockResolvedValue({ text: responseTextMock });
+fetchMock.mockResolvedValue({ text: responseTextMock, status: 200 });
 const beforeParseMock = jest.fn();
 const afterParseMock = jest.fn();
 const urlServiceAddFormDataToUrlMock = jest.spyOn(
@@ -125,7 +125,11 @@ describe('Parser', () => {
           Dom.HTTP_HEADERS.X_RESPONSE_STALE_REASON,
           X_RESPONSE_STALE_REASON.STALE_IF_ERROR,
         );
-        fetchMock.mockResolvedValueOnce({ headers, text: responseTextMock });
+        fetchMock.mockResolvedValueOnce({
+          headers,
+          text: responseTextMock,
+          status: 200,
+        });
 
         const result = await parser.load(url);
         expect(result).not.toBe(NO_OP);
@@ -224,7 +228,11 @@ describe('Parser', () => {
 
         // Complete first request
         responseTextMock.mockResolvedValue(responseText);
-        resolveFirst!({ text: responseTextMock, headers: new Map() });
+        resolveFirst!({
+          text: responseTextMock,
+          headers: new Map(),
+          status: 200,
+        });
 
         const firstResult = await firstRequest;
         expect(firstResult).toEqual({
@@ -282,12 +290,14 @@ describe('Parser', () => {
         resolveFirst!({
           text: () => Promise.resolve(responseText1),
           headers: new Map(),
+          status: 200,
         });
 
         responseTextMock.mockResolvedValueOnce(responseText2);
         resolveSecond!({
           text: () => Promise.resolve(responseText2),
           headers: new Map(),
+          status: 200,
         });
 
         // First request should return NO_OP (was replaced)
@@ -312,6 +322,7 @@ describe('Parser', () => {
         fetchMock.mockResolvedValue({
           text: responseTextMock,
           headers: new Map(),
+          status: 200,
         });
 
         // Start two requests with different sync IDs
