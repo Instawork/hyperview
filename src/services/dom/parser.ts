@@ -151,9 +151,10 @@ export class Parser {
       HTTP_HEADERS.X_RESPONSE_STALE_REASON,
     ) as XResponseStaleReason;
     if (
-      response.status >= 500 &&
-      staleHeaderType !== X_RESPONSE_STALE_REASON.STALE_IF_ERROR &&
-      contentType !== CONTENT_TYPE.APPLICATION_XML
+      (response.status >= 500 &&
+        staleHeaderType !== X_RESPONSE_STALE_REASON.STALE_IF_ERROR &&
+        contentType !== CONTENT_TYPE.APPLICATION_XML) ||
+      response.status !== 200
     ) {
       throw new Errors.ServerError(
         url,
