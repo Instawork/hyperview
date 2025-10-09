@@ -74,6 +74,32 @@ export class ServerError extends ErrorService.HvBaseError {
   }
 }
 
+export class ClientError extends ErrorService.HvBaseError {
+  name = 'ClientError';
+
+  responseHeaders: Headers;
+
+  responseText: string;
+
+  status: number;
+
+  constructor(
+    url: string,
+    responseText: string,
+    responseHeaders: Headers,
+    status: number,
+  ) {
+    super(`${url}\nstatus: ${status}`);
+    this.responseText = responseText;
+    this.responseHeaders = responseHeaders;
+    this.status = status;
+    this.setExtraContext('url', url);
+    this.setExtraContext('responseText', responseText);
+    this.setExtraContext('responseHeaders', responseHeaders);
+    this.setExtraContext('status', status);
+  }
+}
+
 export class DocumentGetElementByIdError extends ErrorService.HvBaseError {
   name = 'DocumentGetElementByIdError';
 
