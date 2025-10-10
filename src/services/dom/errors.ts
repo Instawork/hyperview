@@ -49,20 +49,22 @@ export class XMLParserFatalError extends ErrorService.HvBaseError {
 export class XMLRequiredElementNotFound extends ErrorService.HvBaseError {
   name = 'XMLRequiredElementNotFound';
 
-  constructor(tag: string, url: string) {
+  constructor(tag: string, url: string, content: string) {
     super(`Required <${tag}> tag not found in the response from ${url}`);
     this.setExtraContext('tag', tag);
     this.setExtraContext('url', url);
+    this.setExtraContext('content', content);
   }
 }
 
 export class XMLRestrictedElementFound extends ErrorService.HvBaseError {
   name = 'XMLRestrictedElementFound';
 
-  constructor(tag: string, url: string) {
+  constructor(tag: string, url: string, content: string) {
     super(`Restricted <${tag}> tag found in the response from ${url}`);
     this.setExtraContext('tag', tag);
     this.setExtraContext('url', url);
+    this.setExtraContext('content', content);
   }
 }
 
