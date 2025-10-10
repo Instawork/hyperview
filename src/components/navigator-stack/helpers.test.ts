@@ -38,13 +38,13 @@ const navDocSourceCard =
 const parser = new DOMParser({
   errorHandler: {
     error: (error: string) => {
-      throw new DomErrors.XMLParserError(error);
+      throw new DomErrors.XMLParserError(error, 'test://parser', '', 0);
     },
     fatalError: (error: string) => {
-      throw new DomErrors.XMLParserFatalError(error);
+      throw new DomErrors.XMLParserFatalError(error, 'test://parser', '', 0);
     },
     warning: (error: string) => {
-      throw new DomErrors.XMLParserWarning(error);
+      throw new DomErrors.XMLParserWarning(error, 'test://parser', '', 0);
     },
   },
   locator: {},
