@@ -208,9 +208,14 @@ export class Parser {
       throw new Error('loadDocument cannot return NO_OP');
     }
     const { doc, staleHeaderType } = result;
+    const resultText = doc.toString();
     const docElement = getFirstTag(doc, LOCAL_NAME.DOC);
     if (!docElement) {
-      throw new Errors.XMLRequiredElementNotFound(LOCAL_NAME.DOC, baseUrl);
+      throw new Errors.XMLRequiredElementNotFound(
+        LOCAL_NAME.DOC,
+        baseUrl,
+        resultText,
+      );
     }
 
     const screenElement = getFirstTag(docElement, LOCAL_NAME.SCREEN);
@@ -219,13 +224,18 @@ export class Parser {
       throw new Errors.XMLRequiredElementNotFound(
         `${LOCAL_NAME.SCREEN}/${LOCAL_NAME.NAVIGATOR}`,
         baseUrl,
+        resultText,
       );
     }
 
     if (screenElement) {
       const bodyElement = getFirstTag(screenElement, LOCAL_NAME.BODY);
       if (!bodyElement) {
-        throw new Errors.XMLRequiredElementNotFound(LOCAL_NAME.BODY, baseUrl);
+        throw new Errors.XMLRequiredElementNotFound(
+          LOCAL_NAME.BODY,
+          baseUrl,
+          resultText,
+        );
       }
     } else if (navigatorElement) {
       const routeElement = getFirstTag(navigatorElement, LOCAL_NAME.NAV_ROUTE);
@@ -233,12 +243,14 @@ export class Parser {
         throw new Errors.XMLRequiredElementNotFound(
           LOCAL_NAME.NAV_ROUTE,
           baseUrl,
+          resultText,
         );
       }
     } else {
       throw new Errors.XMLRequiredElementNotFound(
         `${LOCAL_NAME.SCREEN}/${LOCAL_NAME.NAVIGATOR}`,
         baseUrl,
+        resultText,
       );
     }
     return { doc: processDocument(doc), staleHeaderType };
@@ -275,24 +287,41 @@ export class Parser {
     }
 
     const { doc, staleHeaderType } = result;
+    const resultText = doc.toString();
     const docElement = getFirstTag(doc, LOCAL_NAME.DOC);
     if (docElement) {
-      throw new Errors.XMLRestrictedElementFound(LOCAL_NAME.DOC, baseUrl);
+      throw new Errors.XMLRestrictedElementFound(
+        LOCAL_NAME.DOC,
+        baseUrl,
+        resultText,
+      );
     }
 
     const navigatorElement = getFirstTag(doc, LOCAL_NAME.NAVIGATOR);
     if (navigatorElement) {
-      throw new Errors.XMLRestrictedElementFound(LOCAL_NAME.NAVIGATOR, baseUrl);
+      throw new Errors.XMLRestrictedElementFound(
+        LOCAL_NAME.NAVIGATOR,
+        baseUrl,
+        resultText,
+      );
     }
 
     const screenElement = getFirstTag(doc, LOCAL_NAME.SCREEN);
     if (screenElement) {
-      throw new Errors.XMLRestrictedElementFound(LOCAL_NAME.SCREEN, baseUrl);
+      throw new Errors.XMLRestrictedElementFound(
+        LOCAL_NAME.SCREEN,
+        baseUrl,
+        resultText,
+      );
     }
 
     const bodyElement = getFirstTag(doc, LOCAL_NAME.BODY);
     if (bodyElement) {
-      throw new Errors.XMLRestrictedElementFound(LOCAL_NAME.BODY, baseUrl);
+      throw new Errors.XMLRestrictedElementFound(
+        LOCAL_NAME.BODY,
+        baseUrl,
+        resultText,
+      );
     }
     return { doc: processDocument(doc), staleHeaderType };
   };
