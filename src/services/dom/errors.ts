@@ -12,14 +12,35 @@ export class UnsupportedContentTypeError extends ErrorService.HvBaseError {
  */
 export class XMLParserWarning extends ErrorService.HvBaseError {
   name = 'ParserWarning';
+
+  constructor(message: string, url: string, content: string, status: number) {
+    super(message);
+    this.setExtraContext('url', url);
+    this.setExtraContext('content', content);
+    this.setExtraContext('status', status);
+  }
 }
 
 export class XMLParserError extends ErrorService.HvBaseError {
   name = 'ParserError';
+
+  constructor(message: string, url: string, content: string, status: number) {
+    super(message);
+    this.setExtraContext('url', url);
+    this.setExtraContext('content', content);
+    this.setExtraContext('status', status);
+  }
 }
 
 export class XMLParserFatalError extends ErrorService.HvBaseError {
   name = 'ParserFatalError';
+
+  constructor(message: string, url: string, content: string, status: number) {
+    super(message);
+    this.setExtraContext('url', url);
+    this.setExtraContext('content', content);
+    this.setExtraContext('status', status);
+  }
 }
 
 /**
