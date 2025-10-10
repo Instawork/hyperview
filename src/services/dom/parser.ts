@@ -21,16 +21,37 @@ import { version } from 'hyperview/package.json';
 
 const { width, height } = Dimensions.get('window');
 
+const parserContext = {
+  responseText: '',
+  status: 0,
+  url: '',
+};
+
 const parser = new DOMParser({
   errorHandler: {
     error: (error: string) => {
-      throw new Errors.XMLParserError(error);
+      throw new Errors.XMLParserError(
+        error,
+        parserContext.url,
+        parserContext.responseText,
+        parserContext.status,
+      );
     },
     fatalError: (error: string) => {
-      throw new Errors.XMLParserFatalError(error);
+      throw new Errors.XMLParserFatalError(
+        error,
+        parserContext.url,
+        parserContext.responseText,
+        parserContext.status,
+      );
     },
     warning: (error: string) => {
-      throw new Errors.XMLParserWarning(error);
+      throw new Errors.XMLParserWarning(
+        error,
+        parserContext.url,
+        parserContext.responseText,
+        parserContext.status,
+      );
     },
   },
   locator: {},
@@ -166,6 +187,9 @@ export class Parser {
     if (this.onBeforeParse) {
       this.onBeforeParse(url);
     }
+    parserContext.url = url;
+    parserContext.status = response.status;
+    parserContext.responseText = responseText;
     const doc = parser.parseFromString(responseText);
     if (this.onAfterParse) {
       this.onAfterParse(url);
