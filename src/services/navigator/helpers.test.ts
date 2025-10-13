@@ -144,13 +144,13 @@ const navDocStackNavigatorSource =
 const parser = new DOMParser({
   errorHandler: {
     error: (error: string) => {
-      throw new DomErrors.XMLParserError(error, 'test://parser', '', 0);
+      throw new DomErrors.XMLParserError(error);
     },
     fatalError: (error: string) => {
-      throw new DomErrors.XMLParserFatalError(error, 'test://parser', '', 0);
+      throw new DomErrors.XMLParserFatalError(error);
     },
     warning: (error: string) => {
-      throw new DomErrors.XMLParserWarning(error, 'test://parser', '', 0);
+      throw new DomErrors.XMLParserWarning(error);
     },
   },
   locator: {},
