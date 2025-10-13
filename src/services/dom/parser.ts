@@ -168,21 +168,12 @@ export class Parser {
     }
     let doc: Document;
     try {
-      doc = parser.parseFromString('');
+      doc = parser.parseFromString(responseText);
     } catch (e) {
       const err = e as Error;
-      if (err instanceof Errors.XMLParserError) {
-        // Re-throw with extra context
-        throw new Errors.XMLParserError(
-          err.message,
-          url,
-          responseText,
-          response.status,
-        );
-      }
       if (err instanceof Errors.XMLParserFatalError) {
         // Re-throw with extra context
-        throw new Errors.XMLParserFatalError(
+        throw new Errors.ParserFatalError(
           err.message,
           url,
           responseText,
@@ -191,14 +182,20 @@ export class Parser {
       }
       if (err instanceof Errors.XMLParserWarning) {
         // Re-throw with extra context
-        throw new Errors.XMLParserWarning(
+        throw new Errors.ParserWarning(
           err.message,
           url,
           responseText,
           response.status,
         );
       }
-      throw err;
+      // Re-throw with extra context
+      throw new Errors.ParserError(
+        err?.message || 'Unknown error',
+        url,
+        responseText,
+        response.status,
+      );
     }
     if (this.onAfterParse) {
       this.onAfterParse(url);
