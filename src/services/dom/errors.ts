@@ -10,10 +10,16 @@ export class UnsupportedContentTypeError extends ErrorService.HvBaseError {
 /**
  * XML parser errors
  */
+
 export class XMLParserWarning extends ErrorService.HvBaseError {
   name = 'ParserWarning';
 
-  constructor(message: string, url: string, content: string, status: number) {
+  constructor(
+    message: string,
+    url?: string,
+    content?: string,
+    status?: number,
+  ) {
     super(message);
     this.setExtraContext('url', url);
     this.setExtraContext('content', content);
@@ -24,7 +30,12 @@ export class XMLParserWarning extends ErrorService.HvBaseError {
 export class XMLParserError extends ErrorService.HvBaseError {
   name = 'ParserError';
 
-  constructor(message: string, url: string, content: string, status: number) {
+  constructor(
+    message: string,
+    url?: string,
+    content?: string,
+    status?: number,
+  ) {
     super(message);
     this.setExtraContext('url', url);
     this.setExtraContext('content', content);
@@ -35,7 +46,12 @@ export class XMLParserError extends ErrorService.HvBaseError {
 export class XMLParserFatalError extends ErrorService.HvBaseError {
   name = 'ParserFatalError';
 
-  constructor(message: string, url: string, content: string, status: number) {
+  constructor(
+    message: string,
+    url?: string,
+    content?: string,
+    status?: number,
+  ) {
     super(message);
     this.setExtraContext('url', url);
     this.setExtraContext('content', content);

@@ -21,37 +21,16 @@ import { version } from 'hyperview/package.json';
 
 const { width, height } = Dimensions.get('window');
 
-const parserContext = {
-  responseText: '',
-  status: 0,
-  url: '',
-};
-
 const parser = new DOMParser({
   errorHandler: {
     error: (error: string) => {
-      throw new Errors.XMLParserError(
-        error,
-        parserContext.url,
-        parserContext.responseText,
-        parserContext.status,
-      );
+      throw new Errors.XMLParserError(error);
     },
     fatalError: (error: string) => {
-      throw new Errors.XMLParserFatalError(
-        error,
-        parserContext.url,
-        parserContext.responseText,
-        parserContext.status,
-      );
+      throw new Errors.XMLParserFatalError(error);
     },
     warning: (error: string) => {
-      throw new Errors.XMLParserWarning(
-        error,
-        parserContext.url,
-        parserContext.responseText,
-        parserContext.status,
-      );
+      throw new Errors.XMLParserWarning(error);
     },
   },
   locator: {},
@@ -187,10 +166,40 @@ export class Parser {
     if (this.onBeforeParse) {
       this.onBeforeParse(url);
     }
-    parserContext.url = url;
-    parserContext.status = response.status;
-    parserContext.responseText = responseText;
-    const doc = parser.parseFromString(responseText);
+    let doc: Document;
+    try {
+      doc = parser.parseFromString('');
+    } catch (e) {
+      const err = e as Error;
+      if (err instanceof Errors.XMLParserError) {
+        // Re-throw with extra context
+        throw new Errors.XMLParserError(
+          err.message,
+          url,
+          responseText,
+          response.status,
+        );
+      }
+      if (err instanceof Errors.XMLParserFatalError) {
+        // Re-throw with extra context
+        throw new Errors.XMLParserFatalError(
+          err.message,
+          url,
+          responseText,
+          response.status,
+        );
+      }
+      if (err instanceof Errors.XMLParserWarning) {
+        // Re-throw with extra context
+        throw new Errors.XMLParserWarning(
+          err.message,
+          url,
+          responseText,
+          response.status,
+        );
+      }
+      throw err;
+    }
     if (this.onAfterParse) {
       this.onAfterParse(url);
     }
