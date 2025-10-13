@@ -11,7 +11,13 @@ export class UnsupportedContentTypeError extends ErrorService.HvBaseError {
  * XML parser errors
  */
 
+// Warning thrown by the XML parser
 export class XMLParserWarning extends ErrorService.HvBaseError {
+  name = 'XMLParserWarning';
+}
+
+// Warning thrown by the Hyperview
+export class ParserWarning extends XMLParserWarning {
   name = 'ParserWarning';
 
   constructor(
@@ -27,7 +33,13 @@ export class XMLParserWarning extends ErrorService.HvBaseError {
   }
 }
 
+// Error thrown by the XML parser
 export class XMLParserError extends ErrorService.HvBaseError {
+  name = 'XMLParserError';
+}
+
+// Error thrown by the Hyperview
+export class ParserError extends XMLParserError {
   name = 'ParserError';
 
   constructor(
@@ -43,7 +55,25 @@ export class XMLParserError extends ErrorService.HvBaseError {
   }
 }
 
+// Error thrown by the XML parser
 export class XMLParserFatalError extends ErrorService.HvBaseError {
+  name = 'XMLParserFatalError';
+
+  constructor(
+    message: string,
+    url?: string,
+    content?: string,
+    status?: number,
+  ) {
+    super(message);
+    this.setExtraContext('url', url);
+    this.setExtraContext('content', content);
+    this.setExtraContext('status', status);
+  }
+}
+
+// Error thrown by the Hyperview
+export class ParserFatalError extends XMLParserFatalError {
   name = 'ParserFatalError';
 
   constructor(
