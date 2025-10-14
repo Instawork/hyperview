@@ -17,7 +17,7 @@ export class XMLParserWarning extends ErrorService.HvBaseError {
 }
 
 // Warning thrown by the Hyperview
-export class ParserWarning extends XMLParserWarning {
+export class ParserWarning extends ErrorService.HvBaseError {
   name = 'ParserWarning';
 
   constructor(
@@ -39,7 +39,7 @@ export class XMLParserError extends ErrorService.HvBaseError {
 }
 
 // Error thrown by the Hyperview
-export class ParserError extends XMLParserError {
+export class ParserError extends ErrorService.HvBaseError {
   name = 'ParserError';
 
   constructor(
@@ -73,7 +73,7 @@ export class XMLParserFatalError extends ErrorService.HvBaseError {
 }
 
 // Error thrown by the Hyperview
-export class ParserFatalError extends XMLParserFatalError {
+export class ParserFatalError extends ErrorService.HvBaseError {
   name = 'ParserFatalError';
 
   constructor(
