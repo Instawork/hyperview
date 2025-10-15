@@ -14,12 +14,19 @@ import {
   X_RESPONSE_STALE_REASON,
 } from './types';
 import { LOCAL_NAME, NO_OP, SYNC_METHODS } from 'hyperview/src/types';
-import { getFirstTag, processDocument } from './helpers';
+import {
+  buildContextSnippet,
+  cleanParserMessage,
+  getFirstTag,
+  processDocument,
+  trimAndCleanString,
+} from './helpers';
 import { DOMParser } from '@instawork/xmldom';
 import { Dimensions } from 'react-native';
 import { version } from 'hyperview/package.json';
 
 const { width, height } = Dimensions.get('window');
+const SNIPPET_LENGTH = 200;
 
 const parser = new DOMParser({
   errorHandler: {
@@ -171,29 +178,34 @@ export class Parser {
       doc = parser.parseFromString(responseText);
     } catch (e) {
       const err = e as Error;
+      const snippet = buildContextSnippet(
+        err.message,
+        responseText,
+        SNIPPET_LENGTH,
+      );
       if (err instanceof Errors.XMLParserFatalError) {
         // Re-throw with extra context
         throw new Errors.ParserFatalError(
-          err.message,
+          cleanParserMessage(err.message, snippet),
           url,
-          responseText,
+          snippet,
           response.status,
         );
       }
       if (err instanceof Errors.XMLParserWarning) {
         // Re-throw with extra context
         throw new Errors.ParserWarning(
-          err.message,
+          cleanParserMessage(err.message, snippet),
           url,
-          responseText,
+          snippet,
           response.status,
         );
       }
       // Re-throw with extra context
       throw new Errors.ParserError(
-        err?.message || 'Unknown error',
+        cleanParserMessage(err?.message || 'Unknown error', snippet),
         url,
-        responseText,
+        snippet,
         response.status,
       );
     }
