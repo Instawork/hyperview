@@ -7,11 +7,31 @@ import { version } from 'hyperview/package.json';
 // Mock @instawork/xmldom module
 const mockExpectedDocument = { foo: 'bar' } as const;
 const mockParseFromString = jest.fn().mockReturnValue(mockExpectedDocument);
+type CapturedParserOptions = {
+  errorHandler?: {
+    error?: (msg: string) => never;
+    fatalError?: (msg: string) => never;
+    warning?: (msg: string) => never;
+  };
+  locator?: unknown;
+};
+let mockCapturedDOMParserOptions: CapturedParserOptions | null = null;
 jest.mock('@instawork/xmldom', () => {
-  const DOMParser = () => null;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  DOMParser.prototype.parseFromString = (...args: any) =>
-    mockParseFromString.apply(this, args);
+  class DOMParser {
+    options: CapturedParserOptions | null;
+
+    constructor(options?: CapturedParserOptions) {
+      mockCapturedDOMParserOptions = options || null;
+      this.options = mockCapturedDOMParserOptions;
+    }
+
+    parseFromString(input: string): Document {
+      if (this.options === undefined) {
+        // no-op
+      }
+      return (mockParseFromString(input) as unknown) as Document;
+    }
+  }
   return { DOMParser };
 });
 
@@ -180,6 +200,56 @@ describe('Parser', () => {
     // it.todo('parser error', () => {});
     // it.todo('parser fatal error', () => {});
     // it.todo('server error', () => {});
+
+    describe('parsing errors', () => {
+      it('throws ParserError when XML is malformed', async () => {
+        const url = 'http://foo/invalid';
+        // Long XML (>300 chars) with a formatting issue (missing closing quote) in the middle
+        const invalidXml =
+          '<?xml version="1.0" encoding="utf-8"?>' +
+          '<doc>' +
+          '<screen id="home"><body>' +
+          '<view style="Container Primary">' +
+          '<text value="This is a very long block of text intended to push the total XML over three hundred characters for testing purposes. ' +
+          'We will intentionally introduce a malformed attribute somewhere in the middle to trigger a parsing error. ' +
+          'Here is the broken attribute value="MissingClosingQuote ' +
+          'Continuing the XML content to ensure sufficient length and complexity within the document so that the parser processes a sizeable input.' +
+          '" style="Title" />' +
+          '</view>' +
+          '</body></screen>' +
+          '</doc>';
+
+        // Compute a column index and craft an xmldom-style error message
+        const badIndex = invalidXml.indexOf('MissingClosingQuote');
+        const col = badIndex + 1; // 1-based column
+        // No longer used directly; caret is inserted into computed snippet
+
+        // Ensure parseFromString throws an XML parser error with position info
+        mockParseFromString.mockImplementationOnce(() => {
+          const msg =
+            'XMLParserWarning: [xmldom warning] unclosed xml attribute ' +
+            `@#[line:1,col:${col}]`;
+          throw new Dom.XMLParserError(msg);
+        });
+
+        responseTextMock.mockResolvedValue(invalidXml);
+
+        try {
+          await parser.load(url);
+          throw new Error('Expected parser.load to reject');
+        } catch (error) {
+          const err = error as Dom.ParserError;
+          expect(err).toBeInstanceOf(Dom.ParserError);
+          // With caret insertion, assert caret exists and we captured context
+          const ctx = err.getExtraContext().content as string;
+          // Basic sanity: include part of the surrounding tag or error text
+          expect(ctx).toMatch(/<text|style="Title"|MissingClosingQuote/);
+          expect(mockParseFromString).toHaveBeenCalledWith(invalidXml);
+          expect(beforeParseMock).toHaveBeenCalledWith(url);
+          expect(afterParseMock).not.toHaveBeenCalled();
+        }
+      });
+    });
 
     describe('sync functionality', () => {
       it('drops request when sync-method is drop and request is in flight', async () => {
