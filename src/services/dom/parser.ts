@@ -31,8 +31,25 @@ const SNIPPET_LENGTH = 200;
 
 // Compute a snippet start position by centering around the end of an opening tag
 const getSnippetStartForTag = (responseText: string, tag: string): number => {
-  const center = findTagEndIndex(responseText, tag, 0);
+  let center;
+  try {
+    center = findTagEndIndex(responseText, tag, 0);
+  } catch (e) {
+    center = 0;
+  }
   return Math.max(0, center - SNIPPET_LENGTH / 2);
+};
+
+// Safe version of trimAndCleanString which encapsulates finding the start of the snippet
+const safeTrimAndCleanString = (responseText: string, tag: string): string => {
+  let result;
+  try {
+    const start = getSnippetStartForTag(responseText, tag);
+    result = trimAndCleanString(responseText, start, SNIPPET_LENGTH);
+  } catch (e) {
+    result = '';
+  }
+  return result;
 };
 
 const parser = new DOMParser({
@@ -185,15 +202,29 @@ export class Parser {
       doc = parser.parseFromString(responseText);
     } catch (e) {
       const err = e as Error;
-      const snippet = buildContextSnippet(
-        err.message,
-        responseText,
-        SNIPPET_LENGTH,
-      );
+      let snippet;
+      try {
+        snippet = buildContextSnippet(
+          err.message,
+          responseText,
+          SNIPPET_LENGTH,
+        );
+      } catch {
+        snippet = responseText ? responseText.slice(0, SNIPPET_LENGTH) : '';
+      }
+      let errorMessage;
+      try {
+        errorMessage = cleanParserMessage(
+          err?.message || 'Unknown error',
+          snippet,
+        );
+      } catch {
+        errorMessage = err?.message || 'Unknown error';
+      }
       if (err instanceof Errors.XMLParserFatalError) {
         // Re-throw with extra context
         throw new Errors.ParserFatalError(
-          cleanParserMessage(err.message, snippet),
+          errorMessage,
           url,
           snippet,
           response.status,
@@ -202,19 +233,14 @@ export class Parser {
       if (err instanceof Errors.XMLParserWarning) {
         // Re-throw with extra context
         throw new Errors.ParserWarning(
-          cleanParserMessage(err.message, snippet),
+          errorMessage,
           url,
           snippet,
           response.status,
         );
       }
       // Re-throw with extra context
-      throw new Errors.ParserError(
-        cleanParserMessage(err?.message || 'Unknown error', snippet),
-        url,
-        snippet,
-        response.status,
-      );
+      throw new Errors.ParserError(errorMessage, url, snippet, response.status);
     }
     if (this.onAfterParse) {
       this.onAfterParse(url);
@@ -238,51 +264,43 @@ export class Parser {
       throw new Errors.XMLRequiredElementNotFound(
         LOCAL_NAME.DOC,
         baseUrl,
-        trimAndCleanString(doc.toString(), 0, SNIPPET_LENGTH),
+        safeTrimAndCleanString(doc?.toString() || '', ''),
       );
     }
 
     const screenElement = getFirstTag(docElement, LOCAL_NAME.SCREEN);
     const navigatorElement = getFirstTag(docElement, LOCAL_NAME.NAVIGATOR);
     if (!screenElement && !navigatorElement) {
-      const responseText = doc.toString();
-      const start = getSnippetStartForTag(responseText, LOCAL_NAME.DOC);
       throw new Errors.XMLRequiredElementNotFound(
         `${LOCAL_NAME.SCREEN}/${LOCAL_NAME.NAVIGATOR}`,
         baseUrl,
-        trimAndCleanString(responseText, start, SNIPPET_LENGTH),
+        safeTrimAndCleanString(doc?.toString() || '', LOCAL_NAME.DOC),
       );
     }
 
     if (screenElement) {
       const bodyElement = getFirstTag(screenElement, LOCAL_NAME.BODY);
       if (!bodyElement) {
-        const responseText = doc.toString();
-        const start = getSnippetStartForTag(responseText, LOCAL_NAME.SCREEN);
         throw new Errors.XMLRequiredElementNotFound(
           LOCAL_NAME.BODY,
           baseUrl,
-          trimAndCleanString(responseText, start, SNIPPET_LENGTH),
+          safeTrimAndCleanString(doc?.toString() || '', LOCAL_NAME.SCREEN),
         );
       }
     } else if (navigatorElement) {
       const routeElement = getFirstTag(navigatorElement, LOCAL_NAME.NAV_ROUTE);
       if (!routeElement) {
-        const responseText = doc.toString();
-        const start = getSnippetStartForTag(responseText, LOCAL_NAME.NAVIGATOR);
         throw new Errors.XMLRequiredElementNotFound(
           LOCAL_NAME.NAV_ROUTE,
           baseUrl,
-          trimAndCleanString(responseText, start, SNIPPET_LENGTH),
+          safeTrimAndCleanString(doc?.toString() || '', LOCAL_NAME.NAVIGATOR),
         );
       }
     } else {
-      const responseText = doc.toString();
-      const start = getSnippetStartForTag(responseText, LOCAL_NAME.DOC);
       throw new Errors.XMLRequiredElementNotFound(
         `${LOCAL_NAME.SCREEN}/${LOCAL_NAME.NAVIGATOR}`,
         baseUrl,
-        trimAndCleanString(responseText, start, SNIPPET_LENGTH),
+        safeTrimAndCleanString(doc?.toString() || '', LOCAL_NAME.DOC),
       );
     }
     return { doc: processDocument(doc), staleHeaderType };
@@ -321,45 +339,37 @@ export class Parser {
     const { doc, staleHeaderType } = result;
     const docElement = getFirstTag(doc, LOCAL_NAME.DOC);
     if (docElement) {
-      const responseText = doc.toString();
-      const start = getSnippetStartForTag(responseText, LOCAL_NAME.DOC);
       throw new Errors.XMLRestrictedElementFound(
         LOCAL_NAME.DOC,
         baseUrl,
-        trimAndCleanString(responseText, start, SNIPPET_LENGTH),
+        safeTrimAndCleanString(doc?.toString() || '', LOCAL_NAME.DOC),
       );
     }
 
     const navigatorElement = getFirstTag(doc, LOCAL_NAME.NAVIGATOR);
     if (navigatorElement) {
-      const responseText = doc.toString();
-      const start = getSnippetStartForTag(responseText, LOCAL_NAME.NAVIGATOR);
       throw new Errors.XMLRestrictedElementFound(
         LOCAL_NAME.NAVIGATOR,
         baseUrl,
-        trimAndCleanString(responseText, start, SNIPPET_LENGTH),
+        safeTrimAndCleanString(doc?.toString() || '', LOCAL_NAME.NAVIGATOR),
       );
     }
 
     const screenElement = getFirstTag(doc, LOCAL_NAME.SCREEN);
     if (screenElement) {
-      const responseText = doc.toString();
-      const start = getSnippetStartForTag(responseText, LOCAL_NAME.SCREEN);
       throw new Errors.XMLRestrictedElementFound(
         LOCAL_NAME.SCREEN,
         baseUrl,
-        trimAndCleanString(responseText, start, SNIPPET_LENGTH),
+        safeTrimAndCleanString(doc?.toString() || '', LOCAL_NAME.SCREEN),
       );
     }
 
     const bodyElement = getFirstTag(doc, LOCAL_NAME.BODY);
     if (bodyElement) {
-      const responseText = doc.toString();
-      const start = getSnippetStartForTag(responseText, LOCAL_NAME.BODY);
       throw new Errors.XMLRestrictedElementFound(
         LOCAL_NAME.BODY,
         baseUrl,
-        trimAndCleanString(responseText, start, SNIPPET_LENGTH),
+        safeTrimAndCleanString(doc?.toString() || '', LOCAL_NAME.BODY),
       );
     }
     return { doc: processDocument(doc), staleHeaderType };
