@@ -17,6 +17,7 @@ import { LOCAL_NAME, NO_OP, SYNC_METHODS } from 'hyperview/src/types';
 import {
   buildContextSnippet,
   cleanParserMessage,
+  findTagEndIndex,
   getFirstTag,
   processDocument,
   trimAndCleanString,
@@ -27,6 +28,12 @@ import { version } from 'hyperview/package.json';
 
 const { width, height } = Dimensions.get('window');
 const SNIPPET_LENGTH = 200;
+
+// Compute a snippet start position by centering around the end of an opening tag
+const getSnippetStartForTag = (responseText: string, tag: string): number => {
+  const center = findTagEndIndex(responseText, tag, 0);
+  return Math.max(0, center - SNIPPET_LENGTH / 2);
+};
 
 const parser = new DOMParser({
   errorHandler: {
@@ -226,49 +233,56 @@ export class Parser {
       throw new Error('loadDocument cannot return NO_OP');
     }
     const { doc, staleHeaderType } = result;
-    const resultText = doc.toString();
     const docElement = getFirstTag(doc, LOCAL_NAME.DOC);
     if (!docElement) {
       throw new Errors.XMLRequiredElementNotFound(
         LOCAL_NAME.DOC,
         baseUrl,
-        resultText,
+        trimAndCleanString(doc.toString(), 0, SNIPPET_LENGTH),
       );
     }
 
     const screenElement = getFirstTag(docElement, LOCAL_NAME.SCREEN);
     const navigatorElement = getFirstTag(docElement, LOCAL_NAME.NAVIGATOR);
     if (!screenElement && !navigatorElement) {
+      const responseText = doc.toString();
+      const start = getSnippetStartForTag(responseText, LOCAL_NAME.DOC);
       throw new Errors.XMLRequiredElementNotFound(
         `${LOCAL_NAME.SCREEN}/${LOCAL_NAME.NAVIGATOR}`,
         baseUrl,
-        resultText,
+        trimAndCleanString(responseText, start, SNIPPET_LENGTH),
       );
     }
 
     if (screenElement) {
       const bodyElement = getFirstTag(screenElement, LOCAL_NAME.BODY);
       if (!bodyElement) {
+        const responseText = doc.toString();
+        const start = getSnippetStartForTag(responseText, LOCAL_NAME.SCREEN);
         throw new Errors.XMLRequiredElementNotFound(
           LOCAL_NAME.BODY,
           baseUrl,
-          resultText,
+          trimAndCleanString(responseText, start, SNIPPET_LENGTH),
         );
       }
     } else if (navigatorElement) {
       const routeElement = getFirstTag(navigatorElement, LOCAL_NAME.NAV_ROUTE);
       if (!routeElement) {
+        const responseText = doc.toString();
+        const start = getSnippetStartForTag(responseText, LOCAL_NAME.NAVIGATOR);
         throw new Errors.XMLRequiredElementNotFound(
           LOCAL_NAME.NAV_ROUTE,
           baseUrl,
-          resultText,
+          trimAndCleanString(responseText, start, SNIPPET_LENGTH),
         );
       }
     } else {
+      const responseText = doc.toString();
+      const start = getSnippetStartForTag(responseText, LOCAL_NAME.DOC);
       throw new Errors.XMLRequiredElementNotFound(
         `${LOCAL_NAME.SCREEN}/${LOCAL_NAME.NAVIGATOR}`,
         baseUrl,
-        resultText,
+        trimAndCleanString(responseText, start, SNIPPET_LENGTH),
       );
     }
     return { doc: processDocument(doc), staleHeaderType };
@@ -305,40 +319,47 @@ export class Parser {
     }
 
     const { doc, staleHeaderType } = result;
-    const resultText = doc.toString();
     const docElement = getFirstTag(doc, LOCAL_NAME.DOC);
     if (docElement) {
+      const responseText = doc.toString();
+      const start = getSnippetStartForTag(responseText, LOCAL_NAME.DOC);
       throw new Errors.XMLRestrictedElementFound(
         LOCAL_NAME.DOC,
         baseUrl,
-        resultText,
+        trimAndCleanString(responseText, start, SNIPPET_LENGTH),
       );
     }
 
     const navigatorElement = getFirstTag(doc, LOCAL_NAME.NAVIGATOR);
     if (navigatorElement) {
+      const responseText = doc.toString();
+      const start = getSnippetStartForTag(responseText, LOCAL_NAME.NAVIGATOR);
       throw new Errors.XMLRestrictedElementFound(
         LOCAL_NAME.NAVIGATOR,
         baseUrl,
-        resultText,
+        trimAndCleanString(responseText, start, SNIPPET_LENGTH),
       );
     }
 
     const screenElement = getFirstTag(doc, LOCAL_NAME.SCREEN);
     if (screenElement) {
+      const responseText = doc.toString();
+      const start = getSnippetStartForTag(responseText, LOCAL_NAME.SCREEN);
       throw new Errors.XMLRestrictedElementFound(
         LOCAL_NAME.SCREEN,
         baseUrl,
-        resultText,
+        trimAndCleanString(responseText, start, SNIPPET_LENGTH),
       );
     }
 
     const bodyElement = getFirstTag(doc, LOCAL_NAME.BODY);
     if (bodyElement) {
+      const responseText = doc.toString();
+      const start = getSnippetStartForTag(responseText, LOCAL_NAME.BODY);
       throw new Errors.XMLRestrictedElementFound(
         LOCAL_NAME.BODY,
         baseUrl,
-        resultText,
+        trimAndCleanString(responseText, start, SNIPPET_LENGTH),
       );
     }
     return { doc: processDocument(doc), staleHeaderType };
