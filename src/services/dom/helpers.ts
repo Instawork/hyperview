@@ -168,3 +168,83 @@ export const findTargetByBehavior = (
   // The target is the parent of the behavior element
   return currentBehaviorElement.parentNode as Element;
 };
+
+// Return a trimmed and cleaned string from a given string starting at character index `start`
+// with a total `length`
+export const trimAndCleanString = (
+  text: string,
+  start: number,
+  length: number,
+): string => {
+  const totalLength = text.length;
+  const safeStart = Math.max(0, Math.min(start, totalLength));
+  const safeEnd = Math.min(totalLength, safeStart + Math.max(0, length));
+  const raw = text.slice(safeStart, safeEnd);
+  return raw.replace(/\s+/g, ' ').trim();
+};
+
+// Build a +/- snippet centered at the provided [line,col] from an xmldom message
+export const buildContextSnippet = (
+  message: string,
+  xml: string,
+  radius = 50,
+): string => {
+  const positionRegex = /\[line:(\d+),col:(\d+)\]/g;
+  const matches = Array.from(message.matchAll(positionRegex));
+  const last = matches.length ? matches[matches.length - 1] : null;
+  if (!last) {
+    return xml;
+  }
+  const line = Number(last[1]);
+  const col = Number(last[2]);
+  if (!Number.isFinite(line) || !Number.isFinite(col)) {
+    return xml;
+  }
+  let currentLine = 1;
+  let lineStartIndex = 0;
+  for (let i = 0; i < xml.length && currentLine < line; i += 1) {
+    if (xml[i] === '\n') {
+      currentLine += 1;
+      lineStartIndex = i + 1;
+    }
+  }
+  const absoluteIndex = lineStartIndex + Math.max(col - 1, 0);
+  const start = Math.max(0, absoluteIndex - radius);
+  return trimAndCleanString(xml, start, radius * 2);
+};
+
+// Clean out redundant data from the original message
+export const cleanParserMessage = (
+  originalMessage: string,
+  xmlSnippet: string,
+): string => {
+  const raw = originalMessage?.trim() || '';
+  const markerRegex = /@?#?\[line:\d+,col:\d+\](?:\s*\n)?/gi;
+  let seen = false;
+  const deduped = raw.replace(markerRegex, match => {
+    if (seen) {
+      return '';
+    }
+    seen = true;
+    return match.trim();
+  });
+  return xmlSnippet ? `${deduped}\n\n${xmlSnippet}` : deduped;
+};
+
+// Find the index of the '>' that ends the first opening tag `<tag ...>`.
+// Returns `fallback` (default 0) when not found.
+export const findTagEndIndex = (
+  xml: string,
+  tag: string,
+  fallback = 0,
+): number => {
+  if (!xml || !tag) {
+    return fallback;
+  }
+  const reFull = new RegExp(`<${tag}\\b[^>]*>`, 'i');
+  const m = reFull.exec(xml);
+  if (m) {
+    return m.index + m[0].length - 1;
+  }
+  return fallback;
+};

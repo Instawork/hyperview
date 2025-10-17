@@ -14,12 +14,43 @@ import {
   X_RESPONSE_STALE_REASON,
 } from './types';
 import { LOCAL_NAME, NO_OP, SYNC_METHODS } from 'hyperview/src/types';
-import { getFirstTag, processDocument } from './helpers';
+import {
+  buildContextSnippet,
+  cleanParserMessage,
+  findTagEndIndex,
+  getFirstTag,
+  processDocument,
+  trimAndCleanString,
+} from './helpers';
 import { DOMParser } from '@instawork/xmldom';
 import { Dimensions } from 'react-native';
 import { version } from 'hyperview/package.json';
 
 const { width, height } = Dimensions.get('window');
+const SNIPPET_LENGTH = 200;
+
+// Compute a snippet start position by centering around the end of an opening tag
+const getSnippetStartForTag = (responseText: string, tag: string): number => {
+  let center;
+  try {
+    center = findTagEndIndex(responseText, tag, 0);
+  } catch (e) {
+    center = 0;
+  }
+  return Math.max(0, center - SNIPPET_LENGTH / 2);
+};
+
+// Safe version of trimAndCleanString which encapsulates finding the start of the snippet
+const safeTrimAndCleanString = (responseText: string, tag: string): string => {
+  let result;
+  try {
+    const start = getSnippetStartForTag(responseText, tag);
+    result = trimAndCleanString(responseText, start, SNIPPET_LENGTH);
+  } catch (e) {
+    result = '';
+  }
+  return result;
+};
 
 const parser = new DOMParser({
   errorHandler: {
@@ -166,7 +197,51 @@ export class Parser {
     if (this.onBeforeParse) {
       this.onBeforeParse(url);
     }
-    const doc = parser.parseFromString(responseText);
+    let doc: Document;
+    try {
+      doc = parser.parseFromString(responseText);
+    } catch (e) {
+      const err = e as Error;
+      let snippet;
+      try {
+        snippet = buildContextSnippet(
+          err.message,
+          responseText,
+          SNIPPET_LENGTH,
+        );
+      } catch {
+        snippet = responseText ? responseText.slice(0, SNIPPET_LENGTH) : '';
+      }
+      let errorMessage;
+      try {
+        errorMessage = cleanParserMessage(
+          err?.message || 'Unknown error',
+          snippet,
+        );
+      } catch {
+        errorMessage = err?.message || 'Unknown error';
+      }
+      if (err instanceof Errors.XMLParserFatalError) {
+        // Re-throw with extra context
+        throw new Errors.ParserFatalError(
+          errorMessage,
+          url,
+          snippet,
+          response.status,
+        );
+      }
+      if (err instanceof Errors.XMLParserWarning) {
+        // Re-throw with extra context
+        throw new Errors.ParserWarning(
+          errorMessage,
+          url,
+          snippet,
+          response.status,
+        );
+      }
+      // Re-throw with extra context
+      throw new Errors.ParserError(errorMessage, url, snippet, response.status);
+    }
     if (this.onAfterParse) {
       this.onAfterParse(url);
     }
@@ -186,7 +261,11 @@ export class Parser {
     const { doc, staleHeaderType } = result;
     const docElement = getFirstTag(doc, LOCAL_NAME.DOC);
     if (!docElement) {
-      throw new Errors.XMLRequiredElementNotFound(LOCAL_NAME.DOC, baseUrl);
+      throw new Errors.XMLRequiredElementNotFound(
+        LOCAL_NAME.DOC,
+        baseUrl,
+        safeTrimAndCleanString(doc?.toString() || '', ''),
+      );
     }
 
     const screenElement = getFirstTag(docElement, LOCAL_NAME.SCREEN);
@@ -195,13 +274,18 @@ export class Parser {
       throw new Errors.XMLRequiredElementNotFound(
         `${LOCAL_NAME.SCREEN}/${LOCAL_NAME.NAVIGATOR}`,
         baseUrl,
+        safeTrimAndCleanString(doc?.toString() || '', LOCAL_NAME.DOC),
       );
     }
 
     if (screenElement) {
       const bodyElement = getFirstTag(screenElement, LOCAL_NAME.BODY);
       if (!bodyElement) {
-        throw new Errors.XMLRequiredElementNotFound(LOCAL_NAME.BODY, baseUrl);
+        throw new Errors.XMLRequiredElementNotFound(
+          LOCAL_NAME.BODY,
+          baseUrl,
+          safeTrimAndCleanString(doc?.toString() || '', LOCAL_NAME.SCREEN),
+        );
       }
     } else if (navigatorElement) {
       const routeElement = getFirstTag(navigatorElement, LOCAL_NAME.NAV_ROUTE);
@@ -209,12 +293,14 @@ export class Parser {
         throw new Errors.XMLRequiredElementNotFound(
           LOCAL_NAME.NAV_ROUTE,
           baseUrl,
+          safeTrimAndCleanString(doc?.toString() || '', LOCAL_NAME.NAVIGATOR),
         );
       }
     } else {
       throw new Errors.XMLRequiredElementNotFound(
         `${LOCAL_NAME.SCREEN}/${LOCAL_NAME.NAVIGATOR}`,
         baseUrl,
+        safeTrimAndCleanString(doc?.toString() || '', LOCAL_NAME.DOC),
       );
     }
     return { doc: processDocument(doc), staleHeaderType };
@@ -253,22 +339,38 @@ export class Parser {
     const { doc, staleHeaderType } = result;
     const docElement = getFirstTag(doc, LOCAL_NAME.DOC);
     if (docElement) {
-      throw new Errors.XMLRestrictedElementFound(LOCAL_NAME.DOC, baseUrl);
+      throw new Errors.XMLRestrictedElementFound(
+        LOCAL_NAME.DOC,
+        baseUrl,
+        safeTrimAndCleanString(doc?.toString() || '', LOCAL_NAME.DOC),
+      );
     }
 
     const navigatorElement = getFirstTag(doc, LOCAL_NAME.NAVIGATOR);
     if (navigatorElement) {
-      throw new Errors.XMLRestrictedElementFound(LOCAL_NAME.NAVIGATOR, baseUrl);
+      throw new Errors.XMLRestrictedElementFound(
+        LOCAL_NAME.NAVIGATOR,
+        baseUrl,
+        safeTrimAndCleanString(doc?.toString() || '', LOCAL_NAME.NAVIGATOR),
+      );
     }
 
     const screenElement = getFirstTag(doc, LOCAL_NAME.SCREEN);
     if (screenElement) {
-      throw new Errors.XMLRestrictedElementFound(LOCAL_NAME.SCREEN, baseUrl);
+      throw new Errors.XMLRestrictedElementFound(
+        LOCAL_NAME.SCREEN,
+        baseUrl,
+        safeTrimAndCleanString(doc?.toString() || '', LOCAL_NAME.SCREEN),
+      );
     }
 
     const bodyElement = getFirstTag(doc, LOCAL_NAME.BODY);
     if (bodyElement) {
-      throw new Errors.XMLRestrictedElementFound(LOCAL_NAME.BODY, baseUrl);
+      throw new Errors.XMLRestrictedElementFound(
+        LOCAL_NAME.BODY,
+        baseUrl,
+        safeTrimAndCleanString(doc?.toString() || '', LOCAL_NAME.BODY),
+      );
     }
     return { doc: processDocument(doc), staleHeaderType };
   };
