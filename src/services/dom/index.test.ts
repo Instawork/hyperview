@@ -25,10 +25,8 @@ jest.mock('@instawork/xmldom', () => {
       this.options = mockCapturedDOMParserOptions;
     }
 
+    // eslint-disable-next-line class-methods-use-this
     parseFromString(input: string): Document {
-      if (this.options === undefined) {
-        // no-op
-      }
       return (mockParseFromString(input) as unknown) as Document;
     }
   }
