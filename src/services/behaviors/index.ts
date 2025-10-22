@@ -163,7 +163,9 @@ export const triggerBehaviors = (
     ) {
       handler(element);
     } else {
-      setTimeout(() => handler(element), 0);
+      // Use queueMicrotask to maintain order while avoiding blocking
+      // Microtasks execute in FIFO order before the next event loop tick
+      queueMicrotask(() => handler(element));
     }
   });
 };
