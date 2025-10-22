@@ -27,7 +27,7 @@
     "expo-constants": "~17.0.7",
     "expo-linking": "~7.0.5",
     "expo-status-bar": "~2.0.1",
-    "hyperview": "0.100.0",
+    "hyperview": "0.101.0",
     "moment": "^2.30.1",
     "react": "18.3.1",
     "react-dom": "18.3.1",
