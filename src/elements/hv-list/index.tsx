@@ -13,7 +13,11 @@ import {
   Platform,
 } from 'react-native';
 import React, { useCallback, useRef, useState } from 'react';
-import { createTestProps, getAncestorByTagName } from 'hyperview/src/services';
+import {
+  createStyleProp,
+  createTestProps,
+  getAncestorByTagName,
+} from 'hyperview/src/services';
 import type { ElementRef } from 'react';
 // eslint-disable-next-line instawork/import-components
 import { FlatList } from 'hyperview/src/components/scroll';
@@ -215,6 +219,13 @@ const HvList = (props: HvComponentProps) => {
 
   const { testID, accessibilityLabel } = createTestProps(element);
 
+  const contentContainerStyle = element.getAttribute('content-container-style')
+    ? createStyleProp(element, stylesheets, {
+        ...options,
+        styleAttr: 'content-container-style',
+      })
+    : undefined;
+
   return (
     <HyperviewConsumer>
       {({ refreshControl }) => {
@@ -224,6 +235,7 @@ const HvList = (props: HvComponentProps) => {
           <FlatList
             ref={ref}
             accessibilityLabel={accessibilityLabel}
+            contentContainerStyle={contentContainerStyle}
             data={getItems()}
             element={element}
             horizontal={horizontal}
