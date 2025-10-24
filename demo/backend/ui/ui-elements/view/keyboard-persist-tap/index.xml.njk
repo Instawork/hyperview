@@ -1,6 +1,6 @@
 ---
-permalink: "/ui/ui-elements/list/keyboard-persist-tap/index.xml"
-tags: "UI/UI Elements/List"
+permalink: "/ui/ui-elements/view/keyboard-persist-tap/index.xml"
+tags: "UI/UI Elements/View"
 hv_title: "Keyboard: Persist Tap"
 hv_button_behavior: "back"
 ---
@@ -8,22 +8,22 @@ hv_button_behavior: "back"
 {% from 'macros/text-field/index.xml.njk' import text_field %}
 
 {% block container %}
-  <list keyboard-should-persist-taps="handled">
-    <item key="field" style="item">
+  <view keyboard-should-persist-taps="handled" scroll="true">
+    <view key="field" style="item">
       {{ text_field("field", {"auto-focus":"true", "placeholder":"Tap!"}) }}
-    </item>
+    </view>
     {% for i in range(1, 21) %}
-      <item key="{{ i }}" style="item{% if loop.last %} item-last{% endif %}">
-        <text style="item-label">List {{ i }}</text>
+      <view key="{{ i }}" style="item{% if loop.last %} item-last{% endif %}">
+        <text style="item-label">Item {{ i }}</text>
         <behavior
           xmlns:alert="https://hyperview.org/hyperview-alert"
           trigger="press"
           action="alert"
-          alert:title="List {{ i }} selected"
+          alert:title="Item {{ i }} selected"
         >
           <alert:option alert:label="Cancel" />
         </behavior>
-      </item>
+      </view>
     {% endfor %}
-  </list>
+  </view>
 {% endblock %}

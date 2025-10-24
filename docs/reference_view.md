@@ -166,3 +166,11 @@ If `sticky="true"`, the element will remain fixed at the top of the screen when 
 | **none** (default), `on-drag`, `interactive` | No       |
 
 An attribute that controls the virtual keyboard behavior when the scrollable view is interacted with. Note: `interactive` value is only supported on iOS. When set to this value, the keyboard is dismissed interactively with the drag and moves in synchrony with the touch, dragging upwards cancels the dismissal. On Android this is not supported and it will have the same behavior as `none`. Attribute `scroll` should be set in for this to have any effect.
+
+#### `keyboard-should-persist-taps`
+
+| Type                                     | Required |
+| ---------------------------------------- | -------- |
+| **never** (default), `always`, `handled` | No       |
+
+An attribute that controls the virtual keyboard behavior when the scrollable view is tapped.

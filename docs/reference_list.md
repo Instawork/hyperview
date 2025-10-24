@@ -30,6 +30,7 @@ A `<list>` element will only render `<item>` and `<items>` children elements. Ot
 
 - [Behavior attributes](#behavior-attributes)
 - [`style`](#style)
+- [`content-container-style`](#content-container-style)
 - [`itemHeight`](#itemheight)
 - [`id`](#id)
 - [`hide`](#hide)
@@ -49,6 +50,14 @@ A list will accept the standard [behavior attributes](/docs/reference_behavior_a
 | string | No       |
 
 A space-separated list of styles to apply to the text. See [Styles](/docs/reference_style).
+
+#### `content-container-style`
+
+| Type   | Required |
+| ------ | -------- |
+| string | No       |
+
+A space-separated list of styles to apply to the content container element of the scrollable view. See [Styles](/docs/reference_style).
 
 #### `itemHeight`
 
