@@ -10,16 +10,83 @@ export class UnsupportedContentTypeError extends ErrorService.HvBaseError {
 /**
  * XML parser errors
  */
+
+// Warning thrown by the XML parser
 export class XMLParserWarning extends ErrorService.HvBaseError {
+  name = 'XMLParserWarning';
+}
+
+// Warning thrown by the Hyperview
+export class ParserWarning extends ErrorService.HvBaseError {
   name = 'ParserWarning';
+
+  constructor(
+    message: string,
+    url?: string,
+    content?: string,
+    status?: number,
+  ) {
+    super(message);
+    this.setExtraContext('url', url);
+    this.setExtraContext('content', content);
+    this.setExtraContext('status', status);
+  }
 }
 
+// Error thrown by the XML parser
 export class XMLParserError extends ErrorService.HvBaseError {
-  name = 'ParserError';
+  name = 'XMLParserError';
 }
 
+// Error thrown by the Hyperview
+export class ParserError extends ErrorService.HvBaseError {
+  name = 'ParserError';
+
+  constructor(
+    message: string,
+    url?: string,
+    content?: string,
+    status?: number,
+  ) {
+    super(message);
+    this.setExtraContext('url', url);
+    this.setExtraContext('content', content);
+    this.setExtraContext('status', status);
+  }
+}
+
+// Error thrown by the XML parser
 export class XMLParserFatalError extends ErrorService.HvBaseError {
+  name = 'XMLParserFatalError';
+
+  constructor(
+    message: string,
+    url?: string,
+    content?: string,
+    status?: number,
+  ) {
+    super(message);
+    this.setExtraContext('url', url);
+    this.setExtraContext('content', content);
+    this.setExtraContext('status', status);
+  }
+}
+
+// Error thrown by the Hyperview
+export class ParserFatalError extends ErrorService.HvBaseError {
   name = 'ParserFatalError';
+
+  constructor(
+    message: string,
+    url?: string,
+    content?: string,
+    status?: number,
+  ) {
+    super(message);
+    this.setExtraContext('url', url);
+    this.setExtraContext('content', content);
+    this.setExtraContext('status', status);
+  }
 }
 
 /**
@@ -28,20 +95,22 @@ export class XMLParserFatalError extends ErrorService.HvBaseError {
 export class XMLRequiredElementNotFound extends ErrorService.HvBaseError {
   name = 'XMLRequiredElementNotFound';
 
-  constructor(tag: string, url: string) {
+  constructor(tag: string, url: string, content: string) {
     super(`Required <${tag}> tag not found in the response from ${url}`);
     this.setExtraContext('tag', tag);
     this.setExtraContext('url', url);
+    this.setExtraContext('content', content);
   }
 }
 
 export class XMLRestrictedElementFound extends ErrorService.HvBaseError {
   name = 'XMLRestrictedElementFound';
 
-  constructor(tag: string, url: string) {
+  constructor(tag: string, url: string, content: string) {
     super(`Restricted <${tag}> tag found in the response from ${url}`);
     this.setExtraContext('tag', tag);
     this.setExtraContext('url', url);
+    this.setExtraContext('content', content);
   }
 }
 
