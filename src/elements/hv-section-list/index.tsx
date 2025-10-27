@@ -15,7 +15,11 @@ import {
 import { LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
 import type { ScrollParams, State } from './types';
-import { createTestProps, getAncestorByTagName } from 'hyperview/src/services';
+import {
+  createStyleProp,
+  createTestProps,
+  getAncestorByTagName,
+} from 'hyperview/src/services';
 import { DOMParser } from '@instawork/xmldom';
 import { Context as DocContext } from 'hyperview/src/elements/hv-doc/context';
 import type { ElementRef } from 'react';
@@ -341,12 +345,26 @@ export default class HvSectionList extends PureComponent<
       });
     }
 
+    const horizontal =
+      this.props.element.getAttribute('scroll-orientation') === 'horizontal';
+    const showScrollIndicator =
+      this.props.element.getAttribute('shows-scroll-indicator') !== 'false';
+
     // Fix scrollbar rendering issue in iOS 13+
     // https://github.com/facebook/react-native/issues/26610#issuecomment-539843444
     const scrollIndicatorInsets =
       Platform.OS === 'ios' && parseInt(Platform.Version, 10) >= 13
         ? { right: 1 }
         : undefined;
+
+    const contentContainerStyle = this.props.element.getAttribute(
+      'content-container-style',
+    )
+      ? createStyleProp(this.props.element, this.props.stylesheets, {
+          ...this.props.options,
+          styleAttr: 'content-container-style',
+        })
+      : undefined;
 
     const { testID, accessibilityLabel } = createTestProps(this.props.element);
 
@@ -361,7 +379,9 @@ export default class HvSectionList extends PureComponent<
             <SectionList
               ref={this.onRef}
               accessibilityLabel={accessibilityLabel}
+              contentContainerStyle={contentContainerStyle}
               element={this.props.element}
+              horizontal={horizontal}
               keyboardDismissMode={Keyboard.getKeyboardDismissMode(
                 this.props.element,
               )}
@@ -399,6 +419,8 @@ export default class HvSectionList extends PureComponent<
               )}
               scrollIndicatorInsets={scrollIndicatorInsets}
               sections={sections}
+              showsHorizontalScrollIndicator={horizontal && showScrollIndicator}
+              showsVerticalScrollIndicator={!horizontal && showScrollIndicator}
               stickySectionHeadersEnabled={this.getStickySectionHeadersEnabled()}
               style={style}
               testID={testID}

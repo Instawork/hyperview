@@ -34,8 +34,11 @@ A `<section-list>` element will only render `<section-title>` and `<item>` child
 
 - [Behavior attributes](#behavior-attributes)
 - [`style`](#style)
+- [`content-container-style`](#content-container-style)
 - [`id`](#id)
 - [`hide`](#hide)
+- [`scroll-orientation`](#scroll-orientation)
+- [`shows-scroll-indicator`](#shows-scroll-indicator)
 - [`sticky-section-titles`](#sticky-section-titles)
 - [`keyboard-dismiss-mode`](#keyboard-dismiss-mode)
 - [`keyboard-should-persist-taps`](#keyboard-should-persist-taps)
@@ -52,6 +55,14 @@ A section list will accept the standard [behavior attributes](/docs/reference_be
 
 A space-separated list of styles to apply to the text. See [Styles](/docs/reference_style).
 
+#### `content-container-style`
+
+| Type   | Required |
+| ------ | -------- |
+| string | No       |
+
+A space-separated list of styles to apply to the content container element of the scrollable view. See [Styles](/docs/reference_style).
+
 #### `id`
 
 | Type   | Required |
@@ -67,6 +78,22 @@ A global attribute uniquely identifying the element in the whole document.
 | **false** (default), true | No       |
 
 If `hide="true"`, the element will not be rendered on screen. If the element or any of the element's children have a behavior that triggers on "load" or "visible", those behaviors will not trigger while the element is hidden.
+
+#### `scroll-orientation`
+
+| Type                               | Required |
+| ---------------------------------- | -------- |
+| **vertical** (default), horizontal | No       |
+
+An attribute indicating the direction in which the body will scroll.
+
+#### `shows-scroll-indicator`
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| **true** (default), false | No       |
+
+An attribute indicating whether the scroll bar should be shown.
 
 ### `sticky-section-titles`
 

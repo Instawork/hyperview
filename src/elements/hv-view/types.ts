@@ -39,6 +39,7 @@ export type ScrollViewProps = {
   contentContainerStyle?: StyleProp<ViewStyle> | undefined;
   horizontal?: boolean | undefined;
   keyboardDismissMode?: 'none' | 'on-drag' | 'interactive' | undefined;
+  keyboardShouldPersistTaps?: 'never' | 'always' | 'handled' | undefined;
   scrollIndicatorInsets?: Readonly<{
     bottom?: number | undefined;
     left?: number | undefined;

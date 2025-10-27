@@ -124,6 +124,9 @@ export default class HvView extends PureComponent<HvComponentProps> {
       contentContainerStyle,
       horizontal,
       keyboardDismissMode: Keyboard.getKeyboardDismissMode(this.props.element),
+      keyboardShouldPersistTaps: Keyboard.getKeyboardShouldPersistTaps(
+        this.props.element,
+      ),
       scrollIndicatorInsets,
       showsHorizontalScrollIndicator: horizontal && showScrollIndicator,
       showsVerticalScrollIndicator: !horizontal && showScrollIndicator,
