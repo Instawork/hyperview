@@ -291,6 +291,72 @@
       
       
       <item
+        href="/hyperview/public/ui/ui-elements/view/keyboard-dismiss/index.xml"
+        key="keyboard:-dismiss-on-drag"
+        style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
+        
+      >
+        <view style="item-left">
+          <text style="item-label">Keyboard: Dismiss on Drag</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+      
+      
+      <item
+        href="/hyperview/public/ui/ui-elements/view/keyboard-persist-tap/index.xml"
+        key="keyboard:-persist-tap"
+        style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
+        
+      >
+        <view style="item-left">
+          <text style="item-label">Keyboard: Persist Tap</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+      
+      
+      <item
         href="/hyperview/public/ui/ui-elements/view/scroll-view/index.xml"
         key="scroll-view"
         style="item"
@@ -610,7 +676,7 @@
       
       <item
         href="/hyperview/public/ui/ui-elements/list/basic/index.xml"
-        key="basic-list"
+        key="basic"
         style="item"
         
           action="push"
@@ -618,7 +684,7 @@
         
       >
         <view style="item-left">
-          <text style="item-label">Basic List</text>
+          <text style="item-label">Basic</text>
         </view>
         <view style="item-chevron">
           <svg
@@ -676,7 +742,7 @@
       
       <item
         href="/hyperview/public/ui/ui-elements/list/horizontal/index.xml"
-        key="horizontal-list"
+        key="horizontal"
         style="item"
         
           action="push"
@@ -684,7 +750,7 @@
         
       >
         <view style="item-left">
-          <text style="item-label">Horizontal List</text>
+          <text style="item-label">Horizontal</text>
         </view>
         <view style="item-chevron">
           <svg
@@ -742,7 +808,7 @@
       
       <item
         href="/hyperview/public/ui/ui-elements/list/keyboard-dismiss/index.xml"
-        key="dismiss-keyboard-on-drag"
+        key="keyboard:-dismiss-on-drag"
         style="item"
         
           action="push"
@@ -750,7 +816,7 @@
         
       >
         <view style="item-left">
-          <text style="item-label">Dismiss Keyboard on Drag</text>
+          <text style="item-label">Keyboard: Dismiss on Drag</text>
         </view>
         <view style="item-chevron">
           <svg
@@ -775,7 +841,7 @@
       
       <item
         href="/hyperview/public/ui/ui-elements/list/keyboard-persist-tap/index.xml"
-        key="keyboard-persist-tap"
+        key="keyboard:-persist-tap"
         style="item"
         
           action="push"
@@ -783,7 +849,7 @@
         
       >
         <view style="item-left">
-          <text style="item-label">Keyboard Persist Tap</text>
+          <text style="item-label">Keyboard: Persist Tap</text>
         </view>
         <view style="item-chevron">
           <svg
@@ -841,7 +907,7 @@
       
       <item
         href="/hyperview/public/ui/ui-elements/list/refresh/index.xml"
-        key="list-with-refresh"
+        key="refresh"
         style="item"
         
           action="push"
@@ -849,7 +915,7 @@
         
       >
         <view style="item-left">
-          <text style="item-label">List with Refresh</text>
+          <text style="item-label">Refresh</text>
         </view>
         <view style="item-chevron">
           <svg
@@ -876,7 +942,7 @@
       
       <item
         href="/hyperview/public/ui/ui-elements/list/sticky/index.xml"
-        key="list-with-sticky-items"
+        key="sticky-items"
         style="item item-last"
         
           action="push"
@@ -884,7 +950,7 @@
         
       >
         <view style="item-left">
-          <text style="item-label">List with Sticky items</text>
+          <text style="item-label">Sticky items</text>
         </view>
         <view style="item-chevron">
           <svg
@@ -914,7 +980,7 @@
       
       <item
         href="/hyperview/public/ui/ui-elements/section-list/basic/index.xml"
-        key="basic-section-list"
+        key="basic"
         style="item"
         
           action="push"
@@ -922,7 +988,7 @@
         
       >
         <view style="item-left">
-          <text style="item-label">Basic Section List</text>
+          <text style="item-label">Basic</text>
         </view>
         <view style="item-chevron">
           <svg
@@ -946,8 +1012,8 @@
       
       
       <item
-        href="/hyperview/public/ui/ui-elements/section-list/dismiss-keyboard/index.xml"
-        key="dismiss-keyboard-on-drag"
+        href="/hyperview/public/ui/ui-elements/section-list/hidden-scroll/index.xml"
+        key="hidden-scrollbar"
         style="item"
         
           action="push"
@@ -955,7 +1021,40 @@
         
       >
         <view style="item-left">
-          <text style="item-label">Dismiss Keyboard on Drag</text>
+          <text style="item-label">Hidden Scrollbar</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+      
+      
+      <item
+        href="/hyperview/public/ui/ui-elements/section-list/horizontal/index.xml"
+        key="horizontal"
+        style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
+        
+      >
+        <view style="item-left">
+          <text style="item-label">Horizontal</text>
         </view>
         <view style="item-chevron">
           <svg
@@ -980,7 +1079,7 @@
       
       <item
         href="/hyperview/public/ui/ui-elements/section-list/infinite/index.xml"
-        key="section-list-infinite-scroll"
+        key="infinite-scroll"
         style="item"
         
           action="push"
@@ -988,7 +1087,40 @@
         
       >
         <view style="item-left">
-          <text style="item-label">Section List Infinite Scroll</text>
+          <text style="item-label">Infinite Scroll</text>
+        </view>
+        <view style="item-chevron">
+          <svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5.11594 13.1867L9.96816 7.99887L5.11594 2.81309C4.96135 2.62696 4.96135 2.32574 5.11594 2.1396C5.27911 1.95347 5.53675 1.95347 5.69992 2.1396L10.7497 7.54054C10.8012 7.56356 10.8441 7.59758 10.8871 7.64261C10.9644 7.74069 11.0073 7.86978 10.9987 7.99787C11.0073 8.12697 10.973 8.25806 10.8871 8.35714C10.8441 8.40417 10.8012 8.43819 10.7497 8.46121L5.69992 13.8611C5.53675 14.0463 5.27911 14.0463 5.11594 13.8611C4.96135 13.674 4.96135 13.3738 5.11594 13.1867Z"
+    fill="#4E4D4D"
+  />
+</svg>
+
+        </view>
+      </item>
+    
+      
+      
+      <item
+        href="/hyperview/public/ui/ui-elements/section-list/keyboard-dismiss/index.xml"
+        key="keyboard:-dismiss-on-drag"
+        style="item"
+        
+          action="push"
+          show-during-load="loading-screen-pushed"
+        
+      >
+        <view style="item-left">
+          <text style="item-label">Keyboard: Dismiss on Drag</text>
         </view>
         <view style="item-chevron">
           <svg
@@ -1013,7 +1145,7 @@
       
       <item
         href="/hyperview/public/ui/ui-elements/section-list/keyboard-persist-tap/index.xml"
-        key="keyboard-persist-tap"
+        key="keyboard:-persist-tap"
         style="item"
         
           action="push"
@@ -1021,7 +1153,7 @@
         
       >
         <view style="item-left">
-          <text style="item-label">Keyboard Persist Tap</text>
+          <text style="item-label">Keyboard: Persist Tap</text>
         </view>
         <view style="item-chevron">
           <svg
@@ -1081,7 +1213,7 @@
       
       <item
         href="/hyperview/public/ui/ui-elements/section-list/refresh/index.xml"
-        key="section-list-with-refresh"
+        key="refresh"
         style="item item-last"
         
           action="push"
@@ -1089,7 +1221,7 @@
         
       >
         <view style="item-left">
-          <text style="item-label">Section List with Refresh</text>
+          <text style="item-label">Refresh</text>
         </view>
         <view style="item-chevron">
           <svg

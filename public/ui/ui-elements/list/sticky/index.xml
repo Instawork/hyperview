@@ -374,7 +374,7 @@
 
       </view>
     
-    <text style="header-title">List with Sticky items</text>
+    <text style="header-title">Sticky items</text>
   </header>
 </safe-area:safe-area-view>
 

@@ -375,7 +375,7 @@
 
       </view>
     
-    <text style="header-title">Section List with Refresh</text>
+    <text style="header-title">Refresh</text>
   </header>
 </safe-area:safe-area-view>
 

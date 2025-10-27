@@ -374,7 +374,7 @@
 
       </view>
     
-    <text style="header-title">Section List Infinite Scroll</text>
+    <text style="header-title">Infinite Scroll</text>
   </header>
 </safe-area:safe-area-view>
 

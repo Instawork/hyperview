@@ -374,7 +374,7 @@
 
       </view>
     
-    <text style="header-title">Dismiss Keyboard on Drag</text>
+    <text style="header-title">Keyboard: Dismiss on Drag</text>
   </header>
 </safe-area:safe-area-view>
 

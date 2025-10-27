@@ -374,7 +374,7 @@
 
       </view>
     
-    <text style="header-title">Basic Section List</text>
+    <text style="header-title">Basic</text>
   </header>
 </safe-area:safe-area-view>
 

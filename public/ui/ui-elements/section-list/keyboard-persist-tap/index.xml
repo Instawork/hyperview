@@ -374,7 +374,7 @@
 
       </view>
     
-    <text style="header-title">Keyboard Persist Tap</text>
+    <text style="header-title">Keyboard: Persist Tap</text>
   </header>
 </safe-area:safe-area-view>
 

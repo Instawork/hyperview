@@ -374,7 +374,7 @@
 
       </view>
     
-    <text style="header-title">List with Refresh</text>
+    <text style="header-title">Refresh</text>
   </header>
 </safe-area:safe-area-view>
 

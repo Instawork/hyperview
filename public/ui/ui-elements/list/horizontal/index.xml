@@ -378,7 +378,7 @@
 
       </view>
     
-    <text style="header-title">Horizontal List</text>
+    <text style="header-title">Horizontal</text>
   </header>
 </safe-area:safe-area-view>
 
