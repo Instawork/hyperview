@@ -42,6 +42,7 @@ A `<section-list>` element will only render `<section-title>` and `<item>` child
 - [`sticky-section-titles`](#sticky-section-titles)
 - [`keyboard-dismiss-mode`](#keyboard-dismiss-mode)
 - [`keyboard-should-persist-taps`](#keyboard-should-persist-taps)
+- [`over-scroll`](#over-scroll)
 
 #### Behavior attributes
 
@@ -118,3 +119,11 @@ An attribute that controls the virtual keyboard behavior when the scrollable vie
 | **never** (default), `always`, `handled` | No       |
 
 An attribute that controls the virtual keyboard behavior when the scrollable view is tapped.
+
+#### `over-scroll`
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| **true** (default), false | No       |
+
+An attribute that helps disabling the "over-scroll" or "bounce" effect when reaching the beginning or end of the scrollable content.

@@ -62,6 +62,7 @@ A `<view>` element can only appear anywhere within a `<screen>` element.
 - [`avoid-keyboard`](#avoid-keyboard)
 - [`sticky`](#sticky)
 - [`keyboard-dismiss-mode`](#keyboard-dismiss-mode)
+- [`over-scroll`](#over-scroll)
 
 #### Behavior attributes
 
@@ -174,3 +175,11 @@ An attribute that controls the virtual keyboard behavior when the scrollable vie
 | **never** (default), `always`, `handled` | No       |
 
 An attribute that controls the virtual keyboard behavior when the scrollable view is tapped.
+
+#### `over-scroll`
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| **true** (default), false | No       |
+
+An attribute that helps disabling the "over-scroll" or "bounce" effect when reaching the beginning or end of the scrollable content. Attribute `scroll` should be set in for this to have any effect.
