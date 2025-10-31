@@ -226,6 +226,16 @@ const HvList = (props: HvComponentProps) => {
       })
     : undefined;
 
+  // Allow disabling scroll bouncing (on by default)
+  const bounces =
+    element.getAttribute('over-scroll') === 'false' && Platform.OS === 'ios'
+      ? false
+      : undefined;
+  const overScrollMode =
+    element.getAttribute('over-scroll') === 'false' && Platform.OS === 'android'
+      ? 'never'
+      : undefined;
+
   return (
     <HyperviewConsumer>
       {({ refreshControl }) => {
@@ -235,6 +245,7 @@ const HvList = (props: HvComponentProps) => {
           <FlatList
             ref={ref}
             accessibilityLabel={accessibilityLabel}
+            bounces={bounces}
             contentContainerStyle={contentContainerStyle}
             data={getItems()}
             element={element}
@@ -245,6 +256,7 @@ const HvList = (props: HvComponentProps) => {
             )}
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             keyExtractor={(item: any) => item && item.getAttribute('key')}
+            overScrollMode={overScrollMode}
             refreshControl={
               hasRefreshTrigger ? (
                 <RefreshControl onRefresh={refresh} refreshing={refreshing} />

@@ -4,6 +4,7 @@ import type { DOMString } from 'hyperview/src/types';
 export const ATTRIBUTES = {
   AVOID_KEYBOARD: 'avoid-keyboard',
   CONTENT_CONTAINER_STYLE: 'content-container-style',
+  OVER_SCROLL: 'over-scroll',
   SAFE_AREA: 'safe-area',
   SCROLL: 'scroll',
   SCROLL_ORIENTATION: 'scroll-orientation',
@@ -15,6 +16,7 @@ export const ATTRIBUTES = {
 export type Attributes = {
   ['avoid-keyboard']?: DOMString | null | undefined;
   ['content-container-style']?: DOMString | null | undefined;
+  ['over-scroll']?: DOMString | null | undefined;
   ['safe-area']?: DOMString | null | undefined;
   scroll?: DOMString | null | undefined;
   ['scroll-orientation']?: DOMString | null | undefined;
@@ -31,6 +33,8 @@ export type CommonProps = {
 };
 
 export type ScrollViewProps = {
+  bounces?: boolean | undefined;
+  overScrollMode?: 'always' | 'never' | 'auto' | undefined;
   accessibilityLabel?: string | undefined;
   testID?: string | undefined;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

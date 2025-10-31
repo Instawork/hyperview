@@ -1,0 +1,17 @@
+---
+permalink: "/ui/ui-elements/list/no-over-scroll/index.xml"
+tags: "UI/UI Elements/List"
+hv_title: "No Over Scroll"
+hv_button_behavior: "back"
+---
+{% extends 'templates/base.xml.njk' %}
+
+{% block container %}
+  <list over-scroll="false">
+    {% for i in range(1, 21) %}
+      <item key="{{ i }}" style="item{% if loop.last %} item-last{% endif %}">
+        <text style="item-label">List {{ i }}</text>
+      </item>
+    {% endfor %}
+  </list>
+{% endblock %}
