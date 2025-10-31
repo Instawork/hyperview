@@ -120,13 +120,27 @@ export default class HvView extends PureComponent<HvComponentProps> {
       [],
     );
 
+    // Allow disabling scroll bouncing (on by default)
+    const bounces =
+      this.attributes[ATTRIBUTES.OVER_SCROLL] === 'false' &&
+      Platform.OS === 'ios'
+        ? false
+        : undefined;
+    const overScrollMode =
+      this.attributes[ATTRIBUTES.OVER_SCROLL] === 'false' &&
+      Platform.OS === 'android'
+        ? 'never'
+        : undefined;
+
     return {
+      bounces,
       contentContainerStyle,
       horizontal,
       keyboardDismissMode: Keyboard.getKeyboardDismissMode(this.props.element),
       keyboardShouldPersistTaps: Keyboard.getKeyboardShouldPersistTaps(
         this.props.element,
       ),
+      overScrollMode,
       scrollIndicatorInsets,
       showsHorizontalScrollIndicator: horizontal && showScrollIndicator,
       showsVerticalScrollIndicator: !horizontal && showScrollIndicator,
