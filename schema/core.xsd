@@ -575,9 +575,17 @@
 
       <xs:attribute name="borderBottomWidth" type="xs:nonNegativeInteger" />
 
+      <xs:attribute name="borderEndWidth" type="xs:nonNegativeInteger" />
+
       <xs:attribute name="borderColor" type="hv:color" />
 
+      <xs:attribute name="borderBlockColor" type="hv:color" />
+      <xs:attribute name="borderBlockEndColor" type="hv:color" />
+      <xs:attribute name="borderBlockStartColor" type="hv:color" />
+
       <xs:attribute name="borderEndColor" type="hv:color" />
+      <xs:attribute name="borderEndEndRadius" type="xs:nonNegativeInteger" />
+      <xs:attribute name="borderEndStartRadius" type="xs:nonNegativeInteger" />
 
       <xs:attribute name="borderLeftColor" type="hv:color" />
 
@@ -590,6 +598,12 @@
       <xs:attribute name="borderRightWidth" type="xs:nonNegativeInteger" />
 
       <xs:attribute name="borderStartColor" type="hv:color" />
+      <xs:attribute name="borderStartEndRadius" type="xs:nonNegativeInteger" />
+      <xs:attribute
+        name="borderStartStartRadius"
+        type="xs:nonNegativeInteger"
+      />
+      <xs:attribute name="borderStartWidth" type="xs:nonNegativeInteger" />
 
       <xs:attribute name="borderStyle">
         <xs:simpleType>
@@ -615,11 +629,20 @@
 
       <xs:attribute name="borderWidth" type="xs:nonNegativeInteger" />
 
+      <xs:attribute name="borderCurve" type="xs:string" />
+
       <xs:attribute name="bottom" type="xs:integer" />
+
+      <xs:attribute name="boxShadow" type="xs:string" />
+      <xs:attribute name="boxSizing" type="xs:string" />
 
       <xs:attribute name="color" type="hv:color" />
 
       <xs:attribute name="columnGap" type="xs:integer" />
+
+      <xs:attribute name="cursor" type="xs:string" />
+
+      <xs:attribute name="direction" type="xs:string" />
 
       <xs:attribute name="display">
         <xs:simpleType>
@@ -631,6 +654,8 @@
       </xs:attribute>
 
       <xs:attribute name="elevation" type="xs:nonNegativeInteger" />
+
+      <xs:attribute name="end" type="xs:string" />
 
       <xs:attribute name="flex">
         <xs:simpleType>
@@ -666,6 +691,8 @@
         </xs:simpleType>
       </xs:attribute>
 
+      <xs:attribute name="filter" type="xs:string" />
+
       <xs:attribute name="fontFamily" type="xs:string" />
       <xs:attribute name="fontSize" type="xs:positiveInteger" />
       <xs:attribute name="fontStyle">
@@ -677,6 +704,7 @@
         </xs:simpleType>
       </xs:attribute>
 
+      <xs:attribute name="fontVariant" type="xs:string" />
       <xs:attribute name="fontWeight">
         <xs:simpleType>
           <xs:restriction base="xs:string">
@@ -715,6 +743,7 @@
       </xs:attribute>
 
       <xs:attribute name="left" type="hv:pointsOrPercent" />
+      <xs:attribute name="letterSpacing" type="hv:sizing" />
       <xs:attribute name="lineHeight" type="xs:integer" />
       <xs:attribute name="margin" type="hv:sizing" />
       <xs:attribute name="marginBottom" type="hv:sizing" />
@@ -722,6 +751,8 @@
       <xs:attribute name="marginLeft" type="hv:sizing" />
       <xs:attribute name="marginRight" type="hv:sizing" />
       <xs:attribute name="marginTop" type="hv:sizing" />
+      <xs:attribute name="marginEnd" type="hv:sizing" />
+      <xs:attribute name="marginStart" type="hv:sizing" />
       <xs:attribute name="marginVertical" type="hv:sizing" />
       <xs:attribute name="maxHeight" type="hv:pointsOrPercent" />
       <xs:attribute name="maxWidth" type="hv:pointsOrPercent" />
@@ -754,7 +785,11 @@
       <xs:attribute name="paddingLeft" type="hv:pointsOrPercent" />
       <xs:attribute name="paddingRight" type="hv:pointsOrPercent" />
       <xs:attribute name="paddingTop" type="hv:pointsOrPercent" />
+      <xs:attribute name="paddingEnd" type="hv:pointsOrPercent" />
+      <xs:attribute name="paddingStart" type="hv:pointsOrPercent" />
       <xs:attribute name="paddingVertical" type="hv:pointsOrPercent" />
+
+      <xs:attribute name="pointerEvents" type="xs:string" />
 
       <xs:attribute name="position">
         <xs:simpleType>
@@ -767,6 +802,7 @@
 
       <xs:attribute name="right" type="hv:pointsOrPercent" />
       <xs:attribute name="rowGap" type="xs:integer" />
+      <xs:attribute name="start" type="xs:string" />
       <xs:attribute name="shadowColor" type="hv:color" />
       <xs:attribute name="shadowOffsetX" type="xs:integer" />
       <xs:attribute name="shadowOffsetY" type="xs:decimal" />
@@ -796,7 +832,13 @@
         </xs:simpleType>
       </xs:attribute>
 
+      <xs:attribute name="textDecorationColor" type="hv:color" />
       <xs:attribute name="textDecorationLine" type="xs:NCName" />
+      <xs:attribute name="textDecorationStyle" type="xs:string" />
+      <xs:attribute name="textShadowOffsetX" type="xs:integer" />
+      <xs:attribute name="textShadowOffsetY" type="xs:integer" />
+      <xs:attribute name="textShadowRadius" type="xs:decimal" />
+      <xs:attribute name="textTransform" type="xs:string" />
       <xs:attribute name="top" type="hv:pointsOrPercent" />
       <xs:attribute name="width" type="hv:pointsOrPercent" />
       <xs:attribute name="zIndex" type="xs:positiveInteger" />
@@ -816,7 +858,17 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>
-      <xs:attribute name="outlineWidth" type="xs:integer" />
+      <xs:attribute name="outlineWidth" type="hv:sizing" />
+
+      <xs:attribute name="includeFontPadding" type="xs:string" />
+      <xs:attribute name="userSelect" type="xs:string" />
+      <xs:attribute name="verticalAlign" type="xs:string" />
+      <xs:attribute name="writingDirection" type="xs:string" />
+
+      <xs:attribute name="backfaceVisibility" type="xs:string" />
+      <xs:attribute name="objectFit" type="xs:string" />
+      <xs:attribute name="overlayColor" type="hv:color" />
+      <xs:attribute name="tintColor" type="hv:color" />
     </xs:complexType>
   </xs:element>
 

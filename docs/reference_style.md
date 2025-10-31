@@ -30,31 +30,39 @@ A `<style>` element should only appear as a direct child of a `<styles>` element
 - [`id`](#id)
 - [Layout rules](#layout-rules)
 
-  - [`aspectRatio`](#aspectratio)
   - [`alignContent`](#aligncontent)
   - [`alignItems`](#alignitems)
   - [`alignSelf`](#alignself)
   - [`borderBottomWidth`](#borderbottomwidth)
+  - [`borderEndWidth`](#borderendwidth)
   - [`borderLeftWidth`](#borderleftwidth)
   - [`borderRightWidth`](#borderrightwidth)
+  - [`borderStartWidth`](#borderstartwidth)
   - [`borderTopWidth`](#bordertopwidth)
   - [`borderWidth`](#borderwidth)
   - [`bottom`](#bottom)
+  - [`boxSizing`](#boxsizing)
+  - [`columnGap`](#columngap)
+  - [`direction`](#direction)
   - [`display`](#display)
+  - [`end`](#end)
   - [`flex`](#flex)
   - [`flexBasis`](#flexbasis)
   - [`flexDirection`](#flexdirection)
   - [`flexGrow`](#flexgrow)
   - [`flexShrink`](#flexshrink)
   - [`flexWrap`](#flexwrap)
+  - [`gap`](#gap)
   - [`height`](#height)
   - [`justifyContent`](#justifycontent)
   - [`left`](#left)
   - [`margin`](#margin)
   - [`marginBottom`](#marginbottom)
+  - [`marginEnd`](#marginend)
   - [`marginHorizontal`](#marginhorizontal)
   - [`marginLeft`](#marginleft)
   - [`marginRight`](#marginright)
+  - [`marginStart`](#marginstart)
   - [`marginTop`](#margintop)
   - [`marginVertical`](#marginvertical)
   - [`maxHeight`](#maxheight)
@@ -64,33 +72,60 @@ A `<style>` element should only appear as a direct child of a `<styles>` element
   - [`overflow`](#overflow)
   - [`padding`](#padding)
   - [`paddingBottom`](#paddingbottom)
+  - [`paddingEnd`](#paddingend)
   - [`paddingHorizontal`](#paddinghorizontal)
   - [`paddingLeft`](#paddingleft)
   - [`paddingRight`](#paddingright)
+  - [`paddingStart`](#paddingstart)
   - [`paddingTop`](#paddingtop)
   - [`paddingVertical`](#paddingvertical)
   - [`position`](#position)
   - [`right`](#right)
+  - [`rowGap`](#rowgap)
+  - [`start`](#start)
   - [`top`](#top)
   - [`width`](#width)
-  - [`zIndex`](#zIndex)
+  - [`zIndex`](#zindex)
 
 - [View & image rules](#view-image-rules)
 
-  - [`borderRightColor`](#borderrightcolor)
+  - [`aspectRatio`](#aspectratio)
+  - [`backgroundColor`](#backgroundcolor)
+  - [`borderBlockColor`](#borderblockcolor)
+  - [`borderBlockEndColor`](#borderblockendcolor)
+  - [`borderBlockStartColor`](#borderblockstartcolor)
   - [`borderBottomColor`](#borderbottomcolor)
+  - [`borderBottomEndRadius`](#borderbottomendradius)
   - [`borderBottomLeftRadius`](#borderbottomleftradius)
   - [`borderBottomRightRadius`](#borderbottomrightradius)
+  - [`borderBottomStartRadius`](#borderbottomstartradius)
   - [`borderColor`](#bordercolor)
+  - [`borderCurve`](#bordercurve)
+  - [`borderEndColor`](#borderendcolor)
+  - [`borderEndEndRadius`](#borderendendradius)
+  - [`borderEndStartRadius`](#borderendstartradius)
   - [`borderLeftColor`](#borderleftcolor)
   - [`borderRadius`](#borderradius)
-  - [`backgroundColor`](#backgroundcolor)
+  - [`borderRightColor`](#borderrightcolor)
+  - [`borderStartColor`](#borderstartcolor)
+  - [`borderStartEndRadius`](#borderstartendradius)
+  - [`borderStartStartRadius`](#borderstartstartradius)
   - [`borderStyle`](#borderstyle)
   - [`borderTopColor`](#bordertopcolor)
+  - [`borderTopEndRadius`](#bordertopendradius)
   - [`borderTopLeftRadius`](#bordertopleftradius)
   - [`borderTopRightRadius`](#bordertoprightradius)
+  - [`borderTopStartRadius`](#bordertopstartradius)
+  - [`boxShadow`](#boxshadow)
+  - [`cursor`](#cursor)
   - [`elevation`](#elevation)
+  - [`filter`](#filter)
   - [`opacity`](#opacity)
+  - [`outlineColor`](#outlinecolor)
+  - [`outlineOffset`](#outlineoffset)
+  - [`outlineStyle`](#outlinestyle)
+  - [`outlineWidth`](#outlinewidth)
+  - [`pointerEvents`](#pointerevents)
   - [`shadowColor`](#shadowcolor)
   - [`shadowOffsetX`](#shadowoffsetx)
   - [`shadowOffsetY`](#shadowoffsety)
@@ -98,15 +133,37 @@ A `<style>` element should only appear as a direct child of a `<styles>` element
   - [`shadowRadius`](#shadowradius)
 
 - [Text rules](#text-rules)
+
   - [`color`](#color)
+  - [`fontFamily`](#fontfamily)
   - [`fontSize`](#fontsize)
   - [`fontStyle`](#fontstyle)
+  - [`fontVariant`](#fontvariant)
   - [`fontWeight`](#fontweight)
+  - [`includeFontPadding`](#includefontpadding)
+  - [`letterSpacing`](#letterspacing)
   - [`lineHeight`](#lineheight)
   - [`textAlign`](#textalign)
+  - [`textAlignVertical`](#textalignvertical)
+  - [`textDecorationColor`](#textdecorationcolor)
+  - [`textDecorationLine`](#textdecorationline)
+  - [`textDecorationStyle`](#textdecorationstyle)
   - [`textShadowColor`](#textshadowcolor)
-  - [`fontFamily`](#fontfamily)
+  - [`textShadowOffsetX`](#textshadowoffsetx)
+  - [`textShadowOffsetY`](#textshadowoffsety)
   - [`textShadowRadius`](#textshadowradius)
+  - [`textTransform`](#texttransform)
+  - [`userSelect`](#userselect)
+  - [`verticalAlign`](#verticalalign)
+  - [`writingDirection`](#writingdirection)
+
+- [Image rules](#image-rules)
+
+  - [`backfaceVisibility`](#backfacevisibility)
+  - [`objectFit`](#objectfit)
+  - [`overlayColor`](#overlaycolor)
+  - [`resizeMode`](#resizemode)
+  - [`tintColor`](#tintcolor)
 
 ### `id`
 
@@ -123,20 +180,6 @@ A global attribute uniquely identifying the element in the whole document. This 
 `<style>` attributes support the following [layout props](https://facebook.github.io/react-native/docs/layout-props) from React Native.
 
 > Layout rules can only be applied to most elements with a few exceptions (such as `<spinner>`).
-
-#### `aspectRatio`
-
-Aspect ratio controls the size of the undefined dimension of a node. See https://developer.mozilla.org/en-US/docs/Web/CSS/aspect-ratio for more details.
-
-- On a node with a set width/height, aspect ratio controls the size of the unset dimension
-- On a node with a set flex basis, aspect ratio controls the size of the node in the cross axis if unset
-- On a node with a measure function, aspect ratio works as though the measure function measures the flex basis
-- On a node with flex grow/shrink, aspect ratio controls the size of the node in the cross axis if unset
-- Aspect ratio takes min/max dimensions into account
-
-| Type           | Required |
-| -------------- | -------- |
-| number, string | No       |
 
 #### `alignContent`
 
@@ -170,6 +213,14 @@ Aspect ratio controls the size of the undefined dimension of a node. See https:/
 | ------ | -------- |
 | number | No       |
 
+#### `borderEndWidth`
+
+`borderEndWidth` works like `border-inline-end-width` in CSS. See https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-end-width for more details.
+
+| Type   | Required |
+| ------ | -------- |
+| number | No       |
+
 #### `borderLeftWidth`
 
 `borderLeftWidth` works like `border-left-width` in CSS. See https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-width for more details.
@@ -181,6 +232,14 @@ Aspect ratio controls the size of the undefined dimension of a node. See https:/
 #### `borderRightWidth`
 
 `borderRightWidth` works like `border-right-width` in CSS. See https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-width for more details.
+
+| Type   | Required |
+| ------ | -------- |
+| number | No       |
+
+#### `borderStartWidth`
+
+`borderStartWidth` works like `border-inline-start-width` in CSS. See https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-start-width for more details.
 
 | Type   | Required |
 | ------ | -------- |
@@ -214,6 +273,30 @@ See https://developer.mozilla.org/en-US/docs/Web/CSS/bottom for more details of 
 | -------------- | -------- |
 | number, string | No       |
 
+#### `boxSizing`
+
+`boxSizing` sets how the total width and height of an element is calculated. It works like `box-sizing` in CSS. See https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing for more details.
+
+| Type   | Required |
+| ------ | -------- |
+| string | No       |
+
+#### `columnGap`
+
+`columnGap` sets the size of the gap (gutter) between an element's columns. It works like `column-gap` in CSS. See https://developer.mozilla.org/en-US/docs/Web/CSS/column-gap for more details.
+
+| Type   | Required |
+| ------ | -------- |
+| number | No       |
+
+#### `direction`
+
+`direction` sets the direction of text, table columns, and horizontal overflow. It works like `direction` in CSS. See https://developer.mozilla.org/en-US/docs/Web/CSS/direction for more details.
+
+| Type   | Required |
+| ------ | -------- |
+| string | No       |
+
 #### `display`
 
 `display` sets the display type of this component.
@@ -223,6 +306,14 @@ It works similarly to `display` in CSS, but only support 'flex' and 'none'. 'fle
 | Type           | Required |
 | -------------- | -------- |
 | 'none', 'flex' | No       |
+
+#### `end`
+
+`end` is the number of logical pixels to offset the end edge of this component. It works like `inset-inline-end` in CSS. See https://developer.mozilla.org/en-US/docs/Web/CSS/inset-inline-end for more details.
+
+| Type   | Required |
+| ------ | -------- |
+| string | No       |
 
 #### `flex`
 
@@ -271,6 +362,14 @@ flexGrow, flexShrink, and flexBasis work the same as in CSS.
 | Type             | Required |
 | ---------------- | -------- |
 | 'wrap', 'nowrap' | No       |
+
+#### `gap`
+
+`gap` sets the gaps (gutters) between rows and columns. It works like `gap` in CSS. See https://developer.mozilla.org/en-US/docs/Web/CSS/gap for more details.
+
+| Type   | Required |
+| ------ | -------- |
+| number | No       |
 
 #### `height`
 
@@ -345,6 +444,22 @@ Setting `marginHorizontal` has the same effect as setting both `marginLeft` and 
 #### `marginTop`
 
 `marginTop` works like `margin-top` in CSS. You must use points or percentages. Ems and other units are not supported. See https://developer.mozilla.org/en-US/docs/Web/CSS/margin-top for more details.
+
+| Type           | Required |
+| -------------- | -------- |
+| number, string | No       |
+
+#### `marginEnd`
+
+`marginEnd` works like `margin-inline-end` in CSS. You must use points or percentages. Ems and other units are not supported. See https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline-end for more details.
+
+| Type           | Required |
+| -------------- | -------- |
+| number, string | No       |
+
+#### `marginStart`
+
+`marginStart` works like `margin-inline-start` in CSS. You must use points or percentages. Ems and other units are not supported. See https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline-start for more details.
 
 | Type           | Required |
 | -------------- | -------- |
@@ -472,6 +587,22 @@ See https://developer.mozilla.org/en-US/docs/Web/CSS/padding-top for more detail
 | -------------- | -------- |
 | number, string | No       |
 
+#### `paddingEnd`
+
+`paddingEnd` works like `padding-inline-end` in CSS. You must use points or percentages. Ems and other units are not supported. See https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline-end for more details.
+
+| Type           | Required |
+| -------------- | -------- |
+| number, string | No       |
+
+#### `paddingStart`
+
+`paddingStart` works like `padding-inline-start` in CSS. You must use points or percentages. Ems and other units are not supported. See https://developer.mozilla.org/en-US/docs/Web/CSS/padding-inline-start for more details.
+
+| Type           | Required |
+| -------------- | -------- |
+| number, string | No       |
+
 #### `paddingVertical`
 
 Setting `paddingVertical` is like setting both of `paddingTop` and `paddingBottom` to the same value. You must use points or percentages. Ems and other units are not supported.
@@ -503,6 +634,22 @@ See https://developer.mozilla.org/en-US/docs/Web/CSS/right for more details of h
 | Type           | Required |
 | -------------- | -------- |
 | number, string | No       |
+
+#### `rowGap`
+
+`rowGap` sets the size of the gap (gutter) between an element's rows. It works like `row-gap` in CSS. See https://developer.mozilla.org/en-US/docs/Web/CSS/row-gap for more details.
+
+| Type   | Required |
+| ------ | -------- |
+| number | No       |
+
+#### `start`
+
+`start` is the number of logical pixels to offset the start edge of this component. It works like `inset-inline-start` in CSS. See https://developer.mozilla.org/en-US/docs/Web/CSS/inset-inline-start for more details.
+
+| Type   | Required |
+| ------ | -------- |
+| string | No       |
 
 #### `top`
 
@@ -541,6 +688,26 @@ It works similarly to `zIndex` in CSS, but in Hyperview you must use only intege
 `<style>` elements support the following attributes for `<view>` and `<image>` as defined in [React Native](https://facebook.github.io/react-native/docs/view-style-props).
 
 > View rules will only be applied to `<view>` and `<image>` elements. Adding these rules to other elements will cause a warning in the client.
+
+#### `aspectRatio`
+
+Aspect ratio controls the size of the undefined dimension of a node. See https://developer.mozilla.org/en-US/docs/Web/CSS/aspect-ratio for more details.
+
+- On a node with a set width/height, aspect ratio controls the size of the unset dimension
+- On a node with a set flex basis, aspect ratio controls the size of the node in the cross axis if unset
+- On a node with a measure function, aspect ratio works as though the measure function measures the flex basis
+- On a node with flex grow/shrink, aspect ratio controls the size of the node in the cross axis if unset
+- Aspect ratio takes min/max dimensions into account
+
+| Type           | Required |
+| -------------- | -------- |
+| number, string | No       |
+
+#### `backgroundColor`
+
+| Type  | Required |
+| ----- | -------- |
+| color | No       |
 
 #### `borderRightColor`
 
@@ -731,3 +898,49 @@ Specifies text alignment. The value 'justify' is only supported on iOS and fallb
 | Type   | Required |
 | ------ | -------- |
 | number | No       |
+
+### Image rules
+
+`<style>` elements support the following attributes specifically for `<image>` elements.
+
+> Image rules will only be applied to `<image>` elements. Adding these rules to other elements will cause a warning in the client.
+
+#### `backfaceVisibility`
+
+`backfaceVisibility` sets whether the back face of an element is visible when turned towards the user. It works like `backface-visibility` in CSS. See https://developer.mozilla.org/en-US/docs/Web/CSS/backface-visibility for more details.
+
+| Type   | Required |
+| ------ | -------- |
+| string | No       |
+
+#### `objectFit`
+
+`objectFit` sets how the content of a replaced element, such as an image, should be resized to fit its container. It works like `object-fit` in CSS. See https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit for more details.
+
+| Type   | Required |
+| ------ | -------- |
+| string | No       |
+
+#### `overlayColor`
+
+`overlayColor` sets the color to overlay on top of the image. This is useful for creating tinted images.
+
+| Type  | Required |
+| ----- | -------- |
+| color | No       |
+
+#### `resizeMode`
+
+`resizeMode` determines how to resize the image when the frame doesn't match the raw image dimensions. See React Native Image documentation for more details.
+
+| Type                                              | Required |
+| ------------------------------------------------- | -------- |
+| 'cover', 'contain', 'stretch', 'repeat', 'center' | No       |
+
+#### `tintColor`
+
+`tintColor` changes the color of all the non-transparent pixels to the tintColor.
+
+| Type  | Required |
+| ----- | -------- |
+| color | No       |
