@@ -366,6 +366,18 @@ export default class HvSectionList extends PureComponent<
         })
       : undefined;
 
+    // Allow disabling scroll bouncing (on by default)
+    const bounces =
+      this.props.element.getAttribute('over-scroll') === 'false' &&
+      Platform.OS === 'ios'
+        ? false
+        : undefined;
+    const overScrollMode =
+      this.props.element.getAttribute('over-scroll') === 'false' &&
+      Platform.OS === 'android'
+        ? 'never'
+        : undefined;
+
     const { testID, accessibilityLabel } = createTestProps(this.props.element);
 
     return (
@@ -379,6 +391,7 @@ export default class HvSectionList extends PureComponent<
             <SectionList
               ref={this.onRef}
               accessibilityLabel={accessibilityLabel}
+              bounces={bounces}
               contentContainerStyle={contentContainerStyle}
               element={this.props.element}
               horizontal={horizontal}
@@ -390,6 +403,7 @@ export default class HvSectionList extends PureComponent<
               )}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               keyExtractor={(item: any) => item.getAttribute('key')}
+              overScrollMode={overScrollMode}
               refreshControl={
                 hasRefreshTrigger ? (
                   <RefreshControl
