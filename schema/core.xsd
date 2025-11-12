@@ -384,6 +384,15 @@
     </xs:sequence>
   </xs:group>
 
+  <xs:group name="textChildren">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="hv:text" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="hv:behavior" />
+      </xs:choice>
+    </xs:sequence>
+  </xs:group>
+
   <xs:simpleType name="networkRetryAction">
     <xs:restriction base="xs:string">
       <xs:enumeration value="replace" />
@@ -923,10 +932,7 @@
 
   <xs:element name="text">
     <xs:complexType mixed="true">
-      <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="hv:text" />
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="hv:behavior" />
-      </xs:choice>
+      <xs:group ref="hv:textChildren" />
       <xs:attribute name="numberOfLines" type="xs:positiveInteger" />
       <xs:attribute name="style" type="hv:styleList" />
       <xs:attribute name="id" type="hv:ID" />
