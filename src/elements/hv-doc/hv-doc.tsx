@@ -393,7 +393,7 @@ export default (props: Props) => {
       <Loading
         cachedId={props.route?.params?.behaviorElementId}
         routeElement={() => {
-          const doc = getDoc();
+          const doc = getSourceDoc();
           return props.route?.params?.routeId && doc
             ? NavigatorService.getRouteById(doc, props.route?.params?.routeId)
             : undefined;
