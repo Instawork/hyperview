@@ -215,7 +215,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
       const navigation = options.onUpdateCallbacks.getNavigation();
       const doc = options.onUpdateCallbacks.getDoc();
       const state = options.onUpdateCallbacks.getState();
-      if (navigation && doc && state.url) {
+      if (navigation) {
         const {
           behaviorElement,
           delay,

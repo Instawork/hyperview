@@ -370,10 +370,7 @@ export default (props: Props) => {
         const component = (
           <HvElement
             element={body as Element}
-            onUpdate={
-              // eslint-disable-next-line @typescript-eslint/no-empty-function
-              () => {}
-            }
+            onUpdate={onDocUpdate}
             options={{ componentRegistry }}
             stylesheets={styleSheet}
           />
