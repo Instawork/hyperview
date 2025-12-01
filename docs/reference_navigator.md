@@ -18,7 +18,7 @@ An example stack navigator.
 
 ## Structure
 
-A `<navigator>` element can only appear as a direct and only child of a `<doc>` element. A `<navigator>` must contain at least one `<nav-route>` child. A `<navigator>` may contain one ore more `<behavior>` children. `<navigator>` elements can handle can only handle the `load` and `on-event` triggers.
+A `<navigator>` element can only appear as a direct and only child of a `<doc>` or `nav-route` element. A `<navigator>` must contain at least one `<nav-route>` child. A `<navigator>` may contain one or more `<behavior>` children and supports only `load` or `on-event` triggers.
 
 An example navigator with behavior.
 
