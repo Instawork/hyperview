@@ -74,8 +74,8 @@ export const isRenderableElement = (
       return true;
     }
     // No component registered for the namespace/local name.
-    // Warn in case this was an unintended mistake.
-    Logging.warn(
+    // Log an info event in case this was an unintended mistake.
+    Logging.info(
       `No component registered for tag <${element.localName}> (namespace: ${element.namespaceURI})`,
     );
   }
