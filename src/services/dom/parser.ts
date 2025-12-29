@@ -27,7 +27,7 @@ import { Dimensions } from 'react-native';
 import { version } from 'hyperview/package.json';
 
 const { width, height } = Dimensions.get('window');
-const SNIPPET_LENGTH = 200;
+const SNIPPET_LENGTH = 1000;
 
 // Compute a snippet start position by centering around the end of an opening tag
 const getSnippetStartForTag = (responseText: string, tag: string): number => {
