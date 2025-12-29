@@ -151,17 +151,12 @@ export default class HyperRef extends PureComponent<Props, State> {
       handler(this.props.element);
 
       Logging.info(
-        '[on-event] trigger [',
         Logging.deferredToString(() => {
-          return behaviorElement.getAttribute('event-name');
-        }),
-        '] caught by: ',
-        Logging.deferredToString(() => {
-          const listenerElement: Element = behaviorElement.cloneNode(
-            false,
-          ) as Element;
+          const event = behaviorElement.getAttribute('event-name') || '';
+          const listenerElement = behaviorElement.cloneNode(false) as Element;
           listenerElement.textContent = '';
-          return Helpers.elementToString(listenerElement);
+          const listener = Helpers.elementToString(listenerElement);
+          return `[on-event] trigger [ ${event} ] caught by: ${listener}`;
         }),
       );
     });
