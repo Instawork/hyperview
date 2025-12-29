@@ -3,6 +3,7 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import { LOCAL_NAME, NODE_TYPE, UPDATE_ACTIONS } from 'hyperview/src/types';
 import type { NamespaceURI, NodeType, UpdateAction } from 'hyperview/src/types';
 import { DocumentGetElementByIdError } from './errors';
+import { XMLSerializer } from '@instawork/xmldom';
 import { uuid } from 'hyperview/src/services';
 
 export const getBehaviorElements = (element: Element) => {
@@ -247,4 +248,23 @@ export const findTagEndIndex = (
     return m.index + m[0].length - 1;
   }
   return fallback;
+};
+
+/**
+ * Convert an element to a string, trimming and cleaning the string to a maximum length
+ */
+export const elementToString = (
+  element?: Element | null,
+  maxLength = 1000,
+): string => {
+  if (!element) {
+    return '';
+  }
+  try {
+    const serializer = new XMLSerializer();
+    const xml = serializer.serializeToString(element);
+    return trimAndCleanString(xml, 0, maxLength);
+  } catch {
+    return '';
+  }
 };
