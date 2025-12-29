@@ -27,7 +27,6 @@ import { ElementCacheProvider } from 'hyperview/src/contexts/element-cache';
 import HvRoute from 'hyperview/src/elements/hv-route';
 import { HyperviewContext } from 'hyperview/src/contexts/hyperview';
 import { Linking } from 'react-native';
-import { XMLSerializer } from '@instawork/xmldom';
 
 /**
  * Provides routing to the correct path based on the state passed in
@@ -142,9 +141,15 @@ export default class Hyperview extends PureComponent<Types.Props> {
     networkRetryEvent: string | null | undefined,
     syncId: DOMString | null | undefined = undefined,
     syncMethod: DOMString | null | undefined = 'drop',
+    behaviorElement: Element | null | undefined = null,
   ): Promise<Element | null> => {
     if (!href) {
-      Logging.error(new Error('No href passed to fetchElement'));
+      Logging.error(
+        new Error('No href passed to fetchElement'),
+        Logging.deferredToString(() =>
+          Helpers.elementToString(behaviorElement),
+        ),
+      );
       return null;
     }
 
@@ -153,7 +158,12 @@ export default class Hyperview extends PureComponent<Types.Props> {
       if (element) {
         return element.cloneNode(true) as Element;
       }
-      Logging.error(new Error(`Element with id ${href} not found in document`));
+      Logging.error(
+        new Error(`Element with id ${href} not found in document`),
+        Logging.deferredToString(() =>
+          Helpers.elementToString(behaviorElement),
+        ),
+      );
       return null;
     }
 
@@ -275,6 +285,9 @@ export default class Hyperview extends PureComponent<Types.Props> {
           new Error(
             'trigger="on-event" and action="dispatch-event" cannot be used on the same element',
           ),
+          Logging.deferredToString(() =>
+            Helpers.elementToString(behaviorElement),
+          ),
         );
         return;
       }
@@ -282,6 +295,9 @@ export default class Hyperview extends PureComponent<Types.Props> {
         Logging.error(
           new Error(
             'dispatch-event requires an event-name attribute to be present',
+          ),
+          Logging.deferredToString(() =>
+            Helpers.elementToString(behaviorElement),
           ),
         );
         return;
@@ -397,6 +413,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
           networkRetryEvent,
           options.syncId,
           options.syncMethod,
+          behaviorElement,
         ).then(newElement => {
           if (newElement === null) {
             // Request was dropped due to sync logic, no update needed
@@ -505,11 +522,9 @@ export default class Hyperview extends PureComponent<Types.Props> {
         // Warn developers if the behavior element is not found
         Logging.error(
           `Cannot find a behavior element to perform "${action}". It may be missing an id.`,
-          Logging.deferredToString(() => {
-            return new XMLSerializer().serializeToString(
-              behaviorElement as Element,
-            );
-          }),
+          Logging.deferredToString(() =>
+            Helpers.elementToString(behaviorElement),
+          ),
         );
       }
     } else {
@@ -550,7 +565,12 @@ export default class Hyperview extends PureComponent<Types.Props> {
     }
     const action = behaviorElement.getAttribute('action');
     if (!action) {
-      Logging.warn('Custom behavior requires an action attribute');
+      Logging.warn(
+        'Custom behavior requires an action attribute',
+        Logging.deferredToString(() =>
+          Helpers.elementToString(behaviorElement),
+        ),
+      );
       return;
     }
     const behavior = this.behaviorRegistry[action];

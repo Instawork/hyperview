@@ -1,3 +1,4 @@
+import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as InlineContext from 'hyperview/src/services/inline-context';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
@@ -56,11 +57,17 @@ export const isRenderableElement = (
 
   if (element.nodeType === NODE_TYPE.ELEMENT_NODE) {
     if (!element.namespaceURI) {
-      Logging.warn('`namespaceURI` missing for node:', element.toString());
+      Logging.warn(
+        '`namespaceURI` missing for node:',
+        Logging.deferredToString(() => Helpers.elementToString(element)),
+      );
       return false;
     }
     if (!element.localName) {
-      Logging.warn('`localName` missing for node:', element.toString());
+      Logging.warn(
+        '`localName` missing for node:',
+        Logging.deferredToString(() => Helpers.elementToString(element)),
+      );
       return false;
     }
 
