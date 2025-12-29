@@ -1,3 +1,4 @@
+import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Keyboard from 'hyperview/src/services/keyboard';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
@@ -185,7 +186,12 @@ export default class HvView extends PureComponent<HvComponentProps> {
     const safeArea = this.attributes[ATTRIBUTES.SAFE_AREA] === 'true';
     if (safeArea) {
       if (keyboardAvoiding || scrollable) {
-        Logging.warn('safe-area is incompatible with scroll or avoid-keyboard');
+        Logging.warn(
+          'safe-area is incompatible with scroll or avoid-keyboard',
+          Logging.deferredToString(() =>
+            Helpers.elementToString(this.props.element),
+          ),
+        );
       }
     }
 

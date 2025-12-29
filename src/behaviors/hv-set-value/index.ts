@@ -1,5 +1,6 @@
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Dom from 'hyperview/src/services/dom';
+import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Xml from 'hyperview/src/services/xml';
 import type {
@@ -22,7 +23,10 @@ export default {
       'target',
     );
     if (!targetId) {
-      Logging.warn('[behaviors/set-value]: missing "target" attribute');
+      Logging.warn(
+        '[behaviors/set-value]: missing "target" attribute',
+        Logging.deferredToString(() => Helpers.elementToString(element)),
+      );
       return;
     }
 

@@ -1,6 +1,7 @@
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Events from 'hyperview/src/services/events';
+import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import { BEHAVIOR_ATTRIBUTES, LOCAL_NAME, TRIGGERS } from 'hyperview/src/types';
@@ -25,7 +26,6 @@ import HvElement from 'hyperview/src/components/hv-element';
 import { ScrollView } from 'hyperview/src/components/scroll';
 import type { StyleSheet } from 'hyperview/src/types';
 import VisibilityDetectingView from './VisibilityDetectingView';
-import { XMLSerializer } from '@instawork/xmldom';
 
 /**
  * Component that handles dispatching behaviors based on the appropriate
@@ -128,12 +128,14 @@ export default class HyperRef extends PureComponent<Props, State> {
             new Error(
               'trigger="on-event" and action="dispatch-event" cannot be used on the same element',
             ),
+            Logging.deferredToString(() => Helpers.elementToString(e)),
           );
           return false;
         }
         if (!currentAttributeEventName) {
           Logging.error(
             new Error('on-event trigger requires an event-name attribute'),
+            Logging.deferredToString(() => Helpers.elementToString(e)),
           );
           return false;
         }
@@ -159,7 +161,7 @@ export default class HyperRef extends PureComponent<Props, State> {
             false,
           ) as Element;
           listenerElement.textContent = '';
-          return new XMLSerializer().serializeToString(listenerElement);
+          return Helpers.elementToString(listenerElement);
         }),
       );
     });

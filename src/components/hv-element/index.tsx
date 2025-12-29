@@ -1,3 +1,4 @@
+import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as InlineContext from 'hyperview/src/services/inline-context';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
@@ -106,6 +107,7 @@ export default (props: HvComponentProps): JSX.Element | null | string => {
         if (trimmedValue.length > 0) {
           Logging.warn(
             `Text string "${trimmedValue}" must be rendered within a <text> element`,
+            Logging.deferredToString(() => Helpers.elementToString(element)),
           );
         }
       }

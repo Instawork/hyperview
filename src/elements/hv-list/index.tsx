@@ -1,4 +1,5 @@
 import * as Dom from 'hyperview/src/services/dom';
+import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Keyboard from 'hyperview/src/services/keyboard';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
@@ -41,7 +42,12 @@ const HvList = (props: HvComponentProps) => {
         | null
         | undefined = behaviorElement?.getAttribute('target');
       if (!targetId) {
-        Logging.warn('[behaviors/scroll]: missing "target" attribute');
+        Logging.warn(
+          '[behaviors/scroll]: missing "target" attribute',
+          Logging.deferredToString(() =>
+            Helpers.elementToString(behaviorElement),
+          ),
+        );
         return;
       }
       const doc: Document | undefined = getDoc?.();

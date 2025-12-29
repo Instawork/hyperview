@@ -1,3 +1,4 @@
+import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Logging from 'hyperview/src/services/logging';
 import { Clipboard } from 'react-native';
 
@@ -11,6 +12,7 @@ export default {
     if (!value) {
       Logging.warn(
         `[behaviors/copy-to-clipboard]: missing "${attributeName}" attribute`,
+        Logging.deferredToString(() => Helpers.elementToString(element)),
       );
       return;
     }

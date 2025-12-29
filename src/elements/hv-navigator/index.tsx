@@ -1,6 +1,7 @@
 import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Events from 'hyperview/src/services/events';
+import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as NavigatorService from 'hyperview/src/services/navigator';
@@ -56,12 +57,14 @@ export default function HvNavigator(props: Props) {
               new Error(
                 'trigger="on-event" and action="dispatch-event" cannot be used on the same element',
               ),
+              Logging.deferredToString(() => Helpers.elementToString(e)),
             );
             return false;
           }
           if (!currentAttributeEventName) {
             Logging.error(
               new Error('on-event trigger requires an event-name attribute'),
+              Logging.deferredToString(() => Helpers.elementToString(e)),
             );
             return false;
           }
@@ -97,6 +100,7 @@ export default function HvNavigator(props: Props) {
             `Unsupported trigger '${triggerAttr}'. Only "${supportedTriggers.join(
               ',',
             )}" are supported`,
+            Logging.deferredToString(() => Helpers.elementToString(e)),
           );
           return false;
         }
