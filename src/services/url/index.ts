@@ -3,6 +3,13 @@ import urlParse from 'url-parse';
 const QUERY_SEPARATOR = '?';
 const QUERY_PARAM_SEPARATOR = '&';
 
+// Regex for UUID path segments. Example: /550e8400-e29b-41d4-a716-446655440000
+const UUID_PATH_SEGMENT_RE = /\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}(?=\/|$)/g;
+// Regex for integer path segments. Example: /123
+const INT_PATH_SEGMENT_RE = /\/\d+(?=\/|$)/g;
+// Regex for "token-ish" segments. Example: /oBDew8n / 5YzXjvB
+const TOKEN_PATH_SEGMENT_RE = /\/(?=[A-Za-z0-9_-]{6,}(?=\/|$))(?=[^/]*\d)[A-Za-z0-9_-]+(?=\/|$)/g;
+
 /**
  * Turns the href into a fetchable URL.
  * If the href is fully qualified, return it.
@@ -80,4 +87,27 @@ export const addFormDataToUrl = (
     }
   }
   return url;
+};
+
+/**
+ * Sanitize the path portion of a URL to remove unique identifiers for error messages.
+ *
+ * Replaces dynamic-looking segments with placeholders while preserving route structure.
+ *
+ * Examples:
+ * - `https://app.instawork.com/worker_app/shift-transfer/oBDew8n/confirm/9188184`
+ *    -> `https://app.instawork.com/worker_app/shift-transfer/:token/confirm/:id`
+ */
+export const sanitizeUrl = (url: string): string => {
+  const parsed = urlParse(url, undefined, false);
+  const origin =
+    parsed.protocol && parsed.host ? `${parsed.protocol}//${parsed.host}` : '';
+  const path = parsed.pathname || '';
+
+  const sanitizedPath = path
+    .replaceAll(UUID_PATH_SEGMENT_RE, '/:uuid')
+    .replaceAll(INT_PATH_SEGMENT_RE, '/:id')
+    .replaceAll(TOKEN_PATH_SEGMENT_RE, '/:token');
+
+  return `${origin}${sanitizedPath}`;
 };

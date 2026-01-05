@@ -1,6 +1,7 @@
 /* eslint-disable max-classes-per-file */
 
 import * as ErrorService from 'hyperview/src/services/error';
+import * as UrlService from 'hyperview/src/services/url';
 import { XMLSerializer } from '@instawork/xmldom';
 
 export class UnsupportedContentTypeError extends ErrorService.HvBaseError {
@@ -96,9 +97,11 @@ export class XMLRequiredElementNotFound extends ErrorService.HvBaseError {
   name = 'XMLRequiredElementNotFound';
 
   constructor(tag: string, url: string, content: string) {
-    super(`Required <${tag}> tag not found in the response from ${url}`);
+    const cleanUrl = UrlService.sanitizeUrl(url);
+    super(`Required <${tag}> tag not found in the response from ${cleanUrl}`);
     this.setExtraContext('tag', tag);
     this.setExtraContext('url', url);
+    this.setExtraContext('cleanUrl', cleanUrl);
     this.setExtraContext('content', content);
   }
 }
@@ -107,9 +110,11 @@ export class XMLRestrictedElementFound extends ErrorService.HvBaseError {
   name = 'XMLRestrictedElementFound';
 
   constructor(tag: string, url: string, content: string) {
-    super(`Restricted <${tag}> tag found in the response from ${url}`);
+    const cleanUrl = UrlService.sanitizeUrl(url);
+    super(`Restricted <${tag}> tag found in the response from ${cleanUrl}`);
     this.setExtraContext('tag', tag);
     this.setExtraContext('url', url);
+    this.setExtraContext('cleanUrl', cleanUrl);
     this.setExtraContext('content', content);
   }
 }
@@ -132,11 +137,13 @@ export class ServerError extends ErrorService.HvBaseError {
     responseHeaders: Headers,
     status: number,
   ) {
-    super(url);
+    const cleanUrl = UrlService.sanitizeUrl(url);
+    super(cleanUrl);
     this.responseText = responseText;
     this.responseHeaders = responseHeaders;
     this.status = status;
     this.setExtraContext('url', url);
+    this.setExtraContext('cleanUrl', cleanUrl);
     this.setExtraContext('responseText', responseText);
     this.setExtraContext('responseHeaders', responseHeaders);
     this.setExtraContext('status', status);
