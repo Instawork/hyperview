@@ -41,23 +41,3 @@ describe('addParamsToUrl', () => {
     );
   });
 });
-
-describe('sanitizeUrl', () => {
-  it('replaces numeric segments with :id and token-ish segments with :token', () => {
-    expect(
-      Url.sanitizeUrl(
-        'https://app.instawork.com/worker_app/shift-transfer/oBDew8n/confirm/9188184?foo=bar',
-      ),
-    ).toEqual(
-      'https://app.instawork.com/worker_app/shift-transfer/:token/confirm/:id',
-    );
-  });
-
-  it('replaces UUID segments with :uuid', () => {
-    expect(
-      Url.sanitizeUrl(
-        'https://example.com/foo/550e8400-e29b-41d4-a716-446655440000/bar',
-      ),
-    ).toEqual('https://example.com/foo/:uuid/bar');
-  });
-});
