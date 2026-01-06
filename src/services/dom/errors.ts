@@ -96,7 +96,7 @@ export class XMLRequiredElementNotFound extends ErrorService.HvBaseError {
   name = 'XMLRequiredElementNotFound';
 
   constructor(tag: string, url: string, content: string) {
-    super(`Required <${tag}> tag not found in the response from ${url}`);
+    super(`Required <${tag}> tag not found in the response`);
     this.setExtraContext('tag', tag);
     this.setExtraContext('url', url);
     this.setExtraContext('content', content);
@@ -107,7 +107,7 @@ export class XMLRestrictedElementFound extends ErrorService.HvBaseError {
   name = 'XMLRestrictedElementFound';
 
   constructor(tag: string, url: string, content: string) {
-    super(`Restricted <${tag}> tag found in the response from ${url}`);
+    super(`Restricted <${tag}> tag found in the response`);
     this.setExtraContext('tag', tag);
     this.setExtraContext('url', url);
     this.setExtraContext('content', content);
@@ -132,7 +132,7 @@ export class ServerError extends ErrorService.HvBaseError {
     responseHeaders: Headers,
     status: number,
   ) {
-    super(url);
+    super(`ServerError (status ${status})`);
     this.responseText = responseText;
     this.responseHeaders = responseHeaders;
     this.status = status;
