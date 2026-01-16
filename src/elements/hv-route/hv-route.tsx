@@ -180,7 +180,7 @@ function HvRouteFC(props: Types.Props) {
   } = useHyperview();
   const { setElement } = useElementCache();
   const { get, onUpdate } = useBackBehaviorContext();
-  const { getDoc, setDoc } = useUnsafeHvDocContext() || {};
+  const { getDoc, getSourceDoc, setDoc } = useUnsafeHvDocContext() || {};
 
   const url =
     props.navigation === undefined
@@ -206,7 +206,7 @@ function HvRouteFC(props: Types.Props) {
   // Get the navigator element from the context
   const element: Element | undefined = getNestedNavigator(
     props.route?.params?.id,
-    getDoc?.(),
+    getSourceDoc?.(),
   );
 
   React.useEffect(() => {
