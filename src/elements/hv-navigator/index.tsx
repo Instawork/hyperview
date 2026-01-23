@@ -12,6 +12,9 @@ import {
   TRIGGERS,
 } from 'hyperview/src/types';
 import {
+  BehaviorUnsupportedTriggerError,
+} from 'hyperview/src/errors';
+import {
   ParamTypes,
   Props,
   SHOW_DEFAULT_FOOTER_UI,
@@ -94,9 +97,11 @@ export default function HvNavigator(props: Props) {
           e.getAttribute(BEHAVIOR_ATTRIBUTES.TRIGGER) || 'press';
         if (!supportedTriggers.includes(triggerAttr)) {
           Logging.warn(
-            `Unsupported trigger '${triggerAttr}'. Only "${supportedTriggers.join(
-              ',',
-            )}" are supported`,
+            new BehaviorUnsupportedTriggerError(
+              e,
+              triggerAttr,
+              supportedTriggers,
+            ),
           );
           return false;
         }

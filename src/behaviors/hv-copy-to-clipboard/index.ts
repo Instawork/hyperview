@@ -1,4 +1,5 @@
 import * as Logging from 'hyperview/src/services/logging';
+import { BehaviorCopyToClipboardError } from 'hyperview/src/errors';
 import { Clipboard } from 'react-native';
 
 export default {
@@ -9,9 +10,7 @@ export default {
       attributeName,
     );
     if (!value) {
-      Logging.warn(
-        `[behaviors/copy-to-clipboard]: missing "${attributeName}" attribute`,
-      );
+      Logging.warn(new BehaviorCopyToClipboardError(element, attributeName));
       return;
     }
     Clipboard.setString(value);
