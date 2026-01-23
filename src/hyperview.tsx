@@ -37,7 +37,6 @@ import { ElementCacheProvider } from 'hyperview/src/contexts/element-cache';
 import HvRoute from 'hyperview/src/elements/hv-route';
 import { HyperviewContext } from 'hyperview/src/contexts/hyperview';
 import { Linking } from 'react-native';
-import { XMLSerializer } from '@instawork/xmldom';
 
 /**
  * Provides routing to the correct path based on the state passed in
