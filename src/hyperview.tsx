@@ -27,6 +27,7 @@ import {
   EventTriggerError,
   FetchMissingElementError,
   UpdateMissingBehaviorElementError,
+  UpdateMissingBehaviorError,
 } from 'hyperview/src/errors';
 import React, { PureComponent } from 'react';
 import { ElementCacheProvider } from 'hyperview/src/contexts/element-cache';
@@ -577,7 +578,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
       );
     } else {
       // No behavior detected.
-      Logging.warn(`No behavior registered for action "${action}"`);
+      Logging.warn(new UpdateMissingBehaviorError(behaviorElement, action));
     }
   };
 
