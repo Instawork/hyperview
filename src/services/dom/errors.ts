@@ -1,7 +1,6 @@
 /* eslint-disable max-classes-per-file */
 
 import * as ErrorService from 'hyperview/src/services/error';
-import { XMLSerializer } from '@instawork/xmldom';
 
 export class UnsupportedContentTypeError extends ErrorService.HvBaseError {
   name = 'UnsupportedContentTypeError';
@@ -143,24 +142,13 @@ export class ServerError extends ErrorService.HvBaseError {
   }
 }
 
-export class DocumentGetElementByIdError extends ErrorService.HvBaseError {
+export class DocumentGetElementByIdError extends ErrorService.HvDocError {
   name = 'DocumentGetElementByIdError';
 
   constructor(id: string, doc: Document, error: Error) {
-    super(`Document.getElementById failed for id: ${id}`);
+    super('Document.getElementById failed.', doc);
     this.stack = error.stack;
     this.setExtraContext('error', error);
-    this.setExtraContext('doc', docToString(doc));
     this.setExtraContext('id', id);
   }
 }
-
-const docToString = (doc: Document): string => {
-  try {
-    const serializer = new XMLSerializer();
-    return serializer.serializeToString(doc);
-  } catch (e) {
-    const error = e as Error;
-    return error ? `serializing error: ${error.message}` : 'serializing error';
-  }
-};
