@@ -57,7 +57,12 @@ export {
   getBehaviorElements,
   getFirstTag,
 } from 'hyperview/src/services/dom';
-export { HvBaseError } from 'hyperview/src/services/error';
+export {
+  HvBaseError,
+  HvDocError,
+  HvElementError,
+  HvParserError,
+} from 'hyperview/src/services/error';
 export { renderChildren, renderElement } from 'hyperview/src/services/render';
 export { createStylesheets } from 'hyperview/src/services/stylesheets';
 export { getUrlFromHref } from 'hyperview/src/services/url';
