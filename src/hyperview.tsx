@@ -22,6 +22,9 @@ import {
   UPDATE_ACTIONS,
   UpdateAction,
 } from 'hyperview/src/types';
+import {
+  FetchMissingElementError,
+} from 'hyperview/src/errors';
 import React, { PureComponent } from 'react';
 import { ElementCacheProvider } from 'hyperview/src/contexts/element-cache';
 import HvRoute from 'hyperview/src/elements/hv-route';
@@ -153,7 +156,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
       if (element) {
         return element.cloneNode(true) as Element;
       }
-      Logging.error(new Error(`Element with id ${href} not found in document`));
+      Logging.error(new FetchMissingElementError(root, href));
       return null;
     }
 
