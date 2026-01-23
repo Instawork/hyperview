@@ -23,6 +23,8 @@ import {
   UpdateAction,
 } from 'hyperview/src/types';
 import {
+  EventMissingNameError,
+  EventTriggerError,
   FetchMissingElementError,
   UpdateMissingBehaviorElementError,
 } from 'hyperview/src/errors';
@@ -275,19 +277,11 @@ export default class Hyperview extends PureComponent<Types.Props> {
 
       // Check for event loop formation
       if (trigger === 'on-event') {
-        Logging.error(
-          new Error(
-            'trigger="on-event" and action="dispatch-event" cannot be used on the same element',
-          ),
-        );
+        Logging.error(new EventTriggerError(behaviorElement));
         return;
       }
       if (!eventName) {
-        Logging.error(
-          new Error(
-            'dispatch-event requires an event-name attribute to be present',
-          ),
-        );
+        Logging.error(new EventMissingNameError(behaviorElement));
         return;
       }
 

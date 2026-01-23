@@ -4,6 +4,7 @@ import * as Events from 'hyperview/src/services/events';
 import * as Logging from 'hyperview/src/services/logging';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import { BEHAVIOR_ATTRIBUTES, LOCAL_NAME, TRIGGERS } from 'hyperview/src/types';
+import { EventMissingNameError, EventTriggerError } from 'hyperview/src/errors';
 import {
   PRESS_TRIGGERS,
   PRESS_TRIGGERS_PROP_NAMES,
@@ -124,17 +125,11 @@ export default class HyperRef extends PureComponent<Props, State> {
           | null
           | undefined = e.getAttribute('action');
         if (currentAttributeAction === 'dispatch-event') {
-          Logging.error(
-            new Error(
-              'trigger="on-event" and action="dispatch-event" cannot be used on the same element',
-            ),
-          );
+          Logging.error(new EventTriggerError(e));
           return false;
         }
         if (!currentAttributeEventName) {
-          Logging.error(
-            new Error('on-event trigger requires an event-name attribute'),
-          );
+          Logging.error(new EventMissingNameError(e));
           return false;
         }
         return currentAttributeEventName === eventName;
