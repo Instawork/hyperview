@@ -28,6 +28,7 @@ import {
   FetchMissingElementError,
   UpdateMissingBehaviorElementError,
   UpdateMissingBehaviorError,
+  UpdateMissingTargetError,
 } from 'hyperview/src/errors';
 import React, { PureComponent } from 'react';
 import { ElementCacheProvider } from 'hyperview/src/contexts/element-cache';
@@ -421,8 +422,10 @@ export default class Hyperview extends PureComponent<Types.Props> {
             // Warn developers if a provided target was not found
             if (targetId) {
               Logging.error(
-                'Target element not found. Falling back to current element.',
-                { id: targetId },
+                new UpdateMissingTargetError(
+                  onUpdateCallbacks.getDoc() as Document,
+                  targetId,
+                ),
               );
             }
           }
