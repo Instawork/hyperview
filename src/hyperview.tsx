@@ -27,6 +27,7 @@ import {
   EventTriggerError,
   FetchMissingElementError,
   UpdateBehaviorTargetError,
+  UpdateMissingActionError,
   UpdateMissingBehaviorElementError,
   UpdateMissingBehaviorError,
   UpdateMissingTargetError,
@@ -548,7 +549,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
   ) => {
     const action = behaviorElement.getAttribute('action');
     if (!action) {
-      Logging.warn('Custom behavior requires an action attribute');
+      Logging.warn(new UpdateMissingActionError(behaviorElement));
       return;
     }
     const behavior = this.behaviorRegistry[action];

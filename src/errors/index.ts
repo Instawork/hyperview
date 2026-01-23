@@ -10,6 +10,7 @@ export { FetchMissingElementError } from './FetchMissingElementError';
 export { RenderLocalNameError } from './RenderLocalNameError';
 export { RenderNamespaceError } from './RenderNamespaceError';
 export { UpdateBehaviorTargetError } from './UpdateBehaviorTargetError';
+export { UpdateMissingActionError } from './UpdateMissingActionError';
 export { UpdateMissingBehaviorElementError } from './UpdateMissingBehaviorElementError';
 export { UpdateMissingBehaviorError } from './UpdateMissingBehaviorError';
 export { UpdateMissingTargetError } from './UpdateMissingTargetError';
