@@ -26,6 +26,7 @@ import {
   EventMissingNameError,
   EventTriggerError,
   FetchMissingElementError,
+  UpdateBehaviorTargetError,
   UpdateMissingBehaviorElementError,
   UpdateMissingBehaviorError,
   UpdateMissingTargetError,
@@ -510,12 +511,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
       } else {
         // Warn developers if the behavior element is not found
         Logging.error(
-          `Cannot find a behavior element to perform "${action}". It may be missing an id.`,
-          Logging.deferredToString(() => {
-            return new XMLSerializer().serializeToString(
-              behaviorElement as Element,
-            );
-          }),
+          new UpdateBehaviorTargetError(behaviorElement as Element, action),
         );
       }
     } else {
