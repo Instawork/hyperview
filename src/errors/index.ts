@@ -4,6 +4,7 @@ export { BehaviorSelectAllError } from './BehaviorSelectAllError';
 export { BehaviorSetValueError } from './BehaviorSetValueError';
 export { BehaviorUnselectAllError } from './BehaviorUnselectAllError';
 export { BehaviorUnsupportedTriggerError } from './BehaviorUnsupportedTriggerError';
+export { ElementTextError } from './ElementTextError';
 export { EventMissingNameError } from './EventMissingNameError';
 export { EventTriggerError } from './EventTriggerError';
 export { FetchMissingElementError } from './FetchMissingElementError';
