@@ -7,3 +7,4 @@ export { BehaviorUnsupportedTriggerError } from './BehaviorUnsupportedTriggerErr
 export { FetchMissingElementError } from './FetchMissingElementError';
 export { RenderLocalNameError } from './RenderLocalNameError';
 export { RenderNamespaceError } from './RenderNamespaceError';
+export { UpdateMissingBehaviorElementError } from './UpdateMissingBehaviorElementError';

@@ -24,6 +24,7 @@ import {
 } from 'hyperview/src/types';
 import {
   FetchMissingElementError,
+  UpdateMissingBehaviorElementError,
 } from 'hyperview/src/errors';
 import React, { PureComponent } from 'react';
 import { ElementCacheProvider } from 'hyperview/src/contexts/element-cache';
@@ -259,7 +260,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
     } else if (action === ACTIONS.DISPATCH_EVENT) {
       const { behaviorElement } = options;
       if (!behaviorElement) {
-        Logging.warn('dispatch-event requires a behaviorElement');
+        Logging.warn(new UpdateMissingBehaviorElementError(element, action));
         return;
       }
       const eventName = behaviorElement.getAttribute('event-name');
@@ -301,6 +302,10 @@ export default class Hyperview extends PureComponent<Types.Props> {
       }
     } else {
       const { behaviorElement } = options;
+      if (!behaviorElement) {
+        Logging.warn(new UpdateMissingBehaviorElementError(element, 'custom'));
+        return;
+      }
       this.onCustomUpdate(behaviorElement, options.onUpdateCallbacks);
     }
   };
@@ -544,13 +549,9 @@ export default class Hyperview extends PureComponent<Types.Props> {
    * Extensions for custom behaviors.
    */
   onCustomUpdate = (
-    behaviorElement: Element | null | undefined,
+    behaviorElement: Element,
     onUpdateCallbacks: OnUpdateCallbacks,
   ) => {
-    if (!behaviorElement) {
-      Logging.warn('Custom behavior requires a behaviorElement');
-      return;
-    }
     const action = behaviorElement.getAttribute('action');
     if (!action) {
       Logging.warn('Custom behavior requires an action attribute');
