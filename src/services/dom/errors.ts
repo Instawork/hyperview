@@ -16,19 +16,16 @@ export class XMLParserWarning extends ErrorService.HvBaseError {
 }
 
 // Warning thrown by the Hyperview
-export class ParserWarning extends ErrorService.HvBaseError {
+export class ParserWarning extends ErrorService.HvParserError {
   name = 'ParserWarning';
 
   constructor(
     message: string,
-    url?: string,
     content?: string,
     status?: number,
+    url?: string,
   ) {
-    super(message);
-    this.setExtraContext('url', url);
-    this.setExtraContext('content', content);
-    this.setExtraContext('status', status);
+    super('ParserWarning', content || '', message, status || 500, url);
   }
 }
 
@@ -38,19 +35,16 @@ export class XMLParserError extends ErrorService.HvBaseError {
 }
 
 // Error thrown by the Hyperview
-export class ParserError extends ErrorService.HvBaseError {
+export class ParserError extends ErrorService.HvParserError {
   name = 'ParserError';
 
   constructor(
     message: string,
-    url?: string,
     content?: string,
     status?: number,
+    url?: string,
   ) {
-    super(message);
-    this.setExtraContext('url', url);
-    this.setExtraContext('content', content);
-    this.setExtraContext('status', status);
+    super('ParserError', content || '', message, status || 500, url);
   }
 }
 
@@ -72,19 +66,16 @@ export class XMLParserFatalError extends ErrorService.HvBaseError {
 }
 
 // Error thrown by the Hyperview
-export class ParserFatalError extends ErrorService.HvBaseError {
+export class ParserFatalError extends ErrorService.HvParserError {
   name = 'ParserFatalError';
 
   constructor(
     message: string,
-    url?: string,
     content?: string,
     status?: number,
+    url?: string,
   ) {
-    super(message);
-    this.setExtraContext('url', url);
-    this.setExtraContext('content', content);
-    this.setExtraContext('status', status);
+    super('ParserFatalError', content || '', message, status || 500, url);
   }
 }
 

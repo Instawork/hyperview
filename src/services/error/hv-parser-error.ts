@@ -5,14 +5,16 @@ export class HvParserError extends HvBaseError {
 
   constructor(
     message: string,
+    content: string,
     error: string,
-    response: string,
     status: number,
+    url?: string,
   ) {
     super(message);
+    this.setExtraContext('content', content);
     this.setExtraContext('error', error);
-    this.setExtraContext('response', response);
     this.setExtraContext('status', status);
+    this.setExtraContext('url', url);
     if (this.constructor === HvParserError) {
       throw new Error('Do not instantiate `HvParserError` directly');
     }
