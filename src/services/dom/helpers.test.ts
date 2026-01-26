@@ -1,10 +1,4 @@
-import {
-  buildContextSnippet,
-  cleanParserMessage,
-  findTagEndIndex,
-  preorder,
-  trimAndCleanString,
-} from './helpers';
+import { findTagEndIndex, preorder, trimAndCleanString } from './helpers';
 import { NODE_TYPE } from 'hyperview/src/types';
 import { parse } from 'hyperview/test/helpers';
 
@@ -92,51 +86,6 @@ describe('preorder', () => {
 });
 
 describe('helpers', () => {
-  describe('buildContextSnippet', () => {
-    it('returns a +/- radius snippet around the column on a single line', () => {
-      const xml =
-        'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-      const col = 20; // 1-based
-      const msg = `XMLParserWarning: something [line:1,col:${col}]`;
-      const result = buildContextSnippet(msg, xml);
-      expect(result).toBe(xml);
-    });
-
-    it('handles multi-line input using line and column', () => {
-      const line1 = 'first-line-contents';
-      const line2 = 'SECONDLINE-CONTENTS-ABCDEFG';
-      const xml = `${line1}\n${line2}`;
-      const col = 3; // character index 2 on line 2
-      const msg = `XMLParserError: details [line:2,col:${col}]`;
-      const lineStartIndex = line1.length + 1; // +1 for "\n"
-      const idx = lineStartIndex + (col - 1);
-      const expected = xml
-        .slice(Math.max(0, idx - 50), Math.min(xml.length, idx + 50))
-        .replace(/\s+/g, ' ')
-        .trim();
-      expect(buildContextSnippet(msg, xml)).toBe(expected);
-    });
-  });
-
-  describe('cleanParserMessage', () => {
-    it('keeps XMLParserWarning, one location, and appends snippet', () => {
-      const col = 43;
-      const snippet = 'SnippetTxt';
-      const msg =
-        'ParserError: [xmldom error] element parse error: ' +
-        'XMLParserWarning: [xmldom warning] unclosed xml attribute ' +
-        `@#[line:1,col:${col}]\n` +
-        `@#[line:1,col:${col}]`;
-
-      const result = cleanParserMessage(msg, snippet);
-      expect(result).toContain('[xmldom warning] unclosed xml attribute');
-      expect(result).toContain(`[line:1,col:${col}]`);
-      expect(result.endsWith(`\n\n${snippet}`)).toBe(true);
-      // Ensure duplicate markers removed
-      expect((result.match(/\[line:1,col:43\]/g) || []).length).toBe(1);
-    });
-  });
-
   describe('trimAndCleanString', () => {
     it('collapses whitespace and respects start/length bounds', () => {
       const text = 'AAA\n\n   BBB\t\tCCC    DDD';

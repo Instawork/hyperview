@@ -183,54 +183,6 @@ export const trimAndCleanString = (
   return raw.replace(/\s+/g, ' ').trim();
 };
 
-// Build a +/- snippet centered at the provided [line,col] from an xmldom message
-export const buildContextSnippet = (
-  message: string,
-  xml: string,
-  radius = 50,
-): string => {
-  const positionRegex = /\[line:(\d+),col:(\d+)\]/g;
-  const matches = Array.from(message.matchAll(positionRegex));
-  const last = matches.length ? matches[matches.length - 1] : null;
-  if (!last) {
-    return xml;
-  }
-  const line = Number(last[1]);
-  const col = Number(last[2]);
-  if (!Number.isFinite(line) || !Number.isFinite(col)) {
-    return xml;
-  }
-  let currentLine = 1;
-  let lineStartIndex = 0;
-  for (let i = 0; i < xml.length && currentLine < line; i += 1) {
-    if (xml[i] === '\n') {
-      currentLine += 1;
-      lineStartIndex = i + 1;
-    }
-  }
-  const absoluteIndex = lineStartIndex + Math.max(col - 1, 0);
-  const start = Math.max(0, absoluteIndex - radius);
-  return trimAndCleanString(xml, start, radius * 2);
-};
-
-// Clean out redundant data from the original message
-export const cleanParserMessage = (
-  originalMessage: string,
-  xmlSnippet: string,
-): string => {
-  const raw = originalMessage?.trim() || '';
-  const markerRegex = /@?#?\[line:\d+,col:\d+\](?:\s*\n)?/gi;
-  let seen = false;
-  const deduped = raw.replace(markerRegex, match => {
-    if (seen) {
-      return '';
-    }
-    seen = true;
-    return match.trim();
-  });
-  return xmlSnippet ? `${deduped}\n\n${xmlSnippet}` : deduped;
-};
-
 // Find the index of the '>' that ends the first opening tag `<tag ...>`.
 // Returns `fallback` (default 0) when not found.
 export const findTagEndIndex = (
