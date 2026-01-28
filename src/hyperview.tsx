@@ -22,12 +22,21 @@ import {
   UPDATE_ACTIONS,
   UpdateAction,
 } from 'hyperview/src/types';
+import {
+  EventMissingNameError,
+  EventTriggerError,
+  FetchMissingElementError,
+  UpdateBehaviorTargetError,
+  UpdateMissingActionError,
+  UpdateMissingBehaviorElementError,
+  UpdateMissingBehaviorError,
+  UpdateMissingTargetError,
+} from 'hyperview/src/errors';
 import React, { PureComponent } from 'react';
 import { ElementCacheProvider } from 'hyperview/src/contexts/element-cache';
 import HvRoute from 'hyperview/src/elements/hv-route';
 import { HyperviewContext } from 'hyperview/src/contexts/hyperview';
 import { Linking } from 'react-native';
-import { XMLSerializer } from '@instawork/xmldom';
 
 /**
  * Provides routing to the correct path based on the state passed in
@@ -153,7 +162,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
       if (element) {
         return element.cloneNode(true) as Element;
       }
-      Logging.error(new Error(`Element with id ${href} not found in document`));
+      Logging.error(new FetchMissingElementError(root, href));
       return null;
     }
 
@@ -256,7 +265,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
     } else if (action === ACTIONS.DISPATCH_EVENT) {
       const { behaviorElement } = options;
       if (!behaviorElement) {
-        Logging.warn('dispatch-event requires a behaviorElement');
+        Logging.warn(new UpdateMissingBehaviorElementError(element, action));
         return;
       }
       const eventName = behaviorElement.getAttribute('event-name');
@@ -271,19 +280,11 @@ export default class Hyperview extends PureComponent<Types.Props> {
 
       // Check for event loop formation
       if (trigger === 'on-event') {
-        Logging.error(
-          new Error(
-            'trigger="on-event" and action="dispatch-event" cannot be used on the same element',
-          ),
-        );
+        Logging.error(new EventTriggerError(behaviorElement));
         return;
       }
       if (!eventName) {
-        Logging.error(
-          new Error(
-            'dispatch-event requires an event-name attribute to be present',
-          ),
-        );
+        Logging.error(new EventMissingNameError(behaviorElement));
         return;
       }
 
@@ -298,6 +299,10 @@ export default class Hyperview extends PureComponent<Types.Props> {
       }
     } else {
       const { behaviorElement } = options;
+      if (!behaviorElement) {
+        Logging.warn(new UpdateMissingBehaviorElementError(element, 'custom'));
+        return;
+      }
       this.onCustomUpdate(behaviorElement, options.onUpdateCallbacks);
     }
   };
@@ -418,8 +423,10 @@ export default class Hyperview extends PureComponent<Types.Props> {
             // Warn developers if a provided target was not found
             if (targetId) {
               Logging.error(
-                'Target element not found. Falling back to current element.',
-                { id: targetId },
+                new UpdateMissingTargetError(
+                  onUpdateCallbacks.getDoc() as Document,
+                  targetId,
+                ),
               );
             }
           }
@@ -504,12 +511,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
       } else {
         // Warn developers if the behavior element is not found
         Logging.error(
-          `Cannot find a behavior element to perform "${action}". It may be missing an id.`,
-          Logging.deferredToString(() => {
-            return new XMLSerializer().serializeToString(
-              behaviorElement as Element,
-            );
-          }),
+          new UpdateBehaviorTargetError(behaviorElement as Element, action),
         );
       }
     } else {
@@ -541,16 +543,12 @@ export default class Hyperview extends PureComponent<Types.Props> {
    * Extensions for custom behaviors.
    */
   onCustomUpdate = (
-    behaviorElement: Element | null | undefined,
+    behaviorElement: Element,
     onUpdateCallbacks: OnUpdateCallbacks,
   ) => {
-    if (!behaviorElement) {
-      Logging.warn('Custom behavior requires a behaviorElement');
-      return;
-    }
     const action = behaviorElement.getAttribute('action');
     if (!action) {
-      Logging.warn('Custom behavior requires an action attribute');
+      Logging.warn(new UpdateMissingActionError(behaviorElement));
       return;
     }
     const behavior = this.behaviorRegistry[action];
@@ -579,7 +577,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
       );
     } else {
       // No behavior detected.
-      Logging.warn(`No behavior registered for action "${action}"`);
+      Logging.warn(new UpdateMissingBehaviorError(behaviorElement, action));
     }
   };
 

@@ -4,6 +4,7 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as Render from 'hyperview/src/services/render';
 import { LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
 import React, { useMemo } from 'react';
+import { ElementTextError } from 'hyperview/src/errors';
 import type { HvComponentProps } from 'hyperview/src/types';
 import HyperRef from 'hyperview/src/components/hyper-ref';
 import { needsHyperRef } from './utils';
@@ -104,9 +105,7 @@ export default (props: HvComponentProps): JSX.Element | null | string => {
         // However we raise a warning when the string isn't just composed of whitespaces.
         const trimmedValue = element.nodeValue.trim();
         if (trimmedValue.length > 0) {
-          Logging.warn(
-            `Text string "${trimmedValue}" must be rendered within a <text> element`,
-          );
+          Logging.warn(new ElementTextError(element, trimmedValue));
         }
       }
     }

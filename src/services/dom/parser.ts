@@ -15,8 +15,6 @@ import {
 } from './types';
 import { LOCAL_NAME, NO_OP, SYNC_METHODS } from 'hyperview/src/types';
 import {
-  buildContextSnippet,
-  cleanParserMessage,
   findTagEndIndex,
   getFirstTag,
   processDocument,
@@ -202,45 +200,35 @@ export class Parser {
       doc = parser.parseFromString(responseText);
     } catch (e) {
       const err = e as Error;
-      let snippet;
-      try {
-        snippet = buildContextSnippet(
-          err.message,
-          responseText,
-          SNIPPET_LENGTH,
-        );
-      } catch {
-        snippet = responseText ? responseText.slice(0, SNIPPET_LENGTH) : '';
-      }
-      let errorMessage;
-      try {
-        errorMessage = cleanParserMessage(
-          err?.message || 'Unknown error',
-          snippet,
-        );
-      } catch {
-        errorMessage = err?.message || 'Unknown error';
-      }
+      const errorMessage = err?.message || 'Unknown error';
       if (err instanceof Errors.XMLParserFatalError) {
         // Re-throw with extra context
         throw new Errors.ParserFatalError(
           errorMessage,
-          url,
-          snippet,
+          responseText,
           response.status,
+          contentType,
+          url,
         );
       }
       if (err instanceof Errors.XMLParserWarning) {
         // Re-throw with extra context
         throw new Errors.ParserWarning(
           errorMessage,
-          url,
-          snippet,
+          responseText,
           response.status,
+          contentType,
+          url,
         );
       }
       // Re-throw with extra context
-      throw new Errors.ParserError(errorMessage, url, snippet, response.status);
+      throw new Errors.ParserError(
+        errorMessage,
+        responseText,
+        response.status,
+        contentType,
+        url,
+      );
     }
     if (this.onAfterParse) {
       this.onAfterParse(url);

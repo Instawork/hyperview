@@ -18,6 +18,7 @@ import {
   createTestProps,
   getAncestorByTagName,
 } from 'hyperview/src/services';
+import { BehaviorScrollError } from 'hyperview/src/errors';
 import type { ElementRef } from 'react';
 // eslint-disable-next-line instawork/import-components
 import { FlatList } from 'hyperview/src/components/scroll';
@@ -41,7 +42,7 @@ const HvList = (props: HvComponentProps) => {
         | null
         | undefined = behaviorElement?.getAttribute('target');
       if (!targetId) {
-        Logging.warn('[behaviors/scroll]: missing "target" attribute');
+        Logging.warn(new BehaviorScrollError(behaviorElement));
         return;
       }
       const doc: Document | undefined = getDoc?.();

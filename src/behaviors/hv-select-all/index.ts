@@ -10,6 +10,7 @@ import type {
 } from 'hyperview/src/types';
 import { later, shallowCloneToRoot } from 'hyperview/src/services';
 import { ACTIONS } from 'hyperview/src/types';
+import { BehaviorSelectAllError } from 'hyperview/src/errors';
 
 export default {
   action: ACTIONS.SELECT_ALL,
@@ -23,7 +24,7 @@ export default {
       'target',
     );
     if (!targetId) {
-      Logging.warn('[behaviors/select-all]: missing "target" attribute');
+      Logging.warn(new BehaviorSelectAllError(element));
       return;
     }
 

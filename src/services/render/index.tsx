@@ -8,6 +8,10 @@ import type {
   StyleSheets,
 } from 'hyperview/src/types';
 import { LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
+import {
+  RenderLocalNameError,
+  RenderNamespaceError,
+} from 'hyperview/src/errors';
 import HvElement from 'hyperview/src/components/hv-element';
 import React from 'react';
 
@@ -56,11 +60,11 @@ export const isRenderableElement = (
 
   if (element.nodeType === NODE_TYPE.ELEMENT_NODE) {
     if (!element.namespaceURI) {
-      Logging.warn('`namespaceURI` missing for node:', element.toString());
+      Logging.warn(new RenderNamespaceError(element));
       return false;
     }
     if (!element.localName) {
-      Logging.warn('`localName` missing for node:', element.toString());
+      Logging.warn(new RenderLocalNameError(element));
       return false;
     }
 

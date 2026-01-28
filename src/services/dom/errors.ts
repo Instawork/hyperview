@@ -1,7 +1,6 @@
 /* eslint-disable max-classes-per-file */
 
 import * as ErrorService from 'hyperview/src/services/error';
-import { XMLSerializer } from '@instawork/xmldom';
 
 export class UnsupportedContentTypeError extends ErrorService.HvBaseError {
   name = 'UnsupportedContentTypeError';
@@ -17,19 +16,24 @@ export class XMLParserWarning extends ErrorService.HvBaseError {
 }
 
 // Warning thrown by the Hyperview
-export class ParserWarning extends ErrorService.HvBaseError {
+export class ParserWarning extends ErrorService.HvParserError {
   name = 'ParserWarning';
 
   constructor(
     message: string,
-    url?: string,
     content?: string,
     status?: number,
+    contentType?: string | null,
+    url?: string,
   ) {
-    super(message);
-    this.setExtraContext('url', url);
-    this.setExtraContext('content', content);
-    this.setExtraContext('status', status);
+    super(
+      'ParserWarning',
+      content || '',
+      message,
+      status || 500,
+      contentType,
+      url,
+    );
   }
 }
 
@@ -39,19 +43,24 @@ export class XMLParserError extends ErrorService.HvBaseError {
 }
 
 // Error thrown by the Hyperview
-export class ParserError extends ErrorService.HvBaseError {
+export class ParserError extends ErrorService.HvParserError {
   name = 'ParserError';
 
   constructor(
     message: string,
-    url?: string,
     content?: string,
     status?: number,
+    contentType?: string | null,
+    url?: string,
   ) {
-    super(message);
-    this.setExtraContext('url', url);
-    this.setExtraContext('content', content);
-    this.setExtraContext('status', status);
+    super(
+      'ParserError',
+      content || '',
+      message,
+      status || 500,
+      contentType,
+      url,
+    );
   }
 }
 
@@ -73,19 +82,24 @@ export class XMLParserFatalError extends ErrorService.HvBaseError {
 }
 
 // Error thrown by the Hyperview
-export class ParserFatalError extends ErrorService.HvBaseError {
+export class ParserFatalError extends ErrorService.HvParserError {
   name = 'ParserFatalError';
 
   constructor(
     message: string,
-    url?: string,
     content?: string,
     status?: number,
+    contentType?: string | null,
+    url?: string,
   ) {
-    super(message);
-    this.setExtraContext('url', url);
-    this.setExtraContext('content', content);
-    this.setExtraContext('status', status);
+    super(
+      'ParserFatalError',
+      content || '',
+      message,
+      status || 500,
+      contentType,
+      url,
+    );
   }
 }
 
@@ -143,24 +157,13 @@ export class ServerError extends ErrorService.HvBaseError {
   }
 }
 
-export class DocumentGetElementByIdError extends ErrorService.HvBaseError {
+export class DocumentGetElementByIdError extends ErrorService.HvDocError {
   name = 'DocumentGetElementByIdError';
 
   constructor(id: string, doc: Document, error: Error) {
-    super(`Document.getElementById failed for id: ${id}`);
+    super('Document.getElementById failed.', doc);
     this.stack = error.stack;
     this.setExtraContext('error', error);
-    this.setExtraContext('doc', docToString(doc));
     this.setExtraContext('id', id);
   }
 }
-
-const docToString = (doc: Document): string => {
-  try {
-    const serializer = new XMLSerializer();
-    return serializer.serializeToString(doc);
-  } catch (e) {
-    const error = e as Error;
-    return error ? `serializing error: ${error.message}` : 'serializing error';
-  }
-};
