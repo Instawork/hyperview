@@ -23,9 +23,17 @@ export class ParserWarning extends ErrorService.HvParserError {
     message: string,
     content?: string,
     status?: number,
+    contentType?: string | null,
     url?: string,
   ) {
-    super('ParserWarning', content || '', message, status || 500, url);
+    super(
+      'ParserWarning',
+      content || '',
+      message,
+      status || 500,
+      contentType,
+      url,
+    );
   }
 }
 
@@ -42,9 +50,17 @@ export class ParserError extends ErrorService.HvParserError {
     message: string,
     content?: string,
     status?: number,
+    contentType?: string | null,
     url?: string,
   ) {
-    super('ParserError', content || '', message, status || 500, url);
+    super(
+      'ParserError',
+      content || '',
+      message,
+      status || 500,
+      contentType,
+      url,
+    );
   }
 }
 
@@ -73,9 +89,17 @@ export class ParserFatalError extends ErrorService.HvParserError {
     message: string,
     content?: string,
     status?: number,
+    contentType?: string | null,
     url?: string,
   ) {
-    super('ParserFatalError', content || '', message, status || 500, url);
+    super(
+      'ParserFatalError',
+      content || '',
+      message,
+      status || 500,
+      contentType,
+      url,
+    );
   }
 }
 

@@ -8,12 +8,14 @@ export class HvParserError extends HvBaseError {
     content: string,
     error: string,
     status: number,
+    contentType?: string | null,
     url?: string,
   ) {
     super(message);
     this.setExtraContext('content', content);
     this.setExtraContext('error', error);
     this.setExtraContext('status', status);
+    this.setExtraContext('contentType', contentType);
     this.setExtraContext('url', url);
     if (this.constructor === HvParserError) {
       throw new Error('Do not instantiate `HvParserError` directly');

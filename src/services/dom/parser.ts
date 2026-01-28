@@ -207,6 +207,7 @@ export class Parser {
           errorMessage,
           responseText,
           response.status,
+          contentType,
           url,
         );
       }
@@ -216,6 +217,7 @@ export class Parser {
           errorMessage,
           responseText,
           response.status,
+          contentType,
           url,
         );
       }
@@ -224,6 +226,7 @@ export class Parser {
         errorMessage,
         responseText,
         response.status,
+        contentType,
         url,
       );
     }
