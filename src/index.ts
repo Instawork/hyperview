@@ -61,6 +61,7 @@ export {
   HvBaseError,
   HvDocError,
   HvElementError,
+  HvNodeError,
   HvParserError,
 } from 'hyperview/src/services/error';
 export type { ExtraContext } from 'hyperview/src/services/error';

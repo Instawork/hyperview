@@ -1,41 +1,12 @@
-import { ExtraContext } from './types';
-import { HvBaseError } from './hv-base-error';
-import { XMLSerializer } from '@instawork/xmldom';
+import { HvNodeError } from './hv-node-error';
 
-export class HvElementError extends HvBaseError {
+export class HvElementError extends HvNodeError {
   name = 'HvElementError';
 
-  element: Element;
-
-  elementString: string | null = null;
-
-  parentString: string | null = null;
-
-  constructor(message: string, element: Element) {
-    super(message);
-    this.element = element;
+  constructor(message: string, element: Node) {
+    super(message, element);
     if (this.constructor === HvElementError) {
       throw new Error('Do not instantiate `HvElementError` directly');
     }
-  }
-
-  getExtraContext(): ExtraContext {
-    if (!this.elementString || !this.parentString) {
-      const serializer = new XMLSerializer();
-      this.elementString = serializer.serializeToString(this.element);
-      if (this.element.parentNode) {
-        this.parentString = serializer.serializeToString(
-          this.element.parentNode as Element,
-        );
-      } else {
-        this.parentString = '';
-      }
-    }
-
-    return {
-      ...super.getExtraContext(),
-      element: this.elementString,
-      parent: this.parentString,
-    };
   }
 }
