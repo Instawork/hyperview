@@ -1,45 +1,6 @@
-type ExtraContext = { [key: string]: unknown };
-
-export class HvBaseError extends Error {
-  extraContext: ExtraContext = {};
-
-  name = 'HvBaseError';
-
-  constructor(message: string) {
-    super(message);
-    if (this.constructor === HvBaseError) {
-      throw new Error('Do not instantiate `HvBaseError` directly');
-    }
-  }
-
-  castExtraContextValue = (value: unknown): string => {
-    switch (typeof value) {
-      case 'string':
-        return value;
-      case 'function':
-        return value.name || 'anonymous function';
-      case 'boolean':
-      case 'undefined':
-      case 'number':
-        return String(value);
-      case 'object':
-      default:
-        return JSON.stringify(value);
-    }
-  };
-
-  setExtraContext: (key: string, value: unknown) => void = (
-    key: string,
-    value: unknown,
-  ) => {
-    this.extraContext[key] = this.castExtraContextValue(value);
-  };
-
-  getExtraContext(): ExtraContext {
-    return this.extraContext;
-  }
-
-  getFingerprint(): string[] {
-    return [this.name, this.message];
-  }
-}
+export type { ExtraContext } from './types';
+export { HvBaseError } from './hv-base-error';
+export { HvDocError } from './hv-doc-error';
+export { HvElementError } from './hv-element-error';
+export { HvNodeError } from './hv-node-error';
+export { HvParserError } from './hv-parser-error';

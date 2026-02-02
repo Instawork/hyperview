@@ -12,6 +12,11 @@ import {
   TRIGGERS,
 } from 'hyperview/src/types';
 import {
+  BehaviorUnsupportedTriggerError,
+  EventMissingNameError,
+  EventTriggerError,
+} from 'hyperview/src/errors';
+import {
   ParamTypes,
   Props,
   SHOW_DEFAULT_FOOTER_UI,
@@ -52,17 +57,11 @@ export default function HvNavigator(props: Props) {
             | null
             | undefined = e.getAttribute('action');
           if (currentAttributeAction === 'dispatch-event') {
-            Logging.error(
-              new Error(
-                'trigger="on-event" and action="dispatch-event" cannot be used on the same element',
-              ),
-            );
+            Logging.error(new EventTriggerError(e));
             return false;
           }
           if (!currentAttributeEventName) {
-            Logging.error(
-              new Error('on-event trigger requires an event-name attribute'),
-            );
+            Logging.error(new EventMissingNameError(e));
             return false;
           }
           return currentAttributeEventName === eventName;
@@ -94,9 +93,11 @@ export default function HvNavigator(props: Props) {
           e.getAttribute(BEHAVIOR_ATTRIBUTES.TRIGGER) || 'press';
         if (!supportedTriggers.includes(triggerAttr)) {
           Logging.warn(
-            `Unsupported trigger '${triggerAttr}'. Only "${supportedTriggers.join(
-              ',',
-            )}" are supported`,
+            new BehaviorUnsupportedTriggerError(
+              e,
+              triggerAttr,
+              supportedTriggers,
+            ),
           );
           return false;
         }

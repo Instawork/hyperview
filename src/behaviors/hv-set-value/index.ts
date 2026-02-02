@@ -9,6 +9,7 @@ import type {
   HvUpdateRoot,
 } from 'hyperview/src/types';
 import { later, shallowCloneToRoot } from 'hyperview/src/services';
+import { BehaviorSetValueError } from 'hyperview/src/errors';
 
 export default {
   action: 'set-value',
@@ -22,7 +23,7 @@ export default {
       'target',
     );
     if (!targetId) {
-      Logging.warn('[behaviors/set-value]: missing "target" attribute');
+      Logging.warn(new BehaviorSetValueError(element));
       return;
     }
 

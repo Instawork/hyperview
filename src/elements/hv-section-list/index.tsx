@@ -20,6 +20,7 @@ import {
   createTestProps,
   getAncestorByTagName,
 } from 'hyperview/src/services';
+import { BehaviorScrollError } from 'hyperview/src/errors';
 import { DOMParser } from '@instawork/xmldom';
 import { Context as DocContext } from 'hyperview/src/elements/hv-doc/context';
 import type { ElementRef } from 'react';
@@ -108,7 +109,7 @@ export default class HvSectionList extends PureComponent<
       | null
       | undefined = behaviorElement?.getAttribute('target');
     if (!targetId) {
-      Logging.warn('[behaviors/scroll]: missing "target" attribute');
+      Logging.warn(new BehaviorScrollError(behaviorElement));
       return;
     }
     const doc: Document | undefined = this.context?.getDoc();
