@@ -5,7 +5,8 @@
       "guide_installation",
       "guide_html",
       "guide_navigation",
-      "guide_demo_app_contribution"
+      "guide_demo_app_contribution",
+      "guide_errors_and_logging"
     ]
   },
 
