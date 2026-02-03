@@ -9,4 +9,8 @@ export class HvElementError extends HvNodeError {
       throw new Error('Do not instantiate `HvElementError` directly');
     }
   }
+
+  getElement(): Element {
+    return this.node as Element;
+  }
 }
