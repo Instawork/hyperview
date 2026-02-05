@@ -1,0 +1,32 @@
+---
+permalink: "/navigation/navigator/nested-tabs/index.xml"
+tags: "Navigation/Navigator"
+hv_title: "Nested Tabs"
+hv_button_behavior: "back"
+---
+
+{#
+Nested Tab Navigator Hierarchy:
+Stack Navigator (top-stack)                           ← This file
+└── Tab Navigator (top-level-tab-navigator)           ← This file
+    ├── tab-1-2-route → nested tab navigator (tabs 1 & 2)
+    └── tab-3-4-route → nested tab navigator (tabs 3 & 4)
+#}
+
+<doc xmlns="https://hyperview.org/hyperview">
+  <navigator id="top-stack" type="stack">
+    <nav-route id="tabs-route">
+      <navigator id="top-level-tab-navigator" type="tab">
+        <nav-route
+          id="tab-1-2-route"
+          href="/hyperview/public/navigation/navigator/nested-tabs/tab-1-2-route.xml"
+        />
+        <nav-route
+          id="tab-3-4-route"
+          href="/hyperview/public/navigation/navigator/nested-tabs/tab-3-4-route.xml"
+        />
+      </navigator>
+    </nav-route>
+  </navigator>
+</doc>
+
