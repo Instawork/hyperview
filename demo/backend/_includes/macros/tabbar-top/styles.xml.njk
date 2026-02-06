@@ -1,5 +1,5 @@
 <style
-  id="tabbar-top-select"
+  id="tabbar-top-container"
   backgroundColor="#eee"
   borderRadius="12"
   flexDirection="row"
@@ -17,9 +17,9 @@
   flex="1"
   padding="8"
   justifyContent="center"
->
-  <modifier selected="true">
-  <style
+/>
+<style
+  id="tabbar-top-item-selected"
   backgroundColor="white"
   elevation="2"
   shadowColor="black"
@@ -27,9 +27,12 @@
   shadowOffsetY="2"
   shadowOpacity="0.1"
   shadowRadius="2"
-  />
-  </modifier>
-</style>
+/>
+<style
+  id="tabbar-top-item-link"
+  alignItems="stretch"
+  flex="1"
+/>
 <style
   id="tabbar-top-label"
   fontSize="16"
