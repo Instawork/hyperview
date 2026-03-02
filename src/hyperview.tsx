@@ -153,7 +153,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
     syncMethod: DOMString | null | undefined = 'drop',
   ): Promise<Element | null> => {
     if (!href) {
-      Logging.error(new Error('No href passed to fetchElement'));
+      Logging.warn(new Error('No href passed to fetchElement'));
       return null;
     }
 
@@ -162,7 +162,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
       if (element) {
         return element.cloneNode(true) as Element;
       }
-      Logging.error(new FetchMissingElementError(root, href));
+      Logging.warn(new FetchMissingElementError(root, href));
       return null;
     }
 
@@ -280,11 +280,11 @@ export default class Hyperview extends PureComponent<Types.Props> {
 
       // Check for event loop formation
       if (trigger === 'on-event') {
-        Logging.error(new EventTriggerError(behaviorElement));
+        Logging.warn(new EventTriggerError(behaviorElement));
         return;
       }
       if (!eventName) {
-        Logging.error(new EventMissingNameError(behaviorElement));
+        Logging.warn(new EventMissingNameError(behaviorElement));
         return;
       }
 
@@ -422,7 +422,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
             );
             // Warn developers if a provided target was not found
             if (targetId) {
-              Logging.error(
+              Logging.warn(
                 new UpdateMissingTargetError(
                   onUpdateCallbacks.getDoc() as Document,
                   targetId,
@@ -510,7 +510,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
         Services.setTimeoutId(targetElement, timeoutId.toString());
       } else {
         // Warn developers if the behavior element is not found
-        Logging.error(
+        Logging.warn(
           new UpdateBehaviorTargetError(behaviorElement as Element, action),
         );
       }

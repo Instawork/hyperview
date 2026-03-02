@@ -57,11 +57,11 @@ export default function HvNavigator(props: Props) {
             | null
             | undefined = e.getAttribute('action');
           if (currentAttributeAction === 'dispatch-event') {
-            Logging.error(new EventTriggerError(e));
+            Logging.warn(new EventTriggerError(e));
             return false;
           }
           if (!currentAttributeEventName) {
-            Logging.error(new EventMissingNameError(e));
+            Logging.warn(new EventMissingNameError(e));
             return false;
           }
           return currentAttributeEventName === eventName;
