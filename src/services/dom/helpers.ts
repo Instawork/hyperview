@@ -107,7 +107,7 @@ export const getElementById = (
       ? element.ownerDocument.getElementById(id)
       : null;
   } catch (e) {
-    Logging.error(new DocumentGetElementByIdError(id, doc, e as Error));
+    Logging.warn(new DocumentGetElementByIdError(id, doc, e as Error));
     return null;
   }
 };

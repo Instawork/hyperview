@@ -85,7 +85,7 @@ const Filter = (props: HvComponentProps) => {
             element.namespaceURI === Namespaces.HYPERVIEW &&
             element.localName !== LOCAL_NAME.TEXT
           ) {
-            Logging.error(
+            Logging.warn(
               'Element with attribute `role="filter-terms"` should be a <text> element or a custom element',
             );
             return;
