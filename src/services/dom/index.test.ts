@@ -250,13 +250,12 @@ describe('Parser', () => {
         } catch (error) {
           const err = error as Dom.ParserError;
           expect(err).toBeInstanceOf(Dom.ParserError);
-          const ctx = err.getExtraContext();
-          expect(ctx.headers).toBe(JSON.stringify(mockHeadersData));
-          expect(ctx.status).toBe(String(200));
-          expect(ctx.url).toBe(url);
+          expect(err.headers).toBe(mockHeaders);
+          expect(err.status).toBe(200);
+          expect(err.url).toBe(url);
           // With caret insertion, assert caret exists and we captured context
           // Basic sanity: include part of the surrounding tag or error text
-          expect(ctx.content as string).toMatch(
+          expect(err.content).toMatch(
             /<text|style="Title"|MissingClosingQuote/,
           );
           expect(mockParseFromString).toHaveBeenCalledWith(invalidXml);
