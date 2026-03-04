@@ -5,6 +5,7 @@ export class HvParserError extends HvBaseError {
 
   constructor(
     message: string,
+    headers: Headers,
     content: string,
     error: string,
     status: number,
@@ -14,6 +15,7 @@ export class HvParserError extends HvBaseError {
     super(message);
     this.setExtraContext('content', content);
     this.setExtraContext('error', error);
+    this.setExtraContext('headers', headers);
     this.setExtraContext('status', status);
     this.setExtraContext('contentType', contentType);
     this.setExtraContext('url', url);
