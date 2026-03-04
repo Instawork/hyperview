@@ -230,6 +230,18 @@ describe('Parser', () => {
           throw new Dom.XMLParserError(msg);
         });
 
+        const mockHeadersData: Record<string, string> = {
+          [Dom.HTTP_HEADERS.CONTENT_TYPE]: 'application/xml',
+        };
+        const mockHeaders = {
+          ...mockHeadersData,
+          get: (key: string) => mockHeadersData[key] ?? null,
+        };
+        fetchMock.mockResolvedValueOnce({
+          headers: mockHeaders,
+          status: 200,
+          text: responseTextMock,
+        });
         responseTextMock.mockResolvedValue(invalidXml);
 
         try {
@@ -238,10 +250,15 @@ describe('Parser', () => {
         } catch (error) {
           const err = error as Dom.ParserError;
           expect(err).toBeInstanceOf(Dom.ParserError);
+          const ctx = err.getExtraContext();
+          expect(ctx.headers).toBe(JSON.stringify(mockHeadersData));
+          expect(ctx.status).toBe(String(200));
+          expect(ctx.url).toBe(url);
           // With caret insertion, assert caret exists and we captured context
-          const ctx = err.getExtraContext().content as string;
           // Basic sanity: include part of the surrounding tag or error text
-          expect(ctx).toMatch(/<text|style="Title"|MissingClosingQuote/);
+          expect(ctx.content as string).toMatch(
+            /<text|style="Title"|MissingClosingQuote/,
+          );
           expect(mockParseFromString).toHaveBeenCalledWith(invalidXml);
           expect(beforeParseMock).toHaveBeenCalledWith(url);
           expect(afterParseMock).not.toHaveBeenCalled();
