@@ -21,6 +21,7 @@ export class ParserWarning extends ErrorService.HvParserError {
 
   constructor(
     message: string,
+    headers: Headers,
     content?: string,
     status?: number,
     contentType?: string | null,
@@ -28,6 +29,7 @@ export class ParserWarning extends ErrorService.HvParserError {
   ) {
     super(
       'ParserWarning',
+      headers,
       content || '',
       message,
       status || 500,
@@ -48,6 +50,7 @@ export class ParserError extends ErrorService.HvParserError {
 
   constructor(
     message: string,
+    headers: Headers,
     content?: string,
     status?: number,
     contentType?: string | null,
@@ -55,6 +58,7 @@ export class ParserError extends ErrorService.HvParserError {
   ) {
     super(
       'ParserError',
+      headers,
       content || '',
       message,
       status || 500,
@@ -87,6 +91,7 @@ export class ParserFatalError extends ErrorService.HvParserError {
 
   constructor(
     message: string,
+    headers: Headers,
     content?: string,
     status?: number,
     contentType?: string | null,
@@ -94,6 +99,7 @@ export class ParserFatalError extends ErrorService.HvParserError {
   ) {
     super(
       'ParserFatalError',
+      headers,
       content || '',
       message,
       status || 500,

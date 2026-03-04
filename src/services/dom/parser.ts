@@ -205,6 +205,7 @@ export class Parser {
         // Re-throw with extra context
         throw new Errors.ParserFatalError(
           errorMessage,
+          response.headers,
           responseText,
           response.status,
           contentType,
@@ -215,6 +216,7 @@ export class Parser {
         // Re-throw with extra context
         throw new Errors.ParserWarning(
           errorMessage,
+          response.headers,
           responseText,
           response.status,
           contentType,
@@ -224,6 +226,7 @@ export class Parser {
       // Re-throw with extra context
       throw new Errors.ParserError(
         errorMessage,
+        response.headers,
         responseText,
         response.status,
         contentType,
