@@ -115,6 +115,7 @@ export const renderElement = (
   stylesheets: StyleSheets,
   onUpdate: HvComponentOnUpdate,
   options: HvComponentOptions,
+  index?: number,
 ): React.ReactElement<HvComponentProps> | null | string => {
   if (!element) {
     return null;
@@ -133,20 +134,12 @@ export const renderElement = (
     return null;
   }
 
-  const key = element.getAttribute?.('key');
-  if (key && key !== '') {
-    return (
-      <HvElement
-        key={key}
-        element={element}
-        onUpdate={onUpdate}
-        options={options}
-        stylesheets={stylesheets}
-      />
-    );
-  }
+  const key =
+    element.getAttribute?.('key') ||
+    (index !== undefined ? String(index) : undefined);
   return (
     <HvElement
+      key={key}
       element={element}
       onUpdate={onUpdate}
       options={options}
@@ -184,10 +177,13 @@ export const renderChildNodes = (
 ): Array<React.ReactElement<HvComponentProps> | null | string> => {
   const children = [];
   for (let i = 0; i < childNodes.length; i += 1) {
-    const e = renderElement(childNodes[i] as Element, stylesheets, onUpdate, {
-      ...options,
-      skipHref: false,
-    });
+    const e = renderElement(
+      childNodes[i] as Element,
+      stylesheets,
+      onUpdate,
+      { ...options, skipHref: false },
+      i,
+    );
     if (e) {
       children.push(e);
     }
