@@ -75,6 +75,7 @@ const HvWebView = (props: HvComponentProps) => {
       source={source}
       startInLoadingState
       testID={componentProps.testID}
+      webviewDebuggingEnabled={__DEV__}
     />
   );
 };
