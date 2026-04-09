@@ -71,7 +71,9 @@ export default class HyperviewMap extends PureComponent<Props> {
 
 #### Behavior support
 
-By default, Hyperview behavior attributes (`href`, `action`, `<behavior>` children) placed directly on a custom element's root tag are **not processed**. There are two ways to support behaviors on a custom element:
+By default, when a custom element has [behavior attributes](reference_behavior_attributes) set, or nested behaviors as immediate children, the attributes are **not processed** (e.g. `<my-ns:my-element href="/some/path" />` or `<my-ns:my-element><behavior href="/some/path" /></my-ns:my-element>`)
+
+There are two ways to support behaviors on a custom element:
 
 **Option A — Opt the component in with `supportsHyperRef`**
 
