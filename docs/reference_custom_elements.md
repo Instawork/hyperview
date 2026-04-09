@@ -16,6 +16,7 @@ Custom Hyperview elements are backed by a React Native component. Any React Nati
 | ------------------ | -------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | namespaceURI       | string   | Yes      | The XML namespace for the element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | localName          | string   | Yes      | The local tag name (within the XML namespace) for the element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| supportsHyperRef   | boolean  | No       | Set to `true` to enable [behavior attributes](/docs/reference_behavior_attributes) (`href`, `action`, `<behavior>` children) on the custom element's root tag. Defaults to `false`. See [Behavior support](#behavior-support) below.                                                                                                                                                                                                                                                                                                           |
 | getFormInputValues | function | No       | A function with the signature `(element): Array<[string, string]>`. Add this if your custom element contains data that should be serialized into a parent form. The array return value allows for the custom element to serialize multiple name/value pairs. Most commonly, your element would return one name/value pair, like `[["first_name", "Alice"]]`. You can also return multiple values for one name, like `[["choice", "1"], ["choice", "2"]]`. Or multiple values with multiple names, like `[["state", "CA"], ["country", "USA"]]` |
 
 When rendering the component, Hyperview will pass screen context to `render()` as props. The component is free to use these props if it wants to render sub-children:
@@ -67,6 +68,42 @@ export default class HyperviewMap extends PureComponent<Props> {
   }
 }
 ```
+
+#### Behavior support
+
+By default, when a custom element has [behavior attributes](reference_behavior_attributes) set, or nested behaviors as immediate children, the attributes are **not processed** (e.g. `<my-ns:my-element href="/some/path" />` or `<my-ns:my-element><behavior href="/some/path" /></my-ns:my-element>`)
+
+There are two ways to support behaviors on a custom element:
+
+**Option A — Opt the component in with `supportsHyperRef`**
+
+Set the static property `supportsHyperRef = true` on the component. When behavior attributes are present, Hyperview will wrap the element with `HyperRef` before rendering — the same mechanism used by built-in elements like `<view>` and `<text>`.
+
+```typescript
+MyComponent.namespaceURI = 'https://example.com/my-ns';
+MyComponent.localName = 'my-element';
+MyComponent.supportsHyperRef = true;
+```
+
+```xml
+<my-ns:my-element
+  xmlns:my-ns="https://example.com/my-ns"
+  href="/next-screen"
+  action="push"
+/>
+```
+
+**Option B — Place behaviors on a wrapping standard element in HXML**
+
+No component code change is needed. Wrap the custom element in a standard `<view>` and put the behavior attributes there instead:
+
+```xml
+<view href="/next-screen" action="push">
+  <my-ns:my-element xmlns:my-ns="https://example.com/my-ns" />
+</view>
+```
+
+> **Note:** behaviors on _child_ elements rendered by `renderChildren` are always processed correctly regardless of `supportsHyperRef`, because each child passes through `hv-element` independently.
 
 #### Configuring the client
 
