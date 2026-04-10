@@ -1,0 +1,17 @@
+---
+permalink: "/navigation/behaviors.xml"
+hv_title: "Navigation"
+hv_tab_id: "navigation"
+hv_button_behavior: "none"
+---
+{% extends 'templates/tab-route.xml.njk' %}
+
+{% from 'macros/tabbar-top/index.xml.njk' import tabbar_top %}
+
+{% block tab_route_content %}
+  {{ tabbar_top([
+  {id: "navigation-behaviors-route", label: "Behaviors", selected: true},
+  {id: "navigator-route", label: "Navigator"}
+  ]) }}
+  {% include './behaviors/content.xml.njk' %}
+{% endblock %}
