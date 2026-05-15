@@ -51,6 +51,7 @@ const HvWebView = (props: HvComponentProps) => {
   const sharedCookiesEnabled = componentProps['shared-cookies-enabled']
     ? componentProps['shared-cookies-enabled'] === 'true'
     : undefined;
+  const webviewDebuggingEnabled = componentProps.debug === 'true' || __DEV__;
   const source = {
     html: componentProps.html,
     uri: componentProps.url,
@@ -75,7 +76,7 @@ const HvWebView = (props: HvComponentProps) => {
       source={source}
       startInLoadingState
       testID={componentProps.testID}
-      webviewDebuggingEnabled={__DEV__}
+      webviewDebuggingEnabled={webviewDebuggingEnabled}
     />
   );
 };

@@ -32,6 +32,9 @@ A `<web-view>` element can appear anywhere within a `<body>` element.
 - [`activity-indicator-color`](#activity-indicator-color)
 - [`injected-java-script`](#injected-java-script)
 - [`show-loading-indicator`](#show-loading-indicator)
+- [`allows-inline-media-playback`](#allows-inline-media-playback)
+- [`shared-cookies-enabled`](#shared-cookies-enabled)
+- [`debug`](#debug)
 - [`id`](#id)
 
 #### `url`
@@ -73,6 +76,30 @@ A string of Javascript that gets injected into the loaded web view. Can be used 
 | **all** (default), document-only | No       |
 
 An attribute specifying when to stop showing the web-view's loader. `document-only` specifies to stop loading after the document renders but before other subresources load. By default (`all`), shows loader until the whole page loads.
+
+#### `allows-inline-media-playback`
+
+| Type                         | Required |
+| ---------------------------- | -------- |
+| boolean, **false** (default) | No       |
+
+An attribute that determines whether HTML5 videos play inline or use the native full-screen controller.
+
+#### `shared-cookies-enabled`
+
+| Type                         | Required |
+| ---------------------------- | -------- |
+| boolean, **false** (default) | No       |
+
+Set `true` if shared cookies from `[NSHTTPCookieStorage sharedHTTPCookieStorage]` should be used for every load request in the WebView. The default value is false.
+
+#### `debug`
+
+| Type                         | Required |
+| ---------------------------- | -------- |
+| boolean, **false** (default) | No       |
+
+Whether or not the webview can be debugged remotely using Safari / Chrome.
 
 #### `id`
 
