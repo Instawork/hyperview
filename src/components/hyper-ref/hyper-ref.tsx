@@ -48,8 +48,8 @@ export default class HyperRef extends PureComponent<Props, State> {
 
   style: StyleSheet | null | undefined;
 
-  constructor(props: Props, state: State) {
-    super(props, state);
+  constructor(props: Props) {
+    super(props);
     this.updateBehaviorElements();
     this.updateStyle();
   }
