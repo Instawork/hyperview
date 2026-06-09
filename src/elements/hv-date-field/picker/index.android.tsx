@@ -3,7 +3,7 @@ import DateTimePicker from 'hyperview/src/components/date-time-picker';
 import type { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import React from 'react';
 
-export default (props: Props): JSX.Element | null => {
+export default (props: Props): React.JSX.Element | null => {
   if (!props.focused) {
     return null;
   }

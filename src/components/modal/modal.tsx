@@ -18,7 +18,7 @@ import styles from './styles';
  * Uses styles defined on the <picker-field> element for the modal and buttons.
  * This is used on iOS only.
  */
-export default (props: Props): JSX.Element => {
+export default (props: Props): React.JSX.Element => {
   const [visible, setVisible] = useState(props.focused);
   const [height, setHeight] = useState(0);
 

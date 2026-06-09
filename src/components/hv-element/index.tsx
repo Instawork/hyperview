@@ -9,7 +9,7 @@ import type { HvComponentProps } from 'hyperview/src/types';
 import HyperRef from 'hyperview/src/components/hyper-ref';
 import { needsHyperRef } from './utils';
 
-export default (props: HvComponentProps): JSX.Element | null | string => {
+export default (props: HvComponentProps): React.JSX.Element | null | string => {
   // eslint-disable-next-line react/destructuring-assignment
   const { element, onUpdate, options, stylesheets } = props;
   if (!element) {
