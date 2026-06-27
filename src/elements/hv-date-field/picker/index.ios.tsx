@@ -8,7 +8,7 @@ import styles from './styles';
  * On iOS this component is rendered inline, and on Android it's rendered as a modal.
  * Thus, on iOS we need to wrap this component in our own modal for consistency.
  */
-export default (props: Props): JSX.Element | null => {
+export default (props: Props): React.JSX.Element | null => {
   if (!props.focused) {
     return null;
   }

@@ -363,7 +363,9 @@ type BottomTabBarProps = RNBottomTabBarProps & {
   id: string;
 };
 
-type BottomTabBarComponent = (props: BottomTabBarProps) => JSX.Element | null;
+type BottomTabBarComponent = (
+  props: BottomTabBarProps,
+) => React.JSX.Element | null;
 
 export type NavigationComponents = {
   BottomTabBar?: BottomTabBarComponent;

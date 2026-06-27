@@ -5,7 +5,7 @@ import {
 } from 'hyperview/src/elements/hv-date-field/helpers';
 import type { Props } from './types';
 
-export default (props: Props): JSX.Element => {
+export default (props: Props): React.JSX.Element => {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {

@@ -251,7 +251,7 @@ export default (props: Props) => {
     [parentDocState, setScreenState],
   );
 
-  const onUpdateCallbacksRef = useRef<OnUpdateCallbacks>();
+  const onUpdateCallbacksRef = useRef<OnUpdateCallbacks>(undefined);
 
   const onDocUpdate = useCallback(
     (

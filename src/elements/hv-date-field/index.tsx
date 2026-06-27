@@ -14,7 +14,7 @@ import { getNameValueFormInputValues } from 'hyperview/src/services';
  * - On iOS, pressing the field brings up a custom bottom sheet with a picker and action buttons.
  * - On Android and web, pressing the field brings up the system date picker modal.
  */
-const HvDateField = (props: HvComponentProps): JSX.Element | null => {
+const HvDateField = (props: HvComponentProps): React.JSX.Element | null => {
   /**
    * Shows the picker, defaulting to the field's value.
    * If the field is not set, use today's date in the picker.

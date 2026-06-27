@@ -48,8 +48,8 @@ export default class HyperRef extends PureComponent<Props, State> {
 
   style: StyleSheet | null | undefined;
 
-  constructor(props: Props, state: State) {
-    super(props, state);
+  constructor(props: Props) {
+    super(props);
     this.updateBehaviorElements();
     this.updateStyle();
   }
@@ -195,7 +195,11 @@ export default class HyperRef extends PureComponent<Props, State> {
     }
   };
 
-  TouchableView = ({ children }: { children: JSX.Element }): JSX.Element => {
+  TouchableView = ({
+    children,
+  }: {
+    children: React.JSX.Element;
+  }): React.JSX.Element => {
     const behaviors = this.behaviorElements.filter(
       e =>
         PRESS_TRIGGERS.indexOf(
@@ -331,7 +335,11 @@ export default class HyperRef extends PureComponent<Props, State> {
     );
   };
 
-  ScrollableView = ({ children }: { children: JSX.Element }): JSX.Element => {
+  ScrollableView = ({
+    children,
+  }: {
+    children: React.JSX.Element;
+  }): React.JSX.Element => {
     const behaviors = this.getBehaviorElements(TRIGGERS.REFRESH);
     if (!behaviors.length) {
       return children;
@@ -357,7 +365,11 @@ export default class HyperRef extends PureComponent<Props, State> {
     );
   };
 
-  VisibilityView = ({ children }: { children: JSX.Element }): JSX.Element => {
+  VisibilityView = ({
+    children,
+  }: {
+    children: React.JSX.Element;
+  }): React.JSX.Element => {
     const behaviors = this.getBehaviorElements(TRIGGERS.VISIBLE);
     if (!behaviors.length) {
       return children;
@@ -416,7 +428,9 @@ export default class HyperRef extends PureComponent<Props, State> {
     return (
       <VisibilityView>
         <ScrollableView>
-          <TouchableView>{(children as JSX.Element) || null}</TouchableView>
+          <TouchableView>
+            {(children as React.JSX.Element) || null}
+          </TouchableView>
         </ScrollableView>
       </VisibilityView>
     );
