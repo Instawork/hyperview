@@ -2,22 +2,20 @@
 permalink: "/advanced/index.xml"
 hv_title: "Advanced"
 hv_tab_id: "advanced"
-hv_button_behavior: "none"
 ---
-{% extends 'templates/tab-route.xml.njk' %}
+{% extends 'templates/root.xml.njk' %}
 
-{% from 'macros/tabbar-top/index.xml.njk' import tabbar_top %}
-{% from 'macros/tabbar-top-tab/index.xml.njk' import tabbar_top_tab %}
-
-{% block tab_route_content %}
-  {{ tabbar_top([
-  {id: "tab-case-studies", label: "Case Studies", selected: true},
-  {id: "tab-community", label: "Community"}
-  ]) }}
-  {% call tabbar_top_tab("tab-case-studies", true) -%}
-    {% include './case-studies/content.xml.njk' %}
-  {%- endcall -%}
-  {% call tabbar_top_tab("tab-community") -%}
-    {% include './community/content.xml.njk' %}
-  {%- endcall -%}
+{% block root %}
+  <doc xmlns="https://hyperview.org/hyperview">
+    <navigator id="advanced-nested-tabs" type="tab">
+      <nav-route
+        id="case-studies-route"
+        href="/hyperview/public/advanced/case-studies.xml"
+      />
+      <nav-route
+        id="community-route"
+        href="/hyperview/public/advanced/community.xml"
+      />
+    </navigator>
+  </doc>
 {% endblock %}
