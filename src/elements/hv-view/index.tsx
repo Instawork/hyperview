@@ -21,10 +21,13 @@ import {
   ScrollView,
 } from 'hyperview/src/components/scroll';
 import React, { PureComponent } from 'react';
+import {
+  createCollapsableProps,
+  createStyleProp,
+} from 'hyperview/src/services';
 import { ATTRIBUTES } from './types';
 import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import { createStyleProp } from 'hyperview/src/services';
 
 export default class HvView extends PureComponent<HvComponentProps> {
   static namespaceURI = Namespaces.HYPERVIEW;
@@ -253,7 +256,14 @@ export default class HvView extends PureComponent<HvComponentProps> {
       );
     }
     // TODO: Replace with <HvChildren>
-    return React.createElement(View, this.getCommonProps(), ...children);
+    return React.createElement(
+      View,
+      {
+        ...this.getCommonProps(),
+        ...createCollapsableProps(this.props.element),
+      },
+      ...children,
+    );
     /* eslint-enable react/jsx-props-no-spreading */
   };
 

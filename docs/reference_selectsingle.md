@@ -37,6 +37,8 @@ A `<select-single>` element most often appears within a `<form>` element. Howeve
 - [`id`](#id)
 - [`hide`](#hide)
 - [`allow-deselect`](#allow-deselect)
+- [`collapsable`](#collapsable)
+- [`collapsable-children`](#collapsable-children)
 
 #### `name`
 
@@ -77,3 +79,19 @@ If `hide="true"`, the element will not be rendered on screen. If the element or 
 | **false** (default), true | No       |
 
 If `allow-deselect="true"`, the `<option>` element can be deselected.
+
+#### `collapsable`
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| **true** (default), false | No       |
+
+Controls whether Android is allowed to collapse this view for rendering optimizations. Setting `collapsable="false"` prevents Android from removing this element from the native view hierarchy. Has no effect on iOS. See the [React Native docs](https://reactnative.dev/docs/view#collapsable-android) for details.
+
+#### `collapsable-children`
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| **true** (default), false | No       |
+
+Setting `collapsable-children="false"` prevents Android from collapsing the children of this element for rendering optimizations. Has no effect on iOS. See the [React Native docs](https://reactnative.dev/docs/view#collapsablechildren-android) for details.

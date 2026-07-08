@@ -486,6 +486,8 @@
     <xs:attribute name="value" type="xs:string" />
     <xs:attribute name="sticky" type="xs:boolean" />
     <xs:attribute name="scroll-to-input-offset" type="xs:nonNegativeInteger" />
+    <xs:attribute name="collapsable" type="xs:boolean" />
+    <xs:attribute name="collapsable-children" type="xs:boolean" />
     <xs:attributeGroup ref="hv:behaviorAttributes" />
     <xs:attributeGroup ref="hv:scrollAttributes" />
   </xs:attributeGroup>
@@ -1274,6 +1276,8 @@
       <xs:attribute name="key" type="hv:KEY" />
       <xs:attribute name="hide" type="xs:boolean" />
       <xs:attribute name="style" type="hv:styleList" />
+      <xs:attribute name="collapsable" type="xs:boolean" />
+      <xs:attribute name="collapsable-children" type="xs:boolean" />
     </xs:complexType>
   </xs:element>
 
@@ -1285,6 +1289,8 @@
       <xs:attribute name="key" type="hv:KEY" />
       <xs:attribute name="hide" type="xs:boolean" />
       <xs:attribute name="style" type="hv:styleList" />
+      <xs:attribute name="collapsable" type="xs:boolean" />
+      <xs:attribute name="collapsable-children" type="xs:boolean" />
     </xs:complexType>
   </xs:element>
 
@@ -1298,6 +1304,8 @@
       <xs:attribute name="style" type="hv:styleList" />
       <xs:attribute name="selected" type="xs:boolean" />
       <xs:attribute name="value" type="xs:string" />
+      <xs:attribute name="collapsable" type="xs:boolean" />
+      <xs:attribute name="collapsable-children" type="xs:boolean" />
     </xs:complexType>
   </xs:element>
 

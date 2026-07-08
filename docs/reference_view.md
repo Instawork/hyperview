@@ -63,6 +63,8 @@ A `<view>` element can only appear anywhere within a `<screen>` element.
 - [`sticky`](#sticky)
 - [`keyboard-dismiss-mode`](#keyboard-dismiss-mode)
 - [`over-scroll`](#over-scroll)
+- [`collapsable`](#collapsable)
+- [`collapsable-children`](#collapsable-children)
 
 #### Behavior attributes
 
@@ -183,3 +185,19 @@ An attribute that controls the virtual keyboard behavior when the scrollable vie
 | **true** (default), false | No       |
 
 An attribute that helps disabling the "over-scroll" or "bounce" effect when reaching the beginning or end of the scrollable content. Attribute `scroll` should be set in for this to have any effect.
+
+#### `collapsable`
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| **true** (default), false | No       |
+
+Controls whether Android is allowed to collapse this view for rendering optimizations. Setting `collapsable="false"` prevents Android from removing this view from the native view hierarchy, which is required when you need to measure the view or perform certain native operations. Only applies to non-scrollable views. Has no effect on iOS. See the [React Native docs](https://reactnative.dev/docs/view#collapsable-android) for details.
+
+#### `collapsable-children`
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| **true** (default), false | No       |
+
+Setting `collapsable-children="false"` prevents Android from collapsing the children of this view for rendering optimizations. Has no effect on iOS. See the [React Native docs](https://reactnative.dev/docs/view#collapsablechildren-android) for details.

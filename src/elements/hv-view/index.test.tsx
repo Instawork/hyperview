@@ -37,5 +37,19 @@ describe('HvView', () => {
         return true;
       });
     });
+    test('collapsable', async () => {
+      render(
+        <HyperviewMock paths={[`${__dirname}/stories/collapsable.xml`]} />,
+      );
+
+      await waitFor(() => {
+        expect(screen.getByTestId('collapsable-false')).toBeOnTheScreen();
+        expect(
+          screen.getByTestId('collapsable-children-false'),
+        ).toBeOnTheScreen();
+
+        return true;
+      });
+    });
   });
 });

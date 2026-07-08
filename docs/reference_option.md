@@ -34,6 +34,8 @@ A `<option>` element can appear anywhere within a `<select-single>` or `<select-
 - [`style`](#style)
 - [`id`](#id)
 - [`hide`](#hide)
+- [`collapsable`](#collapsable)
+- [`collapsable-children`](#collapsable-children)
 
 #### `value`
 
@@ -68,3 +70,19 @@ A global attribute uniquely identifying the element in the whole document.
 | **false** (default), true | No       |
 
 If `hide="true"`, the element will not be rendered on screen. If the element or any of the element's children have a behavior that triggers on "load" or "visible", those behaviors will not trigger while the element is hidden.
+
+#### `collapsable`
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| **true** (default), false | No       |
+
+Controls whether Android is allowed to collapse this view for rendering optimizations. Setting `collapsable="false"` prevents Android from removing this element from the native view hierarchy. Has no effect on iOS. See the [React Native docs](https://reactnative.dev/docs/view#collapsable-android) for details.
+
+#### `collapsable-children`
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| **true** (default), false | No       |
+
+Setting `collapsable-children="false"` prevents Android from collapsing the children of this element for rendering optimizations. Has no effect on iOS. See the [React Native docs](https://reactnative.dev/docs/view#collapsablechildren-android) for details.
