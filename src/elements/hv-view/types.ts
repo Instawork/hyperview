@@ -26,6 +26,8 @@ export type Attributes = {
 
 export type CommonProps = {
   accessibilityLabel?: string | undefined;
+  collapsable?: boolean | undefined;
+  collapsableChildren?: boolean | undefined;
   testID?: string | undefined;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   children?: any | undefined;

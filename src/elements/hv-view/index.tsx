@@ -80,9 +80,9 @@ export default class HvView extends PureComponent<HvComponentProps> {
       return { style };
     }
     if (Platform.OS === 'ios') {
-      return { style, testID: id };
+      return { collapsable: false, style, testID: id };
     }
-    return { accessibilityLabel: id, style };
+    return { accessibilityLabel: id, collapsable: false, style };
   };
 
   getScrollViewProps = (
