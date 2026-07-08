@@ -39,4 +39,30 @@ hv_button_behavior: "back"
     <view style="flex-child styled"/>
     <view style="flex-child styled"/>
   </view>
+  {{ description('Collapsing enabled (default)') }}
+  <view style="border" key="view-1">
+    <view key="view-2">
+      <view key="view-3">
+        <view style="border styled" key="view-4"/>
+      </view>
+    </view>
+  </view>
+  {{ description('Collapsing disabled') }}
+  <view style="border" key="view-5">
+    <view collapsable="false" key="view-6">
+      <view key="view-7">
+        <view style="border styled" key="view-8"/>
+      </view>
+    </view>
+  </view>
+  {{ description('Children collapsing disabled') }}
+  <view style="border" key="view-9">
+    <view collapsable-children="false" key="view-10">
+      <view key="view-11">
+        <view style="border styled" key="view-12"/>
+      </view>
+    </view>
+  </view>
+
+  </view>
 {% endblock %}

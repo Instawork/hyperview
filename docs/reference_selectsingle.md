@@ -86,7 +86,7 @@ If `allow-deselect="true"`, the `<option>` element can be deselected.
 | ------------------------- | -------- |
 | **true** (default), false | No       |
 
-Controls whether Android is allowed to collapse this view for rendering optimizations. Setting `collapsable="false"` prevents Android from removing this element from the native view hierarchy. Has no effect on iOS. See the [React Native docs](https://reactnative.dev/docs/view#collapsable-android) for details.
+When this element is only used to lay out its children, it may be automatically removed from the native view hierarchy as an optimization. Setting `collapsable="false"` disables this optimization and ensures the element exists in the native view hierarchy. See the [React Native docs](https://reactnative.dev/docs/view#collapsable) for details.
 
 #### `collapsable-children`
 
@@ -94,4 +94,4 @@ Controls whether Android is allowed to collapse this view for rendering optimiza
 | ------------------------- | -------- |
 | **true** (default), false | No       |
 
-Setting `collapsable-children="false"` prevents Android from collapsing the children of this element for rendering optimizations. Has no effect on iOS. See the [React Native docs](https://reactnative.dev/docs/view#collapsablechildren-android) for details.
+Setting `collapsable-children="false"` prevents the direct children of this element from being removed from the native view hierarchy, similar to setting `collapsable="false"` on each child. See the [React Native docs](https://reactnative.dev/docs/view#collapsablechildren) for details.

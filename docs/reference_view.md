@@ -192,7 +192,7 @@ An attribute that helps disabling the "over-scroll" or "bounce" effect when reac
 | ------------------------- | -------- |
 | **true** (default), false | No       |
 
-Controls whether Android is allowed to collapse this view for rendering optimizations. Setting `collapsable="false"` prevents Android from removing this view from the native view hierarchy, which is required when you need to measure the view or perform certain native operations. Only applies to non-scrollable views. Has no effect on iOS. See the [React Native docs](https://reactnative.dev/docs/view#collapsable-android) for details.
+Views that are only used to lay out their children or otherwise don't draw anything may be automatically removed from the native view hierarchy as an optimization. Setting `collapsable="false"` disables this optimization and ensures the view exists in the native view hierarchy. Only applies to the non-scrollable `<view>`. See the [React Native docs](https://reactnative.dev/docs/view#collapsable) for details.
 
 #### `collapsable-children`
 
@@ -200,4 +200,4 @@ Controls whether Android is allowed to collapse this view for rendering optimiza
 | ------------------------- | -------- |
 | **true** (default), false | No       |
 
-Setting `collapsable-children="false"` prevents Android from collapsing the children of this view for rendering optimizations. Has no effect on iOS. See the [React Native docs](https://reactnative.dev/docs/view#collapsablechildren-android) for details.
+Setting `collapsable-children="false"` prevents the direct children of this view from being removed from the native view hierarchy, similar to setting `collapsable="false"` on each child. See the [React Native docs](https://reactnative.dev/docs/view#collapsablechildren) for details.
