@@ -85,6 +85,20 @@ export const createTestProps = (
   return { accessibilityLabel: id };
 };
 
+export const createCollapsableProps = (
+  element: Element,
+): { collapsable?: boolean; collapsableChildren?: boolean } => {
+  const props: { collapsable?: boolean; collapsableChildren?: boolean } = {};
+  if (element.hasAttribute('collapsable')) {
+    props.collapsable = element.getAttribute('collapsable') === 'true';
+  }
+  if (element.hasAttribute('collapsable-children')) {
+    props.collapsableChildren =
+      element.getAttribute('collapsable-children') === 'true';
+  }
+  return props;
+};
+
 export const createProps = (
   element: Element,
   stylesheets: StyleSheets,
@@ -107,7 +121,9 @@ export const createProps = (
   for (let i = 0; i < element.attributes.length; i += 1) {
     const attr = element.attributes.item(i);
     if (attr) {
-      if (numericRules.indexOf(attr.name) >= 0) {
+      if (attr.name === 'collapsable' || attr.name === 'collapsable-children') {
+        // handled by createCollapsableProps
+      } else if (numericRules.indexOf(attr.name) >= 0) {
         const intValue = parseInt(attr.value, 10);
         props[attr.name] = intValue || 0;
       } else if (booleanRules.indexOf(attr.name) >= 0) {
@@ -123,7 +139,7 @@ export const createProps = (
 
   props.style = createStyleProp(element, stylesheets, options);
   const testProps = createTestProps(element);
-  return { ...props, ...testProps };
+  return { ...props, ...testProps, ...createCollapsableProps(element) };
 };
 
 export const later = (delayMs: number): Promise<void> =>

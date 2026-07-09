@@ -1,0 +1,11 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style id="container" flex="1" />
+    </styles>
+    <body style="container" id="outer">
+      <view id="collapsable-false" collapsable="false" />
+      <view id="collapsable-children-false" collapsable-children="false" />
+    </body>
+  </screen>
+</doc>

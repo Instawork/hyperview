@@ -37,6 +37,8 @@ A `<select-single>` element most often appears within a `<form>` element. Howeve
 - [`id`](#id)
 - [`hide`](#hide)
 - [`allow-deselect`](#allow-deselect)
+- [`collapsable`](#collapsable)
+- [`collapsable-children`](#collapsable-children)
 
 #### `name`
 
@@ -77,3 +79,19 @@ If `hide="true"`, the element will not be rendered on screen. If the element or 
 | **false** (default), true | No       |
 
 If `allow-deselect="true"`, the `<option>` element can be deselected.
+
+#### `collapsable`
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| **true** (default), false | No       |
+
+When this element is only used to lay out its children, it may be automatically removed from the native view hierarchy as an optimization. Setting `collapsable="false"` disables this optimization and ensures the element exists in the native view hierarchy. See the [React Native docs](https://reactnative.dev/docs/view#collapsable) for details.
+
+#### `collapsable-children`
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| **true** (default), false | No       |
+
+Setting `collapsable-children="false"` prevents the direct children of this element from being removed from the native view hierarchy, similar to setting `collapsable="false"` on each child. See the [React Native docs](https://reactnative.dev/docs/view#collapsablechildren) for details.
