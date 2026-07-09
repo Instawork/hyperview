@@ -425,6 +425,42 @@
     <view style="flex-child styled"/>
     <view style="flex-child styled"/>
   </view>
+  
+  
+    <text style="description">Collapsing enabled (default)</text>
+  
+
+  <view style="border" key="view-1">
+    <view key="view-2">
+      <view key="view-3">
+        <view style="border styled" key="view-4"/>
+      </view>
+    </view>
+  </view>
+  
+  
+    <text style="description">Collapsing disabled</text>
+  
+
+  <view style="border" key="view-5">
+    <view collapsable="false" key="view-6">
+      <view key="view-7">
+        <view style="border styled" key="view-8"/>
+      </view>
+    </view>
+  </view>
+  
+  
+    <text style="description">Children collapsing disabled</text>
+  
+
+  <view style="border" key="view-9">
+    <view collapsable-children="false" key="view-10">
+      <view key="view-11">
+        <view style="border styled" key="view-12"/>
+      </view>
+    </view>
+  </view>
 
   </view>
 
