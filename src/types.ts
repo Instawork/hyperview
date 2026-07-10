@@ -349,8 +349,9 @@ export type ErrorScreenProps = {
 };
 
 export type ExperimentalFeatures = {
-  // Delay the mutation of the navigation state until after the screen has been rendered
-  // This is intended to improve the performance of navigation actions
+  /**
+   * @deprecated
+   */
   navStateMutationsDelay?: number;
 };
 

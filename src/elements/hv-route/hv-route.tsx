@@ -183,7 +183,6 @@ function HvRouteFC(props: Types.Props) {
     entrypointUrl,
     onRouteBlur,
     onRouteFocus,
-    experimentalFeatures,
   } = useHyperview();
   const { setElement } = useElementCache();
   const { get, onUpdate } = useBackBehaviorContext();
@@ -228,6 +227,8 @@ function HvRouteFC(props: Types.Props) {
   // Track focus state at discrete event boundaries rather than sampling
   // nav.isFocused() mid-animation, which is unreliable during swipe gestures
   const isFocusedRef = useRef(nav?.isFocused() ?? false);
+  // Store the last nav event so that we can defer the update until after the transition ends
+  const deferredNavEventRef = useRef<ListenerEvent | null>(null);
 
   const handleBlur = useCallback(() => {
     isFocusedRef.current = false;
@@ -238,8 +239,6 @@ function HvRouteFC(props: Types.Props) {
 
   const handleFocus = useCallback(() => {
     isFocusedRef.current = true;
-    const navStateMutationsDelay =
-      experimentalFeatures?.navStateMutationsDelay || 0;
     const updateRouteFocus = () => {
       const doc = getDoc?.();
       NavigatorService.setSelected(doc, id, setDoc);
@@ -255,22 +254,11 @@ function HvRouteFC(props: Types.Props) {
         onRouteFocus(props.route);
       }
     };
-    if (navStateMutationsDelay > 0) {
-      // The timeout ensures the processing occurs after the screen is rendered or shown
-      setTimeout(updateRouteFocus, navStateMutationsDelay);
-    } else {
+    const unsubscribe = nav.addListener('transitionEnd', () => {
+      unsubscribe();
       updateRouteFocus();
-    }
-  }, [
-    entrypointUrl,
-    experimentalFeatures,
-    getDoc,
-    id,
-    nav,
-    onRouteFocus,
-    props.route,
-    setDoc,
-  ]);
+    });
+  }, [entrypointUrl, getDoc, id, nav, onRouteFocus, props.route, setDoc]);
 
   const handleBeforeRemove = useCallback(
     (event: { preventDefault: () => void }) => {
@@ -302,27 +290,23 @@ function HvRouteFC(props: Types.Props) {
 
   const handleState = useCallback(
     (event: ListenerEvent) => {
-      const navStateMutationsDelay =
-        experimentalFeatures?.navStateMutationsDelay || 0;
-      const updateRouteUrlFromState = (e: ListenerEvent) => {
-        NavigatorService.updateRouteUrlFromState(
-          getDoc?.(),
-          id,
-          e.data?.state,
-          setDoc,
-        );
-      };
-      if (navStateMutationsDelay > 0) {
-        // The timeout ensures the processing occurs after the screen is rendered or shown
-        setTimeout(
-          () => updateRouteUrlFromState(event),
-          navStateMutationsDelay,
-        );
-      } else {
-        updateRouteUrlFromState(event);
+      const isListenerPending = deferredNavEventRef.current !== null;
+      deferredNavEventRef.current = event;
+      if (!isListenerPending) {
+        const unsubscribe = nav.addListener('transitionEnd', () => {
+          unsubscribe();
+          const latestEvent = deferredNavEventRef.current;
+          deferredNavEventRef.current = null;
+          NavigatorService.updateRouteUrlFromState(
+            getDoc?.(),
+            id,
+            latestEvent?.data?.state,
+            setDoc,
+          );
+        });
       }
     },
-    [experimentalFeatures, getDoc, id, setDoc],
+    [getDoc, id, nav, setDoc],
   );
 
   useEffect(() => {
