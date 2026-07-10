@@ -15,7 +15,14 @@ import type {
   NavigationProps,
   ScreenState,
 } from 'hyperview/src/types';
-import React, { PureComponent, useContext, useMemo } from 'react';
+import React, {
+  PureComponent,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react';
 import HvNavigator from 'hyperview/src/elements/hv-navigator';
 import HvScreen from 'hyperview/src/elements/hv-screen';
 import { LOCAL_NAME } from 'hyperview/src/types';
@@ -209,122 +216,145 @@ function HvRouteFC(props: Types.Props) {
     getSourceDoc?.(),
   );
 
-  React.useEffect(() => {
-    const id = props.route?.params?.id || props.route?.key;
-    if (nav) {
-      const unsubscribeBlur: () => void = nav.addListener('blur', () => {
-        if (onRouteBlur && props.route) {
-          onRouteBlur(props.route);
-        }
-      });
+  const id = props.route?.params?.id || props.route?.key;
+  const routeUrl = props.route?.params?.url;
 
-      // Use the focus event to set the selected route
-      const unsubscribeFocus: () => void = nav.addListener('focus', () => {
-        const navStateMutationsDelay =
-          experimentalFeatures?.navStateMutationsDelay || 0;
-        const updateRouteFocus = () => {
-          const doc = getDoc?.();
-          NavigatorService.setSelected(doc, id, setDoc);
-          NavigatorService.addStackRoute(
-            doc,
-            id,
-            props.route,
-            nav.getState().routes[0]?.name,
-            entrypointUrl,
-            setDoc,
-          );
-          if (onRouteFocus && props.route) {
-            onRouteFocus(props.route);
-          }
-        };
-        if (navStateMutationsDelay > 0) {
-          // The timeout ensures the processing occurs after the screen is rendered or shown
-          setTimeout(() => {
-            updateRouteFocus();
-          }, navStateMutationsDelay);
-        } else {
-          updateRouteFocus();
-        }
-      });
+  // Keep onUpdate current without placing it in listener dep arrays
+  const onUpdateRef = useRef<typeof onUpdate>(onUpdate);
+  useEffect(() => {
+    onUpdateRef.current = onUpdate;
+  }, [onUpdate]);
 
-      // Use the beforeRemove event to remove the route from the stack
-      const unsubscribeRemove: () => void = nav.addListener(
-        'beforeRemove',
-        (event: { preventDefault: () => void }) => {
-          // Use the current document state to access behaviors on the document
-          // Check for elements registered to interrupt back action via a trigger of BACK
-          const elements: Element[] = (get && get()) || [];
-          if (elements.length > 0 && onUpdate && nav.isFocused()) {
-            // Process the elements
-            event.preventDefault();
-            elements.forEach(behaviorElement => {
-              const href = behaviorElement.getAttribute('href');
-              const action = behaviorElement.getAttribute('action');
-              onUpdate(href, action, behaviorElement, {
-                behaviorElement,
-                showIndicatorId: behaviorElement.getAttribute(
-                  'show-during-load',
-                ),
-                targetId: behaviorElement.getAttribute('target'),
-              });
-            });
-          } else {
-            // Perform cleanup of the associated route (retrieved from parent document state)
-            NavigatorService.removeStackRoute(
-              getDoc?.(),
-              props.route?.params?.url,
-              entrypointUrl,
-              setDoc,
-            );
-          }
-        },
-      );
+  // Track focus state at discrete event boundaries rather than sampling
+  // nav.isFocused() mid-animation, which is unreliable during swipe gestures
+  const isFocusedRef = useRef(nav?.isFocused() ?? false);
 
-      // Update the urls in each route when the state updates the params
-      const unsubscribeState: () => void = nav.addListener(
-        'state',
-        (event: ListenerEvent) => {
-          const navStateMutationsDelay =
-            experimentalFeatures?.navStateMutationsDelay || 0;
-          const updateRouteUrlFromState = (e: ListenerEvent) => {
-            NavigatorService.updateRouteUrlFromState(
-              getDoc?.(),
-              id,
-              e.data?.state,
-              setDoc,
-            );
-          };
-          if (navStateMutationsDelay > 0) {
-            // The timeout ensures the processing occurs after the screen is rendered or shown
-            setTimeout(() => {
-              updateRouteUrlFromState(event);
-            }, navStateMutationsDelay);
-          } else {
-            updateRouteUrlFromState(event);
-          }
-        },
-      );
-
-      return () => {
-        unsubscribeBlur();
-        unsubscribeFocus();
-        unsubscribeRemove();
-        unsubscribeState();
-      };
+  const handleBlur = useCallback(() => {
+    isFocusedRef.current = false;
+    if (onRouteBlur && props.route) {
+      onRouteBlur(props.route);
     }
-    return undefined;
+  }, [onRouteBlur, props.route]);
+
+  const handleFocus = useCallback(() => {
+    isFocusedRef.current = true;
+    const navStateMutationsDelay =
+      experimentalFeatures?.navStateMutationsDelay || 0;
+    const updateRouteFocus = () => {
+      const doc = getDoc?.();
+      NavigatorService.setSelected(doc, id, setDoc);
+      NavigatorService.addStackRoute(
+        doc,
+        id,
+        props.route,
+        nav.getState().routes[0]?.name,
+        entrypointUrl,
+        setDoc,
+      );
+      if (onRouteFocus && props.route) {
+        onRouteFocus(props.route);
+      }
+    };
+    if (navStateMutationsDelay > 0) {
+      // The timeout ensures the processing occurs after the screen is rendered or shown
+      setTimeout(updateRouteFocus, navStateMutationsDelay);
+    } else {
+      updateRouteFocus();
+    }
   }, [
     entrypointUrl,
     experimentalFeatures,
-    get,
     getDoc,
+    id,
     nav,
-    onRouteBlur,
     onRouteFocus,
-    onUpdate,
     props.route,
     setDoc,
   ]);
+
+  const handleBeforeRemove = useCallback(
+    (event: { preventDefault: () => void }) => {
+      // Check for elements registered to interrupt back action via a trigger of BACK
+      const elements: Element[] = (get && get()) || [];
+      if (elements.length > 0 && onUpdateRef.current && isFocusedRef.current) {
+        event.preventDefault();
+        elements.forEach(behaviorElement => {
+          const href = behaviorElement.getAttribute('href');
+          const action = behaviorElement.getAttribute('action');
+          onUpdateRef.current?.(href, action, behaviorElement, {
+            behaviorElement,
+            showIndicatorId: behaviorElement.getAttribute('show-during-load'),
+            targetId: behaviorElement.getAttribute('target'),
+          });
+        });
+      } else {
+        // Perform cleanup of the associated route (retrieved from parent document state)
+        NavigatorService.removeStackRoute(
+          getDoc?.(),
+          routeUrl,
+          entrypointUrl,
+          setDoc,
+        );
+      }
+    },
+    [entrypointUrl, get, getDoc, routeUrl, setDoc],
+  );
+
+  const handleState = useCallback(
+    (event: ListenerEvent) => {
+      const navStateMutationsDelay =
+        experimentalFeatures?.navStateMutationsDelay || 0;
+      const updateRouteUrlFromState = (e: ListenerEvent) => {
+        NavigatorService.updateRouteUrlFromState(
+          getDoc?.(),
+          id,
+          e.data?.state,
+          setDoc,
+        );
+      };
+      if (navStateMutationsDelay > 0) {
+        // The timeout ensures the processing occurs after the screen is rendered or shown
+        setTimeout(
+          () => updateRouteUrlFromState(event),
+          navStateMutationsDelay,
+        );
+      } else {
+        updateRouteUrlFromState(event);
+      }
+    },
+    [experimentalFeatures, getDoc, id, setDoc],
+  );
+
+  useEffect(() => {
+    if (!nav) {
+      return undefined;
+    }
+    return nav.addListener('blur', handleBlur);
+  }, [nav, handleBlur]);
+
+  // Use the focus event to set the selected route
+  useEffect(() => {
+    if (!nav) {
+      return undefined;
+    }
+    return nav.addListener('focus', handleFocus);
+  }, [nav, handleFocus]);
+
+  // Use the beforeRemove event to remove the route from the stack
+  useEffect(() => {
+    if (!nav) {
+      return undefined;
+    }
+    return nav.addListener('beforeRemove', handleBeforeRemove);
+  }, [nav, handleBeforeRemove]);
+
+  // Update the urls in each route when the state updates the params
+  useEffect(() => {
+    if (!nav) {
+      return undefined;
+    }
+    return nav.addListener('state', handleState);
+  }, [nav, handleState]);
 
   return (
     <HvDoc
