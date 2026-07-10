@@ -264,9 +264,24 @@ function HvRouteFC(props: Types.Props) {
     (event: { preventDefault: () => void }) => {
       // Check for elements registered to interrupt back action via a trigger of BACK
       const elements: Element[] = (get && get()) || [];
-      if (elements.length > 0 && onUpdateRef.current && isFocusedRef.current) {
+      // Filter to only elements that are not hidden (or whose ancestors are not hidden).
+      const visibleElements: Element[] = elements.filter(el => {
+        let node: Node | null = el;
+        while (node && node.nodeType !== 9) {
+          if ((node as Element).getAttribute?.('hide') === 'true') {
+            return false;
+          }
+          node = (node as Element).parentNode;
+        }
+        return true;
+      });
+      if (
+        visibleElements.length > 0 &&
+        onUpdateRef.current &&
+        isFocusedRef.current
+      ) {
         event.preventDefault();
-        elements.forEach(behaviorElement => {
+        visibleElements.forEach(behaviorElement => {
           const href = behaviorElement.getAttribute('href');
           const action = behaviorElement.getAttribute('action');
           onUpdateRef.current?.(href, action, behaviorElement, {
