@@ -61,6 +61,7 @@ describe('buildRoutesFromDom', () => {
     const state: StackNavigationState<ParamListBase> = {
       index: 0,
       key: 'key1',
+      preloadedRoutes: [],
       routeNames: ['route1'],
       routes: [
         {
@@ -93,6 +94,7 @@ describe('buildRoutesFromDom', () => {
     const state: StackNavigationState<ParamListBase> = {
       index: 0,
       key: 'key1',
+      preloadedRoutes: [],
       routeNames: ['route1'],
       routes: [
         {
@@ -128,6 +130,7 @@ describe('buildRoutesFromDom', () => {
     const state: StackNavigationState<ParamListBase> = {
       index: 0,
       key: 'key1',
+      preloadedRoutes: [],
       routeNames: ['route1'],
       routes: [
         {
@@ -165,6 +168,7 @@ describe('buildRoutesFromDom', () => {
     const state: StackNavigationState<ParamListBase> = {
       index: 0,
       key: 'key1',
+      preloadedRoutes: [],
       routeNames: ['route1'],
       routes: [
         {
@@ -202,6 +206,7 @@ describe('buildRoutesFromDom', () => {
     const state: StackNavigationState<ParamListBase> = {
       index: 0,
       key: 'key1',
+      preloadedRoutes: [],
       routeNames: ['route1'],
       routes: [
         {
@@ -244,6 +249,7 @@ describe('buildRoutesFromDom', () => {
     const state: StackNavigationState<ParamListBase> = {
       index: 0,
       key: 'key1',
+      preloadedRoutes: [],
       routeNames: ['route1'],
       routes: [
         {

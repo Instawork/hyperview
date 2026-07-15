@@ -26,16 +26,18 @@ import {
   TabScreenOptions,
 } from './types';
 import React, { useCallback, useEffect, useRef } from 'react';
+import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { CardStyleInterpolators } from '@react-navigation/stack';
 import { HvDocContext } from 'hyperview/src/elements/hv-doc';
 import NavigatorStack from 'hyperview/src/components/navigator-stack';
 import NavigatorTab from 'hyperview/src/components/navigator-tab';
 import { Platform } from 'react-native';
+import { RouteProp } from '@react-navigation/native';
 import { getFirstChildTag } from 'hyperview/src/services/dom/helpers';
 import { useHyperview } from 'hyperview/src/contexts/hyperview';
 
-export const Stack = NavigatorStack<ParamTypes>();
-export const BottomTab = NavigatorTab<ParamTypes>();
+export const Stack = NavigatorStack();
+export const BottomTab = NavigatorTab();
 
 export default function HvNavigator(props: Props) {
   // eslint-disable-next-line react/destructuring-assignment
@@ -136,7 +138,11 @@ export default function HvNavigator(props: Props) {
    * Encapsulated options for the stack screenOptions
    */
   const stackScreenOptions = useCallback(
-    (route: ScreenParams): StackScreenOptions => ({
+    ({
+      route,
+    }: {
+      route: RouteProp<ParamTypes, string>;
+    }): StackScreenOptions => ({
       headerMode: 'screen',
       headerShown: SHOW_DEFAULT_HEADER_UI,
       title: getId(route.params),
@@ -148,7 +154,11 @@ export default function HvNavigator(props: Props) {
    * Encapsulated options for the tab screenOptions
    */
   const tabScreenOptions = useCallback(
-    (route: ScreenParams): TabScreenOptions => ({
+    ({
+      route,
+    }: {
+      route: RouteProp<ParamTypes, string>;
+    }): TabScreenOptions => ({
       headerShown: SHOW_DEFAULT_HEADER_UI,
       tabBarStyle: {
         display: SHOW_DEFAULT_FOOTER_UI ? 'flex' : 'none',
@@ -201,7 +211,7 @@ export default function HvNavigator(props: Props) {
             initialParams={initialParams}
             name={id}
             options={{
-              animationEnabled: !isFirstScreen,
+              animation: isFirstScreen ? 'none' : 'default',
               cardStyleInterpolator,
               gestureEnabled,
               presentation: needsSubStack
@@ -398,7 +408,7 @@ export default function HvNavigator(props: Props) {
           return (
             <Stack.Navigator
               id={navigatorId}
-              screenOptions={({ route }) => stackScreenOptions(route)}
+              screenOptions={stackScreenOptions}
             >
               {screens}
             </Stack.Navigator>
@@ -432,10 +442,7 @@ export default function HvNavigator(props: Props) {
         switch (type) {
           case NAVIGATOR_TYPE.STACK:
             return (
-              <Stack.Navigator
-                id={id}
-                screenOptions={({ route }) => stackScreenOptions(route)}
-              >
+              <Stack.Navigator id={id} screenOptions={stackScreenOptions}>
                 {buildScreens(type, element)}
               </Stack.Navigator>
             );
@@ -445,10 +452,10 @@ export default function HvNavigator(props: Props) {
                 backBehavior="none"
                 id={id}
                 initialRouteName={selectedId}
-                screenOptions={({ route }) => tabScreenOptions(route)}
+                screenOptions={tabScreenOptions}
                 tabBar={
                   BottomTabBar &&
-                  (p => (
+                  ((p: BottomTabBarProps) => (
                     <BottomTabBar
                       descriptors={p.descriptors}
                       id={id}
