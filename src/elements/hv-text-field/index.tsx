@@ -55,13 +55,21 @@ const HvTextField = (props: HvComponentProps) => {
     [],
   );
 
+  const elementRef = useRef<Element>(props.element);
+
+  useEffect(() => {
+    elementRef.current = props.element;
+  }, [props.element]);
+
   // This handler takes care of handling the state, so it shouldn't be debounced
   // eslint-disable-next-line react-hooks/rules-of-hooks, react-hooks/exhaustive-deps
   const onChangeText = (value: string) => {
-    const formattedValue = HvTextField.getFormattedValue(props.element, value);
-    const newElement = props.element.cloneNode(true) as Element;
+    const currentElement = elementRef.current;
+    const formattedValue = HvTextField.getFormattedValue(currentElement, value);
+    const newElement = currentElement.cloneNode(true) as Element;
     newElement.setAttribute('value', formattedValue);
-    props.onUpdate(null, 'swap', props.element, { newElement });
+    props.onUpdate(null, 'swap', currentElement, { newElement });
+    elementRef.current = newElement;
     triggerChangeBehaviors(newElement);
   };
 
@@ -87,7 +95,10 @@ const HvTextField = (props: HvComponentProps) => {
   const p = {
     ...createProps(props.element, props.stylesheets, {
       ...props.options,
-      focused: textInputRef.current?.isFocused(),
+      focused:
+        typeof textInputRef.current?.isFocused === 'function'
+          ? textInputRef.current?.isFocused()
+          : false,
     }),
   };
 

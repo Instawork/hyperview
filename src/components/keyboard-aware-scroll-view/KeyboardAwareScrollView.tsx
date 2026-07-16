@@ -110,7 +110,7 @@ export default class KeyboardAwareScrollView extends PureComponent<
     if (this.props.getTextInputRefs) {
       const textInputRefs = this.props.getTextInputRefs();
       textInputRefs?.some(textInputRef => {
-        const isFocusedFunc = textInputRef.isFocused();
+        const isFocusedFunc = textInputRef.isFocused;
         const isFocused =
           isFocusedFunc && typeof isFocusedFunc === 'function'
             ? // eslint-disable-next-line @typescript-eslint/ban-ts-comment
