@@ -212,11 +212,6 @@ export default class HyperRef extends PureComponent<Props, State> {
       return children;
     }
 
-    // With multiple behaviors for the same trigger, we need to stagger
-    // the updates a bit so that each update operates on the latest DOM.
-    // Ideally, we could apply multiple DOM updates at a time.
-    let time = 0;
-
     const pressHandlers: PressHandlers = {};
 
     behaviors.forEach(behaviorElement => {
@@ -235,8 +230,7 @@ export default class HyperRef extends PureComponent<Props, State> {
         pressHandlers[triggerPropName as PressPropName] = createEventHandler(
           () => {
             oldHandler();
-            setTimeout(() => handler(this.props.element), time);
-            time += 1;
+            queueMicrotask(() => handler(this.props.element));
           },
         );
       } else {
@@ -272,7 +266,7 @@ export default class HyperRef extends PureComponent<Props, State> {
       if (pressHandlers.onPress) {
         const onPressHandler = pressHandlers.onPress;
         pressHandlers.onPress = createEventHandler(() => {
-          setTimeout(onPressHandler, time);
+          queueMicrotask(onPressHandler);
         });
       }
     }

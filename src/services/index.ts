@@ -144,7 +144,7 @@ export const createProps = (
 
 export const later = (delayMs: number): Promise<void> =>
   new Promise((resolve: (result?: Promise<never>) => void) =>
-    setTimeout(resolve, delayMs),
+    delayMs ? setTimeout(resolve, delayMs) : queueMicrotask(resolve),
   );
 
 /**

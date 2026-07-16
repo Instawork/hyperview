@@ -118,7 +118,7 @@ export default class KeyboardAwareScrollView extends PureComponent<
               isFocusedFunc()
             : isFocusedFunc;
         if (isFocused) {
-          setTimeout(() => {
+          queueMicrotask(() => {
             this.keyboardAwareView
               ?.getScrollResponder()
               .scrollResponderScrollNativeHandleToKeyboard(
@@ -127,7 +127,7 @@ export default class KeyboardAwareScrollView extends PureComponent<
                   defaultScrollToInputAdditionalOffset,
                 true,
               );
-          }, 0);
+          });
         }
         return isFocused;
       });
