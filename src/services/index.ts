@@ -142,10 +142,15 @@ export const createProps = (
   return { ...props, ...testProps, ...createCollapsableProps(element) };
 };
 
-export const later = (delayMs: number): Promise<void> =>
-  new Promise((resolve: (result?: Promise<never>) => void) =>
-    delayMs ? setTimeout(resolve, delayMs) : queueMicrotask(resolve),
-  );
+export const later = (delayMs: number): Promise<void> => {
+  type Resolve = (result?: Promise<never>) => void;
+  if (delayMs === 0) {
+    return new Promise((resolve: Resolve) => queueMicrotask(resolve));
+  }
+  return new Promise((resolve: Resolve) => {
+    setTimeout(resolve, delayMs);
+  });
+};
 
 /**
  * Clones the element and moves all children from the original element

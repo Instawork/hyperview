@@ -15,6 +15,11 @@ import TinyMask from './mask';
 import debounce from 'lodash/debounce';
 
 const HvTextField = (props: HvComponentProps) => {
+  const elementRef = useRef<Element>(props.element);
+  useEffect(() => {
+    elementRef.current = props.element;
+  }, [props.element]);
+
   if (props.element.getAttribute('hide') === 'true') {
     return null;
   }
@@ -54,12 +59,6 @@ const HvTextField = (props: HvComponentProps) => {
     }, debounceTimeMs),
     [],
   );
-
-  const elementRef = useRef<Element>(props.element);
-
-  useEffect(() => {
-    elementRef.current = props.element;
-  }, [props.element]);
 
   // This handler takes care of handling the state, so it shouldn't be debounced
   // eslint-disable-next-line react-hooks/rules-of-hooks, react-hooks/exhaustive-deps
