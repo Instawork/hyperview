@@ -48,7 +48,6 @@ export { Events, Logging, Namespaces };
 export {
   createProps,
   createStyleProp,
-  createTestProps,
   getAncestorByTagName,
   shallowCloneToRoot,
 } from 'hyperview/src/services';

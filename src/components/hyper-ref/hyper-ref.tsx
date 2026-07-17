@@ -19,7 +19,6 @@ import type {
 } from './types';
 import React, { PureComponent } from 'react';
 import { RefreshControl, Text, TouchableOpacity } from 'react-native';
-import { createEventHandler, createTestProps } from 'hyperview/src/services';
 import { BackBehaviorContext } from 'hyperview/src/contexts/back-behaviors';
 import HvElement from 'hyperview/src/components/hv-element';
 // eslint-disable-next-line instawork/import-components
@@ -27,6 +26,7 @@ import { ScrollView } from 'hyperview/src/components/scroll';
 import type { StyleSheet } from 'hyperview/src/types';
 import VisibilityDetectingView from './VisibilityDetectingView';
 import { XMLSerializer } from '@instawork/xmldom';
+import { createEventHandler } from 'hyperview/src/services';
 
 /**
  * Component that handles dispatching behaviors based on the appropriate
@@ -272,7 +272,7 @@ export default class HyperRef extends PureComponent<Props, State> {
     }
 
     const style = this.getStyle();
-    const { accessibilityLabel, testID } = createTestProps(this.props.element);
+    const testID = this.props.element.getAttribute('id') || undefined;
     const { onLongPress, onPress, onPressIn, onPressOut } = pressHandlers;
 
     // If element is a <text> nested under another <text>, simply add press events
@@ -286,7 +286,6 @@ export default class HyperRef extends PureComponent<Props, State> {
       const noop = () => {};
       return (
         <Text
-          accessibilityLabel={accessibilityLabel}
           accessible={false}
           onLongPress={onLongPress}
           // when no press handler set, we still need an empty handler for pressIn or pressOut
@@ -314,7 +313,6 @@ export default class HyperRef extends PureComponent<Props, State> {
 
     return (
       <TouchableOpacity
-        accessibilityLabel={accessibilityLabel}
         accessible={false}
         activeOpacity={1}
         onLongPress={onLongPress}
