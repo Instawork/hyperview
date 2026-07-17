@@ -1,13 +1,11 @@
 import * as Xml from 'hyperview/src/services/xml';
 import { DEFAULT_PRESS_OPACITY, HV_TIMEOUT_ID_ATTR } from './types';
 import type {
-  DOMString,
   HvComponentOptions,
   StyleSheet,
   StyleSheets,
 } from 'hyperview/src/types';
 import { NODE_TYPE } from 'hyperview/src/types';
-import { Platform } from 'react-native';
 
 /**
  * This file is currently a dumping place for every functions used accross
@@ -64,27 +62,6 @@ export const createStyleProp = (
   return styleRules;
 };
 
-/**
- * Sets the element's id attribute as a test id and accessibility label
- * (for testing automation purposes).
- */
-export const createTestProps = (
-  element: Element,
-): {
-  testID?: string;
-  accessibilityLabel?: string;
-} => {
-  const testProps = {};
-  const id: DOMString | null | undefined = element.getAttribute('id');
-  if (!id) {
-    return testProps;
-  }
-  if (Platform.OS === 'ios') {
-    return { testID: id };
-  }
-  return { accessibilityLabel: id };
-};
-
 export const createCollapsableProps = (
   element: Element,
 ): { collapsable?: boolean; collapsableChildren?: boolean } => {
@@ -138,8 +115,8 @@ export const createProps = (
   }
 
   props.style = createStyleProp(element, stylesheets, options);
-  const testProps = createTestProps(element);
-  return { ...props, ...testProps, ...createCollapsableProps(element) };
+  const testID = element.getAttribute('id') || undefined;
+  return { ...props, testID, ...createCollapsableProps(element) };
 };
 
 export const later = (delayMs: number): Promise<void> => {
