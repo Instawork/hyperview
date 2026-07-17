@@ -19,7 +19,6 @@ import type {
 } from './types';
 import React, { PureComponent } from 'react';
 import { RefreshControl, Text, TouchableOpacity } from 'react-native';
-import { createEventHandler, createTestProps } from 'hyperview/src/services';
 import { BackBehaviorContext } from 'hyperview/src/contexts/back-behaviors';
 import HvElement from 'hyperview/src/components/hv-element';
 // eslint-disable-next-line instawork/import-components
@@ -27,6 +26,7 @@ import { ScrollView } from 'hyperview/src/components/scroll';
 import type { StyleSheet } from 'hyperview/src/types';
 import VisibilityDetectingView from './VisibilityDetectingView';
 import { XMLSerializer } from '@instawork/xmldom';
+import { createEventHandler } from 'hyperview/src/services';
 
 /**
  * Component that handles dispatching behaviors based on the appropriate
@@ -296,7 +296,7 @@ export default class HyperRef extends PureComponent<Props, State> {
     }
 
     const style = this.getStyle();
-    const { accessibilityLabel, testID } = createTestProps(this.props.element);
+    const testID = this.props.element.getAttribute('id') || undefined;
     const { onLongPress, onPress, onPressIn, onPressOut } = pressHandlers;
     const disabled = this.props.element.getAttribute('disabled') === 'true';
 
@@ -311,7 +311,6 @@ export default class HyperRef extends PureComponent<Props, State> {
       const noop = () => {};
       return (
         <Text
-          accessibilityLabel={accessibilityLabel}
           accessible={false}
           disabled={disabled}
           onLongPress={onLongPress}
@@ -340,7 +339,6 @@ export default class HyperRef extends PureComponent<Props, State> {
 
     return (
       <TouchableOpacity
-        accessibilityLabel={accessibilityLabel}
         accessible={false}
         activeOpacity={1}
         disabled={disabled}
@@ -435,7 +433,7 @@ export default class HyperRef extends PureComponent<Props, State> {
     // Only <TouchableView> applies the element's test props, and only when the element has
     // press behaviors. The wrapped component skips them in that case, so that a single node
     // carries the element's id in the native view hierarchy.
-    const skipTestProps = this.getPressBehaviorElements().length > 0;
+    const skipTestId = this.getPressBehaviorElements().length > 0;
     const children = (
       <HvElement
         element={this.props.element}
@@ -444,7 +442,7 @@ export default class HyperRef extends PureComponent<Props, State> {
           ...this.props.options,
           pressed: this.state.pressed,
           skipHref: true,
-          skipTestProps,
+          skipTestId,
         }}
         stylesheets={this.props.stylesheets}
       />
