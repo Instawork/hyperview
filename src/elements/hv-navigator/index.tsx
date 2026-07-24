@@ -186,6 +186,13 @@ export default function HvNavigator(props: Props) {
       }
       if (type === NAVIGATOR_TYPE.STACK) {
         const gestureEnabled = Platform.OS === 'ios' ? !needsSubStack : false;
+        let cardStyleInterpolator;
+        if (needsSubStack) {
+          cardStyleInterpolator =
+            Platform.OS === 'android'
+              ? CardStyleInterpolators.forBottomSheetAndroid
+              : CardStyleInterpolators.forVerticalIOS;
+        }
         return (
           <Stack.Screen
             key={id}
@@ -195,9 +202,7 @@ export default function HvNavigator(props: Props) {
             name={id}
             options={{
               animationEnabled: !isFirstScreen,
-              cardStyleInterpolator: needsSubStack
-                ? CardStyleInterpolators.forVerticalIOS
-                : undefined,
+              cardStyleInterpolator,
               gestureEnabled,
               presentation: needsSubStack
                 ? NavigatorService.ID_MODAL
