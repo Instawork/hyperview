@@ -112,8 +112,27 @@ export default class HyperRef extends PureComponent<Props, State> {
       : null;
   };
 
+  /**
+   * Returns the current version of the element in the DOM.
+   * DOM updates shallow-clone every ancestor of the mutated node, which moves the
+   * children onto the clone and orphans the original. Until React re-renders with
+   * the new node, `props.element` can be an orphan with no behavior children.
+   * Behavior elements are moved rather than cloned, so they point back to the
+   * current version of the element.
+   */
+  getCurrentElement = (): Element => {
+    if (this.props.element.parentNode) {
+      return this.props.element;
+    }
+    const attachedBehavior = this.behaviorElements.find(
+      e => e !== this.props.element && e.parentNode,
+    );
+    return (attachedBehavior?.parentNode as Element) || this.props.element;
+  };
+
   onEventDispatch = (eventName: string) => {
-    const behaviorElements = Dom.getBehaviorElements(this.props.element);
+    const element = this.getCurrentElement();
+    const behaviorElements = Dom.getBehaviorElements(element);
     const onEventBehaviors = behaviorElements.filter(e => {
       if (e.getAttribute(BEHAVIOR_ATTRIBUTES.TRIGGER) === TRIGGERS.ON_EVENT) {
         const currentAttributeEventName:
@@ -141,7 +160,7 @@ export default class HyperRef extends PureComponent<Props, State> {
         behaviorElement,
         this.props.onUpdate,
       );
-      handler(this.props.element);
+      handler(element);
 
       Logging.info(
         Logging.deferredToString(() => {
