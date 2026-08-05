@@ -37,6 +37,15 @@ describe('HvView', () => {
         return true;
       });
     });
+    test('applies the id to a single element when wrapped by a hyper-ref', async () => {
+      render(<HyperviewMock paths={[`${__dirname}/stories/pressable.xml`]} />);
+
+      await waitFor(() => {
+        expect(screen.getAllByTestId('pressable')).toHaveLength(1);
+        expect(screen.getAllByTestId('loadable')).toHaveLength(1);
+        return true;
+      });
+    });
     test('collapsable', async () => {
       render(
         <HyperviewMock paths={[`${__dirname}/stories/collapsable.xml`]} />,

@@ -184,6 +184,16 @@ export default class HyperRef extends PureComponent<Props, State> {
     );
   };
 
+  getPressBehaviorElements = (): Element[] => {
+    return this.behaviorElements.filter(
+      e =>
+        PRESS_TRIGGERS.indexOf(
+          (e.getAttribute(BEHAVIOR_ATTRIBUTES.TRIGGER) ||
+            TRIGGERS.PRESS) as PressTrigger,
+        ) >= 0,
+    );
+  };
+
   getStyle = (): StyleSheet | null | undefined => {
     const styleAttr = this.props.element.getAttribute(
       BEHAVIOR_ATTRIBUTES.HREF_STYLE,
@@ -219,13 +229,7 @@ export default class HyperRef extends PureComponent<Props, State> {
   }: {
     children: React.JSX.Element;
   }): React.JSX.Element => {
-    const behaviors = this.behaviorElements.filter(
-      e =>
-        PRESS_TRIGGERS.indexOf(
-          (e.getAttribute(BEHAVIOR_ATTRIBUTES.TRIGGER) ||
-            TRIGGERS.PRESS) as PressTrigger,
-        ) >= 0,
-    );
+    const behaviors = this.getPressBehaviorElements();
 
     if (!behaviors.length) {
       return children;
@@ -424,6 +428,10 @@ export default class HyperRef extends PureComponent<Props, State> {
   render() {
     // Render the component based on the XML element. Depending on the applied behaviors,
     // this component will be wrapped with others to provide the necessary interaction.
+    // Only <TouchableView> applies the element's test props, and only when the element has
+    // press behaviors. The wrapped component skips them in that case, so that a single node
+    // carries the element's id in the native view hierarchy.
+    const skipTestProps = this.getPressBehaviorElements().length > 0;
     const children = (
       <HvElement
         element={this.props.element}
@@ -432,6 +440,7 @@ export default class HyperRef extends PureComponent<Props, State> {
           ...this.props.options,
           pressed: this.state.pressed,
           skipHref: true,
+          skipTestProps,
         }}
         stylesheets={this.props.stylesheets}
       />
