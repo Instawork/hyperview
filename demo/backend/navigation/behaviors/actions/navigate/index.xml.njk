@@ -18,4 +18,10 @@ hv_button_behavior: "back"
   {% call button('Navigate with indicator') -%}
     <behavior action="navigate" href="/hyperview/public/navigation/behaviors/actions/pushed.xml" show-during-load="loading-screen-pushed" />
   {%- endcall %}
+
+  {{ description('When "navigate" targets a screen already in the stack, it pops back to that screen instead of adding a duplicate.') }}
+
+  {% call button('Navigate pop') -%}
+    <behavior action="navigate" href="/hyperview/public/navigation/behaviors/actions/navigate/pop-to-existing-route/index.xml" />
+  {%- endcall %}
 {% endblock %}

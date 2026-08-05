@@ -1,0 +1,16 @@
+---
+permalink: "/navigation/behaviors/actions/navigate/pop-to-existing-route/index.xml"
+hv_title: "Step 1"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  {{ description('Stack: Step 1. Add Step 2 to the stack.') }}
+
+  {% call button('Go to Step 2') -%}
+    <behavior action="navigate" href="/hyperview/public/navigation/behaviors/actions/navigate/pop-to-existing-route/step-2.xml" />
+  {%- endcall %}
+{% endblock %}
