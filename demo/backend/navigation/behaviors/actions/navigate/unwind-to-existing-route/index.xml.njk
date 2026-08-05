@@ -1,5 +1,5 @@
 ---
-permalink: "/navigation/behaviors/actions/navigate/pop-to-existing-route/index.xml"
+permalink: "/navigation/behaviors/actions/navigate/unwind-to-existing-route/index.xml"
 hv_title: "Step 1"
 hv_button_behavior: "back"
 ---
@@ -11,6 +11,6 @@ hv_button_behavior: "back"
   {{ description('Stack: Step 1. Add Step 2 to the stack.') }}
 
   {% call button('Go to Step 2') -%}
-    <behavior action="navigate" href="/hyperview/public/navigation/behaviors/actions/navigate/pop-to-existing-route/step-2.xml" />
+    <behavior action="navigate" href="/hyperview/public/navigation/behaviors/actions/navigate/unwind-to-existing-route/step-2.xml" />
   {%- endcall %}
 {% endblock %}
