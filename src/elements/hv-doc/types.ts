@@ -10,6 +10,7 @@ export type Props = {
   children?: React.ReactNode;
   hasElement?: boolean;
   navigationProvider: NavigationProvider;
+  onUrlChange?: (url: string) => void;
   route?: RouteProps;
   url: string;
 };

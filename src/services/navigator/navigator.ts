@@ -66,11 +66,16 @@ export class Navigator implements NavigationProvider {
     if (routeParams) {
       const route = this.props.rootNavigation?.getCurrentRoute();
       if (route) {
+        const target = Helpers.findNavigatorKeyForRoute(
+          this.props.rootNavigation?.getRootState(),
+          route.key,
+        );
         navigation.dispatch({
           ...CommonActions.setParams({
             ...routeParams,
           }),
           source: route.key,
+          ...(target && { target }),
         });
       }
     }
@@ -80,8 +85,12 @@ export class Navigator implements NavigationProvider {
    * Prepare and send the request
    */
   sendRequest = (action: NavAction, routeParams?: RouteParams) => {
+    const startingNavigation =
+      action === NAV_ACTIONS.CLOSE && this.props.route?.params?.isModal
+        ? this.props.navigation?.getParent() || this.props.navigation
+        : this.props.navigation;
     const [navAction, navigation, routeId, params] = Helpers.buildRequest(
-      this.props.navigation,
+      startingNavigation,
       action,
       routeParams,
     );
@@ -201,5 +210,18 @@ export class Navigator implements NavigationProvider {
 
   openModalAction = (params: RouteParams) => {
     this.sendRequest(NAV_ACTIONS.NEW, params);
+  };
+
+  updateRouteUrl = (url: string) => {
+    const routeKey = this.props.route?.key;
+    if (!this.props.navigation || !routeKey) {
+      return;
+    }
+    this.props.navigation.dispatch({
+      ...CommonActions.setParams({
+        url,
+      }),
+      source: routeKey,
+    });
   };
 }
