@@ -1,3 +1,4 @@
+import * as CustomTabRouter from 'hyperview/src/components/navigator-tab/router';
 import * as React from 'react';
 import {
   BottomTabNavigationEventMap,
@@ -7,15 +8,15 @@ import {
 import {
   TabActionHelpers,
   TabNavigationState,
-  TabRouter,
-  TabRouterOptions,
   createNavigatorFactory,
   useNavigationBuilder,
 } from '@react-navigation/native';
 import type { ParamListBase } from '@react-navigation/routers';
 import type { Props } from './types';
+import { useHvDocContext } from 'hyperview/src/elements/hv-doc';
 
 const CustomTabNavigator = (props: Props) => {
+  const { getSourceDoc } = useHvDocContext();
   const {
     state,
     descriptors,
@@ -23,13 +24,14 @@ const CustomTabNavigator = (props: Props) => {
     NavigationContent,
   } = useNavigationBuilder<
     TabNavigationState<ParamListBase>,
-    TabRouterOptions,
+    CustomTabRouter.Options,
     TabActionHelpers<ParamListBase>,
     BottomTabNavigationOptions,
     BottomTabNavigationEventMap
-  >(TabRouter, {
+  >(CustomTabRouter.Router, {
     backBehavior: props.backBehavior,
     children: props.children,
+    getDoc: () => getSourceDoc(),
     id: props.id,
     initialRouteName: props.initialRouteName,
     screenOptions: props.screenOptions,
