@@ -64,10 +64,7 @@ const HvWebView = (props: HvComponentProps) => {
       onMessage={onMessage}
       renderLoading={() => {
         return renderLoading ? (
-          <ActivityIndicator
-            color={color}
-            style={StyleSheet.absoluteFillObject}
-          />
+          <ActivityIndicator color={color} style={StyleSheet.absoluteFill} />
         ) : (
           <></>
         );
