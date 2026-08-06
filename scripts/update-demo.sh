@@ -45,9 +45,9 @@ yarn add \
 
 # Install Hyperview dependencies with exact versions
 yarn add --exact \
-  @react-navigation/bottom-tabs@6.5.7 \
-  @react-navigation/native@6.1.6 \
-  @react-navigation/stack@6.3.16
+  @react-navigation/bottom-tabs@7.18.14 \
+  @react-navigation/native@7.3.14 \
+  @react-navigation/stack@7.10.19
 
 # Make Hyperview symlinkable
 cd $ROOT_DIR
