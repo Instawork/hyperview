@@ -1,0 +1,22 @@
+---
+permalink: "/navigation/behaviors/actions/navigate/unwind-to-existing-route/step-3.xml"
+hv_title: "Step 3"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  {{ description('Stack: Step 1 → Step 2 → Step 3.') }}
+
+  {{ description('Return to the existing Step 1 and remove Steps 2 and 3.') }}
+  {% call button('Unwind to Step 1') -%}
+    <behavior action="navigate" href="/hyperview/public/navigation/behaviors/actions/navigate/unwind-to-existing-route/index.xml" />
+  {%- endcall %}
+
+  {{ description('Return to the existing Step 2 and remove Step 3.') }}
+  {% call button('Unwind to Step 2') -%}
+    <behavior action="navigate" href="/hyperview/public/navigation/behaviors/actions/navigate/unwind-to-existing-route/step-2.xml" />
+  {%- endcall %}
+{% endblock %}
