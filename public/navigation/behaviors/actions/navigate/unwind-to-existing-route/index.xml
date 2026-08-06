@@ -344,32 +344,7 @@
 </style>
 
         
-  <style id="flex" flex="1" />
-  <style
-    id="input"
-    backgroundColor="#FFFFFF"
-    borderBottomColor="#E1E1E1"
-    borderBottomWidth="1"
-    borderColor="#4E4D4D"
-    fontSize="16"
-    fontWeight="normal"
-    paddingBottom="8"
-    paddingTop="8">
-    <modifier pressed="true">
-    <style borderBottomColor="green"/>
-    </modifier>
-    <modifier focused="true">
-    <style borderBottomColor="#4778FF"/>
-    </modifier>
-  </style>
-  <style id="relative" position="relative" />
-  <style id="absolute" position="absolute" />
-  <style id="r-0" right="0" />
-  <style id="mx-24" marginHorizontal="24" />
-  <style id="py-8" paddingVertical="8" />
-  <style id="border-bottom" borderBottomWidth="1" borderBottomColor="lightgray" />
-  <style id="highlight" fontWeight="bold" color="blue" />
-
+        
       </styles>
       <body style="body">
         
@@ -399,198 +374,34 @@
 
       </view>
     
-    <text style="header-title">Contacts</text>
+    <text style="header-title">Step 1</text>
   </header>
 </safe-area:safe-area-view>
 
           
-  <form style="flex">
-    <list
-  id="contacts"
-  trigger="refresh"
-  action="replace"
-  href="?page=1&amp;template=_list"
-  target="contacts"
-  keyboard-dismiss-mode="on-drag"
-  style="flex"
-  xmlns="https://hyperview.org/hyperview"
->
-  
-  <item key="search" id="top" sticky="true" style="relative mx-24">
-    <text-field
-      placeholder="Search a contact…"
-      placeholderTextColor="#8D9494"
-      name="search"
-      style="input"
-      debounce="200"
-      value=""
-    >
-      
-      
-      
-      
-      <behavior
-        trigger="change"
-        action="hide"
-        target="load-more"
-      />
-      <behavior
-        trigger="change"
-        action="scroll"
-        target="top"
-        xmlns:scroll="https://hyperview.org/hyperview-scroll"
-      />
-      <behavior
-        trigger="change"
-        action="replace"
-        target="contacts"
-        href="?template=_list"
-        show-during-load="loading-indicator"
-      />
-    </text-field>
-    <view id="loading-indicator" style="absolute r-0 py-8" hide="true">
-      <spinner />
-    </view>
-  </item>
-  <items xmlns="https://hyperview.org/hyperview">
-  
-    <item key="e243b575-f927-46be-80b2-cf3339e8cb98" style="mx-24 py-8 border-bottom">
-      <text>Aaron Berge</text>
-      <text>Otilia_Hoppe@hotmail.com</text>
-      <text>1-712-669-6862 x298</text>
-    </item>
-  
-    <item key="4a3527f3-4c96-4b84-ba2e-3256f02e6071" style="mx-24 py-8 border-bottom">
-      <text>Aaron Brekke</text>
-      <text>Estell_Kuhic54@yahoo.com</text>
-      <text>1-818-628-9502 x5614</text>
-    </item>
-  
-    <item key="2dbe11f4-0cf3-41da-ba27-e8a6cf640c7c" style="mx-24 py-8 border-bottom">
-      <text>Aaron Dickinson III</text>
-      <text>Martin_Metz54@hotmail.com</text>
-      <text>1-450-326-7837 x2260</text>
-    </item>
-  
-    <item key="3e77b9c6-46a5-4fa9-97a6-cb354ff21fc8" style="mx-24 py-8 border-bottom">
-      <text>Aaron Goodwin</text>
-      <text>Abbigail.Cummings@yahoo.com</text>
-      <text>761.876.5770 x4947</text>
-    </item>
-  
-    <item key="dbcf4053-d403-40b2-bc25-75d60e67efd4" style="mx-24 py-8 border-bottom">
-      <text>Aaron Goyette</text>
-      <text>Troy.Kulas@hotmail.com</text>
-      <text>807-332-5663 x5172</text>
-    </item>
-  
-    <item key="82e38b9e-d0f2-4b13-a14a-2bb7966a86df" style="mx-24 py-8 border-bottom">
-      <text>Aaron Greenfelder</text>
-      <text>Gretchen.Bartoletti16@hotmail.com</text>
-      <text>907-759-3207 x35642</text>
-    </item>
-  
-    <item key="d58ab6d3-123a-429b-ac92-9895d3da7f2f" style="mx-24 py-8 border-bottom">
-      <text>Aaron Keeling</text>
-      <text>Milton.Graham85@yahoo.com</text>
-      <text>(404) 497-3603 x509</text>
-    </item>
-  
-    <item key="8576e6ec-4caf-42b5-8fa8-fbc304961d55" style="mx-24 py-8 border-bottom">
-      <text>Aaron Klocko</text>
-      <text>Diego_Heller71@hotmail.com</text>
-      <text>1-578-471-3453 x04540</text>
-    </item>
-  
-    <item key="582200da-2664-4919-8b1c-7d8412ddd5a7" style="mx-24 py-8 border-bottom">
-      <text>Aaron Kovacek</text>
-      <text>Jewel.Howell80@gmail.com</text>
-      <text>214.331.7551 x90402</text>
-    </item>
-  
-    <item key="7dc2582f-5b8b-4bf0-8b38-1d2f171dac6b" style="mx-24 py-8 border-bottom">
-      <text>Aaron Langworth</text>
-      <text>Daija_Marvin12@yahoo.com</text>
-      <text>(244) 512-8511</text>
-    </item>
-  
-    <item key="78b33f95-b0d4-472c-9c80-b6a7dd799df7" style="mx-24 py-8 border-bottom">
-      <text>Aaron Langworth</text>
-      <text>Gordon81@hotmail.com</text>
-      <text>(206) 843-4321 x093</text>
-    </item>
-  
-    <item key="9bf7a211-8b45-4a52-b108-c7f3a8e5523e" style="mx-24 py-8 border-bottom">
-      <text>Aaron Lind</text>
-      <text>Elaina86@hotmail.com</text>
-      <text>(879) 938-0722</text>
-    </item>
-  
-    <item key="a1d45be4-7d08-481b-a38d-00470a8abcd4" style="mx-24 py-8 border-bottom">
-      <text>Aaron Lindgren</text>
-      <text>Quinn13@hotmail.com</text>
-      <text>561.240.8684 x6046</text>
-    </item>
-  
-    <item key="c3cdf8f9-d83a-41e8-96d6-cd33a8d79b1d" style="mx-24 py-8 border-bottom">
-      <text>Aaron McGlynn IV</text>
-      <text>Payton_Gleason@gmail.com</text>
-      <text>579-221-4751 x155</text>
-    </item>
-  
-    <item key="ba06e9a6-2523-4db9-930d-a2cd73d94ee9" style="mx-24 py-8 border-bottom">
-      <text>Aaron Monahan</text>
-      <text>Marco86@gmail.com</text>
-      <text>1-624-453-3383 x28133</text>
-    </item>
-  
-    <item key="04813c45-7fe0-4cf4-9d6d-a1595529d6c2" style="mx-24 py-8 border-bottom">
-      <text>Aaron Purdy PhD</text>
-      <text>Rodrick.McCullough@gmail.com</text>
-      <text>1-275-368-1445 x99515</text>
-    </item>
-  
-    <item key="975a64d7-ddbc-444b-9869-506487693d06" style="mx-24 py-8 border-bottom">
-      <text>Aaron Schiller</text>
-      <text>Orland.Jacobs@gmail.com</text>
-      <text>(807) 333-9922</text>
-    </item>
-  
-    <item key="962d5128-2a61-45da-baeb-ac1b01517e51" style="mx-24 py-8 border-bottom">
-      <text>Aaron Schoen-Lang</text>
-      <text>Macie_Little65@yahoo.com</text>
-      <text>685-290-5292 x29377</text>
-    </item>
-  
-    <item key="8613f787-97b1-49fd-9b92-9f4be5ab8009" style="mx-24 py-8 border-bottom">
-      <text>Aaron Schowalter</text>
-      <text>Travis.Kunze@gmail.com</text>
-      <text>(895) 473-1769 x4782</text>
-    </item>
-  
-    <item key="d2cdba59-ce2c-4c4f-8e6a-db92a852a5f6" style="mx-24 py-8 border-bottom">
-      <text>Aaron Shields</text>
-      <text>Jaquelin_Smitham49@hotmail.com</text>
-      <text>666.230.2630 x954</text>
-    </item>
+  <view scroll="true" style="main">
+    
   
   
-    <item
-      key="load-more"
-      id="load-more"
-      trigger="visible"
-      action="replace"
-      style="py-8"
-      href="?page=2"
-    >
-      <spinner />
-    </item>
+    <text style="description">Stack: Step 1. Add Step 2 to the stack.</text>
   
-</items>
 
-</list>
 
-  </form>
+  
+  <view
+    
+    
+      style="button"
+    
+  >
+    
+      <behavior action="navigate" href="/hyperview/public/navigation/behaviors/actions/navigate/unwind-to-existing-route/step-2.xml" />
+    
+    <text style="button-label">Go to Step 2</text>
+  </view>
+
+
+  </view>
 
         
       </body>

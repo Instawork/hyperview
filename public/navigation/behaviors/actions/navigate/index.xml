@@ -415,6 +415,26 @@
   </view>
 
 
+  
+  
+    <text style="description">When &quot;navigate&quot; targets a screen already in the stack, it unwinds back to that screen instead of adding a duplicate.</text>
+  
+
+
+  
+  <view
+    
+    
+      style="button"
+    
+  >
+    
+      <behavior action="navigate" href="/hyperview/public/navigation/behaviors/actions/navigate/unwind-to-existing-route/index.xml" />
+    
+    <text style="button-label">Unwind navigation</text>
+  </view>
+
+
   </view>
 
         
