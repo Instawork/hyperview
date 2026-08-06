@@ -27,17 +27,36 @@ import {
 } from './types';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import { CardStyleInterpolators } from '@react-navigation/stack';
 import { HvDocContext } from 'hyperview/src/elements/hv-doc';
 import NavigatorStack from 'hyperview/src/components/navigator-stack';
 import NavigatorTab from 'hyperview/src/components/navigator-tab';
 import { Platform } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
+import { TransitionPresets } from '@react-navigation/stack';
 import { getFirstChildTag } from 'hyperview/src/services/dom/helpers';
 import { useHyperview } from 'hyperview/src/contexts/hyperview';
 
 export const Stack = NavigatorStack();
 export const BottomTab = NavigatorTab();
+
+const getTransitionOptions = (
+  needsSubStack: boolean,
+  isFirstScreen: boolean,
+) => {
+  if (needsSubStack) {
+    return Platform.OS === 'android'
+      ? TransitionPresets.BottomSheetAndroid
+      : TransitionPresets.ModalSlideFromBottomIOS;
+  }
+  if (
+    !isFirstScreen &&
+    Platform.OS === 'android' &&
+    Number(Platform.Version) >= 34
+  ) {
+    return TransitionPresets.ScaleFromCenterAndroid;
+  }
+  return {};
+};
 
 export default function HvNavigator(props: Props) {
   // eslint-disable-next-line react/destructuring-assignment
@@ -120,7 +139,7 @@ export default function HvNavigator(props: Props) {
   /**
    * Logic to determine the nav route id
    */
-  const getId = useCallback((p: RouteParams): string => {
+  const getId = useCallback((p: RouteParams): string | undefined => {
     if (!p) {
       throw new NavigatorService.HvNavigatorError('No params found for route');
     }
@@ -131,7 +150,7 @@ export default function HvNavigator(props: Props) {
       }
       return p.id;
     }
-    return p.url || '';
+    return p.url || undefined;
   }, []);
 
   /**
@@ -196,13 +215,6 @@ export default function HvNavigator(props: Props) {
       }
       if (type === NAVIGATOR_TYPE.STACK) {
         const gestureEnabled = Platform.OS === 'ios' ? !needsSubStack : false;
-        let cardStyleInterpolator;
-        if (needsSubStack) {
-          cardStyleInterpolator =
-            Platform.OS === 'android'
-              ? CardStyleInterpolators.forBottomSheetAndroid
-              : CardStyleInterpolators.forVerticalIOS;
-        }
         return (
           <Stack.Screen
             key={id}
@@ -212,7 +224,7 @@ export default function HvNavigator(props: Props) {
             name={id}
             options={{
               animation: isFirstScreen ? 'none' : 'default',
-              cardStyleInterpolator,
+              ...getTransitionOptions(needsSubStack, isFirstScreen),
               gestureEnabled,
               presentation: needsSubStack
                 ? NavigatorService.ID_MODAL
@@ -376,7 +388,7 @@ export default function HvNavigator(props: Props) {
               NAVIGATOR_TYPE.STACK,
               params?.url || undefined,
               false,
-              false,
+              true,
               params?.id,
               true,
             ),
