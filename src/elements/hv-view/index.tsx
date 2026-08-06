@@ -24,6 +24,7 @@ import React, { PureComponent } from 'react';
 import {
   createCollapsableProps,
   createStyleProp,
+  createTestProps,
 } from 'hyperview/src/services';
 import { ATTRIBUTES } from './types';
 import type { HvComponentProps } from 'hyperview/src/types';
@@ -75,14 +76,14 @@ export default class HvView extends PureComponent<HvComponentProps> {
       this.props.stylesheets,
       this.props.options,
     ) as unknown) as ViewStyle;
-    const id = this.props.element.getAttribute('id');
-    if (!id) {
+    if (!this.props.element.getAttribute('id')) {
       return { style };
     }
-    if (Platform.OS === 'ios') {
-      return { collapsable: false, style, testID: id };
-    }
-    return { accessibilityLabel: id, collapsable: false, style };
+    return {
+      ...createTestProps(this.props.element, this.props.options),
+      collapsable: false,
+      style,
+    };
   };
 
   getScrollViewProps = (

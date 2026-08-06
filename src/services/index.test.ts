@@ -78,6 +78,18 @@ describe('createTestProps', () => {
   it('returns empty id attribute is empty', () => {
     expect(createTestProps(createElement(''))).toEqual({});
   });
+
+  it('returns empty object when skipTestProps is set', () => {
+    expect(
+      createTestProps(createElement('myID'), { skipTestProps: true }),
+    ).toEqual({});
+  });
+
+  it('returns test props when skipTestProps is not set', () => {
+    expect(
+      createTestProps(createElement('myID'), { skipTestProps: false }),
+    ).not.toEqual({});
+  });
 });
 
 describe('createCollapsableProps', () => {

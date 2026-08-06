@@ -67,16 +67,19 @@ export const createStyleProp = (
 /**
  * Sets the element's id attribute as a test id and accessibility label
  * (for testing automation purposes).
+ * Returns no props when `skipTestProps` is set, which happens when an ancestor
+ * component already applied them for the same element.
  */
 export const createTestProps = (
   element: Element,
+  options?: HvComponentOptions,
 ): {
   testID?: string;
   accessibilityLabel?: string;
 } => {
   const testProps = {};
   const id: DOMString | null | undefined = element.getAttribute('id');
-  if (!id) {
+  if (!id || options?.skipTestProps) {
     return testProps;
   }
   if (Platform.OS === 'ios') {
@@ -138,7 +141,7 @@ export const createProps = (
   }
 
   props.style = createStyleProp(element, stylesheets, options);
-  const testProps = createTestProps(element);
+  const testProps = createTestProps(element, options);
   return { ...props, ...testProps, ...createCollapsableProps(element) };
 };
 

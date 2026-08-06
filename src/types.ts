@@ -104,6 +104,7 @@ export type HvComponentOptions = {
   screenUrl?: string | object | undefined;
   selected?: boolean | null | undefined;
   skipHref?: boolean | null | undefined;
+  skipTestProps?: boolean | null | undefined;
   showIndicatorIds?: DOMString | null | undefined;
   styleAttr?: DOMString | null | undefined;
   syncId?: DOMString | null | undefined;

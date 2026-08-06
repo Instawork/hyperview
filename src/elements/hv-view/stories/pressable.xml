@@ -1,0 +1,27 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style
+        id="container"
+        backgroundColor="white"
+        flex="1"
+        flexDirection="column"
+      />
+      <style
+        id="content"
+        backgroundColor="#63CB76"
+        borderRadius="16"
+        height="40"
+        width="40"
+      />
+    </styles>
+    <body style="container" id="container">
+      <view style="content" id="pressable">
+        <behavior trigger="press" action="show" target="content" />
+      </view>
+      <view style="content" id="loadable">
+        <behavior trigger="load" action="show" target="content" />
+      </view>
+    </body>
+  </screen>
+</doc>

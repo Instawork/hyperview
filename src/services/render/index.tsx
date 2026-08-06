@@ -181,7 +181,7 @@ export const renderChildNodes = (
       childNodes[i] as Element,
       stylesheets,
       onUpdate,
-      { ...options, skipHref: false },
+      { ...options, skipHref: false, skipTestProps: false },
       i,
     );
     if (e) {
