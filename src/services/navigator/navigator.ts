@@ -82,15 +82,31 @@ export class Navigator implements NavigationProvider {
   }
 
   /**
+   * Resolve the navigator which owns the route.
+   */
+  getActiveNavigation = (): NavigationProps | undefined => {
+    const { navigation, rootNavigation, route } = this.props;
+    const rootState = rootNavigation?.getRootState();
+
+    if (
+      !navigation ||
+      !route?.key ||
+      !rootState ||
+      Helpers.findNavigatorKeyForRoute(rootState, route.key)
+    ) {
+      return navigation;
+    }
+
+    return navigation.getParent() || navigation;
+  };
+
+  /**
    * Prepare and send the request
    */
   sendRequest = (action: NavAction, routeParams?: RouteParams) => {
-    const startingNavigation =
-      action === NAV_ACTIONS.CLOSE && this.props.route?.params?.isModal
-        ? this.props.navigation?.getParent() || this.props.navigation
-        : this.props.navigation;
+    const activeNavigation = this.getActiveNavigation();
     const [navAction, navigation, routeId, params] = Helpers.buildRequest(
-      startingNavigation,
+      activeNavigation,
       action,
       routeParams,
     );

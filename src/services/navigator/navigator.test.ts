@@ -1,5 +1,9 @@
 import * as Types from './types';
-import { CommonActions, NavigationState } from '@react-navigation/native';
+import {
+  CommonActions,
+  NavigationState,
+  StackActions,
+} from '@react-navigation/native';
 import type {
   NavigationProps,
   RouteParams,
@@ -102,7 +106,7 @@ describe('Navigator.routeBackRequest', () => {
 });
 
 describe('Navigator.sendRequest', () => {
-  it('closes the navigator containing a nested modal screen', () => {
+  it('closes the current nested modal during a modal flow event', () => {
     const parentNavigation = createNavigation({
       index: 1,
       key: 'stack-root',
@@ -153,8 +157,178 @@ describe('Navigator.sendRequest', () => {
 
     navigator.sendRequest(NAV_ACTIONS.CLOSE);
 
-    expect(parentNavigation.goBack).toHaveBeenCalled();
-    expect(navigation.goBack).not.toHaveBeenCalled();
+    expect(navigation.goBack).toHaveBeenCalled();
+    expect(parentNavigation.goBack).not.toHaveBeenCalled();
+  });
+
+  it('closes a named modal through its modal sub-stack', () => {
+    const parentNavigation = createNavigation({
+      index: 1,
+      key: 'stack-root',
+      routeNames: ['tabs', 'welcome'],
+      routes: [
+        {
+          key: 'tabs-key',
+          name: 'tabs',
+        },
+        {
+          key: 'welcome-key',
+          name: 'welcome',
+          params: {
+            isModal: true,
+          },
+        },
+      ],
+      stale: false,
+      type: 'stack',
+    } as NavigationState);
+    const navigation = createNavigation({
+      index: 0,
+      key: 'welcome-stack',
+      routeNames: ['modal-screen-welcome'],
+      routes: [
+        {
+          key: 'modal-screen-welcome-key',
+          name: 'modal-screen-welcome',
+        },
+      ],
+      stale: false,
+      type: 'stack',
+    } as NavigationState);
+    (navigation.getParent as jest.Mock).mockReturnValue(parentNavigation);
+    const navigator = new Navigator({
+      entrypointUrl: 'https://example.com/index.xml',
+      navigation,
+      route: {
+        key: 'modal-screen-welcome-key',
+        name: 'modal-screen-welcome',
+        params: {
+          isModal: true,
+        },
+      } as RouteProps,
+      setElement: jest.fn(),
+    });
+
+    navigator.sendRequest(NAV_ACTIONS.CLOSE);
+
+    expect(navigation.goBack).toHaveBeenCalled();
+    expect(parentNavigation.goBack).not.toHaveBeenCalled();
+  });
+
+  it('continues navigation from the parent after its route is removed', () => {
+    const parentState = {
+      index: 0,
+      key: 'stack-root',
+      routeNames: ['home'],
+      routes: [
+        {
+          key: 'home-key',
+          name: 'home',
+        },
+      ],
+      stale: false,
+      type: 'stack',
+    } as NavigationState;
+    const parentNavigation = createNavigation(parentState);
+    const navigation = createNavigation({
+      index: 0,
+      key: 'modal-stack',
+      routeNames: ['modal-screen'],
+      routes: [
+        {
+          key: 'modal-screen-key',
+          name: 'modal-screen',
+        },
+      ],
+      stale: false,
+      type: 'stack',
+    } as NavigationState);
+    (navigation.getParent as jest.Mock).mockReturnValue(parentNavigation);
+    const rootNavigation = ({
+      getRootState: jest.fn(() => parentState),
+    } as unknown) as NonNullable<Types.Props['rootNavigation']>;
+    const navigator = new Navigator({
+      entrypointUrl: 'https://example.com/index.xml',
+      navigation,
+      rootNavigation,
+      route: {
+        key: 'modal-screen-key',
+        name: 'modal-screen',
+      } as RouteProps,
+      setElement: jest.fn(),
+    });
+    const routeParams = {
+      url: 'https://example.com/destination.xml',
+    };
+
+    navigator.sendRequest(NAV_ACTIONS.PUSH, routeParams);
+
+    expect(parentNavigation.dispatch).toHaveBeenCalledWith(
+      StackActions.push('card', routeParams),
+    );
+    expect(navigation.dispatch).not.toHaveBeenCalled();
+  });
+
+  it('keeps navigation within a modal while its route is active', () => {
+    const modalState = {
+      index: 0,
+      key: 'modal-stack',
+      routeNames: ['modal-screen'],
+      routes: [
+        {
+          key: 'modal-screen-key',
+          name: 'modal-screen',
+        },
+      ],
+      stale: false,
+      type: 'stack',
+    } as NavigationState;
+    const rootNavigation = ({
+      getRootState: jest.fn(
+        () =>
+          ({
+            index: 1,
+            key: 'stack-root',
+            routeNames: ['home', 'modal'],
+            routes: [
+              {
+                key: 'home-key',
+                name: 'home',
+              },
+              {
+                key: 'modal-key',
+                name: 'modal',
+                state: modalState,
+              },
+            ],
+            stale: false,
+            type: 'stack',
+          } as NavigationState),
+      ),
+    } as unknown) as NonNullable<Types.Props['rootNavigation']>;
+    const navigation = createNavigation(modalState);
+    const parentNavigation = createNavigation(rootNavigation.getRootState());
+    (navigation.getParent as jest.Mock).mockReturnValue(parentNavigation);
+    const navigator = new Navigator({
+      entrypointUrl: 'https://example.com/index.xml',
+      navigation,
+      rootNavigation,
+      route: {
+        key: 'modal-screen-key',
+        name: 'modal-screen',
+      } as RouteProps,
+      setElement: jest.fn(),
+    });
+    const routeParams = {
+      url: 'https://example.com/destination.xml',
+    };
+
+    navigator.sendRequest(NAV_ACTIONS.PUSH, routeParams);
+
+    expect(navigation.dispatch).toHaveBeenCalledWith(
+      StackActions.push('card', routeParams),
+    );
+    expect(parentNavigation.dispatch).not.toHaveBeenCalled();
   });
 });
 
