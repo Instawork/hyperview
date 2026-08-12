@@ -65,6 +65,26 @@ export const createStyleProp = (
 };
 
 /**
+ * Sets the given id as a test id and accessibility label
+ * (for testing automation purposes).
+ */
+export const createTestPropsFromId = (
+  id: DOMString | null | undefined,
+): {
+  testID?: string;
+  accessibilityLabel?: string;
+} => {
+  const testProps = {};
+  if (!id) {
+    return testProps;
+  }
+  if (Platform.OS === 'ios') {
+    return { testID: id };
+  }
+  return { accessibilityLabel: id };
+};
+
+/**
  * Sets the element's id attribute as a test id and accessibility label
  * (for testing automation purposes).
  * Returns no props when `skipTestProps` is set, which happens when an ancestor
@@ -77,15 +97,11 @@ export const createTestProps = (
   testID?: string;
   accessibilityLabel?: string;
 } => {
-  const testProps = {};
-  const id: DOMString | null | undefined = element.getAttribute('id');
-  if (!id || options?.skipTestProps) {
-    return testProps;
+  if (options?.skipTestProps) {
+    return {};
   }
-  if (Platform.OS === 'ios') {
-    return { testID: id };
-  }
-  return { accessibilityLabel: id };
+
+  return createTestPropsFromId(element.getAttribute('id'));
 };
 
 export const createCollapsableProps = (
