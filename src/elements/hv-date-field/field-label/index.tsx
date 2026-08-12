@@ -25,7 +25,7 @@ export default (props: Props) => {
     : placeholder || '';
   const fieldId = props.element.getAttribute('id');
   const textProps = {
-    ...createTestPropsFromId(fieldId && `${fieldId}-text`),
+    ...createTestPropsFromId(fieldId && `${fieldId}/field-label`),
     ...FontScale.getFontScaleProps(props.element),
   };
 

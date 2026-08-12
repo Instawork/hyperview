@@ -191,7 +191,7 @@ The duration in milliseconds that the close animation of the date selection moda
 A global attribute uniquely identifying the element in the whole document.
 
 When set, the text displaying the formatted value (or placeholder) is also given the
-automation identifier `<id>-text`, so UI automation can read the displayed label
+automation identifier `<id>/field-label`, so UI automation can read the displayed label
 without depending on the element hierarchy.
 
 #### `hide`
