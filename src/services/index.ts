@@ -96,10 +96,13 @@ export const createTestProps = (
 ): {
   testID?: string;
   accessibilityLabel?: string;
-} =>
-  options?.skipTestProps
-    ? {}
-    : createTestPropsFromId(element.getAttribute('id'));
+} => {
+  if (options?.skipTestProps) {
+    return {};
+  }
+
+  return createTestPropsFromId(element.getAttribute('id'));
+};
 
 export const createCollapsableProps = (
   element: Element,
