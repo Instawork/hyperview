@@ -77,6 +77,7 @@ describe('HvDateField', () => {
       await waitFor(() => {
         const element = screen.getByTestId('date-field');
         expect(element).toBeOnTheScreen();
+        expect(screen.getByTestId('date-field-text')).toBeOnTheScreen();
         return true;
       });
     });

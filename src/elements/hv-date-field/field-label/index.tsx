@@ -3,6 +3,7 @@ import type { Props } from './types';
 import React from 'react';
 import type { StyleSheet } from 'hyperview/src/types';
 import { Text } from 'react-native';
+import { createTestPropsFromId } from 'hyperview/src/services';
 
 /**
  * This text label of the field. Contains logic to decide how to format the value
@@ -22,10 +23,15 @@ export default (props: Props) => {
   const label: string | undefined = props.value
     ? props.formatter(props.value, labelFormat || undefined)
     : placeholder || '';
+  const fieldId = props.element.getAttribute('id');
+  const textProps = {
+    ...createTestPropsFromId(fieldId && `${fieldId}-text`),
+    ...FontScale.getFontScaleProps(props.element),
+  };
 
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
-    <Text style={labelStyles} {...FontScale.getFontScaleProps(props.element)}>
+    <Text style={labelStyles} {...textProps}>
       {label}
     </Text>
   );
