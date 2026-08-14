@@ -297,6 +297,16 @@ export default class HyperRef extends PureComponent<Props, State> {
     const style = this.getStyle();
     const { accessibilityLabel, testID } = createTestProps(this.props.element);
     const { onLongPress, onPress, onPressIn, onPressOut } = pressHandlers;
+    const elementHasAction = !!this.props.element.getAttribute('action');
+    const elementHasHref = !!this.props.element.getAttribute('href');
+    const hasActionablePressBehavior = behaviors.some(behaviorElement => {
+      const behaviorAction = (
+        behaviorElement.getAttribute(BEHAVIOR_ATTRIBUTES.ACTION) || ''
+      ).toLowerCase();
+      return behaviorAction !== '' && behaviorAction !== 'amplitude';
+    });
+    const disabled =
+      !elementHasAction && !elementHasHref && !hasActionablePressBehavior;
 
     // If element is a <text> nested under another <text>, simply add press events
     const isNestedUnderText =
@@ -310,22 +320,25 @@ export default class HyperRef extends PureComponent<Props, State> {
       return (
         <Text
           accessibilityLabel={accessibilityLabel}
+          accessibilityState={disabled ? { disabled: true } : undefined}
           accessible={false}
-          onLongPress={onLongPress}
+          onLongPress={disabled ? undefined : onLongPress}
           // when no press handler set, we still need an empty handler for pressIn or pressOut
           // handlers to work
           onPress={
-            onPress ||
-            (onPressIn !== undefined || onPressOut !== undefined
-              ? noop
-              : undefined)
+            disabled
+              ? undefined
+              : onPress ||
+                (onPressIn !== undefined || onPressOut !== undefined
+                  ? noop
+                  : undefined)
           }
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore TS2300: no overload matches this call
-          onResponderGrant={onPressIn}
+          onResponderGrant={disabled ? undefined : onPressIn}
           // Both release and terminate responder are needed to properly pressOut
-          onResponderRelease={onPressOut}
-          onResponderTerminate={onPressOut}
+          onResponderRelease={disabled ? undefined : onPressOut}
+          onResponderTerminate={disabled ? undefined : onPressOut}
           style={style}
           suppressHighlighting
           testID={testID}
@@ -338,8 +351,10 @@ export default class HyperRef extends PureComponent<Props, State> {
     return (
       <TouchableOpacity
         accessibilityLabel={accessibilityLabel}
+        accessibilityState={disabled ? { disabled: true } : undefined}
         accessible={false}
         activeOpacity={1}
+        disabled={disabled}
         onLongPress={onLongPress}
         onPress={onPress}
         onPressIn={onPressIn}
