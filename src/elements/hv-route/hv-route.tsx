@@ -126,11 +126,19 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     }
 
     if (needsSubStack || renderElement?.localName === LOCAL_NAME.NAVIGATOR) {
+      const routeParams = this.props.route?.params;
+      const navigatorParams = needsSubStack
+        ? {
+            ...routeParams,
+            id: routeParams?.id ?? this.props.route?.key,
+            needsSubStack,
+          }
+        : routeParams;
       return (
         <HvNavigator
           element={renderElement}
           onUpdate={this.props.onUpdate}
-          params={this.props.route?.params}
+          params={navigatorParams}
           routeComponent={HvRoute}
         />
       );
@@ -196,7 +204,8 @@ function HvRouteFC(props: Types.Props) {
         );
 
   const rootNavigation = useContext(NavigationContainerRefContext);
-  const nav = props.navigation || (rootNavigation as NavigationProps);
+  const nav =
+    props.navigation || ((rootNavigation as unknown) as NavigationProps);
   const navigator = useMemo(
     () =>
       new NavigatorService.Navigator({
@@ -359,6 +368,7 @@ function HvRouteFC(props: Types.Props) {
     <HvDoc
       hasElement={!!element}
       navigationProvider={navigator}
+      onUrlChange={navigator.updateRouteUrl}
       route={props.route}
       url={url}
     >
