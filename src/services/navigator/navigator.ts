@@ -107,7 +107,14 @@ export class Navigator implements NavigationProvider {
       case NAV_ACTIONS.NAVIGATE:
       case NAV_ACTIONS.NEW:
         if (routeId) {
-          navigation.dispatch(CommonActions.navigate(routeId, params));
+          navigation.dispatch({
+            ...CommonActions.navigate(routeId, params),
+            payload: {
+              name: routeId,
+              params,
+              pop: true,
+            },
+          });
         }
         break;
       case NAV_ACTIONS.PUSH:

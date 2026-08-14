@@ -1,22 +1,22 @@
+import * as CustomTabRouter from 'hyperview/src/components/navigator-tab/router';
 import * as React from 'react';
 import {
   BottomTabNavigationEventMap,
   BottomTabNavigationOptions,
   BottomTabView,
 } from '@react-navigation/bottom-tabs';
+import type { Props, TabOptions } from './types';
 import {
-  EventMapBase,
   TabActionHelpers,
   TabNavigationState,
-  TabRouter,
-  TabRouterOptions,
   createNavigatorFactory,
   useNavigationBuilder,
 } from '@react-navigation/native';
-import type { NavigationState, ParamListBase } from '@react-navigation/routers';
-import type { Props } from './types';
+import type { ParamListBase } from '@react-navigation/routers';
+import { useHvDocContext } from 'hyperview/src/elements/hv-doc';
 
 const CustomTabNavigator = (props: Props) => {
+  const { getSourceDoc } = useHvDocContext();
   const {
     state,
     descriptors,
@@ -24,13 +24,14 @@ const CustomTabNavigator = (props: Props) => {
     NavigationContent,
   } = useNavigationBuilder<
     TabNavigationState<ParamListBase>,
-    TabRouterOptions,
+    TabOptions,
     TabActionHelpers<ParamListBase>,
     BottomTabNavigationOptions,
     BottomTabNavigationEventMap
-  >(TabRouter, {
+  >(CustomTabRouter.Router, {
     backBehavior: props.backBehavior,
     children: props.children,
+    getDoc: () => getSourceDoc(),
     id: props.id,
     initialRouteName: props.initialRouteName,
     screenOptions: props.screenOptions,
@@ -59,9 +60,4 @@ const CustomTabNavigator = (props: Props) => {
   );
 };
 
-export default createNavigatorFactory<
-  Readonly<NavigationState>,
-  object,
-  EventMapBase,
-  typeof CustomTabNavigator
->(CustomTabNavigator);
+export default createNavigatorFactory(CustomTabNavigator);

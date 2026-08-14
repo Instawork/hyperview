@@ -26,6 +26,7 @@ import {
   TabScreenOptions,
 } from './types';
 import React, { useCallback, useEffect, useRef } from 'react';
+import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { CardStyleInterpolators } from '@react-navigation/stack';
 import { HvDocContext } from 'hyperview/src/elements/hv-doc';
 import NavigatorStack from 'hyperview/src/components/navigator-stack';
@@ -448,7 +449,7 @@ export default function HvNavigator(props: Props) {
                 screenOptions={({ route }) => tabScreenOptions(route)}
                 tabBar={
                   BottomTabBar &&
-                  (p => (
+                  ((p: BottomTabBarProps) => (
                     <BottomTabBar
                       descriptors={p.descriptors}
                       id={id}

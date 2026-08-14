@@ -1,8 +1,7 @@
 import * as DomErrors from 'hyperview/src/services/dom/errors';
 import { DOMParser } from '@instawork/xmldom';
-import type { ParamListBase } from '@react-navigation/routers';
-import type { StackNavigationState } from '@react-navigation/native';
 import { buildRoutesFromDom } from './helpers';
+import { createStackNavigationState } from 'hyperview/test/helpers/navigation';
 
 /**
  * Test document response
@@ -58,7 +57,7 @@ describe('buildRoutesFromDom', () => {
 
   it('should add one route', () => {
     const doc = parser.parseFromString(navDocSource);
-    const state: StackNavigationState<ParamListBase> = {
+    const state = createStackNavigationState({
       index: 0,
       key: 'key1',
       routeNames: ['route1'],
@@ -71,7 +70,7 @@ describe('buildRoutesFromDom', () => {
       ],
       stale: false,
       type: 'stack',
-    };
+    });
     const routes = buildRoutesFromDom(
       doc,
       state,
@@ -90,7 +89,7 @@ describe('buildRoutesFromDom', () => {
   it('should ignore same order route', () => {
     // When the incoming dom contains the same url as one already in state, don't change
     const doc = parser.parseFromString(navDocSource);
-    const state: StackNavigationState<ParamListBase> = {
+    const state = createStackNavigationState({
       index: 0,
       key: 'key1',
       routeNames: ['route1'],
@@ -108,7 +107,7 @@ describe('buildRoutesFromDom', () => {
       ],
       stale: false,
       type: 'stack',
-    };
+    });
     const routes = buildRoutesFromDom(
       doc,
       state,
@@ -125,7 +124,7 @@ describe('buildRoutesFromDom', () => {
 
   it('should replace out of order routes', () => {
     const doc = parser.parseFromString(navDocSource);
-    const state: StackNavigationState<ParamListBase> = {
+    const state = createStackNavigationState({
       index: 0,
       key: 'key1',
       routeNames: ['route1'],
@@ -143,7 +142,7 @@ describe('buildRoutesFromDom', () => {
       ],
       stale: false,
       type: 'stack',
-    };
+    });
     const routes = buildRoutesFromDom(
       doc,
       state,
@@ -162,7 +161,7 @@ describe('buildRoutesFromDom', () => {
     // When the incoming dom contains the same order as state but adds new ones after,
     // leave the current one intact and add a new ones
     const doc = parser.parseFromString(navDocSourceThreeRoute);
-    const state: StackNavigationState<ParamListBase> = {
+    const state = createStackNavigationState({
       index: 0,
       key: 'key1',
       routeNames: ['route1'],
@@ -180,7 +179,7 @@ describe('buildRoutesFromDom', () => {
       ],
       stale: false,
       type: 'stack',
-    };
+    });
     const routes = buildRoutesFromDom(
       doc,
       state,
@@ -199,7 +198,7 @@ describe('buildRoutesFromDom', () => {
 
   it('should change presentation to modal', () => {
     const doc = parser.parseFromString(navDocSourceModal);
-    const state: StackNavigationState<ParamListBase> = {
+    const state = createStackNavigationState({
       index: 0,
       key: 'key1',
       routeNames: ['route1'],
@@ -222,7 +221,7 @@ describe('buildRoutesFromDom', () => {
       ],
       stale: false,
       type: 'stack',
-    };
+    });
     const routes = buildRoutesFromDom(
       doc,
       state,
@@ -241,7 +240,7 @@ describe('buildRoutesFromDom', () => {
 
   it('should change presentation to card', () => {
     const doc = parser.parseFromString(navDocSourceCard);
-    const state: StackNavigationState<ParamListBase> = {
+    const state = createStackNavigationState({
       index: 0,
       key: 'key1',
       routeNames: ['route1'],
@@ -264,7 +263,7 @@ describe('buildRoutesFromDom', () => {
       ],
       stale: false,
       type: 'stack',
-    };
+    });
     const routes = buildRoutesFromDom(
       doc,
       state,

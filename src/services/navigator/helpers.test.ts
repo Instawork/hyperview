@@ -8,6 +8,7 @@ import {
   buildParams,
   buildRequest,
   cleanHrefFragment,
+  expandNestedNavigate,
   findPath,
   getChildElements,
   getNavAction,
@@ -16,11 +17,13 @@ import {
   getSelectedNavRouteElement,
   getUrlFromHref,
   isNavigationElement,
+  isReactNavigation7,
   isUrlFragment,
   mergeDocument,
   removeStackRoute,
   validateUrl,
 } from './helpers';
+import { CommonActions } from '@react-navigation/native';
 import { DOMParser } from '@instawork/xmldom';
 import { NAV_ACTIONS } from 'hyperview/src/types';
 import type { NavigationState } from '@react-navigation/native';
@@ -417,6 +420,19 @@ describe('findPath', () => {
     it('should not find a path to `to_be_found`', () => {
       expect(path.length).toEqual(0);
     });
+  });
+});
+
+describe('expandNestedNavigate', () => {
+  it('detects the installed React Navigation 6 dependency', () => {
+    expect(isReactNavigation7).toBe(false);
+  });
+
+  it('preserves bare nested navigation under React Navigation 6', () => {
+    const state = StateSource as NavigationState;
+    const action = CommonActions.navigate('performance_2');
+
+    expect(expandNestedNavigate(state, action)).toBe(action);
   });
 });
 
