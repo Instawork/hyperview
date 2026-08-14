@@ -303,7 +303,13 @@ export default class HyperRef extends PureComponent<Props, State> {
       const behaviorAction = (
         behaviorElement.getAttribute(BEHAVIOR_ATTRIBUTES.ACTION) || ''
       ).toLowerCase();
-      return behaviorAction !== '' && behaviorAction !== 'amplitude';
+      const behaviorHref = behaviorElement.getAttribute(
+        BEHAVIOR_ATTRIBUTES.HREF,
+      );
+      return (
+        (behaviorAction !== '' && behaviorAction !== 'amplitude') ||
+        !!behaviorHref
+      );
     });
     const disabled =
       !elementHasAction && !elementHasHref && !hasActionablePressBehavior;
