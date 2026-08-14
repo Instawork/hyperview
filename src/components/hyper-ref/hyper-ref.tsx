@@ -156,11 +156,12 @@ export default class HyperRef extends PureComponent<Props, State> {
       return false;
     });
     onEventBehaviors.forEach(behaviorElement => {
+      const currentElement = this.getCurrentElement();
       const handler = Behaviors.createActionHandler(
         behaviorElement,
         this.props.onUpdate,
       );
-      handler(element);
+      handler(currentElement);
 
       Logging.info(
         Logging.deferredToString(() => {

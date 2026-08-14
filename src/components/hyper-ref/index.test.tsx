@@ -42,6 +42,42 @@ describe('HyperRef', () => {
       return container;
     };
 
+    const createSequencedContainer = (): Element => {
+      const doc = new DOMParser().parseFromString(
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <screen>
+              <body>
+                <form>
+                  <view id="container">
+                    <text-field id="field" name="field" hide="true" />
+                    <behavior
+                      action="set-value"
+                      trigger="on-event"
+                      event-name="test-event"
+                      target="field"
+                      new-value="on"
+                    />
+                    <behavior
+                      action="replace"
+                      trigger="on-event"
+                      event-name="test-event"
+                      target="container"
+                      href="/submit"
+                      verb="post"
+                    />
+                  </view>
+                </form>
+              </body>
+            </screen>
+          </doc>
+        `,
+        'text/xml',
+      );
+      const [container] = Array.from(doc.getElementsByTagName('view'));
+      return container;
+    };
+
     const createHyperRef = (element: Element, onUpdate: jest.Mock) =>
       new HyperRef({ element, onUpdate, options: {}, stylesheets });
 
@@ -82,6 +118,32 @@ describe('HyperRef', () => {
       hyperRef.onEventDispatch('test-event');
 
       expect(onUpdate).toHaveBeenCalledTimes(1);
+    });
+
+    test('resolves the current element between sequenced behaviors', () => {
+      const container = createSequencedContainer();
+      const [field] = Array.from(container.getElementsByTagName('text-field'));
+      const receivedElements: Element[] = [];
+      const onUpdate = jest.fn(
+        (
+          _href: string | null | undefined,
+          _action: string | null | undefined,
+          element: Element,
+        ) => {
+          receivedElements.push(element);
+          if (receivedElements.length === 1) {
+            shallowCloneToRoot(field);
+          }
+        },
+      );
+      const hyperRef = createHyperRef(container, onUpdate);
+
+      hyperRef.onEventDispatch('test-event');
+
+      expect(onUpdate).toHaveBeenCalledTimes(2);
+      expect(receivedElements[0].parentNode).toBeNull();
+      expect(receivedElements[1].parentNode).not.toBeNull();
+      expect(receivedElements[1]).not.toBe(receivedElements[0]);
     });
   });
 });
