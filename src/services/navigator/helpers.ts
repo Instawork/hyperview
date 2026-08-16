@@ -15,8 +15,11 @@ import type {
   RouteParams,
   RouteProps,
 } from 'hyperview/src/types';
+import type {
+  NavigationAction,
+  NavigationState,
+} from '@react-navigation/native';
 import { ANCHOR_ID_SEPARATOR } from './types';
-import type { NavigationState } from '@react-navigation/native';
 import { shallowCloneToRoot } from 'hyperview/src/services';
 
 /**
@@ -151,6 +154,84 @@ export const findPath = (
 };
 
 /**
+ * Find the key of the navigator that directly contains a route key
+ */
+export const findNavigatorKeyForRoute = (
+  state: NavigationState | undefined,
+  routeKey: string,
+): string | undefined => {
+  if (!state?.routes) {
+    return undefined;
+  }
+
+  if (state.routes.some(route => route.key === routeKey)) {
+    return state.key;
+  }
+
+  return state.routes.reduce<string | undefined>(
+    (navigatorKey, route) =>
+      navigatorKey ||
+      findNavigatorKeyForRoute(route.state as NavigationState, routeKey),
+    undefined,
+  );
+};
+
+/**
+ * Convert an RN6-style bare nested navigate into explicit RN7 nested params
+ * Uses mounted navigation state first, then an optional HXML path fallback
+ */
+export const expandNestedNavigate = <Action extends NavigationAction>(
+  state: NavigationState,
+  action: Action,
+  getFallbackPath?: (targetId: string) => string[],
+): Action => {
+  if (action.type !== 'NAVIGATE') {
+    return action;
+  }
+
+  const payload = action.payload as
+    | {
+        merge?: boolean;
+        name?: string;
+        params?: object;
+        pop?: boolean;
+      }
+    | undefined;
+  const targetId = payload?.name;
+
+  if (!targetId || state.routeNames.includes(targetId)) {
+    return action;
+  }
+
+  const statePath = findPath(state, targetId);
+  const [parentId, ...path] = statePath.length
+    ? statePath
+    : getFallbackPath?.(targetId) || [];
+
+  if (!parentId || path.length === 0 || !state.routeNames.includes(parentId)) {
+    return action;
+  }
+
+  const params = path.reduceRight<object | undefined>(
+    (childParams, screen) => ({
+      params: childParams,
+      screen,
+    }),
+    payload.params,
+  );
+
+  return ({
+    ...action,
+    payload: {
+      ...payload,
+      name: parentId,
+      params,
+      pop: payload.pop ?? true,
+    },
+  } as unknown) as Action;
+};
+
+/**
  * Continue up the hierarchy until a navigation is found which contains the target
  * If the target is not found, no navigation is returned
  * If no target is provided, the current navigation is returned
@@ -266,6 +347,41 @@ export const getNavigatorById = (
     return n.getAttribute(Types.KEY_ID) === id;
   });
   return navigators[0];
+};
+
+/**
+ * Build the route id path from a navigator to a target route in the HXML
+ */
+export const findPathFromDom = (
+  doc: Document | undefined,
+  navigatorId: string,
+  targetId: string,
+): string[] => {
+  const route = doc ? getRouteById(doc, targetId) : undefined;
+  const findPathToNavigator = (node: Node | null, path: string[]): string[] => {
+    if (!node || node.nodeType !== NODE_TYPE.ELEMENT_NODE) {
+      return [];
+    }
+
+    const element = node as Element;
+    if (
+      element.localName === LOCAL_NAME.NAVIGATOR &&
+      element.getAttribute(Types.KEY_ID) === navigatorId
+    ) {
+      return path;
+    }
+
+    const routeId =
+      element.localName === LOCAL_NAME.NAV_ROUTE
+        ? element.getAttribute(Types.KEY_ID)
+        : null;
+    return findPathToNavigator(
+      element.parentNode,
+      routeId ? [routeId, ...path] : path,
+    );
+  };
+
+  return route ? findPathToNavigator(route, []) : [];
 };
 
 /**

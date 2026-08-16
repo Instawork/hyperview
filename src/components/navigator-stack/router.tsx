@@ -3,6 +3,10 @@ import type {
   RouterConfigOptions,
 } from '@react-navigation/routers';
 import type { RouterRenameOptions, StackOptions } from './types';
+import {
+  expandNestedNavigate,
+  findPathFromDom,
+} from 'hyperview/src/services/navigator/helpers';
 import type { StackNavigationState } from '@react-navigation/native';
 import { StackRouter } from '@react-navigation/native';
 import { buildRoutesFromDom } from './helpers';
@@ -22,6 +26,20 @@ export const Router = (stackOptions: StackOptions) => {
         ...options,
         routeKeyChanges: [],
       });
+    },
+
+    getStateForAction(
+      state: StackNavigationState<ParamListBase>,
+      action: Parameters<typeof router.getStateForAction>[1],
+      options: RouterConfigOptions,
+    ) {
+      return router.getStateForAction(
+        state,
+        expandNestedNavigate(state, action, targetId =>
+          findPathFromDom(stackOptions.getDoc?.(), stackOptions.id, targetId),
+        ),
+        options,
+      );
     },
 
     getStateForRouteNamesChange(
@@ -51,6 +69,10 @@ const mutateState = (
     options.routeParamList,
     entrypointUrl,
   );
+
+  if (!routes.length) {
+    return state;
+  }
 
   return {
     ...state,

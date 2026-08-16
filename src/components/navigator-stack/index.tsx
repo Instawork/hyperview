@@ -1,11 +1,11 @@
 import * as CustomStackRouter from 'hyperview/src/components/navigator-stack/router';
 import * as React from 'react';
-import type { NavigationState, ParamListBase } from '@react-navigation/routers';
 import type { Props, StackOptions } from './types';
 import {
   StackActionHelpers,
   StackNavigationState,
   createNavigatorFactory,
+  useLocale,
   useNavigationBuilder,
 } from '@react-navigation/native';
 import {
@@ -13,16 +13,18 @@ import {
   StackNavigationOptions,
   StackView,
 } from '@react-navigation/stack';
-import type { EventMapBase } from '@react-navigation/native';
+import type { ParamListBase } from '@react-navigation/routers';
 import { useHvDocContext } from 'hyperview/src/elements/hv-doc';
 import { useHyperview } from 'hyperview/src/contexts/hyperview';
 
 const CustomStackNavigator = (props: Props) => {
   const { getSourceDoc } = useHvDocContext();
   const { entrypointUrl } = useHyperview();
+  const { direction } = useLocale();
 
   const {
     state,
+    describe,
     descriptors,
     navigation,
     NavigationContent,
@@ -44,7 +46,9 @@ const CustomStackNavigator = (props: Props) => {
   return (
     <NavigationContent>
       <StackView
+        describe={describe}
         descriptors={descriptors}
+        direction={direction}
         navigation={navigation}
         state={state}
       />
@@ -52,9 +56,4 @@ const CustomStackNavigator = (props: Props) => {
   );
 };
 
-export default createNavigatorFactory<
-  Readonly<NavigationState>,
-  StackNavigationOptions,
-  EventMapBase,
-  typeof CustomStackNavigator
->(CustomStackNavigator);
+export default createNavigatorFactory(CustomStackNavigator);

@@ -31,6 +31,8 @@ import { useElementCache } from 'hyperview/src/contexts/element-cache';
 import { useHyperview } from 'hyperview/src/contexts/hyperview';
 
 export default (props: Props) => {
+  // eslint-disable-next-line react/destructuring-assignment
+  const { onUrlChange } = props;
   // <HACK>
   // In addition to storing the document on the react state, we keep a reference to it.
   // When performing batched updates on the DOM, we need to ensure every
@@ -277,12 +279,16 @@ export default (props: Props) => {
     [reload],
   );
 
-  const updateUrl = useCallback((url: string) => {
-    setState(prev => ({
-      ...prev,
-      loadingUrl: url,
-    }));
-  }, []);
+  const updateUrl = useCallback(
+    (url: string) => {
+      onUrlChange?.(url);
+      setState(prev => ({
+        ...prev,
+        loadingUrl: url,
+      }));
+    },
+    [onUrlChange],
+  );
 
   const contextValue = useMemo(() => {
     onUpdateCallbacksRef.current = {

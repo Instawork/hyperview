@@ -40,17 +40,15 @@ export const getFirstChildTag = (
   if (!node || !node.childNodes) {
     return null;
   }
-  for (let i = 0; i < node.childNodes.length; i += 1) {
-    const child = node.childNodes[i] as Element;
-    if (
-      child.nodeType === NODE_TYPE.ELEMENT_NODE &&
-      child.localName === localName &&
-      child.namespaceURI === namespace
-    ) {
-      return child;
-    }
-  }
-  return null;
+
+  return (
+    Array.from(node.childNodes as NodeListOf<Element>).find(
+      child =>
+        child.nodeType === NODE_TYPE.ELEMENT_NODE &&
+        child.localName === localName &&
+        child.namespaceURI === namespace,
+    ) || null
+  );
 };
 
 export const getPreviousNodeOfType = (
