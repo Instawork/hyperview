@@ -297,6 +297,7 @@ export default class HyperRef extends PureComponent<Props, State> {
     const style = this.getStyle();
     const { accessibilityLabel, testID } = createTestProps(this.props.element);
     const { onLongPress, onPress, onPressIn, onPressOut } = pressHandlers;
+    const disabled = this.props.element.getAttribute('disabled') === 'true';
 
     // If element is a <text> nested under another <text>, simply add press events
     const isNestedUnderText =
@@ -311,6 +312,7 @@ export default class HyperRef extends PureComponent<Props, State> {
         <Text
           accessibilityLabel={accessibilityLabel}
           accessible={false}
+          disabled={disabled}
           onLongPress={onLongPress}
           // when no press handler set, we still need an empty handler for pressIn or pressOut
           // handlers to work
@@ -340,6 +342,7 @@ export default class HyperRef extends PureComponent<Props, State> {
         accessibilityLabel={accessibilityLabel}
         accessible={false}
         activeOpacity={1}
+        disabled={disabled}
         onLongPress={onLongPress}
         onPress={onPress}
         onPressIn={onPressIn}
