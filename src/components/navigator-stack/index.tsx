@@ -1,4 +1,5 @@
 import * as CustomStackRouter from 'hyperview/src/components/navigator-stack/router';
+import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as React from 'react';
 import type {
   CompatibleStackViewProps,
@@ -17,10 +18,6 @@ import {
   StackNavigationOptions,
   StackView,
 } from '@react-navigation/stack';
-import {
-  isReactNavigation7,
-  useCompatibleLocale,
-} from 'hyperview/src/services/navigator/helpers';
 import type { ParamListBase } from '@react-navigation/routers';
 import { useHvDocContext } from 'hyperview/src/elements/hv-doc';
 import { useHyperview } from 'hyperview/src/contexts/hyperview';
@@ -30,7 +27,7 @@ const CompatibleStackView = StackView as React.ComponentType<CompatibleStackView
 const CustomStackNavigator = (props: Props) => {
   const { getSourceDoc } = useHvDocContext();
   const { entrypointUrl } = useHyperview();
-  const { direction } = useCompatibleLocale();
+  const { direction } = NavigatorService.useCompatibleLocale();
 
   const builder = useNavigationBuilder<
     StackNavigationState<ParamListBase>,
@@ -52,9 +49,9 @@ const CustomStackNavigator = (props: Props) => {
   return (
     <NavigationContent>
       <CompatibleStackView
-        describe={isReactNavigation7 ? describe : undefined}
+        describe={NavigatorService.isReactNavigation7 ? describe : undefined}
         descriptors={descriptors}
-        direction={isReactNavigation7 ? direction : undefined}
+        direction={NavigatorService.isReactNavigation7 ? direction : undefined}
         navigation={navigation}
         state={state}
       />
