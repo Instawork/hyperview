@@ -1,0 +1,16 @@
+
+
+
+
+  <view
+    
+      xmlns="https://hyperview.org/hyperview"
+    
+    
+      style="button"
+    
+  >
+    
+    <text style="button-label">Replaced!</text>
+  </view>
+

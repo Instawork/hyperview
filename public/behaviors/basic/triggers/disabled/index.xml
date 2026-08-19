@@ -344,32 +344,7 @@
 </style>
 
         
-  <style id="flex" flex="1" />
-  <style
-    id="input"
-    backgroundColor="#FFFFFF"
-    borderBottomColor="#E1E1E1"
-    borderBottomWidth="1"
-    borderColor="#4E4D4D"
-    fontSize="16"
-    fontWeight="normal"
-    paddingBottom="8"
-    paddingTop="8">
-    <modifier pressed="true">
-    <style borderBottomColor="green"/>
-    </modifier>
-    <modifier focused="true">
-    <style borderBottomColor="#4778FF"/>
-    </modifier>
-  </style>
-  <style id="relative" position="relative" />
-  <style id="absolute" position="absolute" />
-  <style id="r-0" right="0" />
-  <style id="mx-24" marginHorizontal="24" />
-  <style id="py-8" paddingVertical="8" />
-  <style id="border-bottom" borderBottomWidth="1" borderBottomColor="lightgray" />
-  <style id="highlight" fontWeight="bold" color="blue" />
-
+        
       </styles>
       <body style="body">
         
@@ -399,198 +374,68 @@
 
       </view>
     
-    <text style="header-title">Contacts</text>
+    <text style="header-title">Disabled</text>
   </header>
 </safe-area:safe-area-view>
 
           
-  <form style="flex">
-    <list
-  id="contacts"
-  trigger="refresh"
-  action="replace"
-  href="?page=1&amp;template=_list"
-  target="contacts"
-  keyboard-dismiss-mode="on-drag"
-  style="flex"
-  xmlns="https://hyperview.org/hyperview"
->
+  <view scroll="true" style="main">
+    
   
-  <item key="search" id="top" sticky="true" style="relative mx-24">
-    <text-field
-      placeholder="Search a contact…"
-      placeholderTextColor="#8D9494"
-      name="search"
-      style="input"
-      debounce="200"
-      value=""
-    >
-      
-      
-      
-      
-      <behavior
-        trigger="change"
-        action="hide"
-        target="load-more"
-      />
-      <behavior
-        trigger="change"
-        action="scroll"
-        target="top"
-        xmlns:scroll="https://hyperview.org/hyperview-scroll"
-      />
-      <behavior
-        trigger="change"
-        action="replace"
-        target="contacts"
-        href="?template=_list"
-        show-during-load="loading-indicator"
-      />
-    </text-field>
-    <view id="loading-indicator" style="absolute r-0 py-8" hide="true">
-      <spinner />
-    </view>
-  </item>
-  <items xmlns="https://hyperview.org/hyperview">
-  
-    <item key="1f4b1f44-f08e-43d0-ba33-6f20f3a085d3" style="mx-24 py-8 border-bottom">
-      <text>Aaron Bergnaum</text>
-      <text>Mohamed90@hotmail.com</text>
-      <text>379-595-9889 x15813</text>
-    </item>
-  
-    <item key="f6c27224-731f-4597-b604-ef7254c84ffb" style="mx-24 py-8 border-bottom">
-      <text>Aaron Casper II</text>
-      <text>Pearlie_Ziemann30@hotmail.com</text>
-      <text>1-847-252-7014 x02854</text>
-    </item>
-  
-    <item key="7933161c-5969-4f22-b20d-5a325e43f40b" style="mx-24 py-8 border-bottom">
-      <text>Aaron Durgan</text>
-      <text>Leanna.Carroll@hotmail.com</text>
-      <text>1-471-710-5017 x803</text>
-    </item>
-  
-    <item key="149bd41d-4bdc-405a-898c-9cdee41cefc7" style="mx-24 py-8 border-bottom">
-      <text>Aaron Greenfelder</text>
-      <text>Mason73@gmail.com</text>
-      <text>686.405.8828 x163</text>
-    </item>
-  
-    <item key="33015599-e41c-4e09-8666-0f44bdb0812b" style="mx-24 py-8 border-bottom">
-      <text>Aaron Jast</text>
-      <text>Tiffany.Reichel@gmail.com</text>
-      <text>839-832-8070 x816</text>
-    </item>
-  
-    <item key="687c4b4b-52ea-4fe0-b560-af1c137c8f7a" style="mx-24 py-8 border-bottom">
-      <text>Aaron O'Hara</text>
-      <text>Jennings.DAmore@gmail.com</text>
-      <text>1-303-947-4753 x9826</text>
-    </item>
-  
-    <item key="78fb3c0a-5579-4965-a0ac-e4739bb24679" style="mx-24 py-8 border-bottom">
-      <text>Aaron Renner</text>
-      <text>Maude.Botsford48@gmail.com</text>
-      <text>997-406-8636</text>
-    </item>
-  
-    <item key="d68e41e1-2177-4cc3-826a-fa758d7189d3" style="mx-24 py-8 border-bottom">
-      <text>Aaron Schmitt Sr.</text>
-      <text>Kenyatta.Price69@yahoo.com</text>
-      <text>867.439.0078 x793</text>
-    </item>
-  
-    <item key="5c536982-30b8-46f7-b3ee-edd503d3b77b" style="mx-24 py-8 border-bottom">
-      <text>Aaron Shields</text>
-      <text>Jocelyn.Lemke@yahoo.com</text>
-      <text>(230) 731-7401</text>
-    </item>
-  
-    <item key="914d8350-f060-4774-b35f-1a4320991a10" style="mx-24 py-8 border-bottom">
-      <text>Aaron West</text>
-      <text>Burdette.Keeling30@gmail.com</text>
-      <text>872-776-4312</text>
-    </item>
-  
-    <item key="ca31fa34-0886-4548-9af7-15fe2693482d" style="mx-24 py-8 border-bottom">
-      <text>Aaron Wiza DVM</text>
-      <text>Jalyn.Walter@hotmail.com</text>
-      <text>739.443.4886</text>
-    </item>
-  
-    <item key="e5e80da2-ccfa-45ea-b207-49d366bcbff5" style="mx-24 py-8 border-bottom">
-      <text>Abel Beahan</text>
-      <text>Stephan84@hotmail.com</text>
-      <text>(286) 635-6791 x906</text>
-    </item>
-  
-    <item key="ce39a887-d272-4eaf-ac08-be190ce0484c" style="mx-24 py-8 border-bottom">
-      <text>Abel Boehm</text>
-      <text>Isadore94@gmail.com</text>
-      <text>1-632-728-9523 x32197</text>
-    </item>
-  
-    <item key="82f862e1-fc88-4e27-9d89-7abe6548795d" style="mx-24 py-8 border-bottom">
-      <text>Abel Brekke</text>
-      <text>Lilyan21@yahoo.com</text>
-      <text>1-459-689-3902 x87617</text>
-    </item>
-  
-    <item key="63ee56c8-72dc-4db6-9a73-671afa6ff6ac" style="mx-24 py-8 border-bottom">
-      <text>Abel Glover</text>
-      <text>Carole.Littel@gmail.com</text>
-      <text>505-963-2409</text>
-    </item>
-  
-    <item key="a9ae44ff-43f2-43b1-b6d2-3ebb06ec5d18" style="mx-24 py-8 border-bottom">
-      <text>Abel Hammes</text>
-      <text>Willow.Mueller@yahoo.com</text>
-      <text>1-621-974-6992 x826</text>
-    </item>
-  
-    <item key="8bb5af90-79c7-42c7-a9ca-1da9ca1b23ac" style="mx-24 py-8 border-bottom">
-      <text>Abel Konopelski</text>
-      <text>Lilly.Boyer@hotmail.com</text>
-      <text>1-801-468-4717 x779</text>
-    </item>
-  
-    <item key="a0d670a2-2479-4b68-82c2-3620ff885e8f" style="mx-24 py-8 border-bottom">
-      <text>Abel Konopelski DDS</text>
-      <text>Ruby_Schultz@yahoo.com</text>
-      <text>1-729-880-7267 x027</text>
-    </item>
-  
-    <item key="1c592d5f-af2f-4e22-997c-db105ba6b42c" style="mx-24 py-8 border-bottom">
-      <text>Abel Lemke</text>
-      <text>Elvis_Thiel@yahoo.com</text>
-      <text>705.516.9129 x217</text>
-    </item>
-  
-    <item key="530802d6-6bb7-4706-9db8-ec61dff205ab" style="mx-24 py-8 border-bottom">
-      <text>Abel O'Conner</text>
-      <text>Valentina.Franecki@yahoo.com</text>
-      <text>218.981.1622</text>
-    </item>
-  
-  
-    <item
-      key="load-more"
-      id="load-more"
-      trigger="visible"
-      action="replace"
-      style="py-8"
-      href="?page=2"
-    >
-      <spinner />
-    </item>
-  
-</items>
 
-</list>
 
-  </form>
+
+  
+    <text style="description">Pressing the enabled button will replace its content.</text>
+  
+
+
+  <view
+    
+    
+      style="button"
+    
+  >
+    
+      <behavior
+    action="replace"
+    href="/hyperview/public/behaviors/basic/triggers/disabled/button/replace_fragment.xml"
+    trigger="press"
+  />
+    
+    <text style="button-label">Enabled</text>
+  </view>
+
+
+
+  
+    <text style="description">The disabled button exposes its disabled state and does not respond to presses.</text>
+  
+
+
+  <view
+    
+      disabled="true"
+    
+      id="disabled-button"
+    
+      style="button button-disabled"
+    
+    
+  >
+    
+      <behavior
+    action="replace"
+    href="/hyperview/public/behaviors/basic/triggers/disabled/button/replace_fragment.xml"
+    trigger="press"
+  />
+    
+    <text style="button-label">Disabled</text>
+  </view>
+
+
+
+  </view>
 
         
       </body>
