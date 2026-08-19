@@ -1,12 +1,9 @@
+import * as NavigatorService from 'hyperview/src/services/navigator';
 import type {
   ParamListBase,
   RouterConfigOptions,
 } from '@react-navigation/routers';
 import type { RouterRenameOptions, StackOptions } from './types';
-import {
-  expandNestedNavigate,
-  findPathFromDom,
-} from 'hyperview/src/services/navigator/helpers';
 import type { StackNavigationState } from '@react-navigation/native';
 import { StackRouter } from '@react-navigation/native';
 import { buildRoutesFromDom } from './helpers';
@@ -37,8 +34,12 @@ export const Router = (
     ) {
       return router.getStateForAction(
         state,
-        expandNestedNavigate(state, action, targetId =>
-          findPathFromDom(stackOptions.getDoc?.(), stackOptions.id, targetId),
+        NavigatorService.expandNestedNavigate(state, action, targetId =>
+          NavigatorService.findPathFromDom(
+            stackOptions.getDoc?.(),
+            stackOptions.id,
+            targetId,
+          ),
         ),
         options,
       );
