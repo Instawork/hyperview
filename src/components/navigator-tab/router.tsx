@@ -10,7 +10,7 @@ import type { TabNavigationState } from '@react-navigation/native';
 import type { TabOptions } from './types';
 import { TabRouter } from '@react-navigation/native';
 
-export const Router = (options: TabOptions) => {
+export const Router = (options: TabOptions): ReturnType<typeof TabRouter> => {
   const router = TabRouter(options);
 
   return {

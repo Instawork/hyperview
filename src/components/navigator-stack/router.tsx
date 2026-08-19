@@ -14,7 +14,9 @@ import { buildRoutesFromDom } from './helpers';
 /**
  * Provides a custom stack router that allows us to set the initial route
  */
-export const Router = (stackOptions: StackOptions) => {
+export const Router = (
+  stackOptions: StackOptions,
+): ReturnType<typeof StackRouter> => {
   const router = StackRouter(stackOptions);
 
   return {
