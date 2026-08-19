@@ -1,3 +1,4 @@
+import * as NavigatorService from 'hyperview/src/services/navigator';
 import type {
   ParamListBase,
   RouterConfigOptions,
@@ -10,7 +11,9 @@ import { buildRoutesFromDom } from './helpers';
 /**
  * Provides a custom stack router that allows us to set the initial route
  */
-export const Router = (stackOptions: StackOptions) => {
+export const Router = (
+  stackOptions: StackOptions,
+): ReturnType<typeof StackRouter> => {
   const router = StackRouter(stackOptions);
 
   return {
@@ -22,6 +25,24 @@ export const Router = (stackOptions: StackOptions) => {
         ...options,
         routeKeyChanges: [],
       });
+    },
+
+    getStateForAction(
+      state: StackNavigationState<ParamListBase>,
+      action: Parameters<typeof router.getStateForAction>[1],
+      options: RouterConfigOptions,
+    ) {
+      return router.getStateForAction(
+        state,
+        NavigatorService.expandNestedNavigate(state, action, targetId =>
+          NavigatorService.findPathFromDom(
+            stackOptions.getDoc?.(),
+            stackOptions.id,
+            targetId,
+          ),
+        ),
+        options,
+      );
     },
 
     getStateForRouteNamesChange(
@@ -51,6 +72,10 @@ const mutateState = (
     options.routeParamList,
     entrypointUrl,
   );
+
+  if (!routes.length) {
+    return state;
+  }
 
   return {
     ...state,

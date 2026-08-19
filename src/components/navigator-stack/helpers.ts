@@ -1,5 +1,4 @@
-import * as NavigatorHelpers from 'hyperview/src/services/navigator/helpers';
-import { ID_CARD, ID_MODAL } from 'hyperview/src/services/navigator/types';
+import * as NavigatorService from 'hyperview/src/services/navigator';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { ParamListBase } from '@react-navigation/routers';
 import type { RouteProps } from 'hyperview/src/types';
@@ -13,10 +12,10 @@ export const buildRoutesFromDom = (
   entrypointUrl: string | undefined,
 ): RouteProps[] => {
   const element = doc
-    ? NavigatorHelpers.getNavigatorById(doc, navigatorId)
+    ? NavigatorService.getNavigatorById(doc, navigatorId)
     : null;
   const elementRoutes = element
-    ? NavigatorHelpers.getChildElements(element).filter(
+    ? NavigatorService.getChildElements(element).filter(
         e => e.localName === LOCAL_NAME.NAV_ROUTE,
       )
     : [];
@@ -25,7 +24,7 @@ export const buildRoutesFromDom = (
   const routeIds = state.routes.map((r: RouteProps) => r.params?.id);
   const routeHrefs = state.routes.map((r: RouteProps) => {
     return r.params?.url
-      ? NavigatorHelpers.getUrlFromHref(r.params.url, entrypointUrl)
+      ? NavigatorService.getUrlFromHref(r.params.url, entrypointUrl)
       : undefined;
   });
 
@@ -38,7 +37,7 @@ export const buildRoutesFromDom = (
     if (id) {
       const existingIndex = href
         ? routeHrefs.indexOf(
-            NavigatorHelpers.getUrlFromHref(href, entrypointUrl),
+            NavigatorService.getUrlFromHref(href, entrypointUrl),
           )
         : routeIds.indexOf(id);
       // Ensure each existing route is in the same order and hasn't been disrupted
@@ -49,10 +48,10 @@ export const buildRoutesFromDom = (
         existingIndex > -1 &&
         !sequenceBroken &&
         // Ensure the presentation matches for dynamic screens
-        (!NavigatorHelpers.isDynamicRoute(state.routes[existingIndex].name) ||
+        (!NavigatorService.isDynamicRoute(state.routes[existingIndex].name) ||
           (isModal
-            ? state.routes[existingIndex].name === ID_MODAL
-            : state.routes[existingIndex].name === ID_CARD))
+            ? state.routes[existingIndex].name === NavigatorService.ID_MODAL
+            : state.routes[existingIndex].name === NavigatorService.ID_CARD))
       ) {
         routes.push(state.routes[existingIndex]);
       } else {

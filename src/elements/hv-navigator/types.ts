@@ -1,6 +1,7 @@
 import type { HvComponentOnUpdate, RouteParams } from 'hyperview/src/types';
 import { FC } from 'react';
 import type { Props as HvRouteProps } from 'hyperview/src/elements/hv-route';
+import type { RouteProp } from '@react-navigation/native';
 
 /**
  * Flag to show the default navigator UIs
@@ -17,7 +18,7 @@ export const SHOW_DEFAULT_HEADER_UI = false;
 export type ParamTypes = Record<string, RouteParams>;
 
 export type ScreenParams = {
-  params: RouteParams;
+  params: RouteParams | undefined;
 };
 
 /**
@@ -51,4 +52,8 @@ export type TabScreenOptions = {
   headerShown: boolean;
   tabBarStyle: { display: 'flex' | 'none' | undefined };
   title: string | undefined;
+};
+
+export type ScreenOptionsProps = {
+  route: RouteProp<ParamTypes, string>;
 };

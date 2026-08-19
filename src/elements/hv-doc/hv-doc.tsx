@@ -31,6 +31,8 @@ import { useElementCache } from 'hyperview/src/contexts/element-cache';
 import { useHyperview } from 'hyperview/src/contexts/hyperview';
 
 export default (props: Props) => {
+  // eslint-disable-next-line react/destructuring-assignment
+  const { onUrlChange } = props;
   // <HACK>
   // In addition to storing the document on the react state, we keep a reference to it.
   // When performing batched updates on the DOM, we need to ensure every
@@ -47,6 +49,8 @@ export default (props: Props) => {
   // </HACK>
 
   const currentUrl = useRef<string | null | undefined>(null);
+  const activeLoadUrl = useRef<string | null>(null);
+  const pendingRouteUrl = useRef<string | null>(null);
 
   const [state, setState] = useState<DocState>({
     doc: undefined,
@@ -81,9 +85,12 @@ export default (props: Props) => {
   const parentDocState = useContext(Context);
 
   const loadUrl = useCallback(
-    async (url?: string) => {
+    async (url?: string, notifyUrlChange = false) => {
       // Updates the state and calls the error handler
       const handleError = (err: Error, u?: string | null) => {
+        if (notifyUrlChange) {
+          pendingRouteUrl.current = null;
+        }
         try {
           if (onError) {
             onError(err);
@@ -103,6 +110,11 @@ export default (props: Props) => {
         handleError(new HvDocError('No URL provided'), targetUrl);
         return;
       }
+      const fullUrl = UrlService.getUrlFromHref(targetUrl, entrypointUrl);
+      if (activeLoadUrl.current === fullUrl) {
+        return;
+      }
+      activeLoadUrl.current = fullUrl;
       const params = props.route?.params ?? {};
 
       try {
@@ -114,7 +126,6 @@ export default (props: Props) => {
           await later(delay);
         }
 
-        const fullUrl = UrlService.getUrlFromHref(targetUrl, entrypointUrl);
         const { doc, staleHeaderType } = await parser.loadDocument(fullUrl);
 
         const root = Helpers.getFirstChildTag(doc, LOCAL_NAME.DOC);
@@ -131,6 +142,7 @@ export default (props: Props) => {
 
           localDoc.current = document;
           localUrl.current = fullUrl;
+          currentUrl.current = fullUrl;
           const stylesheets = Stylesheets.createStylesheets(doc);
           setState(prev => ({
             ...prev,
@@ -141,6 +153,9 @@ export default (props: Props) => {
             styles: stylesheets,
             url: fullUrl,
           }));
+          if (notifyUrlChange) {
+            onUrlChange?.(fullUrl);
+          }
         } else {
           // Invalid document
           localDoc.current = undefined;
@@ -163,6 +178,7 @@ export default (props: Props) => {
     [
       entrypointUrl,
       onError,
+      onUrlChange,
       parser,
       props.route?.params,
       removeElement,
@@ -174,8 +190,28 @@ export default (props: Props) => {
   useEffect(() => {
     if (state.loadingUrl) {
       // Handle force reload
-      loadUrl(state.loadingUrl);
-    } else if (props.url) {
+      loadUrl(state.loadingUrl, true);
+      return;
+    }
+
+    activeLoadUrl.current = null;
+
+    if (pendingRouteUrl.current) {
+      const routeUrl = props.url
+        ? UrlService.getUrlFromHref(props.url, entrypointUrl)
+        : null;
+      const pendingUrl = UrlService.getUrlFromHref(
+        pendingRouteUrl.current,
+        entrypointUrl,
+      );
+      if (routeUrl === pendingUrl) {
+        pendingRouteUrl.current = null;
+        currentUrl.current = routeUrl;
+      }
+      return;
+    }
+
+    if (props.url) {
       if (
         !currentUrl.current &&
         !props.hasElement &&
@@ -278,6 +314,7 @@ export default (props: Props) => {
   );
 
   const updateUrl = useCallback((url: string) => {
+    pendingRouteUrl.current = url;
     setState(prev => ({
       ...prev,
       loadingUrl: url,

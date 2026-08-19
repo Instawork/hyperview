@@ -1,3 +1,4 @@
+import type * as ReactNavigation from '@react-navigation/native';
 import type {
   NavigationProps,
   RouteParams,
@@ -38,4 +39,19 @@ export type NavigateParams = {
  */
 export type RouteMap = {
   [key: string]: Element;
+};
+
+export type NavigateActionPayload = {
+  merge?: boolean;
+  name?: string;
+  params?: object;
+  pop?: boolean;
+};
+
+export type Locale = {
+  direction: 'ltr' | 'rtl';
+};
+
+export type ReactNavigationWithLocale = typeof ReactNavigation & {
+  useLocale?: () => Locale;
 };

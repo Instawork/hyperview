@@ -3,6 +3,7 @@ import {
   BottomTabBarProps,
   BottomTabNavigationOptions,
 } from '@react-navigation/bottom-tabs';
+import type { TabRouterOptions } from '@react-navigation/native';
 
 export type Props = {
   id: string;
@@ -11,4 +12,9 @@ export type Props = {
   children: React.ReactNode;
   screenOptions: BottomTabNavigationOptions;
   tabBar?: ((props: BottomTabBarProps) => React.ReactNode) | undefined;
+};
+
+export type TabOptions = TabRouterOptions & {
+  getDoc?: () => Document | undefined;
+  id: string;
 };

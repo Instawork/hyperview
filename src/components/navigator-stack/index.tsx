@@ -1,7 +1,12 @@
 import * as CustomStackRouter from 'hyperview/src/components/navigator-stack/router';
+import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as React from 'react';
-import type { NavigationState, ParamListBase } from '@react-navigation/routers';
-import type { Props, StackOptions } from './types';
+import type {
+  CompatibleStackViewProps,
+  NavigationBuilderWithDescribe,
+  Props,
+  StackOptions,
+} from './types';
 import {
   StackActionHelpers,
   StackNavigationState,
@@ -13,20 +18,18 @@ import {
   StackNavigationOptions,
   StackView,
 } from '@react-navigation/stack';
-import type { EventMapBase } from '@react-navigation/native';
+import type { ParamListBase } from '@react-navigation/routers';
 import { useHvDocContext } from 'hyperview/src/elements/hv-doc';
 import { useHyperview } from 'hyperview/src/contexts/hyperview';
+
+const CompatibleStackView = StackView as React.ComponentType<CompatibleStackViewProps>;
 
 const CustomStackNavigator = (props: Props) => {
   const { getSourceDoc } = useHvDocContext();
   const { entrypointUrl } = useHyperview();
+  const { direction } = NavigatorService.useCompatibleLocale();
 
-  const {
-    state,
-    descriptors,
-    navigation,
-    NavigationContent,
-  } = useNavigationBuilder<
+  const builder = useNavigationBuilder<
     StackNavigationState<ParamListBase>,
     StackOptions,
     StackActionHelpers<ParamListBase>,
@@ -40,11 +43,15 @@ const CustomStackNavigator = (props: Props) => {
     initialRouteName: props.initialRouteName,
     screenOptions: props.screenOptions,
   });
+  const { state, descriptors, navigation, NavigationContent } = builder;
+  const { describe } = (builder as unknown) as NavigationBuilderWithDescribe;
 
   return (
     <NavigationContent>
-      <StackView
+      <CompatibleStackView
+        describe={NavigatorService.isReactNavigation7 ? describe : undefined}
         descriptors={descriptors}
+        direction={NavigatorService.isReactNavigation7 ? direction : undefined}
         navigation={navigation}
         state={state}
       />
@@ -52,9 +59,4 @@ const CustomStackNavigator = (props: Props) => {
   );
 };
 
-export default createNavigatorFactory<
-  Readonly<NavigationState>,
-  StackNavigationOptions,
-  EventMapBase,
-  typeof CustomStackNavigator
->(CustomStackNavigator);
+export default createNavigatorFactory(CustomStackNavigator);
