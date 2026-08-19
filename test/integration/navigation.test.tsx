@@ -8,7 +8,7 @@ import {
   screen,
   waitFor,
 } from '@testing-library/react-native';
-import Hyperview from './hyperview';
+import Hyperview from 'hyperview/src/hyperview';
 import { Pressable } from 'react-native';
 import React from 'react';
 import { fetchFactory } from 'hyperview/test/helpers/fetch';
