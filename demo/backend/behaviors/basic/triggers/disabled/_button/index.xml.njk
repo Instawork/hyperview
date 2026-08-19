@@ -1,0 +1,20 @@
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{{ description('Pressing the enabled button will replace its content.') }}
+{% call button('Enabled') -%}
+  <behavior
+    action="replace"
+    href="/hyperview/public/behaviors/basic/triggers/disabled/button/replace_fragment.xml"
+    trigger="press"
+  />
+{%- endcall %}
+
+{{ description('The disabled button exposes its disabled state and does not respond to presses.') }}
+{% call button('Disabled', attributes={disabled:"true", id:"disabled-button", style:"button button-disabled"}) -%}
+  <behavior
+    action="replace"
+    href="/hyperview/public/behaviors/basic/triggers/disabled/button/replace_fragment.xml"
+    trigger="press"
+  />
+{%- endcall %}
