@@ -59,6 +59,7 @@ A `<view>` element can only appear anywhere within a `<screen>` element.
 - [`shows-scroll-indicator`](#shows-scroll-indicator)
 - [`id`](#id)
 - [`hide`](#hide)
+- [`disabled`](#disabled)
 - [`avoid-keyboard`](#avoid-keyboard)
 - [`sticky`](#sticky)
 - [`keyboard-dismiss-mode`](#keyboard-dismiss-mode)
@@ -143,6 +144,14 @@ A global attribute uniquely identifying the element in the whole document.
 | **false** (default), true | No       |
 
 If `hide="true"`, the element will not be rendered on screen. If the element or any of the element's children have a behavior that triggers on "load" or "visible", those behaviors will not trigger while the element is hidden.
+
+#### `disabled`
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| **false** (default), true | No       |
+
+If `disabled="true"`, press behaviors on the element will not respond to user interaction. The element's native disabled state is exposed to UI automation frameworks.
 
 #### `avoid-keyboard`
 

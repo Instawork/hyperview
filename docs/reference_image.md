@@ -35,6 +35,7 @@ An `<image>` element can appear anywhere within a `<screen>` element (including 
 - [`style`](#style)
 - [`id`](#id)
 - [`hide`](#hide)
+- [`disabled`](#disabled)
 
 #### Behavior attributes
 
@@ -78,3 +79,11 @@ A global attribute uniquely identifying the element in the whole document.
 | **false** (default), true | No       |
 
 If `hide="true"`, the element will not be rendered on screen. If the element or any of the element's children have a behavior that triggers on "load" or "visible", those behaviors will not trigger while the element is hidden.
+
+#### `disabled`
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| **false** (default), true | No       |
+
+If `disabled="true"`, press behaviors on the element will not respond to user interaction. The element's native disabled state is exposed to UI automation frameworks.
