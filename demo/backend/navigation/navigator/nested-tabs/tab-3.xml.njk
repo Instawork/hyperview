@@ -1,0 +1,58 @@
+---
+permalink: "/navigation/navigator/nested-tabs/tab-3.xml"
+hv_title: "Nested Tabs - Tab 3"
+hv_button_behavior: "back"
+---
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+{% extends 'templates/base.xml.njk' %}
+
+{% block styles %}
+  {% include './_styles.xml.njk' %}
+{% endblock %}
+
+{% block container %}
+  <view style="top-tabs">
+    <view
+      style="top-tab top-tab-selected"
+    >
+      <text style="top-tab-label top-tab-label-selected">Tab 3</text>
+    </view>
+    <view
+      style="top-tab"
+      href-style="top-tab-link"
+      action="navigate"
+      href="#tab-4"
+    >
+      <text style="top-tab-label">Tab 4</text>
+    </view>
+  </view>
+  <view scroll="true">
+    {{ description('This is the content for tab 3.') }}
+  </view>
+  <view id="Footer" style="footer">
+    <view style="footer-row">
+      <view
+        style="bottom-tab"
+        href-style="bottom-tab"
+        action="navigate"
+        href="#tab-1-2-route"
+      >
+        <image
+          source="/hyperview/public/navigation/navigator/nested-tabs/heart2.png"
+          style="bottom-tab-icon"
+        />
+        <text style="bottom-tab-label">Tabs 1-2</text>
+      </view>
+      <view
+        style="bottom-tab bottom-tab-selected"
+      >
+        <image
+          source="/hyperview/public/navigation/navigator/nested-tabs/list2.png"
+          style="bottom-tab-icon bottom-tab-selected"
+        />
+        <text style="bottom-tab-label bottom-tab-label-selected">Tabs 3-4</text>
+      </view>
+    </view>
+  </view>
+{% endblock %}
