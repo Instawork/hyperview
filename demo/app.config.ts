@@ -1,16 +1,26 @@
 export default {
+  plugins: ['./plugins/withFmtXcode26Fix'],
   android: {
     adaptiveIcon: {
-      backgroundColor: '#ffffff',
-      foregroundImage: './assets/adaptive-icon.png',
+      backgroundColor: '#000000',
+      foregroundImage: './assets/icon.png',
     },
+    package: 'org.hyperview.demo',
+    usesCleartextTraffic: true,
   },
   assetBundlePatterns: ['**/*'],
   extra: {
-    baseUrl: process.env.BASE_URL || 'http://0.0.0.0:8085',
+    baseUrl: process.env.BASE_URL || 'http://127.0.0.1:8085',
   },
   icon: './assets/icon.png',
   ios: {
+    bundleIdentifier: 'org.hyperview.demo',
+    infoPlist: {
+      CFBundleDisplayName: 'Hyperview',
+      NSAppTransportSecurity: {
+        NSAllowsLocalNetworking: true,
+      },
+    },
     supportsTablet: true,
   },
   name: 'demo',

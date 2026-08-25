@@ -27,10 +27,12 @@ npx expo install \
   @react-native-community/datetimepicker \
   @react-native-picker/picker \
   expo-constants \
+  expo-dev-client \
   expo-linking \
   react-native-gesture-handler \
   react-native-maps \
   react-native-reanimated \
+  react-native-worklets \
   react-native-safe-area-context \
   react-native-screens \
   react-native-web \
@@ -94,6 +96,7 @@ rm demo/app.json
 mv demo-old/.eleventy* demo
 mv demo-old/.gitignore demo
 mv demo-old/app.config.ts demo
+mv demo-old/plugins demo
 mv demo-old/App.tsx demo
 mv demo-old/assets/* demo/assets
 mv demo-old/babel.config.js demo
