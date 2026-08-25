@@ -44,5 +44,6 @@ This configuration sets up the necessary terminal windows:
 - The sync and server processes must be running for the demo to work
 - iOS is the preferred platform for testing
 - Use Android configuration only when specifically needed. Android requires setting port forwarding (adb reverse tcp:8085 tcp:8085)
+- The demo is an Expo development build, not Expo Go. First `yarn ios` / `yarn android` compiles native code (several minutes). Uninstall Expo Go if Metro opens it instead. Physical devices: see the root README.
 - Each window will open in a new terminal window
 - Wait for the sync and server processes to fully start before the mobile app will work
