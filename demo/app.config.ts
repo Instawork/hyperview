@@ -23,7 +23,7 @@ export default {
     },
     supportsTablet: true,
   },
-  name: 'demo',
+  name: 'Hyperview',
   newArchEnabled: true,
   orientation: 'portrait',
   scheme: 'hyperview',
