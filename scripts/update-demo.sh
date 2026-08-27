@@ -96,7 +96,6 @@ rm demo/app.json
 mv demo-old/.eleventy* demo
 mv demo-old/.gitignore demo
 mv demo-old/app.config.ts demo
-mv demo-old/plugins demo
 mv demo-old/App.tsx demo
 mv demo-old/assets/* demo/assets
 mv demo-old/babel.config.js demo

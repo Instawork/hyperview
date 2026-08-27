@@ -1,5 +1,4 @@
 export default {
-  plugins: ['./plugins/withFmtXcode26Fix'],
   android: {
     adaptiveIcon: {
       backgroundColor: '#000000',

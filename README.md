@@ -117,10 +117,10 @@ BASE_URL="http://X.X.X.X:8085" yarn android --device
 > [!NOTE]
 > Replace `X.X.X.X` with the IP of your machine. This is needed in order for your physical device to be able to request the example XML files from your development machine.
 
-This compiles Hyperview Demo onto the device (first run takes a few minutes) and starts Metro. Metro displays a QR code in the terminal.
+This compiles Hyperview onto the device (first run takes a few minutes) and starts Metro. Metro displays a QR code in the terminal.
 
-- On your iOS device, open the Camera app and point it at the QR code in the terminal. The Camera app should show an "Open in Hyperview Demo" notification. Tap this notification.
-- On your Android device, open Hyperview Demo and type `http://X.X.X.X:8081` in the development launcher. Google Camera will not open the QR code.
+- On your iOS device, open the Camera app and point it at the QR code in the terminal. The Camera app should show an "Open in Hyperview" notification. Tap this notification.
+- On your Android device, open Hyperview and type `http://X.X.X.X:8081` in the development launcher. Google Camera will not open the QR code.
 
 ## Developing Hyperview Core Features
 
