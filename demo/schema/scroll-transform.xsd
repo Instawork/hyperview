@@ -1,0 +1,51 @@
+<xs:schema
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    attributeFormDefault="qualified"
+    elementFormDefault="qualified"
+    targetNamespace="https://hyperview.org/scroll-transform"
+    xmlns:scroll-transform="https://hyperview.org/scroll-transform"
+    xmlns:hv="https://hyperview.org/hyperview"
+>
+    <xs:import
+        namespace="https://hyperview.org/hyperview"
+        schemaLocation="hyperview.xsd"
+    />
+    <xs:simpleType name="scroll-range">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\[-?[0-9]+,\s?-?[0-9]+\]" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="attr-range">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\[-?[0-9]\.?[0-9]*,\s?-?[0-9]\.?[0-9]*\]" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="container">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="scroll-transform:transform" minOccurs="0" maxOccurs="unbounded" />
+                <xs:any minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+            <xs:attribute name="style" type="hv:styleList" form="unqualified" />
+            <xs:attribute name="transformOrigin" type="xs:string" form="unqualified" />
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="transform">
+        <xs:complexType>
+            <xs:attribute name="context-key" type="xs:token" use="required" />
+            <xs:attribute name="style-attr" type="xs:token" />
+            <xs:attribute name="transform-attr" type="xs:token" />
+            <xs:attribute name="axis">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="horizontal" />
+                        <xs:enumeration value="vertical" />
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="duration" type="xs:nonNegativeInteger" />
+            <xs:attribute name="scroll-range" type="scroll-transform:scroll-range" />
+            <xs:attribute name="attr-range" type="scroll-transform:attr-range" />
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
