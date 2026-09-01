@@ -15,6 +15,10 @@ import type {
   NavigationProps,
   ScreenState,
 } from 'hyperview/src/types';
+import {
+  NavigationContainerRefContext,
+  useIsFocused,
+} from '@react-navigation/native';
 import React, {
   PureComponent,
   useCallback,
@@ -26,7 +30,6 @@ import React, {
 import HvNavigator from 'hyperview/src/elements/hv-navigator';
 import HvScreen from 'hyperview/src/elements/hv-screen';
 import { LOCAL_NAME } from 'hyperview/src/types';
-import { NavigationContainerRefContext } from '@react-navigation/native';
 import { useElementCache } from 'hyperview/src/contexts/element-cache';
 import { useHyperview } from 'hyperview/src/contexts/hyperview';
 
@@ -175,6 +178,27 @@ const getNestedNavigator = (
   return undefined;
 };
 
+const BackBehaviorGuard = (props: Types.BackBehaviorGuardProps) => {
+  const isFocused = useIsFocused();
+  NavigatorService.useCompatiblePreventRemove(
+    isFocused && props.preventRemove,
+    props.onPreventRemove,
+  );
+  return <>{props.children}</>;
+};
+
+const getVisibleBackBehaviors = (elements: Element[]): Element[] =>
+  elements.filter(el => {
+    let node: Node | null = el;
+    while (node && node.nodeType !== 9) {
+      if ((node as Element).getAttribute?.('hide') === 'true') {
+        return false;
+      }
+      node = (node as Element).parentNode;
+    }
+    return true;
+  });
+
 /**
  * Functional component wrapper around HvRouteInner
  * NOTE: The reason for this approach is to allow accessing
@@ -269,38 +293,47 @@ function HvRouteFC(props: Types.Props) {
     });
   }, [entrypointUrl, getDoc, id, nav, onRouteFocus, props.route, setDoc]);
 
-  const handleBeforeRemove = useCallback(
-    (event: { preventDefault: () => void }) => {
-      // Check for elements registered to interrupt back action via a trigger of BACK
-      const elements: Element[] = (get && get()) || [];
-      // Filter to only elements that are not hidden (or whose ancestors are not hidden).
-      const visibleElements: Element[] = elements.filter(el => {
-        let node: Node | null = el;
-        while (node && node.nodeType !== 9) {
-          if ((node as Element).getAttribute?.('hide') === 'true') {
-            return false;
-          }
-          node = (node as Element).parentNode;
-        }
-        return true;
-      });
+  // Check for elements registered to interrupt back action via a trigger of BACK
+  const elements: Element[] = (get && get()) || [];
+  // Filter to only elements that are not hidden (or whose ancestors are not hidden).
+  const visibleElements = getVisibleBackBehaviors(elements);
+  const handlePreventRemove = useCallback(
+    ({
+      data: { action },
+    }: Parameters<Types.BackBehaviorGuardProps['onPreventRemove']>[0]) => {
+      const currentVisibleElements = getVisibleBackBehaviors(
+        (get && get()) || [],
+      );
       if (
-        visibleElements.length > 0 &&
-        onUpdateRef.current &&
-        isFocusedRef.current
+        currentVisibleElements.length > 0 &&
+        isFocusedRef.current &&
+        onUpdateRef.current
       ) {
-        event.preventDefault();
-        visibleElements.forEach(behaviorElement => {
+        currentVisibleElements.forEach(behaviorElement => {
           const href = behaviorElement.getAttribute('href');
-          const action = behaviorElement.getAttribute('action');
-          onUpdateRef.current?.(href, action, behaviorElement, {
+          const behaviorAction = behaviorElement.getAttribute('action');
+          onUpdateRef.current?.(href, behaviorAction, behaviorElement, {
             behaviorElement,
             showIndicatorId: behaviorElement.getAttribute('show-during-load'),
             targetId: behaviorElement.getAttribute('target'),
           });
         });
-      } else {
-        // Perform cleanup of the associated route (retrieved from parent document state)
+        return;
+      }
+      NavigatorService.removeStackRoute(
+        getDoc?.(),
+        routeUrl,
+        entrypointUrl,
+        setDoc,
+      );
+      nav.dispatch(action);
+    },
+    [entrypointUrl, get, getDoc, nav, routeUrl, setDoc],
+  );
+
+  const handleBeforeRemove = useCallback(
+    (event: ListenerEvent) => {
+      if (!event.defaultPrevented) {
         NavigatorService.removeStackRoute(
           getDoc?.(),
           routeUrl,
@@ -309,7 +342,7 @@ function HvRouteFC(props: Types.Props) {
         );
       }
     },
-    [entrypointUrl, get, getDoc, routeUrl, setDoc],
+    [entrypointUrl, getDoc, routeUrl, setDoc],
   );
 
   const handleState = useCallback(
@@ -380,21 +413,33 @@ function HvRouteFC(props: Types.Props) {
           onUpdateCallbacks,
           reload,
           setScreenState,
-        }) => (
-          <HvRouteInner
-            componentRegistry={componentRegistry}
-            element={element}
-            elementErrorComponent={elementErrorComponent}
-            getDoc={localGetDoc}
-            getScreenState={getScreenState}
-            onUpdate={stateOnUpdate}
-            onUpdateCallbacks={onUpdateCallbacks}
-            reload={reload}
-            route={props.route}
-            setScreenState={setScreenState}
-            url={url}
-          />
-        )}
+        }) => {
+          const routeContent = (
+            <HvRouteInner
+              componentRegistry={componentRegistry}
+              element={element}
+              elementErrorComponent={elementErrorComponent}
+              getDoc={localGetDoc}
+              getScreenState={getScreenState}
+              onUpdate={stateOnUpdate}
+              onUpdateCallbacks={onUpdateCallbacks}
+              reload={reload}
+              route={props.route}
+              setScreenState={setScreenState}
+              url={url}
+            />
+          );
+          return props.route ? (
+            <BackBehaviorGuard
+              onPreventRemove={handlePreventRemove}
+              preventRemove={visibleElements.length > 0}
+            >
+              {routeContent}
+            </BackBehaviorGuard>
+          ) : (
+            routeContent
+          );
+        }}
       </HvDocContext>
     </HvDoc>
   );

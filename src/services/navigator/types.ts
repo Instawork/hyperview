@@ -52,6 +52,18 @@ export type Locale = {
   direction: 'ltr' | 'rtl';
 };
 
+export type UsePreventRemove = (
+  preventRemove: boolean,
+  callback: (options: {
+    data: { action: ReactNavigation.NavigationAction };
+  }) => void,
+) => void;
+
+type ReactNavigation6PreventRemove = {
+  [key in 'UNSTABLE_usePreventRemove']?: UsePreventRemove;
+};
+
 export type ReactNavigationWithLocale = typeof ReactNavigation & {
   useLocale?: () => Locale;
-};
+  usePreventRemove?: UsePreventRemove;
+} & ReactNavigation6PreventRemove;

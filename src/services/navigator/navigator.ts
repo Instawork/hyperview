@@ -43,7 +43,7 @@ export class Navigator implements NavigationProvider {
 
     if (
       action === NAV_ACTIONS.BACK &&
-      sourceIndex &&
+      sourceIndex >= 0 &&
       sourceIndex < state.index
     ) {
       // Back request from a non-focused route
@@ -82,29 +82,60 @@ export class Navigator implements NavigationProvider {
   }
 
   /**
+   * Determine if the route is absent from the navigation state
+   */
+  isRouteUnowned = (): boolean => {
+    const { navigation, rootNavigation, route } = this.props;
+    if (navigation?.isFocused()) {
+      return false;
+    }
+    const rootState = rootNavigation?.getRootState();
+    if (!route?.key || !rootState) {
+      return false;
+    }
+    const ownerKey = Helpers.findNavigatorKeyForRoute(rootState, route.key);
+    return typeof ownerKey !== 'string';
+  };
+
+  /**
    * Resolve the navigator which owns the route.
    */
-  getActiveNavigation = (): NavigationProps | undefined => {
-    const { navigation, rootNavigation, route } = this.props;
-    const rootState = rootNavigation?.getRootState();
-
-    if (
-      !navigation ||
-      !route?.key ||
-      !rootState ||
-      Helpers.findNavigatorKeyForRoute(rootState, route.key)
-    ) {
+  getActiveNavigation = (action: NavAction): NavigationProps | undefined => {
+    const { navigation, rootNavigation } = this.props;
+    if (!this.isRouteUnowned()) {
       return navigation;
     }
-
-    return navigation.getParent() || navigation;
+    if (action === NAV_ACTIONS.BACK) {
+      return undefined;
+    }
+    // A detached route can have a detached parent, and dispatching there goes
+    // nowhere, so only continue from the parent while it is still mounted.
+    const parent = navigation?.getParent();
+    if (
+      Helpers.isNavigatorMounted(
+        rootNavigation?.getRootState(),
+        parent?.getState().key,
+      )
+    ) {
+      return parent;
+    }
+    return rootNavigation as NavigationProps;
   };
 
   /**
    * Prepare and send the request
    */
   sendRequest = (action: NavAction, routeParams?: RouteParams) => {
-    const activeNavigation = this.getActiveNavigation();
+    const routeIsUnowned = this.isRouteUnowned();
+    const routeKey = this.props.route?.key;
+    const routeWasRemoved =
+      routeKey &&
+      this.props.navigation &&
+      typeof Helpers.findNavigatorKeyForRoute(
+        this.props.navigation.getState(),
+        routeKey,
+      ) !== 'string';
+    const activeNavigation = this.getActiveNavigation(action);
     const [navAction, navigation, routeId, params] = Helpers.buildRequest(
       activeNavigation,
       action,
@@ -132,12 +163,28 @@ export class Navigator implements NavigationProvider {
       case NAV_ACTIONS.NAVIGATE:
       case NAV_ACTIONS.NEW:
         if (routeId) {
+          const navigationState = navigation.getState();
+          const currentRoute = navigationState.routes[navigationState.index];
+          if (
+            navAction === NAV_ACTIONS.NEW &&
+            routeIsUnowned &&
+            routeWasRemoved &&
+            Helpers.isModalRouteName(currentRoute?.name)
+          ) {
+            navigation.dispatch({
+              ...StackActions.replace(routeId, params),
+              target: navigationState.key,
+            });
+            break;
+          }
+          // Unwind only when the route belongs to the target navigator
+          const pop = !routeIsUnowned;
           navigation.dispatch({
             ...CommonActions.navigate(routeId, params),
             payload: {
               name: routeId,
               params,
-              pop: true,
+              pop,
             },
           });
         }

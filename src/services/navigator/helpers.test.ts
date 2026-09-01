@@ -428,10 +428,50 @@ describe('expandNestedNavigate', () => {
     expect(isReactNavigation7).toBe(false);
   });
 
-  it('preserves bare nested navigation under React Navigation 6', () => {
+  it('leaves a bare nested navigate unchanged under React Navigation 6', () => {
     const state = StateSource as NavigationState;
     const action = CommonActions.navigate('performance_2');
 
+    expect(expandNestedNavigate(state, action)).toBe(action);
+  });
+
+  it('leaves a navigate to a route of the current navigator untouched', () => {
+    const state = StateSource as NavigationState;
+    const action = CommonActions.navigate(state.routeNames[0]);
+
+    expect(expandNestedNavigate(state, action)).toBe(action);
+  });
+
+  it('leaves the action bare when expanding would unwind the stack', () => {
+    const state = ({
+      index: 1,
+      key: 'stack-root',
+      routeNames: ['tabs-route', 'card'],
+      routes: [
+        {
+          key: 'tabs-route-key',
+          name: 'tabs-route',
+          state: {
+            index: 0,
+            key: 'tabs',
+            routeNames: ['shifts-route', 'messages-route'],
+            routes: [
+              { key: 'shifts-key', name: 'shifts-route' },
+              { key: 'messages-key', name: 'messages-route' },
+            ],
+            stale: false,
+            type: 'tab',
+          },
+        },
+        { key: 'card-key', name: 'card' },
+      ],
+      stale: false,
+      type: 'stack',
+    } as unknown) as NavigationState;
+    const action = CommonActions.navigate('messages-route');
+
+    // React Navigation 6 pops to an existing route regardless of `pop`, so
+    // expanding here would discard `card`.
     expect(expandNestedNavigate(state, action)).toBe(action);
   });
 });
@@ -674,7 +714,10 @@ describe('buildRequest', () => {
         const params = {
           url: 'url',
           // New actions are always modal
-          ...(action === NAV_ACTIONS.NEW && { isModal: true }),
+          ...(action === NAV_ACTIONS.NEW && {
+            isModal: true,
+            needsSubStack: true,
+          }),
         };
         it('should ignore object without params', () => {
           expect(buildRequest(undefined, action, undefined)).toEqual([
@@ -706,10 +749,47 @@ describe('buildRequest', () => {
       ]);
     });
   });
+  describe('new', () => {
+    it('should present a new modal outside the sub-stack it was opened from', () => {
+      const root = ({
+        getParent: () => undefined,
+        getState: () => ({
+          index: 1,
+          routes: [{ name: 'home' }, { name: `${ID_MODAL}-first` }],
+        }),
+      } as unknown) as NonNullable<Types.Props['navigation']>;
+      const modalSubStack = ({
+        getParent: () => root,
+        getState: () => ({ index: 0, routes: [{ name: 'modal-screen' }] }),
+      } as unknown) as NonNullable<Types.Props['navigation']>;
+
+      const [, navigation] = buildRequest(modalSubStack, NAV_ACTIONS.NEW, {
+        url: 'url',
+      });
+
+      expect(navigation).toBe(root);
+    });
+
+    it('should present a new modal on the current navigator outside a modal', () => {
+      const root = ({
+        getParent: () => undefined,
+        getState: () => ({
+          index: 1,
+          routes: [{ name: 'home' }, { name: ID_CARD }],
+        }),
+      } as unknown) as NonNullable<Types.Props['navigation']>;
+
+      const [, navigation] = buildRequest(root, NAV_ACTIONS.NEW, {
+        url: 'url',
+      });
+
+      expect(navigation).toBe(root);
+    });
+  });
+
   // TODO buildRequest tests
   // - invalid navigator
   // - invalid path
-  // - success
 });
 
 describe('mergeDocuments', () => {
