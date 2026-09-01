@@ -47,6 +47,7 @@ yarn add \
 yarn add --exact \
   @react-navigation/bottom-tabs@6.5.7 \
   @react-navigation/native@6.1.6 \
+  @react-navigation/native-stack@6.11.0 \
   @react-navigation/stack@6.3.16
 
 # Make Hyperview symlinkable

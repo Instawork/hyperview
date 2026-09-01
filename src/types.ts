@@ -258,7 +258,7 @@ export type UpdateAction = typeof UPDATE_ACTIONS[keyof typeof UPDATE_ACTIONS];
 
 export type ListenerEvent = {
   data: { state: NavigationState | undefined } | undefined;
-  preventDefault: () => void;
+  defaultPrevented?: boolean;
 };
 
 type ListenerCallback = (event: ListenerEvent) => void;
@@ -380,6 +380,8 @@ export type Props = {
   behaviors?: HvBehavior[];
   components?: HvComponent[];
   elementErrorComponent?: ComponentType<ElementErrorComponentProps>;
+  enableModalDismissGesture?: boolean;
+  enableNativeRoutes?: boolean;
   entrypointUrl: string;
   errorScreen?: ComponentType<ErrorScreenProps>;
   experimentalFeatures?: ExperimentalFeatures;

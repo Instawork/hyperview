@@ -40,6 +40,7 @@ More importantly, the client is designed to be incorporated into an existing Rea
 - @react-native-picker/picker >= 2.9.0
 - @react-navigation/bottom-tabs >= 6.5.7
 - @react-navigation/native >= 6.1.6
+- @react-navigation/native-stack >= 6.11.0
 - @react-navigation/stack >= 6.3.16
 - @types/react >= 18.3.12
 - react >= 18.3.1

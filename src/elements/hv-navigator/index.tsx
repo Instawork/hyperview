@@ -17,10 +17,6 @@ import {
   EventTriggerError,
 } from 'hyperview/src/errors';
 import {
-  CardStyleInterpolators,
-  StackNavigationOptions,
-} from '@react-navigation/stack';
-import {
   Props,
   SHOW_DEFAULT_FOOTER_UI,
   SHOW_DEFAULT_HEADER_UI,
@@ -31,7 +27,10 @@ import {
 } from './types';
 import React, { useCallback, useEffect, useRef } from 'react';
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
+import { CardStyleInterpolators } from '@react-navigation/stack';
 import { HvDocContext } from 'hyperview/src/elements/hv-doc';
+import type { NativeStackNavigationOptions } from '@react-navigation/native-stack';
+import type { NavigationOptions } from 'hyperview/src/components/navigator-stack/types';
 import NavigatorStack from 'hyperview/src/components/navigator-stack';
 import NavigatorTab from 'hyperview/src/components/navigator-tab';
 import { Platform } from 'react-native';
@@ -41,11 +40,26 @@ import { useHyperview } from 'hyperview/src/contexts/hyperview';
 export const Stack = NavigatorStack();
 export const BottomTab = NavigatorTab();
 
+export const getStackPresentation = (
+  isModalPresentation: boolean,
+  modalDismissGestureEnabled: boolean,
+): NativeStackNavigationOptions['presentation'] => {
+  if (!isModalPresentation) {
+    return 'card';
+  }
+  return modalDismissGestureEnabled ? 'modal' : 'fullScreenModal';
+};
+
 export default function HvNavigator(props: Props) {
   // eslint-disable-next-line react/destructuring-assignment
   const { element, onUpdate, params, routeComponent } = props;
   const behaviorElements = useRef<Element[]>([]);
-  const { navigationComponents } = useHyperview();
+  const {
+    enableModalDismissGesture = false,
+    enableNativeRoutes = false,
+    entrypointUrl,
+    navigationComponents,
+  } = useHyperview();
   const prevProps = useRef<Element | undefined>(undefined);
 
   const onEventDispatch = useCallback(
@@ -122,30 +136,33 @@ export default function HvNavigator(props: Props) {
   /**
    * Logic to determine the nav route id
    */
-  const getId = useCallback((p: RouteParams | undefined) => {
-    if (!p) {
-      throw new NavigatorService.HvNavigatorError('No params found for route');
-    }
-    if (p.id) {
-      if (NavigatorService.isDynamicRoute(p.id)) {
-        // Dynamic routes use their url as id
-        return p.url || p.id;
+  const getId = useCallback(
+    (p: RouteParams | undefined) => {
+      if (!p) {
+        throw new NavigatorService.HvNavigatorError(
+          'No params found for route',
+        );
       }
-      return p.id;
-    }
-    return p.url || undefined;
-  }, []);
+      if (p.id && !NavigatorService.isDynamicRoute(p.id)) {
+        return p.id;
+      }
+      return p.url
+        ? NavigatorService.getUrlFromHref(p.url, entrypointUrl)
+        : p.id;
+    },
+    [entrypointUrl],
+  );
 
   /**
    * Encapsulated options for the stack screenOptions
    */
   const stackScreenOptions = useCallback(
     ({ route }: ScreenOptionsProps): StackScreenOptions => ({
-      headerMode: 'screen',
+      ...(!enableNativeRoutes && { headerMode: 'screen' as const }),
       headerShown: SHOW_DEFAULT_HEADER_UI,
       title: getId(route.params),
     }),
-    [getId],
+    [enableNativeRoutes, getId],
   );
 
   /**
@@ -175,8 +192,10 @@ export default function HvNavigator(props: Props) {
       routeId?: string | undefined,
       isModal = false,
     ): React.ReactElement => {
+      const dynamicInitialParams =
+        enableNativeRoutes && needsSubStack ? { needsSubStack: true } : {};
       const initialParams = NavigatorService.isDynamicRoute(id)
-        ? {}
+        ? dynamicInitialParams
         : { id, isModal, needsSubStack, routeId, url: href };
       if (type === NAVIGATOR_TYPE.TAB) {
         return (
@@ -189,14 +208,51 @@ export default function HvNavigator(props: Props) {
         );
       }
       if (type === NAVIGATOR_TYPE.STACK) {
-        const animation = isFirstScreen ? 'none' : 'default';
-        const gestureEnabled = Platform.OS === 'ios' ? !needsSubStack : false;
-        let cardStyleInterpolator;
-        if (needsSubStack) {
-          cardStyleInterpolator =
-            Platform.OS === 'android'
-              ? CardStyleInterpolators.forBottomSheetAndroid
-              : CardStyleInterpolators.forVerticalIOS;
+        const isModalPresentation = needsSubStack;
+        const modalDismissGestureEnabled =
+          enableNativeRoutes &&
+          isModalPresentation &&
+          Platform.OS === 'ios' &&
+          enableModalDismissGesture;
+        const gestureEnabled =
+          Platform.OS === 'ios'
+            ? !isModalPresentation || modalDismissGestureEnabled
+            : false;
+        let options: NavigationOptions;
+        if (!enableNativeRoutes) {
+          let cardStyleInterpolator;
+          if (isModalPresentation) {
+            cardStyleInterpolator =
+              Platform.OS === 'android'
+                ? CardStyleInterpolators.forBottomSheetAndroid
+                : CardStyleInterpolators.forVerticalIOS;
+          }
+          options = {
+            animation: isFirstScreen ? 'none' : 'default',
+            animationEnabled: !isFirstScreen,
+            cardStyleInterpolator,
+            gestureEnabled,
+            presentation: isModalPresentation
+              ? NavigatorService.ID_MODAL
+              : NavigatorService.ID_CARD,
+          } as NavigationOptions;
+        } else {
+          const presentation = getStackPresentation(
+            isModalPresentation,
+            modalDismissGestureEnabled,
+          );
+          let animation: NativeStackNavigationOptions['animation'] =
+            Platform.OS === 'ios' ? 'default' : 'slide_from_right';
+          if (isFirstScreen) {
+            animation = 'none';
+          } else if (isModalPresentation && Platform.OS === 'android') {
+            animation = 'slide_from_bottom';
+          }
+          options = {
+            animation,
+            gestureEnabled,
+            presentation,
+          } as NavigationOptions;
         }
         return (
           <Stack.Screen
@@ -205,17 +261,7 @@ export default function HvNavigator(props: Props) {
             getId={({ params: p }: ScreenParams) => getId(p)}
             initialParams={initialParams}
             name={id}
-            options={
-              {
-                animation,
-                animationEnabled: !isFirstScreen,
-                cardStyleInterpolator,
-                gestureEnabled,
-                presentation: needsSubStack
-                  ? NavigatorService.ID_MODAL
-                  : NavigatorService.ID_CARD,
-              } as StackNavigationOptions
-            }
+            options={options}
           />
         );
       }
@@ -223,7 +269,7 @@ export default function HvNavigator(props: Props) {
         `No navigator found for type '${type}'`,
       );
     },
-    [getId, routeComponent],
+    [enableModalDismissGesture, enableNativeRoutes, getId, routeComponent],
   );
 
   /**

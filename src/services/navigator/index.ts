@@ -19,6 +19,7 @@ export {
   setSelected,
   updateRouteUrlFromState,
   useCompatibleLocale,
+  useCompatiblePreventRemove,
 } from './helpers';
 export { ANCHOR_ID_SEPARATOR, ID_CARD, ID_MODAL, KEY_MODAL } from './types';
 export type { Locale } from './types';

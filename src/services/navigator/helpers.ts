@@ -30,6 +30,10 @@ export const isReactNavigation7 = navigationWithLocale.useLocale !== undefined;
 export const useCompatibleLocale =
   navigationWithLocale.useLocale ?? (() => ({ direction: 'ltr' as const }));
 
+export const useCompatiblePreventRemove =
+  navigationWithLocale.usePreventRemove ??
+  navigationWithLocale.UNSTABLE_usePreventRemove;
+
 /**
  * Card and modal routes are not defined in the document
  */
@@ -185,6 +189,26 @@ export const findNavigatorKeyForRoute = (
 };
 
 /**
+ * Determine whether a navigator is still present in the navigation state
+ */
+export const isNavigatorMounted = (
+  state: NavigationState | undefined,
+  navigatorKey: string | undefined,
+): boolean => {
+  if (!state?.routes || !navigatorKey) {
+    return false;
+  }
+
+  if (state.key === navigatorKey) {
+    return true;
+  }
+
+  return state.routes.some(route =>
+    isNavigatorMounted(route.state as NavigationState, navigatorKey),
+  );
+};
+
+/**
  * Convert a Hyperview-style bare nested navigate into explicit RN7 nested params
  * Uses mounted navigation state first, then an optional HXML path fallback
  */
@@ -213,6 +237,12 @@ export const expandNestedNavigate = <Action extends NavigationAction>(
     return action;
   }
 
+  // Retargeting a parent below the top of a stack must preserve the screens
+  // above it while delivering the action to the nested navigator.
+  const parentIndex = state.routes.findIndex(route => route.name === parentId);
+  const unwinds =
+    state.type === 'stack' && parentIndex > -1 && parentIndex < state.index;
+
   const params = path.reduceRight<object | undefined>(
     (childParams, screen) => ({
       params: childParams,
@@ -227,7 +257,7 @@ export const expandNestedNavigate = <Action extends NavigationAction>(
       ...payload,
       name: parentId,
       params,
-      pop: payload.pop ?? true,
+      pop: unwinds ? false : payload.pop ?? true,
     },
   } as Action;
 };
@@ -468,6 +498,29 @@ const buildCloseRequest = (
 };
 
 /**
+ * Resolve the navigator which presents a new modal, skipping the sub-stack of
+ * the modal it was opened from
+ */
+const getModalHostNavigator = (
+  navigation?: NavigationProps,
+): NavigationProps | undefined => {
+  let current = navigation;
+  while (current) {
+    const parent = current.getParent();
+    if (!parent) {
+      return current;
+    }
+    const parentState = parent.getState();
+    const focused = parentState.routes[parentState.index];
+    if (!focused || !isModalRouteName(focused.name)) {
+      return current;
+    }
+    current = parent;
+  }
+  return navigation;
+};
+
+/**
  * Build the request structure including finding the navigation,
  * building params, and determining screen id
  */
@@ -499,13 +552,18 @@ export const buildRequest = (
 
   const [navigation, path] = getNavigatorAndPath(
     routeParams.targetId || '',
-    nav,
+    navAction === NAV_ACTIONS.NEW && !routeParams.targetId
+      ? getModalHostNavigator(nav)
+      : nav,
   );
 
   const cleanedParams: RouteParams = {
     ...routeParams,
     // New actions are always modal
-    ...(action === NAV_ACTIONS.NEW && { isModal: true }),
+    ...(action === NAV_ACTIONS.NEW && {
+      isModal: true,
+      needsSubStack: true,
+    }),
   };
 
   if (cleanedParams.url && isUrlFragment(cleanedParams.url)) {

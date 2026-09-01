@@ -17,6 +17,8 @@ function Screen({ url }) {
 ```
 
 - `entrypointUrl` is the URL for the screen. `Hyperview` will make a `GET` request to fetch the URL. The response should be an HXML doc, that will be parsed and rendered on-screen.
+- `enableNativeRoutes` enables native-stack navigation on iOS and Android. It defaults to `false` and is always disabled on web.
 - `fetch` is the fetch method used to make requests in the screen. Since it is injected, the app can modify the method. This is commonly done to add headers for authentication, like an API header or cookie.
+- `enableModalDismissGesture` enables swipe-down dismissal for native modal routes on iOS and uses the native `modal` presentation instead of `fullScreenModal`. It defaults to `false` and has no effect when native routes are disabled or on Android.
 
 To see more examples of `Hyperview` features, check out the [demo app code](https://github.com/Instawork/hyperview/blob/2bd2cce6c381d9bb83983024fb7dc42045ad4261/demo/App.tsx#L33-L43).

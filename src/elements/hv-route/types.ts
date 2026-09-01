@@ -1,4 +1,5 @@
 import * as Components from 'hyperview/src/services/components';
+import type { ComponentType, ReactNode } from 'react';
 import type {
   ElementErrorComponentProps,
   HvComponentOnUpdate,
@@ -7,7 +8,7 @@ import type {
   RouteProps,
   ScreenState,
 } from 'hyperview/src/types';
-import type { ComponentType } from 'react';
+import type { NavigationAction } from '@react-navigation/native';
 
 /**
  * The props used by inner components of hv-route
@@ -33,3 +34,12 @@ export type Props = {
   navigation?: NavigationProps;
   route?: RouteProps;
 };
+
+/**
+ * The props used to guard route removal when back behaviors are registered
+ */
+export type BackBehaviorGuardProps = Readonly<{
+  children: ReactNode;
+  onPreventRemove: (options: { data: { action: NavigationAction } }) => void;
+  preventRemove: boolean;
+}>;
