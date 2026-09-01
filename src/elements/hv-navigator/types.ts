@@ -40,7 +40,7 @@ export type NavigatorProps = {
  * Options used for a stack navigator's screenOptions
  */
 export type StackScreenOptions = {
-  headerMode: 'float' | 'screen' | undefined;
+  headerMode?: 'float' | 'screen';
   headerShown: boolean;
   title: string | undefined;
 };

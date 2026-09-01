@@ -32,11 +32,11 @@ import {
   UpdateMissingBehaviorError,
   UpdateMissingTargetError,
 } from 'hyperview/src/errors';
+import { Linking, Platform } from 'react-native';
 import React, { PureComponent } from 'react';
 import { ElementCacheProvider } from 'hyperview/src/contexts/element-cache';
 import HvRoute from 'hyperview/src/elements/hv-route';
 import { HyperviewContext } from 'hyperview/src/contexts/hyperview';
-import { Linking } from 'react-native';
 
 /**
  * Provides routing to the correct path based on the state passed in
@@ -587,6 +587,9 @@ export default class Hyperview extends PureComponent<Types.Props> {
         value={{
           componentRegistry: this.componentRegistry,
           elementErrorComponent: this.props.elementErrorComponent,
+          enableModalDismissGesture: this.props.enableModalDismissGesture,
+          enableNativeRoutes:
+            Platform.OS !== 'web' && this.props.enableNativeRoutes === true,
           entrypointUrl: this.props.entrypointUrl,
           errorScreen: this.props.errorScreen,
           experimentalFeatures: this.props.experimentalFeatures,

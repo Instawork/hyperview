@@ -1,6 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react-native';
 import Hyperview from './hyperview';
 import { NavigationContainer } from '@react-navigation/native';
+import { Platform } from 'react-native';
 import React from 'react';
 import { fetchFactory } from 'hyperview/test/helpers/fetch';
 
@@ -11,6 +12,40 @@ describe('Hyperview', () => {
   });
 
   const formatDate = jest.fn();
+
+  describe('enableNativeRoutes', () => {
+    test.each([
+      [undefined, false],
+      [false, false],
+      [true, true],
+    ])('resolves %s to %s on native platforms', (value, expected) => {
+      const hyperview = new Hyperview({
+        enableNativeRoutes: value,
+        entrypointUrl: 'http://myapp.com',
+        fetch: jest.fn(),
+        formatDate,
+      });
+
+      expect(hyperview.render().props.value.enableNativeRoutes).toBe(expected);
+    });
+
+    it('is always disabled on web', () => {
+      const platform = Platform.OS;
+      Object.defineProperty(Platform, 'OS', { value: 'web' });
+      const hyperview = new Hyperview({
+        enableNativeRoutes: true,
+        entrypointUrl: 'http://myapp.com',
+        fetch: jest.fn(),
+        formatDate,
+      });
+
+      try {
+        expect(hyperview.render().props.value.enableNativeRoutes).toBe(false);
+      } finally {
+        Object.defineProperty(Platform, 'OS', { value: platform });
+      }
+    });
+  });
 
   /**
    * Test for a view which has two behaviors which originally caused a bug.
