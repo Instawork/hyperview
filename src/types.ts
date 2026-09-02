@@ -365,9 +365,12 @@ type BottomTabBarProps = RNBottomTabBarProps & {
   id: string;
 };
 
-type BottomTabBarComponent = (
+type BottomTabBarComponent = ((
   props: BottomTabBarProps,
-) => React.JSX.Element | null;
+) => React.JSX.Element | null) & {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  TabView?: ComponentType<any>;
+};
 
 export type NavigationComponents = {
   BottomTabBar?: BottomTabBarComponent;

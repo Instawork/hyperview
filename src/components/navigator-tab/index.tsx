@@ -14,9 +14,12 @@ import {
 } from '@react-navigation/native';
 import type { ParamListBase } from '@react-navigation/routers';
 import { useHvDocContext } from 'hyperview/src/elements/hv-doc';
+import { useHyperview } from 'hyperview/src/contexts/hyperview';
 
 const CustomTabNavigator = (props: Props) => {
   const { getSourceDoc } = useHvDocContext();
+  const { navigationComponents } = useHyperview();
+  const TabView = navigationComponents?.BottomTabBar?.TabView || BottomTabView;
   const {
     state,
     descriptors,
@@ -49,7 +52,7 @@ const CustomTabNavigator = (props: Props) => {
 
   return (
     <NavigationContent>
-      <BottomTabView
+      <TabView
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...props}
         descriptors={descriptors}
