@@ -25,6 +25,9 @@
         <xs:any minOccurs="0" maxOccurs="unbounded" />
       </xs:sequence>
       <xs:attribute name="route" type="xs:string" use="required" />
+      <xs:attribute name="label" type="xs:string" />
+      <xs:attribute name="icon" type="xs:string" />
+      <xs:attribute name="badge" type="xs:string" />
       <xs:attribute name="style" type="hv:styleList" form="unqualified" />
       <xs:attribute name="key" type="hv:KEY" form="unqualified" />
     </xs:complexType>
