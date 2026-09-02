@@ -102,7 +102,7 @@ const Map = (props: HvComponentProps) => {
       showsCompass={false}
       showsIndoors={false}
       showsMyLocationButton={false}
-      showsPointsOfInterest
+      showsPointsOfInterests
       showsScale={false}
       showsTraffic={false}
       showsUserLocation={false}
