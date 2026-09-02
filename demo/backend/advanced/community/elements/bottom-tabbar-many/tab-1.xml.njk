@@ -1,0 +1,13 @@
+---
+permalink: "/advanced/community/elements/bottom-tabbar-many/tab-1.xml"
+hv_title: "Many Tabs - Home"
+hv_button_behavior: "back"
+tab_id: 1
+---
+{% extends 'templates/base.xml.njk' %}
+
+{% block body_attrs %}scroll="true"{% endblock %}
+
+{% block body %}
+  {% include 'templates/many-tab-body.xml.njk' %}
+{% endblock %}

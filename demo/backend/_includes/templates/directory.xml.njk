@@ -1,0 +1,70 @@
+{#
+  Directory of screen links as views, not <list>/<section-list>.
+  Tab-route bodies must be the UIScrollView native tabs observe; a nested
+  VirtualizedList would steal scrolling and block minimize-on-scroll.
+#}
+<view id="directory-list">
+  {% if hv_section_list_tag %}
+    {% for section_tag in hv_section_list_tag.split(',') %}
+      <view style="list-header item-first">
+        <text style="list-header-text">{{ section_tag | sectionTitle }}</text>
+      </view>
+      {% for screen in collections[section_tag]|sortCollection %}
+        {% set item_style = "item" %}
+        {% if loop.last %}
+          {% set item_style = item_style ~ " item-last" %}
+        {% endif %}
+        <view
+          href="/hyperview/public{{ screen.data.permalink }}"
+          key="{{ screen.data.permalink }}"
+          style="{{ item_style }}"
+          {% if screen.data.hv_open_modal == "true" %}
+            action="new"
+            show-during-load="loading-screen-modal"
+          {% else %}
+            action="push"
+            show-during-load="loading-screen-pushed"
+          {% endif %}
+        >
+          <view style="item-left">
+            <text style="item-label">{{ screen.data.hv_title }}</text>
+          </view>
+          <view style="item-chevron">
+            {% include 'icons/chevron-right.svg' %}
+          </view>
+        </view>
+      {% endfor %}
+    {% endfor %}
+  {% else %}
+    {% for tag in hv_list_tag.split(',') %}
+      {% for screen in collections[tag]|sortCollection %}
+        {% set item_style = "item" %}
+        {% if loop.first %}
+          {% set item_style = item_style ~ " item-first" %}
+        {% endif %}
+        {% if loop.last %}
+          {% set item_style = item_style ~ " item-last" %}
+        {% endif %}
+        <view
+          href="/hyperview/public/{{ screen.data.permalink }}"
+          key="{{ screen.data.permalink }}"
+          style="{{ item_style }}"
+          {% if screen.data.hv_open_modal == "true" %}
+            action="new"
+            show-during-load="loading-screen-modal"
+          {% else %}
+            action="push"
+            show-during-load="loading-screen-pushed"
+          {% endif %}
+        >
+          <view style="item-left">
+            <text style="item-label">{{ screen.data.hv_title }}</text>
+          </view>
+          <view style="item-chevron">
+            {% include 'icons/chevron-right.svg' %}
+          </view>
+        </view>
+      {% endfor %}
+    {% endfor %}
+  {% endif %}
+</view>

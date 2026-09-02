@@ -7,23 +7,25 @@ hv_button_behavior: "back"
 {% from 'macros/button/index.xml.njk' import button %}
 {% extends 'templates/base.xml.njk' %}
 
-{% block container %}
-  <view scroll="true">
-    {{ description('This is the content for tab 2.') }}
-    {% call button("Notify tab 2", attributes={id:"notify-tab-2"}) -%}
-      <behavior action="hide" target="add-notification" />
-      <behavior action="show" target="remove-notification" />
-      <behavior action="replace" target="bottom-tab-bar" href="/hyperview/public/advanced/community/elements/bottom-tabbar/tab-bar-notify-tab-2.xml" />
-    {%- endcall %}
-    {% call button("Unnotify tab 2", attributes={id:"unnotify-tab-2", hide:"true"}) -%}
-      <behavior action="reload" href="#" />
-    {%- endcall %}
-    {% call button("Reload tab 1", attributes={id:"reload-tab-1"}) -%}
-      <behavior
-        action="dispatch-event"
-        event-name="advanced/community/elements/bottom-tabbar/tab-1/reload"
-      />
-    {%- endcall %}
+{% block body_attrs %}scroll="true"{% endblock %}
+
+{% block body %}
+  <view sticky="true">
+    {% include 'templates/header.xml.njk' %}
   </view>
+  {{ description('This is the content for tab 2.') }}
+  {% call button("Notify tab 2", attributes={id:"notify-tab-2"}) -%}
+    <behavior action="replace" target="bottom-tab-bar" href="/hyperview/public/advanced/community/elements/bottom-tabbar/tab-bar-notify-tab-2.xml" />
+  {%- endcall %}
+  {% call button("Unnotify tab 2", attributes={id:"unnotify-tab-2"}) -%}
+    <behavior action="reload" href="#" />
+  {%- endcall %}
+  {% call button("Reload tab 1", attributes={id:"reload-tab-1"}) -%}
+    <behavior
+      action="dispatch-event"
+      event-name="advanced/community/elements/bottom-tabbar/tab-1/reload"
+    />
+  {%- endcall %}
+  {% include './_scroll-copy.xml.njk' %}
   {% include './tab-bar.xml.njk' %}
 {% endblock %}

@@ -2,14 +2,18 @@
 {% from 'macros/tabbar-bottom-tab/index.xml.njk' import tabbar_bottom_tab %}
 {% from 'macros/tabbar-bottom/index.xml.njk' import tabbar_bottom %}
 
-{% block container %}
-  <view style="tab-route-content">
-    {% block tab_route_content %}{% endblock %}
+{% block body_attrs %}scroll="true"{% endblock %}
+
+{% block body %}
+  <view sticky="true">
+    {% include 'templates/header.xml.njk' %}
+    {% block tab_route_tabs %}{% endblock %}
   </view>
+  {% block tab_route_content %}{% endblock %}
   {% call tabbar_bottom("tabs-navigator") -%}
-    {{ tabbar_bottom_tab("ui", "UI", hv_tab_id == "ui") }}
-    {{ tabbar_bottom_tab("behaviors", "Behaviors", hv_tab_id == "behaviors") }}
-    {{ tabbar_bottom_tab("navigation", "Navigation", hv_tab_id == "navigation") }}
-    {{ tabbar_bottom_tab("advanced", "Advanced", hv_tab_id == "advanced") }}
+    {{ tabbar_bottom_tab("ui", "UI", hv_tab_id == "ui", "/hyperview/public/assets/tab-icons/ui.png") }}
+    {{ tabbar_bottom_tab("behaviors", "Behaviors", hv_tab_id == "behaviors", "/hyperview/public/assets/tab-icons/behaviors.png") }}
+    {{ tabbar_bottom_tab("navigation", "Navigation", hv_tab_id == "navigation", "/hyperview/public/assets/tab-icons/navigation.png") }}
+    {{ tabbar_bottom_tab("advanced", "Advanced", hv_tab_id == "advanced", "/hyperview/public/assets/tab-icons/advanced.png") }}
   {%- endcall %}
 {% endblock %}

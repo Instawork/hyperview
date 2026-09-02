@@ -3,11 +3,14 @@
 {% from 'macros/tabbar-top/index.xml.njk' import tabbar_top %}
 {% from 'macros/tabbar-top-tab/index.xml.njk' import tabbar_top_tab %}
 
-{% block tab_route_content %}
+{% block tab_route_tabs %}
   {{ tabbar_top([
   {id: "tab-basic", label: "Basic", selected: true},
   {id: "tab-advanced", label: "Advanced"}
   ]) }}
+{% endblock %}
+
+{% block tab_route_content %}
   {% call tabbar_top_tab("tab-basic", true) -%}
     {% include './basic/content.xml.njk' %}
   {%- endcall -%}
