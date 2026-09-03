@@ -48,7 +48,7 @@
     "@babel/eslint-parser": "7.13.4",
     "@babel/preset-env": "^7.28.0",
     "@expo/webpack-config": "^19.0.1",
-    "@faker-js/faker": "^9.9.0",
+    "@faker-js/faker": "^10.5.0",
     "@prettier/plugin-xml": "0.13.0",
     "@tsconfig/react-native": "^3.0.6",
     "@types/jest": "^30.0.0",
