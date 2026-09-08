@@ -1,0 +1,34 @@
+<navigation:bottom-tab-bar
+  xmlns="https://hyperview.org/hyperview"
+  xmlns:navigation="https://hyperview.org/navigation"
+  navigation:navigator="custom-many-tabs-navigator"
+  id="bottom-tab-bar"
+>
+  <safe-area:safe-area-view
+    xmlns:safe-area="https://hyperview.org/safe-area"
+    key="tabbar-bottom"
+    style="tabbar-bottom"
+    safe-area:mode="padding"
+    safe-area:insets="[&quot;right&quot;,&quot;bottom&quot;,&quot;left&quot;]"
+  >
+    {% for tab in manyTabs %}
+      <navigation:bottom-tab-bar-item
+        key="custom-many-tabs-tab-{{ tab.id }}"
+        navigation:route="custom-many-tabs-tab-{{ tab.id }}"
+        navigation:label="{{ tab.label }}"
+        navigation:icon="/hyperview/public/assets/tab-icons/{{ tab.icon }}.png"
+        style="tabbar-bottom-tab"
+      >
+        <view style="tabbar-bottom-tab-content">
+          <view style="tabbar-bottom-tab-icon-selected">
+            {% include 'icons/' + tab.icon + '-selected.svg' %}
+          </view>
+          <view style="tabbar-bottom-tab-icon">
+            {% include 'icons/' + tab.icon + '.svg' %}
+          </view>
+          <text style="tabbar-bottom-tabbar-top-label">{{ tab.label }}</text>
+        </view>
+      </navigation:bottom-tab-bar-item>
+    {% endfor %}
+  </safe-area:safe-area-view>
+</navigation:bottom-tab-bar>

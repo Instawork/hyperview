@@ -1,0 +1,21 @@
+---
+permalink: "/advanced/community/elements/bottom-tabbar-many/index.xml"
+tags: "Advanced/Community/Elements"
+hv_title: "Bottom Tab Bar (10 tabs)"
+hv_button_behavior: "back"
+---
+{# 10-tab navigator to evaluate native overflow / More / minimize #}
+<doc xmlns="https://hyperview.org/hyperview">
+  <navigator id="custom-many-stack" type="stack">
+    <nav-route id="custom-many-tabs-route">
+      <navigator id="custom-many-tabs-navigator" type="tab">
+        {% for tab in manyTabs %}
+          <nav-route
+            id="custom-many-tabs-tab-{{ tab.id }}"
+            href="/hyperview/public/advanced/community/elements/bottom-tabbar-many/tab-{{ tab.id }}.xml"
+          />
+        {% endfor %}
+      </navigator>
+    </nav-route>
+  </navigator>
+</doc>

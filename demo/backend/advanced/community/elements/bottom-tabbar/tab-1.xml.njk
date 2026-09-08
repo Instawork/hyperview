@@ -6,17 +6,21 @@ hv_button_behavior: "back"
 {% from 'macros/description/index.xml.njk' import description %}
 {% extends 'templates/base.xml.njk' %}
 
-{% block container %}
-  <view scroll="true">
-    {% block content %}
-      {{ description('This is the content for tab 1.') }}
-    {% endblock %}
-    <behavior
-      trigger="on-event"
-      event-name="advanced/community/elements/bottom-tabbar/tab-1/reload"
-      action="reload"
-      href="/hyperview/public/advanced/community/elements/bottom-tabbar/tab-1-reloaded.xml"
-    />
+{% block body_attrs %}scroll="true"{% endblock %}
+
+{% block body %}
+  <view sticky="true">
+    {% include 'templates/header.xml.njk' %}
   </view>
+  {% block content %}
+    {{ description('This is the content for tab 1.') }}
+  {% endblock %}
+  {% include './_scroll-copy.xml.njk' %}
+  <behavior
+    trigger="on-event"
+    event-name="advanced/community/elements/bottom-tabbar/tab-1/reload"
+    action="reload"
+    href="/hyperview/public/advanced/community/elements/bottom-tabbar/tab-1-reloaded.xml"
+  />
   {% include './tab-bar.xml.njk' %}
 {% endblock %}

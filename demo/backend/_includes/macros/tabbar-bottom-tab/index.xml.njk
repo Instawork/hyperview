@@ -1,7 +1,9 @@
-{% macro tabbar_bottom_tab(id, label, selected) %}
+{% macro tabbar_bottom_tab(id, label, selected, icon) %}
   <navigation:bottom-tab-bar-item
     key="{{ id }}"
     navigation:route="tab-{{ id }}"
+    navigation:label="{{ label }}"
+    navigation:icon="{{ icon }}"
     style="tabbar-bottom-tab"
   >
     <view style="tabbar-bottom-tab-icon-selected">

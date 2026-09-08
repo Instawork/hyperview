@@ -10,7 +10,7 @@
         {% block styles %}
         {% endblock %}
       </styles>
-      <body style="body">
+      <body style="{% block body_style %}body{% endblock %}" {% block body_attrs %}{% endblock %}>
         {% block body %}
           {% include 'templates/header.xml.njk' %}
           {% block container %}{% endblock %}

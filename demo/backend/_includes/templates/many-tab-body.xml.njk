@@ -1,0 +1,9 @@
+{% from 'macros/description/index.xml.njk' import description %}
+{% set tab = manyTabs[tab_id - 1] %}
+<view sticky="true">
+  {% include 'templates/header.xml.njk' %}
+</view>
+{{ description('Tab ' ~ tab.id ~ ' of 10 (' ~ tab.label ~ '). Native chrome should overflow into More. Scroll to minimize.') }}
+{% include 'templates/tab-minimize-copy.xml.njk' %}
+{% include 'templates/tab-minimize-copy.xml.njk' %}
+{% include 'templates/many-tab-bar.xml.njk' %}
