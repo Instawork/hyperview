@@ -44,6 +44,7 @@ export function withContext<T, P extends ScrollProps>(
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...(p as P)}
         ref={ref}
+        contentInsetAdjustmentBehavior="automatic"
         onScroll={onScrollWrapper}
         scrollEventThrottle={scrollEventThrottle}
       />

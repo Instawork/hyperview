@@ -216,6 +216,7 @@ export default class KeyboardAwareScrollView extends PureComponent<
           this.keyboardAwareView = r;
         }}
         contentInset={{ bottom: this.state.keyboardHeight }}
+        contentInsetAdjustmentBehavior="automatic"
         onContentSizeChange={() => {
           this.updateKeyboardAwareViewContentSize();
         }}

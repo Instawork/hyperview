@@ -11,6 +11,7 @@ export type Offsets = { [key: string]: ScrollOffset };
 export type OnScroll = ScrollViewProps['onScroll'];
 
 export type ScrollProps = {
+  contentInsetAdjustmentBehavior?: ScrollViewProps['contentInsetAdjustmentBehavior'];
   onScroll?: OnScroll;
   scrollEventThrottle?: ScrollViewProps['scrollEventThrottle'];
 };
