@@ -9,6 +9,8 @@ dist/
 hyperview/
 
 # Native
+/ios
+/android
 *.orig.*
 *.jks
 *.p8

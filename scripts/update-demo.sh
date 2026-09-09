@@ -27,10 +27,12 @@ npx expo install \
   @react-native-community/datetimepicker \
   @react-native-picker/picker \
   expo-constants \
+  expo-dev-client \
   expo-linking \
   react-native-gesture-handler \
   react-native-maps \
   react-native-reanimated \
+  react-native-worklets \
   react-native-safe-area-context \
   react-native-screens \
   react-native-web \
