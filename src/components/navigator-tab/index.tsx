@@ -3,7 +3,7 @@ import * as React from 'react';
 import {
   BottomTabNavigationEventMap,
   BottomTabNavigationOptions,
-  BottomTabView,
+  BottomTabView as RNBottomTabView,
 } from '@react-navigation/bottom-tabs';
 import type { Props, TabOptions } from './types';
 import {
@@ -14,9 +14,12 @@ import {
 } from '@react-navigation/native';
 import type { ParamListBase } from '@react-navigation/routers';
 import { useHvDocContext } from 'hyperview/src/elements/hv-doc';
+import { useHyperview } from 'hyperview/src/contexts/hyperview';
 
 const CustomTabNavigator = (props: Props) => {
   const { getSourceDoc } = useHvDocContext();
+  const { navigationComponents } = useHyperview();
+  const BottomTabView = navigationComponents?.BottomTabView ?? RNBottomTabView;
   const {
     state,
     descriptors,
