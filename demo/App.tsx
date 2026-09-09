@@ -1,8 +1,8 @@
 import './src/gesture-handler';
 import * as Linking from 'expo-linking';
+import { BottomTabBar, BottomTabView } from './src/Core';
 import { Logger, fetchWrapper, formatDate } from './src/Helpers';
 import Behaviors from './src/Behaviors';
-import { BottomTabBar } from './src/Core';
 import { BottomTabBarContextProvider } from './src/Contexts';
 import Components from './src/Components';
 import Constants from 'expo-constants';
@@ -52,6 +52,7 @@ export default () => (
           logger={new Logger(Logger.Level.log)}
           navigationComponents={{
             BottomTabBar,
+            BottomTabView,
           }}
         />
       </BottomTabBarContextProvider>
