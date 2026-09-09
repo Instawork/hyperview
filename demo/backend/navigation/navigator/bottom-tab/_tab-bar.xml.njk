@@ -1,0 +1,31 @@
+{% from 'macros/tabbar-bottom/index.xml.njk' import tabbar_bottom %}
+{% call tabbar_bottom("simple-tab-navigator") -%}
+  <navigation:bottom-tab-bar-item
+    navigation:route="tab-1"
+    navigation:label="Tab 1"
+    navigation:icon="/hyperview/public/navigation/navigator/bottom-tab/heart2.png"
+    style="tabbar-bottom-tab"
+  >
+    <view style="tabbar-bottom-tab-content">
+      <image
+        source="/hyperview/public/navigation/navigator/bottom-tab/heart2.png"
+        style="bottom-tab-icon"
+      />
+      <text style="tabbar-bottom-tabbar-top-label">Tab 1</text>
+    </view>
+  </navigation:bottom-tab-bar-item>
+  <navigation:bottom-tab-bar-item
+    navigation:route="tab-2"
+    navigation:label="Tab 2"
+    navigation:icon="/hyperview/public/navigation/navigator/bottom-tab/list2.png"
+    style="tabbar-bottom-tab"
+  >
+    <view style="tabbar-bottom-tab-content">
+      <image
+        source="/hyperview/public/navigation/navigator/bottom-tab/list2.png"
+        style="bottom-tab-icon"
+      />
+      <text style="tabbar-bottom-tabbar-top-label">Tab 2</text>
+    </view>
+  </navigation:bottom-tab-bar-item>
+{%- endcall %}
