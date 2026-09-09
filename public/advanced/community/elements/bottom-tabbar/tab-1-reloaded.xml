@@ -16,7 +16,7 @@
 />
 <style id="button-disabled" backgroundColor="#bdc4c4" />
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
-<style id="button-serialize-title" fontSize="16" marginHorizontal="24" marginTop="24" />
+<style id="button-serialize-title" color="black" fontSize="16" marginHorizontal="24" marginTop="24" />
 <style id="button-serialize-data" backgroundColor="lightgrey" marginHorizontal="24" marginTop="8" padding="16" />
 
 <style
@@ -34,9 +34,9 @@
   borderRadius="18"
   margin="24"
 />
-<style id="about-text" fontSize="20" fontWeight="700" />
+<style id="about-text" color="black" fontSize="20" fontWeight="700" />
 
-<style id="description" fontSize="16" margin="24" />
+<style id="description" color="black" fontSize="16" margin="24" />
 
 <style
   id="link-text"
@@ -118,6 +118,7 @@
 </style>
 <style
   id="tabbar-top-label"
+  color="black"
   fontSize="16"
   fontWeight="500"
   lineHeight="24"
@@ -232,7 +233,7 @@
 />
 <style id="header-title" color="black" fontSize="24" fontWeight="600" />
 <style id="body" backgroundColor="white" flex="1" />
-<style id="description" fontSize="16" margin="24" />
+<style id="description" color="black" fontSize="16" margin="24" />
 <style
   id="item"
   alignItems="center"
@@ -256,7 +257,7 @@
   marginBottom="24"
 />
 <style id="item-left" flex="1" flexDirection="row" />
-<style id="item-label" fontSize="18" fontWeight="normal" />
+<style id="item-label" color="black" fontSize="18" fontWeight="normal" />
 <style id="item-chevron" />
 <style
   id="button"
@@ -317,7 +318,7 @@
   marginHorizontal="24"
   paddingHorizontal="16"
 />
-<style id="list-header-text" fontSize="18" fontWeight="bold"/>
+<style id="list-header-text" color="black" fontSize="18" fontWeight="bold"/>
 <style id="links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" marginBottom="24" />
 <style
   id="picker-modal"
@@ -480,7 +481,7 @@
 />
 <style id="button-disabled" backgroundColor="#bdc4c4" />
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
-<style id="button-serialize-title" fontSize="16" marginHorizontal="24" marginTop="24" />
+<style id="button-serialize-title" color="black" fontSize="16" marginHorizontal="24" marginTop="24" />
 <style id="button-serialize-data" backgroundColor="lightgrey" marginHorizontal="24" marginTop="8" padding="16" />
 
 <style
@@ -498,9 +499,9 @@
   borderRadius="18"
   margin="24"
 />
-<style id="about-text" fontSize="20" fontWeight="700" />
+<style id="about-text" color="black" fontSize="20" fontWeight="700" />
 
-<style id="description" fontSize="16" margin="24" />
+<style id="description" color="black" fontSize="16" margin="24" />
 
 <style
   id="link-text"
@@ -582,6 +583,7 @@
 </style>
 <style
   id="tabbar-top-label"
+  color="black"
   fontSize="16"
   fontWeight="500"
   lineHeight="24"
@@ -696,7 +698,7 @@
 />
 <style id="header-title" color="black" fontSize="24" fontWeight="600" />
 <style id="body" backgroundColor="white" flex="1" />
-<style id="description" fontSize="16" margin="24" />
+<style id="description" color="black" fontSize="16" margin="24" />
 <style
   id="item"
   alignItems="center"
@@ -720,7 +722,7 @@
   marginBottom="24"
 />
 <style id="item-left" flex="1" flexDirection="row" />
-<style id="item-label" fontSize="18" fontWeight="normal" />
+<style id="item-label" color="black" fontSize="18" fontWeight="normal" />
 <style id="item-chevron" />
 <style
   id="button"
@@ -781,7 +783,7 @@
   marginHorizontal="24"
   paddingHorizontal="16"
 />
-<style id="list-header-text" fontSize="18" fontWeight="bold"/>
+<style id="list-header-text" color="black" fontSize="18" fontWeight="bold"/>
 <style id="links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" marginBottom="24" />
 <style
   id="picker-modal"
@@ -829,7 +831,7 @@
 />
 <style id="button-disabled" backgroundColor="#bdc4c4" />
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
-<style id="button-serialize-title" fontSize="16" marginHorizontal="24" marginTop="24" />
+<style id="button-serialize-title" color="black" fontSize="16" marginHorizontal="24" marginTop="24" />
 <style id="button-serialize-data" backgroundColor="lightgrey" marginHorizontal="24" marginTop="8" padding="16" />
 
 <style
@@ -847,9 +849,9 @@
   borderRadius="18"
   margin="24"
 />
-<style id="about-text" fontSize="20" fontWeight="700" />
+<style id="about-text" color="black" fontSize="20" fontWeight="700" />
 
-<style id="description" fontSize="16" margin="24" />
+<style id="description" color="black" fontSize="16" margin="24" />
 
 <style
   id="link-text"
@@ -931,6 +933,7 @@
 </style>
 <style
   id="tabbar-top-label"
+  color="black"
   fontSize="16"
   fontWeight="500"
   lineHeight="24"
@@ -1045,7 +1048,7 @@
 />
 <style id="header-title" color="black" fontSize="24" fontWeight="600" />
 <style id="body" backgroundColor="white" flex="1" />
-<style id="description" fontSize="16" margin="24" />
+<style id="description" color="black" fontSize="16" margin="24" />
 <style
   id="item"
   alignItems="center"
@@ -1069,7 +1072,7 @@
   marginBottom="24"
 />
 <style id="item-left" flex="1" flexDirection="row" />
-<style id="item-label" fontSize="18" fontWeight="normal" />
+<style id="item-label" color="black" fontSize="18" fontWeight="normal" />
 <style id="item-chevron" />
 <style
   id="button"
@@ -1130,7 +1133,7 @@
   marginHorizontal="24"
   paddingHorizontal="16"
 />
-<style id="list-header-text" fontSize="18" fontWeight="bold"/>
+<style id="list-header-text" color="black" fontSize="18" fontWeight="bold"/>
 <style id="links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" marginBottom="24" />
 <style
   id="picker-modal"
@@ -1210,7 +1213,7 @@
 />
 <style id="button-disabled" backgroundColor="#bdc4c4" />
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
-<style id="button-serialize-title" fontSize="16" marginHorizontal="24" marginTop="24" />
+<style id="button-serialize-title" color="black" fontSize="16" marginHorizontal="24" marginTop="24" />
 <style id="button-serialize-data" backgroundColor="lightgrey" marginHorizontal="24" marginTop="8" padding="16" />
 
 <style
@@ -1228,9 +1231,9 @@
   borderRadius="18"
   margin="24"
 />
-<style id="about-text" fontSize="20" fontWeight="700" />
+<style id="about-text" color="black" fontSize="20" fontWeight="700" />
 
-<style id="description" fontSize="16" margin="24" />
+<style id="description" color="black" fontSize="16" margin="24" />
 
 <style
   id="link-text"
@@ -1312,6 +1315,7 @@
 </style>
 <style
   id="tabbar-top-label"
+  color="black"
   fontSize="16"
   fontWeight="500"
   lineHeight="24"
@@ -1426,7 +1430,7 @@
 />
 <style id="header-title" color="black" fontSize="24" fontWeight="600" />
 <style id="body" backgroundColor="white" flex="1" />
-<style id="description" fontSize="16" margin="24" />
+<style id="description" color="black" fontSize="16" margin="24" />
 <style
   id="item"
   alignItems="center"
@@ -1450,7 +1454,7 @@
   marginBottom="24"
 />
 <style id="item-left" flex="1" flexDirection="row" />
-<style id="item-label" fontSize="18" fontWeight="normal" />
+<style id="item-label" color="black" fontSize="18" fontWeight="normal" />
 <style id="item-chevron" />
 <style
   id="button"
@@ -1511,7 +1515,7 @@
   marginHorizontal="24"
   paddingHorizontal="16"
 />
-<style id="list-header-text" fontSize="18" fontWeight="bold"/>
+<style id="list-header-text" color="black" fontSize="18" fontWeight="bold"/>
 <style id="links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" marginBottom="24" />
 <style
   id="picker-modal"

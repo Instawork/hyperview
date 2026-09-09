@@ -16,7 +16,7 @@
 />
 <style id="button-disabled" backgroundColor="#bdc4c4" />
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
-<style id="button-serialize-title" fontSize="16" marginHorizontal="24" marginTop="24" />
+<style id="button-serialize-title" color="black" fontSize="16" marginHorizontal="24" marginTop="24" />
 <style id="button-serialize-data" backgroundColor="lightgrey" marginHorizontal="24" marginTop="8" padding="16" />
 
 <style
@@ -34,9 +34,9 @@
   borderRadius="18"
   margin="24"
 />
-<style id="about-text" fontSize="20" fontWeight="700" />
+<style id="about-text" color="black" fontSize="20" fontWeight="700" />
 
-<style id="description" fontSize="16" margin="24" />
+<style id="description" color="black" fontSize="16" margin="24" />
 
 <style
   id="link-text"
@@ -118,6 +118,7 @@
 </style>
 <style
   id="tabbar-top-label"
+  color="black"
   fontSize="16"
   fontWeight="500"
   lineHeight="24"
@@ -232,7 +233,7 @@
 />
 <style id="header-title" color="black" fontSize="24" fontWeight="600" />
 <style id="body" backgroundColor="white" flex="1" />
-<style id="description" fontSize="16" margin="24" />
+<style id="description" color="black" fontSize="16" margin="24" />
 <style
   id="item"
   alignItems="center"
@@ -256,7 +257,7 @@
   marginBottom="24"
 />
 <style id="item-left" flex="1" flexDirection="row" />
-<style id="item-label" fontSize="18" fontWeight="normal" />
+<style id="item-label" color="black" fontSize="18" fontWeight="normal" />
 <style id="item-chevron" />
 <style
   id="button"
@@ -317,7 +318,7 @@
   marginHorizontal="24"
   paddingHorizontal="16"
 />
-<style id="list-header-text" fontSize="18" fontWeight="bold"/>
+<style id="list-header-text" color="black" fontSize="18" fontWeight="bold"/>
 <style id="links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" marginBottom="24" />
 <style
   id="picker-modal"
@@ -454,124 +455,124 @@
   </item>
   <items xmlns="https://hyperview.org/hyperview">
   
-    <item key="73b7cd46-9d7f-4ef4-bc1d-6f60605166bf" style="mx-24 py-8 border-bottom">
-      <text>Aaron Bailey</text>
-      <text>Adell52@gmail.com</text>
-      <text>359.254.0038 x8573</text>
+    <item key="09c7c187-9500-47c6-b903-c7c6f33a1ef6" style="mx-24 py-8 border-bottom">
+      <text>Aaron Abbott</text>
+      <text>Jevon_Cartwright59@gmail.com</text>
+      <text>(779) 620-4244</text>
     </item>
   
-    <item key="9f14b3ce-5b56-43e9-8de1-b172a6699368" style="mx-24 py-8 border-bottom">
-      <text>Aaron Beier IV</text>
-      <text>Silas.Dickens57@yahoo.com</text>
-      <text>(802) 490-5217 x154</text>
+    <item key="0b557f54-60a6-4ec1-ac0b-5ffada16ec1b" style="mx-24 py-8 border-bottom">
+      <text>Aaron Bogisich</text>
+      <text>Kristian_Heathcote14@yahoo.com</text>
+      <text>(681) 593-8119 x70863</text>
     </item>
   
-    <item key="4fa3584b-c173-44f1-a344-480ea166a854" style="mx-24 py-8 border-bottom">
-      <text>Aaron Bosco</text>
-      <text>Demetris.Gislason@hotmail.com</text>
-      <text>1-351-872-2669 x347</text>
+    <item key="bdba1084-a985-4237-8d8e-04575da0adae" style="mx-24 py-8 border-bottom">
+      <text>Aaron Dicki-Lockman</text>
+      <text>Reva26@yahoo.com</text>
+      <text>1-739-931-3044 x4034</text>
     </item>
   
-    <item key="7c15a968-b1ce-486b-9c46-7a8b3cd9f5cf" style="mx-24 py-8 border-bottom">
-      <text>Aaron Boyle-Donnelly DVM</text>
-      <text>Ashtyn30@yahoo.com</text>
-      <text>978-431-0502 x32843</text>
+    <item key="93be54e3-7623-427d-a019-0ae43dd9c2d0" style="mx-24 py-8 border-bottom">
+      <text>Aaron Donnelly V</text>
+      <text>Kacie63@yahoo.com</text>
+      <text>200-595-5241 x057</text>
     </item>
   
-    <item key="9c677907-ad15-4584-b00b-db2a5614c6f7" style="mx-24 py-8 border-bottom">
-      <text>Aaron Cassin</text>
-      <text>Cameron_Armstrong40@gmail.com</text>
-      <text>630.700.8809 x924</text>
+    <item key="f9d6e539-5bc6-400b-8e9f-c29aa69ce24b" style="mx-24 py-8 border-bottom">
+      <text>Aaron Funk</text>
+      <text>Cleo_Daniel93@yahoo.com</text>
+      <text>378-761-7114</text>
     </item>
   
-    <item key="b7ed4142-10be-48f6-85cf-99a360bd8455" style="mx-24 py-8 border-bottom">
-      <text>Aaron Cole</text>
-      <text>Brennon.Terry@gmail.com</text>
-      <text>882-686-3011 x706</text>
+    <item key="0a625c67-ba4c-4407-9229-4bb808327b5a" style="mx-24 py-8 border-bottom">
+      <text>Aaron Jenkins IV</text>
+      <text>Susie_Thiel45@gmail.com</text>
+      <text>621-501-0312</text>
     </item>
   
-    <item key="178dedf0-eae3-43de-8537-5220b9ba605d" style="mx-24 py-8 border-bottom">
-      <text>Aaron Hegmann</text>
-      <text>Audreanne.Kshlerin91@yahoo.com</text>
-      <text>860-962-2364 x247</text>
-    </item>
-  
-    <item key="735c942b-fab9-4339-8d49-7b84aa5f7aaf" style="mx-24 py-8 border-bottom">
-      <text>Aaron Hirthe</text>
-      <text>Royal_Considine22@hotmail.com</text>
-      <text>809.735.8641 x93757</text>
-    </item>
-  
-    <item key="59d1318d-35ed-4935-81dc-5532109b32cf" style="mx-24 py-8 border-bottom">
-      <text>Aaron Huel</text>
-      <text>Gardner17@hotmail.com</text>
-      <text>1-428-932-6118 x738</text>
-    </item>
-  
-    <item key="bf3b9540-06d1-4df8-8838-d5b93ed0b62d" style="mx-24 py-8 border-bottom">
+    <item key="6b926eba-563b-4604-98d9-77f82a10dd9f" style="mx-24 py-8 border-bottom">
       <text>Aaron Johns</text>
-      <text>Jaiden.Smith@gmail.com</text>
-      <text>740.951.1059</text>
+      <text>Noemi_Mohr@hotmail.com</text>
+      <text>1-572-258-0899</text>
     </item>
   
-    <item key="47d1f1c6-e777-49b8-a72e-3d17a3975be0" style="mx-24 py-8 border-bottom">
-      <text>Aaron Kunde</text>
-      <text>Darrin74@gmail.com</text>
-      <text>(229) 414-3179</text>
+    <item key="d1bfb6c9-8cb7-4e2a-b511-c4afbdd23927" style="mx-24 py-8 border-bottom">
+      <text>Aaron Marvin</text>
+      <text>Laverne_Murphy25@hotmail.com</text>
+      <text>960-784-3397</text>
     </item>
   
-    <item key="9ce47525-5a3d-49de-a14b-59857304331f" style="mx-24 py-8 border-bottom">
-      <text>Aaron Littel</text>
-      <text>Glennie_Bernier@gmail.com</text>
-      <text>(341) 313-5107 x4681</text>
+    <item key="09c2a3aa-b9cb-497e-a8f7-3903549f29f6" style="mx-24 py-8 border-bottom">
+      <text>Aaron McKenzie</text>
+      <text>Ezekiel85@gmail.com</text>
+      <text>644.985.0575 x33130</text>
     </item>
   
-    <item key="a4d28dc8-8399-4255-b590-1ebddf46dcf8" style="mx-24 py-8 border-bottom">
-      <text>Aaron Mayert</text>
-      <text>Letha.Pollich54@yahoo.com</text>
-      <text>1-924-861-2279 x4146</text>
+    <item key="8235467c-51f1-4315-a81d-4306fc8f043a" style="mx-24 py-8 border-bottom">
+      <text>Aaron Mosciski</text>
+      <text>Yesenia.Hackett33@yahoo.com</text>
+      <text>749.950.1807 x94142</text>
     </item>
   
-    <item key="8ea698a2-fc97-424c-b95c-a5b48aa65a8a" style="mx-24 py-8 border-bottom">
-      <text>Aaron Mraz</text>
-      <text>Roman_Zulauf17@hotmail.com</text>
-      <text>513.243.4488 x642</text>
+    <item key="d4015d5f-d459-420c-8bd7-335115c17eb1" style="mx-24 py-8 border-bottom">
+      <text>Aaron Nader</text>
+      <text>Lisandro.Kuhic@gmail.com</text>
+      <text>476.897.9170 x83647</text>
     </item>
   
-    <item key="65dd8923-95bb-4fd8-9720-181d6b3bcacc" style="mx-24 py-8 border-bottom">
-      <text>Aaron Rau</text>
-      <text>Carmen_Volkman76@yahoo.com</text>
-      <text>(854) 333-9531 x85188</text>
+    <item key="ef48a105-fcdd-4e88-a9de-5f8981daddc9" style="mx-24 py-8 border-bottom">
+      <text>Aaron Nicolas-Schoen</text>
+      <text>Sonya_Kemmer@hotmail.com</text>
+      <text>(465) 857-1506</text>
     </item>
   
-    <item key="7446751c-f0c3-43bf-bdd8-44bbdd93e03c" style="mx-24 py-8 border-bottom">
-      <text>Aaron Sawayn</text>
-      <text>Clint_McGlynn33@gmail.com</text>
-      <text>1-260-883-7499 x151</text>
+    <item key="9c77c534-7a3e-4fb8-b82a-31ec6999fd21" style="mx-24 py-8 border-bottom">
+      <text>Aaron Nienow</text>
+      <text>Janick_Schroeder@yahoo.com</text>
+      <text>1-780-501-9482 x909</text>
     </item>
   
-    <item key="b8c576d0-a9cf-473c-a3a4-6c0adf255103" style="mx-24 py-8 border-bottom">
-      <text>Aaron Watsica</text>
-      <text>Sigmund31@gmail.com</text>
-      <text>(982) 761-0150 x3743</text>
+    <item key="48dec1e2-e3ef-40a1-881c-6d388c0a1600" style="mx-24 py-8 border-bottom">
+      <text>Aaron Rippin</text>
+      <text>Dorothea.Kris11@yahoo.com</text>
+      <text>(298) 352-8093</text>
     </item>
   
-    <item key="3d9897d3-ea56-4559-94f1-e0a10c6388b2" style="mx-24 py-8 border-bottom">
-      <text>Aaron Weber</text>
-      <text>Cary61@gmail.com</text>
-      <text>637-502-0824 x61757</text>
+    <item key="6b77cd92-cabe-44ed-b4c0-3c7aaefc427a" style="mx-24 py-8 border-bottom">
+      <text>Aaron Stehr</text>
+      <text>Kayla.Gottlieb41@gmail.com</text>
+      <text>608.904.6801 x9735</text>
     </item>
   
-    <item key="f307c027-0477-4a54-b9e5-335d2f862093" style="mx-24 py-8 border-bottom">
-      <text>Abel Armstrong</text>
-      <text>Brandon.Graham26@gmail.com</text>
-      <text>663-567-9341 x9923</text>
+    <item key="58f5329d-4c66-4ce3-b4af-1044f5393c0d" style="mx-24 py-8 border-bottom">
+      <text>Aaron Wilderman</text>
+      <text>Brad.Paucek-Leuschke92@yahoo.com</text>
+      <text>(244) 963-6387</text>
     </item>
   
-    <item key="ff793b87-ae79-4881-95dc-d880f8fbd87e" style="mx-24 py-8 border-bottom">
-      <text>Abel Armstrong IV</text>
-      <text>Alessia_Corwin22@hotmail.com</text>
-      <text>1-479-801-1665 x395</text>
+    <item key="bd0c51ba-a595-4554-88d5-e9391f8c41ce" style="mx-24 py-8 border-bottom">
+      <text>Aaron Wiza IV</text>
+      <text>Deangelo97@gmail.com</text>
+      <text>(231) 373-4613</text>
+    </item>
+  
+    <item key="f242814c-aecd-4f4c-9fd5-d85a814e5362" style="mx-24 py-8 border-bottom">
+      <text>Abel Anderson Jr.</text>
+      <text>Andreanne.Wehner84@yahoo.com</text>
+      <text>652-905-9251</text>
+    </item>
+  
+    <item key="02c98dd9-b1a1-44f4-88ff-78f7f7667b26" style="mx-24 py-8 border-bottom">
+      <text>Abel Brown</text>
+      <text>Tremaine94@yahoo.com</text>
+      <text>266.399.6138 x245</text>
+    </item>
+  
+    <item key="f011cd4e-1814-427f-9a71-6fc7d4fb38f7" style="mx-24 py-8 border-bottom">
+      <text>Abel Cronin</text>
+      <text>Alan51@yahoo.com</text>
+      <text>829.319.4576 x4607</text>
     </item>
   
   
@@ -611,7 +612,7 @@
 />
 <style id="button-disabled" backgroundColor="#bdc4c4" />
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
-<style id="button-serialize-title" fontSize="16" marginHorizontal="24" marginTop="24" />
+<style id="button-serialize-title" color="black" fontSize="16" marginHorizontal="24" marginTop="24" />
 <style id="button-serialize-data" backgroundColor="lightgrey" marginHorizontal="24" marginTop="8" padding="16" />
 
 <style
@@ -629,9 +630,9 @@
   borderRadius="18"
   margin="24"
 />
-<style id="about-text" fontSize="20" fontWeight="700" />
+<style id="about-text" color="black" fontSize="20" fontWeight="700" />
 
-<style id="description" fontSize="16" margin="24" />
+<style id="description" color="black" fontSize="16" margin="24" />
 
 <style
   id="link-text"
@@ -713,6 +714,7 @@
 </style>
 <style
   id="tabbar-top-label"
+  color="black"
   fontSize="16"
   fontWeight="500"
   lineHeight="24"
@@ -827,7 +829,7 @@
 />
 <style id="header-title" color="black" fontSize="24" fontWeight="600" />
 <style id="body" backgroundColor="white" flex="1" />
-<style id="description" fontSize="16" margin="24" />
+<style id="description" color="black" fontSize="16" margin="24" />
 <style
   id="item"
   alignItems="center"
@@ -851,7 +853,7 @@
   marginBottom="24"
 />
 <style id="item-left" flex="1" flexDirection="row" />
-<style id="item-label" fontSize="18" fontWeight="normal" />
+<style id="item-label" color="black" fontSize="18" fontWeight="normal" />
 <style id="item-chevron" />
 <style
   id="button"
@@ -912,7 +914,7 @@
   marginHorizontal="24"
   paddingHorizontal="16"
 />
-<style id="list-header-text" fontSize="18" fontWeight="bold"/>
+<style id="list-header-text" color="black" fontSize="18" fontWeight="bold"/>
 <style id="links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" marginBottom="24" />
 <style
   id="picker-modal"
@@ -960,7 +962,7 @@
 />
 <style id="button-disabled" backgroundColor="#bdc4c4" />
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
-<style id="button-serialize-title" fontSize="16" marginHorizontal="24" marginTop="24" />
+<style id="button-serialize-title" color="black" fontSize="16" marginHorizontal="24" marginTop="24" />
 <style id="button-serialize-data" backgroundColor="lightgrey" marginHorizontal="24" marginTop="8" padding="16" />
 
 <style
@@ -978,9 +980,9 @@
   borderRadius="18"
   margin="24"
 />
-<style id="about-text" fontSize="20" fontWeight="700" />
+<style id="about-text" color="black" fontSize="20" fontWeight="700" />
 
-<style id="description" fontSize="16" margin="24" />
+<style id="description" color="black" fontSize="16" margin="24" />
 
 <style
   id="link-text"
@@ -1062,6 +1064,7 @@
 </style>
 <style
   id="tabbar-top-label"
+  color="black"
   fontSize="16"
   fontWeight="500"
   lineHeight="24"
@@ -1176,7 +1179,7 @@
 />
 <style id="header-title" color="black" fontSize="24" fontWeight="600" />
 <style id="body" backgroundColor="white" flex="1" />
-<style id="description" fontSize="16" margin="24" />
+<style id="description" color="black" fontSize="16" margin="24" />
 <style
   id="item"
   alignItems="center"
@@ -1200,7 +1203,7 @@
   marginBottom="24"
 />
 <style id="item-left" flex="1" flexDirection="row" />
-<style id="item-label" fontSize="18" fontWeight="normal" />
+<style id="item-label" color="black" fontSize="18" fontWeight="normal" />
 <style id="item-chevron" />
 <style
   id="button"
@@ -1261,7 +1264,7 @@
   marginHorizontal="24"
   paddingHorizontal="16"
 />
-<style id="list-header-text" fontSize="18" fontWeight="bold"/>
+<style id="list-header-text" color="black" fontSize="18" fontWeight="bold"/>
 <style id="links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" marginBottom="24" />
 <style
   id="picker-modal"
@@ -1341,7 +1344,7 @@
 />
 <style id="button-disabled" backgroundColor="#bdc4c4" />
 <style id="button-label" color="white" fontSize="24" fontWeight="bold" />
-<style id="button-serialize-title" fontSize="16" marginHorizontal="24" marginTop="24" />
+<style id="button-serialize-title" color="black" fontSize="16" marginHorizontal="24" marginTop="24" />
 <style id="button-serialize-data" backgroundColor="lightgrey" marginHorizontal="24" marginTop="8" padding="16" />
 
 <style
@@ -1359,9 +1362,9 @@
   borderRadius="18"
   margin="24"
 />
-<style id="about-text" fontSize="20" fontWeight="700" />
+<style id="about-text" color="black" fontSize="20" fontWeight="700" />
 
-<style id="description" fontSize="16" margin="24" />
+<style id="description" color="black" fontSize="16" margin="24" />
 
 <style
   id="link-text"
@@ -1443,6 +1446,7 @@
 </style>
 <style
   id="tabbar-top-label"
+  color="black"
   fontSize="16"
   fontWeight="500"
   lineHeight="24"
@@ -1557,7 +1561,7 @@
 />
 <style id="header-title" color="black" fontSize="24" fontWeight="600" />
 <style id="body" backgroundColor="white" flex="1" />
-<style id="description" fontSize="16" margin="24" />
+<style id="description" color="black" fontSize="16" margin="24" />
 <style
   id="item"
   alignItems="center"
@@ -1581,7 +1585,7 @@
   marginBottom="24"
 />
 <style id="item-left" flex="1" flexDirection="row" />
-<style id="item-label" fontSize="18" fontWeight="normal" />
+<style id="item-label" color="black" fontSize="18" fontWeight="normal" />
 <style id="item-chevron" />
 <style
   id="button"
@@ -1642,7 +1646,7 @@
   marginHorizontal="24"
   paddingHorizontal="16"
 />
-<style id="list-header-text" fontSize="18" fontWeight="bold"/>
+<style id="list-header-text" color="black" fontSize="18" fontWeight="bold"/>
 <style id="links-container" flexDirection="row" flexWrap="wrap" marginLeft="24" marginBottom="24" />
 <style
   id="picker-modal"
