@@ -151,7 +151,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
     networkRetryEvent: string | null | undefined,
     syncId: DOMString | null | undefined = undefined,
     syncMethod: DOMString | null | undefined = 'drop',
-  ): Promise<Element | null> => {
+  ): Promise<Element | typeof NO_OP | null> => {
     if (!href) {
       Logging.warn(new Error('No href passed to fetchElement'));
       return null;
@@ -184,7 +184,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
 
       if (result === NO_OP) {
         // Request was dropped due to sync logic, return null to indicate no-op
-        return null;
+        return NO_OP;
       }
 
       const { doc, staleHeaderType } = result;
@@ -403,7 +403,7 @@ export default class Hyperview extends PureComponent<Types.Props> {
           options.syncId,
           options.syncMethod,
         ).then(newElement => {
-          if (newElement === null) {
+          if (newElement === NO_OP) {
             // Request was dropped due to sync logic, no update needed
             return;
           }
