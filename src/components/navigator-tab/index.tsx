@@ -3,7 +3,7 @@ import * as React from 'react';
 import {
   BottomTabNavigationEventMap,
   BottomTabNavigationOptions,
-  BottomTabView as RNBottomTabView,
+  BottomTabView,
 } from '@react-navigation/bottom-tabs';
 import type { Props, TabOptions } from './types';
 import {
@@ -19,7 +19,7 @@ import { useHyperview } from 'hyperview/src/contexts/hyperview';
 const CustomTabNavigator = (props: Props) => {
   const { getSourceDoc } = useHvDocContext();
   const { navigationComponents } = useHyperview();
-  const BottomTabView = navigationComponents?.BottomTabView ?? RNBottomTabView;
+  const TabView = navigationComponents?.BottomTabView ?? BottomTabView;
   const {
     state,
     descriptors,
@@ -52,7 +52,7 @@ const CustomTabNavigator = (props: Props) => {
 
   return (
     <NavigationContent>
-      <BottomTabView
+      <TabView
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...props}
         descriptors={descriptors}

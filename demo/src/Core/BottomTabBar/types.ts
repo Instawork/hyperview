@@ -28,7 +28,3 @@ export type NativeTabEvent = {
   provenance: TabSelectedEvent['provenance'];
   selectedScreenKey: TabSelectedEvent['selectedScreenKey'];
 };
-
-export type NativeTabViewProps = BottomTabViewProps & {
-  items: NativeTabBarItems;
-};
