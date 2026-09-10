@@ -1,7 +1,7 @@
 import * as React from 'react';
 import type { BottomTabViewProps, NativeTabEvent } from './types';
 import { getNativeTabItems, isLiquidGlassSupported } from './helpers';
-import { BottomTabBar } from '.';
+import { BottomTabBar } from './BottomTabBar';
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { CommonActions } from '@react-navigation/native';
 import type { NativeSyntheticEvent } from 'react-native';
