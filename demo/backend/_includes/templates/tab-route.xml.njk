@@ -3,7 +3,7 @@
 {% from 'macros/tabbar-bottom/index.xml.njk' import tabbar_bottom %}
 
 {% block container %}
-  <view style="tab-route-content">
+  <view safe-area="true" style="tab-route-content">
     {% block tab_route_content %}{% endblock %}
   </view>
   {% call tabbar_bottom("tabs-navigator") -%}
