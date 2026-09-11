@@ -1,1 +1,1 @@
-export { BottomTabView } from './BottomTabBar';
+export { BottomTabView } from './BottomTabView';

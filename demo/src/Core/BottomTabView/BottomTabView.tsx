@@ -1,11 +1,11 @@
 import * as React from 'react';
 import type { BottomTabViewProps, NativeTabEvent } from './types';
 import { getNativeTabItems, isLiquidGlassSupported } from './helpers';
-import { BottomTabBar } from './BottomTabBar';
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { CommonActions } from '@react-navigation/native';
 import type { NativeSyntheticEvent } from 'react-native';
 import { BottomTabView as RNBottomTabView } from '@react-navigation/bottom-tabs';
+import { TabBar } from './TabBar';
 import { Tabs } from 'react-native-screens';
 import { useBottomTabBarContext } from '../../Contexts';
 
@@ -24,7 +24,7 @@ export const BottomTabView = (props: BottomTabViewProps) => {
         return null;
       }
       return (
-        <BottomTabBar
+        <TabBar
           descriptors={tabBarProps.descriptors}
           id={navigatorId}
           insets={tabBarProps.insets}
