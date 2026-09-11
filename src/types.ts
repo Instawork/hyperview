@@ -1,12 +1,15 @@
 import * as Components from 'hyperview/src/services/components';
 import * as Logging from 'hyperview/src/services/logging';
 import type {
+  BottomTabView,
+  BottomTabBarProps as RNBottomTabBarProps,
+} from '@react-navigation/bottom-tabs';
+import type {
   NavigationState,
   Route as NavigatorRoute,
 } from '@react-navigation/native';
 import React, { ComponentType } from 'react';
 import type { Props as LoadingProps } from 'hyperview/src/components/loading';
-import type { BottomTabBarProps as RNBottomTabBarProps } from '@react-navigation/bottom-tabs';
 import type { RefreshControlProps } from 'react-native';
 import type { XResponseStaleReason } from 'hyperview/src/services/dom';
 
@@ -371,6 +374,7 @@ type BottomTabBarComponent = (
 
 export type NavigationComponents = {
   BottomTabBar?: BottomTabBarComponent;
+  BottomTabView?: typeof BottomTabView;
 };
 
 /**

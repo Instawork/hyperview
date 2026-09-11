@@ -2,8 +2,8 @@ import './src/gesture-handler';
 import * as Linking from 'expo-linking';
 import { Logger, fetchWrapper, formatDate } from './src/Helpers';
 import Behaviors from './src/Behaviors';
-import { BottomTabBar } from './src/Core';
 import { BottomTabBarContextProvider } from './src/Contexts';
+import { BottomTabView } from './src/Core';
 import Components from './src/Components';
 import Constants from 'expo-constants';
 import ElementErrorComponent from './src/element-error-component';
@@ -50,9 +50,7 @@ export default () => (
           formatDate={formatDate}
           loadingScreen={LoadingScreen}
           logger={new Logger(Logger.Level.log)}
-          navigationComponents={{
-            BottomTabBar,
-          }}
+          navigationComponents={{ BottomTabView }}
         />
       </BottomTabBarContextProvider>
     </NavigationContainer>
