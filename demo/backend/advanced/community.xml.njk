@@ -1,0 +1,17 @@
+---
+permalink: "/advanced/community.xml"
+hv_title: "Advanced"
+hv_tab_id: "advanced"
+hv_button_behavior: "none"
+---
+{% extends 'templates/tab-route.xml.njk' %}
+
+{% from 'macros/tabbar-top/index.xml.njk' import tabbar_top %}
+
+{% block tab_route_content %}
+  {{ tabbar_top([
+  {id: "case-studies-route", label: "Case Studies"},
+  {id: "community-route", label: "Community", selected: true}
+  ]) }}
+  {% include './community/content.xml.njk' %}
+{% endblock %}
