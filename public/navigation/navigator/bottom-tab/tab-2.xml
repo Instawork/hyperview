@@ -212,6 +212,7 @@
 
 
 <style id="flex-1" flex="1" />
+<style id="header-background" backgroundColor="white" />
 <style
   id="header"
   alignItems="center"
@@ -346,37 +347,6 @@
 
         
   <style
-  id="footer"
-  alignItems="stretch"
-  borderTopColor="#eee"
-  borderTopWidth="1"
-  bottom="0"
-  flexDirection="row"
-  flexShrink="1"
-  flexGrow="0"
-  height="48"
-  justifyContent="space-around"
-  backgroundColor="white"
-  position="absolute"
-  width="100%"
-/>
-<style
-  id="bottom-tab"
-  alignItems="center"
-  flex="1"
-  justifyContent="center"
-/>
-<style
-  id="bottom-tab-label"
-  color="#cccccc"
-  fontSize="8"
-  fontWeight="bold"
-/>
-<style
-  id="bottom-tab-label-selected"
-  color="#4778FF"
-/>
-<style
   id="bottom-tab-icon"
   height="24"
   width="24"
@@ -384,11 +354,13 @@
 
 
       </styles>
-      <body style="body">
+      <body style="body" scroll="true">
         
-          <safe-area:safe-area-view
+  <view sticky="true">
+    <safe-area:safe-area-view
   xmlns:safe-area="https://hyperview.org/safe-area"
   key="header-container"
+  style="header-background"
   safe-area:mode="padding"
   safe-area:insets="[&quot;right&quot;,&quot;top&quot;,&quot;left&quot;]"
 >
@@ -416,35 +388,69 @@
   </header>
 </safe-area:safe-area-view>
 
-          
+  </view>
   
   
     <text style="description">This is the content for tab 2.</text>
   
 
-  <view id="Footer" style="footer">
-    <view
-      style="bottom-tab"
-      href-style="bottom-tab"
-      action="navigate"
-      href="#tab-1"
+  <text style="description">Scroll down to minimize the tab bar.</text>
+<text style="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</text>
+<text style="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</text>
+<text style="description">Velit voluptas et alias atque provident sapiente consequuntur deserunt. Dolorem et non error dolorem voluptate amet accusantium. Corporis rerum sed labore quae sed qui quis quasi. Illo pariatur sint qui.</text>
+<text style="description">Quasi quaerat id molestias. Necessitatibus et ipsa quia asperiores laborum neque. Quisquam dolorem consequatur illum. Ut magni iusto explicabo blanditiis quasi laborum incidunt earum. Eius ut in rerum ipsam.</text>
+<text style="description">Officiis dolores suscipit consequatur placeat commodi eum. Vel possimus placeat aut eos tempore saepe. Esse assumenda eum illo sed aut earum quia voluptatibus. Recusandae qui iusto corporis sed atque.</text>
+<text style="description">Veniam et possimus praesentium. Cum molestiae non velit minus voluptatibus quos illo sed. Et omnis ut soluta qui inventore molestias. Dolores voluptatem perspiciatis exercitationem consectetur minus illum.</text>
+<text style="description">Quos quaerat omnis aut eius eos dolores velit. Et quia vel ea unde eum repudiandae. Repellat et ab sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</text>
+
+  
+
+  <navigation:bottom-tab-bar
+    xmlns:navigation="https://hyperview.org/navigation"
+    navigation:navigator="simple-tab-navigator"
+  >
+    <safe-area:safe-area-view
+      xmlns:safe-area="https://hyperview.org/safe-area"
+      key="tabbar-bottom"
+      style="tabbar-bottom"
+      safe-area:mode="padding"
+      safe-area:insets="[&quot;right&quot;,&quot;bottom&quot;,&quot;left&quot;]"
     >
+      
+        <navigation:bottom-tab-bar-item
+    navigation:route="tab-1"
+    navigation:label="Tab 1"
+    navigation:icon="/hyperview/public/navigation/navigator/bottom-tab/heart2.png"
+    style="tabbar-bottom-tab"
+  >
+    <view style="tabbar-bottom-tab-content">
       <image
         source="/hyperview/public/navigation/navigator/bottom-tab/heart2.png"
         style="bottom-tab-icon"
       />
-      <text style="bottom-tab-label">Tab 1</text>
+      <text style="tabbar-bottom-tabbar-top-label">Tab 1</text>
     </view>
-    <view style="bottom-tab bottom-tab-selected">
+  </navigation:bottom-tab-bar-item>
+  <navigation:bottom-tab-bar-item
+    navigation:route="tab-2"
+    navigation:label="Tab 2"
+    navigation:icon="/hyperview/public/navigation/navigator/bottom-tab/list2.png"
+    style="tabbar-bottom-tab"
+  >
+    <view style="tabbar-bottom-tab-content">
       <image
         source="/hyperview/public/navigation/navigator/bottom-tab/list2.png"
-        style="bottom-tab-icon bottom-tab-selected"
+        style="bottom-tab-icon"
       />
-      <text style="bottom-tab-label bottom-tab-label-selected">Tab 2</text>
+      <text style="tabbar-bottom-tabbar-top-label">Tab 2</text>
     </view>
-  </view>
+  </navigation:bottom-tab-bar-item>
+      
+    </safe-area:safe-area-view>
+  </navigation:bottom-tab-bar>
 
-        
+
+
       </body>
     </screen>
     
@@ -659,6 +665,7 @@
 
 
 <style id="flex-1" flex="1" />
+<style id="header-background" backgroundColor="white" />
 <style
   id="header"
   alignItems="center"
@@ -1009,6 +1016,7 @@
 
 
 <style id="flex-1" flex="1" />
+<style id="header-background" backgroundColor="white" />
 <style
   id="header"
   alignItems="center"
@@ -1148,6 +1156,7 @@
         <safe-area:safe-area-view
   xmlns:safe-area="https://hyperview.org/safe-area"
   key="header-container"
+  style="header-background"
   safe-area:mode="padding"
   safe-area:insets="[&quot;right&quot;,&quot;top&quot;,&quot;left&quot;]"
 >
@@ -1391,6 +1400,7 @@
 
 
 <style id="flex-1" flex="1" />
+<style id="header-background" backgroundColor="white" />
 <style
   id="header"
   alignItems="center"
@@ -1530,6 +1540,7 @@
         <safe-area:safe-area-view
   xmlns:safe-area="https://hyperview.org/safe-area"
   key="header-container"
+  style="header-background"
   safe-area:mode="padding"
   safe-area:insets="[&quot;right&quot;,&quot;top&quot;,&quot;left&quot;]"
 >

@@ -212,6 +212,7 @@
 
 
 <style id="flex-1" flex="1" />
+<style id="header-background" backgroundColor="white" />
 <style
   id="header"
   alignItems="center"
@@ -518,11 +519,12 @@
 
 
       </styles>
-      <body style="body">
+      <body style="body" >
         
           <safe-area:safe-area-view
   xmlns:safe-area="https://hyperview.org/safe-area"
   key="header-container"
+  style="header-background"
   safe-area:mode="padding"
   safe-area:insets="[&quot;right&quot;,&quot;top&quot;,&quot;left&quot;]"
 >
@@ -1206,6 +1208,7 @@
 
 
 <style id="flex-1" flex="1" />
+<style id="header-background" backgroundColor="white" />
 <style
   id="header"
   alignItems="center"
@@ -1556,6 +1559,7 @@
 
 
 <style id="flex-1" flex="1" />
+<style id="header-background" backgroundColor="white" />
 <style
   id="header"
   alignItems="center"
@@ -1695,6 +1699,7 @@
         <safe-area:safe-area-view
   xmlns:safe-area="https://hyperview.org/safe-area"
   key="header-container"
+  style="header-background"
   safe-area:mode="padding"
   safe-area:insets="[&quot;right&quot;,&quot;top&quot;,&quot;left&quot;]"
 >
@@ -1938,6 +1943,7 @@
 
 
 <style id="flex-1" flex="1" />
+<style id="header-background" backgroundColor="white" />
 <style
   id="header"
   alignItems="center"
@@ -2077,6 +2083,7 @@
         <safe-area:safe-area-view
   xmlns:safe-area="https://hyperview.org/safe-area"
   key="header-container"
+  style="header-background"
   safe-area:mode="padding"
   safe-area:insets="[&quot;right&quot;,&quot;top&quot;,&quot;left&quot;]"
 >

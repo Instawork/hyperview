@@ -13,6 +13,9 @@
   >
     <navigation:bottom-tab-bar-item
       navigation:route="custom-bottom-tabs-tab-1"
+      navigation:label="Tab 1"
+      navigation:icon="/hyperview/public/assets/tab-icons/behaviors.png"
+      
       style="tabbar-bottom-tab"
     >
       <view style="tabbar-bottom-tab-content">
@@ -38,6 +41,9 @@
     </navigation:bottom-tab-bar-item>
     <navigation:bottom-tab-bar-item
       navigation:route="custom-bottom-tabs-tab-2"
+      navigation:label="Tab 2"
+      navigation:icon="/hyperview/public/assets/tab-icons/advanced.png"
+      
       style="tabbar-bottom-tab"
     >
       <view style="tabbar-bottom-tab-content">

@@ -212,6 +212,7 @@
 
 
 <style id="flex-1" flex="1" />
+<style id="header-background" backgroundColor="white" />
 <style
   id="header"
   alignItems="center"
@@ -347,11 +348,12 @@
         
         
       </styles>
-      <body style="body">
+      <body style="body" >
         
           <safe-area:safe-area-view
   xmlns:safe-area="https://hyperview.org/safe-area"
   key="header-container"
+  style="header-background"
   safe-area:mode="padding"
   safe-area:insets="[&quot;right&quot;,&quot;top&quot;,&quot;left&quot;]"
 >
@@ -362,7 +364,7 @@
 </safe-area:safe-area-view>
 
           
-  <view style="tab-route-content">
+  <view safe-area="true" style="tab-route-content">
     
   
   <select-single id="tab-bar" name="tab-bar" style="tabbar-top-select">
@@ -2257,6 +2259,9 @@
   <navigation:bottom-tab-bar-item
     key="ui"
     navigation:route="tab-ui"
+    navigation:label="UI"
+    navigation:icon="/hyperview/public/assets/tab-icons/ui.png"
+    navigation:badge=""
     style="tabbar-bottom-tab"
   >
     <view style="tabbar-bottom-tab-icon-selected">
@@ -2282,6 +2287,9 @@
   <navigation:bottom-tab-bar-item
     key="behaviors"
     navigation:route="tab-behaviors"
+    navigation:label="Behaviors"
+    navigation:icon="/hyperview/public/assets/tab-icons/behaviors.png"
+    navigation:badge=""
     style="tabbar-bottom-tab"
   >
     <view style="tabbar-bottom-tab-icon-selected">
@@ -2307,6 +2315,9 @@
   <navigation:bottom-tab-bar-item
     key="navigation"
     navigation:route="tab-navigation"
+    navigation:label="Navigation"
+    navigation:icon="/hyperview/public/assets/tab-icons/navigation.png"
+    navigation:badge=""
     style="tabbar-bottom-tab"
   >
     <view style="tabbar-bottom-tab-icon-selected">
@@ -2336,6 +2347,9 @@
   <navigation:bottom-tab-bar-item
     key="advanced"
     navigation:route="tab-advanced"
+    navigation:label="Advanced"
+    navigation:icon="/hyperview/public/assets/tab-icons/advanced.png"
+    navigation:badge=""
     style="tabbar-bottom-tab"
   >
     <view style="tabbar-bottom-tab-icon-selected">
@@ -2577,6 +2591,7 @@
 
 
 <style id="flex-1" flex="1" />
+<style id="header-background" backgroundColor="white" />
 <style
   id="header"
   alignItems="center"
@@ -2927,6 +2942,7 @@
 
 
 <style id="flex-1" flex="1" />
+<style id="header-background" backgroundColor="white" />
 <style
   id="header"
   alignItems="center"
@@ -3066,6 +3082,7 @@
         <safe-area:safe-area-view
   xmlns:safe-area="https://hyperview.org/safe-area"
   key="header-container"
+  style="header-background"
   safe-area:mode="padding"
   safe-area:insets="[&quot;right&quot;,&quot;top&quot;,&quot;left&quot;]"
 >
@@ -3309,6 +3326,7 @@
 
 
 <style id="flex-1" flex="1" />
+<style id="header-background" backgroundColor="white" />
 <style
   id="header"
   alignItems="center"
@@ -3448,6 +3466,7 @@
         <safe-area:safe-area-view
   xmlns:safe-area="https://hyperview.org/safe-area"
   key="header-container"
+  style="header-background"
   safe-area:mode="padding"
   safe-area:insets="[&quot;right&quot;,&quot;top&quot;,&quot;left&quot;]"
 >
