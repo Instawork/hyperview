@@ -9,6 +9,7 @@
     namespace="https://hyperview.org/hyperview"
     schemaLocation="hyperview.xsd"
   />
+  <xs:attribute name="content-insets" type="xs:boolean" />
   <xs:attributeGroup name="scrollAttributes">
     <xs:attribute name="animated" type="xs:boolean" />
     <xs:attribute name="offset" type="xs:integer" />
