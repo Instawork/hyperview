@@ -3,11 +3,27 @@ import type { BottomTabViewProps, NativeTabEvent } from './types';
 import { getNativeTabItems, isLiquidGlassSupported } from './helpers';
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { CommonActions } from '@react-navigation/native';
+import { ContentInsetsProvider } from 'hyperview';
 import type { NativeSyntheticEvent } from 'react-native';
 import { BottomTabView as RNBottomTabView } from '@react-navigation/bottom-tabs';
+import { SafeAreaListener } from 'react-native-safe-area-context';
 import { TabBar } from './TabBar';
 import { Tabs } from 'react-native-screens';
 import { useBottomTabBarContext } from '../../Contexts';
+
+const NativeTabScreenContent = (props: React.PropsWithChildren) => {
+  const [bottomInset, setBottomInset] = React.useState<number>();
+
+  return (
+    <SafeAreaListener onChange={({ insets }) => setBottomInset(insets.bottom)}>
+      {bottomInset === undefined ? null : (
+        <ContentInsetsProvider value={{ bottom: bottomInset }}>
+          {props.children}
+        </ContentInsetsProvider>
+      )}
+    </SafeAreaListener>
+  );
+};
 
 export const BottomTabView = (props: BottomTabViewProps) => {
   const { getElementProps } = useBottomTabBarContext();
@@ -108,7 +124,9 @@ export const BottomTabView = (props: BottomTabViewProps) => {
             screenKey={route.key}
             title={item.label ?? route.name}
           >
-            {props.descriptors[route.key].render()}
+            <NativeTabScreenContent>
+              {props.descriptors[route.key].render()}
+            </NativeTabScreenContent>
           </Tabs.Screen>
         );
       })}
