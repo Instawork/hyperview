@@ -36,6 +36,7 @@ A `<web-view>` element can appear anywhere within a `<body>` element.
 - [`shared-cookies-enabled`](#shared-cookies-enabled)
 - [`debug`](#debug)
 - [`id`](#id)
+- [`scroll:content-insets`](#scrollcontent-insets)
 
 #### `url`
 
@@ -108,6 +109,14 @@ Whether or not the webview can be debugged remotely using Safari / Chrome.
 | string | No       |
 
 A global attribute uniquely identifying the element in the whole document.
+
+#### `scroll:content-insets`
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| true, **false** (default) | No       |
+
+When `true`, exposes the host-provided bottom inset to the document as the `--hyperview-content-inset-bottom` CSS custom property. Use this property to keep web content above native UI along the bottom edge.
 
 ## Dispatching events from web views
 
