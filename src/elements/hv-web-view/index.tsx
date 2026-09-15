@@ -1,7 +1,8 @@
 import * as Events from 'hyperview/src/services/events';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import { ActivityIndicator, StyleSheet } from 'react-native';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
+import { ContentInsetsContext } from 'hyperview/src/components/scroll/context';
 import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import WebView from 'hyperview/src/components/web-view';
@@ -51,6 +52,15 @@ const HvWebView = (props: HvComponentProps) => {
   const sharedCookiesEnabled = componentProps['shared-cookies-enabled']
     ? componentProps['shared-cookies-enabled'] === 'true'
     : undefined;
+  const contentInsets = useContext(ContentInsetsContext);
+  const contentInsetsRequested =
+    element.getAttributeNS(Namespaces.HYPERVIEW_SCROLL, 'content-insets') ===
+    'true';
+  const contentInsetsEnabled = contentInsets !== null && contentInsetsRequested;
+  if (contentInsetsEnabled) {
+    injectedJavaScript ||= '';
+    injectedJavaScript += `document.documentElement.style.setProperty('--hyperview-content-inset-bottom', '${contentInsets.bottom}px'); true;`;
+  }
   const webviewDebuggingEnabled = componentProps.debug === 'true' || __DEV__;
   const source = {
     html: componentProps.html,
@@ -60,6 +70,10 @@ const HvWebView = (props: HvComponentProps) => {
     <WebView
       accessibilityLabel={componentProps.accessibilityLabel}
       allowsInlineMediaPlayback={allowsInlineMediaPlayback}
+      // The document handles the inset; automatic would add a second native scroll range.
+      contentInsetAdjustmentBehavior={
+        contentInsetsEnabled ? 'never' : undefined
+      }
       injectedJavaScript={injectedJavaScript}
       onMessage={onMessage}
       renderLoading={() => {

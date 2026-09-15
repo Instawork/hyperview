@@ -27,3 +27,8 @@ export const Provider = (props: { children: React.ReactNode }) => {
 };
 
 export const useScrollContext = () => useContext(Context);
+
+export const ContentInsetsContext = createContext<{ bottom: number } | null>(
+  null,
+);
+export const ContentInsetsProvider = ContentInsetsContext.Provider;

@@ -1,4 +1,7 @@
-<doc xmlns="https://hyperview.org/hyperview">
+<doc
+  xmlns="https://hyperview.org/hyperview"
+  xmlns:scroll="https://hyperview.org/hyperview-scroll"
+>
   <screen>
     <styles>
       <style id="body" backgroundColor="white" flex="1" />
@@ -25,6 +28,7 @@
     <body style="body">
       <view
         scroll="true"
+        scroll:content-insets="true"
         scroll-orientation="vertical"
         style="container container-vertical"
         id="container-vertical"
