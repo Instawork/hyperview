@@ -1,0 +1,19 @@
+---
+permalink: "/ui/ui-elements/web-view/content-insets/insets.xml"
+hv_title: "With Insets"
+hv_button_behavior: "back"
+---
+{% from 'macros/web-view-content-insets/index.xml.njk' import content_insets_web_view %}
+{% extends 'templates/base.xml.njk' %}
+
+{% block styles %}
+  <style id="container" flexShrink="1" flex="1" />
+{% endblock %}
+
+{% block body %}
+  {% include 'templates/header.xml.njk' %}
+  <view style="container">
+    {{ content_insets_web_view(true) }}
+  </view>
+  {% include './tab-bar.xml.njk' %}
+{% endblock %}

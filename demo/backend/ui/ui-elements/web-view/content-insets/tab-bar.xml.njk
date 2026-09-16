@@ -1,0 +1,47 @@
+<navigation:bottom-tab-bar
+  xmlns="https://hyperview.org/hyperview"
+  xmlns:navigation="https://hyperview.org/navigation"
+  navigation:navigator="web-view-content-insets-navigator"
+  id="bottom-tab-bar"
+>
+  <safe-area:safe-area-view
+    xmlns:safe-area="https://hyperview.org/safe-area"
+    key="tabbar-bottom"
+    style="tabbar-bottom"
+    safe-area:mode="padding"
+    safe-area:insets="[&quot;right&quot;,&quot;bottom&quot;,&quot;left&quot;]"
+  >
+    <navigation:bottom-tab-bar-item
+      navigation:route="web-view-basic-route"
+      navigation:label="No Insets"
+      navigation:icon="/hyperview/public/assets/tab-icons/ui.png"
+      style="tabbar-bottom-tab"
+    >
+      <view style="tabbar-bottom-tab-content">
+        <view style="tabbar-bottom-tab-icon-selected">
+          {% include 'icons/ui-selected.svg' %}
+        </view>
+        <view style="tabbar-bottom-tab-icon">
+          {% include 'icons/ui.svg' %}
+        </view>
+        <text style="tabbar-bottom-tabbar-top-label">No Insets</text>
+      </view>
+    </navigation:bottom-tab-bar-item>
+    <navigation:bottom-tab-bar-item
+      navigation:route="web-view-insets-route"
+      navigation:label="Insets"
+      navigation:icon="/hyperview/public/assets/tab-icons/advanced.png"
+      style="tabbar-bottom-tab"
+    >
+      <view style="tabbar-bottom-tab-content">
+        <view style="tabbar-bottom-tab-icon-selected">
+          {% include 'icons/advanced-selected.svg' %}
+        </view>
+        <view style="tabbar-bottom-tab-icon">
+          {% include 'icons/advanced.svg' %}
+        </view>
+        <text style="tabbar-bottom-tabbar-top-label">Insets</text>
+      </view>
+    </navigation:bottom-tab-bar-item>
+  </safe-area:safe-area-view>
+</navigation:bottom-tab-bar>
