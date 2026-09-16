@@ -53,7 +53,7 @@ A `<view>` element can only appear anywhere within a `<screen>` element.
 - [`safe-area (deprecated)`](#safe-area)
 - [`style`](#style)
 - [`content-container-style`](#content-container-style)
-- [`scroll:content-insets`](#scrollcontent-insets)
+- [`content-insets`](#content-insets)
 - [`scroll`](#scroll)
 - [`scroll-orientation`](#scroll-orientation)
 - [`scroll-to-input-offset`](#scroll-to-input-offset)
@@ -98,7 +98,7 @@ A space-separated list of styles to apply to the element. See [Styles](/docs/ref
 
 A space-separated list of styles to apply to the content container element of a scroll view. See [Styles](/docs/reference_style). Note that text style rules cannot be applied to a `<view>`, and this attribute only has an effect when `scroll` is true.
 
-#### `scroll:content-insets`
+#### `content-insets`
 
 | Type                      | Required |
 | ------------------------- | -------- |
@@ -107,11 +107,7 @@ A space-separated list of styles to apply to the content container element of a 
 On iOS, setting this to `true` dynamically insets scrollable content based on the size and location of native UI along the bottom edge. It only takes effect when `scroll="true"` and the host provides content insets.
 
 ```xml
-<view
-  xmlns:scroll="https://hyperview.org/hyperview-scroll"
-  scroll="true"
-  scroll:content-insets="true"
->
+<view content-insets="true" scroll="true">
   <!-- Scrollable content -->
 </view>
 ```

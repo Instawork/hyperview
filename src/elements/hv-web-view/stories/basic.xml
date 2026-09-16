@@ -1,7 +1,4 @@
-<doc
-  xmlns="https://hyperview.org/hyperview"
-  xmlns:scroll="https://hyperview.org/hyperview-scroll"
->
+<doc xmlns="https://hyperview.org/hyperview">
   <screen>
     <styles>
       <style id="body" backgroundColor="white" flex="1" />
@@ -11,7 +8,7 @@
         id="web-view"
         url="https://hyperview.org"
         activity-indicator-color="blue"
-        scroll:content-insets="true"
+        content-insets="true"
         injected-java-script="alert('Hello Hyperview user!')"
       />
     </body>

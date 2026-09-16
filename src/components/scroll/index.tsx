@@ -18,9 +18,7 @@ export function withContext<T, P extends ScrollProps>(
     const { element, onScroll, ...p } = props;
     const hasContentInsets = Boolean(useContext(ContentInsetsContext));
     const shouldAdjustContentInsets =
-      hasContentInsets &&
-      element.getAttributeNS(Namespaces.HYPERVIEW_SCROLL, 'content-insets') ===
-        'true';
+      hasContentInsets && element.getAttribute('content-insets') === 'true';
     const contentInsetAdjustmentBehavior =
       p.contentInsetAdjustmentBehavior ??
       (shouldAdjustContentInsets ? 'automatic' : undefined);

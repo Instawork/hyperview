@@ -3,13 +3,12 @@
   action="replace"
   href="{% if list_href %}{{ list_href }}{% else %}{{ permalink }}{% endif %}"
   id="directory-list"
-  scroll:content-insets="true"
+  content-insets="true"
   sticky-section-titles="false"
   style="list-container"
   target="directory-list"
   trigger="refresh"
   xmlns="https://hyperview.org/hyperview"
-  xmlns:scroll="https://hyperview.org/hyperview-scroll"
 >
   {% for section_tag in hv_section_list_tag.split(',') %}
     <section-title style="list-header item-first">

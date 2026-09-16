@@ -4,11 +4,10 @@
   href="{% if list_href %}{{ list_href }}{% else %}{{ permalink }}{% endif %}"
   id="directory-list"
   style="list-container"
-  scroll:content-insets="true"
+  content-insets="true"
   target="directory-list"
   trigger="refresh"
   xmlns="https://hyperview.org/hyperview"
-  xmlns:scroll="https://hyperview.org/hyperview-scroll"
 >
   {% for tag in hv_list_tag.split(',') %}
     {% for screen in collections[tag]|sortCollection %}

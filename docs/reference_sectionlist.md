@@ -35,7 +35,7 @@ A `<section-list>` element will only render `<section-title>` and `<item>` child
 - [Behavior attributes](#behavior-attributes)
 - [`style`](#style)
 - [`content-container-style`](#content-container-style)
-- [`scroll:content-insets`](#scrollcontent-insets)
+- [`content-insets`](#content-insets)
 - [`id`](#id)
 - [`hide`](#hide)
 - [`scroll-orientation`](#scroll-orientation)
@@ -65,13 +65,13 @@ A space-separated list of styles to apply to the text. See [Styles](/docs/refere
 
 A space-separated list of styles to apply to the content container element of the scrollable view. See [Styles](/docs/reference_style).
 
-#### `scroll:content-insets`
+#### `content-insets`
 
 | Type                      | Required |
 | ------------------------- | -------- |
 | true, **false** (default) | No       |
 
-See [`scroll:content-insets` on `<view>`](/docs/reference_view#scrollcontent-insets) for behavior and an example.
+See [`content-insets` on `<view>`](/docs/reference_view#content-insets) for behavior and an example.
 
 #### `id`
 

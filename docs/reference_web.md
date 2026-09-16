@@ -36,7 +36,7 @@ A `<web-view>` element can appear anywhere within a `<body>` element.
 - [`shared-cookies-enabled`](#shared-cookies-enabled)
 - [`debug`](#debug)
 - [`id`](#id)
-- [`scroll:content-insets`](#scrollcontent-insets)
+- [`content-insets`](#content-insets)
 
 #### `url`
 
@@ -110,7 +110,7 @@ Whether or not the webview can be debugged remotely using Safari / Chrome.
 
 A global attribute uniquely identifying the element in the whole document.
 
-#### `scroll:content-insets`
+#### `content-insets`
 
 | Type                      | Required |
 | ------------------------- | -------- |

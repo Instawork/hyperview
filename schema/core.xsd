@@ -474,7 +474,7 @@
       </xs:simpleType>
     </xs:attribute>
     <xs:attribute name="over-scroll" type="xs:boolean" />
-    <xs:attribute ref="scroll:content-insets" />
+    <xs:attribute name="content-insets" type="xs:boolean" />
   </xs:attributeGroup>
 
   <xs:attributeGroup name="viewAttributes">
@@ -1332,7 +1332,7 @@
       </xs:attribute>
       <xs:attribute name="id" type="hv:ID" />
       <xs:attribute name="key" type="hv:KEY" />
-      <xs:attribute ref="scroll:content-insets" />
+      <xs:attribute name="content-insets" type="xs:boolean" />
     </xs:complexType>
   </xs:element>
 

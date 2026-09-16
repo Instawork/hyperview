@@ -54,8 +54,7 @@ const HvWebView = (props: HvComponentProps) => {
     : undefined;
   const contentInsets = useContext(ContentInsetsContext);
   const contentInsetsRequested =
-    element.getAttributeNS(Namespaces.HYPERVIEW_SCROLL, 'content-insets') ===
-    'true';
+    element.getAttribute('content-insets') === 'true';
   const contentInsetsEnabled = contentInsets !== null && contentInsetsRequested;
   if (contentInsetsEnabled) {
     injectedJavaScript ||= '';
