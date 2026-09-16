@@ -8,6 +8,7 @@
         id="web-view"
         url="https://hyperview.org"
         activity-indicator-color="blue"
+        content-insets="true"
         injected-java-script="alert('Hello Hyperview user!')"
       />
     </body>

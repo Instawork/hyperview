@@ -24,6 +24,7 @@
     </styles>
     <body style="body">
       <view
+        content-insets="true"
         scroll="true"
         scroll-orientation="vertical"
         style="container container-vertical"

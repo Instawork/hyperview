@@ -1,14 +1,36 @@
 import { render, screen, waitFor } from '@testing-library/react-native';
+// eslint-disable-next-line instawork/import-components
+import { ContentInsetsProvider } from 'hyperview/src/components/scroll';
 import { HyperviewMock } from 'hyperview/test/helpers';
 import React from 'react';
 
 describe('HvList', () => {
   describe('render', () => {
-    test('basic', async () => {
-      render(<HyperviewMock paths={[`${__dirname}/stories/basic.xml`]} />);
+    test('does not apply content insets by default', async () => {
+      render(
+        <ContentInsetsProvider value={{ bottom: 83 }}>
+          <HyperviewMock paths={[`${__dirname}/stories/basic.xml`]} />
+        </ContentInsetsProvider>,
+      );
 
       await waitFor(() => {
-        expect(screen.getByTestId('list')).toBeOnTheScreen();
+        expect(
+          screen.getByTestId('list').props.contentInsetAdjustmentBehavior,
+        ).toBeUndefined();
+        return true;
+      });
+    });
+    test('applies content insets when enabled', async () => {
+      render(
+        <ContentInsetsProvider value={{ bottom: 83 }}>
+          <HyperviewMock paths={[`${__dirname}/stories/content_insets.xml`]} />
+        </ContentInsetsProvider>,
+      );
+
+      await waitFor(() => {
+        expect(
+          screen.getByTestId('list').props.contentInsetAdjustmentBehavior,
+        ).toEqual('automatic');
         return true;
       });
     });

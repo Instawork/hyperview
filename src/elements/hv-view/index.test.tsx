@@ -46,7 +46,7 @@ describe('HvView', () => {
     test('applies content insets when enabled', async () => {
       render(
         <ContentInsetsProvider value={{ bottom: 83 }}>
-          <HyperviewMock paths={[`${__dirname}/stories/scrollview.xml`]} />
+          <HyperviewMock paths={[`${__dirname}/stories/content_insets.xml`]} />
         </ContentInsetsProvider>,
       );
 
