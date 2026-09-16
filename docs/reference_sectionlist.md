@@ -71,7 +71,7 @@ A space-separated list of styles to apply to the content container element of th
 | ------------------------- | -------- |
 | true, **false** (default) | No       |
 
-See [`content-insets` on `<view>`](/docs/reference_view#content-insets) for behavior and an example.
+Specifies whether safe area insets modify the content area of the section list on iOS. When `true` and the host provides content insets, Hyperview sets React Native's [`contentInsetAdjustmentBehavior`](https://reactnative.dev/docs/0.77/scrollview#contentinsetadjustmentbehavior-ios) to `automatic`.
 
 #### `id`
 

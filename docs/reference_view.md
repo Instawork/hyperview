@@ -104,7 +104,7 @@ A space-separated list of styles to apply to the content container element of a 
 | ------------------------- | -------- |
 | true, **false** (default) | No       |
 
-On iOS, setting this to `true` dynamically insets scrollable content based on the size and location of native UI along the bottom edge. It only takes effect when `scroll="true"` and the host provides content insets.
+Specifies whether safe area insets modify the content area of the scroll view on iOS. When `true` and the host provides content insets, Hyperview sets React Native's [`contentInsetAdjustmentBehavior`](https://reactnative.dev/docs/0.77/scrollview#contentinsetadjustmentbehavior-ios) to `automatic`. This attribute only has an effect when `scroll="true"`.
 
 ```xml
 <view content-insets="true" scroll="true">

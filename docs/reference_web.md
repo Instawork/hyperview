@@ -116,7 +116,7 @@ A global attribute uniquely identifying the element in the whole document.
 | ------------------------- | -------- |
 | true, **false** (default) | No       |
 
-When `true`, exposes the host-provided bottom inset to the document as the `--hyperview-content-inset-bottom` CSS custom property. Use this property to keep web content above native UI along the bottom edge.
+Specifies whether the host-provided bottom inset is exposed to the web document on iOS. When `true` and the host provides content insets, Hyperview sets the `--hyperview-content-inset-bottom` CSS custom property. The web view does not add padding; the document must use this property to adjust its own scrollable content.
 
 ## Dispatching events from web views
 
