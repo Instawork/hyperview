@@ -15,11 +15,7 @@ import {
 import { LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
 import React, { PureComponent } from 'react';
 import type { ScrollParams, State } from './types';
-import {
-  createStyleProp,
-  createTestProps,
-  getAncestorByTagName,
-} from 'hyperview/src/services';
+import { createStyleProp, getAncestorByTagName } from 'hyperview/src/services';
 import { BehaviorScrollError } from 'hyperview/src/errors';
 import { DOMParser } from '@instawork/xmldom';
 import { Context as DocContext } from 'hyperview/src/elements/hv-doc/context';
@@ -379,7 +375,7 @@ export default class HvSectionList extends PureComponent<
         ? 'never'
         : undefined;
 
-    const { testID, accessibilityLabel } = createTestProps(this.props.element);
+    const testID = this.props.element.getAttribute('id') || undefined;
 
     return (
       <HyperviewContext.Consumer>
@@ -391,7 +387,6 @@ export default class HvSectionList extends PureComponent<
           return (
             <SectionList
               ref={this.onRef}
-              accessibilityLabel={accessibilityLabel}
               bounces={bounces}
               contentContainerStyle={contentContainerStyle}
               element={this.props.element}

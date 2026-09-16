@@ -8,7 +8,6 @@ import type {
 import React, { useCallback } from 'react';
 import {
   createStyleProp,
-  createTestProps,
   getNameValueFormInputValues,
 } from 'hyperview/src/services';
 import { LOCAL_NAME } from 'hyperview/src/types';
@@ -114,7 +113,7 @@ const HvPickerField = (props: HvComponentProps) => {
     ...options,
     styleAttr: 'field-text-style',
   });
-  const { testID, accessibilityLabel } = createTestProps(element);
+  const testID = element.getAttribute('id') || undefined;
   const value: DOMString | null | undefined = element.getAttribute('value');
   const placeholderTextColor:
     | DOMString
@@ -168,11 +167,7 @@ const HvPickerField = (props: HvComponentProps) => {
   }
 
   return (
-    <View
-      accessibilityLabel={accessibilityLabel}
-      style={fieldStyle}
-      testID={testID}
-    >
+    <View style={fieldStyle} testID={testID}>
       <Picker
         onBlur={onBlur}
         onFocus={onFocus}
