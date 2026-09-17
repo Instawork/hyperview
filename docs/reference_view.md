@@ -53,6 +53,7 @@ A `<view>` element can only appear anywhere within a `<screen>` element.
 - [`safe-area (deprecated)`](#safe-area)
 - [`style`](#style)
 - [`content-container-style`](#content-container-style)
+- [`content-insets`](#content-insets)
 - [`scroll`](#scroll)
 - [`scroll-orientation`](#scroll-orientation)
 - [`scroll-to-input-offset`](#scroll-to-input-offset)
@@ -96,6 +97,20 @@ A space-separated list of styles to apply to the element. See [Styles](/docs/ref
 | string | No       |
 
 A space-separated list of styles to apply to the content container element of a scroll view. See [Styles](/docs/reference_style). Note that text style rules cannot be applied to a `<view>`, and this attribute only has an effect when `scroll` is true.
+
+#### `content-insets`
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| true, **false** (default) | No       |
+
+Specifies whether safe area insets modify the content area of the scroll view on iOS. When `true`, Hyperview sets React Native's [`contentInsetAdjustmentBehavior`](https://reactnative.dev/docs/0.77/scrollview#contentinsetadjustmentbehavior-ios) to `automatic`. This attribute only has an effect when `scroll="true"`.
+
+```xml
+<view content-insets="true" scroll="true">
+  <!-- Scrollable content -->
+</view>
+```
 
 #### `scroll`
 

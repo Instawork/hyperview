@@ -4,11 +4,27 @@ import React from 'react';
 
 describe('HvSectionList', () => {
   describe('render', () => {
-    test('basic', async () => {
+    test('does not apply content insets by default', async () => {
       render(<HyperviewMock paths={[`${__dirname}/stories/basic.xml`]} />);
 
       await waitFor(() => {
-        expect(screen.getByTestId('section-list')).toBeOnTheScreen();
+        expect(
+          screen.getByTestId('section-list').props
+            .contentInsetAdjustmentBehavior,
+        ).toBeUndefined();
+        return true;
+      });
+    });
+    test('applies content insets when enabled', async () => {
+      render(
+        <HyperviewMock paths={[`${__dirname}/stories/content_insets.xml`]} />,
+      );
+
+      await waitFor(() => {
+        expect(
+          screen.getByTestId('section-list').props
+            .contentInsetAdjustmentBehavior,
+        ).toEqual('automatic');
         return true;
       });
     });
