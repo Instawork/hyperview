@@ -13,14 +13,13 @@ import HVKeyboardAwareScrollView from 'hyperview/src/components/keyboard-aware-s
 export function withContext<T, P extends ScrollProps>(
   Component: React.ComponentType<P>,
 ) {
-  return forwardRef<T, P & Props<T>>((props: Props<T> & ScrollProps, ref) => {
+  return forwardRef<T, P & Props<T>>((props: Props<T>, ref) => {
     const { updateOffset } = useContext(Context);
     const { element, onScroll, ...p } = props;
-    const shouldAdjustContentInsets =
-      element.getAttribute('content-insets') === 'true';
     const contentInsetAdjustmentBehavior =
-      p.contentInsetAdjustmentBehavior ??
-      (shouldAdjustContentInsets ? 'automatic' : undefined);
+      element.getAttribute('content-insets') === 'true'
+        ? 'automatic'
+        : undefined;
     const contextKey = element.getAttributeNS(
       Namespaces.HYPERVIEW_SCROLL,
       'context-key',
