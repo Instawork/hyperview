@@ -29,10 +29,16 @@ export default (props: Props) => {
   }
 
   const label: string = props.value ? props.value : placeholder || '';
+  const fieldId = props.element.getAttribute('id');
+  const testID = fieldId ? `${fieldId}/field-label` : undefined;
 
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    <Text style={labelStyles} {...FontScale.getFontScaleProps(props.element)}>
+    <Text
+      style={labelStyles}
+      testID={testID}
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...FontScale.getFontScaleProps(props.element)}
+    >
       {label}
     </Text>
   );
