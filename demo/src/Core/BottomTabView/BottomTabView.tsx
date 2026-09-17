@@ -3,7 +3,6 @@ import type { BottomTabViewProps, NativeTabEvent } from './types';
 import { getNativeTabItems, isLiquidGlassSupported } from './helpers';
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { CommonActions } from '@react-navigation/native';
-import { ContentInsetsProvider } from 'hyperview';
 import type { NativeSyntheticEvent } from 'react-native';
 import { BottomTabView as RNBottomTabView } from '@react-navigation/bottom-tabs';
 import { TabBar } from './TabBar';
@@ -109,9 +108,7 @@ export const BottomTabView = (props: BottomTabViewProps) => {
             screenKey={route.key}
             title={item.label ?? route.name}
           >
-            <ContentInsetsProvider value>
-              {props.descriptors[route.key].render()}
-            </ContentInsetsProvider>
+            {props.descriptors[route.key].render()}
           </Tabs.Screen>
         );
       })}

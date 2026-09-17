@@ -1,6 +1,4 @@
 import { render, screen, waitFor } from '@testing-library/react-native';
-// eslint-disable-next-line instawork/import-components
-import { ContentInsetsProvider } from 'hyperview/src/components/scroll';
 import { HyperviewMock } from 'hyperview/test/helpers';
 import React from 'react';
 
@@ -43,24 +41,9 @@ describe('HvView', () => {
         return true;
       });
     });
-    test('requires host opt-in for content insets', async () => {
+    test('applies content insets when enabled', async () => {
       render(
         <HyperviewMock paths={[`${__dirname}/stories/content_insets.xml`]} />,
-      );
-
-      await waitFor(() => {
-        expect(
-          screen.getByTestId('container-vertical').props
-            .contentInsetAdjustmentBehavior,
-        ).toBeUndefined();
-        return true;
-      });
-    });
-    test('applies content insets when the host and document opt in', async () => {
-      render(
-        <ContentInsetsProvider value>
-          <HyperviewMock paths={[`${__dirname}/stories/content_insets.xml`]} />
-        </ContentInsetsProvider>,
       );
 
       await waitFor(() => {

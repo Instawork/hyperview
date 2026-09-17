@@ -1,5 +1,4 @@
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import { ContentInsetsContext, Context } from './context';
 import type { OnScroll, Props, ScrollProps } from './types';
 import {
   FlatList as RNFlatList,
@@ -7,6 +6,7 @@ import {
   SectionList as RNSectionList,
 } from 'react-native';
 import React, { forwardRef, useCallback, useContext } from 'react';
+import { Context } from './context';
 // eslint-disable-next-line instawork/import-components
 import HVKeyboardAwareScrollView from 'hyperview/src/components/keyboard-aware-scroll-view';
 
@@ -16,9 +16,8 @@ export function withContext<T, P extends ScrollProps>(
   return forwardRef<T, P & Props<T>>((props: Props<T> & ScrollProps, ref) => {
     const { updateOffset } = useContext(Context);
     const { element, onScroll, ...p } = props;
-    const hasContentInsets = useContext(ContentInsetsContext);
     const shouldAdjustContentInsets =
-      hasContentInsets && element.getAttribute('content-insets') === 'true';
+      element.getAttribute('content-insets') === 'true';
     const contentInsetAdjustmentBehavior =
       p.contentInsetAdjustmentBehavior ??
       (shouldAdjustContentInsets ? 'automatic' : undefined);
@@ -72,5 +71,4 @@ export const KeyboardAwareScrollView = withContext<
   HVKeyboardAwareScrollView['props']
 >(HVKeyboardAwareScrollView);
 
-export { ContentInsetsProvider } from './context';
 export { Context, Provider, useScrollContext } from './context';
