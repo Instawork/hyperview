@@ -6,7 +6,7 @@ import React from 'react';
 
 describe('HvSectionList', () => {
   describe('render', () => {
-    test('does not apply content insets by default', async () => {
+    test('requires document opt-in for content insets', async () => {
       render(
         <ContentInsetsProvider value>
           <HyperviewMock paths={[`${__dirname}/stories/basic.xml`]} />
@@ -21,7 +21,20 @@ describe('HvSectionList', () => {
         return true;
       });
     });
-    test('applies content insets when enabled', async () => {
+    test('requires host opt-in for content insets', async () => {
+      render(
+        <HyperviewMock paths={[`${__dirname}/stories/content_insets.xml`]} />,
+      );
+
+      await waitFor(() => {
+        expect(
+          screen.getByTestId('section-list').props
+            .contentInsetAdjustmentBehavior,
+        ).toBeUndefined();
+        return true;
+      });
+    });
+    test('applies content insets when the host and document opt in', async () => {
       render(
         <ContentInsetsProvider value>
           <HyperviewMock paths={[`${__dirname}/stories/content_insets.xml`]} />

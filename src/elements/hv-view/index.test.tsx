@@ -43,7 +43,20 @@ describe('HvView', () => {
         return true;
       });
     });
-    test('applies content insets when enabled', async () => {
+    test('requires host opt-in for content insets', async () => {
+      render(
+        <HyperviewMock paths={[`${__dirname}/stories/content_insets.xml`]} />,
+      );
+
+      await waitFor(() => {
+        expect(
+          screen.getByTestId('container-vertical').props
+            .contentInsetAdjustmentBehavior,
+        ).toBeUndefined();
+        return true;
+      });
+    });
+    test('applies content insets when the host and document opt in', async () => {
       render(
         <ContentInsetsProvider value>
           <HyperviewMock paths={[`${__dirname}/stories/content_insets.xml`]} />
