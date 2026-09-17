@@ -207,12 +207,11 @@ const HvPickerField = (props: HvComponentProps) => {
           options={options}
           stylesheets={stylesheets}
         >
-          <View>
+          <View testID={testID}>
             <Picker
               onValueChange={setPickerValue}
               selectedValue={getPickerValue()}
               style={style}
-              testID={testID}
             >
               {children}
             </Picker>
