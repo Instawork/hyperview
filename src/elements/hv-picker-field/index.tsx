@@ -6,13 +6,13 @@ import type {
   StyleSheet,
 } from 'hyperview/src/types';
 import React, { useCallback } from 'react';
+import { Text, View } from 'react-native';
 import {
   createStyleProp,
   getNameValueFormInputValues,
 } from 'hyperview/src/services';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import Picker from 'hyperview/src/components/picker';
-import { View } from 'react-native';
 
 /**
  * A picker field renders a form field with values that come from a pre-defined list.
@@ -49,6 +49,21 @@ const HvPickerField = (props: HvComponentProps) => {
         ),
       ),
     [element],
+  );
+
+  /**
+   * Gets the label from the picker items for the given value.
+   * If the value doesn't have a picker item, returns null.
+   */
+  const getLabelForValue = useCallback(
+    (value: DOMString): string | null | undefined => {
+      const item = getPickerItems().find(
+        (pickerItemElement: Element) =>
+          pickerItemElement.getAttribute('value') === value,
+      );
+      return item ? item.getAttribute('label') : null;
+    },
+    [getPickerItems],
   );
 
   const onFocus = useCallback(() => {
@@ -166,17 +181,49 @@ const HvPickerField = (props: HvComponentProps) => {
     );
   }
 
+  const label =
+    getLabelForValue(getValue()) || element.getAttribute('placeholder') || '';
+
   return (
-    <View style={fieldStyle} testID={testID}>
-      <Picker
-        onBlur={onBlur}
-        onFocus={onFocus}
-        onValueChange={onChange}
-        selectedValue={getPickerValue()}
-        style={style}
+    <View style={fieldStyle}>
+      <View importantForAccessibility="no-hide-descendants">
+        <Picker
+          onBlur={onBlur}
+          onFocus={onFocus}
+          onValueChange={onChange}
+          selectedValue={getPickerValue()}
+          style={[...style, { color: 'transparent' }]}
+        >
+          {children}
+        </Picker>
+      </View>
+      <View
+        pointerEvents="none"
+        style={{
+          bottom: 0,
+          left: 0,
+          position: 'absolute',
+          right: 0,
+          top: 0,
+        }}
       >
-        {children}
-      </Picker>
+        <Text
+          style={[
+            ...style,
+            {
+              flex: 1,
+              marginBottom: 0,
+              marginLeft: 0,
+              marginRight: 0,
+              marginTop: 0,
+              textAlignVertical: 'center',
+            },
+          ]}
+          testID={testID}
+        >
+          {label}
+        </Text>
+      </View>
     </View>
   );
 };
