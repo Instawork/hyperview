@@ -16,7 +16,7 @@ export function withContext<T, P extends ScrollProps>(
   return forwardRef<T, P & Props<T>>((props: Props<T> & ScrollProps, ref) => {
     const { updateOffset } = useContext(Context);
     const { element, onScroll, ...p } = props;
-    const hasContentInsets = Boolean(useContext(ContentInsetsContext));
+    const hasContentInsets = useContext(ContentInsetsContext);
     const shouldAdjustContentInsets =
       hasContentInsets && element.getAttribute('content-insets') === 'true';
     const contentInsetAdjustmentBehavior =

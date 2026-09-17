@@ -8,7 +8,7 @@ describe('HvSectionList', () => {
   describe('render', () => {
     test('does not apply content insets by default', async () => {
       render(
-        <ContentInsetsProvider value={{ bottom: 83 }}>
+        <ContentInsetsProvider value>
           <HyperviewMock paths={[`${__dirname}/stories/basic.xml`]} />
         </ContentInsetsProvider>,
       );
@@ -23,7 +23,7 @@ describe('HvSectionList', () => {
     });
     test('applies content insets when enabled', async () => {
       render(
-        <ContentInsetsProvider value={{ bottom: 83 }}>
+        <ContentInsetsProvider value>
           <HyperviewMock paths={[`${__dirname}/stories/content_insets.xml`]} />
         </ContentInsetsProvider>,
       );

@@ -36,7 +36,6 @@ A `<web-view>` element can appear anywhere within a `<body>` element.
 - [`shared-cookies-enabled`](#shared-cookies-enabled)
 - [`debug`](#debug)
 - [`id`](#id)
-- [`content-insets`](#content-insets)
 
 #### `url`
 
@@ -109,14 +108,6 @@ Whether or not the webview can be debugged remotely using Safari / Chrome.
 | string | No       |
 
 A global attribute uniquely identifying the element in the whole document.
-
-#### `content-insets`
-
-| Type                      | Required |
-| ------------------------- | -------- |
-| true, **false** (default) | No       |
-
-Specifies whether the host-provided bottom inset is exposed to the web document on iOS. When `true` and the host provides content insets, Hyperview sets the `--hyperview-content-inset-bottom` CSS custom property. The web view does not add padding; the document must use this property to adjust its own scrollable content.
 
 ## Dispatching events from web views
 
