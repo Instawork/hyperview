@@ -364,7 +364,7 @@
 </safe-area:safe-area-view>
 
           
-  <view safe-area="true" style="tab-route-content">
+  <view style="tab-route-content">
     
   
   <select-single id="tab-bar" name="tab-bar" style="tabbar-top-select">
@@ -403,6 +403,7 @@
   action="replace"
   href="/hyperview/public/behaviors/basic/index.xml"
   id="directory-list"
+  content-insets="true"
   sticky-section-titles="false"
   style="list-container"
   target="directory-list"
@@ -1794,6 +1795,7 @@
   href="/hyperview/public/behaviors/advanced/index.xml"
   id="directory-list"
   style="list-container"
+  content-insets="true"
   target="directory-list"
   trigger="refresh"
   xmlns="https://hyperview.org/hyperview"

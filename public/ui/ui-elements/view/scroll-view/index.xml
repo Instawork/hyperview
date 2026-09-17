@@ -388,6 +388,7 @@
   href="/ui/ui-elements/view/scroll-view/index.xml"
   id="directory-list"
   style="list-container"
+  content-insets="true"
   target="directory-list"
   trigger="refresh"
   xmlns="https://hyperview.org/hyperview"

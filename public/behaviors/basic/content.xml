@@ -5,6 +5,7 @@
   action="replace"
   href="/hyperview/public/behaviors/basic/index.xml"
   id="directory-list"
+  content-insets="true"
   sticky-section-titles="false"
   style="list-container"
   target="directory-list"
