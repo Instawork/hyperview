@@ -5,7 +5,7 @@ import type {
   HvComponentProps,
   StyleSheet,
 } from 'hyperview/src/types';
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   createStyleProp,
   createTestProps,
@@ -26,6 +26,16 @@ import { View } from 'react-native';
 const HvPickerField = (props: HvComponentProps) => {
   // eslint-disable-next-line react/destructuring-assignment
   const { element, onUpdate, options, stylesheets } = props;
+
+  // While the picker is open, the value of the wheel is held here rather than on the
+  // `picker-value` attribute. Writing to the attribute means a document swap, which
+  // re-renders the whole screen and can be applied to a stale element when an unrelated
+  // part of the screen re-renders at the same time. When that happens the `selectedValue`
+  // we hand back to the native picker lags behind the wheel, and the picker corrects
+  // itself with an animated programmatic scroll in the middle of the user's gesture.
+  // On iOS 26 + Fabric that scroll is what crashes UIPickerView's hit test.
+  // The value is committed to the DOM when the picker is dismissed.
+  const [inFlightValue, setInFlightValue] = useState<string | null>(null);
 
   /**
    * Returns a string representing the value in the field.
@@ -94,8 +104,8 @@ const HvPickerField = (props: HvComponentProps) => {
    * Returns a string representing the value in the picker.
    */
   const getPickerValue = useCallback(
-    (): string => element.getAttribute('picker-value') || '',
-    [element],
+    (): string => inFlightValue ?? (element.getAttribute('picker-value') || ''),
+    [element, inFlightValue],
   );
 
   /**
@@ -103,9 +113,11 @@ const HvPickerField = (props: HvComponentProps) => {
    * If the field is not set, use the first value in the picker.
    */
   const onFieldPress = useCallback(() => {
+    const initialValue = getPickerInitialValue();
+    setInFlightValue(initialValue);
     const newElement = element.cloneNode(true) as Element;
     newElement.setAttribute('focused', 'true');
-    newElement.setAttribute('picker-value', getPickerInitialValue());
+    newElement.setAttribute('picker-value', initialValue);
     onUpdate(null, 'swap', element, { newElement });
     Behaviors.trigger('focus', newElement, onUpdate);
   }, [element, onUpdate, getPickerInitialValue]);
@@ -114,6 +126,7 @@ const HvPickerField = (props: HvComponentProps) => {
    * Hides the picker without applying the chosen value.
    */
   const onCancel = useCallback(() => {
+    setInFlightValue(null);
     const newElement = element.cloneNode(true) as Element;
     newElement.setAttribute('focused', 'false');
     newElement.removeAttribute('picker-value');
@@ -127,6 +140,7 @@ const HvPickerField = (props: HvComponentProps) => {
   const onDone = useCallback(() => {
     const pickerValue = getPickerValue();
     const value = getValue();
+    setInFlightValue(null);
     const newElement = element.cloneNode(true) as Element;
     newElement.setAttribute('value', pickerValue);
     newElement.removeAttribute('picker-value');
@@ -145,14 +159,9 @@ const HvPickerField = (props: HvComponentProps) => {
   /**
    * Updates the picker value while keeping the picker open.
    */
-  const setPickerValue = useCallback(
-    (value: string) => {
-      const newElement = element.cloneNode(true) as Element;
-      newElement.setAttribute('picker-value', value);
-      onUpdate(null, 'swap', element, { newElement });
-    },
-    [element, onUpdate],
-  );
+  const setPickerValue = useCallback((value: string) => {
+    setInFlightValue(value);
+  }, []);
 
   /**
    * Returns true if the field is focused (and picker is showing).
