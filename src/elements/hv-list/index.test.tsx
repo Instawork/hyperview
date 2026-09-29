@@ -4,11 +4,25 @@ import React from 'react';
 
 describe('HvList', () => {
   describe('render', () => {
-    test('basic', async () => {
+    test('does not apply content insets by default', async () => {
       render(<HyperviewMock paths={[`${__dirname}/stories/basic.xml`]} />);
 
       await waitFor(() => {
-        expect(screen.getByTestId('list')).toBeOnTheScreen();
+        expect(
+          screen.getByTestId('list').props.contentInsetAdjustmentBehavior,
+        ).toBeUndefined();
+        return true;
+      });
+    });
+    test('applies content insets when enabled', async () => {
+      render(
+        <HyperviewMock paths={[`${__dirname}/stories/content_insets.xml`]} />,
+      );
+
+      await waitFor(() => {
+        expect(
+          screen.getByTestId('list').props.contentInsetAdjustmentBehavior,
+        ).toEqual('automatic');
         return true;
       });
     });

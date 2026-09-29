@@ -13,6 +13,9 @@
   >
     <navigation:bottom-tab-bar-item
       navigation:route="custom-bottom-tabs-tab-1"
+      navigation:label="Tab 1"
+      navigation:icon="/hyperview/public/assets/tab-icons/behaviors.png"
+      {% if notify_tab == 1 %}navigation:badge="1"{% endif %}
       style="tabbar-bottom-tab"
     >
       <view style="tabbar-bottom-tab-content">
@@ -30,6 +33,9 @@
     </navigation:bottom-tab-bar-item>
     <navigation:bottom-tab-bar-item
       navigation:route="custom-bottom-tabs-tab-2"
+      navigation:label="Tab 2"
+      navigation:icon="/hyperview/public/assets/tab-icons/advanced.png"
+      {% if notify_tab == 2 %}navigation:badge="1"{% endif %}
       style="tabbar-bottom-tab"
     >
       <view style="tabbar-bottom-tab-content">

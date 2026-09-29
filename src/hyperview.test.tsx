@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react-native';
+import { act, render, screen, waitFor } from '@testing-library/react-native';
 import Hyperview from './hyperview';
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
@@ -793,6 +793,119 @@ describe('Hyperview', () => {
               { timeout: 2000 },
             );
           });
+        });
+      });
+    });
+
+    describe('Fragment fetch error', () => {
+      test('restores indicators after a failed replace', async () => {
+        const mockFetch = fetchFactory([
+          [
+            'http://myapp.com/navigator',
+            `
+              <doc xmlns="https://hyperview.org/hyperview">
+                <navigator id="root" type="stack">
+                  <nav-route id="home" href="http://myapp.com/view" />
+                </navigator>
+              </doc>
+            `,
+          ],
+          [
+            'http://myapp.com/view',
+            `
+              <doc xmlns="https://hyperview.org/hyperview">
+                <screen>
+                  <body>
+                    <view id="container">
+                      <behavior
+                        action="replace"
+                        trigger="load"
+                        href="http://myapp.com/fail-fragment"
+                        target="container"
+                        show-during-load="loading-indicator"
+                        hide-during-load="status-text"
+                        once="true"
+                      />
+                      <text id="container-text">Original fragment</text>
+                    </view>
+                    <text id="status-text">Ready</text>
+                    <spinner id="loading-indicator" hide="true" />
+                  </body>
+                </screen>
+              </doc>
+            `,
+          ],
+          ['http://myapp.com/fail-fragment', 'Internal Server Error', 500],
+        ]);
+
+        behaviorRender(mockFetch);
+
+        await waitFor(() => {
+          expect(
+            screen.getByText('ServerError: ServerError (status 500)'),
+          ).toBeOnTheScreen();
+          expect(screen.getByTestId('container-text')).toBeOnTheScreen();
+          expect(screen.queryByTestId('loading-indicator')).toBeNull();
+          expect(screen.getByText('Ready')).toBeOnTheScreen();
+        });
+      });
+
+      test('stops list pull-to-refresh after a failed replace', async () => {
+        const mockFetch = fetchFactory([
+          [
+            'http://myapp.com/navigator',
+            `
+              <doc xmlns="https://hyperview.org/hyperview">
+                <navigator id="root" type="stack">
+                  <nav-route id="home" href="http://myapp.com/view" />
+                </navigator>
+              </doc>
+            `,
+          ],
+          [
+            'http://myapp.com/view',
+            `
+              <doc xmlns="https://hyperview.org/hyperview">
+                <screen>
+                  <body>
+                    <list id="tasks" trigger="refresh">
+                      <behavior
+                        trigger="refresh"
+                        href="http://myapp.com/fail-fragment"
+                        action="replace"
+                        target="tasks"
+                      />
+                      <item key="1">
+                        <text id="task-text">Example task</text>
+                      </item>
+                    </list>
+                  </body>
+                </screen>
+              </doc>
+            `,
+          ],
+          ['http://myapp.com/fail-fragment', 'Internal Server Error', 500],
+        ]);
+
+        behaviorRender(mockFetch);
+
+        await waitFor(() => {
+          expect(screen.getByTestId('tasks')).toBeOnTheScreen();
+        });
+
+        const { refreshControl } = screen.getByTestId('tasks').props;
+        await act(async () => {
+          refreshControl.props.onRefresh();
+        });
+
+        await waitFor(() => {
+          expect(
+            screen.getByText('ServerError: ServerError (status 500)'),
+          ).toBeOnTheScreen();
+          expect(screen.getByTestId('task-text')).toBeOnTheScreen();
+          expect(
+            screen.getByTestId('tasks').props.refreshControl.props.refreshing,
+          ).toBe(false);
         });
       });
     });

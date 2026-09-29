@@ -3,7 +3,7 @@ version: 2
 jobs:
   test:
     docker:
-      - image: cimg/python:3.12.1-node
+      - image: cimg/python:3.12.11-node
     steps:
       - checkout
       - run:
@@ -45,7 +45,7 @@ jobs:
           command: yarn test:validate-xml
   deploy:
     docker:
-      - image: cimg/python:3.12.1-node
+      - image: cimg/python:3.12.11-node
     steps:
       - add_ssh_keys:
           fingerprints:

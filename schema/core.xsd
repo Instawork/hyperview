@@ -474,6 +474,7 @@
       </xs:simpleType>
     </xs:attribute>
     <xs:attribute name="over-scroll" type="xs:boolean" />
+    <xs:attribute name="content-insets" type="xs:boolean" />
   </xs:attributeGroup>
 
   <xs:attributeGroup name="viewAttributes">

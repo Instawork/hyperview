@@ -19,7 +19,11 @@ describe('HvView', () => {
       render(<HyperviewMock paths={[`${__dirname}/stories/scrollview.xml`]} />);
 
       await waitFor(() => {
-        expect(screen.getByTestId('container-vertical')).toBeOnTheScreen();
+        const verticalScroll = screen.getByTestId('container-vertical');
+        expect(verticalScroll).toBeOnTheScreen();
+        expect(
+          verticalScroll.props.contentInsetAdjustmentBehavior,
+        ).toBeUndefined();
         expect(screen.getByTestId('child-vertical-1')).toBeOnTheScreen();
         expect(screen.getByTestId('child-vertical-2')).toBeOnTheScreen();
         expect(screen.getByTestId('child-vertical-3')).toBeOnTheScreen();
@@ -34,6 +38,23 @@ describe('HvView', () => {
         expect(screen.getByTestId('child-horizontal-5')).toBeOnTheScreen();
         expect(screen.getByTestId('child-horizontal-6')).toBeOnTheScreen();
         expect(screen.getByTestId('child-horizontal-7')).toBeOnTheScreen();
+        return true;
+      });
+    });
+    test('applies content insets when enabled', async () => {
+      render(
+        <HyperviewMock paths={[`${__dirname}/stories/content_insets.xml`]} />,
+      );
+
+      await waitFor(() => {
+        expect(
+          screen.getByTestId('container-vertical').props
+            .contentInsetAdjustmentBehavior,
+        ).toEqual('automatic');
+        expect(
+          screen.getByTestId('container-horizontal').props
+            .contentInsetAdjustmentBehavior,
+        ).toBeUndefined();
         return true;
       });
     });

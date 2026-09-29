@@ -5,12 +5,12 @@ import { useBottomTabBarContext } from '../../Contexts';
 import { useCallback } from 'react';
 
 /**
- * Component used by Hyperview to render a custom bottom tab bar.
+ * Renders the HXML tab bar used by the non-native React Navigation BottomTabView.
  * It retrieves the arguments needed by Hyperview render service
  * from BottomTabBarContext. This works in tandem with the custom Hyperview
  * element <navigation:bottom-tab-bar>
  */
-export const BottomTabBar = (navProps: Props): JSX.Element | null => {
+export const TabBar = (navProps: Props): JSX.Element | null => {
   const { id, state, navigation } = navProps;
   // id is provided by Hyperview, and represents a tab navigator id
   const { getElementProps, setElement } = useBottomTabBarContext();

@@ -35,6 +35,7 @@ A `<section-list>` element will only render `<section-title>` and `<item>` child
 - [Behavior attributes](#behavior-attributes)
 - [`style`](#style)
 - [`content-container-style`](#content-container-style)
+- [`content-insets`](#content-insets)
 - [`id`](#id)
 - [`hide`](#hide)
 - [`scroll-orientation`](#scroll-orientation)
@@ -63,6 +64,14 @@ A space-separated list of styles to apply to the text. See [Styles](/docs/refere
 | string | No       |
 
 A space-separated list of styles to apply to the content container element of the scrollable view. See [Styles](/docs/reference_style).
+
+#### `content-insets`
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| true, **false** (default) | No       |
+
+Specifies whether safe area insets modify the content area of the section list on iOS. When `true`, Hyperview sets React Native's [`contentInsetAdjustmentBehavior`](https://reactnative.dev/docs/0.77/scrollview#contentinsetadjustmentbehavior-ios) to `automatic`.
 
 #### `id`
 
