@@ -22,6 +22,7 @@ export default (props: Props) => {
 
   return (
     <TouchableWithoutFeedback
+      accessible={false}
       onPress={props.onPress}
       onPressIn={() => setPressed(true)}
       onPressOut={() => setPressed(false)}
