@@ -5788,10 +5788,10 @@ humps@2.0.1:
   resolved "https://registry.yarnpkg.com/humps/-/humps-2.0.1.tgz#dd02ea6081bd0568dc5d073184463957ba9ef9aa"
   integrity sha512-E0eIbrFWUhwfXJmsbdjRQFQPrl5pTEoKlz163j1mTqqUnU9PgR4AgB8AIITzuB3vLBdxZXyZ9TDIrwB2OASz4g==
 
-hyperview@0.111.0:
-  version "0.111.0"
-  resolved "https://registry.npmjs.org/hyperview/-/hyperview-0.111.0.tgz#917727be0c59143dcab19a46d3406a972629c301"
-  integrity sha512-k9RdACurh8MYKNZhFune/q1fdzkWPNzC2/FQjZ9TTSPCmS+oA9KJIIz6wBSd0iLI3ihVUrdFyXyFUarZ/yJtww==
+hyperview@0.112.0:
+  version "0.112.0"
+  resolved "https://registry.yarnpkg.com/hyperview/-/hyperview-0.112.0.tgz#beafd550c6807a042b73348b3a84c701575c7df1"
+  integrity sha512-Yp/tW7bRhRcN52Ghda/zNAMmt0bVaGL6t1/LY4hs/9c7BAUBSBBNjTj5QHi29vxbkG0ftJAtOeTea6YAk950wg==
   dependencies:
     "@instawork/xmldom" "0.0.3"
     lodash "4.17.21"
