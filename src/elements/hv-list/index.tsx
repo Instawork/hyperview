@@ -13,11 +13,7 @@ import {
   Platform,
 } from 'react-native';
 import React, { useCallback, useRef, useState } from 'react';
-import {
-  createStyleProp,
-  createTestProps,
-  getAncestorByTagName,
-} from 'hyperview/src/services';
+import { createStyleProp, getAncestorByTagName } from 'hyperview/src/services';
 import { BehaviorScrollError } from 'hyperview/src/errors';
 import type { ElementRef } from 'react';
 // eslint-disable-next-line instawork/import-components
@@ -218,7 +214,7 @@ const HvList = (props: HvComponentProps) => {
       : acc;
   }, []);
 
-  const { testID, accessibilityLabel } = createTestProps(element);
+  const testID = element.getAttribute('id') || undefined;
 
   const contentContainerStyle = element.getAttribute('content-container-style')
     ? createStyleProp(element, stylesheets, {
@@ -245,7 +241,6 @@ const HvList = (props: HvComponentProps) => {
         return (
           <FlatList
             ref={ref}
-            accessibilityLabel={accessibilityLabel}
             bounces={bounces}
             contentContainerStyle={contentContainerStyle}
             data={getItems()}

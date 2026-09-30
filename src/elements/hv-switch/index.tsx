@@ -3,7 +3,6 @@ import * as Namespaces from 'hyperview/src/services/namespaces';
 import { Platform, StyleSheet, Switch } from 'react-native';
 import {
   createStyleProp,
-  createTestProps,
   getNameValueFormInputValues,
 } from 'hyperview/src/services';
 import type { ColorValue } from './style-sheet';
@@ -48,10 +47,9 @@ const HvSwitch = (props: HvComponentProps) => {
     }),
   );
 
-  const { testID, accessibilityLabel } = createTestProps(props.element);
+  const testID = props.element.getAttribute('id') || undefined;
 
   const componentProps = {
-    accessibilityLabel,
     ios_backgroundColor: unselectedStyle
       ? unselectedStyle.backgroundColor
       : null,
