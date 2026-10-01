@@ -1,5 +1,5 @@
 {
-  "packageManager": "yarn@1.22.22",
+  "packageManager": "yarn@4.17.1",
   "scripts": {
     "examples": "docusaurus-examples",
     "start": "docusaurus-start",
