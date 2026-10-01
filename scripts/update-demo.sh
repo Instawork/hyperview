@@ -52,10 +52,7 @@ yarn add --exact \
   @react-navigation/stack@6.3.16
 
 # Make Hyperview symlinkable
-cd $ROOT_DIR
-yarn link
-cd demo
-yarn link hyperview
+yarn link ..
 
 # Install dev dependencies
 yarn add -D \
