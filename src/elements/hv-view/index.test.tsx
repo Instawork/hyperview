@@ -5,7 +5,9 @@ import React from 'react';
 describe('HvView', () => {
   describe('render', () => {
     test('basic', async () => {
-      render(<HyperviewMock paths={[`${__dirname}/stories/basic.xml`]} />);
+      await render(
+        <HyperviewMock paths={[`${__dirname}/stories/basic.xml`]} />,
+      );
 
       await waitFor(() => {
         expect(screen.getByTestId('container')).toBeOnTheScreen();
@@ -16,7 +18,9 @@ describe('HvView', () => {
       });
     });
     test('scrollview', async () => {
-      render(<HyperviewMock paths={[`${__dirname}/stories/scrollview.xml`]} />);
+      await render(
+        <HyperviewMock paths={[`${__dirname}/stories/scrollview.xml`]} />,
+      );
 
       await waitFor(() => {
         const verticalScroll = screen.getByTestId('container-vertical');
@@ -42,7 +46,7 @@ describe('HvView', () => {
       });
     });
     test('applies content insets when enabled', async () => {
-      render(
+      await render(
         <HyperviewMock paths={[`${__dirname}/stories/content_insets.xml`]} />,
       );
 
@@ -59,7 +63,9 @@ describe('HvView', () => {
       });
     });
     test('applies the id to a single element when wrapped by a hyper-ref', async () => {
-      render(<HyperviewMock paths={[`${__dirname}/stories/pressable.xml`]} />);
+      await render(
+        <HyperviewMock paths={[`${__dirname}/stories/pressable.xml`]} />,
+      );
 
       await waitFor(() => {
         expect(screen.getAllByTestId('pressable')).toHaveLength(1);
@@ -68,7 +74,7 @@ describe('HvView', () => {
       });
     });
     test('collapsable', async () => {
-      render(
+      await render(
         <HyperviewMock paths={[`${__dirname}/stories/collapsable.xml`]} />,
       );
 
