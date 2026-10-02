@@ -1,15 +1,16 @@
 {
   "name": "demo",
   "version": "1.0.0",
+  "packageManager": "yarn@4.17.1",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
-    "deploy": "gh-pages -d hyperview",
+    "build:web": "BASE_URL=https://instawork.github.io expo export:web; rm -rf hyperview; mv -f web-build/ hyperview; ENV='production' eleventy",
+    "deploy": "yarn build:web && gh-pages -d hyperview",
     "format-njk": "./scripts/format-njk.sh",
-    "predeploy": "BASE_URL=https://instawork.github.io expo export:web; rm -rf hyperview; mv -f web-build/ hyperview; ENV='production' eleventy",
     "prettify": "pretty-quick && prettier --write '**/*.md'",
     "server": "eleventy --watch --incremental --serve --port=8085",
     "test:lint": "eslint src && prettier --check '**/*.md' && yarn format-njk -c",

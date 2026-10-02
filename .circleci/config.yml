@@ -7,6 +7,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Enable corepack
+          command: sudo corepack enable
+      - run:
           name: Install dependencies
           command: yarn
       - run:
@@ -51,6 +54,9 @@ jobs:
           fingerprints:
             - 'SHA256:efIwcAYspXfEF3arKOxCPis7fOPJ1SRlYKCx7AC+HoE'
       - checkout
+      - run:
+          name: Enable corepack
+          command: sudo corepack enable
       - run: yarn
       - run:
           working_directory: demo
