@@ -61,11 +61,13 @@ Enable corepack once (it provides the Yarn version pinned in `package.json`):
 corepack enable
 ```
 
-Then, from the `demo/` directory:
+Then, from the root of the repository:
 
 ```sh
 yarn
 ```
+
+This installs the dependencies of both the `hyperview/` package and the `demo/` app, which uses the local `hyperview/` package through a Yarn workspace.
 
 Note: you only need to run this step once.
 
@@ -130,25 +132,13 @@ This compiles Hyperview onto the device (first run takes a few minutes) and star
 
 ## Developing Hyperview Core Features
 
-As you're developing new features in the Hyperview library, you can use the demo app along with this special command to help you quickly test your changes:
+The `demo/` app uses the local `hyperview/` package through a Yarn workspace, so changes made in `hyperview/src` are picked up directly by the demo.
 
-From the `demo/` directory (in a separate terminal):
-
-```sh
-yarn sync
-```
-
-This command will copy all the files from the `hyperview/src` directory, into the `demo/node_modules/hyperview/src` directory, and watch for any more changes.
-
-You can also pass as an additional argument the root path of your own react-native app where you've installed hyperview to perform the same sync/watch operation. e.g.
+To test your changes in your own react-native app where you've installed hyperview, from the root of the repository, pass the root path of that app to `yarn sync`. The command copies all the files from the `hyperview/src` directory into the app's `node_modules/hyperview/src` directory, and watches for any more changes. e.g.
 
 ```sh
 yarn sync ../projects/my-cool-app
 ```
-
-> **Tip**
->
-> You may stop this with <kbd>Ctrl</kbd> + <kbd>C</kbd>
 
 ## Troubleshooting
 

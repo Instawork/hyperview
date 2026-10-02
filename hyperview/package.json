@@ -1,7 +1,6 @@
 {
   "name": "hyperview",
   "version": "0.112.0",
-  "packageManager": "yarn@4.17.1",
   "main": "src/index.ts",
   "description": "React Native client for Hyperview XML",
   "homepage": "https://hyperview.org",
@@ -90,9 +89,6 @@
   },
   "jest": {
     "preset": "@react-native/jest-preset",
-    "modulePathIgnorePatterns": [
-      "./demo/"
-    ],
     "setupFiles": [
       "./test/setup.ts"
     ],
