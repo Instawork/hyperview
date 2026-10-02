@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-ROOT_DIR=$(cd "$(dirname "$0")/..";pwd -P)
-cd $ROOT_DIR
+HYPERVIEW_DIR=$(cd "$(dirname "$0")/.."; pwd -P)
+ROOT_DIR=$(git -C "$HYPERVIEW_DIR" rev-parse --show-toplevel)
+cd "$ROOT_DIR"
 
 # Move app code in temp dir and recreate app
 rm -rf demo-old
@@ -52,7 +53,7 @@ yarn add --exact \
   @react-navigation/stack@6.3.16
 
 # Make Hyperview symlinkable
-yarn link ..
+yarn link "$HYPERVIEW_DIR"
 
 # Install dev dependencies
 yarn add -D \
