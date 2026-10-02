@@ -3,12 +3,15 @@ version: 2
 jobs:
   test:
     docker:
-      - image: cimg/python:3.12.11-node
+      - image: cimg/python:3.12.14-node
     steps:
       - checkout
       - run:
           name: Enable corepack
           command: sudo corepack enable
+      - run:
+          name: Node version
+          command: node --version
       - run:
           name: Install dependencies
           command: yarn
@@ -48,7 +51,7 @@ jobs:
           command: yarn test:validate-xml
   deploy:
     docker:
-      - image: cimg/python:3.12.11-node
+      - image: cimg/python:3.12.14-node
     steps:
       - add_ssh_keys:
           fingerprints:
@@ -57,6 +60,9 @@ jobs:
       - run:
           name: Enable corepack
           command: sudo corepack enable
+      - run:
+          name: Node version
+          command: node --version
       - run: yarn
       - run:
           working_directory: demo
