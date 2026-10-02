@@ -5,12 +5,14 @@ import path from 'path';
 const PROJECT_DIR = path.join(__dirname, '../..');
 const SRC_DIRNAME = process.argv[3] || 'src';
 const SRC_DIR = path.join(PROJECT_DIR, SRC_DIRNAME);
-const DEST_PROJECT_REL_PATH = process.argv[2] || './demo';
-const HYPERVIEW_DIR = path.join(
-  PROJECT_DIR,
-  DEST_PROJECT_REL_PATH,
-  '/node_modules/hyperview',
-);
+const REPO_ROOT = childProcess
+  .execSync('git rev-parse --show-toplevel', { cwd: PROJECT_DIR })
+  .toString()
+  .trim();
+const DEST_PROJECT_DIR = process.argv[2]
+  ? path.resolve(process.cwd(), process.argv[2])
+  : path.join(REPO_ROOT, 'demo');
+const HYPERVIEW_DIR = path.join(DEST_PROJECT_DIR, 'node_modules/hyperview');
 const HYPERVIEW_SRC_DIR = path.join(HYPERVIEW_DIR, SRC_DIRNAME);
 
 const updatePackageJson = () => {

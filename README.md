@@ -55,7 +55,13 @@ It also contains a demo Expo project that can connect to the example XML server,
 
 ### 1. Install dependencies
 
-From the `demo/` directory:
+Enable corepack once (it provides the Yarn version pinned in `package.json`):
+
+```sh
+corepack enable
+```
+
+Then, from the `demo/` directory:
 
 ```sh
 yarn

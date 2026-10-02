@@ -5,7 +5,9 @@ import React from 'react';
 describe('HvImage', () => {
   describe('render', () => {
     test('basic', async () => {
-      render(<HyperviewMock paths={[`${__dirname}/stories/basic.xml`]} />);
+      await render(
+        <HyperviewMock paths={[`${__dirname}/stories/basic.xml`]} />,
+      );
 
       await waitFor(() => {
         const element = screen.getByText('Hello, world!');
@@ -14,7 +16,9 @@ describe('HvImage', () => {
       });
     });
     test('nested', async () => {
-      render(<HyperviewMock paths={[`${__dirname}/stories/nested.xml`]} />);
+      await render(
+        <HyperviewMock paths={[`${__dirname}/stories/nested.xml`]} />,
+      );
 
       await waitFor(() => {
         const element = screen.getByText('Hello, world!');
@@ -23,7 +27,7 @@ describe('HvImage', () => {
       });
     });
     test('preformatted', async () => {
-      render(
+      await render(
         <HyperviewMock paths={[`${__dirname}/stories/preformatted.xml`]} />,
       );
 
@@ -34,7 +38,9 @@ describe('HvImage', () => {
       });
     });
     test('selectable', async () => {
-      render(<HyperviewMock paths={[`${__dirname}/stories/selectable.xml`]} />);
+      await render(
+        <HyperviewMock paths={[`${__dirname}/stories/selectable.xml`]} />,
+      );
 
       await waitFor(() => {
         const element = screen.getByText('Hello, world!');

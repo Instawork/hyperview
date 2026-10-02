@@ -84,7 +84,7 @@ describe('Hyperview navigation sequences', () => {
         ],
       ]);
 
-      render(
+      await render(
         <NavigationContainer>
           <Hyperview
             entrypointUrl="http://myapp.com/navigation-sequence-document"
@@ -165,7 +165,7 @@ describe('Hyperview navigation sequences', () => {
       ],
     ]);
 
-    render(
+    await render(
       <NavigationContainer>
         <Hyperview
           entrypointUrl="http://myapp.com/community-document"
@@ -178,7 +178,7 @@ describe('Hyperview navigation sequences', () => {
     await waitFor(() => {
       expect(screen.getByTestId('get-started')).toBeOnTheScreen();
     });
-    fireEvent.press(screen.getByTestId('get-started'));
+    await fireEvent.press(screen.getByTestId('get-started'));
 
     await waitFor(() => {
       expect(screen.getByTestId('community-form')).toBeOnTheScreen();
@@ -231,7 +231,7 @@ describe('Hyperview navigation sequences', () => {
       ],
     ]);
 
-    render(
+    await render(
       <NavigationContainer>
         <Hyperview
           entrypointUrl="http://myapp.com/named-modal-document"
@@ -244,7 +244,7 @@ describe('Hyperview navigation sequences', () => {
     await waitFor(() => {
       expect(screen.getByTestId('close-welcome')).toBeOnTheScreen();
     });
-    fireEvent.press(screen.getByTestId('close-welcome'));
+    await fireEvent.press(screen.getByTestId('close-welcome'));
 
     await waitFor(() => {
       expect(screen.getByTestId('home')).toBeOnTheScreen();
@@ -354,7 +354,7 @@ describe('Hyperview navigation sequences', () => {
       ],
     ]);
 
-    render(
+    await render(
       <NavigationContainer>
         <Hyperview
           entrypointUrl="http://myapp.com/nested-modal-document"
@@ -367,19 +367,19 @@ describe('Hyperview navigation sequences', () => {
     await waitFor(() => {
       expect(screen.getByTestId('open-first-modal')).toBeOnTheScreen();
     });
-    fireEvent.press(screen.getByTestId('open-first-modal'));
+    await fireEvent.press(screen.getByTestId('open-first-modal'));
     await waitFor(() => {
       expect(screen.getByTestId('open-second-modal')).toBeOnTheScreen();
     });
-    fireEvent.press(screen.getByTestId('open-second-modal'));
+    await fireEvent.press(screen.getByTestId('open-second-modal'));
     await waitFor(() => {
       expect(screen.getByTestId('open-third-modal')).toBeOnTheScreen();
     });
-    fireEvent.press(screen.getByTestId('open-third-modal'));
+    await fireEvent.press(screen.getByTestId('open-third-modal'));
     await waitFor(() => {
       expect(screen.getByTestId('close-modal-flow')).toBeOnTheScreen();
     });
-    fireEvent.press(screen.getByTestId('close-modal-flow'));
+    await fireEvent.press(screen.getByTestId('close-modal-flow'));
 
     await waitFor(() => {
       expect(screen.getByTestId('home')).toBeOnTheScreen();
@@ -455,7 +455,7 @@ describe('Hyperview navigation sequences', () => {
       ],
     ]);
 
-    render(
+    await render(
       <NavigationContainer>
         <Hyperview
           entrypointUrl="http://myapp.com/push-in-modal-document"
@@ -468,15 +468,15 @@ describe('Hyperview navigation sequences', () => {
     await waitFor(() => {
       expect(screen.getByTestId('open-modal')).toBeOnTheScreen();
     });
-    fireEvent.press(screen.getByTestId('open-modal'));
+    await fireEvent.press(screen.getByTestId('open-modal'));
     await waitFor(() => {
       expect(screen.getByTestId('push')).toBeOnTheScreen();
     });
-    fireEvent.press(screen.getByTestId('push'));
+    await fireEvent.press(screen.getByTestId('push'));
     await waitFor(() => {
       expect(screen.getByTestId('close')).toBeOnTheScreen();
     });
-    fireEvent.press(screen.getByTestId('close'));
+    await fireEvent.press(screen.getByTestId('close'));
 
     await waitFor(() => {
       expect(screen.getByTestId('home')).toBeOnTheScreen();
@@ -567,7 +567,7 @@ describe('Hyperview navigation sequences', () => {
       ],
     ]);
 
-    render(
+    await render(
       <NavigationContainer>
         <Hyperview
           entrypointUrl="http://myapp.com/push-then-modal-document"
@@ -580,11 +580,11 @@ describe('Hyperview navigation sequences', () => {
     await waitFor(() => {
       expect(screen.getByTestId('push')).toBeOnTheScreen();
     });
-    fireEvent.press(screen.getByTestId('push'));
+    await fireEvent.press(screen.getByTestId('push'));
     await waitFor(() => {
       expect(screen.getByTestId('open-modal')).toBeOnTheScreen();
     });
-    fireEvent.press(screen.getByTestId('open-modal'));
+    await fireEvent.press(screen.getByTestId('open-modal'));
 
     await waitFor(() => {
       expect(screen.getByTestId('home')).toBeOnTheScreen();
@@ -651,7 +651,7 @@ describe('Hyperview navigation sequences', () => {
       return new Response('Not found', { status: 404 });
     });
 
-    render(
+    await render(
       <>
         <NavigationContainer ref={navigationRef}>
           <Hyperview
@@ -670,7 +670,7 @@ describe('Hyperview navigation sequences', () => {
     await waitFor(() => {
       expect(screen.getByTestId('load-destination')).toBeOnTheScreen();
     });
-    fireEvent.press(screen.getByTestId('load-destination'));
+    await fireEvent.press(screen.getByTestId('load-destination'));
 
     await waitFor(() => {
       expect(
@@ -679,7 +679,7 @@ describe('Hyperview navigation sequences', () => {
     });
     expect(getCurrentUrl()).not.toBe(destinationUrl);
 
-    fireEvent.press(screen.getByTestId('resolve-destination'));
+    await fireEvent.press(screen.getByTestId('resolve-destination'));
 
     await waitFor(() => {
       expect(screen.getByTestId('destination')).toBeOnTheScreen();
