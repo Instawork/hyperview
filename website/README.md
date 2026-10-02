@@ -1,5 +1,15 @@
 This website was created with [Docusaurus](https://docusaurus.io/).
 
+> [!NOTE]
+> The website is intentionally **not** a Yarn workspace of this repository. Install it separately by running `yarn` in this directory.
+>
+> - It runs on Docusaurus 1 (end of life) with React 16.
+> - Its install builds native image binaries (`imagemin-gifsicle`, `imagemin-optipng`, `imagemin-jpegtran` through `bin-build`), which often fail on recent Node versions and on Apple Silicon. Inside the workspaces, such a failure would break every root install.
+> - CI doesn't build it.
+> - Its `resolutions` would otherwise apply to the whole repository.
+>
+> It can join the workspaces once it moves off Docusaurus 1.
+
 # What's In This Document
 
 * [Get Started in 5 Minutes](#get-started-in-5-minutes)

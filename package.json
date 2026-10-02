@@ -1,103 +1,21 @@
 {
-  "name": "hyperview",
-  "version": "0.112.0",
+  "private": true,
   "packageManager": "yarn@4.17.1",
-  "main": "src/index.ts",
-  "description": "React Native client for Hyperview XML",
-  "homepage": "https://hyperview.org",
-  "keywords": [
+  "workspaces": [
     "hyperview",
-    "react-native-hyperview",
-    "hyperview-xml"
+    "demo"
   ],
-  "bugs": {
-    "url": "https://github.com/Instawork/hyperview/issues",
-    "email": "engineering-contact@instawork.com"
+  "engines": {
+    "node": ">=24 <25"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Instawork/hyperview"
-  },
-  "license": "MIT",
   "scripts": {
-    "sync": "ts-node ./scripts/sync",
-    "prettify": "pretty-quick && prettier --write '**/*.xsd' '**/*.xml' '**/*.md'",
-    "release:patch": "./scripts/release.sh patch",
-    "release:minor": "./scripts/release.sh minor",
-    "release:major": "./scripts/release.sh major",
-    "test:ts": "tsc",
-    "test:lint": "eslint src test/helpers test/integration && prettier --check '**/*.xsd' '**/*.xml' '**/*.md'",
-    "test:unit": "jest --runInBand --testPathPattern 'src|test/integration'",
-    "test:validate-xml": "find test src -name '*.xml' | xargs xmlschema-validate --schema schema/hyperview.xsd --version 1.1",
-    "test": "yarn test:ts && yarn test:lint && yarn test:unit && yarn test:validate-xml"
-  },
-  "dependencies": {
-    "@instawork/xmldom": "0.0.3",
-    "lodash": "4.17.21",
-    "tiny-emitter": "2.1.0",
-    "url-parse": "1.5.10"
-  },
-  "peerDependencies": {
-    "@react-native-community/datetimepicker": "^9.1.0",
-    "@react-native-picker/picker": "^2.11.4",
-    "@react-navigation/bottom-tabs": "^6.5.7",
-    "@react-navigation/native": "^6.1.6",
-    "@react-navigation/stack": "^6.3.16",
-    "@types/react": "^19.2.0",
-    "react": "^19.2.0",
-    "react-native": ">=0.86.0",
-    "react-native-webview": "^13.16.1"
+    "sync": "yarn workspace hyperview sync",
+    "prettify": "prettier --write 'docs/**/*.md' README.md",
+    "test:docs": "prettier --check 'docs/**/*.md' README.md",
+    "test": "yarn workspace hyperview test && yarn workspace demo test && yarn test:docs"
   },
   "devDependencies": {
-    "@babel/core": "7.29.7",
-    "@babel/eslint-parser": "7.26.5",
-    "@babel/runtime": "7.29.7",
     "@prettier/plugin-xml": "0.13.0",
-    "@react-native-community/datetimepicker": "9.1.0",
-    "@react-native-picker/picker": "2.11.4",
-    "@react-native/babel-preset": "0.86.3",
-    "@react-native/jest-preset": "0.86.3",
-    "@react-navigation/bottom-tabs": "6.5.7",
-    "@react-navigation/native": "6.1.6",
-    "@react-navigation/stack": "6.3.16",
-    "@testing-library/react-native": "14.0.0",
-    "@tsconfig/react-native": "3.0.9",
-    "@types/jest": "29.5.14",
-    "@types/lodash": "4.17.25",
-    "@types/node": "24.19.0",
-    "@types/react": "~19.2.2",
-    "@types/url-parse": "1.4.11",
-    "babel-eslint": "10.1.0",
-    "babel-jest": "29.7.0",
-    "babel-plugin-module-resolver": "5.0.2",
-    "chokidar": "3.6.0",
-    "eslint": "7.20.0",
-    "eslint-import-resolver-babel-module": "5.2.0",
-    "eslint-plugin-instawork": "0.12.0",
-    "jest": "29.7.0",
-    "prettier": "2.2.1",
-    "pretty-quick": "3.1.0",
-    "react": "19.2.3",
-    "react-dom": "19.2.3",
-    "react-native": "0.86.3",
-    "react-native-gesture-handler": "2.32.0",
-    "react-native-safe-area-context": "5.7.0",
-    "react-native-screens": "4.26.2",
-    "react-native-webview": "13.16.1",
-    "test-renderer": "1.2.0",
-    "ts-node": "10.9.2",
-    "typescript": "5.9.3"
-  },
-  "jest": {
-    "preset": "@react-native/jest-preset",
-    "modulePathIgnorePatterns": [
-      "./demo/"
-    ],
-    "setupFiles": [
-      "./test/setup.ts"
-    ],
-    "transformIgnorePatterns": [
-      "./src/components/keyboard-aware-scrollview/"
-    ]
+    "prettier": "2.2.1"
   }
 }
