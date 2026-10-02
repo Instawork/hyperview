@@ -55,7 +55,7 @@
     "@tsconfig/react-native": "^3.0.6",
     "@types/jest": "^30.0.0",
     "@types/lodash": "^4.17.20",
-    "@types/react": "~18.3.12",
+    "@types/react": "~19.2.2",
     "@types/url-parse": "^1.4.11",
     "babel-eslint": "10.1.0",
     "eslint": "7.20.0",
