@@ -22,12 +22,11 @@
   "scripts": {
     "sync": "ts-node ./scripts/sync",
     "prettify": "pretty-quick && prettier --write '**/*.xsd' '**/*.xml' '**/*.md'",
-    "format-njk": "./scripts/format-njk.sh",
     "release:patch": "./scripts/release.sh patch",
     "release:minor": "./scripts/release.sh minor",
     "release:major": "./scripts/release.sh major",
     "test:ts": "tsc",
-    "test:lint": "eslint src test/helpers test/integration && prettier --check '**/*.xsd' '**/*.xml' '**/*.md' && yarn format-njk -c",
+    "test:lint": "eslint src test/helpers test/integration && prettier --check '**/*.xsd' '**/*.xml' '**/*.md'",
     "test:unit": "jest --runInBand --testPathPattern 'src|test/integration'",
     "test:validate-xml": "find test src -name '*.xml' | xargs xmlschema-validate --schema schema/hyperview.xsd --version 1.1",
     "test": "yarn test:ts && yarn test:lint && yarn test:unit && yarn test:validate-xml"
