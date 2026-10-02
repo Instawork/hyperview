@@ -5,7 +5,9 @@ import React from 'react';
 describe('HvSectionList', () => {
   describe('render', () => {
     test('does not apply content insets by default', async () => {
-      render(<HyperviewMock paths={[`${__dirname}/stories/basic.xml`]} />);
+      await render(
+        <HyperviewMock paths={[`${__dirname}/stories/basic.xml`]} />,
+      );
 
       await waitFor(() => {
         expect(
@@ -16,7 +18,7 @@ describe('HvSectionList', () => {
       });
     });
     test('applies content insets when enabled', async () => {
-      render(
+      await render(
         <HyperviewMock paths={[`${__dirname}/stories/content_insets.xml`]} />,
       );
 
@@ -29,7 +31,7 @@ describe('HvSectionList', () => {
       });
     });
     test('infinite scroll', async () => {
-      render(
+      await render(
         <HyperviewMock paths={[`${__dirname}/stories/infinite_scroll.xml`]} />,
       );
 

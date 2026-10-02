@@ -84,8 +84,8 @@ describe('Hyperview', () => {
       return true;
     };
 
-    const behaviorRender = (mockFetch: jest.Mock) => {
-      render(
+    const behaviorRender = async (mockFetch: jest.Mock) => {
+      await render(
         <NavigationContainer>
           <Hyperview
             entrypointUrl="http://myapp.com/navigator"
@@ -146,7 +146,21 @@ describe('Hyperview', () => {
           `,
         );
 
-        behaviorRender(mockFetch);
+        // The reloaded document dispatches the same load event and reloads
+        // again, forever. Keep the second `view` request pending so rendering
+        // can settle on the document where both views were shown by events.
+        let viewRequests = 0;
+        const loopGuardFetch = jest.fn((url: string, options: unknown) => {
+          if (url.includes('/view')) {
+            viewRequests += 1;
+            if (viewRequests > 1) {
+              return new Promise<Response>(() => undefined);
+            }
+          }
+          return mockFetch(url, options);
+        });
+
+        await behaviorRender(loopGuardFetch);
 
         await waitFor(
           () => {
@@ -194,7 +208,7 @@ describe('Hyperview', () => {
             `,
           );
 
-          behaviorRender(mockFetch);
+          await behaviorRender(mockFetch);
 
           await waitFor(
             () => {
@@ -235,7 +249,7 @@ describe('Hyperview', () => {
               `,
             );
 
-            behaviorRender(mockFetch);
+            await behaviorRender(mockFetch);
 
             await waitFor(
               () => {
@@ -273,7 +287,7 @@ describe('Hyperview', () => {
               `,
             );
 
-            behaviorRender(mockFetch);
+            await behaviorRender(mockFetch);
 
             await waitFor(
               () => {
@@ -310,7 +324,7 @@ describe('Hyperview', () => {
               `,
             );
 
-            behaviorRender(mockFetch);
+            await behaviorRender(mockFetch);
 
             await waitFor(
               () => {
@@ -352,7 +366,7 @@ describe('Hyperview', () => {
               `,
             );
 
-            behaviorRender(mockFetch);
+            await behaviorRender(mockFetch);
 
             await waitFor(
               () => {
@@ -389,7 +403,7 @@ describe('Hyperview', () => {
               `,
             );
 
-            behaviorRender(mockFetch);
+            await behaviorRender(mockFetch);
 
             await waitFor(
               () => {
@@ -426,7 +440,7 @@ describe('Hyperview', () => {
               `,
             );
 
-            behaviorRender(mockFetch);
+            await behaviorRender(mockFetch);
 
             await waitFor(
               () => {
@@ -462,7 +476,7 @@ describe('Hyperview', () => {
               </view>
             `,
           );
-          render(
+          await render(
             <NavigationContainer>
               <Hyperview
                 entrypointUrl="http://myapp.com/navigator"
@@ -510,7 +524,7 @@ describe('Hyperview', () => {
             `,
             );
 
-            behaviorRender(mockFetch);
+            await behaviorRender(mockFetch);
 
             await waitFor(
               () => {
@@ -548,7 +562,7 @@ describe('Hyperview', () => {
               `,
             );
 
-            behaviorRender(mockFetch);
+            await behaviorRender(mockFetch);
 
             await waitFor(
               () => {
@@ -587,7 +601,7 @@ describe('Hyperview', () => {
               `,
             );
 
-            behaviorRender(mockFetch);
+            await behaviorRender(mockFetch);
 
             await waitFor(
               () => {
@@ -629,7 +643,7 @@ describe('Hyperview', () => {
             `,
             );
 
-            behaviorRender(mockFetch);
+            await behaviorRender(mockFetch);
 
             await waitFor(
               () => {
@@ -667,7 +681,7 @@ describe('Hyperview', () => {
               `,
             );
 
-            behaviorRender(mockFetch);
+            await behaviorRender(mockFetch);
 
             await waitFor(
               () => {
@@ -705,7 +719,7 @@ describe('Hyperview', () => {
               `,
             );
 
-            behaviorRender(mockFetch);
+            await behaviorRender(mockFetch);
 
             await waitFor(
               () => {
@@ -748,7 +762,7 @@ describe('Hyperview', () => {
               `,
             );
 
-            behaviorRender(mockFetch);
+            await behaviorRender(mockFetch);
 
             await waitFor(
               () => {
@@ -784,7 +798,7 @@ describe('Hyperview', () => {
               `,
             );
 
-            behaviorRender(mockFetch);
+            await behaviorRender(mockFetch);
 
             await waitFor(
               () => {
@@ -838,7 +852,7 @@ describe('Hyperview', () => {
           ['http://myapp.com/fail-fragment', 'Internal Server Error', 500],
         ]);
 
-        behaviorRender(mockFetch);
+        await behaviorRender(mockFetch);
 
         await waitFor(() => {
           expect(
@@ -887,7 +901,7 @@ describe('Hyperview', () => {
           ['http://myapp.com/fail-fragment', 'Internal Server Error', 500],
         ]);
 
-        behaviorRender(mockFetch);
+        await behaviorRender(mockFetch);
 
         await waitFor(() => {
           expect(screen.getByTestId('tasks')).toBeOnTheScreen();

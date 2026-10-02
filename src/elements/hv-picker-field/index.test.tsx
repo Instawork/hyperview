@@ -48,14 +48,16 @@ describe('HvPickerField', () => {
   });
   describe('render', () => {
     test('basic', async () => {
-      render(<HyperviewMock paths={[`${__dirname}/stories/basic.xml`]} />);
+      await render(
+        <HyperviewMock paths={[`${__dirname}/stories/basic.xml`]} />,
+      );
       await waitFor(() => {
         expect(screen.getByTestId('picker-field')).toBeOnTheScreen();
         return true;
       });
     });
     test('deselectable', async () => {
-      render(
+      await render(
         <HyperviewMock paths={[`${__dirname}/stories/deselectable.xml`]} />,
       );
       await waitFor(() => {
@@ -64,7 +66,9 @@ describe('HvPickerField', () => {
       });
     });
     test('filled', async () => {
-      render(<HyperviewMock paths={[`${__dirname}/stories/filled.xml`]} />);
+      await render(
+        <HyperviewMock paths={[`${__dirname}/stories/filled.xml`]} />,
+      );
       await waitFor(() => {
         expect(screen.getByTestId('picker-field')).toBeOnTheScreen();
         return true;

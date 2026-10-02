@@ -5,7 +5,9 @@ import React from 'react';
 describe('HvWebView', () => {
   describe('render', () => {
     test.skip('basic', async () => {
-      render(<HyperviewMock paths={[`${__dirname}/stories/basic.xml`]} />);
+      await render(
+        <HyperviewMock paths={[`${__dirname}/stories/basic.xml`]} />,
+      );
 
       await waitFor(() => {
         expect(screen.getByTestId('web-view')).toBeOnTheScreen();

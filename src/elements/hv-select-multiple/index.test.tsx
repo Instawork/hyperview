@@ -71,7 +71,9 @@ describe('HvSelectMultiple', () => {
   });
   describe('render', () => {
     test('basic', async () => {
-      render(<HyperviewMock paths={[`${__dirname}/stories/basic.xml`]} />);
+      await render(
+        <HyperviewMock paths={[`${__dirname}/stories/basic.xml`]} />,
+      );
 
       await waitFor(() => {
         expect(screen.getByTestId('select')).toBeOnTheScreen();
@@ -79,7 +81,7 @@ describe('HvSelectMultiple', () => {
       });
     });
     test('preselected', async () => {
-      render(
+      await render(
         <HyperviewMock paths={[`${__dirname}/stories/pre_selected.xml`]} />,
       );
 
@@ -89,7 +91,9 @@ describe('HvSelectMultiple', () => {
       });
     });
     test('custom', async () => {
-      render(<HyperviewMock paths={[`${__dirname}/stories/custom.xml`]} />);
+      await render(
+        <HyperviewMock paths={[`${__dirname}/stories/custom.xml`]} />,
+      );
 
       await waitFor(() => {
         expect(screen.getByTestId('select')).toBeOnTheScreen();

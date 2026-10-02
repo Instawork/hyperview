@@ -1,4 +1,11 @@
-import mocks from 'react-native-gesture-handler/src/mocks';
+import mocks, {
+  BaseButton,
+  BorderlessButton,
+  RawButton,
+  RectButton,
+} from 'react-native-gesture-handler/src/mocks/mocks';
+
+export { BaseButton, BorderlessButton, RawButton, RectButton };
 
 export const {
   TouchableHighlight,
@@ -17,10 +24,6 @@ export const {
   PinchGestureHandler,
   RotationGestureHandler,
   FlingGestureHandler,
-  RawButton,
-  BaseButton,
-  RectButton,
-  BorderlessButton,
   PanGestureHandler,
   attachGestureHandler,
   createGestureHandler,

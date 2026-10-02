@@ -5,7 +5,9 @@ import React from 'react';
 describe('HvImage', () => {
   describe('render', () => {
     test('basic', async () => {
-      render(<HyperviewMock paths={[`${__dirname}/stories/basic.xml`]} />);
+      await render(
+        <HyperviewMock paths={[`${__dirname}/stories/basic.xml`]} />,
+      );
 
       await waitFor(() => {
         const element = screen.getByTestId('image');
