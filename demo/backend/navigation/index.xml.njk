@@ -2,22 +2,20 @@
 permalink: "/navigation/index.xml"
 hv_title: "Navigation"
 hv_tab_id: "navigation"
-hv_button_behavior: "none"
 ---
-{% extends 'templates/tab-route.xml.njk' %}
+{% extends 'templates/root.xml.njk' %}
 
-{% from 'macros/tabbar-top/index.xml.njk' import tabbar_top %}
-{% from 'macros/tabbar-top-tab/index.xml.njk' import tabbar_top_tab %}
-
-{% block tab_route_content %}
-  {{ tabbar_top([
-  {id: "tab-behaviors", label: "Behaviors", selected: true},
-  {id: "tab-navigator", label: "Navigator"}
-  ]) }}
-  {% call tabbar_top_tab("tab-behaviors", true) -%}
-    {% include './behaviors/content.xml.njk' %}
-  {%- endcall -%}
-  {% call tabbar_top_tab("tab-navigator") -%}
-    {% include './navigator/content.xml.njk' %}
-  {%- endcall -%}
+{% block root %}
+  <doc xmlns="https://hyperview.org/hyperview">
+    <navigator id="navigation-nested-tabs" type="tab">
+      <nav-route
+        id="navigation-behaviors-route"
+        href="/hyperview/public/navigation/behaviors.xml"
+      />
+      <nav-route
+        id="navigator-route"
+        href="/hyperview/public/navigation/navigator.xml"
+      />
+    </navigator>
+  </doc>
 {% endblock %}

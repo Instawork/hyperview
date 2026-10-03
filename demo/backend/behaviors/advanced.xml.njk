@@ -1,0 +1,17 @@
+---
+permalink: "/behaviors/advanced.xml"
+hv_title: "Behaviors"
+hv_tab_id: "behaviors"
+hv_button_behavior: "none"
+---
+{% extends 'templates/tab-route.xml.njk' %}
+
+{% from 'macros/tabbar-top/index.xml.njk' import tabbar_top %}
+
+{% block tab_route_content %}
+  {{ tabbar_top([
+  {id: "basic-route", label: "Basic"},
+  {id: "advanced-behaviors-route", label: "Advanced", selected: true}
+  ]) }}
+  {% include './advanced/content.xml.njk' %}
+{% endblock %}

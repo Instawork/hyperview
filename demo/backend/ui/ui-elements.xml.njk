@@ -1,0 +1,17 @@
+---
+permalink: "/ui/ui-elements.xml"
+hv_title: "UI"
+hv_tab_id: "ui"
+hv_button_behavior: "none"
+---
+{% extends 'templates/tab-route.xml.njk' %}
+
+{% from 'macros/tabbar-top/index.xml.njk' import tabbar_top %}
+
+{% block tab_route_content %}
+  {{ tabbar_top([
+  {id: "ui-elements-route", label: "UI Elements", selected: true},
+  {id: "styling-route", label: "Styling"}
+  ]) }}
+  {% include './ui-elements/content.xml.njk' %}
+{% endblock %}

@@ -2,6 +2,20 @@
 permalink: "/behaviors/index.xml"
 hv_title: "Behaviors"
 hv_tab_id: "behaviors"
-hv_button_behavior: "none"
 ---
-{% include './content.xml.njk' %}
+{% extends 'templates/root.xml.njk' %}
+
+{% block root %}
+  <doc xmlns="https://hyperview.org/hyperview">
+    <navigator id="behaviors-nested-tabs" type="tab">
+      <nav-route
+        id="basic-route"
+        href="/hyperview/public/behaviors/basic.xml"
+      />
+      <nav-route
+        id="advanced-behaviors-route"
+        href="/hyperview/public/behaviors/advanced.xml"
+      />
+    </navigator>
+  </doc>
+{% endblock %}
