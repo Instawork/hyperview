@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+:root {
+  --sidebar-width: 260px;
+  --toolbar-height: 44px;
+  --border-color: #2a2a3a;
+  --bg-primary: #0f0f1a;
+  --bg-secondary: #161625;
+  --bg-canvas: #1c1c2e;
+  --bg-hover: #22223a;
+  --text-primary: #e0e0f0;
+  --text-secondary: #8888a8;
+  --accent: #6366f1;
+  --accent-hover: #818cf8;
+}
+
+body {
+  margin: 0;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Craft.js canvas overrides */
+.craftjs-renderer {
+  min-height: 100%;
+}
+
+/* Element hover labels */
+[class*="hv-"][class*="-preview"]:hover::before,
+.hv-element-wrapper:hover::after {
+  content: attr(data-label);
+  position: absolute;
+  top: -18px;
+  left: 0;
+  font-size: 10px;
+  padding: 1px 4px;
+  background: var(--accent);
+  color: white;
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 10;
+  white-space: nowrap;
+}
+
+/* Selection outline animation */
+@keyframes selection-pulse {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.6); }
+  50% { box-shadow: 0 0 0 2px rgba(99, 102, 241, 1); }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #333355;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #444477;
+}
