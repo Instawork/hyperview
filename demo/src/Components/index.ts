@@ -6,6 +6,7 @@ import { NavBack } from './NavBack';
 import { ProgressBar } from './ProgressBar';
 import { SafeAreaView } from './SafeAreaView';
 import { ScrollOpacity } from './ScrollOpacity';
+import { ScrollTransformContainer } from './ScrollTransform';
 import { Svg } from './Svg';
 
 export default [
@@ -19,5 +20,6 @@ export default [
   ProgressBar,
   SafeAreaView,
   ScrollOpacity,
+  ScrollTransformContainer,
   Svg,
 ];
