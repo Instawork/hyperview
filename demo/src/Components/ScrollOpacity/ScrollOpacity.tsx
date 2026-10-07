@@ -8,6 +8,7 @@ import {
 import { createStyleProp, renderChildren, useScrollContext } from 'hyperview';
 import { Animated } from 'react-native';
 import type { HvComponentProps } from 'hyperview';
+import type { JSX } from 'react';
 
 const ScrollOpacity = (props: HvComponentProps) => {
   const contextKey = props.element.getAttributeNS(namespaceURI, 'context-key');

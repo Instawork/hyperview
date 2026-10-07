@@ -25,6 +25,10 @@ hyperview/
 npm-debug.*
 yarn-debug.*
 yarn-error.*
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+.pnp.*
 
 # macOS
 .DS_Store

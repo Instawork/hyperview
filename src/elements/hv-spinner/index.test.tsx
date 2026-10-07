@@ -5,7 +5,9 @@ import React from 'react';
 describe('HvSpnner', () => {
   describe('render', () => {
     test('basic', async () => {
-      render(<HyperviewMock paths={[`${__dirname}/stories/basic.xml`]} />);
+      await render(
+        <HyperviewMock paths={[`${__dirname}/stories/basic.xml`]} />,
+      );
 
       await waitFor(() => {
         const element = screen.getByTestId('spinner');
@@ -15,7 +17,9 @@ describe('HvSpnner', () => {
       });
     });
     test('colored', async () => {
-      render(<HyperviewMock paths={[`${__dirname}/stories/colored.xml`]} />);
+      await render(
+        <HyperviewMock paths={[`${__dirname}/stories/colored.xml`]} />,
+      );
 
       await waitFor(() => {
         const element = screen.getByTestId('spinner');

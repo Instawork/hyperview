@@ -7,6 +7,8 @@ docs/
 node_modules/
 scripts/
 website/
+.yarn/
+.yarnrc.yml
 .DS_Store
 .editorconfig
 .eslintignore

@@ -1,4 +1,5 @@
 import type { HvComponentOnUpdate } from 'hyperview';
+import type { JSX } from 'react';
 import type { Props } from './types';
 import { renderChildren } from 'hyperview';
 import { useBottomTabBarContext } from '../../Contexts';

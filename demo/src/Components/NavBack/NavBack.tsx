@@ -1,4 +1,5 @@
 import type { HvComponentProps } from 'hyperview';
+import type { JSX } from 'react';
 import { NavigationContext } from '@react-navigation/native';
 import { findElements } from '../../Helpers';
 import { renderElement } from 'hyperview';
