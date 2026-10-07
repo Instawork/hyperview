@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "@instawork/xmldom": "0.0.3",
+    "@react-native/normalize-colors": "0.87.1",
     "lodash": "4.17.21",
     "tiny-emitter": "2.1.0",
     "url-parse": "1.5.10"
