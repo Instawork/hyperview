@@ -13,6 +13,7 @@ yarn create expo-app demo --yes --template expo-template-blank-typescript
 echo "const oldPackage = require('./demo-old/package.json'); \
       const newPackage = require('./demo/package.json'); \
       newPackage.main = oldPackage.main; \
+      newPackage.dependencies.hyperview = 'workspace:*'; \
       newPackage.homepage = oldPackage.homepage; \
       newPackage.engines = oldPackage.engines; \
       newPackage.resolutions = oldPackage.resolutions; \
@@ -41,7 +42,6 @@ npx expo install \
 
 # Install Hyperview dependencies
 yarn add \
-  hyperview \
   moment \
   react-dom \
   react-native-svg
@@ -51,9 +51,6 @@ yarn add --exact \
   @react-navigation/bottom-tabs@6.5.7 \
   @react-navigation/native@6.1.6 \
   @react-navigation/stack@6.3.16
-
-# Make Hyperview symlinkable
-yarn link "$HYPERVIEW_DIR"
 
 # Install dev dependencies
 yarn add -D \

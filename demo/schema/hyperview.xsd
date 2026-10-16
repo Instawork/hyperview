@@ -13,11 +13,11 @@
 >
   <xs:import
     namespace="https://hyperview.org/hyperview-alert"
-    schemaLocation="../../schema/alert.xsd"
+    schemaLocation="../../hyperview/schema/alert.xsd"
   />
   <xs:import
     namespace="https://hyperview.org/hyperview-scroll"
-    schemaLocation="../../schema/scroll.xsd"
+    schemaLocation="../../hyperview/schema/scroll.xsd"
   />
   <xs:import
     namespace="https://hyperview.org/bottom-sheet"
@@ -49,7 +49,7 @@
     schemaLocation="share.xsd"
   />
 
-  <xs:redefine schemaLocation="../../schema/core.xsd">
+  <xs:redefine schemaLocation="../../hyperview/schema/core.xsd">
     <xs:simpleType name="action">
       <xs:restriction base="hv:action">
         <!-- Hyperview core -->

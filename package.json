@@ -1,0 +1,21 @@
+{
+  "private": true,
+  "packageManager": "yarn@4.17.1",
+  "workspaces": [
+    "hyperview",
+    "demo"
+  ],
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "sync": "yarn workspace hyperview sync",
+    "prettify": "prettier --write 'docs/**/*.md' README.md",
+    "test:docs": "prettier --check 'docs/**/*.md' README.md",
+    "test": "yarn workspace hyperview test && yarn workspace demo test && yarn test:docs"
+  },
+  "devDependencies": {
+    "@prettier/plugin-xml": "0.13.0",
+    "prettier": "2.2.1"
+  }
+}

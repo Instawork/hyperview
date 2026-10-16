@@ -1,7 +1,6 @@
 {
   "name": "hyperview",
   "version": "0.112.0",
-  "packageManager": "yarn@4.17.1",
   "main": "src/index.ts",
   "description": "React Native client for Hyperview XML",
   "homepage": "https://hyperview.org",
@@ -29,7 +28,9 @@
     "test:lint": "eslint src test/helpers test/integration && prettier --check '**/*.xsd' '**/*.xml' '**/*.md'",
     "test:unit": "jest --runInBand --testPathPattern 'src|test/integration'",
     "test:validate-xml": "find test src -name '*.xml' | xargs xmlschema-validate --schema schema/hyperview.xsd --version 1.1",
-    "test": "yarn test:ts && yarn test:lint && yarn test:unit && yarn test:validate-xml"
+    "test": "yarn test:ts && yarn test:lint && yarn test:unit && yarn test:validate-xml",
+    "prepack": "cp ../LICENSE.md LICENSE.md",
+    "postpack": "rm -f LICENSE.md"
   },
   "dependencies": {
     "@instawork/xmldom": "0.0.3",
@@ -91,9 +92,6 @@
   },
   "jest": {
     "preset": "@react-native/jest-preset",
-    "modulePathIgnorePatterns": [
-      "./demo/"
-    ],
     "setupFiles": [
       "./test/setup.ts"
     ],
