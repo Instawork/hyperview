@@ -1600,6 +1600,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native/normalize-colors@npm:0.87.1":
+  version: 0.87.1
+  resolution: "@react-native/normalize-colors@npm:0.87.1"
+  checksum: 10c0/0ab052554526b886c5ddd92c10a82915f6508bc0a77670d1af256bb0985f829534f2cef7e75ea24b860a910f3562c9ca7ad58007c242205b5966b2f7cd7b2f7b
+  languageName: node
+  linkType: hard
+
 "@react-native/virtualized-lists@npm:0.86.3":
   version: 0.86.3
   resolution: "@react-native/virtualized-lists@npm:0.86.3"
@@ -4861,6 +4868,7 @@ __metadata:
     "@react-native-picker/picker": "npm:2.11.4"
     "@react-native/babel-preset": "npm:0.86.3"
     "@react-native/jest-preset": "npm:0.86.3"
+    "@react-native/normalize-colors": "npm:0.87.1"
     "@react-navigation/bottom-tabs": "npm:6.5.7"
     "@react-navigation/native": "npm:6.1.6"
     "@react-navigation/stack": "npm:6.3.16"
