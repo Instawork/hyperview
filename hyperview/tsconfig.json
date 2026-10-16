@@ -26,5 +26,5 @@
     },
     "types": ["jest", "node"]
   },
-  "exclude": ["**/*.js", "**/*.jsx", "demo/**/*"]
+  "exclude": ["**/*.js", "**/*.jsx"]
 }
