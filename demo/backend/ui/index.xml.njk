@@ -2,22 +2,20 @@
 permalink: "/ui/index.xml"
 hv_title: "UI"
 hv_tab_id: "ui"
-hv_button_behavior: "none"
 ---
-{% extends 'templates/tab-route.xml.njk' %}
+{% extends 'templates/root.xml.njk' %}
 
-{% from 'macros/tabbar-top/index.xml.njk' import tabbar_top %}
-{% from 'macros/tabbar-top-tab/index.xml.njk' import tabbar_top_tab %}
-
-{% block tab_route_content %}
-  {{ tabbar_top([
-  {id: "tab-ui-elements", label: "UI Elements", selected: true},
-  {id: "tab-styling", label: "Styling"}
-  ]) }}
-  {% call tabbar_top_tab("tab-ui-elements", true) -%}
-    {% include './ui-elements/content.xml.njk' %}
-  {%- endcall -%}
-  {% call tabbar_top_tab("tab-styling") -%}
-    {% include './styling/content.xml.njk' %}
-  {%- endcall -%}
+{% block root %}
+  <doc xmlns="https://hyperview.org/hyperview">
+    <navigator id="ui-nested-tabs" type="tab">
+      <nav-route
+        id="ui-elements-route"
+        href="/hyperview/public/ui/ui-elements.xml"
+      />
+      <nav-route
+        id="styling-route"
+        href="/hyperview/public/ui/styling.xml"
+      />
+    </navigator>
+  </doc>
 {% endblock %}
