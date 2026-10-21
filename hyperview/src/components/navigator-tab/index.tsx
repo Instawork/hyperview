@@ -20,12 +20,7 @@ const CustomTabNavigator = (props: Props) => {
   const { getSourceDoc } = useHvDocContext();
   const { navigationComponents } = useHyperview();
   const TabView = navigationComponents?.BottomTabView ?? BottomTabView;
-  const {
-    state,
-    descriptors,
-    navigation,
-    NavigationContent,
-  } = useNavigationBuilder<
+  const { state, descriptors, navigation, render } = useNavigationBuilder<
     TabNavigationState<ParamListBase>,
     TabOptions,
     TabActionHelpers<ParamListBase>,
@@ -50,16 +45,14 @@ const CustomTabNavigator = (props: Props) => {
     }
   }, [props.initialRouteName, navigation]);
 
-  return (
-    <NavigationContent>
-      <TabView
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        {...props}
-        descriptors={descriptors}
-        navigation={navigation}
-        state={state}
-      />
-    </NavigationContent>
+  return render(
+    <TabView
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...props}
+      descriptors={descriptors}
+      navigation={navigation}
+      state={state}
+    />,
   );
 };
 

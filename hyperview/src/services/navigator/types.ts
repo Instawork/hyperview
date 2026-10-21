@@ -1,4 +1,3 @@
-import type * as ReactNavigation from '@react-navigation/native';
 import type {
   NavigationProps,
   RouteParams,
@@ -46,12 +45,4 @@ export type NavigateActionPayload = {
   name?: string;
   params?: object;
   pop?: boolean;
-};
-
-export type Locale = {
-  direction: 'ltr' | 'rtl';
-};
-
-export type ReactNavigationWithLocale = typeof ReactNavigation & {
-  useLocale?: () => Locale;
 };
