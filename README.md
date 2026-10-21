@@ -38,9 +38,9 @@ More importantly, the client is designed to be incorporated into an existing Rea
 
 - @react-native-community/datetimepicker >= 8.2.0
 - @react-native-picker/picker >= 2.9.0
-- @react-navigation/bottom-tabs >= 6.5.7
-- @react-navigation/native >= 6.1.6
-- @react-navigation/stack >= 6.3.16
+- @react-navigation/bottom-tabs >= 7.21.0
+- @react-navigation/native >= 7.5.1
+- @react-navigation/stack >= 7.12.1
 - @types/react >= 18.3.12
 - react >= 18.3.1
 - react-native >= 0.76.7
