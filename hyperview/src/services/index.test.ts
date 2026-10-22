@@ -130,5 +130,26 @@ describe('createProps', () => {
       );
       expect(result).toHaveProperty('collapsableChildren', true);
     });
+
+    describe('number of lines attribute', () => {
+      it('maps number-of-lines attribute to numberOfLines numeric prop', () => {
+        const result = createProps(
+          makeEl({ 'number-of-lines': '3' }),
+          styleSheets2,
+          {},
+        );
+        expect(result).toHaveProperty('numberOfLines', 3);
+        expect(result).not.toHaveProperty('number-of-lines');
+      });
+
+      it('preserves numberOfLines attribute for backwards compatibility', () => {
+        const result = createProps(
+          makeEl({ numberOfLines: '2' }),
+          styleSheets2,
+          {},
+        );
+        expect(result).toHaveProperty('numberOfLines', 2);
+      });
+    });
   });
 });

@@ -50,7 +50,7 @@ A `<view>` element can only appear anywhere within a `<screen>` element.
 
 - [Behavior attributes](#behavior-attributes)
 - [`style`](#style)
-- [`numberOfLines`](#numberoflines)
+- [`number-of-lines`](#number-of-lines)
 - [`id`](#id)
 - [`hide`](#hide)
 - [`disabled`](#disabled)
@@ -73,13 +73,15 @@ A `<view>` element accepts the standard [behavior attributes](/docs/reference_be
 
 A space-separated list of styles to apply to the element. See [Styles](/docs/reference_style). Note that text style rules will cannot be applied to a `<view>`.
 
-#### `numberOfLines`
+#### `number-of-lines`
 
 | Type    | Required |
 | ------- | -------- |
 | integer | No       |
 
 An integer representing the number of lines of text to display before the text content truncates. The width of the element is determined by the applied styles and the dimensions of the device screen.
+
+Note: `numberOfLines` is also supported for backwards compatibility.
 
 #### `id`
 

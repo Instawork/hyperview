@@ -773,6 +773,7 @@
       <xs:attribute name="minHeight" type="hv:pointsOrPercent" />
       <xs:attribute name="minWidth" type="hv:pointsOrPercent" />
       <xs:attribute name="numberOfLines" type="xs:integer" />
+      <xs:attribute name="number-of-lines" type="xs:integer" />
 
       <xs:attribute name="opacity">
         <xs:simpleType>
@@ -939,6 +940,7 @@
     <xs:complexType mixed="true">
       <xs:group ref="hv:textChildren" />
       <xs:attribute name="numberOfLines" type="xs:positiveInteger" />
+      <xs:attribute name="number-of-lines" type="xs:positiveInteger" />
       <xs:attribute name="style" type="hv:styleList" />
       <xs:attribute name="id" type="hv:ID" />
       <xs:attribute name="key" type="hv:KEY" />
