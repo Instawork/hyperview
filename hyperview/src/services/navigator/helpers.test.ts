@@ -424,15 +424,29 @@ describe('findPath', () => {
 });
 
 describe('expandNestedNavigate', () => {
-  it('detects the installed React Navigation 6 dependency', () => {
-    expect(isReactNavigation7).toBe(false);
+  it('detects the installed React Navigation 7 dependency', () => {
+    expect(isReactNavigation7).toBe(true);
   });
 
-  it('preserves bare nested navigation under React Navigation 6', () => {
+  it('expands bare nested navigation under React Navigation 7', () => {
     const state = StateSource as NavigationState;
     const action = CommonActions.navigate('performance_2');
+    const expandedAction = expandNestedNavigate(state, action);
 
-    expect(expandNestedNavigate(state, action)).toBe(action);
+    expect(expandedAction).not.toBe(action);
+    expect(expandedAction).toMatchObject({
+      payload: {
+        name: 'screen_stack_root_home',
+        params: {
+          params: {
+            params: undefined,
+            screen: 'performance_2',
+          },
+          screen: 'performance',
+        },
+        pop: true,
+      },
+    });
   });
 });
 
