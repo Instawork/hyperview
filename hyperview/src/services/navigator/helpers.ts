@@ -1,7 +1,6 @@
 import * as Errors from './errors';
 import * as Helpers from 'hyperview/src/services/dom/helpers';
 import * as Namespaces from 'hyperview/src/services/namespaces';
-import * as ReactNavigation from '@react-navigation/native';
 import * as Types from './types';
 import * as UrlService from 'hyperview/src/services/url';
 import {
@@ -22,13 +21,6 @@ import type {
 } from '@react-navigation/native';
 import { ANCHOR_ID_SEPARATOR } from './types';
 import { shallowCloneToRoot } from 'hyperview/src/services';
-
-const navigationWithLocale = ReactNavigation as Types.ReactNavigationWithLocale;
-
-export const isReactNavigation7 = navigationWithLocale.useLocale !== undefined;
-
-export const useCompatibleLocale =
-  navigationWithLocale.useLocale ?? (() => ({ direction: 'ltr' as const }));
 
 /**
  * Card and modal routes are not defined in the document
@@ -193,7 +185,7 @@ export const expandNestedNavigate = <Action extends NavigationAction>(
   action: Action,
   getFallbackPath?: (targetId: string) => string[],
 ): Action => {
-  if (!isReactNavigation7 || action.type !== 'NAVIGATE') {
+  if (action.type !== 'NAVIGATE') {
     return action;
   }
 

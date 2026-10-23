@@ -17,10 +17,6 @@ import {
   EventTriggerError,
 } from 'hyperview/src/errors';
 import {
-  CardStyleInterpolators,
-  StackNavigationOptions,
-} from '@react-navigation/stack';
-import {
   Props,
   SHOW_DEFAULT_FOOTER_UI,
   SHOW_DEFAULT_HEADER_UI,
@@ -31,6 +27,7 @@ import {
 } from './types';
 import React, { useCallback, useEffect, useRef } from 'react';
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
+import { CardStyleInterpolators } from '@react-navigation/stack';
 import { HvDocContext } from 'hyperview/src/elements/hv-doc';
 import NavigatorStack from 'hyperview/src/components/navigator-stack';
 import NavigatorTab from 'hyperview/src/components/navigator-tab';
@@ -205,17 +202,14 @@ export default function HvNavigator(props: Props) {
             getId={({ params: p }: ScreenParams) => getId(p)}
             initialParams={initialParams}
             name={id}
-            options={
-              {
-                animation,
-                animationEnabled: !isFirstScreen,
-                cardStyleInterpolator,
-                gestureEnabled,
-                presentation: needsSubStack
-                  ? NavigatorService.ID_MODAL
-                  : NavigatorService.ID_CARD,
-              } as StackNavigationOptions
-            }
+            options={{
+              animation,
+              cardStyleInterpolator,
+              gestureEnabled,
+              presentation: needsSubStack
+                ? NavigatorService.ID_MODAL
+                : NavigatorService.ID_CARD,
+            }}
           />
         );
       }
