@@ -37,6 +37,7 @@ const HvOption = (props: HvComponentProps) => {
   // Option renders as an outer TouchableWithoutFeedback view and inner view.
   // The outer view handles presses, the inner view handles styling.
   const outerProps = {
+    accessibilityState: { selected },
     onPress: createEventHandler(() => {
       if (onSelect) {
         // Updates the DOM state, causing this element to re-render as selected.

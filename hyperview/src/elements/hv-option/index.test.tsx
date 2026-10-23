@@ -12,6 +12,7 @@ describe('HvOption', () => {
       await waitFor(() => {
         const element = screen.getByTestId('basic-option');
         expect(element).toBeOnTheScreen();
+        expect(element).toHaveProp('accessibilityState', { selected: false });
         return true;
       });
     });
@@ -34,6 +35,7 @@ describe('HvOption', () => {
       await waitFor(() => {
         const element = screen.getByTestId('pre-selected-option');
         expect(element).toBeOnTheScreen();
+        expect(element).toHaveProp('accessibilityState', { selected: true });
         return true;
       });
     });
