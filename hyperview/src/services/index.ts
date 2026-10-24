@@ -81,7 +81,7 @@ export const createProps = (
   stylesheets: StyleSheets,
   options: HvComponentOptions,
 ) => {
-  const numericRules = ['numberOfLines'];
+  const numericRules = ['numberOfLines', 'number-of-lines'];
   const booleanRules = [
     'adjustsFontSizeToFit',
     'allowFontScaling',
@@ -102,7 +102,9 @@ export const createProps = (
         // handled by createCollapsableProps
       } else if (numericRules.indexOf(attr.name) >= 0) {
         const intValue = parseInt(attr.value, 10);
-        props[attr.name] = intValue || 0;
+        const propName =
+          attr.name === 'number-of-lines' ? 'numberOfLines' : attr.name;
+        props[propName] = intValue || 0;
       } else if (booleanRules.indexOf(attr.name) >= 0) {
         props[attr.name] = attr.value === 'true';
       } else if (floatRules.indexOf(attr.name) >= 0) {
