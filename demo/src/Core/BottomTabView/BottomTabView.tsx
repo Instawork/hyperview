@@ -12,15 +12,12 @@ import { useBottomTabBarContext } from '../../Contexts';
 export const BottomTabView = (props: BottomTabViewProps) => {
   const { getElementProps } = useBottomTabBarContext();
   const [confirmedProvenance, setConfirmedProvenance] = React.useState(0);
+  const mountedRouteKeys = React.useRef(new Set<string>());
   const navigatorId = props.navigation.getId?.();
-  const nativeTabItems =
-    isLiquidGlassSupported() && navigatorId
-      ? getNativeTabItems(getElementProps?.(navigatorId))
-      : false;
 
-  if (!nativeTabItems) {
+  if (!isLiquidGlassSupported()) {
     const tabBar = (tabBarProps: BottomTabBarProps) => {
-      if (nativeTabItems === undefined || !navigatorId) {
+      if (!navigatorId) {
         return null;
       }
       return (
@@ -45,6 +42,14 @@ export const BottomTabView = (props: BottomTabViewProps) => {
   }
 
   const focusedRouteKey = props.state.routes[props.state.index].key;
+  mountedRouteKeys.current.add(focusedRouteKey);
+  const nativeTabItems = navigatorId
+    ? getNativeTabItems(getElementProps?.(navigatorId)) ?? []
+    : [];
+  const nativeTabRoutes = new Set(nativeTabItems.map(({ route }) => route));
+  const tabBarHidden = props.state.routes.some(
+    ({ name }) => !nativeTabRoutes.has(name),
+  );
   const onTabSelectionChange = (
     event: NativeSyntheticEvent<NativeTabEvent>,
   ) => {
@@ -91,24 +96,21 @@ export const BottomTabView = (props: BottomTabViewProps) => {
       onTabSelected={onTabSelectionChange}
       onTabSelectionRejected={onTabSelectionChange}
       rejectStaleNavStateUpdates
+      tabBarHidden={tabBarHidden}
     >
-      {nativeTabItems.map(item => {
-        const route = props.state.routes.find(
-          ({ name }) => name === item.route,
-        );
-        if (!route) {
-          return null;
-        }
-
+      {props.state.routes.map(route => {
+        const item = nativeTabItems.find(tab => tab.route === route.name);
         return (
           <Tabs.Screen
             key={route.key}
-            badgeValue={item.badgeValue}
-            ios={{ icon: item.icon }}
+            badgeValue={item?.badgeValue}
+            ios={{ icon: item?.icon }}
             screenKey={route.key}
-            title={item.label ?? route.name}
+            title={item?.label ?? route.name}
           >
-            {props.descriptors[route.key].render()}
+            {mountedRouteKeys.current.has(route.key)
+              ? props.descriptors[route.key].render()
+              : null}
           </Tabs.Screen>
         );
       })}
