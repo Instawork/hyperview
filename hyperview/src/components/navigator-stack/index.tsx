@@ -1,16 +1,11 @@
 import * as CustomStackRouter from 'hyperview/src/components/navigator-stack/router';
-import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as React from 'react';
-import type {
-  CompatibleStackViewProps,
-  NavigationBuilderWithDescribe,
-  Props,
-  StackOptions,
-} from './types';
+import type { Props, StackOptions } from './types';
 import {
   StackActionHelpers,
   StackNavigationState,
   createNavigatorFactory,
+  useLocale,
   useNavigationBuilder,
 } from '@react-navigation/native';
 import {
@@ -22,14 +17,18 @@ import type { ParamListBase } from '@react-navigation/routers';
 import { useHvDocContext } from 'hyperview/src/elements/hv-doc';
 import { useHyperview } from 'hyperview/src/contexts/hyperview';
 
-const CompatibleStackView = StackView as React.ComponentType<CompatibleStackViewProps>;
-
 const CustomStackNavigator = (props: Props) => {
   const { getSourceDoc } = useHvDocContext();
   const { entrypointUrl } = useHyperview();
-  const { direction } = NavigatorService.useCompatibleLocale();
+  const { direction } = useLocale();
 
-  const builder = useNavigationBuilder<
+  const {
+    state,
+    describe,
+    descriptors,
+    navigation,
+    render,
+  } = useNavigationBuilder<
     StackNavigationState<ParamListBase>,
     StackOptions,
     StackActionHelpers<ParamListBase>,
@@ -43,19 +42,15 @@ const CustomStackNavigator = (props: Props) => {
     initialRouteName: props.initialRouteName,
     screenOptions: props.screenOptions,
   });
-  const { state, descriptors, navigation, NavigationContent } = builder;
-  const { describe } = (builder as unknown) as NavigationBuilderWithDescribe;
 
-  return (
-    <NavigationContent>
-      <CompatibleStackView
-        describe={NavigatorService.isReactNavigation7 ? describe : undefined}
-        descriptors={descriptors}
-        direction={NavigatorService.isReactNavigation7 ? direction : undefined}
-        navigation={navigation}
-        state={state}
-      />
-    </NavigationContent>
+  return render(
+    <StackView
+      describe={describe}
+      descriptors={descriptors}
+      direction={direction}
+      navigation={navigation}
+      state={state}
+    />,
   );
 };
 

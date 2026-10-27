@@ -3,18 +3,14 @@ import type {
   StackNavigationState,
 } from '@react-navigation/native';
 
-type CompatibleStackState = StackNavigationState<ParamListBase> & {
-  preloadedRoutes: StackNavigationState<ParamListBase>['routes'];
-};
-
 type StackStateWithoutPreloadedRoutes = Omit<
-  CompatibleStackState,
+  StackNavigationState<ParamListBase>,
   'preloadedRoutes'
 >;
 
 export const createStackNavigationState = (
   state: StackStateWithoutPreloadedRoutes,
-): CompatibleStackState => ({
+): StackNavigationState<ParamListBase> => ({
   ...state,
   preloadedRoutes: [],
 });

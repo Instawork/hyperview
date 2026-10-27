@@ -17,7 +17,6 @@ import {
   getSelectedNavRouteElement,
   getUrlFromHref,
   isNavigationElement,
-  isReactNavigation7,
   isUrlFragment,
   mergeDocument,
   removeStackRoute,
@@ -424,11 +423,7 @@ describe('findPath', () => {
 });
 
 describe('expandNestedNavigate', () => {
-  it('detects the installed React Navigation 7 dependency', () => {
-    expect(isReactNavigation7).toBe(true);
-  });
-
-  it('expands bare nested navigation under React Navigation 7', () => {
+  it('expands bare nested navigation', () => {
     const state = StateSource as NavigationState;
     const action = CommonActions.navigate('performance_2');
     const expandedAction = expandNestedNavigate(state, action);

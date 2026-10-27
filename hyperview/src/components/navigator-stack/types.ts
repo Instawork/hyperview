@@ -1,10 +1,6 @@
-import type * as NavigatorService from 'hyperview/src/services/navigator';
 import * as React from 'react';
-import type {
-  StackNavigationOptions,
-  StackView,
-} from '@react-navigation/stack';
 import type { RouterConfigOptions } from '@react-navigation/routers';
+import type { StackNavigationOptions } from '@react-navigation/stack';
 
 export type Props = {
   id: string;
@@ -26,16 +22,4 @@ export type StackOptions = {
   getDoc?: () => Document | undefined;
   id: string;
   initialRouteName?: string;
-};
-
-export type CompatibleStackViewProps = Omit<
-  React.ComponentProps<typeof StackView>,
-  'describe' | 'direction'
-> & {
-  describe?: unknown;
-  direction?: NavigatorService.Locale['direction'];
-};
-
-export type NavigationBuilderWithDescribe = {
-  describe?: unknown;
 };
