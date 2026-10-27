@@ -1,5 +1,5 @@
 import type { ColorValue } from 'react-native';
-import normalizeColor from '@react-native/normalize-colors';
+import normalizeColor from './normalize-colors';
 
 export default normalizeColor;
 export type { ColorValue };
