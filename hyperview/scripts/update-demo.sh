@@ -48,9 +48,9 @@ yarn add \
 
 # Install Hyperview dependencies with exact versions
 yarn add --exact \
-  @react-navigation/bottom-tabs@6.5.7 \
-  @react-navigation/native@6.1.6 \
-  @react-navigation/stack@6.3.16
+  @react-navigation/bottom-tabs@7.21.0 \
+  @react-navigation/native@7.5.1 \
+  @react-navigation/stack@7.12.1
 
 # Install dev dependencies
 yarn add -D \

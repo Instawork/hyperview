@@ -307,7 +307,11 @@ describe('Navigator.sendRequest', () => {
       ),
     } as unknown) as NonNullable<Types.Props['rootNavigation']>;
     const navigation = createNavigation(modalState);
-    const parentNavigation = createNavigation(rootNavigation.getRootState());
+    const modalRootState = rootNavigation.getRootState();
+    if (!modalRootState) {
+      throw new Error('Expected a root navigation state');
+    }
+    const parentNavigation = createNavigation(modalRootState);
     (navigation.getParent as jest.Mock).mockReturnValue(parentNavigation);
     const navigator = new Navigator({
       entrypointUrl: 'https://example.com/index.xml',
