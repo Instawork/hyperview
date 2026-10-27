@@ -9,6 +9,6 @@ yarn version "$1"
 VERSION=$(node -p "require('./package.json').version")
 git add package.json
 git commit -m "v$VERSION"
-git tag "v$VERSION"
+git tag --annotate "v$VERSION" --message "v$VERSION"
 yarn npm publish
 git push --follow-tags
