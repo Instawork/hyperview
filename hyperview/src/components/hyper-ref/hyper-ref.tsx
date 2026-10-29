@@ -1,0 +1,462 @@
+import * as Behaviors from 'hyperview/src/services/behaviors';
+import * as Dom from 'hyperview/src/services/dom';
+import * as Events from 'hyperview/src/services/events';
+import * as Logging from 'hyperview/src/services/logging';
+import * as Namespaces from 'hyperview/src/services/namespaces';
+import { BEHAVIOR_ATTRIBUTES, LOCAL_NAME, TRIGGERS } from 'hyperview/src/types';
+import { EventMissingNameError, EventTriggerError } from 'hyperview/src/errors';
+import {
+  PRESS_TRIGGERS,
+  PRESS_TRIGGERS_PROP_NAMES,
+  PressTrigger,
+} from './types';
+import type {
+  PressHandlers,
+  PressPropName,
+  Props,
+  State,
+  TriggerType,
+} from './types';
+import React, { PureComponent } from 'react';
+import { RefreshControl, Text, TouchableOpacity } from 'react-native';
+import { BackBehaviorContext } from 'hyperview/src/contexts/back-behaviors';
+import HvElement from 'hyperview/src/components/hv-element';
+// eslint-disable-next-line instawork/import-components
+import { ScrollView } from 'hyperview/src/components/scroll';
+import type { StyleSheet } from 'hyperview/src/types';
+import VisibilityDetectingView from './VisibilityDetectingView';
+import { XMLSerializer } from '@instawork/xmldom';
+import { createEventHandler } from 'hyperview/src/services';
+
+/**
+ * Component that handles dispatching behaviors based on the appropriate
+ * triggers.
+ */
+export default class HyperRef extends PureComponent<Props, State> {
+  static contextType = BackBehaviorContext;
+
+  context:
+    | React.ContextType<typeof BackBehaviorContext>
+    | undefined = undefined;
+
+  state: State = {
+    pressed: false,
+    refreshing: false,
+  };
+
+  behaviorElements: Element[] = [];
+
+  style: StyleSheet | null | undefined;
+
+  constructor(props: Props) {
+    super(props);
+    this.updateBehaviorElements();
+    this.updateStyle();
+  }
+
+  componentDidMount() {
+    this.triggerLoadBehaviors();
+
+    // Register event listener for on-event triggers
+    Events.subscribe(this.onEventDispatch);
+
+    // Register behavior elements for back triggers
+    this.addBackBehaviors();
+  }
+
+  componentDidUpdate(prevProps: Props) {
+    if (prevProps.element === this.props.element) {
+      return;
+    }
+
+    // Deregister event listener for back triggers
+    this.removeBackBehaviors();
+
+    this.updateBehaviorElements();
+    this.updateStyle();
+    this.triggerLoadBehaviors();
+    // Register behavior elements for back triggers
+    this.addBackBehaviors();
+  }
+
+  componentWillUnmount() {
+    // Remove event listener for on-event triggers to avoid memory leaks
+    Events.unsubscribe(this.onEventDispatch);
+    // Deregister event listener for back triggers
+    this.removeBackBehaviors();
+  }
+
+  updateBehaviorElements = () => {
+    // Retrieve and cache behavior elements when element is updated
+    this.behaviorElements = Dom.getBehaviorElements(this.props.element);
+  };
+
+  addBackBehaviors = () => {
+    this.context?.add(
+      this.getBehaviorElements(TRIGGERS.BACK),
+      this.props.onUpdate,
+    );
+  };
+
+  removeBackBehaviors = () => {
+    this.context?.remove(this.getBehaviorElements(TRIGGERS.BACK));
+  };
+
+  updateStyle = () => {
+    // Retrieve and cache style
+    const styleAttr = this.props.element.getAttribute(
+      BEHAVIOR_ATTRIBUTES.HREF_STYLE,
+    );
+    this.style = styleAttr
+      ? styleAttr.split(' ').map(s => this.props.stylesheets.regular[s])
+      : null;
+  };
+
+  /**
+   * Returns the current version of the element in the DOM.
+   * DOM updates shallow-clone every ancestor of the mutated node, which moves the
+   * children onto the clone and orphans the original. Until React re-renders with
+   * the new node, `props.element` can be an orphan with no behavior children.
+   * Behavior elements are moved rather than cloned, so they point back to the
+   * current version of the element.
+   */
+  getCurrentElement = (): Element => {
+    if (this.props.element.parentNode) {
+      return this.props.element;
+    }
+    const attachedBehavior = this.behaviorElements.find(
+      e => e !== this.props.element && e.parentNode,
+    );
+    return (attachedBehavior?.parentNode as Element) || this.props.element;
+  };
+
+  onEventDispatch = (eventName: string) => {
+    const element = this.getCurrentElement();
+    const behaviorElements = Dom.getBehaviorElements(element);
+    const onEventBehaviors = behaviorElements.filter(e => {
+      if (e.getAttribute(BEHAVIOR_ATTRIBUTES.TRIGGER) === TRIGGERS.ON_EVENT) {
+        const currentAttributeEventName:
+          | string
+          | null
+          | undefined = e.getAttribute('event-name');
+        const currentAttributeAction:
+          | string
+          | null
+          | undefined = e.getAttribute('action');
+        if (currentAttributeAction === 'dispatch-event') {
+          Logging.warn(new EventTriggerError(e));
+          return false;
+        }
+        if (!currentAttributeEventName) {
+          Logging.warn(new EventMissingNameError(e));
+          return false;
+        }
+        return currentAttributeEventName === eventName;
+      }
+      return false;
+    });
+    onEventBehaviors.forEach(behaviorElement => {
+      const currentElement = this.getCurrentElement();
+      const handler = Behaviors.createActionHandler(
+        behaviorElement,
+        this.props.onUpdate,
+      );
+      handler(currentElement);
+
+      Logging.info(
+        Logging.deferredToString(() => {
+          const listenerElement: Element = behaviorElement.cloneNode(
+            false,
+          ) as Element;
+          listenerElement.textContent = '';
+          return `[on-event] trigger [${behaviorElement.getAttribute(
+            'event-name',
+          )}] caught by: ${new XMLSerializer().serializeToString(
+            listenerElement,
+          )}`;
+        }),
+      );
+    });
+  };
+
+  getBehaviorElements = (trigger: TriggerType): Element[] => {
+    return this.behaviorElements.filter(
+      e => e.getAttribute(BEHAVIOR_ATTRIBUTES.TRIGGER) === trigger,
+    );
+  };
+
+  getPressBehaviorElements = (): Element[] => {
+    return this.behaviorElements.filter(
+      e =>
+        PRESS_TRIGGERS.indexOf(
+          (e.getAttribute(BEHAVIOR_ATTRIBUTES.TRIGGER) ||
+            TRIGGERS.PRESS) as PressTrigger,
+        ) >= 0,
+    );
+  };
+
+  getStyle = (): StyleSheet | null | undefined => {
+    const styleAttr = this.props.element.getAttribute(
+      BEHAVIOR_ATTRIBUTES.HREF_STYLE,
+    );
+    return styleAttr
+      ? styleAttr.split(' ').map(s => this.props.stylesheets.regular[s])
+      : null;
+  };
+
+  triggerLoadBehaviors = () => {
+    let loadBehaviors = this.getBehaviorElements(TRIGGERS.LOAD);
+    if (
+      this.props.options?.staleHeaderType ===
+      Dom.X_RESPONSE_STALE_REASON.STALE_IF_ERROR
+    ) {
+      const loadStaleBehaviors = this.getBehaviorElements(
+        TRIGGERS.LOAD_STALE_ERROR,
+      );
+      loadBehaviors = loadBehaviors.concat(loadStaleBehaviors);
+    }
+
+    if (loadBehaviors.length > 0) {
+      Behaviors.triggerBehaviors(
+        this.props.element,
+        loadBehaviors,
+        this.props.onUpdate,
+      );
+    }
+  };
+
+  TouchableView = ({
+    children,
+  }: {
+    children: React.JSX.Element;
+  }): React.JSX.Element => {
+    const behaviors = this.getPressBehaviorElements();
+
+    if (!behaviors.length) {
+      return children;
+    }
+
+    const pressHandlers: PressHandlers = {};
+
+    behaviors.forEach(behaviorElement => {
+      const trigger =
+        behaviorElement.getAttribute(BEHAVIOR_ATTRIBUTES.TRIGGER) ||
+        TRIGGERS.PRESS;
+      const triggerPropName =
+        PRESS_TRIGGERS_PROP_NAMES[trigger as PressTrigger];
+      const handler = Behaviors.createActionHandler(
+        behaviorElement,
+        this.props.onUpdate,
+      );
+      const pressHandler = pressHandlers[triggerPropName as PressPropName];
+      if (pressHandler) {
+        const oldHandler = pressHandler;
+        pressHandlers[triggerPropName as PressPropName] = createEventHandler(
+          () => {
+            oldHandler();
+            queueMicrotask(() => handler(this.props.element));
+          },
+        );
+      } else {
+        pressHandlers[
+          triggerPropName as PressPropName
+        ] = createEventHandler(() => handler(this.props.element));
+      }
+    });
+
+    if (pressHandlers.onPressIn) {
+      const oldHandler = pressHandlers.onPressIn;
+      pressHandlers.onPressIn = createEventHandler(() => {
+        this.setState({ pressed: true });
+        oldHandler();
+      });
+    } else {
+      pressHandlers.onPressIn = createEventHandler(() => {
+        this.setState({ pressed: true });
+      });
+    }
+
+    if (pressHandlers.onPressOut) {
+      const oldHandler = pressHandlers.onPressOut;
+      pressHandlers.onPressOut = createEventHandler(() => {
+        this.setState({ pressed: false });
+        oldHandler();
+      });
+    } else {
+      pressHandlers.onPressOut = createEventHandler(() => {
+        this.setState({ pressed: false });
+      });
+      // Fix a conflict between onPressOut and onPress triggering at the same time.
+      if (pressHandlers.onPress) {
+        const onPressHandler = pressHandlers.onPress;
+        pressHandlers.onPress = createEventHandler(() => {
+          queueMicrotask(onPressHandler);
+        });
+      }
+    }
+
+    const style = this.getStyle();
+    const testID = this.props.element.getAttribute('id') || undefined;
+    const { onLongPress, onPress, onPressIn, onPressOut } = pressHandlers;
+    const disabled = this.props.element.getAttribute('disabled') === 'true';
+
+    // If element is a <text> nested under another <text>, simply add press events
+    const isNestedUnderText =
+      (this.props.element.parentNode as Element)?.namespaceURI ===
+        Namespaces.HYPERVIEW &&
+      (this.props.element.parentNode as Element)?.localName === LOCAL_NAME.TEXT;
+
+    if (isNestedUnderText) {
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      const noop = () => {};
+      return (
+        <Text
+          accessible={false}
+          disabled={disabled}
+          onLongPress={onLongPress}
+          // when no press handler set, we still need an empty handler for pressIn or pressOut
+          // handlers to work
+          onPress={
+            onPress ||
+            (onPressIn !== undefined || onPressOut !== undefined
+              ? noop
+              : undefined)
+          }
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore TS2300: no overload matches this call
+          onResponderGrant={onPressIn}
+          // Both release and terminate responder are needed to properly pressOut
+          onResponderRelease={onPressOut}
+          onResponderTerminate={onPressOut}
+          style={style}
+          suppressHighlighting
+          testID={testID}
+        >
+          {children}
+        </Text>
+      );
+    }
+
+    return (
+      <TouchableOpacity
+        accessible={false}
+        activeOpacity={1}
+        disabled={disabled}
+        onLongPress={onLongPress}
+        onPress={onPress}
+        onPressIn={onPressIn}
+        onPressOut={onPressOut}
+        style={style}
+        testID={testID}
+      >
+        {children}
+      </TouchableOpacity>
+    );
+  };
+
+  ScrollableView = ({
+    children,
+  }: {
+    children: React.JSX.Element;
+  }): React.JSX.Element => {
+    const behaviors = this.getBehaviorElements(TRIGGERS.REFRESH);
+    if (!behaviors.length) {
+      return children;
+    }
+    const refreshHandlers = behaviors.map(behaviorElement =>
+      Behaviors.createActionHandler(behaviorElement, this.props.onUpdate),
+    );
+    const onRefresh = () => refreshHandlers.forEach(h => h(this.props.element));
+    const refreshControl = React.createElement(RefreshControl, {
+      onRefresh,
+      refreshing: this.state.refreshing,
+    });
+    return React.createElement(
+      ScrollView,
+      {
+        element: this.props.element,
+        refreshControl,
+        showsVerticalScrollIndicator:
+          this.props.element.getAttribute('shows-scroll-indicator') !== 'false',
+        style: this.getStyle(),
+      },
+      children,
+    );
+  };
+
+  VisibilityView = ({
+    children,
+  }: {
+    children: React.JSX.Element;
+  }): React.JSX.Element => {
+    const behaviors = this.getBehaviorElements(TRIGGERS.VISIBLE);
+    if (!behaviors.length) {
+      return children;
+    }
+    const onVisible = () => {
+      // We don't want to use the cached `behaviors` list here because
+      // the DOM might have been mutated since.
+      this.getBehaviorElements(TRIGGERS.VISIBLE)
+        .map(behaviorElement =>
+          Behaviors.createActionHandler(behaviorElement, this.props.onUpdate),
+        )
+        .forEach(h => h(this.props.element));
+    };
+
+    // If element does not have an `id` attribute, generate a pseudo id from list of attributes
+    // This is necessary to indicate to the VisibilityDetectingView that the element has changed
+    // and the internal state needs to be reset.
+    const id =
+      this.props.element.getAttribute('id') ||
+      Object.values(BEHAVIOR_ATTRIBUTES)
+        .reduce((acc: string[], name: string) => {
+          const value = this.props.element.getAttribute(name);
+          return value ? [...acc, `${name}:${value}`] : acc;
+        }, [])
+        .join('_');
+
+    return React.createElement(
+      VisibilityDetectingView,
+      {
+        id,
+        onInvisible: null,
+        onVisible,
+        style: this.getStyle(),
+      },
+      children,
+    );
+  };
+
+  render() {
+    // Render the component based on the XML element. Depending on the applied behaviors,
+    // this component will be wrapped with others to provide the necessary interaction.
+    // Only <TouchableView> applies the element's test props, and only when the element has
+    // press behaviors. The wrapped component skips them in that case, so that a single node
+    // carries the element's id in the native view hierarchy.
+    const skipTestId = this.getPressBehaviorElements().length > 0;
+    const children = (
+      <HvElement
+        element={this.props.element}
+        onUpdate={this.props.onUpdate}
+        options={{
+          ...this.props.options,
+          pressed: this.state.pressed,
+          skipHref: true,
+          skipTestId,
+        }}
+        stylesheets={this.props.stylesheets}
+      />
+    );
+    const { ScrollableView, TouchableView, VisibilityView } = this;
+
+    return (
+      <VisibilityView>
+        <ScrollableView>
+          <TouchableView>
+            {(children as React.JSX.Element) || null}
+          </TouchableView>
+        </ScrollableView>
+      </VisibilityView>
+    );
+  }
+}

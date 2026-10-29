@@ -6,6 +6,7 @@ import {
   renderChildren,
 } from 'hyperview';
 import type { HvComponentProps } from 'hyperview';
+import type { JSX } from 'react';
 import { findElements } from '../../Helpers';
 import { useEffect } from 'react';
 

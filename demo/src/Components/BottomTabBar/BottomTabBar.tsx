@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 /**
  * This component's only job is to associate its own props with a
  * navigator ID in BottomTabBarContext. It does not render anything.
- * It's child elements are used by the Core/BottomTabBar component
+ * Its child elements are used by the Core BottomTabView
  * to build the bottom tab bar UI.
  *
  * Usage:

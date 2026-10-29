@@ -1,0 +1,17 @@
+---
+permalink: "/navigation/sequences/tab-retarget/messages.xml"
+hv_title: "Tab retarget (messages)"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from '../welcome-tabs/_tab-bar.xml.njk' import home_messages_tab_bar %}
+
+{% block styles %}
+  {% include '../welcome-tabs/_styles.xml.njk' %}
+{% endblock %}
+
+{% block content %}
+  {{ description('This tab changes behind the pushed card.') }}
+  {{ home_messages_tab_bar("sequence-tab-retarget-navigator", "sequence-tab-retarget-home", "sequence-tab-retarget-messages") }}
+{% endblock %}

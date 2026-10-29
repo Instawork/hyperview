@@ -1,0 +1,11 @@
+__mocks__/
+node_modules/
+scripts/
+.DS_Store
+.editorconfig
+.eslintignore
+.eslintrc
+.gitignore
+.prettierignore
+.prettierrc.js
+yarn-error.log

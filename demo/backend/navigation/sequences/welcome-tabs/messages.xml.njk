@@ -1,0 +1,16 @@
+---
+permalink: "/navigation/sequences/welcome-tabs/messages.xml"
+hv_title: "Welcome tabs (messages)"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block styles %}
+  {% include './_styles.xml.njk' %}
+{% endblock %}
+
+{% block content %}
+  {{ description('Welcome stays dismissed when switching between Home and Messages.') }}
+  {% include './_tab-bar.xml.njk' %}
+{% endblock %}

@@ -10,40 +10,40 @@ const output = 'hyperview/public';
 
 module.exports = function (eleventyConfig) {
   eleventyConfig.setServerOptions({
-    module: '@11ty/eleventy-server-browsersync',
-    middleware: function (req, res, next) {
-      res.setHeader('Access-Control-Allow-Origin', '*');
-      res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
-      res.setHeader(
-        'Access-Control-Allow-Headers',
-        'x-hyperview-dimensions,x-hyperview-version,pragma,expires,cache-control',
-      );
-      if (req.method === 'OPTIONS') {
-        res.writeHead(200, {});
-        res.end();
-      } else {
-        try {
-          const path = req._parsedUrl.pathname.replace(`${output}/`, '');
-          const handler = require(`./backend${path}.js`);
-          if (handler) {
-            handler(req, res, next);
-          } else {
-            // No handler found for route, pass through to 11ty
+    middleware: [
+      function (req, res, next) {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+        res.setHeader(
+          'Access-Control-Allow-Headers',
+          'x-hyperview-dimensions,x-hyperview-version,pragma,expires,cache-control',
+        );
+        if (req.method === 'OPTIONS') {
+          res.writeHead(200, {});
+          res.end();
+        } else {
+          try {
+            const path = new URL(req.url, 'http://localhost').pathname.replace(
+              `${output}/`,
+              '',
+            );
+            const handler = require(`./backend${path}.js`);
+            if (handler) {
+              handler(req, res, next);
+            } else {
+              // No handler found for route, pass through to 11ty
+              next();
+            }
+          } catch (err) {
+            if (err.code !== 'MODULE_NOT_FOUND') {
+              console.error(err);
+            }
+            // Error loading the handler, pass through to 11ty
             next();
           }
-        } catch (err) {
-          if (err.code !== 'MODULE_NOT_FOUND') {
-            console.error(err);
-          }
-          // Error loading the handler, pass through to 11ty
-          next();
         }
-      }
-    },
-    server: {
-      baseDir: '.',
-      directory: true,
-    },
+      },
+    ],
   });
   // Pass through any XML files that haven't been ported yet.
   // Once everything is ported, we can remove this.
@@ -70,5 +70,6 @@ module.exports = function (eleventyConfig) {
       input: 'backend',
       output,
     },
+    pathPrefix: '/hyperview/public/',
   };
 };

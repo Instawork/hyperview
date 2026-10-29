@@ -1,0 +1,67 @@
+import * as NavigatorService from 'hyperview/src/services/navigator';
+import { LOCAL_NAME } from 'hyperview/src/types';
+import type { ParamListBase } from '@react-navigation/routers';
+import type { RouteProps } from 'hyperview/src/types';
+import type { StackNavigationState } from '@react-navigation/native';
+
+export const buildRoutesFromDom = (
+  doc: Document | undefined,
+  state: StackNavigationState<ParamListBase>,
+  navigatorId: string,
+  routeParamList: Record<string, object | undefined>,
+  entrypointUrl: string | undefined,
+): RouteProps[] => {
+  const element = doc
+    ? NavigatorService.getNavigatorById(doc, navigatorId)
+    : null;
+  const elementRoutes = element
+    ? NavigatorService.getChildElements(element).filter(
+        e => e.localName === LOCAL_NAME.NAV_ROUTE,
+      )
+    : [];
+
+  const routes: RouteProps[] = [];
+  const routeIds = state.routes.map((r: RouteProps) => r.params?.id);
+  const routeHrefs = state.routes.map((r: RouteProps) => {
+    return r.params?.url
+      ? NavigatorService.getUrlFromHref(r.params.url, entrypointUrl)
+      : undefined;
+  });
+
+  let sequenceBroken = false;
+  for (let i = 0; i < elementRoutes.length; i += 1) {
+    const routeElement = elementRoutes[i];
+    const href = routeElement.getAttribute('href');
+    const id = routeElement.getAttribute('id');
+    const isModal = routeElement.getAttribute('modal') === 'true';
+    if (id) {
+      const existingIndex = href
+        ? routeHrefs.indexOf(
+            NavigatorService.getUrlFromHref(href, entrypointUrl),
+          )
+        : routeIds.indexOf(id);
+      // Ensure each existing route is in the same order and hasn't been disrupted
+      if (!sequenceBroken && existingIndex !== i) {
+        sequenceBroken = true;
+      }
+      if (
+        existingIndex > -1 &&
+        !sequenceBroken &&
+        // Ensure the presentation matches for dynamic screens
+        (!NavigatorService.isDynamicRoute(state.routes[existingIndex].name) ||
+          isModal ===
+            NavigatorService.isModalRouteName(state.routes[existingIndex].name))
+      ) {
+        routes.push(state.routes[existingIndex]);
+      } else {
+        const params = routeParamList[id] || {};
+        routes.push({
+          key: id,
+          name: id,
+          params,
+        });
+      }
+    }
+  }
+  return routes;
+};

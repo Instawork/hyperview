@@ -1,0 +1,30 @@
+import * as React from 'react';
+import type { NativeStackNavigationOptions } from '@react-navigation/native-stack';
+import type { RouterConfigOptions } from '@react-navigation/routers';
+import type { StackNavigationOptions } from '@react-navigation/stack';
+
+export type NavigationOptions =
+  | NativeStackNavigationOptions
+  | StackNavigationOptions;
+
+export type Props = {
+  id: string;
+  children?: React.ReactNode;
+  initialRouteName?: string;
+  screenOptions?: NavigationOptions;
+};
+
+export type RouterRenameOptions = RouterConfigOptions & {
+  /**
+   * List of routes whose key has changed even if they still have the same name.
+   * This allows to remove screens declaratively.
+   */
+  routeKeyChanges: string[];
+};
+
+export type StackOptions = {
+  entrypointUrl: string | undefined;
+  getDoc?: () => Document | undefined;
+  id: string;
+  initialRouteName?: string;
+};

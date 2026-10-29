@@ -9,6 +9,8 @@ dist/
 hyperview/
 
 # Native
+/ios
+/android
 *.orig.*
 *.jks
 *.p8
@@ -23,6 +25,10 @@ hyperview/
 npm-debug.*
 yarn-debug.*
 yarn-error.*
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+.pnp.*
 
 # macOS
 .DS_Store

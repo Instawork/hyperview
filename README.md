@@ -38,10 +38,9 @@ More importantly, the client is designed to be incorporated into an existing Rea
 
 - @react-native-community/datetimepicker >= 8.2.0
 - @react-native-picker/picker >= 2.9.0
-- @react-navigation/bottom-tabs >= 6.5.7
-- @react-navigation/native >= 6.1.6
-- @react-navigation/native-stack >= 6.11.0
-- @react-navigation/stack >= 6.3.16
+- @react-navigation/bottom-tabs >= 7.21.0
+- @react-navigation/native >= 7.5.1
+- @react-navigation/stack >= 7.12.1
 - @types/react >= 18.3.12
 - react >= 18.3.1
 - react-native >= 0.76.7
@@ -56,11 +55,19 @@ It also contains a demo Expo project that can connect to the example XML server,
 
 ### 1. Install dependencies
 
-From the `demo/` directory:
+Enable corepack once (it provides the Yarn version pinned in `package.json`):
+
+```sh
+corepack enable
+```
+
+Then, from the root of the repository:
 
 ```sh
 yarn
 ```
+
+This installs the dependencies of both the `hyperview/` package and the `demo/` app, which uses the local `hyperview/` package through a Yarn workspace.
 
 Note: you only need to run this step once.
 
@@ -86,7 +93,7 @@ From the `demo/` directory:
 yarn ios
 ```
 
-This will open the iOS simulator and install the demo app in the simulator. It will then start the Expo development server to load the demo app.
+This will compile and install the demo app in the iOS simulator (first run takes a few minutes). It will then start the Expo development server to load the demo app.
 
 #### Running on the Android emulator
 
@@ -97,56 +104,44 @@ adb reverse tcp:8085 tcp:8085
 yarn android
 ```
 
-This will open an Android Virtual Device (AVD) and install the demo app in the emulator. It will then start the Expo development server to load the demo app.
+This will compile and install the demo app in the emulator (first run takes a few minutes). It will then start the Expo development server to load the demo app.
 
 #### Running on a physical device
 
-On your physical mobile device, install the Expo client
-
-- [iOS App Store](https://itunes.apple.com/us/app/expo-client/id982107779?mt=8)
-- [Google Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent)
-
-Make sure your mobile device and development machine are connected to the same Wi-Fi network.
+The demo uses a local Expo development build, not Expo Go. Plug in the device (Developer Mode on iOS, USB debugging on Android). Make sure your mobile device and development machine are connected to the same Wi-Fi network.
 
 From the `demo/` directory:
 
 ```sh
-cd demo
-BASE_URL="http://X.X.X.X:8085" yarn start
+BASE_URL="http://X.X.X.X:8085" yarn ios --device
+```
+
+or
+
+```sh
+BASE_URL="http://X.X.X.X:8085" yarn android --device
 ```
 
 > [!NOTE]
 > Replace `X.X.X.X` with the IP of your machine. This is needed in order for your physical device to be able to request the example XML files from your development machine.
 
-This command will start an Expo development server and will display a QR code.
+This compiles Hyperview onto the device (first run takes a few minutes) and starts Metro. Metro displays a QR code in the terminal.
 
-- On your iOS device, open the Camera app and point it at the QR code on your screen. The Camera app should show an "Open in Expo" notification. Tap this notification.
-- On your Android device, use the Expo app to scan the QR code on your screen.
+- On your iOS device, open the Camera app and point it at the QR code in the terminal. The Camera app should show an "Open in Hyperview" notification. Tap this notification.
+- On your Android device, open Hyperview and type `http://X.X.X.X:8081` in the development launcher. Google Camera will not open the QR code.
 
 ## Developing Hyperview Core Features
 
-As you're developing new features in the Hyperview library, you can use the demo app along with this special command to help you quickly test your changes:
+The `demo/` app uses the local `hyperview/` package through a Yarn workspace, so changes made in `hyperview/src` are picked up directly by the demo.
 
-From the `demo/` directory (in a separate terminal):
-
-```sh
-yarn sync
-```
-
-This command will copy all the files from the `hyperview/src` directory, into the `demo/node_modules/hyperview/src` directory, and watch for any more changes.
-
-You can also pass as an additional argument the root path of your own react-native app where you've installed hyperview to perform the same sync/watch operation. e.g.
+To test your changes in your own react-native app where you've installed hyperview, from the root of the repository, pass the root path of that app to `yarn sync`. The command copies all the files from the `hyperview/src` directory into the app's `node_modules/hyperview/src` directory, and watches for any more changes. e.g.
 
 ```sh
 yarn sync ../projects/my-cool-app
 ```
 
-> **Tip**
->
-> You may stop this with <kbd>Ctrl</kbd> + <kbd>C</kbd>
-
 ## Troubleshooting
 
-> This version of the Expo app is out of date. Uninstall the app and run again to upgrade.
+If Metro opens Expo Go instead of the Hyperview demo, uninstall Expo Go from the simulator or device and run `yarn ios` or `yarn android` again.
 
-If you see this warning message on the Expo development server webpage, you need to uninstall the Expo app from the simulator or physical device and install the latest version. On a physical device, this means getting the latest version from an app store. In the simulator or AVD, this means uninstalling and re-running `yarn ios` or `yarn android`.
+Physical iOS device builds require Automatic Signing with a Personal Team in Xcode. A paid Apple Developer account is not required.

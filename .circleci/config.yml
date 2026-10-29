@@ -1,36 +1,39 @@
-version: 2
+version: 2.1
 
 jobs:
   test:
     docker:
-      - image: cimg/python:3.12.1-node
+      - image: cimg/python:3.12.14-node
     steps:
       - checkout
+      - run:
+          name: Enable corepack
+          command: sudo corepack enable
+      - run:
+          name: Node version
+          command: node --version
       - run:
           name: Install dependencies
           command: yarn
       - run:
+          working_directory: hyperview
           name: Check types
           command: yarn test:ts
       - run:
+          working_directory: hyperview
           name: Unit tests
           command: yarn test:unit
       - run:
+          working_directory: hyperview
           name: Validate XML
           command: pip install xmlschema; yarn test:validate-xml
       - run:
+          working_directory: hyperview
           name: Lint
-          command: pip install djhtml; yarn test:lint
+          command: yarn test:lint
       - run:
-          working_directory: demo
-          name: Demo - Install dependencies
-          command: yarn
-      - run:
-          working_directory: demo
-          name: Demo - Sync hyperview
-          command: |
-            rm -rf node_modules/hyperview/src
-            cp -r ../src node_modules/hyperview
+          name: Docs
+          command: yarn test:docs
       - run:
           working_directory: demo
           name: Demo - Check types
@@ -38,30 +41,28 @@ jobs:
       - run:
           working_directory: demo
           name: Demo - Lint
-          command: yarn test:lint
+          command: pip install djhtml; yarn test:lint
       - run:
           working_directory: demo
           name: Demo - Validate XML
-          command: yarn test:validate-xml
+          command: pip install xmlschema; yarn test:validate-xml
   deploy:
     docker:
-      - image: cimg/python:3.12.1-node
+      - image: cimg/python:3.12.14-node
     steps:
       - add_ssh_keys:
           fingerprints:
             - 'SHA256:efIwcAYspXfEF3arKOxCPis7fOPJ1SRlYKCx7AC+HoE'
       - checkout
-      - run: yarn
       - run:
-          working_directory: demo
-          name: Install
+          name: Enable corepack
+          command: sudo corepack enable
+      - run:
+          name: Node version
+          command: node --version
+      - run:
+          name: Install dependencies
           command: yarn
-      - run:
-          working_directory: demo
-          name: Sync hyperview
-          command: |
-            rm -rf node_modules/hyperview/src
-            cp -r ../src node_modules/hyperview
       - run:
           working_directory: demo
           name: Deploy

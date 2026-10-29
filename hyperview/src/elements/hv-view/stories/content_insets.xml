@@ -1,0 +1,56 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style id="body" backgroundColor="white" flex="1" />
+      <style
+        id="container"
+        borderColor="#e1e1e1"
+        borderRadius="16"
+        borderWidth="1"
+        height="160"
+        margin="24"
+      />
+      <style id="container-vertical" flexDirection="column" />
+      <style id="container-horizontal" flexDirection="row" />
+      <style
+        id="child"
+        backgroundColor="#63CB76"
+        borderRadius="16"
+        height="40"
+        margin="8"
+      />
+      <style id="child-vertical" height="40" />
+      <style id="child-horizontal" width="40" />
+    </styles>
+    <body style="body">
+      <view
+        content-insets="true"
+        scroll="true"
+        scroll-orientation="vertical"
+        style="container container-vertical"
+        id="container-vertical"
+      >
+        <view style="child child-vertical" id="child-vertical-1" />
+        <view style="child child-vertical" id="child-vertical-2" />
+        <view style="child child-vertical" id="child-vertical-3" />
+        <view style="child child-vertical" id="child-vertical-4" />
+        <view style="child child-vertical" id="child-vertical-5" />
+        <view style="child child-vertical" id="child-vertical-6" />
+      </view>
+      <view
+        scroll="true"
+        scroll-orientation="horizontal"
+        style="container container-horizontal"
+        id="container-horizontal"
+      >
+        <view style="child child-horizontal" id="child-horizontal-1" />
+        <view style="child child-horizontal" id="child-horizontal-2" />
+        <view style="child child-horizontal" id="child-horizontal-3" />
+        <view style="child child-horizontal" id="child-horizontal-4" />
+        <view style="child child-horizontal" id="child-horizontal-5" />
+        <view style="child child-horizontal" id="child-horizontal-6" />
+        <view style="child child-horizontal" id="child-horizontal-7" />
+      </view>
+    </body>
+  </screen>
+</doc>
