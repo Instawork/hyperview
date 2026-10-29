@@ -76,7 +76,12 @@ export default class HvView extends PureComponent<HvComponentProps> {
       this.props.options,
     ) as unknown) as ViewStyle;
     const testID = this.props.element.getAttribute('id') ?? undefined;
-    if (!testID || this.props.options.skipTestId) {
+    const isPressableChild = this.props.options.skipTestId;
+    if (isPressableChild) {
+      // Keep the pressed child in the native hierarchy while its wrapper handles touch state.
+      return { collapsable: false, style };
+    }
+    if (!testID) {
       return { style };
     }
     return { collapsable: false, style, testID };

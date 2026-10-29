@@ -1,0 +1,27 @@
+---
+permalink: "/navigation/sequences/welcome-tabs/index.xml"
+tags: "Navigation/Sequences"
+hv_title: "Welcome modal over tabs"
+hv_button_behavior: "back"
+---
+<doc xmlns="https://hyperview.org/hyperview">
+  <navigator id="navigation-sequence-welcome-tabs" type="stack">
+    <nav-route id="sequence-welcome-tabs-route">
+      <navigator id="sequence-welcome-tabs-navigator" type="tab" merge="true">
+        <nav-route
+          id="sequence-home-route"
+          href="/hyperview/public/navigation/sequences/welcome-tabs/home.xml"
+        />
+        <nav-route
+          id="sequence-messages-route"
+          href="/hyperview/public/navigation/sequences/welcome-tabs/messages.xml"
+        />
+      </navigator>
+    </nav-route>
+    <nav-route
+      id="sequence-welcome-route"
+      href="/hyperview/public/navigation/sequences/welcome-tabs/welcome.xml"
+      modal="true"
+    />
+  </navigator>
+</doc>

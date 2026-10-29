@@ -68,7 +68,9 @@ describe('HvView', () => {
       );
 
       await waitFor(() => {
+        const pressable = screen.getByTestId('pressable');
         expect(screen.getAllByTestId('pressable')).toHaveLength(1);
+        expect(pressable.children[0]).toHaveProp('collapsable', false);
         expect(screen.getAllByTestId('loadable')).toHaveLength(1);
         return true;
       });

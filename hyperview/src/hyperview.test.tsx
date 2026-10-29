@@ -7,7 +7,6 @@ import { fetchFactory } from 'hyperview/test/helpers/fetch';
 describe('Hyperview', () => {
   afterEach(() => {
     jest.clearAllMocks();
-    jest.resetAllMocks();
   });
 
   const formatDate = jest.fn();

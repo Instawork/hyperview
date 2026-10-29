@@ -279,4 +279,81 @@ describe('buildRoutesFromDom', () => {
     // The third has been changed due to presentation difference
     expect(routes[2].key).toEqual('route3');
   });
+
+  it('should preserve a scoped dynamic card route', () => {
+    const doc = parser.parseFromString(navDocSource);
+    const state = createStackNavigationState({
+      index: 1,
+      key: 'key1',
+      routeNames: [
+        'route1',
+        '__hyperview__:navigator:card',
+        '__hyperview__:navigator:modal',
+      ],
+      routes: [
+        {
+          key: 'key1',
+          name: 'route1',
+          params: { id: 'route1', url: '/route1' },
+        },
+        {
+          key: 'key2',
+          name: '__hyperview__:navigator:card',
+          params: { url: '/route2' },
+        },
+      ],
+      stale: false,
+      type: 'stack',
+    });
+    const routes = buildRoutesFromDom(
+      doc,
+      state,
+      'navigator',
+      routeParamList,
+      'http://foo.com',
+    );
+
+    expect(routes[1]).toBe(state.routes[1]);
+  });
+
+  it('should preserve a scoped dynamic modal route', () => {
+    const doc = parser.parseFromString(navDocSourceModal);
+    const state = createStackNavigationState({
+      index: 2,
+      key: 'key1',
+      routeNames: [
+        'route1',
+        '__hyperview__:navigator:card',
+        '__hyperview__:navigator:modal',
+      ],
+      routes: [
+        {
+          key: 'key1',
+          name: 'route1',
+          params: { id: 'route1', url: '/route1' },
+        },
+        {
+          key: 'key2',
+          name: '__hyperview__:navigator:card',
+          params: { url: '/route2' },
+        },
+        {
+          key: 'key3',
+          name: '__hyperview__:navigator:modal',
+          params: { url: '/route3' },
+        },
+      ],
+      stale: false,
+      type: 'stack',
+    });
+    const routes = buildRoutesFromDom(
+      doc,
+      state,
+      'navigator',
+      routeParamList,
+      'http://foo.com',
+    );
+
+    expect(routes[2]).toBe(state.routes[2]);
+  });
 });

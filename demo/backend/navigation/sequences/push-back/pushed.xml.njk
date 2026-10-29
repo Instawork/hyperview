@@ -1,0 +1,12 @@
+---
+permalink: "/navigation/sequences/push-back/pushed.xml"
+hv_title: "Push and back (pushed)"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block content %}
+  {{ description('Use header back. You should land on home screen.') }}
+  {{ description('This screen was pushed onto the demo app stack.') }}
+{% endblock %}

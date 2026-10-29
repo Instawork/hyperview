@@ -1,0 +1,19 @@
+---
+permalink: "/navigation/sequences/stacked-modals/details.xml"
+hv_title: "Stacked modals (details)"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  {{ description('After modal cascade closes, this pushed screen must remain visible.') }}
+  {% call button('Open first modal') -%}
+    <behavior
+      action="new"
+      href="/hyperview/public/navigation/sequences/stacked-modals/modal-first.xml"
+      show-during-load="loading-screen-modal"
+    />
+  {%- endcall %}
+{% endblock %}
