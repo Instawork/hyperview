@@ -1,0 +1,18 @@
+---
+permalink: "/navigation/sequences/close-then-push-load/home.xml"
+hv_title: "Close then push load (home)"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block content %}
+  {{ description('On load, briefly creates and closes an intermediate route, then pushes the destination screen.') }}
+  <behavior
+    trigger="load"
+    action="new"
+    href="/hyperview/public/navigation/sequences/close-then-push-load/proxy.xml"
+    once="true"
+    show-during-load="loading-screen-modal"
+  />
+{% endblock %}

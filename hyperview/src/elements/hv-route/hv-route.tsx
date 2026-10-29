@@ -21,12 +21,17 @@ import React, {
   useContext,
   useEffect,
   useMemo,
-  useRef,
 } from 'react';
+import {
+  getNestedNavigator,
+  getVisibleBackBehaviors,
+  registerRouteFocusListener,
+} from './helpers';
 import HvNavigator from 'hyperview/src/elements/hv-navigator';
 import HvScreen from 'hyperview/src/elements/hv-screen';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { NavigationContainerRefContext } from '@react-navigation/native';
+import { RouteGuard } from './route-guard';
 import { useElementCache } from 'hyperview/src/contexts/element-cache';
 import { useHyperview } from 'hyperview/src/contexts/hyperview';
 
@@ -100,13 +105,13 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
   Route = (): React.ReactElement => {
     const { Screen } = this;
 
-    const needsSubStack = this.props.route?.params?.needsSubStack ?? false;
+    const isModalFlow = NavigatorService.isModalFlowRoute(this.props.route);
 
-    const renderElement: Element | undefined = needsSubStack
+    const renderElement: Element | undefined = isModalFlow
       ? undefined
       : this.getRenderElement();
 
-    if (!needsSubStack) {
+    if (!isModalFlow) {
       if (!renderElement) {
         throw new NavigatorService.HvRenderError('No element found');
       }
@@ -125,18 +130,19 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
       }
     }
 
-    if (needsSubStack || renderElement?.localName === LOCAL_NAME.NAVIGATOR) {
+    if (isModalFlow || renderElement?.localName === LOCAL_NAME.NAVIGATOR) {
       const routeParams = this.props.route?.params;
-      const navigatorParams = needsSubStack
+      const navigatorParams = isModalFlow
         ? {
             ...routeParams,
             id: routeParams?.id ?? this.props.route?.key,
-            needsSubStack,
           }
         : routeParams;
       return (
         <HvNavigator
           element={renderElement}
+          isModalFlow={isModalFlow}
+          isRootNavigator={this.props.route === undefined}
           onUpdate={this.props.onUpdate}
           params={navigatorParams}
           routeComponent={HvRoute}
@@ -156,24 +162,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
     return <Route />;
   }
 }
-
-/**
- * Retrieve a nested navigator as a child of the nav-route with the given id
- */
-const getNestedNavigator = (
-  id?: string,
-  doc?: Document,
-): Element | undefined => {
-  if (!id || !doc) {
-    return undefined;
-  }
-
-  const route = NavigatorService.getRouteById(doc, id);
-  if (route) {
-    return Helpers.getFirstChildTag(route, LOCAL_NAME.NAVIGATOR) || undefined;
-  }
-  return undefined;
-};
 
 /**
  * Functional component wrapper around HvRouteInner
@@ -227,134 +215,70 @@ function HvRouteFC(props: Types.Props) {
   const id = props.route?.params?.id || props.route?.key;
   const routeUrl = props.route?.params?.url;
 
-  // Keep onUpdate current without placing it in listener dep arrays
-  const onUpdateRef = useRef<typeof onUpdate>(onUpdate);
-  useEffect(() => {
-    onUpdateRef.current = onUpdate;
-  }, [onUpdate]);
-
-  // Track focus state at discrete event boundaries rather than sampling
-  // nav.isFocused() mid-animation, which is unreliable during swipe gestures
-  const isFocusedRef = useRef(nav?.isFocused() ?? false);
-  // Store the last nav event so that we can defer the update until after the transition ends
-  const deferredNavEventRef = useRef<ListenerEvent | null>(null);
-
   const handleBlur = useCallback(() => {
-    isFocusedRef.current = false;
     if (onRouteBlur && props.route) {
       onRouteBlur(props.route);
     }
   }, [onRouteBlur, props.route]);
 
   const handleFocus = useCallback(() => {
-    isFocusedRef.current = true;
-    const updateRouteFocus = () => {
-      const doc = getDoc?.();
-      NavigatorService.setSelected(doc, id, setDoc);
-      NavigatorService.addStackRoute(
-        doc,
-        id,
-        props.route,
-        nav.getState().routes[0]?.name,
+    const doc = getDoc?.();
+    NavigatorService.setSelected(doc, id, setDoc);
+    NavigatorService.addStackRoute(
+      doc,
+      id,
+      props.route,
+      nav.getState().routes[0]?.name,
+      entrypointUrl,
+      setDoc,
+    );
+  }, [entrypointUrl, getDoc, id, nav, props.route, setDoc]);
+
+  const visibleElements = getVisibleBackBehaviors(get());
+  const runBackBehaviors = useCallback(() => {
+    const currentVisibleElements = getVisibleBackBehaviors(get());
+    if (currentVisibleElements.length > 0 && onUpdate) {
+      currentVisibleElements.forEach(behaviorElement => {
+        const href = behaviorElement.getAttribute('href');
+        const behaviorAction = behaviorElement.getAttribute('action');
+        onUpdate(href, behaviorAction, behaviorElement, {
+          behaviorElement,
+          showIndicatorId: behaviorElement.getAttribute('show-during-load'),
+          targetId: behaviorElement.getAttribute('target'),
+        });
+      });
+    }
+  }, [get, onUpdate]);
+
+  const resumeRemoval = useCallback(
+    (action: Types.PreventRemoveAction) => {
+      nav.dispatch(action);
+    },
+    [nav],
+  );
+
+  const handleRemove = useCallback(() => {
+    if (getVisibleBackBehaviors(get()).length === 0) {
+      NavigatorService.removeStackRoute(
+        getDoc?.(),
+        routeUrl,
         entrypointUrl,
         setDoc,
       );
-      if (onRouteFocus && props.route) {
-        onRouteFocus(props.route);
-      }
-    };
-    const unsubscribe = nav.addListener('transitionEnd', () => {
-      unsubscribe();
-      updateRouteFocus();
-    });
-  }, [entrypointUrl, getDoc, id, nav, onRouteFocus, props.route, setDoc]);
-
-  const handleBeforeRemove = useCallback(
-    (event: { preventDefault: () => void }) => {
-      // Check for elements registered to interrupt back action via a trigger of BACK
-      const elements: Element[] = (get && get()) || [];
-      // Filter to only elements that are not hidden (or whose ancestors are not hidden).
-      const visibleElements: Element[] = elements.filter(el => {
-        let node: Node | null = el;
-        while (node && node.nodeType !== 9) {
-          if ((node as Element).getAttribute?.('hide') === 'true') {
-            return false;
-          }
-          node = (node as Element).parentNode;
-        }
-        return true;
-      });
-      if (
-        visibleElements.length > 0 &&
-        onUpdateRef.current &&
-        isFocusedRef.current
-      ) {
-        event.preventDefault();
-        visibleElements.forEach(behaviorElement => {
-          const href = behaviorElement.getAttribute('href');
-          const action = behaviorElement.getAttribute('action');
-          onUpdateRef.current?.(href, action, behaviorElement, {
-            behaviorElement,
-            showIndicatorId: behaviorElement.getAttribute('show-during-load'),
-            targetId: behaviorElement.getAttribute('target'),
-          });
-        });
-      } else {
-        // Perform cleanup of the associated route (retrieved from parent document state)
-        NavigatorService.removeStackRoute(
-          getDoc?.(),
-          routeUrl,
-          entrypointUrl,
-          setDoc,
-        );
-      }
-    },
-    [entrypointUrl, get, getDoc, routeUrl, setDoc],
-  );
+    }
+  }, [entrypointUrl, get, getDoc, routeUrl, setDoc]);
 
   const handleState = useCallback(
     (event: ListenerEvent) => {
-      const isListenerPending = deferredNavEventRef.current !== null;
-      deferredNavEventRef.current = event;
-      if (!isListenerPending) {
-        const unsubscribe = nav.addListener('transitionEnd', () => {
-          unsubscribe();
-          const latestEvent = deferredNavEventRef.current;
-          deferredNavEventRef.current = null;
-          NavigatorService.updateRouteUrlFromState(
-            getDoc?.(),
-            id,
-            latestEvent?.data?.state,
-            setDoc,
-          );
-        });
-      }
+      NavigatorService.updateRouteUrlFromState(
+        getDoc?.(),
+        id,
+        event.data?.state,
+        setDoc,
+      );
     },
-    [getDoc, id, nav, setDoc],
+    [getDoc, id, setDoc],
   );
-
-  useEffect(() => {
-    if (!nav) {
-      return undefined;
-    }
-    return nav.addListener('blur', handleBlur);
-  }, [nav, handleBlur]);
-
-  // Use the focus event to set the selected route
-  useEffect(() => {
-    if (!nav) {
-      return undefined;
-    }
-    return nav.addListener('focus', handleFocus);
-  }, [nav, handleFocus]);
-
-  // Use the beforeRemove event to remove the route from the stack
-  useEffect(() => {
-    if (!nav) {
-      return undefined;
-    }
-    return nav.addListener('beforeRemove', handleBeforeRemove);
-  }, [nav, handleBeforeRemove]);
 
   // Update the urls in each route when the state updates the params
   useEffect(() => {
@@ -363,6 +287,14 @@ function HvRouteFC(props: Types.Props) {
     }
     return nav.addListener('state', handleState);
   }, [nav, handleState]);
+
+  // Preserve the public callback timing without making route state depend on transitions.
+  useEffect(() => {
+    if (!nav) {
+      return undefined;
+    }
+    return registerRouteFocusListener(nav, props.route, onRouteFocus);
+  }, [nav, onRouteFocus, props.route]);
 
   return (
     <HvDoc
@@ -380,21 +312,38 @@ function HvRouteFC(props: Types.Props) {
           onUpdateCallbacks,
           reload,
           setScreenState,
-        }) => (
-          <HvRouteInner
-            componentRegistry={componentRegistry}
-            element={element}
-            elementErrorComponent={elementErrorComponent}
-            getDoc={localGetDoc}
-            getScreenState={getScreenState}
-            onUpdate={stateOnUpdate}
-            onUpdateCallbacks={onUpdateCallbacks}
-            reload={reload}
-            route={props.route}
-            setScreenState={setScreenState}
-            url={url}
-          />
-        )}
+        }) => {
+          const routeContent = (
+            <HvRouteInner
+              componentRegistry={componentRegistry}
+              element={element}
+              elementErrorComponent={elementErrorComponent}
+              getDoc={localGetDoc}
+              getScreenState={getScreenState}
+              onUpdate={stateOnUpdate}
+              onUpdateCallbacks={onUpdateCallbacks}
+              reload={reload}
+              route={props.route}
+              setScreenState={setScreenState}
+              url={url}
+            />
+          );
+          return props.route ? (
+            <RouteGuard
+              navigation={nav}
+              onBlur={handleBlur}
+              onFocus={handleFocus}
+              onRemove={handleRemove}
+              preventRemove={visibleElements.length > 0}
+              resumeRemoval={resumeRemoval}
+              runBackBehaviors={runBackBehaviors}
+            >
+              {routeContent}
+            </RouteGuard>
+          ) : (
+            routeContent
+          );
+        }}
       </HvDocContext>
     </HvDoc>
   );

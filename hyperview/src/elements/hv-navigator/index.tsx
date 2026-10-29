@@ -2,7 +2,6 @@ import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Dom from 'hyperview/src/services/dom';
 import * as Events from 'hyperview/src/services/events';
 import * as Logging from 'hyperview/src/services/logging';
-import * as Namespaces from 'hyperview/src/services/namespaces';
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import {
   BEHAVIOR_ATTRIBUTES,
@@ -27,12 +26,11 @@ import {
 } from './types';
 import React, { useCallback, useEffect, useRef } from 'react';
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import { CardStyleInterpolators } from '@react-navigation/stack';
 import { HvDocContext } from 'hyperview/src/elements/hv-doc';
 import NavigatorStack from 'hyperview/src/components/navigator-stack';
 import NavigatorTab from 'hyperview/src/components/navigator-tab';
-import { Platform } from 'react-native';
 import { getFirstChildTag } from 'hyperview/src/services/dom/helpers';
+import { getStackRouteOptions } from './stack-options';
 import { useHyperview } from 'hyperview/src/contexts/hyperview';
 
 export const Stack = NavigatorStack();
@@ -40,7 +38,14 @@ export const BottomTab = NavigatorTab();
 
 export default function HvNavigator(props: Props) {
   // eslint-disable-next-line react/destructuring-assignment
-  const { element, onUpdate, params, routeComponent } = props;
+  const {
+    element,
+    isModalFlow,
+    isRootNavigator,
+    onUpdate,
+    params,
+    routeComponent,
+  } = props;
   const behaviorElements = useRef<Element[]>([]);
   const { navigationComponents } = useHyperview();
   const prevProps = useRef<Element | undefined>(undefined);
@@ -138,7 +143,6 @@ export default function HvNavigator(props: Props) {
    */
   const stackScreenOptions = useCallback(
     ({ route }: ScreenOptionsProps): StackScreenOptions => ({
-      headerMode: 'screen',
       headerShown: SHOW_DEFAULT_HEADER_UI,
       title: getId(route.params),
     }),
@@ -167,14 +171,22 @@ export default function HvNavigator(props: Props) {
       id: string,
       type: string,
       href: string | undefined,
-      needsSubStack: boolean,
+      usesModalPresentation: boolean,
       isFirstScreen = false,
       routeId?: string | undefined,
-      isModal = false,
+      ownsModalFlow = false,
     ): React.ReactElement => {
-      const initialParams = NavigatorService.isDynamicRoute(id)
-        ? {}
-        : { id, isModal, needsSubStack, routeId, url: href };
+      const dynamicRouteParams: RouteParams = usesModalPresentation
+        ? { isModal: true }
+        : {};
+      const initialParams: RouteParams = NavigatorService.isDynamicRoute(id)
+        ? dynamicRouteParams
+        : {
+            id,
+            isModal: ownsModalFlow,
+            routeId,
+            url: href,
+          };
       if (type === NAVIGATOR_TYPE.TAB) {
         return (
           <BottomTab.Screen
@@ -186,15 +198,10 @@ export default function HvNavigator(props: Props) {
         );
       }
       if (type === NAVIGATOR_TYPE.STACK) {
-        const animation = isFirstScreen ? 'none' : 'default';
-        const gestureEnabled = Platform.OS === 'ios' ? !needsSubStack : false;
-        let cardStyleInterpolator;
-        if (needsSubStack) {
-          cardStyleInterpolator =
-            Platform.OS === 'android'
-              ? CardStyleInterpolators.forBottomSheetAndroid
-              : CardStyleInterpolators.forVerticalIOS;
-        }
+        const options = getStackRouteOptions({
+          isFirstScreen,
+          usesModalPresentation,
+        });
         return (
           <Stack.Screen
             key={id}
@@ -202,14 +209,7 @@ export default function HvNavigator(props: Props) {
             getId={({ params: p }: ScreenParams) => getId(p)}
             initialParams={initialParams}
             name={id}
-            options={{
-              animation,
-              cardStyleInterpolator,
-              gestureEnabled,
-              presentation: needsSubStack
-                ? NavigatorService.ID_MODAL
-                : NavigatorService.ID_CARD,
-            }}
+            options={options}
           />
         );
       }
@@ -223,28 +223,29 @@ export default function HvNavigator(props: Props) {
   /**
    * Build the card and modal screens for a stack navigator
    */
-  const buildDynamicScreens = useCallback((): React.ReactElement[] => {
-    const screens: React.ReactElement[] = [];
+  const buildDynamicScreens = useCallback(
+    (navigatorId?: string): React.ReactElement[] => {
+      const screens: React.ReactElement[] = [];
+      const cardId = navigatorId
+        ? NavigatorService.getDynamicRouteName(
+            navigatorId,
+            NavigatorService.ID_CARD,
+          )
+        : NavigatorService.ID_CARD;
+      const modalId = navigatorId
+        ? NavigatorService.getDynamicRouteName(
+            navigatorId,
+            NavigatorService.ID_MODAL,
+          )
+        : NavigatorService.ID_MODAL;
 
-    screens.push(
-      buildScreen(
-        NavigatorService.ID_CARD,
-        NAVIGATOR_TYPE.STACK,
-        undefined,
-        false,
-      ),
-    );
+      screens.push(buildScreen(cardId, NAVIGATOR_TYPE.STACK, undefined, false));
 
-    screens.push(
-      buildScreen(
-        NavigatorService.ID_MODAL,
-        NAVIGATOR_TYPE.STACK,
-        undefined,
-        true,
-      ),
-    );
-    return screens;
-  }, [buildScreen]);
+      screens.push(buildScreen(modalId, NAVIGATOR_TYPE.STACK, undefined, true));
+      return screens;
+    },
+    [buildScreen],
+  );
 
   /**
    * Build all screens from received routes
@@ -273,7 +274,7 @@ export default function HvNavigator(props: Props) {
             );
           }
           const href: string | null | undefined = navRoute.getAttribute('href');
-          const isModal =
+          const ownsModalFlow =
             navRoute.getAttribute(NavigatorService.KEY_MODAL) === 'true';
 
           // Check for nested navigators
@@ -297,10 +298,10 @@ export default function HvNavigator(props: Props) {
               id,
               type,
               href || undefined,
-              isModal,
+              ownsModalFlow,
               index === 0,
               id,
-              isModal,
+              ownsModalFlow,
             ),
           );
         }
@@ -308,11 +309,14 @@ export default function HvNavigator(props: Props) {
 
       // Add the dynamic stack screens
       if (type === NAVIGATOR_TYPE.STACK) {
-        screens.push(...buildDynamicScreens());
+        const navigatorId = screenElement.getAttribute('id') || undefined;
+        screens.push(
+          ...buildDynamicScreens(isRootNavigator ? undefined : navigatorId),
+        );
       }
       return screens;
     },
-    [buildDynamicScreens, buildScreen],
+    [buildDynamicScreens, buildScreen, isRootNavigator],
   );
 
   useEffect(() => {
@@ -341,26 +345,17 @@ export default function HvNavigator(props: Props) {
 
   return (
     <HvDocContext>
-      {({ getSourceDoc }) => {
-        if (params?.needsSubStack) {
-          // Build a stack navigator for a modal screen
-          const doc = getSourceDoc?.();
-          if (!params) {
+      {() => {
+        if (isModalFlow) {
+          if (!params?.id) {
             throw new NavigatorService.HvNavigatorError(
-              'No params found for modal screen',
+              'No id found for modal flow',
             );
           }
 
-          if (!params.id) {
-            throw new NavigatorService.HvNavigatorError(
-              'No id found for modal screen',
-            );
-          }
+          const navigatorId = `modal-flow-${params.id}`;
+          const screenId = `modal-flow-root-${params.id}`;
 
-          const navigatorId = `stack-${params?.id}`;
-          const screenId = `modal-screen-${params?.id}`;
-
-          // Generate a simple structure for the modal
           const screens: React.ReactElement[] = [];
           screens.push(
             buildScreen(
@@ -373,29 +368,7 @@ export default function HvNavigator(props: Props) {
               true,
             ),
           );
-          screens.push(...buildDynamicScreens());
-
-          // Mutate the dom to match
-          if (doc) {
-            const route: Element | null = params?.id
-              ? Dom.getElementById(doc, params.id) || null
-              : null;
-            if (route && !NavigatorService.getNavigatorById(doc, navigatorId)) {
-              const navigator = doc.createElementNS(
-                Namespaces.HYPERVIEW,
-                LOCAL_NAME.NAVIGATOR,
-              );
-              navigator.setAttribute('id', navigatorId);
-              navigator.setAttribute('type', 'stack');
-              const screen = doc.createElementNS(
-                Namespaces.HYPERVIEW,
-                LOCAL_NAME.NAV_ROUTE,
-              );
-              screen.setAttribute('id', screenId);
-              navigator.appendChild(screen);
-              route.appendChild(navigator);
-            }
-          }
+          screens.push(...buildDynamicScreens(navigatorId));
 
           return (
             <Stack.Navigator

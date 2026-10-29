@@ -33,6 +33,7 @@ import { useHyperview } from 'hyperview/src/contexts/hyperview';
 export default (props: Props) => {
   // eslint-disable-next-line react/destructuring-assignment
   const { onUrlChange } = props;
+  const isModalFlow = NavigatorService.isModalFlowRoute(props.route);
   // <HACK>
   // In addition to storing the document on the react state, we keep a reference to it.
   // When performing batched updates on the DOM, we need to ensure every
@@ -212,11 +213,7 @@ export default (props: Props) => {
     }
 
     if (props.url) {
-      if (
-        !currentUrl.current &&
-        !props.hasElement &&
-        !props.route?.params?.needsSubStack
-      ) {
+      if (!currentUrl.current && !props.hasElement && !isModalFlow) {
         // Handle initial load
         loadUrl(props.url);
       } else if (
@@ -230,7 +227,7 @@ export default (props: Props) => {
     }
 
     currentUrl.current = props.url;
-  }, [entrypointUrl, loadUrl, props, state.loadingUrl]);
+  }, [entrypointUrl, isModalFlow, loadUrl, props, state.loadingUrl]);
 
   const getScreenState = useCallback(
     () => ({ ...state, url: localUrl.current }),
@@ -366,10 +363,8 @@ export default (props: Props) => {
    * Don't show loading screen if the doc is already loaded
    */
   const isLoading = useMemo(() => {
-    return (
-      !state.doc && !props.route?.params?.needsSubStack && !props.hasElement
-    );
-  }, [state.doc, props.hasElement, props.route?.params?.needsSubStack]);
+    return !state.doc && !isModalFlow && !props.hasElement;
+  }, [isModalFlow, props.hasElement, state.doc]);
 
   if (state.error) {
     const ErrorScreen = errorScreen || LoadError;

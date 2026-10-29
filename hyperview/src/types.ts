@@ -260,7 +260,13 @@ export const UPDATE_ACTIONS = {
 export type UpdateAction = typeof UPDATE_ACTIONS[keyof typeof UPDATE_ACTIONS];
 
 export type ListenerEvent = {
-  data: { state: NavigationState | undefined } | undefined;
+  data:
+    | {
+        closing?: boolean;
+        state?: NavigationState;
+      }
+    | undefined;
+  defaultPrevented?: boolean;
   preventDefault: () => void;
 };
 
@@ -284,6 +290,7 @@ export type RouteParams = {
   delay?: number;
   id?: string;
   isModal?: boolean;
+  /** @deprecated Modal ownership is inferred from the route. */
   needsSubStack?: boolean;
   preloadScreen?: number | null;
   routeId?: string;

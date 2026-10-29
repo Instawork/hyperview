@@ -1,0 +1,18 @@
+---
+permalink: "/navigation/sequences/tab-retarget/card.xml"
+hv_title: "Tab retarget (card)"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  {{ description('Messages is selected behind this card. Close card to reveal messages tab.') }}
+  {% call button('Select messages tab') -%}
+    <behavior action="navigate" href="#sequence-tab-retarget-messages" />
+  {%- endcall %}
+  {% call button('Close to reveal messages') -%}
+    <behavior action="back" />
+  {%- endcall %}
+{% endblock %}

@@ -3,7 +3,6 @@ import React, {
   createContext,
   useCallback,
   useContext,
-  useRef,
   useState,
 } from 'react';
 import type { HvComponentOnUpdate } from 'hyperview/src/types';
@@ -29,7 +28,7 @@ export function removeElements(
 }
 
 export const Provider = (props: { children: ReactNode }) => {
-  const registry = useRef<Element[]>([]);
+  const [registry, setRegistry] = useState<Element[]>([]);
   const [onUpdate, setOnUpdate] = useState<HvComponentOnUpdate>(() => null);
 
   const add = useCallback(
@@ -37,16 +36,16 @@ export const Provider = (props: { children: ReactNode }) => {
       if (elements.length === 0) {
         return;
       }
-      registry.current.push(...elements);
+      setRegistry(currentRegistry => [...currentRegistry, ...elements]);
       setOnUpdate(() => update);
     },
     [],
   );
 
-  const get = useCallback((): Element[] => registry.current, []);
+  const get = useCallback((): Element[] => registry, [registry]);
 
   const remove = useCallback((elements: Element[]): void => {
-    registry.current = removeElements(registry.current, elements);
+    setRegistry(currentRegistry => removeElements(currentRegistry, elements));
   }, []);
 
   return (

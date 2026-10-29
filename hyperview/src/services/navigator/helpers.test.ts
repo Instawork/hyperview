@@ -11,11 +11,16 @@ import {
   expandNestedNavigate,
   findPath,
   getChildElements,
+  getDynamicRouteName,
+  getFocusedStackForAction,
   getNavAction,
   getNavigatorById,
   getRouteId,
   getSelectedNavRouteElement,
   getUrlFromHref,
+  isDynamicRoute,
+  isModalFlowRoute,
+  isModalRouteName,
   isNavigationElement,
   isUrlFragment,
   mergeDocument,
@@ -546,7 +551,67 @@ describe('buildParams', () => {
   });
 });
 
+describe('isModalFlowRoute', () => {
+  it('identifies dynamic modal routes', () => {
+    expect(
+      isModalFlowRoute({
+        key: 'modal-key',
+        name: ID_MODAL,
+        params: { isModal: true },
+      }),
+    ).toBe(true);
+  });
+
+  it('identifies modal nav-routes by their stable route id', () => {
+    expect(
+      isModalFlowRoute({
+        key: 'welcome-key',
+        name: 'welcome',
+        params: { id: 'welcome', isModal: true, routeId: 'welcome' },
+      }),
+    ).toBe(true);
+  });
+
+  it('accepts legacy modal route state', () => {
+    expect(
+      isModalFlowRoute({
+        key: 'legacy-modal-key',
+        name: 'legacy-modal',
+        params: { needsSubStack: true },
+      }),
+    ).toBe(true);
+  });
+
+  it('does not identify a screen inside the modal flow as its owner', () => {
+    expect(
+      isModalFlowRoute({
+        key: 'modal-root-key',
+        name: 'modal-root',
+        params: {
+          id: 'modal-root',
+          isModal: true,
+          routeId: 'welcome',
+        },
+      }),
+    ).toBe(false);
+  });
+});
+
 describe('getRouteId', () => {
+  it('resolves navigator-scoped dynamic route names', () => {
+    const card = getDynamicRouteName('nested', ID_CARD);
+    const modal = getDynamicRouteName('nested', ID_MODAL);
+
+    expect(isDynamicRoute(card)).toBe(true);
+    expect(isDynamicRoute(modal)).toBe(true);
+    expect(isModalRouteName(card)).toBe(false);
+    expect(isModalRouteName(modal)).toBe(true);
+    expect(getRouteId(NAV_ACTIONS.PUSH, '/card.xml', [card, modal])).toBe(card);
+    expect(getRouteId(NAV_ACTIONS.NEW, '/modal.xml', [card, modal])).toBe(
+      modal,
+    );
+  });
+
   describe('fragment', () => {
     const urls = ['#url', '#'];
     describe('action:push', () => {
@@ -683,7 +748,9 @@ describe('buildRequest', () => {
         const params = {
           url: 'url',
           // New actions are always modal
-          ...(action === NAV_ACTIONS.NEW && { isModal: true }),
+          ...(action === NAV_ACTIONS.NEW && {
+            isModal: true,
+          }),
         };
         it('should ignore object without params', () => {
           expect(buildRequest(undefined, action, undefined)).toEqual([
@@ -715,10 +782,96 @@ describe('buildRequest', () => {
       ]);
     });
   });
+  it('marks new routes as modal', () => {
+    const navigation = ({
+      getParent: () => undefined,
+      getState: () => ({
+        index: 0,
+        key: 'stack',
+        routeNames: ['home', ID_MODAL],
+        routes: [{ key: 'home-key', name: 'home' }],
+        stale: false,
+        type: 'stack',
+      }),
+    } as unknown) as NonNullable<Types.Props['navigation']>;
+
+    expect(
+      buildRequest(navigation, NAV_ACTIONS.NEW, {
+        url: 'url',
+      }),
+    ).toEqual([
+      NAV_ACTIONS.NEW,
+      navigation,
+      ID_MODAL,
+      {
+        isModal: true,
+        url: 'url',
+      },
+    ]);
+  });
   // TODO buildRequest tests
   // - invalid navigator
   // - invalid path
   // - success
+});
+
+describe('getFocusedStackForAction', () => {
+  const modalStack = {
+    index: 0,
+    key: 'modal-stack',
+    routeNames: [
+      'modal-root',
+      '__hyperview__:modal-owner:card',
+      '__hyperview__:modal-owner:modal',
+    ],
+    routes: [{ key: 'modal-root-key', name: 'modal-root' }],
+    stale: false,
+    type: 'stack',
+  } as NavigationState;
+  const rootStack = {
+    index: 1,
+    key: 'root-stack',
+    routeNames: ['home', ID_CARD, ID_MODAL],
+    routes: [
+      { key: 'home-key', name: 'home' },
+      {
+        key: 'modal-key',
+        name: ID_MODAL,
+        params: {
+          id: 'modal-owner',
+          isModal: true,
+          routeId: 'modal-owner',
+        },
+        state: modalStack,
+      },
+    ],
+    stale: false,
+    type: 'stack',
+  } as NavigationState;
+
+  it('targets the nested stack for a push inside a modal', () => {
+    expect(getFocusedStackForAction(rootStack, NAV_ACTIONS.PUSH)).toBe(
+      modalStack,
+    );
+  });
+
+  it('targets the modal host for a new modal', () => {
+    expect(getFocusedStackForAction(rootStack, NAV_ACTIONS.NEW)).toBe(
+      rootStack,
+    );
+  });
+
+  it('targets the revealed stack after the modal is removed', () => {
+    const revealedState = {
+      ...rootStack,
+      index: 0,
+      routes: rootStack.routes.slice(0, 1),
+    } as NavigationState;
+
+    expect(getFocusedStackForAction(revealedState, NAV_ACTIONS.PUSH)).toBe(
+      revealedState,
+    );
+  });
 });
 
 describe('mergeDocuments', () => {

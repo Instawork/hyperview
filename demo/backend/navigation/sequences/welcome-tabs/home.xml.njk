@@ -1,0 +1,20 @@
+---
+permalink: "/navigation/sequences/welcome-tabs/home.xml"
+hv_title: "Welcome tabs (home)"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block styles %}
+  {% include './_styles.xml.njk' %}
+{% endblock %}
+
+{% block content %}
+  {{ description('Welcome modal is dismissed. Use the button or tab bar to open Messages.') }}
+  {% call button('Go to Messages tab') -%}
+    <behavior action="navigate" href="#sequence-messages-route" />
+  {%- endcall %}
+  {% include './_tab-bar.xml.njk' %}
+{% endblock %}

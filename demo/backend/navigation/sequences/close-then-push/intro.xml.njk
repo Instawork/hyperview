@@ -1,0 +1,19 @@
+---
+permalink: "/navigation/sequences/close-then-push/intro.xml"
+hv_title: "Close then push (intro)"
+hv_button_behavior: "close"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  {{ description('Get started → form screen (intro must not remain on stack).') }}
+  {% call button('Get started') -%}
+    <behavior action="close" />
+    <behavior
+      action="push"
+      href="/hyperview/public/navigation/sequences/close-then-push/form.xml"
+    />
+  {%- endcall %}
+{% endblock %}

@@ -1,0 +1,19 @@
+---
+permalink: "/navigation/sequences/close-then-push/home.xml"
+hv_title: "Close then push (home)"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block content %}
+  {{ description('On load opens intro modal. Get started closes the modal, then pushes the form.') }}
+  <behavior
+    trigger="load"
+    action="new"
+    href="/hyperview/public/navigation/sequences/close-then-push/intro.xml"
+    once="true"
+    show-during-load="loading-screen-modal"
+  />
+  {{ description('Wait for the intro modal, then tap Get started.') }}
+{% endblock %}

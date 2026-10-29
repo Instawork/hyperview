@@ -25,13 +25,45 @@ import { shallowCloneToRoot } from 'hyperview/src/services';
 /**
  * Card and modal routes are not defined in the document
  */
+const DYNAMIC_ROUTE_PREFIX = '__hyperview__:';
+
+const isDynamicRouteType = (id: string, type: string): boolean =>
+  id === type ||
+  (id.startsWith(DYNAMIC_ROUTE_PREFIX) && id.endsWith(`:${type}`));
+
 export const isDynamicRoute = (id: string): boolean => {
-  return id === Types.ID_CARD || id === Types.ID_MODAL;
+  return (
+    isDynamicRouteType(id, Types.ID_CARD) ||
+    isDynamicRouteType(id, Types.ID_MODAL)
+  );
 };
 
 export const isModalRouteName = (name: string): boolean => {
-  return name.startsWith(Types.ID_MODAL);
+  return isDynamicRouteType(name, Types.ID_MODAL);
 };
+
+export const isModalFlowRoute = (route?: RouteProps): boolean => {
+  if (!route) {
+    return false;
+  }
+  if (isModalRouteName(route.name)) {
+    return true;
+  }
+  const { params } = route;
+  if (params?.needsSubStack === true) {
+    return true;
+  }
+  return (
+    params?.isModal === true &&
+    params.id !== undefined &&
+    params.id === params.routeId
+  );
+};
+
+export const getDynamicRouteName = (
+  navigatorId: string,
+  type: typeof Types.ID_CARD | typeof Types.ID_MODAL,
+): string => `${DYNAMIC_ROUTE_PREFIX}${navigatorId}:${type}`;
 
 /**
  * Get an array of all child elements of a node
@@ -176,6 +208,71 @@ export const findNavigatorKeyForRoute = (
   );
 };
 
+export const findNavigatorForRouteName = (
+  state: NavigationState | undefined,
+  routeName: string,
+): NavigationState | undefined => {
+  if (!state?.routes) {
+    return undefined;
+  }
+
+  if (state.routeNames.includes(routeName)) {
+    return state;
+  }
+
+  return state.routes.reduce<NavigationState | undefined>(
+    (navigatorState, route) =>
+      navigatorState ??
+      findNavigatorForRouteName(route.state as NavigationState, routeName),
+    undefined,
+  );
+};
+
+const getFocusedStatePath = (state: NavigationState): NavigationState[] => {
+  const focusedState = state.routes[state.index]?.state as
+    | NavigationState
+    | undefined;
+  return focusedState ? [state, ...getFocusedStatePath(focusedState)] : [state];
+};
+
+export const getFocusedStackForAction = (
+  state: NavigationState,
+  action: typeof NAV_ACTIONS.PUSH | typeof NAV_ACTIONS.NEW,
+): NavigationState | undefined => {
+  const routeType = action === NAV_ACTIONS.NEW ? Types.ID_MODAL : Types.ID_CARD;
+  const path = getFocusedStatePath(state);
+  const findTargetIndex = (startIndex: number): number | undefined => {
+    for (let index = startIndex; index >= 0; index -= 1) {
+      const navigatorState = path[index];
+      if (
+        navigatorState.type === NAVIGATOR_TYPE.STACK &&
+        navigatorState.routeNames.some(routeName =>
+          isDynamicRouteType(routeName, routeType),
+        )
+      ) {
+        return index;
+      }
+    }
+    return undefined;
+  };
+  const findTarget = (startIndex: number): NavigationState | undefined => {
+    const targetIndex = findTargetIndex(startIndex);
+    if (targetIndex === undefined) {
+      return undefined;
+    }
+    if (action === NAV_ACTIONS.PUSH || targetIndex === 0) {
+      return path[targetIndex];
+    }
+    const parentState = path[targetIndex - 1];
+    const parentRoute = parentState.routes[parentState.index];
+    return isModalFlowRoute(parentRoute as RouteProps)
+      ? findTarget(targetIndex - 1)
+      : path[targetIndex];
+  };
+
+  return findTarget(path.length - 1);
+};
+
 /**
  * Convert a Hyperview-style bare nested navigate into explicit RN7 nested params
  * Uses mounted navigation state first, then an optional HXML path fallback
@@ -285,12 +382,14 @@ export const buildParams = (
 export const getRouteId = (
   action: NavAction,
   url: string | undefined,
+  routeNames: string[] = [],
 ): string => {
   if (url && isUrlFragment(url)) {
     return cleanHrefFragment(url);
   }
 
-  return action === NAV_ACTIONS.NEW ? Types.ID_MODAL : Types.ID_CARD;
+  const type = action === NAV_ACTIONS.NEW ? Types.ID_MODAL : Types.ID_CARD;
+  return routeNames.find(name => isDynamicRouteType(name, type)) || type;
 };
 
 /**
@@ -403,7 +502,7 @@ const isRouteModal = (state: NavigationState, index: number): boolean => {
   if (!state || index > state.routes.length - 1) {
     return false;
   }
-  return isModalRouteName(state.routes[index].name);
+  return isModalFlowRoute(state.routes[index] as RouteProps);
 };
 
 /**
@@ -497,7 +596,9 @@ export const buildRequest = (
   const cleanedParams: RouteParams = {
     ...routeParams,
     // New actions are always modal
-    ...(action === NAV_ACTIONS.NEW && { isModal: true }),
+    ...(action === NAV_ACTIONS.NEW && {
+      isModal: true,
+    }),
   };
 
   if (cleanedParams.url && isUrlFragment(cleanedParams.url)) {
@@ -511,7 +612,11 @@ export const buildRequest = (
     return [navAction, undefined, '', cleanedParams];
   }
 
-  const routeId = getRouteId(navAction, routeParams.url ?? undefined);
+  const routeId = getRouteId(
+    navAction,
+    routeParams.url ?? undefined,
+    navigation.getState().routeNames,
+  );
 
   if (!path || !path.length) {
     return [navAction, navigation, routeId, cleanedParams];
