@@ -1,0 +1,19 @@
+---
+permalink: "/advanced/community/elements/top-tabbar/tab-1.xml"
+hv_title: "Tab Navigator - Tab 1"
+hv_button_behavior: "back"
+---
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/tabbar-top/index.xml.njk' import tabbar_top %}
+{% extends 'templates/base.xml.njk' %}
+
+{% block container %}
+  {{ tabbar_top([
+  {id: "custom-top-tabs-tab-1", label: "Tab 1", selected: true},
+  {id: "custom-top-tabs-tab-2", label: "Tab 2"},
+  {id: "custom-top-tabs-tab-3", label: "Tab 3"}
+  ]) }}
+  <view scroll="true">
+    {{ description('This is the content for tab 1.') }}
+  </view>
+{% endblock %}
