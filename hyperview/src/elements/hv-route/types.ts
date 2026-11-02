@@ -18,10 +18,7 @@ export type PreventRemoveAction = PreventRemoveEvent['data']['action'];
 
 export type RouteGuardProps = {
   children: ReactNode;
-  navigation: NavigationProps;
   onBlur: () => void;
-  onFocus: () => void;
-  onRemove: () => void;
   preventRemove: boolean;
   resumeRemoval: (action: PreventRemoveAction) => void;
   runBackBehaviors: () => void;

@@ -26,6 +26,7 @@ import { shallowCloneToRoot } from 'hyperview/src/services';
  * Card and modal routes are not defined in the document
  */
 const DYNAMIC_ROUTE_PREFIX = '__hyperview__:';
+const KEY_RUNTIME_ROUTE = 'data-hyperview-runtime-route';
 
 const isDynamicRouteType = (id: string, type: string): boolean =>
   id === type ||
@@ -37,6 +38,9 @@ export const isDynamicRoute = (id: string): boolean => {
     isDynamicRouteType(id, Types.ID_MODAL)
   );
 };
+
+export const isRuntimeRouteElement = (element: Element): boolean =>
+  element.getAttribute(KEY_RUNTIME_ROUTE) === 'true';
 
 export const isModalRouteName = (name: string): boolean => {
   return isDynamicRouteType(name, Types.ID_MODAL);
@@ -774,36 +778,41 @@ export const setSelected = (
   doc: Document | undefined,
   id: string | undefined,
   setDoc?: ((d: Document) => void) | undefined,
-) => {
+): boolean => {
   if (!doc || !id) {
-    return;
+    return false;
   }
   const route = getRouteById(doc, id);
-  if (route && route.parentNode) {
-    const parentNode = route.parentNode as Element;
-    const type = parentNode.getAttribute(Types.KEY_TYPE);
-    if (type !== NAVIGATOR_TYPE.TAB) {
-      return;
-    }
-
-    // Reset all siblings
-    if (parentNode.childNodes) {
-      Array.from(parentNode.childNodes).forEach((child: Node) => {
-        const sibling = child as Element;
-        if (sibling && sibling.localName === LOCAL_NAME.NAV_ROUTE) {
-          sibling.setAttribute(Types.KEY_SELECTED, 'false');
-        }
-      });
-    }
-
-    // Set the selected route
-    route.setAttribute(Types.KEY_SELECTED, 'true');
+  if (!route?.parentNode) {
+    return false;
+  }
+  const parentNode = route.parentNode as Element;
+  if (parentNode.getAttribute(Types.KEY_TYPE) !== NAVIGATOR_TYPE.TAB) {
+    return false;
   }
 
-  if (setDoc) {
+  const siblings = getChildElements(parentNode).filter(
+    child => child.localName === LOCAL_NAME.NAV_ROUTE,
+  );
+  const changed = siblings.some(
+    sibling =>
+      sibling.getAttribute(Types.KEY_SELECTED) !==
+      (sibling === route ? 'true' : 'false'),
+  );
+  if (changed) {
+    siblings.forEach(sibling => {
+      sibling.setAttribute(
+        Types.KEY_SELECTED,
+        sibling === route ? 'true' : 'false',
+      );
+    });
+  }
+
+  if (changed && setDoc) {
     const newRoot = shallowCloneToRoot(doc);
     setDoc(newRoot);
   }
+  return changed;
 };
 
 /**
@@ -814,9 +823,9 @@ export const removeStackRoute = (
   url: string | undefined,
   baseUrl: string,
   setDoc?: ((d: Document) => void) | undefined,
-) => {
+): boolean => {
   if (!doc || !url) {
-    return;
+    return false;
   }
   const route = getRouteByUrl(doc, url, baseUrl);
   if (route && route.parentNode) {
@@ -830,9 +839,11 @@ export const removeStackRoute = (
           const newRoot = shallowCloneToRoot(doc);
           setDoc(newRoot);
         }
+        return true;
       }
     }
   }
+  return false;
 };
 
 /**
@@ -845,7 +856,7 @@ export const addStackRoute = (
   siblingName: string | undefined,
   baseUrl: string,
   setDoc?: ((d: Document) => void) | undefined,
-) => {
+): boolean => {
   if (
     !doc ||
     !id ||
@@ -855,7 +866,7 @@ export const addStackRoute = (
     !route.params?.url ||
     getRouteByUrl(doc, route.params?.url, baseUrl)
   ) {
-    return;
+    return false;
   }
 
   const siblingElement = getRouteById(doc, siblingName);
@@ -869,14 +880,20 @@ export const addStackRoute = (
       );
       element.setAttribute(Types.KEY_ID, id);
       element.setAttribute(Types.KEY_HREF, route.params.url);
+      element.setAttribute(KEY_RUNTIME_ROUTE, 'true');
+      if (isModalRouteName(route.name)) {
+        element.setAttribute(Types.KEY_MODAL, 'true');
+      }
       parentElement.appendChild(element);
 
       if (setDoc) {
         const newRoot = shallowCloneToRoot(doc);
         setDoc(newRoot);
       }
+      return true;
     }
   }
+  return false;
 };
 
 const getUrlFromState = (
@@ -889,8 +906,8 @@ const getUrlFromState = (
 
   for (let i = 0; i < state.routes.length; i += 1) {
     const route = state.routes[i];
-    if (route.name === id) {
-      const params = route.params as RouteParams;
+    const params = route.params as RouteParams;
+    if (route.name === id || route.key === id || params?.id === id) {
       return params.url || undefined;
     }
     const url = getUrlFromState(route.state as NavigationState, id);
@@ -910,9 +927,9 @@ export const updateRouteUrlFromState = (
   id: string | undefined,
   state: NavigationState | undefined,
   setDoc?: ((d: Document) => void) | undefined,
-) => {
+): boolean => {
   if (!doc || !id || !state) {
-    return;
+    return false;
   }
   const route = getRouteById(doc, id);
   if (route) {
@@ -924,6 +941,61 @@ export const updateRouteUrlFromState = (
         const newRoot = shallowCloneToRoot(doc);
         setDoc(newRoot);
       }
+      return true;
     }
   }
+  return false;
+};
+
+export const synchronizeNavigationState = (
+  doc: Document | undefined,
+  navigatorId: string,
+  state: NavigationState,
+  baseUrl: string,
+  setDoc?: ((d: Document) => void) | undefined,
+): boolean => {
+  if (!doc) {
+    return false;
+  }
+
+  const firstRouteName = state.routes[0]?.name;
+  let changed = false;
+  state.routes.forEach(route => {
+    const params = route.params as RouteParams | undefined;
+    const id = params?.id || route.key;
+    const added = addStackRoute(
+      doc,
+      id,
+      route as RouteProps,
+      firstRouteName,
+      baseUrl,
+    );
+    const urlUpdated = updateRouteUrlFromState(doc, id, state);
+    changed = added || urlUpdated || changed;
+  });
+
+  const activeRoute = state.routes[state.index];
+  const activeParams = activeRoute?.params as RouteParams | undefined;
+  changed = setSelected(doc, activeParams?.id || activeRoute?.key) || changed;
+
+  const navigator = getNavigatorById(doc, navigatorId);
+  if (navigator?.getAttribute(Types.KEY_TYPE) === NAVIGATOR_TYPE.STACK) {
+    const stateUrls = state.routes
+      .map(route => (route.params as RouteParams | undefined)?.url)
+      .filter((url): url is string => Boolean(url))
+      .map(url => getUrlFromHref(url, baseUrl));
+    getChildElements(navigator)
+      .filter(isRuntimeRouteElement)
+      .forEach(route => {
+        const href = route.getAttribute(Types.KEY_HREF);
+        if (href && !stateUrls.includes(getUrlFromHref(href, baseUrl))) {
+          changed = removeStackRoute(doc, href, baseUrl) || changed;
+        }
+      });
+  }
+
+  if (changed && setDoc) {
+    setDoc(shallowCloneToRoot(doc));
+  }
+  return changed;
 };

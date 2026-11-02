@@ -6,28 +6,18 @@ import {
   usePreventRemove,
 } from '@react-navigation/native';
 
-const useRouteFocus = (onFocus: () => void, onBlur: () => void) => {
+const useRouteBlur = (onBlur: () => void) => {
   const onBlurRef = useRef(onBlur);
-  const onFocusRef = useRef(onFocus);
   useEffect(() => {
     onBlurRef.current = onBlur;
-    onFocusRef.current = onFocus;
-  }, [onBlur, onFocus]);
-  useFocusEffect(
-    useCallback(() => {
-      onFocusRef.current();
-      return () => onBlurRef.current();
-    }, []),
-  );
+  }, [onBlur]);
+  useFocusEffect(useCallback(() => () => onBlurRef.current(), []));
 };
 
 export const RouteGuard = (props: Types.RouteGuardProps) => {
   const {
     children,
-    navigation,
     onBlur,
-    onFocus,
-    onRemove,
     preventRemove,
     resumeRemoval,
     runBackBehaviors,
@@ -47,15 +37,6 @@ export const RouteGuard = (props: Types.RouteGuardProps) => {
       runningBackBehaviors.current = false;
     }
   });
-  useEffect(
-    () =>
-      navigation.addListener('beforeRemove', event => {
-        if (!event.defaultPrevented) {
-          onRemove();
-        }
-      }),
-    [navigation, onRemove],
-  );
-  useRouteFocus(onFocus, onBlur);
+  useRouteBlur(onBlur);
   return children;
 };

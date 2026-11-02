@@ -1,4 +1,5 @@
 import * as CustomTabRouter from 'hyperview/src/components/navigator-tab/router';
+import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as React from 'react';
 import {
   BottomTabNavigationEventMap,
@@ -17,8 +18,8 @@ import { useHvDocContext } from 'hyperview/src/elements/hv-doc';
 import { useHyperview } from 'hyperview/src/contexts/hyperview';
 
 const CustomTabNavigator = (props: Props) => {
-  const { getSourceDoc } = useHvDocContext();
-  const { navigationComponents } = useHyperview();
+  const { getSourceDoc, setDoc } = useHvDocContext();
+  const { entrypointUrl, navigationComponents } = useHyperview();
   const TabView = navigationComponents?.BottomTabView ?? BottomTabView;
   const { state, descriptors, navigation, render } = useNavigationBuilder<
     TabNavigationState<ParamListBase>,
@@ -33,6 +34,13 @@ const CustomTabNavigator = (props: Props) => {
     id: props.id,
     initialRouteName: props.initialRouteName,
     screenOptions: props.screenOptions,
+  });
+  NavigatorService.useNavigationStateSync({
+    entrypointUrl,
+    getDoc: getSourceDoc,
+    navigatorId: props.id,
+    setDoc,
+    state,
   });
 
   React.useEffect(() => {

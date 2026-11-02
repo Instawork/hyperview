@@ -198,10 +198,6 @@ export default function HvNavigator(props: Props) {
         );
       }
       if (type === NAVIGATOR_TYPE.STACK) {
-        const options = getStackRouteOptions({
-          isFirstScreen,
-          usesModalPresentation,
-        });
         return (
           <Stack.Screen
             key={id}
@@ -209,7 +205,14 @@ export default function HvNavigator(props: Props) {
             getId={({ params: p }: ScreenParams) => getId(p)}
             initialParams={initialParams}
             name={id}
-            options={options}
+            options={({ route }: ScreenOptionsProps) =>
+              getStackRouteOptions({
+                // Routes injected while reconciling a new document use their
+                // DOM id as the key and should not animate into the reset hierarchy.
+                isFirstScreen: isFirstScreen || route.key === id,
+                usesModalPresentation,
+              })
+            }
           />
         );
       }
@@ -258,6 +261,8 @@ export default function HvNavigator(props: Props) {
       }
       const elements: Element[] = NavigatorService.getChildElements(
         screenElement,
+      ).filter(
+        routeElement => !NavigatorService.isRuntimeRouteElement(routeElement),
       );
 
       // For tab navigators, the screens are appended

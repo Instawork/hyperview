@@ -24,13 +24,6 @@ jest.mock('@react-navigation/native', () => {
 });
 
 const mockUsePreventRemove = usePreventRemove as jest.Mock;
-const mockAddListener = jest.fn<
-  () => void,
-  [string, (event: ListenerEvent) => void]
->((): (() => void) => jest.fn());
-const routeGuardNavigation = ({
-  addListener: mockAddListener,
-} as unknown) as NavigationProps;
 
 describe('registerRouteFocusListener', () => {
   it('notifies after a completed opening transition for the focused route', () => {
@@ -91,23 +84,17 @@ describe('registerRouteFocusListener', () => {
 
 describe('RouteGuard', () => {
   beforeEach(() => {
-    mockAddListener.mockClear();
     mockUsePreventRemove.mockClear();
   });
 
-  it('keeps focus lifetime stable when route callbacks change', async () => {
+  it('keeps blur lifetime stable when the callback changes', async () => {
     const onBlur = jest.fn();
-    const onFocus = jest.fn();
     const onNextBlur = jest.fn();
-    const onNextFocus = jest.fn();
     const resumeRemoval = jest.fn();
     const runBackBehaviors = jest.fn();
     const view = await render(
       <RouteGuard
-        navigation={routeGuardNavigation}
         onBlur={onBlur}
-        onFocus={onFocus}
-        onRemove={jest.fn()}
         preventRemove
         resumeRemoval={resumeRemoval}
         runBackBehaviors={runBackBehaviors}
@@ -116,14 +103,9 @@ describe('RouteGuard', () => {
       </RouteGuard>,
     );
 
-    await waitFor(() => expect(onFocus).toHaveBeenCalledTimes(1));
-
     await view.rerender(
       <RouteGuard
-        navigation={routeGuardNavigation}
         onBlur={onNextBlur}
-        onFocus={onNextFocus}
-        onRemove={jest.fn()}
         preventRemove
         resumeRemoval={resumeRemoval}
         runBackBehaviors={runBackBehaviors}
@@ -133,7 +115,6 @@ describe('RouteGuard', () => {
     );
 
     expect(onBlur).not.toHaveBeenCalled();
-    expect(onNextFocus).not.toHaveBeenCalled();
 
     await view.unmount();
 
@@ -144,57 +125,13 @@ describe('RouteGuard', () => {
     );
   });
 
-  it('removes the route only after an unprevented removal', async () => {
-    const onRemove = jest.fn();
-    await render(
-      <RouteGuard
-        navigation={routeGuardNavigation}
-        onBlur={jest.fn()}
-        onFocus={jest.fn()}
-        onRemove={onRemove}
-        preventRemove
-        resumeRemoval={jest.fn()}
-        runBackBehaviors={jest.fn()}
-      >
-        <Text>Route</Text>
-      </RouteGuard>,
-    );
-    const listenerCall = mockAddListener.mock.calls.at(-1);
-    if (!listenerCall) {
-      throw new Error('Expected beforeRemove listener');
-    }
-    const [, handleBeforeRemove] = listenerCall;
-
-    await act(() => {
-      handleBeforeRemove({
-        data: {},
-        defaultPrevented: true,
-        preventDefault: jest.fn(),
-      });
-      handleBeforeRemove({
-        data: {},
-        defaultPrevented: false,
-        preventDefault: jest.fn(),
-      });
-    });
-
-    expect(mockAddListener).toHaveBeenCalledWith(
-      'beforeRemove',
-      expect.any(Function),
-    );
-    expect(onRemove).toHaveBeenCalledTimes(1);
-  });
-
   it('keeps the original removal blocked when back behaviors do not navigate', async () => {
     const action = { type: 'GO_BACK' };
     const resumeRemoval = jest.fn();
     const runBackBehaviors = jest.fn();
     await render(
       <RouteGuard
-        navigation={routeGuardNavigation}
         onBlur={jest.fn()}
-        onFocus={jest.fn()}
-        onRemove={jest.fn()}
         preventRemove
         resumeRemoval={resumeRemoval}
         runBackBehaviors={runBackBehaviors}
@@ -232,10 +169,7 @@ describe('RouteGuard', () => {
     });
     await render(
       <RouteGuard
-        navigation={routeGuardNavigation}
         onBlur={jest.fn()}
-        onFocus={jest.fn()}
-        onRemove={jest.fn()}
         preventRemove
         resumeRemoval={resumeRemoval}
         runBackBehaviors={runBackBehaviors}

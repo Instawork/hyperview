@@ -79,7 +79,7 @@ export default class HvView extends PureComponent<HvComponentProps> {
     const isPressableChild = this.props.options.skipTestId;
     if (isPressableChild) {
       // Keep the pressed child in the native hierarchy while its wrapper handles touch state.
-      return { collapsable: false, style };
+      return { collapsable: false, collapsableChildren: false, style };
     }
     if (!testID) {
       return { style };

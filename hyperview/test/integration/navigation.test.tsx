@@ -1,3 +1,4 @@
+import * as Events from 'hyperview/src/services/events';
 import {
   NavigationContainer,
   createNavigationContainerRef,
@@ -10,12 +11,17 @@ import {
   screen,
   waitFor,
 } from '@testing-library/react-native';
+import type { HvBehavior } from 'hyperview/src/types';
 import HyperviewComponent from 'hyperview/src/hyperview';
 import { Pressable } from 'react-native';
 import React from 'react';
 import { fetchFactory } from 'hyperview/test/helpers/fetch';
 
 let mockUseNativeStack = false;
+const mockStackRouteOptionsParams: Array<{
+  isFirstScreen: boolean;
+  usesModalPresentation: boolean;
+}> = [];
 
 jest.mock('hyperview/src/components/navigator-stack', () => {
   const ReactModule = jest.requireActual<typeof import('react')>('react');
@@ -53,11 +59,13 @@ jest.mock('hyperview/src/elements/hv-navigator/stack-options', () => {
   return {
     getStackRouteOptions: (
       params: Parameters<typeof stackOptions.getStackRouteOptions>[0],
-    ) =>
-      (mockUseNativeStack
+    ) => {
+      mockStackRouteOptionsParams.push(params);
+      return (mockUseNativeStack
         ? nativeStackOptions
         : stackOptions
-      ).getStackRouteOptions(params),
+      ).getStackRouteOptions(params);
+    },
   };
 });
 
@@ -79,6 +87,7 @@ describe.each([
     props: React.ComponentProps<typeof HyperviewComponent>,
   ): React.ReactElement => (
     <HyperviewComponent
+      behaviors={props.behaviors}
       entrypointUrl={props.entrypointUrl}
       fetch={props.fetch}
       formatDate={props.formatDate}
@@ -88,10 +97,161 @@ describe.each([
 
   beforeEach(() => {
     mockUseNativeStack = useNativeStack;
+    mockStackRouteOptionsParams.length = 0;
   });
 
   afterEach(async () => {
     await cleanup();
+  });
+
+  it('does not animate routes injected during document reconciliation', async () => {
+    const mockFetch = fetchFactory([
+      [
+        'http://myapp.com/reset-document',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <navigator id="root" type="stack">
+              <nav-route id="home" href="http://myapp.com/reset-home" />
+              <nav-route
+                id="welcome"
+                href="http://myapp.com/reset-welcome"
+                modal="true"
+              />
+            </navigator>
+          </doc>
+        `,
+      ],
+      [
+        'http://myapp.com/reset-welcome',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <screen>
+              <body>
+                <text id="welcome">Welcome</text>
+              </body>
+            </screen>
+          </doc>
+        `,
+      ],
+    ]);
+
+    await render(
+      <NavigationContainer>
+        <Hyperview
+          entrypointUrl="http://myapp.com/reset-document"
+          fetch={mockFetch}
+          formatDate={formatDate}
+        />
+      </NavigationContainer>,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId('welcome')).toBeOnTheScreen();
+    });
+    expect(mockStackRouteOptionsParams).toContainEqual({
+      isFirstScreen: true,
+      usesModalPresentation: true,
+    });
+  });
+
+  it('resets the route hierarchy when the entrypoint changes', async () => {
+    const navigationRef = createNavigationContainerRef();
+    const mockFetch = fetchFactory([
+      [
+        'http://myapp.com/logged-out-document',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <navigator id="root" type="stack">
+              <nav-route id="intro" href="http://myapp.com/intro" />
+            </navigator>
+          </doc>
+        `,
+      ],
+      [
+        'http://myapp.com/intro',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <screen>
+              <body>
+                <behavior
+                  trigger="load"
+                  action="new"
+                  href="http://myapp.com/login"
+                  once="true"
+                />
+                <text id="intro">Intro</text>
+              </body>
+            </screen>
+          </doc>
+        `,
+      ],
+      [
+        'http://myapp.com/login',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <screen>
+              <body>
+                <text id="login">Login</text>
+              </body>
+            </screen>
+          </doc>
+        `,
+      ],
+      [
+        'http://myapp.com/logged-in-document',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <navigator id="root" type="stack">
+              <nav-route id="welcome" href="http://myapp.com/welcome" />
+            </navigator>
+          </doc>
+        `,
+      ],
+      [
+        'http://myapp.com/welcome',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <screen>
+              <body>
+                <text id="welcome">Welcome</text>
+              </body>
+            </screen>
+          </doc>
+        `,
+      ],
+    ]);
+
+    const view = await render(
+      <NavigationContainer ref={navigationRef}>
+        <Hyperview
+          entrypointUrl="http://myapp.com/logged-out-document"
+          fetch={mockFetch}
+          formatDate={formatDate}
+        />
+      </NavigationContainer>,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId('login')).toBeOnTheScreen();
+    });
+
+    await view.rerender(
+      <NavigationContainer ref={navigationRef}>
+        <Hyperview
+          entrypointUrl="http://myapp.com/logged-in-document"
+          fetch={mockFetch}
+          formatDate={formatDate}
+        />
+      </NavigationContainer>,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId('welcome')).toBeOnTheScreen();
+      expect(screen.queryByTestId('login')).not.toBeOnTheScreen();
+    });
+    const rootState = getRootNavigationState(navigationRef);
+    expect(rootState.routes.map(route => route.name)).toEqual(['welcome']);
+    expect(rootState.index).toBe(0);
   });
 
   test.each(['new', 'push'])(
@@ -185,9 +345,102 @@ describe.each([
         'home',
         action === 'new' ? 'modal' : 'card',
       ]);
+      expect(rootState.routeNames).toEqual(['home', 'card', 'modal']);
       expect(rootState.index).toBe(1);
     },
   );
+
+  test('completes delayed work before closing its route', async () => {
+    const completed = jest.fn();
+    const behaviors: HvBehavior[] = [
+      {
+        action: 'redux',
+        callback: element => {
+          if (element.getAttribute('phase') === 'begin') {
+            setTimeout(() => Events.dispatch('save-local-auth-token-end'), 50);
+          } else {
+            completed(element.getAttribute('phase'));
+          }
+        },
+      },
+    ];
+    const mockFetch = fetchFactory([
+      [
+        'http://myapp.com/login-document',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <navigator id="root" type="stack">
+              <nav-route id="home" href="http://myapp.com/login-home" />
+            </navigator>
+          </doc>
+        `,
+      ],
+      [
+        'http://myapp.com/login-home',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <screen>
+              <body>
+                <behavior
+                  trigger="load"
+                  action="new"
+                  href="http://myapp.com/login-response"
+                  once="true"
+                />
+                <text id="home">Home</text>
+              </body>
+            </screen>
+          </doc>
+        `,
+      ],
+      [
+        'http://myapp.com/login-response',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <screen>
+              <body>
+                <behavior trigger="load" action="redux" phase="begin" />
+                <behavior
+                  trigger="on-event"
+                  event-name="save-local-auth-token-end"
+                  action="redux"
+                  phase="complete"
+                />
+                <behavior
+                  trigger="on-event"
+                  event-name="save-local-auth-token-end"
+                  action="close"
+                />
+                <behavior
+                  trigger="on-event"
+                  event-name="save-local-auth-token-end"
+                  action="redux"
+                  phase="configuration"
+                />
+              </body>
+            </screen>
+          </doc>
+        `,
+      ],
+    ]);
+
+    await render(
+      <NavigationContainer>
+        <Hyperview
+          behaviors={behaviors}
+          entrypointUrl="http://myapp.com/login-document"
+          fetch={mockFetch}
+          formatDate={formatDate}
+        />
+      </NavigationContainer>,
+    );
+
+    await waitFor(() => {
+      expect(completed).toHaveBeenNthCalledWith(1, 'complete');
+      expect(completed).toHaveBeenNthCalledWith(2, 'configuration');
+      expect(screen.getByTestId('home')).toBeOnTheScreen();
+    });
+  });
 
   test('runs adjacent close and push press behaviors in order', async () => {
     const navigationRef = createNavigationContainerRef();

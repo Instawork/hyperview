@@ -10,11 +10,7 @@ import HvDoc, {
   HvDocContext,
   useUnsafeHvDocContext,
 } from 'hyperview/src/elements/hv-doc';
-import type {
-  ListenerEvent,
-  NavigationProps,
-  ScreenState,
-} from 'hyperview/src/types';
+import type { NavigationProps, ScreenState } from 'hyperview/src/types';
 import React, {
   PureComponent,
   useCallback,
@@ -182,7 +178,7 @@ function HvRouteFC(props: Types.Props) {
   } = useHyperview();
   const { setElement } = useElementCache();
   const { get, onUpdate } = useBackBehaviorContext();
-  const { getDoc, getSourceDoc, setDoc } = useUnsafeHvDocContext() || {};
+  const { getSourceDoc } = useUnsafeHvDocContext() || {};
 
   const url =
     props.navigation === undefined
@@ -212,27 +208,11 @@ function HvRouteFC(props: Types.Props) {
     getSourceDoc?.(),
   );
 
-  const id = props.route?.params?.id || props.route?.key;
-  const routeUrl = props.route?.params?.url;
-
   const handleBlur = useCallback(() => {
     if (onRouteBlur && props.route) {
       onRouteBlur(props.route);
     }
   }, [onRouteBlur, props.route]);
-
-  const handleFocus = useCallback(() => {
-    const doc = getDoc?.();
-    NavigatorService.setSelected(doc, id, setDoc);
-    NavigatorService.addStackRoute(
-      doc,
-      id,
-      props.route,
-      nav.getState().routes[0]?.name,
-      entrypointUrl,
-      setDoc,
-    );
-  }, [entrypointUrl, getDoc, id, nav, props.route, setDoc]);
 
   const visibleElements = getVisibleBackBehaviors(get());
   const runBackBehaviors = useCallback(() => {
@@ -256,37 +236,6 @@ function HvRouteFC(props: Types.Props) {
     },
     [nav],
   );
-
-  const handleRemove = useCallback(() => {
-    if (getVisibleBackBehaviors(get()).length === 0) {
-      NavigatorService.removeStackRoute(
-        getDoc?.(),
-        routeUrl,
-        entrypointUrl,
-        setDoc,
-      );
-    }
-  }, [entrypointUrl, get, getDoc, routeUrl, setDoc]);
-
-  const handleState = useCallback(
-    (event: ListenerEvent) => {
-      NavigatorService.updateRouteUrlFromState(
-        getDoc?.(),
-        id,
-        event.data?.state,
-        setDoc,
-      );
-    },
-    [getDoc, id, setDoc],
-  );
-
-  // Update the urls in each route when the state updates the params
-  useEffect(() => {
-    if (!nav) {
-      return undefined;
-    }
-    return nav.addListener('state', handleState);
-  }, [nav, handleState]);
 
   // Preserve the public callback timing without making route state depend on transitions.
   useEffect(() => {
@@ -330,10 +279,7 @@ function HvRouteFC(props: Types.Props) {
           );
           return props.route ? (
             <RouteGuard
-              navigation={nav}
               onBlur={handleBlur}
-              onFocus={handleFocus}
-              onRemove={handleRemove}
               preventRemove={visibleElements.length > 0}
               resumeRemoval={resumeRemoval}
               runBackBehaviors={runBackBehaviors}

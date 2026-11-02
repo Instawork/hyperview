@@ -15,6 +15,7 @@ import {
   getFocusedStackForAction,
   getNavAction,
   getNavigatorById,
+  getRouteById,
   getRouteId,
   getSelectedNavRouteElement,
   getUrlFromHref,
@@ -22,9 +23,11 @@ import {
   isModalFlowRoute,
   isModalRouteName,
   isNavigationElement,
+  isRuntimeRouteElement,
   isUrlFragment,
   mergeDocument,
   removeStackRoute,
+  synchronizeNavigationState,
   validateUrl,
 } from './helpers';
 import { CommonActions } from '@react-navigation/native';
@@ -1107,5 +1110,202 @@ describe('getNavigatorById', () => {
       const routes = getChildElements(navigator);
       expect(routes.length).toEqual(2);
     }
+  });
+});
+
+describe('synchronizeNavigationState', () => {
+  it('adds and removes dynamic stack routes from committed state', () => {
+    let doc = parser.parseFromString(`
+      <doc xmlns="https://hyperview.org/hyperview">
+        <navigator id="root" type="stack">
+          <nav-route id="home" href="/home" />
+        </navigator>
+      </doc>
+    `);
+    const setDoc = jest.fn((nextDoc: Document) => {
+      doc = nextDoc;
+    });
+    const pushedState = ({
+      index: 1,
+      routes: [
+        { key: 'home-key', name: 'home', params: { id: 'home', url: '/home' } },
+        { key: 'modal-key', name: ID_MODAL, params: { url: '/details' } },
+      ],
+    } as unknown) as NavigationState;
+
+    expect(
+      synchronizeNavigationState(
+        doc,
+        'root',
+        pushedState,
+        'https://example.com',
+        setDoc,
+      ),
+    ).toBe(true);
+    expect(
+      getChildElements(getNavigatorById(doc, 'root') as Element).map(route => [
+        route.getAttribute('id'),
+        route.getAttribute('href'),
+        route.getAttribute('modal'),
+      ]),
+    ).toEqual([
+      ['home', '/home', ''],
+      ['modal-key', '/details', 'true'],
+    ]);
+    expect(
+      isRuntimeRouteElement(
+        getChildElements(getNavigatorById(doc, 'root') as Element)[1],
+      ),
+    ).toBe(true);
+    expect(
+      synchronizeNavigationState(
+        doc,
+        'root',
+        pushedState,
+        'https://example.com',
+        setDoc,
+      ),
+    ).toBe(false);
+
+    const poppedState = ({
+      index: 0,
+      routes: [pushedState.routes[0]],
+    } as unknown) as NavigationState;
+    expect(
+      synchronizeNavigationState(
+        doc,
+        'root',
+        poppedState,
+        'https://example.com',
+        setDoc,
+      ),
+    ).toBe(true);
+    expect(
+      getChildElements(getNavigatorById(doc, 'root') as Element).map(route =>
+        route.getAttribute('id'),
+      ),
+    ).toEqual(['home']);
+    expect(setDoc).toHaveBeenCalledTimes(2);
+  });
+
+  it('updates route urls from committed state', () => {
+    const doc = parser.parseFromString(`
+      <doc xmlns="https://hyperview.org/hyperview">
+        <navigator id="root" type="stack">
+          <nav-route id="home" href="/old" />
+        </navigator>
+      </doc>
+    `);
+    const state = ({
+      index: 0,
+      routes: [
+        { key: 'home-key', name: 'home', params: { id: 'home', url: '/new' } },
+      ],
+    } as unknown) as NavigationState;
+
+    synchronizeNavigationState(doc, 'root', state, 'https://example.com');
+
+    expect(
+      getChildElements(
+        getNavigatorById(doc, 'root') as Element,
+      )[0].getAttribute('href'),
+    ).toBe('/new');
+  });
+
+  it('updates dynamic route urls by route key', () => {
+    const doc = parser.parseFromString(`
+      <doc xmlns="https://hyperview.org/hyperview">
+        <navigator id="root" type="stack">
+          <nav-route id="home" href="/home" />
+        </navigator>
+      </doc>
+    `);
+    const initialState = ({
+      index: 1,
+      routes: [
+        { key: 'home-key', name: 'home', params: { id: 'home', url: '/home' } },
+        { key: 'modal-key', name: ID_MODAL, params: { url: '/details' } },
+      ],
+    } as unknown) as NavigationState;
+    synchronizeNavigationState(
+      doc,
+      'root',
+      initialState,
+      'https://example.com',
+    );
+
+    const updatedState = ({
+      ...initialState,
+      routes: [
+        initialState.routes[0],
+        { key: 'modal-key', name: ID_MODAL, params: { url: '/updated' } },
+      ],
+    } as unknown) as NavigationState;
+    synchronizeNavigationState(
+      doc,
+      'root',
+      updatedState,
+      'https://example.com',
+    );
+
+    expect(getRouteById(doc, 'modal-key')?.getAttribute('href')).toBe(
+      '/updated',
+    );
+  });
+
+  it('retains declarative stack routes that are not active', () => {
+    const doc = parser.parseFromString(`
+      <doc xmlns="https://hyperview.org/hyperview">
+        <navigator id="root" type="stack">
+          <nav-route id="home" href="/home" />
+          <nav-route id="settings" href="/settings" />
+        </navigator>
+      </doc>
+    `);
+    const state = ({
+      index: 0,
+      routes: [
+        { key: 'home-key', name: 'home', params: { id: 'home', url: '/home' } },
+      ],
+    } as unknown) as NavigationState;
+
+    expect(
+      synchronizeNavigationState(doc, 'root', state, 'https://example.com'),
+    ).toBe(false);
+    expect(
+      getChildElements(getNavigatorById(doc, 'root') as Element).map(route =>
+        route.getAttribute('id'),
+      ),
+    ).toEqual(['home', 'settings']);
+  });
+
+  it('updates the selected tab from committed state', () => {
+    const doc = parser.parseFromString(`
+      <doc xmlns="https://hyperview.org/hyperview">
+        <navigator id="tabs" type="tab">
+          <nav-route id="home" href="/home" selected="true" />
+          <nav-route id="messages" href="/messages" selected="false" />
+        </navigator>
+      </doc>
+    `);
+    const state = ({
+      index: 1,
+      routes: [
+        { key: 'home-key', name: 'home', params: { id: 'home', url: '/home' } },
+        {
+          key: 'messages-key',
+          name: 'messages',
+          params: { id: 'messages', url: '/messages' },
+        },
+      ],
+    } as unknown) as NavigationState;
+
+    synchronizeNavigationState(doc, 'tabs', state, 'https://example.com');
+
+    expect(
+      getChildElements(getNavigatorById(doc, 'tabs') as Element).map(route =>
+        route.getAttribute('selected'),
+      ),
+    ).toEqual(['false', 'true']);
   });
 });

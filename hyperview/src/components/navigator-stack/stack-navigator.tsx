@@ -1,4 +1,5 @@
 import * as CustomStackRouter from 'hyperview/src/components/navigator-stack/router';
+import * as NavigatorService from 'hyperview/src/services/navigator';
 import * as React from 'react';
 import type { Props, StackOptions } from './types';
 import {
@@ -17,7 +18,7 @@ import { useHvDocContext } from 'hyperview/src/elements/hv-doc';
 import { useHyperview } from 'hyperview/src/contexts/hyperview';
 
 export default function StackNavigator(props: Props) {
-  const { getSourceDoc } = useHvDocContext();
+  const { getSourceDoc, setDoc } = useHvDocContext();
   const { entrypointUrl } = useHyperview();
   const { direction } = useLocale();
 
@@ -40,6 +41,13 @@ export default function StackNavigator(props: Props) {
     id: props.id,
     initialRouteName: props.initialRouteName,
     screenOptions: props.screenOptions as StackNavigationOptions,
+  });
+  NavigatorService.useNavigationStateSync({
+    entrypointUrl,
+    getDoc: getSourceDoc,
+    navigatorId: props.id,
+    setDoc,
+    state,
   });
 
   return render(
