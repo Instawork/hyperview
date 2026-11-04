@@ -25,13 +25,49 @@ import { shallowCloneToRoot } from 'hyperview/src/services';
 /**
  * Card and modal routes are not defined in the document
  */
+const DYNAMIC_ROUTE_PREFIX = '__hyperview__:';
+const KEY_RUNTIME_ROUTE = 'data-hyperview-runtime-route';
+
+const isDynamicRouteType = (id: string, type: string): boolean =>
+  id === type ||
+  (id.startsWith(DYNAMIC_ROUTE_PREFIX) && id.endsWith(`:${type}`));
+
 export const isDynamicRoute = (id: string): boolean => {
-  return id === Types.ID_CARD || id === Types.ID_MODAL;
+  return (
+    isDynamicRouteType(id, Types.ID_CARD) ||
+    isDynamicRouteType(id, Types.ID_MODAL)
+  );
 };
 
+export const isRuntimeRouteElement = (element: Element): boolean =>
+  element.getAttribute(KEY_RUNTIME_ROUTE) === 'true';
+
 export const isModalRouteName = (name: string): boolean => {
-  return name.startsWith(Types.ID_MODAL);
+  return isDynamicRouteType(name, Types.ID_MODAL);
 };
+
+export const isModalFlowRoute = (route?: RouteProps): boolean => {
+  if (!route) {
+    return false;
+  }
+  if (isModalRouteName(route.name)) {
+    return true;
+  }
+  const { params } = route;
+  if (params?.needsSubStack === true) {
+    return true;
+  }
+  return (
+    params?.isModal === true &&
+    params.id !== undefined &&
+    params.id === params.routeId
+  );
+};
+
+export const getDynamicRouteName = (
+  navigatorId: string,
+  type: typeof Types.ID_CARD | typeof Types.ID_MODAL,
+): string => `${DYNAMIC_ROUTE_PREFIX}${navigatorId}:${type}`;
 
 /**
  * Get an array of all child elements of a node
@@ -176,6 +212,71 @@ export const findNavigatorKeyForRoute = (
   );
 };
 
+export const findNavigatorForRouteName = (
+  state: NavigationState | undefined,
+  routeName: string,
+): NavigationState | undefined => {
+  if (!state?.routes) {
+    return undefined;
+  }
+
+  if (state.routeNames.includes(routeName)) {
+    return state;
+  }
+
+  return state.routes.reduce<NavigationState | undefined>(
+    (navigatorState, route) =>
+      navigatorState ??
+      findNavigatorForRouteName(route.state as NavigationState, routeName),
+    undefined,
+  );
+};
+
+const getFocusedStatePath = (state: NavigationState): NavigationState[] => {
+  const focusedState = state.routes[state.index]?.state as
+    | NavigationState
+    | undefined;
+  return focusedState ? [state, ...getFocusedStatePath(focusedState)] : [state];
+};
+
+export const getFocusedStackForAction = (
+  state: NavigationState,
+  action: typeof NAV_ACTIONS.PUSH | typeof NAV_ACTIONS.NEW,
+): NavigationState | undefined => {
+  const routeType = action === NAV_ACTIONS.NEW ? Types.ID_MODAL : Types.ID_CARD;
+  const path = getFocusedStatePath(state);
+  const findTargetIndex = (startIndex: number): number | undefined => {
+    for (let index = startIndex; index >= 0; index -= 1) {
+      const navigatorState = path[index];
+      if (
+        navigatorState.type === NAVIGATOR_TYPE.STACK &&
+        navigatorState.routeNames.some(routeName =>
+          isDynamicRouteType(routeName, routeType),
+        )
+      ) {
+        return index;
+      }
+    }
+    return undefined;
+  };
+  const findTarget = (startIndex: number): NavigationState | undefined => {
+    const targetIndex = findTargetIndex(startIndex);
+    if (targetIndex === undefined) {
+      return undefined;
+    }
+    if (action === NAV_ACTIONS.PUSH || targetIndex === 0) {
+      return path[targetIndex];
+    }
+    const parentState = path[targetIndex - 1];
+    const parentRoute = parentState.routes[parentState.index];
+    return isModalFlowRoute(parentRoute as RouteProps)
+      ? findTarget(targetIndex - 1)
+      : path[targetIndex];
+  };
+
+  return findTarget(path.length - 1);
+};
+
 /**
  * Convert a Hyperview-style bare nested navigate into explicit RN7 nested params
  * Uses mounted navigation state first, then an optional HXML path fallback
@@ -285,12 +386,14 @@ export const buildParams = (
 export const getRouteId = (
   action: NavAction,
   url: string | undefined,
+  routeNames: string[] = [],
 ): string => {
   if (url && isUrlFragment(url)) {
     return cleanHrefFragment(url);
   }
 
-  return action === NAV_ACTIONS.NEW ? Types.ID_MODAL : Types.ID_CARD;
+  const type = action === NAV_ACTIONS.NEW ? Types.ID_MODAL : Types.ID_CARD;
+  return routeNames.find(name => isDynamicRouteType(name, type)) || type;
 };
 
 /**
@@ -403,7 +506,7 @@ const isRouteModal = (state: NavigationState, index: number): boolean => {
   if (!state || index > state.routes.length - 1) {
     return false;
   }
-  return isModalRouteName(state.routes[index].name);
+  return isModalFlowRoute(state.routes[index] as RouteProps);
 };
 
 /**
@@ -497,7 +600,9 @@ export const buildRequest = (
   const cleanedParams: RouteParams = {
     ...routeParams,
     // New actions are always modal
-    ...(action === NAV_ACTIONS.NEW && { isModal: true }),
+    ...(action === NAV_ACTIONS.NEW && {
+      isModal: true,
+    }),
   };
 
   if (cleanedParams.url && isUrlFragment(cleanedParams.url)) {
@@ -511,7 +616,11 @@ export const buildRequest = (
     return [navAction, undefined, '', cleanedParams];
   }
 
-  const routeId = getRouteId(navAction, routeParams.url ?? undefined);
+  const routeId = getRouteId(
+    navAction,
+    routeParams.url ?? undefined,
+    navigation.getState().routeNames,
+  );
 
   if (!path || !path.length) {
     return [navAction, navigation, routeId, cleanedParams];
@@ -669,36 +778,41 @@ export const setSelected = (
   doc: Document | undefined,
   id: string | undefined,
   setDoc?: ((d: Document) => void) | undefined,
-) => {
+): boolean => {
   if (!doc || !id) {
-    return;
+    return false;
   }
   const route = getRouteById(doc, id);
-  if (route && route.parentNode) {
-    const parentNode = route.parentNode as Element;
-    const type = parentNode.getAttribute(Types.KEY_TYPE);
-    if (type !== NAVIGATOR_TYPE.TAB) {
-      return;
-    }
-
-    // Reset all siblings
-    if (parentNode.childNodes) {
-      Array.from(parentNode.childNodes).forEach((child: Node) => {
-        const sibling = child as Element;
-        if (sibling && sibling.localName === LOCAL_NAME.NAV_ROUTE) {
-          sibling.setAttribute(Types.KEY_SELECTED, 'false');
-        }
-      });
-    }
-
-    // Set the selected route
-    route.setAttribute(Types.KEY_SELECTED, 'true');
+  if (!route?.parentNode) {
+    return false;
+  }
+  const parentNode = route.parentNode as Element;
+  if (parentNode.getAttribute(Types.KEY_TYPE) !== NAVIGATOR_TYPE.TAB) {
+    return false;
   }
 
-  if (setDoc) {
+  const siblings = getChildElements(parentNode).filter(
+    child => child.localName === LOCAL_NAME.NAV_ROUTE,
+  );
+  const changed = siblings.some(
+    sibling =>
+      sibling.getAttribute(Types.KEY_SELECTED) !==
+      (sibling === route ? 'true' : 'false'),
+  );
+  if (changed) {
+    siblings.forEach(sibling => {
+      sibling.setAttribute(
+        Types.KEY_SELECTED,
+        sibling === route ? 'true' : 'false',
+      );
+    });
+  }
+
+  if (changed && setDoc) {
     const newRoot = shallowCloneToRoot(doc);
     setDoc(newRoot);
   }
+  return changed;
 };
 
 /**
@@ -709,9 +823,9 @@ export const removeStackRoute = (
   url: string | undefined,
   baseUrl: string,
   setDoc?: ((d: Document) => void) | undefined,
-) => {
+): boolean => {
   if (!doc || !url) {
-    return;
+    return false;
   }
   const route = getRouteByUrl(doc, url, baseUrl);
   if (route && route.parentNode) {
@@ -725,9 +839,11 @@ export const removeStackRoute = (
           const newRoot = shallowCloneToRoot(doc);
           setDoc(newRoot);
         }
+        return true;
       }
     }
   }
+  return false;
 };
 
 /**
@@ -740,7 +856,7 @@ export const addStackRoute = (
   siblingName: string | undefined,
   baseUrl: string,
   setDoc?: ((d: Document) => void) | undefined,
-) => {
+): boolean => {
   if (
     !doc ||
     !id ||
@@ -750,7 +866,7 @@ export const addStackRoute = (
     !route.params?.url ||
     getRouteByUrl(doc, route.params?.url, baseUrl)
   ) {
-    return;
+    return false;
   }
 
   const siblingElement = getRouteById(doc, siblingName);
@@ -764,14 +880,20 @@ export const addStackRoute = (
       );
       element.setAttribute(Types.KEY_ID, id);
       element.setAttribute(Types.KEY_HREF, route.params.url);
+      element.setAttribute(KEY_RUNTIME_ROUTE, 'true');
+      if (isModalRouteName(route.name)) {
+        element.setAttribute(Types.KEY_MODAL, 'true');
+      }
       parentElement.appendChild(element);
 
       if (setDoc) {
         const newRoot = shallowCloneToRoot(doc);
         setDoc(newRoot);
       }
+      return true;
     }
   }
+  return false;
 };
 
 const getUrlFromState = (
@@ -784,8 +906,8 @@ const getUrlFromState = (
 
   for (let i = 0; i < state.routes.length; i += 1) {
     const route = state.routes[i];
-    if (route.name === id) {
-      const params = route.params as RouteParams;
+    const params = route.params as RouteParams;
+    if (route.name === id || route.key === id || params?.id === id) {
       return params.url || undefined;
     }
     const url = getUrlFromState(route.state as NavigationState, id);
@@ -805,9 +927,9 @@ export const updateRouteUrlFromState = (
   id: string | undefined,
   state: NavigationState | undefined,
   setDoc?: ((d: Document) => void) | undefined,
-) => {
+): boolean => {
   if (!doc || !id || !state) {
-    return;
+    return false;
   }
   const route = getRouteById(doc, id);
   if (route) {
@@ -819,6 +941,61 @@ export const updateRouteUrlFromState = (
         const newRoot = shallowCloneToRoot(doc);
         setDoc(newRoot);
       }
+      return true;
     }
   }
+  return false;
+};
+
+export const synchronizeNavigationState = (
+  doc: Document | undefined,
+  navigatorId: string,
+  state: NavigationState,
+  baseUrl: string,
+  setDoc?: ((d: Document) => void) | undefined,
+): boolean => {
+  if (!doc) {
+    return false;
+  }
+
+  const firstRouteName = state.routes[0]?.name;
+  let changed = false;
+  state.routes.forEach(route => {
+    const params = route.params as RouteParams | undefined;
+    const id = params?.id || route.key;
+    const added = addStackRoute(
+      doc,
+      id,
+      route as RouteProps,
+      firstRouteName,
+      baseUrl,
+    );
+    const urlUpdated = updateRouteUrlFromState(doc, id, state);
+    changed = added || urlUpdated || changed;
+  });
+
+  const activeRoute = state.routes[state.index];
+  const activeParams = activeRoute?.params as RouteParams | undefined;
+  changed = setSelected(doc, activeParams?.id || activeRoute?.key) || changed;
+
+  const navigator = getNavigatorById(doc, navigatorId);
+  if (navigator?.getAttribute(Types.KEY_TYPE) === NAVIGATOR_TYPE.STACK) {
+    const stateUrls = state.routes
+      .map(route => (route.params as RouteParams | undefined)?.url)
+      .filter((url): url is string => Boolean(url))
+      .map(url => getUrlFromHref(url, baseUrl));
+    getChildElements(navigator)
+      .filter(isRuntimeRouteElement)
+      .forEach(route => {
+        const href = route.getAttribute(Types.KEY_HREF);
+        if (href && !stateUrls.includes(getUrlFromHref(href, baseUrl))) {
+          changed = removeStackRoute(doc, href, baseUrl) || changed;
+        }
+      });
+  }
+
+  if (changed && setDoc) {
+    setDoc(shallowCloneToRoot(doc));
+  }
+  return changed;
 };

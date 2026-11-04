@@ -1,0 +1,15 @@
+---
+permalink: "/navigation/sequences/push-in-modal/modal-step-two.xml"
+hv_title: "Push in modal (step 2)"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  {{ description('Close → home screen (modal dismissed, not step one).') }}
+  {% call button('Close modal flow') -%}
+    <behavior action="close" />
+  {%- endcall %}
+{% endblock %}

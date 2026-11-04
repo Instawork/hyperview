@@ -1,0 +1,16 @@
+---
+permalink: "/navigation/sequences/stacked-modals/modal-third.xml"
+hv_title: "Stacked modals (modal 3)"
+hv_button_behavior: "close"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  <behavior trigger="on-event" event-name="sequence-close-modal-flow" action="close" />
+  {{ description('Close flow → details screen (home still below on stack).') }}
+  {% call button('Close modal flow') -%}
+    <behavior action="dispatch-event" event-name="sequence-close-modal-flow" />
+  {%- endcall %}
+{% endblock %}

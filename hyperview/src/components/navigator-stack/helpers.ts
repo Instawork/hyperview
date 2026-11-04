@@ -49,9 +49,8 @@ export const buildRoutesFromDom = (
         !sequenceBroken &&
         // Ensure the presentation matches for dynamic screens
         (!NavigatorService.isDynamicRoute(state.routes[existingIndex].name) ||
-          (isModal
-            ? state.routes[existingIndex].name === NavigatorService.ID_MODAL
-            : state.routes[existingIndex].name === NavigatorService.ID_CARD))
+          isModal ===
+            NavigatorService.isModalRouteName(state.routes[existingIndex].name))
       ) {
         routes.push(state.routes[existingIndex]);
       } else {

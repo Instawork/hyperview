@@ -11,15 +11,23 @@ import {
   expandNestedNavigate,
   findPath,
   getChildElements,
+  getDynamicRouteName,
+  getFocusedStackForAction,
   getNavAction,
   getNavigatorById,
+  getRouteById,
   getRouteId,
   getSelectedNavRouteElement,
   getUrlFromHref,
+  isDynamicRoute,
+  isModalFlowRoute,
+  isModalRouteName,
   isNavigationElement,
+  isRuntimeRouteElement,
   isUrlFragment,
   mergeDocument,
   removeStackRoute,
+  synchronizeNavigationState,
   validateUrl,
 } from './helpers';
 import { CommonActions } from '@react-navigation/native';
@@ -546,7 +554,67 @@ describe('buildParams', () => {
   });
 });
 
+describe('isModalFlowRoute', () => {
+  it('identifies dynamic modal routes', () => {
+    expect(
+      isModalFlowRoute({
+        key: 'modal-key',
+        name: ID_MODAL,
+        params: { isModal: true },
+      }),
+    ).toBe(true);
+  });
+
+  it('identifies modal nav-routes by their stable route id', () => {
+    expect(
+      isModalFlowRoute({
+        key: 'welcome-key',
+        name: 'welcome',
+        params: { id: 'welcome', isModal: true, routeId: 'welcome' },
+      }),
+    ).toBe(true);
+  });
+
+  it('accepts legacy modal route state', () => {
+    expect(
+      isModalFlowRoute({
+        key: 'legacy-modal-key',
+        name: 'legacy-modal',
+        params: { needsSubStack: true },
+      }),
+    ).toBe(true);
+  });
+
+  it('does not identify a screen inside the modal flow as its owner', () => {
+    expect(
+      isModalFlowRoute({
+        key: 'modal-root-key',
+        name: 'modal-root',
+        params: {
+          id: 'modal-root',
+          isModal: true,
+          routeId: 'welcome',
+        },
+      }),
+    ).toBe(false);
+  });
+});
+
 describe('getRouteId', () => {
+  it('resolves navigator-scoped dynamic route names', () => {
+    const card = getDynamicRouteName('nested', ID_CARD);
+    const modal = getDynamicRouteName('nested', ID_MODAL);
+
+    expect(isDynamicRoute(card)).toBe(true);
+    expect(isDynamicRoute(modal)).toBe(true);
+    expect(isModalRouteName(card)).toBe(false);
+    expect(isModalRouteName(modal)).toBe(true);
+    expect(getRouteId(NAV_ACTIONS.PUSH, '/card.xml', [card, modal])).toBe(card);
+    expect(getRouteId(NAV_ACTIONS.NEW, '/modal.xml', [card, modal])).toBe(
+      modal,
+    );
+  });
+
   describe('fragment', () => {
     const urls = ['#url', '#'];
     describe('action:push', () => {
@@ -683,7 +751,9 @@ describe('buildRequest', () => {
         const params = {
           url: 'url',
           // New actions are always modal
-          ...(action === NAV_ACTIONS.NEW && { isModal: true }),
+          ...(action === NAV_ACTIONS.NEW && {
+            isModal: true,
+          }),
         };
         it('should ignore object without params', () => {
           expect(buildRequest(undefined, action, undefined)).toEqual([
@@ -715,10 +785,96 @@ describe('buildRequest', () => {
       ]);
     });
   });
+  it('marks new routes as modal', () => {
+    const navigation = ({
+      getParent: () => undefined,
+      getState: () => ({
+        index: 0,
+        key: 'stack',
+        routeNames: ['home', ID_MODAL],
+        routes: [{ key: 'home-key', name: 'home' }],
+        stale: false,
+        type: 'stack',
+      }),
+    } as unknown) as NonNullable<Types.Props['navigation']>;
+
+    expect(
+      buildRequest(navigation, NAV_ACTIONS.NEW, {
+        url: 'url',
+      }),
+    ).toEqual([
+      NAV_ACTIONS.NEW,
+      navigation,
+      ID_MODAL,
+      {
+        isModal: true,
+        url: 'url',
+      },
+    ]);
+  });
   // TODO buildRequest tests
   // - invalid navigator
   // - invalid path
   // - success
+});
+
+describe('getFocusedStackForAction', () => {
+  const modalStack = {
+    index: 0,
+    key: 'modal-stack',
+    routeNames: [
+      'modal-root',
+      '__hyperview__:modal-owner:card',
+      '__hyperview__:modal-owner:modal',
+    ],
+    routes: [{ key: 'modal-root-key', name: 'modal-root' }],
+    stale: false,
+    type: 'stack',
+  } as NavigationState;
+  const rootStack = {
+    index: 1,
+    key: 'root-stack',
+    routeNames: ['home', ID_CARD, ID_MODAL],
+    routes: [
+      { key: 'home-key', name: 'home' },
+      {
+        key: 'modal-key',
+        name: ID_MODAL,
+        params: {
+          id: 'modal-owner',
+          isModal: true,
+          routeId: 'modal-owner',
+        },
+        state: modalStack,
+      },
+    ],
+    stale: false,
+    type: 'stack',
+  } as NavigationState;
+
+  it('targets the nested stack for a push inside a modal', () => {
+    expect(getFocusedStackForAction(rootStack, NAV_ACTIONS.PUSH)).toBe(
+      modalStack,
+    );
+  });
+
+  it('targets the modal host for a new modal', () => {
+    expect(getFocusedStackForAction(rootStack, NAV_ACTIONS.NEW)).toBe(
+      rootStack,
+    );
+  });
+
+  it('targets the revealed stack after the modal is removed', () => {
+    const revealedState = {
+      ...rootStack,
+      index: 0,
+      routes: rootStack.routes.slice(0, 1),
+    } as NavigationState;
+
+    expect(getFocusedStackForAction(revealedState, NAV_ACTIONS.PUSH)).toBe(
+      revealedState,
+    );
+  });
 });
 
 describe('mergeDocuments', () => {
@@ -954,5 +1110,202 @@ describe('getNavigatorById', () => {
       const routes = getChildElements(navigator);
       expect(routes.length).toEqual(2);
     }
+  });
+});
+
+describe('synchronizeNavigationState', () => {
+  it('adds and removes dynamic stack routes from committed state', () => {
+    let doc = parser.parseFromString(`
+      <doc xmlns="https://hyperview.org/hyperview">
+        <navigator id="root" type="stack">
+          <nav-route id="home" href="/home" />
+        </navigator>
+      </doc>
+    `);
+    const setDoc = jest.fn((nextDoc: Document) => {
+      doc = nextDoc;
+    });
+    const pushedState = ({
+      index: 1,
+      routes: [
+        { key: 'home-key', name: 'home', params: { id: 'home', url: '/home' } },
+        { key: 'modal-key', name: ID_MODAL, params: { url: '/details' } },
+      ],
+    } as unknown) as NavigationState;
+
+    expect(
+      synchronizeNavigationState(
+        doc,
+        'root',
+        pushedState,
+        'https://example.com',
+        setDoc,
+      ),
+    ).toBe(true);
+    expect(
+      getChildElements(getNavigatorById(doc, 'root') as Element).map(route => [
+        route.getAttribute('id'),
+        route.getAttribute('href'),
+        route.getAttribute('modal'),
+      ]),
+    ).toEqual([
+      ['home', '/home', ''],
+      ['modal-key', '/details', 'true'],
+    ]);
+    expect(
+      isRuntimeRouteElement(
+        getChildElements(getNavigatorById(doc, 'root') as Element)[1],
+      ),
+    ).toBe(true);
+    expect(
+      synchronizeNavigationState(
+        doc,
+        'root',
+        pushedState,
+        'https://example.com',
+        setDoc,
+      ),
+    ).toBe(false);
+
+    const poppedState = ({
+      index: 0,
+      routes: [pushedState.routes[0]],
+    } as unknown) as NavigationState;
+    expect(
+      synchronizeNavigationState(
+        doc,
+        'root',
+        poppedState,
+        'https://example.com',
+        setDoc,
+      ),
+    ).toBe(true);
+    expect(
+      getChildElements(getNavigatorById(doc, 'root') as Element).map(route =>
+        route.getAttribute('id'),
+      ),
+    ).toEqual(['home']);
+    expect(setDoc).toHaveBeenCalledTimes(2);
+  });
+
+  it('updates route urls from committed state', () => {
+    const doc = parser.parseFromString(`
+      <doc xmlns="https://hyperview.org/hyperview">
+        <navigator id="root" type="stack">
+          <nav-route id="home" href="/old" />
+        </navigator>
+      </doc>
+    `);
+    const state = ({
+      index: 0,
+      routes: [
+        { key: 'home-key', name: 'home', params: { id: 'home', url: '/new' } },
+      ],
+    } as unknown) as NavigationState;
+
+    synchronizeNavigationState(doc, 'root', state, 'https://example.com');
+
+    expect(
+      getChildElements(
+        getNavigatorById(doc, 'root') as Element,
+      )[0].getAttribute('href'),
+    ).toBe('/new');
+  });
+
+  it('updates dynamic route urls by route key', () => {
+    const doc = parser.parseFromString(`
+      <doc xmlns="https://hyperview.org/hyperview">
+        <navigator id="root" type="stack">
+          <nav-route id="home" href="/home" />
+        </navigator>
+      </doc>
+    `);
+    const initialState = ({
+      index: 1,
+      routes: [
+        { key: 'home-key', name: 'home', params: { id: 'home', url: '/home' } },
+        { key: 'modal-key', name: ID_MODAL, params: { url: '/details' } },
+      ],
+    } as unknown) as NavigationState;
+    synchronizeNavigationState(
+      doc,
+      'root',
+      initialState,
+      'https://example.com',
+    );
+
+    const updatedState = ({
+      ...initialState,
+      routes: [
+        initialState.routes[0],
+        { key: 'modal-key', name: ID_MODAL, params: { url: '/updated' } },
+      ],
+    } as unknown) as NavigationState;
+    synchronizeNavigationState(
+      doc,
+      'root',
+      updatedState,
+      'https://example.com',
+    );
+
+    expect(getRouteById(doc, 'modal-key')?.getAttribute('href')).toBe(
+      '/updated',
+    );
+  });
+
+  it('retains declarative stack routes that are not active', () => {
+    const doc = parser.parseFromString(`
+      <doc xmlns="https://hyperview.org/hyperview">
+        <navigator id="root" type="stack">
+          <nav-route id="home" href="/home" />
+          <nav-route id="settings" href="/settings" />
+        </navigator>
+      </doc>
+    `);
+    const state = ({
+      index: 0,
+      routes: [
+        { key: 'home-key', name: 'home', params: { id: 'home', url: '/home' } },
+      ],
+    } as unknown) as NavigationState;
+
+    expect(
+      synchronizeNavigationState(doc, 'root', state, 'https://example.com'),
+    ).toBe(false);
+    expect(
+      getChildElements(getNavigatorById(doc, 'root') as Element).map(route =>
+        route.getAttribute('id'),
+      ),
+    ).toEqual(['home', 'settings']);
+  });
+
+  it('updates the selected tab from committed state', () => {
+    const doc = parser.parseFromString(`
+      <doc xmlns="https://hyperview.org/hyperview">
+        <navigator id="tabs" type="tab">
+          <nav-route id="home" href="/home" selected="true" />
+          <nav-route id="messages" href="/messages" selected="false" />
+        </navigator>
+      </doc>
+    `);
+    const state = ({
+      index: 1,
+      routes: [
+        { key: 'home-key', name: 'home', params: { id: 'home', url: '/home' } },
+        {
+          key: 'messages-key',
+          name: 'messages',
+          params: { id: 'messages', url: '/messages' },
+        },
+      ],
+    } as unknown) as NavigationState;
+
+    synchronizeNavigationState(doc, 'tabs', state, 'https://example.com');
+
+    expect(
+      getChildElements(getNavigatorById(doc, 'tabs') as Element).map(route =>
+        route.getAttribute('selected'),
+      ),
+    ).toEqual(['false', 'true']);
   });
 });

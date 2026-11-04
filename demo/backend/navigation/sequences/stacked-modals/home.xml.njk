@@ -1,0 +1,18 @@
+---
+permalink: "/navigation/sequences/stacked-modals/home.xml"
+hv_title: "Stacked modals (home)"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  {{ description('Push details → open 3 nested modals → close flow → details stays on stack.') }}
+  {% call button('Push details') -%}
+    <behavior
+      action="push"
+      href="/hyperview/public/navigation/sequences/stacked-modals/details.xml"
+    />
+  {%- endcall %}
+{% endblock %}

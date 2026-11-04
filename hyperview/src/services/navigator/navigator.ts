@@ -11,8 +11,16 @@ import type {
   NavigationProvider,
   RouteParams,
 } from 'hyperview/src/types';
-import { CommonActions, StackActions } from '@react-navigation/native';
-import { NAV_ACTIONS } from 'hyperview/src/types';
+import {
+  CommonActions,
+  StackActions,
+  TabActions,
+} from '@react-navigation/native';
+import { NAVIGATOR_TYPE, NAV_ACTIONS } from 'hyperview/src/types';
+import type {
+  NavigationAction,
+  NavigationState,
+} from '@react-navigation/native';
 import { uuidNumber } from 'hyperview/src/services';
 
 /**
@@ -82,34 +90,15 @@ export class Navigator implements NavigationProvider {
   }
 
   /**
-   * Resolve the navigator which owns the route.
-   */
-  getActiveNavigation = (): NavigationProps | undefined => {
-    const { navigation, rootNavigation, route } = this.props;
-    const rootState = rootNavigation?.getRootState();
-
-    if (
-      !navigation ||
-      !route?.key ||
-      !rootState ||
-      Helpers.findNavigatorKeyForRoute(rootState, route.key)
-    ) {
-      return navigation;
-    }
-
-    return navigation.getParent() || navigation;
-  };
-
-  /**
    * Prepare and send the request
    */
   sendRequest = (action: NavAction, routeParams?: RouteParams) => {
-    const activeNavigation = this.getActiveNavigation();
-    const [navAction, navigation, routeId, params] = Helpers.buildRequest(
-      activeNavigation,
-      action,
-      routeParams,
-    );
+    const [
+      navAction,
+      navigation,
+      initialRouteId,
+      params,
+    ] = Helpers.buildRequest(this.props.navigation, action, routeParams);
 
     if (!navigation) {
       if (routeParams?.targetId) {
@@ -118,6 +107,31 @@ export class Navigator implements NavigationProvider {
       }
       return;
     }
+
+    const rootState = this.props.rootNavigation?.getRootState();
+    let target: NavigationState | undefined;
+    if (rootState && !routeParams?.targetId) {
+      if (navAction === NAV_ACTIONS.PUSH || navAction === NAV_ACTIONS.NEW) {
+        target = Helpers.getFocusedStackForAction(rootState, navAction);
+      } else if (navAction === NAV_ACTIONS.NAVIGATE && initialRouteId) {
+        target = Helpers.findNavigatorForRouteName(rootState, initialRouteId);
+      }
+    }
+    const routeId =
+      target &&
+      (navAction === NAV_ACTIONS.PUSH || navAction === NAV_ACTIONS.NEW)
+        ? Helpers.getRouteId(navAction, routeParams?.url, target.routeNames)
+        : initialRouteId;
+    const dispatch = (navigationAction: NavigationAction) => {
+      if (target && this.props.rootNavigation) {
+        this.props.rootNavigation.dispatch({
+          ...navigationAction,
+          target: target.key,
+        });
+      } else {
+        navigation.dispatch(navigationAction);
+      }
+    };
 
     switch (navAction) {
       case NAV_ACTIONS.BACK:
@@ -130,16 +144,22 @@ export class Navigator implements NavigationProvider {
         );
         break;
       case NAV_ACTIONS.NAVIGATE:
+        if (routeId) {
+          dispatch(
+            target?.type === NAVIGATOR_TYPE.TAB
+              ? TabActions.jumpTo(routeId, params)
+              : CommonActions.navigate(routeId, params, { pop: true }),
+          );
+        }
+        break;
       case NAV_ACTIONS.NEW:
         if (routeId) {
-          navigation.dispatch(
-            CommonActions.navigate(routeId, params, { pop: true }),
-          );
+          dispatch(CommonActions.navigate(routeId, params, { pop: true }));
         }
         break;
       case NAV_ACTIONS.PUSH:
         if (routeId) {
-          navigation.dispatch(StackActions.push(routeId, params));
+          dispatch(StackActions.push(routeId, params));
         }
         break;
       default:
@@ -155,7 +175,7 @@ export class Navigator implements NavigationProvider {
     stateUrl?: string | null,
     doc?: Document,
   ): void => {
-    const { showIndicatorId, delay, targetId } = opts;
+    const { delay, showIndicatorId, targetId } = opts;
     const formData: FormData | null | undefined = componentRegistry.getFormData(
       element,
     );

@@ -4,6 +4,7 @@ import type {
   RouteProps,
 } from 'hyperview/src/types';
 import { NavigationContainerRefContext } from '@react-navigation/native';
+import type { NavigationState } from '@react-navigation/native';
 
 export const ANCHOR_ID_SEPARATOR = '#';
 export const ID_CARD = 'card';
@@ -45,4 +46,12 @@ export type NavigateActionPayload = {
   name?: string;
   params?: object;
   pop?: boolean;
+};
+
+export type NavigationStateSyncOptions = {
+  entrypointUrl: string;
+  getDoc: () => Document | undefined;
+  navigatorId: string;
+  setDoc: (doc: Document) => void;
+  state: NavigationState;
 };

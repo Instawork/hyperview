@@ -1,0 +1,15 @@
+---
+permalink: "/navigation/sequences/close-then-push-load/destination.xml"
+hv_title: "Close then push load (destination)"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  {{ description('Final screen after adjacent close+push load behaviors.') }}
+  {% call button('Back to load home') -%}
+    <behavior action="back" />
+  {%- endcall %}
+{% endblock %}

@@ -1,0 +1,23 @@
+---
+permalink: "/navigation/sequences/tab-retarget/index.xml"
+tags: "Navigation/Sequences"
+hv_title: "Tab retarget keeps push"
+hv_button_behavior: "back"
+---
+<doc xmlns="https://hyperview.org/hyperview">
+  <navigator id="navigation-sequence-tab-retarget" type="stack">
+    <nav-route id="sequence-tab-retarget-tabs">
+      <navigator id="sequence-tab-retarget-navigator" type="tab">
+        <nav-route
+          id="sequence-tab-retarget-home"
+          href="/hyperview/public/navigation/sequences/tab-retarget/home.xml"
+          selected="true"
+        />
+        <nav-route
+          id="sequence-tab-retarget-messages"
+          href="/hyperview/public/navigation/sequences/tab-retarget/messages.xml"
+        />
+      </navigator>
+    </nav-route>
+  </navigator>
+</doc>

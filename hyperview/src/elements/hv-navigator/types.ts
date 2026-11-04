@@ -1,7 +1,9 @@
 import type { HvComponentOnUpdate, RouteParams } from 'hyperview/src/types';
 import { FC } from 'react';
 import type { Props as HvRouteProps } from 'hyperview/src/elements/hv-route';
+import type { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import type { RouteProp } from '@react-navigation/native';
+import type { StackNavigationOptions } from '@react-navigation/stack';
 
 /**
  * Flag to show the default navigator UIs
@@ -26,6 +28,8 @@ export type ScreenParams = {
  */
 export type Props = {
   element?: Element;
+  isModalFlow: boolean;
+  isRootNavigator: boolean;
   onUpdate: HvComponentOnUpdate;
   params?: RouteParams;
   routeComponent: FC<HvRouteProps>;
@@ -39,8 +43,16 @@ export type NavigatorProps = {
 /**
  * Options used for a stack navigator's screenOptions
  */
+export type StackRouteOptions =
+  | NativeStackNavigationOptions
+  | StackNavigationOptions;
+
+export type StackRouteOptionsParams = {
+  isFirstScreen: boolean;
+  usesModalPresentation: boolean;
+};
+
 export type StackScreenOptions = {
-  headerMode: 'float' | 'screen' | undefined;
   headerShown: boolean;
   title: string | undefined;
 };

@@ -1,0 +1,21 @@
+---
+permalink: "/navigation/sequences/modal-open-close/index.xml"
+tags: "Navigation/Sequences"
+hv_title: "Modal open and close"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  {{ description('Open modal → modal sheet. Close → return here.') }}
+  {{ description('Opens a modal with action new, then closes it with action close.') }}
+  {% call button('Open modal') -%}
+    <behavior
+      action="new"
+      href="/hyperview/public/navigation/sequences/modal-open-close/modal.xml"
+      show-during-load="loading-screen-modal"
+    />
+  {%- endcall %}
+{% endblock %}

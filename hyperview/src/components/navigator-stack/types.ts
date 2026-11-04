@@ -1,12 +1,17 @@
 import * as React from 'react';
+import type { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import type { RouterConfigOptions } from '@react-navigation/routers';
 import type { StackNavigationOptions } from '@react-navigation/stack';
+
+export type NavigationOptions =
+  | NativeStackNavigationOptions
+  | StackNavigationOptions;
 
 export type Props = {
   id: string;
   children?: React.ReactNode;
   initialRouteName?: string;
-  screenOptions?: StackNavigationOptions;
+  screenOptions?: NavigationOptions;
 };
 
 export type RouterRenameOptions = RouterConfigOptions & {
