@@ -9,6 +9,8 @@ import type {
   ScreenState,
 } from 'hyperview/src/types';
 
+export type PreventRemoveAction = Parameters<NavigationProps['dispatch']>[0];
+
 /**
  * The props used by inner components of hv-route
  */
@@ -38,4 +40,7 @@ export type RouteLifecycleProps = {
   children: ReactNode;
   onBlur: () => void;
   onFocus: () => (() => void) | undefined;
+  preventRemove: boolean;
+  resumeRemoval: (action: PreventRemoveAction) => void;
+  runBackBehaviors: () => boolean;
 };

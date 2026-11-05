@@ -254,12 +254,53 @@ function HvRouteFC(props: Types.Props) {
     return registerRouteFocusListener(nav, updateRouteFocus);
   }, [entrypointUrl, getDoc, id, nav, onRouteFocus, props.route, setDoc]);
 
+  const runBackBehaviors = useCallback((): boolean => {
+    const elements: Element[] = (get && get()) || [];
+    const visibleElements = getVisibleBackBehaviors(elements);
+    if (visibleElements.length === 0 || !onUpdate) {
+      return false;
+    }
+    visibleElements.forEach(behaviorElement => {
+      onUpdate(
+        behaviorElement.getAttribute('href'),
+        behaviorElement.getAttribute('action'),
+        behaviorElement,
+        {
+          behaviorElement,
+          showIndicatorId: behaviorElement.getAttribute('show-during-load'),
+          targetId: behaviorElement.getAttribute('target'),
+        },
+      );
+    });
+    return true;
+  }, [get, onUpdate]);
+
+  const removeRouteFromDocument = useCallback(() => {
+    NavigatorService.removeStackRoute(
+      getDoc?.(),
+      routeUrl,
+      entrypointUrl,
+      setDoc,
+    );
+  }, [entrypointUrl, getDoc, routeUrl, setDoc]);
+
+  const resumeRemoval = useCallback(
+    (action: Types.PreventRemoveAction) => {
+      removeRouteFromDocument();
+      nav.dispatch(action);
+    },
+    [nav, removeRouteFromDocument],
+  );
+
   const handleBeforeRemove = useCallback(
     (event: { preventDefault: () => void }) => {
       // Check for elements registered to interrupt back action via a trigger of BACK
       const elements: Element[] = (get && get()) || [];
       // Filter to only elements that are not hidden (or whose ancestors are not hidden).
       const visibleElements = getVisibleBackBehaviors(elements);
+      if (props.route && visibleElements.length > 0) {
+        return;
+      }
       if (
         visibleElements.length > 0 &&
         onUpdateRef.current &&
@@ -277,15 +318,10 @@ function HvRouteFC(props: Types.Props) {
         });
       } else {
         // Perform cleanup of the associated route (retrieved from parent document state)
-        NavigatorService.removeStackRoute(
-          getDoc?.(),
-          routeUrl,
-          entrypointUrl,
-          setDoc,
-        );
+        removeRouteFromDocument();
       }
     },
-    [entrypointUrl, get, getDoc, routeUrl, setDoc],
+    [get, props.route, removeRouteFromDocument],
   );
 
   const handleState = useCallback(
@@ -375,7 +411,13 @@ function HvRouteFC(props: Types.Props) {
     </HvDoc>
   );
   return props.route ? (
-    <RouteLifecycle onBlur={handleBlur} onFocus={handleFocus}>
+    <RouteLifecycle
+      onBlur={handleBlur}
+      onFocus={handleFocus}
+      preventRemove={getVisibleBackBehaviors((get && get()) || []).length > 0}
+      resumeRemoval={resumeRemoval}
+      runBackBehaviors={runBackBehaviors}
+    >
       {route}
     </RouteLifecycle>
   ) : (

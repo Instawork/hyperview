@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useRef } from 'react';
+import {
+  useFocusEffect,
+  useIsFocused,
+  usePreventRemove,
+} from '@react-navigation/native';
 import type { RouteLifecycleProps } from './types';
-import { useFocusEffect } from '@react-navigation/native';
 
 const useRouteFocus = (
   onFocus: RouteLifecycleProps['onFocus'],
@@ -27,8 +31,28 @@ export const RouteLifecycle = ({
   children,
   onBlur,
   onFocus,
+  preventRemove,
+  resumeRemoval,
+  runBackBehaviors,
 }: RouteLifecycleProps) => {
+  const isFocused = useIsFocused();
+  const runningBackBehaviors = useRef(false);
+
   useRouteFocus(onFocus, onBlur);
+  usePreventRemove(isFocused && preventRemove, event => {
+    if (runningBackBehaviors.current) {
+      resumeRemoval(event.data.action);
+      return;
+    }
+    runningBackBehaviors.current = true;
+    try {
+      if (!runBackBehaviors()) {
+        resumeRemoval(event.data.action);
+      }
+    } finally {
+      runningBackBehaviors.current = false;
+    }
+  });
 
   return children;
 };
