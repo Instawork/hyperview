@@ -9,6 +9,7 @@ import {
   buildRequest,
   cleanHrefFragment,
   expandNestedNavigate,
+  findNavigatorForRouteName,
   findPath,
   getChildElements,
   getNavAction,
@@ -419,6 +420,50 @@ describe('findPath', () => {
     it('should not find a path to `to_be_found`', () => {
       expect(path.length).toEqual(0);
     });
+  });
+});
+
+describe('findNavigatorForRouteName', () => {
+  it('finds the mounted navigator containing a nested route', () => {
+    const state = {
+      index: 1,
+      key: 'root-stack',
+      routeNames: ['tabs', 'card'],
+      routes: [
+        {
+          key: 'tabs-key',
+          name: 'tabs',
+          state: {
+            index: 0,
+            key: 'tabs-state',
+            routeNames: ['home', 'messages'],
+            routes: [
+              {
+                key: 'home-key',
+                name: 'home',
+              },
+              {
+                key: 'messages-key',
+                name: 'messages',
+              },
+            ],
+            stale: false,
+            type: 'tab',
+          },
+        },
+        {
+          key: 'card-key',
+          name: 'card',
+        },
+      ],
+      stale: false,
+      type: 'stack',
+    } as NavigationState;
+
+    expect(findNavigatorForRouteName(state, 'messages')?.key).toBe(
+      'tabs-state',
+    );
+    expect(findNavigatorForRouteName(state, 'missing')).toBeUndefined();
   });
 });
 

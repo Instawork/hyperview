@@ -11,8 +11,12 @@ import type {
   NavigationProvider,
   RouteParams,
 } from 'hyperview/src/types';
-import { CommonActions, StackActions } from '@react-navigation/native';
-import { NAV_ACTIONS } from 'hyperview/src/types';
+import {
+  CommonActions,
+  StackActions,
+  TabActions,
+} from '@react-navigation/native';
+import { NAVIGATOR_TYPE, NAV_ACTIONS } from 'hyperview/src/types';
 import { uuidNumber } from 'hyperview/src/services';
 
 /**
@@ -139,7 +143,27 @@ export class Navigator implements NavigationProvider {
           routeParams,
         );
         break;
-      case NAV_ACTIONS.NAVIGATE:
+      case NAV_ACTIONS.NAVIGATE: {
+        const targetNavigator = routeId
+          ? Helpers.findNavigatorForRouteName(
+              this.props.rootNavigation?.getRootState(),
+              routeId,
+            )
+          : undefined;
+        if (targetNavigator?.type === NAVIGATOR_TYPE.TAB) {
+          this.props.rootNavigation?.dispatch({
+            ...TabActions.jumpTo(routeId, params),
+            target: targetNavigator.key,
+          });
+          break;
+        }
+        if (routeId) {
+          navigation.dispatch(
+            CommonActions.navigate(routeId, params, { pop: true }),
+          );
+        }
+        break;
+      }
       case NAV_ACTIONS.NEW:
         if (routeId) {
           navigation.dispatch(

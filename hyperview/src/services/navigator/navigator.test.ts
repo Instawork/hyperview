@@ -3,6 +3,7 @@ import {
   CommonActions,
   NavigationState,
   StackActions,
+  TabActions,
 } from '@react-navigation/native';
 import type {
   NavigationProps,
@@ -440,6 +441,74 @@ describe('Navigator.sendRequest', () => {
       StackActions.push('card', routeParams),
     );
     expect(parentNavigation.dispatch).not.toHaveBeenCalled();
+  });
+
+  it('targets a mounted tab without changing the parent stack', () => {
+    const fullState = {
+      index: 1,
+      key: 'root-stack',
+      routeNames: ['tabs', 'card'],
+      routes: [
+        {
+          key: 'tabs-key',
+          name: 'tabs',
+          state: {
+            index: 0,
+            key: 'tabs-state',
+            routeNames: ['home', 'messages'],
+            routes: [
+              {
+                key: 'home-key',
+                name: 'home',
+              },
+              {
+                key: 'messages-key',
+                name: 'messages',
+              },
+            ],
+            stale: false,
+            type: 'tab',
+          },
+        },
+        {
+          key: 'card-key',
+          name: 'card',
+        },
+      ],
+      stale: false,
+      type: 'stack',
+    } as NavigationState;
+    const navigation = createNavigation({
+      ...fullState,
+      routes: fullState.routes.map(route => ({
+        key: route.key,
+        name: route.name,
+      })),
+    } as NavigationState);
+    const rootNavigation = ({
+      dispatch: jest.fn(),
+      getRootState: jest.fn(() => fullState),
+    } as unknown) as NonNullable<Types.Props['rootNavigation']>;
+    const navigator = new Navigator({
+      entrypointUrl: 'https://example.com/index.xml',
+      navigation,
+      rootNavigation,
+      route: {
+        key: 'card-key',
+        name: 'card',
+      } as RouteProps,
+      setElement: jest.fn(),
+    });
+
+    navigator.sendRequest(NAV_ACTIONS.NAVIGATE, {
+      url: '#messages',
+    });
+
+    expect(rootNavigation.dispatch).toHaveBeenCalledWith({
+      ...TabActions.jumpTo('messages', {}),
+      target: 'tabs-state',
+    });
+    expect(navigation.dispatch).not.toHaveBeenCalled();
   });
 });
 
