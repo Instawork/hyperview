@@ -1284,6 +1284,117 @@ describe('Hyperview navigation sequences', () => {
     expect(rootState.index).toBe(0);
   });
 
+  test('retargets a tab behind a pushed card without removing the card', async () => {
+    const navigationRef = createNavigationContainerRef();
+    const mockFetch = fetchFactory([
+      [
+        'http://myapp.com/tab-retarget-document',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <navigator id="root-navigator" type="stack">
+              <nav-route id="tabs-route">
+                <navigator id="tabs-navigator" type="tab">
+                  <nav-route id="home-route" href="http://myapp.com/tab-retarget-home" />
+                  <nav-route id="messages-route" href="http://myapp.com/tab-retarget-messages" />
+                </navigator>
+              </nav-route>
+            </navigator>
+          </doc>
+        `,
+      ],
+      [
+        'http://myapp.com/tab-retarget-home',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <screen>
+              <body>
+                <text id="home">Home</text>
+                <view
+                  action="push"
+                  href="http://myapp.com/tab-retarget-card"
+                  id="push-card"
+                >
+                  <text>Push card</text>
+                </view>
+              </body>
+            </screen>
+          </doc>
+        `,
+      ],
+      [
+        'http://myapp.com/tab-retarget-card',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <screen>
+              <body>
+                <text id="card">Card</text>
+                <view action="navigate" href="#messages-route" id="go-messages">
+                  <text>Go to messages</text>
+                </view>
+              </body>
+            </screen>
+          </doc>
+        `,
+      ],
+      [
+        'http://myapp.com/tab-retarget-messages',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <screen>
+              <body>
+                <text id="messages">Messages</text>
+              </body>
+            </screen>
+          </doc>
+        `,
+      ],
+    ]);
+
+    await render(
+      <NavigationContainer ref={navigationRef}>
+        <Hyperview
+          entrypointUrl="http://myapp.com/tab-retarget-document"
+          fetch={mockFetch}
+          formatDate={formatDate}
+        />
+      </NavigationContainer>,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId('push-card')).toBeOnTheScreen();
+    });
+    await fireEvent.press(screen.getByTestId('push-card'));
+    await waitFor(() => {
+      expect(screen.getByTestId('go-messages')).toBeOnTheScreen();
+    });
+    await fireEvent.press(screen.getByTestId('go-messages'));
+
+    await waitFor(() => {
+      const rootState = getRootNavigationState(navigationRef);
+      const tabsState = rootState.routes[0].state;
+      expect(tabsState?.routes[tabsState.index ?? 0]?.name).toBe(
+        'messages-route',
+      );
+    });
+    expect(screen.getByTestId('card')).toBeOnTheScreen();
+    let rootState = getRootNavigationState(navigationRef);
+    expect(rootState.routes.map(route => route.name)).toEqual([
+      'tabs-route',
+      'card',
+    ]);
+    expect(rootState.index).toBe(1);
+
+    await act(() => navigationRef.goBack());
+
+    await waitFor(() => {
+      expect(screen.getByTestId('messages')).toBeOnTheScreen();
+      expect(screen.queryByTestId('card')).not.toBeOnTheScreen();
+    });
+    rootState = getRootNavigationState(navigationRef);
+    expect(rootState.routes.map(route => route.name)).toEqual(['tabs-route']);
+    expect(rootState.index).toBe(0);
+  });
+
   test('keeps the screen under a modal when a pushed child close races an event close', async () => {
     const navigationRef = createNavigationContainerRef();
     const mockFetch = fetchFactory([
