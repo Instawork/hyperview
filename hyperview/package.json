@@ -95,6 +95,7 @@
   "jest": {
     "preset": "@react-native/jest-preset",
     "setupFiles": [
+      "./__mocks__/react-native-safe-area-context.ts",
       "./test/setup.ts"
     ],
     "transformIgnorePatterns": [
