@@ -40,12 +40,14 @@ More importantly, the client is designed to be incorporated into an existing Rea
 - @react-native-picker/picker >= 2.9.0
 - @react-navigation/bottom-tabs >= 7.21.0
 - @react-navigation/native >= 7.5.1
+- @react-navigation/native-stack >= 7.21.0
 - @react-navigation/stack >= 7.12.1
 - @types/react >= 18.3.12
 - react >= 18.3.1
 - react-native >= 0.76.7
 - react-native-gesture-handler >= 2.20.2
 - react-native-safe-area-context >= 4.12.0
+- react-native-screens >= 4.0.0
 - react-native-webview >= 13.12.5
 
 ## Hyperview Demo App
