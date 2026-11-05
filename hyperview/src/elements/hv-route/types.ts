@@ -1,4 +1,5 @@
 import * as Components from 'hyperview/src/services/components';
+import type { ComponentType, ReactNode } from 'react';
 import type {
   ElementErrorComponentProps,
   HvComponentOnUpdate,
@@ -7,7 +8,6 @@ import type {
   RouteProps,
   ScreenState,
 } from 'hyperview/src/types';
-import type { ComponentType } from 'react';
 
 /**
  * The props used by inner components of hv-route
@@ -32,4 +32,10 @@ export type InnerRouteProps = {
 export type Props = {
   navigation?: NavigationProps;
   route?: RouteProps;
+};
+
+export type RouteLifecycleProps = {
+  children: ReactNode;
+  onBlur: () => void;
+  onFocus: () => (() => void) | undefined;
 };

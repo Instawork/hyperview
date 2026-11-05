@@ -33,7 +33,10 @@ export const registerRouteFocusListener = (
   navigation: NavigationProps,
   onFocus: () => void,
 ) => {
-  const unsubscribe = navigation.addListener('transitionEnd', () => {
+  const unsubscribe = navigation.addListener('transitionEnd', event => {
+    if (event.data?.closing === true || !navigation.isFocused()) {
+      return;
+    }
     unsubscribe();
     onFocus();
   });

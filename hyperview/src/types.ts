@@ -260,7 +260,12 @@ export const UPDATE_ACTIONS = {
 export type UpdateAction = typeof UPDATE_ACTIONS[keyof typeof UPDATE_ACTIONS];
 
 export type ListenerEvent = {
-  data: { state: NavigationState | undefined } | undefined;
+  data:
+    | {
+        closing?: boolean;
+        state?: NavigationState;
+      }
+    | undefined;
   preventDefault: () => void;
 };
 
