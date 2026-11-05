@@ -32,6 +32,7 @@ import HvNavigator from 'hyperview/src/elements/hv-navigator';
 import HvScreen from 'hyperview/src/elements/hv-screen';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { NavigationContainerRefContext } from '@react-navigation/native';
+import { RouteLifecycle } from './route-lifecycle';
 import { useElementCache } from 'hyperview/src/contexts/element-cache';
 import { useHyperview } from 'hyperview/src/contexts/hyperview';
 
@@ -250,7 +251,7 @@ function HvRouteFC(props: Types.Props) {
         onRouteFocus(props.route);
       }
     };
-    registerRouteFocusListener(nav, updateRouteFocus);
+    return registerRouteFocusListener(nav, updateRouteFocus);
   }, [entrypointUrl, getDoc, id, nav, onRouteFocus, props.route, setDoc]);
 
   const handleBeforeRemove = useCallback(
@@ -309,19 +310,19 @@ function HvRouteFC(props: Types.Props) {
   );
 
   useEffect(() => {
-    if (!nav) {
+    if (!nav || props.route) {
       return undefined;
     }
     return nav.addListener('blur', handleBlur);
-  }, [nav, handleBlur]);
+  }, [nav, handleBlur, props.route]);
 
   // Use the focus event to set the selected route
   useEffect(() => {
-    if (!nav) {
+    if (!nav || props.route) {
       return undefined;
     }
     return nav.addListener('focus', handleFocus);
-  }, [nav, handleFocus]);
+  }, [nav, handleFocus, props.route]);
 
   // Use the beforeRemove event to remove the route from the stack
   useEffect(() => {
@@ -339,7 +340,7 @@ function HvRouteFC(props: Types.Props) {
     return nav.addListener('state', handleState);
   }, [nav, handleState]);
 
-  return (
+  const route = (
     <HvDoc
       hasElement={!!element}
       navigationProvider={navigator}
@@ -372,6 +373,13 @@ function HvRouteFC(props: Types.Props) {
         )}
       </HvDocContext>
     </HvDoc>
+  );
+  return props.route ? (
+    <RouteLifecycle onBlur={handleBlur} onFocus={handleFocus}>
+      {route}
+    </RouteLifecycle>
+  ) : (
+    route
   );
 }
 
