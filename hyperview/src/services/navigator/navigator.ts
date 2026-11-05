@@ -37,13 +37,13 @@ export class Navigator implements NavigationProvider {
     routeParams?: RouteParams,
   ) {
     const state = navigation.getState();
-    const sourceIndex = state?.routes.findIndex(
+    const sourceIndex = state.routes.findIndex(
       route => route.key === sourceKey,
     );
 
     if (
       action === NAV_ACTIONS.BACK &&
-      sourceIndex &&
+      sourceIndex >= 0 &&
       sourceIndex < state.index
     ) {
       // Back request from a non-focused route
@@ -56,6 +56,16 @@ export class Navigator implements NavigationProvider {
           index: routes.length - 1,
           routes,
         }),
+      });
+    } else if (
+      action === NAV_ACTIONS.BACK &&
+      state.type === NAVIGATOR_TYPE.STACK &&
+      (sourceIndex > 0 || (sourceIndex < 0 && this.props.route !== undefined))
+    ) {
+      navigation.dispatch({
+        ...CommonActions.goBack(),
+        source: sourceKey,
+        target: state.key,
       });
     } else {
       // Close request or back request from the focused route
