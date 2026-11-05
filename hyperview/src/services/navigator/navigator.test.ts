@@ -50,6 +50,108 @@ const createNavigation = (state: NavigationState): NavigationProps => ({
 });
 
 describe('Navigator.routeBackRequest', () => {
+  it('removes a non-focused first route without going back from the focused route', () => {
+    const state = {
+      index: 2,
+      key: 'stack-root',
+      routeNames: ['redirect', 'confirmation', 'webview'],
+      routes: [
+        {
+          key: 'redirect-key',
+          name: 'redirect',
+        },
+        {
+          key: 'confirmation-key',
+          name: 'confirmation',
+        },
+        {
+          key: 'webview-key',
+          name: 'webview',
+        },
+      ],
+      stale: false,
+      type: 'stack',
+    } as NavigationState;
+    const navigation = createNavigation(state);
+    const navigator = new Navigator({
+      entrypointUrl: 'https://example.com/index.xml',
+      navigation,
+      route: {
+        key: 'redirect-key',
+        name: 'redirect',
+      } as RouteProps,
+      setElement: jest.fn(),
+    });
+
+    navigator.routeBackRequest(navigation, NAV_ACTIONS.BACK, 'redirect-key');
+
+    expect(navigation.dispatch).toHaveBeenCalledWith(
+      CommonActions.reset({
+        ...state,
+        index: 1,
+        routes: state.routes.slice(1),
+      }),
+    );
+    expect(navigation.goBack).not.toHaveBeenCalled();
+  });
+
+  it('targets back requests from removed routes at their source navigator', () => {
+    const state = {
+      index: 1,
+      key: 'stack-root',
+      routeNames: ['home', 'card'],
+      routes: [
+        {
+          key: 'home-key',
+          name: 'home',
+        },
+        {
+          key: 'card-key',
+          name: 'card',
+        },
+      ],
+      stale: false,
+      type: 'stack',
+    } as NavigationState;
+    const navigation = createNavigation(state);
+    const navigator = new Navigator({
+      entrypointUrl: 'https://example.com/index.xml',
+      navigation,
+      route: {
+        key: 'removed-key',
+        name: 'card',
+      } as RouteProps,
+      setElement: jest.fn(),
+    });
+
+    navigator.routeBackRequest(navigation, NAV_ACTIONS.BACK, 'removed-key');
+
+    expect(navigation.dispatch).toHaveBeenCalledWith({
+      ...CommonActions.goBack(),
+      source: 'removed-key',
+      target: 'stack-root',
+    });
+    expect(navigation.goBack).not.toHaveBeenCalled();
+  });
+
+  it('bubbles back requests from the first stack route', () => {
+    const navigation = createNavigation(rootState);
+    const navigator = new Navigator({
+      entrypointUrl: 'https://example.com/index.xml',
+      navigation,
+      route: {
+        key: 'tabs-key',
+        name: 'tabs',
+      } as RouteProps,
+      setElement: jest.fn(),
+    });
+
+    navigator.routeBackRequest(navigation, NAV_ACTIONS.BACK, 'tabs-key');
+
+    expect(navigation.dispatch).not.toHaveBeenCalled();
+    expect(navigation.goBack).toHaveBeenCalled();
+  });
+
   it('targets the navigator containing the revealed route when setting params', () => {
     const navigation = createNavigation({
       index: 1,
@@ -96,12 +198,17 @@ describe('Navigator.routeBackRequest', () => {
       routeParams,
     );
 
-    expect(navigation.goBack).toHaveBeenCalled();
+    expect(navigation.dispatch).toHaveBeenCalledWith({
+      ...CommonActions.goBack(),
+      source: 'card-key',
+      target: 'stack-root',
+    });
     expect(navigation.dispatch).toHaveBeenCalledWith({
       ...CommonActions.setParams(routeParams),
       source: 'tab-navigation-key',
       target: 'tab-root',
     });
+    expect(navigation.goBack).not.toHaveBeenCalled();
   });
 });
 
