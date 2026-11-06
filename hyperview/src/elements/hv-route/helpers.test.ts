@@ -70,6 +70,7 @@ describe('registerRouteFocusListener', () => {
           return removeListener;
         },
       ),
+      isFocused: jest.fn(() => true),
     } as unknown) as NavigationProps;
     const onFocus = jest.fn();
 
@@ -86,5 +87,43 @@ describe('registerRouteFocusListener', () => {
     expect(onFocus).toHaveBeenCalledTimes(1);
     expect(removeListener).toHaveBeenCalledTimes(1);
     expect(unsubscribe).toBe(removeListener);
+  });
+
+  it('ignores closing and unfocused transitions', () => {
+    let listener: ((event: ListenerEvent) => void) | undefined;
+    const removeListener = jest.fn();
+    const navigation = ({
+      addListener: jest.fn(
+        (_eventName: string, callback: (event: ListenerEvent) => void) => {
+          listener = callback;
+          return removeListener;
+        },
+      ),
+      isFocused: jest.fn(() => true),
+    } as unknown) as NavigationProps;
+    const onFocus = jest.fn();
+
+    registerRouteFocusListener(navigation, onFocus);
+
+    listener?.({
+      data: { closing: true },
+      preventDefault: jest.fn(),
+    });
+    expect(onFocus).not.toHaveBeenCalled();
+
+    navigation.isFocused = jest.fn(() => false);
+    listener?.({
+      data: { closing: false },
+      preventDefault: jest.fn(),
+    });
+    expect(onFocus).not.toHaveBeenCalled();
+
+    navigation.isFocused = jest.fn(() => true);
+    listener?.({
+      data: { closing: false },
+      preventDefault: jest.fn(),
+    });
+    expect(onFocus).toHaveBeenCalledTimes(1);
+    expect(removeListener).toHaveBeenCalledTimes(1);
   });
 });
