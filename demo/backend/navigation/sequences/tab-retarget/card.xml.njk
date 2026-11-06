@@ -1,0 +1,19 @@
+---
+permalink: "/navigation/sequences/tab-retarget/card.xml"
+hv_title: "Card"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  {{ description('Tap “Select messages” to switch tabs without closing “Card”.') }}
+  {{ description('Then tap “Back to messages” to reveal “Messages tab”.') }}
+  {% call button('Select messages') -%}
+    <behavior action="navigate" href="#sequence-tab-retarget-messages" />
+  {%- endcall %}
+  {% call button('Back to messages') -%}
+    <behavior action="back" />
+  {%- endcall %}
+{% endblock %}

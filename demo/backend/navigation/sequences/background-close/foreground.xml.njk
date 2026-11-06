@@ -1,0 +1,18 @@
+---
+permalink: "/navigation/sequences/background-close/foreground.xml"
+hv_title: "Newer modal"
+hv_button_behavior: "close"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  {{ description('Tap “Close background”. Both modals should close and return to “Close background flow”.') }}
+  {% call button('Close background') -%}
+    <behavior
+      action="dispatch-event"
+      event-name="sequence-close-background-flow"
+    />
+  {%- endcall %}
+{% endblock %}
