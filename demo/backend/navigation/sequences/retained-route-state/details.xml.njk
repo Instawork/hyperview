@@ -1,0 +1,16 @@
+---
+permalink: "/navigation/sequences/retained-route-state/details.xml"
+hv_title: "Details"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  {{ description('Tap “Return” to go back to “Retained state”.') }}
+  {{ description('“Updated state retained.” should still be visible.') }}
+  {% call button('Return') -%}
+    <behavior action="back" />
+  {%- endcall %}
+{% endblock %}

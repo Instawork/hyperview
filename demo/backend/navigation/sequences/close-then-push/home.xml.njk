@@ -1,0 +1,19 @@
+---
+permalink: "/navigation/sequences/close-then-push/home.xml"
+hv_title: "Tap sequence"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block content %}
+  {{ description('“Tap sequence” appears briefly while its load behavior opens the “Intro” modal.') }}
+  {{ description('Tap “Get started” to close “Intro” and push “Form” in the same interaction.') }}
+  <behavior
+    trigger="load"
+    action="new"
+    href="/hyperview/public/navigation/sequences/close-then-push/intro.xml"
+    once="true"
+    show-during-load="loading-screen-modal"
+  />
+{% endblock %}

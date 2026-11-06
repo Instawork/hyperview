@@ -1,0 +1,24 @@
+---
+permalink: "/navigation/sequences/guarded-native-back/guarded.xml"
+hv_title: "Guarded screen"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/container/index.xml.njk' import container %}
+
+{% block content %}
+  {{ description('Use “Go back”, header back, Android system back, or the iOS edge swipe.') }}
+  {{ description('The first attempt removes the guard without leaving “Guarded screen”. The second returns to “Back guard”.') }}
+  {% call container('Back guard active. The first back attempt removes this notice.', attributes={id:"sequence-native-back-guard"}) -%}
+    <behavior
+      trigger="back"
+      action="hide"
+      target="sequence-native-back-guard"
+    />
+  {%- endcall %}
+  {% call button('Go back') -%}
+    <behavior action="back" />
+  {%- endcall %}
+{% endblock %}

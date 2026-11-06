@@ -1,0 +1,21 @@
+---
+permalink: "/navigation/sequences/modal-open-close/index.xml"
+tags: "Navigation/Scenarios"
+hv_title: "Open and close"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  {{ description('Tap “Open modal” to open the full-screen “Modal”.') }}
+  {{ description('“Close modal” or the header close should return directly to “Open and close”.') }}
+  {% call button('Open modal') -%}
+    <behavior
+      action="new"
+      href="/hyperview/public/navigation/sequences/modal-open-close/modal.xml"
+      show-during-load="loading-screen-modal"
+    />
+  {%- endcall %}
+{% endblock %}
