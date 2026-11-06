@@ -13,6 +13,20 @@ import React from 'react';
 import type { RouteProps } from 'hyperview/src/types';
 import { fetchFactory } from 'hyperview/test/helpers/fetch';
 
+jest.mock('hyperview/src/components/navigator-stack', () => {
+  const { createNavigatorFactory } = jest.requireActual(
+    '@react-navigation/native',
+  );
+  const StackNavigator = jest.requireActual(
+    'hyperview/src/components/navigator-stack/stack-navigator.tsx',
+  ).default;
+
+  return {
+    __esModule: true,
+    default: createNavigatorFactory(StackNavigator),
+  };
+});
+
 describe('Hyperview route lifecycle', () => {
   it('reports route identities when a new route focuses', async () => {
     const navigationRef = createNavigationContainerRef();
