@@ -26,12 +26,11 @@ import {
   TabScreenOptions,
 } from './types';
 import React, { useCallback, useEffect, useRef } from 'react';
+import { getStackRouteOptions, getStackScreenOptions } from './stack-options';
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import { CardStyleInterpolators } from '@react-navigation/stack';
 import { HvDocContext } from 'hyperview/src/elements/hv-doc';
 import NavigatorStack from 'hyperview/src/components/navigator-stack';
 import NavigatorTab from 'hyperview/src/components/navigator-tab';
-import { Platform } from 'react-native';
 import { getFirstChildTag } from 'hyperview/src/services/dom/helpers';
 import { useHyperview } from 'hyperview/src/contexts/hyperview';
 
@@ -137,11 +136,8 @@ export default function HvNavigator(props: Props) {
    * Encapsulated options for the stack screenOptions
    */
   const stackScreenOptions = useCallback(
-    ({ route }: ScreenOptionsProps): StackScreenOptions => ({
-      headerMode: 'screen',
-      headerShown: SHOW_DEFAULT_HEADER_UI,
-      title: getId(route.params),
-    }),
+    (options: ScreenOptionsProps): StackScreenOptions =>
+      getStackScreenOptions(options, getId),
     [getId],
   );
 
@@ -186,15 +182,6 @@ export default function HvNavigator(props: Props) {
         );
       }
       if (type === NAVIGATOR_TYPE.STACK) {
-        const animation = isFirstScreen ? 'none' : 'default';
-        const gestureEnabled = Platform.OS === 'ios' ? !needsSubStack : false;
-        let cardStyleInterpolator;
-        if (needsSubStack) {
-          cardStyleInterpolator =
-            Platform.OS === 'android'
-              ? CardStyleInterpolators.forBottomSheetAndroid
-              : CardStyleInterpolators.forVerticalIOS;
-        }
         return (
           <Stack.Screen
             key={id}
@@ -202,14 +189,10 @@ export default function HvNavigator(props: Props) {
             getId={({ params: p }: ScreenParams) => getId(p)}
             initialParams={initialParams}
             name={id}
-            options={{
-              animation,
-              cardStyleInterpolator,
-              gestureEnabled,
-              presentation: needsSubStack
-                ? NavigatorService.ID_MODAL
-                : NavigatorService.ID_CARD,
-            }}
+            options={getStackRouteOptions({
+              isFirstScreen,
+              usesModalPresentation: needsSubStack,
+            })}
           />
         );
       }
