@@ -62,6 +62,14 @@ export class Navigator implements NavigationProvider {
         }),
       });
     } else if (
+      action === NAV_ACTIONS.CLOSE &&
+      sourceIndex > 0 &&
+      sourceIndex < state.index &&
+      (Helpers.isModalRouteName(state.routes[sourceIndex].name) ||
+        (state.routes[sourceIndex].params as RouteParams | undefined)?.isModal)
+    ) {
+      navigation.dispatch(StackActions.pop(state.index - sourceIndex + 1));
+    } else if (
       action === NAV_ACTIONS.BACK &&
       state.type === NAVIGATOR_TYPE.STACK &&
       (sourceIndex > 0 || (sourceIndex < 0 && this.props.route !== undefined))

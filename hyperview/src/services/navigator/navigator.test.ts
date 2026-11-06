@@ -96,6 +96,45 @@ describe('Navigator.routeBackRequest', () => {
     expect(navigation.goBack).not.toHaveBeenCalled();
   });
 
+  it('closes a background modal and every route presented above it', () => {
+    const state = {
+      index: 2,
+      key: 'stack-root',
+      routeNames: ['home', 'modal'],
+      routes: [
+        {
+          key: 'home-key',
+          name: 'home',
+        },
+        {
+          key: 'modal-one-key',
+          name: 'modal',
+        },
+        {
+          key: 'modal-two-key',
+          name: 'modal',
+        },
+      ],
+      stale: false,
+      type: 'stack',
+    } as NavigationState;
+    const navigation = createNavigation(state);
+    const navigator = new Navigator({
+      entrypointUrl: 'https://example.com/index.xml',
+      navigation,
+      route: {
+        key: 'modal-one-key',
+        name: 'modal',
+      } as RouteProps,
+      setElement: jest.fn(),
+    });
+
+    navigator.routeBackRequest(navigation, NAV_ACTIONS.CLOSE, 'modal-one-key');
+
+    expect(navigation.dispatch).toHaveBeenCalledWith(StackActions.pop(2));
+    expect(navigation.goBack).not.toHaveBeenCalled();
+  });
+
   it('targets back requests from removed routes at their source navigator', () => {
     const state = {
       index: 1,
