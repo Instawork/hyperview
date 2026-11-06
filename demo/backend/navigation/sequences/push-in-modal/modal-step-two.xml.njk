@@ -1,0 +1,16 @@
+---
+permalink: "/navigation/sequences/push-in-modal/modal-step-two.xml"
+hv_title: "Pushed screen"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  {{ description('Tap “Close flow” to dismiss both “Pushed screen” and “Modal”.') }}
+  {{ description('“Modal push” should appear directly; “Modal” should not reappear.') }}
+  {% call button('Close flow') -%}
+    <behavior action="close" />
+  {%- endcall %}
+{% endblock %}

@@ -1,0 +1,30 @@
+---
+permalink: "/navigation/sequences/background-modal-removal/foreground.xml"
+hv_title: "Newer modal"
+hv_button_behavior: "close"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  {{ description('Tap “Remove background” to remove “Background modal” while keeping “Newer modal” visible.') }}
+  {{ description('Then tap “Close newer” to return directly to “Remove background”; “Background modal” should not reappear.') }}
+  <view id="sequence-background-modal-status" style="container-style">
+    <text style="container-label">“Newer modal” is active; “Background modal” is still present.</text>
+  </view>
+  {% call button('Remove background') -%}
+    <behavior
+      action="dispatch-event"
+      event-name="sequence-remove-background-modal"
+    />
+    <behavior
+      action="replace-inner"
+      href="/hyperview/public/navigation/sequences/background-modal-removal/event-sent.xml"
+      target="sequence-background-modal-status"
+    />
+  {%- endcall %}
+  {% call button('Close newer') -%}
+    <behavior action="close" />
+  {%- endcall %}
+{% endblock %}
