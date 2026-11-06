@@ -3,6 +3,7 @@ import {
   CommonActions,
   NavigationState,
   StackActions,
+  TabActions,
 } from '@react-navigation/native';
 import type {
   NavigationProps,
@@ -50,6 +51,147 @@ const createNavigation = (state: NavigationState): NavigationProps => ({
 });
 
 describe('Navigator.routeBackRequest', () => {
+  it('removes a non-focused first route without going back from the focused route', () => {
+    const state = {
+      index: 2,
+      key: 'stack-root',
+      routeNames: ['redirect', 'confirmation', 'webview'],
+      routes: [
+        {
+          key: 'redirect-key',
+          name: 'redirect',
+        },
+        {
+          key: 'confirmation-key',
+          name: 'confirmation',
+        },
+        {
+          key: 'webview-key',
+          name: 'webview',
+        },
+      ],
+      stale: false,
+      type: 'stack',
+    } as NavigationState;
+    const navigation = createNavigation(state);
+    const navigator = new Navigator({
+      entrypointUrl: 'https://example.com/index.xml',
+      navigation,
+      route: {
+        key: 'redirect-key',
+        name: 'redirect',
+      } as RouteProps,
+      setElement: jest.fn(),
+    });
+
+    navigator.routeBackRequest(navigation, NAV_ACTIONS.BACK, 'redirect-key');
+
+    expect(navigation.dispatch).toHaveBeenCalledWith(
+      CommonActions.reset({
+        ...state,
+        index: 1,
+        routes: state.routes.slice(1),
+      }),
+    );
+    expect(navigation.goBack).not.toHaveBeenCalled();
+  });
+
+  it('closes a background modal and every route presented above it', () => {
+    const state = {
+      index: 2,
+      key: 'stack-root',
+      routeNames: ['home', 'modal'],
+      routes: [
+        {
+          key: 'home-key',
+          name: 'home',
+        },
+        {
+          key: 'modal-one-key',
+          name: 'modal',
+        },
+        {
+          key: 'modal-two-key',
+          name: 'modal',
+        },
+      ],
+      stale: false,
+      type: 'stack',
+    } as NavigationState;
+    const navigation = createNavigation(state);
+    const navigator = new Navigator({
+      entrypointUrl: 'https://example.com/index.xml',
+      navigation,
+      route: {
+        key: 'modal-one-key',
+        name: 'modal',
+      } as RouteProps,
+      setElement: jest.fn(),
+    });
+
+    navigator.routeBackRequest(navigation, NAV_ACTIONS.CLOSE, 'modal-one-key');
+
+    expect(navigation.dispatch).toHaveBeenCalledWith(StackActions.pop(2));
+    expect(navigation.goBack).not.toHaveBeenCalled();
+  });
+
+  it('targets back requests from removed routes at their source navigator', () => {
+    const state = {
+      index: 1,
+      key: 'stack-root',
+      routeNames: ['home', 'card'],
+      routes: [
+        {
+          key: 'home-key',
+          name: 'home',
+        },
+        {
+          key: 'card-key',
+          name: 'card',
+        },
+      ],
+      stale: false,
+      type: 'stack',
+    } as NavigationState;
+    const navigation = createNavigation(state);
+    const navigator = new Navigator({
+      entrypointUrl: 'https://example.com/index.xml',
+      navigation,
+      route: {
+        key: 'removed-key',
+        name: 'card',
+      } as RouteProps,
+      setElement: jest.fn(),
+    });
+
+    navigator.routeBackRequest(navigation, NAV_ACTIONS.BACK, 'removed-key');
+
+    expect(navigation.dispatch).toHaveBeenCalledWith({
+      ...CommonActions.goBack(),
+      source: 'removed-key',
+      target: 'stack-root',
+    });
+    expect(navigation.goBack).not.toHaveBeenCalled();
+  });
+
+  it('bubbles back requests from the first stack route', () => {
+    const navigation = createNavigation(rootState);
+    const navigator = new Navigator({
+      entrypointUrl: 'https://example.com/index.xml',
+      navigation,
+      route: {
+        key: 'tabs-key',
+        name: 'tabs',
+      } as RouteProps,
+      setElement: jest.fn(),
+    });
+
+    navigator.routeBackRequest(navigation, NAV_ACTIONS.BACK, 'tabs-key');
+
+    expect(navigation.dispatch).not.toHaveBeenCalled();
+    expect(navigation.goBack).toHaveBeenCalled();
+  });
+
   it('targets the navigator containing the revealed route when setting params', () => {
     const navigation = createNavigation({
       index: 1,
@@ -96,12 +238,17 @@ describe('Navigator.routeBackRequest', () => {
       routeParams,
     );
 
-    expect(navigation.goBack).toHaveBeenCalled();
+    expect(navigation.dispatch).toHaveBeenCalledWith({
+      ...CommonActions.goBack(),
+      source: 'card-key',
+      target: 'stack-root',
+    });
     expect(navigation.dispatch).toHaveBeenCalledWith({
       ...CommonActions.setParams(routeParams),
       source: 'tab-navigation-key',
       target: 'tab-root',
     });
+    expect(navigation.goBack).not.toHaveBeenCalled();
   });
 });
 
@@ -333,6 +480,74 @@ describe('Navigator.sendRequest', () => {
       StackActions.push('card', routeParams),
     );
     expect(parentNavigation.dispatch).not.toHaveBeenCalled();
+  });
+
+  it('targets a mounted tab without changing the parent stack', () => {
+    const fullState = {
+      index: 1,
+      key: 'root-stack',
+      routeNames: ['tabs', 'card'],
+      routes: [
+        {
+          key: 'tabs-key',
+          name: 'tabs',
+          state: {
+            index: 0,
+            key: 'tabs-state',
+            routeNames: ['home', 'messages'],
+            routes: [
+              {
+                key: 'home-key',
+                name: 'home',
+              },
+              {
+                key: 'messages-key',
+                name: 'messages',
+              },
+            ],
+            stale: false,
+            type: 'tab',
+          },
+        },
+        {
+          key: 'card-key',
+          name: 'card',
+        },
+      ],
+      stale: false,
+      type: 'stack',
+    } as NavigationState;
+    const navigation = createNavigation({
+      ...fullState,
+      routes: fullState.routes.map(route => ({
+        key: route.key,
+        name: route.name,
+      })),
+    } as NavigationState);
+    const rootNavigation = ({
+      dispatch: jest.fn(),
+      getRootState: jest.fn(() => fullState),
+    } as unknown) as NonNullable<Types.Props['rootNavigation']>;
+    const navigator = new Navigator({
+      entrypointUrl: 'https://example.com/index.xml',
+      navigation,
+      rootNavigation,
+      route: {
+        key: 'card-key',
+        name: 'card',
+      } as RouteProps,
+      setElement: jest.fn(),
+    });
+
+    navigator.sendRequest(NAV_ACTIONS.NAVIGATE, {
+      url: '#messages',
+    });
+
+    expect(rootNavigation.dispatch).toHaveBeenCalledWith({
+      ...TabActions.jumpTo('messages', {}),
+      target: 'tabs-state',
+    });
+    expect(navigation.dispatch).not.toHaveBeenCalled();
   });
 });
 
