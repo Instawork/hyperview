@@ -1,0 +1,23 @@
+---
+permalink: "/navigation/sequences/background-close/background.xml"
+hv_title: "Background modal"
+hv_button_behavior: "close"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  <behavior
+    trigger="on-event"
+    event-name="sequence-close-background-flow"
+    action="close"
+  />
+  {{ description('“Background modal” listens for close while “Newer modal” is above it.') }}
+  {% call button('Open newer') -%}
+    <behavior
+      action="new"
+      href="/hyperview/public/navigation/sequences/background-close/foreground.xml"
+    />
+  {%- endcall %}
+{% endblock %}
