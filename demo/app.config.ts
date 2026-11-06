@@ -25,6 +25,16 @@ export default {
   name: 'Hyperview',
   newArchEnabled: true,
   orientation: 'portrait',
+  plugins: [
+    [
+      'expo-build-properties',
+      {
+        ios: {
+          enableSceneSupport: true,
+        },
+      },
+    ],
+  ],
   scheme: 'hyperview',
   slug: 'demo',
   splash: {
