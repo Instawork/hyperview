@@ -27,8 +27,9 @@
     "test:ts": "tsc",
     "test:lint": "eslint src test/helpers test/integration && prettier --check '**/*.xsd' '**/*.xml' '**/*.md'",
     "test:unit": "jest --runInBand --testPathPattern 'src|test/integration'",
+    "test:navigation:js-stack": "jest --runInBand --haste='{\"defaultPlatform\":\"android\",\"platforms\":[\"android\",\"ios\",\"native\"]}' test/integration/navigation.test.tsx",
     "test:validate-xml": "find test src -name '*.xml' | xargs xmlschema-validate --schema schema/hyperview.xsd --version 1.1",
-    "test": "yarn test:ts && yarn test:lint && yarn test:unit && yarn test:validate-xml",
+    "test": "yarn test:ts && yarn test:lint && yarn test:unit && yarn test:navigation:js-stack && yarn test:validate-xml",
     "prepack": "cp ../LICENSE.md LICENSE.md",
     "postpack": "rm -f LICENSE.md"
   },

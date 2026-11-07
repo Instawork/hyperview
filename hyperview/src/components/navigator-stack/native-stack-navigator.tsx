@@ -15,7 +15,7 @@ import type { ParamListBase } from '@react-navigation/routers';
 import { useHvDocContext } from 'hyperview/src/elements/hv-doc';
 import { useHyperview } from 'hyperview/src/contexts/hyperview';
 
-const NativeStackNavigator = (props: Props) => {
+const NativeStackNavigator = (props: Props<NativeStackNavigationOptions>) => {
   const { getSourceDoc } = useHvDocContext();
   const { entrypointUrl } = useHyperview();
 
@@ -37,7 +37,7 @@ const NativeStackNavigator = (props: Props) => {
     getDoc: () => getSourceDoc(),
     id: props.id,
     initialRouteName: props.initialRouteName,
-    screenOptions: props.screenOptions as NativeStackNavigationOptions,
+    screenOptions: props.screenOptions,
   });
 
   return render(

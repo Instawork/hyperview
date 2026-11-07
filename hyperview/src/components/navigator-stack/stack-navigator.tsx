@@ -16,7 +16,7 @@ import type { ParamListBase } from '@react-navigation/routers';
 import { useHvDocContext } from 'hyperview/src/elements/hv-doc';
 import { useHyperview } from 'hyperview/src/contexts/hyperview';
 
-const CustomStackNavigator = (props: Props) => {
+const CustomStackNavigator = (props: Props<StackNavigationOptions>) => {
   const { getSourceDoc } = useHvDocContext();
   const { entrypointUrl } = useHyperview();
   const { direction } = useLocale();
