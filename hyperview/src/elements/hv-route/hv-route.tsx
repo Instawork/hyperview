@@ -214,12 +214,8 @@ function HvRouteFC(props: Types.Props) {
 
   const id = props.route?.params?.id || props.route?.key;
   const routeUrl = props.route?.params?.url;
-
-  // Keep onUpdate current without placing it in listener dep arrays
-  const onUpdateRef = useRef<typeof onUpdate>(onUpdate);
-  useEffect(() => {
-    onUpdateRef.current = onUpdate;
-  }, [onUpdate]);
+  const preventRemove =
+    getVisibleBackBehaviors((get && get()) || []).length > 0;
 
   // Track focus state at discrete event boundaries rather than sampling
   // nav.isFocused() mid-animation, which is unreliable during swipe gestures
@@ -292,37 +288,12 @@ function HvRouteFC(props: Types.Props) {
     [nav, removeRouteFromDocument],
   );
 
-  const handleBeforeRemove = useCallback(
-    (event: { preventDefault: () => void }) => {
-      // Check for elements registered to interrupt back action via a trigger of BACK
-      const elements: Element[] = (get && get()) || [];
-      // Filter to only elements that are not hidden (or whose ancestors are not hidden).
-      const visibleElements = getVisibleBackBehaviors(elements);
-      if (props.route && visibleElements.length > 0) {
-        return;
-      }
-      if (
-        visibleElements.length > 0 &&
-        onUpdateRef.current &&
-        isFocusedRef.current
-      ) {
-        event.preventDefault();
-        visibleElements.forEach(behaviorElement => {
-          const href = behaviorElement.getAttribute('href');
-          const action = behaviorElement.getAttribute('action');
-          onUpdateRef.current?.(href, action, behaviorElement, {
-            behaviorElement,
-            showIndicatorId: behaviorElement.getAttribute('show-during-load'),
-            targetId: behaviorElement.getAttribute('target'),
-          });
-        });
-      } else {
-        // Perform cleanup of the associated route (retrieved from parent document state)
-        removeRouteFromDocument();
-      }
-    },
-    [get, props.route, removeRouteFromDocument],
-  );
+  const handleBeforeRemove = useCallback(() => {
+    if (props.route && preventRemove && isFocusedRef.current) {
+      return;
+    }
+    removeRouteFromDocument();
+  }, [preventRemove, props.route, removeRouteFromDocument]);
 
   const handleState = useCallback(
     (event: ListenerEvent) => {
@@ -414,7 +385,7 @@ function HvRouteFC(props: Types.Props) {
     <RouteLifecycle
       onBlur={handleBlur}
       onFocus={handleFocus}
-      preventRemove={getVisibleBackBehaviors((get && get()) || []).length > 0}
+      preventRemove={preventRemove}
       resumeRemoval={resumeRemoval}
       runBackBehaviors={runBackBehaviors}
     >
