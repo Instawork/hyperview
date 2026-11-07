@@ -1,4 +1,5 @@
 import * as Events from 'hyperview/src/services/events';
+import * as NavigatorService from 'hyperview/src/services/navigator';
 import {
   NavigationContainer,
   createNavigationContainerRef,
@@ -15,6 +16,16 @@ import Hyperview from 'hyperview/src/hyperview';
 import { Pressable } from 'react-native';
 import React from 'react';
 import { fetchFactory } from 'hyperview/test/helpers/fetch';
+
+jest.mock('hyperview/src/services/navigator', () => {
+  const actual = jest.requireActual('hyperview/src/services/navigator');
+  return {
+    ...actual,
+    removeStackRoute: jest.fn(actual.removeStackRoute),
+  };
+});
+
+const mockRemoveStackRoute = jest.mocked(NavigatorService.removeStackRoute);
 
 const getRootNavigationState = (
   navigationRef: ReturnType<typeof createNavigationContainerRef>,
@@ -1680,6 +1691,8 @@ describe('Hyperview navigation sequences', () => {
   });
 
   test('blocks route removal while a visible back behavior is registered', async () => {
+    const guardedUrl = 'http://myapp.com/back-behavior-guarded';
+    mockRemoveStackRoute.mockClear();
     const navigationRef = createNavigationContainerRef();
     const mockFetch = fetchFactory([
       [
@@ -1778,5 +1791,285 @@ describe('Hyperview navigation sequences', () => {
     rootState = getRootNavigationState(navigationRef);
     expect(rootState.routes.map(route => route.name)).toEqual(['home']);
     expect(rootState.index).toBe(0);
+    const guardedRemovals = mockRemoveStackRoute.mock.calls.filter(
+      ([, routeUrl]) => routeUrl === guardedUrl,
+    ).length;
+    expect(guardedRemovals).toBe(1);
+  });
+
+  test('removes a covering card when navigating to a tab route', async () => {
+    const navigationRef = createNavigationContainerRef();
+    const mockFetch = fetchFactory([
+      [
+        'http://myapp.com/tab-unwind-document',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <navigator id="root-navigator" type="stack">
+              <nav-route id="tabs-route">
+                <navigator id="tabs-navigator" type="tab">
+                  <nav-route id="home-route" href="http://myapp.com/tab-unwind-home" />
+                  <nav-route id="messages-route" href="http://myapp.com/tab-unwind-messages" />
+                </navigator>
+              </nav-route>
+            </navigator>
+          </doc>
+        `,
+      ],
+      [
+        'http://myapp.com/tab-unwind-home',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <screen>
+              <body>
+                <text id="home">Home</text>
+                <view
+                  action="push"
+                  href="http://myapp.com/tab-unwind-card"
+                  id="open-card"
+                >
+                  <text>Open card</text>
+                </view>
+              </body>
+            </screen>
+          </doc>
+        `,
+      ],
+      [
+        'http://myapp.com/tab-unwind-card',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <screen>
+              <body>
+                <text id="card">Card</text>
+                <view action="navigate" href="#messages-route" id="go-messages">
+                  <text>Go to messages</text>
+                </view>
+              </body>
+            </screen>
+          </doc>
+        `,
+      ],
+      [
+        'http://myapp.com/tab-unwind-messages',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <screen>
+              <body>
+                <text id="messages">Messages</text>
+              </body>
+            </screen>
+          </doc>
+        `,
+      ],
+    ]);
+
+    await render(
+      <NavigationContainer ref={navigationRef}>
+        <Hyperview
+          entrypointUrl="http://myapp.com/tab-unwind-document"
+          fetch={mockFetch}
+          formatDate={formatDate}
+        />
+      </NavigationContainer>,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId('open-card')).toBeOnTheScreen();
+    });
+    await fireEvent.press(screen.getByTestId('open-card'));
+    await waitFor(() => {
+      expect(screen.getByTestId('go-messages')).toBeOnTheScreen();
+    });
+    await fireEvent.press(screen.getByTestId('go-messages'));
+
+    await waitFor(() => {
+      expect(screen.getByTestId('messages')).toBeOnTheScreen();
+      expect(screen.queryByTestId('card')).not.toBeOnTheScreen();
+    });
+    const rootState = getRootNavigationState(navigationRef);
+    expect(rootState.routes.map(route => route.name)).toEqual(['tabs-route']);
+    expect(rootState.index).toBe(0);
+    const tabsState = rootState.routes[0].state;
+    expect(tabsState?.routes[tabsState.index ?? 0]?.name).toBe(
+      'messages-route',
+    );
+  });
+
+  test('cleans a guarded background route removed by a multi-pop', async () => {
+    const guardedUrl = 'http://myapp.com/background-guarded';
+    mockRemoveStackRoute.mockClear();
+    const navigationRef = createNavigationContainerRef();
+    const mockFetch = fetchFactory([
+      [
+        'http://myapp.com/background-guard-document',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <navigator id="root" type="stack">
+              <nav-route id="home" href="http://myapp.com/background-guard-home" />
+            </navigator>
+          </doc>
+        `,
+      ],
+      [
+        'http://myapp.com/background-guard-home',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <screen>
+              <body>
+                <text id="home">Home</text>
+                <view action="push" href="${guardedUrl}" id="open-guarded">
+                  <text>Open guarded route</text>
+                </view>
+              </body>
+            </screen>
+          </doc>
+        `,
+      ],
+      [
+        guardedUrl,
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <screen>
+              <body>
+                <view id="back-guard">
+                  <behavior action="hide" target="back-guard" trigger="back" />
+                </view>
+                <view
+                  action="push"
+                  href="http://myapp.com/background-guard-foreground"
+                  id="open-foreground"
+                >
+                  <text>Open foreground route</text>
+                </view>
+              </body>
+            </screen>
+          </doc>
+        `,
+      ],
+      [
+        'http://myapp.com/background-guard-foreground',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <screen>
+              <body>
+                <text id="foreground">Foreground</text>
+                <view action="navigate" href="#home" id="return-home">
+                  <text>Return home</text>
+                </view>
+              </body>
+            </screen>
+          </doc>
+        `,
+      ],
+    ]);
+
+    await render(
+      <NavigationContainer ref={navigationRef}>
+        <Hyperview
+          entrypointUrl="http://myapp.com/background-guard-document"
+          fetch={mockFetch}
+          formatDate={formatDate}
+        />
+      </NavigationContainer>,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId('open-guarded')).toBeOnTheScreen();
+    });
+    await fireEvent.press(screen.getByTestId('open-guarded'));
+    await waitFor(() => {
+      expect(screen.getByTestId('open-foreground')).toBeOnTheScreen();
+    });
+    await fireEvent.press(screen.getByTestId('open-foreground'));
+    await waitFor(() => {
+      expect(screen.getByTestId('return-home')).toBeOnTheScreen();
+    });
+    await fireEvent.press(screen.getByTestId('return-home'));
+
+    await waitFor(() => {
+      expect(screen.getByTestId('home')).toBeOnTheScreen();
+      expect(screen.queryByTestId('foreground')).not.toBeOnTheScreen();
+    });
+    const guardedRemovals = mockRemoveStackRoute.mock.calls.filter(
+      ([, routeUrl]) => routeUrl === guardedUrl,
+    ).length;
+    expect(guardedRemovals).toBe(1);
+  });
+
+  test('cleans a route once when back behaviors hide its guard and close', async () => {
+    const guardedUrl = 'http://myapp.com/hide-close-guarded';
+    mockRemoveStackRoute.mockClear();
+    const navigationRef = createNavigationContainerRef();
+    const mockFetch = fetchFactory([
+      [
+        'http://myapp.com/hide-close-document',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <navigator id="root" type="stack">
+              <nav-route id="home" href="http://myapp.com/hide-close-home" />
+            </navigator>
+          </doc>
+        `,
+      ],
+      [
+        'http://myapp.com/hide-close-home',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <screen>
+              <body>
+                <text id="home">Home</text>
+                <view action="new" href="${guardedUrl}" id="open-guarded">
+                  <text>Open guarded route</text>
+                </view>
+              </body>
+            </screen>
+          </doc>
+        `,
+      ],
+      [
+        guardedUrl,
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <screen>
+              <body>
+                <text id="guarded">Guarded</text>
+                <view id="back-guard">
+                  <behavior action="hide" target="back-guard" trigger="back" />
+                  <behavior action="close" trigger="back" />
+                </view>
+              </body>
+            </screen>
+          </doc>
+        `,
+      ],
+    ]);
+
+    await render(
+      <NavigationContainer ref={navigationRef}>
+        <Hyperview
+          entrypointUrl="http://myapp.com/hide-close-document"
+          fetch={mockFetch}
+          formatDate={formatDate}
+        />
+      </NavigationContainer>,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId('open-guarded')).toBeOnTheScreen();
+    });
+    await fireEvent.press(screen.getByTestId('open-guarded'));
+    await waitFor(() => {
+      expect(screen.getByTestId('guarded')).toBeOnTheScreen();
+    });
+    await act(() => navigationRef.goBack());
+
+    await waitFor(() => {
+      expect(screen.getByTestId('home')).toBeOnTheScreen();
+      expect(screen.queryByTestId('guarded')).not.toBeOnTheScreen();
+    });
+    const guardedRemovals = mockRemoveStackRoute.mock.calls.filter(
+      ([, routeUrl]) => routeUrl === guardedUrl,
+    ).length;
+    expect(guardedRemovals).toBe(1);
   });
 });
