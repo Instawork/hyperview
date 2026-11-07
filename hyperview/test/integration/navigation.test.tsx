@@ -1319,6 +1319,12 @@ describe('Hyperview navigation sequences', () => {
           <doc xmlns="https://hyperview.org/hyperview">
             <screen>
               <body>
+                <behavior
+                  action="navigate"
+                  event-name="retarget-messages"
+                  href="#messages-route"
+                  trigger="on-event"
+                />
                 <text id="home">Home</text>
                 <view
                   action="push"
@@ -1339,7 +1345,11 @@ describe('Hyperview navigation sequences', () => {
             <screen>
               <body>
                 <text id="card">Card</text>
-                <view action="navigate" href="#messages-route" id="go-messages">
+                <view
+                  action="dispatch-event"
+                  event-name="retarget-messages"
+                  id="go-messages"
+                >
                   <text>Go to messages</text>
                 </view>
               </body>

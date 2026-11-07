@@ -141,6 +141,14 @@ export class Navigator implements NavigationProvider {
       return;
     }
 
+    const rootState = this.props.rootNavigation?.getRootState();
+    const sourceKey = this.props.route?.key;
+    const sourceIsBackground =
+      navAction === NAV_ACTIONS.NAVIGATE &&
+      !!sourceKey &&
+      !!Helpers.findNavigatorKeyForRoute(rootState, sourceKey) &&
+      this.props.navigation?.isFocused() === false;
+
     switch (navAction) {
       case NAV_ACTIONS.BACK:
       case NAV_ACTIONS.CLOSE:
@@ -152,14 +160,12 @@ export class Navigator implements NavigationProvider {
         );
         break;
       case NAV_ACTIONS.NAVIGATE: {
-        const targetNavigator = routeId
-          ? Helpers.findNavigatorForRouteName(
-              this.props.rootNavigation?.getRootState(),
-              routeId,
-            )
-          : undefined;
+        const targetNavigator =
+          sourceIsBackground && routeId
+            ? Helpers.findNavigatorForRouteName(navigation.getState(), routeId)
+            : undefined;
         if (targetNavigator?.type === NAVIGATOR_TYPE.TAB) {
-          this.props.rootNavigation?.dispatch({
+          navigation.dispatch({
             ...TabActions.jumpTo(routeId, params),
             target: targetNavigator.key,
           });

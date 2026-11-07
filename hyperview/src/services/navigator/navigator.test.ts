@@ -40,13 +40,51 @@ const rootState = {
   type: 'stack',
 } as NavigationState;
 
-const createNavigation = (state: NavigationState): NavigationProps => ({
+const stackWithTabsState = {
+  index: 1,
+  key: 'root-stack',
+  routeNames: ['tabs', 'card'],
+  routes: [
+    {
+      key: 'tabs-key',
+      name: 'tabs',
+      state: {
+        index: 0,
+        key: 'tabs-state',
+        routeNames: ['home', 'messages'],
+        routes: [
+          {
+            key: 'home-key',
+            name: 'home',
+          },
+          {
+            key: 'messages-key',
+            name: 'messages',
+          },
+        ],
+        stale: false,
+        type: 'tab',
+      },
+    },
+    {
+      key: 'card-key',
+      name: 'card',
+    },
+  ],
+  stale: false,
+  type: 'stack',
+} as NavigationState;
+
+const createNavigation = (
+  state: NavigationState,
+  isFocused = true,
+): NavigationProps => ({
   addListener: jest.fn(() => jest.fn()),
   dispatch: jest.fn(),
   getParent: jest.fn(),
   getState: jest.fn(() => state),
   goBack: jest.fn(),
-  isFocused: jest.fn(() => true),
+  isFocused: jest.fn(() => isFocused),
   navigate: jest.fn(),
 });
 
@@ -482,51 +520,40 @@ describe('Navigator.sendRequest', () => {
     expect(parentNavigation.dispatch).not.toHaveBeenCalled();
   });
 
-  it('targets a mounted tab without changing the parent stack', () => {
-    const fullState = {
-      index: 1,
-      key: 'root-stack',
-      routeNames: ['tabs', 'card'],
-      routes: [
-        {
-          key: 'tabs-key',
-          name: 'tabs',
-          state: {
-            index: 0,
-            key: 'tabs-state',
-            routeNames: ['home', 'messages'],
-            routes: [
-              {
-                key: 'home-key',
-                name: 'home',
-              },
-              {
-                key: 'messages-key',
-                name: 'messages',
-              },
-            ],
-            stale: false,
-            type: 'tab',
-          },
-        },
-        {
-          key: 'card-key',
-          name: 'card',
-        },
-      ],
-      stale: false,
-      type: 'stack',
-    } as NavigationState;
-    const navigation = createNavigation({
-      ...fullState,
-      routes: fullState.routes.map(route => ({
-        key: route.key,
-        name: route.name,
-      })),
-    } as NavigationState);
+  it('targets a mounted tab from a background route without changing the parent stack', () => {
+    const tabsState = stackWithTabsState.routes[0].state as NavigationState;
+    const navigation = createNavigation(tabsState, false);
     const rootNavigation = ({
       dispatch: jest.fn(),
-      getRootState: jest.fn(() => fullState),
+      getRootState: jest.fn(() => stackWithTabsState),
+    } as unknown) as NonNullable<Types.Props['rootNavigation']>;
+    const navigator = new Navigator({
+      entrypointUrl: 'https://example.com/index.xml',
+      navigation,
+      rootNavigation,
+      route: {
+        key: 'home-key',
+        name: 'home',
+      } as RouteProps,
+      setElement: jest.fn(),
+    });
+
+    navigator.sendRequest(NAV_ACTIONS.NAVIGATE, {
+      url: '#messages',
+    });
+
+    expect(navigation.dispatch).toHaveBeenCalledWith({
+      ...TabActions.jumpTo('messages', {}),
+      target: 'tabs-state',
+    });
+    expect(rootNavigation.dispatch).not.toHaveBeenCalled();
+  });
+
+  it('unwinds the focused stack when navigating to a mounted tab', () => {
+    const navigation = createNavigation(stackWithTabsState);
+    const rootNavigation = ({
+      dispatch: jest.fn(),
+      getRootState: jest.fn(() => stackWithTabsState),
     } as unknown) as NonNullable<Types.Props['rootNavigation']>;
     const navigator = new Navigator({
       entrypointUrl: 'https://example.com/index.xml',
@@ -543,11 +570,168 @@ describe('Navigator.sendRequest', () => {
       url: '#messages',
     });
 
-    expect(rootNavigation.dispatch).toHaveBeenCalledWith({
+    expect(navigation.dispatch).toHaveBeenCalledWith(
+      CommonActions.navigate('messages', {}, { pop: true }),
+    );
+    expect(rootNavigation.dispatch).not.toHaveBeenCalled();
+  });
+
+  it('uses regular navigation when the target tab is not mounted', () => {
+    const tabsState = stackWithTabsState.routes[0].state as NavigationState;
+    const navigation = createNavigation(tabsState, false);
+    const rootNavigation = ({
+      dispatch: jest.fn(),
+      getRootState: jest.fn(() => stackWithTabsState),
+    } as unknown) as NonNullable<Types.Props['rootNavigation']>;
+    const navigator = new Navigator({
+      entrypointUrl: 'https://example.com/index.xml',
+      navigation,
+      rootNavigation,
+      route: {
+        key: 'home-key',
+        name: 'home',
+      } as RouteProps,
+      setElement: jest.fn(),
+    });
+
+    navigator.sendRequest(NAV_ACTIONS.NAVIGATE, {
+      url: '#settings',
+    });
+
+    expect(navigation.dispatch).toHaveBeenCalledWith(
+      CommonActions.navigate('settings', {}, { pop: true }),
+    );
+    expect(rootNavigation.dispatch).not.toHaveBeenCalled();
+  });
+
+  it('limits background tab lookup to the active navigator', () => {
+    const firstTabsState = {
+      index: 0,
+      key: 'first-tabs-state',
+      routeNames: ['home', 'messages'],
+      routes: [
+        { key: 'first-home-key', name: 'home' },
+        { key: 'first-messages-key', name: 'messages' },
+      ],
+      stale: false,
+      type: 'tab',
+    } as NavigationState;
+    const secondTabsState = {
+      index: 0,
+      key: 'second-tabs-state',
+      routeNames: ['home', 'messages'],
+      routes: [
+        { key: 'second-home-key', name: 'home' },
+        { key: 'second-messages-key', name: 'messages' },
+      ],
+      stale: false,
+      type: 'tab',
+    } as NavigationState;
+    const fullState = {
+      index: 2,
+      key: 'root-stack',
+      routeNames: ['first-tabs', 'second-tabs', 'card'],
+      routes: [
+        {
+          key: 'first-tabs-key',
+          name: 'first-tabs',
+          state: firstTabsState,
+        },
+        {
+          key: 'second-tabs-key',
+          name: 'second-tabs',
+          state: secondTabsState,
+        },
+        { key: 'card-key', name: 'card' },
+      ],
+      stale: false,
+      type: 'stack',
+    } as NavigationState;
+    const navigation = createNavigation(secondTabsState, false);
+    const rootNavigation = ({
+      dispatch: jest.fn(),
+      getRootState: jest.fn(() => fullState),
+    } as unknown) as NonNullable<Types.Props['rootNavigation']>;
+    const navigator = new Navigator({
+      entrypointUrl: 'https://example.com/index.xml',
+      navigation,
+      rootNavigation,
+      route: {
+        key: 'second-home-key',
+        name: 'home',
+      } as RouteProps,
+      setElement: jest.fn(),
+    });
+
+    navigator.sendRequest(NAV_ACTIONS.NAVIGATE, {
+      url: '#messages',
+    });
+
+    expect(navigation.dispatch).toHaveBeenCalledWith({
       ...TabActions.jumpTo('messages', {}),
+      target: 'second-tabs-state',
+    });
+    expect(rootNavigation.dispatch).not.toHaveBeenCalled();
+  });
+
+  it('uses the navigator resolved for an explicit navigation target', () => {
+    const leafState = {
+      index: 0,
+      key: 'leaf-stack',
+      routeNames: ['leaf'],
+      routes: [{ key: 'leaf-key', name: 'leaf' }],
+      stale: false,
+      type: 'stack',
+    } as NavigationState;
+    const tabsState = {
+      index: 0,
+      key: 'tabs-state',
+      routeNames: ['home', 'messages'],
+      routes: [
+        { key: 'home-key', name: 'home', state: leafState },
+        { key: 'messages-key', name: 'messages' },
+      ],
+      stale: false,
+      type: 'tab',
+    } as NavigationState;
+    const fullState = {
+      ...stackWithTabsState,
+      routes: [
+        { key: 'tabs-key', name: 'tabs', state: tabsState },
+        { key: 'card-key', name: 'card' },
+      ],
+    } as NavigationState;
+    const navigation = createNavigation(leafState, false);
+    const tabsNavigation = createNavigation(tabsState);
+    (navigation.getParent as jest.Mock).mockReturnValue(tabsNavigation);
+    const rootNavigation = ({
+      dispatch: jest.fn(),
+      getRootState: jest.fn(() => fullState),
+    } as unknown) as NonNullable<Types.Props['rootNavigation']>;
+    const navigator = new Navigator({
+      entrypointUrl: 'https://example.com/index.xml',
+      navigation,
+      rootNavigation,
+      route: {
+        key: 'leaf-key',
+        name: 'leaf',
+      } as RouteProps,
+      setElement: jest.fn(),
+    });
+
+    navigator.sendRequest(NAV_ACTIONS.NAVIGATE, {
+      targetId: 'messages',
+    });
+
+    expect(tabsNavigation.dispatch).toHaveBeenCalledWith({
+      ...TabActions.jumpTo('messages', {
+        params: { targetId: 'messages' },
+        screen: 'card',
+      }),
       target: 'tabs-state',
     });
     expect(navigation.dispatch).not.toHaveBeenCalled();
+    expect(rootNavigation.dispatch).not.toHaveBeenCalled();
   });
 });
 
