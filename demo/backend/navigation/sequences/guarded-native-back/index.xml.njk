@@ -17,4 +17,11 @@ hv_button_behavior: "back"
       href="/hyperview/public/navigation/sequences/guarded-native-back/guarded.xml"
     />
   {%- endcall %}
+  {{ description('Tap “Open closing guard” to present “Closing guard”. One back attempt should hide its guard and close the modal.') }}
+  {% call button('Open closing guard') -%}
+    <behavior
+      action="new"
+      href="/hyperview/public/navigation/sequences/guarded-native-back/guarded-close.xml"
+    />
+  {%- endcall %}
 {% endblock %}

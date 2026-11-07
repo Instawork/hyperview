@@ -1,0 +1,22 @@
+---
+permalink: "/navigation/sequences/tab-retarget/card.xml"
+hv_title: "Card"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  {{ description('Tap “Go to Messages” to navigate directly from “Card”. “Card” should close as “Messages tab” is selected.') }}
+  {% call button('Go to Messages') -%}
+    <behavior action="navigate" href="#sequence-tab-retarget-messages" />
+  {%- endcall %}
+  {{ description('Tap “Navigate from Home” to have the background “Home tab” handle the same navigation. “Card” should remain open while “Messages tab” is selected underneath. Go back to reveal it.') }}
+  {% call button('Navigate from Home') -%}
+    <behavior
+      action="dispatch-event"
+      event-name="sequence-tab-retarget-background"
+    />
+  {%- endcall %}
+{% endblock %}

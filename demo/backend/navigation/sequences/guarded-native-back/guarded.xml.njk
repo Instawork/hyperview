@@ -9,8 +9,9 @@ hv_button_behavior: "back"
 {% from 'macros/container/index.xml.njk' import container %}
 
 {% block content %}
-  {{ description('Use “Go back”, header back, Android system back, or the iOS edge swipe.') }}
+  {{ description('Use “Go back”, the header back button, or your platform’s system back control.') }}
   {{ description('The first attempt removes the guard without leaving “Guarded screen”. The second returns to “Back guard”.') }}
+  {{ description('After the guard is removed, the next back attempt should complete normally. Interactive back gestures should track the gesture without snapping back.') }}
   {% call container('Back guard active. The first back attempt removes this notice.', attributes={id:"sequence-native-back-guard"}) -%}
     <behavior
       trigger="back"
