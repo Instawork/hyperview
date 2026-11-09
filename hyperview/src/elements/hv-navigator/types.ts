@@ -21,6 +21,15 @@ export type ScreenParams = {
   params: RouteParams | undefined;
 };
 
+export type GetRouteId = (
+  params: RouteParams | undefined,
+) => string | undefined;
+
+export type StackRouteOptionsParams = {
+  isFirstScreen: boolean;
+  usesModalPresentation: boolean;
+};
+
 /**
  * All of the props used by hv-navigator
  */

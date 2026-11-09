@@ -23,6 +23,11 @@ import React, {
   useMemo,
   useRef,
 } from 'react';
+import {
+  getNestedNavigator,
+  getVisibleBackBehaviors,
+  registerRouteFocusListener,
+} from './helpers';
 import HvNavigator from 'hyperview/src/elements/hv-navigator';
 import HvScreen from 'hyperview/src/elements/hv-screen';
 import { LOCAL_NAME } from 'hyperview/src/types';
@@ -158,24 +163,6 @@ class HvRouteInner extends PureComponent<Types.InnerRouteProps, ScreenState> {
 }
 
 /**
- * Retrieve a nested navigator as a child of the nav-route with the given id
- */
-const getNestedNavigator = (
-  id?: string,
-  doc?: Document,
-): Element | undefined => {
-  if (!id || !doc) {
-    return undefined;
-  }
-
-  const route = NavigatorService.getRouteById(doc, id);
-  if (route) {
-    return Helpers.getFirstChildTag(route, LOCAL_NAME.NAVIGATOR) || undefined;
-  }
-  return undefined;
-};
-
-/**
  * Functional component wrapper around HvRouteInner
  * NOTE: The reason for this approach is to allow accessing
  *  multiple contexts to pass data to HvRouteInner
@@ -263,10 +250,7 @@ function HvRouteFC(props: Types.Props) {
         onRouteFocus(props.route);
       }
     };
-    const unsubscribe = nav.addListener('transitionEnd', () => {
-      unsubscribe();
-      updateRouteFocus();
-    });
+    registerRouteFocusListener(nav, updateRouteFocus);
   }, [entrypointUrl, getDoc, id, nav, onRouteFocus, props.route, setDoc]);
 
   const handleBeforeRemove = useCallback(
@@ -274,16 +258,7 @@ function HvRouteFC(props: Types.Props) {
       // Check for elements registered to interrupt back action via a trigger of BACK
       const elements: Element[] = (get && get()) || [];
       // Filter to only elements that are not hidden (or whose ancestors are not hidden).
-      const visibleElements: Element[] = elements.filter(el => {
-        let node: Node | null = el;
-        while (node && node.nodeType !== 9) {
-          if ((node as Element).getAttribute?.('hide') === 'true') {
-            return false;
-          }
-          node = (node as Element).parentNode;
-        }
-        return true;
-      });
+      const visibleElements = getVisibleBackBehaviors(elements);
       if (
         visibleElements.length > 0 &&
         onUpdateRef.current &&
