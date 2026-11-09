@@ -1,7 +1,9 @@
 import * as DomErrors from 'hyperview/src/services/dom/errors';
 import * as Namespaces from 'hyperview/src/services/namespaces';
+import { Provider, removeElements, useBackBehaviorContext } from './context';
+import { act, render } from '@testing-library/react-native';
 import { DOMParser } from '@instawork/xmldom';
-import { removeElements } from './context';
+import React from 'react';
 
 const testDoc = `
 <doc xmlns="https://hyperview.org/hyperview">
@@ -79,5 +81,43 @@ describe('BackBehaviorRemove', () => {
 
     const updatedBehaviors = removeElements(behaviors, backBehaviors);
     expect(updatedBehaviors.length).toEqual(1);
+  });
+});
+
+describe('BackBehaviorProvider', () => {
+  it('notifies consumers when registrations change', async () => {
+    const [behavior] = Array.from(
+      parser
+        .parseFromString(testDoc)
+        .getElementsByTagNameNS(Namespaces.HYPERVIEW, 'behavior'),
+    );
+    const onUpdate = jest.fn();
+    let context: ReturnType<typeof useBackBehaviorContext> | undefined;
+    let renders = 0;
+    const Consumer = () => {
+      context = useBackBehaviorContext();
+      renders += 1;
+      return null;
+    };
+
+    await render(
+      React.createElement(Provider, null, React.createElement(Consumer)),
+    );
+    if (!context) {
+      throw new Error('Expected BackBehavior context');
+    }
+    const initialRenders = renders;
+
+    await act(() => context?.add([behavior], onUpdate));
+    expect(renders).toBe(initialRenders + 1);
+
+    await act(() => {
+      context?.remove([behavior]);
+      context?.add([behavior], onUpdate);
+    });
+    expect(renders).toBe(initialRenders + 2);
+
+    await act(() => context?.remove([behavior]));
+    expect(renders).toBe(initialRenders + 3);
   });
 });

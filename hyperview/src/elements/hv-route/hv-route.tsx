@@ -32,6 +32,7 @@ import HvNavigator from 'hyperview/src/elements/hv-navigator';
 import HvScreen from 'hyperview/src/elements/hv-screen';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { NavigationContainerRefContext } from '@react-navigation/native';
+import { RouteLifecycle } from './route-lifecycle';
 import { useElementCache } from 'hyperview/src/contexts/element-cache';
 import { useHyperview } from 'hyperview/src/contexts/hyperview';
 
@@ -213,12 +214,8 @@ function HvRouteFC(props: Types.Props) {
 
   const id = props.route?.params?.id || props.route?.key;
   const routeUrl = props.route?.params?.url;
-
-  // Keep onUpdate current without placing it in listener dep arrays
-  const onUpdateRef = useRef<typeof onUpdate>(onUpdate);
-  useEffect(() => {
-    onUpdateRef.current = onUpdate;
-  }, [onUpdate]);
+  const preventRemove =
+    getVisibleBackBehaviors((get && get()) || []).length > 0;
 
   // Track focus state at discrete event boundaries rather than sampling
   // nav.isFocused() mid-animation, which is unreliable during swipe gestures
@@ -250,42 +247,53 @@ function HvRouteFC(props: Types.Props) {
         onRouteFocus(props.route);
       }
     };
-    registerRouteFocusListener(nav, updateRouteFocus);
+    return registerRouteFocusListener(nav, updateRouteFocus);
   }, [entrypointUrl, getDoc, id, nav, onRouteFocus, props.route, setDoc]);
 
-  const handleBeforeRemove = useCallback(
-    (event: { preventDefault: () => void }) => {
-      // Check for elements registered to interrupt back action via a trigger of BACK
-      const elements: Element[] = (get && get()) || [];
-      // Filter to only elements that are not hidden (or whose ancestors are not hidden).
-      const visibleElements = getVisibleBackBehaviors(elements);
-      if (
-        visibleElements.length > 0 &&
-        onUpdateRef.current &&
-        isFocusedRef.current
-      ) {
-        event.preventDefault();
-        visibleElements.forEach(behaviorElement => {
-          const href = behaviorElement.getAttribute('href');
-          const action = behaviorElement.getAttribute('action');
-          onUpdateRef.current?.(href, action, behaviorElement, {
-            behaviorElement,
-            showIndicatorId: behaviorElement.getAttribute('show-during-load'),
-            targetId: behaviorElement.getAttribute('target'),
-          });
-        });
-      } else {
-        // Perform cleanup of the associated route (retrieved from parent document state)
-        NavigatorService.removeStackRoute(
-          getDoc?.(),
-          routeUrl,
-          entrypointUrl,
-          setDoc,
-        );
-      }
+  const runBackBehaviors = useCallback((): boolean => {
+    const elements: Element[] = (get && get()) || [];
+    const visibleElements = getVisibleBackBehaviors(elements);
+    if (visibleElements.length === 0 || !onUpdate) {
+      return false;
+    }
+    visibleElements.forEach(behaviorElement => {
+      onUpdate(
+        behaviorElement.getAttribute('href'),
+        behaviorElement.getAttribute('action'),
+        behaviorElement,
+        {
+          behaviorElement,
+          showIndicatorId: behaviorElement.getAttribute('show-during-load'),
+          targetId: behaviorElement.getAttribute('target'),
+        },
+      );
+    });
+    return true;
+  }, [get, onUpdate]);
+
+  const removeRouteFromDocument = useCallback(() => {
+    NavigatorService.removeStackRoute(
+      getDoc?.(),
+      routeUrl,
+      entrypointUrl,
+      setDoc,
+    );
+  }, [entrypointUrl, getDoc, routeUrl, setDoc]);
+
+  const resumeRemoval = useCallback(
+    (action: Types.PreventRemoveAction) => {
+      removeRouteFromDocument();
+      nav.dispatch(action);
     },
-    [entrypointUrl, get, getDoc, routeUrl, setDoc],
+    [nav, removeRouteFromDocument],
   );
+
+  const handleBeforeRemove = useCallback(() => {
+    if (props.route && preventRemove && isFocusedRef.current) {
+      return;
+    }
+    removeRouteFromDocument();
+  }, [preventRemove, props.route, removeRouteFromDocument]);
 
   const handleState = useCallback(
     (event: ListenerEvent) => {
@@ -309,19 +317,19 @@ function HvRouteFC(props: Types.Props) {
   );
 
   useEffect(() => {
-    if (!nav) {
+    if (!nav || props.route) {
       return undefined;
     }
     return nav.addListener('blur', handleBlur);
-  }, [nav, handleBlur]);
+  }, [nav, handleBlur, props.route]);
 
   // Use the focus event to set the selected route
   useEffect(() => {
-    if (!nav) {
+    if (!nav || props.route) {
       return undefined;
     }
     return nav.addListener('focus', handleFocus);
-  }, [nav, handleFocus]);
+  }, [nav, handleFocus, props.route]);
 
   // Use the beforeRemove event to remove the route from the stack
   useEffect(() => {
@@ -339,7 +347,7 @@ function HvRouteFC(props: Types.Props) {
     return nav.addListener('state', handleState);
   }, [nav, handleState]);
 
-  return (
+  const route = (
     <HvDoc
       hasElement={!!element}
       navigationProvider={navigator}
@@ -372,6 +380,19 @@ function HvRouteFC(props: Types.Props) {
         )}
       </HvDocContext>
     </HvDoc>
+  );
+  return props.route ? (
+    <RouteLifecycle
+      onBlur={handleBlur}
+      onFocus={handleFocus}
+      preventRemove={preventRemove}
+      resumeRemoval={resumeRemoval}
+      runBackBehaviors={runBackBehaviors}
+    >
+      {route}
+    </RouteLifecycle>
+  ) : (
+    route
   );
 }
 
