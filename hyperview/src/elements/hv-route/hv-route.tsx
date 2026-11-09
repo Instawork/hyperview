@@ -213,6 +213,9 @@ function HvRouteFC(props: Types.Props) {
   );
 
   const id = props.route?.params?.id || props.route?.key;
+  const shouldRemoveDocumentRoute =
+    !props.route?.params?.routeId ||
+    props.route.params.routeId === props.route.params.id;
   const routeUrl = props.route?.params?.url;
   const preventRemove =
     getVisibleBackBehaviors((get && get()) || []).length > 0;
@@ -272,20 +275,27 @@ function HvRouteFC(props: Types.Props) {
   }, [get, onUpdate]);
 
   const removeRouteFromDocument = useCallback(() => {
+    if (!shouldRemoveDocumentRoute) {
+      return;
+    }
     NavigatorService.removeStackRoute(
       getDoc?.(),
       routeUrl,
       entrypointUrl,
       setDoc,
     );
-  }, [entrypointUrl, getDoc, routeUrl, setDoc]);
+  }, [entrypointUrl, getDoc, routeUrl, setDoc, shouldRemoveDocumentRoute]);
 
   const resumeRemoval = useCallback(
     (action: Types.PreventRemoveAction) => {
       removeRouteFromDocument();
-      nav.dispatch(action);
+      if (action.target && rootNavigation) {
+        rootNavigation.dispatch(action);
+      } else {
+        nav.dispatch(action);
+      }
     },
-    [nav, removeRouteFromDocument],
+    [nav, removeRouteFromDocument, rootNavigation],
   );
 
   const handleBeforeRemove = useCallback(() => {

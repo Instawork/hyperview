@@ -8,6 +8,7 @@ import { NavigationContainerRefContext } from '@react-navigation/native';
 export const ANCHOR_ID_SEPARATOR = '#';
 export const ID_CARD = 'card';
 export const ID_MODAL = 'modal';
+export const MODAL_HOST_ROUTE_PREFIX = 'modal-host';
 export const KEY_MERGE = 'merge';
 export const KEY_SELECTED = 'selected';
 export const KEY_MODAL = 'modal';
@@ -45,4 +46,14 @@ export type NavigateActionPayload = {
   name?: string;
   params?: object;
   pop?: boolean;
+};
+
+export type ModalHostPopTarget = {
+  count: number;
+  target: string;
+};
+
+export type ModalHostTarget = {
+  navigation: NavigationProps;
+  routeName: string;
 };

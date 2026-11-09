@@ -5,6 +5,7 @@ import type {
   BottomTabBarProps as RNBottomTabBarProps,
 } from '@react-navigation/bottom-tabs';
 import type {
+  NavigationAction,
   NavigationState,
   Route as NavigatorRoute,
 } from '@react-navigation/native';
@@ -276,7 +277,7 @@ type ListenerCallback = (event: ListenerEvent) => void;
  */
 export type NavigationProps = {
   navigate: (options: object) => void;
-  dispatch: (options: object) => void;
+  dispatch: (action: NavigationAction) => void;
   goBack: () => void;
   getState: () => NavigationState;
   getParent: (id?: string) => NavigationProps | undefined;
@@ -289,6 +290,9 @@ export type RouteParams = {
   delay?: number;
   id?: string;
   isModal?: boolean;
+  isModalHost?: boolean;
+  modalHostPath?: string[];
+  modalHostRouteName?: string;
   needsSubStack?: boolean;
   preloadScreen?: number | null;
   routeId?: string;

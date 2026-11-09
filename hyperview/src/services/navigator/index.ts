@@ -18,4 +18,10 @@ export {
   setSelected,
   updateRouteUrlFromState,
 } from './helpers';
-export { ANCHOR_ID_SEPARATOR, ID_CARD, ID_MODAL, KEY_MODAL } from './types';
+export {
+  ANCHOR_ID_SEPARATOR,
+  ID_CARD,
+  ID_MODAL,
+  KEY_MODAL,
+  MODAL_HOST_ROUTE_PREFIX,
+} from './types';

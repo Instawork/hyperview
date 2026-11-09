@@ -23,10 +23,14 @@ import { ANCHOR_ID_SEPARATOR } from './types';
 import { shallowCloneToRoot } from 'hyperview/src/services';
 
 /**
- * Card and modal routes are not defined in the document
+ * Card, modal, and generated modal-host routes are not defined in the document
  */
-export const isDynamicRoute = (id: string): boolean => {
-  return id === Types.ID_CARD || id === Types.ID_MODAL;
+export const isDynamicRoute = (id: string, params?: RouteParams): boolean => {
+  return (
+    id === Types.ID_CARD ||
+    id === Types.ID_MODAL ||
+    params?.isModalHost === true
+  );
 };
 
 /**
@@ -193,6 +197,89 @@ export const findNavigatorForRouteName = (
 ): NavigationState | undefined => {
   return findNavigator(state, navigator =>
     navigator.routeNames.includes(routeName),
+  );
+};
+
+/**
+ * Find the exact modal-host route name assigned to a mounted target route.
+ */
+export const findModalHostRouteName = (
+  state: NavigationState,
+  targetId: string,
+): string | undefined => {
+  const navigator = findNavigator(state, current =>
+    current.routes.some(route => route.name === targetId),
+  );
+  const targetRoute = navigator?.routes.find(route => route.name === targetId);
+  return (targetRoute?.params as RouteParams | undefined)?.modalHostRouteName;
+};
+
+/**
+ * Find the nearest modal host that owns the source route.
+ */
+const findModalHostPopTargetForSource = (
+  state: NavigationState,
+  sourceKey: string,
+): [boolean, Types.ModalHostPopTarget | undefined] => {
+  return state.routes.reduce<[boolean, Types.ModalHostPopTarget | undefined]>(
+    (result, route, index) => {
+      if (result[0]) {
+        return result;
+      }
+
+      const [containsSource, childTarget] = route.state
+        ? findModalHostPopTargetForSource(
+            route.state as NavigationState,
+            sourceKey,
+          )
+        : [false, undefined];
+      const sourceFound = route.key === sourceKey || containsSource;
+
+      if (childTarget) {
+        return [true, childTarget];
+      }
+      if (
+        sourceFound &&
+        (route.params as RouteParams | undefined)?.isModalHost === true
+      ) {
+        return [
+          true,
+          {
+            count: state.index - index + 1,
+            target: state.key,
+          },
+        ];
+      }
+      return [sourceFound, undefined];
+    },
+    [false, undefined],
+  );
+};
+
+/**
+ * Find the pop target for a mounted source or its nearest remaining host.
+ */
+export const getModalHostPopTarget = (
+  state: NavigationState | undefined,
+  sourceKey: string,
+  modalHostPath: string[] = [],
+): Types.ModalHostPopTarget | undefined => {
+  if (!state) {
+    return undefined;
+  }
+
+  const [sourceFound, sourceTarget] = findModalHostPopTargetForSource(
+    state,
+    sourceKey,
+  );
+  if (sourceFound) {
+    return sourceTarget;
+  }
+
+  return modalHostPath.reduceRight<Types.ModalHostPopTarget | undefined>(
+    (hostTarget, hostKey) =>
+      hostTarget || findModalHostPopTargetForSource(state, hostKey)[1],
+    undefined,
   );
 };
 
@@ -489,6 +576,7 @@ export const buildRequest = (
   nav: NavigationProps | undefined,
   action: NavAction,
   routeParams?: RouteParams,
+  routeIdOverride?: string,
 ): [
   NavAction,
   NavigationProps | undefined,
@@ -533,7 +621,8 @@ export const buildRequest = (
     return [navAction, undefined, '', cleanedParams];
   }
 
-  const routeId = getRouteId(navAction, routeParams.url ?? undefined);
+  const routeId =
+    routeIdOverride ?? getRouteId(navAction, routeParams.url ?? undefined);
 
   if (!path || !path.length) {
     return [navAction, navigation, routeId, cleanedParams];
@@ -768,7 +857,7 @@ export const addStackRoute = (
     !id ||
     !route ||
     !siblingName ||
-    !isDynamicRoute(route.name) ||
+    !isDynamicRoute(route.name, route.params) ||
     !route.params?.url ||
     getRouteByUrl(doc, route.params?.url, baseUrl)
   ) {
