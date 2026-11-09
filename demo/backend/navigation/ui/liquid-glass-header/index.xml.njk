@@ -1,0 +1,157 @@
+---
+permalink: "/navigation/ui/liquid-glass-header/index.xml"
+tags: "Navigation/UI"
+hv_title: "Header"
+hv_button_behavior: "back"
+---
+{% extends 'templates/base.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block styles %}
+  <style id="liquid-header" marginBottom="0" />
+  <style
+    id="liquid-header-image"
+    height="240"
+    marginBottom="16"
+    resizeMode="cover"
+    width="100%"
+  />
+  <style
+    id="liquid-header-actions"
+    alignItems="center"
+    flexDirection="row"
+  />
+  <style id="liquid-header-action" marginLeft="12" />
+  <style id="liquid-header-title" flex="1" />
+  <style id="liquid-header-content" flex="1" />
+  <style
+    id="liquid-header-dark-section"
+    backgroundColor="#333333"
+    marginBottom="16"
+    paddingBottom="32"
+    paddingHorizontal="16"
+    paddingTop="32"
+  />
+  <style id="liquid-header-dark-text" color="#FFFFFF" />
+{% endblock %}
+
+{% block body %}
+  <header
+    xmlns:navigation="https://hyperview.org/navigation"
+    key="header"
+    navigation:title="Header"
+  >
+    <safe-area:safe-area-view
+      xmlns:safe-area="https://hyperview.org/safe-area"
+      key="header-container"
+      style="header-background"
+      safe-area:mode="padding"
+      safe-area:insets="[&quot;right&quot;,&quot;top&quot;,&quot;left&quot;]"
+    >
+      <view style="header liquid-header">
+        <view
+          action="back"
+          href="#"
+          id="liquid-header/header/back-button"
+          style="header-btn"
+          navigation:role="back"
+        >
+          {% include 'icons/back.svg' %}
+        </view>
+        <text style="header-title liquid-header-title">Header</text>
+        <view style="liquid-header-actions">
+          <view
+            id="liquid-header/header/information-button"
+            style="liquid-header-action"
+            navigation:icon="info.circle"
+            navigation:role="right-item"
+          >
+            {% include 'icons/info.svg' %}
+            <behavior
+              xmlns:alert="https://hyperview.org/hyperview-alert"
+              action="alert"
+              alert:message="The information header action was pressed."
+              alert:title="Header"
+            >
+              <alert:option alert:label="OK" />
+            </behavior>
+          </view>
+          <view
+            id="liquid-header/header/help-button"
+            style="liquid-header-action"
+            navigation:icon="questionmark.circle"
+            navigation:role="right-item"
+          >
+            {% include 'icons/help.svg' %}
+            <behavior
+              xmlns:alert="https://hyperview.org/hyperview-alert"
+              action="alert"
+              alert:message="The help header action was pressed."
+              alert:title="Header"
+            >
+              <alert:option alert:label="OK" />
+            </behavior>
+          </view>
+          <view
+            id="liquid-header/header/assistant-button"
+            style="liquid-header-action"
+            navigation:icon="sparkles"
+            navigation:role="right-item"
+          >
+            {% include 'icons/assistant.svg' %}
+            <behavior
+              xmlns:alert="https://hyperview.org/hyperview-alert"
+              action="alert"
+              alert:message="The assistant header action was pressed."
+              alert:title="Header"
+            >
+              <alert:option alert:label="OK" />
+            </behavior>
+          </view>
+        </view>
+      </view>
+    </safe-area:safe-area-view>
+  </header>
+  <safe-area:safe-area-view
+    xmlns:safe-area="https://hyperview.org/safe-area"
+    key="content-safe-area"
+    style="flex-1"
+    safe-area:mode="padding"
+    safe-area:insets="[&quot;bottom&quot;]"
+  >
+    <view
+      content-insets="true"
+      scroll="true"
+      style="liquid-header-content"
+    >
+      {{ description('This example renders the Hyperview header in Liquid Glass on supported iOS versions. Older iOS versions and other platforms use the same HXML to render the legacy header and actions.') }}
+      <image
+        source="/hyperview/public/ui/ui-elements/image/image.jpg"
+        style="liquid-header-image"
+      />
+      <view style="liquid-header-dark-section">
+        <text style="liquid-header-dark-text">
+          The initial content inset keeps content below the header. Scroll to move the images and text beneath the header. The
+          native header controls adjust for contrast over the dark background.
+        </text>
+      </view>
+      <image
+        source="/hyperview/public/ui/ui-elements/image/image.jpg"
+        style="liquid-header-image"
+      />
+      {{ description('The native header groups the Information, Help, and Assistant SF Symbols. The legacy header uses the bundled SVG icons.') }}
+      <image
+        source="/hyperview/public/ui/ui-elements/image/image.jpg"
+        style="liquid-header-image"
+      />
+      {{ description('The same HXML defines the title, buttons, and actions for both header styles.') }}
+      <view
+        action="new"
+        href="/hyperview/public/navigation/ui/liquid-glass-header/modal.xml"
+        style="button"
+      >
+        <text style="button-label">New</text>
+      </view>
+    </view>
+  </safe-area:safe-area-view>
+{% endblock %}

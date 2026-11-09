@@ -1,0 +1,104 @@
+---
+permalink: "/navigation/ui/liquid-glass-header/modal-pushed.xml"
+hv_title: "Push Screen 1"
+hv_button_behavior: "back"
+---
+{% extends 'templates/base.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block styles %}
+  <style id="liquid-header" marginBottom="0" />
+  <style
+    id="first-modal-push-image"
+    height="280"
+    marginBottom="16"
+    resizeMode="cover"
+    width="100%"
+  />
+  <style
+    id="first-modal-push-actions"
+    alignItems="center"
+    flexDirection="row"
+  />
+  <style id="first-modal-push-action" marginLeft="12" />
+  <style id="first-modal-push-title" flex="1" />
+  <style id="first-modal-push-content" flex="1" />
+{% endblock %}
+
+{% block body %}
+  <header
+    xmlns:navigation="https://hyperview.org/navigation"
+    key="header"
+    navigation:title="Push Screen 1"
+  >
+    <safe-area:safe-area-view
+      xmlns:safe-area="https://hyperview.org/safe-area"
+      key="header-container"
+      style="header-background"
+      safe-area:mode="padding"
+      safe-area:insets="[&quot;right&quot;,&quot;top&quot;,&quot;left&quot;]"
+    >
+      <view style="header liquid-header">
+        <view
+          action="back"
+          href="#"
+          id="liquid-header-push-1/header/back-button"
+          style="header-btn"
+          navigation:role="back"
+        >
+          {% include 'icons/back.svg' %}
+        </view>
+        <text style="header-title first-modal-push-title">Push Screen 1</text>
+        <view style="first-modal-push-actions">
+          <view
+            id="liquid-header-push-1/header/new-button"
+            style="first-modal-push-action"
+            navigation:icon="plus.square"
+            navigation:role="right-item"
+          >
+            {% include 'icons/plus-square.svg' %}
+            <behavior
+              xmlns:alert="https://hyperview.org/hyperview-alert"
+              action="alert"
+              alert:message="Open the nested modal using the content action."
+              alert:title="Push Screen 1"
+            >
+              <alert:option alert:label="OK" />
+            </behavior>
+          </view>
+        </view>
+      </view>
+    </safe-area:safe-area-view>
+  </header>
+  <safe-area:safe-area-view
+    xmlns:safe-area="https://hyperview.org/safe-area"
+    key="content-safe-area"
+    style="flex-1"
+    safe-area:mode="padding"
+    safe-area:insets="[&quot;bottom&quot;]"
+  >
+    <view
+      content-insets="true"
+      scroll="true"
+      style="first-modal-push-content"
+    >
+      {{ description('This screen was pushed within the first modal container. Back should return to Modal Screen 1 without dismissing the modal.') }}
+      <image
+        source="/hyperview/public/ui/ui-elements/image/image.jpg"
+        style="first-modal-push-image"
+      />
+      {{ description('Opening the next modal should create a second independent modal container while preserving this screen underneath it.') }}
+      <view
+        action="new"
+        href="/hyperview/public/navigation/ui/liquid-glass-header/second-modal.xml"
+        style="button"
+      >
+        <text style="button-label">New</text>
+      </view>
+      {{ description('Closing from this screen should dismiss the entire first modal container and return to the Header screen.') }}
+      <view action="close" href="#" style="button">
+        <text style="button-label">Close modal</text>
+      </view>
+    </view>
+  </safe-area:safe-area-view>
+{% endblock %}
