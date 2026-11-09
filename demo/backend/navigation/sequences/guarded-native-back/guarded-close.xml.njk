@@ -1,0 +1,25 @@
+---
+permalink: "/navigation/sequences/guarded-native-back/guarded-close.xml"
+hv_title: "Closing guard"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from 'macros/container/index.xml.njk' import container %}
+
+{% block content %}
+  {{ description('Use “Go back”, the header back button, or your platform’s system back control.') }}
+  {{ description('One back attempt should hide the guard, close “Closing guard”, and return to “Back guard”.') }}
+  {% call container('Back guard active. Going back hides this notice and closes the modal.', attributes={id:"sequence-native-back-close-guard"}) -%}
+    <behavior
+      trigger="back"
+      action="hide"
+      target="sequence-native-back-close-guard"
+    />
+    <behavior trigger="back" action="close" />
+  {%- endcall %}
+  {% call button('Go back') -%}
+    <behavior action="back" />
+  {%- endcall %}
+{% endblock %}

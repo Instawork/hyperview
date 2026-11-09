@@ -1,0 +1,19 @@
+---
+permalink: "/navigation/sequences/close-then-push-load/home.xml"
+hv_title: "Load sequence"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block content %}
+  {{ description('This screen appears briefly while its load behavior opens the temporary “Redirecting” route.') }}
+  {{ description('“Redirecting” should never be visible. “Destination” appears next.') }}
+  <behavior
+    trigger="load"
+    action="new"
+    href="/hyperview/public/navigation/sequences/close-then-push-load/proxy.xml"
+    once="true"
+    show-during-load="loading-screen-modal"
+  />
+{% endblock %}

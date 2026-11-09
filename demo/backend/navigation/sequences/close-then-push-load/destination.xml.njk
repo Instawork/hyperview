@@ -1,0 +1,16 @@
+---
+permalink: "/navigation/sequences/close-then-push-load/destination.xml"
+hv_title: "Destination"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  {{ description('The temporary “Redirecting” route was closed before “Destination” was pushed.') }}
+  {{ description('“Back home” should return directly to “Load sequence”.') }}
+  {% call button('Back home') -%}
+    <behavior action="back" />
+  {%- endcall %}
+{% endblock %}

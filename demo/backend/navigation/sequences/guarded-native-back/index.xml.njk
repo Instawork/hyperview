@@ -1,0 +1,27 @@
+---
+permalink: "/navigation/sequences/guarded-native-back/index.xml"
+tags: "Navigation/Scenarios"
+hv_title: "Back guard"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  {{ description('Tap “Open back guard” to push “Guarded screen”.') }}
+  {{ description('The first back attempt should remove the visible guard without leaving. The second should return to “Back guard”.') }}
+  {% call button('Open back guard') -%}
+    <behavior
+      action="push"
+      href="/hyperview/public/navigation/sequences/guarded-native-back/guarded.xml"
+    />
+  {%- endcall %}
+  {{ description('Tap “Open closing guard” to present “Closing guard”. One back attempt should hide its guard and close the modal.') }}
+  {% call button('Open closing guard') -%}
+    <behavior
+      action="new"
+      href="/hyperview/public/navigation/sequences/guarded-native-back/guarded-close.xml"
+    />
+  {%- endcall %}
+{% endblock %}

@@ -1,0 +1,12 @@
+---
+permalink: "/navigation/sequences/close-then-push/form.xml"
+hv_title: "Form"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block content %}
+  {{ description('“Intro” was closed before “Form” was pushed.') }}
+  {{ description('Header back should return directly to “Tap sequence”.') }}
+{% endblock %}

@@ -1,0 +1,30 @@
+---
+permalink: "/navigation/sequences/tab-retarget/home.xml"
+hv_title: "Home tab"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+{% from '../welcome-tabs/_tab-bar.xml.njk' import home_messages_tab_bar %}
+
+{% block styles %}
+  {% include '../welcome-tabs/_styles.xml.njk' %}
+{% endblock %}
+
+{% block content %}
+  <behavior
+    action="navigate"
+    event-name="sequence-tab-retarget-background"
+    href="#sequence-tab-retarget-messages"
+    trigger="on-event"
+  />
+  {{ description('Open “Card” to compare navigation from the focused card with navigation from this background route.') }}
+  {% call button('Open card') -%}
+    <behavior
+      action="push"
+      href="/hyperview/public/navigation/sequences/tab-retarget/card.xml"
+    />
+  {%- endcall %}
+  {{ home_messages_tab_bar("sequence-tab-retarget-navigator", "sequence-tab-retarget-home", "sequence-tab-retarget-messages") }}
+{% endblock %}

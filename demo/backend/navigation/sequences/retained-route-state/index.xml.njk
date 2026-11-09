@@ -1,0 +1,37 @@
+---
+permalink: "/navigation/sequences/retained-route-state/index.xml"
+tags: "Navigation/Scenarios"
+hv_title: "Retained state"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  {{ description('Wait for “Initial state loaded once.”, then tap “Update state”.') }}
+  {{ description('Open “Details” and return. “Updated state retained.” should still be visible.') }}
+  <behavior
+    trigger="load"
+    action="replace-inner"
+    href="/hyperview/public/navigation/sequences/retained-route-state/initial.xml"
+    target="retained-route-state"
+    once="true"
+  />
+  <view id="retained-route-state" style="container-style">
+    <text style="container-label">Waiting for initial state.</text>
+  </view>
+  {% call button('Update state') -%}
+    <behavior
+      action="replace-inner"
+      href="/hyperview/public/navigation/sequences/retained-route-state/updated.xml"
+      target="retained-route-state"
+    />
+  {%- endcall %}
+  {% call button('Open details') -%}
+    <behavior
+      action="push"
+      href="/hyperview/public/navigation/sequences/retained-route-state/details.xml"
+    />
+  {%- endcall %}
+{% endblock %}
