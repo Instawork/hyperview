@@ -147,10 +147,16 @@ describe('Navigator.routeBackRequest', () => {
         {
           key: 'modal-one-key',
           name: 'modal',
+          params: {
+            isModal: true,
+          },
         },
         {
           key: 'modal-two-key',
           name: 'modal',
+          params: {
+            isModal: true,
+          },
         },
       ],
       stale: false,
@@ -171,6 +177,49 @@ describe('Navigator.routeBackRequest', () => {
 
     expect(navigation.dispatch).toHaveBeenCalledWith(StackActions.pop(2));
     expect(navigation.goBack).not.toHaveBeenCalled();
+  });
+
+  it('does not identify a modal from its route name', () => {
+    const state = {
+      index: 2,
+      key: 'stack-root',
+      routeNames: ['home', 'modal-content', 'card'],
+      routes: [
+        {
+          key: 'home-key',
+          name: 'home',
+        },
+        {
+          key: 'modal-content-key',
+          name: 'modal-content',
+        },
+        {
+          key: 'card-key',
+          name: 'card',
+        },
+      ],
+      stale: false,
+      type: 'stack',
+    } as NavigationState;
+    const navigation = createNavigation(state);
+    const navigator = new Navigator({
+      entrypointUrl: 'https://example.com/index.xml',
+      navigation,
+      route: {
+        key: 'modal-content-key',
+        name: 'modal-content',
+      } as RouteProps,
+      setElement: jest.fn(),
+    });
+
+    navigator.routeBackRequest(
+      navigation,
+      NAV_ACTIONS.CLOSE,
+      'modal-content-key',
+    );
+
+    expect(navigation.dispatch).not.toHaveBeenCalled();
+    expect(navigation.goBack).toHaveBeenCalled();
   });
 
   it('targets back requests from removed routes at their source navigator', () => {
@@ -321,6 +370,9 @@ describe('Navigator.sendRequest', () => {
         {
           key: 'nested-modal-key',
           name: 'modal',
+          params: {
+            isModal: true,
+          },
         },
       ],
       stale: false,
@@ -375,6 +427,9 @@ describe('Navigator.sendRequest', () => {
         {
           key: 'modal-screen-welcome-key',
           name: 'modal-screen-welcome',
+          params: {
+            isModal: true,
+          },
         },
       ],
       stale: false,

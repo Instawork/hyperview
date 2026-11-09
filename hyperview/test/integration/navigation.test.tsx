@@ -1,6 +1,7 @@
 import * as Events from 'hyperview/src/services/events';
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import {
+  CommonActions,
   NavigationContainer,
   createNavigationContainerRef,
 } from '@react-navigation/native';
@@ -135,6 +136,111 @@ describe('Hyperview navigation sequences', () => {
       expect(rootState.index).toBe(1);
     },
   );
+
+  test('closes a background modal opened outside HXML', async () => {
+    const navigationRef = createNavigationContainerRef();
+    const mockFetch = fetchFactory([
+      [
+        'http://myapp.com/external-modal-document',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <navigator id="root" type="stack">
+              <nav-route
+                id="home"
+                href="http://myapp.com/external-modal-home"
+              />
+            </navigator>
+          </doc>
+        `,
+      ],
+      [
+        'http://myapp.com/external-modal-home',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <screen>
+              <body>
+                <text id="home">Home</text>
+              </body>
+            </screen>
+          </doc>
+        `,
+      ],
+      [
+        'http://myapp.com/external-modal-first',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <screen>
+              <body>
+                <behavior
+                  action="close"
+                  event-name="close-first-modal"
+                  trigger="on-event"
+                />
+                <text id="first-modal">First modal</text>
+              </body>
+            </screen>
+          </doc>
+        `,
+      ],
+      [
+        'http://myapp.com/external-modal-second',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <screen>
+              <body>
+                <text id="second-modal">Second modal</text>
+              </body>
+            </screen>
+          </doc>
+        `,
+      ],
+    ]);
+
+    await render(
+      <NavigationContainer ref={navigationRef}>
+        <Hyperview
+          entrypointUrl="http://myapp.com/external-modal-document"
+          fetch={mockFetch}
+          formatDate={formatDate}
+        />
+      </NavigationContainer>,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId('home')).toBeOnTheScreen();
+    });
+    await act(() =>
+      navigationRef.dispatch(
+        CommonActions.navigate('modal', {
+          url: 'http://myapp.com/external-modal-first',
+        }),
+      ),
+    );
+    await waitFor(() => {
+      expect(screen.getByTestId('first-modal')).toBeOnTheScreen();
+    });
+    await act(() =>
+      navigationRef.dispatch(
+        CommonActions.navigate('modal', {
+          url: 'http://myapp.com/external-modal-second',
+        }),
+      ),
+    );
+    await waitFor(() => {
+      expect(screen.getByTestId('second-modal')).toBeOnTheScreen();
+    });
+
+    await act(() => Events.dispatch('close-first-modal'));
+
+    await waitFor(() => {
+      expect(screen.getByTestId('home')).toBeOnTheScreen();
+      expect(screen.queryByTestId('first-modal')).not.toBeOnTheScreen();
+      expect(screen.queryByTestId('second-modal')).not.toBeOnTheScreen();
+    });
+    const rootState = getRootNavigationState(navigationRef);
+    expect(rootState.routes.map(route => route.name)).toEqual(['home']);
+    expect(rootState.index).toBe(0);
+  });
 
   test('runs adjacent close and push press behaviors as one transition', async () => {
     const navigationRef = createNavigationContainerRef();

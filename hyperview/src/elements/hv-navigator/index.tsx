@@ -169,7 +169,9 @@ export default function HvNavigator(props: Props) {
       isModal = false,
     ): React.ReactElement => {
       const initialParams = NavigatorService.isDynamicRoute(id)
-        ? {}
+        ? {
+            ...(id === NavigatorService.ID_MODAL && { isModal: true }),
+          }
         : { id, isModal, needsSubStack, routeId, url: href };
       if (type === NAVIGATOR_TYPE.TAB) {
         return (

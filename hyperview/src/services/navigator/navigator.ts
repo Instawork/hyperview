@@ -65,8 +65,8 @@ export class Navigator implements NavigationProvider {
       action === NAV_ACTIONS.CLOSE &&
       sourceIndex > 0 &&
       sourceIndex < state.index &&
-      (Helpers.isModalRouteName(state.routes[sourceIndex].name) ||
-        (state.routes[sourceIndex].params as RouteParams | undefined)?.isModal)
+      (state.routes[sourceIndex].params as RouteParams | undefined)?.isModal ===
+        true
     ) {
       navigation.dispatch(StackActions.pop(state.index - sourceIndex + 1));
     } else if (
