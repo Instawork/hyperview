@@ -1,0 +1,8 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <navigator id="navigation-sequence-push-in-modal" type="stack">
+    <nav-route
+      id="sequence-push-in-modal-home"
+      href="/hyperview/public/navigation/sequences/push-in-modal/home.xml"
+    />
+  </navigator>
+</doc>

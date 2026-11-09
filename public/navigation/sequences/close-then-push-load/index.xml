@@ -1,0 +1,8 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <navigator id="navigation-sequence-close-then-push-load" type="stack">
+    <nav-route
+      id="sequence-close-push-load-home"
+      href="/hyperview/public/navigation/sequences/close-then-push-load/home.xml"
+    />
+  </navigator>
+</doc>
