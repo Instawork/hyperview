@@ -11,8 +11,12 @@ import type {
   NavigationProvider,
   RouteParams,
 } from 'hyperview/src/types';
-import { CommonActions, StackActions } from '@react-navigation/native';
-import { NAV_ACTIONS } from 'hyperview/src/types';
+import {
+  CommonActions,
+  StackActions,
+  TabActions,
+} from '@react-navigation/native';
+import { NAVIGATOR_TYPE, NAV_ACTIONS } from 'hyperview/src/types';
 import { uuidNumber } from 'hyperview/src/services';
 
 /**
@@ -37,13 +41,13 @@ export class Navigator implements NavigationProvider {
     routeParams?: RouteParams,
   ) {
     const state = navigation.getState();
-    const sourceIndex = state?.routes.findIndex(
+    const sourceIndex = state.routes.findIndex(
       route => route.key === sourceKey,
     );
 
     if (
       action === NAV_ACTIONS.BACK &&
-      sourceIndex &&
+      sourceIndex >= 0 &&
       sourceIndex < state.index
     ) {
       // Back request from a non-focused route
@@ -56,6 +60,24 @@ export class Navigator implements NavigationProvider {
           index: routes.length - 1,
           routes,
         }),
+      });
+    } else if (
+      action === NAV_ACTIONS.CLOSE &&
+      sourceIndex > 0 &&
+      sourceIndex < state.index &&
+      (Helpers.isModalRouteName(state.routes[sourceIndex].name) ||
+        (state.routes[sourceIndex].params as RouteParams | undefined)?.isModal)
+    ) {
+      navigation.dispatch(StackActions.pop(state.index - sourceIndex + 1));
+    } else if (
+      action === NAV_ACTIONS.BACK &&
+      state.type === NAVIGATOR_TYPE.STACK &&
+      (sourceIndex > 0 || (sourceIndex < 0 && this.props.route !== undefined))
+    ) {
+      navigation.dispatch({
+        ...CommonActions.goBack(),
+        source: sourceKey,
+        target: state.key,
       });
     } else {
       // Close request or back request from the focused route
@@ -119,6 +141,14 @@ export class Navigator implements NavigationProvider {
       return;
     }
 
+    const rootState = this.props.rootNavigation?.getRootState();
+    const sourceKey = this.props.route?.key;
+    const sourceIsBackground =
+      navAction === NAV_ACTIONS.NAVIGATE &&
+      !!sourceKey &&
+      !!Helpers.findNavigatorKeyForRoute(rootState, sourceKey) &&
+      this.props.navigation?.isFocused() === false;
+
     switch (navAction) {
       case NAV_ACTIONS.BACK:
       case NAV_ACTIONS.CLOSE:
@@ -129,7 +159,25 @@ export class Navigator implements NavigationProvider {
           routeParams,
         );
         break;
-      case NAV_ACTIONS.NAVIGATE:
+      case NAV_ACTIONS.NAVIGATE: {
+        const targetNavigator =
+          sourceIsBackground && routeId
+            ? Helpers.findNavigatorForRouteName(navigation.getState(), routeId)
+            : undefined;
+        if (targetNavigator?.type === NAVIGATOR_TYPE.TAB) {
+          navigation.dispatch({
+            ...TabActions.jumpTo(routeId, params),
+            target: targetNavigator.key,
+          });
+          break;
+        }
+        if (routeId) {
+          navigation.dispatch(
+            CommonActions.navigate(routeId, params, { pop: true }),
+          );
+        }
+        break;
+      }
       case NAV_ACTIONS.NEW:
         if (routeId) {
           navigation.dispatch(

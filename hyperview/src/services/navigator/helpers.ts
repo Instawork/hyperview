@@ -177,6 +177,32 @@ export const findNavigatorKeyForRoute = (
 };
 
 /**
+ * Find the mounted navigator that directly contains a route name.
+ */
+export const findNavigatorForRouteName = (
+  state: NavigationState | undefined,
+  routeName: string,
+): NavigationState | undefined => {
+  if (!state?.routes) {
+    return undefined;
+  }
+
+  if (state.routeNames.includes(routeName)) {
+    return state;
+  }
+
+  return state.routes.reduce<NavigationState | undefined>(
+    (navigator, route) =>
+      navigator ||
+      findNavigatorForRouteName(
+        route.state as NavigationState | undefined,
+        routeName,
+      ),
+    undefined,
+  );
+};
+
+/**
  * Convert a Hyperview-style bare nested navigate into explicit RN7 nested params
  * Uses mounted navigation state first, then an optional HXML path fallback
  */
