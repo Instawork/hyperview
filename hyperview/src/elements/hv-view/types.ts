@@ -1,5 +1,6 @@
+import type { DOMString, HvComponentOnUpdate } from 'hyperview/src/types';
 import type { StyleProp, ViewStyle } from 'react-native';
-import type { DOMString } from 'hyperview/src/types';
+import type { ReactElement } from 'react';
 
 export const ATTRIBUTES = {
   AVOID_KEYBOARD: 'avoid-keyboard',
@@ -32,6 +33,13 @@ export type CommonProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   children?: any | undefined;
   style?: StyleProp<ViewStyle> | undefined;
+};
+
+export type HeaderProps = {
+  children: ReactElement;
+  element: Element;
+  isRouteLoading?: boolean;
+  onUpdate: HvComponentOnUpdate;
 };
 
 export type ScrollViewProps = {

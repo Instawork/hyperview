@@ -408,7 +408,7 @@ export default (props: Props) => {
           <HvElement
             element={body as Element}
             onUpdate={onDocUpdate}
-            options={{ componentRegistry }}
+            options={{ componentRegistry, isRouteLoading: true }}
             stylesheets={styleSheet}
           />
         );

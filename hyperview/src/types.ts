@@ -11,6 +11,7 @@ import type {
 } from '@react-navigation/native';
 import React, { ComponentType } from 'react';
 import type { Props as LoadingProps } from 'hyperview/src/components/loading';
+import type { NativeHeaderOptions } from 'hyperview/src/elements/hv-screen';
 import type { RefreshControlProps } from 'react-native';
 import type { XResponseStaleReason } from 'hyperview/src/services/dom';
 
@@ -115,6 +116,7 @@ export type HvComponentOptions = {
   syncMethod?: DOMString | null | undefined;
   targetId?: DOMString | null | undefined;
   inlineFormattingContext?: [Node[], string[]] | null | undefined;
+  isRouteLoading?: boolean;
   verb?: DOMString | null | undefined;
   custom?: boolean;
   newElement?: Element | null | undefined;
@@ -381,9 +383,24 @@ type BottomTabBarComponent = (
   props: BottomTabBarProps,
 ) => React.JSX.Element | null;
 
+export type HeaderViewProps = {
+  children: React.ReactElement;
+  element: Element;
+  isRouteLoading?: boolean;
+  onPress: (element: Element) => void;
+};
+
+type HeaderViewComponent = ComponentType<HeaderViewProps> & {
+  getOptions?: (
+    element: Element,
+    onPress: HeaderViewProps['onPress'],
+  ) => NativeHeaderOptions | undefined;
+};
+
 export type NavigationComponents = {
   BottomTabBar?: BottomTabBarComponent;
   BottomTabView?: typeof BottomTabView;
+  HeaderView?: HeaderViewComponent;
 };
 
 /**

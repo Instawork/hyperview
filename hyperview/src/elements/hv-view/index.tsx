@@ -26,6 +26,7 @@ import {
   createStyleProp,
 } from 'hyperview/src/services';
 import { ATTRIBUTES } from './types';
+import HeaderView from './header-view';
 import type { HvComponentProps } from 'hyperview/src/types';
 import { LOCAL_NAME } from 'hyperview/src/types';
 
@@ -266,6 +267,18 @@ export default class HvView extends PureComponent<HvComponentProps> {
 
   render() {
     const { Content } = this;
-    return <Content />;
+    const content = <Content />;
+    if (this.props.element.localName !== LOCAL_NAME.HEADER) {
+      return content;
+    }
+    return (
+      <HeaderView
+        element={this.props.element}
+        isRouteLoading={this.props.options.isRouteLoading}
+        onUpdate={this.props.onUpdate}
+      >
+        {content}
+      </HeaderView>
+    );
   }
 }

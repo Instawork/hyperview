@@ -1,6 +1,7 @@
 import * as Namespaces from 'hyperview/src/services/namespaces';
 // eslint-disable-next-line instawork/import-components
 import * as Scroll from 'hyperview/src/components/scroll';
+import { NativeHeaderInitializer, useNativeHeader } from './native-header';
 import React, { useEffect } from 'react';
 import type { ElementErrorComponentProps } from 'hyperview/src/types';
 import HvElement from 'hyperview/src/components/hv-element';
@@ -36,13 +37,27 @@ const HvScreen = (props: Props) => {
     ? elementErrorComponent || LoadElementError
     : null;
 
+  const [body] = doc
+    ? Array.from(doc.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'body'))
+    : [];
+  const {
+    onInitialized,
+    options: nativeHeaderOptions,
+    shouldInitializeNativeHeader,
+  } = useNativeHeader(body, onUpdate);
+
   if (!doc) {
     throw new HvScreenRenderError('The document is not available.');
   }
 
-  const [body] = Array.from(
-    doc.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'body'),
-  );
+  if (shouldInitializeNativeHeader && nativeHeaderOptions) {
+    return (
+      <NativeHeaderInitializer
+        onInitialized={onInitialized}
+        options={nativeHeaderOptions}
+      />
+    );
+  }
 
   let screenElement: React.ReactElement | undefined;
 
@@ -89,3 +104,4 @@ const HvScreen = (props: Props) => {
 };
 
 export default HvScreen;
+export type { NativeHeaderOptions } from './types';

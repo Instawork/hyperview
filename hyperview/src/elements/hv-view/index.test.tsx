@@ -1,6 +1,9 @@
+import * as Behaviors from 'hyperview/src/services/behaviors';
 import { render, screen, waitFor } from '@testing-library/react-native';
+import type { HeaderViewProps } from 'hyperview/src/types';
 import { HyperviewMock } from 'hyperview/test/helpers';
 import React from 'react';
+import { View } from 'react-native';
 
 describe('HvView', () => {
   describe('render', () => {
@@ -16,6 +19,57 @@ describe('HvView', () => {
         expect(screen.getByTestId('content3')).toBeOnTheScreen();
         return true;
       });
+    });
+    test('renders header as a view without a host wrapper', async () => {
+      await render(
+        <HyperviewMock paths={[`${__dirname}/stories/header.xml`]} />,
+      );
+
+      await waitFor(() => {
+        expect(screen.getByTestId('header')).toBeOnTheScreen();
+        return true;
+      });
+    });
+    test('wraps only header elements with the host header view', async () => {
+      const triggerPressBehaviors = jest.spyOn(
+        Behaviors,
+        'triggerPressBehaviors',
+      );
+      const HeaderView = jest.fn(({ children }: HeaderViewProps) => (
+        <View testID="host-header">{children}</View>
+      ));
+
+      await render(
+        <HyperviewMock
+          navigationComponents={{ HeaderView }}
+          paths={[`${__dirname}/stories/header.xml`]}
+        />,
+      );
+
+      await waitFor(() => {
+        expect(screen.getByTestId('host-header')).toBeOnTheScreen();
+        expect(screen.getByTestId('header')).toBeOnTheScreen();
+        expect(screen.getByTestId('content')).toBeOnTheScreen();
+        expect(HeaderView).toHaveBeenCalled();
+        expect(
+          HeaderView.mock.calls.every(
+            ([props]) =>
+              props.element.localName === 'header' &&
+              typeof props.onPress === 'function',
+          ),
+        ).toBe(true);
+        return true;
+      });
+
+      const [headerViewProps] = HeaderView.mock.calls[
+        HeaderView.mock.calls.length - 1
+      ];
+      headerViewProps.onPress(headerViewProps.element);
+
+      expect(triggerPressBehaviors).toHaveBeenCalledWith(
+        headerViewProps.element,
+        expect.any(Function),
+      );
     });
     test('scrollview', async () => {
       await render(
