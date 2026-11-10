@@ -14,8 +14,16 @@ hv_button_behavior: "back"
     </styles>
     <body style="body">
       {% include 'templates/header.xml.njk' %}
-      <text style="label">This is screen 2.</text>
-      <text action="back" href="#" style="label label-link">Go back</text>
+      <safe-area:safe-area-view
+        xmlns:safe-area="https://hyperview.org/safe-area"
+        key="content-safe-area"
+        style="flex-1"
+        safe-area:mode="screen"
+        safe-area:insets="[&quot;top&quot;,&quot;right&quot;,&quot;bottom&quot;,&quot;left&quot;]"
+      >
+        <text style="label">This is screen 2.</text>
+        <text action="back" href="#" style="label label-link">Go back</text>
+      </safe-area:safe-area-view>
     </body>
   </screen>
 </doc>

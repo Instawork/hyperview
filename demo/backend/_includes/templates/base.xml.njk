@@ -13,7 +13,17 @@
       <body style="body" {% block body_attrs %}{% endblock %}>
         {% block body %}
           {% include 'templates/header.xml.njk' %}
-          {% block container %}{% endblock %}
+          {% block content_container %}
+            <safe-area:safe-area-view
+              xmlns:safe-area="https://hyperview.org/safe-area"
+              key="content-safe-area"
+              style="flex-1"
+              safe-area:mode="screen"
+              safe-area:insets="[&quot;top&quot;,&quot;right&quot;,&quot;bottom&quot;,&quot;left&quot;]"
+            >
+              {% block container %}{% endblock %}
+            </safe-area:safe-area-view>
+          {% endblock %}
         {% endblock %}
       </body>
     </screen>
@@ -38,10 +48,18 @@
         {% set hv_title = "" %}
         {% set hv_button_behavior = "back" %}
         {% include 'templates/header.xml.njk' %}
-        <view style="loading">
-          <text style="loading-text">Loading…</text>
-          <spinner/>
-        </view>
+        <safe-area:safe-area-view
+          xmlns:safe-area="https://hyperview.org/safe-area"
+          key="loading-content-safe-area"
+          style="flex-1"
+          safe-area:mode="screen"
+          safe-area:insets="[&quot;top&quot;,&quot;right&quot;,&quot;bottom&quot;,&quot;left&quot;]"
+        >
+          <view style="loading">
+            <text style="loading-text">Loading…</text>
+            <spinner/>
+          </view>
+        </safe-area:safe-area-view>
       </body>
     </screen>
     <screen id="loading-screen-modal">
@@ -52,10 +70,18 @@
         {% set hv_title = "" %}
         {% set hv_button_behavior = "close" %}
         {% include 'templates/header.xml.njk' %}
-        <view style="loading">
-          <text style="loading-text">Loading…</text>
-          <spinner/>
-        </view>
+        <safe-area:safe-area-view
+          xmlns:safe-area="https://hyperview.org/safe-area"
+          key="loading-content-safe-area"
+          style="flex-1"
+          safe-area:mode="screen"
+          safe-area:insets="[&quot;top&quot;,&quot;right&quot;,&quot;bottom&quot;,&quot;left&quot;]"
+        >
+          <view style="loading">
+            <text style="loading-text">Loading…</text>
+            <spinner/>
+          </view>
+        </safe-area:safe-area-view>
       </body>
     </screen>
   </doc>

@@ -1,4 +1,4 @@
-import type { HvComponentProps } from 'hyperview';
+import type { HvComponentProps, RouteParams } from 'hyperview';
 import type { JSX } from 'react';
 import { NavigationContext } from '@react-navigation/native';
 import { findElements } from '../../Helpers';
@@ -11,13 +11,15 @@ const NavBack = (props: HvComponentProps) => {
   const ctx = useContext(NavigationContext);
   const state = ctx?.getState();
   const route = state?.routes[state.index];
+  const isModalRoot =
+    state?.index === 0 && (route?.params as RouteParams | undefined)?.isModal;
 
-  // Screen is first on the stack? Don't render anything
-  if (state?.index === 0) {
+  // Screen is first on a non-modal stack? Don't render anything
+  if (state?.index === 0 && !isModalRoot) {
     return null;
   }
 
-  const role = route?.name === 'modal' ? 'close' : 'back';
+  const role = isModalRoot ? 'close' : 'back';
   const [element] = findElements(namespaceURI, props.element, ['role']).filter(
     el => {
       return el.getAttributeNS(namespaceURI, 'role') === role;
