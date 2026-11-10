@@ -7,7 +7,7 @@ hv_button_behavior: "back"
 {% from 'macros/button/index.xml.njk' import button %}
 {% extends 'templates/base.xml.njk' %}
 
-{% block body_attrs %}scroll="true"{% endblock %}
+{% block body_attrs %}content-insets="true" scroll="true"{% endblock %}
 
 {% block body %}
   <view sticky="true">

@@ -4,11 +4,11 @@ tags: "UI/UI Elements/List"
 hv_title: "Keyboard: Persist Tap"
 hv_button_behavior: "back"
 ---
-{% extends 'templates/base.xml.njk' %}
+{% extends 'templates/scroll-base.xml.njk' %}
 {% from 'macros/text-field/index.xml.njk' import text_field %}
 
 {% block container %}
-  <list keyboard-should-persist-taps="handled">
+  <list content-insets="true" keyboard-should-persist-taps="handled">
     <item key="field" style="item">
       {{ text_field("field", {"auto-focus":"true", "placeholder":"Tap!"}) }}
     </item>

@@ -4,10 +4,10 @@ tags: "UI/UI Elements/List"
 hv_title: "Sticky items"
 hv_button_behavior: "back"
 ---
-{% extends 'templates/base.xml.njk' %}
+{% extends 'templates/scroll-base.xml.njk' %}
 
 {% block container %}
-  <list>
+  <list content-insets="true">
     {% for i in range(1, 21) %}
       <item
         key="{{ i }}"
