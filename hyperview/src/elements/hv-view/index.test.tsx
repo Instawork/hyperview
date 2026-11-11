@@ -1,7 +1,12 @@
 import * as Behaviors from 'hyperview/src/services/behaviors';
+import {
+  HyperviewMock,
+  getDummyHvProps,
+  getElements,
+} from 'hyperview/test/helpers';
 import { render, screen, waitFor } from '@testing-library/react-native';
 import type { HeaderViewProps } from 'hyperview/src/types';
-import { HyperviewMock } from 'hyperview/test/helpers';
+import HvView from 'hyperview/src/elements/hv-view';
 import React from 'react';
 import { View } from 'react-native';
 
@@ -112,6 +117,52 @@ describe('HvView', () => {
         expect(
           screen.getByTestId('container-horizontal').props
             .contentInsetAdjustmentBehavior,
+        ).toBeUndefined();
+        return true;
+      });
+    });
+    test('applies explicit content insets to the body', async () => {
+      const [body] = getElements(
+        '<body xmlns="https://hyperview.org/hyperview" id="body" scroll="true" />',
+        'body',
+      );
+      const props = getDummyHvProps();
+
+      await render(
+        <HvView
+          element={body}
+          onUpdate={props.onUpdate}
+          options={{ contentInsetAdjustmentBehavior: 'automatic' }}
+          stylesheets={props.stylesheets}
+        />,
+      );
+
+      await waitFor(() => {
+        expect(
+          screen.getByTestId('body').props.contentInsetAdjustmentBehavior,
+        ).toEqual('automatic');
+        return true;
+      });
+    });
+    test('does not apply body content insets to a view', async () => {
+      const [view] = getElements(
+        '<view xmlns="https://hyperview.org/hyperview" id="view" scroll="true" />',
+        'view',
+      );
+      const props = getDummyHvProps();
+
+      await render(
+        <HvView
+          element={view}
+          onUpdate={props.onUpdate}
+          options={{ contentInsetAdjustmentBehavior: 'automatic' }}
+          stylesheets={props.stylesheets}
+        />,
+      );
+
+      await waitFor(() => {
+        expect(
+          screen.getByTestId('view').props.contentInsetAdjustmentBehavior,
         ).toBeUndefined();
         return true;
       });

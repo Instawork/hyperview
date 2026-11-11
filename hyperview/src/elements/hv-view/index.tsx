@@ -132,10 +132,15 @@ export default class HvView extends PureComponent<HvComponentProps> {
       Platform.OS === 'android'
         ? 'never'
         : undefined;
+    const contentInsetAdjustmentBehavior =
+      this.props.element.localName === LOCAL_NAME.BODY
+        ? this.props.options.contentInsetAdjustmentBehavior
+        : undefined;
 
     return {
       bounces,
       contentContainerStyle,
+      contentInsetAdjustmentBehavior,
       horizontal,
       keyboardDismissMode: Keyboard.getKeyboardDismissMode(this.props.element),
       keyboardShouldPersistTaps: Keyboard.getKeyboardShouldPersistTaps(

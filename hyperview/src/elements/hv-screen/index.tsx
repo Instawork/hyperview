@@ -69,6 +69,9 @@ const HvScreen = (props: Props) => {
         onUpdate={onUpdate}
         options={{
           componentRegistry,
+          contentInsetAdjustmentBehavior: isNativeHeaderActive
+            ? 'automatic'
+            : undefined,
           nativeHeaderActive: isNativeHeaderActive,
           onUpdateCallbacks,
           screenUrl: url || undefined,

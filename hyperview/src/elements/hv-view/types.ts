@@ -1,5 +1,9 @@
 import type { DOMString, HvComponentOnUpdate } from 'hyperview/src/types';
-import type { StyleProp, ViewStyle } from 'react-native';
+import type {
+  ScrollViewProps as RNScrollViewProps,
+  StyleProp,
+  ViewStyle,
+} from 'react-native';
 import type { ReactElement } from 'react';
 
 export const ATTRIBUTES = {
@@ -44,6 +48,7 @@ export type HeaderProps = {
 
 export type ScrollViewProps = {
   bounces?: boolean | undefined;
+  contentInsetAdjustmentBehavior?: RNScrollViewProps['contentInsetAdjustmentBehavior'];
   overScrollMode?: 'always' | 'never' | 'auto' | undefined;
   accessibilityLabel?: string | undefined;
   testID?: string | undefined;
