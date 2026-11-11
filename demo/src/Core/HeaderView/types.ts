@@ -27,6 +27,7 @@ export type HeaderMetadata = {
   left: HeaderItem[];
   right: HeaderItem[];
   title: string;
+  titleMode: 'compact' | 'large';
 };
 
 export type NativeHeaderItem = NativeStackHeaderItem;

@@ -24,6 +24,7 @@ const titleStyle = {
 const resetHeaderOptions: NativeHeaderOptions = {
   headerBackVisible: undefined,
   headerBlurEffect: undefined,
+  headerLargeTitleEnabled: undefined,
   headerLargeTitleStyle: undefined,
   headerShadowVisible: undefined,
   headerShown: false,
@@ -60,6 +61,7 @@ export const getHeaderOptions = (
   return {
     headerBackVisible: false,
     headerBlurEffect: 'none',
+    headerLargeTitleEnabled: metadata.titleMode === 'large',
     headerLargeTitleStyle: titleStyle,
     headerShadowVisible: false,
     headerShown: true,

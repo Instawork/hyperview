@@ -123,6 +123,8 @@ export const getHeaderMetadata = (
     left,
     right,
     title: element.getAttributeNS(NAVIGATION_NAMESPACE, 'title')?.trim() || '',
+    titleMode:
+      getAttribute(element, 'title-mode') === 'large' ? 'large' : 'compact',
   };
 };
 
