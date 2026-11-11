@@ -117,6 +117,7 @@ export type HvComponentOptions = {
   targetId?: DOMString | null | undefined;
   inlineFormattingContext?: [Node[], string[]] | null | undefined;
   isRouteLoading?: boolean;
+  nativeHeaderActive?: boolean;
   verb?: DOMString | null | undefined;
   custom?: boolean;
   newElement?: Element | null | undefined;

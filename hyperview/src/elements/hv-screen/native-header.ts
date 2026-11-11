@@ -33,9 +33,11 @@ export const useNativeHeader = (
       ? navigationComponents?.HeaderView?.getOptions?.(header, onPress)
       : undefined;
   }, [body, navigationComponents, onPress]);
+  const isNativeHeaderActive = Boolean(options);
   const onInitialized = useCallback(() => setIsInitialized(true), []);
 
   return {
+    isNativeHeaderActive,
     onInitialized,
     options,
     shouldInitializeNativeHeader: Boolean(options && !isInitialized),

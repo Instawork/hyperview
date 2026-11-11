@@ -41,6 +41,7 @@ const HvScreen = (props: Props) => {
     ? Array.from(doc.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'body'))
     : [];
   const {
+    isNativeHeaderActive,
     onInitialized,
     options: nativeHeaderOptions,
     shouldInitializeNativeHeader,
@@ -68,6 +69,7 @@ const HvScreen = (props: Props) => {
         onUpdate={onUpdate}
         options={{
           componentRegistry,
+          nativeHeaderActive: isNativeHeaderActive,
           onUpdateCallbacks,
           screenUrl: url || undefined,
           staleHeaderType: staleHeaderType || undefined,
