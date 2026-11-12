@@ -300,6 +300,7 @@ export default function HvNavigator(props: Props) {
     [buildDynamicScreens, buildScreen],
   );
 
+  // componentDidMount / componentWillUnmount: maintain the event subscription.
   useEffect(() => {
     Events.subscribe(onEventDispatch);
 
@@ -308,6 +309,7 @@ export default function HvNavigator(props: Props) {
     };
   }, [onEventDispatch]);
 
+  // componentDidMount / componentDidUpdate: trigger loads for each document element.
   useEffect(() => {
     if (!element || loadBehaviorElement.current === element) {
       return undefined;
