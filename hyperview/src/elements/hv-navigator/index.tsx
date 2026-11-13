@@ -29,7 +29,6 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import { getStackRouteOptions, getStackScreenOptions } from './stack-options';
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { HvDocContext } from 'hyperview/src/elements/hv-doc';
-import { NavigationContainerRefContext } from '@react-navigation/native';
 import NavigatorStack from 'hyperview/src/components/navigator-stack';
 import NavigatorTab from 'hyperview/src/components/navigator-tab';
 import { getFirstChildTag } from 'hyperview/src/services/dom/helpers';
@@ -44,7 +43,6 @@ export default function HvNavigator(props: Props) {
   const behaviorElements = useRef<Element[]>([]);
   const { navigationComponents } = useHyperview();
   const loadBehaviorElement = useRef<Element | undefined>(undefined);
-  const rootNavigation = React.useContext(NavigationContainerRefContext);
 
   const onEventDispatch = useCallback(
     (eventName: string) => {
@@ -312,25 +310,13 @@ export default function HvNavigator(props: Props) {
   // componentDidMount / componentDidUpdate: trigger loads for each document element.
   useEffect(() => {
     if (!element || loadBehaviorElement.current === element) {
-      return undefined;
+      return;
     }
 
-    const triggerWhenReady = () => {
-      if (loadBehaviorElement.current === element) {
-        return;
-      }
-      loadBehaviorElement.current = element;
-      updateBehaviorElements();
-      triggerLoadBehaviors();
-    };
-
-    if (!rootNavigation || rootNavigation.isReady()) {
-      triggerWhenReady();
-      return undefined;
-    }
-
-    return rootNavigation.addListener('ready', triggerWhenReady);
-  }, [element, rootNavigation, triggerLoadBehaviors, updateBehaviorElements]);
+    loadBehaviorElement.current = element;
+    updateBehaviorElements();
+    triggerLoadBehaviors();
+  }, [element, triggerLoadBehaviors, updateBehaviorElements]);
 
   return (
     <HvDocContext>
