@@ -17,6 +17,7 @@ export type {
   ElementErrorComponentProps,
   ErrorScreenProps,
   ExperimentalFeatures,
+  HeaderViewProps,
   HvBehavior,
   HvComponent,
   HvComponentProps,
@@ -30,6 +31,7 @@ export type {
   StyleSheet,
   StyleSheets,
 } from 'hyperview/src/types';
+export type { NativeHeaderOptions } from 'hyperview/src/elements/hv-screen';
 export { ACTIONS, LOCAL_NAME, NODE_TYPE } from 'hyperview/src/types';
 
 /**

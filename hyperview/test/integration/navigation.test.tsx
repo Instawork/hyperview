@@ -5,7 +5,11 @@ import {
   NavigationContainer,
   createNavigationContainerRef,
 } from '@react-navigation/native';
-import type { HvBehavior, RouteParams } from 'hyperview/src/types';
+import type {
+  HeaderViewProps,
+  HvBehavior,
+  RouteParams,
+} from 'hyperview/src/types';
 import {
   act,
   fireEvent,
@@ -40,6 +44,111 @@ const getRootNavigationState = (
 
 describe('Hyperview navigation sequences', () => {
   const formatDate = jest.fn();
+
+  test('marks a preloaded header as route loading', async () => {
+    const navigationRef = createNavigationContainerRef();
+    let resolveDestination: (value: string) => void = () => undefined;
+    const destination = new Promise<string>(resolve => {
+      resolveDestination = resolve;
+    });
+    const HeaderView = jest.fn(({ children }: HeaderViewProps) => children);
+    const mockFetch = jest.fn(async url => {
+      if (url.includes('loading-header-document')) {
+        return new Response(
+          `
+            <doc xmlns="https://hyperview.org/hyperview">
+              <navigator id="root" type="stack">
+                <nav-route
+                  id="home"
+                  href="http://myapp.com/loading-header-home"
+                />
+              </navigator>
+            </doc>
+          `,
+          { status: 200 },
+        );
+      }
+      if (url.includes('loading-header-home')) {
+        return new Response(
+          `
+            <doc xmlns="https://hyperview.org/hyperview">
+              <screen>
+                <body>
+                  <header id="home-header">
+                    <text>Home</text>
+                  </header>
+                  <view
+                    id="open-destination"
+                    action="push"
+                    href="http://myapp.com/loading-header-destination"
+                    show-during-load="loading-screen"
+                  >
+                    <text>Open</text>
+                  </view>
+                </body>
+              </screen>
+              <screen id="loading-screen">
+                <body>
+                  <header id="loading-header">
+                    <text>Loading</text>
+                  </header>
+                </body>
+              </screen>
+            </doc>
+          `,
+          { status: 200 },
+        );
+      }
+      if (url.includes('loading-header-destination')) {
+        return new Response(await destination, { status: 200 });
+      }
+      return new Response('Not found', { status: 404 });
+    });
+
+    await render(
+      <NavigationContainer ref={navigationRef}>
+        <Hyperview
+          entrypointUrl="http://myapp.com/loading-header-document"
+          fetch={mockFetch}
+          formatDate={formatDate}
+          navigationComponents={{ HeaderView }}
+        />
+      </NavigationContainer>,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId('open-destination')).toBeOnTheScreen();
+    });
+    await fireEvent.press(screen.getByTestId('open-destination'));
+
+    await waitFor(() => {
+      const [loadingCall] = HeaderView.mock.calls.filter(
+        ([props]) => props.element.getAttribute('id') === 'loading-header',
+      );
+      expect(loadingCall?.[0].isRouteLoading).toBe(true);
+    });
+
+    resolveDestination(`
+      <doc xmlns="https://hyperview.org/hyperview">
+        <screen>
+          <body>
+            <header id="destination-header">
+              <text>Destination</text>
+            </header>
+            <text id="destination">Destination</text>
+          </body>
+        </screen>
+      </doc>
+    `);
+
+    await waitFor(() => {
+      expect(screen.getByTestId('destination')).toBeOnTheScreen();
+      const [destinationCall] = HeaderView.mock.calls.filter(
+        ([props]) => props.element.getAttribute('id') === 'destination-header',
+      );
+      expect(destinationCall?.[0].isRouteLoading).toBeUndefined();
+    });
+  });
 
   test.each(['new', 'push'])(
     'runs adjacent close and %s load behaviors as one transition',

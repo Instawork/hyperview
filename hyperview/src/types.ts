@@ -9,9 +9,13 @@ import type {
   NavigationState,
   Route as NavigatorRoute,
 } from '@react-navigation/native';
+import type {
+  ScrollViewProps as RNScrollViewProps,
+  RefreshControlProps,
+} from 'react-native';
 import React, { ComponentType } from 'react';
 import type { Props as LoadingProps } from 'hyperview/src/components/loading';
-import type { RefreshControlProps } from 'react-native';
+import type { NativeHeaderOptions } from 'hyperview/src/elements/hv-screen';
 import type { XResponseStaleReason } from 'hyperview/src/services/dom';
 
 export type DOMString = string;
@@ -90,6 +94,7 @@ export type StyleSheets = {
 export type HvComponentOptions = {
   behaviorElement?: Element | null | undefined;
   componentRegistry?: Components.Registry;
+  contentInsetAdjustmentBehavior?: RNScrollViewProps['contentInsetAdjustmentBehavior'];
   delay?: DOMString | null | undefined;
   focused?: boolean | null | undefined;
   hideIndicatorIds?: DOMString | null | undefined;
@@ -115,6 +120,8 @@ export type HvComponentOptions = {
   syncMethod?: DOMString | null | undefined;
   targetId?: DOMString | null | undefined;
   inlineFormattingContext?: [Node[], string[]] | null | undefined;
+  isRouteLoading?: boolean;
+  nativeHeaderActive?: boolean;
   verb?: DOMString | null | undefined;
   custom?: boolean;
   newElement?: Element | null | undefined;
@@ -381,9 +388,24 @@ type BottomTabBarComponent = (
   props: BottomTabBarProps,
 ) => React.JSX.Element | null;
 
+export type HeaderViewProps = {
+  children: React.ReactElement;
+  element: Element;
+  isRouteLoading?: boolean;
+  onPress: (element: Element) => void;
+};
+
+type HeaderViewComponent = ComponentType<HeaderViewProps> & {
+  getOptions?: (
+    element: Element,
+    onPress: HeaderViewProps['onPress'],
+  ) => NativeHeaderOptions | undefined;
+};
+
 export type NavigationComponents = {
   BottomTabBar?: BottomTabBarComponent;
   BottomTabView?: typeof BottomTabView;
+  HeaderView?: HeaderViewComponent;
 };
 
 /**

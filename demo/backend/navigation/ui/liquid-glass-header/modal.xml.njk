@@ -1,0 +1,104 @@
+---
+permalink: "/navigation/ui/liquid-glass-header/modal.xml"
+hv_title: "Modal Screen 1"
+hv_button_behavior: "close"
+---
+{% extends 'templates/base.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block styles %}
+  <style id="liquid-header" marginBottom="0" />
+  <style
+    id="liquid-modal-image"
+    height="260"
+    marginBottom="16"
+    resizeMode="cover"
+    width="100%"
+  />
+  <style
+    id="liquid-modal-actions"
+    alignItems="center"
+    flexDirection="row"
+  />
+  <style id="liquid-modal-action" marginLeft="12" />
+  <style id="liquid-modal-title" flex="1" />
+  <style id="liquid-modal-content" flex="1" />
+{% endblock %}
+
+{% block body %}
+  <header
+    xmlns:navigation="https://hyperview.org/navigation"
+    key="header"
+    navigation:title="Modal Screen 1"
+  >
+    <safe-area:safe-area-view
+      xmlns:safe-area="https://hyperview.org/safe-area"
+      key="header-container"
+      style="header-background"
+      safe-area:mode="padding"
+      safe-area:insets="[&quot;right&quot;,&quot;top&quot;,&quot;left&quot;]"
+    >
+      <view style="header liquid-header">
+        <view
+          action="close"
+          href="#"
+          id="liquid-header-modal/header/close-button"
+          style="header-btn"
+          navigation:role="close"
+        >
+          {% include 'icons/close.svg' %}
+        </view>
+        <text style="header-title liquid-modal-title">Modal Screen 1</text>
+        <view style="liquid-modal-actions">
+          <view
+            id="liquid-header-modal/header/help-button"
+            style="liquid-modal-action"
+            navigation:icon="questionmark.circle"
+            navigation:role="right-item"
+          >
+            {% include 'icons/help.svg' %}
+            <behavior
+              xmlns:alert="https://hyperview.org/hyperview-alert"
+              action="alert"
+              alert:message="The modal help action was pressed."
+              alert:title="Modal Screen 1"
+            >
+              <alert:option alert:label="OK" />
+            </behavior>
+          </view>
+        </view>
+      </view>
+    </safe-area:safe-area-view>
+  </header>
+  <safe-area:safe-area-view
+    xmlns:safe-area="https://hyperview.org/safe-area"
+    key="content-safe-area"
+    style="flex-1"
+    safe-area:mode="padding"
+    safe-area:insets="[&quot;bottom&quot;]"
+  >
+    <view
+      content-insets="true"
+      scroll="true"
+      style="liquid-modal-content"
+    >
+      {{ description('This modal uses a close button instead of a back button. The same HXML close behavior powers both the native and legacy headers.') }}
+      <image
+        source="/hyperview/public/ui/ui-elements/image/image.jpg"
+        style="liquid-modal-image"
+      />
+      {{ description('The content starts below the transparent native header and scrolls underneath it.') }}
+      <image
+        source="/hyperview/public/ui/ui-elements/image/image.jpg"
+        style="liquid-modal-image"
+      />
+      <view
+        action="push"
+        href="/hyperview/public/navigation/ui/liquid-glass-header/modal-pushed.xml"
+        style="button"
+      >
+        <text style="button-label">Push on stack</text>
+      </view>
+    </view>
+  </safe-area:safe-area-view>
+{% endblock %}

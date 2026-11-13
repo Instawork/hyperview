@@ -1,0 +1,102 @@
+---
+permalink: "/navigation/ui/liquid-glass-header/second-modal.xml"
+hv_title: "Modal Screen 2"
+hv_button_behavior: "close"
+---
+{% extends 'templates/base.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block styles %}
+  <style id="liquid-header" marginBottom="0" />
+  <style
+    id="second-liquid-modal-image"
+    height="300"
+    marginBottom="16"
+    resizeMode="cover"
+    width="100%"
+  />
+  <style
+    id="second-liquid-modal-actions"
+    alignItems="center"
+    flexDirection="row"
+  />
+  <style id="second-liquid-modal-action" marginLeft="12" />
+  <style id="second-liquid-modal-title" flex="1" />
+  <style id="second-liquid-modal-content" flex="1" />
+{% endblock %}
+
+{% block body %}
+  <header
+    xmlns:navigation="https://hyperview.org/navigation"
+    key="header"
+    navigation:title="Modal Screen 2"
+  >
+    <safe-area:safe-area-view
+      xmlns:safe-area="https://hyperview.org/safe-area"
+      key="header-container"
+      style="header-background"
+      safe-area:mode="padding"
+      safe-area:insets="[&quot;right&quot;,&quot;top&quot;,&quot;left&quot;]"
+    >
+      <view style="header liquid-header">
+        <view
+          action="close"
+          href="#"
+          id="liquid-header-modal-2/header/close-button"
+          style="header-btn"
+          navigation:role="close"
+        >
+          {% include 'icons/close.svg' %}
+        </view>
+        <text style="header-title second-liquid-modal-title">
+          Modal Screen 2
+        </text>
+        <view style="second-liquid-modal-actions">
+          <view
+            id="liquid-header-modal-2/header/information-button"
+            style="second-liquid-modal-action"
+            navigation:icon="info.circle"
+            navigation:role="right-item"
+          >
+            {% include 'icons/info.svg' %}
+            <behavior
+              xmlns:alert="https://hyperview.org/hyperview-alert"
+              action="alert"
+              alert:message="The second modal information action was pressed."
+              alert:title="Modal Screen 2"
+            >
+              <alert:option alert:label="OK" />
+            </behavior>
+          </view>
+        </view>
+      </view>
+    </safe-area:safe-area-view>
+  </header>
+  <safe-area:safe-area-view
+    xmlns:safe-area="https://hyperview.org/safe-area"
+    key="content-safe-area"
+    style="flex-1"
+    safe-area:mode="padding"
+    safe-area:insets="[&quot;bottom&quot;]"
+  >
+    <view
+      content-insets="true"
+      scroll="true"
+      style="second-liquid-modal-content"
+    >
+      {{ description('This screen opens as a second modal above Push Screen 1. Its header should transition independently from both underlying headers.') }}
+      <image
+        source="/hyperview/public/ui/ui-elements/image/image.jpg"
+        style="second-liquid-modal-image"
+      />
+      {{ description('Push another screen to verify that navigation stays within this second modal container.') }}
+      <view
+        action="push"
+        href="/hyperview/public/navigation/ui/liquid-glass-header/second-modal-pushed.xml"
+        style="button"
+      >
+        <text style="button-label">Push on stack</text>
+      </view>
+    </view>
+  </safe-area:safe-area-view>
+{% endblock %}

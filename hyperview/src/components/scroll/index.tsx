@@ -16,10 +16,12 @@ export function withContext<T, P extends ScrollProps>(
   return forwardRef<T, P & Props<T>>((props: Props<T>, ref) => {
     const { updateOffset } = useContext(Context);
     const { element, onScroll, ...p } = props;
+    const componentProps = p as P;
     const contentInsetAdjustmentBehavior =
-      element.getAttribute('content-insets') === 'true'
+      componentProps.contentInsetAdjustmentBehavior ??
+      (element.getAttribute('content-insets') === 'true'
         ? 'automatic'
-        : undefined;
+        : undefined);
     const contextKey = element.getAttributeNS(
       Namespaces.HYPERVIEW_SCROLL,
       'context-key',
@@ -46,7 +48,7 @@ export function withContext<T, P extends ScrollProps>(
     return (
       <Component
         // eslint-disable-next-line react/jsx-props-no-spreading
-        {...(p as P)}
+        {...componentProps}
         ref={ref}
         contentInsetAdjustmentBehavior={contentInsetAdjustmentBehavior}
         onScroll={onScrollWrapper}

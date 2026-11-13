@@ -1,5 +1,10 @@
-import type { StyleProp, ViewStyle } from 'react-native';
-import type { DOMString } from 'hyperview/src/types';
+import type { DOMString, HvComponentOnUpdate } from 'hyperview/src/types';
+import type {
+  ScrollViewProps as RNScrollViewProps,
+  StyleProp,
+  ViewStyle,
+} from 'react-native';
+import type { ReactElement } from 'react';
 
 export const ATTRIBUTES = {
   AVOID_KEYBOARD: 'avoid-keyboard',
@@ -34,8 +39,16 @@ export type CommonProps = {
   style?: StyleProp<ViewStyle> | undefined;
 };
 
+export type HeaderProps = {
+  children: ReactElement;
+  element: Element;
+  isRouteLoading?: boolean;
+  onUpdate: HvComponentOnUpdate;
+};
+
 export type ScrollViewProps = {
   bounces?: boolean | undefined;
+  contentInsetAdjustmentBehavior?: RNScrollViewProps['contentInsetAdjustmentBehavior'];
   overScrollMode?: 'always' | 'never' | 'auto' | undefined;
   accessibilityLabel?: string | undefined;
   testID?: string | undefined;

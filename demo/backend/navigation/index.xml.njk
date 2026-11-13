@@ -12,12 +12,16 @@ hv_button_behavior: "none"
 {% block tab_route_content %}
   {{ tabbar_top([
   {id: "tab-behaviors", label: "Behaviors", selected: true},
-  {id: "tab-navigator", label: "Navigator"}
+  {id: "tab-navigator", label: "Navigator"},
+  {id: "tab-ui", label: "UI"}
   ]) }}
   {% call tabbar_top_tab("tab-behaviors", true) -%}
     {% include './behaviors/content.xml.njk' %}
   {%- endcall -%}
   {% call tabbar_top_tab("tab-navigator") -%}
     {% include './navigator/content.xml.njk' %}
+  {%- endcall -%}
+  {% call tabbar_top_tab("tab-ui") -%}
+    {% include './ui/content.xml.njk' %}
   {%- endcall -%}
 {% endblock %}

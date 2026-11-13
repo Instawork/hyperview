@@ -36,6 +36,20 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="back" />
       <xs:enumeration value="close" />
+      <xs:enumeration value="right-item" />
+      <xs:enumeration value="title" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="iconType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="sfSymbol" />
+      <xs:enumeration value="xcasset" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="titleMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="compact" />
+      <xs:enumeration value="large" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="back">
@@ -46,6 +60,11 @@
     </xs:complexType>
   </xs:element>
   <xs:attributeGroup name="navAttributes">
+    <xs:attribute name="icon" type="xs:string" />
+    <xs:attribute name="icon-type" type="nav:iconType" />
+    <xs:attribute name="label" type="xs:string" />
     <xs:attribute name="role" type="nav:role" />
+    <xs:attribute name="title" type="xs:string" />
+    <xs:attribute name="title-mode" type="nav:titleMode" />
   </xs:attributeGroup>
 </xs:schema>
