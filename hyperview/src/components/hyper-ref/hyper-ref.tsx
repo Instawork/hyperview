@@ -46,6 +46,8 @@ export default class HyperRef extends PureComponent<Props, State> {
 
   behaviorElements: Element[] = [];
 
+  cachedElement: Element | null = null;
+
   style: StyleSheet | null | undefined;
 
   constructor(props: Props) {
@@ -89,6 +91,7 @@ export default class HyperRef extends PureComponent<Props, State> {
   updateBehaviorElements = () => {
     // Retrieve and cache behavior elements when element is updated
     this.behaviorElements = Dom.getBehaviorElements(this.props.element);
+    this.cachedElement = this.props.element;
   };
 
   addBackBehaviors = () => {
@@ -99,7 +102,12 @@ export default class HyperRef extends PureComponent<Props, State> {
   };
 
   removeBackBehaviors = () => {
-    this.context?.remove(this.getBehaviorElements(TRIGGERS.BACK));
+    // Remove the committed behaviors before replacing the cache.
+    this.context?.remove(
+      this.behaviorElements.filter(
+        e => e.getAttribute(BEHAVIOR_ATTRIBUTES.TRIGGER) === TRIGGERS.BACK,
+      ),
+    );
   };
 
   updateStyle = () => {
@@ -179,15 +187,20 @@ export default class HyperRef extends PureComponent<Props, State> {
     });
   };
 
+  getCurrentBehaviorElements = (): Element[] => {
+    return this.cachedElement === this.props.element
+      ? this.behaviorElements
+      : Dom.getBehaviorElements(this.getCurrentElement());
+  };
+
   getBehaviorElements = (trigger: TriggerType): Element[] => {
-    return this.behaviorElements.filter(
+    return this.getCurrentBehaviorElements().filter(
       e => e.getAttribute(BEHAVIOR_ATTRIBUTES.TRIGGER) === trigger,
     );
   };
 
   getPressBehaviorElements = (): Element[] => {
-    // The behavior cache updates after render.
-    return Dom.getBehaviorElements(this.getCurrentElement()).filter(
+    return this.getCurrentBehaviorElements().filter(
       e =>
         PRESS_TRIGGERS.indexOf(
           (e.getAttribute(BEHAVIOR_ATTRIBUTES.TRIGGER) ||
