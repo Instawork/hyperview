@@ -147,10 +147,16 @@ describe('Navigator.routeBackRequest', () => {
         {
           key: 'modal-one-key',
           name: 'modal',
+          params: {
+            isModal: true,
+          },
         },
         {
           key: 'modal-two-key',
           name: 'modal',
+          params: {
+            isModal: true,
+          },
         },
       ],
       stale: false,
@@ -171,6 +177,49 @@ describe('Navigator.routeBackRequest', () => {
 
     expect(navigation.dispatch).toHaveBeenCalledWith(StackActions.pop(2));
     expect(navigation.goBack).not.toHaveBeenCalled();
+  });
+
+  it('does not identify a modal from its route name', () => {
+    const state = {
+      index: 2,
+      key: 'stack-root',
+      routeNames: ['home', 'modal-content', 'card'],
+      routes: [
+        {
+          key: 'home-key',
+          name: 'home',
+        },
+        {
+          key: 'modal-content-key',
+          name: 'modal-content',
+        },
+        {
+          key: 'card-key',
+          name: 'card',
+        },
+      ],
+      stale: false,
+      type: 'stack',
+    } as NavigationState;
+    const navigation = createNavigation(state);
+    const navigator = new Navigator({
+      entrypointUrl: 'https://example.com/index.xml',
+      navigation,
+      route: {
+        key: 'modal-content-key',
+        name: 'modal-content',
+      } as RouteProps,
+      setElement: jest.fn(),
+    });
+
+    navigator.routeBackRequest(
+      navigation,
+      NAV_ACTIONS.CLOSE,
+      'modal-content-key',
+    );
+
+    expect(navigation.dispatch).not.toHaveBeenCalled();
+    expect(navigation.goBack).toHaveBeenCalled();
   });
 
   it('targets back requests from removed routes at their source navigator', () => {
@@ -321,6 +370,9 @@ describe('Navigator.sendRequest', () => {
         {
           key: 'nested-modal-key',
           name: 'modal',
+          params: {
+            isModal: true,
+          },
         },
       ],
       stale: false,
@@ -375,6 +427,9 @@ describe('Navigator.sendRequest', () => {
         {
           key: 'modal-screen-welcome-key',
           name: 'modal-screen-welcome',
+          params: {
+            isModal: true,
+          },
         },
       ],
       stale: false,
@@ -732,6 +787,285 @@ describe('Navigator.sendRequest', () => {
     });
     expect(navigation.dispatch).not.toHaveBeenCalled();
     expect(rootNavigation.dispatch).not.toHaveBeenCalled();
+  });
+});
+
+describe('Navigator.sendRequest', () => {
+  it('propagates the modal host name to pushed routes', () => {
+    const navigation = createNavigation({
+      index: 0,
+      key: 'stack-root',
+      routeNames: ['home', 'card'],
+      routes: [{ key: 'home-key', name: 'home' }],
+      stale: false,
+      type: 'stack',
+    } as NavigationState);
+    const navigator = new Navigator({
+      entrypointUrl: 'https://example.com/index.xml',
+      navigation,
+      route: {
+        key: 'home-key',
+        name: 'home',
+        params: {
+          modalHostRouteName: '__modal-host-root',
+        },
+      } as RouteProps,
+      setElement: jest.fn(),
+    });
+    const routeParams = {
+      url: 'https://example.com/pushed.xml',
+    };
+
+    navigator.sendRequest(NAV_ACTIONS.PUSH, routeParams);
+
+    expect(navigation.dispatch).toHaveBeenCalledWith(
+      StackActions.push('card', {
+        ...routeParams,
+        modalHostRouteName: '__modal-host-root',
+      }),
+    );
+  });
+
+  it('opens new routes as nested modal hosts', () => {
+    const navigation = createNavigation({
+      index: 0,
+      key: 'stack-root',
+      routeNames: ['home', 'card', 'modal', '__modal-host-root'],
+      routes: [
+        {
+          key: 'home-key',
+          name: 'home',
+        },
+      ],
+      stale: false,
+      type: 'stack',
+    } as NavigationState);
+    const navigator = new Navigator({
+      entrypointUrl: 'https://example.com/index.xml',
+      navigation,
+      route: {
+        key: 'home-key',
+        name: 'home',
+        params: {
+          modalHostRouteName: '__modal-host-root',
+        },
+      } as RouteProps,
+      setElement: jest.fn(),
+    });
+    const routeParams = {
+      url: 'https://example.com/modal.xml',
+    };
+
+    navigator.sendRequest(NAV_ACTIONS.NEW, routeParams);
+
+    expect(navigation.dispatch).toHaveBeenCalledWith(
+      CommonActions.navigate(
+        '__modal-host-root',
+        {
+          ...routeParams,
+          isModal: true,
+          isModalHost: true,
+          needsSubStack: true,
+        },
+        { pop: true },
+      ),
+    );
+  });
+
+  it('opens subsequent new routes as nested modal flows', () => {
+    const navigation = createNavigation({
+      index: 0,
+      key: 'modal-flow-stack',
+      routeNames: ['modal-screen-flow', 'card', 'modal', '__modal-host-nested'],
+      routes: [
+        {
+          key: 'modal-screen-flow-key',
+          name: 'modal-screen-flow',
+        },
+      ],
+      stale: false,
+      type: 'stack',
+    } as NavigationState);
+    const navigator = new Navigator({
+      entrypointUrl: 'https://example.com/index.xml',
+      navigation,
+      route: {
+        key: 'modal-screen-flow-key',
+        name: 'modal-screen-flow',
+        params: {
+          modalHostPath: ['first-modal-host-key'],
+          modalHostRouteName: '__modal-host-nested',
+        },
+      } as RouteProps,
+      setElement: jest.fn(),
+    });
+    const routeParams = {
+      url: 'https://example.com/nested-modal.xml',
+    };
+
+    navigator.sendRequest(NAV_ACTIONS.NEW, routeParams);
+
+    expect(navigation.dispatch).toHaveBeenCalledWith(
+      CommonActions.navigate(
+        '__modal-host-nested',
+        {
+          ...routeParams,
+          isModal: true,
+          isModalHost: true,
+          modalHostPath: ['first-modal-host-key'],
+          needsSubStack: true,
+        },
+        { pop: true },
+      ),
+    );
+  });
+
+  it('opens a modal host on the ancestor stack from a tab', () => {
+    const tabNavigation = createNavigation({
+      index: 0,
+      key: 'tabs-state',
+      routeNames: ['home'],
+      routes: [{ key: 'home-key', name: 'home' }],
+      stale: false,
+      type: 'tab',
+    } as NavigationState);
+    const stackNavigation = createNavigation({
+      index: 0,
+      key: 'root-stack',
+      routeNames: ['tabs', '__modal-host-root'],
+      routes: [{ key: 'tabs-key', name: 'tabs' }],
+      stale: false,
+      type: 'stack',
+    } as NavigationState);
+    (tabNavigation.getParent as jest.Mock).mockReturnValue(stackNavigation);
+    const navigator = new Navigator({
+      entrypointUrl: 'https://example.com/index.xml',
+      navigation: tabNavigation,
+      route: {
+        key: 'home-key',
+        name: 'home',
+        params: {
+          modalHostRouteName: '__modal-host-root',
+        },
+      } as RouteProps,
+      setElement: jest.fn(),
+    });
+    const routeParams = {
+      url: 'https://example.com/modal.xml',
+    };
+
+    navigator.sendRequest(NAV_ACTIONS.NEW, routeParams);
+
+    expect(stackNavigation.dispatch).toHaveBeenCalledWith(
+      CommonActions.navigate(
+        '__modal-host-root',
+        {
+          ...routeParams,
+          isModal: true,
+          isModalHost: true,
+          needsSubStack: true,
+        },
+        { pop: true },
+      ),
+    );
+    expect(tabNavigation.dispatch).not.toHaveBeenCalled();
+  });
+
+  it('opens a modal host for an explicitly targeted nested route', () => {
+    const tabState = {
+      index: 0,
+      key: 'tabs-state',
+      routeNames: ['home'],
+      routes: [
+        {
+          key: 'home-key',
+          name: 'home',
+          params: { modalHostRouteName: '__modal-host-root' },
+        },
+      ],
+      stale: false,
+      type: 'tab',
+    } as NavigationState;
+    const tabNavigation = createNavigation(tabState);
+    const stackNavigation = createNavigation({
+      index: 0,
+      key: 'root-stack',
+      routeNames: ['tabs', '__modal-host-root'],
+      routes: [{ key: 'tabs-key', name: 'tabs', state: tabState }],
+      stale: false,
+      type: 'stack',
+    } as NavigationState);
+    (tabNavigation.getParent as jest.Mock).mockReturnValue(stackNavigation);
+    const navigator = new Navigator({
+      entrypointUrl: 'https://example.com/index.xml',
+      navigation: tabNavigation,
+      route: {
+        key: 'home-key',
+        name: 'home',
+      } as RouteProps,
+      setElement: jest.fn(),
+    });
+    const routeParams = {
+      targetId: 'home',
+      url: 'https://example.com/modal.xml',
+    };
+
+    navigator.sendRequest(NAV_ACTIONS.NEW, routeParams);
+
+    expect(stackNavigation.dispatch).toHaveBeenCalledWith(
+      CommonActions.navigate(
+        'tabs',
+        {
+          params: {
+            params: {
+              ...routeParams,
+              isModal: true,
+              isModalHost: true,
+              needsSubStack: true,
+            },
+            screen: '__modal-host-root',
+          },
+          screen: 'home',
+        },
+        { pop: true },
+      ),
+    );
+    expect(tabNavigation.dispatch).not.toHaveBeenCalled();
+  });
+
+  it('ignores a close after its complete modal host path detaches', () => {
+    const navigation = createNavigation({
+      index: 1,
+      key: 'root-stack',
+      routeNames: ['home', '__modal-host-current'],
+      routes: [
+        { key: 'home-key', name: 'home' },
+        {
+          key: 'current-modal-host-key',
+          name: '__modal-host-current',
+          params: { isModalHost: true },
+        },
+      ],
+      stale: false,
+      type: 'stack',
+    } as NavigationState);
+    const navigator = new Navigator({
+      entrypointUrl: 'https://example.com/index.xml',
+      navigation,
+      route: {
+        key: 'detached-screen-key',
+        name: 'detached-screen',
+        params: {
+          modalHostPath: ['detached-modal-host-key'],
+        },
+      } as RouteProps,
+      setElement: jest.fn(),
+    });
+
+    navigator.sendRequest(NAV_ACTIONS.CLOSE);
+
+    expect(navigation.dispatch).not.toHaveBeenCalled();
+    expect(navigation.goBack).not.toHaveBeenCalled();
   });
 });
 

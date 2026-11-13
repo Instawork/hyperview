@@ -9,14 +9,17 @@ import {
   buildRequest,
   cleanHrefFragment,
   expandNestedNavigate,
+  findModalHostRouteName,
   findNavigatorForRouteName,
   findPath,
   getChildElements,
+  getModalHostPopTarget,
   getNavAction,
   getNavigatorById,
   getRouteId,
   getSelectedNavRouteElement,
   getUrlFromHref,
+  isDynamicRoute,
   isNavigationElement,
   isUrlFragment,
   mergeDocument,
@@ -464,6 +467,185 @@ describe('findNavigatorForRouteName', () => {
       'tabs-state',
     );
     expect(findNavigatorForRouteName(state, 'missing')).toBeUndefined();
+  });
+});
+
+describe('findModalHostRouteName', () => {
+  it('reads the exact host route name assigned to a target route', () => {
+    const state = {
+      index: 0,
+      key: 'root-stack',
+      routeNames: ['tabs'],
+      routes: [
+        {
+          key: 'tabs-key',
+          name: 'tabs',
+          state: {
+            index: 0,
+            key: 'tabs-state',
+            routeNames: ['home'],
+            routes: [
+              {
+                key: 'home-key',
+                name: 'home',
+                params: {
+                  modalHostRouteName: '__modal-host-root',
+                },
+              },
+            ],
+            stale: false,
+            type: 'tab',
+          },
+        },
+      ],
+      stale: false,
+      type: 'stack',
+    } as NavigationState;
+
+    expect(findModalHostRouteName(state, 'home')).toBe('__modal-host-root');
+  });
+});
+
+describe('isDynamicRoute', () => {
+  it('does not reserve modal host-like HXML route IDs', () => {
+    expect(isDynamicRoute('modal-flow')).toBe(false);
+    expect(isDynamicRoute('modal-flow-settings')).toBe(false);
+  });
+
+  it('identifies an internal modal host through route metadata', () => {
+    expect(isDynamicRoute('generated-route-name', { isModalHost: true })).toBe(
+      true,
+    );
+  });
+});
+
+describe('getModalHostPopTarget', () => {
+  const createStackState = (
+    key: string,
+    routes: NavigationState['routes'],
+  ): NavigationState => ({
+    index: routes.length - 1,
+    key,
+    routeNames: routes.map(route => route.name),
+    routes,
+    stale: false,
+    type: 'stack',
+  });
+  const thirdModalState = createStackState('third-modal-stack', [
+    {
+      key: 'third-modal-screen-key',
+      name: 'modal-screen-third',
+    },
+  ]);
+  const secondModalState = createStackState('second-modal-stack', [
+    {
+      key: 'second-modal-screen-key',
+      name: 'modal-screen-second',
+    },
+    {
+      key: 'third-modal-host-key',
+      name: 'modal-flow-second-modal-stack',
+      params: { isModalHost: true },
+      state: thirdModalState,
+    },
+  ]);
+  const firstModalState = createStackState('first-modal-stack', [
+    {
+      key: 'first-modal-screen-key',
+      name: 'modal-screen-first',
+    },
+    {
+      key: 'second-modal-host-key',
+      name: 'modal-flow-first-modal-stack',
+      params: { isModalHost: true },
+      state: secondModalState,
+    },
+  ]);
+  const state = createStackState('root-stack', [
+    {
+      key: 'home-key',
+      name: 'home',
+    },
+    {
+      key: 'first-modal-host-key',
+      name: 'modal-flow-root-stack',
+      params: { isModalHost: true },
+      state: firstModalState,
+    },
+  ]);
+
+  it('targets the navigator that owns the source modal host', () => {
+    expect(getModalHostPopTarget(state, 'third-modal-screen-key')).toEqual({
+      count: 1,
+      target: 'second-modal-stack',
+    });
+  });
+
+  it('targets the nearest remaining host from the source path', () => {
+    const stateWithoutThirdModal = {
+      ...state,
+      routes: [
+        state.routes[0],
+        {
+          ...state.routes[1],
+          state: {
+            ...firstModalState,
+            routes: [
+              firstModalState.routes[0],
+              {
+                ...firstModalState.routes[1],
+                state: {
+                  ...secondModalState,
+                  index: 0,
+                  routes: [secondModalState.routes[0]],
+                },
+              },
+            ],
+          },
+        },
+      ],
+    } as NavigationState;
+
+    expect(
+      getModalHostPopTarget(stateWithoutThirdModal, 'third-modal-screen-key', [
+        'first-modal-host-key',
+        'second-modal-host-key',
+        'third-modal-host-key',
+      ]),
+    ).toEqual({
+      count: 1,
+      target: 'first-modal-stack',
+    });
+  });
+
+  it('does not target an unrelated host after the source path detaches', () => {
+    expect(
+      getModalHostPopTarget(state, 'detached-source-key', [
+        'detached-modal-host-key',
+      ]),
+    ).toBeUndefined();
+  });
+
+  it('pops routes above a mounted background modal host', () => {
+    const stateWithBackgroundHost = {
+      ...state,
+      index: 2,
+      routes: [
+        state.routes[0],
+        state.routes[1],
+        {
+          key: 'newer-card-key',
+          name: 'card',
+        },
+      ],
+    } as NavigationState;
+
+    expect(
+      getModalHostPopTarget(stateWithBackgroundHost, 'first-modal-screen-key'),
+    ).toEqual({
+      count: 2,
+      target: 'root-stack',
+    });
   });
 });
 

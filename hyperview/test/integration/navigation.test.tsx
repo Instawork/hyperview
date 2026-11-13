@@ -1,9 +1,11 @@
 import * as Events from 'hyperview/src/services/events';
 import * as NavigatorService from 'hyperview/src/services/navigator';
 import {
+  CommonActions,
   NavigationContainer,
   createNavigationContainerRef,
 } from '@react-navigation/native';
+import type { HvBehavior, RouteParams } from 'hyperview/src/types';
 import {
   act,
   fireEvent,
@@ -11,7 +13,6 @@ import {
   screen,
   waitFor,
 } from '@testing-library/react-native';
-import type { HvBehavior } from 'hyperview/src/types';
 import Hyperview from 'hyperview/src/hyperview';
 import { Pressable } from 'react-native';
 import React from 'react';
@@ -131,10 +132,120 @@ describe('Hyperview navigation sequences', () => {
         'home',
         action === 'new' ? 'modal' : 'card',
       ]);
-      expect(rootState.routeNames).toEqual(['home', 'card', 'modal']);
+      expect(rootState.routeNames.slice(0, 3)).toEqual([
+        'home',
+        'card',
+        'modal',
+      ]);
+      expect(rootState.routeNames[3]).toMatch(/^modal-host-/);
       expect(rootState.index).toBe(1);
     },
   );
+
+  test('closes a background modal opened outside HXML', async () => {
+    const navigationRef = createNavigationContainerRef();
+    const mockFetch = fetchFactory([
+      [
+        'http://myapp.com/external-modal-document',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <navigator id="root" type="stack">
+              <nav-route
+                id="home"
+                href="http://myapp.com/external-modal-home"
+              />
+            </navigator>
+          </doc>
+        `,
+      ],
+      [
+        'http://myapp.com/external-modal-home',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <screen>
+              <body>
+                <text id="home">Home</text>
+              </body>
+            </screen>
+          </doc>
+        `,
+      ],
+      [
+        'http://myapp.com/external-modal-first',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <screen>
+              <body>
+                <behavior
+                  action="close"
+                  event-name="close-first-modal"
+                  trigger="on-event"
+                />
+                <text id="first-modal">First modal</text>
+              </body>
+            </screen>
+          </doc>
+        `,
+      ],
+      [
+        'http://myapp.com/external-modal-second',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <screen>
+              <body>
+                <text id="second-modal">Second modal</text>
+              </body>
+            </screen>
+          </doc>
+        `,
+      ],
+    ]);
+
+    await render(
+      <NavigationContainer ref={navigationRef}>
+        <Hyperview
+          entrypointUrl="http://myapp.com/external-modal-document"
+          fetch={mockFetch}
+          formatDate={formatDate}
+        />
+      </NavigationContainer>,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId('home')).toBeOnTheScreen();
+    });
+    await act(() =>
+      navigationRef.dispatch(
+        CommonActions.navigate('modal', {
+          url: 'http://myapp.com/external-modal-first',
+        }),
+      ),
+    );
+    await waitFor(() => {
+      expect(screen.getByTestId('first-modal')).toBeOnTheScreen();
+    });
+    await act(() =>
+      navigationRef.dispatch(
+        CommonActions.navigate('modal', {
+          url: 'http://myapp.com/external-modal-second',
+        }),
+      ),
+    );
+    await waitFor(() => {
+      expect(screen.getByTestId('second-modal')).toBeOnTheScreen();
+    });
+
+    await act(() => Events.dispatch('close-first-modal'));
+
+    await waitFor(() => {
+      expect(screen.getByTestId('home')).toBeOnTheScreen();
+      expect(screen.queryByTestId('first-modal')).not.toBeOnTheScreen();
+      expect(screen.queryByTestId('second-modal')).not.toBeOnTheScreen();
+    });
+    const rootState = getRootNavigationState(navigationRef);
+    expect(rootState.routes.map(route => route.name)).toEqual(['home']);
+    expect(rootState.index).toBe(0);
+  });
 
   test('runs adjacent close and push press behaviors as one transition', async () => {
     const navigationRef = createNavigationContainerRef();
@@ -223,6 +334,8 @@ describe('Hyperview navigation sequences', () => {
   });
 
   test('closes a named route marked as a modal', async () => {
+    const modalUrl = 'http://myapp.com/named-modal-welcome';
+    mockRemoveStackRoute.mockClear();
     const navigationRef = createNavigationContainerRef();
     const mockFetch = fetchFactory([
       [
@@ -290,7 +403,63 @@ describe('Hyperview navigation sequences', () => {
     const rootState = getRootNavigationState(navigationRef);
     expect(rootState.routes.map(route => route.name)).toEqual(['home']);
     expect(rootState.index).toBe(0);
+    const modalRemovals = mockRemoveStackRoute.mock.calls.filter(
+      ([, routeUrl]) => routeUrl === modalUrl,
+    ).length;
+    expect(modalRemovals).toBe(1);
   });
+
+  test.each(['modal-flow', 'modal-flow-settings'])(
+    'preserves the static HXML route ID %s',
+    async routeId => {
+      const navigationRef = createNavigationContainerRef();
+      const documentUrl = `http://myapp.com/${routeId}-document`;
+      const screenUrl = `http://myapp.com/${routeId}-screen`;
+      const mockFetch = fetchFactory([
+        [
+          documentUrl,
+          `
+            <doc xmlns="https://hyperview.org/hyperview">
+              <navigator id="root" type="stack">
+                <nav-route id="${routeId}" href="${screenUrl}" />
+              </navigator>
+            </doc>
+          `,
+        ],
+        [
+          screenUrl,
+          `
+            <doc xmlns="https://hyperview.org/hyperview">
+              <screen>
+                <body>
+                  <text id="static-route">Static route</text>
+                </body>
+              </screen>
+            </doc>
+          `,
+        ],
+      ]);
+
+      await render(
+        <NavigationContainer ref={navigationRef}>
+          <Hyperview
+            entrypointUrl={documentUrl}
+            fetch={mockFetch}
+            formatDate={formatDate}
+          />
+        </NavigationContainer>,
+      );
+
+      await waitFor(() => {
+        expect(screen.getByTestId('static-route')).toBeOnTheScreen();
+      });
+      const rootState = getRootNavigationState(navigationRef);
+      expect(rootState.routes[0].name).toBe(routeId);
+      expect((rootState.routes[0].params as RouteParams | undefined)?.url).toBe(
+        screenUrl,
+      );
+    },
+  );
 
   test('closes an entire flow containing nested modals through back behaviors', async () => {
     const navigationRef = createNavigationContainerRef();
@@ -956,19 +1125,27 @@ describe('Hyperview navigation sequences', () => {
       () => {
         expect(screen.getByTestId('webview')).toBeOnTheScreen();
         expect(screen.queryByTestId('recommendations')).not.toBeOnTheScreen();
+        const rootState = getRootNavigationState(navigationRef);
         expect(
-          getRootNavigationState(navigationRef).routes.map(
+          rootState.routes.map(
             route => (route.params as { url?: string } | undefined)?.url,
           ),
         ).toEqual([
           'http://myapp.com/background-modal-home',
+          'http://myapp.com/background-modal-redirect',
+        ]);
+        expect(
+          rootState.routes[1].state?.routes.map(
+            route => (route.params as { url?: string } | undefined)?.url,
+          ),
+        ).toEqual([
           'http://myapp.com/background-modal-recommendations',
           'http://myapp.com/background-modal-webview',
         ]);
       },
       { timeout: 2000 },
     );
-    expect(getRootNavigationState(navigationRef).index).toBe(2);
+    expect(getRootNavigationState(navigationRef).index).toBe(1);
   });
 
   test('completes delayed work before closing its route', async () => {
@@ -1539,10 +1716,10 @@ describe('Hyperview navigation sequences', () => {
       expect(screen.queryByTestId('form')).not.toBeOnTheScreen();
     });
     const rootState = getRootNavigationState(navigationRef);
-    expect(rootState.routes.map(route => route.name)).toEqual([
-      'home',
-      'modal',
-    ]);
+    expect(rootState.routes[0].name).toBe('home');
+    expect(
+      (rootState.routes[1].params as RouteParams | undefined)?.isModalHost,
+    ).toBe(true);
     expect(rootState.index).toBe(1);
   });
 

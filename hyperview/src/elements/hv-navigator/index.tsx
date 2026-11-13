@@ -17,6 +17,7 @@ import {
   EventTriggerError,
 } from 'hyperview/src/errors';
 import {
+  BuildScreenOptions,
   Props,
   SHOW_DEFAULT_FOOTER_UI,
   SHOW_DEFAULT_HEADER_UI,
@@ -33,6 +34,7 @@ import NavigatorStack from 'hyperview/src/components/navigator-stack';
 import NavigatorTab from 'hyperview/src/components/navigator-tab';
 import { getFirstChildTag } from 'hyperview/src/services/dom/helpers';
 import { useHyperview } from 'hyperview/src/contexts/hyperview';
+import { uuidNumber } from 'hyperview/src/services';
 
 export const Stack = NavigatorStack();
 export const BottomTab = NavigatorTab();
@@ -43,6 +45,9 @@ export default function HvNavigator(props: Props) {
   const behaviorElements = useRef<Element[]>([]);
   const { navigationComponents } = useHyperview();
   const loadBehaviorElement = useRef<Element | undefined>(undefined);
+  const modalHostRouteName = useRef(
+    `${NavigatorService.MODAL_HOST_ROUTE_PREFIX}-${uuidNumber()}`,
+  ).current;
 
   const onEventDispatch = useCallback(
     (eventName: string) => {
@@ -123,7 +128,7 @@ export default function HvNavigator(props: Props) {
       throw new NavigatorService.HvNavigatorError('No params found for route');
     }
     if (p.id) {
-      if (NavigatorService.isDynamicRoute(p.id)) {
+      if (NavigatorService.isDynamicRoute(p.id, p)) {
         // Dynamic routes use their url as id
         return p.url || p.id;
       }
@@ -159,18 +164,27 @@ export default function HvNavigator(props: Props) {
    * Build an individual screen
    */
   const buildScreen = useCallback(
-    (
-      id: string,
-      type: string,
-      href: string | undefined,
-      needsSubStack: boolean,
+    ({
+      href,
+      id,
+      initialRouteParams,
+      isDynamic = false,
       isFirstScreen = false,
-      routeId?: string | undefined,
       isModal = false,
-    ): React.ReactElement => {
-      const initialParams = NavigatorService.isDynamicRoute(id)
-        ? {}
-        : { id, isModal, needsSubStack, routeId, url: href };
+      needsSubStack,
+      routeId,
+      type,
+    }: BuildScreenOptions): React.ReactElement => {
+      const initialParams = isDynamic
+        ? initialRouteParams ?? {}
+        : {
+            id,
+            isModal,
+            needsSubStack,
+            routeId,
+            url: href,
+            ...initialRouteParams,
+          };
       if (type === NAVIGATOR_TYPE.TAB) {
         return (
           <BottomTab.Screen
@@ -210,24 +224,33 @@ export default function HvNavigator(props: Props) {
     const screens: React.ReactElement[] = [];
 
     screens.push(
-      buildScreen(
-        NavigatorService.ID_CARD,
-        NAVIGATOR_TYPE.STACK,
-        undefined,
-        false,
-      ),
+      buildScreen({
+        id: NavigatorService.ID_CARD,
+        isDynamic: true,
+        needsSubStack: false,
+        type: NAVIGATOR_TYPE.STACK,
+      }),
     );
 
     screens.push(
-      buildScreen(
-        NavigatorService.ID_MODAL,
-        NAVIGATOR_TYPE.STACK,
-        undefined,
-        true,
-      ),
+      buildScreen({
+        id: NavigatorService.ID_MODAL,
+        initialRouteParams: { isModal: true },
+        isDynamic: true,
+        needsSubStack: true,
+        type: NAVIGATOR_TYPE.STACK,
+      }),
+    );
+    screens.push(
+      buildScreen({
+        id: modalHostRouteName,
+        isDynamic: true,
+        needsSubStack: true,
+        type: NAVIGATOR_TYPE.STACK,
+      }),
     );
     return screens;
-  }, [buildScreen]);
+  }, [buildScreen, modalHostRouteName]);
 
   /**
    * Build all screens from received routes
@@ -276,15 +299,21 @@ export default function HvNavigator(props: Props) {
           // This relies on the schema requirement that each <navigator>
           // has at least one <nav-route>
           screens.push(
-            buildScreen(
+            buildScreen({
+              href: href || undefined,
               id,
+              initialRouteParams: {
+                modalHostRouteName:
+                  type === NAVIGATOR_TYPE.STACK
+                    ? modalHostRouteName
+                    : params?.modalHostRouteName,
+              },
+              isFirstScreen: index === 0,
+              isModal,
+              needsSubStack: isModal,
+              routeId: id,
               type,
-              href || undefined,
-              isModal,
-              index === 0,
-              id,
-              isModal,
-            ),
+            }),
           );
         }
       });
@@ -295,7 +324,12 @@ export default function HvNavigator(props: Props) {
       }
       return screens;
     },
-    [buildDynamicScreens, buildScreen],
+    [
+      buildDynamicScreens,
+      buildScreen,
+      modalHostRouteName,
+      params?.modalHostRouteName,
+    ],
   );
 
   // componentDidMount / componentWillUnmount: maintain the event subscription.
@@ -337,20 +371,27 @@ export default function HvNavigator(props: Props) {
           }
 
           const navigatorId = `stack-${params?.id}`;
-          const screenId = `modal-screen-${params?.id}`;
+          const screenId = `modal-screen-${params.id}`;
 
           // Generate a simple structure for the modal
           const screens: React.ReactElement[] = [];
+          const modalHostPath = params.isModalHost
+            ? [...(params.modalHostPath || []), params.id]
+            : params.modalHostPath;
           screens.push(
-            buildScreen(
-              screenId,
-              NAVIGATOR_TYPE.STACK,
-              params?.url || undefined,
-              false,
-              true,
-              params?.id,
-              true,
-            ),
+            buildScreen({
+              href: params.url || undefined,
+              id: screenId,
+              initialRouteParams: {
+                ...(modalHostPath && { modalHostPath }),
+                modalHostRouteName,
+              },
+              isFirstScreen: true,
+              isModal: true,
+              needsSubStack: false,
+              routeId: params.id,
+              type: NAVIGATOR_TYPE.STACK,
+            }),
           );
           screens.push(...buildDynamicScreens());
 
