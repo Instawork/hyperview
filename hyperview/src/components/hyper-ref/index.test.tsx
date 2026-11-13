@@ -256,7 +256,7 @@ describe('HyperRef', () => {
           element => element.type === 'RCTRefreshControl',
         ),
       ).toHaveLength(0);
-      expect(view.root?.type).toBe('View');
+      expect(view.root?.props.collapsable).toBe(false);
     });
   });
 });

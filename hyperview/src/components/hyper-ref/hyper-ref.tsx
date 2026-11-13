@@ -190,7 +190,7 @@ export default class HyperRef extends PureComponent<Props, State> {
   getCurrentBehaviorElements = (): Element[] => {
     return this.cachedElement === this.props.element
       ? this.behaviorElements
-      : Dom.getBehaviorElements(this.getCurrentElement());
+      : Dom.getBehaviorElements(this.props.element);
   };
 
   getBehaviorElements = (trigger: TriggerType): Element[] => {
