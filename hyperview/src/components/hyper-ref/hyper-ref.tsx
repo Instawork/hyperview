@@ -186,8 +186,7 @@ export default class HyperRef extends PureComponent<Props, State> {
   };
 
   getPressBehaviorElements = (): Element[] => {
-    // Press handlers are created during render, before componentDidUpdate
-    // refreshes the behavior cache for a new element.
+    // The behavior cache updates after render.
     return Dom.getBehaviorElements(this.getCurrentElement()).filter(
       e =>
         PRESS_TRIGGERS.indexOf(
