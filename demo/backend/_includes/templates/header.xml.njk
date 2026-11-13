@@ -1,20 +1,38 @@
-<safe-area:safe-area-view
-  xmlns:safe-area="https://hyperview.org/safe-area"
-  key="header-container"
-  style="header-background"
-  safe-area:mode="padding"
-  safe-area:insets="[&quot;right&quot;,&quot;top&quot;,&quot;left&quot;]"
+<header
+  xmlns:navigation="https://hyperview.org/navigation"
+  key="header"
+  navigation:title="{{ hv_title }}"
 >
-  <header style="header" key="header">
-    {% if hv_button_behavior == 'close' %}
-      <view action="close" href="#" style="header-btn">
-        {% include 'icons/close.svg' %}
-      </view>
-    {% elif hv_button_behavior == 'back' %}
-      <view action="back" href="#" style="header-btn">
-        {% include 'icons/back.svg' %}
-      </view>
-    {% endif %}
-    <text style="header-title">{{ hv_title }}</text>
-  </header>
-</safe-area:safe-area-view>
+  <safe-area:safe-area-view
+    xmlns:safe-area="https://hyperview.org/safe-area"
+    key="header-container"
+    style="header-background"
+    safe-area:mode="padding"
+    safe-area:insets="[&quot;right&quot;,&quot;top&quot;,&quot;left&quot;]"
+  >
+    <view style="header standard-header">
+      {% if hv_button_behavior == 'close' %}
+        <view
+          action="close"
+          href="#"
+          id="header/close-button"
+          style="header-btn"
+          navigation:role="close"
+        >
+          {% include 'icons/close.svg' %}
+        </view>
+      {% elif hv_button_behavior == 'back' %}
+        <view
+          action="back"
+          href="#"
+          id="header/back-button"
+          style="header-btn"
+          navigation:role="back"
+        >
+          {% include 'icons/back.svg' %}
+        </view>
+      {% endif %}
+      <text style="header-title">{{ hv_title }}</text>
+    </view>
+  </safe-area:safe-area-view>
+</header>

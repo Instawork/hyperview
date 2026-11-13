@@ -4,11 +4,12 @@ tags: "UI/UI Elements/List"
 hv_title: "Refresh and Infinite Scroll"
 hv_button_behavior: "back"
 ---
-{% extends 'templates/base.xml.njk' %}
+{% extends 'templates/scroll-base.xml.njk' %}
 {% from 'macros/description/index.xml.njk' import description %}
 
 {% block container %}
   <list
+    content-insets="true"
     id="list"
     action="replace"
     href="/hyperview/public/ui/ui-elements/list/refresh-infinite/refresh_infinite_scroll_fragment.xml"

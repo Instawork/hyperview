@@ -4,10 +4,11 @@ tags: "Advanced/Case Studies"
 hv_title: "Pull To Refresh"
 hv_button_behavior: "back"
 ---
-{% extends 'templates/base.xml.njk' %}
+{% extends 'templates/scroll-base.xml.njk' %}
 
 {% block container %}
   <list
+    content-insets="true"
     id="list"
     action="replace"
     delay="800"

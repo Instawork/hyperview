@@ -2,19 +2,46 @@ import React, { useMemo } from 'react';
 import { createStyleProp, renderChildren } from 'hyperview';
 import type { HvComponentProps } from 'hyperview';
 import type { InsetsStyle } from './types';
+import { SafeAreaView as NativeSafeAreaView } from 'react-native-screens/experimental';
 import { View } from 'react-native';
+import { isLiquidGlassSupported } from '../../Core/BottomTabView/helpers';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const namespaceURI = 'https://hyperview.org/safe-area';
 
 const defaultMode = 'padding';
 const defaultInsets = JSON.stringify(['top', 'bottom', 'left', 'right']);
+const noEdges = {
+  bottom: false,
+  left: false,
+  right: false,
+  top: false,
+};
+
+const parseEdges = (value: string) => {
+  try {
+    const parsed: unknown = JSON.parse(value);
+    if (!Array.isArray(parsed)) {
+      return noEdges;
+    }
+    const edges = new Set<unknown>(parsed);
+    return {
+      bottom: edges.has('bottom'),
+      left: edges.has('left'),
+      right: edges.has('right'),
+      top: edges.has('top'),
+    };
+  } catch {
+    return noEdges;
+  }
+};
 
 /**
  * A component that applies safe area insets to its children.
  * Supported attributes:
- * - mode: 'margin' | 'padding' (default: 'padding')
- * - insets: list'top' | 'bottom' | 'left' | 'right' (default: 'top' | 'bottom' | 'left' | 'right')
+ * - mode: 'margin' | 'padding' | 'screen' (default: 'padding')
+ * - insets: list of 'top' | 'bottom' | 'left' | 'right'
+ *   (default: ['top', 'bottom', 'left', 'right'])
  *
  * Usage:
  * ```xml
@@ -34,6 +61,7 @@ const SafeAreaView = (props: HvComponentProps) => {
     props.element.getAttributeNS(namespaceURI, 'mode') || defaultMode;
   const insets =
     props.element.getAttributeNS(namespaceURI, 'insets') || defaultInsets;
+  const edges = useMemo(() => parseEdges(insets), [insets]);
   const children = renderChildren(
     props.element,
     props.stylesheets,
@@ -48,48 +76,52 @@ const SafeAreaView = (props: HvComponentProps) => {
   const safeAreaInsets = useSafeAreaInsets();
   const style = useMemo(() => {
     const styles: InsetsStyle = {};
-    try {
-      const styleProps = JSON.parse(insets);
-      switch (mode) {
-        case 'margin':
-          if (styleProps.includes('bottom')) {
-            styles.marginBottom = safeAreaInsets.bottom;
-          }
-          if (styleProps.includes('left')) {
-            styles.marginLeft = safeAreaInsets.left;
-          }
-          if (styleProps.includes('right')) {
-            styles.marginRight = safeAreaInsets.right;
-          }
-          if (styleProps.includes('top')) {
-            styles.marginTop = safeAreaInsets.top;
-          }
-          break;
-        case 'padding':
-          if (styleProps.includes('bottom')) {
-            styles.paddingBottom = safeAreaInsets.bottom;
-          }
-          if (styleProps.includes('left')) {
-            styles.paddingLeft = safeAreaInsets.left;
-          }
-          if (styleProps.includes('right')) {
-            styles.paddingRight = safeAreaInsets.right;
-          }
-          if (styleProps.includes('top')) {
-            styles.paddingTop = safeAreaInsets.top;
-          }
-          break;
-        default:
-          break;
+    if (mode === 'margin') {
+      if (edges.bottom) {
+        styles.marginBottom = safeAreaInsets.bottom;
       }
-    } catch (e) {
-      // Swallow errors
+      if (edges.left) {
+        styles.marginLeft = safeAreaInsets.left;
+      }
+      if (edges.right) {
+        styles.marginRight = safeAreaInsets.right;
+      }
+      if (edges.top) {
+        styles.marginTop = safeAreaInsets.top;
+      }
+    } else if (mode === 'padding' || mode === 'screen') {
+      if (edges.bottom) {
+        styles.paddingBottom = safeAreaInsets.bottom;
+      }
+      if (edges.left) {
+        styles.paddingLeft = safeAreaInsets.left;
+      }
+      if (edges.right) {
+        styles.paddingRight = safeAreaInsets.right;
+      }
+      if (mode === 'padding' && edges.top) {
+        styles.paddingTop = safeAreaInsets.top;
+      }
     }
     return [styles, extraStyle];
-  }, [insets, mode, safeAreaInsets, extraStyle]);
+  }, [edges, mode, safeAreaInsets, extraStyle]);
+
+  if (mode === 'screen') {
+    if (isLiquidGlassSupported()) {
+      return (
+        <NativeSafeAreaView key={key} edges={edges} style={extraStyle}>
+          {children}
+        </NativeSafeAreaView>
+      );
+    }
+    return (
+      <View key={key} style={style}>
+        {children}
+      </View>
+    );
+  }
 
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
     <View key={key} style={style}>
       {children}
     </View>

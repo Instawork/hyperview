@@ -4,14 +4,14 @@ tags: "UI/UI Elements/Section List"
 hv_title: "Refresh"
 hv_button_behavior: "back"
 ---
-{% extends 'templates/base.xml.njk' %}
+{% extends 'templates/scroll-base.xml.njk' %}
 
 {% block styles %}
   <style id="item-label-special" color="red"/>
 {% endblock %}
 
 {% block container %}
-  <section-list action="replace" delay="700" href="/hyperview/public/ui/ui-elements/section-list/refresh/refresh_load.xml" trigger="refresh">
+  <section-list action="replace" content-insets="true" delay="700" href="/hyperview/public/ui/ui-elements/section-list/refresh/refresh_load.xml" trigger="refresh">
     <section-title style="list-header">
       <text style="list-header-text">Section 1</text>
     </section-title>

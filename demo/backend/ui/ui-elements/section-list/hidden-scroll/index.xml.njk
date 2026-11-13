@@ -4,10 +4,10 @@ tags: "UI/UI Elements/Section List"
 hv_title: "Hidden Scrollbar"
 hv_button_behavior: "back"
 ---
-{% extends 'templates/base.xml.njk' %}
+{% extends 'templates/scroll-base.xml.njk' %}
 
 {% block container %}
-  <section-list shows-scroll-indicator="false">
+  <section-list content-insets="true" shows-scroll-indicator="false">
     <section-title style="list-header">
       <text style="list-header-text">Section 1</text>
     </section-title>

@@ -4,11 +4,11 @@ tags: "UI/UI Elements/View"
 hv_title: "Keyboard: Dismiss on Drag"
 hv_button_behavior: "back"
 ---
-{% extends 'templates/base.xml.njk' %}
+{% extends 'templates/scroll-base.xml.njk' %}
 {% from 'macros/text-field/index.xml.njk' import text_field %}
 
 {% block container %}
-  <view scroll="true" keyboard-dismiss-mode="on-drag">
+  <view content-insets="true" scroll="true" keyboard-dismiss-mode="on-drag">
     <view key="field" style="item">
       {{ text_field("field", {"auto-focus":"true", "placeholder":"Scroll!"}) }}
     </view>

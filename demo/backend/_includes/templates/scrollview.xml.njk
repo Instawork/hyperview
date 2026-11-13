@@ -1,7 +1,7 @@
-{% extends 'templates/base.xml.njk' %}
+{% extends 'templates/scroll-base.xml.njk' %}
 
 {% block container %}
-  <view scroll="true" style="main">
+  <view content-insets="true" scroll="true" style="main">
     {% block content %}{% endblock %}
   </view>
 {% endblock %}

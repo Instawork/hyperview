@@ -4,11 +4,11 @@ tags: "UI/UI Elements/Section List"
 hv_title: "Keyboard: Dismiss on Drag"
 hv_button_behavior: "back"
 ---
-{% extends 'templates/base.xml.njk' %}
+{% extends 'templates/scroll-base.xml.njk' %}
 {% from 'macros/text-field/index.xml.njk' import text_field %}
 
 {% block container %}
-  <section-list keyboard-dismiss-mode="on-drag">
+  <section-list content-insets="true" keyboard-dismiss-mode="on-drag">
     <item key="field" style="item">
       {{ text_field("field", {"auto-focus":"true", "placeholder":"Scroll!"}) }}
     </item>
