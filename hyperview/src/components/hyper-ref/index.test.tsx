@@ -1,18 +1,20 @@
+import { fireEvent, render } from '@testing-library/react-native';
 import { DOMParser } from '@instawork/xmldom';
 import HyperRef from 'hyperview/src/components/hyper-ref';
+import React from 'react';
 import type { StyleSheets } from 'hyperview/src/types';
 import { shallowCloneToRoot } from 'hyperview/src/services';
 
 describe('HyperRef', () => {
-  describe('onEventDispatch', () => {
-    const stylesheets: StyleSheets = {
-      focused: {},
-      pressed: {},
-      pressedSelected: {},
-      regular: {},
-      selected: {},
-    };
+  const stylesheets: StyleSheets = {
+    focused: {},
+    pressed: {},
+    pressedSelected: {},
+    regular: {},
+    selected: {},
+  };
 
+  describe('onEventDispatch', () => {
     /**
      * Creates a doc with an `on-event` listener on a container element, next to a
      * field a behavior can set a value on.
@@ -144,6 +146,117 @@ describe('HyperRef', () => {
       expect(receivedElements[0].parentNode).toBeNull();
       expect(receivedElements[1].parentNode).not.toBeNull();
       expect(receivedElements[1]).not.toBe(receivedElements[0]);
+    });
+  });
+
+  describe('render', () => {
+    const createPressElement = (href: string): Element => {
+      const doc = new DOMParser().parseFromString(
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <screen>
+              <body>
+                <view id="cta" href="${href}" />
+              </body>
+            </screen>
+          </doc>
+        `,
+        'text/xml',
+      );
+      const [element] = Array.from(doc.getElementsByTagName('view'));
+      return element;
+    };
+
+    const createTriggeredElement = (trigger: string): Element => {
+      const doc = new DOMParser().parseFromString(
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <screen>
+              <body>
+                <view id="cta">
+                  <behavior action="reload" trigger="${trigger}" />
+                </view>
+              </body>
+            </screen>
+          </doc>
+        `,
+        'text/xml',
+      );
+      const [element] = Array.from(doc.getElementsByTagName('view'));
+      return element;
+    };
+
+    test('uses the latest press behavior after the element changes', async () => {
+      const onUpdate = jest.fn();
+      const previousElement = createPressElement('/previous');
+      const currentElement = createPressElement('/current');
+      const view = await render(
+        <HyperRef
+          element={previousElement}
+          onUpdate={onUpdate}
+          options={{}}
+          stylesheets={stylesheets}
+        />,
+      );
+
+      await view.rerender(
+        <HyperRef
+          element={currentElement}
+          onUpdate={onUpdate}
+          options={{}}
+          stylesheets={stylesheets}
+        />,
+      );
+      await fireEvent.press(view.getByTestId('cta'));
+
+      expect(onUpdate).toHaveBeenCalledTimes(1);
+      expect(onUpdate).toHaveBeenCalledWith(
+        '/current',
+        'push',
+        currentElement,
+        expect.objectContaining({ behaviorElement: currentElement }),
+      );
+    });
+
+    test('uses the latest render-time triggers after the element changes', async () => {
+      const onUpdate = jest.fn();
+      const view = await render(
+        <HyperRef
+          element={createPressElement('/previous')}
+          onUpdate={onUpdate}
+          options={{}}
+          stylesheets={stylesheets}
+        />,
+      );
+
+      await view.rerender(
+        <HyperRef
+          element={createTriggeredElement('refresh')}
+          onUpdate={onUpdate}
+          options={{}}
+          stylesheets={stylesheets}
+        />,
+      );
+      expect(
+        view.container.queryAll(
+          element => element.type === 'RCTRefreshControl',
+        ),
+      ).toHaveLength(1);
+
+      await view.rerender(
+        <HyperRef
+          element={createTriggeredElement('visible')}
+          onUpdate={onUpdate}
+          options={{}}
+          stylesheets={stylesheets}
+        />,
+      );
+      expect(
+        view.container.queryAll(
+          element => element.type === 'RCTRefreshControl',
+        ),
+      ).toHaveLength(0);
+      expect(view.root?.props.collapsable).toBe(false);
     });
   });
 });
