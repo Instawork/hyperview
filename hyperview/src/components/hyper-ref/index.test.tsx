@@ -1,18 +1,20 @@
+import { fireEvent, render } from '@testing-library/react-native';
 import { DOMParser } from '@instawork/xmldom';
 import HyperRef from 'hyperview/src/components/hyper-ref';
+import React from 'react';
 import type { StyleSheets } from 'hyperview/src/types';
 import { shallowCloneToRoot } from 'hyperview/src/services';
 
 describe('HyperRef', () => {
-  describe('onEventDispatch', () => {
-    const stylesheets: StyleSheets = {
-      focused: {},
-      pressed: {},
-      pressedSelected: {},
-      regular: {},
-      selected: {},
-    };
+  const stylesheets: StyleSheets = {
+    focused: {},
+    pressed: {},
+    pressedSelected: {},
+    regular: {},
+    selected: {},
+  };
 
+  describe('onEventDispatch', () => {
     /**
      * Creates a doc with an `on-event` listener on a container element, next to a
      * field a behavior can set a value on.
@@ -144,6 +146,57 @@ describe('HyperRef', () => {
       expect(receivedElements[0].parentNode).toBeNull();
       expect(receivedElements[1].parentNode).not.toBeNull();
       expect(receivedElements[1]).not.toBe(receivedElements[0]);
+    });
+  });
+
+  describe('TouchableView', () => {
+    const createPressElement = (href: string): Element => {
+      const doc = new DOMParser().parseFromString(
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <screen>
+              <body>
+                <view id="cta" href="${href}" />
+              </body>
+            </screen>
+          </doc>
+        `,
+        'text/xml',
+      );
+      const [element] = Array.from(doc.getElementsByTagName('view'));
+      return element;
+    };
+
+    test('uses the latest press behavior after the element changes', async () => {
+      const onUpdate = jest.fn();
+      const previousElement = createPressElement('/previous');
+      const currentElement = createPressElement('/current');
+      const view = await render(
+        <HyperRef
+          element={previousElement}
+          onUpdate={onUpdate}
+          options={{}}
+          stylesheets={stylesheets}
+        />,
+      );
+
+      await view.rerender(
+        <HyperRef
+          element={currentElement}
+          onUpdate={onUpdate}
+          options={{}}
+          stylesheets={stylesheets}
+        />,
+      );
+      await fireEvent.press(view.getByTestId('cta'));
+
+      expect(onUpdate).toHaveBeenCalledTimes(1);
+      expect(onUpdate).toHaveBeenCalledWith(
+        '/current',
+        'push',
+        currentElement,
+        expect.objectContaining({ behaviorElement: currentElement }),
+      );
     });
   });
 });
