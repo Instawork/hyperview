@@ -42,7 +42,7 @@ export default function HvNavigator(props: Props) {
   const { element, onUpdate, params, routeComponent } = props;
   const behaviorElements = useRef<Element[]>([]);
   const { navigationComponents } = useHyperview();
-  const prevProps = useRef<Element | undefined>(undefined);
+  const loadBehaviorElement = useRef<Element | undefined>(undefined);
 
   const onEventDispatch = useCallback(
     (eventName: string) => {
@@ -298,26 +298,22 @@ export default function HvNavigator(props: Props) {
     [buildDynamicScreens, buildScreen],
   );
 
+  // componentDidMount / componentWillUnmount: maintain the event subscription.
   useEffect(() => {
-    // Constructor
-    updateBehaviorElements();
-
-    // ComponentDidMount
-    triggerLoadBehaviors();
     Events.subscribe(onEventDispatch);
 
-    // ComponentWillUnmount
     return () => {
       Events.unsubscribe(onEventDispatch);
     };
-  }, [onEventDispatch, triggerLoadBehaviors, updateBehaviorElements]);
+  }, [onEventDispatch]);
 
+  // componentDidMount / componentDidUpdate: trigger loads for each document element.
   useEffect(() => {
-    // ComponentDidUpdate
-    if (prevProps.current === element) {
+    if (!element || loadBehaviorElement.current === element) {
       return;
     }
-    prevProps.current = element;
+
+    loadBehaviorElement.current = element;
     updateBehaviorElements();
     triggerLoadBehaviors();
   }, [element, triggerLoadBehaviors, updateBehaviorElements]);
