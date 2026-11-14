@@ -134,11 +134,11 @@ describe('Navigator.routeBackRequest', () => {
     expect(navigation.goBack).not.toHaveBeenCalled();
   });
 
-  it('closes a background modal and every route presented above it', () => {
+  it('closes a background modal and every card presented above it', () => {
     const state = {
       index: 2,
       key: 'stack-root',
-      routeNames: ['home', 'modal'],
+      routeNames: ['home', 'modal', 'card'],
       routes: [
         {
           key: 'home-key',
@@ -147,6 +147,49 @@ describe('Navigator.routeBackRequest', () => {
         {
           key: 'modal-one-key',
           name: 'modal',
+        },
+        {
+          key: 'card-key',
+          name: 'card',
+        },
+      ],
+      stale: false,
+      type: 'stack',
+    } as NavigationState;
+    const navigation = createNavigation(state);
+    const navigator = new Navigator({
+      entrypointUrl: 'https://example.com/index.xml',
+      navigation,
+      route: {
+        key: 'modal-one-key',
+        name: 'modal',
+      } as RouteProps,
+      setElement: jest.fn(),
+    });
+
+    navigator.routeBackRequest(navigation, NAV_ACTIONS.CLOSE, 'modal-one-key');
+
+    expect(navigation.dispatch).toHaveBeenCalledWith(StackActions.pop(2));
+    expect(navigation.goBack).not.toHaveBeenCalled();
+  });
+
+  it('keeps a later modal when a background modal closes', () => {
+    const state = {
+      index: 3,
+      key: 'stack-root',
+      routeNames: ['home', 'modal', 'card'],
+      routes: [
+        {
+          key: 'home-key',
+          name: 'home',
+        },
+        {
+          key: 'modal-one-key',
+          name: 'modal',
+        },
+        {
+          key: 'card-key',
+          name: 'card',
         },
         {
           key: 'modal-two-key',
@@ -169,7 +212,13 @@ describe('Navigator.routeBackRequest', () => {
 
     navigator.routeBackRequest(navigation, NAV_ACTIONS.CLOSE, 'modal-one-key');
 
-    expect(navigation.dispatch).toHaveBeenCalledWith(StackActions.pop(2));
+    expect(navigation.dispatch).toHaveBeenCalledWith(
+      CommonActions.reset({
+        ...state,
+        index: 1,
+        routes: [state.routes[0], state.routes[3]],
+      }),
+    );
     expect(navigation.goBack).not.toHaveBeenCalled();
   });
 

@@ -19,6 +19,10 @@ import {
 import { NAVIGATOR_TYPE, NAV_ACTIONS } from 'hyperview/src/types';
 import { uuidNumber } from 'hyperview/src/services';
 
+const isModalRoute = (route: { name: string; params?: object }): boolean =>
+  Helpers.isModalRouteName(route.name) ||
+  !!(route.params as RouteParams | undefined)?.isModal;
+
 /**
  * Provide navigation action implementations
  */
@@ -65,10 +69,28 @@ export class Navigator implements NavigationProvider {
       action === NAV_ACTIONS.CLOSE &&
       sourceIndex > 0 &&
       sourceIndex < state.index &&
-      (Helpers.isModalRouteName(state.routes[sourceIndex].name) ||
-        (state.routes[sourceIndex].params as RouteParams | undefined)?.isModal)
+      isModalRoute(state.routes[sourceIndex])
     ) {
-      navigation.dispatch(StackActions.pop(state.index - sourceIndex + 1));
+      // A later modal may have been pushed independently of the closing one
+      // (e.g. app code navigating while the closing doc was still loading),
+      // so only the closing modal and the cards stacked on it are removed.
+      const nextModalIndex = state.routes.findIndex(
+        (route, index) => index > sourceIndex && isModalRoute(route),
+      );
+      if (nextModalIndex < 0) {
+        navigation.dispatch(StackActions.pop(state.index - sourceIndex + 1));
+      } else {
+        const routes = state.routes.filter(
+          (_, index) => index < sourceIndex || index >= nextModalIndex,
+        );
+        navigation.dispatch({
+          ...CommonActions.reset({
+            ...state,
+            index: routes.length - 1,
+            routes,
+          }),
+        });
+      }
     } else if (
       action === NAV_ACTIONS.BACK &&
       state.type === NAVIGATOR_TYPE.STACK &&
