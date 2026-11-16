@@ -486,6 +486,37 @@ const buildCloseRequest = (
 };
 
 /**
+ * Determine which route owns a dynamic route in the current navigator
+ */
+const getOwnerRouteKey = (
+  navigation: NavigationProps | undefined,
+  path: string[] | undefined,
+  routeId: string,
+  routeParams: RouteParams,
+  sourceRouteKey: string | undefined,
+): string | undefined => {
+  if (!navigation || path?.length) {
+    return undefined;
+  }
+
+  const state = navigation.getState();
+  const existingRoute = state.routes.find(
+    route =>
+      route.name === routeId &&
+      (route.params as RouteParams | undefined)?.url === routeParams.url,
+  );
+  if (existingRoute) {
+    // Keep the original relationship when React Navigation reuses a same-URL route
+    return (existingRoute.params as RouteParams | undefined)?.ownerRouteKey;
+  }
+
+  return sourceRouteKey &&
+    state.routes.some(route => route.key === sourceRouteKey)
+    ? sourceRouteKey
+    : undefined;
+};
+
+/**
  * Build the request structure including finding the navigation,
  * building params, and determining screen id
  */
@@ -493,6 +524,7 @@ export const buildRequest = (
   nav: NavigationProps | undefined,
   action: NavAction,
   routeParams?: RouteParams,
+  sourceRouteKey?: string,
 ): [
   NavAction,
   NavigationProps | undefined,
@@ -519,11 +551,21 @@ export const buildRequest = (
     routeParams.targetId || '',
     nav,
   );
+  const routeId = getRouteId(navAction, routeParams.url ?? undefined);
+  const isDynamicNavigation =
+    isDynamicRoute(routeId) &&
+    (navAction === NAV_ACTIONS.NAVIGATE ||
+      navAction === NAV_ACTIONS.NEW ||
+      navAction === NAV_ACTIONS.PUSH);
+  const ownerRouteKey = isDynamicNavigation
+    ? getOwnerRouteKey(navigation, path, routeId, routeParams, sourceRouteKey)
+    : undefined;
 
   const cleanedParams: RouteParams = {
     ...routeParams,
     // New actions are always modal
     ...(action === NAV_ACTIONS.NEW && { isModal: true }),
+    ...(ownerRouteKey && { ownerRouteKey }),
   };
 
   if (cleanedParams.url && isUrlFragment(cleanedParams.url)) {
@@ -536,8 +578,6 @@ export const buildRequest = (
   if (!navigation) {
     return [navAction, undefined, '', cleanedParams];
   }
-
-  const routeId = getRouteId(navAction, routeParams.url ?? undefined);
 
   if (!path || !path.length) {
     return [navAction, navigation, routeId, cleanedParams];
