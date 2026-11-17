@@ -1,0 +1,24 @@
+---
+permalink: "/navigation/sequences/keep-second-modal/first.xml"
+hv_title: "First modal"
+hv_button_behavior: "close"
+---
+{% extends 'templates/scrollview.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/button/index.xml.njk' import button %}
+
+{% block content %}
+  <behavior
+    trigger="on-event"
+    event-name="sequence-close-first-modal"
+    action="close"
+  />
+  {{ description('Tap “Open second” to open “Second modal” above this modal.') }}
+  {{ description('From there, close “First modal” while keeping “Second modal” open.') }}
+  {% call button('Open second') -%}
+    <behavior
+      action="dispatch-event"
+      event-name="sequence-open-second-modal"
+    />
+  {%- endcall %}
+{% endblock %}

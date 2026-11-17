@@ -134,7 +134,7 @@ describe('Navigator.routeBackRequest', () => {
     expect(navigation.goBack).not.toHaveBeenCalled();
   });
 
-  it('closes a background modal and every route presented above it', () => {
+  it('closes a background modal and every route owned by it', () => {
     const state = {
       index: 2,
       key: 'stack-root',
@@ -147,10 +147,16 @@ describe('Navigator.routeBackRequest', () => {
         {
           key: 'modal-one-key',
           name: 'modal',
+          params: {
+            ownerRouteKey: 'home-key',
+          },
         },
         {
           key: 'modal-two-key',
           name: 'modal',
+          params: {
+            ownerRouteKey: 'modal-one-key',
+          },
         },
       ],
       stale: false,
@@ -169,8 +175,82 @@ describe('Navigator.routeBackRequest', () => {
 
     navigator.routeBackRequest(navigation, NAV_ACTIONS.CLOSE, 'modal-one-key');
 
-    expect(navigation.dispatch).toHaveBeenCalledWith(StackActions.pop(2));
+    expect(navigation.dispatch).toHaveBeenCalledWith(
+      CommonActions.reset({
+        ...state,
+        index: 0,
+        routes: state.routes.slice(0, 1),
+      }),
+    );
     expect(navigation.goBack).not.toHaveBeenCalled();
+  });
+
+  it('passes close params to the route beneath a background modal', () => {
+    const state = {
+      index: 2,
+      key: 'stack-root',
+      routeNames: ['home', 'modal'],
+      routes: [
+        {
+          key: 'home-key',
+          name: 'home',
+        },
+        {
+          key: 'modal-one-key',
+          name: 'modal',
+          params: {
+            ownerRouteKey: 'home-key',
+          },
+        },
+        {
+          key: 'modal-two-key',
+          name: 'modal',
+          params: {
+            ownerRouteKey: 'home-key',
+          },
+        },
+      ],
+      stale: false,
+      type: 'stack',
+    } as NavigationState;
+    const navigation = createNavigation(state);
+    const rootNavigation = ({
+      getCurrentRoute: jest.fn(() => state.routes[2]),
+      getRootState: jest.fn(() => state),
+    } as unknown) as NonNullable<Types.Props['rootNavigation']>;
+    const routeParams: RouteParams = {
+      url: 'https://example.com/changed.xml',
+    };
+    const navigator = new Navigator({
+      entrypointUrl: 'https://example.com/index.xml',
+      navigation,
+      rootNavigation,
+      route: {
+        key: 'modal-one-key',
+        name: 'modal',
+      } as RouteProps,
+      setElement: jest.fn(),
+    });
+
+    navigator.routeBackRequest(
+      navigation,
+      NAV_ACTIONS.CLOSE,
+      'modal-one-key',
+      routeParams,
+    );
+
+    expect(navigation.dispatch).toHaveBeenCalledWith(
+      CommonActions.reset({
+        ...state,
+        index: 1,
+        routes: [state.routes[0], state.routes[2]],
+      }),
+    );
+    expect(navigation.dispatch).toHaveBeenCalledWith({
+      ...CommonActions.setParams(routeParams),
+      source: 'home-key',
+      target: 'stack-root',
+    });
   });
 
   it('targets back requests from removed routes at their source navigator', () => {
@@ -515,9 +595,113 @@ describe('Navigator.sendRequest', () => {
     navigator.sendRequest(NAV_ACTIONS.PUSH, routeParams);
 
     expect(navigation.dispatch).toHaveBeenCalledWith(
-      StackActions.push('card', routeParams),
+      StackActions.push('card', {
+        ...routeParams,
+        ownerRouteKey: 'modal-screen-key',
+      }),
     );
     expect(parentNavigation.dispatch).not.toHaveBeenCalled();
+  });
+
+  it('preserves ownership when navigating to an existing dynamic route', () => {
+    const state = {
+      index: 2,
+      key: 'stack-root',
+      routeNames: ['home', 'card', 'modal'],
+      routes: [
+        {
+          key: 'home-key',
+          name: 'home',
+        },
+        {
+          key: 'card-key',
+          name: 'card',
+          params: {
+            ownerRouteKey: 'home-key',
+            url: 'https://example.com/card.xml',
+          },
+        },
+        {
+          key: 'modal-key',
+          name: 'modal',
+          params: {
+            ownerRouteKey: 'home-key',
+            url: 'https://example.com/modal.xml',
+          },
+        },
+      ],
+      stale: false,
+      type: 'stack',
+    } as NavigationState;
+    const navigation = createNavigation(state);
+    const navigator = new Navigator({
+      entrypointUrl: 'https://example.com/index.xml',
+      navigation,
+      route: state.routes[2] as RouteProps,
+      setElement: jest.fn(),
+    });
+    const routeParams = {
+      url: 'https://example.com/card.xml',
+    };
+
+    navigator.sendRequest(NAV_ACTIONS.NAVIGATE, routeParams);
+
+    expect(navigation.dispatch).toHaveBeenCalledWith(
+      CommonActions.navigate(
+        'card',
+        {
+          ...routeParams,
+          ownerRouteKey: 'home-key',
+        },
+        { pop: true },
+      ),
+    );
+  });
+
+  it('does not claim ownership of an existing external dynamic route', () => {
+    const state = {
+      index: 1,
+      key: 'stack-root',
+      routeNames: ['home', 'modal'],
+      routes: [
+        {
+          key: 'home-key',
+          name: 'home',
+        },
+        {
+          key: 'modal-key',
+          name: 'modal',
+          params: {
+            url: 'https://example.com/modal.xml',
+          },
+        },
+      ],
+      stale: false,
+      type: 'stack',
+    } as NavigationState;
+    const navigation = createNavigation(state);
+    const navigator = new Navigator({
+      entrypointUrl: 'https://example.com/index.xml',
+      navigation,
+      route: state.routes[1] as RouteProps,
+      setElement: jest.fn(),
+    });
+    const routeParams = {
+      url: 'https://example.com/modal.xml',
+    };
+
+    navigator.sendRequest(NAV_ACTIONS.NEW, routeParams);
+
+    expect(navigation.dispatch).toHaveBeenCalledWith(
+      CommonActions.navigate(
+        'modal',
+        {
+          ...routeParams,
+          isModal: true,
+        },
+        { pop: true },
+      ),
+    );
   });
 
   it('targets a mounted tab from a background route without changing the parent stack', () => {
@@ -672,6 +856,59 @@ describe('Navigator.sendRequest', () => {
       target: 'second-tabs-state',
     });
     expect(rootNavigation.dispatch).not.toHaveBeenCalled();
+  });
+
+  it('does not pass ownership into an explicitly targeted child navigator', () => {
+    const childState = {
+      index: 0,
+      key: 'child-stack',
+      routeNames: ['leaf'],
+      routes: [{ key: 'leaf-key', name: 'leaf' }],
+      stale: false,
+      type: 'stack',
+    } as NavigationState;
+    const state = {
+      index: 0,
+      key: 'stack-root',
+      routeNames: ['source', 'target'],
+      routes: [
+        { key: 'source-key', name: 'source' },
+        {
+          key: 'target-key',
+          name: 'target',
+          state: childState,
+        },
+      ],
+      stale: false,
+      type: 'stack',
+    } as NavigationState;
+    const navigation = createNavigation(state);
+    const rootNavigation = ({
+      getRootState: jest.fn(() => state),
+    } as unknown) as NonNullable<Types.Props['rootNavigation']>;
+    const navigator = new Navigator({
+      entrypointUrl: 'https://example.com/index.xml',
+      navigation,
+      rootNavigation,
+      route: state.routes[0] as RouteProps,
+      setElement: jest.fn(),
+    });
+    const routeParams = {
+      targetId: 'leaf',
+      url: 'https://example.com/destination.xml',
+    };
+
+    navigator.sendRequest(NAV_ACTIONS.PUSH, routeParams);
+
+    expect(navigation.dispatch).toHaveBeenCalledWith(
+      StackActions.push('target', {
+        params: {
+          params: routeParams,
+          screen: 'card',
+        },
+        screen: 'leaf',
+      }),
+    );
   });
 
   it('uses the navigator resolved for an explicit navigation target', () => {

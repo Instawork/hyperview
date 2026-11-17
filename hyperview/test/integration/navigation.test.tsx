@@ -971,6 +971,143 @@ describe('Hyperview navigation sequences', () => {
     expect(getRootNavigationState(navigationRef).index).toBe(2);
   });
 
+  test('keeps an independently opened modal when a background modal closes', async () => {
+    const navigationRef = createNavigationContainerRef();
+    const mockFetch = fetchFactory([
+      [
+        'http://myapp.com/independent-modal-document',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <navigator id="root" type="stack">
+              <nav-route
+                id="home"
+                href="http://myapp.com/independent-modal-home"
+              />
+            </navigator>
+          </doc>
+        `,
+      ],
+      [
+        'http://myapp.com/independent-modal-home',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <screen>
+              <body>
+                <behavior
+                  trigger="on-event"
+                  event-name="open-independent-modal"
+                  action="new"
+                  href="http://myapp.com/independent-modal-newer"
+                />
+                <view
+                  id="open-background"
+                  action="new"
+                  href="http://myapp.com/independent-modal-background"
+                >
+                  <text>Open background</text>
+                </view>
+                <text id="home">Home</text>
+              </body>
+            </screen>
+          </doc>
+        `,
+      ],
+      [
+        'http://myapp.com/independent-modal-background',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <screen>
+              <body>
+                <behavior
+                  trigger="on-event"
+                  event-name="close-background-modal"
+                  action="close"
+                />
+                <view
+                  id="open-independent"
+                  action="dispatch-event"
+                  event-name="open-independent-modal"
+                >
+                  <text>Open independent</text>
+                </view>
+              </body>
+            </screen>
+          </doc>
+        `,
+      ],
+      [
+        'http://myapp.com/independent-modal-newer',
+        `
+          <doc xmlns="https://hyperview.org/hyperview">
+            <screen>
+              <body>
+                <text id="independent">Independent modal</text>
+                <view
+                  id="close-background"
+                  action="dispatch-event"
+                  event-name="close-background-modal"
+                >
+                  <text>Close background</text>
+                </view>
+                <view id="close-independent" action="close">
+                  <text>Close independent</text>
+                </view>
+              </body>
+            </screen>
+          </doc>
+        `,
+      ],
+    ]);
+
+    await render(
+      <NavigationContainer ref={navigationRef}>
+        <Hyperview
+          entrypointUrl="http://myapp.com/independent-modal-document"
+          fetch={mockFetch}
+          formatDate={formatDate}
+        />
+      </NavigationContainer>,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId('open-background')).toBeOnTheScreen();
+    });
+    await fireEvent.press(screen.getByTestId('open-background'));
+    await waitFor(() => {
+      expect(screen.getByTestId('open-independent')).toBeOnTheScreen();
+    });
+    await fireEvent.press(screen.getByTestId('open-independent'));
+    await waitFor(() => {
+      expect(screen.getByTestId('independent')).toBeOnTheScreen();
+    });
+    await fireEvent.press(screen.getByTestId('close-background'));
+
+    await waitFor(() => {
+      expect(screen.getByTestId('independent')).toBeOnTheScreen();
+      expect(screen.queryByTestId('open-independent')).not.toBeOnTheScreen();
+      expect(screen.queryByTestId('home')).not.toBeOnTheScreen();
+    });
+    let rootState = getRootNavigationState(navigationRef);
+    expect(
+      rootState.routes.map(
+        route => (route.params as { url?: string } | undefined)?.url,
+      ),
+    ).toEqual([
+      'http://myapp.com/independent-modal-home',
+      'http://myapp.com/independent-modal-newer',
+    ]);
+    expect(rootState.index).toBe(1);
+
+    await fireEvent.press(screen.getByTestId('close-independent'));
+    await waitFor(() => {
+      expect(screen.getByTestId('home')).toBeOnTheScreen();
+      expect(screen.queryByTestId('independent')).not.toBeOnTheScreen();
+    });
+    rootState = getRootNavigationState(navigationRef);
+    expect(rootState.routes.map(route => route.name)).toEqual(['home']);
+    expect(rootState.index).toBe(0);
+  });
+
   test('completes delayed work before closing its route', async () => {
     const completed = jest.fn();
     const started = jest.fn();
