@@ -28,6 +28,7 @@ export const getStackRouteOptions = ({
   }
   return {
     animation,
+    animationDuration: usesModalPresentation ? 350 : undefined,
     gestureEnabled: !usesModalPresentation,
     presentation: 'card',
   };

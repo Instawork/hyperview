@@ -12,6 +12,7 @@ describe('iOS stack options', () => {
       }),
     ).toEqual({
       animation: 'slide_from_bottom',
+      animationDuration: 350,
       gestureEnabled: false,
       presentation: 'card',
     });
