@@ -126,7 +126,7 @@ export const validateUrl = (action: NavAction, routeParams: RouteParams) => {
  * example: ['home', 'shifts', 'my-shifts']
  */
 export const findPath = (
-  state: NavigationState,
+  state: NavigationState | undefined,
   targetId: string,
 ): string[] => {
   let path: string[] = [];
@@ -450,6 +450,9 @@ const buildCloseRequest = (
   }
 
   const state = navigation.getState();
+  if (!state) {
+    return [NAV_ACTIONS.CLOSE, navigation, '', routeParams];
+  }
   if (state.type === NAVIGATOR_TYPE.STACK) {
     // Check if current route is modal
     if (isRouteModal(state, state.index)) {
@@ -500,6 +503,9 @@ const getOwnerRouteKey = (
   }
 
   const state = navigation.getState();
+  if (!state) {
+    return undefined;
+  }
   const existingRoute = state.routes.find(
     route =>
       route.name === routeId &&
