@@ -41,6 +41,9 @@ export class Navigator implements NavigationProvider {
     routeParams?: RouteParams,
   ) {
     const state = navigation.getState();
+    if (!state) {
+      return;
+    }
     const sourceIndex = state.routes.findIndex(
       route => route.key === sourceKey,
     );

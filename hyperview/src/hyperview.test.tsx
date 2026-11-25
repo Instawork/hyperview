@@ -1,4 +1,10 @@
-import { act, render, screen, waitFor } from '@testing-library/react-native';
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react-native';
 import Hyperview from './hyperview';
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
@@ -11,6 +17,28 @@ describe('Hyperview', () => {
   });
 
   const formatDate = jest.fn();
+
+  test('does not throw when pressing Back after the entrypoint fails to load', async () => {
+    const mockFetch = fetchFactory([
+      ['http://myapp.com/navigator', 'Internal Server Error', 500],
+    ]);
+
+    await render(
+      <NavigationContainer>
+        <Hyperview
+          entrypointUrl="http://myapp.com/navigator"
+          fetch={mockFetch}
+          formatDate={formatDate}
+        />
+      </NavigationContainer>,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText('Back')).toBeOnTheScreen();
+    });
+
+    expect(() => fireEvent.press(screen.getByText('Back'))).not.toThrow();
+  });
 
   /**
    * Test for a view which has two behaviors which originally caused a bug.

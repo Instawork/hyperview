@@ -239,7 +239,7 @@ function HvRouteFC(props: Types.Props) {
         doc,
         id,
         props.route,
-        nav.getState().routes[0]?.name,
+        nav.getState()?.routes[0]?.name,
         entrypointUrl,
         setDoc,
       );

@@ -279,7 +279,7 @@ export type NavigationProps = {
   navigate: (options: object) => void;
   dispatch: (action: NavigationAction) => void;
   goBack: () => void;
-  getState: () => NavigationState;
+  getState: () => NavigationState | undefined;
   getParent: (id?: string) => NavigationProps | undefined;
   addListener: (eventName: string, callback: ListenerCallback) => () => void;
   isFocused: () => boolean;

@@ -89,6 +89,22 @@ const createNavigation = (
 });
 
 describe('Navigator.routeBackRequest', () => {
+  it('ignores back requests when navigation state is unavailable', () => {
+    const navigation: NavigationProps = {
+      ...createNavigation(rootState),
+      getState: jest.fn(() => undefined),
+    };
+    const navigator = new Navigator({
+      entrypointUrl: 'https://example.com/index.xml',
+      navigation,
+      setElement: jest.fn(),
+    });
+
+    expect(() => navigator.backAction()).not.toThrow();
+    expect(navigation.dispatch).not.toHaveBeenCalled();
+    expect(navigation.goBack).not.toHaveBeenCalled();
+  });
+
   it('removes a non-focused first route without going back from the focused route', () => {
     const state = {
       index: 2,
