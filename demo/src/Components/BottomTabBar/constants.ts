@@ -1,1 +1,1 @@
-export const namespaceURI = 'https://hyperview.org/navigation';
+export { NAVIGATION_NAMESPACE as namespaceURI } from '../../Helpers';

@@ -1,6 +1,5 @@
 import type { HvComponentProps } from 'hyperview';
 import type { NativeTabBarItems } from './types';
-import { Platform } from 'react-native';
 import { getUrlFromHref } from 'hyperview';
 
 const getAttribute = (element: Element, name: string) => {
@@ -52,8 +51,3 @@ export const getNativeTabItems = (props: HvComponentProps | undefined) => {
   });
   return items;
 };
-
-export const isLiquidGlassSupported = (
-  platformOS = Platform.OS,
-  platformVersion = Platform.Version,
-) => platformOS === 'ios' && Number(platformVersion) >= 26;

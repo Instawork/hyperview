@@ -14,6 +14,7 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="margin" />
       <xs:enumeration value="padding" />
+      <xs:enumeration value="screen" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="safe-area-view">
