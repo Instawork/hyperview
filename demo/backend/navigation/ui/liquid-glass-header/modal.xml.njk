@@ -1,0 +1,116 @@
+---
+permalink: "/navigation/ui/liquid-glass-header/modal.xml"
+tags: "Navigation/UI/Transitions"
+hv_title: "Modal and push transitions"
+hv_button_behavior: "close"
+hv_open_modal: "true"
+---
+{% extends 'templates/scroll-base.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/navigation-header/index.xml.njk' import navigation_header %}
+
+{% block styles %}
+  <style id="liquid-header" marginBottom="0" />
+  <style
+    id="liquid-modal-image"
+    height="260"
+    marginBottom="16"
+    resizeMode="cover"
+    width="100%"
+  />
+  <style
+    id="liquid-modal-actions"
+    alignItems="center"
+    columnGap="12"
+    flexDirection="row"
+  />
+  <style
+    id="liquid-modal-custom-item"
+    alignItems="center"
+    height="32"
+    justifyContent="center"
+    width="32"
+  />
+  <style
+    id="liquid-modal-custom-dot"
+    backgroundColor="#F5B700"
+    borderRadius="8"
+    height="16"
+    width="16"
+  />
+  <style id="liquid-modal-title" flex="1" />
+  <style id="liquid-modal-content" flex="1" />
+{% endblock %}
+
+{% block header %}
+  {% call navigation_header(hv_title, 'liquid-header') %}
+    <view
+      action="close"
+      href="#"
+      id="liquid-header-modal/header/close-button"
+      style="header-btn"
+      navigation:role="close"
+    >
+      {% include 'icons/close.svg' %}
+    </view>
+    <text numberOfLines="1" style="header-title liquid-modal-title">
+      {{ hv_title }}
+    </text>
+    <view style="liquid-modal-actions">
+      <view
+        id="liquid-transition/header/persistent-help"
+        navigation:icon="questionmark.circle"
+        navigation:role="right-item"
+      >
+        {% include 'icons/help.svg' %}
+        <behavior
+          xmlns:alert="https://hyperview.org/hyperview-alert"
+          action="alert"
+          alert:message="Help tapped."
+          alert:title="{{ hv_title }}"
+        >
+          <alert:option alert:label="OK" />
+        </behavior>
+      </view>
+      <view
+        id="liquid-transition/header/persistent-custom"
+        style="liquid-modal-custom-item"
+        navigation:role="right-item"
+      >
+        <view style="liquid-modal-custom-dot" />
+        <behavior
+          xmlns:alert="https://hyperview.org/hyperview-alert"
+          action="alert"
+          alert:message="Custom items do not use transition matching."
+          alert:title="Custom transition item"
+          trigger="press"
+        >
+          <alert:option alert:label="OK" />
+        </behavior>
+      </view>
+    </view>
+  {% endcall %}
+{% endblock %}
+
+{% block container %}
+  <view scroll="true" style="liquid-modal-content">
+    {{ description('Close replaces back. The same close action works in both header styles.') }}
+    {{ description('Push the next screen to compare the help icon with the custom yellow item. Only the icon button uses transition matching.') }}
+    <image
+      source="/hyperview/public/ui/ui-elements/image/image.jpg"
+      style="liquid-modal-image"
+    />
+    {{ description('Content starts below the transparent header and scrolls underneath it.') }}
+    <image
+      source="/hyperview/public/ui/ui-elements/image/image.jpg"
+      style="liquid-modal-image"
+    />
+    <view
+      action="push"
+      href="/hyperview/public/navigation/ui/liquid-glass-header/modal-pushed.xml"
+      style="button"
+    >
+      <text style="button-label">Push next screen</text>
+    </view>
+  </view>
+{% endblock %}
