@@ -1,11 +1,11 @@
 import type { HvComponentProps, RouteParams } from 'hyperview';
+import { NAVIGATION_NAMESPACE, findElements } from '../../Helpers';
 import type { JSX } from 'react';
 import { NavigationContext } from '@react-navigation/native';
-import { findElements } from '../../Helpers';
 import { renderElement } from 'hyperview';
 import { useContext } from 'react';
 
-export const namespaceURI = 'https://hyperview.org/navigation';
+export const namespaceURI = NAVIGATION_NAMESPACE;
 
 const NavBack = (props: HvComponentProps) => {
   const ctx = useContext(NavigationContext);
