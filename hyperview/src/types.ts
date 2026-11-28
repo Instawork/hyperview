@@ -120,6 +120,7 @@ export type HvComponentOptions = {
   newElement?: Element | null | undefined;
   showIndicatorId?: string | null | undefined;
   onUpdateCallbacks?: OnUpdateCallbacks;
+  nativeHeaderActive?: boolean;
 };
 
 export type HvComponentOnUpdate = (

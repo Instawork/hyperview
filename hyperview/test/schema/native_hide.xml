@@ -1,0 +1,30 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <body native-hide="true">
+      <header native-hide="true" />
+      <text native-hide="true">Title</text>
+      <text-field name="text-field" native-hide="true" />
+      <view native-hide="true" />
+      <image native-hide="true" source="image.png" style="image" />
+      <list native-hide="true">
+        <item native-hide="true" />
+        <items native-hide="true">
+          <section-title native-hide="true" />
+        </items>
+      </list>
+      <section-list native-hide="true" />
+      <spinner native-hide="true" />
+      <form native-hide="true">
+        <date-field name="date" native-hide="true" />
+        <picker-field name="picker" native-hide="true">
+          <picker-item label="Item" />
+        </picker-field>
+        <switch name="switch" native-hide="true" />
+        <select-single name="single" native-hide="true" />
+        <select-multiple name="multiple" native-hide="true" />
+        <option native-hide="true" />
+        <web-view native-hide="true" />
+      </form>
+    </body>
+  </screen>
+</doc>

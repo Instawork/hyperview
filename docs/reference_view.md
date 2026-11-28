@@ -60,6 +60,7 @@ A `<view>` element can only appear anywhere within a `<screen>` element.
 - [`shows-scroll-indicator`](#shows-scroll-indicator)
 - [`id`](#id)
 - [`hide`](#hide)
+- [`native-hide`](#native-hide)
 - [`disabled`](#disabled)
 - [`avoid-keyboard`](#avoid-keyboard)
 - [`sticky`](#sticky)
@@ -159,6 +160,14 @@ A global attribute uniquely identifying the element in the whole document.
 | **false** (default), true | No       |
 
 If `hide="true"`, the element will not be rendered on screen. If the element or any of the element's children have a behavior that triggers on "load" or "visible", those behaviors will not trigger while the element is hidden.
+
+#### `native-hide`
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| **false** (default), true | No       |
+
+If `native-hide="true"`, the element will not be rendered while the native header is active. It remains visible when the native header is inactive, allowing the same document to provide a legacy fallback without moving or wrapping the element.
 
 #### `disabled`
 
