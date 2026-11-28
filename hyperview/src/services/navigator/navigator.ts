@@ -29,6 +29,32 @@ export class Navigator implements NavigationProvider {
     this.props = props;
   }
 
+  updateFocusedRouteParams(
+    navigation: NavigationProps,
+    routeParams?: RouteParams,
+    destinationRouteKey?: string,
+  ) {
+    if (!routeParams) {
+      return;
+    }
+
+    const routeKey =
+      destinationRouteKey || this.props.rootNavigation?.getCurrentRoute()?.key;
+    if (routeKey) {
+      const target = Helpers.findNavigatorKeyForRoute(
+        this.props.rootNavigation?.getRootState(),
+        routeKey,
+      );
+      navigation.dispatch({
+        ...CommonActions.setParams({
+          ...routeParams,
+        }),
+        source: routeKey,
+        ...(target && { target }),
+      });
+    }
+  }
+
   /**
    * Process the request by changing params before going back
    * Only the current navigator is targeted
@@ -51,8 +77,8 @@ export class Navigator implements NavigationProvider {
       action === NAV_ACTIONS.CLOSE &&
       sourceIndex > 0 &&
       sourceIndex < state.index &&
-      (Helpers.isModalRouteName(state.routes[sourceIndex].name) ||
-        (state.routes[sourceIndex].params as RouteParams | undefined)?.isModal);
+      (state.routes[sourceIndex].params as RouteParams | undefined)?.isModal ===
+        true;
     const destinationRouteKey = closesBackgroundModal
       ? state.routes[sourceIndex - 1].key
       : undefined;
@@ -74,15 +100,7 @@ export class Navigator implements NavigationProvider {
         }),
       });
     } else if (closesBackgroundModal) {
-      const removedRouteKeys = new Set([sourceKey]);
-      const routes = state.routes.filter(route => {
-        const ownerRouteKey = (route.params as RouteParams | undefined)
-          ?.ownerRouteKey;
-        if (ownerRouteKey && removedRouteKeys.has(ownerRouteKey)) {
-          removedRouteKeys.add(route.key);
-        }
-        return !removedRouteKeys.has(route.key);
-      });
+      const routes = Helpers.removeRouteTree(state, sourceKey);
       navigation.dispatch(
         CommonActions.reset({
           ...state,
@@ -105,25 +123,7 @@ export class Navigator implements NavigationProvider {
       navigation.goBack();
     }
 
-    // Update the params of the destination route
-    if (routeParams) {
-      const routeKey =
-        destinationRouteKey ||
-        this.props.rootNavigation?.getCurrentRoute()?.key;
-      if (routeKey) {
-        const target = Helpers.findNavigatorKeyForRoute(
-          this.props.rootNavigation?.getRootState(),
-          routeKey,
-        );
-        navigation.dispatch({
-          ...CommonActions.setParams({
-            ...routeParams,
-          }),
-          source: routeKey,
-          ...(target && { target }),
-        });
-      }
-    }
+    this.updateFocusedRouteParams(navigation, routeParams, destinationRouteKey);
   }
 
   /**
@@ -145,28 +145,98 @@ export class Navigator implements NavigationProvider {
     return navigation.getParent() || navigation;
   };
 
+  getModalHostTarget(
+    navigation: NavigationProps | undefined,
+    targetId?: string,
+  ): Types.ModalHostTarget | undefined {
+    let targetNavigation = navigation;
+    while (targetNavigation) {
+      const state = targetNavigation.getState();
+      if (state) {
+        const routeName = targetId
+          ? Helpers.findModalHostRouteName(state, targetId)
+          : this.props.route?.params?.modalHostRouteName;
+        if (routeName && targetId) {
+          let ownerNavigation: NavigationProps | undefined = targetNavigation;
+          while (ownerNavigation) {
+            const ownerState = ownerNavigation.getState();
+            if (ownerState?.routeNames.includes(routeName)) {
+              break;
+            }
+            ownerNavigation = ownerNavigation.getParent();
+          }
+          if (ownerNavigation) {
+            return {
+              navigation: ownerNavigation,
+              routeName,
+            };
+          }
+        } else if (routeName && state.routeNames.includes(routeName)) {
+          return {
+            navigation: targetNavigation,
+            routeName,
+          };
+        }
+      }
+      targetNavigation = targetNavigation.getParent();
+    }
+    return undefined;
+  }
+
   /**
    * Prepare and send the request
    */
   sendRequest = (action: NavAction, routeParams?: RouteParams) => {
     const activeNavigation = this.getActiveNavigation();
     const sourceKey = this.props.route?.key;
+    const modalHostTarget =
+      action === NAV_ACTIONS.NEW
+        ? this.getModalHostTarget(activeNavigation, routeParams?.targetId)
+        : undefined;
+    const modalHostRouteKeyPath = this.props.route?.params
+      ?.modalHostRouteKeyPath;
+    const modalHostRouteName = this.props.route?.params?.modalHostRouteName;
+    const shouldPropagateModalHost =
+      action === NAV_ACTIONS.NEW || action === NAV_ACTIONS.PUSH;
+    const requestParams = shouldPropagateModalHost
+      ? {
+          ...routeParams,
+          ...(modalHostRouteKeyPath && { modalHostRouteKeyPath }),
+          ...(action === NAV_ACTIONS.PUSH &&
+            modalHostRouteName && { modalHostRouteName }),
+          ...(modalHostTarget && {
+            isModalHost: true,
+            needsSubStack: true,
+          }),
+        }
+      : routeParams;
     const [navAction, navigation, routeId, params] = Helpers.buildRequest(
-      activeNavigation,
+      modalHostTarget?.navigation || activeNavigation,
       action,
-      routeParams,
-      sourceKey,
+      requestParams,
+      this.props.route,
+      modalHostTarget?.routeName,
     );
 
     if (!navigation) {
-      if (routeParams?.targetId) {
-        Logging.info(`sendRequest action ${action} routeParams ${routeParams}`);
+      if (requestParams?.targetId) {
+        Logging.info(
+          `sendRequest action ${action} routeParams ${requestParams}`,
+        );
         Logging.warn('No navigation found for provided target');
       }
       return;
     }
 
     const rootState = this.props.rootNavigation?.getRootState();
+    const modalHostCloseTarget =
+      navAction === NAV_ACTIONS.CLOSE && sourceKey
+        ? Helpers.getModalCloseTarget(
+            rootState,
+            sourceKey,
+            modalHostRouteKeyPath,
+          )
+        : undefined;
     const sourceIsBackground =
       navAction === NAV_ACTIONS.NAVIGATE &&
       !!sourceKey &&
@@ -176,6 +246,29 @@ export class Navigator implements NavigationProvider {
     switch (navAction) {
       case NAV_ACTIONS.BACK:
       case NAV_ACTIONS.CLOSE:
+        if (modalHostCloseTarget && this.props.rootNavigation) {
+          const routes = Helpers.removeRouteTree(
+            modalHostCloseTarget.state,
+            modalHostCloseTarget.routeKey,
+          );
+          this.props.rootNavigation.dispatch({
+            ...CommonActions.reset({
+              ...modalHostCloseTarget.state,
+              index: routes.length - 1,
+              routes,
+            }),
+            target: modalHostCloseTarget.state.key,
+          });
+          this.updateFocusedRouteParams(navigation, routeParams);
+          break;
+        }
+        if (
+          navAction === NAV_ACTIONS.CLOSE &&
+          modalHostRouteKeyPath &&
+          modalHostRouteKeyPath.length > 0
+        ) {
+          break;
+        }
         this.routeBackRequest(
           navigation,
           navAction,
