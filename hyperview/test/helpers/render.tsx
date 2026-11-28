@@ -1,8 +1,10 @@
 import Hyperview from 'hyperview/src';
+import type { NavigationComponents } from 'hyperview/src';
 import React from 'react';
 import { read } from './file';
 
 type Props = {
+  navigationComponents?: NavigationComponents;
   paths: string[];
 };
 
@@ -31,6 +33,11 @@ export const HyperviewMock = (props: Props) => {
       experimentalFeatures={{}}
       fetch={fetch}
       formatDate={() => ''}
+      navigationComponents={props.navigationComponents}
     />
   );
+};
+
+HyperviewMock.defaultProps = {
+  navigationComponents: undefined,
 };

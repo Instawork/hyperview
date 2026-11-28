@@ -1,0 +1,18 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <body>
+      <header id="header">
+        <view disabled="true" id="disabled-item">
+          <text>Disabled</text>
+        </view>
+        <view id="enabled-item">
+          <text>Enabled</text>
+          <behavior action="reload" href="#" trigger="press" />
+        </view>
+        <view id="loading-item">
+          <spinner />
+        </view>
+      </header>
+    </body>
+  </screen>
+</doc>

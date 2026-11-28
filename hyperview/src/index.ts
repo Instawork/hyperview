@@ -17,6 +17,8 @@ export type {
   ElementErrorComponentProps,
   ErrorScreenProps,
   ExperimentalFeatures,
+  HeaderCallbacks,
+  HeaderViewProps,
   HvBehavior,
   HvComponent,
   HvComponentProps,

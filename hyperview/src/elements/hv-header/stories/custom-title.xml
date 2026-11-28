@@ -1,0 +1,17 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style id="title" alignItems="center" />
+      <style id="title-primary" fontSize="16" fontWeight="600" />
+      <style id="title-secondary" color="#636366" fontSize="11" />
+    </styles>
+    <body>
+      <header id="header">
+        <view id="custom-title" style="title">
+          <text style="title-primary">Messages</text>
+          <text style="title-secondary">3 unread</text>
+        </view>
+      </header>
+    </body>
+  </screen>
+</doc>
