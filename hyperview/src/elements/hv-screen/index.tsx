@@ -1,12 +1,21 @@
 import * as Namespaces from 'hyperview/src/services/namespaces';
 // eslint-disable-next-line instawork/import-components
 import * as Scroll from 'hyperview/src/components/scroll';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import type { ElementErrorComponentProps } from 'hyperview/src/types';
+import { HeaderProvider } from 'hyperview/src/elements/hv-header';
 import HvElement from 'hyperview/src/components/hv-element';
 import { HvScreenRenderError } from './errors';
 import LoadElementError from 'hyperview/src/components/load-element-error';
 import type { Props } from './types';
+
+const emptyStylesheets = {
+  focused: {},
+  pressed: {},
+  pressedSelected: {},
+  regular: {},
+  selected: {},
+};
 
 const HvScreen = (props: Props) => {
   // eslint-disable-next-line react/destructuring-assignment
@@ -36,55 +45,55 @@ const HvScreen = (props: Props) => {
     ? elementErrorComponent || LoadElementError
     : null;
 
+  const body = doc?.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'body')[0];
+  const stylesheets = styles || emptyStylesheets;
+  const renderOptions = useMemo(
+    () => ({
+      componentRegistry,
+      onUpdateCallbacks,
+      screenUrl: url || undefined,
+      staleHeaderType: staleHeaderType || undefined,
+    }),
+    [componentRegistry, onUpdateCallbacks, staleHeaderType, url],
+  );
   if (!doc) {
     throw new HvScreenRenderError('The document is not available.');
   }
 
-  const [body] = Array.from(
-    doc.getElementsByTagNameNS(Namespaces.HYPERVIEW, 'body'),
-  );
-
-  let screenElement: React.ReactElement | undefined;
-
-  if (body) {
-    screenElement = (
-      <HvElement
-        element={body}
-        onUpdate={onUpdate}
-        options={{
-          componentRegistry,
-          onUpdateCallbacks,
-          screenUrl: url || undefined,
-          staleHeaderType: staleHeaderType || undefined,
-        }}
-        stylesheets={
-          styles || {
-            focused: {},
-            pressed: {},
-            pressedSelected: {},
-            regular: {},
-            selected: {},
-          }
-        }
-      />
-    );
-  }
-
-  if (!screenElement) {
+  if (!body) {
     throw new HvScreenRenderError('The document has no content.');
   }
 
   return (
-    <>
-      {ErrorComponent && elementError ? (
-        <ErrorComponent
-          error={elementError}
-          onPressClose={() => setScreenState({ elementError: null })}
-          onPressReload={() => reload()}
-        />
-      ) : null}
-      <Scroll.Provider>{screenElement}</Scroll.Provider>
-    </>
+    <HeaderProvider
+      element={body}
+      onUpdate={onUpdate}
+      options={renderOptions}
+      stylesheets={stylesheets}
+    >
+      {nativeHeaderActive => (
+        <>
+          {ErrorComponent && elementError ? (
+            <ErrorComponent
+              error={elementError}
+              onPressClose={() => setScreenState({ elementError: null })}
+              onPressReload={() => reload()}
+            />
+          ) : null}
+          <Scroll.Provider>
+            <HvElement
+              element={body}
+              onUpdate={onUpdate}
+              options={{
+                ...renderOptions,
+                nativeHeaderActive,
+              }}
+              stylesheets={stylesheets}
+            />
+          </Scroll.Provider>
+        </>
+      )}
+    </HeaderProvider>
   );
 };
 

@@ -395,12 +395,10 @@ export default (props: Props) => {
     if (props.route?.params?.preloadScreen) {
       const preloadElement = getElement(props.route?.params?.preloadScreen);
       if (preloadElement) {
-        const [body] = Array.from(
-          preloadElement.getElementsByTagNameNS(
-            Namespaces.HYPERVIEW,
-            'body',
-          ) as HTMLCollectionOf<Element>,
-        );
+        const preloadDocument = preloadElement.ownerDocument ?? undefined;
+        const body = preloadElement
+          .getElementsByTagNameNS(Namespaces.HYPERVIEW, 'body')
+          .item(0);
         const styleSheet = Stylesheets.createStylesheets(
           (preloadElement as unknown) as Document,
         );
@@ -408,7 +406,14 @@ export default (props: Props) => {
           <HvElement
             element={body as Element}
             onUpdate={onDocUpdate}
-            options={{ componentRegistry }}
+            options={{
+              componentRegistry,
+              isRouteLoading: true,
+              onUpdateCallbacks: {
+                ...contextValue.onUpdateCallbacks,
+                getDoc: () => preloadDocument,
+              },
+            }}
             stylesheets={styleSheet}
           />
         );

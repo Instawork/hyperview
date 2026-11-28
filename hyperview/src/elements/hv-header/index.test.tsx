@@ -9,8 +9,10 @@ import {
   waitFor,
 } from '@testing-library/react-native';
 import type { HeaderViewProps } from 'hyperview/src/types';
+import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 import { View } from 'react-native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { resolveUniqueElementById } from './callbacks';
 
 describe('HvHeader', () => {
@@ -79,6 +81,54 @@ describe('HvHeader', () => {
       element,
       expect.any(Function),
     );
+  });
+
+  test('updates native header activation from host context', async () => {
+    const EnabledContext = React.createContext(false);
+    const Stack = createNativeStackNavigator();
+    const HeaderView = ({ children }: HeaderViewProps) => children;
+    const useOptions = () => {
+      return React.useContext(EnabledContext)
+        ? { headerShown: true }
+        : undefined;
+    };
+    HeaderView.useOptions = useOptions;
+    const renderHeader = (enabled: boolean) => (
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="HeaderTest">
+            {() => (
+              <EnabledContext.Provider value={enabled}>
+                <HyperviewMock
+                  navigationComponents={{ HeaderView }}
+                  paths={[`${__dirname}/stories/search.xml`]}
+                />
+              </EnabledContext.Provider>
+            )}
+          </Stack.Screen>
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+    const result = await render(renderHeader(false));
+
+    await waitFor(() => {
+      expect(screen.getByTestId('native-search')).toBeOnTheScreen();
+      return true;
+    });
+
+    await result.rerender(renderHeader(true));
+
+    await waitFor(() => {
+      expect(screen.queryByTestId('native-search')).not.toBeOnTheScreen();
+      return true;
+    });
+
+    await result.rerender(renderHeader(false));
+
+    await waitFor(() => {
+      expect(screen.getByTestId('native-search')).toBeOnTheScreen();
+      return true;
+    });
   });
 
   test('renders custom header buttons through standard HXML behaviors', async () => {
