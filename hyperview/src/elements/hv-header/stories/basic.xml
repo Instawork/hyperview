@@ -1,0 +1,10 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <body>
+      <header id="header">
+        <text>Header</text>
+      </header>
+      <view id="content" />
+    </body>
+  </screen>
+</doc>

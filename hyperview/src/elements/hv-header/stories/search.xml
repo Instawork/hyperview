@@ -1,0 +1,23 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <body>
+      <header id="header">
+        <text>Search</text>
+      </header>
+      <text-field
+        debounce="10"
+        id="native-search"
+        mask="(999) 999-9999"
+        name="native-search"
+        native-hide="true"
+        placeholder="Search"
+        value=""
+      >
+        <behavior action="reload" href="#" trigger="blur" />
+        <behavior action="reload" href="#" trigger="change" />
+        <behavior action="reload" href="#" trigger="focus" />
+        <behavior action="reload" href="#" trigger="submit" />
+      </text-field>
+    </body>
+  </screen>
+</doc>

@@ -37,7 +37,6 @@ export default class HvView extends PureComponent<HvComponentProps> {
   static localNameAliases = [
     LOCAL_NAME.BODY,
     LOCAL_NAME.FORM,
-    LOCAL_NAME.HEADER,
     LOCAL_NAME.ITEM,
     LOCAL_NAME.ITEMS,
     LOCAL_NAME.SECTION_TITLE,

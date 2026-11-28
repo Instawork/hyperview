@@ -11,6 +11,7 @@ import type {
 } from '@react-navigation/native';
 import React, { ComponentType } from 'react';
 import type { Props as LoadingProps } from 'hyperview/src/components/loading';
+import type { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import type { RefreshControlProps } from 'react-native';
 import type { XResponseStaleReason } from 'hyperview/src/services/dom';
 
@@ -120,6 +121,8 @@ export type HvComponentOptions = {
   newElement?: Element | null | undefined;
   showIndicatorId?: string | null | undefined;
   onUpdateCallbacks?: OnUpdateCallbacks;
+  isRouteLoading?: boolean;
+  nativeHeaderActive?: boolean;
 };
 
 export type HvComponentOnUpdate = (
@@ -382,9 +385,31 @@ type BottomTabBarComponent = (
   props: BottomTabBarProps,
 ) => React.JSX.Element | null;
 
+export type HeaderCallbacks = {
+  getElementById: (elementId: string) => Element | undefined;
+  onChangeText: (elementId: string, value: string) => void;
+  onPress: (elementId: string) => void;
+  onTrigger: (trigger: 'blur' | 'focus' | 'submit', elementId: string) => void;
+  renderItem: (element: Element) => React.ReactElement | null | string;
+};
+
+export type HeaderViewProps = HeaderCallbacks & {
+  children: React.ReactElement;
+  element: Element;
+  isRouteLoading?: boolean;
+};
+
+type HeaderViewComponent = ComponentType<HeaderViewProps> & {
+  useOptions?: (
+    element: Element | undefined,
+    callbacks: HeaderCallbacks,
+  ) => NativeStackNavigationOptions | undefined;
+};
+
 export type NavigationComponents = {
   BottomTabBar?: BottomTabBarComponent;
   BottomTabView?: typeof BottomTabView;
+  HeaderView?: HeaderViewComponent;
 };
 
 /**

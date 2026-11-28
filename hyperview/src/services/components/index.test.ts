@@ -1,6 +1,7 @@
 /* eslint-disable max-classes-per-file */
 import * as Components from 'hyperview/src/services/components';
 import type { HvComponentProps } from 'hyperview/src/types';
+import HvHeader from 'hyperview/src/elements/hv-header';
 import HvView from 'hyperview/src/elements/hv-view';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import { PureComponent } from 'react';
@@ -96,6 +97,9 @@ describe('Registry', () => {
       expect(
         registry.getComponent('https://hyperview.org/hyperview', 'body'),
       ).toBe(HvView);
+      expect(
+        registry.getComponent('https://hyperview.org/hyperview', 'header'),
+      ).toBe(HvHeader);
     });
 
     it('returns custom component using local name', () => {

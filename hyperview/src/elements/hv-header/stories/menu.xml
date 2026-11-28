@@ -1,0 +1,26 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <body>
+      <header id="header">
+        <view id="native-menu">
+          <text>Options</text>
+          <view id="menu-favorite">
+            <text>Favorite</text>
+            <behavior action="reload" href="#" trigger="press" />
+          </view>
+          <view id="menu-sort">
+            <text>Sort</text>
+            <view id="menu-sort-recent">
+              <text>Recent</text>
+              <behavior action="reload" href="#" trigger="press" />
+            </view>
+            <view id="menu-sort-name">
+              <text>Name</text>
+              <behavior action="reload" href="#" trigger="press" />
+            </view>
+          </view>
+        </view>
+      </header>
+    </body>
+  </screen>
+</doc>

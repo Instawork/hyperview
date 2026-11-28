@@ -36,6 +36,7 @@ A `<text-field>` element can appear anywhere within a `<form>` element.
 - [`style`](#style)
 - [`id`](#id)
 - [`hide`](#hide)
+- [`native-hide`](#native-hide)
 - [`auto-focus`](#auto-focus)
 - [`secure-text`](#secure-text)
 - [`text-content-type`](#text-content-type)
@@ -182,6 +183,14 @@ A global attribute uniquely identifying the element in the whole document.
 | **false** (default), true | No       |
 
 If `hide="true"`, the element will not be rendered on screen. If the element or any of the element's children have a behavior that triggers on "load" or "visible", those behaviors will not trigger while the element is hidden.
+
+#### `native-hide`
+
+| Type                      | Required |
+| ------------------------- | -------- |
+| **false** (default), true | No       |
+
+If `native-hide="true"`, the field will not be rendered while the native header is active. The field remains in the document as the state and behavior model for a native search field and renders normally when the native header is inactive.
 
 #### `auto-focus`
 

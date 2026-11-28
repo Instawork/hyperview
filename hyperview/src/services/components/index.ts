@@ -1,6 +1,7 @@
 import * as Services from 'hyperview/src/services';
 import type { HvComponent } from 'hyperview/src/types';
 import HvDateField from 'hyperview/src/elements/hv-date-field';
+import HvHeader from 'hyperview/src/elements/hv-header';
 import HvImage from 'hyperview/src/elements/hv-image';
 import HvList from 'hyperview/src/elements/hv-list';
 import HvOption from 'hyperview/src/elements/hv-option';
@@ -17,6 +18,7 @@ import HvWebView from 'hyperview/src/elements/hv-web-view';
 
 const HYPERVIEW_COMPONENTS = [
   HvDateField,
+  HvHeader,
   HvList,
   HvOption,
   HvPickerField,

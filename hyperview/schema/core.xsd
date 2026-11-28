@@ -477,11 +477,16 @@
     <xs:attribute name="content-insets" type="xs:boolean" />
   </xs:attributeGroup>
 
+  <xs:attributeGroup name="nativeAttributes">
+    <xs:attribute name="native-hide" type="xs:boolean" />
+  </xs:attributeGroup>
+
   <xs:attributeGroup name="viewAttributes">
     <xs:attribute name="style" type="hv:styleList" />
     <xs:attribute name="id" type="hv:ID" />
     <xs:attribute name="key" type="hv:KEY" />
     <xs:attribute name="hide" type="xs:boolean" />
+    <xs:attributeGroup ref="hv:nativeAttributes" />
     <xs:attribute name="disabled" type="xs:boolean" />
     <xs:attribute name="avoid-keyboard" type="xs:boolean" />
     <xs:attribute name="safe-area" type="xs:boolean" />
@@ -931,6 +936,7 @@
       <xs:attribute name="disabled" type="xs:boolean" />
       <xs:attribute name="resizeMode" type="hv:resizeMode" />
       <xs:attribute name="value" type="xs:string" />
+      <xs:attributeGroup ref="hv:nativeAttributes" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
     </xs:complexType>
   </xs:element>
@@ -948,6 +954,7 @@
       <xs:attribute name="preformatted" type="xs:boolean" />
       <xs:attribute name="value" type="xs:string" />
       <xs:attribute name="adjustsFontSizeToFit" type="xs:boolean" />
+      <xs:attributeGroup ref="hv:nativeAttributes" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
       <xs:attributeGroup ref="hv:fontScaleAttributes" />
     </xs:complexType>
@@ -975,6 +982,7 @@
       <xs:attribute name="key" type="hv:KEY" />
       <xs:attribute name="hide" type="xs:boolean" />
       <xs:attribute name="value" type="xs:string" />
+      <xs:attributeGroup ref="hv:nativeAttributes" />
       <xs:attributeGroup ref="hv:scrollAttributes" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
     </xs:complexType>
@@ -997,6 +1005,7 @@
       <xs:attribute name="hide" type="xs:boolean" />
       <xs:attribute name="value" type="xs:string" />
       <xs:attribute name="sticky-section-titles" type="xs:boolean" />
+      <xs:attributeGroup ref="hv:nativeAttributes" />
       <xs:attributeGroup ref="hv:scrollAttributes" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
     </xs:complexType>
@@ -1050,6 +1059,7 @@
       <xs:attribute name="id" type="hv:ID" />
       <xs:attribute name="key" type="hv:KEY" />
       <xs:attribute name="hide" type="xs:boolean" />
+      <xs:attributeGroup ref="hv:nativeAttributes" />
     </xs:complexType>
   </xs:element>
 
@@ -1098,6 +1108,7 @@
       <xs:attribute name="id" type="hv:ID" />
       <xs:attribute name="key" type="hv:KEY" />
       <xs:attribute name="hide" type="xs:boolean" />
+      <xs:attributeGroup ref="hv:nativeAttributes" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
       <xs:attributeGroup ref="hv:fontScaleAttributes" />
     </xs:complexType>
@@ -1132,6 +1143,7 @@
       <xs:attribute name="id" type="hv:ID" />
       <xs:attribute name="key" type="hv:KEY" />
       <xs:attribute name="hide" type="xs:boolean" />
+      <xs:attributeGroup ref="hv:nativeAttributes" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
       <xs:attributeGroup ref="hv:fontScaleAttributes" />
     </xs:complexType>
@@ -1164,6 +1176,7 @@
       <xs:attribute name="key" type="hv:KEY" />
       <xs:attribute name="hide" type="xs:boolean" />
       <xs:attribute name="style" type="hv:styleList" />
+      <xs:attributeGroup ref="hv:nativeAttributes" />
       <xs:attributeGroup ref="hv:behaviorAttributes" />
     </xs:complexType>
   </xs:element>
@@ -1206,6 +1219,7 @@
       <xs:attribute name="style" type="hv:styleList" />
       <xs:attribute name="auto-focus" type="xs:boolean" />
       <xs:attribute name="secure-text" type="xs:boolean" />
+      <xs:attributeGroup ref="hv:nativeAttributes" />
       <xs:attribute name="underlineColorAndroid" type="hv:color" />
       <xs:attribute name="clearButtonMode">
         <xs:simpleType>
@@ -1282,6 +1296,7 @@
       <xs:attribute name="style" type="hv:styleList" />
       <xs:attribute name="collapsable" type="xs:boolean" />
       <xs:attribute name="collapsable-children" type="xs:boolean" />
+      <xs:attributeGroup ref="hv:nativeAttributes" />
     </xs:complexType>
   </xs:element>
 
@@ -1295,6 +1310,7 @@
       <xs:attribute name="style" type="hv:styleList" />
       <xs:attribute name="collapsable" type="xs:boolean" />
       <xs:attribute name="collapsable-children" type="xs:boolean" />
+      <xs:attributeGroup ref="hv:nativeAttributes" />
     </xs:complexType>
   </xs:element>
 
@@ -1310,6 +1326,7 @@
       <xs:attribute name="value" type="xs:string" />
       <xs:attribute name="collapsable" type="xs:boolean" />
       <xs:attribute name="collapsable-children" type="xs:boolean" />
+      <xs:attributeGroup ref="hv:nativeAttributes" />
     </xs:complexType>
   </xs:element>
 
@@ -1332,6 +1349,7 @@
       </xs:attribute>
       <xs:attribute name="id" type="hv:ID" />
       <xs:attribute name="key" type="hv:KEY" />
+      <xs:attributeGroup ref="hv:nativeAttributes" />
     </xs:complexType>
   </xs:element>
 

@@ -3,6 +3,7 @@ import {
   ACTIONS,
   BEHAVIOR_ATTRIBUTES,
   NAV_ACTIONS,
+  TRIGGERS,
   UPDATE_ACTIONS,
 } from 'hyperview/src/types';
 import type {
@@ -165,6 +166,28 @@ export const triggerBehaviors = (
     } else {
       // Use queueMicrotask to maintain order while avoiding blocking
       // Microtasks execute in FIFO order before the next event loop tick
+      queueMicrotask(() => handler(element));
+    }
+  });
+};
+
+/**
+ * Trigger press behaviors using the same ordering as HyperRef.
+ */
+export const triggerPressBehaviors = (
+  element: Element,
+  onUpdate: HvComponentOnUpdate,
+) => {
+  const behaviors = Dom.getBehaviorElements(element).filter(
+    behaviorElement =>
+      (behaviorElement.getAttribute(BEHAVIOR_ATTRIBUTES.TRIGGER) ||
+        TRIGGERS.PRESS) === TRIGGERS.PRESS,
+  );
+  behaviors.forEach((behaviorElement, index) => {
+    const handler = createActionHandler(behaviorElement, onUpdate);
+    if (index === 0) {
+      handler(element);
+    } else {
       queueMicrotask(() => handler(element));
     }
   });

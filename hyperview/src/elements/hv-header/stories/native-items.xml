@@ -1,0 +1,29 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <body>
+      <header id="header">
+        <view id="native-back">
+          <text>Back</text>
+          <behavior action="back" trigger="press" />
+        </view>
+        <view id="native-info">
+          <text>Info</text>
+          <behavior action="reload" href="#" trigger="press" />
+        </view>
+        <view id="native-done">
+          <text>Done</text>
+          <behavior action="reload" href="#" trigger="press" />
+        </view>
+      </header>
+    </body>
+  </screen>
+  <screen id="loading-screen">
+    <body>
+      <header>
+        <view id="native-info">
+          <text>Loading</text>
+        </view>
+      </header>
+    </body>
+  </screen>
+</doc>

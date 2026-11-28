@@ -1,0 +1,24 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style
+        id="button"
+        alignItems="center"
+        backgroundColor="#34C759"
+        borderRadius="16"
+        height="32"
+        justifyContent="center"
+        paddingHorizontal="12"
+      />
+      <style id="button-label" color="#FFFFFF" />
+    </styles>
+    <body>
+      <header id="header">
+        <view id="custom-header-button" style="button">
+          <text style="button-label">Done</text>
+          <behavior action="push" href="/next" trigger="press" />
+        </view>
+      </header>
+    </body>
+  </screen>
+</doc>

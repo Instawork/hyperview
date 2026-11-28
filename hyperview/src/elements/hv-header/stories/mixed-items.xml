@@ -1,0 +1,45 @@
+<doc xmlns="https://hyperview.org/hyperview">
+  <screen>
+    <styles>
+      <style
+        id="custom-item"
+        alignItems="center"
+        height="32"
+        justifyContent="center"
+        width="32"
+      />
+      <style
+        id="badge"
+        alignItems="center"
+        backgroundColor="#FF3B30"
+        borderRadius="8"
+        height="16"
+        justifyContent="center"
+        position="absolute"
+        right="-4"
+        top="-4"
+        width="16"
+      />
+      <style id="badge-label" color="#FFFFFF" fontSize="10" />
+    </styles>
+    <body>
+      <header id="header">
+        <view id="native-info">
+          <text>Info</text>
+          <behavior action="reload" href="#" trigger="press" />
+        </view>
+        <view id="custom-star" style="custom-item">
+          <text>★</text>
+          <behavior action="reload" href="#" trigger="press" />
+        </view>
+        <view id="custom-badge" style="custom-item">
+          <text>Alerts</text>
+          <view style="badge">
+            <text style="badge-label">3</text>
+          </view>
+          <behavior action="reload" href="#" trigger="press" />
+        </view>
+      </header>
+    </body>
+  </screen>
+</doc>

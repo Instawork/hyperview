@@ -28,3 +28,5 @@ export type TextContextType =
   | 'newPassword'
   | 'oneTimeCode'
   | undefined;
+
+export type TextFieldBehaviorTrigger = 'blur' | 'change' | 'focus' | 'submit';

@@ -15,6 +15,12 @@ import {
 import HvElement from 'hyperview/src/components/hv-element';
 import React from 'react';
 
+const isHidden = (element: Element, options: HvComponentOptions) =>
+  element.nodeType === NODE_TYPE.ELEMENT_NODE &&
+  (element.getAttribute('hide') === 'true' ||
+    (options.nativeHeaderActive &&
+      element.getAttribute('native-hide') === 'true'));
+
 /**
  * Checks if an element should be rendered based on the element type and options
  * Logging warnings for unexpected conditions
@@ -31,10 +37,7 @@ export const isRenderableElement = (
   if (!element) {
     return false;
   }
-  if (
-    element.nodeType === NODE_TYPE.ELEMENT_NODE &&
-    element.getAttribute('hide') === 'true'
-  ) {
+  if (isHidden(element, options)) {
     // Hidden elements don't get rendered
     return false;
   }
