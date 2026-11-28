@@ -1,0 +1,126 @@
+---
+permalink: "/navigation/ui/liquid-glass-header/button-state.xml"
+tags: "Navigation/UI/Header controls"
+hv_title: "Header button state"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scroll-base.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/navigation-header/index.xml.njk' import navigation_header %}
+
+{% block styles %}
+  <style id="button-state-header" alignItems="center" flexDirection="row" />
+  <style id="button-state-title" flex="1" />
+  <style
+    id="button-state-save"
+    alignItems="center"
+    backgroundColor="#0A84FF"
+    borderRadius="16"
+    height="32"
+    justifyContent="center"
+    paddingHorizontal="16"
+  />
+  <style
+    id="button-state-save-disabled"
+    alignItems="center"
+    backgroundColor="#C7CECE"
+    borderRadius="16"
+    height="32"
+    justifyContent="center"
+    paddingHorizontal="16"
+  />
+  <style id="button-state-save-label" color="#FFFFFF" />
+  <style id="button-state-content" flex="1" paddingHorizontal="16" />
+  <style
+    id="button-state-toggle"
+    alignItems="center"
+    backgroundColor="#63CB76"
+    borderRadius="16"
+    marginTop="16"
+    padding="16"
+  />
+  <style
+    id="button-state-toggle-label"
+    color="#FFFFFF"
+    fontSize="18"
+    fontWeight="bold"
+  />
+  <style
+    id="button-state-status-container"
+    borderColor="#E1E1E1"
+    borderRadius="16"
+    borderWidth="2"
+    marginTop="16"
+    padding="16"
+  />
+  <style
+    id="button-state-status-title"
+    fontWeight="600"
+    marginBottom="8"
+  />
+{% endblock %}
+
+{% block header %}
+  {% call navigation_header(hv_title, 'button-state-header') %}
+    <view
+      action="back"
+      href="#"
+      id="button-state/header/back"
+      style="header-btn"
+      navigation:role="back"
+    >
+      {% include 'icons/back.svg' %}
+    </view>
+    <text numberOfLines="1" style="header-title button-state-title">
+      {{ hv_title }}
+    </text>
+    <view
+      id="button-state/header/save-enabled"
+      style="button-state-save"
+      navigation:label="Save"
+      navigation:role="right-item"
+      navigation:header-item-variant="prominent"
+    >
+      <text style="button-state-save-label">Save</text>
+      <behavior
+        xmlns:alert="https://hyperview.org/hyperview-alert"
+        action="alert"
+        alert:message="Save tapped."
+        alert:title="Save"
+      >
+        <alert:option alert:label="OK" />
+      </behavior>
+    </view>
+    <view
+      disabled="true"
+      hide="true"
+      id="button-state/header/save-disabled"
+      style="button-state-save-disabled"
+      navigation:label="Save"
+      navigation:role="right-item"
+      navigation:header-item-variant="prominent"
+    >
+      <text style="button-state-save-label">Save</text>
+    </view>
+  {% endcall %}
+{% endblock %}
+
+{% block container %}
+  <view scroll="true" style="button-state-content">
+    {{ description('Toggle Save between enabled and disabled. The standard header uses the same blue and gray styles.') }}
+    <view style="button-state-toggle">
+      <text style="button-state-toggle-label">Toggle Save</text>
+      <behavior action="toggle" target="button-state/header/save-enabled" />
+      <behavior action="toggle" target="button-state/header/save-disabled" />
+      <behavior action="toggle" target="button-state/content/enabled" />
+      <behavior action="toggle" target="button-state/content/disabled" />
+    </view>
+    <view style="button-state-status-container">
+      <text style="button-state-status-title">Current state</text>
+      <text id="button-state/content/enabled">Save is enabled</text>
+      <text hide="true" id="button-state/content/disabled">
+        Save is disabled
+      </text>
+    </view>
+  </view>
+{% endblock %}
