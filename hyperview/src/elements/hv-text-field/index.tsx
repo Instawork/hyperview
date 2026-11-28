@@ -1,17 +1,22 @@
-import * as Behaviors from 'hyperview/src/services/behaviors';
 import * as Namespaces from 'hyperview/src/services/namespaces';
 import React, { MutableRefObject, useCallback, useEffect, useRef } from 'react';
 import {
   createProps,
   getNameValueFormInputValues,
 } from 'hyperview/src/services';
+import {
+  getDebounceTime,
+  getFormattedValue,
+  triggerTextFieldBehavior,
+  updateTextFieldFocus,
+  updateTextFieldValue,
+} from './updates';
 import type { ElementRef } from 'react';
 import type { HvComponentProps } from 'hyperview/src/types';
 import type { KeyboardTypeOptions } from 'react-native';
 import { LOCAL_NAME } from 'hyperview/src/types';
 import type { TextContextType } from './types';
 import { TextInput } from 'react-native';
-import TinyMask from './mask';
 import debounce from 'lodash/debounce';
 
 const HvTextField = (props: HvComponentProps) => {
@@ -20,14 +25,9 @@ const HvTextField = (props: HvComponentProps) => {
     elementRef.current = props.element;
   }, [props.element]);
 
-  if (props.element.getAttribute('hide') === 'true') {
-    return null;
-  }
-
   // Extract known attributes into their own variables
   const autoFocus = props.element.getAttribute('auto-focus') === 'true';
-  const debounceTimeMs =
-    parseInt(props.element.getAttribute('debounce') || '', 10) || 0;
+  const debounceTimeMs = getDebounceTime(props.element);
   const defaultValue = props.element.getAttribute('value') || undefined;
   const editable = props.element.getAttribute('editable') !== 'false';
   const keyboardType =
@@ -41,21 +41,14 @@ const HvTextField = (props: HvComponentProps) => {
 
   // Handlers
   const setFocus = (focused: boolean) => {
-    const newElement = props.element.cloneNode(true) as Element;
-    props.onUpdate(null, 'swap', props.element, { newElement });
-
-    if (focused) {
-      Behaviors.trigger('focus', newElement, props.onUpdate);
-    } else {
-      Behaviors.trigger('blur', newElement, props.onUpdate);
-    }
+    updateTextFieldFocus(props.element, focused, props.onUpdate);
   };
 
   // Create a memoized, debounced function to trigger the "change" behavior
   // eslint-disable-next-line react-hooks/rules-of-hooks, react-hooks/exhaustive-deps
   const triggerChangeBehaviors = useCallback(
     debounce((newElement: Element) => {
-      Behaviors.trigger('change', newElement, props.onUpdate);
+      triggerTextFieldBehavior('change', newElement, props.onUpdate);
     }, debounceTimeMs),
     [],
   );
@@ -64,16 +57,17 @@ const HvTextField = (props: HvComponentProps) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks, react-hooks/exhaustive-deps
   const onChangeText = (value: string) => {
     const currentElement = elementRef.current;
-    const formattedValue = HvTextField.getFormattedValue(currentElement, value);
-    const newElement = currentElement.cloneNode(true) as Element;
-    newElement.setAttribute('value', formattedValue);
-    props.onUpdate(null, 'swap', currentElement, { newElement });
+    const newElement = updateTextFieldValue(
+      currentElement,
+      value,
+      props.onUpdate,
+    );
     elementRef.current = newElement;
     triggerChangeBehaviors(newElement);
   };
 
   const onSubmitEditing = () => {
-    Behaviors.trigger('submit', props.element, props.onUpdate);
+    triggerTextFieldBehavior('submit', props.element, props.onUpdate);
   };
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -140,15 +134,14 @@ HvTextField.getFormInputValues = (
  * Currently supports the "mask" attribute, which will be applied
  * to format the provided value.
  */
-HvTextField.getFormattedValue = (element: Element, value: string) => {
-  if (!element.hasAttribute('mask')) {
-    return value;
-  }
-  const mask = new TinyMask(element.getAttribute('mask'));
-  // TinyMask returns undefined in some cases (like if the value is an empty string).
-  // In those situations, we want the formatted value to be an empty string
-  // (for proper serialization).
-  return mask.mask(value) || '';
+HvTextField.getFormattedValue = getFormattedValue;
+
+export {
+  getDebounceTime,
+  getFormattedValue,
+  triggerTextFieldBehavior,
+  updateTextFieldFocus,
+  updateTextFieldValue,
 };
 
 export default HvTextField;
