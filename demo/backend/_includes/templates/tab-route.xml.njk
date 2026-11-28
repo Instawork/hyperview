@@ -2,10 +2,16 @@
 {% from 'macros/tabbar-bottom-tab/index.xml.njk' import tabbar_bottom_tab %}
 {% from 'macros/tabbar-bottom/index.xml.njk' import tabbar_bottom %}
 
-{% block container %}
-  <view style="tab-route-content">
+{% block content_container %}
+  <safe-area:safe-area-view
+    xmlns:safe-area="https://hyperview.org/safe-area"
+    key="tab-route-content-safe-area"
+    style="tab-route-content"
+    safe-area:mode="screen"
+    safe-area:insets="[&quot;top&quot;,&quot;right&quot;,&quot;left&quot;]"
+  >
     {% block tab_route_content %}{% endblock %}
-  </view>
+  </safe-area:safe-area-view>
   {% call tabbar_bottom("tabs-navigator") -%}
     {{ tabbar_bottom_tab("ui", "UI", hv_tab_id == "ui", "/hyperview/public/assets/tab-icons/ui.png") }}
     {{ tabbar_bottom_tab("behaviors", "Behaviors", hv_tab_id == "behaviors", "/hyperview/public/assets/tab-icons/behaviors.png") }}

@@ -1,20 +1,26 @@
-<safe-area:safe-area-view
-  xmlns:safe-area="https://hyperview.org/safe-area"
-  key="header-container"
-  style="header-background"
-  safe-area:mode="padding"
-  safe-area:insets="[&quot;right&quot;,&quot;top&quot;,&quot;left&quot;]"
->
-  <header style="header" key="header">
-    {% if hv_button_behavior == 'close' %}
-      <view action="close" href="#" style="header-btn">
-        {% include 'icons/close.svg' %}
-      </view>
-    {% elif hv_button_behavior == 'back' %}
-      <view action="back" href="#" style="header-btn">
-        {% include 'icons/back.svg' %}
-      </view>
-    {% endif %}
-    <text style="header-title">{{ hv_title }}</text>
-  </header>
-</safe-area:safe-area-view>
+{% from 'macros/navigation-header/index.xml.njk' import navigation_header %}
+
+{% call navigation_header(hv_title) %}
+  {% if hv_button_behavior == 'close' %}
+    <view
+      action="close"
+      href="#"
+      id="header/close-button"
+      style="header-btn"
+      navigation:role="close"
+    >
+      {% include 'icons/close.svg' %}
+    </view>
+  {% elif hv_button_behavior == 'back' %}
+    <view
+      action="back"
+      href="#"
+      id="header/back-button"
+      style="header-btn"
+      navigation:role="back"
+    >
+      {% include 'icons/back.svg' %}
+    </view>
+  {% endif %}
+  <text style="header-title">{{ hv_title }}</text>
+{% endcall %}
