@@ -1,0 +1,154 @@
+---
+permalink: "/navigation/ui/liquid-glass-header/overflow.xml"
+tags: "Navigation/UI/Layout limits"
+hv_title: "Overflow ordering"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scroll-base.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/navigation-header/index.xml.njk' import navigation_header %}
+
+{% macro custom_item() %}
+  <view
+    id="overflow-header/header/custom-button"
+    style="overflow-header-custom-button"
+    navigation:item-background="none"
+    navigation:role="right-item"
+  >
+    <view style="overflow-header-custom-visual">
+      <text style="overflow-header-custom-label">C</text>
+    </view>
+    <behavior
+      xmlns:alert="https://hyperview.org/hyperview-alert"
+      action="alert"
+      alert:message="Custom items stay visible and are not moved into overflow."
+      alert:title="Custom item"
+      trigger="press"
+    >
+      <alert:option alert:label="OK" />
+    </behavior>
+  </view>
+{% endmacro %}
+
+{% block styles %}
+  <style id="overflow-header" marginBottom="0" />
+  <style id="overflow-header-actions" alignItems="center" flexDirection="row" />
+  <style id="overflow-header-action" marginLeft="8" />
+  <style
+    id="overflow-header-icon-button"
+    alignItems="center"
+    height="32"
+    justifyContent="center"
+    width="32"
+  />
+  <style
+    id="overflow-header-custom-button"
+    alignItems="center"
+    height="32"
+    justifyContent="center"
+    marginLeft="8"
+    width="32"
+  />
+  <style
+    id="overflow-header-custom-visual"
+    alignItems="center"
+    backgroundColor="#D70015"
+    borderRadius="14"
+    height="28"
+    justifyContent="center"
+    overflow="hidden"
+    width="28"
+  />
+  <style
+    id="overflow-header-custom-label"
+    color="#FFFFFF"
+    fontSize="11"
+    fontWeight="700"
+  />
+  <style id="overflow-header-title" flex="1" />
+  <style id="overflow-header-content" flex="1" paddingHorizontal="16" />
+{% endblock %}
+
+{% block header %}
+  {% if overflow_custom_first %}
+    {% set header_title = hv_title %}
+  {% else %}
+    {% set header_title = 'A very long header title' %}
+  {% endif %}
+  {% call navigation_header(header_title, 'overflow-header') %}
+    <view
+      action="back"
+      href="#"
+      id="overflow-header/header/back-button"
+      style="header-btn"
+      navigation:role="back"
+    >
+      {% include 'icons/back.svg' %}
+    </view>
+    <text numberOfLines="1" style="header-title overflow-header-title">
+      {% if overflow_custom_first %}
+        {{ hv_title }}
+      {% else %}
+        A very long header title
+      {% endif %}
+    </text>
+    <view style="overflow-header-actions">
+      {% if overflow_custom_first %}
+        {{ custom_item() }}
+      {% endif %}
+      {% for item in [
+      ['magnifyingglass', 'Search', 'magnifyingglass'],
+      ['bell', 'Notifications', 'bell'],
+      ['bookmark', 'Bookmark', 'bookmark'],
+      ['square.and.arrow.up', 'Share', 'share'],
+      ['camera', 'Camera', 'camera'],
+      ['heart', 'Favorite', 'heart'],
+      ['paperplane', 'Send', 'paperplane'],
+      ['gearshape', 'Settings', 'gearshape']
+      ] %}
+      <view
+        id="overflow-header/header/{{ item[1] | lower }}-button"
+        style="overflow-header-action overflow-header-icon-button"
+        navigation:accessibility-label="{{ item[1] }}"
+        navigation:icon="{{ item[0] }}"
+        navigation:label="{{ item[1] }}"
+        navigation:role="right-item"
+      >
+        {% include 'icons/' + item[2] + '.svg' %}
+        <behavior
+          xmlns:alert="https://hyperview.org/hyperview-alert"
+          action="alert"
+          alert:message="{{ item[1] }} tapped."
+          alert:title="Overflow"
+        >
+          <alert:option alert:label="OK" />
+        </behavior>
+      </view>
+  {% endfor %}
+  {% if not overflow_custom_first %}
+    {{ custom_item() }}
+  {% endif %}
+  </view>
+{% endcall %}
+{% endblock %}
+
+{% block container %}
+  <view scroll="true" style="overflow-header-content">
+    {{ description('Nine trailing actions: eight icon buttons and one custom control.') }}
+    {% if overflow_custom_first %}
+      {{ description('The custom item is first. It stays visible while extra icon buttons move into overflow.') }}
+    {% else %}
+      {{ description('The custom item is last. Icon buttons overflow, but the custom item is not added to the menu.') }}
+      <view
+        action="push"
+        href="/hyperview/public/navigation/ui/liquid-glass-header/overflow-custom-first.xml"
+        style="button"
+      >
+        <text numberOfLines="1" style="button-label">
+          Show custom first
+        </text>
+      </view>
+    {% endif %}
+    {{ description('Trailing actions squeeze the title. The standard header keeps markup order and has no overflow menu.') }}
+  </view>
+{% endblock %}

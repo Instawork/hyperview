@@ -1,0 +1,24 @@
+---
+permalink: "/navigation/ui/liquid-glass-header/stateful-inactive.xml"
+---
+<view xmlns="https://hyperview.org/hyperview">
+  <text id="liquid-header/header/stateful-inactive" style="liquid-header-state">
+    OFF
+  </text>
+  <text
+    hide="true"
+    id="liquid-header/header/stateful-loading"
+    style="liquid-header-state"
+  >
+    …
+  </text>
+  <behavior
+    action="replace-inner"
+    delay="800"
+    hide-during-load="liquid-header/header/stateful-inactive"
+    href="/hyperview/public/navigation/ui/liquid-glass-header/stateful-active.xml"
+    show-during-load="liquid-header/header/stateful-loading"
+    target="liquid-header/header/stateful-button"
+    trigger="press"
+  />
+</view>

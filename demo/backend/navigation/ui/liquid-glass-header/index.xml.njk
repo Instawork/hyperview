@@ -1,0 +1,217 @@
+---
+permalink: "/navigation/ui/liquid-glass-header/index.xml"
+tags: "Navigation/UI/Header controls"
+hv_title: "Mixed header controls"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scroll-base.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/navigation-header/index.xml.njk' import navigation_header %}
+
+{% block styles %}
+  <style id="liquid-header" marginBottom="0" />
+  <style
+    id="liquid-header-image"
+    height="240"
+    marginBottom="16"
+    resizeMode="cover"
+    width="100%"
+  />
+  <style
+    id="liquid-header-actions"
+    alignItems="center"
+    columnGap="12"
+    flexDirection="row"
+  />
+  <style id="liquid-header-title" flex="1" />
+  <style id="liquid-header-content" flex="1" />
+  <style
+    id="liquid-header-custom-item"
+    alignItems="center"
+    height="32"
+    justifyContent="center"
+    width="32"
+  />
+  <style
+    id="liquid-header-medal"
+    alignItems="center"
+    backgroundColor="#F5B700"
+    borderRadius="12"
+    height="24"
+    justifyContent="center"
+    width="24"
+  />
+  <style
+    id="liquid-header-medal-text"
+    color="#332600"
+    fontSize="15"
+    fontWeight="700"
+  />
+  <style
+    id="liquid-header-badge"
+    alignItems="center"
+    backgroundColor="#D70015"
+    borderRadius="7"
+    height="14"
+    justifyContent="center"
+    position="absolute"
+    right="0"
+    top="0"
+    width="14"
+  />
+  <style
+    id="liquid-header-badge-text"
+    color="#FFFFFF"
+    fontSize="9"
+    fontWeight="700"
+  />
+  <style
+    id="liquid-header-state"
+    color="#0057B8"
+    fontSize="12"
+    fontWeight="700"
+  />
+  <style
+    id="liquid-header-dark-section"
+    backgroundColor="#333333"
+    marginBottom="16"
+    paddingBottom="32"
+    paddingHorizontal="16"
+    paddingTop="32"
+  />
+  <style id="liquid-header-dark-text" color="#FFFFFF" />
+{% endblock %}
+
+{% block header %}
+  {% call navigation_header(hv_title, 'liquid-header') %}
+    <view
+      action="back"
+      href="#"
+      id="liquid-header/header/back-button"
+      style="header-btn"
+      navigation:role="back"
+    >
+      {% include 'icons/back.svg' %}
+    </view>
+    <text numberOfLines="1" style="header-title liquid-header-title">
+      {{ hv_title }}
+    </text>
+    <view style="liquid-header-actions">
+      <view
+        id="liquid-header/header/information-button"
+        navigation:item-background="{% if mixed_mode == 'split' %}separate{% else %}shared{% endif %}"
+        navigation:icon="info.circle"
+        navigation:role="right-item"
+      >
+        {% include 'icons/info.svg' %}
+        <behavior
+          xmlns:alert="https://hyperview.org/hyperview-alert"
+          action="alert"
+          alert:message="Info tapped."
+          alert:title="Info"
+        >
+          <alert:option alert:label="OK" />
+        </behavior>
+      </view>
+      <view
+        id="liquid-header/header/medal-badge"
+        style="liquid-header-custom-item"
+        navigation:item-background="{% if mixed_mode %}shared{% else %}none{% endif %}"
+        navigation:role="right-item"
+      >
+        <view style="liquid-header-medal">
+          <text style="liquid-header-medal-text">★</text>
+        </view>
+        <view style="liquid-header-badge">
+          <text style="liquid-header-badge-text">3</text>
+        </view>
+        <behavior
+          xmlns:alert="https://hyperview.org/hyperview-alert"
+          action="alert"
+          alert:message="Custom badge tapped."
+          alert:title="Custom badge"
+          trigger="press"
+        >
+          <alert:option alert:label="OK" />
+        </behavior>
+      </view>
+      <view
+        id="liquid-header/header/stateful-button"
+        style="liquid-header-custom-item"
+        navigation:role="right-item"
+      >
+        <text
+          id="liquid-header/header/stateful-inactive"
+          style="liquid-header-state"
+        >
+          OFF
+        </text>
+        <text
+          hide="true"
+          id="liquid-header/header/stateful-loading"
+          style="liquid-header-state"
+        >
+          …
+        </text>
+        <behavior
+          action="replace-inner"
+          delay="800"
+          hide-during-load="liquid-header/header/stateful-inactive"
+          href="/hyperview/public/navigation/ui/liquid-glass-header/stateful-active.xml"
+          show-during-load="liquid-header/header/stateful-loading"
+          target="liquid-header/header/stateful-button"
+          trigger="press"
+        />
+      </view>
+    </view>
+  {% endcall %}
+{% endblock %}
+
+{% block container %}
+  <view scroll="true" style="liquid-header-content">
+    {% if mixed_mode == 'shared' %}
+      {{ description('All three header controls share one glass background.') }}
+    {% elif mixed_mode == 'split' %}
+      {{ description('The info button has its own glass background. The badge and state control share another.') }}
+    {% else %}
+      {{ description('Info button, custom badge, and state control. The badge keeps its own background instead of joining the glass group.') }}
+      <view
+        action="push"
+        href="/hyperview/public/navigation/ui/liquid-glass-header/mixed-shared.xml"
+        style="button"
+      >
+        <text numberOfLines="1" style="button-label">
+          Shared glass background
+        </text>
+      </view>
+      <view
+        action="push"
+        href="/hyperview/public/navigation/ui/liquid-glass-header/mixed-split.xml"
+        style="button"
+      >
+        <text numberOfLines="1" style="button-label">
+          Split glass backgrounds
+        </text>
+      </view>
+    {% endif %}
+    <image
+      source="/hyperview/public/ui/ui-elements/image/image.jpg"
+      style="liquid-header-image"
+    />
+    <view style="liquid-header-dark-section">
+      <text style="liquid-header-dark-text">
+        Scroll to compare the header over light and dark content.
+      </text>
+    </view>
+    <image
+      source="/hyperview/public/ui/ui-elements/image/image.jpg"
+      style="liquid-header-image"
+    />
+    {{ description('Custom items use normal styled views and behaviors.') }}
+    <image
+      source="/hyperview/public/ui/ui-elements/image/image.jpg"
+      style="liquid-header-image"
+    />
+    {{ description('The same markup provides the title, controls, and actions for both header styles.') }}
+  </view>
+{% endblock %}

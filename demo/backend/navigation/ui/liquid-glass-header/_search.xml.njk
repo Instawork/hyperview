@@ -1,0 +1,206 @@
+{% extends 'templates/base.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% macro set_search_state(trigger, state) %}
+  {% for target in ['idle', 'focused', 'changed', 'submitted', 'blurred'] %}
+    <behavior
+      action="{% if target == state %}show{% else %}hide{% endif %}"
+      target="search-header/content/{{ target }}"
+      trigger="{{ trigger }}"
+    />
+  {% endfor %}
+{% endmacro %}
+
+{% macro search_field(style) %}
+  <text-field
+    id="search-field"
+    name="search-text"
+    placeholder="Search"
+    style="search-header-field {{ style }}"
+  >
+    <behavior
+      action="dispatch-event"
+      event-name="header-search-change"
+      trigger="change"
+    />
+    {{ set_search_state('focus', 'focused') }}
+    {{ set_search_state('change', 'changed') }}
+    {{ set_search_state('submit', 'submitted') }}
+    {{ set_search_state('blur', 'blurred') }}
+  </text-field>
+{% endmacro %}
+
+{% block styles %}
+  <style
+    id="search-header"
+    {% if search_placement == 'stacked' %}
+      alignItems="stretch"
+      flexDirection="column"
+    {% endif %}
+    marginBottom="0"
+  />
+  <style id="search-header-top" alignItems="center" flexDirection="row" />
+  <style id="search-header-title" flex="1" />
+  <style
+    id="search-header-field"
+    backgroundColor="#E9E9EB"
+    borderRadius="10"
+    height="36"
+    paddingHorizontal="12"
+  />
+  <style id="search-header-field-inline" flex="1" marginLeft="8" />
+  <style id="search-header-field-stacked" marginTop="10" />
+  <style id="search-bottom-bar" padding="12" />
+  <style id="search-bottom-field" width="100%" />
+  <style id="search-header-content" flex="1" />
+  <style
+    id="search-header-state-container"
+    borderColor="#E1E1E1"
+    borderRadius="16"
+    borderWidth="2"
+    marginBottom="16"
+    marginHorizontal="24"
+    padding="16"
+  />
+  <style
+    id="search-header-state-title"
+    fontWeight="600"
+    marginBottom="8"
+  />
+  <style id="search-header-state-value" flexDirection="row" />
+  <style id="search-header-state-value-text" marginLeft="4" />
+  <style
+    id="search-header-dark"
+    backgroundColor="#333333"
+    marginBottom="16"
+    paddingBottom="48"
+    paddingHorizontal="16"
+    paddingTop="48"
+  />
+  <style id="search-header-dark-text" color="#FFFFFF" />
+  <style
+    id="search-header-image"
+    height="220"
+    marginBottom="16"
+    resizeMode="cover"
+    width="100%"
+  />
+{% endblock %}
+
+{% block body %}
+  <form style="flex-1">
+    <header
+      xmlns:navigation="https://hyperview.org/navigation"
+      key="header"
+      navigation:search-placeholder="Search"
+      navigation:search-placement="{{ search_placement }}"
+      navigation:search-target="search-field"
+      navigation:title="{{ header_title }}"
+    >
+      <safe-area:safe-area-view
+        xmlns:safe-area="https://hyperview.org/safe-area"
+        key="header-container"
+        style="header-background"
+        safe-area:mode="padding"
+        safe-area:insets="[&quot;right&quot;,&quot;top&quot;,&quot;left&quot;]"
+      >
+        <view style="header search-header">
+          {% if search_placement == 'stacked' %}
+            <view style="search-header-top">
+          {% endif %}
+          <view
+            action="back"
+            href="#"
+            id="search-header/header/back"
+            style="header-btn"
+            navigation:role="back"
+          >
+            {% include 'icons/back.svg' %}
+          </view>
+          {% if search_placement == 'stacked' %}
+            <text numberOfLines="1" style="header-title search-header-title">
+              {{ header_title }}
+            </text>
+          {% endif %}
+          {% if search_placement == 'integratedButton' %}
+            {{ search_field('search-header-field-inline') }}
+          {% endif %}
+          {% if search_placement == 'stacked' %}
+            </view>
+            {{ search_field('search-header-field-stacked') }}
+          {% endif %}
+        </view>
+      </safe-area:safe-area-view>
+    </header>
+    <safe-area:safe-area-view
+      xmlns:safe-area="https://hyperview.org/safe-area"
+      key="content-safe-area"
+      style="flex-1"
+      safe-area:mode="padding"
+      safe-area:insets="[&quot;bottom&quot;]"
+    >
+      <view scroll="true" style="search-header-content">
+        {% if search_placement == 'stacked' %}
+          {{ description('Search sits on a second row under the navigation controls.') }}
+        {% elif search_placement == 'integratedButton' %}
+          {{ description('Search starts in the header row and expands when tapped.') }}
+        {% else %}
+          {{ description('Search sits at the bottom of the screen, below the content.') }}
+        {% endif %}
+        {{ description('Focus, type, submit, and dismiss search to see each callback.') }}
+        <filter:container
+          xmlns:filter="https://hyperview.org/filter"
+          filter:on-event="header-search-change"
+          filter:on-param="search-text"
+        >
+          <view style="search-header-state-container">
+            <text style="search-header-state-title">Current state</text>
+            <text id="search-header/content/idle">Waiting for input</text>
+            <text hide="true" id="search-header/content/focused">Focused</text>
+            <view
+              hide="true"
+              id="search-header/content/changed"
+              style="search-header-state-value"
+            >
+              <text>Changed:</text>
+              <text
+                style="search-header-state-value-text"
+                filter:role="filter-terms"
+              />
+            </view>
+            <text hide="true" id="search-header/content/submitted">
+              Submitted
+            </text>
+            <text hide="true" id="search-header/content/blurred">Blurred</text>
+          </view>
+        </filter:container>
+        <image
+          source="/hyperview/public/ui/ui-elements/image/image.jpg"
+          style="search-header-image"
+        />
+        <view style="search-header-dark">
+          <text style="search-header-dark-text">
+            Scroll under the header to check placement, insets, and contrast.
+          </text>
+        </view>
+        <image
+          source="/hyperview/public/ui/ui-elements/image/image.jpg"
+          style="search-header-image"
+        />
+        <image
+          source="/hyperview/public/ui/ui-elements/image/image.jpg"
+          style="search-header-image"
+        />
+        <image
+          source="/hyperview/public/ui/ui-elements/image/image.jpg"
+          style="search-header-image"
+        />
+      </view>
+      {% if search_placement == 'automatic' %}
+        <view native-hide="true" style="search-bottom-bar">
+          {{ search_field('search-bottom-field') }}
+        </view>
+      {% endif %}
+    </safe-area:safe-area-view>
+  </form>
+{% endblock %}
