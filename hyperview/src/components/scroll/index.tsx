@@ -14,12 +14,14 @@ export function withContext<T, P extends ScrollProps>(
   Component: React.ComponentType<P>,
 ) {
   return forwardRef<T, P & Props<T>>((props: Props<T>, ref) => {
-    const { updateOffset } = useContext(Context);
+    const { automaticContentInsets, updateOffset } = useContext(Context);
     const { element, onScroll, ...p } = props;
-    const contentInsetAdjustmentBehavior =
-      element.getAttribute('content-insets') === 'true'
-        ? 'automatic'
-        : undefined;
+    const contentInsets = element.getAttribute('content-insets');
+    const contentInsetAdjustmentBehavior = getContentInsetAdjustmentBehavior(
+      props,
+      contentInsets,
+      automaticContentInsets,
+    );
     const contextKey = element.getAttributeNS(
       Namespaces.HYPERVIEW_SCROLL,
       'context-key',
@@ -71,3 +73,20 @@ export const KeyboardAwareScrollView = withContext<
 >(HVKeyboardAwareScrollView);
 
 export { Context, Provider, useScrollContext } from './context';
+
+function getContentInsetAdjustmentBehavior(
+  props: ScrollProps,
+  contentInsets: string | null,
+  automaticContentInsets: boolean,
+) {
+  if (props.contentInsetAdjustmentBehavior !== undefined) {
+    return props.contentInsetAdjustmentBehavior;
+  }
+  if (
+    contentInsets === 'true' ||
+    (contentInsets !== 'false' && automaticContentInsets && !props.horizontal)
+  ) {
+    return 'automatic';
+  }
+  return undefined;
+}

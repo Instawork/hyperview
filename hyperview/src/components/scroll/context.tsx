@@ -1,29 +1,43 @@
-import type { Offsets, ScrollOffset } from './types';
-import React, { createContext, useContext, useState } from 'react';
+import type {
+  ContextValue,
+  Offsets,
+  ProviderProps,
+  ScrollOffset,
+} from './types';
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from 'react';
 
-export const Context = createContext<{
-  offsets: Offsets;
-  updateOffset: (viewId: string, offset: ScrollOffset) => void | undefined;
-}>({
+export const Context = createContext<ContextValue>({
+  automaticContentInsets: false,
   offsets: {},
   updateOffset: () => undefined,
 });
 
-export const Provider = (props: { children: React.ReactNode }) => {
+export const Provider = (props: ProviderProps) => {
   const [offsets, setOffsets] = useState<Offsets>({});
 
-  const updateOffset = (viewId: string, offset: ScrollOffset) => {
-    setOffsets({
-      ...offsets,
+  const updateOffset = useCallback((viewId: string, offset: ScrollOffset) => {
+    setOffsets(currentOffsets => ({
+      ...currentOffsets,
       [viewId]: offset,
-    });
-  };
+    }));
+  }, []);
 
-  return (
-    <Context.Provider value={{ offsets, updateOffset }}>
-      {props.children}
-    </Context.Provider>
+  const value = useMemo(
+    () => ({
+      automaticContentInsets: props.automaticContentInsets,
+      offsets,
+      updateOffset,
+    }),
+    [props.automaticContentInsets, offsets, updateOffset],
   );
+
+  return <Context.Provider value={value}>{props.children}</Context.Provider>;
 };
 
 export const useScrollContext = () => useContext(Context);

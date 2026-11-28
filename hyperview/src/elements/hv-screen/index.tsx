@@ -80,7 +80,7 @@ const HvScreen = (props: Props) => {
               onPressReload={() => reload()}
             />
           ) : null}
-          <Scroll.Provider>
+          <Scroll.Provider automaticContentInsets={nativeHeaderActive}>
             <HvElement
               element={body}
               onUpdate={onUpdate}
