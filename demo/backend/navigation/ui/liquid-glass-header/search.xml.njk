@@ -1,0 +1,45 @@
+---
+permalink: "/navigation/ui/liquid-glass-header/search.xml"
+tags: "Navigation/UI/Header shapes"
+hv_title: "Search"
+hv_button_behavior: "back"
+---
+{% extends 'templates/base.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+
+{% block styles %}
+  <style id="search-options" flex="1" paddingHorizontal="16" />
+  <style
+    id="search-option"
+    alignItems="center"
+    backgroundColor="#63CB76"
+    borderRadius="16"
+    marginBottom="12"
+    padding="16"
+  />
+  <style
+    id="search-option-label"
+    color="#FFFFFF"
+    fontSize="18"
+    fontWeight="bold"
+  />
+{% endblock %}
+
+{% block container %}
+  <view scroll="true" style="search-options">
+    {{ description('Compare the three search placements supported by the header.') }}
+    {% for option in [
+    ['Inline', 'search-integrated'],
+    ['Second row', 'search-row'],
+    ['Bottom', 'search-bottom']
+    ] %}
+    <view
+      action="push"
+      href="/hyperview/public/navigation/ui/liquid-glass-header/{{ option[1] }}.xml"
+      style="search-option"
+    >
+      <text style="search-option-label">{{ option[0] }}</text>
+    </view>
+{% endfor %}
+</view>
+{% endblock %}
