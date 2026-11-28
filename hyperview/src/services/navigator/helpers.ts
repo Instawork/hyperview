@@ -154,26 +154,38 @@ export const findPath = (
 };
 
 /**
+ * Find the first mounted navigator that matches the provided condition.
+ */
+const findNavigator = (
+  state: NavigationState | undefined,
+  matches: (navigator: NavigationState) => boolean,
+): NavigationState | undefined => {
+  if (!state?.routes) {
+    return undefined;
+  }
+
+  if (matches(state)) {
+    return state;
+  }
+
+  return state.routes.reduce<NavigationState | undefined>(
+    (navigator, route) =>
+      navigator ||
+      findNavigator(route.state as NavigationState | undefined, matches),
+    undefined,
+  );
+};
+
+/**
  * Find the key of the navigator that directly contains a route key
  */
 export const findNavigatorKeyForRoute = (
   state: NavigationState | undefined,
   routeKey: string,
 ): string | undefined => {
-  if (!state?.routes) {
-    return undefined;
-  }
-
-  if (state.routes.some(route => route.key === routeKey)) {
-    return state.key;
-  }
-
-  return state.routes.reduce<string | undefined>(
-    (navigatorKey, route) =>
-      navigatorKey ||
-      findNavigatorKeyForRoute(route.state as NavigationState, routeKey),
-    undefined,
-  );
+  return findNavigator(state, navigator =>
+    navigator.routes.some(route => route.key === routeKey),
+  )?.key;
 };
 
 /**
@@ -183,22 +195,8 @@ export const findNavigatorForRouteName = (
   state: NavigationState | undefined,
   routeName: string,
 ): NavigationState | undefined => {
-  if (!state?.routes) {
-    return undefined;
-  }
-
-  if (state.routeNames.includes(routeName)) {
-    return state;
-  }
-
-  return state.routes.reduce<NavigationState | undefined>(
-    (navigator, route) =>
-      navigator ||
-      findNavigatorForRouteName(
-        route.state as NavigationState | undefined,
-        routeName,
-      ),
-    undefined,
+  return findNavigator(state, navigator =>
+    navigator.routeNames.includes(routeName),
   );
 };
 
