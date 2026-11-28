@@ -36,6 +36,38 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="back" />
       <xs:enumeration value="close" />
+      <xs:enumeration value="right-item" />
+      <xs:enumeration value="title" />
+      <xs:enumeration value="left-item" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="titleMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="compact" />
+      <xs:enumeration value="large" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="headerItemVariant">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="done" />
+      <xs:enumeration value="plain" />
+      <xs:enumeration value="prominent" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="itemBackground">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="none" />
+      <xs:enumeration value="separate" />
+      <xs:enumeration value="shared" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="searchPlacement">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="automatic" />
+      <xs:enumeration value="integrated" />
+      <xs:enumeration value="integratedButton" />
+      <xs:enumeration value="integratedCentered" />
+      <xs:enumeration value="stacked" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="back">
@@ -43,9 +75,21 @@
       <xs:sequence>
         <xs:any minOccurs="0" maxOccurs="unbounded" />
       </xs:sequence>
+      <xs:attribute name="role" type="nav:role" />
     </xs:complexType>
   </xs:element>
   <xs:attributeGroup name="navAttributes">
+    <xs:attribute name="accessibility-label" type="xs:string" />
+    <xs:attribute name="badge" type="xs:string" />
+    <xs:attribute name="item-background" type="nav:itemBackground" />
+    <xs:attribute name="icon" type="xs:string" />
+    <xs:attribute name="label" type="xs:string" />
     <xs:attribute name="role" type="nav:role" />
+    <xs:attribute name="search-placeholder" type="xs:string" />
+    <xs:attribute name="search-placement" type="nav:searchPlacement" />
+    <xs:attribute name="search-target" type="hv:IDREF" />
+    <xs:attribute name="title" type="xs:string" />
+    <xs:attribute name="title-mode" type="nav:titleMode" />
+    <xs:attribute name="header-item-variant" type="nav:headerItemVariant" />
   </xs:attributeGroup>
 </xs:schema>
