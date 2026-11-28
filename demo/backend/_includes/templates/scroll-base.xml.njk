@@ -1,0 +1,13 @@
+{% extends 'templates/base.xml.njk' %}
+
+{% block content_container %}
+  <safe-area:safe-area-view
+    xmlns:safe-area="https://hyperview.org/safe-area"
+    key="content-safe-area"
+    style="flex-1"
+    safe-area:mode="padding"
+    safe-area:insets="[&quot;bottom&quot;]"
+  >
+    {% block container %}{% endblock %}
+  </safe-area:safe-area-view>
+{% endblock %}

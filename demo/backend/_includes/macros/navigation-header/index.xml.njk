@@ -1,0 +1,19 @@
+{% macro navigation_header(title, header_style='', safe_area_style='header-background') %}
+  <header
+    xmlns:navigation="https://hyperview.org/navigation"
+    key="header"
+    navigation:title="{{ title }}"
+  >
+    <safe-area:safe-area-view
+      xmlns:safe-area="https://hyperview.org/safe-area"
+      key="header-container"
+      style="{{ safe_area_style }}"
+      safe-area:mode="padding"
+      safe-area:insets="[&quot;right&quot;,&quot;top&quot;,&quot;left&quot;]"
+    >
+      <view style="header{% if header_style %} {{ header_style }}{% endif %}">
+        {{ caller() }}
+      </view>
+    </safe-area:safe-area-view>
+  </header>
+{% endmacro %}

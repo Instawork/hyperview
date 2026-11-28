@@ -19,15 +19,23 @@ hv_button_behavior: "back"
     </styles>
     <body style="body">
       {% include 'templates/header.xml.njk' %}
-      <text style="label">This is screen 1.</text>
-      <text
-        delay="800"
-        href="/hyperview/public/advanced/case-studies/navigation/screen2.xml"
-        show-during-load="screen2Loading"
-        style="label label-link"
+      <safe-area:safe-area-view
+        xmlns:safe-area="https://hyperview.org/safe-area"
+        key="content-safe-area"
+        style="flex-1"
+        safe-area:mode="screen"
+        safe-area:insets="[&quot;top&quot;,&quot;right&quot;,&quot;bottom&quot;,&quot;left&quot;]"
       >
-        Click me
-      </text>
+        <text style="label">This is screen 1.</text>
+        <text
+          delay="800"
+          href="/hyperview/public/advanced/case-studies/navigation/screen2.xml"
+          show-during-load="screen2Loading"
+          style="label label-link"
+        >
+          Click me
+        </text>
+      </safe-area:safe-area-view>
     </body>
   </screen>
   <screen id="screen2Loading">
@@ -39,10 +47,18 @@ hv_button_behavior: "back"
     </styles>
     <body style="body">
       {% include 'templates/header.xml.njk' %}
-      <view style="loading">
-        <text style="loading-text">Screen 2 is loading…</text>
-        <spinner/>
-      </view>
+      <safe-area:safe-area-view
+        xmlns:safe-area="https://hyperview.org/safe-area"
+        key="content-safe-area"
+        style="flex-1"
+        safe-area:mode="screen"
+        safe-area:insets="[&quot;top&quot;,&quot;right&quot;,&quot;bottom&quot;,&quot;left&quot;]"
+      >
+        <view style="loading">
+          <text style="loading-text">Screen 2 is loading…</text>
+          <spinner/>
+        </view>
+      </safe-area:safe-area-view>
     </body>
   </screen>
 </doc>
