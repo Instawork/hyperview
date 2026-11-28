@@ -1,0 +1,90 @@
+---
+permalink: "/navigation/ui/liquid-glass-header/left-native.xml"
+tags: "Navigation/UI/Layout limits"
+hv_title: "Back and left items"
+hv_button_behavior: "back"
+---
+{% extends 'templates/scroll-base.xml.njk' %}
+{% from 'macros/description/index.xml.njk' import description %}
+{% from 'macros/navigation-header/index.xml.njk' import navigation_header %}
+
+{% block styles %}
+  <style id="left-native-header" marginBottom="0" />
+  <style id="left-native-header-action" marginHorizontal="8" />
+  <style
+    id="left-native-header-custom"
+    alignItems="center"
+    backgroundColor="#E8F1FF"
+    borderRadius="14"
+    height="28"
+    justifyContent="center"
+    width="36"
+  />
+  <style
+    id="left-native-header-custom-label"
+    color="#0057B8"
+    fontSize="11"
+    fontWeight="700"
+  />
+  <style id="left-native-header-title" flex="1" />
+  <style id="left-native-header-content" flex="1" paddingHorizontal="16" />
+{% endblock %}
+
+{% block header %}
+  {% call navigation_header(hv_title, 'left-native-header') %}
+    <view
+      action="back"
+      href="#"
+      id="left-native-header/header/back-button"
+      style="header-btn"
+      navigation:role="back"
+    >
+      {% include 'icons/back.svg' %}
+    </view>
+    <view
+      id="left-native-header/header/sidebar-button"
+      style="left-native-header-action"
+      navigation:accessibility-label="Sidebar"
+      navigation:icon="sidebar.left"
+      navigation:role="left-item"
+    >
+      {% include 'icons/sidebar-left.svg' %}
+      <behavior
+        xmlns:alert="https://hyperview.org/hyperview-alert"
+        action="alert"
+        alert:message="Sidebar tapped."
+        alert:title="Sidebar"
+      >
+        <alert:option alert:label="OK" />
+      </behavior>
+    </view>
+    <view
+      id="left-native-header/header/custom-button"
+      style="left-native-header-custom"
+      navigation:item-background="none"
+      navigation:role="left-item"
+    >
+      <text style="left-native-header-custom-label">UI</text>
+      <behavior
+        xmlns:alert="https://hyperview.org/hyperview-alert"
+        action="alert"
+        alert:message="Custom left item tapped."
+        alert:title="Custom left item"
+        trigger="press"
+      >
+        <alert:option alert:label="OK" />
+      </behavior>
+    </view>
+    <text numberOfLines="1" style="header-title left-native-header-title">
+      {{ hv_title }}
+    </text>
+  {% endcall %}
+{% endblock %}
+
+{% block container %}
+  <view scroll="true" style="left-native-header-content">
+    {{ description('Back, Sidebar, and a custom UI control on the left.') }}
+    {{ description('The standard header shows the same three controls in the same order.') }}
+    {{ description('Try back, control order, glass grouping, and how the title behaves with extra left items.') }}
+  </view>
+{% endblock %}
