@@ -290,6 +290,9 @@ export type RouteParams = {
   delay?: number;
   id?: string;
   isModal?: boolean;
+  isModalHost?: boolean;
+  modalHostRouteKeyPath?: string[];
+  modalHostRouteName?: string;
   needsSubStack?: boolean;
   preloadScreen?: number | null;
   ownerRouteKey?: string;

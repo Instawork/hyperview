@@ -23,14 +23,14 @@ import { ANCHOR_ID_SEPARATOR } from './types';
 import { shallowCloneToRoot } from 'hyperview/src/services';
 
 /**
- * Card and modal routes are not defined in the document
+ * Card, modal, and generated modal-host routes are not defined in the document
  */
-export const isDynamicRoute = (id: string): boolean => {
-  return id === Types.ID_CARD || id === Types.ID_MODAL;
-};
-
-export const isModalRouteName = (name: string): boolean => {
-  return name.startsWith(Types.ID_MODAL);
+export const isDynamicRoute = (id: string, params?: RouteParams): boolean => {
+  return (
+    id === Types.ID_CARD ||
+    id === Types.ID_MODAL ||
+    params?.isModalHost === true
+  );
 };
 
 /**
@@ -154,26 +154,38 @@ export const findPath = (
 };
 
 /**
+ * Find the first mounted navigator that matches the provided condition.
+ */
+const findNavigator = (
+  state: NavigationState | undefined,
+  matches: (navigator: NavigationState) => boolean,
+): NavigationState | undefined => {
+  if (!state?.routes) {
+    return undefined;
+  }
+
+  if (matches(state)) {
+    return state;
+  }
+
+  return state.routes.reduce<NavigationState | undefined>(
+    (navigator, route) =>
+      navigator ||
+      findNavigator(route.state as NavigationState | undefined, matches),
+    undefined,
+  );
+};
+
+/**
  * Find the key of the navigator that directly contains a route key
  */
 export const findNavigatorKeyForRoute = (
   state: NavigationState | undefined,
   routeKey: string,
 ): string | undefined => {
-  if (!state?.routes) {
-    return undefined;
-  }
-
-  if (state.routes.some(route => route.key === routeKey)) {
-    return state.key;
-  }
-
-  return state.routes.reduce<string | undefined>(
-    (navigatorKey, route) =>
-      navigatorKey ||
-      findNavigatorKeyForRoute(route.state as NavigationState, routeKey),
-    undefined,
-  );
+  return findNavigator(state, navigator =>
+    navigator.routes.some(route => route.key === routeKey),
+  )?.key;
 };
 
 /**
@@ -183,21 +195,139 @@ export const findNavigatorForRouteName = (
   state: NavigationState | undefined,
   routeName: string,
 ): NavigationState | undefined => {
-  if (!state?.routes) {
+  return findNavigator(state, navigator =>
+    navigator.routeNames.includes(routeName),
+  );
+};
+
+/**
+ * Find the exact modal-host route name assigned to a mounted target route.
+ */
+export const findModalHostRouteName = (
+  state: NavigationState,
+  targetId: string,
+): string | undefined => {
+  const navigator = findNavigator(state, current =>
+    current.routes.some(route => route.name === targetId),
+  );
+  const targetRoute = navigator?.routes.find(route => route.name === targetId);
+  return (targetRoute?.params as RouteParams | undefined)?.modalHostRouteName;
+};
+
+/**
+ * Remove a route and its owned route tree.
+ */
+export const removeRouteTree = (
+  state: NavigationState,
+  sourceKey: string,
+): NavigationState['routes'] => {
+  const removedRouteKeys = new Set([sourceKey]);
+  return state.routes.filter(route => {
+    const ownerRouteKey = (route.params as RouteParams | undefined)
+      ?.ownerRouteKey;
+    if (ownerRouteKey && removedRouteKeys.has(ownerRouteKey)) {
+      removedRouteKeys.add(route.key);
+    }
+    return !removedRouteKeys.has(route.key);
+  });
+};
+
+/**
+ * Find the nearest modal host that owns the source route.
+ */
+const findModalHostCloseTargetForSource = (
+  state: NavigationState,
+  sourceKey: string,
+): [boolean, Types.ModalCloseTarget | undefined] => {
+  return state.routes.reduce<[boolean, Types.ModalCloseTarget | undefined]>(
+    (result, route) => {
+      if (result[0]) {
+        return result;
+      }
+
+      const [containsSource, childTarget] = route.state
+        ? findModalHostCloseTargetForSource(
+            route.state as NavigationState,
+            sourceKey,
+          )
+        : [false, undefined];
+      const sourceFound = route.key === sourceKey || containsSource;
+
+      if (childTarget) {
+        return [true, childTarget];
+      }
+      if (
+        sourceFound &&
+        (route.params as RouteParams | undefined)?.isModalHost === true
+      ) {
+        return [
+          true,
+          {
+            routeKey: route.key,
+            state,
+          },
+        ];
+      }
+      return [sourceFound, undefined];
+    },
+    [false, undefined],
+  );
+};
+
+/**
+ * Find a mounted dynamic route that is owned by another route in its navigator.
+ */
+const findOwnedRouteCloseTarget = (
+  state: NavigationState,
+  sourceKey: string,
+): Types.ModalCloseTarget | undefined => {
+  const sourceRoute = state.routes.find(route => route.key === sourceKey);
+  const ownerRouteKey = (sourceRoute?.params as RouteParams | undefined)
+    ?.ownerRouteKey;
+  if (
+    sourceRoute &&
+    ownerRouteKey &&
+    state.routes.some(route => route.key === ownerRouteKey)
+  ) {
+    return {
+      routeKey: sourceKey,
+      state,
+    };
+  }
+
+  return state.routes.reduce<Types.ModalCloseTarget | undefined>(
+    (target, route) =>
+      target ||
+      (route.state
+        ? findOwnedRouteCloseTarget(route.state as NavigationState, sourceKey)
+        : undefined),
+    undefined,
+  );
+};
+
+/**
+ * Find the close target for a mounted source or its nearest remaining host.
+ */
+export const getModalCloseTarget = (
+  state: NavigationState | undefined,
+  sourceKey: string,
+  modalHostRouteKeyPath: string[] = [],
+): Types.ModalCloseTarget | undefined => {
+  if (!state) {
     return undefined;
   }
 
-  if (state.routeNames.includes(routeName)) {
-    return state;
+  const [sourceFound, sourceTarget] = findModalHostCloseTargetForSource(
+    state,
+    sourceKey,
+  );
+  if (sourceFound) {
+    return sourceTarget || findOwnedRouteCloseTarget(state, sourceKey);
   }
 
-  return state.routes.reduce<NavigationState | undefined>(
-    (navigator, route) =>
-      navigator ||
-      findNavigatorForRouteName(
-        route.state as NavigationState | undefined,
-        routeName,
-      ),
+  return modalHostRouteKeyPath.reduceRight<Types.ModalCloseTarget | undefined>(
+    (hostTarget, hostKey) =>
+      hostTarget || findModalHostCloseTargetForSource(state, hostKey)[1],
     undefined,
   );
 };
@@ -429,7 +559,9 @@ const isRouteModal = (state: NavigationState, index: number): boolean => {
   if (!state || index > state.routes.length - 1) {
     return false;
   }
-  return isModalRouteName(state.routes[index].name);
+  return (
+    (state.routes[index].params as RouteParams | undefined)?.isModal === true
+  );
 };
 
 /**
@@ -496,7 +628,7 @@ const getOwnerRouteKey = (
   path: string[] | undefined,
   routeId: string,
   routeParams: RouteParams,
-  sourceRouteKey: string | undefined,
+  sourceRoute: RouteProps | undefined,
 ): string | undefined => {
   if (!navigation || path?.length) {
     return undefined;
@@ -516,9 +648,17 @@ const getOwnerRouteKey = (
     return (existingRoute.params as RouteParams | undefined)?.ownerRouteKey;
   }
 
-  return sourceRouteKey &&
-    state.routes.some(route => route.key === sourceRouteKey)
-    ? sourceRouteKey
+  if (
+    sourceRoute &&
+    state.routes.some(route => route.key === sourceRoute.key)
+  ) {
+    return sourceRoute.key;
+  }
+
+  const sourceOwnerRouteKey = sourceRoute?.params?.ownerRouteKey;
+  return sourceOwnerRouteKey &&
+    state.routes.some(route => route.key === sourceOwnerRouteKey)
+    ? sourceOwnerRouteKey
     : undefined;
 };
 
@@ -530,7 +670,8 @@ export const buildRequest = (
   nav: NavigationProps | undefined,
   action: NavAction,
   routeParams?: RouteParams,
-  sourceRouteKey?: string,
+  sourceRoute?: RouteProps,
+  routeIdOverride?: string,
 ): [
   NavAction,
   NavigationProps | undefined,
@@ -557,14 +698,15 @@ export const buildRequest = (
     routeParams.targetId || '',
     nav,
   );
-  const routeId = getRouteId(navAction, routeParams.url ?? undefined);
+  const routeId =
+    routeIdOverride ?? getRouteId(navAction, routeParams.url ?? undefined);
   const isDynamicNavigation =
-    isDynamicRoute(routeId) &&
+    isDynamicRoute(routeId, routeParams) &&
     (navAction === NAV_ACTIONS.NAVIGATE ||
       navAction === NAV_ACTIONS.NEW ||
       navAction === NAV_ACTIONS.PUSH);
   const ownerRouteKey = isDynamicNavigation
-    ? getOwnerRouteKey(navigation, path, routeId, routeParams, sourceRouteKey)
+    ? getOwnerRouteKey(navigation, path, routeId, routeParams, sourceRoute)
     : undefined;
 
   const cleanedParams: RouteParams = {
@@ -818,7 +960,7 @@ export const addStackRoute = (
     !id ||
     !route ||
     !siblingName ||
-    !isDynamicRoute(route.name) ||
+    !isDynamicRoute(route.name, route.params) ||
     !route.params?.url ||
     getRouteByUrl(doc, route.params?.url, baseUrl)
   ) {

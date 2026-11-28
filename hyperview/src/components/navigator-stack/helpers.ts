@@ -48,7 +48,10 @@ export const buildRoutesFromDom = (
         existingIndex > -1 &&
         !sequenceBroken &&
         // Ensure the presentation matches for dynamic screens
-        (!NavigatorService.isDynamicRoute(state.routes[existingIndex].name) ||
+        (!NavigatorService.isDynamicRoute(
+          state.routes[existingIndex].name,
+          state.routes[existingIndex].params,
+        ) ||
           (isModal
             ? state.routes[existingIndex].name === NavigatorService.ID_MODAL
             : state.routes[existingIndex].name === NavigatorService.ID_CARD))

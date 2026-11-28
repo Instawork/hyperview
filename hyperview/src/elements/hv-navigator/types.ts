@@ -21,6 +21,17 @@ export type ScreenParams = {
   params: RouteParams | undefined;
 };
 
+export type BuildScreenOptions = {
+  href?: string;
+  id: string;
+  initialRouteParams?: RouteParams;
+  isFirstScreen?: boolean;
+  isModal?: boolean;
+  needsSubStack: boolean;
+  routeId?: string;
+  type: string;
+};
+
 export type GetRouteId = (
   params: RouteParams | undefined,
 ) => string | undefined;
